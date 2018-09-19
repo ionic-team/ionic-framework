@@ -1189,6 +1189,7 @@ export class Animator {
    * Recursively destroy this animation and all child animations.
    */
   destroy() {
+    this._didFinish(false);
     this._destroyed = true;
 
     const children = this._childAnimations;

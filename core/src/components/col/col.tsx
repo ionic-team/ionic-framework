@@ -1,4 +1,4 @@
-import { Component, Element, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
 
 import { matchBreakpoint } from '../../utils/media';
 
@@ -10,7 +10,7 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
   styleUrl: 'col.scss',
   shadow: true
 })
-export class Col {
+export class Col implements ComponentInterface {
   @Prop({ context: 'window' }) win!: Window;
 
   @Element() el!: HTMLStencilElement;

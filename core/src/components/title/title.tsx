@@ -1,4 +1,4 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -8,7 +8,7 @@ import { createColorClasses } from '../../utils/theme';
   styleUrl: 'title.scss',
   shadow: true
 })
-export class ToolbarTitle {
+export class ToolbarTitle implements ComponentInterface {
 
   mode!: Mode;
 

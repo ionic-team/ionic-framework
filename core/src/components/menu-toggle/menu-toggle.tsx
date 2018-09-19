@@ -1,11 +1,11 @@
-import { Component, Listen, Prop, State } from '@stencil/core';
+import { Component, ComponentInterface, Listen, Prop, State } from '@stencil/core';
 
 @Component({
   tag: 'ion-menu-toggle',
   styleUrl: 'menu-toggle.scss',
   shadow: true
 })
-export class MenuToggle {
+export class MenuToggle implements ComponentInterface {
 
   @Prop({ context: 'document' }) doc!: Document;
 
@@ -39,10 +39,9 @@ export class MenuToggle {
     if (menuCtrl) {
       const menu = await menuCtrl.get(this.menu);
       if (menu) {
-        return menuCtrl.toggle(this.menu);
+        menuCtrl.toggle(this.menu);
       }
     }
-    return false;
   }
 
   @Listen('body:ionMenuChange')

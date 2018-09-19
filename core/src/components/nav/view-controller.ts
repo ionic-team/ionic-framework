@@ -42,7 +42,6 @@ export class ViewController {
     const element = this.element;
     if (element) {
       if (this.delegate) {
-        // tslint:disable-next-line:no-floating-promises
         this.delegate.removeViewFromDom(element.parentElement, element);
       } else {
         element.remove();
@@ -61,10 +60,10 @@ export function matches(view: ViewController | undefined, id: string, params: Co
     return false;
   }
   const currentParams = view.params;
-  if (!currentParams && !params) {
-    return false;
-  }
   if (currentParams === params) {
+    return true;
+  }
+  if (!currentParams && !params) {
     return true;
   }
   if (!currentParams || !params) {

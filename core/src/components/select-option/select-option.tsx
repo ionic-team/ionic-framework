@@ -1,9 +1,9 @@
-import { Component, Element, Event, EventEmitter, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop } from '@stencil/core';
 
 @Component({
   tag: 'ion-select-option'
 })
-export class SelectOption {
+export class SelectOption implements ComponentInterface {
 
   private inputId = `ion-selopt-${selectOptionIds++}`;
 

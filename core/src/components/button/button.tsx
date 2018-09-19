@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
 
 import { Color, CssClassMap, Mode, RouterDirection } from '../../interface';
 import { hasShadowDom } from '../../utils/helpers';
@@ -12,7 +12,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
   },
   shadow: true,
 })
-export class Button {
+export class Button implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'window' }) win!: Window;
@@ -149,6 +149,7 @@ export class Button {
     const { buttonType, color, expand, fill, mode, shape, size, strong } = this;
 
     return {
+      'ion-activatable': true,
       class: {
         ...createColorClasses(color),
         ...getButtonClassMap(buttonType, mode),
@@ -158,12 +159,11 @@ export class Button {
         ...getButtonTypeClassMap(buttonType, strong ? 'strong' : undefined, mode),
         ...getButtonTypeClassMap(buttonType, fill, mode),
         'focused': this.keyFocus,
-      },
-      'ion-activable': true,
+      }
     };
   }
 
-  protected render() {
+  render() {
 
     const TagType = this.href === undefined ? 'button' : 'a';
     const attrs = (TagType === 'button')
@@ -186,7 +186,7 @@ export class Button {
           <slot></slot>
           <slot name="end"></slot>
         </span>
-        {this.mode === 'md' && <ion-ripple-effect />}
+        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </TagType>
     );
   }

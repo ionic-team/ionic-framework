@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
 import { CheckedInputChangeEvent, Color, Mode, StyleEvent } from '../../interface';
 import { deferEvent } from '../../utils/helpers';
@@ -12,7 +12,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   },
   shadow: true
 })
-export class Radio {
+export class Radio implements ComponentInterface {
 
   private inputId = `ion-rb-${radioButtonIds++}`;
   private nativeInput!: HTMLInputElement;
@@ -172,7 +172,7 @@ export class Radio {
     return {
       class: {
         ...createColorClasses(this.color),
-        'in-item': hostContext('.item', this.el),
+        'in-item': hostContext('ion-item', this.el),
         'interactive': true,
         'radio-checked': this.checked,
         'radio-disabled': this.disabled,

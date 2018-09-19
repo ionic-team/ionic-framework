@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Event, EventEmitter, Listen, Prop } from '@stencil/core';
 
 import { now } from '../../utils/helpers';
 
@@ -10,7 +10,7 @@ import { now } from '../../utils/helpers';
   },
   shadow: true
 })
-export class Backdrop {
+export class Backdrop implements ComponentInterface {
 
   private lastClick = -10000;
 

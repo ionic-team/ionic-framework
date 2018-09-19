@@ -123,11 +123,10 @@ export class Tabs implements NavOutlet {
     if (this.useRouter && href !== undefined) {
       const router = this.doc.querySelector('ion-router');
       if (router) {
-        return router.push(href);
+        router.push(href);
       }
-      return Promise.resolve(false);
     } else {
-      return this.select(selectedTab);
+      this.select(selectedTab);
     }
   }
 

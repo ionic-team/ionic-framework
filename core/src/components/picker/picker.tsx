@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 
 import { Animation, AnimationBuilder, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
 import { dismiss, eventMethod, present } from '../../utils/overlays';
@@ -14,7 +14,7 @@ import { iosLeaveAnimation } from './animations/ios.leave';
     md: 'picker.md.scss'
   }
 })
-export class Picker implements OverlayInterface {
+export class Picker implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
 
   presented = false;
@@ -127,9 +127,9 @@ export class Picker implements OverlayInterface {
   protected onBackdropTap() {
     const cancelBtn = this.buttons.find(b => b.role === 'cancel');
     if (cancelBtn) {
-      return this.buttonClick(cancelBtn);
+      this.buttonClick(cancelBtn);
     } else {
-      return this.dismiss();
+      this.dismiss();
     }
   }
 
@@ -257,7 +257,7 @@ export class Picker implements OverlayInterface {
             <div class={buttonWrapperClass(b)}>
               <button
                 type="button"
-                ion-activable
+                ion-activatable
                 onClick={() => this.buttonClick(b)}
                 class={buttonClass(b)}
               >

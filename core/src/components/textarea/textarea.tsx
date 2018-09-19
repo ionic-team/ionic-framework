@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 import { Color, Mode, StyleEvent, TextInputChangeEvent } from '../../interface';
 import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
@@ -12,7 +12,7 @@ import { createColorClasses } from '../../utils/theme';
   },
   shadow: true
 })
-export class Textarea {
+export class Textarea implements ComponentInterface {
 
   private nativeInput?: HTMLTextAreaElement;
   private inputId = `ion-input-${textareaIds++}`;

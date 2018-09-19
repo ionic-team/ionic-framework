@@ -4,7 +4,7 @@
 // Material Design Popover
 // --------------------------------------------------
 
-.popover-md .popover-content {
+.popover-content {
   @include border-radius($popover-md-border-radius);
   @include transform-origin(start, top);
 
@@ -19,7 +19,7 @@
   box-shadow: $popover-md-box-shadow;
 }
 
-.popover-md .popover-viewport {
+.popover-viewport {
   // opacity: 0;
   transition-delay: 100ms;
 }

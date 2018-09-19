@@ -1,4 +1,4 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -11,7 +11,7 @@ import { createColorClasses } from '../../utils/theme';
   },
   shadow: true
 })
-export class ItemOption {
+export class ItemOption implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
@@ -51,9 +51,10 @@ export class ItemOption {
 
   hostData() {
     return {
+      'ion-activatable': true,
       class: {
         ...createColorClasses(this.color),
-        'item-option-expandable': this.expandable
+        'item-option-expandable': this.expandable,
       }
     };
   }
@@ -77,6 +78,7 @@ export class ItemOption {
           <slot name="bottom" />
           <slot name="end"></slot>
         </span>
+        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </TagType>
     );
   }

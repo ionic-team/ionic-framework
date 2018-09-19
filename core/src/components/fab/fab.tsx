@@ -1,11 +1,11 @@
-import { Component, Element, Listen, Method, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Method, Prop, Watch } from '@stencil/core';
 
 @Component({
   tag: 'ion-fab',
   styleUrl: 'fab.scss',
   shadow: true
 })
-export class Fab {
+export class Fab implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 

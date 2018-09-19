@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 import { Color, Mode, TextInputChangeEvent } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
@@ -12,7 +12,7 @@ import { createColorClasses } from '../../utils/theme';
   },
   scoped: true
 })
-export class Searchbar {
+export class Searchbar implements ComponentInterface {
 
   private nativeInput!: HTMLInputElement;
   private isCancelVisible = false;

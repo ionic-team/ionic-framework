@@ -37,24 +37,36 @@
 }
 
 ::slotted(.segment-button-disabled) {
-  --border-color: var(--border-color-disabled);
-  --color: var(--color-disabled);
+  --btn-border-color: var(--border-color-disabled);
+
+  color: var(--color-disabled);
 }
 
-:host(.ion-color) ::slotted(.segment-button-disabled) {
-  --border-color: #{current-color(base)};
-  --color: #{current-color(base, $segment-button-ios-background-color-alpha-disabled)};
+:host(.ion-color)::slotted(ion-segment-button) {
+  color: #{current-color(base)};
+}
+
+:host(.ion-color)::slotted(.segment-button-checked) {
+  --btn-background: #{current-color(base)};
+  --btn-border-color: #{current-color(base)};
+  color: #{current-color(contrast)};
+}
+
+:host(.ion-color)::slotted(.segment-button-disabled) {
+  --btn-border-color: #{current-color(base)};
+  color: #{current-color(base, $segment-button-ios-background-color-alpha-disabled)};
 }
 
 // iOS Segment in Toolbar
 // --------------------------------------------------
-:host(.in-toolbar) {
+:host-context(ion-toolbar) {
   @include position(0, 0, 0, 0);
+  @include margin(0);
 
   position: absolute;
 }
 
-:host(.in-toolbar) ::slotted(ion-segment-button) {
+:host-context(ion-toolbar)::slotted(ion-segment-button) {
   max-width: $segment-button-ios-toolbar-button-max-width;
   height: $segment-button-ios-toolbar-button-height;
 
@@ -63,7 +75,7 @@
   line-height: $segment-button-ios-toolbar-line-height;
 }
 
-:host(.in-color-toolbar:not(.ion-color)) {
+:host-context(ion-toolbar.ion-color):not(.ion-color) {
   --color: #{current-color(contrast)};
   --color-checked: #{current-color(base)};
   --color-disabled: #{current-color(contrast, $segment-button-ios-opacity-disabled)};

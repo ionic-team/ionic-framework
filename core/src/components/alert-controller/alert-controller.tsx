@@ -1,4 +1,4 @@
-import { Component, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Method, Prop } from '@stencil/core';
 
 import { AlertOptions, OverlayController } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
@@ -6,7 +6,7 @@ import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays'
 @Component({
   tag: 'ion-alert-controller'
 })
-export class AlertController implements OverlayController {
+export class AlertController implements ComponentInterface, OverlayController {
 
   @Prop({ context: 'document' }) doc!: Document;
 

@@ -1,4 +1,4 @@
-import { Component, Element, Method, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Method, Prop, QueueApi } from '@stencil/core';
 
 import { rIC } from '../../utils/helpers';
 
@@ -7,7 +7,7 @@ import { rIC } from '../../utils/helpers';
   styleUrl: 'ripple-effect.scss',
   shadow: true
 })
-export class RippleEffect {
+export class RippleEffect implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 

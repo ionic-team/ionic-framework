@@ -1,4 +1,4 @@
-import { Component } from '@stencil/core';
+import { Component, ComponentInterface } from '@stencil/core';
 
 import { Mode } from '../../interface';
 
@@ -10,7 +10,7 @@ import { Mode } from '../../interface';
   },
   shadow: true
 })
-export class Reorder {
+export class Reorder implements ComponentInterface {
 
   mode!: Mode;
 

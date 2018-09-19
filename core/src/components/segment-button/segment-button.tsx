@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -10,7 +10,7 @@ let ids = 0;
   styleUrl: 'segment-button.scss',
   shadow: true
 })
-export class SegmentButton {
+export class SegmentButton implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
@@ -57,12 +57,12 @@ export class SegmentButton {
   hostData() {
     const { disabled, checked, color } = this;
     return {
+      'ion-activatable': true,
       class: {
         ...createColorClasses(color),
         'segment-button-disabled': disabled,
         'segment-button-checked': checked,
-      },
-      'ion-activable': true,
+      }
     };
   }
 
@@ -76,7 +76,7 @@ export class SegmentButton {
         onClick={() => this.checked = true}
       >
         <slot></slot>
-        {this.mode === 'md' && <ion-ripple-effect />}
+        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </button>
     ];
   }

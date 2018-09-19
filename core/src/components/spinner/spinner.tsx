@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Color, Config, Mode, SpinnerConfig, SpinnerTypes } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -10,7 +10,7 @@ import { SPINNERS } from './spinner-configs';
   styleUrl: 'spinner.scss',
   shadow: true
 })
-export class Spinner {
+export class Spinner implements ComponentInterface {
   @Prop({ context: 'config' }) config!: Config;
 
   mode!: Mode;

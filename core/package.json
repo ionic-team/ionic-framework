@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "4.0.0-beta.8",
+  "version": "4.0.0-beta.11",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -28,15 +28,17 @@
     "ionicons": "4.4.3"
   },
   "devDependencies": {
-    "@stencil/core": "0.13.0-8",
+    "@stencil/core": "0.13.0-11",
     "@stencil/dev-server": "latest",
     "@stencil/sass": "0.1.0",
     "@stencil/utils": "latest",
     "@types/jest": "^23.3.1",
+    "@types/swiper": "4.2.1",
     "agadoo": "^1.0.0",
     "autoprefixer": "^9.0.2",
     "chromedriver": "^2.38.3",
     "clean-css-cli": "^4.1.11",
+    "fs-extra": "^7.0.0",
     "jest": "23.5.0",
     "mocha": "^4.0.1",
     "np": "^3.0.4",
@@ -44,6 +46,7 @@
     "selenium-webdriver": "^3.6.0",
     "stylelint": "^9.4.0",
     "stylelint-order": "^0.8.1",
+    "swiper": "4.4.1",
     "tslint": "^5.10.0",
     "tslint-ionic-rules": "0.0.19",
     "tslint-react": "^3.6.0",
@@ -52,6 +55,7 @@
   },
   "scripts": {
     "build": "npm run clean && npm run build.css && stencil build --docs",
+    "build.vendor": "rollup --config ./scripts/swiper.rollup.config.js",
     "build.css": "npm run css.sass && npm run css.minify",
     "build.debug": "npm run clean && stencil build --debug",
     "build.docs.json": "stencil build --docs-json dist/docs.json",
@@ -73,7 +77,6 @@
     "test": "stencil test --spec",
     "test.e2e": "stencil test --e2e",
     "test.screenshot": "stencil test --e2e --screenshot --compare",
-    "test.watch": "jest --watch --no-cache",
     "theme-app-build": "stencil build --dev --config scripts/theme-builder/stencil.config.js",
     "theme-builder": "sd concurrent \"npm run theme-app-build\" \"stencil build --dev --watch\" \"stencil-dev-server\" \"npm run theme-server\" ",
     "theme-builder:dev": "sd concurrent \"npm run theme-app-build -- --watch\" \"stencil build --dev --watch\" \"stencil-dev-server\" \"npm run theme-server\" ",

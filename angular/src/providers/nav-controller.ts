@@ -21,7 +21,7 @@ export class NavController {
     private location: Location,
     @Optional() private router?: Router
   ) {
-    window && window.document.body.addEventListener('ionBackButton', (ev) => {
+    window && window.document.addEventListener('ionBackButton', (ev) => {
       (ev as BackButtonEvent).detail.register(0, () => this.goBack());
     });
   }

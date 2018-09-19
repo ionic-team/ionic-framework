@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 
 import { ActionSheetButton, Animation, AnimationBuilder, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
@@ -17,7 +17,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
   },
   scoped: true
 })
-export class ActionSheet implements OverlayInterface {
+export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   presented = false;
   animation?: Animation;
@@ -125,7 +125,7 @@ export class ActionSheet implements OverlayInterface {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    return this.dismiss(undefined, BACKDROP);
+    this.dismiss(undefined, BACKDROP);
   }
 
   @Listen('ionActionSheetWillDismiss')
@@ -235,7 +235,7 @@ export class ActionSheet implements OverlayInterface {
               </div>
             }
             {buttons.map(b =>
-              <button type="button" ion-activable class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
+              <button type="button" ion-activatable class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
                 <span class="action-sheet-button-inner">
                   {b.icon && <ion-icon icon={b.icon} lazy={false} class="action-sheet-icon" />}
                   {b.text}
@@ -247,7 +247,7 @@ export class ActionSheet implements OverlayInterface {
           {cancelButton &&
             <div class="action-sheet-group action-sheet-group-cancel">
               <button
-                ion-activable
+                ion-activatable
                 type="button"
                 class={buttonClass(cancelButton)}
                 onClick={() => this.buttonClick(cancelButton)}

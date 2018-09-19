@@ -1,4 +1,4 @@
-import { Component, Element, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop, State } from '@stencil/core';
 
 import { Color, CssClassMap, Mode, RouterDirection } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
@@ -11,10 +11,12 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
   },
   shadow: true
 })
-export class Item {
+export class Item implements ComponentInterface {
   private itemStyles = new Map<string, CssClassMap>();
 
   @Element() el!: HTMLStencilElement;
+
+  @State() multipleInputs = false;
 
   @Prop({ context: 'window' }) win!: Window;
 
@@ -113,6 +115,10 @@ export class Item {
         button.size = 'small';
       }
     });
+
+    // Check for multiple inputs to change the position to relative
+    const inputs = this.el.querySelectorAll('ion-select, ion-datetime');
+    this.multipleInputs = inputs.length > 1 ? true : false;
   }
 
   private isClickable(): boolean {
@@ -126,14 +132,15 @@ export class Item {
     });
 
     return {
-      'ion-activable': this.isClickable(),
+      'ion-activatable': this.isClickable(),
       class: {
         ...childStyles,
         ...createColorClasses(this.color),
         [`item-lines-${this.lines}`]: !!this.lines,
         'item-disabled': this.disabled,
         'in-list': hostContext('ion-list', this.el),
-        'item': true
+        'item': true,
+        'item-multiple-inputs': this.multipleInputs
       }
     };
   }
@@ -161,7 +168,7 @@ export class Item {
           {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon"></ion-icon>}
         </div>
         {state && <div class="item-state"></div>}
-        {clickable && mode === 'md' && <ion-ripple-effect />}
+        {clickable && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </TagType>
     );
   }

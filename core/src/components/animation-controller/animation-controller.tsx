@@ -1,4 +1,4 @@
-import { Component, Method } from '@stencil/core';
+import { Component, ComponentInterface, Method } from '@stencil/core';
 
 import { Animation, AnimationBuilder, AnimationController } from '../../interface';
 
@@ -8,7 +8,7 @@ import { Animator } from './animator';
 @Component({
   tag: 'ion-animation-controller'
 })
-export class AnimationControllerImpl implements AnimationController {
+export class AnimationControllerImpl implements ComponentInterface, AnimationController {
 
   /**
    * Creates an animation instance

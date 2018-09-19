@@ -7,6 +7,7 @@
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-contrast: #{ion-color(primary, contrast)};
 
+  background: #{current-color(base)};
   color: #{current-color(contrast)};
 
   font-family: $font-family-base;
@@ -16,6 +17,8 @@
   @include text-inherit();
   @include padding(0, .7em);
 
+  position: relative;
+
   width: 100%;
   height: 100%;
 
@@ -23,14 +26,10 @@
 
   outline: none;
 
-  background: #{current-color(base)};
+  background: transparent;
 
   cursor: pointer;
   appearance: none;
-}
-
-.item-option-native:hover {
-  opacity: 0.8;
 }
 
 .item-option-button-inner {

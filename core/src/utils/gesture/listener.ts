@@ -10,7 +10,7 @@ function supportsPassive(node: Node) {
         }
       });
       node.addEventListener('optsTest', () => { return; }, opts);
-    } catch {
+    } catch (e) {
       _sPassive = false;
     }
   }

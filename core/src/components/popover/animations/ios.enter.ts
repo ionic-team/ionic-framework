@@ -16,8 +16,7 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev
   const bodyHeight = window.innerHeight;
 
   // If ev was passed, use that for target element
-  const targetDim =
-    ev && ev.target && (ev.target as HTMLElement).getBoundingClientRect();
+  const targetDim = ev && ev.target && (ev.target as HTMLElement).getBoundingClientRect();
 
   const targetTop =
     targetDim != null && 'top' in targetDim
@@ -34,7 +33,7 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev
   const arrowWidth = arrowDim.width;
   const arrowHeight = arrowDim.height;
 
-  if (targetDim != null) {
+  if (targetDim == null) {
     arrowEl.style.display = 'none';
   }
 

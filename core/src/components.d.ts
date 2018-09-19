@@ -1398,6 +1398,10 @@ export namespace Components {
     */
     'mode': Mode;
     /**
+    * When using a router, it specifies the transition direction when navigating to another page using `href`.
+    */
+    'routerDirection'?: RouterDirection;
+    /**
     * If true, the fab button will show when in a fab-list.
     */
     'show': boolean;
@@ -1427,6 +1431,10 @@ export namespace Components {
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
     'mode'?: Mode;
+    /**
+    * When using a router, it specifies the transition direction when navigating to another page using `href`.
+    */
+    'routerDirection'?: RouterDirection;
     /**
     * If true, the fab button will show when in a fab-list.
     */
@@ -2022,7 +2030,7 @@ export namespace Components {
     /**
     * Emitted when the item has been fully swiped.
     */
-    'onIonSwipe'?: (event: CustomEvent<void>) => void;
+    'onIonSwipe'?: (event: CustomEvent<any>) => void;
     /**
     * The side the option button should be on. Possible values: `"start"` and `"end"`. Defaults to `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
     */
@@ -4011,7 +4019,7 @@ export namespace Components {
     * The text to display on the ok button. Default: `OK`.
     */
     'okText': string;
-    'open': (ev?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement>;
+    'open': (ev?: UIEvent | undefined) => Promise<HTMLIonPopoverElement | HTMLIonActionSheetElement | HTMLIonAlertElement>;
     /**
     * The text to display when the select is empty.
     */
@@ -4159,7 +4167,9 @@ export namespace Components {
   }
 
   interface IonSlide {}
-  interface IonSlideAttributes extends StencilHTMLAttributes {}
+  interface IonSlideAttributes extends StencilHTMLAttributes {
+    'onIonSlideChanged'?: (event: CustomEvent<void>) => void;
+  }
 
   interface IonSlides {
     /**
@@ -4185,15 +4195,19 @@ export namespace Components {
     /**
     * Lock or unlock the ability to slide to the next slides.
     */
-    'lockSwipeToNext': (shouldLockSwipeToNext: boolean) => void;
+    'lockSwipeToNext': (shouldLockSwipeToNext: boolean) => Promise<void>;
     /**
     * Lock or unlock the ability to slide to the previous slides.
     */
-    'lockSwipeToPrev': (shouldLockSwipeToPrev: boolean) => void;
+    'lockSwipeToPrev': (shouldLockSwipeToPrev: boolean) => Promise<void>;
     /**
     * Lock or unlock the ability to slide to change slides.
     */
-    'lockSwipes': (shouldLockSwipes: boolean) => void;
+    'lockSwipes': (shouldLockSwipes: boolean) => Promise<void>;
+    /**
+    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    */
+    'mode': Mode;
     /**
     * Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options
     */
@@ -4209,93 +4223,97 @@ export namespace Components {
     /**
     * Transition to the next slide.
     */
-    'slideNext': (speed?: number | undefined, runCallbacks?: boolean | undefined) => void;
+    'slideNext': (speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>;
     /**
     * Transition to the previous slide.
     */
-    'slidePrev': (speed?: number | undefined, runCallbacks?: boolean | undefined) => void;
+    'slidePrev': (speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>;
     /**
     * Transition to the specified slide.
     */
-    'slideTo': (index: number, speed?: number | undefined, runCallbacks?: boolean | undefined) => void;
+    'slideTo': (index: number, speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>;
     /**
     * Start auto play.
     */
-    'startAutoplay': () => void;
+    'startAutoplay': () => Promise<void>;
     /**
     * Stop auto play.
     */
-    'stopAutoplay': () => void;
+    'stopAutoplay': () => Promise<void>;
     /**
     * Update the underlying slider implementation. Call this if you've added or removed child slides.
     */
-    'update': () => void;
+    'update': () => Promise<void>;
   }
   interface IonSlidesAttributes extends StencilHTMLAttributes {
     /**
+    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    */
+    'mode'?: Mode;
+    /**
     * Emitted after the active slide has changed.
     */
-    'onIonSlideDidChange'?: (event: CustomEvent) => void;
+    'onIonSlideDidChange'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted when the user double taps on the slide's container.
     */
-    'onIonSlideDoubleTap'?: (event: CustomEvent) => void;
+    'onIonSlideDoubleTap'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted when the slider is actively being moved.
     */
-    'onIonSlideDrag'?: (event: CustomEvent) => void;
+    'onIonSlideDrag'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted when the next slide has ended.
     */
-    'onIonSlideNextEnd'?: (event: CustomEvent) => void;
+    'onIonSlideNextEnd'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted when the next slide has started.
     */
-    'onIonSlideNextStart'?: (event: CustomEvent) => void;
+    'onIonSlideNextStart'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted when the previous slide has ended.
     */
-    'onIonSlidePrevEnd'?: (event: CustomEvent) => void;
+    'onIonSlidePrevEnd'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted when the previous slide has started.
     */
-    'onIonSlidePrevStart'?: (event: CustomEvent) => void;
+    'onIonSlidePrevStart'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted when the slider is at the last slide.
     */
-    'onIonSlideReachEnd'?: (event: CustomEvent) => void;
+    'onIonSlideReachEnd'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted when the slider is at its initial position.
     */
-    'onIonSlideReachStart'?: (event: CustomEvent) => void;
+    'onIonSlideReachStart'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted when the user taps/clicks on the slide's container.
     */
-    'onIonSlideTap'?: (event: CustomEvent) => void;
+    'onIonSlideTap'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted when the user releases the touch.
     */
-    'onIonSlideTouchEnd'?: (event: CustomEvent) => void;
+    'onIonSlideTouchEnd'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted when the user first touches the slider.
     */
-    'onIonSlideTouchStart'?: (event: CustomEvent) => void;
+    'onIonSlideTouchStart'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted when the slide transition has ended.
     */
-    'onIonSlideTransitionEnd'?: (event: CustomEvent) => void;
+    'onIonSlideTransitionEnd'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted when the slide transition has started.
     */
-    'onIonSlideTransitionStart'?: (event: CustomEvent) => void;
+    'onIonSlideTransitionStart'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted before the active slide has changed.
     */
-    'onIonSlideWillChange'?: (event: CustomEvent) => void;
+    'onIonSlideWillChange'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted after Swiper initialization
     */
-    'onIonSlidesDidLoad'?: (event: CustomEvent) => void;
+    'onIonSlidesDidLoad'?: (event: CustomEvent<void>) => void;
     /**
     * Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options
     */

@@ -10,6 +10,13 @@ See the [Slides API Docs](../slides) for more usage information.
 <!-- Auto Generated Below -->
 
 
+## Events
+
+| Event             | Description |
+| ----------------- | ----------- |
+| `ionSlideChanged` |             |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

@@ -1,7 +1,7 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
 
-import { Color, CssClassMap, Mode } from '../../interface';
-import { createColorClasses } from '../../utils/theme';
+import { Color, Mode, RouterDirection } from '../../interface';
+import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 @Component({
   tag: 'ion-fab-button',
@@ -11,8 +11,9 @@ import { createColorClasses } from '../../utils/theme';
   },
   shadow: true
 })
-export class FabButton {
-  private inList = false;
+export class FabButton implements ComponentInterface {
+
+  @Prop({ context: 'window' }) win!: Window;
 
   @Element() el!: HTMLElement;
 
@@ -40,6 +41,12 @@ export class FabButton {
   @Prop() disabled = false;
 
   /**
+   * When using a router, it specifies the transition direction when navigating to
+   * another page using `href`.
+   */
+  @Prop() routerDirection?: RouterDirection;
+
+  /**
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
@@ -55,32 +62,16 @@ export class FabButton {
    */
   @Prop() show = false;
 
-  componentWillLoad() {
-    const parentNode = this.el.parentNode;
-    const parentTag = parentNode ? parentNode.nodeName : null;
-
-    this.inList = parentTag === 'ION-FAB-LIST';
-  }
-
-  /**
-   * Get the classes for fab buttons in lists
-   */
-  private getFabClassMap(): CssClassMap {
-    return {
-      'fab-button-in-list': this.inList,
-      'fab-button-translucent-in-list': this.inList && this.translucent,
-      'fab-button-close-active': this.activated,
-      'fab-button-show': this.show
-    };
-  }
-
   hostData() {
-
+    const inList = hostContext('ion-fab-list', this.el);
     return {
-      'ion-activable': !this.disabled,
+      'ion-activatable': true,
       class: {
         ...createColorClasses(this.color),
-        ...this.getFabClassMap(),
+        'fab-button-in-list': inList,
+        'fab-button-translucent-in-list': inList && this.translucent,
+        'fab-button-close-active': this.activated,
+        'fab-button-show': this.show,
         'fab-button-disabled': this.disabled,
         'fab-button-translucent': this.translucent
       }
@@ -95,6 +86,7 @@ export class FabButton {
         class="fab-button-native"
         disabled={this.disabled}
         href={this.href}
+        onClick={ev => openURL(this.win, this.href, ev, this.routerDirection)}
       >
         <span class="fab-button-close-icon">
           <ion-icon name="close" lazy={false}></ion-icon>
@@ -102,7 +94,7 @@ export class FabButton {
         <span class="fab-button-inner">
           <slot></slot>
         </span>
-        {this.mode === 'md' && <ion-ripple-effect />}
+        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </TagType>
     );
   }

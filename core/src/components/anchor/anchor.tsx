@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Color, RouterDirection } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
@@ -8,7 +8,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
   styleUrl: 'anchor.scss',
   shadow: true
 })
-export class Anchor {
+export class Anchor implements ComponentInterface {
 
   @Prop({ context: 'window' }) win!: Window;
 
@@ -33,7 +33,8 @@ export class Anchor {
 
   hostData() {
     return {
-      class: createColorClasses(this.color)
+      class: createColorClasses(this.color),
+      'ion-activatable': true
     };
   }
 

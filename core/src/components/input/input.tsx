@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 import { Color, Mode, StyleEvent, TextFieldTypes, TextInputChangeEvent } from '../../interface';
 import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
@@ -12,7 +12,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   },
   shadow: true
 })
-export class Input {
+export class Input implements ComponentInterface {
 
   private nativeInput?: HTMLInputElement;
   private inputId = `ion-input-${inputIds++}`;
@@ -181,7 +181,7 @@ export class Input {
   @Watch('value')
   protected valueChanged() {
     const inputEl = this.nativeInput;
-    const value = this.value;
+    const value = this.getValue();
     if (inputEl && inputEl.value !== value) {
       inputEl.value = value;
     }
@@ -251,6 +251,10 @@ export class Input {
     }
   }
 
+  private getValue(): string {
+    return this.value || '';
+  }
+
   private emitStyle() {
     this.ionStyle.emit({
       'interactive': true,
@@ -313,7 +317,7 @@ export class Input {
   }
 
   private hasValue(): boolean {
-    return this.value.length > 0;
+    return this.getValue().length > 0;
   }
 
   hostData() {
@@ -321,7 +325,7 @@ export class Input {
       class: {
         ...createColorClasses(this.color),
 
-        'in-item': hostContext('.item', this.el),
+        'in-item': hostContext('ion-item', this.el),
         'has-value': this.hasValue(),
         'has-focus': this.hasFocus
       }
@@ -329,7 +333,7 @@ export class Input {
   }
 
   render() {
-    renderHiddenInput(this.el, this.name, this.value, this.disabled);
+    renderHiddenInput(this.el, this.name, this.getValue(), this.disabled);
 
     return [
       <input
@@ -358,7 +362,7 @@ export class Input {
         step={this.step}
         size={this.size}
         type={this.type}
-        value={this.value}
+        value={this.getValue()}
         onInput={this.onInput.bind(this)}
         onBlur={this.onBlur.bind(this)}
         onFocus={this.onFocus.bind(this)}

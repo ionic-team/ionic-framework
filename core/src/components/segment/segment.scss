@@ -30,32 +30,23 @@
   text-align: center;
 }
 
-:host(.segment-disabled) {
-  pointer-events: none;
-}
-
 ::slotted(ion-segment-button) {
-  --color: inherit;
-  --background: inherit;
-  --border-color: inherit;
-}
+  --btn-background: var(--background);
+  --btn-border-color: var(--border-color);
 
-:host(.ion-color) ::slotted(ion-segment-button) {
-  --color: #{current-color(base)};
+  color: var(--color);
 }
 
 ::slotted(.segment-button-checked) {
-  --color: var(--color-checked);
-  --background: var(--background-checked);
-  --border-color: var(--border-color-checked);
+  --btn-background: var(--background-checked);
+  --btn-border-color: var(--border-color-checked);
+
+  color: var(--color-checked);
 }
 
-:host(.ion-color) ::slotted(.segment-button-checked) {
-  --background: #{current-color(base)};
-  --border-color: #{current-color(base)};
-  --color: #{current-color(contrast)};
-}
+// Disabled
 
+:host(.segment-disabled),
 ::slotted(.segment-button-disabled) {
   pointer-events: none;
 }

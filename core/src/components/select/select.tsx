@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
 import { ActionSheetButton, ActionSheetOptions, AlertOptions, CssClassMap, Mode, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent } from '../../interface';
 import { deferEvent, renderHiddenInput } from '../../utils/helpers';
@@ -12,12 +12,13 @@ import { hostContext } from '../../utils/theme';
   },
   shadow: true
 })
-export class Select {
+export class Select implements ComponentInterface {
 
   private childOpts: HTMLIonSelectOptionElement[] = [];
   private inputId = `ion-sel-${selectIds++}`;
   private labelId?: string;
   private overlay?: HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement;
+
   @Element() el!: HTMLIonSelectElement;
 
   @Prop({ connect: 'ion-action-sheet-controller' }) actionSheetCtrl!: HTMLIonActionSheetControllerElement;
@@ -244,7 +245,7 @@ export class Select {
       (this.value as string[]).length = 0;
       checked.forEach(o => {
         // doing this instead of map() so we don't
-        // fire off an unecessary change event
+        // fire off an unnecessary change event
         (this.value as string[]).push(o.value);
       });
       this.text = checked.map(o => o.textContent).join(', ');
@@ -314,7 +315,6 @@ export class Select {
             disabled: o.disabled,
             handler: () => {
               this.value = o.value;
-              // tslint:disable-next-line:no-floating-promises
               this.close();
             }
           } as SelectPopoverOption;
@@ -458,7 +458,7 @@ export class Select {
   hostData() {
     return {
       class: {
-        'in-item': hostContext('.item', this.el),
+        'in-item': hostContext('ion-item', this.el),
         'select-disabled': this.disabled,
         'select-key': this.keyFocus
       }
@@ -506,7 +506,7 @@ export class Select {
         class="select-cover"
       >
         <slot></slot>
-        {this.mode === 'md' && <ion-ripple-effect />}
+        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </button>
     ];
   }

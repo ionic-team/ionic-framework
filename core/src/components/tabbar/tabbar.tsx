@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { Color, Mode, TabbarLayout, TabbarPlacement } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -11,7 +11,7 @@ import { createColorClasses } from '../../utils/theme';
   },
   shadow: true
 })
-export class Tabbar {
+export class Tabbar implements ComponentInterface {
 
   @Prop() mode!: Mode;
   @Prop() color?: Color;
@@ -112,7 +112,7 @@ export class Tabbar {
     return (
       <a
         role="tab"
-        ion-activable
+        ion-activatable
         aria-selected={selected ? 'true' : null}
         href={href || '#'}
         class={{
@@ -136,7 +136,7 @@ export class Tabbar {
         {icon && <ion-icon class="tab-btn-icon" icon={icon} lazy={false}></ion-icon>}
         {label && <span class="tab-btn-text">{label}</span>}
         {badge && <ion-badge class="tab-btn-badge" color={badgeColor}>{badge}</ion-badge>}
-        {this.mode === 'md' && <ion-ripple-effect />}
+        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </a>
     );
   }

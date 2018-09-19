@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { Animation, Config, Gesture, GestureDetail, MenuChangeEventDetail, MenuControllerI, MenuI, Mode, Side } from '../../interface';
 import { assert, isEndSide as isEnd } from '../../utils/helpers';
@@ -11,7 +11,7 @@ import { assert, isEndSide as isEnd } from '../../utils/helpers';
   },
   shadow: true
 })
-export class Menu implements MenuI {
+export class Menu implements ComponentInterface, MenuI {
 
   private animation?: Animation;
   private lastOnEnd = 0;
@@ -223,10 +223,9 @@ export class Menu implements MenuI {
       if (shouldClose) {
         ev.preventDefault();
         ev.stopPropagation();
-        return this.close();
+        this.close();
       }
     }
-    return Promise.resolve(false);
   }
 
   @Method()
@@ -449,7 +448,7 @@ export class Menu implements MenuI {
       this.gesture.setDisabled(!isActive || !this.swipeGesture);
     }
 
-    // Close menu inmediately
+    // Close menu immediately
     if (!isActive && this._isOpen) {
       // close if this menu is open, and should not be enabled
       this.forceClosing();

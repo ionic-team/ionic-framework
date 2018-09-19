@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 
 import { Animation, AnimationBuilder, Config, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
@@ -16,7 +16,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
     md: 'loading.md.scss'
   }
 })
-export class Loading implements OverlayInterface {
+export class Loading implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
 
   presented = false;
@@ -137,7 +137,7 @@ export class Loading implements OverlayInterface {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    return this.dismiss(undefined, BACKDROP);
+    this.dismiss(undefined, BACKDROP);
   }
 
   /**
@@ -189,7 +189,7 @@ export class Loading implements OverlayInterface {
 
     return {
       style: {
-        zIndex: 20000 + this.overlayIndex
+        zIndex: 40000 + this.overlayIndex
       },
       class: {
         ...createThemedClasses(this.mode, 'loading'),

@@ -208,6 +208,18 @@
         </ion-item>
 
         <ion-item>
+          <ion-label>Numbers</ion-label>
+          <ion-select id="numberSelect">
+            <ion-select-option>0</ion-select-option>
+            <ion-select-option>1</ion-select-option>
+            <ion-select-option>2</ion-select-option>
+            <ion-select-option>3</ion-select-option>
+            <ion-select-option>4</ion-select-option>
+            <ion-select-option>5</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
           <ion-label>Disabled</ion-label>
           <ion-select multiple disabled="true">
             <ion-select-option selected="true">Selected Text</ion-select-option>
@@ -262,6 +274,17 @@
     <script>
       var pets = document.getElementById('pets');
       pets.value = ['bird', 'dog'];
+
+      const numberSelect = document.getElementById('numberSelect');
+
+      numberSelect.addEventListener("ionChange", (event) => {
+        console.log(event.detail, event.detail.value);
+      });
+
+      const options = numberSelect.getElementsByTagName('ion-select-option');
+      Array.from(options).forEach((option, index) => {
+        option.value = index;
+      });
 
       var customAlertSelect = document.getElementById('customAlertSelect');
       var customAlertOptions = {

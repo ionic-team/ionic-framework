@@ -1,4 +1,4 @@
-import { mockWindow } from '@stencil/core/testing';
+import { mockWindow } from '@stencil/core/mock-doc';
 
 import { Config } from '../../../global/config';
 import { ComponentProps } from '../../../interface';

@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { Gesture, GestureDetail } from '../../interface';
 
@@ -28,7 +28,7 @@ let openSlidingItem: HTMLIonItemSlidingElement | undefined;
   tag: 'ion-item-sliding',
   styleUrl: 'item-sliding.scss'
 })
-export class ItemSliding {
+export class ItemSliding implements ComponentInterface {
 
   private item: HTMLIonItemElement | null = null;
   private openAmount = 0;
@@ -67,13 +67,13 @@ export class ItemSliding {
   async componentDidLoad() {
     this.item = this.el.querySelector('ion-item');
 
-    this.updateOptions();
+    await this.updateOptions();
 
     this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
       el: this.el,
       queue: this.queue,
       gestureName: 'item-swipe',
-      gesturePriority: 20,
+      gesturePriority: 100,
       threshold: 5,
       canStart: () => this.canStart(),
       onStart: () => this.onStart(),
@@ -108,14 +108,8 @@ export class ItemSliding {
    * the width of the options.
    */
   @Method()
-  async getSlidingRatio(): Promise<number> {
-    if (this.openAmount > 0) {
-      return this.openAmount / this.optsWidthRightSide;
-    } else if (this.openAmount < 0) {
-      return this.openAmount / this.optsWidthLeftSide;
-    } else {
-      return 0;
-    }
+  getSlidingRatio(): Promise<number> {
+    return Promise.resolve(this.getSlidingRatioSync());
   }
 
   /**
@@ -132,14 +126,13 @@ export class ItemSliding {
   @Method()
   async closeOpened(): Promise<boolean> {
     if (openSlidingItem !== undefined) {
-      // tslint:disable-next-line:no-floating-promises
       openSlidingItem.close();
       return true;
     }
     return false;
   }
 
-  private updateOptions() {
+  private async updateOptions() {
     const options = this.el.querySelectorAll('ion-item-options');
 
     let sides = 0;
@@ -148,14 +141,14 @@ export class ItemSliding {
     this.leftOptions = this.rightOptions = undefined;
 
     for (let i = 0; i < options.length; i++) {
-      const option = options.item(i);
+      const option = await options.item(i).componentOnReady();
 
-      if (option.side === 'end') {
-        this.rightOptions = option;
-        sides |= ItemSide.End;
-      } else {
+      if (option.side === 'start') {
         this.leftOptions = option;
         sides |= ItemSide.Start;
+      } else {
+        this.rightOptions = option;
+        sides |= ItemSide.End;
       }
     }
     this.optsDirty = true;
@@ -165,7 +158,6 @@ export class ItemSliding {
   private canStart(): boolean {
     const selected = openSlidingItem;
     if (selected && selected !== this.el) {
-      // tslint:disable-next-line:no-floating-promises
       this.closeOpened();
       return false;
     }
@@ -232,11 +224,12 @@ export class ItemSliding {
       restingPoint = 0;
     }
 
+    const state = this.state;
     this.setOpenAmount(restingPoint, true);
 
-    if ((this.state & SlidingState.SwipeEnd) !== 0 && this.rightOptions) {
+    if ((state & SlidingState.SwipeEnd) !== 0 && this.rightOptions) {
       this.rightOptions.fireSwipeEvent();
-    } else if ((this.state & SlidingState.SwipeStart) !== 0 && this.leftOptions) {
+    } else if ((state & SlidingState.SwipeStart) !== 0 && this.leftOptions) {
       this.leftOptions.fireSwipeEvent();
     }
   }
@@ -290,14 +283,24 @@ export class ItemSliding {
 
     style.transform = `translate3d(${-openAmount}px,0,0)`;
     this.ionDrag.emit({
-      amount: openAmount
+      amount: openAmount,
+      ratio: this.getSlidingRatioSync()
     });
+  }
+
+  private getSlidingRatioSync(): number {
+    if (this.openAmount > 0) {
+      return this.openAmount / this.optsWidthRightSide;
+    } else if (this.openAmount < 0) {
+      return this.openAmount / this.optsWidthLeftSide;
+    } else {
+      return 0;
+    }
   }
 
   hostData() {
     return {
       class: {
-        'item-sliding': true,
         'item-sliding-active-slide': (this.state !== SlidingState.Disabled),
         'item-sliding-active-options-end': (this.state & SlidingState.End) !== 0,
         'item-sliding-active-options-start': (this.state & SlidingState.Start) !== 0,
@@ -308,7 +311,6 @@ export class ItemSliding {
   }
 }
 
-/** @hidden */
 function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolean, isOnResetZone: boolean): boolean {
   // The logic required to know when the sliding item should close (openAmount=0)
   // depends on three booleans (isCloseDirection, isMovingFast, isOnCloseZone)

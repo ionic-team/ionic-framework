@@ -18,6 +18,8 @@
 
   display: flex;
 
+  position: relative;
+
   color: var(--color);
 
   font-family: $font-family-base;
@@ -26,6 +28,8 @@
 }
 
 :host(.in-item) {
+  position: static;
+
   max-width: 45%;
 }
 

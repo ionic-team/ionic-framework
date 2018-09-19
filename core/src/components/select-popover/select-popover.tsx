@@ -1,13 +1,14 @@
-import { Component, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Listen, Prop } from '@stencil/core';
 
 import { Mode, SelectPopoverOption } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-select-popover',
-  styleUrl: 'select-popover.scss'
+  styleUrl: 'select-popover.scss',
+  scoped: true
 })
-export class SelectPopover {
+export class SelectPopover implements ComponentInterface {
 
   mode!: Mode;
 

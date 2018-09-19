@@ -43,7 +43,10 @@
 
   display: inline-block;
 
+  color: var(--color);
+
   font-family: $font-family-base;
+  pointer-events: auto;
 
   text-align: center;
   text-decoration: none;
@@ -212,7 +215,6 @@
   outline: none;
 
   background: var(--background);
-  color: var(--color);
 
   line-height: 1;
 

@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
 
 import { Animation, AnimationBuilder, Config, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { dismiss, eventMethod, present } from '../../utils/overlays';
@@ -16,7 +16,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
     md: 'toast.md.scss'
   }
 })
-export class Toast implements OverlayInterface {
+export class Toast implements ComponentInterface, OverlayInterface {
 
   private durationTimeout: any;
 
@@ -174,6 +174,9 @@ export class Toast implements OverlayInterface {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, 'toast-translucent') : {};
 
     return {
+      style: {
+        zIndex: 60000 + this.overlayIndex,
+      },
       class: {
         ...themedClasses,
         ...createThemedClasses(this.mode, 'toast'),
@@ -194,7 +197,7 @@ export class Toast implements OverlayInterface {
             <div class="toast-message">{this.message}</div>
           }
           {this.showCloseButton &&
-            <ion-button fill="clear" color="light" ion-activable class="toast-button" onClick={() => this.dismiss(undefined, 'cancel')}>
+            <ion-button fill="clear" color="light" ion-activatable class="toast-button" onClick={() => this.dismiss(undefined, 'cancel')}>
               {this.closeButtonText || 'Close'}
             </ion-button>
           }

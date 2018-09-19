@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
 import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
@@ -21,7 +21,7 @@ const QUERY: { [key: string]: string } = {
     md: 'split-pane.md.scss'
   }
 })
-export class SplitPane {
+export class SplitPane implements ComponentInterface {
 
   private rmL: any;
 

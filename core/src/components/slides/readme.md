@@ -23,6 +23,7 @@ Licensed under MIT
 
 | Property    | Attribute   | Description                                                                                  | Type      |
 | ----------- | ----------- | -------------------------------------------------------------------------------------------- | --------- |
+| `mode`      | `mode`      | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.    | `Mode`    |
 | `options`   | --          | Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options | `any`     |
 | `pager`     | `pager`     | If true, show the pagination. Defaults to `false`.                                           | `boolean` |
 | `scrollbar` | `scrollbar` | If true, show the scrollbar. Defaults to `false`.                                            | `boolean` |

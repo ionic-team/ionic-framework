@@ -41,7 +41,7 @@ export function configFromSession(): any {
   try {
     const configStr = window.sessionStorage.getItem(IONIC_SESSION_KEY);
     return configStr !== null ? JSON.parse(configStr) : {};
-  } catch {
+  } catch (e) {
     return {};
   }
 }
@@ -49,7 +49,7 @@ export function configFromSession(): any {
 export function saveConfig(config: any) {
   try {
     window.sessionStorage.setItem(IONIC_SESSION_KEY, JSON.stringify(config));
-  } catch {
+  } catch (e) {
     return;
   }
 }

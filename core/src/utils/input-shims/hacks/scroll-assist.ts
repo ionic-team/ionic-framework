@@ -64,7 +64,6 @@ function jsSetFocus(
   inputEl.focus();
 
   // scroll the input into place
-  // tslint:disable-next-line:no-floating-promises
   contentEl.scrollByPoint(0, scrollData.scrollAmount, scrollData.scrollDuration).then(() => {
     // the scroll view is in the correct position now
     // give the native text input focus

@@ -68,7 +68,6 @@ export class Nav implements NavOutlet {
     const isDev = Build.isDev;
     if (this.root !== undefined) {
       if (!this.useRouter) {
-        // tslint:disable-next-line:no-floating-promises
         this.setRoot(this.root, this.rootParams);
       } else if (isDev) {
         console.warn(
@@ -508,8 +507,6 @@ export class Nav implements NavOutlet {
       const router = this.win.document.querySelector('ion-router');
       if (router) {
         const direction = result.direction === 'back' ? -1 : 1;
-
-        // tslint:disable-next-line:no-floating-promises
         router.navChanged(direction);
       }
     }
@@ -549,7 +546,6 @@ export class Nav implements NavOutlet {
       return false;
     }
 
-    // tslint:disable-next-line:no-floating-promises
     this.runTransition(ti);
     return true;
   }
@@ -915,7 +911,6 @@ export class Nav implements NavOutlet {
       progressAnimation: true
     };
 
-    // tslint:disable-next-line:no-floating-promises
     this.queueTrns(
       {
         removeStart: -1,
