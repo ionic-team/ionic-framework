@@ -170,24 +170,25 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
     return eventMethod(this.el, 'ionActionSheetWillDismiss');
   }
 
-  private buttonClick(button: ActionSheetButton) {
+  private async buttonClick(button: ActionSheetButton) {
     const role = button.role;
     if (isCancel(role)) {
       return this.dismiss(undefined, role);
     }
-    const shouldDismiss = this.callButtonHandler(button);
+    const shouldDismiss = await this.callButtonHandler(button);
     if (shouldDismiss) {
       return this.dismiss(undefined, button.role);
     }
     return Promise.resolve();
   }
 
-  private callButtonHandler(button: ActionSheetButton | undefined): boolean {
+  private async callButtonHandler(button: ActionSheetButton | undefined) {
     if (button && button.handler) {
       // a handler has been provided, execute it
       // pass the handler the values from the inputs
       try {
-        if (button.handler() === false) {
+        const rtn = await button.handler();
+        if (rtn === false) {
           // if the return value of the handler is false then do not dismiss
           return false;
         }
