@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Action Sheet - Custom CSS Class</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Action Sheet - Custom CSS Class</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content padding>
+      <ion-action-sheet-controller></ion-action-sheet-controller>
+
+      <ion-button expand="block" id="cssClass" onclick="presentWithCssClass()">Custom CSS Class</ion-button>
+
+    </ion-content>
+
+    <style>
+      :root {
+        --ion-safe-area-top: 20px;
+        --ion-safe-area-bottom: 40px;
+      }
+      .my-custom-class {
+        --max-width: 300px;
+      }
+    </style>
+
+  </ion-app>
+
+  <script>
+    async function presentWithCssClass() {
+      const actionSheetController = document.querySelector('ion-action-sheet-controller');
+      await actionSheetController.componentOnReady();
+      const actionSheetElement = await actionSheetController.create({
+        header: "Custom Css Class",
+        cssClass: "my-class my-custom-class",
+        buttons: [
+          {
+            text: 'Test',
+            role: 'test',
+            cssClass: 'my-cancel-button my-custom-button customClass',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          }
+        ]
+      });
+      await actionSheetElement.present();
+    }
+
+  </script>
+</body>
+
+</html>

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Action Sheet - Basic</title>
+  <title>Action Sheet - Icons</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <script src="/dist/ionic.js"></script>
   <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
@@ -14,22 +14,20 @@
 
     <ion-header>
       <ion-toolbar>
-        <ion-title>Action Sheet - Basic</ion-title>
+        <ion-title>Action Sheet - Icons</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content padding>
       <ion-action-sheet-controller></ion-action-sheet-controller>
 
-      <ion-button expand="block" id="basic" onclick="presentBasic()">Basic</ion-button>
+      <ion-button expand="block" id="icons" onclick="presentIcons()">Icons</ion-button>
     </ion-content>
 
   </ion-app>
 
   <script>
-    window.addEventListener('ionActionSheetDidDismiss', function (e) { console.log('didDismiss', e) })
-
-    async function presentBasic() {
+    async function presentIcons() {
       const mode = Ionic.mode;
 
       const actionSheetController = document.querySelector('ion-action-sheet-controller');
@@ -57,19 +55,20 @@
           }
         }, {
           text: 'Favorite',
-          icon: mode === 'md' ? 'heart' : null,
+          icon: 'heart',
+          role: 'selected',
           handler: () => {
             console.log('Favorite clicked');
           }
         }, {
           text: 'Cancel',
-          icon: mode === 'md' ? 'close' : null,
           role: 'cancel',
+          icon: 'close',
           handler: () => {
             console.log('Cancel clicked');
           }
         }]
-      });
+      })
       await actionSheetElement.present();
     }
   </script>
