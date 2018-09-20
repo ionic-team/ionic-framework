@@ -4,13 +4,22 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{ion-color(primary, base)};
-  --ion-color-contrast: #{ion-color(primary, contrast)};
+  /**
+   * @prop --background: Background of the item option
+   * @prop --color: Color of the item option
+   */
+  --background: #{ion-color(primary, base)};
+  --color: #{ion-color(primary, contrast)};
 
-  background: #{current-color(base)};
-  color: #{current-color(contrast)};
+  background: var(--background);
+  color: var(--color);
 
   font-family: $font-family-base;
+}
+
+:host(.ion-color) {
+  background: current-color(base);
+  color: current-color(contrast);
 }
 
 .item-option-native {
