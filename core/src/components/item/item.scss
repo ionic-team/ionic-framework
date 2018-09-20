@@ -4,11 +4,34 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --background: Background of the item
+   * @prop --background-activated: Background of the activated item
+   * @prop --border-color: Color of the item border
+   * @prop --border-radius: Radius of the item border
+   * @prop --border-style: Style of the item border
+   * @prop --border-width: Width of the item border
+   * @prop --box-shadow: Box shadow of the item
+   * @prop --color: Color of the item
+   * @prop --detail-icon-color: Color of the item detail icon
+   * @prop --inner-border-width: Width of the item inner border
+   * @prop --inner-box-shadow: Box shadow of the item inner 
+   * @prop --inner-padding-bottom: Bottom padding of the item inner 
+   * @prop --inner-padding-end: End padding of the item inner 
+   * @prop --inner-padding-start: Start padding of the item inner
+   * @prop --inner-padding-top: Top padding of the item inner
+   * @prop --min-height: Minimum height of the item
+   * @prop --padding-bottom: Bottom padding of the item
+   * @prop --padding-end: End padding of the item
+   * @prop --padding-start: Start padding of the item
+   * @prop --padding-top: Top padding of the item
+   * @prop --transition: Transition of the item
+   */
   --min-height: #{$item-min-height};
   --background: #{current-color(base)};
   --background-activated: #{current-color(tint)};
   --color: #{current-color(contrast)};
-  --detail-push-color: #{current-color(shade)};
+  --detail-icon-color: #{current-color(shade)};
   --border-radius: 0;
   --border-width: 0;
   --border-style: solid;

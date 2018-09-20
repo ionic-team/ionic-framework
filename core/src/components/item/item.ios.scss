@@ -18,7 +18,7 @@
   --background-activated: #{$item-ios-background-color-active};
   --border-color: #{$item-ios-border-bottom-color};
   --color: #{$item-ios-text-color};
-  --detail-push-color: #{$item-ios-border-bottom-color};
+  --detail-icon-color: #{$item-ios-border-bottom-color};
 }
 
 :host(.activated) {
@@ -116,7 +116,7 @@
 // --------------------------------------------------
 
 .item-detail-icon {
-  color: var(--detail-push-color);
+  color: var(--detail-icon-color);
 
   font-size: 20px;
 }

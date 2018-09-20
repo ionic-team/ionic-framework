@@ -60,6 +60,33 @@ Items left align text and add an ellipsis when the text is wider than the item. 
 | `type`            | `type`             | The type of the button. Only used when an `onclick` or `button` property is present. Possible values are: `"submit"`, `"reset"` and `"button"`. Default value is: `"button"`                                                                                           | `"submit"`, `"reset"`, `"button"` |
 
 
+## CSS Custom Properties
+
+| Name                     | Description                      |
+| ------------------------ | -------------------------------- |
+| `--background`           | Background of the item           |
+| `--background-activated` | Background of the activated item |
+| `--border-color`         | Color of the item border         |
+| `--border-radius`        | Radius of the item border        |
+| `--border-style`         | Style of the item border         |
+| `--border-width`         | Width of the item border         |
+| `--box-shadow`           | Box shadow of the item           |
+| `--color`                | Color of the item                |
+| `--detail-icon-color`    | Color of the item detail icon    |
+| `--inner-border-width`   | Width of the item inner border   |
+| `--inner-box-shadow`     | Box shadow of the item inner     |
+| `--inner-padding-bottom` | Bottom padding of the item inner |
+| `--inner-padding-end`    | End padding of the item inner    |
+| `--inner-padding-start`  | Start padding of the item inner  |
+| `--inner-padding-top`    | Top padding of the item inner    |
+| `--min-height`           | Minimum height of the item       |
+| `--padding-bottom`       | Bottom padding of the item       |
+| `--padding-end`          | End padding of the item          |
+| `--padding-start`        | Start padding of the item        |
+| `--padding-top`          | Top padding of the item          |
+| `--transition`           | Transition of the item           |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

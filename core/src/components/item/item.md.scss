@@ -22,7 +22,7 @@
   --background-activated: #{$item-md-background-color-active};
   --border-color: #{$item-md-border-bottom-color};
   --color: #{$item-md-text-color};
-  --detail-push-color: #{$item-md-border-bottom-color};
+  --detail-icon-color: #{$item-md-border-bottom-color};
 }
 
 
@@ -61,7 +61,7 @@
 // --------------------------------------------------
 
 .item-detail-icon {
-  color: var(--detail-push-color);
+  color: var(--detail-icon-color);
 
   font-size: 20px;
 }
