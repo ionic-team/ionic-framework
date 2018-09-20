@@ -3,6 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Pr
 import { Color, Mode, StyleEvent, TextFieldTypes, TextInputChangeEvent } from '../../interface';
 import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
+import { submitFormOnEnterPress, KEY_CODES } from '../../utils/forms';
 
 @Component({
   tag: 'ion-input',
@@ -299,7 +300,7 @@ export class Input implements ComponentInterface {
   /**
    * Check if we need to clear the text input if clearOnEdit is enabled
    */
-  private onKeydown() {
+  private onKeydown(ev: KeyboardEvent) {
     if (this.clearOnEdit) {
       // Did the input value change after it was blurred and edited?
       if (this.didBlurAfterEdit && this.hasValue()) {
@@ -309,6 +310,10 @@ export class Input implements ComponentInterface {
 
       // Reset the flag
       this.didBlurAfterEdit = false;
+    }
+    // submit the form if enter key is pressed
+    if (ev.keyCode === KEY_CODES.ENTER) {  // if there is an enter key press on the input
+      submitFormOnEnterPress(this.el, ev);
     }
   }
 

@@ -3,6 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Pr
 import { Color, Mode, StyleEvent, TextInputChangeEvent } from '../../interface';
 import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
+import { submitFormOnEnterPress, KEY_CODES } from '../../utils/forms';
 
 @Component({
   tag: 'ion-textarea',
@@ -206,8 +207,12 @@ export class Textarea implements ComponentInterface {
     this.ionBlur.emit();
   }
 
-  private onKeyDown() {
+  private onKeyDown(ev: KeyboardEvent) {
     this.checkClearOnEdit();
+    // submit the form if enter key is pressed
+    if (ev.keyCode === KEY_CODES.ENTER) {    // if there is an enter-key press on the textarea
+      submitFormOnEnterPress(this.el, ev);
+    }
   }
 
   /**
