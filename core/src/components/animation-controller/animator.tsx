@@ -98,12 +98,14 @@ export class Animator {
    * not have a duration, then it'll get the duration from its parent.
    */
   getDuration(opts?: PlayOptions): number {
-    if (opts && opts.duration !== undefined) {
-      return opts.duration;
-    } else if (this._duration !== undefined) {
-      return this._duration;
-    } else if (this.parent) {
-      return this.parent.getDuration();
+    if (!location.search.includes('ionic:animate=false')) {
+      if (opts && opts.duration !== undefined) {
+        return opts.duration;
+      } else if (this._duration !== undefined) {
+        return this._duration;
+      } else if (this.parent) {
+        return this.parent.getDuration();
+      }
     }
     return 0;
   }
