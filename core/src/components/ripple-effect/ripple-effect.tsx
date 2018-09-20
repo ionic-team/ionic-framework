@@ -19,7 +19,9 @@ export class RippleEffect implements ComponentInterface {
    */
   @Method()
   addRipple(pageX: number, pageY: number) {
-    rIC(() => this.prepareRipple(pageX, pageY));
+    if (!location.search.includes('ionic:animate=false')) {
+      rIC(() => this.prepareRipple(pageX, pageY));
+    }
   }
 
   private prepareRipple(pageX: number, pageY: number) {
