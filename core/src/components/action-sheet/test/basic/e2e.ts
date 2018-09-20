@@ -5,16 +5,13 @@ it('action-sheet: basic', async () => {
     url: `/src/components/action-sheet/test/basic?ionic:animate=false`
   });
 
-  let compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
-
   const presentBtn = await page.find('#basic');
   await presentBtn.click();
 
   let actionSheet = await page.find('ion-action-sheet');
   await actionSheet.waitForVisible();
 
-  compare = await page.compareScreenshot(`presented`);
+  let compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
 
   const backdrop = await page.find('ion-backdrop');
