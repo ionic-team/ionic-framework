@@ -61,9 +61,27 @@ exports.config = {
     }
   ],
   testing: {
+    allowableMismatchedPixels: 200,
+    pixelmatchThreshold: 0.1,
     emulate: [
-      { device: 'iPhone X' },
-      { device: 'Pixel 2' }
+      {
+        userAgent: 'iPhone',
+        width: 400,
+        height: 800,
+        deviceScaleFactor: 2,
+        isMobile: true,
+        hasTouch: true,
+        isLandscape: false
+      },
+      {
+        userAgent: 'Android',
+        width: 400,
+        height: 800,
+        deviceScaleFactor: 2,
+        isMobile: true,
+        hasTouch: true,
+        isLandscape: false
+      }
     ]
   },
   copy: [{ src: '**/*.scss' }],

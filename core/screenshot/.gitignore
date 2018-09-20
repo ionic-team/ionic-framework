@@ -1,0 +1,7 @@
+# only master screenshot data should be committed
+images
+local
+compare.html
+
+# temporarily ignoring master
+master
