@@ -23,7 +23,7 @@
 }
 
 :host(.ion-color) {
-  color: current-color(base) !important;
+  color: current-color(base);
 }
 
 :host([text-wrap]) {
