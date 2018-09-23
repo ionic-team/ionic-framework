@@ -40,7 +40,7 @@ function baseConfig() {
     external: [
       'vue',
       'vue-router',
-      '@ionic/core/dist/esm',
+      '@ionic/core/loader',
       '@ionic/core/css/ionic.bundle.css',
       '@ionic/core/dist/ionic/svg',
       'ionicons/dist/collection/icon/icon.css',
