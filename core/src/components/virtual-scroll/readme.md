@@ -133,8 +133,8 @@ dimensions are measured correctly.
 
 When deploying to iOS with Cordova, it's highly recommended to use the
 [WKWebView plugin](http://blog.ionic.io/cordova-ios-performance-improvements-drop-in-speed-with-wkwebview/)
-in order to take advantage of iOS's higher performimg webview. Additionally,
-WKWebView is superior at scrolling efficiently in comparision to the older
+in order to take advantage of iOS's higher performing webview. Additionally,
+WKWebView is superior at scrolling efficiently in comparison to the older
 UIWebView.
 
 #### Lock in element dimensions and locations
