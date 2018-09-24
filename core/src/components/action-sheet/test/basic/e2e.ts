@@ -14,14 +14,14 @@ it('action-sheet: basic', async () => {
   let compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
 
-  const backdrop = await page.find('ion-backdrop');
-  await backdrop.click();
+  await actionSheet.callMethod('dismiss');
 
-  await actionSheet.callMethod('onDidDismiss');
+  await actionSheet.waitForNotVisible();
 
   compare = await page.compareScreenshot(`dismissed`);
   expect(compare).toMatchScreenshot();
 
   actionSheet = await page.find('ion-action-sheet');
+
   expect(actionSheet).toBe(null);
 });
