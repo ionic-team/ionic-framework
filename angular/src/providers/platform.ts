@@ -39,7 +39,7 @@ export class Platform {
     proxyEvent(this.pause, document, 'pause');
     proxyEvent(this.resume, document, 'resume');
     proxyEvent(this.backButton, document, 'backbutton');
-    proxyEvent(this.resize, document, 'resize');
+    proxyEvent(this.resize, window, 'resize');
 
     let readyResolve: (value: string) => void;
     this._readyPromise = new Promise(res => { readyResolve = res; });
