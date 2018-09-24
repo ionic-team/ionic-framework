@@ -5,8 +5,8 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{$item-ios-divider-background};
-  --ion-color-contrast: #{$item-ios-divider-color};
+  --background: #{$item-ios-divider-background};
+  --color: #{$item-ios-divider-color};
   --padding-start: #{$item-ios-divider-padding-start};
 
   @include border-radius(0);
