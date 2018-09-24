@@ -3612,7 +3612,7 @@ export namespace Components {
     */
     'componentProps'?: {[key: string]: any};
     /**
-    * Used internaly by `ion-router` to know when this route did change.
+    * Used internally by `ion-router` to know when this route did change.
     */
     'onIonRouteDataChanged'?: (event: CustomEvent<any>) => void;
     /**

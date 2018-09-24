@@ -20,7 +20,7 @@ Router is a component that can take a component, and render it when the Browser 
 
 | Event                 | Description                                                        |
 | --------------------- | ------------------------------------------------------------------ |
-| `ionRouteDataChanged` | Used internaly by `ion-router` to know when this route did change. |
+| `ionRouteDataChanged` | Used internally by `ion-router` to know when this route did change. |
 
 
 ----------------------------------------------
