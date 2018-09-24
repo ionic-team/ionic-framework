@@ -6,7 +6,7 @@ it('action-sheet: scrollWithoutCancel', async () => {
   });
 
   const presentBtn = await page.find('#scrollWithoutCancel');
-  await presentBtn.click();
+  presentBtn.click();
 
   const actionSheet = await page.find('ion-action-sheet');
   await actionSheet.waitForVisible();

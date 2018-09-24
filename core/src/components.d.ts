@@ -1271,7 +1271,7 @@ export namespace Components {
     /**
     * The text to display when there's no date selected yet. Using lowercase to match the input attribute
     */
-    'placeholder'?: string;
+    'placeholder'?: string | null;
     /**
     * the value of the datetime.
     */
@@ -1365,7 +1365,7 @@ export namespace Components {
     /**
     * The text to display when there's no date selected yet. Using lowercase to match the input attribute
     */
-    'placeholder'?: string;
+    'placeholder'?: string | null;
     /**
     * the value of the datetime.
     */
@@ -4023,11 +4023,11 @@ export namespace Components {
     /**
     * The text to display when the select is empty.
     */
-    'placeholder'?: string;
+    'placeholder'?: string | null;
     /**
     * The text to display instead of the selected option's value.
     */
-    'selectedText'?: string;
+    'selectedText'?: string | null;
     /**
     * the value of the select.
     */
@@ -4089,11 +4089,11 @@ export namespace Components {
     /**
     * The text to display when the select is empty.
     */
-    'placeholder'?: string;
+    'placeholder'?: string | null;
     /**
     * The text to display instead of the selected option's value.
     */
-    'selectedText'?: string;
+    'selectedText'?: string | null;
     /**
     * the value of the select.
     */

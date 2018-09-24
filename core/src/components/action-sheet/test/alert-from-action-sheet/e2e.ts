@@ -6,7 +6,7 @@ it('action-sheet: alertFromActionSheet', async () => {
   });
 
   const presentBtn = await page.find('#alertFromActionSheet');
-  await presentBtn.click();
+  presentBtn.click();
 
   const actionSheet = await page.find('ion-action-sheet');
   await actionSheet.waitForVisible();
@@ -15,7 +15,7 @@ it('action-sheet: alertFromActionSheet', async () => {
   expect(compare).toMatchScreenshot();
 
   const openAlertBtn = await page.find({ text: 'Open Alert' });
-  await openAlertBtn.click();
+  openAlertBtn.click();
 
   const alert = await page.find('ion-alert');
   await alert.waitForVisible();
@@ -24,7 +24,7 @@ it('action-sheet: alertFromActionSheet', async () => {
   expect(compare).toMatchScreenshot();
 
   const alertOkayBtn = await page.find({ contains: 'Okay' });
-  await alertOkayBtn.click();
+  alertOkayBtn.click();
 
   await Promise.all([
     alert.waitForNotVisible(),

@@ -6,7 +6,7 @@ it('action-sheet: icons', async () => {
   });
 
   const presentBtn = await page.find('#icons');
-  await presentBtn.click();
+  presentBtn.click();
 
   const actionSheet = await page.find('ion-action-sheet');
   await actionSheet.waitForVisible();

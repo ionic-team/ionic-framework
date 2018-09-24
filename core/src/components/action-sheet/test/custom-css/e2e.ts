@@ -6,7 +6,7 @@ it('action-sheet: cssClass', async () => {
   });
 
   const presentBtn = await page.find('#cssClass');
-  await presentBtn.click();
+  presentBtn.click();
 
   const actionSheet = await page.find('ion-action-sheet');
   await actionSheet.waitForVisible();

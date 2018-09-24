@@ -27,7 +27,7 @@ export class Select implements ComponentInterface {
 
   @State() isExpanded = false;
   @State() keyFocus = false;
-  @State() text?: string;
+  @State() text?: string | null;
 
   /**
    * The mode determines which platform styles to use.
@@ -53,7 +53,7 @@ export class Select implements ComponentInterface {
   /**
    * The text to display when the select is empty.
    */
-  @Prop() placeholder?: string;
+  @Prop() placeholder?: string | null;
 
   /**
    * The name of the control, which is submitted with the form data.
@@ -63,7 +63,7 @@ export class Select implements ComponentInterface {
   /**
    * The text to display instead of the selected option's value.
    */
-  @Prop() selectedText?: string;
+  @Prop() selectedText?: string | null;
 
   /**
    * If true, the select can accept multiple values.

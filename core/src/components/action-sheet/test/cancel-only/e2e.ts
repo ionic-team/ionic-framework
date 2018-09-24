@@ -6,7 +6,7 @@ it('action-sheet: cancelOnly', async () => {
   });
 
   const presentBtn = await page.find('#cancelOnly');
-  await presentBtn.click();
+  presentBtn.click();
 
   const actionSheet = await page.find('ion-action-sheet');
   await actionSheet.waitForVisible();

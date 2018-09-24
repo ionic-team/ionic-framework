@@ -6,7 +6,7 @@ it('action-sheet: noBackdropDismiss', async () => {
   });
 
   const presentBtn = await page.find('#noBackdropDismiss');
-  await presentBtn.click();
+  presentBtn.click();
 
   let actionSheet = await page.find('ion-action-sheet');
   await actionSheet.waitForVisible();
@@ -15,7 +15,7 @@ it('action-sheet: noBackdropDismiss', async () => {
   expect(compare).toMatchScreenshot();
 
   const backdrop = await page.find('ion-backdrop');
-  await backdrop.click();
+  backdrop.click();
 
   compare = await page.compareScreenshot(`dismissed`);
   expect(compare).toMatchScreenshot();
@@ -24,7 +24,7 @@ it('action-sheet: noBackdropDismiss', async () => {
   expect(isVisible).toBe(true);
 
   const cancel = await page.find('.action-sheet-cancel');
-  await cancel.click();
+  cancel.click();
 
   await actionSheet.waitForNotVisible();
 

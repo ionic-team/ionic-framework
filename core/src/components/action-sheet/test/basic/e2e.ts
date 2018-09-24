@@ -6,7 +6,7 @@ it('action-sheet: basic', async () => {
   });
 
   const presentBtn = await page.find('#basic');
-  await presentBtn.click();
+  presentBtn.click();
 
   let actionSheet = await page.find('ion-action-sheet');
   await actionSheet.waitForVisible();
@@ -15,7 +15,7 @@ it('action-sheet: basic', async () => {
   expect(compare).toMatchScreenshot();
 
   const backdrop = await page.find('ion-backdrop');
-  await backdrop.click();
+  backdrop.click();
 
   await actionSheet.waitForNotVisible();
 

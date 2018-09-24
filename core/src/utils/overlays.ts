@@ -22,28 +22,24 @@ export function createOverlay<T extends HTMLIonOverlayElement>(element: T, opts:
   return element.componentOnReady();
 }
 
-function closeTopOverlay(doc: Document) {
-  const lastOverlay = getOverlay(doc);
-  if (lastOverlay && lastOverlay.backdropDismiss) {
-    return lastOverlay.dismiss(undefined, BACKDROP);
-  }
-  return Promise.resolve();
-}
-
 export function connectListeners(doc: Document) {
   if (lastId === 0) {
     lastId = 1;
     doc.addEventListener('ionBackButton', ev => {
       const lastOverlay = getOverlay(doc);
-      // We use the overlayIndex property to be sure this node is an overlay
-      if (lastOverlay && lastOverlay.overlayIndex) {
-        (ev as BackButtonEvent).detail.register(100, () => closeTopOverlay(doc));
+      if (lastOverlay && lastOverlay.backdropDismiss) {
+        (ev as BackButtonEvent).detail.register(100, () => {
+          return lastOverlay.dismiss(undefined, BACKDROP);
+        });
       }
     });
 
     doc.addEventListener('keyup', ev => {
       if (ev.key === 'Escape') {
-        closeTopOverlay(doc);
+        const lastOverlay = getOverlay(doc);
+        if (lastOverlay && lastOverlay.backdropDismiss) {
+          lastOverlay.dismiss(undefined, BACKDROP);
+        }
       }
     });
   }
@@ -58,7 +54,7 @@ export function dismissOverlay(doc: Document, data: any, role: string | undefine
 }
 
 export function getOverlays(doc: Document, overlayTag?: string): HTMLIonOverlayElement[] {
-  const overlays = Array.from(getAppRoot(doc).children) as HTMLIonOverlayElement[];
+  const overlays = (Array.from(getAppRoot(doc).children) as HTMLIonOverlayElement[]).filter(c => c.overlayIndex > 0);
   if (overlayTag === undefined) {
     return overlays;
   }
