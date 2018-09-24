@@ -53,7 +53,7 @@ export function hapticSelectionEnd() {
  * Use this to indicate success/failure/warning to the user.
  * options should be of the type `{ type: 'success' }` (or `warning`/`error`)
  */
-export function hapticNotification(options: { type:  'success' | 'warning' | 'error' }) {
+export function hapticNotification(options: { type: 'success' | 'warning' | 'error' }) {
   const engine = (window as any).TapticEngine;
   if (engine) {
     engine.notification(options);

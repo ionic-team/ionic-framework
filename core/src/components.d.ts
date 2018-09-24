@@ -441,7 +441,7 @@ export namespace Components {
     /**
     * The icon name to use for the back button.
     */
-    'icon'?: string;
+    'icon'?: string | null;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -449,7 +449,7 @@ export namespace Components {
     /**
     * The text to display in the back button.
     */
-    'text'?: string;
+    'text'?: string | null;
   }
   interface IonBackButtonAttributes extends StencilHTMLAttributes {
     /**
@@ -463,7 +463,7 @@ export namespace Components {
     /**
     * The icon name to use for the back button.
     */
-    'icon'?: string;
+    'icon'?: string | null;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -471,7 +471,7 @@ export namespace Components {
     /**
     * The text to display in the back button.
     */
-    'text'?: string;
+    'text'?: string | null;
   }
 
   interface IonBackdrop {
