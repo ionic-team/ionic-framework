@@ -2,11 +2,11 @@ import { newE2EPage } from '@stencil/core/testing';
 
 it('action-sheet: alertFromActionSheet', async () => {
   const page = await newE2EPage({
-    url: `/src/components/action-sheet/test/alert-from-action-sheet?ionic:animate=false`
+    url: `/src/components/action-sheet/test/alert-from-action-sheet?ionic:animated=false`
   });
 
   const presentBtn = await page.find('#alertFromActionSheet');
-  presentBtn.click();
+  await presentBtn.click();
 
   const actionSheet = await page.find('ion-action-sheet');
   await actionSheet.waitForVisible();
@@ -15,7 +15,7 @@ it('action-sheet: alertFromActionSheet', async () => {
   expect(compare).toMatchScreenshot();
 
   const openAlertBtn = await page.find({ text: 'Open Alert' });
-  openAlertBtn.click();
+  await openAlertBtn.click();
 
   const alert = await page.find('ion-alert');
   await alert.waitForVisible();
@@ -24,11 +24,5 @@ it('action-sheet: alertFromActionSheet', async () => {
   expect(compare).toMatchScreenshot();
 
   const alertOkayBtn = await page.find({ contains: 'Okay' });
-  alertOkayBtn.click();
-
-  await Promise.all([
-    alert.waitForNotVisible(),
-    actionSheet.waitForNotVisible()
-  ]);
-
+  await alertOkayBtn.click();
 });

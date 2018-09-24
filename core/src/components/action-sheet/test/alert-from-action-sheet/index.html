@@ -11,6 +11,8 @@
 
 <body>
   <ion-app>
+    <ion-action-sheet-controller></ion-action-sheet-controller>
+    <ion-alert-controller></ion-alert-controller>
 
     <ion-header>
       <ion-toolbar>
@@ -19,8 +21,6 @@
     </ion-header>
 
     <ion-content padding>
-      <ion-action-sheet-controller></ion-action-sheet-controller>
-      <ion-alert-controller></ion-alert-controller>
 
       <ion-button expand="block" id="alertFromActionSheet" onclick="presentAlert()">Alert from Action Sheet</ion-button>
 
@@ -46,6 +46,7 @@
                   text: 'Okay',
                   handler: async () => {
                     await actionSheetElement.dismiss();
+                    return false;
                   }
                 }]
               });

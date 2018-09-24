@@ -2,11 +2,11 @@ import { newE2EPage } from '@stencil/core/testing';
 
 it('action-sheet: noBackdropDismiss', async () => {
   const page = await newE2EPage({
-    url: `/src/components/action-sheet/test/no-backdrop-dismiss?ionic:animate=false`
+    url: `/src/components/action-sheet/test/no-backdrop-dismiss?ionic:animated=false`
   });
 
   const presentBtn = await page.find('#noBackdropDismiss');
-  presentBtn.click();
+  await presentBtn.click();
 
   let actionSheet = await page.find('ion-action-sheet');
   await actionSheet.waitForVisible();
@@ -15,7 +15,7 @@ it('action-sheet: noBackdropDismiss', async () => {
   expect(compare).toMatchScreenshot();
 
   const backdrop = await page.find('ion-backdrop');
-  backdrop.click();
+  await backdrop.click();
 
   compare = await page.compareScreenshot(`dismissed`);
   expect(compare).toMatchScreenshot();
@@ -24,7 +24,7 @@ it('action-sheet: noBackdropDismiss', async () => {
   expect(isVisible).toBe(true);
 
   const cancel = await page.find('.action-sheet-cancel');
-  cancel.click();
+  await cancel.click();
 
   await actionSheet.waitForNotVisible();
 

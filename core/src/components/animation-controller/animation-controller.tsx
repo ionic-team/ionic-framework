@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Method } from '@stencil/core';
+import { Component, ComponentInterface, Method, Prop } from '@stencil/core';
 
-import { Animation, AnimationBuilder, AnimationController } from '../../interface';
+import { Animation, AnimationBuilder, AnimationController, Config } from '../../interface';
 
 import { Animator } from './animator';
 
@@ -10,11 +10,14 @@ import { Animator } from './animator';
 })
 export class AnimationControllerImpl implements ComponentInterface, AnimationController {
 
+  @Prop({ context: 'config' }) config!: Config;
+
   /**
    * Creates an animation instance
    */
   @Method()
   create(animationBuilder?: AnimationBuilder, baseEl?: any, opts?: any): Promise<Animation> {
+    Animator.animated = this.config.getBoolean('animated', true);
     if (animationBuilder) {
       return animationBuilder(Animator as any, baseEl, opts);
     }

@@ -50,6 +50,7 @@ export class Backdrop implements ComponentInterface {
     this.emitTap(ev);
   }
 
+  @Listen('click', { passive: false, capture: true })
   @Listen('mousedown', { passive: false, capture: true })
   protected onMouseDown(ev: TouchEvent) {
     if (this.lastClick < now(ev) - 2500) {
