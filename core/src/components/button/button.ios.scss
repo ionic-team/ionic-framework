@@ -26,9 +26,10 @@
 
 // iOS Solid Button
 // --------------------------------------------------
-
-:host(.button-solid:hover) {
-  --opacity: #{$button-ios-opacity-hover};
+@media (any-hover: hover) {
+  :host(.button-solid:hover) {
+    --opacity: #{$button-ios-opacity-hover};
+  }
 }
 
 :host(.button-solid.activated) {
@@ -55,9 +56,10 @@
 
 // iOS Clear Button
 // --------------------------------------------------
-
-:host(.button-clear:hover) {
-  --opacity: #{$button-ios-clear-opacity-hover};
+@media (any-hover: hover) {
+  :host(.button-clear:hover) {
+    --opacity: #{$button-ios-clear-opacity-hover};
+  }
 }
 
 :host(.button-clear.activated) {

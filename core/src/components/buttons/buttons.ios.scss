@@ -40,8 +40,10 @@
 // iOS Toolbar Button Solid
 // --------------------------------------------------
 
-::slotted(*) .button-solid-ios:hover {
-  opacity: .4;
+@media (any-hover: hover) {
+  ::slotted(*) .button-solid-ios:hover {
+    opacity: .4;
+  }
 }
 
 
