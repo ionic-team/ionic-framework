@@ -39,12 +39,12 @@ export class BackButton implements ComponentInterface {
   /**
    * The icon name to use for the back button.
    */
-  @Prop() icon?: string;
+  @Prop() icon?: string | null;
 
   /**
    * The text to display in the back button.
    */
-  @Prop() text?: string;
+  @Prop() text?: string | null;
 
   async onClick(ev: Event) {
     const nav = this.el.closest('ion-nav');
@@ -60,18 +60,19 @@ export class BackButton implements ComponentInterface {
     const showBackButton = this.defaultHref !== undefined;
 
     return {
+      'ion-activatable': true,
       class: {
         ...createColorClasses(this.color),
         'button': true,
         'show-back-button': showBackButton
-      },
-      'ion-activatable': true,
+      }
     };
   }
 
   render() {
-    const backButtonIcon = this.icon || this.config.get('backButtonIcon', 'arrow-back');
-    const backButtonText = this.text !== undefined ? this.text : this.config.get('backButtonText', 'Back');
+    const defaultBackButtonText = this.mode === 'ios' ? 'Back' : null;
+    const backButtonIcon = this.icon != null ? this.icon : this.config.get('backButtonIcon', 'arrow-back');
+    const backButtonText = this.text != null ? this.text : this.config.get('backButtonText', defaultBackButtonText);
 
     return (
       <button
@@ -80,9 +81,9 @@ export class BackButton implements ComponentInterface {
         onClick={ev => this.onClick(ev)}
       >
         <span class="back-button-inner">
-          {backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false}/>}
-          {this.mode === 'ios' && backButtonText && <span class="button-text">{backButtonText}</span>}
-          {this.mode === 'md' && <ion-ripple-effect />}
+          {backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false}></ion-icon>}
+          {backButtonText && <span class="back-button-text">{backButtonText}</span>}
+          {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </span>
       </button>
     );
