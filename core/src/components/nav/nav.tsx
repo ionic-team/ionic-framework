@@ -142,7 +142,7 @@ export class Nav implements NavOutlet {
   }
 
   /**
-   * Push a new component onto the current navigation stack. Pass any aditional information along as an object. This additional information is accessible through NavParams
+   * Push a new component onto the current navigation stack. Pass any additional information along as an object. This additional information is accessible through NavParams
    */
   @Method()
   push<T extends NavComponent>(
