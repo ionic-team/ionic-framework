@@ -1,6 +1,7 @@
-const { sass } = require('@stencil/sass');
+import { Config } from '@stencil/core';
+import { sass } from '@stencil/sass';
 
-exports.config = {
+export const config: Config = {
   namespace: 'Ionic',
   bundles: [
     { components: ['ion-action-sheet', 'ion-action-sheet-controller'] },
@@ -58,6 +59,47 @@ exports.config = {
     {
       type: 'stats',
       file: 'stats.json'
+    },
+    {
+      type: 'angular',
+      componentCorePackage: '@ionic/core',
+      directivesProxyFile: '../angular/src/directives/proxies.ts',
+      directivesArrayFile: '../angular/src/directives/proxies-list.txt',
+      excludeComponents: [
+        // overlays
+        'ion-action-sheet',
+        'ion-action-sheet-controller',
+        'ion-alert',
+        'ion-alert-controller',
+        'ion-loading',
+        'ion-loading-controller',
+        'ion-modal',
+        'ion-modal-controller',
+        'ion-picker',
+        'ion-picker-controller',
+        'ion-popover',
+        'ion-popover-controller',
+        'ion-toast',
+        'ion-toast-controller',
+        'ion-toast',
+
+        // controllers
+        'ion-menu-controller',
+        'ion-animation-controller',
+
+        // navigation
+        'ion-router',
+        'ion-route',
+        'ion-route-redirect',
+        'ion-router-outlet',
+        'ion-anchor',
+        'ion-tabbar',
+
+        // auxiliar
+        'ion-picker-column',
+        'ion-anchor',
+        'ion-virtual-scroll'
+      ]
     }
   ],
   testing: {

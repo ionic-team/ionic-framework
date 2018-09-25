@@ -36,7 +36,7 @@
     "tsc": "tsc -p .",
     "validate": "npm i && npm run lint && npm run test && npm run build"
   },
-  "main": "dist/index.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist/",
