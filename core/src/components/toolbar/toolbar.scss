@@ -22,7 +22,10 @@
   --opacity: 1;
 
   @include font-smoothing();
-
+  @include padding-horizontal(
+    calc(var(--padding-end) + var(--ion-safe-area-right)),
+    calc(var(--padding-start) + var(--ion-safe-area-left))
+  );
   display: block;
 
   position: relative;
@@ -48,13 +51,6 @@
 }
 
 .toolbar-container {
-  @include padding(
-    var(--padding-top),
-    calc(var(--padding-end) + var(--ion-safe-area-right)),
-    var(--padding-bottom),
-    calc(var(--padding-start) + var(--ion-safe-area-left))
-  );
-
   display: flex;
   position: relative;
 
