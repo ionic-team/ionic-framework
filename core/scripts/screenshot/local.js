@@ -5,7 +5,7 @@ const https = require('https');
 
 class LocalScreenshotConnector extends ScreenshotConnector {
 
-  downloadImage(image) {
+  async downloadImage(image) {
     return new Promise((resolve, reject) => {
       const req = https.request({
         method: 'GET',

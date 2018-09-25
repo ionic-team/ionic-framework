@@ -38,6 +38,7 @@
     "@types/swiper": "4.2.1",
     "agadoo": "^1.0.0",
     "autoprefixer": "^9.0.2",
+    "aws-sdk": "^2.320.0",
     "chromedriver": "^2.38.3",
     "clean-css-cli": "^4.1.11",
     "fs-extra": "^7.0.0",
