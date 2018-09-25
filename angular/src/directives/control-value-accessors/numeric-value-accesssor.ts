@@ -31,7 +31,7 @@ export class NumericValueAccessor implements ControlValueAccessor {
     setIonicClasses(this.element);
   }
 
-  @HostListener('input', ['$event.target.value'])
+  @HostListener('ionChange', ['$event.target.value'])
   _handleInputEvent(value: any) {
     this.onChange(value);
 
