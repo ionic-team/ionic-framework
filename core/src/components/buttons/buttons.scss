@@ -8,7 +8,6 @@
   transform: translateZ(0);
 
   z-index: $z-index-toolbar-buttons;
-  pointer-events: none;
 }
 
 // Toolbar Buttons
@@ -26,6 +25,4 @@
   --box-shadow: none;
 
   @include margin-horizontal(2px, 2px);
-
 }
-

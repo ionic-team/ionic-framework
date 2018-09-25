@@ -4,7 +4,7 @@
 // Material Design Toolbar Default Button
 // --------------------------------------------------
 
-::slotted(*) .button {
+::slotted(*) ion-button {
   --padding-top: 0;
   --padding-bottom: 0;
   --padding-start: 8px;
@@ -70,7 +70,6 @@
   @include margin-horizontal(null, .3em);
 
   font-size: 1.4em;
-  pointer-events: none;
 }
 
 ::slotted(*) ion-icon[slot="end"] {
@@ -78,7 +77,6 @@
   @include margin-horizontal(.4em, null);
 
   font-size: 1.4em;
-  pointer-events: none;
 }
 
 ::slotted(*) ion-icon[slot="icon-only"] {
@@ -86,7 +84,6 @@
   @include margin(0);
 
   font-size: 1.8em;
-  pointer-events: none;
 }
 
 

@@ -86,9 +86,9 @@
       console.log('Push page');
     }
 
-    function menu() {
+    async function menu() {
       console.log('Disable/enable menu');
-      menuCtrl.enable(!menuCtrl.isEnabled());
+      menuCtrl.enable(!await menuCtrl.isEnabled());
     }
   </script>
 

@@ -9,9 +9,6 @@
    *
    * @prop --color: Text color of the button
    *
-   * @prop --width: Width of the button
-   * @prop --height: Height of the button
-   *
    * @prop --min-width: Minimum width of the button
    * @prop --min-height: Minimum height of the button
    *
@@ -53,6 +50,8 @@
 
   display: none;
 
+  color: var(--color);
+
   font-family: $font-family-base;
 
   text-align: center;
@@ -70,7 +69,7 @@
 // Back Button with Color
 // --------------------------------------------------
 
-:host(.ion-color) .back-button-native {
+:host(.ion-color) .button-native {
   color: current-color(base);
 }
 
@@ -78,7 +77,7 @@
 // Back Button States
 // --------------------------------------------------
 
-:host(.activated) .back-button-native {
+:host(.activated) .button-native {
   opacity: .4;
 }
 
@@ -91,7 +90,7 @@
 // Native Back Button
 // --------------------------------------------------
 
-.back-button-native {
+.button-native {
   @include border-radius(var(--border-radius));
   @include font-smoothing();
   @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
@@ -101,10 +100,7 @@
   display: block;
   position: relative;
 
-  width: var(--width);
   min-width: var(--min-width);
-
-  height: var(--height);
   min-height: var(--min-height);
 
   transition: var(--transition);
@@ -114,7 +110,6 @@
   outline: none;
 
   background: var(--background);
-  color: var(--color);
 
   line-height: 1;
 
@@ -126,7 +121,7 @@
   appearance: none;
 }
 
-.back-button-inner {
+.button-inner {
   display: flex;
 
   flex-flow: row nowrap;
