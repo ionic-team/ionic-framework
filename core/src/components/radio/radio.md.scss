@@ -9,6 +9,10 @@
   --color-checked: #{ion-color(primary, base)};
   --width: #{$radio-md-icon-width};
   --height: #{$radio-md-icon-height};
+  --border-width: #{$radio-md-icon-border-width};
+  --border-style: #{$radio-md-icon-border-style};
+  --inner-width: calc(var(--width) - var(--border-width) * 4);
+  --inner-height: calc(var(--height) - var(--border-width) * 4);
 }
 
 :host(.ion-color) .radio-inner {
@@ -23,12 +27,11 @@
 // -----------------------------------------
 
 .radio-icon {
-  @include position(0, null, null, 0);
   @include margin(0);
   @include border-radius($radio-md-icon-border-radius);
 
-  border-width: $radio-md-icon-border-width;
-  border-style: $radio-md-icon-border-style;
+  border-width: var(--border-width);
+  border-style: var(--border-style);
   border-color: var(--color);
 }
 
@@ -37,13 +40,7 @@
 // -----------------------------------------
 
 .radio-inner {
-  @include position($radio-md-icon-border-width, null, null, $radio-md-icon-border-width);
   @include border-radius(50%);
-
-  position: absolute;
-
-  width: $radio-md-icon-width - $radio-md-icon-border-width * 4;
-  height: $radio-md-icon-height - $radio-md-icon-border-width * 4;
 
   transform: scale3d(0, 0, 0);
 
