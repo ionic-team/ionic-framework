@@ -84,7 +84,7 @@
     "tsc": "./node_modules/.bin/tsc -p .",
     "test.treeshake": "agadoo dist/collection/index.js",
     "validate": "npm run lint && npm run test && npm run build && npm run test.treeshake",
-    "validate.ci": "npm run lint && npm run test && npm run build --max-workers 1 --debug && npm run test.treeshake"
+    "validate.ci": "npm run lint && npm run test.spec && npm run build --max-workers 1 --debug && npm run test.treeshake"
   },
   "author": "Ionic Team",
   "license": "MIT",
