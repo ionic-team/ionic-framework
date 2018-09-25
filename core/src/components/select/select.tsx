@@ -27,7 +27,7 @@ export class Select implements ComponentInterface {
 
   @State() isExpanded = false;
   @State() keyFocus = false;
-  @State() text?: string | null;
+  @State() text = '';
 
   /**
    * The mode determines which platform styles to use.
@@ -164,9 +164,7 @@ export class Select implements ComponentInterface {
         }
       });
 
-      if (texts.length > 0) {
-        this.text = texts.join(', ');
-      }
+      this.text = texts.join(', ');
     }
 
     // emit the new value
@@ -250,9 +248,7 @@ export class Select implements ComponentInterface {
         // fire off an unnecessary change event
         (this.value as string[]).push(o.value);
       });
-      if (checked.map(o => o.textContent).length > 0) {
-        this.text = checked.map(o => o.textContent).join(', ');
-      }
+      this.text = checked.map(o => o.textContent).join(', ');
 
     } else {
       const checked = this.childOpts.find(o => o.selected);
@@ -475,7 +471,7 @@ export class Select implements ComponentInterface {
     let addPlaceholderClass = false;
 
     let selectText = this.selectedText || this.text;
-    if (selectText == null && this.placeholder != null) {
+    if (selectText === '' && this.placeholder != null) {
       selectText = this.placeholder;
       addPlaceholderClass = true;
     }
