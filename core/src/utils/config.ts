@@ -7,6 +7,8 @@ export interface IonicConfig {
    */
   mode?: Mode;
   persistConfig?: boolean;
+  hardwareBackButton?: boolean;
+  statusTap?: boolean;
 
   inputShims?: boolean;
   backButtonIcon?: string;
