@@ -16,7 +16,8 @@
     "no-console": false,
     "no-unbound-method": true,
     "no-floating-promises": false,
-
+    "linebreak-style": false,
+    
     "jsx-key": false,
     "jsx-self-close": false,
     "jsx-curly-spacing": [true, "never"],

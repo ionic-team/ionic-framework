@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const spawn = require('child_process').spawn;
+const os = require('os');
 
 const stencilPath = path.join(__dirname, '..', '..', 'core', 'node_modules', '.bin');
 
@@ -8,7 +9,11 @@ const stencilPath = path.join(__dirname, '..', '..', 'core', 'node_modules', '.b
 function buildIonicAngular() {
   return new Promise((resolve, reject) => {
 
-    const cmd = 'stencil';
+    let cmd = './stencil';
+    if (os.platform() === 'win32') {
+      cmd = 'stencil.cmd';
+    }
+
     const args = [
       'build',
       '--config',
@@ -16,7 +21,7 @@ function buildIonicAngular() {
       ...process.argv.slice(2)
     ];
 
-    const p = spawn('./stencil', args, { cwd: stencilPath, stdio: 'inherit' });
+    const p = spawn(cmd, args, { cwd: stencilPath, stdio: 'inherit' });
     p.on('close', (code) => {
       if (code > 0) {
         console.log(`@ionic/angular build exited with ${code}`);
