@@ -392,7 +392,8 @@ export class Menu implements ComponentInterface, MenuI {
     this.lastOnEnd = detail.timeStamp;
     this.animation
       .onFinish(() => this.afterAnimation(shouldOpen), {
-        clearExistingCallbacks: true
+        clearExistingCallbacks: true,
+        oneTimeCallback: true
       })
       .progressEnd(shouldComplete, stepValue, realDur);
   }
