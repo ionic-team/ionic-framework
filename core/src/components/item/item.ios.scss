@@ -8,7 +8,7 @@
   --transition: background-color 200ms linear;
   --padding-start: #{$item-ios-padding-start};
   --inner-padding-end: #{$item-ios-padding-end / 2};
-  --inner-border-width: #{0 0 $item-ios-border-bottom-width 0};
+  --inner-border-width: #{0px 0px $item-ios-border-bottom-width 0px};
 
   font-size: $item-ios-font-size;
 }
@@ -32,11 +32,11 @@
 // Full lines - apply the border to the item
 // Inset lines - apply the border to the item inner
 :host(.item-lines-full) {
-  --border-width: #{0 0 $item-ios-border-bottom-width 0};
+  --border-width: #{0px 0px $item-ios-border-bottom-width 0px};
 }
 
 :host(.item-lines-inset) {
-  --inner-border-width: #{0 0 $item-ios-border-bottom-width 0};
+  --inner-border-width: #{0px 0px $item-ios-border-bottom-width 0px};
 }
 
 // Full lines - remove the border from the item inner (inset list items)
@@ -44,12 +44,12 @@
 // No lines - remove the border on both (full / inset list items)
 :host(.item-lines-inset),
 :host(.item-lines-none) {
-  --border-width: 0;
+  --border-width: 0px;
 }
 
 :host(.item-lines-full),
 :host(.item-lines-none) {
-  --inner-border-width: 0;
+  --inner-border-width: 0px;
 }
 
 
@@ -79,8 +79,8 @@
 // --------------------------------------------------
 
 ::slotted(.button-small) {
-  --padding-top: 0;
-  --padding-bottom: 0;
+  --padding-top: 0px;
+  --padding-bottom: 0px;
   --padding-start: .5em;
   --padding-end: .5em;
   --height: 24px;
@@ -133,7 +133,7 @@
 
 :host(.item-radio) ::slotted(ion-label),
 :host(.item-toggle) ::slotted(ion-label) {
-  @include margin-horizontal(0, null);
+  @include margin-horizontal(0px, null);
 }
 
 
@@ -148,7 +148,7 @@
 :host(.item-label-floating) ::slotted(ion-select) {
   --padding-top: 8px;
   --padding-bottom: 8px;
-  --padding-start: 0;
+  --padding-start: 0px;
 }
 
 

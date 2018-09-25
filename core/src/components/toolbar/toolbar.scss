@@ -50,9 +50,9 @@
 .toolbar-container {
   @include padding(
     var(--padding-top),
-    var(--padding-end),
+    calc(var(--padding-end) + var(--ion-safe-area-right)),
     var(--padding-bottom),
-    var(--padding-start)
+    calc(var(--padding-start) + var(--ion-safe-area-left))
   );
 
   display: flex;

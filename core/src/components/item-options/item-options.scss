@@ -56,6 +56,14 @@ ion-item-options {
   }
 }
 
+.item-options-start ion-item-option:first-child {
+  @include padding-horizontal(null, var(--ion-safe-area-left))
+}
+
+.item-options-end ion-item-option:last-child {
+  @include padding-horizontal(null, var(--ion-safe-area-right))
+}
+
 .item-sliding-active-slide {
   @include rtl() {
     &.item-sliding-active-options-start ion-item-options:not(.item-options-end) {
