@@ -8,7 +8,7 @@ export function inputs(instance: any, el: ElementRef, props: string[]) {
   });
 }
 
-export function proxyEvent(emitter: any, el: Node, eventName: string) {
+export function proxyEvent(emitter: any, el: EventTarget, eventName: string) {
   el.addEventListener(eventName, (ev) => {
     emitter.emit(ev);
   });
