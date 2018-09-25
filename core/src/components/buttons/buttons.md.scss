@@ -4,7 +4,7 @@
 // Material Design Toolbar Default Button
 // --------------------------------------------------
 
-::slotted(*) ion-button.button {
+::slotted(*) ion-button {
   --padding-top: 0;
   --padding-bottom: 0;
   --padding-start: 8px;
@@ -16,7 +16,7 @@
   font-weight: 500;
 }
 
-::slotted(*) .button:not(.button-round) {
+::slotted(*) ion-button:not(.button-round) {
   --border-radius: #{$toolbar-md-button-border-radius};
 }
 
