@@ -8,7 +8,7 @@ export function hostContext(selector: string, el: HTMLElement): boolean {
  * Create the mode and color classes for the component based on the classes passed in
  */
 export function createColorClasses(color: Color | undefined | null): CssClassMap | undefined {
-  return (color != null) ? {
+  return (typeof color === 'string' && color.length > 0) ? {
     'ion-color': true,
     [`ion-color-${color}`]: true
   } : undefined;
