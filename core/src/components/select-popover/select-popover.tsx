@@ -1,7 +1,6 @@
 import { Component, ComponentInterface, Listen, Prop } from '@stencil/core';
 
 import { Mode, SelectPopoverOption } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-select-popover',
@@ -30,12 +29,6 @@ export class SelectPopover implements ComponentInterface {
     if (option && option.handler) {
       option.handler();
     }
-  }
-
-  hostData() {
-    return {
-      class: createThemedClasses(this.mode, 'select-popover')
-    };
   }
 
   render() {

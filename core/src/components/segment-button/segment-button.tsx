@@ -71,7 +71,7 @@ export class SegmentButton implements ComponentInterface {
       <button
         type="button"
         aria-pressed={this.checked ? 'true' : null}
-        class="segment-button-native"
+        class="button-native"
         disabled={this.disabled}
         onClick={() => this.checked = true}
       >

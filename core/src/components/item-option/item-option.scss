@@ -22,7 +22,7 @@
   color: current-color(contrast);
 }
 
-.item-option-native {
+.button-native {
   @include text-inherit();
   @include padding(0, .7em);
 
@@ -41,7 +41,7 @@
   appearance: none;
 }
 
-.item-option-button-inner {
+.button-inner {
   display: flex;
 
   flex-direction: column;

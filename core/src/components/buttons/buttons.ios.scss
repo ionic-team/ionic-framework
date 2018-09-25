@@ -5,7 +5,7 @@
 // iOS Toolbar Default Button
 // --------------------------------------------------
 
-::slotted(*) ion-button {
+::slotted(*) ion-button.button {
   --padding-top: 0;
   --padding-bottom: 0;
   --padding-start: 5px;
