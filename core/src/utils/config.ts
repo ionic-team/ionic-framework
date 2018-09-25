@@ -48,6 +48,8 @@ export interface IonicConfig {
   popoverLeave?: string;
   toastLeave?: string;
   pickerLeave?: string;
+
+  _forceStatusbarPadding?: boolean;
 }
 
 export function setupConfig(config: IonicConfig) {
