@@ -18,9 +18,10 @@ body.backdrop-no-scroll {
   overflow: hidden;
 }
 
-body.backdrop-no-scroll .ion-page > ion-content {
-  --overflow: hidden;
-}
+// TODO: Block scrolling in ion-content, breaks inside ion-modal
+// body.backdrop-no-scroll .ion-page > ion-content {
+//   --overflow: hidden;
+// }
 
 
 // Ionic Colors
