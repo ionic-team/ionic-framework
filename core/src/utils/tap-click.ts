@@ -5,6 +5,7 @@ export function startTapClick(doc: Document) {
   let lastTouch = -MOUSE_WAIT * 10;
   let lastActivated = 0;
   let cancelled = false;
+  let scrolling = false;
 
   let activatableEle: HTMLElement | undefined;
   let activeDefer: any;
@@ -12,7 +13,7 @@ export function startTapClick(doc: Document) {
   const clearDefers = new WeakMap<HTMLElement, any>();
 
   function onBodyClick(ev: Event) {
-    if (cancelled) {
+    if (cancelled || scrolling) {
       ev.preventDefault();
       ev.stopPropagation();
     }
@@ -45,6 +46,7 @@ export function startTapClick(doc: Document) {
 
   function cancelActive() {
     clearTimeout(activeDefer);
+    activeDefer = undefined;
     if (activatableEle) {
       removeActivated(false);
       activatableEle = undefined;
@@ -53,7 +55,7 @@ export function startTapClick(doc: Document) {
   }
 
   function pointerDown(ev: any) {
-    if (activatableEle) {
+    if (activatableEle || scrolling) {
       return;
     }
     cancelled = false;
@@ -61,6 +63,9 @@ export function startTapClick(doc: Document) {
   }
 
   function pointerUp(ev: UIEvent) {
+    if (scrolling) {
+      return;
+    }
     setActivatedElement(undefined, ev);
     if (cancelled && ev.cancelable) {
       ev.preventDefault();
@@ -133,7 +138,13 @@ export function startTapClick(doc: Document) {
   }
 
   doc.body.addEventListener('click', onBodyClick, true);
-  doc.body.addEventListener('ionScrollStart', cancelActive);
+  doc.body.addEventListener('ionScrollStart', () => {
+    scrolling = true;
+    cancelActive();
+  });
+  doc.body.addEventListener('ionScrollEnd', () => {
+    scrolling = false;
+  });
   doc.body.addEventListener('ionGestureCaptured', cancelActive);
 
   doc.addEventListener('touchstart', onTouchStart, true);
