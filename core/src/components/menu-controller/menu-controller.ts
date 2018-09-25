@@ -225,7 +225,7 @@ export class MenuController implements MenuControllerI {
     if (shouldOpen) {
       const openedMenu = await this.getOpen();
       if (openedMenu && menu.el !== openedMenu) {
-        return openedMenu.setOpen(false, false);
+        await openedMenu.setOpen(false, false);
       }
     }
     return menu._setOpen(shouldOpen, animated);
