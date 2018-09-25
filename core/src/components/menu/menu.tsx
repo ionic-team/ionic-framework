@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { Animation, Config, Gesture, GestureDetail, MenuChangeEventDetail, MenuControllerI, MenuI, Mode, Side } from '../../interface';
+import { GESTURE_CONTROLLER } from '../../utils/gesture/gesture-controller';
 import { assert, isEndSide as isEnd } from '../../utils/helpers';
 
 @Component({
@@ -16,6 +17,7 @@ export class Menu implements ComponentInterface, MenuI {
   private animation?: Animation;
   private lastOnEnd = 0;
   private gesture?: Gesture;
+  private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
 
   mode!: Mode;
 
@@ -195,6 +197,7 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   componentDidUnload() {
+    this.blocker.destroy();
     this.menuCtrl!._unregister(this);
     if (this.animation) {
       this.animation.destroy();
@@ -403,6 +406,7 @@ export class Menu implements ComponentInterface, MenuI {
     if (this.backdropEl) {
       this.backdropEl.classList.add(SHOW_BACKDROP);
     }
+    this.blocker.block();
     this.isAnimating = true;
   }
 
@@ -415,6 +419,9 @@ export class Menu implements ComponentInterface, MenuI {
     // emit opened/closed events
     this._isOpen = isOpen;
     this.isAnimating = false;
+    if (!this._isOpen) {
+      this.blocker.unblock();
+    }
 
     // add/remove backdrop click listeners
     this.enableListener(this, 'body:click', isOpen);

@@ -18,6 +18,10 @@ body.backdrop-no-scroll {
   overflow: hidden;
 }
 
+body.backdrop-no-scroll .ion-page > ion-content {
+  --overflow: hidden;
+}
+
 
 // Ionic Colors
 // --------------------------------------------------
