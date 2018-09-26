@@ -23,8 +23,8 @@
 
   @include font-smoothing();
   @include padding-horizontal(
-    calc(var(--padding-end) + var(--ion-safe-area-right)),
-    calc(var(--padding-start) + var(--ion-safe-area-left))
+    var(--ion-safe-area-left),
+    var(--ion-safe-area-right)
   );
 
   display: block;
