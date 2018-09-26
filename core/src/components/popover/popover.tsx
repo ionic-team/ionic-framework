@@ -16,7 +16,8 @@ import { mdLeaveAnimation } from './animations/md.leave';
   styleUrls: {
     ios: 'popover.ios.scss',
     md: 'popover.md.scss'
-  }
+  },
+  scoped: true
 })
 export class Popover implements ComponentInterface, OverlayInterface {
 
@@ -178,7 +179,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
       ...this.componentProps,
       popover: this.el
     };
-    this.usersElement = await attachComponent(this.delegate, container, this.component, ['popover-viewport'], data);
+    this.usersElement = await attachComponent(this.delegate, container, this.component, ['popover-viewport', (this.el as any)['s-sc']], data);
     await deepReady(this.usersElement);
     return present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, this.event);
   }
