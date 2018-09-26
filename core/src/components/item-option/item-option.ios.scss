@@ -15,11 +15,3 @@
 :host(.ion-color.activated) {
   background: current-color(shade);
 }
-
-:host(.in-list.item-options-end:last-child) {
-  @include safe-area-padding-horizontal(null, .7em);
-}
-
-:host(.in-list.item-options-start:first-child) {
-  @include safe-area-padding-horizontal(.7em, null);
-}
