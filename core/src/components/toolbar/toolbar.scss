@@ -51,6 +51,12 @@
 }
 
 .toolbar-container {
+  @include padding(
+    var(--padding-top),
+    var(--padding-end),
+    var(--padding-bottom),
+    var(--padding-start)
+   );
   display: flex;
   position: relative;
 

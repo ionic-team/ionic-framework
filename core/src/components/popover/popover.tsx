@@ -16,8 +16,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
   styleUrls: {
     ios: 'popover.ios.scss',
     md: 'popover.md.scss'
-  },
-  scoped: true
+  }
 })
 export class Popover implements ComponentInterface, OverlayInterface {
 

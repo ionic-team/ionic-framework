@@ -9,6 +9,9 @@
    * @prop --color: Color of the card
    */
 
+  --ion-safe-area-left: 0px;
+  --ion-safe-area-right: 0px;
+
   @include font-smoothing();
 
   display: block;

@@ -29,3 +29,9 @@
   overflow: auto;
   z-index: $z-index-overlay-wrapper;
 }
+
+.popover-viewport {
+  --ion-safe-area-left: 0px;
+  --ion-safe-area-right: 0px;
+}
+

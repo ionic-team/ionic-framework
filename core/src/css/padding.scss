@@ -14,12 +14,17 @@ $margin: var(--ion-margin, 16px);
 // --------------------------------------------------
 
 [no-padding] {
-  --padding-start: 0;
-  --padding-end: 0;
-  --padding-top: 0;
-  --padding-bottom: 0;
+  --padding-start: 0px;
+  --padding-end: 0px;
+  --padding-top: 0px;
+  --padding-bottom: 0px;
 
-  @include padding(0);
+  @include padding(
+    var(--padding-start),
+    calc(var(--ion-safe-area-right, 0px) + var(--padding-end)),
+    var(--padding-bottom),
+    calc(var(--ion-safe-area-left, 0px) + var(--padding-start)),
+  );
 }
 
 [padding] {
@@ -28,45 +33,59 @@ $margin: var(--ion-margin, 16px);
   --padding-top: #{$padding};
   --padding-bottom: #{$padding};
 
-  @include padding($padding);
+  @include padding(
+    var(--padding-start),
+    calc(var(--ion-safe-area-right, 0px) + var(--padding-end)),
+    var(--padding-bottom),
+    calc(var(--ion-safe-area-left, 0px) + var(--padding-start)),
+  );
 }
 
 [padding-top] {
   --padding-top: #{$padding};
 
-  @include padding($padding, null, null, null);
+  @include padding(var(--padding-top), null, null, null);
 }
 
 [padding-start] {
   --padding-start: #{$padding};
 
-  @include padding-horizontal($padding, null);
+  @include padding-horizontal(
+    calc(var(--ion-safe-area-left, 0px) + var(--padding-start)),
+    null
+  );
 }
 
 [padding-end] {
   --padding-end: #{$padding};
 
-  @include padding-horizontal(null, $padding);
+  @include padding-horizontal(
+    null,
+    calc(var(--ion-safe-area-right, 0px) + var(--padding-end))
+  );
 }
 
 [padding-bottom] {
   --padding-bottom: #{$padding};
 
-  @include padding(null, null, $padding, null);
+  @include padding(null, null, var(--padding-bottom), null);
 }
 
 [padding-vertical] {
   --padding-top: #{$padding};
   --padding-bottom: #{$padding};
 
-  @include padding($padding, null, $padding, null);
+  @include padding(var(--padding-top), null, var(--padding-bottom), null);
 }
 
 [padding-horizontal] {
   --padding-start: #{$padding};
   --padding-end: #{$padding};
 
-  @include padding-horizontal($padding);
+  @include padding-horizontal(
+    calc(var(--ion-safe-area-left, 0px) + var(--padding-start)),
+    calc(var(--ion-safe-area-right, 0px) + var(--padding-end)),
+  );
 }
 
 
