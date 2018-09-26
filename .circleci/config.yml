@@ -1,0 +1,33 @@
+version: 2
+
+jobs:
+  build:
+    working_directory: /tmp/workspace
+    docker:
+      - image: circleci/node:latest-browsers
+    branches:
+      # ignore:
+      #   - core
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install monorepo node modules
+          command: npm i
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - restore_cache:
+          key: dependency-cache-{{ checksum "core/package.json" }}
+      - run:
+          name: Install core node modules
+          command: npm --prefix core/ i
+      - save_cache:
+          key: dependency-cache-{{ checksum "core/package.json" }}
+          paths:
+            - core/node_modules
+      - run:
+          name: Validate Core
+          command: npm --prefix core/ run validate.ci
