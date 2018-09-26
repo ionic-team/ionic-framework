@@ -133,7 +133,7 @@ button, a {
     var(--inner-padding-top),
     calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end)),
     var(--inner-padding-bottom),
-    calc(var(--ion-safe-area-left, 0px) + var(--inner-padding-start))
+    var(--inner-padding-start)
   );
 
   display: flex;
