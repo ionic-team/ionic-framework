@@ -85,6 +85,15 @@ export class Navbar extends ToolbarBase {
    * @hidden
    */
   _sbPadding: boolean;
+  /**
+   * @hidden
+   */
+  _backButtonClick = (ev: UIEvent) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    this.navCtrl && this.navCtrl.pop(null, null);
+  }
 
   /**
    * @input {boolean} If true, the back button will be hidden.
@@ -95,6 +104,17 @@ export class Navbar extends ToolbarBase {
   }
   set hideBackButton(val: boolean) {
     this._hideBb = isTrueProperty(val);
+  }
+  
+  /**
+    * @input {(ev: UIEvent) => void} Takes a function override the default one
+    */
+  @Input()
+  get backButtonClick(): (ev: UIEvent) => void {
+    return this._backButtonClick;
+  }
+  set backButtonClick(val: (ev: UIEvent) => void){
+    this._backButtonClick = val;
   }
 
   constructor(
@@ -112,14 +132,6 @@ export class Navbar extends ToolbarBase {
     this._bbIcon = config.get('backButtonIcon');
     this._sbPadding = config.getBoolean('statusbarPadding');
     this._backText = config.get('backButtonText', 'Back');
-  }
-
-
-  backButtonClick(ev: UIEvent) {
-    ev.preventDefault();
-    ev.stopPropagation();
-
-    this.navCtrl && this.navCtrl.pop(null, null);
   }
 
   /**
