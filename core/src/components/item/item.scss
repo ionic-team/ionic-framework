@@ -15,9 +15,9 @@
    * @prop --color: Color of the item
    * @prop --detail-icon-color: Color of the item detail icon
    * @prop --inner-border-width: Width of the item inner border
-   * @prop --inner-box-shadow: Box shadow of the item inner 
-   * @prop --inner-padding-bottom: Bottom padding of the item inner 
-   * @prop --inner-padding-end: End padding of the item inner 
+   * @prop --inner-box-shadow: Box shadow of the item inner
+   * @prop --inner-padding-bottom: Bottom padding of the item inner
+   * @prop --inner-padding-end: End padding of the item inner
    * @prop --inner-padding-start: Start padding of the item inner
    * @prop --inner-padding-top: Top padding of the item inner
    * @prop --min-height: Minimum height of the item
@@ -32,15 +32,15 @@
   --background-activated: #{current-color(tint)};
   --color: #{current-color(contrast)};
   --detail-icon-color: #{current-color(shade)};
-  --border-radius: 0;
-  --border-width: 0;
+  --border-radius: 0px;
+  --border-width: 0px;
   --border-style: solid;
   --border-color: #{current-color(shade)};
-  --inner-border-width: 0;
-  --padding-top: 0;
-  --padding-bottom: 0;
-  --padding-end: 0;
-  --padding-start: 0;
+  --inner-border-width: 0px;
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+  --padding-end: 0px;
+  --padding-start: 0px;
   --inner-padding-top: 0px;
   --inner-padding-bottom: 0px;
   --inner-padding-start: 0px;
@@ -78,7 +78,12 @@
 
 
 .item-native {
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include padding(
+    var(--padding-top),
+    var(--padding-end),
+    var(--padding-bottom),
+    calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
+  );
   @include border-radius(var(--border-radius));
   @include margin(0);
   @include text-inherit();
@@ -128,7 +133,7 @@ button, a {
     var(--inner-padding-top),
     calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end)),
     var(--inner-padding-bottom),
-    calc(var(--ion-safe-area-left, 0px) + var(--inner-padding-start))
+    var(--inner-padding-start)
   );
 
   display: flex;

@@ -40,6 +40,8 @@
 }
 
 :host(.menu-side-start) .menu-inner {
+  --ion-safe-area-right: 0px;
+
   @include multi-dir() {
     /* stylelint-disable property-blacklist */
     right: auto;
@@ -48,6 +50,8 @@
 }
 
 :host(.menu-side-end) .menu-inner {
+  --ion-safe-area-left: 0px;
+
   @include multi-dir() {
     right: 0;
     left: auto;

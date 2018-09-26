@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/ionic/
     docker:
-      - image: node:8
+      - image: circleci/node:latest-browsers
     branches:
       # ignore:
       #   - core
