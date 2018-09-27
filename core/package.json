@@ -26,6 +26,7 @@
     "loader/"
   ],
   "dependencies": {
+    "@types/node": "10.11.0",
     "ionicons": "4.4.4"
   },
   "devDependencies": {
