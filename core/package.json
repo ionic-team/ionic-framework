@@ -29,9 +29,9 @@
     "ionicons": "4.4.4"
   },
   "devDependencies": {
-    "@stencil/core": "0.13.0",
+    "@stencil/core": "0.13.1",
     "@stencil/dev-server": "latest",
-    "@stencil/sass": "0.1.0",
+    "@stencil/sass": "0.1.1",
     "@stencil/utils": "latest",
     "@types/jest": "^23.3.1",
     "@types/puppeteer": "1.6.4",
@@ -45,8 +45,8 @@
     "np": "^3.0.4",
     "pixelmatch": "4.0.2",
     "puppeteer": "1.7.0",
-    "stylelint": "^9.4.0",
-    "stylelint-order": "^0.8.1",
+    "stylelint": "~9.6.0",
+    "stylelint-order": "~1.0.0",
     "swiper": "4.4.1",
     "tslint": "^5.10.0",
     "tslint-ionic-rules": "0.0.19",
