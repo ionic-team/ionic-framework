@@ -13,7 +13,7 @@ import { RadioButton } from './radio-button';
  * button that belongs to a radio group unchecks any previous checked
  * radio button within the same group.
  *
- * See the [Angular Forms Docs](https://angular.io/docs/ts/latest/guide/forms.html)
+ * See the [Angular Forms Docs](https://angular.io/docs/ts/latest/guide/forms)
  * for more information on forms and inputs.
  *
  * @usage
