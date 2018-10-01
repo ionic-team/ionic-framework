@@ -1,7 +1,3 @@
-# only master screenshot data should be committed
 images
-local
+builds
 compare.html
-
-# temporarily ignoring master
-master

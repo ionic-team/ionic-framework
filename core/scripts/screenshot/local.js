@@ -6,11 +6,18 @@ const https = require('https');
 class LocalScreenshotConnector extends ScreenshotConnector {
 
   async downloadImage(image) {
+    const stream = fs.createWriteStream(path.join(this.imagesDir, image));
+    const p = `/data/images/${image}`;
+
+    await this.downloadToStream(stream, p);
+  }
+
+  async downloadToStream(stream, p) {
     return new Promise((resolve, reject) => {
       const req = https.request({
         method: 'GET',
         hostname: 'screenshot.ionicframework.com',
-        path: `/images/${image}`,
+        path: p,
       });
 
       req.on('response', res => {
@@ -18,12 +25,11 @@ class LocalScreenshotConnector extends ScreenshotConnector {
           return reject(new Error(`Bad Status Code: ${res.statusCode}`));
         }
 
-        const f = fs.createWriteStream(path.join(this.imagesDir, image));
-        f.on('error', reject);
+        stream.on('error', reject);
+        stream.on('close', resolve);
 
         res.on('error', reject);
-        res.on('end', resolve);
-        res.pipe(f);
+        res.pipe(stream);
       });
 
       req.on('error', reject);
@@ -31,12 +37,15 @@ class LocalScreenshotConnector extends ScreenshotConnector {
     });
   }
 
-  async pullMasterImages() {
+  async pullMasterBuild() {
     const timespan = this.logger.createTimeSpan(`pull master screenshot images started`);
 
-    const masterFilePaths = (fs.readdirSync(this.masterDir)).map(f => path.join(this.masterDir, f)).filter(f => f.endsWith('.json'));
-    const masterScreenshots = masterFilePaths.map(f => JSON.parse(fs.readFileSync(f, 'utf-8')));
-    const masterImageNames = masterScreenshots.map(s => s.image);
+    const ws = fs.createWriteStream(path.join(this.buildsDir, 'master.json'));
+    const p = `/data/builds/master.json`;
+    await this.downloadToStream(ws, p);
+    const master = JSON.parse(fs.readFileSync(path.join(this.buildsDir, 'master.json'), 'utf8'));
+
+    const masterImageNames = master.screenshots.map(s => s.image);
     const missingImages = masterImageNames.filter(masterImageName => {
       try {
         const masterImagePath = path.join(this.imagesDir, masterImageName);
