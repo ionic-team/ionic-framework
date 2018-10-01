@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue",
-  "version": "4.0.0-beta.11",
+  "version": "4.0.0-beta.12",
   "description": "Vue specific wrappers for @ionic/core",
   "homepage": "https://moduscreate.com",
   "author": "Modus Create",
@@ -11,7 +11,7 @@
   "unpkg": "dist/ionic-vue.js",
   "jsdelivr": "dist/ionic-vue.js",
   "contributors": [
-      "Michael Tintiuc <michael.tintiuc@moduscreate.com>"
+    "Michael Tintiuc <michael.tintiuc@moduscreate.com>"
   ],
   "files": [
     "src/",
@@ -68,6 +68,6 @@
     "vue": "^2.5.17",
     "vue-template-compiler": "^2.5.17",
     "vue-router": "^3.0.1",
-    "@ionic/core": "4.0.0-beta.11"
+    "@ionic/core": "4.0.0-beta.12"
   }
 }
