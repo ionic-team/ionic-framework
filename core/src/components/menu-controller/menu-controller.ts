@@ -16,6 +16,7 @@ export class MenuController implements MenuControllerI {
   private menuAnimations = new Map<string, AnimationBuilder>();
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
+  @Prop({ context: 'document' }) doc!: Document;
 
   constructor() {
     this.registerAnimation('reveal', menuRevealAnimation);
@@ -134,6 +135,8 @@ export class MenuController implements MenuControllerI {
         return undefined;
       }
     }
+    await this.waitUntilReady();
+
     if (menuId === 'start' || menuId === 'end') {
       // there could be more than one menu on the same side
       // so first try to get the enabled one
@@ -166,24 +169,27 @@ export class MenuController implements MenuControllerI {
    * Returns the instance of the menu already opened, otherwise `null`.
    */
   @Method()
-  getOpen(): Promise<HTMLIonMenuElement | undefined> {
-    return Promise.resolve(this.getOpenSync());
+  async getOpen(): Promise<HTMLIonMenuElement | undefined> {
+    await this.waitUntilReady();
+    return this.getOpenSync();
   }
 
   /**
    * Returns an array of all menu instances.
    */
   @Method()
-  getMenus(): Promise<HTMLIonMenuElement[]> {
-    return Promise.resolve(this.getMenusSync());
+  async getMenus(): Promise<HTMLIonMenuElement[]> {
+    await this.waitUntilReady();
+    return this.getMenusSync();
   }
 
   /**
    * Returns true if any menu is currently animating.
    */
   @Method()
-  isAnimating(): Promise<boolean> {
-    return Promise.resolve(this.isAnimatingSync());
+  async isAnimating(): Promise<boolean> {
+    await this.waitUntilReady();
+    return this.isAnimatingSync();
   }
 
   @Method()
@@ -263,5 +269,12 @@ export class MenuController implements MenuControllerI {
       return instance.el;
     }
     return undefined;
+  }
+
+  private waitUntilReady() {
+    return Promise.all(
+      Array.from(this.doc.querySelectorAll('ion-menu'))
+        .map(menu => menu.componentOnReady())
+    );
   }
 }

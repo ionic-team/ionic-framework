@@ -31,7 +31,7 @@ export interface MenuControllerI {
   _unregister(menu: MenuI): void;
   _setActiveMenu(menu: MenuI): void;
 
-  getMenusSync(): HTMLIonMenuElement[];
+  getMenus(): Promise<HTMLIonMenuElement[]>;
   getOpenSync(): HTMLIonMenuElement | undefined;
 }
 

@@ -168,7 +168,7 @@ export class Menu implements ComponentInterface, MenuI {
 
     let isEnabled = !this.disabled;
     if (isEnabled) {
-      const menus = this.menuCtrl!.getMenusSync();
+      const menus = await this.menuCtrl!.getMenus();
       isEnabled = !menus.some((m: any) => {
         return m.side === this.side && !m.disabled;
       });
