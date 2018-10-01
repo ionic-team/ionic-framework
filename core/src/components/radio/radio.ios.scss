@@ -8,6 +8,8 @@
   --color-checked: #{ion-color(primary, base)};
   --width: #{$radio-ios-icon-width};
   --height: #{$radio-ios-icon-height};
+  --inner-width: 5px;
+  --inner-height: 12px;
 }
 
 :host(.ion-color.radio-checked) .radio-inner {
@@ -23,10 +25,6 @@
 // -----------------------------------------
 
 :host(.radio-checked) .radio-inner {
-  @include position(4px, null, null, 7px);
-
-  position: absolute;
-
   width: 5px;
   height: 12px;
 
@@ -38,7 +36,6 @@
   border-style: $radio-ios-icon-border-style;
   border-color: var(--color-checked);
 }
-
 
 // iOS Radio: Disabled
 // -----------------------------------------

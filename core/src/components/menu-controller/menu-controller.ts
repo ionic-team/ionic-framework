@@ -187,6 +187,11 @@ export class MenuController implements MenuControllerI {
   }
 
   @Method()
+  registerAnimation(name: string, animation: AnimationBuilder) {
+    this.menuAnimations.set(name, animation);
+  }
+
+  @Method()
   _register(menu: MenuI) {
     if (this.menus.indexOf(menu) < 0) {
       this.menus.push(menu);
@@ -220,7 +225,7 @@ export class MenuController implements MenuControllerI {
     if (shouldOpen) {
       const openedMenu = await this.getOpen();
       if (openedMenu && menu.el !== openedMenu) {
-        return openedMenu.setOpen(false, false);
+        await openedMenu.setOpen(false, false);
       }
     }
     return menu._setOpen(shouldOpen, animated);
@@ -250,10 +255,6 @@ export class MenuController implements MenuControllerI {
 
   isAnimatingSync(): boolean {
     return this.menus.some(menu => menu.isAnimating);
-  }
-
-  private registerAnimation(name: string, animation: AnimationBuilder) {
-    this.menuAnimations.set(name, animation);
   }
 
   private find(predicate: (menu: MenuI) => boolean): HTMLIonMenuElement | undefined {

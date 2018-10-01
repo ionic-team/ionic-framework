@@ -42,7 +42,9 @@ export class Fab implements ComponentInterface {
   }
 
   componentDidLoad() {
-    this.activatedChanged();
+    if (this.activated) {
+      this.activatedChanged();
+    }
   }
 
   @Listen('click')

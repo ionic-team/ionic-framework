@@ -53,6 +53,8 @@ ion-toast {
 }
 
 .toast-button {
+  --color: inherit;
+
   font-size: $toast-button-font-size;
 }
 

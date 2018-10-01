@@ -1,8 +1,11 @@
 import { defineCustomElements } from '@ionic/core/loader';
-
 import { Config } from './providers/config';
 import { IonicWindow } from './types/interfaces';
 
+// Webpack import for ionicons
+// @ts-ignore
+// tslint:disable-next-line:no-import-side-effect
+import '@ionic/core/dist/ionic/svg';
 
 export function appInitialize(config: Config) {
   return () => {
@@ -35,6 +38,8 @@ export function appInitialize(config: Config) {
           win.requestAnimationFrame(cb);
         }
       };
+
+
 
       // define all of Ionic's custom elements
       defineCustomElements(win);

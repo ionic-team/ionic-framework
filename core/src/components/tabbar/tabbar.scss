@@ -1,6 +1,11 @@
 @import "../../themes/ionic.globals";
 
 :host {
+  @include padding-horizontal(
+    var(--ion-safe-area-left),
+    var(--ion-safe-area-right)
+  );
+
   display: flex;
   position: relative;
 
@@ -8,7 +13,7 @@
   justify-content: center;
   order: 1;
 
-  width: 100%;
+  width: auto;
 
   background: var(--background);
   color: var(--color);

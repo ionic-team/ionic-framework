@@ -106,7 +106,7 @@ images while scrolling quickly.
     </ion-avatar>
     {{ item.firstName }} {{ item.lastName }}
   </ion-item>
-</ion-list>
+</ion-virtual-scroll>
 ```
 
 ### Custom Components
@@ -124,7 +124,7 @@ dimensions are measured correctly.
       {{ item }}
     </my-custom-item>
   </div>
-</ion-list>
+</ion-virtual-scroll>
 ```
 
 ## Virtual Scroll Performance Tips
@@ -133,8 +133,8 @@ dimensions are measured correctly.
 
 When deploying to iOS with Cordova, it's highly recommended to use the
 [WKWebView plugin](http://blog.ionic.io/cordova-ios-performance-improvements-drop-in-speed-with-wkwebview/)
-in order to take advantage of iOS's higher performimg webview. Additionally,
-WKWebView is superior at scrolling efficiently in comparision to the older
+in order to take advantage of iOS's higher performing webview. Additionally,
+WKWebView is superior at scrolling efficiently in comparison to the older
 UIWebView.
 
 #### Lock in element dimensions and locations

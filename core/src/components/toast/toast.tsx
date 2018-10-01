@@ -197,7 +197,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
             <div class="toast-message">{this.message}</div>
           }
           {this.showCloseButton &&
-            <ion-button fill="clear" color="light" ion-activatable class="toast-button" onClick={() => this.dismiss(undefined, 'cancel')}>
+            <ion-button fill="clear" ion-activatable class="toast-button" onClick={() => this.dismiss(undefined, 'cancel')}>
               {this.closeButtonText || 'Close'}
             </ion-button>
           }

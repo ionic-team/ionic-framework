@@ -1,14 +1,11 @@
 @import "./item";
 @import "./item.md.vars";
+@import "../label/label.md.vars";
 
 // Material Design Item
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: var(--ion-item-background-color, transparent);
-  --ion-color-contrast: #{$item-md-text-color};
-  --ion-color-tint: #{$item-md-background-color-active};
-  --ion-color-shade: #{$item-md-border-bottom-color};
   --transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
   --padding-start: #{$item-md-padding-start};
   --inner-padding-end: #{$item-md-padding-end / 2};
@@ -19,6 +16,15 @@
 
   text-transform: none;
 }
+
+:host(:not(.ion-color)) {
+  --background: var(--ion-item-background-color, transparent);
+  --background-activated: #{$item-md-background-color-active};
+  --border-color: #{$item-md-border-bottom-color};
+  --color: #{$item-md-text-color};
+  --detail-icon-color: #{$item-md-border-bottom-color};
+}
+
 
 // Material Design Item Lines
 // --------------------------------------------------
@@ -55,7 +61,7 @@
 // --------------------------------------------------
 
 .item-detail-icon {
-  color: var(--detail-push-color);
+  color: var(--detail-icon-color);
 
   font-size: 20px;
 }
@@ -165,4 +171,9 @@
 :host(:not(.item-label)) ::slotted(ion-input),
 :host(:not(.item-label)) ::slotted(ion-textarea) {
   --padding-start: 0;
+}
+
+:host(.item-has-focus:not(.ion-color)) ::slotted(.label-stacked),
+:host(.item-has-focus:not(.ion-color)) ::slotted(.label-floating) {
+  color: $label-md-text-color-focused;
 }

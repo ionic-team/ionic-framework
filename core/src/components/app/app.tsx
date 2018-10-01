@@ -18,10 +18,12 @@ export class App implements ComponentInterface {
 
   componentDidLoad() {
     rIC(() => {
-      importTapClick(this.win);
-      importInputShims(this.win, this.config);
-      importStatusTap(this.win, this.queue);
-      importHardwareBackButton(this.win);
+      const { win, config, queue } = this;
+
+      importTapClick(win);
+      importInputShims(win, config);
+      importStatusTap(win, config, queue);
+      importHardwareBackButton(win, config);
     });
   }
 
@@ -29,19 +31,22 @@ export class App implements ComponentInterface {
     return {
       class: {
         'ion-page': true,
+        'force-statusbar-padding': this.config.getBoolean('_forceStatusbarPadding')
       }
     };
   }
 }
 
-function importHardwareBackButton(win: Window) {
-  if (isPlatform(win, 'hybrid')) {
+function importHardwareBackButton(win: Window, config: Config) {
+  const hardwareBackConfig = config.getBoolean('hardwareBackButton', isPlatform(win, 'hybrid'));
+  if (hardwareBackConfig) {
     import('../../utils/hardware-back-button').then(module => module.startHardwareBackButton(win));
   }
 }
 
-function importStatusTap(win: Window, queue: QueueApi) {
-  if (isPlatform(win, 'hybrid')) {
+function importStatusTap(win: Window, config: Config, queue: QueueApi) {
+  const statusTap = config.getBoolean('statusTap', isPlatform(win, 'hybrid'));
+  if (statusTap) {
     import('../../utils/status-tap').then(module => module.startStatusTap(win, queue));
   }
 }

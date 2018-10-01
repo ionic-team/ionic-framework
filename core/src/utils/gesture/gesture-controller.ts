@@ -29,8 +29,8 @@ export class GestureController {
    */
   createBlocker(opts: BlockerConfig = {}): BlockerDelegate {
     return new BlockerDelegate(
-      this.newID(),
       this,
+      this.newID(),
       opts.disable,
       !!opts.disableScroll
     );
@@ -95,10 +95,16 @@ export class GestureController {
 
   disableScroll(id: number) {
     this.disabledScroll.add(id);
+    if (this.disabledScroll.size === 1) {
+      this.doc.body.classList.add(BACKDROP_NO_SCROLL);
+    }
   }
 
   enableScroll(id: number) {
     this.disabledScroll.delete(id);
+    if (this.disabledScroll.size === 0) {
+      this.doc.body.classList.remove(BACKDROP_NO_SCROLL);
+    }
   }
 
   canStart(gestureName: string): boolean {
@@ -140,7 +146,7 @@ export class GestureDelegate {
   private ctrl?: GestureController;
 
   constructor(
-    ctrl: any,
+    ctrl: GestureController,
     private id: number,
     private name: string,
     private priority: number,
@@ -199,8 +205,8 @@ export class BlockerDelegate {
   private ctrl?: GestureController;
 
   constructor(
+    ctrl: GestureController,
     private id: number,
-    ctrl: any,
     private disable: string[] | undefined,
     private disableScroll: boolean
   ) {
@@ -253,4 +259,5 @@ export interface BlockerConfig {
   disableScroll?: boolean;
 }
 
-export const gestureController = new GestureController(document);
+const BACKDROP_NO_SCROLL = 'backdrop-no-scroll';
+export const GESTURE_CONTROLLER = new GestureController(document);

@@ -1,5 +1,6 @@
 import { Component, ComponentInterface, Element, Method, Prop, QueueApi } from '@stencil/core';
 
+import { Config } from '../../interface';
 import { rIC } from '../../utils/helpers';
 
 @Component({
@@ -13,13 +14,16 @@ export class RippleEffect implements ComponentInterface {
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'window' }) win!: Window;
+  @Prop({ context: 'config' }) config!: Config;
 
   /**
    * Adds the ripple effect to the parent element
    */
   @Method()
   addRipple(pageX: number, pageY: number) {
-    rIC(() => this.prepareRipple(pageX, pageY));
+    if (this.config.getBoolean('animated', true)) {
+      rIC(() => this.prepareRipple(pageX, pageY));
+    }
   }
 
   private prepareRipple(pageX: number, pageY: number) {

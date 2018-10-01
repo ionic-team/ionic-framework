@@ -27,7 +27,7 @@ export class Select implements ComponentInterface {
 
   @State() isExpanded = false;
   @State() keyFocus = false;
-  @State() text?: string;
+  @State() text = '';
 
   /**
    * The mode determines which platform styles to use.
@@ -53,7 +53,7 @@ export class Select implements ComponentInterface {
   /**
    * The text to display when the select is empty.
    */
-  @Prop() placeholder?: string;
+  @Prop() placeholder?: string | null;
 
   /**
    * The name of the control, which is submitted with the form data.
@@ -63,7 +63,7 @@ export class Select implements ComponentInterface {
   /**
    * The text to display instead of the selected option's value.
    */
-  @Prop() selectedText?: string;
+  @Prop() selectedText?: string | null;
 
   /**
    * If true, the select can accept multiple values.
@@ -164,9 +164,7 @@ export class Select implements ComponentInterface {
         }
       });
 
-      if (texts.length > 0) {
-        this.text = texts.join(', ');
-      }
+      this.text = texts.join(', ');
     }
 
     // emit the new value
@@ -250,9 +248,7 @@ export class Select implements ComponentInterface {
         // fire off an unnecessary change event
         (this.value as string[]).push(o.value);
       });
-      if (checked.map(o => o.textContent).length > 0) {
-        this.text = checked.map(o => o.textContent).join(', ');
-      }
+      this.text = checked.map(o => o.textContent).join(', ');
 
     } else {
       const checked = this.childOpts.find(o => o.selected);
@@ -475,7 +471,7 @@ export class Select implements ComponentInterface {
     let addPlaceholderClass = false;
 
     let selectText = this.selectedText || this.text;
-    if (selectText == null && this.placeholder != null) {
+    if (selectText === '' && this.placeholder != null) {
       selectText = this.placeholder;
       addPlaceholderClass = true;
     }

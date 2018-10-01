@@ -5,8 +5,8 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{$item-md-divider-background};
-  --ion-color-contrast: #{$item-md-divider-color};
+  --background: #{$item-md-divider-background};
+  --color: #{$item-md-divider-color};
   --padding-start: #{$item-md-divider-padding-start};
 
   border-bottom: $item-md-divider-border-bottom;

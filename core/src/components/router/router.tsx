@@ -42,7 +42,7 @@ export class Router implements ComponentInterface {
    * Using one or another might depend in the requirements of your app and/or where it's deployed.
    *
    * Usually "hash-less" navigation works better for SEO and it's more user friendly too, but it might
-   * requires aditional server-side configuration in order to properly work.
+   * requires additional server-side configuration in order to properly work.
    *
    * On the otherside hash-navigation is much easier to deploy, it even works over the file protocol.
    *

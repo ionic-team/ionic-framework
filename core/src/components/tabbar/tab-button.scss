@@ -26,6 +26,7 @@
   text-decoration: none;
 
   cursor: pointer;
+  overflow: hidden;
   box-sizing: border-box;
   -webkit-user-drag: none;
 }
@@ -34,7 +35,12 @@
   background: var(--background-focused);
 }
 
-.tab-btn:hover,
+@media (any-hover: hover) {
+  .tab-btn:hover {
+    color: var(--color-selected);
+  }
+}
+
 .tab-btn-selected {
   color: var(--color-selected);
 }

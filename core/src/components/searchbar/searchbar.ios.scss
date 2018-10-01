@@ -151,8 +151,10 @@
   color: #{current-color(base)};
 }
 
-:host(.ion-color) .searchbar-cancel-button:hover {
-  color: #{current-color(tint)};
+@media (any-hover: hover) {
+  :host(.ion-color) .searchbar-cancel-button:hover {
+    color: #{current-color(tint)};
+  }
 }
 
 // Searchbar in Toolbar Color

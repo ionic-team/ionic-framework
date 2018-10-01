@@ -8,6 +8,10 @@
   color: #{ion-color(primary, base)};
 }
 
+:host(.activated) {
+  opacity: 0.4;
+}
+
 button {
   @include padding(0, 5px);
 }

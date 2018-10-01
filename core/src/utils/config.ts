@@ -7,6 +7,8 @@ export interface IonicConfig {
    */
   mode?: Mode;
   persistConfig?: boolean;
+  hardwareBackButton?: boolean;
+  statusTap?: boolean;
 
   inputShims?: boolean;
   backButtonIcon?: string;
@@ -46,6 +48,8 @@ export interface IonicConfig {
   popoverLeave?: string;
   toastLeave?: string;
   pickerLeave?: string;
+
+  _forceStatusbarPadding?: boolean;
 }
 
 export function setupConfig(config: IonicConfig) {

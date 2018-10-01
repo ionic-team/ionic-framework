@@ -8,10 +8,10 @@
   font-size: $item-option-button-ios-font-size;
 }
 
-:host(.in-list.item-options-end:last-child) {
-  @include safe-area-padding-horizontal(null, .7em);
+:host(.activated) {
+  background: ion-color(primary, shade);
 }
 
-:host(.in-list.item-options-start:first-child) {
-  @include safe-area-padding-horizontal(.7em, null);
+:host(.ion-color.activated) {
+  background: current-color(shade);
 }

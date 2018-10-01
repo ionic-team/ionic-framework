@@ -1,6 +1,6 @@
 import { QueueApi } from '@stencil/core';
 
-import { gestureController } from './gesture-controller';
+import { GESTURE_CONTROLLER } from './gesture-controller';
 import { createPointerEvents } from './pointer-events';
 import { createPanRecognizer } from './recognizers';
 
@@ -52,7 +52,7 @@ export function createGesture(config: GestureConfig): Gesture {
   );
 
   const pan = createPanRecognizer(finalConfig.direction, finalConfig.threshold, finalConfig.maxAngle);
-  const gesture = gestureController.createGesture({
+  const gesture = GESTURE_CONTROLLER.createGesture({
     name: config.gestureName,
     priority: config.gesturePriority,
     disableScroll: config.disableScroll

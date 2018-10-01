@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Pr
 
 import { InputChangeEvent, Mode, PickerColumn, PickerColumnOption, PickerOptions, StyleEvent } from '../../interface';
 import { clamp, deferEvent } from '../../utils/helpers';
-import { createThemedClasses, hostContext } from '../../utils/theme';
+import { hostContext } from '../../utils/theme';
 
 import { DatetimeData, LocaleData, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getValueFromFormat, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
 
@@ -25,7 +25,7 @@ export class Datetime implements ComponentInterface {
 
   @Element() el!: HTMLIonDatetimeElement;
 
-  @State() text?: string;
+  @State() text?: string | null;
 
   @Prop({ connect: 'ion-picker-controller' }) pickerCtrl!: HTMLIonPickerControllerElement;
 
@@ -174,7 +174,7 @@ export class Datetime implements ComponentInterface {
    * The text to display when there's no date selected yet.
    * Using lowercase to match the input attribute
    */
-  @Prop() placeholder?: string;
+  @Prop() placeholder?: string | null;
 
   /**
    * the value of the datetime.
@@ -507,7 +507,6 @@ export class Datetime implements ComponentInterface {
 
     return {
       class: {
-        ...createThemedClasses(this.mode, 'datetime'),
         'datetime-disabled': this.disabled,
         'datetime-placeholder': addPlaceholderClass,
         'in-item': hostContext('ion-item', this.el)

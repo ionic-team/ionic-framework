@@ -83,15 +83,15 @@ export class FabButton implements ComponentInterface {
 
     return (
       <TagType
-        class="fab-button-native"
+        class="button-native"
         disabled={this.disabled}
         href={this.href}
         onClick={ev => openURL(this.win, this.href, ev, this.routerDirection)}
       >
-        <span class="fab-button-close-icon">
+        <span class="close-icon">
           <ion-icon name="close" lazy={false}></ion-icon>
         </span>
-        <span class="fab-button-inner">
+        <span class="button-inner">
           <slot></slot>
         </span>
         {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}

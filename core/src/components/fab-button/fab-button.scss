@@ -37,7 +37,7 @@
   --background: #{current-color(tint)};
 }
 
-.fab-button-native {
+.button-native {
   @include text-inherit();
   @include border-radius(50%);
   @include margin(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
@@ -69,7 +69,7 @@
   appearance: none;
 }
 
-.fab-button-native[disabled] {
+.button-native[disabled] {
   cursor: default;
   opacity: .5;
   pointer-events: none;
@@ -79,7 +79,7 @@
   line-height: 1;
 }
 
-.fab-button-inner {
+.button-inner {
   @include position(0, 0, null, 0);
 
   display: flex;
@@ -107,7 +107,7 @@
 // FAB Close Icon
 // --------------------------------------------------
 
-.fab-button-close-icon {
+.close-icon {
   @include position(0, 0, null, 0);
 
   display: flex;
@@ -129,13 +129,13 @@
 // FAB Animation
 // --------------------------------------------------
 
-:host(.fab-button-close-active) .fab-button-close-icon {
+:host(.fab-button-close-active) .close-icon {
   transform: scale(1) rotateZ(0deg);
 
   opacity: 1;
 }
 
-:host(.fab-button-close-active) .fab-button-inner {
+:host(.fab-button-close-active) .button-inner {
   transform: scale(.4) rotateZ(45deg);
 
   opacity: 0;

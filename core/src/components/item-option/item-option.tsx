@@ -65,12 +65,12 @@ export class ItemOption implements ComponentInterface {
     return (
       <TagType
         type="button"
-        class="item-option-native"
+        class="button-native"
         disabled={this.disabled}
         href={this.href}
         onClick={this.clickedOptionButton.bind(this)}
       >
-        <span class="item-option-button-inner">
+        <span class="button-inner">
           <slot name="start"></slot>
           <slot name="top" />
           <slot name="icon-only" />

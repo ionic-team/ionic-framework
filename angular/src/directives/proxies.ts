@@ -1,5 +1,5 @@
-/* auto-generated angular directive proxies */
 /* tslint:disable */
+/* auto-generated angular directive proxies */
 
 import { fromEvent } from 'rxjs';
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, ViewEncapsulation } from '@angular/core';

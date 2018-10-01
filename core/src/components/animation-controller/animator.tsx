@@ -31,6 +31,8 @@ const raf = (window as any).requestAnimationFrame
 
 export class Animator {
 
+  static animated = true;
+
   private _afterAddClasses?: string[];
   private _afterRemoveClasses?: string[];
   private _afterStyles?: { [property: string]: any; };
@@ -98,12 +100,14 @@ export class Animator {
    * not have a duration, then it'll get the duration from its parent.
    */
   getDuration(opts?: PlayOptions): number {
-    if (opts && opts.duration !== undefined) {
-      return opts.duration;
-    } else if (this._duration !== undefined) {
-      return this._duration;
-    } else if (this.parent) {
-      return this.parent.getDuration();
+    if (Animator.animated) {
+      if (opts && opts.duration !== undefined) {
+        return opts.duration;
+      } else if (this._duration !== undefined) {
+        return this._duration;
+      } else if (this.parent) {
+        return this.parent.getDuration();
+      }
     }
     return 0;
   }

@@ -39,7 +39,7 @@ export class Platform {
     proxyEvent(this.pause, document, 'pause');
     proxyEvent(this.resume, document, 'resume');
     proxyEvent(this.backButton, document, 'backbutton');
-    proxyEvent(this.resize, document, 'resize');
+    proxyEvent(this.resize, window, 'resize');
 
     let readyResolve: (value: string) => void;
     this._readyPromise = new Promise(res => { readyResolve = res; });
@@ -83,14 +83,14 @@ export class Platform {
    * | cordova         | on a device running Cordova.       |
    * | ios             | on a device running iOS.           |
    * | ipad            | on an iPad device.                 |
-   * | iphone          | on an iPhone device.               |   
+   * | iphone          | on an iPhone device.               |
    * | phablet         | on a phablet device.               |
-   * | tablet          | on a tablet device.                |   
+   * | tablet          | on a tablet device.                |
    * | electron        | in Electron on a desktop device.   |
    * | pwa             | as a PWA app.   |
    * | mobile          | on a mobile device.                |
    * | desktop         | on a desktop device.               |
-   * | hybrid          | is a cordova or capacitor app.     |   
+   * | hybrid          | is a cordova or capacitor app.     |
    *
    */
   is(platformName: Platforms): boolean {

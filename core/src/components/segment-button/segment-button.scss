@@ -40,23 +40,23 @@
   font-kerning: none;
 }
 
-:host(:first-of-type) .segment-button-native {
+:host(:first-of-type) .button-native {
   --padding-end: 0;
 
   @include border-radius(var(--border-radius), 0, 0, var(--border-radius));
 }
 
-:host(:not(:first-of-type)) .segment-button-native {
+:host(:not(:first-of-type)) .button-native {
   border-left-width: 0;
 }
 
-:host(:last-of-type) .segment-button-native {
+:host(:last-of-type) .button-native {
   --padding-start: 0;
 
   @include border-radius(0, var(--border-radius), var(--border-radius), 0);
 }
 
-.segment-button-native {
+.button-native {
   @include text-inherit();
   @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
@@ -73,16 +73,13 @@
   border-style: var(--border-style);
   border-color: var(--btn-border-color);
 
+  outline: none;
+
   background: var(--btn-background);
 
   contain: content;
   cursor: pointer;
   overflow: hidden;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
 }
 
 ::slotted(ion-icon) {

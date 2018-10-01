@@ -54,3 +54,4 @@ demos/src/**/*.css.shim.ts
 angular/css/
 core/css/
 core/loader/
+.stencil/
