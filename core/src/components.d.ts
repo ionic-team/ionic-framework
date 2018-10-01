@@ -29,7 +29,6 @@ import {
   LoadingOptions,
   MenuChangeEventDetail,
   MenuControllerI,
-  MenuI,
   ModalOptions,
   Mode,
   NavComponent,
@@ -2439,12 +2438,7 @@ export namespace Components {
   }
 
   interface IonMenuController {
-    '_createAnimation': (type: string, menuCmp: MenuI) => Promise<Animation>;
     '_getInstance': () => Promise<MenuControllerI>;
-    '_register': (menu: MenuI) => void;
-    '_setActiveMenu': (menu: MenuI) => void;
-    '_setOpen': (menu: MenuI, shouldOpen: boolean, animated: boolean) => Promise<boolean>;
-    '_unregister': (menu: MenuI) => void;
     /**
     * Close the menu. If no menu is specified, then it will close any menu that is open. If a menu is specified, it will close that menu.
     */

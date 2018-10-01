@@ -136,15 +136,10 @@ export class Menu implements ComponentInterface, MenuI {
 
     if (this.isServer) {
       this.disabled = true;
-    } else {
-      this.menuCtrl = await this.lazyMenuCtrl.componentOnReady().then(p => p._getInstance());
-    }
-  }
-
-  async componentDidLoad() {
-    if (this.isServer) {
       return;
     }
+
+    const menuCtrl = this.menuCtrl = await this.lazyMenuCtrl.componentOnReady().then(p => p._getInstance());
     const el = this.el;
     const parent = el.parentNode as any;
     const content = this.contentId !== undefined
@@ -166,17 +161,8 @@ export class Menu implements ComponentInterface, MenuI {
     this.typeChanged(this.type, undefined);
     this.sideChanged();
 
-    let isEnabled = !this.disabled;
-    if (isEnabled) {
-      const menus = await this.menuCtrl!.getMenus();
-      isEnabled = !menus.some((m: any) => {
-        return m.side === this.side && !m.disabled;
-      });
-    }
-
     // register this menu with the app's menu controller
-    this.menuCtrl!._register(this);
-    this.ionMenuChange.emit({ disabled: !isEnabled, open: this._isOpen });
+    menuCtrl!._register(this);
 
     this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
       el: this.doc,
@@ -190,10 +176,11 @@ export class Menu implements ComponentInterface, MenuI {
       onMove: ev => this.onMove(ev),
       onEnd: ev => this.onEnd(ev),
     });
-
-    // mask it as enabled / disabled
-    this.disabled = !isEnabled;
     this.updateState();
+  }
+
+  componentDidLoad() {
+    this.ionMenuChange.emit({ disabled: this.disabled, open: this._isOpen });
   }
 
   componentDidUnload() {

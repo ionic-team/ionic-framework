@@ -198,13 +198,20 @@ export class MenuController implements MenuControllerI {
   }
 
   @Method()
+  _getInstance(): Promise<MenuControllerI> {
+    return Promise.resolve(this);
+  }
+
   _register(menu: MenuI) {
-    if (this.menus.indexOf(menu) < 0) {
-      this.menus.push(menu);
+    const menus = this.menus;
+    if (menus.indexOf(menu) < 0) {
+      if (!menu.disabled) {
+        this._setActiveMenu(menu);
+      }
+      menus.push(menu);
     }
   }
 
-  @Method()
   _unregister(menu: MenuI) {
     const index = this.menus.indexOf(menu);
     if (index > -1) {
@@ -212,7 +219,6 @@ export class MenuController implements MenuControllerI {
     }
   }
 
-  @Method()
   _setActiveMenu(menu: MenuI) {
     // if this menu should be enabled
     // then find all the other menus on this same side
@@ -220,10 +226,9 @@ export class MenuController implements MenuControllerI {
     const side = menu.side;
     this.menus
       .filter(m => m.side === side && m !== menu)
-      .forEach(m => (m.disabled = true));
+      .forEach(m => m.disabled = true);
   }
 
-  @Method()
   async _setOpen(menu: MenuI, shouldOpen: boolean, animated: boolean): Promise<boolean> {
     if (this.isAnimatingSync()) {
       return false;
@@ -237,12 +242,6 @@ export class MenuController implements MenuControllerI {
     return menu._setOpen(shouldOpen, animated);
   }
 
-  @Method()
-  _getInstance(): Promise<MenuControllerI> {
-    return Promise.resolve(this);
-  }
-
-  @Method()
   _createAnimation(type: string, menuCmp: MenuI): Promise<Animation> {
     const animationBuilder = this.menuAnimations.get(type);
     if (!animationBuilder) {
