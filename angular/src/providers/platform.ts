@@ -3,6 +3,14 @@ import { BackButtonDetail, Platforms, getPlatforms, isPlatform } from '@ionic/co
 import { proxyEvent } from '../util/util';
 
 
+export class BackButtonEmitter extends EventEmitter<BackButtonDetail> {
+  subscribeWithPriority(priority: number, callback: () => Promise<any> | void) {
+    return this.subscribe((ev: BackButtonDetail) => {
+      ev.register(priority, callback);
+    });
+  }
+}
+
 @Injectable()
 export class Platform {
 
@@ -11,7 +19,7 @@ export class Platform {
   /**
    * @hidden
    */
-  backButton = new EventEmitter<BackButtonDetail>();
+  backButton = new BackButtonEmitter();
 
   /**
    * The pause event emits when the native platform puts the application
