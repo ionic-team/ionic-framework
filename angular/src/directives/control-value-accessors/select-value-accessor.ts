@@ -32,7 +32,7 @@ export class SelectValueAccessor implements ControlValueAccessor {
     });
   }
 
-  @HostListener('ionChange', ['$event.target.value'])
+  @HostListener('ionChange', ['$event.detail.value'])
   _handleChangeEvent(value: any) {
     this.onChange(value);
 

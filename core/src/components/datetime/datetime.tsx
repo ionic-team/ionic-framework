@@ -4,7 +4,7 @@ import { InputChangeEvent, Mode, PickerColumn, PickerColumnOption, PickerOptions
 import { clamp, deferEvent } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
-import { DatetimeData, LocaleData, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getValueFromFormat, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
+import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getValueFromFormat, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
 
 @Component({
   tag: 'ion-datetime',
@@ -189,7 +189,7 @@ export class Datetime implements ComponentInterface {
     this.updateValue();
     this.emitStyle();
     this.ionChange.emit({
-      value: this.value
+      value: convertDataToISO(this.datetimeValue)
     });
   }
 
