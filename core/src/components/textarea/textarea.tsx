@@ -169,7 +169,7 @@ export class Textarea implements ComponentInterface {
   }
 
   @Method()
-  focus() {
+  setFocus() {
     if (this.nativeInput) {
       this.nativeInput.focus();
     }

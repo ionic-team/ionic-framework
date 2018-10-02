@@ -44,9 +44,9 @@ A Searchbar should be used instead of an input to search lists. A clear button i
 
 ## Methods
 
-| Method  | Description |
-| ------- | ----------- |
-| `focus` |             |
+| Method     | Description |
+| ---------- | ----------- |
+| `setFocus` |             |
 
 
 ## CSS Custom Properties

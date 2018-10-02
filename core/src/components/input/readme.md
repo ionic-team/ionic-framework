@@ -57,9 +57,9 @@ It is meant for text `type` inputs only, such as `"text"`, `"password"`, `"email
 
 ## Methods
 
-| Method  | Description |
-| ------- | ----------- |
-| `focus` |             |
+| Method     | Description |
+| ---------- | ----------- |
+| `setFocus` |             |
 
 
 ----------------------------------------------

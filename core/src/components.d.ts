@@ -1733,7 +1733,6 @@ export namespace Components {
     * If true, the user cannot interact with the input. Defaults to `false`.
     */
     'disabled': boolean;
-    'focus': () => void;
     /**
     * A hint to the browser for which keyboard to display. This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
     */
@@ -1786,6 +1785,7 @@ export namespace Components {
     * This is a nonstandard attribute supported by Safari that only applies when the type is `"search"`. Its value should be a nonnegative decimal integer.
     */
     'results'?: number;
+    'setFocus': () => void;
     /**
     * The initial size of the control. This value is in pixels unless the value of the type attribute is `"text"` or `"password"`, in which case it is an integer number of characters. This attribute applies only when the `type` attribute is set to `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
     */
@@ -3713,7 +3713,6 @@ export namespace Components {
     * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `250`.
     */
     'debounce': number;
-    'focus': () => void;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -3726,6 +3725,7 @@ export namespace Components {
     * The icon to use as the search icon. Defaults to `"search"`.
     */
     'searchIcon'?: string;
+    'setFocus': () => void;
     /**
     * If true, show the cancel button. Default `false`.
     */
@@ -4729,7 +4729,6 @@ export namespace Components {
     * If true, the user cannot interact with the textarea. Defaults to `false`.
     */
     'disabled': boolean;
-    'focus': () => void;
     /**
     * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
     */
@@ -4762,6 +4761,7 @@ export namespace Components {
     * The number of visible text lines for the control.
     */
     'rows'?: number;
+    'setFocus': () => void;
     /**
     * If true, the element will have its spelling and grammar checked. Defaults to `false`.
     */

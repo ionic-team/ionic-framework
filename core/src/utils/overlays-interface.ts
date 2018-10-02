@@ -43,7 +43,9 @@ export interface HTMLIonOverlayElement extends HTMLStencilElement {
   dismiss(data?: any, role?: string): Promise<boolean>;
 }
 
+// TODO: uncomment when TS 3.0 issues are fixed
 // Overlay checks
+/*
 export type Conforms<T extends Required<B>, B> = T;
 export type HTMLOverlaysElement =
   Conforms<Required<HTMLIonModalElement>, ModalOptions> |
@@ -53,3 +55,4 @@ export type HTMLOverlaysElement =
   Conforms<Required<HTMLIonPopoverElement>, PopoverOptions> |
   Conforms<Required<HTMLIonPickerElement>, PickerOptions> |
   Conforms<Required<HTMLIonLoadingElement>, LoadingOptions>;
+*/

@@ -48,9 +48,9 @@ The textarea component accepts the [native textarea attributes](https://develope
 
 ## Methods
 
-| Method  | Description |
-| ------- | ----------- |
-| `focus` |             |
+| Method     | Description |
+| ---------- | ----------- |
+| `setFocus` |             |
 
 
 ## CSS Custom Properties

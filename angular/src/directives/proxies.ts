@@ -356,7 +356,7 @@ export class Input {
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyMethods(this, el, ['focus']);
+    proxyMethods(this, el, ['setFocus']);
     proxyInputs(this, el, ['color', 'mode', 'accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'debounce', 'disabled', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'results', 'spellcheck', 'step', 'size', 'type', 'value']);
     proxyOutputs(this, el, ['ionInput', 'ionChange', 'ionStyle', 'ionBlur', 'ionFocus', 'ionInputDidLoad', 'ionInputDidUnload']);
   }
@@ -654,7 +654,7 @@ export class Searchbar {
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyMethods(this, el, ['focus']);
+    proxyMethods(this, el, ['setFocus']);
     proxyInputs(this, el, ['color', 'mode', 'animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'debounce', 'placeholder', 'searchIcon', 'showCancelButton', 'spellcheck', 'type', 'value']);
     proxyOutputs(this, el, ['ionInput', 'ionChange', 'ionCancel', 'ionClear', 'ionBlur', 'ionFocus']);
   }
@@ -857,7 +857,7 @@ export class Textarea {
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyMethods(this, el, ['focus']);
+    proxyMethods(this, el, ['setFocus']);
     proxyInputs(this, el, ['mode', 'color', 'autocapitalize', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value']);
     proxyOutputs(this, el, ['ionChange', 'ionInput', 'ionStyle', 'ionBlur', 'ionFocus']);
   }
