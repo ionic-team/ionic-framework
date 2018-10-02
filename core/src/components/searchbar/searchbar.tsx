@@ -154,9 +154,7 @@ export class Searchbar implements ComponentInterface {
 
   @Method()
   setFocus() {
-    if (this.nativeInput) {
-      this.nativeInput.focus();
-    }
+    this.nativeInput.focus();
   }
 
   /**

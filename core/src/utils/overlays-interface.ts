@@ -1,6 +1,6 @@
 import { EventEmitter } from '@stencil/core';
 
-import { ActionSheetOptions, AlertOptions, Animation, AnimationBuilder, Config, Conforms, LoadingOptions, ModalOptions, Mode, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
+import { Animation, AnimationBuilder, Config, Mode } from '../interface';
 
 export interface OverlayEventDetail<T = any> {
   data?: T;

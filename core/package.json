@@ -30,7 +30,7 @@
     "ionicons": "4.4.4"
   },
   "devDependencies": {
-    "@stencil/core": "0.13.1",
+    "@stencil/core": "0.14.0-0",
     "@stencil/dev-server": "latest",
     "@stencil/sass": "0.1.1",
     "@stencil/utils": "latest",
@@ -46,6 +46,7 @@
     "np": "^3.0.4",
     "pixelmatch": "4.0.2",
     "puppeteer": "1.7.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
     "stylelint": "~9.6.0",
     "stylelint-order": "~1.0.0",
     "swiper": "4.4.1",
