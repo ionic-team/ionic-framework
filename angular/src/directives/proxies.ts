@@ -821,7 +821,7 @@ export class Tab {
 }
 
 export declare interface Tabs extends StencilComponents<'IonTabs'> {}
-@Component({ selector: 'ion-tabs', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'name', 'tabbarHidden', 'tabbarHighlight', 'tabbarLayout', 'tabbarPlacement', 'translucent', 'useRouter'] })
+@Component({ selector: 'ion-tabs', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'name', 'tabbarHidden', 'tabbarHighlight', 'tabbarLayout', 'tabbarPlacement', 'translucent', 'useRouter'] })
 export class Tabs {
   ionChange: EventEmitter<CustomEvent>;
   ionNavWillLoad: EventEmitter<CustomEvent>;
@@ -831,7 +831,7 @@ export class Tabs {
   constructor(r: ElementRef) {
     const el = r.nativeElement;
     proxyMethods(this, el, ['select', 'setRouteId', 'getRouteId', 'getTab', 'getSelected']);
-    proxyInputs(this, el, ['color', 'name', 'tabbarHidden', 'tabbarHighlight', 'tabbarLayout', 'tabbarPlacement', 'translucent', 'useRouter']);
+    proxyInputs(this, el, ['mode', 'color', 'name', 'tabbarHidden', 'tabbarHighlight', 'tabbarLayout', 'tabbarPlacement', 'translucent', 'useRouter']);
     proxyOutputs(this, el, ['ionChange', 'ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange']);
   }
 }

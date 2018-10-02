@@ -4595,6 +4595,10 @@ export namespace Components {
     */
     'getTab': (tabOrIndex: string | number | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>;
     /**
+    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    */
+    'mode': Mode;
+    /**
     * A unique name for the tabs.
     */
     'name'?: string;
@@ -4633,6 +4637,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    */
+    'mode'?: Mode;
     /**
     * A unique name for the tabs.
     */
