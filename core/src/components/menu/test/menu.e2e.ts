@@ -7,7 +7,7 @@ describe('menu', () => {
     const page = await newE2EPage({
       html: `
       <ion-app>
-        <ion-menu>
+        <ion-menu type="overlay">
           <ion-content>Content</ion-content>
         </ion-menu>
         <div main></div>
@@ -19,6 +19,7 @@ describe('menu', () => {
 
     expect(menu).toHaveClasses([
       'menu-type-overlay',
+      'menu-enabled',
       'menu-side-start',
     ]);
 
