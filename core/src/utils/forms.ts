@@ -15,7 +15,6 @@ export function submitFormOnEnterPress(el: HTMLElement, ev: KeyboardEvent) {
         fakeButton.type = 'submit';
         fakeButton.style.display = 'none';
         form.appendChild(fakeButton);
-        console.log(form);
         fakeButton.click();
         fakeButton.remove();
       } else {
