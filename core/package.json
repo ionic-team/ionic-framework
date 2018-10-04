@@ -47,6 +47,7 @@
     "np": "^3.0.4",
     "pixelmatch": "4.0.2",
     "puppeteer": "1.8.0",
+    "rollup": "^0.66.4",
     "rollup-plugin-node-resolve": "^3.4.0",
     "stylelint": "~9.6.0",
     "stylelint-order": "~1.0.0",
