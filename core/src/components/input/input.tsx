@@ -324,7 +324,6 @@ export class Input implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
-
         'in-item': hostContext('ion-item', this.el),
         'has-value': this.hasValue(),
         'has-focus': this.hasFocus

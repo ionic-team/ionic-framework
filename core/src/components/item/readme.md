@@ -56,35 +56,38 @@ Items left align text and add an ellipsis when the text is wider than the item. 
 | `lines`           | `lines`            | How the bottom border should be displayed on the item. Available options: `"full"`, `"inset"`, `"none"`.                                                                                                                                                               | `"full"`, `"inset"`, `"none"`     |
 | `mode`            | `mode`             | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                                                                                                                                                                              | `Mode`                            |
 | `routerDirection` | `router-direction` | When using a router, it specifies the transition direction when navigating to another page using `href`.                                                                                                                                                               | `RouterDirection`                 |
-| `state`           | `state`            |                                                                                                                                                                                                                                                                        | `"valid"`, `"invalid"`, `"focus"` |
 | `type`            | `type`             | The type of the button. Only used when an `onclick` or `button` property is present. Possible values are: `"submit"`, `"reset"` and `"button"`. Default value is: `"button"`                                                                                           | `"submit"`, `"reset"`, `"button"` |
 
 
 ## CSS Custom Properties
 
-| Name                     | Description                      |
-| ------------------------ | -------------------------------- |
-| `--background`           | Background of the item           |
-| `--background-activated` | Background of the activated item |
-| `--border-color`         | Color of the item border         |
-| `--border-radius`        | Radius of the item border        |
-| `--border-style`         | Style of the item border         |
-| `--border-width`         | Width of the item border         |
-| `--box-shadow`           | Box shadow of the item           |
-| `--color`                | Color of the item                |
-| `--detail-icon-color`    | Color of the item detail icon    |
-| `--inner-border-width`   | Width of the item inner border   |
-| `--inner-box-shadow`     | Box shadow of the item inner     |
-| `--inner-padding-bottom` | Bottom padding of the item inner |
-| `--inner-padding-end`    | End padding of the item inner    |
-| `--inner-padding-start`  | Start padding of the item inner  |
-| `--inner-padding-top`    | Top padding of the item inner    |
-| `--min-height`           | Minimum height of the item       |
-| `--padding-bottom`       | Bottom padding of the item       |
-| `--padding-end`          | End padding of the item          |
-| `--padding-start`        | Start padding of the item        |
-| `--padding-top`          | Top padding of the item          |
-| `--transition`           | Transition of the item           |
+| Name                        | Description                                         |
+| --------------------------- | --------------------------------------------------- |
+| `--background`              | Background of the item                              |
+| `--background-activated`    | Background of the activated item                    |
+| `--border-color`            | Color of the item border                            |
+| `--border-radius`           | Radius of the item border                           |
+| `--border-style`            | Style of the item border                            |
+| `--border-width`            | Width of the item border                            |
+| `--box-shadow`              | Box shadow of the item                              |
+| `--color`                   | Color of the item                                   |
+| `--detail-icon-color`       | Color of the item detail icon                       |
+| `--highlight-color-focused` | The color of the highlight on the item when focused |
+| `--highlight-color-invalid` | The color of the highlight on the item when invalid |
+| `--highlight-color-valid`   | The color of the highlight on the item when valid   |
+| `--highlight-height`        | The height of the highlight on the item             |
+| `--inner-border-width`      | Width of the item inner border                      |
+| `--inner-box-shadow`        | Box shadow of the item inner                        |
+| `--inner-padding-bottom`    | Bottom padding of the item inner                    |
+| `--inner-padding-end`       | End padding of the item inner                       |
+| `--inner-padding-start`     | Start padding of the item inner                     |
+| `--inner-padding-top`       | Top padding of the item inner                       |
+| `--min-height`              | Minimum height of the item                          |
+| `--padding-bottom`          | Bottom padding of the item                          |
+| `--padding-end`             | End padding of the item                             |
+| `--padding-start`           | Start padding of the item                           |
+| `--padding-top`             | Top padding of the item                             |
+| `--transition`              | Transition of the item                              |
 
 
 ----------------------------------------------

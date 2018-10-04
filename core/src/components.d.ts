@@ -2108,7 +2108,6 @@ export namespace Components {
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection'?: RouterDirection;
-    'state'?: 'valid' | 'invalid' | 'focus';
     /**
     * The type of the button. Only used when an `onclick` or `button` property is present. Possible values are: `"submit"`, `"reset"` and `"button"`. Default value is: `"button"`
     */
@@ -2151,7 +2150,6 @@ export namespace Components {
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection'?: RouterDirection;
-    'state'?: 'valid' | 'invalid' | 'focus';
     /**
     * The type of the button. Only used when an `onclick` or `button` property is present. Possible values are: `"submit"`, `"reset"` and `"button"`. Default value is: `"button"`
     */
@@ -4021,7 +4019,7 @@ export namespace Components {
     * The text to display on the ok button. Default: `OK`.
     */
     'okText': string;
-    'open': (ev?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement>;
+    'open': (ev?: UIEvent | undefined) => Promise<HTMLIonAlertElement | HTMLIonPopoverElement | HTMLIonActionSheetElement>;
     /**
     * The text to display when the select is empty.
     */

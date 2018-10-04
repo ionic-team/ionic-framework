@@ -48,6 +48,15 @@ $item-md-border-bottom-color:               $item-md-border-color !default;
 /// @prop - Border bottom for the item when lines are displayed
 $item-md-border-bottom:                     $item-md-border-bottom-width $item-md-border-bottom-style $item-md-border-color !default;
 
+/// @prop - Color of the item input highlight
+$item-md-input-highlight-color:             ion-color(primary, base) !default;
+
+/// @prop - Color of the item input highlight when valid
+$item-md-input-highlight-color-valid:       ion-color(success, base) !default;
+
+/// @prop - Color of the item input highlight when invalid
+$item-md-input-highlight-color-invalid:     ion-color(danger, base) !default;
+
 
 // Item Slots
 // --------------------------------------------------
