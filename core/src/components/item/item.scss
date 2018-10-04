@@ -15,7 +15,8 @@
    * @prop --color: Color of the item
    *
    * @prop --detail-icon-color: Color of the item detail icon
-   *
+   * @prop --detail-icon-opacity: Opacity of the item detail icon
+   * @prop --detail-icon-font-size: Font size of the item detail icon
    * @prop --inner-border-width: Width of the item inner border
    * @prop --inner-box-shadow: Box shadow of the item inner
    * @prop --inner-padding-bottom: Bottom padding of the item inner
@@ -52,6 +53,9 @@
   --inner-box-shadow: none;
   --show-full-highlight: 0;
   --show-inset-highlight: 0;
+  --detail-icon-color: currentColor;
+  --detail-icon-font-size: 20px;
+  --detail-icon-opacity: 0.25;
 
   @include font-smoothing();
 
@@ -81,10 +85,6 @@
 :host(.ion-color) .item-native,
 :host(.ion-color) .item-inner {
   border-color: current-color(shade);
-}
-
-:host(.ion-color) .item-detail-icon {
-  color: current-color(shade);
 }
 
 
@@ -186,6 +186,17 @@ button, a {
   box-shadow: var(--inner-box-shadow);
   overflow: hidden;
   box-sizing: border-box;
+}
+
+// Item Detail Icon
+// -----------------------------------------
+
+.item-detail-icon {
+  color: var(--detail-icon-color);
+
+  font-size: var(--detail-icon-font-size);
+
+  opacity: var(--detail-icon-opacity);
 }
 
 

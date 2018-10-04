@@ -13,7 +13,6 @@
   --background-activated: #{$item-ios-background-color-active};
   --border-color: #{$item-ios-border-bottom-color};
   --color: #{$item-ios-text-color};
-  --detail-icon-color: #{$item-ios-border-bottom-color};
   --highlight-height: 0;
   --highlight-color-focused: #{$item-ios-input-highlight-color};
   --highlight-color-valid: #{$item-ios-input-highlight-color-valid};
@@ -124,16 +123,6 @@
 ::slotted(ion-thumbnail[slot="end"]) {
   @include margin(($item-ios-padding-end / 2));
 }
-
-// iOS Item Detail Push
-// --------------------------------------------------
-
-.item-detail-icon {
-  color: var(--detail-icon-color);
-
-  font-size: 20px;
-}
-
 
 // TODO: MOVE FROM RADIO
 // iOS Radio Item Label: Checked
