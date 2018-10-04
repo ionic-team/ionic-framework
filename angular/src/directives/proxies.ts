@@ -492,7 +492,7 @@ export class MenuToggle {
 }
 
 export declare interface Nav extends StencilComponents<'IonNav'> {}
-@Component({ selector: 'ion-nav', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['swipeGesture', 'animated', 'delegate', 'rootParams', 'root'] })
+@Component({ selector: 'ion-nav', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['swipeGesture', 'animated', 'animation', 'delegate', 'rootParams', 'root'] })
 export class Nav {
   ionNavWillLoad: EventEmitter<CustomEvent>;
   ionNavWillChange: EventEmitter<CustomEvent>;
@@ -501,7 +501,7 @@ export class Nav {
   constructor(r: ElementRef) {
     const el = r.nativeElement;
     proxyMethods(this, el, ['push', 'insert', 'insertPages', 'pop', 'popTo', 'popToRoot', 'removeIndex', 'setRoot', 'setPages', 'setRouteId', 'getRouteId', 'getActive', 'getByIndex', 'canGoBack', 'getPrevious']);
-    proxyInputs(this, el, ['swipeGesture', 'animated', 'delegate', 'rootParams', 'root']);
+    proxyInputs(this, el, ['swipeGesture', 'animated', 'animation', 'delegate', 'rootParams', 'root']);
     proxyOutputs(this, el, ['ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange']);
   }
 }

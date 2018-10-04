@@ -1,4 +1,4 @@
-import { Mode } from '../interface';
+import { AnimationBuilder, Mode } from '../interface';
 
 export interface IonicConfig {
   /**
@@ -33,21 +33,23 @@ export interface IonicConfig {
   tabbarLayout?: string;
   tabbarHighlight?: boolean;
 
-  actionSheetEnter?: string;
-  alertEnter?: string;
-  loadingEnter?: string;
-  modalEnter?: string;
-  popoverEnter?: string;
-  toastEnter?: string;
-  pickerEnter?: string;
+  navAnimation?: AnimationBuilder;
 
-  actionSheetLeave?: string;
-  alertLeave?: string;
-  loadingLeave?: string;
-  modalLeave?: string;
-  popoverLeave?: string;
-  toastLeave?: string;
-  pickerLeave?: string;
+  actionSheetEnter?: AnimationBuilder;
+  alertEnter?: AnimationBuilder;
+  loadingEnter?: AnimationBuilder;
+  modalEnter?: AnimationBuilder;
+  popoverEnter?: AnimationBuilder;
+  toastEnter?: AnimationBuilder;
+  pickerEnter?: AnimationBuilder;
+
+  actionSheetLeave?: AnimationBuilder;
+  alertLeave?: AnimationBuilder;
+  loadingLeave?: AnimationBuilder;
+  modalLeave?: AnimationBuilder;
+  popoverLeave?: AnimationBuilder;
+  toastLeave?: AnimationBuilder;
+  pickerLeave?: AnimationBuilder;
 
   _forceStatusbarPadding?: boolean;
 }

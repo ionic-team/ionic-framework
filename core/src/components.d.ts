@@ -2782,6 +2782,7 @@ export namespace Components {
     * If the nav should animate the components or not
     */
     'animated': boolean;
+    'animation'?: AnimationBuilder;
     /**
     * Returns true or false if the current view can go back
     */
@@ -2855,6 +2856,7 @@ export namespace Components {
     * If the nav should animate the components or not
     */
     'animated'?: boolean;
+    'animation'?: AnimationBuilder;
     'delegate'?: FrameworkDelegate;
     /**
     * Event fired when the nav has changed components
@@ -3619,7 +3621,7 @@ export namespace Components {
 
   interface IonRouterOutlet {
     'animated': boolean;
-    'animationBuilder'?: AnimationBuilder;
+    'animation'?: AnimationBuilder;
     'commit': (enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
     'delegate'?: FrameworkDelegate;
     /**
@@ -3634,7 +3636,7 @@ export namespace Components {
   }
   interface IonRouterOutletAttributes extends StencilHTMLAttributes {
     'animated'?: boolean;
-    'animationBuilder'?: AnimationBuilder;
+    'animation'?: AnimationBuilder;
     'delegate'?: FrameworkDelegate;
     'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
     'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
