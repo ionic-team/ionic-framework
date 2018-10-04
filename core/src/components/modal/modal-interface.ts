@@ -5,8 +5,6 @@ export interface ModalOptions<T extends ComponentRef = ComponentRef> {
   componentProps?: ComponentProps<T>;
   showBackdrop?: boolean;
   backdropDismiss?: boolean;
-  enterAnimation?: AnimationBuilder;
-  leaveAnimation?: AnimationBuilder;
   cssClass?: string | string[];
   delegate?: FrameworkDelegate;
   animated?: boolean;
@@ -14,4 +12,7 @@ export interface ModalOptions<T extends ComponentRef = ComponentRef> {
   mode?: string;
   keyboardClose?: boolean;
   id?: string;
+
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
 }
