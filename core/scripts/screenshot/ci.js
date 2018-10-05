@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const S3 = require('aws-sdk/clients/s3');
 const execa = require('execa');
+const stream = require('stream');
 
 const S3_BUCKET = 'screenshot.ionicframework.com';
 const s3 = new S3({ apiVersion: '2006-03-01' });
@@ -46,15 +47,19 @@ class CIScreenshotConnector extends LocalScreenshotConnector {
   async publishBuild(build) {
     const timespan = this.logger.createTimeSpan(`publishing build started`);
     const images = build.screenshots.map(screenshot => screenshot.image);
-    const buildPath = path.join(this.buildsDir, `${build.id}.json`);
+    const buildBuffer = Buffer.from(JSON.stringify(build, undefined, 2));
+    const buildStream = new stream.PassThrough();
+    buildStream.end(buildBuffer);
 
     await Promise.all(images.map(async image => this.uploadImage(image)));
-    await this.uploadStream(fs.createReadStream(buildPath), `data/builds/${build.id}.json`, { ContentType: 'application/json' });
+    await this.uploadStream(buildStream, `data/builds/${build.id}.json`, { ContentType: 'application/json' });
 
     if (this.updateMaster) {
+      const buildStream = new stream.PassThrough();
+      buildStream.end(buildBuffer);
       const key = `data/builds/master.json`;
       this.logger.debug(`uploading: ${key}`);
-      await s3.upload({ Bucket: S3_BUCKET, Key: key, Body: fs.createReadStream(buildPath), ContentType: 'application/json' }).promise();
+      await s3.upload({ Bucket: S3_BUCKET, Key: key, Body: buildStream, ContentType: 'application/json' }).promise();
     }
 
     timespan.finish(`publishing build finished`);
