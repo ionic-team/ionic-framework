@@ -1,8 +1,8 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('fab-button: standalone', async () => {
+it('grid: sizes', async () => {
   const page = await newE2EPage({
-    url: '/src/components/fab-button/test/standalone?ionic:animated=false'
+    url: '/src/components/grid/test/sizes?ionic:animated=false'
   });
 
   const compare = await page.compareScreenshot();
