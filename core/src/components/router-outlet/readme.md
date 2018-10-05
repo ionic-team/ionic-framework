@@ -13,11 +13,11 @@ While RouterOutlet has methods for navigating around, it's recommended to use th
 
 ## Properties
 
-| Property           | Attribute  | Description | Type                |
-| ------------------ | ---------- | ----------- | ------------------- |
-| `animated`         | `animated` |             | `boolean`           |
-| `animationBuilder` | --         |             | `AnimationBuilder`  |
-| `delegate`         | --         |             | `FrameworkDelegate` |
+| Property    | Attribute  | Description | Type                |
+| ----------- | ---------- | ----------- | ------------------- |
+| `animated`  | `animated` |             | `boolean`           |
+| `animation` | --         |             | `AnimationBuilder`  |
+| `delegate`  | --         |             | `FrameworkDelegate` |
 
 
 ## Events
