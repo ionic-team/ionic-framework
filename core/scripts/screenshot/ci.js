@@ -43,13 +43,13 @@ class CIScreenshotConnector extends LocalScreenshotConnector {
     }
   }
 
-  async publishBuild() {
+  async publishBuild(build) {
     const timespan = this.logger.createTimeSpan(`publishing build started`);
-    const images = this.build.screenshots.map(screenshot => screenshot.image);
-    const buildPath = path.join(this.buildsDir, `${this.build.id}.json`);
+    const images = build.screenshots.map(screenshot => screenshot.image);
+    const buildPath = path.join(this.buildsDir, `${build.id}.json`);
 
     await Promise.all(images.map(async image => this.uploadImage(image)));
-    await this.uploadStream(fs.createReadStream(buildPath), `data/builds/${this.build.id}.json`, { ContentType: 'application/json' });
+    await this.uploadStream(fs.createReadStream(buildPath), `data/builds/${build.id}.json`, { ContentType: 'application/json' });
 
     if (this.updateMaster) {
       const key = `data/builds/master.json`;

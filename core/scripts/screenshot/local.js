@@ -1,4 +1,4 @@
-const ScreenshotConnector = require('@stencil/core/screenshot/screenshot-connector');
+const ScreenshotConnector = require('@stencil/core/screenshot/connector');
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
