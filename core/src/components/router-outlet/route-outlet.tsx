@@ -25,7 +25,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
   @Prop() animated = true;
-  @Prop() animationBuilder?: AnimationBuilder;
+  @Prop() animation?: AnimationBuilder;
   @Prop() delegate?: FrameworkDelegate;
 
   @Event() ionNavWillLoad!: EventEmitter<void>;
@@ -124,11 +124,14 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
 
     const { mode, queue, animationCtrl, win, el } = this;
     const animated = this.animated && this.config.getBoolean('animated', true);
+    const animationBuilder = this.animation || opts.animationBuilder || this.config.get('navAnimation');
+
     await transition({
       mode,
       queue,
       animated,
       animationCtrl,
+      animationBuilder,
       window: win,
       enteringEl,
       leavingEl,

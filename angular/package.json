@@ -37,6 +37,7 @@
     "validate": "npm i && npm run lint && npm run test && npm run build"
   },
   "module": "dist/index.js",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist/",

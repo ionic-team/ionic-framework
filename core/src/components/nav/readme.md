@@ -12,6 +12,7 @@ Unlike RouterOutlet, Nav is not tied to a particular router. Meaning that if we 
 | Property       | Attribute       | Description                                            | Type                |
 | -------------- | --------------- | ------------------------------------------------------ | ------------------- |
 | `animated`     | `animated`      | If the nav should animate the components or not        | `boolean`           |
+| `animation`    | --              |                                                        | `AnimationBuilder`  |
 | `delegate`     | --              |                                                        | `FrameworkDelegate` |
 | `rootParams`   | --              | Any parameters for the root component                  | `ComponentProps`    |
 | `root`         | `root`          | Root NavComponent to load                              | `NavComponent`      |

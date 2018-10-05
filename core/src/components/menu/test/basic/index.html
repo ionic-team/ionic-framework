@@ -103,6 +103,13 @@
 
   <script>
     const menu = document.querySelector('ion-menu-controller');
+    start();
+
+    async function start() {
+      await menu.componentOnReady();
+      menu.open('start');
+    }
+
     function openStart() {
       console.log('Open start menu');
       menu.open('start');

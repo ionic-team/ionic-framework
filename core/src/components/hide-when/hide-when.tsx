@@ -5,7 +5,8 @@ import { DisplayWhen, getTestResult } from '../../utils/show-hide-when-utils';
 
 @Component({
   tag: 'ion-hide-when',
-  styleUrl: './hide-when.scss'
+  styleUrl: './hide-when.scss',
+  shadow: true
 })
 export class HideWhen implements ComponentInterface, DisplayWhen {
 
@@ -61,9 +62,12 @@ export class HideWhen implements ComponentInterface, DisplayWhen {
   hostData() {
     return {
       class: {
-        'show-content': !this.passesTest,
         'hide-content': this.passesTest
       }
     };
+  }
+
+  render() {
+    return <slot></slot>;
   }
 }

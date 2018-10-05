@@ -1,4 +1,4 @@
-import { ElementRef } from '@angular/core';
+import { ElementRef, EventEmitter } from '@angular/core';
 
 export function inputs(instance: any, el: ElementRef, props: string[]) {
   props.forEach(propName => {
@@ -8,9 +8,9 @@ export function inputs(instance: any, el: ElementRef, props: string[]) {
   });
 }
 
-export function proxyEvent(emitter: any, el: EventTarget, eventName: string) {
+export function proxyEvent<T>(emitter: EventEmitter<T>, el: EventTarget, eventName: string) {
   el.addEventListener(eventName, (ev) => {
-    emitter.emit(ev);
+    emitter.emit((ev as any).detail as T);
   });
 }
 

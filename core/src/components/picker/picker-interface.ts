@@ -1,3 +1,4 @@
+import { AnimationBuilder } from '../../interface';
 
 export interface PickerOptions {
   columns: PickerColumn[];
@@ -9,6 +10,9 @@ export interface PickerOptions {
   mode?: string;
   keyboardClose?: boolean;
   id?: string;
+
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
 }
 
 export interface PickerButton {

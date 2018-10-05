@@ -356,7 +356,7 @@ export class Input {
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyMethods(this, el, ['focus']);
+    proxyMethods(this, el, ['setFocus']);
     proxyInputs(this, el, ['color', 'mode', 'accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'debounce', 'disabled', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'results', 'spellcheck', 'step', 'size', 'type', 'value']);
     proxyOutputs(this, el, ['ionInput', 'ionChange', 'ionStyle', 'ionBlur', 'ionFocus', 'ionInputDidLoad', 'ionInputDidUnload']);
   }
@@ -492,7 +492,7 @@ export class MenuToggle {
 }
 
 export declare interface Nav extends StencilComponents<'IonNav'> {}
-@Component({ selector: 'ion-nav', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['swipeGesture', 'animated', 'delegate', 'rootParams', 'root'] })
+@Component({ selector: 'ion-nav', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['swipeGesture', 'animated', 'animation', 'delegate', 'rootParams', 'root'] })
 export class Nav {
   ionNavWillLoad: EventEmitter<CustomEvent>;
   ionNavWillChange: EventEmitter<CustomEvent>;
@@ -501,7 +501,7 @@ export class Nav {
   constructor(r: ElementRef) {
     const el = r.nativeElement;
     proxyMethods(this, el, ['push', 'insert', 'insertPages', 'pop', 'popTo', 'popToRoot', 'removeIndex', 'setRoot', 'setPages', 'setRouteId', 'getRouteId', 'getActive', 'getByIndex', 'canGoBack', 'getPrevious']);
-    proxyInputs(this, el, ['swipeGesture', 'animated', 'delegate', 'rootParams', 'root']);
+    proxyInputs(this, el, ['swipeGesture', 'animated', 'animation', 'delegate', 'rootParams', 'root']);
     proxyOutputs(this, el, ['ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange']);
   }
 }
@@ -654,7 +654,7 @@ export class Searchbar {
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyMethods(this, el, ['focus']);
+    proxyMethods(this, el, ['setFocus']);
     proxyInputs(this, el, ['color', 'mode', 'animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'debounce', 'placeholder', 'searchIcon', 'showCancelButton', 'spellcheck', 'type', 'value']);
     proxyOutputs(this, el, ['ionInput', 'ionChange', 'ionCancel', 'ionClear', 'ionBlur', 'ionFocus']);
   }
@@ -821,7 +821,7 @@ export class Tab {
 }
 
 export declare interface Tabs extends StencilComponents<'IonTabs'> {}
-@Component({ selector: 'ion-tabs', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'name', 'tabbarHidden', 'tabbarHighlight', 'tabbarLayout', 'tabbarPlacement', 'translucent', 'useRouter'] })
+@Component({ selector: 'ion-tabs', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'name', 'tabbarHidden', 'tabbarHighlight', 'tabbarLayout', 'tabbarPlacement', 'translucent', 'useRouter'] })
 export class Tabs {
   ionChange: EventEmitter<CustomEvent>;
   ionNavWillLoad: EventEmitter<CustomEvent>;
@@ -831,7 +831,7 @@ export class Tabs {
   constructor(r: ElementRef) {
     const el = r.nativeElement;
     proxyMethods(this, el, ['select', 'setRouteId', 'getRouteId', 'getTab', 'getSelected']);
-    proxyInputs(this, el, ['color', 'name', 'tabbarHidden', 'tabbarHighlight', 'tabbarLayout', 'tabbarPlacement', 'translucent', 'useRouter']);
+    proxyInputs(this, el, ['mode', 'color', 'name', 'tabbarHidden', 'tabbarHighlight', 'tabbarLayout', 'tabbarPlacement', 'translucent', 'useRouter']);
     proxyOutputs(this, el, ['ionChange', 'ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange']);
   }
 }
@@ -857,7 +857,7 @@ export class Textarea {
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyMethods(this, el, ['focus']);
+    proxyMethods(this, el, ['setFocus']);
     proxyInputs(this, el, ['mode', 'color', 'autocapitalize', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value']);
     proxyOutputs(this, el, ['ionChange', 'ionInput', 'ionStyle', 'ionBlur', 'ionFocus']);
   }

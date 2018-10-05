@@ -141,7 +141,7 @@ export class Searchbar implements ComponentInterface {
   protected valueChanged() {
     const inputEl = this.nativeInput;
     const value = this.value;
-    if (inputEl.value !== value) {
+    if (inputEl && inputEl.value !== value) {
       inputEl.value = value;
     }
     this.ionChange.emit({ value });
@@ -153,7 +153,7 @@ export class Searchbar implements ComponentInterface {
   }
 
   @Method()
-  focus() {
+  setFocus() {
     this.nativeInput.focus();
   }
 
