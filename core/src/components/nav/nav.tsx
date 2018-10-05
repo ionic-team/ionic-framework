@@ -1,7 +1,7 @@
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, QueueApi, Watch } from '@stencil/core';
 
 import { ViewLifecycle } from '../..';
-import { Animation, ComponentProps, Config, FrameworkDelegate, Gesture, GestureDetail, Mode, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
+import { Animation, AnimationBuilder, ComponentProps, Config, FrameworkDelegate, Gesture, GestureDetail, Mode, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
 import { assert } from '../../utils/helpers';
 import { TransitionOptions, lifecycle, setPageHidden, transition } from '../../utils/transition';
 
@@ -27,11 +27,8 @@ export class Nav implements NavOutlet {
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
-
   @Prop({ context: 'config' }) config!: Config;
-
   @Prop({ context: 'window' }) win!: Window;
-
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
 
   /**
@@ -49,6 +46,7 @@ export class Nav implements NavOutlet {
    * If the nav should animate the components or not
    */
   @Prop() animated = true;
+  @Prop() animation?: AnimationBuilder;
 
   /** @hidden */
   @Prop() delegate?: FrameworkDelegate;
@@ -795,6 +793,7 @@ export class Nav implements NavOutlet {
       queue: this.queue,
       window: this.win,
       baseEl: this.el,
+      animationBuilder: this.animation || opts.animationBuilder || this.config.get('navAnimation'),
       progressCallback,
       animated,
 

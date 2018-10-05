@@ -1,4 +1,4 @@
-import { TextFieldTypes } from '../../interface';
+import { AnimationBuilder, TextFieldTypes } from '../../interface';
 
 export interface AlertOptions {
   header?: string;
@@ -14,6 +14,9 @@ export interface AlertOptions {
   mode?: string;
   keyboardClose?: boolean;
   id?: string;
+
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
 }
 
 export interface AlertInput {

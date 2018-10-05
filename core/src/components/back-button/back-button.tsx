@@ -63,6 +63,8 @@ export class BackButton implements ComponentInterface {
       'ion-activatable': true,
       class: {
         ...createColorClasses(this.color),
+
+        // ion-buttons target .button
         'button': true,
         'show-back-button': showBackButton
       }
@@ -77,14 +79,15 @@ export class BackButton implements ComponentInterface {
     return (
       <button
         type="button"
-        class="back-button-native"
+        class="button-native"
         onClick={ev => this.onClick(ev)}
       >
-        <span class="back-button-inner">
+        <span class="button-inner">
           {backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false}></ion-icon>}
-          {backButtonText && <span class="back-button-text">{backButtonText}</span>}
+          {backButtonText && <span class="button-text">{backButtonText}</span>}
           {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </span>
+        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </button>
     );
   }

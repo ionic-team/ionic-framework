@@ -14,7 +14,7 @@
   --padding-end: 5px;
   --padding-bottom: 0;
   --padding-start: 5px;
-  --height: 32px;
+  --min-height: 32px;
   --min-width: 44px;
   --icon-padding-end: .3em;
   --icon-padding-start: .3em;
@@ -31,7 +31,7 @@
   text-transform: uppercase;
 }
 
-.back-button-native {
+.button-native {
   box-shadow: none;
 }
 

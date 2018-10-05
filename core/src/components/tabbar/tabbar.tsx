@@ -9,7 +9,7 @@ import { createColorClasses } from '../../utils/theme';
     ios: 'tabbar.ios.scss',
     md: 'tabbar.md.scss'
   },
-  shadow: true
+  scoped: true
 })
 export class Tabbar implements ComponentInterface {
 

@@ -106,7 +106,7 @@ images while scrolling quickly.
     </ion-avatar>
     {{ item.firstName }} {{ item.lastName }}
   </ion-item>
-</ion-list>
+</ion-virtual-scroll>
 ```
 
 ### Custom Components
@@ -124,7 +124,7 @@ dimensions are measured correctly.
       {{ item }}
     </my-custom-item>
   </div>
-</ion-list>
+</ion-virtual-scroll>
 ```
 
 ## Virtual Scroll Performance Tips

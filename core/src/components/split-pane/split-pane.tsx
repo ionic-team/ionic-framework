@@ -43,7 +43,7 @@ export class SplitPane implements ComponentInterface {
    * Can be a CSS media query expression, or a shortcut expression.
    * Can also be a boolean expression.
    */
-  @Prop() when: string | boolean = QUERY['md'];
+  @Prop() when: string | boolean = QUERY['lg'];
 
   /**
    * Emitted when the split pane is visible.

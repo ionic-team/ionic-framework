@@ -39,17 +39,17 @@
   --color: #{ion-color(primary, contrast)};
 }
 
-:host(.chip-button-solid.ion-color) .chip-button-native {
+:host(.chip-button-solid.ion-color) .button-native {
   background: current-color(base);
   color: current-color(contrast);
 }
 
-:host(.chip-button-clear.ion-color) .chip-button-native {
+:host(.chip-button-clear.ion-color) .button-native {
   background: transparent;
   color: current-color(base);
 }
 
-.chip-button-native {
+.button-native {
   @include text-inherit();
   @include border-radius(var(--border-radius));
   @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
@@ -68,7 +68,7 @@
   appearance: none;
 }
 
-.chip-button-inner {
+.button-inner {
   display: flex;
 
   flex-flow: row nowrap;

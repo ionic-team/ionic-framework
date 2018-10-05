@@ -31,7 +31,7 @@
 
       <ion-content>
         <ion-list>
-          <ion-item>Open end Menu</ion-item>
+          <ion-item button onclick="openEnd()">Open end Menu</ion-item>
           <ion-item>Close Menu</ion-item>
           <ion-item>Close Menu</ion-item>
           <ion-item>Close Menu</ion-item>
@@ -103,6 +103,13 @@
 
   <script>
     const menu = document.querySelector('ion-menu-controller');
+    start();
+
+    async function start() {
+      await menu.componentOnReady();
+      menu.open('start');
+    }
+
     function openStart() {
       console.log('Open start menu');
       menu.open('start');

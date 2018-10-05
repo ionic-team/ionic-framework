@@ -8,13 +8,12 @@
   transform: translateZ(0);
 
   z-index: $z-index-toolbar-buttons;
-  pointer-events: none;
 }
 
 // Toolbar Buttons
 // --------------------------------------------------
 
-::slotted(*) .button {
+::slotted(*) ion-button {
   --margin-top: 0;
   --margin-bottom: 0;
   --margin-start: 0;
@@ -26,6 +25,4 @@
   --box-shadow: none;
 
   @include margin-horizontal(2px, 2px);
-
 }
-

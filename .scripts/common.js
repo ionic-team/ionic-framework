@@ -107,19 +107,16 @@ function preparePackage(tasks, package, version) {
       title: `${pkg.name}: lint`,
       task: () => execa('npm', ['run', 'lint'], { cwd: projectRoot })
     });
+    projectTasks.push({
+      title: `${pkg.name}: test`,
+      task: () => execa('npm', ['test'], { cwd: projectRoot })
+    });
   }
 
   projectTasks.push({
     title: `${pkg.name}: build`,
     task: () => execa('npm', ['run', 'build'], { cwd: projectRoot })
   });
-
-  if (version) {
-    projectTasks.push({
-      title: `${pkg.name}: test`,
-      task: () => execa('npm', ['test'], { cwd: projectRoot })
-    });
-  }
 
   if (package === 'core') {
     projectTasks.push({

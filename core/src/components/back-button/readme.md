@@ -26,7 +26,6 @@ To change what is displayed in the back button, use the `text` and `icon` proper
 | `--background`          | Background of the button          |
 | `--border-radius`       | Border radius of the button       |
 | `--color`               | Text color of the button          |
-| `--height`              | Height of the button              |
 | `--icon-font-size`      | Font size of the button icon      |
 | `--icon-font-weight`    | Font weight of the button icon    |
 | `--icon-margin-bottom`  | Margin bottom of the button icon  |
@@ -50,7 +49,6 @@ To change what is displayed in the back button, use the `text` and `icon` proper
 | `--padding-top`         | Padding top of the button         |
 | `--ripple-color`        | Color of the button ripple effect |
 | `--transition`          | Transition of the button          |
-| `--width`               | Width of the button               |
 
 
 ----------------------------------------------

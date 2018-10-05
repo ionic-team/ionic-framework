@@ -245,7 +245,7 @@ export class Input implements ComponentInterface {
   }
 
   @Method()
-  focus() {
+  setFocus() {
     if (this.nativeInput) {
       this.nativeInput.focus();
     }
@@ -372,6 +372,7 @@ export class Input implements ComponentInterface {
       (this.clearInput && !this.readonly && !this.disabled) && <button
         type="button"
         class="input-clear-icon"
+        tabindex="-1"
         onTouchStart={this.clearTextInput.bind(this)}
         onMouseDown={this.clearTextInput.bind(this)}
       />

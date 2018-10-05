@@ -31,6 +31,7 @@ export class App implements ComponentInterface {
     return {
       class: {
         'ion-page': true,
+        'force-statusbar-padding': this.config.getBoolean('_forceStatusbarPadding')
       }
     };
   }

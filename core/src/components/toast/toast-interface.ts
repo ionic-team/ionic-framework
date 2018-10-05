@@ -8,11 +8,12 @@ export interface ToastOptions {
   closeButtonText?: string;
   position?: 'top' | 'bottom' | 'middle';
   translucent?: boolean;
-  enterAnimation?: AnimationBuilder;
-  leaveAnimation?: AnimationBuilder;
   animated?: boolean;
 
   mode?: string;
   keyboardClose?: boolean;
   id?: string;
+
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
 }

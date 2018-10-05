@@ -1,12 +1,12 @@
 import { Build, Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
 
-import { Color, Config, IonicConfig, NavOutlet, RouteID, RouteWrite, TabbarLayout, TabbarPlacement } from '../../interface';
-import { createColorClasses } from '../../utils/theme';
+import { Color, Config, IonicConfig, Mode, NavOutlet, RouteID, RouteWrite, TabbarLayout, TabbarPlacement } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-tabs',
   styleUrl: 'tabs.scss',
-  shadow: true
+  scoped: true
 })
 export class Tabs implements NavOutlet {
 
@@ -22,6 +22,12 @@ export class Tabs implements NavOutlet {
 
   @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'document' }) doc!: Document;
+
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  @Prop() mode!: Mode;
 
   /**
    * The color to use from your application's color palette.
@@ -103,7 +109,7 @@ export class Tabs implements NavOutlet {
   }
 
   componentDidLoad() {
-    return this.initSelect();
+    this.initSelect();
   }
 
   componentDidUnload() {
@@ -293,29 +299,27 @@ export class Tabs implements NavOutlet {
 
   hostData() {
     return {
-      class: createColorClasses(this.color)
+      class: {
+        ...createThemedClasses(this.mode, 'tabs'),
+        'tabbar-visible': !this.tabbarHidden
+      }
     };
   }
 
   render() {
-    return [
-      <div class="tabs-inner">
-        <slot></slot>
-      </div>,
-
-      !this.tabbarHidden && (
-        <ion-tabbar
-          tabs={this.tabs.slice()}
-          color={this.color}
-          selectedTab={this.selectedTab}
-          highlight={this.tabbarHighlight}
-          placement={this.tabbarPlacement}
-          layout={this.tabbarLayout}
-          translucent={this.translucent}
-        >
-        </ion-tabbar>
-      )
-    ];
+    return (
+      <ion-tabbar
+        mode={this.mode}
+        tabs={this.tabs.slice()}
+        color={this.color}
+        selectedTab={this.selectedTab}
+        highlight={this.tabbarHighlight}
+        placement={this.tabbarPlacement}
+        layout={this.tabbarLayout}
+        translucent={this.translucent}
+      >
+      </ion-tabbar>
+    );
   }
 }
 

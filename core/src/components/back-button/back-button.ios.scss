@@ -15,6 +15,7 @@
   --padding-bottom: 0;
   --padding-start: 0;
   --min-height: 32px;
+  --min-width: auto;
   --icon-padding-top: 0;
   --icon-padding-end: 0;
   --icon-padding-bottom: 0;
@@ -28,7 +29,7 @@
   font-size: 17px;
 }
 
-.back-button-native {
+.button-native {
   transform: translateZ(0);
 
   overflow: visible;

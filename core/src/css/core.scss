@@ -18,9 +18,10 @@ body.backdrop-no-scroll {
   overflow: hidden;
 }
 
-body.backdrop-no-scroll .ion-page > ion-content {
-  --overflow: hidden;
-}
+// TODO: Block scrolling in ion-content, breaks inside ion-modal
+// body.backdrop-no-scroll .ion-page > ion-content {
+//   --overflow: hidden;
+// }
 
 
 // Ionic Colors
@@ -48,10 +49,6 @@ body.backdrop-no-scroll .ion-page > ion-content {
   .ion-color-#{$color-name} {
     @include generate-color($color-name);
   }
-}
-
-*::selection {
-  background: var(--ion-color-shade, rgba(0,0,0,0.3));
 }
 
 
@@ -94,7 +91,6 @@ ion-toast-controller,
 .ion-page-invisible {
   opacity: 0;
 }
-
 
 // Ionic Safe Margins
 // --------------------------------------------------

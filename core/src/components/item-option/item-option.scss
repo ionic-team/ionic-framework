@@ -17,12 +17,24 @@
   font-family: $font-family-base;
 }
 
+:host(.in-list.item-options-end:last-child) {
+  @include padding-horizontal(
+    null, calc(.7em + var(--ion-safe-area-right))
+  );
+}
+
+:host(.in-list.item-options-start:first-child) {
+  @include padding-horizontal(
+    calc(.7em + var(--ion-safe-area-left)), null
+  );
+}
+
 :host(.ion-color) {
   background: current-color(base);
   color: current-color(contrast);
 }
 
-.item-option-native {
+.button-native {
   @include text-inherit();
   @include padding(0, .7em);
 
@@ -41,7 +53,7 @@
   appearance: none;
 }
 
-.item-option-button-inner {
+.button-inner {
   display: flex;
 
   flex-direction: column;
@@ -52,13 +64,6 @@
 
   width: 100%;
   height: 100%;
-
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-
-  letter-spacing: inherit;
-
 }
 
 ::slotted([slot="icon-only"]) {

@@ -57,9 +57,25 @@ It is meant for text `type` inputs only, such as `"text"`, `"password"`, `"email
 
 ## Methods
 
-| Method  | Description |
-| ------- | ----------- |
-| `focus` |             |
+| Method     | Description |
+| ---------- | ----------- |
+| `setFocus` |             |
+
+
+## CSS Custom Properties
+
+| Name                        | Description                               |
+| --------------------------- | ----------------------------------------- |
+| `--background`              | Background of the input                   |
+| `--color`                   | Color of the input text                   |
+| `--padding-bottom`          | Bottom padding of the input               |
+| `--padding-end`             | End padding of the input                  |
+| `--padding-start`           | Start padding of the input                |
+| `--padding-top`             | Top padding of the input                  |
+| `--placeholder-color`       | Color of the input placeholder text       |
+| `--placeholder-font-style`  | Font style of the input placeholder text  |
+| `--placeholder-font-weight` | Font weight of the input placeholder text |
+| `--placeholder-opacity`     | Opacity of the input placeholder text     |
 
 
 ----------------------------------------------
