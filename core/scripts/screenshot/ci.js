@@ -1,4 +1,4 @@
-const LocalScreenshotConnector = require('./local');
+const IonicConnector = require('./ionic');
 const fs = require('fs');
 const path = require('path');
 const S3 = require('aws-sdk/clients/s3');
@@ -9,16 +9,16 @@ const S3_BUCKET = 'screenshot.ionicframework.com';
 const s3 = new S3({ apiVersion: '2006-03-01' });
 
 
-class CIScreenshotConnector extends LocalScreenshotConnector {
+class CIScreenshotConnector extends IonicConnector {
 
   async initBuild(opts) {
     const result = await execa.stdout('git', ['log', '-1', '--format=%h%n%an <%ae>%n%ct%n%s']);
     const [ sha1short, author, timestamp, msg ] = result.split('\n');
 
-    const date = new Date(timestamp * 1000);
-
     opts.buildId = sha1short;
-    opts.buildMessage = `${author} @ ${date.toISOString()}: ${msg}`;
+    opts.buildMessage = msg;
+    opts.buildAuthor = author;
+    opts.buildTimestamp = (timestamp * 1000);
 
     await super.initBuild(opts);
   }
@@ -42,6 +42,10 @@ class CIScreenshotConnector extends LocalScreenshotConnector {
       this.logger.debug(`uploading: ${key}`);
       await s3.upload({ Bucket: S3_BUCKET, Key: key, Body: stream, ...extra }).promise();
     }
+  }
+
+  async pullMasterBuild() {
+    await super.pullIonicMasterBuild();
   }
 
   async publishBuild(build) {
