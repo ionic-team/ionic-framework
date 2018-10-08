@@ -229,6 +229,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
 const LIFECYCLE_MAP: any = {
   'ionModalDidPresent': 'ionViewDidEnter',
   'ionModalWillPresent': 'ionViewWillEnter',
-  'ionModalWillDismiss': 'ionViewWillDismiss',
-  'ionModalDidDismiss': 'ionViewDidDismiss',
+  'ionModalWillDismiss': 'ionViewWillLeave',
+  'ionModalDidDismiss': 'ionViewDidLeave',
 };

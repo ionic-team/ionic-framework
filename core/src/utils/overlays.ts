@@ -3,7 +3,7 @@ import { AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, 
 let lastId = 0;
 
 export function createOverlay<T extends HTMLIonOverlayElement>(element: T, opts: object | undefined): Promise<T> {
-  const doc = element.ownerDocument;
+  const doc = element.ownerDocument!;
   connectListeners(doc);
 
   // convert the passed in overlay options into props
@@ -152,16 +152,17 @@ async function overlayAnimation(
     }
     if (overlay.keyboardClose) {
       animation.beforeAddWrite(() => {
-        const activeElement = baseEl.ownerDocument.activeElement as HTMLElement;
+        const activeElement = baseEl.ownerDocument!.activeElement as HTMLElement;
         if (activeElement && activeElement.matches('input, ion-input, ion-textarea')) {
           activeElement.blur();
         }
       });
     }
     await animation.playAsync();
+    const hasCompleted = animation.hasCompleted;
     animation.destroy();
     overlay.animation = undefined;
-    return animation.hasCompleted;
+    return hasCompleted;
   }
 }
 

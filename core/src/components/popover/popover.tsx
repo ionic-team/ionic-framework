@@ -241,6 +241,6 @@ export class Popover implements ComponentInterface, OverlayInterface {
 const LIFECYCLE_MAP: any = {
   'ionPopoverDidPresent': 'ionViewDidEnter',
   'ionPopoverWillPresent': 'ionViewWillEnter',
-  'ionPopoverWillDismiss': 'ionViewWillDismiss',
-  'ionPopoverDidDismiss': 'ionViewDidDismiss',
+  'ionPopoverWillDismiss': 'ionViewWillLeave',
+  'ionPopoverDidDismiss': 'ionViewDidLeave',
 };
