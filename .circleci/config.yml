@@ -1,6 +1,12 @@
 version: 2
 
 aliases:
+  - &install-roboto
+      name: Install Roboto
+      command: |
+        sudo apt update
+        sudo apt install -y fonts-roboto
+
   - &restore-cache
       keys:
         - dependency-cache-{{ checksum "package.json" }}-2
@@ -41,6 +47,7 @@ jobs:
   build-core:
     <<: *defaults
     steps:
+      - run: *install-roboto
       - checkout
       - attach_workspace:
           at: /tmp/workspace
@@ -87,6 +94,28 @@ jobs:
           command: npm run test.treeshake
           working_directory: /tmp/workspace/core
 
+  test-core-screenshot:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Run Screenshot
+          command: npx stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci
+          working_directory: /tmp/workspace/core
+
+  test-core-screenshot-master:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Run Screenshot
+          command: npx stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci --update-screenshot
+          working_directory: /tmp/workspace/core
+
 workflows:
   version: 2
   build:
@@ -100,3 +129,10 @@ workflows:
           requires: [build-core]
       - test-core-treeshake:
           requires: [build-core]
+      - test-core-screenshot:
+          requires: [build-core]
+      - test-core-screenshot-master:
+          requires: [build-core]
+          filters:
+            branches:
+              only: master
