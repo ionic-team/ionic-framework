@@ -17,6 +17,8 @@ it('select: basic', async () => {
   compare = await page.compareScreenshot('should open gender single select');
   expect(compare).toMatchScreenshot();
 
+  await alert.callMethod('dismiss');
+
   select = await page.find('#customSelect');
   await select.click();
 
