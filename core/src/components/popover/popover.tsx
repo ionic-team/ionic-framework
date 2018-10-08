@@ -229,7 +229,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
 
   render() {
     return [
-      <ion-backdrop tappable={this.backdropDismiss}/>,
+      <ion-backdrop tappable={this.backdropDismiss} visible={this.showBackdrop}/>,
       <div class="popover-wrapper">
         <div class="popover-arrow"></div>
         <div class="popover-content"></div>
