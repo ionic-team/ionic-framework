@@ -65,9 +65,21 @@ This utility is really handy when
 
 ## Methods
 
-| Method     | Description |
-| ---------- | ----------- |
-| `complete` |             |
+### `complete(listOrReorder?: boolean | any[] | undefined) => Promise<any>`
+
+
+
+#### Parameters
+
+| Name            | Type                          | Description |
+| --------------- | ----------------------------- | ----------- |
+| `listOrReorder` | `boolean | any[] | undefined` |             |
+
+#### Returns
+
+Type: `Promise<any>`
+
+
 
 
 ----------------------------------------------

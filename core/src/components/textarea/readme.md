@@ -48,9 +48,15 @@ The textarea component accepts the [native textarea attributes](https://develope
 
 ## Methods
 
-| Method     | Description |
-| ---------- | ----------- |
-| `setFocus` |             |
+### `setFocus() => void`
+
+
+
+#### Returns
+
+Type: `void`
+
+
 
 
 ## CSS Custom Properties

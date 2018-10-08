@@ -39,13 +39,68 @@ A Picker is a dialog that displays a row of buttons and columns underneath. It a
 
 ## Methods
 
-| Method          | Description                                                   |
-| --------------- | ------------------------------------------------------------- |
-| `dismiss`       | Dismiss the picker overlay after it has been presented.       |
-| `getColumn`     | Returns the column the matches the specified name             |
-| `onDidDismiss`  | Returns a promise that resolves when the picker did dismiss.  |
-| `onWillDismiss` | Returns a promise that resolves when the picker will dismiss. |
-| `present`       | Present the picker overlay after it has been created.         |
+### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
+
+Dismiss the picker overlay after it has been presented.
+
+#### Parameters
+
+| Name   | Type                 | Description |
+| ------ | -------------------- | ----------- |
+| `data` | `any`                |             |
+| `role` | `string | undefined` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `getColumn(name: string) => Promise<PickerColumn | undefined>`
+
+Returns the column the matches the specified name
+
+#### Parameters
+
+| Name   | Type     | Description |
+| ------ | -------- | ----------- |
+| `name` | `string` |             |
+
+#### Returns
+
+Type: `Promise<PickerColumn | undefined>`
+
+
+
+### `onDidDismiss() => Promise<OverlayEventDetail<any>>`
+
+Returns a promise that resolves when the picker did dismiss.
+
+#### Returns
+
+Type: `Promise<OverlayEventDetail<any>>`
+
+
+
+### `onWillDismiss() => Promise<OverlayEventDetail<any>>`
+
+Returns a promise that resolves when the picker will dismiss.
+
+#### Returns
+
+Type: `Promise<OverlayEventDetail<any>>`
+
+
+
+### `present() => Promise<void>`
+
+Present the picker overlay after it has been created.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 
 ----------------------------------------------

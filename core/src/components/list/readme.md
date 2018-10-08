@@ -20,9 +20,15 @@ Lists support several interactions including swiping items to reveal options, dr
 
 ## Methods
 
-| Method              | Description |
-| ------------------- | ----------- |
-| `closeSlidingItems` |             |
+### `closeSlidingItems() => Promise<boolean>`
+
+
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
 
 
 ----------------------------------------------

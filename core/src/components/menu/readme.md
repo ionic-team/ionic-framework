@@ -35,14 +35,90 @@ These can be controlled from the templates, or programmatically using the MenuCo
 
 ## Methods
 
-| Method     | Description |
-| ---------- | ----------- |
-| `close`    |             |
-| `isActive` |             |
-| `isOpen`   |             |
-| `open`     |             |
-| `setOpen`  |             |
-| `toggle`   |             |
+### `close(animated?: boolean) => Promise<boolean>`
+
+
+
+#### Parameters
+
+| Name       | Type      | Description |
+| ---------- | --------- | ----------- |
+| `animated` | `boolean` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `isActive() => Promise<boolean>`
+
+
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `isOpen() => Promise<boolean>`
+
+
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `open(animated?: boolean) => Promise<boolean>`
+
+
+
+#### Parameters
+
+| Name       | Type      | Description |
+| ---------- | --------- | ----------- |
+| `animated` | `boolean` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `setOpen(shouldOpen: boolean, animated?: boolean) => Promise<boolean>`
+
+
+
+#### Parameters
+
+| Name         | Type      | Description |
+| ------------ | --------- | ----------- |
+| `shouldOpen` | `boolean` |             |
+| `animated`   | `boolean` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `toggle(animated?: boolean) => Promise<boolean>`
+
+
+
+#### Parameters
+
+| Name       | Type      | Description |
+| ---------- | --------- | ----------- |
+| `animated` | `boolean` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
 
 
 ----------------------------------------------

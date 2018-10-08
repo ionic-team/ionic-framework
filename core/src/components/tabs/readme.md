@@ -34,13 +34,73 @@ The component is a container of individual [Tab](../Tab/) components.
 
 ## Methods
 
-| Method        | Description                                      |
-| ------------- | ------------------------------------------------ |
-| `getRouteId`  |                                                  |
-| `getSelected` | Get the currently selected tab                   |
-| `getTab`      | Get the tab at the given index                   |
-| `select`      | Index or the Tab instance, of the tab to select. |
-| `setRouteId`  |                                                  |
+### `getRouteId() => Promise<RouteID | undefined>`
+
+
+
+#### Returns
+
+Type: `Promise<RouteID | undefined>`
+
+
+
+### `getSelected() => Promise<HTMLIonTabElement | undefined>`
+
+Get the currently selected tab
+
+#### Returns
+
+Type: `Promise<HTMLIonTabElement | undefined>`
+
+
+
+### `getTab(tabOrIndex: string | number | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>`
+
+Get the tab at the given index
+
+#### Parameters
+
+| Name         | Type                                  | Description |
+| ------------ | ------------------------------------- | ----------- |
+| `tabOrIndex` | `string | number | HTMLIonTabElement` |             |
+
+#### Returns
+
+Type: `Promise<HTMLIonTabElement | undefined>`
+
+
+
+### `select(tabOrIndex: number | HTMLIonTabElement) => Promise<boolean>`
+
+Index or the Tab instance, of the tab to select.
+
+#### Parameters
+
+| Name         | Type                         | Description |
+| ------------ | ---------------------------- | ----------- |
+| `tabOrIndex` | `number | HTMLIonTabElement` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `setRouteId(id: string) => Promise<RouteWrite>`
+
+
+
+#### Parameters
+
+| Name | Type     | Description |
+| ---- | -------- | ----------- |
+| `id` | `string` |             |
+
+#### Returns
+
+Type: `Promise<RouteWrite>`
+
+
 
 
 ----------------------------------------------

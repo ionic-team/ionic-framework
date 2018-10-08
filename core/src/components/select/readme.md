@@ -69,9 +69,21 @@ Since select uses the alert, action sheet and popover interfaces, options can be
 
 ## Methods
 
-| Method | Description |
-| ------ | ----------- |
-| `open` |             |
+### `open(ev?: UIEvent | undefined) => Promise<OverlaySelect>`
+
+
+
+#### Parameters
+
+| Name | Type                  | Description |
+| ---- | --------------------- | ----------- |
+| `ev` | `UIEvent | undefined` |             |
+
+#### Returns
+
+Type: `Promise<OverlaySelect>`
+
+
 
 
 ## CSS Custom Properties

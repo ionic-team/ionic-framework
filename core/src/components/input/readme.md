@@ -57,9 +57,15 @@ It is meant for text `type` inputs only, such as `"text"`, `"password"`, `"email
 
 ## Methods
 
-| Method     | Description |
-| ---------- | ----------- |
-| `setFocus` |             |
+### `setFocus() => void`
+
+
+
+#### Returns
+
+Type: `void`
+
+
 
 
 ## CSS Custom Properties

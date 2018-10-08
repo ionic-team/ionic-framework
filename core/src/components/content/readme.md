@@ -30,13 +30,83 @@ view component.
 
 ## Methods
 
-| Method             | Description                                         |
-| ------------------ | --------------------------------------------------- |
-| `getScrollElement` |                                                     |
-| `scrollByPoint`    | Scroll by a specified X/Y distance in the component |
-| `scrollToBottom`   | Scroll to the bottom of the component               |
-| `scrollToPoint`    | Scroll to a specified X/Y location in the component |
-| `scrollToTop`      | Scroll to the top of the component                  |
+### `getScrollElement() => Promise<HTMLElement>`
+
+
+
+#### Returns
+
+Type: `Promise<HTMLElement>`
+
+
+
+### `scrollByPoint(x: number, y: number, duration: number) => Promise<void>`
+
+Scroll by a specified X/Y distance in the component
+
+#### Parameters
+
+| Name       | Type     | Description |
+| ---------- | -------- | ----------- |
+| `x`        | `number` |             |
+| `y`        | `number` |             |
+| `duration` | `number` |             |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `scrollToBottom(duration?: number) => Promise<void>`
+
+Scroll to the bottom of the component
+
+#### Parameters
+
+| Name       | Type     | Description |
+| ---------- | -------- | ----------- |
+| `duration` | `number` |             |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `scrollToPoint(x: number | null | undefined, y: number | null | undefined, duration?: number) => Promise<void>`
+
+Scroll to a specified X/Y location in the component
+
+#### Parameters
+
+| Name       | Type                        | Description |
+| ---------- | --------------------------- | ----------- |
+| `x`        | `number | null | undefined` |             |
+| `y`        | `number | null | undefined` |             |
+| `duration` | `number`                    |             |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `scrollToTop(duration?: number) => Promise<void>`
+
+Scroll to the top of the component
+
+#### Parameters
+
+| Name       | Type     | Description |
+| ---------- | -------- | ----------- |
+| `duration` | `number` |             |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 
 ## CSS Custom Properties

@@ -17,9 +17,15 @@ Fabs are container elements that contain one or more fab buttons. They should be
 
 ## Methods
 
-| Method  | Description                        |
-| ------- | ---------------------------------- |
-| `close` | Close an active FAB list container |
+### `close() => void`
+
+Close an active FAB list container
+
+#### Returns
+
+Type: `void`
+
+
 
 
 ----------------------------------------------

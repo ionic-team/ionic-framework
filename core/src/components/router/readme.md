@@ -36,12 +36,58 @@ If you're using Angular, please see [ion-router-outlet](../router-outlet) instea
 
 ## Methods
 
-| Method       | Description                   |
-| ------------ | ----------------------------- |
-| `goBack`     |                               |
-| `navChanged` |                               |
-| `printDebug` |                               |
-| `push`       | Navigate to the specified URL |
+### `goBack() => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `navChanged(intent: number) => Promise<boolean>`
+
+
+
+#### Parameters
+
+| Name     | Type     | Description |
+| -------- | -------- | ----------- |
+| `intent` | `number` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `printDebug() => void`
+
+
+
+#### Returns
+
+Type: `void`
+
+
+
+### `push(url: string, direction?: RouterDirection) => Promise<boolean>`
+
+Navigate to the specified URL
+
+#### Parameters
+
+| Name        | Type              | Description |
+| ----------- | ----------------- | ----------- |
+| `url`       | `string`          |             |
+| `direction` | `RouterDirection` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
 
 
 ----------------------------------------------

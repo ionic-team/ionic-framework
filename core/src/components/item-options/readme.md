@@ -31,9 +31,15 @@ You can combine the `ionSwipe` event plus the `expandable` directive to create a
 
 ## Methods
 
-| Method           | Description |
-| ---------------- | ----------- |
-| `fireSwipeEvent` |             |
+### `fireSwipeEvent() => void`
+
+
+
+#### Returns
+
+Type: `void`
+
+
 
 
 ----------------------------------------------

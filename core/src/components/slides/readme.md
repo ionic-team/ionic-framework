@@ -53,22 +53,186 @@ Licensed under MIT
 
 ## Methods
 
-| Method             | Description                                                                                     |
-| ------------------ | ----------------------------------------------------------------------------------------------- |
-| `getActiveIndex`   | Get the index of the active slide.                                                              |
-| `getPreviousIndex` | Get the index of the previous slide.                                                            |
-| `isBeginning`      | Get whether or not the current slide is the first slide.                                        |
-| `isEnd`            | Get whether or not the current slide is the last slide.                                         |
-| `length`           | Get the total number of slides.                                                                 |
-| `lockSwipeToNext`  | Lock or unlock the ability to slide to the next slides.                                         |
-| `lockSwipeToPrev`  | Lock or unlock the ability to slide to the previous slides.                                     |
-| `lockSwipes`       | Lock or unlock the ability to slide to change slides.                                           |
-| `slideNext`        | Transition to the next slide.                                                                   |
-| `slidePrev`        | Transition to the previous slide.                                                               |
-| `slideTo`          | Transition to the specified slide.                                                              |
-| `startAutoplay`    | Start auto play.                                                                                |
-| `stopAutoplay`     | Stop auto play.                                                                                 |
-| `update`           | Update the underlying slider implementation. Call this if you've added or removed child slides. |
+### `getActiveIndex() => Promise<number>`
+
+Get the index of the active slide.
+
+#### Returns
+
+Type: `Promise<number>`
+
+
+
+### `getPreviousIndex() => Promise<number>`
+
+Get the index of the previous slide.
+
+#### Returns
+
+Type: `Promise<number>`
+
+
+
+### `isBeginning() => Promise<boolean>`
+
+Get whether or not the current slide is the first slide.
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `isEnd() => Promise<boolean>`
+
+Get whether or not the current slide is the last slide.
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `length() => Promise<number>`
+
+Get the total number of slides.
+
+#### Returns
+
+Type: `Promise<number>`
+
+
+
+### `lockSwipeToNext(shouldLockSwipeToNext: boolean) => Promise<void>`
+
+Lock or unlock the ability to slide to the next slides.
+
+#### Parameters
+
+| Name                    | Type      | Description |
+| ----------------------- | --------- | ----------- |
+| `shouldLockSwipeToNext` | `boolean` |             |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `lockSwipeToPrev(shouldLockSwipeToPrev: boolean) => Promise<void>`
+
+Lock or unlock the ability to slide to the previous slides.
+
+#### Parameters
+
+| Name                    | Type      | Description |
+| ----------------------- | --------- | ----------- |
+| `shouldLockSwipeToPrev` | `boolean` |             |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `lockSwipes(shouldLockSwipes: boolean) => Promise<void>`
+
+Lock or unlock the ability to slide to change slides.
+
+#### Parameters
+
+| Name               | Type      | Description |
+| ------------------ | --------- | ----------- |
+| `shouldLockSwipes` | `boolean` |             |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `slideNext(speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>`
+
+Transition to the next slide.
+
+#### Parameters
+
+| Name           | Type                  | Description |
+| -------------- | --------------------- | ----------- |
+| `speed`        | `number | undefined`  |             |
+| `runCallbacks` | `boolean | undefined` |             |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `slidePrev(speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>`
+
+Transition to the previous slide.
+
+#### Parameters
+
+| Name           | Type                  | Description |
+| -------------- | --------------------- | ----------- |
+| `speed`        | `number | undefined`  |             |
+| `runCallbacks` | `boolean | undefined` |             |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `slideTo(index: number, speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>`
+
+Transition to the specified slide.
+
+#### Parameters
+
+| Name           | Type                  | Description |
+| -------------- | --------------------- | ----------- |
+| `index`        | `number`              |             |
+| `speed`        | `number | undefined`  |             |
+| `runCallbacks` | `boolean | undefined` |             |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `startAutoplay() => Promise<void>`
+
+Start auto play.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `stopAutoplay() => Promise<void>`
+
+Stop auto play.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `update() => Promise<void>`
+
+Update the underlying slider implementation. Call this if you've added or removed
+child slides.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 
 ## CSS Custom Properties

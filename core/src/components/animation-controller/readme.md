@@ -9,9 +9,23 @@ Used to create an animation instance.
 
 ## Methods
 
-| Method   | Description                   |
-| -------- | ----------------------------- |
-| `create` | Creates an animation instance |
+### `create(animationBuilder?: AnimationBuilder | undefined, baseEl?: any, opts?: any) => Promise<Animation>`
+
+Creates an animation instance
+
+#### Parameters
+
+| Name               | Type                           | Description |
+| ------------------ | ------------------------------ | ----------- |
+| `animationBuilder` | `AnimationBuilder | undefined` |             |
+| `baseEl`           | `any`                          |             |
+| `opts`             | `any`                          |             |
+
+#### Returns
+
+Type: `Promise<Animation>`
+
+
 
 
 ----------------------------------------------

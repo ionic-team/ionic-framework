@@ -201,11 +201,48 @@ dataset, so please make sure they're performant.
 
 ## Methods
 
-| Method            | Description |
-| ----------------- | ----------- |
-| `markDirty`       |             |
-| `markDirtyTail`   |             |
-| `positionForItem` |             |
+### `markDirty(offset: number, len?: number) => void`
+
+
+
+#### Parameters
+
+| Name     | Type     | Description |
+| -------- | -------- | ----------- |
+| `offset` | `number` |             |
+| `len`    | `number` |             |
+
+#### Returns
+
+Type: `void`
+
+
+
+### `markDirtyTail() => void`
+
+
+
+#### Returns
+
+Type: `void`
+
+
+
+### `positionForItem(index: number) => Promise<number>`
+
+
+
+#### Parameters
+
+| Name    | Type     | Description |
+| ------- | -------- | ----------- |
+| `index` | `number` |             |
+
+#### Returns
+
+Type: `Promise<number>`
+
+
 
 
 ----------------------------------------------

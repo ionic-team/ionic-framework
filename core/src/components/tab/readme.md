@@ -40,9 +40,15 @@ See the [Tabs API Docs](../Tabs/) for more details on configuring Tabs.
 
 ## Methods
 
-| Method      | Description                          |
-| ----------- | ------------------------------------ |
-| `setActive` | Set the active component for the tab |
+### `setActive() => Promise<void>`
+
+Set the active component for the tab
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 
 ----------------------------------------------

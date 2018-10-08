@@ -239,9 +239,15 @@ dates in JavaScript.
 
 ## Methods
 
-| Method | Description |
-| ------ | ----------- |
-| `open` |             |
+### `open() => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 
 ## CSS Custom Properties

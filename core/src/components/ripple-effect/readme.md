@@ -8,9 +8,22 @@ The ripple effect component adds the [Material Design ink ripple interaction eff
 
 ## Methods
 
-| Method      | Description                                  |
-| ----------- | -------------------------------------------- |
-| `addRipple` | Adds the ripple effect to the parent element |
+### `addRipple(pageX: number, pageY: number) => void`
+
+Adds the ripple effect to the parent element
+
+#### Parameters
+
+| Name    | Type     | Description |
+| ------- | -------- | ----------- |
+| `pageX` | `number` |             |
+| `pageY` | `number` |             |
+
+#### Returns
+
+Type: `void`
+
+
 
 
 ----------------------------------------------

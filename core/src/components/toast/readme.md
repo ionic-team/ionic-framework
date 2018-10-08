@@ -51,12 +51,52 @@ The toast can be dismissed automatically after a specific amount of time by pass
 
 ## Methods
 
-| Method          | Description                                                  |
-| --------------- | ------------------------------------------------------------ |
-| `dismiss`       | Dismiss the toast overlay after it has been presented.       |
-| `onDidDismiss`  | Returns a promise that resolves when the toast did dismiss.  |
-| `onWillDismiss` | Returns a promise that resolves when the toast will dismiss. |
-| `present`       | Present the toast overlay after it has been created.         |
+### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
+
+Dismiss the toast overlay after it has been presented.
+
+#### Parameters
+
+| Name   | Type                 | Description |
+| ------ | -------------------- | ----------- |
+| `data` | `any`                |             |
+| `role` | `string | undefined` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `onDidDismiss() => Promise<OverlayEventDetail<any>>`
+
+Returns a promise that resolves when the toast did dismiss.
+
+#### Returns
+
+Type: `Promise<OverlayEventDetail<any>>`
+
+
+
+### `onWillDismiss() => Promise<OverlayEventDetail<any>>`
+
+Returns a promise that resolves when the toast will dismiss.
+
+#### Returns
+
+Type: `Promise<OverlayEventDetail<any>>`
+
+
+
+### `present() => Promise<void>`
+
+Present the toast overlay after it has been created.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 
 ## CSS Custom Properties

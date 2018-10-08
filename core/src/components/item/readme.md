@@ -83,6 +83,8 @@ The highlight color changes based on the item state, but all of the states use I
 | `--box-shadow`              | Box shadow of the item                              |
 | `--color`                   | Color of the item                                   |
 | `--detail-icon-color`       | Color of the item detail icon                       |
+| `--detail-icon-font-size`   | Font size of the item detail icon                   |
+| `--detail-icon-opacity`     | Opacity of the item detail icon                     |
 | `--highlight-color-focused` | The color of the highlight on the item when focused |
 | `--highlight-color-invalid` | The color of the highlight on the item when invalid |
 | `--highlight-color-valid`   | The color of the highlight on the item when valid   |

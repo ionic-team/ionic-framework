@@ -31,12 +31,69 @@ While RouterOutlet has methods for navigating around, it's recommended to use th
 
 ## Methods
 
-| Method       | Description                                           |
-| ------------ | ----------------------------------------------------- |
-| `commit`     |                                                       |
-| `getRouteId` | Returns the ID for the current route                  |
-| `setRoot`    | Set the root component for the given navigation stack |
-| `setRouteId` |                                                       |
+### `commit(enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions | undefi...`
+
+
+
+#### Parameters
+
+| Name         | Type                              | Description |
+| ------------ | --------------------------------- | ----------- |
+| `enteringEl` | `HTMLElement`                     |             |
+| `leavingEl`  | `HTMLElement | undefined`         |             |
+| `opts`       | `RouterOutletOptions | undefined` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `getRouteId() => Promise<RouteID | undefined>`
+
+Returns the ID for the current route
+
+#### Returns
+
+Type: `Promise<RouteID | undefined>`
+
+
+
+### `setRoot(component: ComponentRef, params?: { [key: string]: any; } | undefined, opts?: RouterOutletOption...`
+
+Set the root component for the given navigation stack
+
+#### Parameters
+
+| Name        | Type                                  | Description |
+| ----------- | ------------------------------------- | ----------- |
+| `component` | `ComponentRef`                        |             |
+| `params`    | `{ [key: string]: any; } | undefined` |             |
+| `opts`      | `RouterOutletOptions | undefined`     |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `setRouteId(id: string, params: { [key: string]: any; } | undefined, direction: number) => Promise<RouteWrite>`
+
+
+
+#### Parameters
+
+| Name        | Type                                  | Description |
+| ----------- | ------------------------------------- | ----------- |
+| `id`        | `string`                              |             |
+| `params`    | `{ [key: string]: any; } | undefined` |             |
+| `direction` | `number`                              |             |
+
+#### Returns
+
+Type: `Promise<RouteWrite>`
+
+
 
 
 ----------------------------------------------
