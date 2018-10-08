@@ -622,6 +622,7 @@ export class ReorderGroup {
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
+    proxyMethods(this, el, ['complete']);
     proxyInputs(this, el, ['disabled']);
     proxyOutputs(this, el, ['ionItemReorder']);
   }

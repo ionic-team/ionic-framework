@@ -26,6 +26,7 @@ import {
   InputChangeEvent,
   ItemHeightFn,
   ItemRenderFn,
+  ItemReorderDetail,
   LoadingOptions,
   MenuChangeEventDetail,
   MenuControllerI,
@@ -39,6 +40,7 @@ import {
   PickerOptions,
   PopoverOptions,
   RangeValue,
+  RefresherEventDetail,
   RouteID,
   RouterDirection,
   RouterEventDetail,
@@ -3515,7 +3517,7 @@ export namespace Components {
     /**
     * Emitted when the user lets go of the content and has pulled down further than the `pullMin` or pulls the content down and exceeds the pullMax. Updates the refresher state to `refreshing`. The `complete()` method should be called when the async operation has completed.
     */
-    'onIonRefresh'?: (event: CustomEvent<void>) => void;
+    'onIonRefresh'?: (event: CustomEvent<RefresherEventDetail>) => void;
     /**
     * Emitted when the user begins to start pulling down.
     */
@@ -3535,6 +3537,7 @@ export namespace Components {
   }
 
   interface IonReorderGroup {
+    'complete': (listOrReorder?: boolean | any[] | undefined) => Promise<any>;
     /**
     * If true, the reorder will be hidden. Defaults to `true`.
     */
@@ -3545,7 +3548,10 @@ export namespace Components {
     * If true, the reorder will be hidden. Defaults to `true`.
     */
     'disabled'?: boolean;
-    'onIonItemReorder'?: (event: CustomEvent) => void;
+    /**
+    * Event that needs to be listen to in order to respond to reorder action. `ion-reorder-group` uses this event to delegate to the user the reordering of data array.   The complete() method exposed as
+    */
+    'onIonItemReorder'?: (event: CustomEvent<ItemReorderDetail>) => void;
   }
 
   interface IonReorder {}

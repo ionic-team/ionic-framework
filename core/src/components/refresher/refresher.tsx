@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { Gesture, GestureDetail, Mode } from '../../interface';
+import { Gesture, GestureDetail, Mode, RefresherEventDetail } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
 @Component({
@@ -20,6 +20,8 @@ export class Refresher implements ComponentInterface {
 
   mode!: Mode;
 
+  @Element() el!: HTMLElement;
+
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
@@ -33,8 +35,6 @@ export class Refresher implements ComponentInterface {
    * - `completing` - The `refreshing` state has finished and the refresher is in the way of closing itself. Once closed, the refresher will go back to the `inactive` state.
    */
   @State() private state: RefresherState = RefresherState.Inactive;
-
-  @Element() el!: HTMLElement;
 
   /**
    * The minimum distance the user must pull down until the
@@ -77,7 +77,7 @@ export class Refresher implements ComponentInterface {
    * Updates the refresher state to `refreshing`. The `complete()` method should be
    * called when the async operation has completed.
    */
-  @Event() ionRefresh!: EventEmitter<void>;
+  @Event() ionRefresh!: EventEmitter<RefresherEventDetail>;
 
   /**
    * Emitted while the user is pulling down the content and exposing the refresher.
@@ -307,7 +307,9 @@ export class Refresher implements ComponentInterface {
 
     // emit "refresh" because it was pulled down far enough
     // and they let go to begin refreshing
-    this.ionRefresh.emit();
+    this.ionRefresh.emit({
+      complete: this.complete.bind(this)
+    });
   }
 
   private close(state: RefresherState, delay: string) {
