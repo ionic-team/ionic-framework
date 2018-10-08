@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
 
 import { Color, Config, Mode, ScrollBaseDetail, ScrollDetail } from '../../interface';
+import { isPlatform } from '../../utils/platform';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 @Component({
@@ -102,7 +103,7 @@ export class Content implements ComponentInterface {
 
   componentWillLoad() {
     if (this.forceOverscroll === undefined) {
-      this.forceOverscroll = this.mode === 'ios' && ('ontouchstart' in this.win);
+      this.forceOverscroll = this.mode === 'ios' && isPlatform(this.win, 'mobile');
     }
   }
 
