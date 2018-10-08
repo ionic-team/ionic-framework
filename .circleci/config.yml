@@ -131,6 +131,9 @@ workflows:
           requires: [build-core]
       - test-core-screenshot:
           requires: [build-core]
+          filters:
+            branches:
+              ignore: master
       - test-core-screenshot-master:
           requires: [build-core]
           filters:
