@@ -108,21 +108,25 @@ export const config: Config = {
     emulate: [
       {
         userAgent: 'iPhone',
-        width: 400,
-        height: 800,
-        deviceScaleFactor: 2,
-        isMobile: true,
-        hasTouch: true,
-        isLandscape: false
+        viewport: {
+          width: 400,
+          height: 800,
+          deviceScaleFactor: 2,
+          isMobile: true,
+          hasTouch: true,
+          isLandscape: false
+        }
       },
       {
         userAgent: 'Android',
-        width: 400,
-        height: 800,
-        deviceScaleFactor: 2,
-        isMobile: true,
-        hasTouch: true,
-        isLandscape: false
+        viewport: {
+          width: 400,
+          height: 800,
+          deviceScaleFactor: 2,
+          isMobile: true,
+          hasTouch: true,
+          isLandscape: false
+        }
       }
     ]
   },
