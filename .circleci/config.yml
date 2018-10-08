@@ -3,19 +3,19 @@ version: 2
 aliases:
   - &restore-cache
       keys:
-        - dependency-cache-{{ checksum "package.json" }}
+        - dependency-cache-{{ checksum "package.json" }}-2
 
   - &save-cache
-      key: dependency-cache-{{ checksum "package.json" }}
+      key: dependency-cache-{{ checksum "package.json" }}-2
       paths:
         - node_modules
 
   - &restore-cache-core
       keys:
-        - dependency-cache-{{ checksum "core/package.json" }}
+        - dependency-cache-{{ checksum "core/package.json" }}-2
 
   - &save-cache-core
-      key: dependency-cache-{{ checksum "core/package.json" }}
+      key: dependency-cache-{{ checksum "core/package.json" }}-2
       paths:
         - core/node_modules
 
@@ -47,11 +47,11 @@ jobs:
       - restore_cache: *restore-cache-core
       - run:
           command: npm install
-          working_directory: /tmp/working_directory/core
+          working_directory: /tmp/workspace/core
       - save_cache: *save-cache-core
       - run:
           command: npm run build # --max-workers 1 --debug
-          working_directory: /tmp/working_directory/core
+          working_directory: /tmp/workspace/core
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
@@ -65,7 +65,7 @@ jobs:
           at: /tmp/workspace
       - run:
           command: npm run lint
-          working_directory: /tmp/working_directory/core
+          working_directory: /tmp/workspace/core
 
   test-core-spec:
     <<: *defaults
@@ -75,7 +75,7 @@ jobs:
           at: /tmp/workspace
       - run:
           command: npm run test.spec
-          working_directory: /tmp/working_directory/core
+          working_directory: /tmp/workspace/core
 
   test-core-treeshake:
     <<: *defaults
@@ -85,7 +85,7 @@ jobs:
           at: /tmp/workspace
       - run:
           command: npm run test.treeshake
-          working_directory: /tmp/working_directory/core
+          working_directory: /tmp/workspace/core
 
 workflows:
   version: 2
