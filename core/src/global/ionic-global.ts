@@ -40,3 +40,6 @@ Ionic.mode = Context.mode = mode;
 config.set('mode', mode);
 documentElement.setAttribute('mode', mode);
 documentElement.classList.add(mode);
+if (config.getBoolean('_testing')) {
+  config.set('animated', false);
+}

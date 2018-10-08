@@ -785,7 +785,6 @@ export class Nav implements NavOutlet {
 
     const enteringEl = enteringView.element!;
     const leavingEl = leavingView && leavingView.element!;
-    const animated = this.animated && this.config.getBoolean('animated', true);
     const animationOpts: TransitionOptions = {
       mode: this.mode,
       showGoBack: this.canGoBackSync(enteringView),
@@ -795,7 +794,7 @@ export class Nav implements NavOutlet {
       baseEl: this.el,
       animationBuilder: this.animation || opts.animationBuilder || this.config.get('navAnimation'),
       progressCallback,
-      animated,
+      animated: this.animated,
 
       enteringEl,
       leavingEl,

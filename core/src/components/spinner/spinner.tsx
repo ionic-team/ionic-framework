@@ -53,7 +53,7 @@ export class Spinner implements ComponentInterface {
         ...createColorClasses(this.color),
 
         [`spinner-${this.getName()}`]: true,
-        'spinner-paused': !!this.paused
+        'spinner-paused': !!this.paused || this.config.getBoolean('_testing')
       }
     };
   }

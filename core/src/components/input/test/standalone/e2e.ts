@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 it('input: standalone', async () => {
   const page = await newE2EPage({
-    url: '/src/components/input/test/standalone?ionic:animated=false'
+    url: '/src/components/input/test/standalone?ionic:_testing=true'
   });
 
   const compare = await page.compareScreenshot();

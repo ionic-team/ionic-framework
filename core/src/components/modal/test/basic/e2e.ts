@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 it('modal: basic', async () => {
   const page = await newE2EPage({
-    url: '/src/components/modal/test/basic?ionic:animated=false'
+    url: '/src/components/modal/test/basic?ionic:_testing=true'
   });
 
   await page.click('.e2ePresentModal');

@@ -52,6 +52,7 @@ export interface IonicConfig {
   pickerLeave?: AnimationBuilder;
 
   _forceStatusbarPadding?: boolean;
+  _testing?: boolean;
 }
 
 export function setupConfig(config: IonicConfig) {

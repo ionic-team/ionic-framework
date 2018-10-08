@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 it('list: inset', async () => {
   const page = await newE2EPage({
-    url: '/src/components/list/test/inset?ionic:animated=false'
+    url: '/src/components/list/test/inset?ionic:_testing=true'
   });
 
   const compare = await page.compareScreenshot();

@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
-import { Color, Mode, TextInputChangeEvent } from '../../interface';
+import { Config, Color, Mode, TextInputChangeEvent } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
@@ -20,6 +20,7 @@ export class Searchbar implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
+  @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'document' }) doc!: Document;
 
   @State() focused = false;
@@ -321,7 +322,7 @@ export class Searchbar implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
-        'searchbar-animated': this.animated,
+        'searchbar-animated': this.animated && this.config.getBoolean('animated', true),
         'searchbar-has-value': (this.value !== ''),
         'searchbar-show-cancel': this.showCancelButton,
         'searchbar-left-aligned': this.shouldAlignLeft,
