@@ -1,33 +1,96 @@
 version: 2
 
+aliases:
+  - &restore-cache
+      keys:
+        - dependency-cache-{{ checksum "package.json" }}
+
+  - &save-cache
+      key: dependency-cache-{{ checksum "package.json" }}
+      paths:
+        - node_modules
+
+  - &restore-cache-core
+      keys:
+        - dependency-cache-{{ checksum "core/package.json" }}
+
+  - &save-cache-core
+      key: dependency-cache-{{ checksum "core/package.json" }}
+      paths:
+        - core/node_modules
+
+
+defaults: &defaults
+  docker:
+    - image: circleci/node:latest-browsers
+  working_directory: /tmp/workspace
+
+defaults-core: &defaults-core
+  <<: *defaults-core
+  working_directory: /tmp/workspace/core
+
 jobs:
   build:
-    working_directory: /tmp/workspace
-    docker:
-      - image: circleci/node:latest-browsers
-    branches:
-      # ignore:
-      #   - core
+    <<: *defaults
     steps:
       - checkout
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: Install monorepo node modules
-          command: npm i
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+      - restore_cache: *restore-cache
+      - run: npm install
+      - save_cache: *save-cache
+      - persist_to_workspace:
+          root: /tmp/workspace
           paths:
-            - node_modules
-      - restore_cache:
-          key: dependency-cache-{{ checksum "core/package.json" }}
-      - run:
-          name: Install core node modules
-          command: npm --prefix core/ i
-      - save_cache:
-          key: dependency-cache-{{ checksum "core/package.json" }}
+            - "*"
+
+  build-core:
+    <<: *defaults-core
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - restore_cache: *restore-cache-core
+      - run: npm install
+      - save_cache: *save-cache-core
+      - run: npm run build --max-workers 1 --debug
+      - persist_to_workspace:
+          root: /tmp/workspace
           paths:
-            - core/node_modules
-      - run:
-          name: Validate Core
-          command: npm --prefix core/ run validate.ci
+            - "*"
+
+  test-core-lint:
+    <<: *defaults-core
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run: npm run lint
+
+  test-core-spec:
+    <<: *defaults-core
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run: npm run test.spec
+
+  test-core-treeshake:
+    <<: *defaults-core
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run: npm run test.treeshake
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build
+      - build-core:
+          requires: [build]
+      - test-core-lint:
+          requires: [build-core]
+      - test-core-spec:
+          requires: [build-core]
+      - test-core-treeshake:
+          requires: [build-core]
