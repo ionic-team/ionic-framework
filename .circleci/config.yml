@@ -25,10 +25,6 @@ defaults: &defaults
     - image: circleci/node:latest-browsers
   working_directory: /tmp/workspace
 
-defaults-core: &defaults-core
-  <<: *defaults
-  working_directory: /tmp/workspace/core
-
 jobs:
   build:
     <<: *defaults
@@ -43,43 +39,53 @@ jobs:
             - "*"
 
   build-core:
-    <<: *defaults-core
+    <<: *defaults
     steps:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
       - restore_cache: *restore-cache-core
-      - run: npm install
+      - run:
+          command: npm install
+          working_directory: /tmp/working_directory/core
       - save_cache: *save-cache-core
-      - run: npm run build --max-workers 1 --debug
+      - run:
+          command: npm run build # --max-workers 1 --debug
+          working_directory: /tmp/working_directory/core
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
             - "*"
 
   test-core-lint:
-    <<: *defaults-core
+    <<: *defaults
     steps:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
-      - run: npm run lint
+      - run:
+          command: npm run lint
+          working_directory: /tmp/working_directory/core
 
   test-core-spec:
-    <<: *defaults-core
+    <<: *defaults
     steps:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
-      - run: npm run test.spec
+      - run:
+          command: npm run test.spec
+          working_directory: /tmp/working_directory/core
 
   test-core-treeshake:
-    <<: *defaults-core
+    <<: *defaults
     steps:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
-      - run: npm run test.treeshake
+      - run:
+          command: npm run test.treeshake
+          working_directory: /tmp/working_directory/core
 
 workflows:
   version: 2
