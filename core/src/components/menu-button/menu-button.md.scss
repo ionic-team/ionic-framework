@@ -3,6 +3,9 @@
 
 // MD Menu Button
 // --------------------------------------------------
+:host {
+  --color: #{$menu-button-md-color};
+}
 
 button {
   @include padding(0, 8px);

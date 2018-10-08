@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  color: #{ion-color(primary, base)};
+  --color: #{$menu-button-ios-color};
 }
 
 :host(.activated) {
