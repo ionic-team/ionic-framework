@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
 
-import { Color, CssClassMap, Mode, RouterDirection } from '../../interface';
+import { Color, Mode, RouterDirection } from '../../interface';
 import { hasShadowDom } from '../../utils/helpers';
 import { createColorClasses, openURL } from '../../utils/theme';
 
@@ -146,19 +146,21 @@ export class Button implements ComponentInterface {
   }
 
   hostData() {
-    const { buttonType, color, expand, fill, mode, shape, size, strong } = this;
+    const { buttonType, keyFocus, disabled, color, expand, fill, shape, size, strong } = this;
 
     return {
       'ion-activatable': true,
       class: {
         ...createColorClasses(color),
-        ...getButtonClassMap(buttonType, mode),
-        ...getButtonTypeClassMap(buttonType, expand, mode),
-        ...getButtonTypeClassMap(buttonType, size, mode),
-        ...getButtonTypeClassMap(buttonType, shape, mode),
-        ...getButtonTypeClassMap(buttonType, strong ? 'strong' : undefined, mode),
-        ...getButtonTypeClassMap(buttonType, fill, mode),
-        'focused': this.keyFocus,
+        [buttonType]: true,
+        [`${buttonType}-${expand}`]: !!expand,
+        [`${buttonType}-${size}`]: !!size,
+        [`${buttonType}-${shape}`]: !!shape,
+        [`${buttonType}-${fill}`]: !!fill,
+        [`${buttonType}-strong`]: strong,
+
+        'focused': keyFocus,
+        'button-disabled': disabled
       }
     };
   }
@@ -190,32 +192,4 @@ export class Button implements ComponentInterface {
       </TagType>
     );
   }
-}
-
-/**
- * Get the classes based on the button type
- * e.g. alert-button, action-sheet-button
- */
-function getButtonClassMap(buttonType: string | undefined, mode: Mode): CssClassMap {
-  if (buttonType === undefined) {
-    return {};
-  }
-  return {
-    [buttonType]: true,
-    [`${buttonType}-${mode}`]: true
-  };
-}
-
-/**
- * Get the classes based on the type
- * e.g. block, full, round, large
- */
-function getButtonTypeClassMap(buttonType: string, type: string | undefined, mode: Mode): CssClassMap {
-  if (type === undefined) {
-    return {};
-  }
-  return {
-    [`${buttonType}-${type}`]: true,
-    [`${buttonType}-${type}-${mode}`]: true
-  };
 }

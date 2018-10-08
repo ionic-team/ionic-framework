@@ -62,7 +62,7 @@
   font-kerning: none;
 }
 
-:host([disabled]) {
+:host(.button-disabled) {
   pointer-events: none;
 }
 
