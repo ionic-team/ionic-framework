@@ -44,11 +44,11 @@ export class PickerColumnCmp implements ComponentInterface {
   }
 
   async componentDidLoad() {
-    // get the scrollable element within the column
-    const colEl = this.optsEl!;
-
     // get the height of one option
-    this.optHeight = (colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0);
+    const colEl = this.optsEl;
+    if (colEl) {
+      this.optHeight = (colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0);
+    }
 
     this.refresh();
 
@@ -65,6 +65,10 @@ export class PickerColumnCmp implements ComponentInterface {
     this.gesture.setDisabled(false);
   }
 
+  componentDidUnload() {
+    cancelAnimationFrame(this.rafId);
+  }
+
   private setSelected(selectedIndex: number, duration: number) {
     // if there is a selected index, then figure out it's y position
     // if there isn't a selected index, then just use the top y position
@@ -78,6 +82,10 @@ export class PickerColumnCmp implements ComponentInterface {
   }
 
   private update(y: number, duration: number, saveY: boolean) {
+    if (!this.optsEl) {
+      return;
+    }
+
     // ensure we've got a good round number :)
     let translateY = 0;
     let translateZ = 0;
@@ -86,7 +94,7 @@ export class PickerColumnCmp implements ComponentInterface {
     const durationStr = (duration === 0) ? null : duration + 'ms';
     const scaleStr = `scale(${this.scaleFactor})`;
 
-    const children = this.optsEl!.children;
+    const children = this.optsEl.children;
     for (let i = 0; i < children.length; i++) {
       const button = children[i] as HTMLElement;
       const opt = col.options[i];
@@ -282,7 +290,7 @@ export class PickerColumnCmp implements ComponentInterface {
       }
     }
 
-    const selectedIndex = clamp(min, this.col.selectedIndex!, max);
+    const selectedIndex = clamp(min, this.col.selectedIndex || 0, max);
     if (this.col.prevSelected !== selectedIndex) {
       const y = (selectedIndex * this.optHeight) * -1;
       this.velocity = 0;

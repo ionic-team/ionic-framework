@@ -146,24 +146,24 @@ export class Radio implements ComponentInterface {
     });
   }
 
-  onClick() {
+  private onClick() {
     this.checkedChanged(true);
   }
 
-  onChange() {
+  private onChange() {
     this.checked = true;
     this.nativeInput.focus();
   }
 
-  onKeyUp() {
+  private onKeyUp() {
     this.keyFocus = true;
   }
 
-  onFocus() {
+  private onFocus() {
     this.ionFocus.emit();
   }
 
-  onBlur() {
+  private onBlur() {
     this.keyFocus = false;
     this.ionBlur.emit();
   }

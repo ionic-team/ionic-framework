@@ -99,19 +99,19 @@ export class Checkbox implements ComponentInterface {
     });
   }
 
-  onChange() {
+  private onChange() {
     this.checked = !this.checked;
   }
 
-  onKeyUp() {
+  private onKeyUp() {
     this.keyFocus = true;
   }
 
-  onFocus() {
+  private onFocus() {
     this.ionFocus.emit();
   }
 
-  onBlur() {
+  private onBlur() {
     this.keyFocus = false;
     this.ionBlur.emit();
   }
