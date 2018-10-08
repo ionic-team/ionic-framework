@@ -81,13 +81,13 @@ export class InfiniteScroll implements ComponentInterface {
     }
     this.thresholdChanged(this.threshold);
     this.enableScrollEvents(!this.disabled);
-    // if (this.position === 'top') {
-    //   this.queue.write(() => {
-    //     if (this.scrollEl) {
-    //       this.scrollEl.scrollTop = this.scrollEl.scrollHeight - this.scrollEl.clientHeight;
-    //     }
-    //   });
-    // }
+    if (this.position === 'top') {
+      this.queue.write(() => {
+        if (this.scrollEl) {
+          this.scrollEl.scrollTop = this.scrollEl.scrollHeight - this.scrollEl.clientHeight;
+        }
+      });
+    }
   }
 
   componentDidUnload() {
@@ -130,7 +130,7 @@ export class InfiniteScroll implements ComponentInterface {
   }
 
   /**
-   * Call `complete()` within the `infinite` output event handler when
+   * Call `complete()` within the `ionInfinite` output event handler when
    * your async operation has completed. For example, the `loading`
    * state is while the app is performing an asynchronous operation,
    * such as receiving more data from an AJAX request to add more items
@@ -147,45 +147,49 @@ export class InfiniteScroll implements ComponentInterface {
     }
     this.isLoading = false;
 
-    // if (this.position === 'top') {
-    //   /**
-    //    * New content is being added at the top, but the scrollTop position stays the same,
-    //    * which causes a scroll jump visually. This algorithm makes sure to prevent this.
-    //    * (Frame 1)
-    //    *    - complete() is called, but the UI hasn't had time to update yet.
-    //    *    - Save the current content dimensions.
-    //    *    - Wait for the next frame using _dom.read, so the UI will be updated.
-    //    * (Frame 2)
-    //    *    - Read the new content dimensions.
-    //    *    - Calculate the height difference and the new scroll position.
-    //    *    - Delay the scroll position change until other possible dom reads are done using _dom.write to be performant.
-    //    * (Still frame 2, if I'm correct)
-    //    *    - Change the scroll position (= visually maintain the scroll position).
-    //    *    - Change the state to re-enable the InfiniteScroll.
-    //    *    - This should be after changing the scroll position, or it could
-    //    *    cause the InfiniteScroll to be triggered again immediately.
-    //    * (Frame 3)
-    //    *    Done.
-    //    */
-    //   this.isBusy = true;
-    //   // ******** DOM READ ****************
-    //   // Save the current content dimensions before the UI updates
-    //   const prev = scrollEl.scrollHeight - scrollEl.scrollTop;
+    if (this.position === 'top') {
+      /**
+       * New content is being added at the top, but the scrollTop position stays the same,
+       * which causes a scroll jump visually. This algorithm makes sure to prevent this.
+       * (Frame 1)
+       *    - complete() is called, but the UI hasn't had time to update yet.
+       *    - Save the current content dimensions.
+       *    - Wait for the next frame using _dom.read, so the UI will be updated.
+       * (Frame 2)
+       *    - Read the new content dimensions.
+       *    - Calculate the height difference and the new scroll position.
+       *    - Delay the scroll position change until other possible dom reads are done using _dom.write to be performant.
+       * (Still frame 2, if I'm correct)
+       *    - Change the scroll position (= visually maintain the scroll position).
+       *    - Change the state to re-enable the InfiniteScroll.
+       *    - This should be after changing the scroll position, or it could
+       *    cause the InfiniteScroll to be triggered again immediately.
+       * (Frame 3)
+       *    Done.
+       */
+      this.isBusy = true;
+      // ******** DOM READ ****************
+      // Save the current content dimensions before the UI updates
+      const prev = scrollEl.scrollHeight - scrollEl.scrollTop;
 
-    //   // ******** DOM READ ****************
-    //   this.queue.read(() => {
-    //     // UI has updated, save the new content dimensions
-    //     const scrollHeight = scrollEl.scrollHeight;
-    //     // New content was added on top, so the scroll position should be changed immediately to prevent it from jumping around
-    //     const newScrollTop = scrollHeight - prev;
+      // ******** DOM READ ****************
+      requestAnimationFrame(() => {
+        this.queue.read(() => {
+          // UI has updated, save the new content dimensions
+          const scrollHeight = scrollEl.scrollHeight;
+          // New content was added on top, so the scroll position should be changed immediately to prevent it from jumping around
+          const newScrollTop = scrollHeight - prev;
 
-    //     // ******** DOM WRITE ****************
-    //     this.queue.write(() => {
-    //       scrollEl.scrollTop = newScrollTop;
-    //       this.isBusy = false;
-    //     });
-    //   });
-    // }
+          // ******** DOM WRITE ****************
+          requestAnimationFrame(() => {
+            this.queue.write(() => {
+              scrollEl.scrollTop = newScrollTop;
+              this.isBusy = false;
+            });
+          });
+        });
+      });
+    }
   }
 
   private canStart(): boolean {
