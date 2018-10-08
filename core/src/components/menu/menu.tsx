@@ -203,7 +203,7 @@ export class Menu implements ComponentInterface, MenuI {
     this.updateState();
   }
 
-  @Listen('body:click', { enabled: false, capture: true })
+  @Listen('click', { enabled: false, capture: true })
   onBackdropClick(ev: any) {
     if (this.lastOnEnd < ev.timeStamp - 100) {
       const shouldClose = (ev.composedPath)
@@ -412,7 +412,7 @@ export class Menu implements ComponentInterface, MenuI {
     }
 
     // add/remove backdrop click listeners
-    this.enableListener(this, 'body:click', isOpen);
+    this.enableListener(this, 'click', isOpen);
 
     if (isOpen) {
       // add css class
