@@ -43,6 +43,8 @@ export interface HTMLIonOverlayElement extends HTMLStencilElement {
   dismiss(data?: any, role?: string): Promise<boolean>;
 }
 
+export type OverlaySelect = HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement;
+
 // TODO: uncomment when TS 3.0 issues are fixed
 // Overlay checks
 /*

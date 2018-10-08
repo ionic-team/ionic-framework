@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
-import { ActionSheetButton, ActionSheetOptions, AlertOptions, CssClassMap, Mode, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent } from '../../interface';
+import { ActionSheetButton, ActionSheetOptions, AlertOptions, CssClassMap, Mode, OverlaySelect, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent } from '../../interface';
 import { deferEvent, renderHiddenInput } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
@@ -17,7 +17,7 @@ export class Select implements ComponentInterface {
   private childOpts: HTMLIonSelectOptionElement[] = [];
   private inputId = `ion-sel-${selectIds++}`;
   private labelId?: string;
-  private overlay?: HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement;
+  private overlay?: OverlaySelect;
 
   @Element() el!: HTMLIonSelectElement;
 
@@ -261,7 +261,7 @@ export class Select implements ComponentInterface {
   }
 
   @Method()
-  open(ev?: UIEvent): Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement> {
+  open(ev?: UIEvent): Promise<OverlaySelect> {
     let selectInterface = this.interface;
 
     if ((selectInterface === 'action-sheet' || selectInterface === 'popover') && this.multiple) {

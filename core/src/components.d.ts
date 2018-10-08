@@ -35,6 +35,7 @@ import {
   NavComponent,
   NavOptions,
   OverlayEventDetail,
+  OverlaySelect,
   PickerButton,
   PickerColumn,
   PickerOptions,
@@ -4021,7 +4022,7 @@ export namespace Components {
     * The text to display on the ok button. Default: `OK`.
     */
     'okText': string;
-    'open': (ev?: UIEvent | undefined) => Promise<HTMLIonAlertElement | HTMLIonPopoverElement | HTMLIonActionSheetElement>;
+    'open': (ev?: UIEvent | undefined) => Promise<OverlaySelect>;
     /**
     * The text to display when the select is empty.
     */
