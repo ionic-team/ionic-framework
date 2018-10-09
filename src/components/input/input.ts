@@ -401,7 +401,18 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
    * @hidden
    */
   onInput(ev: any) {
-    this.value = ev.target.value;
+    switch (ev.target.type) {
+      case 'number':
+        this.value = ev.target.valueAsNumber;
+        break;
+
+      case 'date':
+        this.value = ev.target.valueAsDate;
+        break;
+
+      default:
+        this.value = ev.target.value;
+    }
 
     // TODO: deprecate this
     this.input.emit(ev);
