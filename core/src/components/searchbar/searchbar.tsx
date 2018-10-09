@@ -161,7 +161,7 @@ export class Searchbar implements ComponentInterface {
   /**
    * Clears the input field and triggers the control change.
    */
-  private clearInput(ev?: Event) {
+  private onClearInput = (ev?: Event) => {
     this.ionClear.emit();
 
     if (ev) {
@@ -185,13 +185,13 @@ export class Searchbar implements ComponentInterface {
    * the clearInput function doesn't want the input to blur
    * then calls the custom cancel function if the user passed one in.
    */
-  private cancelSearchbar(ev?: Event) {
+  private onCancelSearchbar = (ev?: Event) => {
     if (ev) {
       ev.preventDefault();
       ev.stopPropagation();
     }
     this.ionCancel.emit();
-    this.clearInput();
+    this.onClearInput();
 
     this.nativeInput.blur();
   }
@@ -199,19 +199,19 @@ export class Searchbar implements ComponentInterface {
   /**
    * Update the Searchbar input value when the input changes
    */
-  private onInput(ev: KeyboardEvent) {
+  private onInput = (ev: Event) => {
     const input = ev.target as HTMLInputElement | null;
     if (input) {
       this.value = input.value;
     }
-    this.ionInput.emit(ev);
+    this.ionInput.emit(ev as KeyboardEvent);
   }
 
   /**
    * Sets the Searchbar to not focused and checks if it should align left
    * based on whether there is a value in the searchbar or not.
    */
-  private onBlur() {
+  private onBlur = () => {
     this.focused = false;
     this.ionBlur.emit();
     this.positionElements();
@@ -220,7 +220,7 @@ export class Searchbar implements ComponentInterface {
   /**
    * Sets the Searchbar to focused and active on input focus.
    */
-  private onFocus() {
+  private onFocus = () => {
     this.focused = true;
     this.ionFocus.emit();
     this.positionElements();
@@ -339,8 +339,8 @@ export class Searchbar implements ComponentInterface {
       <button
         type="button"
         tabIndex={this.mode === 'ios' && !this.focused ? -1 : undefined}
-        onMouseDown={this.cancelSearchbar.bind(this)}
-        onTouchStart={this.cancelSearchbar.bind(this)}
+        onMouseDown={this.onCancelSearchbar}
+        onTouchStart={this.onCancelSearchbar}
         class="searchbar-cancel-button"
       >
         { this.mode === 'md'
@@ -355,9 +355,9 @@ export class Searchbar implements ComponentInterface {
         <input
           ref={el => this.nativeInput = el as HTMLInputElement}
           class="searchbar-input"
-          onInput={this.onInput.bind(this)}
-          onBlur={this.onBlur.bind(this)}
-          onFocus={this.onFocus.bind(this)}
+          onInput={this.onInput}
+          onBlur={this.onBlur}
+          onFocus={this.onFocus}
           placeholder={this.placeholder}
           type={this.type}
           value={this.value}
@@ -374,8 +374,8 @@ export class Searchbar implements ComponentInterface {
           type="button"
           no-blur
           class="searchbar-clear-button"
-          onMouseDown={this.clearInput.bind(this)}
-          onTouchStart={this.clearInput.bind(this)}
+          onMouseDown={this.onClearInput}
+          onTouchStart={this.onClearInput}
         >
           <ion-icon mode={this.mode} icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
         </button>

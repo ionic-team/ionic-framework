@@ -108,20 +108,20 @@ export class Button implements ComponentInterface {
     }
   }
 
-  private onFocus() {
+  private onFocus = () => {
     this.ionFocus.emit();
   }
 
-  private onKeyUp() {
+  private onKeyUp = () => {
     this.keyFocus = true;
   }
 
-  private onBlur() {
+  private onBlur = () => {
     this.keyFocus = false;
     this.ionBlur.emit();
   }
 
-  private onClick(ev: Event) {
+  private onClick = (ev: Event) => {
     if (this.type === 'button') {
       return openURL(this.win, this.href, ev, this.routerDirection);
 
@@ -177,10 +177,10 @@ export class Button implements ComponentInterface {
         {...attrs}
         class="button-native"
         disabled={this.disabled}
-        onFocus={this.onFocus.bind(this)}
-        onKeyUp={this.onKeyUp.bind(this)}
-        onBlur={this.onBlur.bind(this)}
-        onClick={this.onClick.bind(this)}
+        onFocus={this.onFocus}
+        onKeyUp={this.onKeyUp}
+        onBlur={this.onBlur}
+        onClick={this.onClick}
       >
         <span class="button-inner">
           <slot name="icon-only"></slot>

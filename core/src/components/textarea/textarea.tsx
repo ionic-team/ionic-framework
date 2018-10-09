@@ -186,27 +186,27 @@ export class Textarea implements ComponentInterface {
     });
   }
 
-  private onInput(ev: KeyboardEvent) {
+  private onInput = (ev: Event) => {
     this.value = this.nativeInput!.value;
     this.emitStyle();
-    this.ionInput.emit(ev);
+    this.ionInput.emit(ev as KeyboardEvent);
   }
 
-  private onFocus() {
+  private onFocus = () => {
     this.hasFocus = true;
     this.focusChange();
 
     this.ionFocus.emit();
   }
 
-  private onBlur() {
+  private onBlur = () => {
     this.hasFocus = false;
     this.focusChange();
 
     this.ionBlur.emit();
   }
 
-  private onKeyDown() {
+  private onKeyDown = () => {
     this.checkClearOnEdit();
   }
 
@@ -268,10 +268,10 @@ export class Textarea implements ComponentInterface {
         cols={this.cols}
         rows={this.rows}
         wrap={this.wrap}
-        onInput={this.onInput.bind(this)}
-        onBlur={this.onBlur.bind(this)}
-        onFocus={this.onFocus.bind(this)}
-        onKeyDown={this.onKeyDown.bind(this)}
+        onInput={this.onInput}
+        onBlur={this.onBlur}
+        onFocus={this.onFocus}
+        onKeyDown={this.onKeyDown}
       >
         {this.value}
       </textarea>

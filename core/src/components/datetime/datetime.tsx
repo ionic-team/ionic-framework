@@ -527,7 +527,6 @@ export class Datetime implements ComponentInterface {
       <button
         type="button"
         aria-haspopup="true"
-        // id={this.datetimeId}
         aria-labelledby={this.labelId}
         aria-disabled={this.disabled ? 'true' : null}
         onClick={this.open.bind(this)}

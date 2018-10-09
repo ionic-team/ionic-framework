@@ -425,15 +425,15 @@ export class Select implements ComponentInterface {
     return overlay.dismiss();
   }
 
-  onKeyUp() {
+  private onKeyUp = () => {
     this.keyFocus = true;
   }
 
-  onFocus() {
+  private onFocus = () => {
     this.ionFocus.emit();
   }
 
-  onBlur() {
+  private onBlur = () => {
     this.keyFocus = false;
     this.ionBlur.emit();
   }
@@ -500,9 +500,9 @@ export class Select implements ComponentInterface {
         aria-expanded={this.isExpanded ? 'true' : null}
         aria-disabled={this.disabled ? 'true' : null}
         onClick={this.open.bind(this)}
-        onKeyUp={this.onKeyUp.bind(this)}
-        onFocus={this.onFocus.bind(this)}
-        onBlur={this.onBlur.bind(this)}
+        onKeyUp={this.onKeyUp}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
         class="select-cover"
       >
         <slot></slot>

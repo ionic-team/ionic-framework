@@ -154,19 +154,19 @@ export class Toggle implements ComponentInterface {
     this.nativeInput.focus();
   }
 
-  private onChange() {
+  private onChange = () => {
     this.checked = !this.checked;
   }
 
-  private onKeyUp() {
+  private onKeyUp = () => {
     this.keyFocus = true;
   }
 
-  private onFocus() {
+  private onFocus = () => {
     this.ionFocus.emit();
   }
 
-  private onBlur() {
+  private onBlur = () => {
     this.keyFocus = false;
     this.ionBlur.emit();
   }
@@ -194,10 +194,10 @@ export class Toggle implements ComponentInterface {
       </div>,
       <input
         type="checkbox"
-        onChange={this.onChange.bind(this)}
-        onFocus={this.onFocus.bind(this)}
-        onBlur={this.onBlur.bind(this)}
-        onKeyUp={this.onKeyUp.bind(this)}
+        onChange={this.onChange}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+        onKeyUp={this.onKeyUp}
         checked={this.checked}
         id={this.inputId}
         name={this.name}

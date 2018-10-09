@@ -265,15 +265,15 @@ export class Input implements ComponentInterface {
     });
   }
 
-  private onInput(ev: KeyboardEvent) {
+  private onInput = (ev: Event) => {
     const input = ev.target as HTMLInputElement | null;
     if (input) {
       this.value = input.value || '';
     }
-    this.ionInput.emit(ev);
+    this.ionInput.emit(ev as KeyboardEvent);
   }
 
-  private onBlur() {
+  private onBlur = () => {
     this.hasFocus = false;
     this.focusChanged();
     this.emitStyle();
@@ -281,7 +281,7 @@ export class Input implements ComponentInterface {
     this.ionBlur.emit();
   }
 
-  private onFocus() {
+  private onFocus = () => {
     this.hasFocus = true;
     this.focusChanged();
     this.emitStyle();
@@ -289,17 +289,7 @@ export class Input implements ComponentInterface {
     this.ionFocus.emit();
   }
 
-  private focusChanged() {
-    // If clearOnEdit is enabled and the input blurred but has a value, set a flag
-    if (this.clearOnEdit && !this.hasFocus && this.hasValue()) {
-      this.didBlurAfterEdit = true;
-    }
-  }
-
-  /**
-   * Check if we need to clear the text input if clearOnEdit is enabled
-   */
-  private onKeydown() {
+  private onKeydown = () => {
     if (this.clearOnEdit) {
       // Did the input value change after it was blurred and edited?
       if (this.didBlurAfterEdit && this.hasValue()) {
@@ -312,8 +302,15 @@ export class Input implements ComponentInterface {
     }
   }
 
-  private clearTextInput() {
+  private clearTextInput = () => {
     this.value = '';
+  }
+
+  private focusChanged() {
+    // If clearOnEdit is enabled and the input blurred but has a value, set a flag
+    if (this.clearOnEdit && !this.hasFocus && this.hasValue()) {
+      this.didBlurAfterEdit = true;
+    }
   }
 
   private hasValue(): boolean {
@@ -362,18 +359,18 @@ export class Input implements ComponentInterface {
         size={this.size}
         type={this.type}
         value={this.getValue()}
-        onInput={this.onInput.bind(this)}
-        onBlur={this.onBlur.bind(this)}
-        onFocus={this.onFocus.bind(this)}
-        onKeyDown={this.onKeydown.bind(this)}
+        onInput={this.onInput}
+        onBlur={this.onBlur}
+        onFocus={this.onFocus}
+        onKeyDown={this.onKeydown}
       />,
       <slot></slot>,
       (this.clearInput && !this.readonly && !this.disabled) && <button
         type="button"
         class="input-clear-icon"
         tabindex="-1"
-        onTouchStart={this.clearTextInput.bind(this)}
-        onMouseDown={this.clearTextInput.bind(this)}
+        onTouchStart={this.clearTextInput}
+        onMouseDown={this.clearTextInput}
       />
     ];
   }
