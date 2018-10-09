@@ -1,12 +1,6 @@
 version: 2
 
 aliases:
-  - &install-roboto
-      name: Install Roboto
-      command: |
-        sudo apt update
-        sudo apt install -y fonts-roboto
-
   - &restore-cache
       keys:
         - dependency-cache-{{ checksum "package.json" }}-2
@@ -47,7 +41,6 @@ jobs:
   build-core:
     <<: *defaults
     steps:
-      - run: *install-roboto
       - checkout
       - attach_workspace:
           at: /tmp/workspace
