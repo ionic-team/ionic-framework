@@ -2565,15 +2565,23 @@ export namespace Components {
     /**
     * Emitted when the menu is closed.
     */
-    'onIonClose'?: (event: CustomEvent<void>) => void;
+    'onIonDidClose'?: (event: CustomEvent<void>) => void;
+    /**
+    * Emitted when the menu is open.
+    */
+    'onIonDidOpen'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted when the menu state is changed.
     */
     'onIonMenuChange'?: (event: CustomEvent<MenuChangeEventDetail>) => void;
     /**
-    * Emitted when the menu is open.
+    * Emitted when the menu is about to be closed.
     */
-    'onIonOpen'?: (event: CustomEvent<void>) => void;
+    'onIonWillClose'?: (event: CustomEvent<void>) => void;
+    /**
+    * Emitted when the menu is about to be opened.
+    */
+    'onIonWillOpen'?: (event: CustomEvent<void>) => void;
     /**
     * Which side of the view the menu should be placed. Default `"start"`.
     */

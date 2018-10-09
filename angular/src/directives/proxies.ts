@@ -459,15 +459,17 @@ export class ListHeader {
 export declare interface Menu extends StencilComponents<'IonMenu'> {}
 @Component({ selector: 'ion-menu', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['contentId', 'menuId', 'type', 'disabled', 'side', 'swipeGesture', 'maxEdgeStart'] })
 export class Menu {
-  ionOpen: EventEmitter<CustomEvent>;
-  ionClose: EventEmitter<CustomEvent>;
+  ionWillOpen: EventEmitter<CustomEvent>;
+  ionWillClose: EventEmitter<CustomEvent>;
+  ionDidOpen: EventEmitter<CustomEvent>;
+  ionDidClose: EventEmitter<CustomEvent>;
   ionMenuChange: EventEmitter<CustomEvent>;
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
     proxyMethods(this, el, ['isOpen', 'isActive', 'open', 'close', 'toggle', 'setOpen']);
     proxyInputs(this, el, ['contentId', 'menuId', 'type', 'disabled', 'side', 'swipeGesture', 'maxEdgeStart']);
-    proxyOutputs(this, el, ['ionOpen', 'ionClose', 'ionMenuChange']);
+    proxyOutputs(this, el, ['ionWillOpen', 'ionWillClose', 'ionDidOpen', 'ionDidClose', 'ionMenuChange']);
   }
 }
 

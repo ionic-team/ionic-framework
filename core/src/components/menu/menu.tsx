@@ -117,14 +117,23 @@ export class Menu implements ComponentInterface, MenuI {
   @Prop() maxEdgeStart = 50;
 
   /**
+   * Emitted when the menu is about to be opened.
+   */
+  @Event() ionWillOpen!: EventEmitter<void>;
+
+  /**
+   * Emitted when the menu is about to be closed.
+   */
+  @Event() ionWillClose!: EventEmitter<void>;
+  /**
    * Emitted when the menu is open.
    */
-  @Event() ionOpen!: EventEmitter<void>;
+  @Event() ionDidOpen!: EventEmitter<void>;
 
   /**
    * Emitted when the menu is closed.
    */
-  @Event() ionClose!: EventEmitter<void>;
+  @Event() ionDidClose!: EventEmitter<void>;
 
   /**
    * Emitted when the menu state is changed.
@@ -254,7 +263,7 @@ export class Menu implements ComponentInterface, MenuI {
       return this._isOpen;
     }
 
-    this.beforeAnimation();
+    this.beforeAnimation(shouldOpen);
     await this.loadAnimation();
     await this.startAnimation(shouldOpen, animated);
     this.afterAnimation(shouldOpen);
@@ -316,7 +325,7 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   private onWillStart(): Promise<void> {
-    this.beforeAnimation();
+    this.beforeAnimation(!this._isOpen);
     return this.loadAnimation();
   }
 
@@ -385,7 +394,7 @@ export class Menu implements ComponentInterface, MenuI {
       .progressEnd(shouldComplete, stepValue, realDur);
   }
 
-  private beforeAnimation() {
+  private beforeAnimation(shouldOpen: boolean) {
     assert(!this.isAnimating, '_before() should not be called while animating');
 
     // this places the menu into the correct location before it animates in
@@ -396,6 +405,11 @@ export class Menu implements ComponentInterface, MenuI {
     }
     this.blocker.block();
     this.isAnimating = true;
+    if (shouldOpen) {
+      this.ionWillOpen.emit();
+    } else {
+      this.ionWillClose.emit();
+    }
   }
 
   private afterAnimation(isOpen: boolean) {
@@ -421,7 +435,7 @@ export class Menu implements ComponentInterface, MenuI {
       }
 
       // emit open event
-      this.ionOpen.emit();
+      this.ionDidOpen.emit();
     } else {
       // remove css classes
       this.el.classList.remove(SHOW_MENU);
@@ -433,7 +447,7 @@ export class Menu implements ComponentInterface, MenuI {
       }
 
       // emit close event
-      this.ionClose.emit();
+      this.ionDidClose.emit();
     }
   }
 
