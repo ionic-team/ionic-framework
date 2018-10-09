@@ -14,26 +14,29 @@
 
   border-top: $tabbar-md-border;
 
+  font-size: $tab-button-md-font-size;
+  font-weight: $tab-button-md-font-weight;
+
   contain: strict;
 }
 
 // Material Design Tabbar Layout
 // --------------------------------------------------
 
-:host(.layout-icon-top) .tab-btn {
+:host(.layout-icon-top) {
   --label-margin-bottom: -2px;
 }
 
-:host(.layout-icon-end) .tab-btn {
+:host(.layout-icon-end) {
   --icon-transform-selected: #{$tab-button-md-icon-right-transform-active};
 }
 
-:host(.layout-icon-bottom) .tab-btn {
+:host(.layout-icon-bottom) {
   --label-margin-top: -2px;
   --label-transform: transform-origin(center, top);
   --icon-transform-selected: #{$tab-button-md-icon-bottom-transform-active};
 }
 
-:host(.layout-icon-start) .tab-btn {
+:host(.layout-icon-start) {
   --icon-transform-selected: #{$tab-button-md-icon-left-transform-active};
 }
