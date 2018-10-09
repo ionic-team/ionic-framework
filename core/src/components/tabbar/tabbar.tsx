@@ -35,10 +35,14 @@ export class Tabbar implements ComponentInterface {
    */
   @Prop() placement: TabbarPlacement = 'bottom';
 
-  /** The selected tab component */
+  /**
+   * The selected tab component
+   */
   @Prop() selectedTab?: HTMLIonTabElement;
 
-  /** The tabs to render */
+  /**
+   * The tabs to render
+   */
   @Prop() tabs: HTMLIonTabElement[] = [];
 
   /**
@@ -51,7 +55,9 @@ export class Tabbar implements ComponentInterface {
    */
   @Prop() translucent = false;
 
-  /** Emitted when the tab bar is clicked  */
+  /**
+   * Emitted when the tab bar is clicked
+   */
   @Event() ionTabbarClick!: EventEmitter<HTMLIonTabElement>;
 
   @Listen('body:keyboardWillHide')
@@ -70,10 +76,6 @@ export class Tabbar implements ComponentInterface {
     this.updateHighlight();
   }
 
-  private getSelectedButton(): HTMLElement | null {
-    return this.el.shadowRoot!.querySelector('.tab-btn-selected');
-  }
-
   @Watch('selectedTab')
   @Listen('window:resize')
   private updateHighlight() {
@@ -81,7 +83,7 @@ export class Tabbar implements ComponentInterface {
       return;
     }
     this.queue.read(() => {
-      const btn = this.getSelectedButton();
+      const btn = this.el.shadowRoot!.querySelector('.tab-btn-selected') as HTMLElement | null;
       const highlight = this.el.shadowRoot!.querySelector('.tabbar-highlight') as HTMLElement;
       if (btn && highlight) {
         highlight.style.transform = `translate3d(${btn.offsetLeft}px,0,0) scaleX(${btn.offsetWidth})`;
@@ -94,6 +96,7 @@ export class Tabbar implements ComponentInterface {
     return {
       role: 'tablist',
       'aria-hidden': keyboardVisible ? 'true' : null,
+      'slot': 'tabbar',
       class: {
         ...createColorClasses(color),
         'tabbar-translucent': translucent,

@@ -7,7 +7,6 @@
   );
 
   display: flex;
-  position: relative;
 
   align-items: center;
   justify-content: center;
@@ -21,6 +20,7 @@
   user-select: none;
 
   z-index: $z-index-toolbar;
+  box-sizing: content-box;
 }
 
 :host(.ion-color) {

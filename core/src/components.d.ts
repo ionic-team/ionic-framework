@@ -4596,10 +4596,6 @@ export namespace Components {
   }
 
   interface IonTabs {
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
     'getRouteId': () => Promise<RouteID | undefined>;
     /**
     * Get the currently selected tab
@@ -4609,10 +4605,6 @@ export namespace Components {
     * Get the tab at the given index
     */
     'getTab': (tabOrIndex: string | number | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>;
-    /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
-    */
-    'mode': Mode;
     /**
     * A unique name for the tabs.
     */
@@ -4627,35 +4619,11 @@ export namespace Components {
     */
     'tabbarHidden': boolean;
     /**
-    * If true, show the tab highlight bar under the selected tab.
-    */
-    'tabbarHighlight'?: boolean;
-    /**
-    * Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
-    */
-    'tabbarLayout'?: TabbarLayout;
-    /**
-    * Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
-    */
-    'tabbarPlacement'?: TabbarPlacement;
-    /**
-    * If true, the tabs will be translucent. Note: In order to scroll content behind the tabs, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
-    */
-    'translucent': boolean;
-    /**
     * If true, the tabs will use the router and `selectedTab` will not do anything.
     */
     'useRouter': boolean;
   }
   interface IonTabsAttributes extends StencilHTMLAttributes {
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
-    /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
-    */
-    'mode'?: Mode;
     /**
     * A unique name for the tabs.
     */
@@ -4680,22 +4648,6 @@ export namespace Components {
     * If true, the tabbar will be hidden. Defaults to `false`.
     */
     'tabbarHidden'?: boolean;
-    /**
-    * If true, show the tab highlight bar under the selected tab.
-    */
-    'tabbarHighlight'?: boolean;
-    /**
-    * Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
-    */
-    'tabbarLayout'?: TabbarLayout;
-    /**
-    * Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
-    */
-    'tabbarPlacement'?: TabbarPlacement;
-    /**
-    * If true, the tabs will be translucent. Note: In order to scroll content behind the tabs, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
-    */
-    'translucent'?: boolean;
     /**
     * If true, the tabs will use the router and `selectedTab` will not do anything.
     */
