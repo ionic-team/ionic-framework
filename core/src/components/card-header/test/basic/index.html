@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Card Header - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Card Header - Basic</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content id="content">
+      <ion-card-header>
+        <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+        <ion-card-title>Card Title</ion-card-title>
+        <ion-card-subtitle class="custom-color">Custom Subtitle</ion-card-subtitle>
+        <ion-card-title class="custom-color">Custom Title</ion-card-title>
+        <ion-card-subtitle color="secondary" class="custom-color">Color Subtitle</ion-card-subtitle>
+        <ion-card-title color="danger" class="custom-color">Color Title</ion-card-title>
+      </ion-card-header>
+
+      <ion-card class="custom-background">
+        <ion-card-header class="custom-header">
+          <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+          <ion-card-title>Card Title</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          This is Card Content
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="custom-background">
+        <ion-card-header color="secondary">
+          <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+          <ion-card-title>Card Title</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          This is Card Content
+        </ion-card-content>
+      </ion-card>
+
+    </ion-content>
+
+  </ion-app>
+  <style>
+    .custom-background {
+      --background: url(https://images.unsplash.com/photo-1503756234508-e32369269deb?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=47b63db904d2c72377ffc588f645eb45&auto=format&fit=crop&w=975&q=80) center 20%;
+      --color: white;
+    }
+
+    .custom-header {
+      --background: rgba(255, 255, 255, 0.5);
+    }
+
+    .custom-color {
+      --color: hotpink;
+    }
+
+  </style>
+</body>
+
+</html>
