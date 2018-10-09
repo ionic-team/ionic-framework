@@ -95,7 +95,7 @@ jobs:
           at: /tmp/workspace
       - run:
           name: Run Screenshot
-          command: npx stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci --runInBand ; exit 0
+          command: npx stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci --runInBand || true
           working_directory: /tmp/workspace/core
 
   test-core-screenshot-master:
@@ -106,7 +106,7 @@ jobs:
           at: /tmp/workspace
       - run:
           name: Run Screenshot
-          command: npx stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci --runInBand --update-screenshot ; exit 0
+          command: npx stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci --runInBand --update-screenshot || true
           working_directory: /tmp/workspace/core
 
 workflows:
