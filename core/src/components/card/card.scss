@@ -34,7 +34,7 @@
 
 :host(.ion-color)::slotted(*) ion-card-title,
 :host(.ion-color)::slotted(*) ion-card-subtitle {
-  color: currentColor;
+  color: current-color(contrast);
 }
 
 // Slotted Content
