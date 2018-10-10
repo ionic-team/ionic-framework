@@ -8,19 +8,33 @@
   <script src="/dist/ionic.js"></script>
   <link rel="stylesheet" type="text/css" href="/css/core.css">
   <link rel="stylesheet" type="text/css" href="/scripts/screenshot/testing.css">
-
-  <style>
-    ion-label {
-      color: red;
-    }
-  </style>
 </head>
 
 <body>
+  <h1>Default</h1>
   <ion-label>Default</ion-label>
-  <ion-label color="primary">Wrap label this label just goes on and on and on</ion-label>
+  <ion-label>Wrap label this label just goes on and on and on</ion-label>
   <ion-label position="fixed">Fixed</ion-label>
   <ion-label position="floating">Floating</ion-label>
   <ion-label position="stacked">Stacked</ion-label>
+
+  <h1>Colors</h1>
+  <ion-label color="primary">Primary</ion-label>
+  <ion-label color="secondary">Secondary</ion-label>
+  <ion-label color="tertiary">Tertiary</ion-label>
+  <ion-label color="success">Success</ion-label>
+  <ion-label color="warning">Warning</ion-label>
+  <ion-label color="danger">Danger</ion-label>
+  <ion-label color="light">Light</ion-label>
+  <ion-label color="medium">Medium</ion-label>
+  <ion-label color="dark" class="custom">Dark</ion-label>
+  <ion-label class="custom">Custom</ion-label>
+
+  <style>
+    .custom {
+      --color: hotpink;
+    }
+  </style>
+
 </body>
 </html>

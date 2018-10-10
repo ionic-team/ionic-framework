@@ -5,11 +5,18 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --color: Color of the label
+   */
+  --color: currentColor;
+
   @include margin(0);
 
   display: block;
 
   flex: 1;
+
+  color: var(--color);
 
   font-family: $font-family-base;
   font-size: inherit;
