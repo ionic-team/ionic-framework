@@ -4,10 +4,17 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --color: Text color of the title
+   */
+  --color: currentColor;
+
   display: flex;
 
   flex: 1;
   align-items: center;
+
+  color: var(--color);
 
   transform: translateZ(0);
 }
