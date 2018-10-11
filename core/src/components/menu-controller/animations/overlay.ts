@@ -4,7 +4,6 @@ import { baseAnimation } from './base';
 
 const BOX_SHADOW_WIDTH = 8;
 /**
- * @hidden
  * Menu Overlay Type
  * The menu slides over the content. The content
  * itself, which is under the menu, does not move.

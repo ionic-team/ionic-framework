@@ -16,30 +16,30 @@ These can be controlled from the templates, or programmatically using the MenuCo
 | Property       | Attribute        | Description                                                                                                        | Type      |
 | -------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------ | --------- |
 | `contentId`    | `content-id`     | The content's id the menu should use.                                                                              | `string`  |
-| `disabled`     | `disabled`       | If true, the menu is disabled. Default `false`.                                                                    | `boolean` |
+| `disabled`     | `disabled`       | If `true`, the menu is disabled. Default `false`.                                                                  | `boolean` |
 | `maxEdgeStart` | `max-edge-start` | The edge threshold for dragging the menu open. If a drag/swipe happens over this value, the menu is not triggered. | `number`  |
 | `menuId`       | `menu-id`        | An id for the menu.                                                                                                | `string`  |
 | `side`         | `side`           | Which side of the view the menu should be placed. Default `"start"`.                                               | `Side`    |
-| `swipeGesture` | `swipe-gesture`  | If true, swiping the menu is enabled. Default `true`.                                                              | `boolean` |
+| `swipeGesture` | `swipe-gesture`  | If `true`, swiping the menu is enabled. Default `true`.                                                            | `boolean` |
 | `type`         | `type`           | The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.                                | `string`  |
 
 
 ## Events
 
-| Event           | Description                                  |
-| --------------- | -------------------------------------------- |
-| `ionDidClose`   | Emitted when the menu is closed.             |
-| `ionDidOpen`    | Emitted when the menu is open.               |
-| `ionMenuChange` | Emitted when the menu state is changed.      |
-| `ionWillClose`  | Emitted when the menu is about to be closed. |
-| `ionWillOpen`   | Emitted when the menu is about to be opened. |
+| Event          | Description                                  |
+| -------------- | -------------------------------------------- |
+| `ionDidClose`  | Emitted when the menu is closed.             |
+| `ionDidOpen`   | Emitted when the menu is open.               |
+| `ionWillClose` | Emitted when the menu is about to be closed. |
+| `ionWillOpen`  | Emitted when the menu is about to be opened. |
 
 
 ## Methods
 
 ### `close(animated?: boolean) => Promise<boolean>`
 
-
+Closes the menu. If the menu is already closed or it can't be closed,
+it returns `false`.
 
 #### Parameters
 
@@ -55,7 +55,10 @@ Type: `Promise<boolean>`
 
 ### `isActive() => Promise<boolean>`
 
+Returns `true` is the menu is active.
 
+A menu is active when it can be opened or closed, meaning it's enabled
+and it's not part of a `ion-split-pane`.
 
 #### Returns
 
@@ -65,7 +68,7 @@ Type: `Promise<boolean>`
 
 ### `isOpen() => Promise<boolean>`
 
-
+Returns `true` is the menu is open.
 
 #### Returns
 
@@ -75,7 +78,8 @@ Type: `Promise<boolean>`
 
 ### `open(animated?: boolean) => Promise<boolean>`
 
-
+Opens the menu. If the menu is already open or it can't be opened,
+it returns `false`.
 
 #### Parameters
 
@@ -91,7 +95,8 @@ Type: `Promise<boolean>`
 
 ### `setOpen(shouldOpen: boolean, animated?: boolean) => Promise<boolean>`
 
-
+Opens or closes the button.
+If the operation can't be completed successfully, it returns `false`.
 
 #### Parameters
 
@@ -108,7 +113,8 @@ Type: `Promise<boolean>`
 
 ### `toggle(animated?: boolean) => Promise<boolean>`
 
-
+Toggles the menu. If the menu is already open, it will try to close, otherwise it will try to open it.
+If the operation can't be completed successfully, it returns `false`.
 
 #### Parameters
 

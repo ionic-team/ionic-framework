@@ -44,8 +44,8 @@ export class ShowWhen implements ComponentInterface, DisplayWhen {
   @Prop() platform?: string;
 
   /**
-   * If false, and two or more conditions are set, the element will show when all are true.
-   * If true, and two or more conditions are set, the element will show when at least one is true.
+   * If `false`, and two or more conditions are set, the element will show when all are true.
+   * If `true`, and two or more conditions are set, the element will show when at least one is true.
    */
   @Prop() or = false;
 

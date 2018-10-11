@@ -34,12 +34,12 @@ export class Item implements ComponentInterface {
   @Prop() mode!: Mode;
 
   /**
-   * If true, a button tag will be rendered and the item will be tappable. Defaults to `false`.
+   * If `true`, a button tag will be rendered and the item will be tappable. Defaults to `false`.
    */
   @Prop() button = false;
 
   /**
-   * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
+   * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
    * is `ios` and an `href`, `onclick` or `button` property is present.
    */
   @Prop() detail?: boolean;
@@ -50,7 +50,7 @@ export class Item implements ComponentInterface {
   @Prop() detailIcon = 'ios-arrow-forward';
 
   /**
-   * If true, the user cannot interact with the item. Defaults to `false`.
+   * If `true`, the user cannot interact with the item. Defaults to `false`.
    */
   @Prop() disabled = false;
 

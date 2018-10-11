@@ -40,12 +40,12 @@ export class Checkbox implements ComponentInterface {
   @Prop() name: string = this.inputId;
 
   /**
-   * If true, the checkbox is selected. Defaults to `false`.
+   * If `true`, the checkbox is selected. Defaults to `false`.
    */
   @Prop({ mutable: true }) checked = false;
 
   /**
-   * If true, the user cannot interact with the checkbox. Defaults to `false`.
+   * If `true`, the user cannot interact with the checkbox. Defaults to `false`.
    */
   @Prop() disabled = false;
 

@@ -25,7 +25,7 @@ export class ChipButton implements ComponentInterface {
   @Prop() mode!: Mode;
 
   /**
-   * If true, the user cannot interact with the chip button. Defaults to `false`.
+   * If `true`, the user cannot interact with the chip button. Defaults to `false`.
    */
   @Prop() disabled = false;
 

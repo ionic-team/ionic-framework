@@ -35,7 +35,7 @@ export class Spinner implements ComponentInterface {
   @Prop() name?: SpinnerTypes;
 
   /**
-   * If true, the spinner's animation will be paused. Defaults to `false`.
+   * If `true`, the spinner's animation will be paused. Defaults to `false`.
    */
   @Prop() paused = false;
 

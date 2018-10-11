@@ -57,6 +57,10 @@ export const config: Config = {
       esmLoaderPath: '../loader'
     },
     {
+      type: 'docs',
+      strict: true
+    },
+    {
       type: 'stats',
       file: 'stats.json'
     },

@@ -29,7 +29,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
+  /** @internal */
   @Prop() overlayIndex!: number;
+
+  /** @internal */
   @Prop() delegate?: FrameworkDelegate;
 
   /**
@@ -39,7 +42,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Prop() mode!: Mode;
 
   /**
-   * If true, the keyboard will be automatically dismissed when the overlay is presented.
+   * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
    */
   @Prop() keyboardClose = true;
 
@@ -70,17 +73,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Prop() cssClass?: string | string[];
 
   /**
-   * If true, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.
+   * If `true`, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.
    */
   @Prop() backdropDismiss = true;
 
   /**
-   * If true, a backdrop will be displayed behind the modal. Defaults to `true`.
+   * If `true`, a backdrop will be displayed behind the modal. Defaults to `true`.
    */
   @Prop() showBackdrop = true;
 
   /**
-   * If true, the modal will animate. Defaults to `true`.
+   * If `true`, the modal will animate. Defaults to `true`.
    */
   @Prop() animated = true;
 

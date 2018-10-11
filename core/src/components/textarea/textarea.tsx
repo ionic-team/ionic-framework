@@ -46,7 +46,7 @@ export class Textarea implements ComponentInterface {
   @Prop() autofocus = false;
 
   /**
-   * If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
+   * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
   @Prop({ mutable: true }) clearOnEdit = false;
 
@@ -61,7 +61,7 @@ export class Textarea implements ComponentInterface {
   }
 
   /**
-   * If true, the user cannot interact with the textarea. Defaults to `false`.
+   * If `true`, the user cannot interact with the textarea. Defaults to `false`.
    */
   @Prop() disabled = false;
 
@@ -91,17 +91,17 @@ export class Textarea implements ComponentInterface {
   @Prop() placeholder?: string;
 
   /**
-   * If true, the user cannot modify the value. Defaults to `false`.
+   * If `true`, the user cannot modify the value. Defaults to `false`.
    */
   @Prop() readonly = false;
 
   /**
-   * If true, the user must fill in a value before submitting a form.
+   * If `true`, the user must fill in a value before submitting a form.
    */
   @Prop() required = false;
 
   /**
-   * If true, the element will have its spelling and grammar checked. Defaults to `false`.
+   * If `true`, the element will have its spelling and grammar checked. Defaults to `false`.
    */
   @Prop() spellcheck = false;
 
@@ -168,6 +168,10 @@ export class Textarea implements ComponentInterface {
     this.emitStyle();
   }
 
+  /**
+   * Sets focus on the specified `ion-textarea`. Use this method instead of the global
+   * `input.focus()`.
+   */
   @Method()
   setFocus() {
     if (this.nativeInput) {

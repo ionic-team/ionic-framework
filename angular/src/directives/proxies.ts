@@ -497,7 +497,7 @@ export class MenuToggle {
 }
 
 export declare interface Nav extends StencilComponents<'IonNav'> {}
-@Component({ selector: 'ion-nav', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['swipeGesture', 'animated', 'animation', 'delegate', 'rootParams', 'root'] })
+@Component({ selector: 'ion-nav', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['delegate', 'swipeGesture', 'animated', 'animation', 'rootParams', 'root'] })
 export class Nav {
   ionNavWillLoad: EventEmitter<CustomEvent>;
   ionNavWillChange: EventEmitter<CustomEvent>;
@@ -506,7 +506,7 @@ export class Nav {
   constructor(r: ElementRef) {
     const el = r.nativeElement;
     proxyMethods(this, el, ['push', 'insert', 'insertPages', 'pop', 'popTo', 'popToRoot', 'removeIndex', 'setRoot', 'setPages', 'setRouteId', 'getRouteId', 'getActive', 'getByIndex', 'canGoBack', 'getPrevious']);
-    proxyInputs(this, el, ['swipeGesture', 'animated', 'animation', 'delegate', 'rootParams', 'root']);
+    proxyInputs(this, el, ['delegate', 'swipeGesture', 'animated', 'animation', 'rootParams', 'root']);
     proxyOutputs(this, el, ['ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange']);
   }
 }
@@ -875,7 +875,7 @@ export class Thumbnail {
 }
 
 export declare interface Toggle extends StencilComponents<'IonToggle'> {}
-@Component({ selector: 'ion-toggle', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'name', 'checked', 'disabled', 'value'] })
+@Component({ selector: 'ion-toggle', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'name', 'checked', 'disabled', 'value'] })
 export class Toggle {
   ionChange: EventEmitter<CustomEvent>;
   ionFocus: EventEmitter<CustomEvent>;
@@ -884,7 +884,7 @@ export class Toggle {
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyInputs(this, el, ['color', 'mode', 'name', 'checked', 'disabled', 'value']);
+    proxyInputs(this, el, ['mode', 'color', 'name', 'checked', 'disabled', 'value']);
     proxyOutputs(this, el, ['ionChange', 'ionFocus', 'ionBlur', 'ionStyle']);
   }
 }

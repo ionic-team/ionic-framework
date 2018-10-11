@@ -11,7 +11,7 @@ export class PickerController implements ComponentInterface, OverlayController {
 
   @Prop({ context: 'document' }) doc!: Document;
 
-  /*
+  /**
    * Create a picker overlay with picker options.
    */
   @Method()
@@ -19,7 +19,7 @@ export class PickerController implements ComponentInterface, OverlayController {
     return createOverlay(this.doc.createElement('ion-picker'), opts);
   }
 
-  /*
+  /**
    * Dismiss the open picker overlay.
    */
   @Method()
@@ -27,7 +27,7 @@ export class PickerController implements ComponentInterface, OverlayController {
     return dismissOverlay(this.doc, data, role, 'ion-picker', id);
   }
 
-  /*
+  /**
    * Get the most recently opened picker overlay.
    */
   @Method()

@@ -31,8 +31,11 @@ export class Nav implements NavOutlet {
   @Prop({ context: 'window' }) win!: Window;
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
 
+  /** @internal */
+  @Prop() delegate?: FrameworkDelegate;
+
   /**
-   * If the nav component should allow for swipe-to-go-back
+   * If the nav component should allow for swipe-to-go-back.
    */
   @Prop({ mutable: true }) swipeGesture?: boolean;
   @Watch('swipeGesture')
@@ -43,13 +46,15 @@ export class Nav implements NavOutlet {
   }
 
   /**
-   * If the nav should animate the components or not
+   * If `true`, the nav should animate the transition of components. Default to `true`.
    */
   @Prop() animated = true;
-  @Prop() animation?: AnimationBuilder;
 
-  /** @hidden */
-  @Prop() delegate?: FrameworkDelegate;
+  /**
+   * By default `ion-nav` animates transition between pages based in the mode (ios or material design).
+   * However, this property allows to create custom transition using `AnimateBuilder` functions.
+   */
+  @Prop() animation?: AnimationBuilder;
 
   /**
    * Any parameters for the root component
@@ -321,7 +326,7 @@ export class Nav implements NavOutlet {
     );
   }
 
-  /** @hidden */
+  /** @internal */
   @Method()
   setRouteId(
     id: string,
@@ -379,7 +384,7 @@ export class Nav implements NavOutlet {
     return promise;
   }
 
-  /** @hidden */
+  /** @internal */
   @Method()
   async getRouteId(): Promise<RouteID | undefined> {
     const active = this.getActiveSync();
@@ -409,7 +414,7 @@ export class Nav implements NavOutlet {
   }
 
   /**
-   * Returns true or false if the current view can go back
+   * Returns `true` or false if the current view can go back
    */
   @Method()
   canGoBack(view?: ViewController): Promise<boolean> {
@@ -448,7 +453,7 @@ export class Nav implements NavOutlet {
   // _queueTrns() adds a navigation stack change to the queue and schedules it to run:
   // 1. _nextTrns(): consumes the next transition in the queue
   // 2. _viewInit(): initializes enteringView if required
-  // 3. _viewTest(): ensures canLeave/canEnter returns true, so the operation can continue
+  // 3. _viewTest(): ensures canLeave/canEnter Returns `true`, so the operation can continue
   // 4. _postViewInit(): add/remove the views from the navigation stack
   // 5. _transitionInit(): initializes the visual transition if required and schedules it to run
   // 6. _viewAttachToDOM(): attaches the enteringView to the DOM

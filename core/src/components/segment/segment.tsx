@@ -28,8 +28,8 @@ export class Segment implements ComponentInterface {
    */
   @Prop() mode!: Mode;
 
-  /*
-   * If true, the user cannot interact with the segment. Defaults to `false`.
+  /**
+   * If `true`, the user cannot interact with the segment. Defaults to `false`.
    */
   @Prop() disabled = false;
 

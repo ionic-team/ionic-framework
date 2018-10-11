@@ -13,8 +13,8 @@ export class RadioGroup implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
-  /*
-   * If true, the radios can be deselected. Default false.
+  /**
+   * If `true`, the radios can be deselected. Default false.
    */
   @Prop() allowEmptySelection = false;
 
@@ -23,8 +23,8 @@ export class RadioGroup implements ComponentInterface {
    */
   @Prop() name: string = this.inputId;
 
-  /*
-   * If true, the user cannot interact with the radio group. Default false.
+  /**
+   * If `true`, the user cannot interact with the radio group. Default false.
    */
   @Prop() disabled = false;
 

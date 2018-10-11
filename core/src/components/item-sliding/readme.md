@@ -31,9 +31,9 @@ Options can be expanded to take up the full width of the item if you swipe past 
 
 ## Properties
 
-| Property   | Attribute  | Description                                                                   | Type      |
-| ---------- | ---------- | ----------------------------------------------------------------------------- | --------- |
-| `disabled` | `disabled` | If true, the user cannot interact with the sliding-item. Defaults to `false`. | `boolean` |
+| Property   | Attribute  | Description                                                                     | Type      |
+| ---------- | ---------- | ------------------------------------------------------------------------------- | --------- |
+| `disabled` | `disabled` | If `true`, the user cannot interact with the sliding-item. Defaults to `false`. | `boolean` |
 
 
 ## Events

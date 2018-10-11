@@ -43,8 +43,8 @@ export class HideWhen implements ComponentInterface, DisplayWhen {
   @Prop() platform?: string;
 
   /**
-   * If false, and two or more conditions are set, the element will hide when all are true.
-   * If true, and two or more conditions are set, the element will hide when at least one is true.
+   * If `false`, and two or more conditions are set, the element will hide when all are true.
+   * If `true`, and two or more conditions are set, the element will hide when at least one is true.
    */
   @Prop() or = false;
 

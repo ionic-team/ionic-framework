@@ -1,6 +1,6 @@
 /**
  * Check to see if the Haptic Plugin is available
- * @return Returns true or false if the plugin is available
+ * @return Returns `true` or false if the plugin is available
  */
 export function hapticAvailable(): boolean {
   const engine = (window as any).TapticEngine;

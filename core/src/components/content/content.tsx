@@ -42,7 +42,6 @@ export class Content implements ComponentInterface {
   };
 
   mode!: Mode;
-  @Prop() color?: Color;
 
   @Element() el!: HTMLStencilElement;
 
@@ -51,14 +50,21 @@ export class Content implements ComponentInterface {
   @Prop({ context: 'window' }) win!: Window;
 
   /**
-   * If true, the content will scroll behind the headers
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
+   */
+  @Prop() color?: Color;
+
+  /**
+   * If `true`, the content will scroll behind the headers
    * and footers. This effect can easily be seen by setting the toolbar
    * to transparent.
    */
   @Prop() fullscreen = false;
 
   /**
-   * If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce.
+   * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce.
    * If the content exceeds the bounds of ionContent, nothing will change.
    * Note, the does not disable the system bounce on iOS. That is an OS level setting.
    */
@@ -157,6 +163,14 @@ export class Content implements ComponentInterface {
     }
   }
 
+  /**
+   * Returns the element where the actual scrolling takes places.
+   * This element is the one you could subscribe to `scroll` events or manually modify
+   * `scrollTop`, however, it's recommended to use the API provided by `ion-content`:
+   *
+   * Ie. Using `ionScroll`, `ionScrollStart`, `ionScrollEnd` for scrolling events
+   * and scrollToPoint() to scroll the content into a certain point.
+   */
   @Method()
   getScrollElement(): Promise<HTMLElement> {
     return Promise.resolve(this.scrollEl);

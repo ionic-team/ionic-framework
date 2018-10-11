@@ -13,7 +13,7 @@ Lists support several interactions including swiping items to reveal options, dr
 
 | Property | Attribute | Description                                                                                               | Type                          |
 | -------- | --------- | --------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| `inset`  | `inset`   | If true, the list will have margin around it and rounded corners. Defaults to `false`.                    | `boolean`                     |
+| `inset`  | `inset`   | If `true`, the list will have margin around it and rounded corners. Defaults to `false`.                  | `boolean`                     |
 | `lines`  | `lines`   | How the bottom border should be displayed on all items. Available options: `"full"`, `"inset"`, `"none"`. | `"full"`, `"inset"`, `"none"` |
 | `mode`   | `mode`    | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                 | `Mode`                        |
 
@@ -22,7 +22,10 @@ Lists support several interactions including swiping items to reveal options, dr
 
 ### `closeSlidingItems() => Promise<boolean>`
 
+If `ion-item-sliding` are used inside the list, this method closes
+any open sliding item.
 
+Returns `true` if an actual `ion-item-sliding` is closed.
 
 #### Returns
 

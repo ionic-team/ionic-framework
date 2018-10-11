@@ -39,7 +39,7 @@ export class Button implements ComponentInterface {
   @Prop({ mutable: true }) buttonType = 'button';
 
   /**
-   * If true, the user cannot interact with the button. Defaults to `false`.
+   * If `true`, the user cannot interact with the button. Defaults to `false`.
    */
   @Prop({ reflectToAttr: true }) disabled = false;
 
@@ -81,7 +81,7 @@ export class Button implements ComponentInterface {
   @Prop({ reflectToAttr: true }) size?: 'small' | 'default' | 'large';
 
   /**
-   * If true, activates a button with a heavier font weight.
+   * If `true`, activates a button with a heavier font weight.
    */
   @Prop() strong = false;
 

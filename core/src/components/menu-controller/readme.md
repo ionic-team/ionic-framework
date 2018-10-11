@@ -87,7 +87,7 @@ Type: `Promise<HTMLIonMenuElement | undefined>`
 
 ### `isAnimating() => Promise<boolean>`
 
-Returns true if any menu is currently animating.
+Returns `true` if any menu is currently animating.
 
 #### Returns
 
@@ -97,7 +97,7 @@ Type: `Promise<boolean>`
 
 ### `isEnabled(menuId?: string | null | undefined) => Promise<boolean>`
 
-Returns true if the specified menu is enabled.
+Returns `true` if the specified menu is enabled.
 
 #### Parameters
 
@@ -113,7 +113,7 @@ Type: `Promise<boolean>`
 
 ### `isOpen(menuId?: string | null | undefined) => Promise<boolean>`
 
-Returns true if the specified menu is open. If the menu is not specified, it
+Returns `true` if the specified menu is open. If the menu is not specified, it
 will return true if any menu is currently open.
 
 #### Parameters
@@ -146,7 +146,11 @@ Type: `Promise<boolean>`
 
 ### `registerAnimation(name: string, animation: AnimationBuilder) => void`
 
+Registers a new animation that can be used in any `ion-menu`.
 
+```
+   * <ion-menu type="my-animation">
+   * ```
 
 #### Parameters
 

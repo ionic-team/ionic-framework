@@ -51,9 +51,9 @@ This utility is really handy when
 
 ## Properties
 
-| Property   | Attribute  | Description                                              | Type      |
-| ---------- | ---------- | -------------------------------------------------------- | --------- |
-| `disabled` | `disabled` | If true, the reorder will be hidden. Defaults to `true`. | `boolean` |
+| Property   | Attribute  | Description                                                | Type      |
+| ---------- | ---------- | ---------------------------------------------------------- | --------- |
+| `disabled` | `disabled` | If `true`, the reorder will be hidden. Defaults to `true`. | `boolean` |
 
 
 ## Events
@@ -67,7 +67,8 @@ This utility is really handy when
 
 ### `complete(listOrReorder?: boolean | any[] | undefined) => Promise<any>`
 
-
+This method must be called once the `ionItemReorder` event is handled in order
+to complete the reorder operation.
 
 #### Parameters
 

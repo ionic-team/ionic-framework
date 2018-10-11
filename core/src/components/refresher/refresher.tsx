@@ -61,7 +61,7 @@ export class Refresher implements ComponentInterface {
   @Prop() snapbackDuration = '280ms';
 
   /**
-   * If true, the refresher will be hidden. Defaults to `false`.
+   * If `true`, the refresher will be hidden. Defaults to `false`.
    */
   @Prop() disabled = false;
   @Watch('disabled')

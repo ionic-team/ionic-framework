@@ -77,7 +77,7 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   /**
-   * If true, the menu is disabled. Default `false`.
+   * If `true`, the menu is disabled. Default `false`.
    */
   @Prop({ mutable: true }) disabled = false;
 
@@ -102,7 +102,7 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   /**
-   * If true, swiping the menu is enabled. Default `true`.
+   * If `true`, swiping the menu is enabled. Default `true`.
    */
   @Prop() swipeGesture = true;
 
@@ -137,6 +137,8 @@ export class Menu implements ComponentInterface, MenuI {
 
   /**
    * Emitted when the menu state is changed.
+   *
+   * @internal
    */
   @Event() protected ionMenuChange!: EventEmitter<MenuChangeEventDetail>;
 
@@ -227,31 +229,56 @@ export class Menu implements ComponentInterface, MenuI {
     }
   }
 
+  /**
+   * Returns `true` is the menu is open.
+   */
   @Method()
   isOpen(): Promise<boolean> {
     return Promise.resolve(this._isOpen);
   }
 
+  /**
+   * Returns `true` is the menu is active.
+   *
+   * A menu is active when it can be opened or closed, meaning it's enabled
+   * and it's not part of a `ion-split-pane`.
+   */
   @Method()
   isActive(): Promise<boolean> {
     return Promise.resolve(this._isActive());
   }
 
+  /**
+   * Opens the menu. If the menu is already open or it can't be opened,
+   * it returns `false`.
+   */
   @Method()
   open(animated = true): Promise<boolean> {
     return this.setOpen(true, animated);
   }
 
+  /**
+   * Closes the menu. If the menu is already closed or it can't be closed,
+   * it returns `false`.
+   */
   @Method()
   close(animated = true): Promise<boolean> {
     return this.setOpen(false, animated);
   }
 
+  /**
+   * Toggles the menu. If the menu is already open, it will try to close, otherwise it will try to open it.
+   * If the operation can't be completed successfully, it returns `false`.
+   */
   @Method()
   toggle(animated = true): Promise<boolean> {
     return this.setOpen(!this._isOpen, animated);
   }
 
+  /**
+   * Opens or closes the button.
+   * If the operation can't be completed successfully, it returns `false`.
+   */
   @Method()
   setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {
     return this.menuCtrl!._setOpen(this, shouldOpen, animated);
@@ -260,7 +287,7 @@ export class Menu implements ComponentInterface, MenuI {
   async _setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {
     // If the menu is disabled or it is currently being animated, let's do nothing
     if (!this._isActive() || this.isAnimating || shouldOpen === this._isOpen) {
-      return this._isOpen;
+      return false;
     }
 
     this.beforeAnimation(shouldOpen);
@@ -268,7 +295,7 @@ export class Menu implements ComponentInterface, MenuI {
     await this.startAnimation(shouldOpen, animated);
     this.afterAnimation(shouldOpen);
 
-    return shouldOpen;
+    return true;
   }
 
   private async loadAnimation(): Promise<void> {
