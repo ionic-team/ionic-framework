@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
   <link rel="stylesheet" type="text/css" href="/css/core.css">
-  <link rel="stylesheet" type="text/css" href="/scripts/screenshot/testing.css">
+  <script src="/scripts/screenshot/testing.js"></script>
 </head>
 
 <body>
@@ -28,6 +28,27 @@
   <ion-menu-button auto-hide="false" color="light"></ion-menu-button>
   <ion-menu-button auto-hide="false" color="medium"></ion-menu-button>
   <ion-menu-button auto-hide="false" color="dark"></ion-menu-button>
+
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Default</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Primary</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Light</ion-title>
+  </ion-toolbar>
 
   <style>
     ion-menu-button {
