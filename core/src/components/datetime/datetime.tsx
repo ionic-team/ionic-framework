@@ -177,9 +177,9 @@ export class Datetime implements ComponentInterface {
   @Prop() placeholder?: string | null;
 
   /**
-   * the value of the datetime.
+   * The value of the datetime as a valid ISO 8601 datetime string.
    */
-  @Prop({ mutable: true }) value?: any;
+  @Prop({ mutable: true }) value?: string;
 
   /**
    * Update the datetime value when the value changes

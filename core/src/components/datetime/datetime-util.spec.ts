@@ -180,7 +180,7 @@ describe('datetime-util', () => {
         ).toEqual('2018-12-25T14:42:00-05:00');
       });
 
-      it('appends a whole hour positive offset timezone', () => {
+      it('appends a partial hour negative offset timezone', () => {
         expect(
           convertDataToISO({
             year: 2018,
