@@ -15,11 +15,11 @@ Creates an animation instance
 
 #### Parameters
 
-| Name               | Type                           | Description |
-| ------------------ | ------------------------------ | ----------- |
-| `animationBuilder` | `AnimationBuilder | undefined` |             |
-| `baseEl`           | `any`                          |             |
-| `opts`             | `any`                          |             |
+| Name               | Type                            | Description |
+| ------------------ | ------------------------------- | ----------- |
+| `animationBuilder` | `AnimationBuilder \| undefined` |             |
+| `baseEl`           | `any`                           |             |
+| `opts`             | `any`                           |             |
 
 #### Returns
 

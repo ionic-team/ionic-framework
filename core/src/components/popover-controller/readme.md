@@ -30,11 +30,11 @@ Dismiss the open popover overlay.
 
 #### Parameters
 
-| Name   | Type                 | Description |
-| ------ | -------------------- | ----------- |
-| `data` | `any`                |             |
-| `role` | `string | undefined` |             |
-| `id`   | `string | undefined` |             |
+| Name   | Type                  | Description |
+| ------ | --------------------- | ----------- |
+| `data` | `any`                 |             |
+| `role` | `string \| undefined` |             |
+| `id`   | `string \| undefined` |             |
 
 #### Returns
 

@@ -15,9 +15,9 @@ that is open. If a menu is specified, it will close that menu.
 
 #### Parameters
 
-| Name     | Type                        | Description |
-| -------- | --------------------------- | ----------- |
-| `menuId` | `string | null | undefined` |             |
+| Name     | Type                          | Description |
+| -------- | ----------------------------- | ----------- |
+| `menuId` | `string \| null \| undefined` |             |
 
 #### Returns
 
@@ -34,10 +34,10 @@ will also automatically disable all the others that are on the same side.
 
 #### Parameters
 
-| Name           | Type                        | Description |
-| -------------- | --------------------------- | ----------- |
-| `shouldEnable` | `boolean`                   |             |
-| `menuId`       | `string | null | undefined` |             |
+| Name           | Type                          | Description |
+| -------------- | ----------------------------- | ----------- |
+| `shouldEnable` | `boolean`                     |             |
+| `menuId`       | `string \| null \| undefined` |             |
 
 #### Returns
 
@@ -55,9 +55,9 @@ return `null`.
 
 #### Parameters
 
-| Name     | Type                        | Description |
-| -------- | --------------------------- | ----------- |
-| `menuId` | `string | null | undefined` |             |
+| Name     | Type                          | Description |
+| -------- | ----------------------------- | ----------- |
+| `menuId` | `string \| null \| undefined` |             |
 
 #### Returns
 
@@ -101,9 +101,9 @@ Returns `true` if the specified menu is enabled.
 
 #### Parameters
 
-| Name     | Type                        | Description |
-| -------- | --------------------------- | ----------- |
-| `menuId` | `string | null | undefined` |             |
+| Name     | Type                          | Description |
+| -------- | ----------------------------- | ----------- |
+| `menuId` | `string \| null \| undefined` |             |
 
 #### Returns
 
@@ -118,9 +118,9 @@ will return true if any menu is currently open.
 
 #### Parameters
 
-| Name     | Type                        | Description |
-| -------- | --------------------------- | ----------- |
-| `menuId` | `string | null | undefined` |             |
+| Name     | Type                          | Description |
+| -------- | ----------------------------- | ----------- |
+| `menuId` | `string \| null \| undefined` |             |
 
 #### Returns
 
@@ -134,9 +134,9 @@ Open the menu.
 
 #### Parameters
 
-| Name     | Type                        | Description |
-| -------- | --------------------------- | ----------- |
-| `menuId` | `string | null | undefined` |             |
+| Name     | Type                          | Description |
+| -------- | ----------------------------- | ----------- |
+| `menuId` | `string \| null \| undefined` |             |
 
 #### Returns
 
@@ -171,10 +171,10 @@ Used to enable or disable the ability to swipe open the menu.
 
 #### Parameters
 
-| Name           | Type                        | Description |
-| -------------- | --------------------------- | ----------- |
-| `shouldEnable` | `boolean`                   |             |
-| `menuId`       | `string | null | undefined` |             |
+| Name           | Type                          | Description |
+| -------------- | ----------------------------- | ----------- |
+| `shouldEnable` | `boolean`                     |             |
+| `menuId`       | `string \| null \| undefined` |             |
 
 #### Returns
 
@@ -189,9 +189,9 @@ will close.
 
 #### Parameters
 
-| Name     | Type                        | Description |
-| -------- | --------------------------- | ----------- |
-| `menuId` | `string | null | undefined` |             |
+| Name     | Type                          | Description |
+| -------- | ----------------------------- | ----------- |
+| `menuId` | `string \| null \| undefined` |             |
 
 #### Returns
 

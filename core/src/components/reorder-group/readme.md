@@ -72,9 +72,9 @@ to complete the reorder operation.
 
 #### Parameters
 
-| Name            | Type                          | Description |
-| --------------- | ----------------------------- | ----------- |
-| `listOrReorder` | `boolean | any[] | undefined` |             |
+| Name            | Type                            | Description |
+| --------------- | ------------------------------- | ----------- |
+| `listOrReorder` | `boolean \| any[] \| undefined` |             |
 
 #### Returns
 

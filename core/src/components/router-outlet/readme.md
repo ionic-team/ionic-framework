@@ -28,11 +28,11 @@ While RouterOutlet has methods for navigating around, it's recommended to use th
 
 #### Parameters
 
-| Name         | Type                              | Description |
-| ------------ | --------------------------------- | ----------- |
-| `enteringEl` | `HTMLElement`                     |             |
-| `leavingEl`  | `HTMLElement | undefined`         |             |
-| `opts`       | `RouterOutletOptions | undefined` |             |
+| Name         | Type                               | Description |
+| ------------ | ---------------------------------- | ----------- |
+| `enteringEl` | `HTMLElement`                      |             |
+| `leavingEl`  | `HTMLElement \| undefined`         |             |
+| `opts`       | `RouterOutletOptions \| undefined` |             |
 
 #### Returns
 
@@ -56,11 +56,11 @@ Set the root component for the given navigation stack
 
 #### Parameters
 
-| Name        | Type                                  | Description |
-| ----------- | ------------------------------------- | ----------- |
-| `component` | `ComponentRef`                        |             |
-| `params`    | `{ [key: string]: any; } | undefined` |             |
-| `opts`      | `RouterOutletOptions | undefined`     |             |
+| Name        | Type                                   | Description |
+| ----------- | -------------------------------------- | ----------- |
+| `component` | `ComponentRef`                         |             |
+| `params`    | `{ [key: string]: any; } \| undefined` |             |
+| `opts`      | `RouterOutletOptions \| undefined`     |             |
 
 #### Returns
 
@@ -74,11 +74,11 @@ Type: `Promise<boolean>`
 
 #### Parameters
 
-| Name        | Type                                  | Description |
-| ----------- | ------------------------------------- | ----------- |
-| `id`        | `string`                              |             |
-| `params`    | `{ [key: string]: any; } | undefined` |             |
-| `direction` | `number`                              |             |
+| Name        | Type                                   | Description |
+| ----------- | -------------------------------------- | ----------- |
+| `id`        | `string`                               |             |
+| `params`    | `{ [key: string]: any; } \| undefined` |             |
+| `direction` | `number`                               |             |
 
 #### Returns
 

@@ -36,9 +36,9 @@ Returns `true` or false if the current view can go back
 
 #### Parameters
 
-| Name   | Type                         | Description |
-| ------ | ---------------------------- | ----------- |
-| `view` | `ViewController | undefined` |             |
+| Name   | Type                          | Description |
+| ------ | ----------------------------- | ----------- |
+| `view` | `ViewController \| undefined` |             |
 
 #### Returns
 
@@ -78,9 +78,9 @@ Gets the previous view
 
 #### Parameters
 
-| Name   | Type                         | Description |
-| ------ | ---------------------------- | ----------- |
-| `view` | `ViewController | undefined` |             |
+| Name   | Type                          | Description |
+| ------ | ----------------------------- | ----------- |
+| `view` | `ViewController \| undefined` |             |
 
 #### Returns
 
@@ -104,13 +104,13 @@ Inserts a component into the nav stack at the specified index. This is useful if
 
 #### Parameters
 
-| Name             | Type                                   | Description |
-| ---------------- | -------------------------------------- | ----------- |
-| `insertIndex`    | `number`                               |             |
-| `component`      | `T`                                    |             |
-| `componentProps` | `ComponentProps<T> | null | undefined` |             |
-| `opts`           | `NavOptions | null | undefined`        |             |
-| `done`           | `TransitionDoneFn | undefined`         |             |
+| Name             | Type                                     | Description |
+| ---------------- | ---------------------------------------- | ----------- |
+| `insertIndex`    | `number`                                 |             |
+| `component`      | `T`                                      |             |
+| `componentProps` | `ComponentProps<T> \| null \| undefined` |             |
+| `opts`           | `NavOptions \| null \| undefined`        |             |
+| `done`           | `TransitionDoneFn \| undefined`          |             |
 
 #### Returns
 
@@ -124,12 +124,12 @@ Inserts an array of components into the nav stack at the specified index. The la
 
 #### Parameters
 
-| Name               | Type                            | Description |
-| ------------------ | ------------------------------- | ----------- |
-| `insertIndex`      | `number`                        |             |
-| `insertComponents` | `NavComponent[]`                |             |
-| `opts`             | `NavOptions | null | undefined` |             |
-| `done`             | `TransitionDoneFn | undefined`  |             |
+| Name               | Type                              | Description |
+| ------------------ | --------------------------------- | ----------- |
+| `insertIndex`      | `number`                          |             |
+| `insertComponents` | `NavComponent[]`                  |             |
+| `opts`             | `NavOptions \| null \| undefined` |             |
+| `done`             | `TransitionDoneFn \| undefined`   |             |
 
 #### Returns
 
@@ -143,10 +143,10 @@ Call to navigate back from a current component. Similar to push(), you can also 
 
 #### Parameters
 
-| Name   | Type                            | Description |
-| ------ | ------------------------------- | ----------- |
-| `opts` | `NavOptions | null | undefined` |             |
-| `done` | `TransitionDoneFn | undefined`  |             |
+| Name   | Type                              | Description |
+| ------ | --------------------------------- | ----------- |
+| `opts` | `NavOptions \| null \| undefined` |             |
+| `done` | `TransitionDoneFn \| undefined`   |             |
 
 #### Returns
 
@@ -160,11 +160,11 @@ Pop to a specific index in the navigation stack
 
 #### Parameters
 
-| Name              | Type                            | Description |
-| ----------------- | ------------------------------- | ----------- |
-| `indexOrViewCtrl` | `number | ViewController`       |             |
-| `opts`            | `NavOptions | null | undefined` |             |
-| `done`            | `TransitionDoneFn | undefined`  |             |
+| Name              | Type                              | Description |
+| ----------------- | --------------------------------- | ----------- |
+| `indexOrViewCtrl` | `number \| ViewController`        |             |
+| `opts`            | `NavOptions \| null \| undefined` |             |
+| `done`            | `TransitionDoneFn \| undefined`   |             |
 
 #### Returns
 
@@ -178,10 +178,10 @@ Navigate back to the root of the stack, no matter how far back that is.
 
 #### Parameters
 
-| Name   | Type                            | Description |
-| ------ | ------------------------------- | ----------- |
-| `opts` | `NavOptions | null | undefined` |             |
-| `done` | `TransitionDoneFn | undefined`  |             |
+| Name   | Type                              | Description |
+| ------ | --------------------------------- | ----------- |
+| `opts` | `NavOptions \| null \| undefined` |             |
+| `done` | `TransitionDoneFn \| undefined`   |             |
 
 #### Returns
 
@@ -195,12 +195,12 @@ Push a new component onto the current navigation stack. Pass any additional info
 
 #### Parameters
 
-| Name             | Type                                   | Description |
-| ---------------- | -------------------------------------- | ----------- |
-| `component`      | `T`                                    |             |
-| `componentProps` | `ComponentProps<T> | null | undefined` |             |
-| `opts`           | `NavOptions | null | undefined`        |             |
-| `done`           | `TransitionDoneFn | undefined`         |             |
+| Name             | Type                                     | Description |
+| ---------------- | ---------------------------------------- | ----------- |
+| `component`      | `T`                                      |             |
+| `componentProps` | `ComponentProps<T> \| null \| undefined` |             |
+| `opts`           | `NavOptions \| null \| undefined`        |             |
+| `done`           | `TransitionDoneFn \| undefined`          |             |
 
 #### Returns
 
@@ -214,12 +214,12 @@ Removes a page from the nav stack at the specified index.
 
 #### Parameters
 
-| Name          | Type                            | Description |
-| ------------- | ------------------------------- | ----------- |
-| `startIndex`  | `number`                        |             |
-| `removeCount` | `number`                        |             |
-| `opts`        | `NavOptions | null | undefined` |             |
-| `done`        | `TransitionDoneFn | undefined`  |             |
+| Name          | Type                              | Description |
+| ------------- | --------------------------------- | ----------- |
+| `startIndex`  | `number`                          |             |
+| `removeCount` | `number`                          |             |
+| `opts`        | `NavOptions \| null \| undefined` |             |
+| `done`        | `TransitionDoneFn \| undefined`   |             |
 
 #### Returns
 
@@ -233,11 +233,11 @@ Set the views of the current navigation stack and navigate to the last view. By 
 
 #### Parameters
 
-| Name    | Type                            | Description |
-| ------- | ------------------------------- | ----------- |
-| `views` | `any[]`                         |             |
-| `opts`  | `NavOptions | null | undefined` |             |
-| `done`  | `TransitionDoneFn | undefined`  |             |
+| Name    | Type                              | Description |
+| ------- | --------------------------------- | ----------- |
+| `views` | `any[]`                           |             |
+| `opts`  | `NavOptions \| null \| undefined` |             |
+| `done`  | `TransitionDoneFn \| undefined`   |             |
 
 #### Returns
 
@@ -251,12 +251,12 @@ Set the root for the current navigation stack.
 
 #### Parameters
 
-| Name             | Type                                   | Description |
-| ---------------- | -------------------------------------- | ----------- |
-| `component`      | `T`                                    |             |
-| `componentProps` | `ComponentProps<T> | null | undefined` |             |
-| `opts`           | `NavOptions | null | undefined`        |             |
-| `done`           | `TransitionDoneFn | undefined`         |             |
+| Name             | Type                                     | Description |
+| ---------------- | ---------------------------------------- | ----------- |
+| `component`      | `T`                                      |             |
+| `componentProps` | `ComponentProps<T> \| null \| undefined` |             |
+| `opts`           | `NavOptions \| null \| undefined`        |             |
+| `done`           | `TransitionDoneFn \| undefined`          |             |
 
 #### Returns
 
@@ -270,11 +270,11 @@ Type: `Promise<boolean>`
 
 #### Parameters
 
-| Name        | Type                                  | Description |
-| ----------- | ------------------------------------- | ----------- |
-| `id`        | `string`                              |             |
-| `params`    | `{ [key: string]: any; } | undefined` |             |
-| `direction` | `number`                              |             |
+| Name        | Type                                   | Description |
+| ----------- | -------------------------------------- | ----------- |
+| `id`        | `string`                               |             |
+| `params`    | `{ [key: string]: any; } \| undefined` |             |
+| `direction` | `number`                               |             |
 
 #### Returns
 

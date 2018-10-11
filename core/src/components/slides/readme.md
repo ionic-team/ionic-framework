@@ -157,10 +157,10 @@ Transition to the next slide.
 
 #### Parameters
 
-| Name           | Type                  | Description |
-| -------------- | --------------------- | ----------- |
-| `speed`        | `number | undefined`  |             |
-| `runCallbacks` | `boolean | undefined` |             |
+| Name           | Type                   | Description |
+| -------------- | ---------------------- | ----------- |
+| `speed`        | `number \| undefined`  |             |
+| `runCallbacks` | `boolean \| undefined` |             |
 
 #### Returns
 
@@ -174,10 +174,10 @@ Transition to the previous slide.
 
 #### Parameters
 
-| Name           | Type                  | Description |
-| -------------- | --------------------- | ----------- |
-| `speed`        | `number | undefined`  |             |
-| `runCallbacks` | `boolean | undefined` |             |
+| Name           | Type                   | Description |
+| -------------- | ---------------------- | ----------- |
+| `speed`        | `number \| undefined`  |             |
+| `runCallbacks` | `boolean \| undefined` |             |
 
 #### Returns
 
@@ -191,11 +191,11 @@ Transition to the specified slide.
 
 #### Parameters
 
-| Name           | Type                  | Description |
-| -------------- | --------------------- | ----------- |
-| `index`        | `number`              |             |
-| `speed`        | `number | undefined`  |             |
-| `runCallbacks` | `boolean | undefined` |             |
+| Name           | Type                   | Description |
+| -------------- | ---------------------- | ----------- |
+| `index`        | `number`               |             |
+| `speed`        | `number \| undefined`  |             |
+| `runCallbacks` | `boolean \| undefined` |             |
 
 #### Returns
 

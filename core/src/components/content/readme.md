@@ -85,11 +85,11 @@ Scroll to a specified X/Y location in the component
 
 #### Parameters
 
-| Name       | Type                        | Description |
-| ---------- | --------------------------- | ----------- |
-| `x`        | `number | null | undefined` |             |
-| `y`        | `number | null | undefined` |             |
-| `duration` | `number`                    |             |
+| Name       | Type                          | Description |
+| ---------- | ----------------------------- | ----------- |
+| `x`        | `number \| null \| undefined` |             |
+| `y`        | `number \| null \| undefined` |             |
+| `duration` | `number`                      |             |
 
 #### Returns
 

@@ -29,11 +29,11 @@ Dismiss the open action sheet overlay.
 
 #### Parameters
 
-| Name   | Type                 | Description |
-| ------ | -------------------- | ----------- |
-| `data` | `any`                |             |
-| `role` | `string | undefined` |             |
-| `id`   | `string | undefined` |             |
+| Name   | Type                  | Description |
+| ------ | --------------------- | ----------- |
+| `data` | `any`                 |             |
+| `role` | `string \| undefined` |             |
+| `id`   | `string \| undefined` |             |
 
 #### Returns
 

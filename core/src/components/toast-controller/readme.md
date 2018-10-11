@@ -14,9 +14,9 @@ Create a toast overlay with toast options.
 
 #### Parameters
 
-| Name   | Type                       | Description |
-| ------ | -------------------------- | ----------- |
-| `opts` | `ToastOptions | undefined` |             |
+| Name   | Type                        | Description |
+| ------ | --------------------------- | ----------- |
+| `opts` | `ToastOptions \| undefined` |             |
 
 #### Returns
 
@@ -30,11 +30,11 @@ Dismiss the open toast overlay.
 
 #### Parameters
 
-| Name   | Type                 | Description |
-| ------ | -------------------- | ----------- |
-| `data` | `any`                |             |
-| `role` | `string | undefined` |             |
-| `id`   | `string | undefined` |             |
+| Name   | Type                  | Description |
+| ------ | --------------------- | ----------- |
+| `data` | `any`                 |             |
+| `role` | `string \| undefined` |             |
+| `id`   | `string \| undefined` |             |
 
 #### Returns
 

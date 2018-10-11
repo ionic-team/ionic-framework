@@ -76,9 +76,9 @@ based in `ion-select` settings.
 
 #### Parameters
 
-| Name | Type                  | Description |
-| ---- | --------------------- | ----------- |
-| `ev` | `UIEvent | undefined` |             |
+| Name | Type                   | Description |
+| ---- | ---------------------- | ----------- |
+| `ev` | `UIEvent \| undefined` |             |
 
 #### Returns
 

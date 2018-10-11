@@ -50,10 +50,10 @@ Dismiss the modal overlay after it has been presented.
 
 #### Parameters
 
-| Name   | Type                 | Description |
-| ------ | -------------------- | ----------- |
-| `data` | `any`                |             |
-| `role` | `string | undefined` |             |
+| Name   | Type                  | Description |
+| ------ | --------------------- | ----------- |
+| `data` | `any`                 |             |
+| `role` | `string \| undefined` |             |
 
 #### Returns
 

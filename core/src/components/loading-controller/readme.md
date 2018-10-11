@@ -16,9 +16,9 @@ Create a loading overlay with loading options.
 
 #### Parameters
 
-| Name   | Type                         | Description |
-| ------ | ---------------------------- | ----------- |
-| `opts` | `LoadingOptions | undefined` |             |
+| Name   | Type                          | Description |
+| ------ | ----------------------------- | ----------- |
+| `opts` | `LoadingOptions \| undefined` |             |
 
 #### Returns
 
@@ -32,11 +32,11 @@ Dismiss the open loading overlay.
 
 #### Parameters
 
-| Name   | Type                 | Description |
-| ------ | -------------------- | ----------- |
-| `data` | `any`                |             |
-| `role` | `string | undefined` |             |
-| `id`   | `string | undefined` |             |
+| Name   | Type                  | Description |
+| ------ | --------------------- | ----------- |
+| `data` | `any`                 |             |
+| `role` | `string \| undefined` |             |
+| `id`   | `string \| undefined` |             |
 
 #### Returns
 

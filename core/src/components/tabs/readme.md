@@ -54,9 +54,9 @@ Get the tab at the given index
 
 #### Parameters
 
-| Name         | Type                                  | Description |
-| ------------ | ------------------------------------- | ----------- |
-| `tabOrIndex` | `string | number | HTMLIonTabElement` |             |
+| Name         | Type                                    | Description |
+| ------------ | --------------------------------------- | ----------- |
+| `tabOrIndex` | `string \| number \| HTMLIonTabElement` |             |
 
 #### Returns
 
@@ -70,9 +70,9 @@ Index or the Tab instance, of the tab to select.
 
 #### Parameters
 
-| Name         | Type                         | Description |
-| ------------ | ---------------------------- | ----------- |
-| `tabOrIndex` | `number | HTMLIonTabElement` |             |
+| Name         | Type                          | Description |
+| ------------ | ----------------------------- | ----------- |
+| `tabOrIndex` | `number \| HTMLIonTabElement` |             |
 
 #### Returns
 
