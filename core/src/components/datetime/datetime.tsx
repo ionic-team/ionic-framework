@@ -4,7 +4,7 @@ import { InputChangeEvent, Mode, PickerColumn, PickerColumnOption, PickerOptions
 import { clamp, deferEvent } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
-import { DatetimeData, LocaleData, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getValueFromFormat, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
+import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getValueFromFormat, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
 
 @Component({
   tag: 'ion-datetime',
@@ -177,16 +177,16 @@ export class Datetime implements ComponentInterface {
   @Prop() placeholder?: string | null;
 
   /**
-   * the value of the datetime.
+   * The value of the datetime as a valid ISO 8601 datetime string.
    */
-  @Prop({ mutable: true }) value?: any;
+  @Prop({ mutable: true }) value?: string;
 
   /**
    * Update the datetime value when the value changes
    */
   @Watch('value')
   protected valueChanged() {
-    this.updateValue();
+    this.updateDatetimeValue(this.value);
     this.emitStyle();
     this.ionChange.emit({
       value: this.value
@@ -221,7 +221,7 @@ export class Datetime implements ComponentInterface {
       dayShortNames: convertToArrayOfStrings(this.dayShortNames, 'dayShortNames')
     };
 
-    this.updateValue();
+    this.updateDatetimeValue(this.value);
   }
 
   componentDidLoad() {
@@ -252,8 +252,8 @@ export class Datetime implements ComponentInterface {
     });
   }
 
-  private updateValue() {
-    updateDate(this.datetimeValue, this.value);
+  private updateDatetimeValue(value: any) {
+    updateDate(this.datetimeValue, value);
     this.updateText();
   }
 
@@ -276,7 +276,8 @@ export class Datetime implements ComponentInterface {
         {
           text: this.doneText,
           handler: (data: any) => {
-            this.value = data;
+            this.updateDatetimeValue(data);
+            this.value = convertDataToISO(this.datetimeValue);
           }
         }
       ];

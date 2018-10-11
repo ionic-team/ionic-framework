@@ -1288,9 +1288,9 @@ export namespace Components {
     */
     'placeholder'?: string | null;
     /**
-    * the value of the datetime.
+    * The value of the datetime as a valid ISO 8601 datetime string.
     */
-    'value'?: any;
+    'value'?: string;
     /**
     * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
     */
@@ -1382,9 +1382,9 @@ export namespace Components {
     */
     'placeholder'?: string | null;
     /**
-    * the value of the datetime.
+    * The value of the datetime as a valid ISO 8601 datetime string.
     */
-    'value'?: any;
+    'value'?: string;
     /**
     * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
     */
