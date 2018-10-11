@@ -39,19 +39,19 @@ export class Searchbar implements ComponentInterface {
   @Prop() mode!: Mode;
 
   /**
-   * If true, enable searchbar animation. Default `false`.
+   * If `true`, enable searchbar animation. Default `false`.
    */
   @Prop() animated = false;
 
   /**
-   * Set the input's autocomplete property. Values: `"on"`, `"off"`. Default `"off"`.
+   * Set the input's autocomplete property. Default `"off"`.
    */
-  @Prop() autocomplete = 'off';
+  @Prop() autocomplete: 'on' | 'off' = 'off';
 
   /**
-   * Set the input's autocorrect property. Values: `"on"`, `"off"`. Default `"off"`.
+   * Set the input's autocorrect property. Default `"off"`.
    */
-  @Prop() autocorrect = 'off';
+  @Prop() autocorrect: 'on' | 'off' = 'off';
 
   /**
    * Set the cancel button icon. Only applies to `md` mode. Defaults to `"md-arrow-back"`.
@@ -89,12 +89,12 @@ export class Searchbar implements ComponentInterface {
   @Prop() searchIcon?: string;
 
   /**
-   * If true, show the cancel button. Default `false`.
+   * If `true`, show the cancel button. Default `false`.
    */
   @Prop() showCancelButton = false;
 
   /**
-   * If true, enable spellcheck on the input. Default `false`.
+   * If `true`, enable spellcheck on the input. Default `false`.
    */
   @Prop() spellcheck = false;
 
@@ -153,6 +153,10 @@ export class Searchbar implements ComponentInterface {
     this.debounceChanged();
   }
 
+  /**
+   * Sets focus on the specified `ion-searchbar`. Use this method instead of the global
+   * `input.focus()`.
+   */
   @Method()
   setFocus() {
     this.nativeInput.focus();

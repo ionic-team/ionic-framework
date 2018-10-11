@@ -29,12 +29,12 @@ export class Tabs implements NavOutlet {
   @Prop() name?: string;
 
   /**
-   * If true, the tabbar will be hidden. Defaults to `false`.
+   * If `true`, the tabbar will be hidden. Defaults to `false`.
    */
   @Prop() tabbarHidden = false;
 
   /**
-   * If true, the tabs will use the router and `selectedTab` will not do anything.
+   * If `true`, the tabs will use the router and `selectedTab` will not do anything.
    */
   @Prop({ mutable: true }) useRouter = false;
 
@@ -122,7 +122,7 @@ export class Tabs implements NavOutlet {
     return true;
   }
 
-  /** @hidden */
+  /** @internal */
   @Method()
   async setRouteId(id: string): Promise<RouteWrite> {
     const selectedTab = await this.getTab(id);
@@ -138,7 +138,7 @@ export class Tabs implements NavOutlet {
     };
   }
 
-  /** @hidden */
+  /** @internal */
   @Method()
   async getRouteId(): Promise<RouteID | undefined> {
     const id = this.selectedTab && this.selectedTab.name;

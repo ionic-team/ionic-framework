@@ -36,7 +36,7 @@ export class Select implements ComponentInterface {
   @Prop() mode!: Mode;
 
   /**
-   * If true, the user cannot interact with the select. Defaults to `false`.
+   * If `true`, the user cannot interact with the select. Defaults to `false`.
    */
   @Prop() disabled = false;
 
@@ -66,7 +66,7 @@ export class Select implements ComponentInterface {
   @Prop() selectedText?: string | null;
 
   /**
-   * If true, the select can accept multiple values.
+   * If `true`, the select can accept multiple values.
    */
   @Prop() multiple = false;
 
@@ -260,6 +260,10 @@ export class Select implements ComponentInterface {
     this.emitStyle();
   }
 
+  /**
+   * Opens the select overlay, it could be an alert, action-sheet or popover,
+   * based in `ion-select` settings.
+   */
   @Method()
   open(ev?: UIEvent): Promise<OverlaySelect> {
     let selectInterface = this.interface;

@@ -13,7 +13,17 @@ import { createColorClasses } from '../../utils/theme';
 })
 export class Tabbar implements ComponentInterface {
 
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
   @Prop() mode!: Mode;
+
+  /**
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
+   */
   @Prop() color?: Color;
 
   @Element() el!: HTMLElement;
@@ -46,12 +56,12 @@ export class Tabbar implements ComponentInterface {
   @Prop() tabs: HTMLIonTabElement[] = [];
 
   /**
-   * If true, show the tab highlight bar under the selected tab.
+   * If `true`, show the tab highlight bar under the selected tab.
    */
   @Prop() highlight = false;
 
   /**
-   * If true, the tabbar will be translucent. Defaults to `false`.
+   * If `true`, the tabbar will be translucent. Defaults to `false`.
    */
   @Prop() translucent = false;
 

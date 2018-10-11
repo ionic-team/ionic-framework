@@ -24,12 +24,33 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   @Prop({ context: 'window' }) win!: Window;
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
-  @Prop() animated = true;
-  @Prop() animation?: AnimationBuilder;
+  /** @internal */
   @Prop() delegate?: FrameworkDelegate;
 
+  /**
+   * If `true`, the router-outlet should animate the transition of components. Default to `true`.
+   */
+  @Prop() animated = true;
+
+  /**
+   * By default `ion-nav` animates transition between pages based in the mode (ios or material design).
+   * However, this property allows to create custom transition using `AnimateBuilder` functions.
+   */
+  @Prop() animation?: AnimationBuilder;
+
+  /**
+   * @internal
+   */
   @Event() ionNavWillLoad!: EventEmitter<void>;
+
+  /**
+   * @internal
+   */
   @Event() ionNavWillChange!: EventEmitter<void>;
+
+  /**
+   * @internal
+   */
   @Event() ionNavDidChange!: EventEmitter<void>;
 
   componentWillLoad() {
@@ -63,7 +84,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     return true;
   }
 
-  /** @hidden */
+  /** @internal */
   @Method()
   async commit(enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions): Promise<boolean> {
     const unlock = await this.lock();
@@ -77,7 +98,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     return changed;
   }
 
-  /** @hidden */
+  /** @internal */
   @Method()
   async setRouteId(id: string, params: ComponentProps | undefined, direction: number): Promise<RouteWrite> {
     const changed = await this.setRoot(id, params, {
@@ -90,7 +111,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     };
   }
 
-  /** Returns the ID for the current route */
+  /** @internal */
   @Method()
   async getRouteId(): Promise<RouteID | undefined> {
     const active = this.activeEl;

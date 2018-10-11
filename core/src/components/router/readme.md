@@ -38,7 +38,7 @@ If you're using Angular, please see [ion-router-outlet](../router-outlet) instea
 
 ### `goBack() => Promise<void>`
 
-
+Go back to previous page in the window.history.
 
 #### Returns
 
@@ -74,7 +74,7 @@ Type: `void`
 
 ### `push(url: string, direction?: RouterDirection) => Promise<boolean>`
 
-Navigate to the specified URL
+Navigate to the specified URL.
 
 #### Parameters
 

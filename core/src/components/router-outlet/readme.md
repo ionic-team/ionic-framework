@@ -13,20 +13,11 @@ While RouterOutlet has methods for navigating around, it's recommended to use th
 
 ## Properties
 
-| Property    | Attribute  | Description | Type                |
-| ----------- | ---------- | ----------- | ------------------- |
-| `animated`  | `animated` |             | `boolean`           |
-| `animation` | --         |             | `AnimationBuilder`  |
-| `delegate`  | --         |             | `FrameworkDelegate` |
-
-
-## Events
-
-| Event              | Description |
-| ------------------ | ----------- |
-| `ionNavDidChange`  |             |
-| `ionNavWillChange` |             |
-| `ionNavWillLoad`   |             |
+| Property    | Attribute  | Description                                                                                                                                                                                    | Type                |
+| ----------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| `animated`  | `animated` | If `true`, the router-outlet should animate the transition of components. Default to `true`.                                                                                                   | `boolean`           |
+| `animation` | --         | By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions. | `AnimationBuilder`  |
+| `delegate`  | --         |                                                                                                                                                                                                | `FrameworkDelegate` |
 
 
 ## Methods
@@ -51,7 +42,7 @@ Type: `Promise<boolean>`
 
 ### `getRouteId() => Promise<RouteID | undefined>`
 
-Returns the ID for the current route
+
 
 #### Returns
 

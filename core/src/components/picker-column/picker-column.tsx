@@ -28,6 +28,7 @@ export class PickerColumnCmp implements ComponentInterface {
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
+  /** @internal */
   @Prop() col!: PickerColumn;
 
   componentWillLoad() {

@@ -9,11 +9,11 @@ The component is a container of individual [Tab](../Tab/) components.
 
 ## Properties
 
-| Property       | Attribute       | Description                                                                   | Type      |
-| -------------- | --------------- | ----------------------------------------------------------------------------- | --------- |
-| `name`         | `name`          | A unique name for the tabs.                                                   | `string`  |
-| `tabbarHidden` | `tabbar-hidden` | If true, the tabbar will be hidden. Defaults to `false`.                      | `boolean` |
-| `useRouter`    | `use-router`    | If true, the tabs will use the router and `selectedTab` will not do anything. | `boolean` |
+| Property       | Attribute       | Description                                                                     | Type      |
+| -------------- | --------------- | ------------------------------------------------------------------------------- | --------- |
+| `name`         | `name`          | A unique name for the tabs.                                                     | `string`  |
+| `tabbarHidden` | `tabbar-hidden` | If `true`, the tabbar will be hidden. Defaults to `false`.                      | `boolean` |
+| `useRouter`    | `use-router`    | If `true`, the tabs will use the router and `selectedTab` will not do anything. | `boolean` |
 
 
 ## Events

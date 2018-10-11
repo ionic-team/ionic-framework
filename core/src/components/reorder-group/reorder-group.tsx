@@ -37,7 +37,7 @@ export class ReorderGroup implements ComponentInterface {
   @Prop({ context: 'document' }) doc!: Document;
 
   /**
-   * If true, the reorder will be hidden. Defaults to `true`.
+   * If `true`, the reorder will be hidden. Defaults to `true`.
    */
   @Prop() disabled = true;
   @Watch('disabled')
@@ -86,6 +86,10 @@ export class ReorderGroup implements ComponentInterface {
     this.onEnd();
   }
 
+  /**
+   * This method must be called once the `ionItemReorder` event is handled in order
+   * to complete the reorder operation.
+   */
   @Method()
   complete(listOrReorder?: boolean | any[]): Promise<any> {
     return Promise.resolve(this.completeSync(listOrReorder));

@@ -191,19 +191,22 @@ dataset, so please make sure they're performant.
 | `domRender`          | --                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `DomRenderFn`                       |
 | `footerFn`           | --                     | Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.                                                                                                                                                                                                                                 | `HeaderFn`                          |
 | `headerFn`           | --                     | Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.                              | `HeaderFn`                          |
-| `itemHeight`         | --                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `ItemHeightFn`                      |
+| `itemHeight`         | --                     | An optional function that maps each item within their height. When this function is provides, heavy optimizations and fast path can be taked by `ion-virtual-scroll` leading to massive performance improvements.  This function allows to skip all DOM reads, which can be Doing so leads to massive performance                                                                                                                                                                                                                                                       | `ItemHeightFn`                      |
 | `items`              | --                     | The data that builds the templates within the virtual scroll. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.                                                                                                                                                                                                                                                                                                                                       | `any[]`                             |
-| `nodeRender`         | --                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `ItemRenderFn`                      |
-| `renderFooter`       | --                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `(item: any, index: number) => any` |
-| `renderHeader`       | --                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `(item: any, index: number) => any` |
-| `renderItem`         | --                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `(item: any, index: number) => any` |
+| `nodeRender`         | --                     | NOTE: only Vanilla JS API.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | `ItemRenderFn`                      |
+| `renderFooter`       | --                     | NOTE: only JSX API for stencil.  Provide a render function for the footer to be rendered. Returns a JSX virtual-dom.                                                                                                                                                                                                                                                                                                                                                                                                                                                    | `(item: any, index: number) => any` |
+| `renderHeader`       | --                     | NOTE: only JSX API for stencil.  Provide a render function for the header to be rendered. Returns a JSX virtual-dom.                                                                                                                                                                                                                                                                                                                                                                                                                                                    | `(item: any, index: number) => any` |
+| `renderItem`         | --                     | NOTE: only JSX API for stencil.  Provide a render function for the items to be rendered. Returns a JSX virtual-dom.                                                                                                                                                                                                                                                                                                                                                                                                                                                     | `(item: any, index: number) => any` |
 
 
 ## Methods
 
 ### `markDirty(offset: number, len?: number) => void`
 
+This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as
+dirty any time the content or their style changes.
 
+The subset of items to be updated can are specifing by an offset and a length.
 
 #### Parameters
 
@@ -220,7 +223,13 @@ Type: `void`
 
 ### `markDirtyTail() => void`
 
+This method marks the tail the items array as dirty, so they can be re-rendered.
 
+It's equivalent to calling:
+
+```
+   * virtualScroll.markDirty(lastItemLen, items.length - lastItemLen);
+   * ```
 
 #### Returns
 
@@ -230,7 +239,7 @@ Type: `void`
 
 ### `positionForItem(index: number) => Promise<number>`
 
-
+Returns the position of the virtual item at the given index.
 
 #### Parameters
 

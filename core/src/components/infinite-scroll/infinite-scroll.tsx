@@ -43,7 +43,7 @@ export class InfiniteScroll implements ComponentInterface {
   }
 
   /**
-   * If true, the infinite scroll will be hidden and scroll event listeners
+   * If `true`, the infinite scroll will be hidden and scroll event listeners
    * will be removed.
    *
    * Set this to true to disable the infinite scroll from actively

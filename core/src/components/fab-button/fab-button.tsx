@@ -32,12 +32,12 @@ export class FabButton implements ComponentInterface {
   @Prop() color?: Color;
 
   /**
-   * If true, the fab button will be show a close icon. Defaults to `false`.
+   * If `true`, the fab button will be show a close icon. Defaults to `false`.
    */
   @Prop() activated = false;
 
   /**
-   * If true, the user cannot interact with the fab button. Defaults to `false`.
+   * If `true`, the user cannot interact with the fab button. Defaults to `false`.
    */
   @Prop() disabled = false;
 
@@ -54,12 +54,12 @@ export class FabButton implements ComponentInterface {
   @Prop() routerDirection?: RouterDirection;
 
   /**
-   * If true, the fab button will show when in a fab-list.
+   * If `true`, the fab button will show when in a fab-list.
    */
   @Prop() show = false;
 
   /**
-   * If true, the fab button will be translucent. Defaults to `false`.
+   * If `true`, the fab button will be translucent. Defaults to `false`.
    */
   @Prop() translucent = false;
 

@@ -47,12 +47,12 @@ export class Slides implements ComponentInterface {
   }
 
   /**
-   * If true, show the pagination. Defaults to `false`.
+   * If `true`, show the pagination. Defaults to `false`.
    */
   @Prop() pager = false;
 
   /**
-   * If true, show the scrollbar. Defaults to `false`.
+   * If `true`, show the scrollbar. Defaults to `false`.
    */
   @Prop() scrollbar = false;
 

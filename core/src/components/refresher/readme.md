@@ -18,7 +18,7 @@ refresher.
 | Property           | Attribute           | Description                                                                                                                                       | Type      |
 | ------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
 | `closeDuration`    | `close-duration`    | Time it takes to close the refresher. Defaults to `280ms`.                                                                                        | `string`  |
-| `disabled`         | `disabled`          | If true, the refresher will be hidden. Defaults to `false`.                                                                                       | `boolean` |
+| `disabled`         | `disabled`          | If `true`, the refresher will be hidden. Defaults to `false`.                                                                                     | `boolean` |
 | `pullMax`          | `pull-max`          | The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`. | `number`  |
 | `pullMin`          | `pull-min`          | The minimum distance the user must pull down until the refresher will go into the `refreshing` state. Defaults to `60`.                           | `number`  |
 | `snapbackDuration` | `snapback-duration` | Time it takes the refresher to to snap back to the `refreshing` state. Defaults to `280ms`.                                                       | `string`  |

@@ -36,7 +36,7 @@ export class Datetime implements ComponentInterface {
   @Prop() mode!: Mode;
 
   /**
-   * If true, the user cannot interact with the datetime. Defaults to `false`.
+   * If `true`, the user cannot interact with the datetime. Defaults to `false`.
    */
   @Prop() disabled = false;
 
@@ -228,6 +228,9 @@ export class Datetime implements ComponentInterface {
     this.emitStyle();
   }
 
+  /**
+   * Opens the datetime overlay.
+   */
   @Method()
   async open() {
     if (this.disabled) {

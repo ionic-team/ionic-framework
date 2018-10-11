@@ -61,12 +61,12 @@ export class Input implements ComponentInterface {
   @Prop() autofocus = false;
 
   /**
-   * If true, a clear icon will appear in the input when there is a value. Clicking it clears the input. Defaults to `false`.
+   * If `true`, a clear icon will appear in the input when there is a value. Clicking it clears the input. Defaults to `false`.
    */
   @Prop() clearInput = false;
 
   /**
-   * If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
+   * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
   @Prop({ mutable: true }) clearOnEdit?: boolean;
 
@@ -81,7 +81,7 @@ export class Input implements ComponentInterface {
   }
 
   /**
-   * If true, the user cannot interact with the input. Defaults to `false`.
+   * If `true`, the user cannot interact with the input. Defaults to `false`.
    */
   @Prop() disabled = false;
 
@@ -116,7 +116,7 @@ export class Input implements ComponentInterface {
   @Prop() minlength?: number;
 
   /**
-   * If true, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"` or `"file"`, otherwise it is ignored.
+   * If `true`, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"` or `"file"`, otherwise it is ignored.
    */
   @Prop() multiple?: boolean;
 
@@ -136,12 +136,12 @@ export class Input implements ComponentInterface {
   @Prop() placeholder?: string;
 
   /**
-   * If true, the user cannot modify the value. Defaults to `false`.
+   * If `true`, the user cannot modify the value. Defaults to `false`.
    */
   @Prop() readonly = false;
 
   /**
-   * If true, the user must fill in a value before submitting a form.
+   * If `true`, the user must fill in a value before submitting a form.
    */
   @Prop() required = false;
 
@@ -151,7 +151,7 @@ export class Input implements ComponentInterface {
   @Prop() results?: number;
 
   /**
-   * If true, the element will have its spelling and grammar checked. Defaults to `false`.
+   * If `true`, the element will have its spelling and grammar checked. Defaults to `false`.
    */
   @Prop() spellcheck = false;
 
@@ -244,6 +244,10 @@ export class Input implements ComponentInterface {
     this.ionInputDidUnload.emit();
   }
 
+  /**
+   * Sets focus on the specified `ion-input`. Use this method instead of the global
+   * `input.focus()`.
+   */
   @Method()
   setFocus() {
     if (this.nativeInput) {

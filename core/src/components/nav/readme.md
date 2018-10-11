@@ -9,14 +9,14 @@ Unlike RouterOutlet, Nav is not tied to a particular router. Meaning that if we 
 
 ## Properties
 
-| Property       | Attribute       | Description                                            | Type                |
-| -------------- | --------------- | ------------------------------------------------------ | ------------------- |
-| `animated`     | `animated`      | If the nav should animate the components or not        | `boolean`           |
-| `animation`    | --              |                                                        | `AnimationBuilder`  |
-| `delegate`     | --              |                                                        | `FrameworkDelegate` |
-| `rootParams`   | --              | Any parameters for the root component                  | `ComponentProps`    |
-| `root`         | `root`          | Root NavComponent to load                              | `NavComponent`      |
-| `swipeGesture` | `swipe-gesture` | If the nav component should allow for swipe-to-go-back | `boolean`           |
+| Property       | Attribute       | Description                                                                                                                                                                                    | Type                |
+| -------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| `animated`     | `animated`      | If `true`, the nav should animate the transition of components. Default to `true`.                                                                                                             | `boolean`           |
+| `animation`    | --              | By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions. | `AnimationBuilder`  |
+| `delegate`     | --              |                                                                                                                                                                                                | `FrameworkDelegate` |
+| `rootParams`   | --              | Any parameters for the root component                                                                                                                                                          | `ComponentProps`    |
+| `root`         | `root`          | Root NavComponent to load                                                                                                                                                                      | `NavComponent`      |
+| `swipeGesture` | `swipe-gesture` | If the nav component should allow for swipe-to-go-back.                                                                                                                                        | `boolean`           |
 
 
 ## Events
@@ -32,7 +32,7 @@ Unlike RouterOutlet, Nav is not tied to a particular router. Meaning that if we 
 
 ### `canGoBack(view?: ViewController | undefined) => Promise<boolean>`
 
-Returns true or false if the current view can go back
+Returns `true` or false if the current view can go back
 
 #### Parameters
 
