@@ -239,12 +239,15 @@ export class Fab {
 }
 
 export declare interface FabButton extends StencilComponents<'IonFabButton'> {}
-@Component({ selector: 'ion-fab-button', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'activated', 'disabled', 'routerDirection', 'href', 'translucent', 'show'] })
+@Component({ selector: 'ion-fab-button', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'activated', 'disabled', 'href', 'routerDirection', 'show', 'translucent', 'type'] })
 export class FabButton {
+  ionFocus: EventEmitter<CustomEvent>;
+  ionBlur: EventEmitter<CustomEvent>;
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyInputs(this, el, ['mode', 'color', 'activated', 'disabled', 'routerDirection', 'href', 'translucent', 'show']);
+    proxyInputs(this, el, ['mode', 'color', 'activated', 'disabled', 'href', 'routerDirection', 'show', 'translucent', 'type']);
+    proxyOutputs(this, el, ['ionFocus', 'ionBlur']);
   }
 }
 

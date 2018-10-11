@@ -1412,6 +1412,10 @@ export namespace Components {
     * If true, the fab button will be translucent. Defaults to `false`.
     */
     'translucent': boolean;
+    /**
+    * The type of the button. Possible values are: `"submit"`, `"reset"` and `"button"`. Default value is: `"button"`
+    */
+    'type': 'submit' | 'reset' | 'button';
   }
   interface IonFabButtonAttributes extends StencilHTMLAttributes {
     /**
@@ -1435,6 +1439,14 @@ export namespace Components {
     */
     'mode'?: Mode;
     /**
+    * Emitted when the button loses focus.
+    */
+    'onIonBlur'?: (event: CustomEvent<void>) => void;
+    /**
+    * Emitted when the button has focus.
+    */
+    'onIonFocus'?: (event: CustomEvent<void>) => void;
+    /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection'?: RouterDirection;
@@ -1446,6 +1458,10 @@ export namespace Components {
     * If true, the fab button will be translucent. Defaults to `false`.
     */
     'translucent'?: boolean;
+    /**
+    * The type of the button. Possible values are: `"submit"`, `"reset"` and `"button"`. Default value is: `"button"`
+    */
+    'type'?: 'submit' | 'reset' | 'button';
   }
 
   interface IonFabList {

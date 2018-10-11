@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
 
 import { Color, Mode, RouterDirection } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
@@ -12,10 +12,11 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
   shadow: true
 })
 export class FabButton implements ComponentInterface {
+  @Element() el!: HTMLElement;
+
+  @State() keyFocus = false;
 
   @Prop({ context: 'window' }) win!: Window;
-
-  @Element() el!: HTMLElement;
 
   /**
    * The mode determines which platform styles to use.
@@ -41,16 +42,21 @@ export class FabButton implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
+   * Contains a URL or a URL fragment that the hyperlink points to.
+   * If this property is set, an anchor tag will be rendered.
+   */
+  @Prop() href?: string;
+
+  /**
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
   @Prop() routerDirection?: RouterDirection;
 
   /**
-   * Contains a URL or a URL fragment that the hyperlink points to.
-   * If this property is set, an anchor tag will be rendered.
+   * If true, the fab button will show when in a fab-list.
    */
-  @Prop() href?: string;
+  @Prop() show = false;
 
   /**
    * If true, the fab button will be translucent. Defaults to `false`.
@@ -58,9 +64,34 @@ export class FabButton implements ComponentInterface {
   @Prop() translucent = false;
 
   /**
-   * If true, the fab button will show when in a fab-list.
+   * The type of the button.
+   * Possible values are: `"submit"`, `"reset"` and `"button"`.
+   * Default value is: `"button"`
    */
-  @Prop() show = false;
+  @Prop() type: 'submit' | 'reset' | 'button' = 'button';
+
+  /**
+   * Emitted when the button has focus.
+   */
+  @Event() ionFocus!: EventEmitter<void>;
+
+  /**
+   * Emitted when the button loses focus.
+   */
+  @Event() ionBlur!: EventEmitter<void>;
+
+  private onFocus = () => {
+    this.ionFocus.emit();
+  }
+
+  private onKeyUp = () => {
+    this.keyFocus = true;
+  }
+
+  private onBlur = () => {
+    this.keyFocus = false;
+    this.ionBlur.emit();
+  }
 
   hostData() {
     const inList = hostContext('ion-fab-list', this.el);
@@ -73,19 +104,26 @@ export class FabButton implements ComponentInterface {
         'fab-button-close-active': this.activated,
         'fab-button-show': this.show,
         'fab-button-disabled': this.disabled,
-        'fab-button-translucent': this.translucent
+        'fab-button-translucent': this.translucent,
+        'focused': this.keyFocus
       }
     };
   }
 
   render() {
     const TagType = this.href === undefined ? 'button' : 'a';
+    const attrs = (TagType === 'button')
+      ? { type: this.type }
+      : { href: this.href };
 
     return (
       <TagType
+        {...attrs}
         class="button-native"
         disabled={this.disabled}
-        href={this.href}
+        onFocus={this.onFocus}
+        onKeyUp={this.onKeyUp}
+        onBlur={this.onBlur}
         onClick={ev => openURL(this.win, this.href, ev, this.routerDirection)}
       >
         <span class="close-icon">
