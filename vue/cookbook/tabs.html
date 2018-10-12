@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Ionic v4 + Vue.js - Transitions with named views</title>
+        <title>Ionic v4 + Vue.js - Ionic tabs</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
@@ -13,20 +13,11 @@
         <script src="https://unpkg.com/@modus/ionic-vue@latest/dist/ionic-vue.js"></script>
         <script src="https://unpkg.com/@ionic/core@latest/dist/ionic.js"></script>
         <link rel="stylesheet" href="https://unpkg.com/@ionic/core@latest/css/ionic.bundle.css"/>
-        <style>
-            .fade-enter-active, .fade-leave-active {
-                transition: opacity .3s ease;
-            }
-            .fade-enter, .fade-leave-to {
-                opacity: 0;
-            }
-        </style>
     </head>
 
     <body>
         <ion-app>
-            <ion-vue-router></ion-vue-router>
-            <router-view name="extra" style="pointer-events:none !important;"></router-view>
+            <Home/>
         </ion-app>
 
         <script>
@@ -43,31 +34,37 @@
                 </ion-header>`
             })
 
-            const Home = {
+            const Home = Vue.component('Home', {
                 template: `<ion-page class="ion-page">
                     <toolbar title="Home"/>
                     <ion-content class="ion-content" padding>
-                        <router-link to="/page">Go to page</router-link>
+                        <ion-tabs>
+                            <ion-tab href="schedule" label="schedule" icon="calendar" name="schedule">
+                                <ion-vue-router/>
+                            </ion-tab>
+                            <ion-tab href="speakers" label="speakers" icon="contacts" name="speakers">
+                                <ion-vue-router name="speakers"/>
+                            </ion-tab>
+                        </ion-tabs>
                     </ion-content>
                 </ion-page>`
-            }
+            })
 
             const Page = {
-                template: `<ion-page class="ion-page">
-                    <toolbar title="Page" backURL="/"/>
-                    <ion-content class="ion-content" padding>
-                        <ion-button @click="goHome">Go home</ion-button>
-                    </ion-content>
-                </ion-page>`,
+                template: '<ion-button @click="goBack">Go back</ion-button>',
                 methods: {
-                    goHome() {
+                    goBack() {
                         this.$router.back()
                     }
                 }
             }
 
-            const Extra = {
-                template: '<transition name="fade"><h1 style="z-index:999;margin:150px 0 0 16px">Some extra conent</h1></transition>'
+            const Schedule = {
+                template: `<ion-button @click="$router.push('page')">To page</ion-button>`
+            }
+
+            const Speakers = {
+                template: '<h1>Speakers list</h1>'
             }
 
             Vue.config.ignoredElements.push(/^ion-/)
@@ -75,8 +72,8 @@
             new Vue({
                 router: new IonicVue.IonicVueRouter({
                     routes: [
-                        { path: '/', component: Home },
-                        { path: '/page', components: {default: Page, extra: Extra} },
+                        { path: '/', components: {default: Schedule, speakers: Speakers} },
+                        { path: '/page', component: Page }
                     ],
                 }),
             }).$mount('ion-app')

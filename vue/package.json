@@ -7,6 +7,7 @@
   "license": "MIT",
   "repository": "github:ionic-team/ionic",
   "main": "dist/ionic-vue.common.js",
+  "typings": "types/index.d.ts",
   "module": "dist/ionic-vue.esm.js",
   "unpkg": "dist/ionic-vue.js",
   "jsdelivr": "dist/ionic-vue.js",
@@ -15,7 +16,9 @@
   ],
   "files": [
     "src/",
-    "dist/*.js"
+    "types/",
+    "dist/*.js",
+    "dist/*.ts"
   ],
   "bugs": {
     "url": "https://github.com/ionic-team/ionic/issues"
@@ -25,6 +28,7 @@
     "ion",
     "vuejs",
     "vue",
+    "typescript",
     "router",
     "routing",
     "plugin",
@@ -42,27 +46,21 @@
     "watch": "rollup -c -w",
     "build": "NODE_ENV=production rollup -c --configProd",
     "clean": "node scripts/clean.js",
-    "lint": "eslint src/**/* test/**/*",
+    "lint": "tslint --project .",
+    "lint.fix": "tslint --project . --fix",
     "test": "jest --coverage --verbose"
   },
   "devDependencies": {
-    "babel-jest": "^23.4.2",
-    "babel-preset-env": "^1.7.0",
-    "buble": "^0.19.3",
-    "eslint": "^5.1.0",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-jest": "^21.18.0",
-    "eslint-plugin-prettier": "^2.6.2",
-    "eslint-plugin-promise": "^3.8.0",
-    "eslint-plugin-vue": "^4.5.0",
-    "fs-extra": "^7.0.0",
-    "jest": "^23.4.2",
-    "jest-sonar-reporter": "^2.0.0",
-    "jest-vue-preprocessor": "^1.4.0",
     "rollup": "^0.62.0",
-    "rollup-plugin-buble": "^0.19.2",
     "rollup-plugin-terser": "^1.0.1",
-    "rollup-plugin-vue": "^4.3.0"
+    "rollup-plugin-vue": "^4.3.0",
+    "rollup-plugin-typescript2": "^0.17.1",
+    "tslib": "1.9.3",
+    "tslint": "5.11.0",
+    "tslint-ionic-rules": "0.0.19",
+    "typescript": "3.1.1",
+    "vue-class-component": "^6.2.0",
+    "vue-property-decorator": "^7.2.0"
   },
   "dependencies": {
     "vue": "^2.5.17",
