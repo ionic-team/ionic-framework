@@ -57,6 +57,17 @@ jobs:
           paths:
             - "*"
 
+  test-core-clean-build:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Checking clean build
+          command: git diff --exit-code
+          working_directory: /tmp/workspace/core
+
   test-core-lint:
     <<: *defaults
     steps:
@@ -116,6 +127,8 @@ workflows:
       - build
       - build-core:
           requires: [build]
+      - test-core-clean-build:
+          requires: [build-core]
       - test-core-lint:
           requires: [build-core]
       - test-core-spec:
