@@ -74,7 +74,7 @@ to complete the reorder operation.
 
 | Name            | Type                            | Description |
 | --------------- | ------------------------------- | ----------- |
-| `listOrReorder` | `boolean \| any[] \| undefined` |             |
+| `listOrReorder` | `any[] \| boolean \| undefined` |             |
 
 #### Returns
 

@@ -13,15 +13,15 @@ These can be controlled from the templates, or programmatically using the MenuCo
 
 ## Properties
 
-| Property       | Attribute        | Description                                                                                                        | Type      |
-| -------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------ | --------- |
-| `contentId`    | `content-id`     | The content's id the menu should use.                                                                              | `string`  |
-| `disabled`     | `disabled`       | If `true`, the menu is disabled. Default `false`.                                                                  | `boolean` |
-| `maxEdgeStart` | `max-edge-start` | The edge threshold for dragging the menu open. If a drag/swipe happens over this value, the menu is not triggered. | `number`  |
-| `menuId`       | `menu-id`        | An id for the menu.                                                                                                | `string`  |
-| `side`         | `side`           | Which side of the view the menu should be placed. Default `"start"`.                                               | `Side`    |
-| `swipeGesture` | `swipe-gesture`  | If `true`, swiping the menu is enabled. Default `true`.                                                            | `boolean` |
-| `type`         | `type`           | The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.                                | `string`  |
+| Property       | Attribute        | Description                                                                                                        | Type                  |
+| -------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------ | --------------------- |
+| `contentId`    | `content-id`     | The content's id the menu should use.                                                                              | `string \| undefined` |
+| `disabled`     | `disabled`       | If `true`, the menu is disabled. Default `false`.                                                                  | `boolean`             |
+| `maxEdgeStart` | `max-edge-start` | The edge threshold for dragging the menu open. If a drag/swipe happens over this value, the menu is not triggered. | `number`              |
+| `menuId`       | `menu-id`        | An id for the menu.                                                                                                | `string \| undefined` |
+| `side`         | `side`           | Which side of the view the menu should be placed. Default `"start"`.                                               | `"end" \| "start"`    |
+| `swipeGesture` | `swipe-gesture`  | If `true`, swiping the menu is enabled. Default `true`.                                                            | `boolean`             |
+| `type`         | `type`           | The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.                                | `string`              |
 
 
 ## Events

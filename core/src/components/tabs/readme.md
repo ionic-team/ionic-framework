@@ -9,11 +9,11 @@ The component is a container of individual [Tab](../Tab/) components.
 
 ## Properties
 
-| Property       | Attribute       | Description                                                                     | Type      |
-| -------------- | --------------- | ------------------------------------------------------------------------------- | --------- |
-| `name`         | `name`          | A unique name for the tabs.                                                     | `string`  |
-| `tabbarHidden` | `tabbar-hidden` | If `true`, the tabbar will be hidden. Defaults to `false`.                      | `boolean` |
-| `useRouter`    | `use-router`    | If `true`, the tabs will use the router and `selectedTab` will not do anything. | `boolean` |
+| Property       | Attribute       | Description                                                                     | Type                  |
+| -------------- | --------------- | ------------------------------------------------------------------------------- | --------------------- |
+| `name`         | `name`          | A unique name for the tabs.                                                     | `string \| undefined` |
+| `tabbarHidden` | `tabbar-hidden` | If `true`, the tabbar will be hidden. Defaults to `false`.                      | `boolean`             |
+| `useRouter`    | `use-router`    | If `true`, the tabs will use the router and `selectedTab` will not do anything. | `boolean`             |
 
 
 ## Events
@@ -56,7 +56,7 @@ Get the tab at the given index
 
 | Name         | Type                                    | Description |
 | ------------ | --------------------------------------- | ----------- |
-| `tabOrIndex` | `string \| number \| HTMLIonTabElement` |             |
+| `tabOrIndex` | `HTMLIonTabElement \| number \| string` |             |
 
 #### Returns
 
@@ -72,7 +72,7 @@ Index or the Tab instance, of the tab to select.
 
 | Name         | Type                          | Description |
 | ------------ | ----------------------------- | ----------- |
-| `tabOrIndex` | `number \| HTMLIonTabElement` |             |
+| `tabOrIndex` | `HTMLIonTabElement \| number` |             |
 
 #### Returns
 

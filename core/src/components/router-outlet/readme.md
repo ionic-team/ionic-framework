@@ -13,11 +13,11 @@ While RouterOutlet has methods for navigating around, it's recommended to use th
 
 ## Properties
 
-| Property    | Attribute  | Description                                                                                                                                                                                    | Type                |
-| ----------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| `animated`  | `animated` | If `true`, the router-outlet should animate the transition of components. Default to `true`.                                                                                                   | `boolean`           |
-| `animation` | --         | By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions. | `AnimationBuilder`  |
-| `delegate`  | --         |                                                                                                                                                                                                | `FrameworkDelegate` |
+| Property    | Attribute  | Description                                                                                                                                                                                    | Type                             |
+| ----------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| `animated`  | `animated` | If `true`, the router-outlet should animate the transition of components. Default to `true`.                                                                                                   | `boolean`                        |
+| `animation` | --         | By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions. | `AnimationBuilder \| undefined`  |
+| `delegate`  | --         |                                                                                                                                                                                                | `FrameworkDelegate \| undefined` |
 
 
 ## Methods
@@ -56,11 +56,11 @@ Set the root component for the given navigation stack
 
 #### Parameters
 
-| Name        | Type                                   | Description |
-| ----------- | -------------------------------------- | ----------- |
-| `component` | `ComponentRef`                         |             |
-| `params`    | `{ [key: string]: any; } \| undefined` |             |
-| `opts`      | `RouterOutletOptions \| undefined`     |             |
+| Name        | Type                                        | Description |
+| ----------- | ------------------------------------------- | ----------- |
+| `component` | `Function \| HTMLElement \| null \| string` |             |
+| `params`    | `undefined \| { [key: string]: any; }`      |             |
+| `opts`      | `RouterOutletOptions \| undefined`          |             |
 
 #### Returns
 
@@ -77,7 +77,7 @@ Type: `Promise<boolean>`
 | Name        | Type                                   | Description |
 | ----------- | -------------------------------------- | ----------- |
 | `id`        | `string`                               |             |
-| `params`    | `{ [key: string]: any; } \| undefined` |             |
+| `params`    | `undefined \| { [key: string]: any; }` |             |
 | `direction` | `number`                               |             |
 
 #### Returns

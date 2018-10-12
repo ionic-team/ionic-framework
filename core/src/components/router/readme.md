@@ -78,10 +78,10 @@ Navigate to the specified URL.
 
 #### Parameters
 
-| Name        | Type              | Description |
-| ----------- | ----------------- | ----------- |
-| `url`       | `string`          |             |
-| `direction` | `RouterDirection` |             |
+| Name        | Type                            | Description |
+| ----------- | ------------------------------- | ----------- |
+| `url`       | `string`                        |             |
+| `direction` | `"back" \| "forward" \| "root"` |             |
 
 #### Returns
 
