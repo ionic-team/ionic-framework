@@ -5,6 +5,7 @@ const S3 = require('aws-sdk/clients/s3');
 const execa = require('execa');
 const stream = require('stream');
 
+const BUILD_URL = 'https://github.com/ionic-team/ionic/commit/';
 const S3_BUCKET = 'screenshot.ionicframework.com';
 const s3 = new S3({ apiVersion: '2006-03-01' });
 
@@ -18,6 +19,7 @@ class CIScreenshotConnector extends IonicConnector {
     opts.buildId = sha1short;
     opts.buildMessage = msg;
     opts.buildAuthor = author;
+    opts.buildUrl = BUILD_URL + sha1short;
     opts.buildTimestamp = (timestamp * 1000);
 
     await super.initBuild(opts);
@@ -48,25 +50,45 @@ class CIScreenshotConnector extends IonicConnector {
     await super.pullIonicMasterBuild();
   }
 
-  async publishBuild(build) {
+  async publishBuild(results) {
+    const currentBuild = results.currentBuild;
+    const compare = results.compare;
+
+    compare.url = `https://${S3_BUCKET}/${compare.a.id}/${compare.b.id}`;
+
     const timespan = this.logger.createTimeSpan(`publishing build started`);
-    const images = build.screenshots.map(screenshot => screenshot.image);
-    const buildBuffer = Buffer.from(JSON.stringify(build, undefined, 2));
+    const images = currentBuild.screenshots.map(screenshot => screenshot.image);
+
+    const buildBuffer = Buffer.from(JSON.stringify(currentBuild, undefined, 2));
     const buildStream = new stream.PassThrough();
     buildStream.end(buildBuffer);
 
-    await Promise.all(images.map(async image => this.uploadImage(image)));
-    await this.uploadStream(buildStream, `data/builds/${build.id}.json`, { ContentType: 'application/json' });
+    const compareBuffer = Buffer.from(JSON.stringify(compare, undefined, 2));
+    const compareStream = new stream.PassThrough();
+    compareStream.end(compareBuffer);
+
+    const uploads = images.map(async image => this.uploadImage(image));
+
+    uploads.push(
+      this.uploadStream(buildStream, `data/builds/${currentBuild.id}.json`, { ContentType: 'application/json' }),
+      this.uploadStream(compareBuffer, `data/compares/${compare.id}.json`, { ContentType: 'application/json' })
+    );
 
     if (this.updateMaster) {
       const buildStream = new stream.PassThrough();
       buildStream.end(buildBuffer);
       const key = `data/builds/master.json`;
       this.logger.debug(`uploading: ${key}`);
-      await s3.upload({ Bucket: S3_BUCKET, Key: key, Body: buildStream, ContentType: 'application/json' }).promise();
+      uploads.push(
+        s3.upload({ Bucket: S3_BUCKET, Key: key, Body: buildStream, ContentType: 'application/json' }).promise()
+      );
     }
 
+    await Promise.all(uploads);
+
     timespan.finish(`publishing build finished`);
+
+    return results;
   }
 
 }
