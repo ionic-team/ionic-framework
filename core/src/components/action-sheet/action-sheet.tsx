@@ -202,7 +202,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   private getButtons(): ActionSheetButton[] {
     return this.buttons.map(b => {
-      return (typeof b === 'string')
+      return typeof b === 'string'
         ? { text: b }
         : b;
     });
