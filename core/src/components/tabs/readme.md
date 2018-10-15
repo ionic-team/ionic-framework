@@ -3,6 +3,26 @@
 Tabs are a top level navigation component for created multiple stacked navs.
 The component is a container of individual [Tab](../Tab/) components.
 
+`ion-tabs` is a styleless component that works as a router outlet in
+order to handle navigation. When the user does not provide a `ion-tabbar` in their markup, `ion-tabs`, by default provides one. Notice that `ion-tabbar` is the UI component that can be used to switch between tabs.
+
+In order to customize the style of the `ion-tabbar`, it should be included in the user's markup as
+direct children of `ion-tabs`, like this:
+
+```html
+<style>
+  .my-custom-tabs {
+    font-size: 20px;
+  }
+</style>
+<ion-tabs>
+  <ion-tab label="Indiana Jones"></ion-tab>
+  <ion-tab label="Star Wars"></ion-tab>
+  <ion-tab label="Jurassic Park"></ion-tab>
+
+  <ion-tabbar color="danger" layout="icon-start" placement="top"></ion-tabbar>
+</ion-tabs>
+```
 
 <!-- Auto Generated Below -->
 

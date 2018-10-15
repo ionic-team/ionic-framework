@@ -81,6 +81,7 @@ const DECLARATIONS = [
   d.Spinner,
   d.SplitPane,
   d.Tab,
+  d.Tabbar,
   d.Tabs,
   d.Text,
   d.Textarea,
