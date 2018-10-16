@@ -30,7 +30,7 @@ class CIScreenshotConnector extends IonicConnector {
     const stream = fs.createReadStream(file);
     const key = `data/images/${image}`;
 
-    await this.uploadStream(stream, key);
+    await this.uploadStream(stream, key, { ContentType: 'image/png' });
   }
 
   async uploadStream(stream, key, extra = {}) {
