@@ -56,9 +56,14 @@ class CIScreenshotConnector extends IonicConnector {
 
     const timespan = this.logger.createTimeSpan(`publishing build started`);
     const images = currentBuild.screenshots.map(screenshot => screenshot.image);
+    const imageBatches = [];
 
-    for (const image of images) {
-      await this.uploadImage(image);
+    while (images.length > 0) {
+      imageBatches.push(images.splice(0, 10));
+    }
+
+    for (const batch of imageBatches) {
+      await Promise.all(batch.map(async image => this.uploadImage(image)));
     }
 
     const buildBuffer = Buffer.from(JSON.stringify(currentBuild, undefined, 2));
