@@ -93,7 +93,15 @@ class CIScreenshotConnector extends IonicConnector {
       );
     }
 
-    await Promise.all(uploads);
+    const uploadBatches = [];
+
+    while (uploads.length > 0) {
+      uploadBatches.push(uploads.splice(0, 10));
+    }
+
+    for (const batch of uploadBatches) {
+      await Promise.all(batch);
+    }
 
     timespan.finish(`publishing build finished`);
 
