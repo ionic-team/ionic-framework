@@ -52,35 +52,44 @@ class CIScreenshotConnector extends IonicConnector {
 
   async publishBuild(results) {
     const currentBuild = results.currentBuild;
-    const compare = results.compare;
-
-    compare.url = `https://${S3_BUCKET}/${compare.a.id}/${compare.b.id}`;
 
     const timespan = this.logger.createTimeSpan(`publishing build started`);
     const images = currentBuild.screenshots.map(screenshot => screenshot.image);
+
+    const uploads = images.map(async image => this.uploadImage(image));
 
     const buildBuffer = Buffer.from(JSON.stringify(currentBuild, undefined, 2));
     const buildStream = new stream.PassThrough();
     buildStream.end(buildBuffer);
 
-    const compareBuffer = Buffer.from(JSON.stringify(compare, undefined, 2));
-    const compareStream = new stream.PassThrough();
-    compareStream.end(compareBuffer);
-
-    const uploads = images.map(async image => this.uploadImage(image));
-
     uploads.push(
       this.uploadStream(buildStream, `data/builds/${currentBuild.id}.json`, { ContentType: 'application/json' }),
-      this.uploadStream(compareBuffer, `data/compares/${compare.id}.json`, { ContentType: 'application/json' })
     );
 
     if (this.updateMaster) {
+      // master build
+      // update the master data with this current build
+      // no need to upload a compare data
       const buildStream = new stream.PassThrough();
       buildStream.end(buildBuffer);
       const key = `data/builds/master.json`;
       this.logger.debug(`uploading: ${key}`);
       uploads.push(
         s3.upload({ Bucket: S3_BUCKET, Key: key, Body: buildStream, ContentType: 'application/json' }).promise()
+      );
+
+    } else {
+      // PR build
+      // not updating master
+      // upload compare data of the PR against the master data
+      const compare = results.compare;
+      compare.url = `https://${S3_BUCKET}/${compare.a.id}/${compare.b.id}`;
+
+      const compareBuffer = Buffer.from(JSON.stringify(compare, undefined, 2));
+      const compareStream = new stream.PassThrough();
+      compareStream.end(compareBuffer);
+      uploads.push(
+        this.uploadStream(compareStream, `data/compares/${compare.id}.json`, { ContentType: 'application/json' })
       );
     }
 
