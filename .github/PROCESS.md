@@ -135,3 +135,27 @@ OR
 
 1. CI builds `stable`, performing the release.
 1. Unfreeze `master`.
+
+#### Hotfixes
+
+Hotfixes bypass `master` and should only be used for urgent fixes that can't wait for the next release to be ready.
+
+1. Create a branch from `stable`.
+1. Make changes.
+1. Run `npm run release.prepare`.
+1. Push changes.
+1. Create a PR, making sure the PR will merge into `stable`.
+1. Click **Squash and merge**. Use the dropdown to select this option if necessary.
+
+    <img width="192" alt="Squash and merge button" src="https://user-images.githubusercontent.com/236501/47031620-da418900-d135-11e8-91ff-e84f2478b2b3.png">
+
+1. During confirmation, rewrite the commit message using our [Commit Message Format guidelines](https://github.com/ionic-team/ionic/blob/master/.github/CONTRIBUTING.md#commit-message-format). Keep the `(#1234)` at the end; it will create a link to the PR in the commit history and `CHANGELOG.md`. This is where commits on `master` become permanent.
+
+    <img width="672" alt="Squash and merge confirmation" src="https://user-images.githubusercontent.com/236501/47031753-31dff480-d136-11e8-9116-03934961bdc2.png">
+
+1. Confirm squash and merge into `stable`.
+1. CI builds `stable`, performing the release.
+1. Create a PR to merge `stable` into `master`.
+1. Click **Merge pull request**. Use the dropdown to select this option if necessary.
+
+    <img width="191" alt="Merge pull request button" src="https://user-images.githubusercontent.com/236501/47032669-8be1b980-d138-11e8-9a90-d1518c223184.png">
