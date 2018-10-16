@@ -57,15 +57,17 @@ class CIScreenshotConnector extends IonicConnector {
     const timespan = this.logger.createTimeSpan(`publishing build started`);
     const images = currentBuild.screenshots.map(screenshot => screenshot.image);
 
-    const uploads = images.map(async image => this.uploadImage(image));
+    for (const image of images) {
+      await this.uploadImage(image);
+    }
 
     const buildBuffer = Buffer.from(JSON.stringify(currentBuild, undefined, 2));
     const buildStream = new stream.PassThrough();
     buildStream.end(buildBuffer);
 
-    uploads.push(
+    const uploads = [
       this.uploadStream(buildStream, `data/builds/${currentBuild.id}.json`, { ContentType: 'application/json' }),
-    );
+    ];
 
     if (this.updateMaster) {
       // master build
@@ -94,15 +96,7 @@ class CIScreenshotConnector extends IonicConnector {
       );
     }
 
-    const uploadBatches = [];
-
-    while (uploads.length > 0) {
-      uploadBatches.push(uploads.splice(0, 10));
-    }
-
-    for (const batch of uploadBatches) {
-      await Promise.all(batch);
-    }
+    await Promise.all(uploads);
 
     timespan.finish(`publishing build finished`);
 
