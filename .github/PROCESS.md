@@ -3,11 +3,9 @@
 This document is to describe the internal process that the Ionic team uses for issue management and project planning.
 
 ## Table of contents
-<!--ts-->
-   * [Project Boards](#project-boards)
-   * [Managing Issues](#managing-issues)
-   * [Workflow](#workflow)
-<!--te-->
+ * [Project Boards](#project-boards)
+ * [Managing Issues](#managing-issues)
+ * [Workflow](#workflow)
 
 ## Project Boards
 
