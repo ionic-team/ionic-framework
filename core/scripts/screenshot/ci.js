@@ -112,9 +112,14 @@ class CIScreenshotConnector extends IonicConnector {
   async getScreenshotCache() {
     const timespan = this.logger.createTimeSpan(`get screenshot cache started`);
 
-    const ws = fs.createWriteStream(this.screenshotCacheFilePath);
-    const p = `/data/compares/screenshot-cache.json?ts=${Date.now()}`;
-    await this.downloadToStream(ws, p);
+    try {
+      const ws = fs.createWriteStream(this.screenshotCacheFilePath);
+      const p = `/data/compares/screenshot-cache.json?ts=${Date.now()}`;
+      await this.downloadToStream(ws, p);
+
+    } catch (e) {
+      this.logger.error(e);
+    }
 
     timespan.finish(`get screenshot cache finished`);
 
