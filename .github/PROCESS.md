@@ -2,6 +2,11 @@
 
 This document is to describe the internal process that the Ionic team uses for issue management and project planning.
 
+## Table of contents
+ * [Project Boards](#project-boards)
+ * [Managing Issues](#managing-issues)
+ * [Workflow](#workflow)
+
 ## Project Boards
 
 The project boards are located under the `Projects` tab in GitHub: https://github.com/ionic-team/ionic/projects/

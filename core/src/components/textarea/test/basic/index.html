@@ -102,23 +102,18 @@
 
         var isTrue = el[prop] ? false : true;
         el[prop] = isTrue;
-        console.log('in toggleBoolean, setting', prop, 'to', isTrue);
       }
 
       function toggleString(id, prop) {
         var el = document.getElementById(id);
-        console.log('INPUT ELE', el);
-
         var newString = el[prop] === 'dynamic' ? 'changed' : 'dynamic';
         el[prop] = newString;
-        console.log('in toggleString, setting', prop, 'to', newString);
       }
 
       function clearString(id, prop) {
         var el = document.getElementById(id);
 
         el[prop] = '';
-        console.log('in toggleString, setting', prop, 'to', '');
       }
     </script>
   </ion-app>
