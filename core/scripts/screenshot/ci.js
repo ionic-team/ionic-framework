@@ -21,6 +21,7 @@ class CIScreenshotConnector extends IonicConnector {
     opts.buildMessage = msg;
     opts.buildAuthor = author;
     opts.buildUrl = BUILD_URL + sha1short;
+    opts.previewUrl = `https://${S3_BUCKET}/${sha1short}`;
     opts.buildTimestamp = (timestamp * 1000);
 
     await super.initBuild(opts);
@@ -106,6 +107,33 @@ class CIScreenshotConnector extends IonicConnector {
     timespan.finish(`publishing build finished`);
 
     return results;
+  }
+
+  async getScreenshotCache() {
+    const timespan = this.logger.createTimeSpan(`get screenshot cache started`);
+
+    const ws = fs.createWriteStream(this.screenshotCacheFilePath);
+    const p = `/data/compares/screenshot-cache.json?ts=${Date.now()}`;
+    await this.downloadToStream(ws, p);
+
+    timespan.finish(`get screenshot cache finished`);
+
+    return super.getScreenshotCache();
+  }
+
+  async setScreenshotCache(cache, buildResults) {
+    cache = await super.setScreenshotCache(cache, buildResults);
+
+    const buffer = Buffer.from(JSON.stringify(cache, undefined, 2));
+    const stream = new stream.PassThrough();
+    stream.end(buffer);
+
+    const key = `data/compares/screenshot-cache.json`;
+    this.logger.debug(`uploading: ${key}`);
+
+    await s3.upload({ Bucket: S3_BUCKET, Key: key, Body: stream, ContentType: 'application/json' }).promise();
+
+    return cache;
   }
 
 }
