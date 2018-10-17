@@ -131,14 +131,14 @@ class CIScreenshotConnector extends IonicConnector {
 
     cache = await super.updateScreenshotCache(cache, buildResults);
 
-    const buffer = Buffer.from(JSON.stringify(cache, undefined, 2));
-    const stream = new stream.PassThrough();
-    stream.end(buffer);
+    const cacheBuffer = Buffer.from(JSON.stringify(cache, undefined, 2));
+    const cacheStream = new stream.PassThrough();
+    cacheStream.end(cacheBuffer);
 
     const key = `data/compares/screenshot-cache.json`;
     this.logger.debug(`uploading: ${key}`);
 
-    await s3.upload({ Bucket: S3_BUCKET, Key: key, Body: stream, ContentType: 'application/json' }).promise();
+    await s3.upload({ Bucket: S3_BUCKET, Key: key, Body: cacheStream, ContentType: 'application/json' }).promise();
 
     timespan.finish(`update screenshot cache finished`);
 
