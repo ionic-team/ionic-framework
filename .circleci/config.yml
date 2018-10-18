@@ -18,8 +18,8 @@ aliases:
       key: dependency-cache-{{ checksum "core/package.json" }}-2
       paths:
         - core/node_modules
-        - .stencil
-        - screenshot/images
+        - core/.stencil
+        - core/screenshot/images
 
 
 defaults: &defaults
