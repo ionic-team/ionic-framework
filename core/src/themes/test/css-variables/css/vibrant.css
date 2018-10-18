@@ -72,4 +72,9 @@
   --ion-color-light-contrast-rgb: 0,0,0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  /* Item Backgrounds */
+  --ion-background-color: #778899;
+  --ion-item-background-color: #fff;
+  --ion-item-border-color: #5bff76;
 }

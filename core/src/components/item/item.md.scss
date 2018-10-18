@@ -12,7 +12,7 @@
   --color: #{$item-md-text-color};
   --transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
   --padding-start: #{$item-md-padding-start};
-  --background: var(--ion-item-background-color, transparent);
+  --background: #{$item-md-background-color};
   --background-activated: #{$item-md-background-color-active};
   --color: #{$item-md-text-color};
   --border-color: #{$item-md-border-bottom-color};

@@ -6,6 +6,8 @@
 
 .list-md {
   @include margin(-1px, $list-md-margin-end, $list-md-margin-bottom, $list-md-margin-start);
+
+  background: $item-md-background-color;
 }
 
 .list-md > .input:last-child::after {

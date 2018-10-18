@@ -9,7 +9,7 @@
   --padding-start: #{$item-ios-padding-start};
   --inner-padding-end: #{$item-ios-padding-end / 2};
   --inner-border-width: #{0px 0px $item-ios-border-bottom-width 0px};
-  --background: var(--ion-item-background-color, transparent);
+  --background: #{$item-ios-background-color};
   --background-activated: #{$item-ios-background-color-active};
   --border-color: #{$item-ios-border-bottom-color};
   --color: #{$item-ios-text-color};
@@ -152,7 +152,6 @@
   --padding-bottom: 8px;
   --padding-start: 0px;
 }
-
 
 
 // TODO
