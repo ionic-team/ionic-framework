@@ -97,7 +97,6 @@ export const config: Config = {
         'ion-route-redirect',
         'ion-router-outlet',
         'ion-anchor',
-        'ion-tabbar',
 
         // auxiliar
         'ion-picker-column',
