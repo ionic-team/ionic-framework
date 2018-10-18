@@ -30,5 +30,5 @@ $toolbar-ios-color-activated:               var(--ion-toolbar-color-activated, i
 // --------------------------------------------------
 $item-ios-background:                       var(--ion-item-background, $background-color) !default;
 $item-ios-background-activated:             var(--ion-item-background-activated, #d9d9d9) !default;
-$item-ios-border-color:                     var(--ion-item-border-color, #c8c7cc) !default;
+$item-ios-border-color:                     var(--ion-item-border-color, var(--ion-border-color, #c8c7cc)) !default;
 $item-ios-color:                            var(--ion-item-color, $text-color) !default;

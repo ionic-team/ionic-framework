@@ -30,5 +30,5 @@ $toolbar-md-color-activated:                var(--ion-toolbar-color-activated, #
 // --------------------------------------------------
 $item-md-background:                        var(--ion-item-background, $background-color) !default;
 $item-md-background-activated:              var(--ion-item-background-activated, #f1f1f1) !default;
-$item-md-border-color:                      var(--ion-item-border-color, rgba(0, 0, 0, .13)) !default;
+$item-md-border-color:                      var(--ion-item-border-color, var(--ion-border-color, rgba(0, 0, 0, .13))) !default;
 $item-md-color:                             var(--ion-item-color, $text-color) !default;
