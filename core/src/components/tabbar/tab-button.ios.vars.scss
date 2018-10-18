@@ -19,16 +19,16 @@ $tab-button-ios-padding-start:        $tab-button-ios-padding-end !default;
 $tab-button-ios-max-width:            240px !default;
 
 /// @prop - Text color of the inactive tab button
-$tab-button-ios-text-color:           $tabbar-ios-text-color !default;
+$tab-button-ios-text-color:           $tabbar-ios-color !default;
 
 /// @prop - Text color of the active tab button
-$tab-button-ios-text-color-active:    $tabbar-ios-text-color-active !default;
+$tab-button-ios-text-color-active:    $tabbar-ios-color-activated !default;
 
 /// @prop - Icon color of the inactive tab button
-$tab-button-ios-icon-color:           $tabbar-ios-text-color !default;
+$tab-button-ios-icon-color:           $tabbar-ios-color !default;
 
 /// @prop - Icon color of the active tab button
-$tab-button-ios-icon-color-active:    $tabbar-ios-text-color-active !default;
+$tab-button-ios-icon-color-active:    $tabbar-ios-color-activated !default;
 
 /// @prop - Font size of the tab button text
 $tab-button-ios-font-size:            10px !default;

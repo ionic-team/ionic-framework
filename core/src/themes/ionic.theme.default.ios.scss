@@ -13,23 +13,22 @@ $overlay-ios-background-color:              var(--ion-overlay-background-color, 
 
 // iOS Tabs & Tab bar
 // --------------------------------------------------
-$tabbar-ios-background-color:               var(--ion-tabbar-background-color, #f8f8f8) !default;
-$tabbar-ios-background-color-focused:       var(--ion-tabbar-background-color-focused, get-color-shade(#f8f8f8)) !default;
+$tabbar-ios-background:                     var(--ion-tabbar-background, #f8f8f8) !default;
+$tabbar-ios-background-focused:             var(--ion-tabbar-background-focused, get-color-shade(#f8f8f8)) !default;
 $tabbar-ios-border-color:                   var(--ion-tabbar-border-color, var(--ion-border-color, rgba(0, 0, 0, .2))) !default;
-$tabbar-ios-text-color:                     var(--ion-tabbar-text-color, $text-color-step-550) !default;
-$tabbar-ios-text-color-active:              var(--ion-tabbar-text-color-active, ion-color(primary, base)) !default;
+$tabbar-ios-color:                          var(--ion-tabbar-color, $text-color-step-550) !default;
+$tabbar-ios-color-activated:                var(--ion-tabbar-color-activated, ion-color(primary, base)) !default;
 
 // iOS Toolbar
 // --------------------------------------------------
-$toolbar-ios-background-color:              var(--ion-toolbar-background-color, #f8f8f8) !default;
+$toolbar-ios-background:                    var(--ion-toolbar-background, #f8f8f8) !default;
 $toolbar-ios-border-color:                  var(--ion-toolbar-border-color, var(--ion-border-color, rgba(0, 0, 0, .2))) !default;
-$toolbar-ios-color-active:                  var(--ion-toolbar-color-active, ion-color(primary, base)) !default;
-$toolbar-ios-color-inactive:                var(--ion-toolbar-color-inactive, $text-color-step-550) !default;
-$toolbar-ios-text-color:                    var(--ion-toolbar-text-color, $text-color) !default;
+$toolbar-ios-color:                         var(--ion-toolbar-color, $text-color) !default;
+$toolbar-ios-color-activated:               var(--ion-toolbar-color-activated, ion-color(primary, base)) !default;
 
 // iOS List & List Items
 // --------------------------------------------------
-$item-ios-background-color:                 var(--ion-item-background-color, $background-color) !default;
-$item-ios-background-color-active:          var(--ion-item-background-color-active, #d9d9d9) !default;
+$item-ios-background:                       var(--ion-item-background, $background-color) !default;
+$item-ios-background-activated:             var(--ion-item-background-activated, #d9d9d9) !default;
 $item-ios-border-color:                     var(--ion-item-border-color, #c8c7cc) !default;
-$item-ios-text-color:                       var(--ion-item-text-color, $text-color) !default;
+$item-ios-color:                            var(--ion-item-color, $text-color) !default;

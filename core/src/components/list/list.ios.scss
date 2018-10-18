@@ -7,7 +7,7 @@
 .list-ios {
   @include margin(-1px, $list-ios-margin-end, $list-ios-margin-bottom, $list-ios-margin-start);
 
-  background: $item-ios-background-color;
+  background: $item-ios-background;
 }
 
 .list-ios:not(.list-inset):not(.list-ios-lines-none) .item:last-child {

@@ -6,15 +6,15 @@
 // --------------------------------------------------
 
 :host {
-  --background: var(--ion-item-background-color, transparent);
-  --background-activated: #{$item-md-background-color-active};
+  --background: var(--ion-item-background, transparent);
+  --background-activated: #{$item-md-background-activated};
   --border-color: #{$item-md-border-bottom-color};
-  --color: #{$item-md-text-color};
+  --color: #{$item-md-color};
   --transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
   --padding-start: #{$item-md-padding-start};
-  --background: #{$item-md-background-color};
-  --background-activated: #{$item-md-background-color-active};
-  --color: #{$item-md-text-color};
+  --background: #{$item-md-background};
+  --background-activated: #{$item-md-background-activated};
+  --color: #{$item-md-color};
   --border-color: #{$item-md-border-bottom-color};
   --inner-padding-end: #{$item-md-padding-end / 2};
   --inner-border-width: #{0 0 $item-md-border-bottom-width 0};

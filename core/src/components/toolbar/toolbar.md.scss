@@ -5,8 +5,8 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{$toolbar-md-background-color};
-  --color: #{$toolbar-md-text-color};
+  --background: #{$toolbar-md-background};
+  --color: #{$toolbar-md-color};
   --border-color: #{$toolbar-md-border-color};
   --padding-top: 4px;
   --padding-bottom: 4px;

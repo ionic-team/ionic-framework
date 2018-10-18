@@ -9,10 +9,10 @@
   --padding-start: #{$item-ios-padding-start};
   --inner-padding-end: #{$item-ios-padding-end / 2};
   --inner-border-width: #{0px 0px $item-ios-border-bottom-width 0px};
-  --background: #{$item-ios-background-color};
-  --background-activated: #{$item-ios-background-color-active};
+  --background: #{$item-ios-background};
+  --background-activated: #{$item-ios-background-activated};
   --border-color: #{$item-ios-border-bottom-color};
-  --color: #{$item-ios-text-color};
+  --color: #{$item-ios-color};
   --highlight-height: 0;
   --highlight-color-focused: #{$item-ios-input-highlight-color};
   --highlight-color-valid: #{$item-ios-input-highlight-color-valid};

@@ -5,8 +5,8 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{$toolbar-ios-background-color};
-  --color: #{$toolbar-ios-text-color};
+  --background: #{$toolbar-ios-background};
+  --color: #{$toolbar-ios-color};
   --border-color: #{$toolbar-ios-border-color};
   --padding-top: 4px;
   --padding-bottom: 4px;
