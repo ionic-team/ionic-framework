@@ -23,9 +23,9 @@ radio button within the same group.
 
 ## Events
 
-| Event       | Description                         |
-| ----------- | ----------------------------------- |
-| `ionChange` | Emitted when the value has changed. |
+| Event       | Detail           | Description                         |
+| ----------- | ---------------- | ----------------------------------- |
+| `ionChange` | InputChangeEvent | Emitted when the value has changed. |
 
 
 ----------------------------------------------

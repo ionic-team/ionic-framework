@@ -37,13 +37,13 @@ The textarea component accepts the [native textarea attributes](https://develope
 
 ## Events
 
-| Event       | Description                               |
-| ----------- | ----------------------------------------- |
-| `ionBlur`   | Emitted when the input loses focus.       |
-| `ionChange` | Emitted when the input value has changed. |
-| `ionFocus`  | Emitted when the input has focus.         |
-| `ionInput`  | Emitted when a keyboard input ocurred.    |
-| `ionStyle`  | Emitted when the styles change.           |
+| Event       | Detail               | Description                               |
+| ----------- | -------------------- | ----------------------------------------- |
+| `ionBlur`   |                      | Emitted when the input loses focus.       |
+| `ionChange` | TextInputChangeEvent | Emitted when the input value has changed. |
+| `ionFocus`  |                      | Emitted when the input has focus.         |
+| `ionInput`  | KeyboardEvent        | Emitted when a keyboard input ocurred.    |
+| `ionStyle`  | StyleEvent           | Emitted when the styles change.           |
 
 
 ## Methods

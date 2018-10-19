@@ -17,10 +17,10 @@ SelectOption is a component that is a child element of Select. For more informat
 
 ## Events
 
-| Event                      | Description                             |
-| -------------------------- | --------------------------------------- |
-| `ionSelectOptionDidLoad`   | Emitted when the select option loads.   |
-| `ionSelectOptionDidUnload` | Emitted when the select option unloads. |
+| Event                      | Detail | Description                             |
+| -------------------------- | ------ | --------------------------------------- |
+| `ionSelectOptionDidLoad`   |        | Emitted when the select option loads.   |
+| `ionSelectOptionDidUnload` |        | Emitted when the select option unloads. |
 
 
 ----------------------------------------------
