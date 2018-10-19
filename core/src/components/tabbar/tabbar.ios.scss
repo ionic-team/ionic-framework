@@ -8,7 +8,7 @@
 :host {
   // default color / background
   --background: #{$tabbar-ios-background};
-  --background-rgb: var(--ion-tabbar-translucent-background-color-rgb, 248, 248, 248);
+  --background-rgb: var(--ion-tab-bar-translucent-background-color-rgb, 248, 248, 248);
   --color: #{$tab-button-ios-text-color};
   --color-selected: #{$tabbar-ios-color-activated};
   --background-focused: #{$tabbar-ios-background-focused};
