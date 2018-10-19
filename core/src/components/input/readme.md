@@ -44,15 +44,15 @@ It is meant for text `type` inputs only, such as `"text"`, `"password"`, `"email
 
 ## Events
 
-| Event               | Description                              |
-| ------------------- | ---------------------------------------- |
-| `ionBlur`           | Emitted when the input loses focus.      |
-| `ionChange`         | Emitted when the value has changed.      |
-| `ionFocus`          | Emitted when the input has focus.        |
-| `ionInput`          | Emitted when a keyboard input ocurred.   |
-| `ionInputDidLoad`   | Emitted when the input has been created. |
-| `ionInputDidUnload` | Emitted when the input has been removed. |
-| `ionStyle`          | Emitted when the styles change.          |
+| Event               | Detail               | Description                              |
+| ------------------- | -------------------- | ---------------------------------------- |
+| `ionBlur`           |                      | Emitted when the input loses focus.      |
+| `ionChange`         | TextInputChangeEvent | Emitted when the value has changed.      |
+| `ionFocus`          |                      | Emitted when the input has focus.        |
+| `ionInput`          | KeyboardEvent        | Emitted when a keyboard input ocurred.   |
+| `ionInputDidLoad`   |                      | Emitted when the input has been created. |
+| `ionInputDidUnload` |                      | Emitted when the input has been removed. |
+| `ionStyle`          | StyleEvent           | Emitted when the styles change.          |
 
 
 ## Methods

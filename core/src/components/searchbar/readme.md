@@ -32,14 +32,14 @@ A Searchbar should be used instead of an input to search lists. A clear button i
 
 ## Events
 
-| Event       | Description                                     |
-| ----------- | ----------------------------------------------- |
-| `ionBlur`   | Emitted when the input loses focus.             |
-| `ionCancel` | Emitted when the cancel button is clicked.      |
-| `ionChange` | Emitted when the value has changed.             |
-| `ionClear`  | Emitted when the clear input button is clicked. |
-| `ionFocus`  | Emitted when the input has focus.               |
-| `ionInput`  | Emitted when a keyboard input ocurred.          |
+| Event       | Detail               | Description                                     |
+| ----------- | -------------------- | ----------------------------------------------- |
+| `ionBlur`   |                      | Emitted when the input loses focus.             |
+| `ionCancel` |                      | Emitted when the cancel button is clicked.      |
+| `ionChange` | TextInputChangeEvent | Emitted when the value has changed.             |
+| `ionClear`  |                      | Emitted when the clear input button is clicked. |
+| `ionFocus`  |                      | Emitted when the input has focus.               |
+| `ionInput`  | KeyboardEvent        | Emitted when a keyboard input ocurred.          |
 
 
 ## Methods
