@@ -26,9 +26,9 @@ Separating the `ion-infinite-scroll` and `ion-infinite-scroll-content` component
 
 ## Events
 
-| Event         | Description                                                                                                                                                                                 |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ionInfinite` | Emitted when the scroll reaches the threshold distance. From within your infinite handler, you must call the infinite scroll's `complete()` method when your async operation has completed. |
+| Event         | Detail | Description                                                                                                                                                                                 |
+| ------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ionInfinite` |        | Emitted when the scroll reaches the threshold distance. From within your infinite handler, you must call the infinite scroll's `complete()` method when your async operation has completed. |
 
 
 ## Methods
