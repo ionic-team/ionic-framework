@@ -6,7 +6,8 @@
   <title>Show When - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
+  <script src="/scripts/screenshot/testing.js"></script>
 </head>
 
 <body>
@@ -21,15 +22,15 @@
     <ion-content padding>
 
       <h2>Mode Tests</h2>
-      <ion-show-when mode="md, ios">
+      <ion-show-when modes="md, ios">
         <div>Shows on MD, iOS</div>
       </ion-show-when>
 
-      <ion-show-when mode="md">
+      <ion-show-when modes="md">
         <div>Shows on MD only</div>
       </ion-show-when>
 
-      <ion-show-when mode="ios">
+      <ion-show-when modes="ios">
         <div>Shows on iOS only</div>
       </ion-show-when>
 

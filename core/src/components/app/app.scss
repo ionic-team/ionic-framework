@@ -1,60 +1,8 @@
-@import "../../themes/ionic.globals";
-@import "../../themes/ionic.mixins";
 
-// Page Container Structure
-// --------------------------------------------------
-
-ion-app,
-ion-router-outlet,
-ion-tab,
-ion-tabs,
-ion-nav,
-.ion-page {
-  @include position(0, 0, 0, 0);
-
-  position: absolute;
-
-  contain: layout size style;
-  overflow: hidden;
-  z-index: $z-index-page-container;
-}
-
-ion-app,
-.ion-page {
-  display: flex;
-
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.ion-page-invisible {
-  opacity: 0;
-}
-
-.ion-page-hidden {
-  /* stylelint-disable-next-line declaration-no-important */
-  display: none !important;
-}
-
-ion-app.is-device {
+html.plt-mobile ion-app {
   user-select: none;
 }
 
-
-// Misc
-// --------------------------------------------------
-
-ion-route,
-ion-route-redirect,
-ion-router,
-ion-animation-controller,
-ion-nav-controller,
-ion-menu-controller,
-ion-action-sheet-controller,
-ion-alert-controller,
-ion-loading-controller,
-ion-modal-controller,
-ion-picker-controller,
-ion-toast-controller {
-  display: none;
+ion-app.force-statusbar-padding {
+  --ion-safe-area-top: 20px;
 }

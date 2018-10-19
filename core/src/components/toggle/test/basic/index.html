@@ -6,7 +6,8 @@
   <title>Toggle - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
+  <script src="/scripts/screenshot/testing.js"></script>
 </head>
 
 <body>
@@ -15,6 +16,9 @@
     <ion-header>
       <ion-toolbar>
         <ion-title>Toggle - Basic</ion-title>
+        <ion-buttons slot="primary">
+          <ion-toggle></ion-toggle>
+        </ion-buttons>
       </ion-toolbar>
     </ion-header>
 
@@ -84,7 +88,7 @@
 
     <script>
       function printForm(ev) {
-        console.log('TODO get working with forms');
+
       }
 
       function toggleBoolean(id, prop) {
@@ -92,7 +96,6 @@
 
         var isTrue = el[prop] ? false : true;
         el[prop] = isTrue;
-        console.log('in toggleBoolean, setting', prop, 'to', isTrue);
       }
     </script>
 

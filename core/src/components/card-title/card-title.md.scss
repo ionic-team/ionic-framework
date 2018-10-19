@@ -5,10 +5,10 @@
 // --------------------------------------------------
 
 :host {
+  --color: #{$card-md-title-text-color};
+
   @include margin($card-md-title-margin-top, $card-md-title-margin-end, $card-md-title-margin-bottom, $card-md-title-margin-start);
   @include padding($card-md-title-padding-top, $card-md-title-padding-end, $card-md-title-padding-bottom, $card-md-title-padding-start);
-
-  color: #{$card-md-title-text-color};
 
   font-size: $card-md-title-font-size;
 

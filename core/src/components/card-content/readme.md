@@ -9,23 +9,9 @@ It is recommended that any text content for a card should be placed in an `ion-c
 
 ## Properties
 
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
-
-## Attributes
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
+| Property | Attribute | Description                                                                               | Type            |
+| -------- | --------- | ----------------------------------------------------------------------------------------- | --------------- |
+| `mode`   | `mode`    | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. | `"ios" \| "md"` |
 
 
 ----------------------------------------------

@@ -19,13 +19,15 @@
 }
 
 :host(.fab-horizontal-start) {
-  @include position-horizontal($fab-content-margin, null);
-  @include safe-position-horizontal($fab-content-margin, null);
+  @include position-horizontal(
+    calc(#{$fab-content-margin} + var(--ion-safe-area-left, 0px)), null
+  );
 }
 
 :host(.fab-horizontal-end) {
-  @include position-horizontal(null, $fab-content-margin);
-  @include safe-position-horizontal(null, $fab-content-margin);
+  @include position-horizontal(
+    null, calc(#{$fab-content-margin} + var(--ion-safe-area-right, 0px))
+  );
 }
 
 
@@ -34,19 +36,21 @@
 
 :host(.fab-vertical-top) {
   top: $fab-content-margin;
-
-  &.fab-edge {
-    top: -$fab-size / 2;
-  }
 }
+
+:host(.fab-vertical-top.fab-edge) {
+  top: -$fab-size / 2;
+}
+
 
 :host(.fab-vertical-bottom) {
   bottom: $fab-content-margin;
-
-  &.fab-edge {
-    bottom: -$fab-size / 2;
-  }
 }
+
+:host(.fab-vertical-bottom.fab-edge) {
+  bottom: -$fab-size / 2;
+}
+
 
 :host(.fab-vertical-center) {
   @include margin(-$fab-size / 2, null, null, null);

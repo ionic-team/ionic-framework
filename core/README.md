@@ -18,9 +18,14 @@ The Ionic Core package contains the Web Components that make up the reusable UI 
 
 ## How to use
 
+### Vanilla HTML
+
 Easiest way to start using Ionic Core is by adding a script tag to the CDN:
 
-    <script src="https://unpkg.com/@ionic/core@4.0.0-beta.1/dist/ionic.js"></script>
+```html
+<link href="https://unpkg.com/@ionic/core@4.0.0-beta.13/css/ionic.bundle.css" rel="stylesheet">
+<script src="https://unpkg.com/@ionic/core@4.0.0-beta.13/dist/ionic.js"></script>
+```
 
 Any Ionic component added to the webpage will automatically load. This includes writing the component tag directly in HTML, or using JavaScript such as `document.createElement('ion-toggle')`.
 
@@ -33,6 +38,10 @@ The `@ionic/core` package can by used in simple HTML, or by vanilla JavaScript w
 
 * [@ionic/angular](https://www.npmjs.com/package/@ionic/angular)
 
+
+## How to contribute
+
+[Check out the CONTRIBUTE guide](CONTRIBUTING.md)
 
 ## Related
 

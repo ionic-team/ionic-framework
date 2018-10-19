@@ -26,20 +26,19 @@ export function startInputShims(
 
   function registerInput(componentEl: HTMLElement) {
     const inputEl = (componentEl.shadowRoot || componentEl).querySelector('input');
-    const contentEl = componentEl.closest('ion-content');
-    const scrollEl = contentEl && contentEl.getScrollElement();
+    const scrollEl = componentEl.closest('ion-content');
 
     if (!inputEl) {
       return;
     }
 
-    if (HIDE_CARET && scrollEl && hideCaret && !hideCaretMap.has(componentEl)) {
+    if (HIDE_CARET && !!scrollEl && hideCaret && !hideCaretMap.has(componentEl)) {
       const rmFn = enableHideCaretOnScroll(componentEl, inputEl, scrollEl);
       hideCaretMap.set(componentEl, rmFn);
     }
 
-    if (SCROLL_ASSIST && contentEl && scrollAssist && !scrollAssistMap.has(componentEl)) {
-      const rmFn = enableScrollAssist(componentEl, inputEl, contentEl, keyboardHeight);
+    if (SCROLL_ASSIST && !!scrollEl && scrollAssist && !scrollAssistMap.has(componentEl)) {
+      const rmFn = enableScrollAssist(componentEl, inputEl, scrollEl, keyboardHeight);
       scrollAssistMap.set(componentEl, rmFn);
     }
   }

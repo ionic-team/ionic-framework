@@ -1,11 +1,10 @@
 @import "./menu-button";
-@import "./menu-button.md.vars";
 
 // MD Menu Button
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: currentColor;
+  --color: currentColor;
 }
 
 button {

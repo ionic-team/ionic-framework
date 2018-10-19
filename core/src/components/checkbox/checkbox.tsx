@@ -1,6 +1,6 @@
-import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
-import { CheckboxInput, CheckedInputChangeEvent, Color, Mode, StyleEvent } from '../../interface';
+import { CheckedInputChangeEvent, Color, Mode, StyleEvent } from '../../interface';
 import { deferEvent, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -12,7 +12,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   },
   shadow: true
 })
-export class Checkbox implements CheckboxInput {
+export class Checkbox implements ComponentInterface {
 
   private inputId = `ion-cb-${checkboxIds++}`;
   private labelId = `${this.inputId}-lbl`;
@@ -40,12 +40,12 @@ export class Checkbox implements CheckboxInput {
   @Prop() name: string = this.inputId;
 
   /**
-   * If true, the checkbox is selected. Defaults to `false`.
+   * If `true`, the checkbox is selected. Defaults to `false`.
    */
   @Prop({ mutable: true }) checked = false;
 
   /**
-   * If true, the user cannot interact with the checkbox. Defaults to `false`.
+   * If `true`, the user cannot interact with the checkbox. Defaults to `false`.
    */
   @Prop() disabled = false;
 
@@ -99,19 +99,19 @@ export class Checkbox implements CheckboxInput {
     });
   }
 
-  onChange() {
+  private onChange = () => {
     this.checked = !this.checked;
   }
 
-  onKeyUp() {
+  private onKeyUp = () => {
     this.keyFocus = true;
   }
 
-  onFocus() {
+  private onFocus = () => {
     this.ionFocus.emit();
   }
 
-  onBlur() {
+  private onBlur = () => {
     this.keyFocus = false;
     this.ionBlur.emit();
   }
@@ -120,7 +120,7 @@ export class Checkbox implements CheckboxInput {
     return {
       class: {
         ...createColorClasses(this.color),
-        'in-item': hostContext('.item', this.el),
+        'in-item': hostContext('ion-item', this.el),
         'checkbox-checked': this.checked,
         'checkbox-disabled': this.disabled,
         'checkbox-key': this.keyFocus,
@@ -140,14 +140,15 @@ export class Checkbox implements CheckboxInput {
         type="checkbox"
         id={this.inputId}
         aria-labelledby={this.labelId}
-        onChange={this.onChange.bind(this)}
-        onFocus={this.onFocus.bind(this)}
-        onBlur={this.onBlur.bind(this)}
-        onKeyUp={this.onKeyUp.bind(this)}
+        onChange={this.onChange}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+        onKeyUp={this.onKeyUp}
         checked={this.checked}
         name={this.name}
         value={this.value}
-        disabled={this.disabled} />
+        disabled={this.disabled}
+      />
     ];
   }
 }

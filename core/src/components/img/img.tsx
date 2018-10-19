@@ -1,11 +1,11 @@
-import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
 @Component({
   tag: 'ion-img',
   styleUrl: 'img.scss',
   shadow: true
 })
-export class Img {
+export class Img implements ComponentInterface {
 
   private io?: IntersectionObserver;
 
@@ -37,7 +37,7 @@ export class Img {
   }
 
   private addIO() {
-    if (!this.src) {
+    if (this.src === undefined) {
       return;
     }
     if ('IntersectionObserver' in window) {
@@ -72,7 +72,8 @@ export class Img {
       <img
         src={this.loadSrc}
         alt={this.alt}
-        decoding="async"></img>
+        decoding="async"
+      />
     );
   }
 }

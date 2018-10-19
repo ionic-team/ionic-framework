@@ -1,6 +1,6 @@
 import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, Input, OnDestroy, OnInit, Optional, Output, ViewContainerRef } from '@angular/core';
-import { ActivatedRoute, ChildrenOutletContexts, PRIMARY_OUTLET, Router } from '@angular/router';
-import { StackController } from './router-controller';
+import { ActivatedRoute, ChildrenOutletContexts, OutletContext, PRIMARY_OUTLET, Router } from '@angular/router';
+import { RouteView, StackController } from './router-controller';
 import { NavController } from '../../providers/nav-controller';
 import { bindLifecycleEvents } from '../../providers/angular-delegate';
 
@@ -11,6 +11,7 @@ import { bindLifecycleEvents } from '../../providers/angular-delegate';
 export class IonRouterOutlet implements OnDestroy, OnInit {
 
   private activated: ComponentRef<any> | null = null;
+  private activatedView: RouteView | null = null;
 
   private _activatedRoute: ActivatedRoute | null = null;
   private name: string;
@@ -42,22 +43,21 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   }
 
   ngOnDestroy(): void {
+    console.log('router-outlet destroyed');
     this.parentContexts.onChildOutletDestroyed(this.name);
+  }
+
+  getContext(): OutletContext | null {
+    return this.parentContexts.getContext(this.name);
   }
 
   ngOnInit(): void {
     if (!this.activated) {
       // If the outlet was not instantiated at the time the route got activated we need to populate
       // the outlet when it is initialized (ie inside a NgIf)
-      const context = this.parentContexts.getContext(this.name);
+      const context = this.getContext();
       if (context && context.route) {
-        if (context.attachRef) {
-          // `attachRef` is populated when there is an existing component to mount
-          this.attach(context.attachRef, context.route);
-        } else {
-          // otherwise the component defined in the configuration is created
-          this.activateWith(context.route, context.resolver || null);
-        }
+        this.activateWith(context.route, context.resolver || null);
       }
     }
   }
@@ -89,43 +89,45 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
    * Called when the `RouteReuseStrategy` instructs to detach the subtree
    */
   detach(): ComponentRef<any> {
-    if (!this.activated) {
-      throw new Error('Outlet is not activated');
-    }
-    this.location.detach();
-    const cmp = this.activated;
-    this.activated = null;
-    this._activatedRoute = null;
-    return cmp;
+    throw new Error('incompatible reuse strategy');
   }
 
   /**
    * Called when the `RouteReuseStrategy` instructs to re-attach a previously detached subtree
    */
-  attach(ref: ComponentRef<any>, activatedRoute: ActivatedRoute) {
-    this.activated = ref;
-    this._activatedRoute = activatedRoute;
-    this.location.insert(ref.hostView);
+  attach(_ref: ComponentRef<any>, _activatedRoute: ActivatedRoute) {
+    throw new Error('incompatible reuse strategy');
   }
 
   deactivate(): void {
     if (this.activated) {
+      if (this.activatedView) {
+        this.activatedView.savedData = new Map(this.getContext()!.children['contexts']);
+      }
       const c = this.component;
+      this.activatedView = null;
       this.activated = null;
       this._activatedRoute = null;
       this.deactivateEvents.emit(c);
     }
   }
 
-  async activateWith(activatedRoute: ActivatedRoute, resolver: ComponentFactoryResolver | null) {
+  activateWith(activatedRoute: ActivatedRoute, resolver: ComponentFactoryResolver | null) {
     if (this.isActivated) {
       throw new Error('Cannot activate an already activated outlet');
     }
     this._activatedRoute = activatedRoute;
 
+    let cmpRef: any;
     let enteringView = this.stackCtrl.getExistingView(activatedRoute);
     if (enteringView) {
-      this.activated = enteringView.ref;
+      cmpRef = this.activated = enteringView.ref;
+      const saved = enteringView.savedData;
+      if (saved) {
+        // self-restore
+        const context = this.getContext()!;
+        context.children['contexts'] = saved;
+      }
     } else {
       const snapshot = (activatedRoute as any)._futureSnapshot;
       const component = snapshot.routeConfig!.component as any;
@@ -135,9 +137,9 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       const childContexts = this.parentContexts.getOrCreateContext(this.name).children;
 
       const injector = new OutletInjector(activatedRoute, childContexts, this.location.injector);
-      const cmp = this.activated = this.location.createComponent(factory, this.location.length, injector);
+      cmpRef = this.activated = this.location.createComponent(factory, this.location.length, injector);
 
-      bindLifecycleEvents(cmp.instance, cmp.location.nativeElement);
+      bindLifecycleEvents(cmpRef.instance, cmpRef.location.nativeElement);
 
       // Calling `markForCheck` to make sure we will run the change detection when the
       // `RouterOutlet` is inside a `ChangeDetectionStrategy.OnPush` component.
@@ -146,10 +148,12 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     }
 
     const { direction, animated } = this.navCtrl.consumeTransition();
-    await this.stackCtrl.setActive(enteringView, direction, animated);
-    this.activateEvents.emit(this.activated.instance);
+    this.activatedView = enteringView;
+    this.stackCtrl.setActive(enteringView, direction, animated).then(() => {
+      this.activateEvents.emit(cmpRef.instance);
+      emitEvent(this.elementRef.nativeElement);
+    });
 
-    emitEvent(this.elementRef.nativeElement);
   }
 
   canGoBack(deep = 1) {
@@ -162,11 +166,11 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 }
 
 function emitEvent(el: HTMLElement) {
-  const event = new CustomEvent('ionRouterOutletActivated', {
+  const ev = new CustomEvent('ionRouterOutletActivated', {
     bubbles: true,
     cancelable: true,
   });
-  el.dispatchEvent(event);
+  el.dispatchEvent(ev);
 }
 
 class OutletInjector implements Injector {

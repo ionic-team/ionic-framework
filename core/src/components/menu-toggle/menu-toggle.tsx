@@ -1,42 +1,47 @@
-import { Component, Listen, Prop, State } from '@stencil/core';
+import { Component, ComponentInterface, Listen, Prop, State } from '@stencil/core';
 
 @Component({
   tag: 'ion-menu-toggle',
   styleUrl: 'menu-toggle.scss',
   shadow: true
 })
-export class MenuToggle {
-  @Prop({ context: 'document' })
-  doc!: Document;
+export class MenuToggle implements ComponentInterface {
+
+  @Prop({ context: 'document' }) doc!: Document;
 
   @State() visible = false;
 
   /**
    * Optional property that maps to a Menu's `menuId` prop.
-   * Can also be `left` or `right` for the menu side.
-   * This is used to find the correct menu to toggle
+   * Can also be `start` or `end` for the menu side.
+   * This is used to find the correct menu to toggle.
+   *
+   * If this property is not used, `ion-menu-toggle` will toggle the
+   * first menu that is active.
    */
   @Prop() menu?: string;
 
   /**
-   * Automatically hides the content when the corresponding menu is not active
+   * Automatically hides the content when the corresponding menu is not active.
+   *
+   * By default, it's `true`. Change it to `false` in order to
+   * keep `ion-menu-toggle` always visible regardless the state of the menu.
    */
   @Prop() autoHide = true;
 
   componentDidLoad() {
-    this.updateVisibility();
+    return this.updateVisibility();
   }
 
   @Listen('click')
   async onClick() {
     const menuCtrl = await getMenuController(this.doc);
     if (menuCtrl) {
-      const menu = menuCtrl.get(this.menu);
-      if (menu && menu.isActive()) {
-        return menuCtrl.toggle(this.menu);
+      const menu = await menuCtrl.get(this.menu);
+      if (menu) {
+        menuCtrl.toggle(this.menu);
       }
     }
-    return false;
   }
 
   @Listen('body:ionMenuChange')
@@ -44,8 +49,8 @@ export class MenuToggle {
   async updateVisibility() {
     const menuCtrl = await getMenuController(this.doc);
     if (menuCtrl) {
-      const menu = menuCtrl.get(this.menu);
-      if (menu && menu.isActive()) {
+      const menu = await menuCtrl.get(this.menu);
+      if (menu && await menu.isActive()) {
         this.visible = true;
         return;
       }

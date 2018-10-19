@@ -3,9 +3,6 @@
 // iOS Item
 // --------------------------------------------------
 
-/// @prop - Font family of the item
-$item-ios-font-family:                       $font-family-base !default;
-
 /// @prop - Font size of the item
 $item-ios-font-size:                         17px !default;
 
@@ -40,7 +37,7 @@ $item-ios-thumbnail-width:                   56px !default;
 $item-ios-thumbnail-height:                  $item-ios-thumbnail-width !default;
 
 /// @prop - Color of the detail arrow icon
-$item-ios-detail-push-color:                 $item-ios-border-color !default;
+$item-ios-detail-icon-color:                 $item-ios-border-color !default;
 
 /// @prop - Padding top for the item content
 $item-ios-padding-top:                       10px !default;
@@ -65,6 +62,15 @@ $item-ios-border-bottom-color:               $item-ios-border-color !default;
 
 /// @prop - Border bottom for the item
 $item-ios-border-bottom:                     $item-ios-border-bottom-width $item-ios-border-bottom-style $item-ios-border-bottom-color !default;
+
+/// @prop - Color of the item input highlight
+$item-ios-input-highlight-color:             ion-color(primary, base) !default;
+
+/// @prop - Color of the item input highlight when valid
+$item-ios-input-highlight-color-valid:       ion-color(success, base) !default;
+
+/// @prop - Color of the item input highlight when invalid
+$item-ios-input-highlight-color-invalid:     ion-color(danger, base) !default;
 
 
 // Item Slots

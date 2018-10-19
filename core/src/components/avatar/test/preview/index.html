@@ -6,7 +6,8 @@
   <title>Avatar</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
+  <script src="/scripts/screenshot/testing.js"></script>
 </head>
 
 <body>
@@ -18,21 +19,21 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content fullscreen>
+    <ion-content fullscreen padding>
       <ion-avatar>
-        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+        <img src="/src/components/avatar/test/avatar.svg">
       </ion-avatar>
 
       <ion-chip>
         <ion-avatar>
-          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+          <img src="/src/components/avatar/test/avatar.svg">
         </ion-avatar>
         <ion-label>Chip Avatar</ion-label>
       </ion-chip>
 
       <ion-item>
         <ion-avatar slot="start">
-          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+          <img src="/src/components/avatar/test/avatar.svg">
         </ion-avatar>
         <ion-label>Item Avatar</ion-label>
       </ion-item>

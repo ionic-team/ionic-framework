@@ -13,148 +13,119 @@ These can be controlled from the templates, or programmatically using the MenuCo
 
 ## Properties
 
-#### contentId
-
-string
-
-The content's id the menu should use.
-
-
-#### disabled
-
-boolean
-
-If true, the menu is disabled. Default `false`.
-
-
-#### maxEdgeStart
-
-number
-
-The edge threshold for dragging the menu open.
-If a drag/swipe happens over this value, the menu is not triggered.
-
-
-#### menuId
-
-string
-
-An id for the menu.
-
-
-#### side
-
-string
-
-Which side of the view the menu should be placed. Default `"start"`.
-
-
-#### swipeEnabled
-
-boolean
-
-If true, swiping the menu is enabled. Default `true`.
-
-
-#### type
-
-string
-
-The display type of the menu.
-Available options: `"overlay"`, `"reveal"`, `"push"`.
-
-
-## Attributes
-
-#### content-id
-
-string
-
-The content's id the menu should use.
-
-
-#### disabled
-
-boolean
-
-If true, the menu is disabled. Default `false`.
-
-
-#### max-edge-start
-
-number
-
-The edge threshold for dragging the menu open.
-If a drag/swipe happens over this value, the menu is not triggered.
-
-
-#### menu-id
-
-string
-
-An id for the menu.
-
-
-#### side
-
-string
-
-Which side of the view the menu should be placed. Default `"start"`.
-
-
-#### swipe-enabled
-
-boolean
-
-If true, swiping the menu is enabled. Default `true`.
-
-
-#### type
-
-string
-
-The display type of the menu.
-Available options: `"overlay"`, `"reveal"`, `"push"`.
+| Property       | Attribute        | Description                                                                                                        | Type                  |
+| -------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------ | --------------------- |
+| `contentId`    | `content-id`     | The content's id the menu should use.                                                                              | `string \| undefined` |
+| `disabled`     | `disabled`       | If `true`, the menu is disabled. Default `false`.                                                                  | `boolean`             |
+| `maxEdgeStart` | `max-edge-start` | The edge threshold for dragging the menu open. If a drag/swipe happens over this value, the menu is not triggered. | `number`              |
+| `menuId`       | `menu-id`        | An id for the menu.                                                                                                | `string \| undefined` |
+| `side`         | `side`           | Which side of the view the menu should be placed. Default `"start"`.                                               | `"end" \| "start"`    |
+| `swipeGesture` | `swipe-gesture`  | If `true`, swiping the menu is enabled. Default `true`.                                                            | `boolean`             |
+| `type`         | `type`           | The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.                                | `string`              |
 
 
 ## Events
 
-#### ionClose
-
-Emitted when the menu is closed.
-
-
-#### ionMenuChange
-
-Emitted when the menu state is changed.
-
-
-#### ionOpen
-
-Emitted when the menu is open.
+| Event          | Description                                  |
+| -------------- | -------------------------------------------- |
+| `ionDidClose`  | Emitted when the menu is closed.             |
+| `ionDidOpen`   | Emitted when the menu is open.               |
+| `ionWillClose` | Emitted when the menu is about to be closed. |
+| `ionWillOpen`  | Emitted when the menu is about to be opened. |
 
 
 ## Methods
 
-#### close()
+### `close(animated?: boolean) => Promise<boolean>`
+
+Closes the menu. If the menu is already closed or it can't be closed,
+it returns `false`.
+
+#### Parameters
+
+| Name       | Type      | Description |
+| ---------- | --------- | ----------- |
+| `animated` | `boolean` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
 
 
-#### getWidth()
+
+### `isActive() => Promise<boolean>`
+
+Returns `true` is the menu is active.
+
+A menu is active when it can be opened or closed, meaning it's enabled
+and it's not part of a `ion-split-pane`.
+
+#### Returns
+
+Type: `Promise<boolean>`
 
 
-#### isActive()
+
+### `isOpen() => Promise<boolean>`
+
+Returns `true` is the menu is open.
+
+#### Returns
+
+Type: `Promise<boolean>`
 
 
-#### isOpen()
+
+### `open(animated?: boolean) => Promise<boolean>`
+
+Opens the menu. If the menu is already open or it can't be opened,
+it returns `false`.
+
+#### Parameters
+
+| Name       | Type      | Description |
+| ---------- | --------- | ----------- |
+| `animated` | `boolean` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
 
 
-#### open()
+
+### `setOpen(shouldOpen: boolean, animated?: boolean) => Promise<boolean>`
+
+Opens or closes the button.
+If the operation can't be completed successfully, it returns `false`.
+
+#### Parameters
+
+| Name         | Type      | Description |
+| ------------ | --------- | ----------- |
+| `shouldOpen` | `boolean` |             |
+| `animated`   | `boolean` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
 
 
-#### setOpen()
 
+### `toggle(animated?: boolean) => Promise<boolean>`
 
-#### toggle()
+Toggles the menu. If the menu is already open, it will try to close, otherwise it will try to open it.
+If the operation can't be completed successfully, it returns `false`.
+
+#### Parameters
+
+| Name       | Type      | Description |
+| ---------- | --------- | ----------- |
+| `animated` | `boolean` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
 
 
 

@@ -4,7 +4,10 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{ion-color(primary, base)};
+  /**
+   * @prop --color: Color of the radio
+   * @prop --color-checked: Color of the checked radio
+   */
 
   display: inline-block;
   position: relative;
@@ -13,14 +16,26 @@
   user-select: none;
 }
 
+:host(.radio-disabled) {
+  pointer-events: none;
+}
+
+
 .radio-icon {
-  display: block;
-  position: relative;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
 
   width: var(--width);
   height: var(--height);
 
   contain: layout size style;
+}
+
+.radio-inner {
+  width: var(--inner-width);
+  height: var(--inner-height);
 }
 
 input {

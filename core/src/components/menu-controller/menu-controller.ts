@@ -1,19 +1,22 @@
 import { Build, Component, Method, Prop } from '@stencil/core';
 
-import { Animation, AnimationBuilder, Menu } from '../../interface';
+import { Animation, AnimationBuilder, MenuControllerI, MenuI } from '../../interface';
 
 import { menuOverlayAnimation } from './animations/overlay';
 import { menuPushAnimation } from './animations/push';
 import { menuRevealAnimation } from './animations/reveal';
 
 @Component({
-  tag: 'ion-menu-controller'
+  tag: 'ion-menu-controller',
+  styleUrl: 'menu-controller.scss'
 })
-export class MenuController {
-  private menus: Menu[] = [];
+export class MenuController implements MenuControllerI {
+
+  private menus: MenuI[] = [];
   private menuAnimations = new Map<string, AnimationBuilder>();
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
+  @Prop({ context: 'document' }) doc!: Document;
 
   constructor() {
     this.registerAnimation('reveal', menuRevealAnimation);
@@ -25,12 +28,12 @@ export class MenuController {
    * Open the menu.
    */
   @Method()
-  open(menuId?: string): Promise<boolean> {
-    const menu = this.get(menuId);
+  async open(menuId?: string | null): Promise<boolean> {
+    const menu = await this.get(menuId);
     if (menu) {
       return menu.open();
     }
-    return Promise.resolve(false);
+    return false;
   }
 
   /**
@@ -38,12 +41,12 @@ export class MenuController {
    * that is open. If a menu is specified, it will close that menu.
    */
   @Method()
-  close(menuId?: string): Promise<boolean> {
-    const menu = menuId ? this.get(menuId) : this.getOpen();
-    if (menu) {
+  async close(menuId?: string | null): Promise<boolean> {
+    const menu = await (menuId !== undefined ? this.get(menuId) : this.getOpen());
+    if (menu !== undefined) {
       return menu.close();
     }
-    return Promise.resolve(false);
+    return false;
   }
 
   /**
@@ -51,12 +54,12 @@ export class MenuController {
    * will close.
    */
   @Method()
-  toggle(menuId?: string): Promise<boolean> {
-    const menu = this.get(menuId);
+  async toggle(menuId?: string | null): Promise<boolean> {
+    const menu = await this.get(menuId);
     if (menu) {
       return menu.toggle();
     }
-    return Promise.resolve(false);
+    return false;
   }
 
   /**
@@ -66,8 +69,8 @@ export class MenuController {
    * will also automatically disable all the others that are on the same side.
    */
   @Method()
-  enable(shouldEnable: boolean, menuId?: string): HTMLIonMenuElement | null {
-    const menu = this.get(menuId);
+  async enable(shouldEnable: boolean, menuId?: string | null): Promise<HTMLIonMenuElement | undefined> {
+    const menu = await this.get(menuId);
     if (menu) {
       menu.disabled = !shouldEnable;
     }
@@ -78,33 +81,35 @@ export class MenuController {
    * Used to enable or disable the ability to swipe open the menu.
    */
   @Method()
-  swipeEnable(shouldEnable: boolean, menuId?: string): HTMLIonMenuElement | null {
-    const menu = this.get(menuId);
+  async swipeGesture(shouldEnable: boolean, menuId?: string | null): Promise<HTMLIonMenuElement | undefined> {
+    const menu = await this.get(menuId);
     if (menu) {
-      menu.swipeEnabled = shouldEnable;
+      menu.swipeGesture = shouldEnable;
     }
     return menu;
   }
 
   /**
-   * Returns true if the specified menu is open. If the menu is not specified, it
-   * will return true if any menu is currently open.
+   * Returns `true` if the specified menu is open. If the menu is not specified, it
+   * will return `true` if any menu is currently open.
    */
   @Method()
-  isOpen(menuId?: string): boolean {
-    if (menuId) {
-      const menu = this.get(menuId);
-      return (menu && menu.isOpen()) || false;
+  async isOpen(menuId?: string | null): Promise<boolean> {
+    if (menuId != null) {
+      const menu = await this.get(menuId);
+      return (menu !== undefined && menu.isOpen());
+    } else {
+      const menu = await this.getOpen();
+      return menu !== undefined;
     }
-    return !!this.getOpen();
   }
 
   /**
-   * Returns true if the specified menu is enabled.
+   * Returns `true` if the specified menu is enabled.
    */
   @Method()
-  isEnabled(menuId?: string): boolean {
-    const menu = this.get(menuId);
+  async isEnabled(menuId?: string | null): Promise<boolean> {
+    const menu = await this.get(menuId);
     if (menu) {
       return !menu.disabled;
     }
@@ -113,23 +118,25 @@ export class MenuController {
 
   /**
    * Used to get a menu instance. If a menu is not provided then it will
-   * return the first menu found. If the specified menu is `left` or `right`, then
+   * return the first menu found. If the specified menu is `start` or `end`, then
    * it will return the enabled menu on that side. Otherwise, it will try to find
    * the menu using the menu's `id` property. If a menu is not found then it will
    * return `null`.
    */
   @Method()
-  get(menuId?: string): HTMLIonMenuElement | null {
+  async get(menuId?: string | null): Promise<HTMLIonMenuElement | undefined> {
     if (Build.isDev) {
       if (menuId === 'left') {
         console.error('menu.side=left is deprecated, use "start" instead');
-        return null;
+        return undefined;
       }
       if (menuId === 'right') {
         console.error('menu.side=right is deprecated, use "end" instead');
-        return null;
+        return undefined;
       }
     }
+    await this.waitUntilReady();
+
     if (menuId === 'start' || menuId === 'end') {
       // there could be more than one menu on the same side
       // so first try to get the enabled one
@@ -140,11 +147,12 @@ export class MenuController {
 
       // didn't find a menu side that is enabled
       // so try to get the first menu side found
-      return this.find(m => m.side === menuId) || null;
-    } else if (menuId) {
+      return this.find(m => m.side === menuId);
+
+    } else if (menuId != null) {
       // the menuId was not left or right
       // so try to get the menu by its "id"
-      return this.find(m => m.menuId === menuId) || null;
+      return this.find(m => m.menuId === menuId);
     }
 
     // return the first enabled menu
@@ -154,75 +162,94 @@ export class MenuController {
     }
 
     // get the first menu in the array, if one exists
-    return this.menus.length > 0 ? this.menus[0].el : null;
+    return this.menus.length > 0 ? this.menus[0].el : undefined;
   }
 
   /**
    * Returns the instance of the menu already opened, otherwise `null`.
    */
   @Method()
-  getOpen(): HTMLIonMenuElement | null {
-    return this.find(m => m.isOpen());
+  async getOpen(): Promise<HTMLIonMenuElement | undefined> {
+    await this.waitUntilReady();
+    return this.getOpenSync();
   }
 
   /**
    * Returns an array of all menu instances.
    */
   @Method()
-  getMenus(): HTMLIonMenuElement[] {
-    return this.menus.map(menu => menu.el);
+  async getMenus(): Promise<HTMLIonMenuElement[]> {
+    await this.waitUntilReady();
+    return this.getMenusSync();
   }
 
   /**
-   * Returns true if any menu is currently animating.
+   * Returns `true` if any menu is currently animating.
    */
   @Method()
-  isAnimating(): boolean {
-    return this.menus.some(menu => menu.isAnimating);
+  async isAnimating(): Promise<boolean> {
+    await this.waitUntilReady();
+    return this.isAnimatingSync();
+  }
+
+  /**
+   * Registers a new animation that can be used in any `ion-menu`.
+   *
+   * ```
+   * <ion-menu type="my-animation">
+   * ```
+   */
+  @Method()
+  registerAnimation(name: string, animation: AnimationBuilder) {
+    this.menuAnimations.set(name, animation);
   }
 
   @Method()
-  _register(menu: Menu) {
-    if (this.menus.indexOf(menu) < 0) {
-      this.menus.push(menu);
+  _getInstance(): Promise<MenuControllerI> {
+    return Promise.resolve(this);
+  }
+
+  _register(menu: MenuI) {
+    const menus = this.menus;
+    if (menus.indexOf(menu) < 0) {
+      if (!menu.disabled) {
+        this._setActiveMenu(menu);
+      }
+      menus.push(menu);
     }
   }
 
-  @Method()
-  _unregister(menu: Menu) {
+  _unregister(menu: MenuI) {
     const index = this.menus.indexOf(menu);
     if (index > -1) {
       this.menus.splice(index, 1);
     }
   }
 
-  @Method()
-  _setActiveMenu(menu: Menu) {
+  _setActiveMenu(menu: MenuI) {
     // if this menu should be enabled
     // then find all the other menus on this same side
     // and automatically disable other same side menus
     const side = menu.side;
     this.menus
       .filter(m => m.side === side && m !== menu)
-      .forEach(m => (m.disabled = true));
+      .forEach(m => m.disabled = true);
   }
 
-  @Method()
-  _setOpen(menu: Menu, shouldOpen: boolean, animated: boolean): Promise<boolean> {
-    if (this.isAnimating()) {
-      return Promise.resolve(false);
+  async _setOpen(menu: MenuI, shouldOpen: boolean, animated: boolean): Promise<boolean> {
+    if (this.isAnimatingSync()) {
+      return false;
     }
     if (shouldOpen) {
-      const openedMenu = this.getOpen();
+      const openedMenu = await this.getOpen();
       if (openedMenu && menu.el !== openedMenu) {
-        openedMenu.setOpen(false, false);
+        await openedMenu.setOpen(false, false);
       }
     }
     return menu._setOpen(shouldOpen, animated);
   }
 
-  @Method()
-  createAnimation(type: string, menuCmp: Menu): Promise<Animation> {
+  _createAnimation(type: string, menuCmp: MenuI): Promise<Animation> {
     const animationBuilder = this.menuAnimations.get(type);
     if (!animationBuilder) {
       return Promise.reject('animation not registered');
@@ -230,18 +257,30 @@ export class MenuController {
     return this.animationCtrl.create(animationBuilder, null, menuCmp);
   }
 
-  @Method()
-  registerAnimation(name: string, animation: AnimationBuilder) {
-    this.menuAnimations.set(name, animation);
+  getOpenSync(): HTMLIonMenuElement | undefined {
+    return this.find(m => m._isOpen);
   }
 
-  private find(predicate: (menu: Menu) => boolean): HTMLIonMenuElement | null {
+  getMenusSync(): HTMLIonMenuElement[] {
+    return this.menus.map(menu => menu.el);
+  }
+
+  isAnimatingSync(): boolean {
+    return this.menus.some(menu => menu.isAnimating);
+  }
+
+  private find(predicate: (menu: MenuI) => boolean): HTMLIonMenuElement | undefined {
     const instance = this.menus.find(predicate);
-    if (instance) {
+    if (instance !== undefined) {
       return instance.el;
     }
-    return null;
+    return undefined;
+  }
+
+  private waitUntilReady() {
+    return Promise.all(
+      Array.from(this.doc.querySelectorAll('ion-menu'))
+        .map(menu => menu.componentOnReady())
+    );
   }
 }
-
-export { menuOverlayAnimation, menuPushAnimation, menuRevealAnimation };

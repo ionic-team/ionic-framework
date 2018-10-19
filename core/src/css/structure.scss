@@ -45,12 +45,7 @@ body {
 
   word-wrap: break-word;
 
-  overscroll-behavior-y: contain;
+  overscroll-behavior-y: none;
 
   text-size-adjust: none;
-}
-
-[hidden] {
-  /* stylelint-disable-next-line declaration-no-important */
-  display: none !important;
 }

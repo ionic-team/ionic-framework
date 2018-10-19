@@ -18,9 +18,8 @@ let readmeContent = fs.readFileSync(readmePath, 'utf-8');
 // https://unpkg.com/@ionic/core@latest/dist/ionic.js
 
 readmeContent = readmeContent.replace(
-  /https\:\/\/unpkg.com\/@ionic\/core@(.+?)\/dist\/ionic\.js/,
-  'https://unpkg.com/@ionic/core@' + version + '/dist/ionic.js'
+  /https\:\/\/unpkg.com\/@ionic\/core@(.+?)\//g,
+  'https://unpkg.com/@ionic/core@' + version + '/'
 );
 
-fs
 fs.writeFileSync(readmePath, readmeContent);

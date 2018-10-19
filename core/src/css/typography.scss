@@ -30,17 +30,8 @@ $h5-font-size:                 calc(#{$h1-font-size} - #{$h-step} * 4) !default;
 /// @prop - Font size of heading level 6
 $h6-font-size:                 calc(#{$h1-font-size} - #{$h-step} * 5) !default;
 
-
-:root[mode=ios] {
-  --ion-font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif;
-
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif;
-}
-
-:root[mode=md] {
-  --ion-font-family: "Roboto", "Helvetica Neue", sans-serif;
-
-  font-family: "Roboto", "Helvetica Neue", sans-serif;
+html {
+  font-family: var(--ion-font-family);
 }
 
 a {

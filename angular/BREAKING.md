@@ -22,6 +22,7 @@ A list of the breaking changes introduced to each component in Ionic Angular v4.
 - [Button](#button)
 - [Chip](#chip)
 - [Colors](#colors)
+- [Content](#content)
 - [Datetime](#datetime)
 - [Dynamic Mode](#dynamic-mode)
 - [FAB](#fab)
@@ -35,6 +36,8 @@ A list of the breaking changes introduced to each component in Ionic Angular v4.
 - [Item Sliding](#item-sliding)
 - [Label](#label)
 - [List Header](#list-header)
+- [Loading](#loading)
+- [Menu](#menu)
 - [Menu Toggle](#menu-toggle)
 - [Modal](#modal)
 - [Nav](#nav)
@@ -44,6 +47,7 @@ A list of the breaking changes introduced to each component in Ionic Angular v4.
 - [Radio](#radio)
 - [Range](#range)
 - [Refresher](#refresher)
+- [Scroll](#scroll)
 - [Segment](#segment)
 - [Select](#select)
 - [Spinner](#spinner)
@@ -55,14 +59,15 @@ A list of the breaking changes introduced to each component in Ionic Angular v4.
 
 ## Action Sheet
 
-The `title` and `subTitle` properties has been renamed to `header` and `subHeader` respectively.
+The `title`, `subTitle` and `enableBackdropDismiss` properties has been renamed to `header`, `subHeader` and `backdropDismiss` respectively.
 
 **Old Usage Example:**
 
 ```js
 const actionSheet = await actionSheetCtrl.create({
   title: 'This is the title',
-  subTitle: 'this is the sub title'
+  subTitle: 'this is the sub title',
+  enableBackdropDismiss: false
 });
 await actionSheet.present();
 ```
@@ -72,7 +77,8 @@ await actionSheet.present();
 ```js
 const actionSheet = await actionSheetCtrl.create({
   header: 'This is the title',
-  subHeader: 'this is the sub title'
+  subHeader: 'this is the sub title',
+  backdropDismiss: false
 });
 await actionSheet.present();
 ```
@@ -80,14 +86,15 @@ await actionSheet.present();
 
 ## Alert
 
-The `title` and `subTitle` properties has been renamed to `header` and `subHeader` respectivelly.
+The `title`, `subTitle` and `enableBackdropDismiss` properties has been renamed to `header`, `subHeader` and `backdropDismiss` respectivelly.
 
 **Old Usage Example:**
 
 ```js
 const alert = await alertCtrl.create({
   title: 'This is the title',
-  subTitle: 'this is the sub title'
+  subTitle: 'this is the sub title',
+  enableBackdropDismiss: false
 });
 await alert.present();
 ```
@@ -97,7 +104,8 @@ await alert.present();
 ```js
 const alert = await alertCtrl.create({
   header: 'This is the title',
-  subHeader: 'this is the sub title'
+  subHeader: 'this is the sub title',
+  backdropDismiss: false
 });
 await alert.present();
 ```
@@ -298,6 +306,23 @@ dark:            #222428
 ```
 
 The `secondary` color saw the largest change. If you were previously using our `secondary` color we recommend switching to `success` instead.
+
+
+## Content
+
+Content is now a drop-in replacement for `ion-scroll`, that means `ion-content` is much more flexible today, they can be used anywhere, even in a nested fashion.
+
+### resize() was removed
+
+In Ionic 4, `ion-content` layout is based in flex, that means their size will automatically adjust without requiring to call resize() programmatically.
+
+
+### Attributes Renamed
+
+
+| Old Property | New Property          | Property Behavior |
+|--------------|-----------------------|-------------------------------------------------------------------------|
+| no-bounce    | forceOverflow="false" | If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. |
 
 
 ## Datetime
@@ -788,6 +813,40 @@ Previously an `ion-label` would automatically get added to an `ion-list-header` 
 </ion-list-header>
 ```
 
+## Loading
+
+`dismissOnPageChange` was removed. Fortunatelly all the navigation API is promise based and there are global events  (`ionNavWillChange`) you can listen in order to detect when navigation occurs.
+
+You should take advantage of these APIs in order to dismiss your loading overlay explicitally.
+
+
+## Menu
+
+### Prop renamed
+
+The `swipeEnabled` prop has been renamed to `swipeGesture`.
+The `content` prop has been renamed to `contentId` and it points to the DOM id of the content:
+
+**Old Usage Example:**
+
+```html
+<ion-menu swipeEnabled="false" content="nav"> </ion-menu>
+<ion-nav #nav></ion-nav>
+```
+
+### Events renamed
+
+- `ionClose` was renamed to `ionDidClose`
+- `ionOpen` was renamed to `ionDidOpen`
+
+
+**New Usage Example:**
+
+```html
+<ion-menu swipeGesture="false" contentId="nav"> </ion-menu>
+<ion-nav id="nav"></ion-nav>
+```
+
 ## Menu Toggle
 
 ### Markup Changed
@@ -869,8 +928,11 @@ export class MyPage {
 ### Method renamed
 
 The `remove` method has been renamed to `removeIndex` to avoid conflicts with HTML and be more descriptive as to what it does.
-
 The `getActiveChildNavs` method has been renamed to `getChildNavs`.
+
+### Prop renamed
+
+The `swipeBackEnabled` prop has been renamed to `swipeGesture`.
 
 
 ## Navbar
@@ -932,7 +994,11 @@ The class has been renamed from `Option` to `SelectOption` to keep it consistent
 
 ### Markup Changed
 
-Action Sheet, Alert, Loading, Modal, Popover, and Toast should now use `async`/`await`:
+Action Sheet, Alert, Loading, Modal, Popover, and Toast:
+ - Should now use `async`/`await`
+ - `enableBackdropDismiss` has been renamed to `backdropDismiss`.
+
+
 
 **Old Usage Example:**
 
@@ -940,8 +1006,9 @@ Action Sheet, Alert, Loading, Modal, Popover, and Toast should now use `async`/`
 presentPopover(ev: any) {
   const popover = this.popoverController.create({
     component: PopoverComponent,
-    ev: event,
-    translucent: true
+    event: event,
+    translucent: true,
+    enableBackdropDismiss: false
   });
   popover.present();
 }
@@ -953,8 +1020,9 @@ presentPopover(ev: any) {
 async presentPopover(ev: any) {
   const popover = await this.popoverController.create({
     component: PopoverComponent,
-    ev: event,
-    translucent: true
+    event: event,
+    translucent: true,
+    backdropDismiss: false
   });
   return await popover.present();
 }
@@ -1111,6 +1179,23 @@ The `enabled` property (with a default value of `true`) has been renamed to `dis
 <ion-refresher disabled="true">
   ...
 </ion-refresher>
+```
+
+## Scroll
+
+`ion-scroll` has been removed, fortunatelly `ion-content` can work as a drop-in replacement:
+
+```diff
+- <ion-scroll scrollX="true">
++ <ion-content scrollX="true">
+```
+
+Another very good option is to style a `div` to become scrollable using CSS:
+
+```css
+div.scrollable {
+  overflow: scroll
+}
 ```
 
 

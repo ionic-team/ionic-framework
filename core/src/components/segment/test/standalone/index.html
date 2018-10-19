@@ -6,7 +6,8 @@
   <title>Segment - Standalone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/core.css">
+  <script src="/scripts/screenshot/testing.js"></script>
 </head>
 
 <body>
@@ -61,6 +62,19 @@
       Inactive
     </ion-segment-button>
   </ion-segment>
+
+  <ion-segment class="custom" value="active">
+    <ion-segment-button value="active">
+      Active
+    </ion-segment-button>
+    <ion-segment-button value="disabled" disabled="true">
+      Disabled
+    </ion-segment-button>
+    <ion-segment-button value="inactive" disabled="false">
+      Inactive
+    </ion-segment-button>
+  </ion-segment>
+
 </body>
 
 <script>
@@ -119,6 +133,17 @@
     word-wrap: normal;
     white-space: pre;
     color: #314361;
+  }
+
+  .custom {
+    --background-checked: navy;
+    --background: papayawhip;
+    --border-color-checked: navy;
+    --border-color-disabled: navy;
+    --border-color: navy;
+    --color-checked: papayawhip;
+    --color-disabled: rgba(0,0,0,0.3);
+    --color: navy;
   }
 </style>
 </html>

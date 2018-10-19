@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
@@ -10,7 +10,7 @@ import { createThemedClasses } from '../../utils/theme';
     md: 'header.md.scss'
   }
 })
-export class Header {
+export class Header implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
@@ -19,7 +19,7 @@ export class Header {
   @Prop() mode!: Mode;
 
   /**
-   * If true, the header will be translucent.
+   * If `true`, the header will be translucent.
    * Note: In order to scroll content behind the header, the `fullscreen`
    * attribute needs to be set on the content.
    * Defaults to `false`.

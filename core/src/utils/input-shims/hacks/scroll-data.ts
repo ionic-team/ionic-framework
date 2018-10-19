@@ -9,15 +9,6 @@ export interface ScrollData {
 }
 
 export function getScrollData(componentEl: HTMLElement, contentEl: HTMLElement, keyboardHeight: number): ScrollData {
-  if (!contentEl) {
-    return {
-      scrollAmount: 0,
-      scrollPadding: 0,
-      scrollDuration: 0,
-      inputSafeY: 0,
-    };
-  }
-
   const itemEl = componentEl.closest('ion-item,[ion-item]') as HTMLElement || componentEl;
   return calcScrollData(
     itemEl.getBoundingClientRect(),

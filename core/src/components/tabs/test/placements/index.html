@@ -6,13 +6,14 @@
   <title>Tab - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
+  <script src="/scripts/screenshot/testing.js"></script>
 </head>
 
 <body>
 
   <ion-app>
-    <ion-tabs tabbar-placement="top">
+    <ion-tabs>
       <ion-tab icon="star">
 
         <ion-header>
@@ -53,6 +54,8 @@
       </ion-tab>
 
       <ion-tab disabled icon="chatboxes" component="page-one"></ion-tab>
+
+      <ion-tabbar placement="top"></ion-tabbar>
     </ion-tabs>
   </ion-app>
 </body>

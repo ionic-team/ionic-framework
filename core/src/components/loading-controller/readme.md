@@ -10,19 +10,48 @@ Loading controllers programmatically control the loading component. Loadings can
 
 ## Methods
 
-#### create()
+### `create(opts?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>`
 
 Create a loading overlay with loading options.
 
+#### Parameters
 
-#### dismiss()
+| Name   | Type                          | Description |
+| ------ | ----------------------------- | ----------- |
+| `opts` | `LoadingOptions \| undefined` |             |
+
+#### Returns
+
+Type: `Promise<HTMLIonLoadingElement>`
+
+
+
+### `dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>`
 
 Dismiss the open loading overlay.
 
+#### Parameters
 
-#### getTop()
+| Name   | Type                  | Description |
+| ------ | --------------------- | ----------- |
+| `data` | `any`                 |             |
+| `role` | `string \| undefined` |             |
+| `id`   | `string \| undefined` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `getTop() => Promise<HTMLIonLoadingElement | undefined>`
 
 Get the most recently opened loading overlay.
+
+#### Returns
+
+Type: `Promise<HTMLIonLoadingElement | undefined>`
+
 
 
 

@@ -6,7 +6,8 @@
   <title>Button - Toolbar</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
+  <script src="/scripts/screenshot/testing.js"></script>
 </head>
 
 <body>
@@ -55,6 +56,23 @@
         </ion-buttons>
         <ion-buttons slot="primary">
           <ion-button color="secondary">
+            <ion-icon slot="icon-only" name="more"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>This is a long title with buttons. It just goes on and on my friend.</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="dark">
+        <ion-buttons slot="secondary">
+          <ion-button class="closeButton" fill="solid">
+            Close
+          </ion-button>
+          <ion-button fill="solid">
+            <ion-icon slot="icon-only" name="search"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button fill="solid" color="secondary">
             <ion-icon slot="icon-only" name="more"></ion-icon>
           </ion-button>
         </ion-buttons>

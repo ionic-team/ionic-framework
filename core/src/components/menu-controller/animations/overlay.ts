@@ -1,15 +1,14 @@
-import { Animation, Menu } from '../../../interface';
+import { Animation, MenuI } from '../../../interface';
 
 import { baseAnimation } from './base';
 
 const BOX_SHADOW_WIDTH = 8;
 /**
- * @hidden
  * Menu Overlay Type
  * The menu slides over the content. The content
  * itself, which is under the menu, does not move.
  */
-export function menuOverlayAnimation(AnimationC: Animation, _: HTMLElement, menu: Menu): Promise<Animation> {
+export function menuOverlayAnimation(AnimationC: Animation, _: HTMLElement, menu: MenuI): Promise<Animation> {
   let closedX: string;
   let openedX: string;
   const width = menu.width + BOX_SHADOW_WIDTH;

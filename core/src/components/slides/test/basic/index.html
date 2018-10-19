@@ -7,7 +7,8 @@
 
   <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
+  <script src="/scripts/screenshot/testing.js"></script>
   <style>
     ion-slide {
       height: 200px !important;
@@ -52,56 +53,56 @@
     slides.pager = false;
     slides.options = {}
 
-    function slideNext() {
-      slides.slideNext(500)
+    async function slideNext() {
+      await slides.slideNext(500)
     };
 
-    function slidePrev() {
-      slides.slidePrev(500);
+    async function slidePrev() {
+      await slides.slidePrev(500);
     };
 
-    function slideTo() {
-      slides.slideTo(2);
+    async function slideTo() {
+      await slides.slideTo(2);
     }
 
-    function slideAutoPlay() {
+    async function slideAutoPlay() {
       slides.options = Object.assign({}, slides.options, {
         autoplay: {
           delay: 2500,
           disableOnInteraction: false
         }
       });
-      slides.startAutoplay();
+      await slides.startAutoplay();
     }
 
-    function slideStopAutoPlay() {
-      slides.stopAutoplay();
+    async function slideStopAutoPlay() {
+      await slides.stopAutoplay();
     }
 
-    function setOptions() {
+    async function setOptions() {
       slides.options = Object.assign({}, slides.options, {
         slidesPerView: 2,
       });
     }
 
-    function slideLength() {
-      console.log(slides.length());
+    async function slideLength() {
+      console.log(await slides.length());
     }
 
-    function getActiveIndex() {
-      console.log(slides.getActiveIndex());
+    async function getActiveIndex() {
+      console.log(await slides.getActiveIndex());
     };
 
-    function getPreviousIndex() {
-      console.log(slides.getPreviousIndex());
+    async function getPreviousIndex() {
+      console.log(await slides.getPreviousIndex());
     };
 
-    function isEnd() {
-      console.log(slides.isEnd());
+    async function isEnd() {
+      console.log(await slides.isEnd());
     }
 
-    function isBeginning() {
-      console.log(slides.isBeginning());
+    async function isBeginning() {
+      console.log(await slides.isBeginning());
     }
     slides.addEventListener('ionSlideDidChange', function (e) {
       console.log('slide did change', e)

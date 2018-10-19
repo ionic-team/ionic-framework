@@ -6,23 +6,12 @@
 
 :host {
   @include margin($label-md-margin-top, $label-md-margin-end, $label-md-margin-bottom, $label-md-margin-start);
-
-  font-family: $label-md-font-family;
 }
 
 :host([text-wrap]) {
   font-size: $label-md-text-wrap-font-size;
 
   line-height: $label-md-text-wrap-line-height;
-}
-
-
-// Material Design Default Label Inside An Input/Select Item
-// --------------------------------------------------
-
-// TODO, takes high priority
-:host-context(.item-interactive) {
-  --ion-color-base: #{$label-md-text-color};
 }
 
 
@@ -45,10 +34,6 @@
   @include margin(null, null, 0, 0);
 }
 
-:host-context(.item-has-focus).label-stacked,
-:host-context(.item-has-focus).label-floating {
-  color: $label-md-text-color-focused;
-}
 
 // MD Typography
 // --------------------------------------------------
@@ -92,7 +77,7 @@
 }
 
 ::slotted(p) {
-  color: #{$item-md-paragraph-text-color};
+  color: $item-md-paragraph-text-color;
 }
 
 :host-context(.ion-color)::slotted(p) {

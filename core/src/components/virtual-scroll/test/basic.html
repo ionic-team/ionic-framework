@@ -6,7 +6,7 @@
   <title>Ionic Item Sliding</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
 </head>
 
 <body>
@@ -20,26 +20,54 @@
           <ion-button onclick="addItems()">Add Items</ion-button>
         </ion-buttons>
       </ion-toolbar>
+      <ion-toolbar></ion-toolbar>
+      <ion-toolbar></ion-toolbar>
+      <ion-toolbar></ion-toolbar>
+      <ion-toolbar></ion-toolbar>
     </ion-header>
 
     <ion-content>
       <p>
         <ion-button onclick="addItems()">Add Items</ion-button>
       </p>
-      <ion-virtual-scroll id="virtual"></ion-virtual-scroll>
+
+      <ion-virtual-scroll id="virtual">
+        <template>
+          <ion-item>
+            <ion-label></ion-label>
+          </ion-item>
+        </template>
+      </ion-virtual-scroll>
+
       <ion-infinite-scroll threshold="100px" id="infinite-scroll">
         <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
         </ion-infinite-scroll-content>
       </ion-infinite-scroll>
+
     </ion-content>
-
-
-
   </ion-app>
 
   <script>
-    const virtual = document.getElementById('virtual');
     const items = Array.from({ length: 100 }, (x, i) => i);
+    const virtual = document.getElementById('virtual');
+    virtual.itemHeight = () => 44;
+    virtual.items = items;
+    virtual.nodeRender = (el, cell) => {
+      if (cell.type === 0) {
+        renderItem(el, cell.value);
+      }
+    };
+    function renderItem(el, item) {
+      el.querySelector('ion-label').textContent = item;
+    }
+
+
+    const infiniteScroll = document.getElementById('infinite-scroll');
+    infiniteScroll.addEventListener('ionInfinite', async function () {
+      const data = await getAsyncData();
+      infiniteScroll.complete();
+      addItems(data);
+    });
 
     function addItems(append) {
       if (!append) {
@@ -48,56 +76,6 @@
       items.push(...append);
       virtual.markDirtyTail(append.length)
     }
-
-    virtual.itemHeight = () => 45;
-    virtual.headerFn = (item, index) => {
-      // if (index % 20 === 0) {
-      //   return 'Header ' + index;
-      // }
-      return null;
-    }
-
-    function renderItem(el, item) {
-      if (!el) {
-        el = document.createElement('ion-item');
-        const text = document.createTextNode(item);
-        el['$content'] = text;
-        el.appendChild(text);
-      } else {
-        el['$content'].nodeValue = item;
-      }
-      return el;
-    }
-
-    function renderHeader(el, item) {
-      if (!el) {
-        el = document.createElement('ion-item-divider');
-        const text = document.createTextNode(item);
-        el['$content'] = text;
-        el.appendChild(text);
-      } else {
-        el['$content'].nodeValue = item;
-      }
-      return el;
-    }
-
-    virtual.nodeRender = (el, cell) => {
-      if (cell.type === 0) return renderItem(el, cell.value);
-      return renderHeader(el, cell.value);
-    };
-    virtual.items = items;
-
-
-
-    const infiniteScroll = document.getElementById('infinite-scroll');
-    infiniteScroll.addEventListener('ionInfinite', async function () {
-      console.log('Loading data...');
-      const data = await getAsyncData();
-      infiniteScroll.complete();
-      addItems(data);
-
-      console.log('Done');
-    });
 
     function getAsyncData() {
       return new Promise(resolve => {

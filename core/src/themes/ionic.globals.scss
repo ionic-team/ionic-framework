@@ -11,6 +11,8 @@
 // Global Mixins
 @import "./ionic.mixins";
 
+// Default Theme
+@import "./ionic.theme.default";
 
 // Global app direction
 $app-direction: ltr !default;
@@ -108,23 +110,12 @@ $colors:  (
     shade:            get-color-shade($dark),
     tint:             get-color-tint($dark)
   )
-);
+) !default;
 
 // Default General Colors
 // --------------------------------------------------
 $overlay-background-color:          var(--ion-overlay-background-color, #fafafa) !default;
 $ripple-background-color:           var(--ion-ripple-background-color, #000) !default;
-
-
-// The minimum dimensions at which your layout will change,
-// adapting to different screen sizes, for use in media queries
-$screen-breakpoints: (
-  xs: 0,
-  sm: 576px,
-  md: 768px,
-  lg: 992px,
-  xl: 1200px
-) !default;
 
 
 // Default General

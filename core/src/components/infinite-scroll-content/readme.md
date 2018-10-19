@@ -7,35 +7,10 @@ The `ion-infinite-scroll-content` component is the default child used by the `io
 
 ## Properties
 
-#### loadingSpinner
-
-string
-
-An animated SVG spinner that shows while loading.
-
-
-#### loadingText
-
-string
-
-Optional text to display while loading.
-
-
-## Attributes
-
-#### loading-spinner
-
-string
-
-An animated SVG spinner that shows while loading.
-
-
-#### loading-text
-
-string
-
-Optional text to display while loading.
-
+| Property         | Attribute         | Description                                       | Type                  |
+| ---------------- | ----------------- | ------------------------------------------------- | --------------------- |
+| `loadingSpinner` | `loading-spinner` | An animated SVG spinner that shows while loading. | `string \| undefined` |
+| `loadingText`    | `loading-text`    | Optional text to display while loading.           | `string \| undefined` |
 
 
 ----------------------------------------------

@@ -1,38 +1,20 @@
-import { Component, Listen, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Method, Prop } from '@stencil/core';
 
-import { AlertOptions } from '../../interface';
-import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
+import { AlertOptions, OverlayController } from '../../interface';
+import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
 @Component({
   tag: 'ion-alert-controller'
 })
-export class AlertController implements OverlayController {
-
-  private alerts = new Map<number, HTMLIonAlertElement>();
+export class AlertController implements ComponentInterface, OverlayController {
 
   @Prop({ context: 'document' }) doc!: Document;
-
-  @Listen('body:ionAlertWillPresent')
-  protected alertWillPresent(ev: any) {
-    this.alerts.set(ev.target.overlayId, ev.target);
-  }
-
-  @Listen('body:ionAlertWillDismiss')
-  @Listen('body:ionAlertDidUnload')
-  protected alertWillDismiss(ev: any) {
-    this.alerts.delete(ev.target.overlayId);
-  }
-
-  @Listen('body:keyup.escape')
-  protected escapeKeyUp() {
-    removeLastOverlay(this.alerts);
-  }
 
   /**
    * Create an alert overlay with alert options
    */
   @Method()
-  create(opts?: AlertOptions): Promise<HTMLIonAlertElement> {
+  create(opts: AlertOptions): Promise<HTMLIonAlertElement> {
     return createOverlay(this.doc.createElement('ion-alert'), opts);
   }
 
@@ -40,15 +22,15 @@ export class AlertController implements OverlayController {
    * Dismiss the open alert overlay.
    */
   @Method()
-  dismiss(data?: any, role?: string, alertId = -1) {
-    return dismissOverlay(data, role, this.alerts, alertId);
+  dismiss(data?: any, role?: string, id?: string) {
+    return dismissOverlay(this.doc, data, role, 'ion-alert', id);
   }
 
   /**
    * Get the most recently opened alert overlay.
    */
   @Method()
-  getTop(): HTMLIonAlertElement {
-    return getTopOverlay(this.alerts);
+  async getTop(): Promise<HTMLIonAlertElement | undefined> {
+    return getOverlay(this.doc, 'ion-alert') as HTMLIonAlertElement;
   }
 }

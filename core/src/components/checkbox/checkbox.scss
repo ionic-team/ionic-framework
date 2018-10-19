@@ -4,13 +4,21 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{ion-color(primary, base)};
-  --ion-color-contrast: #{ion-color(primary, contrast)};
-
-  // Checked colors
-  --background-checked: #{current-color(base)};
-  --border-color-checked: #{current-color(base)};
-  --checkmark-color: #{current-color(contrast)};
+  /**
+   * @prop --background: Background of the checkbox icon
+   * @prop --border-color: Border color of the checkbox icon
+   * @prop --border-radius: Border radius of the checkbox icon
+   * @prop --border-width: Border width of the checkbox icon
+   * @prop --border-style: Border style of the checkbox icon
+   * @prop --size: Size of the checkbox icon
+   * @prop --transition: Transition of the checkbox icon
+   * @prop --background-checked: Background of the checkbox icon when checked
+   * @prop --border-color-checked: Border color of the checkbox icon when checked
+   * @prop --checkmark-color: Color of the checkbox checkmark when checked
+   */
+  --background-checked: #{ion-color(primary, base)};
+  --border-color-checked: #{ion-color(primary, base)};
+  --checkmark-color: #{ion-color(primary, contrast)};
 
   display: inline-block;
   position: relative;
@@ -18,14 +26,10 @@
   user-select: none;
 }
 
-:host(.checkbox-checked) .checkbox-icon {
-  border-color: var(--border-color-checked);
-
-  background: var(--background-checked);
-}
-
-:host(.checkbox-checked) .checkbox-inner {
-  opacity: 1;
+:host(.ion-color) {
+  --background-checked: #{current-color(base)};
+  --border-color-checked: #{current-color(base)};
+  --checkmark-color: #{current-color(contrast)};
 }
 
 input {
@@ -57,3 +61,22 @@ input {
   opacity: 0;
 }
 
+// Checked Checkbox
+// ---------------------------------------------
+
+:host(.checkbox-checked) .checkbox-icon {
+  border-color: var(--border-color-checked);
+
+  background: var(--background-checked);
+}
+
+:host(.checkbox-checked) .checkbox-inner {
+  opacity: 1;
+}
+
+// Disabled Checkbox
+// ---------------------------------------------
+
+:host(.checkbox-disabled) {
+  pointer-events: none;
+}

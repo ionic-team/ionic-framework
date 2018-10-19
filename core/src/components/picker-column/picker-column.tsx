@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop, QueueApi } from '@stencil/core';
 
 import { Gesture, GestureDetail, Mode, PickerColumn } from '../../interface';
 import { hapticSelectionChanged } from '../../utils';
@@ -8,7 +8,7 @@ import { clamp } from '../../utils/helpers';
 @Component({
   tag: 'ion-picker-column'
 })
-export class PickerColumnCmp {
+export class PickerColumnCmp implements ComponentInterface {
   mode!: Mode;
 
   private bounceFrom!: number;
@@ -28,9 +28,8 @@ export class PickerColumnCmp {
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
+  /** @internal */
   @Prop() col!: PickerColumn;
-
-  @Event() ionChange!: EventEmitter<void>;
 
   componentWillLoad() {
     let pickerRotateFactor = 0;
@@ -46,11 +45,11 @@ export class PickerColumnCmp {
   }
 
   async componentDidLoad() {
-    // get the scrollable element within the column
-    const colEl = this.optsEl!;
-
     // get the height of one option
-    this.optHeight = (colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0);
+    const colEl = this.optsEl;
+    if (colEl) {
+      this.optHeight = (colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0);
+    }
 
     this.refresh();
 
@@ -58,13 +57,17 @@ export class PickerColumnCmp {
       el: this.el,
       queue: this.queue,
       gestureName: 'picker-swipe',
-      gesturePriority: 10,
+      gesturePriority: 100,
       threshold: 0,
-      onStart: this.onDragStart.bind(this),
-      onMove: this.onDragMove.bind(this),
-      onEnd: this.onDragEnd.bind(this),
+      onStart: ev => this.onStart(ev),
+      onMove: ev => this.onMove(ev),
+      onEnd: ev => this.onEnd(ev),
     });
     this.gesture.setDisabled(false);
+  }
+
+  componentDidUnload() {
+    cancelAnimationFrame(this.rafId);
   }
 
   private setSelected(selectedIndex: number, duration: number) {
@@ -77,10 +80,13 @@ export class PickerColumnCmp {
     // set what y position we're at
     cancelAnimationFrame(this.rafId);
     this.update(y, duration, true);
-    this.ionChange.emit();
   }
 
   private update(y: number, duration: number, saveY: boolean) {
+    if (!this.optsEl) {
+      return;
+    }
+
     // ensure we've got a good round number :)
     let translateY = 0;
     let translateZ = 0;
@@ -89,7 +95,7 @@ export class PickerColumnCmp {
     const durationStr = (duration === 0) ? null : duration + 'ms';
     const scaleStr = `scale(${this.scaleFactor})`;
 
-    const children = this.optsEl!.children;
+    const children = this.optsEl.children;
     for (let i = 0; i < children.length; i++) {
       const button = children[i] as HTMLElement;
       const opt = col.options[i];
@@ -184,8 +190,6 @@ export class PickerColumnCmp {
       if (notLockedIn) {
         // isn't locked in yet, keep decelerating until it is
         this.rafId = requestAnimationFrame(() => this.decelerate());
-      } else {
-        this.ionChange.emit();
       }
 
     } else if (this.y % this.optHeight !== 0) {
@@ -205,14 +209,12 @@ export class PickerColumnCmp {
 
   // TODO should this check disabled?
 
-  private onDragStart(detail: GestureDetail) {
+  private onStart(detail: GestureDetail) {
     // We have to prevent default in order to block scrolling under the picker
     // but we DO NOT have to stop propagation, since we still want
     // some "click" events to capture
-    if (detail.event) {
-      detail.event.preventDefault();
-      detail.event.stopPropagation();
-    }
+    detail.event.preventDefault();
+    detail.event.stopPropagation();
 
     // reset everything
     cancelAnimationFrame(this.rafId);
@@ -230,11 +232,9 @@ export class PickerColumnCmp {
     this.maxY = -(maxY * this.optHeight);
   }
 
-  private onDragMove(detail: GestureDetail) {
-    if (detail.event) {
-      detail.event.preventDefault();
-      detail.event.stopPropagation();
-    }
+  private onMove(detail: GestureDetail) {
+    detail.event.preventDefault();
+    detail.event.stopPropagation();
 
     // update the scroll position relative to pointer start position
     let y = this.y + detail.deltaY;
@@ -256,7 +256,7 @@ export class PickerColumnCmp {
     this.update(y, 0, false);
   }
 
-  private onDragEnd(detail: GestureDetail) {
+  private onEnd(detail: GestureDetail) {
     if (this.bounceFrom > 0) {
       // bounce back up
       this.update(this.minY, 100, true);
@@ -267,7 +267,7 @@ export class PickerColumnCmp {
       return;
     }
 
-    this.velocity = clamp(-MAX_PICKER_SPEED, detail.velocityY * 17, MAX_PICKER_SPEED);
+    this.velocity = clamp(-MAX_PICKER_SPEED, detail.velocityY * 23, MAX_PICKER_SPEED);
     if (this.velocity === 0 && detail.deltaY === 0) {
       const opt = (detail.event.target as Element).closest('.picker-opt');
       if (opt && opt.hasAttribute('opt-index')) {
@@ -291,7 +291,7 @@ export class PickerColumnCmp {
       }
     }
 
-    const selectedIndex = clamp(min, this.col.selectedIndex!, max);
+    const selectedIndex = clamp(min, this.col.selectedIndex || 0, max);
     if (this.col.prevSelected !== selectedIndex) {
       const y = (selectedIndex * this.optHeight) * -1;
       this.velocity = 0;
@@ -324,12 +324,14 @@ export class PickerColumnCmp {
       <div
         class="picker-opts"
         style={{ maxWidth: col.optionsWidth! }}
-        ref={ el => this.optsEl = el }>
+        ref={el => this.optsEl = el}
+      >
         { col.options.map((o, index) =>
           <Button
+            type="button"
             class={{ 'picker-opt': true, 'picker-opt-disabled': !!o.disabled }}
-            disable-activated
-            opt-index={index}>
+            opt-index={index}
+          >
             {o.text}
           </Button>
         )}
@@ -343,7 +345,6 @@ export class PickerColumnCmp {
   }
 }
 
-export const PICKER_OPT_SELECTED = 'picker-opt-selected';
-export const DECELERATION_FRICTION = 0.97;
-export const FRAME_MS = (1000 / 60);
-export const MAX_PICKER_SPEED = 60;
+const PICKER_OPT_SELECTED = 'picker-opt-selected';
+const DECELERATION_FRICTION = 0.97;
+const MAX_PICKER_SPEED = 90;

@@ -1,11 +1,11 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Config } from '../../interface';
 
 @Component({
   tag: 'ion-refresher-content'
 })
-export class RefresherContent {
+export class RefresherContent implements ComponentInterface {
 
   @Prop({ context: 'config' }) config!: Config;
 
@@ -29,16 +29,16 @@ export class RefresherContent {
    */
   @Prop() refreshingText?: string;
 
-  protected componentDidLoad() {
-    if (!this.pullingIcon) {
-      this.pullingIcon = this.config.get('ionPullIcon', 'arrow-down');
+  componentDidLoad() {
+    if (this.pullingIcon === undefined) {
+      this.pullingIcon = this.config.get('refreshingIcon', 'arrow-down');
     }
-    if (!this.refreshingSpinner) {
-      this.refreshingSpinner = this.config.get('ionRefreshingSpinner', this.config.get('spinner', 'lines'));
+    if (this.refreshingSpinner === undefined) {
+      this.refreshingSpinner = this.config.get('refreshingSpinner', this.config.get('spinner', 'lines'));
     }
   }
 
-  protected render() {
+  render() {
     return [
       <div class="refresher-pulling">
         {this.pullingIcon &&

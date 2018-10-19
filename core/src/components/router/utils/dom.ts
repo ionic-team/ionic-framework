@@ -44,7 +44,7 @@ export async function writeNavState(
   }
 }
 
-export function readNavState(root: HTMLElement | undefined) {
+export async function readNavState(root: HTMLElement | undefined) {
   const ids: RouteID[] = [];
   let outlet: NavOutletElement | undefined;
   let node: HTMLElement | undefined = root;
@@ -52,7 +52,7 @@ export function readNavState(root: HTMLElement | undefined) {
   while (true) {
     outlet = searchNavNode(node);
     if (outlet) {
-      const id = outlet.getRouteId();
+      const id = await outlet.getRouteId();
       if (id) {
         node = id.element;
         id.element = undefined;

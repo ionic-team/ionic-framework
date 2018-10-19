@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
 import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
@@ -21,7 +21,7 @@ const QUERY: { [key: string]: string } = {
     md: 'split-pane.md.scss'
   }
 })
-export class SplitPane {
+export class SplitPane implements ComponentInterface {
 
   private rmL: any;
 
@@ -34,7 +34,7 @@ export class SplitPane {
   @Prop({ context: 'window' }) win!: Window;
 
   /**
-   * If true, the split pane will be hidden. Defaults to `false`.
+   * If `true`, the split pane will be hidden. Defaults to `false`.
    */
   @Prop() disabled = false;
 
@@ -43,28 +43,28 @@ export class SplitPane {
    * Can be a CSS media query expression, or a shortcut expression.
    * Can also be a boolean expression.
    */
-  @Prop() when: string | boolean = QUERY['md'];
+  @Prop() when: string | boolean = QUERY['lg'];
 
   /**
    * Emitted when the split pane is visible.
    */
-  @Event() ionChange!: EventEmitter<{visible: boolean}>;
+  @Event({ bubbles: false }) ionChange!: EventEmitter<{visible: boolean}>;
 
   /**
    * Expression to be called when the split-pane visibility has changed
    */
-  @Event() protected ionSplitPaneVisible!: EventEmitter;
+  @Event() ionSplitPaneVisible!: EventEmitter;
 
   @Watch('visible')
   visibleChanged(visible: boolean) {
-    const detail = { visible };
+    const detail = { visible, isPane: this.isPane.bind(this) };
     this.ionChange.emit(detail);
     this.ionSplitPaneVisible.emit(detail);
   }
 
   componentDidLoad() {
-    this._styleChildren();
-    this.whenChanged();
+    this.styleChildren();
+    this.updateState();
   }
 
   componentDidUnload() {
@@ -74,8 +74,9 @@ export class SplitPane {
     }
   }
 
+  @Watch('disabled')
   @Watch('when')
-  protected whenChanged() {
+  protected updateState() {
     if (this.isServer) {
       return;
     }
@@ -98,13 +99,10 @@ export class SplitPane {
     }
 
     // When query is a string, let's find first if it is a shortcut
-    const defaultQuery = QUERY[query];
-    const mediaQuery = (defaultQuery)
-      ? defaultQuery
-      : query;
+    const mediaQuery = QUERY[query] || query;
 
     // Media query is empty or null, we hide it
-    if (!mediaQuery || mediaQuery.length === 0) {
+    if (mediaQuery.length === 0) {
       this.visible = false;
       return;
     }
@@ -117,15 +115,7 @@ export class SplitPane {
     this.visible = mediaList.matches;
   }
 
-  /** Returns if the split pane is toggled or not */
-  @Method()
-  isVisible(): boolean {
-    return this.visible;
-  }
-
-  /** @hidden */
-  @Method()
-  isPane(element: HTMLElement): boolean {
+  private isPane(element: HTMLElement): boolean {
     if (!this.visible) {
       return false;
     }
@@ -133,7 +123,7 @@ export class SplitPane {
       && element.classList.contains(SPLIT_PANE_SIDE);
   }
 
-  private _styleChildren() {
+  private styleChildren() {
     if (this.isServer) {
       return;
     }
@@ -165,7 +155,6 @@ export class SplitPane {
       }
     };
   }
-
 }
 
 function setPaneClass(el: HTMLElement, isMain: boolean) {

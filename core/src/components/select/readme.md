@@ -41,182 +41,63 @@ Since select uses the alert, action sheet and popover interfaces, options can be
 
 ## Properties
 
-#### cancelText
-
-string
-
-The text to display on the cancel button. Default: `Cancel`.
-
-
-#### disabled
-
-boolean
-
-If true, the user cannot interact with the select. Defaults to `false`.
-
-
-#### interface
-
-string
-
-The interface the select should use: `action-sheet`, `popover` or `alert`. Default: `alert`.
-
-
-#### interfaceOptions
-
-any
-
-Any additional options that the `alert`, `action-sheet` or `popover` interface
-can take. See the [AlertController API docs](../../alert/AlertController/#create), the
-[ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the
-[PopoverController API docs](../../popover/PopoverController/#create) for the
-create options for each interface.
-
-
-#### multiple
-
-boolean
-
-If true, the select can accept multiple values.
-
-
-#### name
-
-string
-
-The name of the control, which is submitted with the form data.
-
-
-#### okText
-
-string
-
-The text to display on the ok button. Default: `OK`.
-
-
-#### placeholder
-
-string
-
-The text to display when the select is empty.
-
-
-#### selectedText
-
-string
-
-The text to display instead of the selected option's value.
-
-
-#### value
-
-any
-
-the value of the select.
-
-
-## Attributes
-
-#### cancel-text
-
-string
-
-The text to display on the cancel button. Default: `Cancel`.
-
-
-#### disabled
-
-boolean
-
-If true, the user cannot interact with the select. Defaults to `false`.
-
-
-#### interface
-
-string
-
-The interface the select should use: `action-sheet`, `popover` or `alert`. Default: `alert`.
-
-
-#### interface-options
-
-any
-
-Any additional options that the `alert`, `action-sheet` or `popover` interface
-can take. See the [AlertController API docs](../../alert/AlertController/#create), the
-[ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the
-[PopoverController API docs](../../popover/PopoverController/#create) for the
-create options for each interface.
-
-
-#### multiple
-
-boolean
-
-If true, the select can accept multiple values.
-
-
-#### name
-
-string
-
-The name of the control, which is submitted with the form data.
-
-
-#### ok-text
-
-string
-
-The text to display on the ok button. Default: `OK`.
-
-
-#### placeholder
-
-string
-
-The text to display when the select is empty.
-
-
-#### selected-text
-
-string
-
-The text to display instead of the selected option's value.
-
-
-#### value
-
-any
-
-the value of the select.
+| Property           | Attribute       | Description                                                                                                                                                                                                                                                                                                                                                                       | Type                                     |
+| ------------------ | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| `cancelText`       | `cancel-text`   | The text to display on the cancel button. Default: `Cancel`.                                                                                                                                                                                                                                                                                                                      | `string`                                 |
+| `disabled`         | `disabled`      | If `true`, the user cannot interact with the select. Defaults to `false`.                                                                                                                                                                                                                                                                                                         | `boolean`                                |
+| `interfaceOptions` | --              | Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [AlertController API docs](../../alert/AlertController/#create), the [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the [PopoverController API docs](../../popover/PopoverController/#create) for the create options for each interface. | `any`                                    |
+| `interface`        | `interface`     | The interface the select should use: `action-sheet`, `popover` or `alert`. Default: `alert`.                                                                                                                                                                                                                                                                                      | `"action-sheet" \| "alert" \| "popover"` |
+| `mode`             | `mode`          | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                                                                                                                                                                                                                                                                                         | `"ios" \| "md"`                          |
+| `multiple`         | `multiple`      | If `true`, the select can accept multiple values.                                                                                                                                                                                                                                                                                                                                 | `boolean`                                |
+| `name`             | `name`          | The name of the control, which is submitted with the form data.                                                                                                                                                                                                                                                                                                                   | `string`                                 |
+| `okText`           | `ok-text`       | The text to display on the ok button. Default: `OK`.                                                                                                                                                                                                                                                                                                                              | `string`                                 |
+| `placeholder`      | `placeholder`   | The text to display when the select is empty.                                                                                                                                                                                                                                                                                                                                     | `null \| string \| undefined`            |
+| `selectedText`     | `selected-text` | The text to display instead of the selected option's value.                                                                                                                                                                                                                                                                                                                       | `null \| string \| undefined`            |
+| `value`            | --              | the value of the select.                                                                                                                                                                                                                                                                                                                                                          | `any`                                    |
 
 
 ## Events
 
-#### ionBlur
-
-Emitted when the select loses focus.
-
-
-#### ionCancel
-
-Emitted when the selection is cancelled.
-
-
-#### ionChange
-
-Emitted when the value has changed.
+| Event       | Description                              |
+| ----------- | ---------------------------------------- |
+| `ionBlur`   | Emitted when the select loses focus.     |
+| `ionCancel` | Emitted when the selection is cancelled. |
+| `ionChange` | Emitted when the value has changed.      |
+| `ionFocus`  | Emitted when the select has focus.       |
+| `ionStyle`  | Emitted when the styles change.          |
 
 
-#### ionFocus
+## Methods
 
-Emitted when the select has focus.
+### `open(ev?: UIEvent | undefined) => Promise<OverlaySelect>`
+
+Opens the select overlay, it could be an alert, action-sheet or popover,
+based in `ion-select` settings.
+
+#### Parameters
+
+| Name | Type                   | Description |
+| ---- | ---------------------- | ----------- |
+| `ev` | `UIEvent \| undefined` |             |
+
+#### Returns
+
+Type: `Promise<OverlaySelect>`
 
 
-#### ionStyle
 
-Emitted when the styles change.
 
+## CSS Custom Properties
+
+| Name                  | Description                          |
+| --------------------- | ------------------------------------ |
+| `--color`             | Color of the select text             |
+| `--icon-color`        | Color of the select icon             |
+| `--padding-bottom`    | Bottom padding of the select         |
+| `--padding-end`       | End padding of the select            |
+| `--padding-start`     | Start padding of the select          |
+| `--padding-top`       | Top padding of the select            |
+| `--placeholder-color` | Color of the select placeholder text |
 
 
 ----------------------------------------------

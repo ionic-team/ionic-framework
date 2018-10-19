@@ -1,4 +1,4 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -11,7 +11,7 @@ import { createColorClasses } from '../../utils/theme';
   },
   shadow: true
 })
-export class ItemDivider {
+export class ItemDivider implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 

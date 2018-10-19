@@ -4,32 +4,60 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --btn-background: Background of the button
+   * @prop --btn-border-color: Color of the button border
+   * @prop --border-radius: Radius of the button border
+   * @prop --border-style: Style of the button border
+   * @prop --border-width: Width of the button border
+   * @prop --icon-size: Size of the button icon
+   * @prop --margin-top: Top margin of the button
+   * @prop --margin-end: End margin of the button
+   * @prop --margin-bottom: Bottom margin of the button
+   * @prop --margin-start: Start margin of the button
+   * @prop --padding-top: Top padding of the button
+   * @prop --padding-end: End padding of the button
+   * @prop --padding-bottom: Bottom padding of the button
+   * @prop --padding-start: Start padding of the button
+   * @prop --transition: Transition of the button
+   */
   --padding-start: 0;
   --padding-end: 0;
   --padding-top: 0;
   --padding-bottom: 0;
   --icon-size: 1em;
+  --btn-background: inherit;
+  --btn-border-color: inherit;
 
   flex: 1;
+
+  color: inherit;
+
+  text-decoration: none;
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+  font-kerning: none;
 }
 
-:host(:first-of-type) .segment-button-native {
+:host(:first-of-type) .button-native {
   --padding-end: 0;
 
   @include border-radius(var(--border-radius), 0, 0, var(--border-radius));
 }
 
-:host(:not(:first-of-type)) .segment-button-native {
+:host(:not(:first-of-type)) .button-native {
   border-left-width: 0;
 }
 
-:host(:last-of-type) .segment-button-native {
+:host(:last-of-type) .button-native {
   --padding-start: 0;
 
   @include border-radius(0, var(--border-radius), var(--border-radius), 0);
 }
 
-.segment-button-native {
+.button-native {
+  @include text-inherit();
   @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
@@ -43,30 +71,15 @@
 
   border-width: var(--border-width);
   border-style: var(--border-style);
-  border-color: var(--border-color);
+  border-color: var(--btn-border-color);
 
-  background: var(--background);
-  color: inherit;
+  outline: none;
 
-  font-size: inherit;
-  font-weight: inherit;
-
-  text-align: center;
-  text-decoration: none;
-  text-overflow: ellipsis;
-  text-transform: inherit;
-
-  white-space: nowrap;
+  background: var(--btn-background);
 
   contain: content;
   cursor: pointer;
   overflow: hidden;
-  font-kerning: none;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
 }
 
 ::slotted(ion-icon) {

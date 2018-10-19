@@ -6,7 +6,8 @@
   <title>Back Button</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
+  <script src="/scripts/screenshot/testing.js"></script>
 </head>
 
 <body onload="loadFirstPage()">
@@ -68,7 +69,7 @@
     // okay cool, we're in the DOM now
     await nav.push(secondPage);
 
-    const nextButton = secondPage.querySelector('ion-button .next');
+    const nextButton = secondPage.querySelector('ion-button.next');
     nextButton.addEventListener('click', async () => {
       await goToPageThree(nav);
     });
@@ -96,7 +97,7 @@
     // okay cool, we're in the DOM now
     await nav.push(thirdPage);
 
-    const nextButton = thirdPage.querySelector('ion-button .next');
+    const nextButton = thirdPage.querySelector('ion-button.next');
     nextButton.addEventListener('click', async () => {
       await goToPageFour(nav);
     });

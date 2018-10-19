@@ -1,20 +1,19 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
 
-import { Color, Config, Mode } from '../../interface';
+import { Color, Config, Mode, SpinnerConfig, SpinnerTypes } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
-import { SPINNERS, SpinnerConfig } from './spinner-configs';
+import { SPINNERS } from './spinner-configs';
 
 @Component({
   tag: 'ion-spinner',
-  styleUrls: {
-    ios: 'spinner.ios.scss',
-    md: 'spinner.md.scss'
-  },
+  styleUrl: 'spinner.scss',
   shadow: true
 })
-export class Spinner {
+export class Spinner implements ComponentInterface {
   @Prop({ context: 'config' }) config!: Config;
+
+  mode!: Mode;
 
   /**
    * The color to use from your application's color palette.
@@ -22,12 +21,6 @@ export class Spinner {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * Duration of the spinner animation in milliseconds. The default varies based on the spinner.
@@ -39,33 +32,19 @@ export class Spinner {
    * spinner will be used. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`,
    * `"circles"`, `"crescent"`.
    */
-  @Prop() name?: string;
+  @Prop() name?: SpinnerTypes;
 
   /**
-   * If true, the spinner's animation will be paused. Defaults to `false`.
+   * If `true`, the spinner's animation will be paused. Defaults to `false`.
    */
   @Prop() paused = false;
 
-  private getName(): string {
-    let name = this.name || this.config.get('spinner');
-    if (!name) {
-      // fallback
-      if (this.mode === 'md') {
-        return 'crescent';
-      } else {
-        return 'lines';
-      }
+  private getName(): SpinnerTypes {
+    const name = this.name || this.config.get('spinner');
+    if (name) {
+      return name;
     }
-    if (name === 'ios') {
-      // deprecation warning, renamed in v4
-      console.warn(`spinner "ios" has been renamed to "lines"`);
-      name = 'lines';
-    } else if (name === 'ios-small') {
-      // deprecation warning, renamed in v4
-      console.warn(`spinner "ios-small" has been renamed to "lines-small"`);
-      name = 'lines-small';
-    }
-    return name;
+    return (this.mode === 'ios') ? 'lines' : 'crescent';
   }
 
   hostData() {
@@ -74,7 +53,7 @@ export class Spinner {
         ...createColorClasses(this.color),
 
         [`spinner-${this.getName()}`]: true,
-        'spinner-paused': !!this.paused
+        'spinner-paused': !!this.paused || this.config.getBoolean('_testing')
       }
     };
   }
@@ -86,12 +65,12 @@ export class Spinner {
     const duration = (typeof this.duration === 'number' && this.duration > 10 ? this.duration : spinner.dur);
     const svgs: any[] = [];
 
-    if (spinner.circles) {
+    if (spinner.circles !== undefined) {
       for (let i = 0; i < spinner.circles; i++) {
         svgs.push(buildCircle(spinner, duration, i, spinner.circles));
       }
 
-    } else if (spinner.lines) {
+    } else if (spinner.lines !== undefined) {
       for (let i = 0; i < spinner.lines; i++) {
         svgs.push(buildLine(spinner, duration, i, spinner.lines));
       }

@@ -25,9 +25,13 @@ export const TRANSFORM_PROPS: {[key: string]: number} = {
   'perspective': 1
 };
 
-const raf = window.requestAnimationFrame || ((f: FrameRequestCallback) => f(Date.now()));
+const raf = (window as any).requestAnimationFrame
+  ? window.requestAnimationFrame.bind(window)
+  : (f: FrameRequestCallback) => f(Date.now());
 
 export class Animator {
+
+  static animated = true;
 
   private _afterAddClasses?: string[];
   private _afterRemoveClasses?: string[];
@@ -58,9 +62,9 @@ export class Animator {
   isPlaying = false;
   hasCompleted = false;
 
-  addElement(el: Node | Node[] | NodeList): Animator {
-    if (el) {
-      if ((el as NodeList).length) {
+  addElement(el: Node | Node[] | NodeList | undefined | null): Animator {
+    if (el != null) {
+      if ((el as NodeList).length > 0) {
         for (let i = 0; i < (el as NodeList).length; i++) {
           this._addEl((el as any)[i]);
         }
@@ -96,12 +100,14 @@ export class Animator {
    * not have a duration, then it'll get the duration from its parent.
    */
   getDuration(opts?: PlayOptions): number {
-    if (opts && opts.duration != null) {
-      return opts.duration;
-    } else if (this._duration != null) {
-      return this._duration;
-    } else if (this.parent) {
-      return this.parent.getDuration();
+    if (Animator.animated) {
+      if (opts && opts.duration !== undefined) {
+        return opts.duration;
+      } else if (this._duration !== undefined) {
+        return this._duration;
+      } else if (this.parent) {
+        return this.parent.getDuration();
+      }
     }
     return 0;
   }
@@ -126,10 +132,10 @@ export class Animator {
    * not have an easing, then it'll get the easing from its parent.
    */
   getEasing(): string | null {
-    if (this._isReverse && this._reversedEasingName) {
+    if (this._isReverse && this._reversedEasingName !== undefined) {
       return this._reversedEasingName;
     }
-    return this._easingName != null ? this._easingName : (this.parent && this.parent.getEasing()) || null;
+    return this._easingName !== undefined ? this._easingName : (this.parent && this.parent.getEasing()) || null;
   }
 
   /**
@@ -159,7 +165,7 @@ export class Animator {
   /**
    * Add the "to" value for a specific property.
    */
-  to(prop: string, val: any, clearProperyAfterTransition?: boolean): Animator {
+  to(prop: string, val: any, clearProperyAfterTransition = false): Animator {
     const fx = this._addProp('to', prop, val);
 
     if (clearProperyAfterTransition) {
@@ -245,15 +251,6 @@ export class Animator {
    */
   beforeRemoveClass(className: string): Animator {
     (this._beforeRemoveClasses = this._beforeRemoveClasses || []).push(className);
-    return this;
-  }
-
-  /**
-   * Sets a CSS class during the duration of the animation.
-   */
-  duringAddClass(className: string): Animator {
-    this.beforeAddClass(className);
-    this.afterRemoveClass(className);
     return this;
   }
 
@@ -372,7 +369,7 @@ export class Animator {
 
   playAsync(opts?: PlayOptions): Promise<Animator> {
     return new Promise(resolve => {
-      this.onFinish(resolve, { oneTimeCallback: true, clearExistingCallacks: true });
+      this.onFinish(resolve, { oneTimeCallback: true, clearExistingCallbacks: true });
       this.play(opts);
       return this;
     });
@@ -573,7 +570,7 @@ export class Animator {
     }
 
     if (this._hasDur) {
-      if (stepValue !== null && stepValue !== undefined) {
+      if (stepValue !== undefined) {
         // too late to have a smooth animation, just finish it
         // ******** DOM WRITE ****************
         this._setTrans(0, true);
@@ -636,10 +633,7 @@ export class Animator {
   /**
    * Immediately stop at the end of the animation.
    */
-  stop(stepValue?: number) {
-    if (stepValue === undefined) {
-      stepValue = 1;
-    }
+  stop(stepValue = 1) {
     // ensure all past transition end events have been cleared
     this._clearAsync();
     this._hasDur = true;
@@ -726,7 +720,7 @@ export class Animator {
     }
 
     // place all transforms on the same property
-    if (finalTransform.length) {
+    if (finalTransform.length > 0) {
       if (!this._isReverse && stepValue !== 1 || this._isReverse && stepValue !== 0) {
         finalTransform += 'translateZ(0px)';
       }
@@ -759,7 +753,7 @@ export class Animator {
         style.transitionDuration = durString;
 
         // each animation can have a different easing
-        if (easing) {
+        if (easing !== null) {
           // ******** DOM WRITE ****************
           style.transitionTimingFunction = easing;
         }
@@ -817,6 +811,7 @@ export class Animator {
       const elementClassList = el.classList;
 
       // css classes to add before the animation
+
       if (addClasses) {
         for (const c of addClasses) {
           // ******** DOM WRITE ****************
@@ -977,7 +972,7 @@ export class Animator {
         if (propWC === 'webkitTransform') {
           wc.push('transform', '-webkit-transform');
 
-        } else if (propWC) {
+        } else if (propWC !== undefined) {
           wc.push(propWC);
         }
       }
@@ -1053,7 +1048,7 @@ export class Animator {
   /**
    * End the progress animation.
    */
-  progressEnd(shouldComplete: boolean, currentStepValue: number, dur?: number) {
+  progressEnd(shouldComplete: boolean, currentStepValue: number, dur = -1) {
     if (this._isReverse) {
       // if the animation is going in reverse then
       // flip the step value: 0 becomes 1, 1 becomes 0
@@ -1061,9 +1056,6 @@ export class Animator {
     }
     const stepValue = shouldComplete ? 1 : 0;
     const diff = Math.abs(currentStepValue - stepValue);
-    if (dur === undefined) {
-      dur = -1;
-    }
     if (dur < 0) {
       dur = this._duration || 0;
     } else if (diff < 0.05) {
@@ -1128,8 +1120,8 @@ export class Animator {
   /**
    * Add a callback to fire when the animation has finished.
    */
-  onFinish(callback: (animation?: any) => void, opts?: {oneTimeCallback?: boolean, clearExistingCallacks?: boolean}): Animator {
-    if (opts && opts.clearExistingCallacks) {
+  onFinish(callback: (animation?: any) => void, opts?: {oneTimeCallback?: boolean, clearExistingCallbacks?: boolean}): Animator {
+    if (opts && opts.clearExistingCallbacks) {
       this._onFinishCallbacks = this._onFinishOneTimeCallbacks = undefined;
     }
     if (opts && opts.oneTimeCallback) {
@@ -1186,10 +1178,7 @@ export class Animator {
   /**
    * Reverse the animation.
    */
-  reverse(shouldReverse?: boolean): Animator {
-    if (shouldReverse === undefined) {
-      shouldReverse = true;
-    }
+  reverse(shouldReverse = true): Animator {
     const children = this._childAnimations;
     if (children) {
       for (const child of children) {
@@ -1204,6 +1193,7 @@ export class Animator {
    * Recursively destroy this animation and all child animations.
    */
   destroy() {
+    this._didFinish(false);
     this._destroyed = true;
 
     const children = this._childAnimations;
@@ -1258,7 +1248,7 @@ export class Animator {
     return (
       this._hasTweenEffect &&
       this._hasDur &&
-      this._elements &&
+      this._elements !== undefined &&
       this._elements.length > 0 ?
       this._elements[0] : null
     );

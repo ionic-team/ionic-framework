@@ -5,9 +5,28 @@
 // --------------------------------------------------
 
 :host {
+  --knob-border-radius: 50%;
+  --knob-background: var(--bar-background-active);
+  --knob-box-shadow: none;
+  --knob-size: 18px;
+  --bar-height: #{$range-md-bar-height};
+  --bar-background: #{$range-md-bar-background-color};
+  --bar-background-active: #{ion-color(primary, base)};
+  --height: #{$range-md-slider-height};
+  --pin-background: #{ion-color(primary, base)};
+  --pin-color: #{ion-color(primary, contrast)};
+
   @include padding($range-md-padding-vertical, $range-md-padding-horizontal);
 
-  font-family: $range-md-font-family;
+  font-size: $range-md-pin-font-size;
+}
+
+:host(.ion-color) .range-bar-active,
+:host(.ion-color) .range-knob,
+:host(.ion-color) .range-pin,
+:host(.ion-color) .range-pin::before {
+  background: current-color(base);
+  color: current-color(contrast);
 }
 
 // TODO: REVIEW
@@ -23,70 +42,22 @@
   @include padding($range-md-padding-vertical + $range-md-pin-font-size + $range-md-pin-padding-vertical, null, null, null);
 }
 
-.range-slider {
-  height: $range-md-slider-height;
-}
-
-.range-bar {
-  @include position(($range-md-slider-height / 2), null, null, 0);
-
-  position: absolute;
-
-  width: 100%;
-  height: $range-md-bar-height;
-
-  background: $range-md-bar-background-color;
-  pointer-events: none;
-}
-
-:host(.range-pressed) .range-bar-active {
-  will-change: left, right;
-}
-
-:host(.range-pressed) .range-knob-handle {
-  will-change: left;
-}
-
 .range-bar-active {
   bottom: 0;
 
   width: auto;
 
-  background: $range-md-bar-active-background-color;
-}
-
-.range-knob-handle {
-  @include position(($range-md-slider-height / 2), null, null, 0);
-  @include margin(-($range-md-hit-height / 2), null, null, -($range-md-hit-width / 2));
-
-  position: absolute;
-
-  width: $range-md-hit-width;
-  height: $range-md-hit-height;
-
-  text-align: center;
+  background: var(--bar-background-active);
 }
 
 .range-knob {
-  @include position(($range-md-hit-height / 2) - ($range-md-knob-height / 2) + ($range-md-bar-height / 2),
-          null, null, ($range-md-hit-width / 2) - ($range-md-knob-width / 2));
-  @include border-radius(50%);
-
-  position: absolute;
-
-  width: $range-md-knob-width;
-  height: $range-md-knob-height;
-
   transform: scale(.67);
 
   transition-duration: 120ms;
   transition-property: transform, background-color, border;
   transition-timing-function: ease;
 
-  background: $range-md-knob-background-color;
-
   z-index: 2;
-  pointer-events: none;
 }
 
 .range-tick {
@@ -121,12 +92,10 @@
   min-width: 28px;
   height: 28px;
 
-  transition: transform 120ms ease, background-color 120ms ease;
+  transition: transform 120ms ease, background 120ms ease;
 
-  background: $range-md-pin-background-color;
-  color: $range-md-pin-color;
-
-  font-size: $range-md-pin-font-size;
+  background: var(--pin-background);
+  color: var(--pin-color);
 
   text-align: center;
 
@@ -142,9 +111,9 @@
 
     transform: rotate(-45deg);
 
-    transition: background-color 120ms ease;
+    transition: background 120ms ease;
 
-    background: $range-md-pin-background-color;
+    background: var(--pin-background);
 
     content: "";
     z-index: -1;
@@ -159,23 +128,19 @@
   transform: scale(1);
 }
 
-@mixin md-range-min() {
-  .range-knob-min.range-knob-min {
-    .range-knob {
-      border: $range-md-knob-min-border;
+.range-knob-min.range-knob-min {
+  .range-knob {
+    border: $range-md-knob-min-border;
 
-      background: $range-md-knob-min-background-color;
-    }
+    background: $range-md-knob-min-background-color;
+  }
 
-    .range-pin,
-    .range-pin::before {
-      background: $range-md-pin-min-background-color;
-      color: ion-color(primary, contrast);
-    }
+  .range-pin,
+  .range-pin::before {
+    background: $range-md-pin-min-background-color;
+    color: ion-color(primary, contrast);
   }
 }
-
-@include md-range-min();
 
 :host(.range-disabled) .range-bar-active {
   background-color: $range-md-bar-background-color;

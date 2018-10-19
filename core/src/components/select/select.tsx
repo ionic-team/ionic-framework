@@ -1,8 +1,8 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
-import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, Mode, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent } from '../../interface';
+import { ActionSheetButton, ActionSheetOptions, AlertOptions, CssClassMap, Mode, OverlaySelect, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent } from '../../interface';
 import { deferEvent, renderHiddenInput } from '../../utils/helpers';
-import { createThemedClasses, hostContext } from '../../utils/theme';
+import { hostContext } from '../../utils/theme';
 
 @Component({
   tag: 'ion-select',
@@ -12,14 +12,12 @@ import { createThemedClasses, hostContext } from '../../utils/theme';
   },
   shadow: true
 })
-export class Select {
+export class Select implements ComponentInterface {
 
   private childOpts: HTMLIonSelectOptionElement[] = [];
   private inputId = `ion-sel-${selectIds++}`;
   private labelId?: string;
-  private overlay?: HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement;
-
-  mode!: Mode;
+  private overlay?: OverlaySelect;
 
   @Element() el!: HTMLIonSelectElement;
 
@@ -29,10 +27,16 @@ export class Select {
 
   @State() isExpanded = false;
   @State() keyFocus = false;
-  @State() text?: string;
+  @State() text = '';
 
   /**
-   * If true, the user cannot interact with the select. Defaults to `false`.
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  @Prop() mode!: Mode;
+
+  /**
+   * If `true`, the user cannot interact with the select. Defaults to `false`.
    */
   @Prop() disabled = false;
 
@@ -49,7 +53,7 @@ export class Select {
   /**
    * The text to display when the select is empty.
    */
-  @Prop() placeholder?: string;
+  @Prop() placeholder?: string | null;
 
   /**
    * The name of the control, which is submitted with the form data.
@@ -59,10 +63,10 @@ export class Select {
   /**
    * The text to display instead of the selected option's value.
    */
-  @Prop() selectedText?: string;
+  @Prop() selectedText?: string | null;
 
   /**
-   * If true, the select can accept multiple values.
+   * If `true`, the select can accept multiple values.
    */
   @Prop() multiple = false;
 
@@ -83,7 +87,7 @@ export class Select {
   /**
    * the value of the select.
    */
-  @Prop({ mutable: true }) value?: any;
+  @Prop({ mutable: true }) value?: any | null;
 
   /**
    * Emitted when the value has changed.
@@ -241,7 +245,7 @@ export class Select {
       (this.value as string[]).length = 0;
       checked.forEach(o => {
         // doing this instead of map() so we don't
-        // fire off an unecessary change event
+        // fire off an unnecessary change event
         (this.value as string[]).push(o.value);
       });
       this.text = checked.map(o => o.textContent).join(', ');
@@ -256,19 +260,16 @@ export class Select {
     this.emitStyle();
   }
 
-  private getLabel() {
-    const item = this.el.closest('ion-item');
-    if (item) {
-      return item.querySelector('ion-label');
-    }
-    return null;
-  }
-
-  private open(ev: UIEvent) {
+  /**
+   * Opens the select overlay, it could be an alert, action-sheet or popover,
+   * based in `ion-select` settings.
+   */
+  @Method()
+  open(ev?: UIEvent): Promise<OverlaySelect> {
     let selectInterface = this.interface;
 
     if ((selectInterface === 'action-sheet' || selectInterface === 'popover') && this.multiple) {
-      console.warn('Select interface cannot be "' + selectInterface + '" with a multi-value select. Using the "alert" interface instead.');
+      console.warn(`Select interface cannot be "${selectInterface}" with a multi-value select. Using the "alert" interface instead.`);
       selectInterface = 'alert';
     }
 
@@ -278,7 +279,7 @@ export class Select {
     }
 
     if (selectInterface === 'popover') {
-      return this.openPopover(ev);
+      return this.openPopover(ev!);
     }
 
     if (selectInterface === 'action-sheet') {
@@ -288,6 +289,14 @@ export class Select {
     return this.openAlert();
   }
 
+  private getLabel() {
+    const item = this.el.closest('ion-item');
+    if (item) {
+      return item.querySelector('ion-label');
+    }
+    return null;
+  }
+
   private async openPopover(ev: UIEvent) {
     const interfaceOptions = this.interfaceOptions;
 
@@ -295,6 +304,8 @@ export class Select {
       ...interfaceOptions,
 
       component: 'ion-select-popover',
+      cssClass: ['select-popover', interfaceOptions.cssClass],
+      event: ev,
       componentProps: {
         header: interfaceOptions.header,
         subHeader: interfaceOptions.subHeader,
@@ -312,9 +323,7 @@ export class Select {
             }
           } as SelectPopoverOption;
         })
-      },
-      cssClass: ['select-popover', interfaceOptions.cssClass],
-      ev
+      }
     };
 
     const popover = this.overlay = await this.popoverCtrl.create(popoverOpts);
@@ -363,18 +372,20 @@ export class Select {
     const labelText = (label) ? label.textContent : null;
 
     const interfaceOptions = this.interfaceOptions;
+    const inputType = (this.multiple ? 'checkbox' : 'radio');
+
     const alertOpts: AlertOptions = {
       ...interfaceOptions,
 
       header: interfaceOptions.header ? interfaceOptions.header : labelText,
       inputs: this.childOpts.map(o => {
         return {
-          type: (this.multiple ? 'checkbox' : 'radio'),
+          type: inputType,
           label: o.textContent,
           value: o.value,
           checked: o.selected,
           disabled: o.disabled
-        } as AlertInput;
+        };
       }),
       buttons: [
         {
@@ -405,10 +416,10 @@ export class Select {
   /**
    * Close the select interface.
    */
-  private close(): Promise<void> {
+  private close(): Promise<boolean> {
     // TODO check !this.overlay || !this.isFocus()
     if (!this.overlay) {
-      return Promise.resolve();
+      return Promise.resolve(false);
     }
 
     const overlay = this.overlay;
@@ -418,15 +429,15 @@ export class Select {
     return overlay.dismiss();
   }
 
-  onKeyUp() {
+  private onKeyUp = () => {
     this.keyFocus = true;
   }
 
-  onFocus() {
+  private onFocus = () => {
     this.ionFocus.emit();
   }
 
-  onBlur() {
+  private onBlur = () => {
     this.keyFocus = false;
     this.ionBlur.emit();
   }
@@ -435,14 +446,14 @@ export class Select {
     if (Array.isArray(this.value)) {
       return this.value.length > 0;
     }
-    return (this.value !== null && this.value !== undefined && this.value !== '');
+    return (this.value != null && this.value !== undefined && this.value !== '');
   }
 
   private emitStyle() {
     this.ionStyle.emit({
       'interactive': true,
       'select': true,
-      'input-has-value': this.hasValue(),
+      'has-value': this.hasValue(),
       'interactive-disabled': this.disabled,
       'select-disabled': this.disabled
     });
@@ -451,8 +462,7 @@ export class Select {
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, 'select'),
-        'in-item': hostContext('.item', this.el),
+        'in-item': hostContext('ion-item', this.el),
         'select-disabled': this.disabled,
         'select-key': this.keyFocus
       }
@@ -465,7 +475,7 @@ export class Select {
     let addPlaceholderClass = false;
 
     let selectText = this.selectedText || this.text;
-    if (!selectText && this.placeholder) {
+    if (selectText === '' && this.placeholder != null) {
       selectText = this.placeholder;
       addPlaceholderClass = true;
     }
@@ -479,7 +489,9 @@ export class Select {
       <div
         role="textbox"
         aria-multiline="false"
-        class={ selectTextClasses }>{ selectText }
+        class={selectTextClasses}
+      >
+        {selectText}
       </div>,
       <div class="select-icon" role="presentation">
         <div class="select-icon-inner"></div>
@@ -492,12 +504,13 @@ export class Select {
         aria-expanded={this.isExpanded ? 'true' : null}
         aria-disabled={this.disabled ? 'true' : null}
         onClick={this.open.bind(this)}
-        onKeyUp={this.onKeyUp.bind(this)}
-        onFocus={this.onFocus.bind(this)}
-        onBlur={this.onBlur.bind(this)}
-        class="select-cover">
+        onKeyUp={this.onKeyUp}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+        class="select-cover"
+      >
         <slot></slot>
-        { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
+        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </button>
     ];
   }

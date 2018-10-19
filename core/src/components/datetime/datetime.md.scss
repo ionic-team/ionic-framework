@@ -4,12 +4,10 @@
 // Material Design Datetime
 // --------------------------------------------------
 
-.datetime-md {
-  @include padding($datetime-md-padding-top, $datetime-md-padding-end, $datetime-md-padding-bottom, $datetime-md-padding-start);
-
-  font-family: $datetime-md-font-family;
-}
-
-.datetime-md .datetime-placeholder {
-  color: $datetime-md-placeholder-color;
+:host {
+  --placeholder-color: #{$datetime-md-placeholder-color};
+  --padding-top: #{$datetime-md-padding-top};
+  --padding-end: #{$datetime-md-padding-end};
+  --padding-bottom: #{$datetime-md-padding-bottom};
+  --padding-start: #{$datetime-md-padding-start};
 }

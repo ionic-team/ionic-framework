@@ -5,16 +5,19 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: var(--ion-item-background, transparent);
-  --ion-color-contrast: #{$item-ios-text-color};
-  --ion-color-tint: #{$item-ios-background-color-active};
-  --ion-color-shade: #{$item-ios-border-bottom-color};
   --transition: background-color 200ms linear;
   --padding-start: #{$item-ios-padding-start};
   --inner-padding-end: #{$item-ios-padding-end / 2};
-  --inner-border-width: #{0 0 $item-ios-border-bottom-width 0};
+  --inner-border-width: #{0px 0px $item-ios-border-bottom-width 0px};
+  --background: var(--ion-item-background-color, transparent);
+  --background-activated: #{$item-ios-background-color-active};
+  --border-color: #{$item-ios-border-bottom-color};
+  --color: #{$item-ios-text-color};
+  --highlight-height: 0;
+  --highlight-color-focused: #{$item-ios-input-highlight-color};
+  --highlight-color-valid: #{$item-ios-input-highlight-color-valid};
+  --highlight-color-invalid: #{$item-ios-input-highlight-color-invalid};
 
-  font-family: $item-ios-font-family;
   font-size: $item-ios-font-size;
 }
 
@@ -22,24 +25,28 @@
   --transition: none;
 }
 
-@media screen and (orientation: landscape) {
-  .item-inner {
-    @include safe-area-padding-horizontal(var(--inner-padding-start), var(--inner-padding-end));
-  }
-}
-
 
 // iOS Item Lines
 // --------------------------------------------------
 
+// Default input items have an inset border
+:host(.item-interactive) {
+  --show-full-highlight: 0;
+  --show-inset-highlight: 1;
+}
+
 // Full lines - apply the border to the item
 // Inset lines - apply the border to the item inner
 :host(.item-lines-full) {
-  --border-width: #{0 0 $item-ios-border-bottom-width 0};
+  --border-width: #{0px 0px $item-ios-border-bottom-width 0px};
+  --show-full-highlight: 1;
+  --show-inset-highlight: 0;
 }
 
 :host(.item-lines-inset) {
-  --inner-border-width: #{0 0 $item-ios-border-bottom-width 0};
+  --inner-border-width: #{0px 0px $item-ios-border-bottom-width 0px};
+  --show-full-highlight: 0;
+  --show-inset-highlight: 1;
 }
 
 // Full lines - remove the border from the item inner (inset list items)
@@ -47,12 +54,14 @@
 // No lines - remove the border on both (full / inset list items)
 :host(.item-lines-inset),
 :host(.item-lines-none) {
-  --border-width: 0;
+  --border-width: 0px;
+  --show-full-highlight: 0;
 }
 
 :host(.item-lines-full),
 :host(.item-lines-none) {
-  --inner-border-width: 0;
+  --inner-border-width: 0px;
+  --show-inset-highlight: 0;
 }
 
 
@@ -82,8 +91,8 @@
 // --------------------------------------------------
 
 ::slotted(.button-small) {
-  --padding-top: 0;
-  --padding-bottom: 0;
+  --padding-top: 0px;
+  --padding-bottom: 0px;
   --padding-start: .5em;
   --padding-end: .5em;
   --height: 24px;
@@ -115,16 +124,6 @@
   @include margin(($item-ios-padding-end / 2));
 }
 
-// iOS Item Detail Push
-// --------------------------------------------------
-
-.item-detail-icon {
-  color: var(--detail-push-color);
-
-  font-size: 20px;
-}
-
-
 // TODO: MOVE FROM RADIO
 // iOS Radio Item Label: Checked
 // -----------------------------------------
@@ -136,7 +135,7 @@
 
 :host(.item-radio) ::slotted(ion-label),
 :host(.item-toggle) ::slotted(ion-label) {
-  @include margin-horizontal(0, null);
+  @include margin-horizontal(0px, null);
 }
 
 
@@ -146,11 +145,14 @@
 :host(.item-label-stacked) ::slotted(ion-input),
 :host(.item-label-floating) ::slotted(ion-input),
 :host(.item-label-stacked) ::slotted(ion-textarea),
-:host(.item-label-floating) ::slotted(ion-textarea) {
+:host(.item-label-floating) ::slotted(ion-textarea),
+:host(.item-label-stacked) ::slotted(ion-select),
+:host(.item-label-floating) ::slotted(ion-select) {
   --padding-top: 8px;
   --padding-bottom: 8px;
-  --padding-start: 0;
+  --padding-start: 0px;
 }
+
 
 
 // TODO

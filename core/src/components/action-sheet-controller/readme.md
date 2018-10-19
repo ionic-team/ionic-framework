@@ -7,19 +7,48 @@ Action Sheet controllers programmatically control the action sheet component. Ac
 
 ## Methods
 
-#### create()
+### `create(opts: ActionSheetOptions) => Promise<HTMLIonActionSheetElement>`
 
 Create an action sheet overlay with action sheet options.
 
+#### Parameters
 
-#### dismiss()
+| Name   | Type                 | Description |
+| ------ | -------------------- | ----------- |
+| `opts` | `ActionSheetOptions` |             |
+
+#### Returns
+
+Type: `Promise<HTMLIonActionSheetElement>`
+
+
+
+### `dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>`
 
 Dismiss the open action sheet overlay.
 
+#### Parameters
 
-#### getTop()
+| Name   | Type                  | Description |
+| ------ | --------------------- | ----------- |
+| `data` | `any`                 |             |
+| `role` | `string \| undefined` |             |
+| `id`   | `string \| undefined` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `getTop() => Promise<HTMLIonActionSheetElement | undefined>`
 
 Get the most recently opened action sheet overlay.
+
+#### Returns
+
+Type: `Promise<HTMLIonActionSheetElement | undefined>`
+
 
 
 

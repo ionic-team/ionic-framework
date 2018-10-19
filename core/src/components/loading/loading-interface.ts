@@ -1,10 +1,18 @@
+import { AnimationBuilder, SpinnerTypes } from '../../interface';
 
 export interface LoadingOptions {
-  spinner?: string;
-  content?: string;
+  spinner?: SpinnerTypes;
+  message?: string;
   cssClass?: string | string[];
   showBackdrop?: boolean;
-  dismissOnPageChange?: boolean;
   duration?: number;
   translucent?: boolean;
+  animated?: boolean;
+
+  mode?: string;
+  keyboardClose?: boolean;
+  id?: string;
+
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
 }

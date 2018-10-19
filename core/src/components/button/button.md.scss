@@ -5,9 +5,6 @@
 // --------------------------------------------------
 
 :host {
-  --transition: #{box-shadow $button-md-transition-duration $button-md-transition-timing-function,
-              background-color $button-md-transition-duration $button-md-transition-timing-function,
-              color $button-md-transition-duration $button-md-transition-timing-function};
   --border-radius: #{$button-md-border-radius};
   --margin-top: #{$button-md-margin-top};
   --margin-bottom: #{$button-md-margin-bottom};
@@ -18,8 +15,10 @@
   --padding-start: #{$button-md-padding-start};
   --padding-end: #{$button-md-padding-end};
   --height: #{$button-md-height};
+  --transition: #{box-shadow $button-md-transition-duration $button-md-transition-timing-function,
+                  background-color $button-md-transition-duration $button-md-transition-timing-function,
+                  color $button-md-transition-duration $button-md-transition-timing-function};
 
-  font-family: #{$button-md-font-family};
   font-size: #{$button-md-font-size};
   font-weight: #{$button-md-font-weight};
 
@@ -37,7 +36,6 @@
 
 :host(.button-solid.activated) {
   --box-shadow: #{$button-md-box-shadow-activated};
-  --background: #{current-color(shade)};
 }
 
 // Material Design Outline Button
@@ -47,14 +45,13 @@
   --border-width: 1px;
   --border-style: solid;
   --box-shadow: none;
+  --background-activated: transparent;
+  --background-focused: #{ion-color(primary, base, .1)};
+  --color-activated: #{ion-color(primary, base)};
 }
 
-:host(.button-outline.activated) {
-  --background: transparent;
-}
-
-:host(.button-outline.focused) {
-  --background: #{current-color(base, .1)};
+:host(.button-outline.activated.ion-color) .button-native {
+  background: transparent;
 }
 
 
@@ -63,6 +60,10 @@
 
 :host(.button-clear) {
   --opacity: #{$button-md-clear-opacity};
+  --background-activated: transparent;
+  --background-focused: #{ion-color(primary, base, .1)};
+  --color-activated: #{ion-color(primary, base)};
+  --color-focused: #{ion-color(primary, base)};
 }
 
 

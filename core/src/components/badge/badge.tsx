@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -11,7 +11,7 @@ import { createColorClasses } from '../../utils/theme';
   },
   shadow: true
 })
-export class Badge {
+export class Badge implements ComponentInterface {
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.

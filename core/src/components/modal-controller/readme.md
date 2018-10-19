@@ -8,19 +8,48 @@ Modal controllers programmatically control the modal component. Modals can be cr
 
 ## Methods
 
-#### create()
+### `create<T extends ComponentRef>(opts: ModalOptions<T>) => Promise<HTMLIonModalElement>`
 
 Create a modal overlay with modal options.
 
+#### Parameters
 
-#### dismiss()
+| Name   | Type              | Description |
+| ------ | ----------------- | ----------- |
+| `opts` | `ModalOptions<T>` |             |
+
+#### Returns
+
+Type: `Promise<HTMLIonModalElement>`
+
+
+
+### `dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>`
 
 Dismiss the open modal overlay.
 
+#### Parameters
 
-#### getTop()
+| Name   | Type                  | Description |
+| ------ | --------------------- | ----------- |
+| `data` | `any`                 |             |
+| `role` | `string \| undefined` |             |
+| `id`   | `string \| undefined` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `getTop() => Promise<HTMLIonModalElement | undefined>`
 
 Get the most recently opened modal overlay.
+
+#### Returns
+
+Type: `Promise<HTMLIonModalElement | undefined>`
+
 
 
 

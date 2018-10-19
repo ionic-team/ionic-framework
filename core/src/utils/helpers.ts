@@ -9,13 +9,21 @@ export function reorderArray(array: any[], indexes: {from: number, to: number}):
   return array;
 }
 
+export function rIC(callback: () => void) {
+  if ('requestIdleCallback' in window) {
+    (window as any).requestIdleCallback(callback);
+  } else {
+    setTimeout(callback, 32);
+  }
+}
+
 export function hasShadowDom(el: HTMLElement) {
-  return !!el.shadowRoot && !!el.attachShadow;
+  return !!el.shadowRoot && !!(el as any).attachShadow;
 }
 
 export function renderHiddenInput(container: HTMLElement, name: string, value: string, disabled: boolean) {
   if (hasShadowDom(container)) {
-    let input = container.querySelector('input.aux-input') as HTMLInputElement;
+    let input = container.querySelector('input.aux-input') as HTMLInputElement | null;
     if (!input) {
       input = container.ownerDocument.createElement('input');
       input.type = 'hidden';

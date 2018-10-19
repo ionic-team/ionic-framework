@@ -1,23 +1,29 @@
 @import "../../themes/ionic.globals";
 
 :host {
+  @include padding-horizontal(
+    var(--ion-safe-area-left),
+    var(--ion-safe-area-right)
+  );
+
   display: flex;
-  position: relative;
 
   align-items: center;
   justify-content: center;
   order: 1;
 
-  width: 100%;
+  width: auto;
 
   background: var(--background);
   color: var(--color);
 
+  user-select: none;
+
   z-index: $z-index-toolbar;
+  box-sizing: content-box;
 }
 
-:host(.ion-color),
-:host(.ion-color) ion-tab-button {
+:host(.ion-color) {
   --background: #{current-color(base)};
   --color: #{current-color(contrast, .7)};
   --color-selected: #{current-color(contrast)};
@@ -32,12 +38,9 @@
   order: -1;
 }
 
-@supports (padding-top: env(safe-area-inset-top)) {
-  :host(.placement-bottom) {
-    @include padding(null, null, env(safe-area-inset-bottom));
-  }
+:host(.placement-bottom) {
+  padding-bottom: var(--ion-safe-area-bottom, 0);
 }
-
 
 
 // Tab Highlight
@@ -74,20 +77,43 @@
 }
 
 
-// Overflow Scrolling
+// Tab Layout
 // --------------------------------------------------
 
-ion-scroll {
-  overflow: hidden;
-}
-
-.scroll-inner {
-  display: flex;
-  position: relative;
-
+:host(.layout-icon-start) .tab-btn {
   flex-direction: row;
 }
 
-ion-button.inactive {
-  visibility: hidden;
+:host(.layout-icon-end) .tab-btn {
+  flex-direction: row-reverse;
+}
+
+:host(.layout-icon-bottom) .tab-btn {
+  flex-direction: column-reverse;
+}
+
+:host(.layout-icon-start) .tab-btn,
+:host(.layout-icon-end) .tab-btn,
+:host(.layout-icon-hide) .tab-btn,
+:host(.layout-label-hide) .tab-btn {
+  justify-content: center;
+}
+
+:host(.layout-icon-hide) {
+  --icon-display: none;
+}
+
+:host(.layout-label-hide) {
+  --label-display: none;
+}
+
+:host(.layout-icon-top) .tab-btn,
+:host(.layout-icon-bottom) .tab-btn {
+  --badge-end: #{calc(50% - 30px)};
+}
+
+:host(.layout-icon-hide) .tab-btn,
+:host(.layout-icon-start) .tab-btn,
+:host(.layout-icon-end) .tab-btn {
+  --badge-end: #{calc(50% - 50px)};
 }

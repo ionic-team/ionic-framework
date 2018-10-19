@@ -1,14 +1,10 @@
 @import "./buttons.md.vars";
 @import "./buttons";
 
-// Material Design Toolbar Button Default
+// Material Design Toolbar Default Button
 // --------------------------------------------------
 
-:host {
-  @include margin(0, 2px);
-}
-
-::slotted(*) .button {
+::slotted(*) ion-button {
   --padding-top: 0;
   --padding-bottom: 0;
   --padding-start: 8px;
@@ -20,9 +16,52 @@
   font-weight: 500;
 }
 
-::slotted(*) .button:not(.button-round) {
+::slotted(*) ion-button:not(.button-round) {
   --border-radius: #{$toolbar-md-button-border-radius};
 }
+
+
+// Material Design Toolbar w/ Color Default Button
+// --------------------------------------------------
+
+:host-context(.ion-color)::slotted(*) .button {
+  --color: currentColor;
+  --color-activated: currentColor;
+}
+
+
+// Material Design Toolbar Solid Button
+// --------------------------------------------------
+
+::slotted(*) .button-solid {
+  --color: #{$toolbar-md-background-color};
+  --color-activated: #{$toolbar-md-background-color};
+  --background: #{$toolbar-md-text-color};
+  --background-activated: #{$toolbar-md-text-color};
+}
+
+
+// Material Design Toolbar Outline Button
+// --------------------------------------------------
+
+::slotted(*) .button-outline {
+  --color: currentColor;
+  --color-activated: currentColor;
+  --background: transparent;
+  --background-activated: transparent;
+  --border-color: currentColor;
+}
+
+
+// Material Design Toolbar Clear Button
+// --------------------------------------------------
+
+::slotted(*) .button-clear {
+  --color: currentColor;
+  --color-activated: currentColor;
+  --background: transparent;
+}
+
 
 // Material Design Toolbar Button Icon
 // --------------------------------------------------
@@ -31,7 +70,6 @@
   @include margin-horizontal(null, .3em);
 
   font-size: 1.4em;
-  pointer-events: none;
 }
 
 ::slotted(*) ion-icon[slot="end"] {
@@ -39,7 +77,6 @@
   @include margin-horizontal(.4em, null);
 
   font-size: 1.4em;
-  pointer-events: none;
 }
 
 ::slotted(*) ion-icon[slot="icon-only"] {
@@ -47,19 +84,6 @@
   @include margin(0);
 
   font-size: 1.8em;
-  pointer-events: none;
-}
-
-::slotted(*) .button.button-solid,
-::slotted(*) .button.button-outline {
-  --ion-color-base: #{$toolbar-md-text-color};
-  --ion-color-contrast: #{$toolbar-md-background-color};
-  --ion-color-shade: #{$toolbar-md-text-color};
-}
-
-::slotted(*) .button.button-clear {
-  --ion-color-base: currentColor;
-  --height: 45px;
 }
 
 

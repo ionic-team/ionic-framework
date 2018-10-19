@@ -1,16 +1,25 @@
+import { AnimationBuilder } from '../../interface';
+
+export interface PickerOptions {
+  columns: PickerColumn[];
+  buttons?: PickerButton[];
+  cssClass?: string | string[];
+  backdropDismiss?: boolean;
+  animated?: boolean;
+
+  mode?: string;
+  keyboardClose?: boolean;
+  id?: string;
+
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
+}
 
 export interface PickerButton {
   text?: string;
   role?: string;
   cssClass?: string | string[];
   handler?: (value: any) => boolean | void;
-}
-
-export interface PickerOptions {
-  buttons?: PickerButton[];
-  columns?: PickerColumn[];
-  cssClass?: string | string[];
-  enableBackdropDismiss?: boolean;
 }
 
 export interface PickerColumn {

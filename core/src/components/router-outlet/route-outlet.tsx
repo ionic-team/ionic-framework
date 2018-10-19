@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi } from '@stencil/core';
 
 import { AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, NavOutlet, RouteID, RouteWrite, RouterOutletOptions } from '../../interface';
 import { transition } from '../../utils';
@@ -9,11 +9,11 @@ import { attachComponent, detachComponent } from '../../utils/framework-delegate
   styleUrl: 'route-outlet.scss',
   shadow: true
 })
-export class RouterOutlet implements NavOutlet {
+export class RouterOutlet implements ComponentInterface, NavOutlet {
 
-  private isTransitioning = false;
   private activeEl: HTMLElement | undefined;
   private activeComponent: any;
+  private waitPromise?: Promise<void>;
 
   mode!: Mode;
 
@@ -24,19 +24,36 @@ export class RouterOutlet implements NavOutlet {
   @Prop({ context: 'window' }) win!: Window;
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
-  @Prop({ mutable: true }) animated?: boolean;
-  @Prop() animationBuilder?: AnimationBuilder;
+  /** @internal */
   @Prop() delegate?: FrameworkDelegate;
 
+  /**
+   * If `true`, the router-outlet should animate the transition of components. Default to `true`.
+   */
+  @Prop() animated = true;
+
+  /**
+   * By default `ion-nav` animates transition between pages based in the mode (ios or material design).
+   * However, this property allows to create custom transition using `AnimateBuilder` functions.
+   */
+  @Prop() animation?: AnimationBuilder;
+
+  /**
+   * @internal
+   */
   @Event() ionNavWillLoad!: EventEmitter<void>;
+
+  /**
+   * @internal
+   */
   @Event() ionNavWillChange!: EventEmitter<void>;
+
+  /**
+   * @internal
+   */
   @Event() ionNavDidChange!: EventEmitter<void>;
 
   componentWillLoad() {
-    if (this.animated === undefined) {
-      this.animated = this.config.getBoolean('animate', true);
-    }
-
     this.ionNavWillLoad.emit();
   }
 
@@ -49,62 +66,41 @@ export class RouterOutlet implements NavOutlet {
    */
   @Method()
   async setRoot(component: ComponentRef, params?: ComponentProps, opts?: RouterOutletOptions): Promise<boolean> {
-    if (this.isTransitioning || this.activeComponent === component) {
+    if (this.activeComponent === component) {
       return false;
     }
-    this.activeComponent = component;
 
     // attach entering view to DOM
-    const enteringEl = await attachComponent(this.delegate, this.el, component, ['ion-page', 'ion-page-invisible'], params);
     const leavingEl = this.activeEl;
+    const enteringEl = await attachComponent(this.delegate, this.el, component, ['ion-page', 'ion-page-invisible'], params);
+
+    this.activeComponent = component;
+    this.activeEl = enteringEl;
 
     // commit animation
     await this.commit(enteringEl, leavingEl, opts);
-
-    // remove leaving view
-    this.activeEl = enteringEl;
-    detachComponent(this.delegate, leavingEl);
+    await detachComponent(this.delegate, leavingEl);
 
     return true;
   }
 
-  /** @hidden */
+  /** @internal */
   @Method()
   async commit(enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions): Promise<boolean> {
-    // isTransitioning acts as a lock to prevent reentering
-    if (this.isTransitioning || leavingEl === enteringEl) {
-      return false;
+    const unlock = await this.lock();
+    let changed = false;
+    try {
+      changed = await this.transition(enteringEl, leavingEl, opts);
+    } catch (e) {
+      console.error(e);
     }
-    this.isTransitioning = true;
-
-    // emit nav will change event
-    this.ionNavWillChange.emit();
-
-    opts = opts || {};
-
-    const { mode, queue, animated, animationCtrl, win, el } = this;
-    await transition({
-      mode,
-      queue,
-      animated,
-      animationCtrl,
-      window: win,
-      enteringEl,
-      leavingEl,
-      baseEl: el,
-
-      ...opts
-    });
-    this.isTransitioning = false;
-
-    // emit nav changed event
-    this.ionNavDidChange.emit();
-    return true;
+    unlock();
+    return changed;
   }
 
-  /** @hidden */
+  /** @internal */
   @Method()
-  async setRouteId(id: string, params: any, direction: number): Promise<RouteWrite> {
+  async setRouteId(id: string, params: ComponentProps | undefined, direction: number): Promise<RouteWrite> {
     const changed = await this.setRoot(id, params, {
       duration: direction === 0 ? 0 : undefined,
       direction: direction === -1 ? 'back' : 'forward',
@@ -115,14 +111,60 @@ export class RouterOutlet implements NavOutlet {
     };
   }
 
-  /** Returns the ID for the current route */
+  /** @internal */
   @Method()
-  getRouteId(): RouteID | undefined {
+  async getRouteId(): Promise<RouteID | undefined> {
     const active = this.activeEl;
     return active ? {
       id: active.tagName,
       element: active,
     } : undefined;
+  }
+
+  private async lock() {
+    const p = this.waitPromise;
+    let resolve!: () => void;
+    this.waitPromise = new Promise(r => resolve = r);
+
+    if (p !== undefined) {
+      await p;
+    }
+    return resolve;
+  }
+
+  async transition(enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions): Promise<boolean> {
+    // isTransitioning acts as a lock to prevent reentering
+    if (leavingEl === enteringEl) {
+      return false;
+    }
+
+    // emit nav will change event
+    this.ionNavWillChange.emit();
+
+    opts = opts || {};
+
+    const { mode, queue, animationCtrl, win, el } = this;
+    const animated = this.animated && this.config.getBoolean('animated', true);
+    const animationBuilder = this.animation || opts.animationBuilder || this.config.get('navAnimation');
+
+    await transition({
+      mode,
+      queue,
+      animated,
+      animationCtrl,
+      animationBuilder,
+      window: win,
+      enteringEl,
+      leavingEl,
+      baseEl: el,
+
+      ...opts
+    });
+
+    // emit nav changed event
+    this.ionNavDidChange.emit();
+
+    return true;
   }
 
   render() {

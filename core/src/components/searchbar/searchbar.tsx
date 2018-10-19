@@ -1,6 +1,6 @@
-import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
-import { Color, InputChangeEvent, Mode } from '../../interface';
+import { Color, Config, Mode, TextInputChangeEvent } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
@@ -12,7 +12,7 @@ import { createColorClasses } from '../../utils/theme';
   },
   scoped: true
 })
-export class Searchbar {
+export class Searchbar implements ComponentInterface {
 
   private nativeInput!: HTMLInputElement;
   private isCancelVisible = false;
@@ -20,6 +20,7 @@ export class Searchbar {
 
   @Element() el!: HTMLElement;
 
+  @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'document' }) doc!: Document;
 
   @State() focused = false;
@@ -38,19 +39,19 @@ export class Searchbar {
   @Prop() mode!: Mode;
 
   /**
-   * If true, enable searchbar animation. Default `false`.
+   * If `true`, enable searchbar animation. Default `false`.
    */
   @Prop() animated = false;
 
   /**
-   * Set the input's autocomplete property. Values: `"on"`, `"off"`. Default `"off"`.
+   * Set the input's autocomplete property. Default `"off"`.
    */
-  @Prop() autocomplete = 'off';
+  @Prop() autocomplete: 'on' | 'off' = 'off';
 
   /**
-   * Set the input's autocorrect property. Values: `"on"`, `"off"`. Default `"off"`.
+   * Set the input's autocorrect property. Default `"off"`.
    */
-  @Prop() autocorrect = 'off';
+  @Prop() autocorrect: 'on' | 'off' = 'off';
 
   /**
    * Set the cancel button icon. Only applies to `md` mode. Defaults to `"md-arrow-back"`.
@@ -88,12 +89,12 @@ export class Searchbar {
   @Prop() searchIcon?: string;
 
   /**
-   * If true, show the cancel button. Default `false`.
+   * If `true`, show the cancel button. Default `false`.
    */
   @Prop() showCancelButton = false;
 
   /**
-   * If true, enable spellcheck on the input. Default `false`.
+   * If `true`, enable spellcheck on the input. Default `false`.
    */
   @Prop() spellcheck = false;
 
@@ -115,7 +116,7 @@ export class Searchbar {
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange!: EventEmitter<InputChangeEvent>;
+  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
 
   /**
    * Emitted when the cancel button is clicked.
@@ -153,9 +154,18 @@ export class Searchbar {
   }
 
   /**
+   * Sets focus on the specified `ion-searchbar`. Use this method instead of the global
+   * `input.focus()`.
+   */
+  @Method()
+  setFocus() {
+    this.nativeInput.focus();
+  }
+
+  /**
    * Clears the input field and triggers the control change.
    */
-  private clearInput(ev?: Event) {
+  private onClearInput = (ev?: Event) => {
     this.ionClear.emit();
 
     if (ev) {
@@ -167,7 +177,7 @@ export class Searchbar {
     // wait for 4 frames
     setTimeout(() => {
       const value = this.value;
-      if (value !== undefined && value !== '') {
+      if (value !== '') {
         this.value = '';
         this.ionInput.emit();
       }
@@ -179,27 +189,33 @@ export class Searchbar {
    * the clearInput function doesn't want the input to blur
    * then calls the custom cancel function if the user passed one in.
    */
-  private cancelSearchbar() {
+  private onCancelSearchbar = (ev?: Event) => {
+    if (ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+    }
     this.ionCancel.emit();
-    this.clearInput();
+    this.onClearInput();
+
+    this.nativeInput.blur();
   }
 
   /**
    * Update the Searchbar input value when the input changes
    */
-  private onInput(ev: KeyboardEvent) {
-    const input = ev.target as HTMLInputElement;
+  private onInput = (ev: Event) => {
+    const input = ev.target as HTMLInputElement | null;
     if (input) {
       this.value = input.value;
     }
-    this.ionInput.emit(ev);
+    this.ionInput.emit(ev as KeyboardEvent);
   }
 
   /**
    * Sets the Searchbar to not focused and checks if it should align left
    * based on whether there is a value in the searchbar or not.
    */
-  private onBlur() {
+  private onBlur = () => {
     this.focused = false;
     this.ionBlur.emit();
     this.positionElements();
@@ -208,7 +224,7 @@ export class Searchbar {
   /**
    * Sets the Searchbar to focused and active on input focus.
    */
-  private onFocus() {
+  private onFocus = () => {
     this.focused = true;
     this.ionFocus.emit();
     this.positionElements();
@@ -220,7 +236,7 @@ export class Searchbar {
    */
   private positionElements() {
     const prevAlignLeft = this.shouldAlignLeft;
-    const shouldAlignLeft = (!this.animated || (this.value && this.value.toString().trim() !== '') || this.focused === true);
+    const shouldAlignLeft = (!this.animated || (this.value && this.value.toString().trim() !== '') || !!this.focused);
     this.shouldAlignLeft = shouldAlignLeft;
 
     if (this.mode !== 'ios') {
@@ -310,7 +326,7 @@ export class Searchbar {
     return {
       class: {
         ...createColorClasses(this.color),
-        'searchbar-animated': this.animated,
+        'searchbar-animated': this.animated && this.config.getBoolean('animated', true),
         'searchbar-has-value': (this.value !== ''),
         'searchbar-show-cancel': this.showCancelButton,
         'searchbar-left-aligned': this.shouldAlignLeft,
@@ -323,45 +339,49 @@ export class Searchbar {
     const clearIcon = this.clearIcon || (this.mode === 'ios' ? 'ios-close-circle' : 'md-close');
     const searchIcon = this.searchIcon || 'search';
 
-    const cancelButton = (this.showCancelButton)
-      ? <button
+    const cancelButton = this.showCancelButton && (
+      <button
         type="button"
         tabIndex={this.mode === 'ios' && !this.focused ? -1 : undefined}
-        onClick={this.cancelSearchbar.bind(this)}
-        class="searchbar-cancel-button">
-          { this.mode === 'md'
-            ? <ion-icon mode={this.mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
-            : this.cancelButtonText }
+        onMouseDown={this.onCancelSearchbar}
+        onTouchStart={this.onCancelSearchbar}
+        class="searchbar-cancel-button"
+      >
+        { this.mode === 'md'
+          ? <ion-icon mode={this.mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
+          : this.cancelButtonText
+        }
       </button>
-      : null;
+    );
 
     return [
       <div class="searchbar-input-container">
         <input
           ref={el => this.nativeInput = el as HTMLInputElement}
           class="searchbar-input"
-          onInput={this.onInput.bind(this)}
-          onBlur={this.onBlur.bind(this)}
-          onFocus={this.onFocus.bind(this)}
+          onInput={this.onInput}
+          onBlur={this.onBlur}
+          onFocus={this.onFocus}
           placeholder={this.placeholder}
           type={this.type}
           value={this.value}
           autoComplete={this.autocomplete}
           autoCorrect={this.autocorrect}
-          spellCheck={this.spellcheck}/>
+          spellCheck={this.spellcheck}
+        />
 
-        { this.mode === 'md' && cancelButton }
+        {this.mode === 'md' && cancelButton}
 
         <ion-icon mode={this.mode} icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
 
         <button
           type="button"
-          no-blur={true}
+          no-blur
           class="searchbar-clear-button"
-          onClick={this.clearInput.bind(this)}
-          onMouseDown={this.clearInput.bind(this)}
-          onTouchStart={this.clearInput.bind(this)}>
-            <ion-icon mode={this.mode} icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
+          onMouseDown={this.onClearInput}
+          onTouchStart={this.onClearInput}
+        >
+          <ion-icon mode={this.mode} icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
         </button>
       </div>,
       this.mode === 'ios' && cancelButton

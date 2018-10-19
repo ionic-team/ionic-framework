@@ -1,6 +1,6 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
 
-import { Config, RouteChain, RouterDirection, RouterEventDetail } from '../../interface';
+import { BackButtonEvent, Config, RouteChain, RouterDirection, RouterEventDetail } from '../../interface';
 import { debounce } from '../../utils/helpers';
 
 import { RouterIntent } from './utils/constants';
@@ -13,12 +13,13 @@ import { chainToPath, generatePath, parsePath, readPath, writePath } from './uti
 @Component({
   tag: 'ion-router'
 })
-export class Router {
+export class Router implements ComponentInterface {
 
   private previousPath: string | null = null;
   private busy = false;
   private state = 0;
   private lastState = 0;
+  private waitPromise?: Promise<void>;
 
   @Element() el!: HTMLElement;
 
@@ -41,7 +42,7 @@ export class Router {
    * Using one or another might depend in the requirements of your app and/or where it's deployed.
    *
    * Usually "hash-less" navigation works better for SEO and it's more user friendly too, but it might
-   * requires aditional server-side configuration in order to properly work.
+   * requires additional server-side configuration in order to properly work.
    *
    * On the otherside hash-navigation is much easier to deploy, it even works over the file protocol.
    *
@@ -65,10 +66,11 @@ export class Router {
     console.debug('[ion-router] found nav');
 
     await this.onRoutesChanged();
+  }
 
+  componentDidLoad() {
     this.win.addEventListener('ionRouteRedirectChanged', debounce(this.onRedirectChanged.bind(this), 10));
     this.win.addEventListener('ionRouteDataChanged', debounce(this.onRoutesChanged.bind(this), 100));
-    this.onRedirectChanged();
   }
 
   @Listen('window:popstate')
@@ -79,18 +81,37 @@ export class Router {
     return this.writeNavStateRoot(path, direction);
   }
 
-  /** Navigate to the specified URL */
+  @Listen('document:ionBackButton')
+  protected onBackButton(ev: BackButtonEvent) {
+    ev.detail.register(0, () => this.goBack());
+  }
+
+  /**
+   * Navigate to the specified URL.
+   */
   @Method()
   push(url: string, direction: RouterDirection = 'forward') {
-    const path = parsePath(url);
-    const intent = DIRECTION_TO_INTENT[direction];
+    if (url.startsWith('.')) {
+      url = (new URL(url, window.location.href)).pathname;
+    }
     console.debug('[ion-router] URL pushed -> updating nav', url, direction);
 
+    const path = parsePath(url);
+    const intent = DIRECTION_TO_INTENT[direction];
     this.setPath(path, intent);
     return this.writeNavStateRoot(path, intent);
   }
 
-  /** @hidden */
+  /**
+   * Go back to previous page in the window.history.
+   */
+  @Method()
+  goBack() {
+    this.win.history.back();
+    return Promise.resolve(this.waitPromise);
+  }
+
+  /** @internal */
   @Method()
   printDebug() {
     console.debug('CURRENT PATH', this.getPath());
@@ -99,13 +120,14 @@ export class Router {
     printRedirects(readRedirects(this.el));
   }
 
-  /** @hidden */
+  /** @internal */
   @Method()
   async navChanged(intent: number): Promise<boolean> {
     if (this.busy) {
+      console.warn('[ion-router] router is busy, navChanged was cancelled');
       return false;
     }
-    const { ids, outlet } = readNavState(this.win.document.body);
+    const { ids, outlet } = await readNavState(this.win.document.body);
     const routes = readRoutes(this.el);
     const chain = routerIDsToChain(ids, routes);
     if (!chain) {
@@ -122,7 +144,7 @@ export class Router {
     console.debug('[ion-router] nav changed -> update URL', ids, path);
     this.setPath(path, intent);
 
-    await this.writeNavState(outlet, chain, RouterIntent.None, path, null, ids.length);
+    await this.safeWriteNavState(outlet, chain, RouterIntent.None, path, null, ids.length);
     return true;
   }
 
@@ -157,9 +179,6 @@ export class Router {
   }
 
   private async writeNavStateRoot(path: string[] | null, intent: RouterIntent): Promise<boolean> {
-    if (this.busy) {
-      return false;
-    }
     if (!path) {
       console.error('[ion-router] URL is not part of the routing set');
       return false;
@@ -184,7 +203,34 @@ export class Router {
     }
 
     // write DOM give
-    return this.writeNavState(this.win.document.body, chain, intent, path, redirectFrom);
+    return this.safeWriteNavState(this.win.document.body, chain, intent, path, redirectFrom);
+  }
+
+  private async safeWriteNavState(
+    node: HTMLElement | undefined, chain: RouteChain, intent: RouterIntent,
+    path: string[], redirectFrom: string[] | null,
+    index = 0
+  ): Promise<boolean> {
+    const unlock = await this.lock();
+    let changed = false;
+    try {
+      changed = await this.writeNavState(node, chain, intent, path, redirectFrom, index);
+    } catch (e) {
+      console.error(e);
+    }
+    unlock();
+    return changed;
+  }
+
+  private async lock() {
+    const p = this.waitPromise;
+    let resolve!: () => void;
+    this.waitPromise = new Promise(r => resolve = r);
+
+    if (p !== undefined) {
+      await p;
+    }
+    return resolve;
   }
 
   private async writeNavState(
@@ -193,6 +239,7 @@ export class Router {
     index = 0
   ): Promise<boolean> {
     if (this.busy) {
+      console.warn('[ion-router] router is busy, transition was cancelled');
       return false;
     }
     this.busy = true;

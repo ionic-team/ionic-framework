@@ -1,15 +1,19 @@
 import { AnimationBuilder } from '../../interface';
 
-export { Toast } from './toast';
-
 export interface ToastOptions {
   message?: string;
   cssClass?: string | string[];
   duration?: number;
   showCloseButton?: boolean;
   closeButtonText?: string;
-  position?: string;
+  position?: 'top' | 'bottom' | 'middle';
   translucent?: boolean;
+  animated?: boolean;
+
+  mode?: string;
+  keyboardClose?: boolean;
+  id?: string;
+
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }

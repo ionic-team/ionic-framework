@@ -1,14 +1,14 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 @Component({
   tag: 'ion-grid',
   styleUrl: 'grid.scss',
   shadow: true
 })
-export class Grid {
+export class Grid implements ComponentInterface {
 
   /**
-   * If true, the grid will have a fixed width based on the screen size. Defaults to `false`.
+   * If `true`, the grid will have a fixed width based on the screen size. Defaults to `false`.
    */
   @Prop() fixed = false;
 

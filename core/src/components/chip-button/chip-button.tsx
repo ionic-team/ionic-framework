@@ -1,4 +1,4 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -8,7 +8,7 @@ import { createColorClasses } from '../../utils/theme';
   styleUrl: 'chip-button.scss',
   shadow: true
 })
-export class ChipButton {
+export class ChipButton implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   /**
@@ -25,14 +25,15 @@ export class ChipButton {
   @Prop() mode!: Mode;
 
   /**
-   * If true, the user cannot interact with the chip button. Defaults to `false`.
+   * If `true`, the user cannot interact with the chip button. Defaults to `false`.
    */
   @Prop() disabled = false;
 
   /**
-   * Set to `"clear"` for a transparent button style.
+   * Set to `"clear"` for a transparent button or to `"solid"` for a filled background.
+   * Defaults to `"clear"`.
    */
-  @Prop() fill: 'clear' | 'solid' = 'solid';
+  @Prop() fill: 'clear' | 'solid' = 'clear';
 
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.
@@ -50,18 +51,19 @@ export class ChipButton {
   }
 
   render() {
-    const TagType = this.href ? 'a' : 'button';
+    const TagType = this.href === undefined ? 'button' : 'a';
 
     return (
       <TagType
         type="button"
-        class="chip-button-native"
+        class="button-native"
         disabled={this.disabled}
-        href={this.href}>
-          <span class="chip-button-inner">
-            <slot></slot>
-          </span>
-          { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
+        href={this.href}
+      >
+        <span class="button-inner">
+          <slot></slot>
+        </span>
+        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </TagType>
     );
   }

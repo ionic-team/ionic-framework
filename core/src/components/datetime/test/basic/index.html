@@ -6,7 +6,8 @@
   <title>Datetime - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
+  <script src="/scripts/screenshot/testing.js"></script>
 </head>
 
 <body>
@@ -26,6 +27,16 @@
     <ion-content id="content" class="outer-content test-content">
       <ion-list>
         <ion-item>
+          <ion-label>Default</ion-label>
+          <ion-datetime></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Max</ion-label>
+          <ion-datetime max="2018-07-29"></ion-datetime>
+        </ion-item>
+
+        <ion-item>
           <ion-label>MMMM</ion-label>
           <ion-datetime display-format="MMMM" value="2012-12-15T13:47:20.789"></ion-datetime>
         </ion-item>
@@ -43,6 +54,13 @@
         <ion-item>
           <ion-label>YYYY</ion-label>
           <ion-datetime id="customPickerOptions" placeholder="Custom Options" display-format="YYYY" min="1981" max="2002"></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Multiple</ion-label>
+          <ion-datetime value="1994-12-24" display-format="YYYY" placeholder="year"></ion-datetime>
+          <ion-datetime value="1994-12-24" display-format="MM" placeholder="month"></ion-datetime>
+          <ion-datetime value="1994-12-24" display-format="DD" placeholder="day"></ion-datetime>
         </ion-item>
 
         <ion-item>

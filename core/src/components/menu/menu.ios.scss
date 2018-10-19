@@ -4,10 +4,6 @@
 // iOS Menu
 // --------------------------------------------------
 
-.menu-inner {
-  background: $menu-ios-background;
-}
-
 :host(.menu-type-overlay) .menu-inner {
   box-shadow: $menu-ios-box-shadow-overlay;
 }
@@ -22,16 +18,4 @@
 
 :host(.menu-type-push) .show-backdrop {
   display: block;
-}
-
-// TODO: review
-// iOS Menu Content
-// --------------------------------------------------
-
-.app-ios .menu-content-reveal {
-  box-shadow: $menu-ios-box-shadow-reveal;
-}
-
-.menu-content-push {
-  box-shadow: $menu-ios-box-shadow-push;
 }

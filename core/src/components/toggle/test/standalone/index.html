@@ -6,7 +6,8 @@
   <title>Toggle - Standalone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/core.css">
+  <script src="/scripts/screenshot/testing.js"></script>
 </head>
 
 <body>
@@ -23,9 +24,17 @@
   <ion-toggle checked color="light"></ion-toggle>
   <ion-toggle checked color="medium"></ion-toggle>
   <ion-toggle checked color="dark"></ion-toggle>
+  <ion-toggle checked class="custom"></ion-toggle>
 
   <!-- Disabled -->
   <ion-toggle checked disabled></ion-toggle>
   <ion-toggle checked disabled color="secondary"></ion-toggle>
+
+  <style>
+    .custom {
+      --background-checked: papayawhip;
+      --handle-background-checked: purple;
+    }
+  </style>
 </body>
 </html>

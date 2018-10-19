@@ -15,9 +15,6 @@ $toolbar-order-ios: (
   menu-toggle-end: 7,
 );
 
-/// @prop - Font family of the toolbar
-$toolbar-ios-font-family:                           $font-family-base !default;
-
 /// @prop - Font size of the toolbar button
 $toolbar-ios-button-font-size:                      17px !default;
 
@@ -35,9 +32,6 @@ $toolbar-ios-button-strong-font-weight:             600 !default;
 
 /// @prop - Fill color of the toolbar button icon
 $toolbar-ios-button-icon-fill-color:                currentColor !default;
-
-/// @prop - Filter of the translucent toolbar
-$toolbar-ios-translucent-filter:                    saturate(180%) blur(20px) !default;
 
 
 // iOS Title

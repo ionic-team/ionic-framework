@@ -3,193 +3,117 @@
 Tabs are a top level navigation component for created multiple stacked navs.
 The component is a container of individual [Tab](../Tab/) components.
 
+`ion-tabs` is a styleless component that works as a router outlet in
+order to handle navigation. When the user does not provide a `ion-tabbar` in their markup, `ion-tabs`, by default provides one. Notice that `ion-tabbar` is the UI component that can be used to switch between tabs.
+
+In order to customize the style of the `ion-tabbar`, it should be included in the user's markup as
+direct children of `ion-tabs`, like this:
+
+```html
+<style>
+  .my-custom-tabs {
+    font-size: 20px;
+  }
+</style>
+<ion-tabs>
+  <ion-tab label="Indiana Jones"></ion-tab>
+  <ion-tab label="Star Wars"></ion-tab>
+  <ion-tab label="Jurassic Park"></ion-tab>
+
+  <ion-tabbar color="danger" layout="icon-start" placement="top"></ion-tabbar>
+</ion-tabs>
+```
 
 <!-- Auto Generated Below -->
 
 
 ## Properties
 
-#### color
-
-string
-
-The color to use from your application's color palette.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information on colors, see [theming](/docs/theming/basics).
-
-
-#### name
-
-string
-
-A unique name for the tabs.
-
-
-#### scrollable
-
-boolean
-
-If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
-
-
-#### tabbarHidden
-
-boolean
-
-If true, the tabbar will be hidden. Defaults to `false`.
-
-
-#### tabbarHighlight
-
-boolean
-
-If true, show the tab highlight bar under the selected tab.
-
-
-#### tabbarLayout
-
-string
-
-Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
-
-
-#### tabbarPlacement
-
-string
-
-Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
-
-
-#### translucent
-
-boolean
-
-If true, the tabs will be translucent.
-Note: In order to scroll content behind the tabs, the `fullscreen`
-attribute needs to be set on the content.
-Defaults to `false`.
-
-
-#### useRouter
-
-boolean
-
-If true, the tabs will use the router and `selectedTab` will not do anything.
-
-
-## Attributes
-
-#### color
-
-string
-
-The color to use from your application's color palette.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information on colors, see [theming](/docs/theming/basics).
-
-
-#### name
-
-string
-
-A unique name for the tabs.
-
-
-#### scrollable
-
-boolean
-
-If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
-
-
-#### tabbar-hidden
-
-boolean
-
-If true, the tabbar will be hidden. Defaults to `false`.
-
-
-#### tabbar-highlight
-
-boolean
-
-If true, show the tab highlight bar under the selected tab.
-
-
-#### tabbar-layout
-
-string
-
-Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
-
-
-#### tabbar-placement
-
-string
-
-Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
-
-
-#### translucent
-
-boolean
-
-If true, the tabs will be translucent.
-Note: In order to scroll content behind the tabs, the `fullscreen`
-attribute needs to be set on the content.
-Defaults to `false`.
-
-
-#### use-router
-
-boolean
-
-If true, the tabs will use the router and `selectedTab` will not do anything.
+| Property       | Attribute       | Description                                                                     | Type                  |
+| -------------- | --------------- | ------------------------------------------------------------------------------- | --------------------- |
+| `name`         | `name`          | A unique name for the tabs.                                                     | `string \| undefined` |
+| `tabbarHidden` | `tabbar-hidden` | If `true`, the tabbar will be hidden. Defaults to `false`.                      | `boolean`             |
+| `useRouter`    | `use-router`    | If `true`, the tabs will use the router and `selectedTab` will not do anything. | `boolean`             |
 
 
 ## Events
 
-#### ionChange
-
-Emitted when the tab changes.
-
-
-#### ionNavDidChange
-
-Emitted when the navigation has finished transitioning to a new component.
-
-
-#### ionNavWillChange
-
-Emitted when the navigation is about to transition to a new component.
-
-
-#### ionNavWillLoad
-
-Emitted when the navigation will load a component.
+| Event              | Description                                                                |
+| ------------------ | -------------------------------------------------------------------------- |
+| `ionChange`        | Emitted when the tab changes.                                              |
+| `ionNavDidChange`  | Emitted when the navigation has finished transitioning to a new component. |
+| `ionNavWillChange` | Emitted when the navigation is about to transition to a new component.     |
+| `ionNavWillLoad`   | Emitted when the navigation will load a component.                         |
 
 
 ## Methods
 
-#### getRouteId()
+### `getRouteId() => Promise<RouteID | undefined>`
 
 
-#### getSelected()
+
+#### Returns
+
+Type: `Promise<RouteID | undefined>`
+
+
+
+### `getSelected() => Promise<HTMLIonTabElement | undefined>`
 
 Get the currently selected tab
 
+#### Returns
 
-#### getTab()
+Type: `Promise<HTMLIonTabElement | undefined>`
+
+
+
+### `getTab(tabOrIndex: string | number | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>`
 
 Get the tab at the given index
 
+#### Parameters
 
-#### select()
+| Name         | Type                                    | Description |
+| ------------ | --------------------------------------- | ----------- |
+| `tabOrIndex` | `HTMLIonTabElement \| number \| string` |             |
+
+#### Returns
+
+Type: `Promise<HTMLIonTabElement | undefined>`
+
+
+
+### `select(tabOrIndex: number | HTMLIonTabElement) => Promise<boolean>`
 
 Index or the Tab instance, of the tab to select.
 
+#### Parameters
 
-#### setRouteId()
+| Name         | Type                          | Description |
+| ------------ | ----------------------------- | ----------- |
+| `tabOrIndex` | `HTMLIonTabElement \| number` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `setRouteId(id: string) => Promise<RouteWrite>`
+
+
+
+#### Parameters
+
+| Name | Type     | Description |
+| ---- | -------- | ----------- |
+| `id` | `string` |             |
+
+#### Returns
+
+Type: `Promise<RouteWrite>`
+
 
 
 

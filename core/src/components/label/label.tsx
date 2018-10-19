@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 
 import { Color, Mode, StyleEvent } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -11,7 +11,7 @@ import { createColorClasses } from '../../utils/theme';
   },
   scoped: true
 })
-export class Label {
+export class Label implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   /**
@@ -37,11 +37,6 @@ export class Label {
    * Emitted when the styles change.
    */
   @Event() ionStyle!: EventEmitter<StyleEvent>;
-
-  @Method()
-  getText(): string {
-    return this.el.textContent || '';
-  }
 
   componentDidLoad() {
     this.positionChanged();

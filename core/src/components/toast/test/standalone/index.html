@@ -6,7 +6,8 @@
   <title>Toast - Standalone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/core.css">
+  <script src="/scripts/screenshot/testing.js"></script>
 </head>
 
 <body>
@@ -17,6 +18,7 @@
   <button onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true})">Show Toast with Close Button</button>
   <button onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, closeButtonText: 'closing time'})">Show Toast with Custom Close Button Text</button>
   <button onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, translucent: true})">Show Translucent Toast</button>
+  <button onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, cssClass: 'custom'})">Show Toast with Custom Properties</button>
 
   <ion-toast-controller></ion-toast-controller>
 
@@ -31,6 +33,12 @@
       border: 1px solid #eee;
       border-radius: 4px;
       margin-bottom: 8px;
+    }
+
+    .custom {
+      --background: papayawhip;
+      --button-color: blue;
+      --color: red;
     }
   </style>
 

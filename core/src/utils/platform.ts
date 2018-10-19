@@ -1,21 +1,63 @@
 
-export function isIpad(win: Window) {
+export const PLATFORMS_MAP = {
+  'ipad': isIpad,
+  'iphone': isIphone,
+  'ios': isIOS,
+  'android': isAndroid,
+  'phablet': isPhablet,
+  'tablet': isTablet,
+  'cordova': isCordova,
+  'capacitor': isCapacitorNative,
+  'electron': isElectron,
+  'pwa': isPWA,
+  'mobile': isMobile,
+  'desktop': isDesktop,
+  'hybrid': isHybrid
+};
+
+export type Platforms = keyof typeof PLATFORMS_MAP;
+
+export function getPlatforms(win: any) {
+  return setupPlatforms(win);
+}
+
+export function isPlatform(win: Window, platform: Platforms) {
+  return getPlatforms(win).includes(platform);
+}
+
+export function setupPlatforms(win: any) {
+  win.Ionic = win.Ionic || {};
+
+  let platforms: string[] | undefined | null = win.Ionic.platforms;
+  if (platforms == null) {
+    platforms = win.Ionic.platforms = detectPlatforms(win);
+    const classList = win.document.documentElement.classList;
+    platforms.forEach(p => classList.add(`plt-${p}`));
+  }
+  return platforms;
+}
+
+function detectPlatforms(win: Window): string[] {
+  return Object.keys(PLATFORMS_MAP).filter(p => (PLATFORMS_MAP as any)[p](win));
+}
+
+function isIpad(win: Window) {
   return testUserAgent(win, /iPad/i);
 }
 
-export function isIphone(win: Window) {
+function isIphone(win: Window) {
   return testUserAgent(win, /iPhone/i);
 }
 
-export function isIOS(win: Window) {
+function isIOS(win: Window) {
   return testUserAgent(win, /iPad|iPhone|iPod/i);
 }
 
-export function isAndroid(win: Window) {
-  return !isIOS(win);
+function isAndroid(win: Window) {
+  return testUserAgent(win, /android|sink/i);
 }
 
-export function isPhablet(win: Window) {
+function isPhablet(win: Window) {
   const width = win.innerWidth;
   const height = win.innerHeight;
   const smallest = Math.min(width, height);
@@ -25,7 +67,7 @@ export function isPhablet(win: Window) {
     (largest > 620 && largest < 800);
 }
 
-export function isTablet(win: Window) {
+function isTablet(win: Window) {
   const width = win.innerWidth;
   const height = win.innerHeight;
   const smallest = Math.min(width, height);
@@ -34,88 +76,41 @@ export function isTablet(win: Window) {
     (largest > 780 && largest < 1400);
 }
 
-export function isDevice(win: Window) {
+function isMobile(win: Window) {
   return matchMedia(win, '(any-pointer:coarse)');
 }
 
-export function isHybrid(win: Window) {
+function isDesktop(win: Window) {
+  return !isMobile(win);
+}
+
+function isHybrid(win: Window) {
   return isCordova(win) || isCapacitorNative(win);
 }
 
-export function isCordova(window: Window): boolean {
+function isCordova(window: Window): boolean {
   const win = window as any;
   return !!(win['cordova'] || win['phonegap'] || win['PhoneGap']);
 }
 
-export function isCapacitorNative(window: Window): boolean {
+function isCapacitorNative(window: Window): boolean {
   const win = window as any;
   const capacitor = win['Capacitor'];
   return !!(capacitor && capacitor.isNative);
 }
 
-export function isElectron(win: Window): boolean {
+function isElectron(win: Window): boolean {
   return testUserAgent(win, /electron/);
 }
 
-export function isStandaloneMode(win: Window): boolean {
+function isPWA(win: Window): boolean {
   return win.matchMedia('(display-mode: standalone)').matches;
 }
 
-export function needInputShims(win: Window) {
-  return isIOS(win) && isDevice(win);
-}
-
-export function testUserAgent(win: Window, expr: RegExp) {
+function testUserAgent(win: Window, expr: RegExp) {
   return expr.test(win.navigator.userAgent);
 }
 
-export function matchMedia(win: Window, query: string, fallback = false): boolean {
-  return win.matchMedia
-    ? win.matchMedia(query).matches
-    : fallback;
-}
-
-export interface PlatformConfig {
-  name: string;
-  isMatch: (win: Window) => boolean;
-}
-
-export const PLATFORM_CONFIGS: PlatformConfig[] = [
-  {
-    name: 'ipad',
-    isMatch: isIpad
-  },
-  {
-    name: 'iphone',
-    isMatch: isIphone
-  },
-  {
-    name: 'ios',
-    isMatch: isIOS
-  },
-  {
-    name: 'android',
-    isMatch: isAndroid
-  },
-  {
-    name: 'phablet',
-    isMatch: isPhablet
-  },
-  {
-    name: 'tablet',
-    isMatch: isTablet
-  },
-  {
-    name: 'cordova',
-    isMatch: isCordova
-  },
-  {
-    name: 'electron',
-    isMatch: isElectron
-  }
-];
-
-export function detectPlatforms(win: Window, platforms: PlatformConfig[] = PLATFORM_CONFIGS) {
-  // bracket notation to ensure they're not property renamed
-  return platforms.filter(p => p.isMatch(win));
+function matchMedia(win: Window, query: string): boolean {
+  return win.matchMedia(query).matches;
 }

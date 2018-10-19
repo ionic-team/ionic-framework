@@ -3,7 +3,7 @@
 # See documentation at https://stylelint.io/
 
 ignoreFiles:
-  - src/css/colors.scss
+  - src/css/core.scss
   - src/css/flex-utils.scss
   - src/css/normalize.scss
   - src/css/text-alignment.scss
@@ -45,10 +45,6 @@ rules:
   declaration-no-important:
     - true
 
-  length-zero-no-unit:
-    - true
-    - ignore:
-      - custom-properties
 
   order/order:
     - custom-properties
@@ -268,8 +264,6 @@ rules:
     - margin
     - margin-left
     - margin-right
-    - margin-top
-    - margin-bottom
     - border-radius
     - border-top-left-radius
     - border-top-right-radius

@@ -1,0 +1,32 @@
+@import "./tab-button";
+@import "./tab-button.ios.vars";
+
+.tab-btn {
+  @include padding($tab-button-ios-padding-top, $tab-button-ios-padding-end, $tab-button-ios-padding-bottom, $tab-button-ios-padding-start);
+  max-width: $tab-button-ios-max-width;
+}
+
+.tab-btn-text {
+  @include margin(0, null, 1px, null);
+
+  min-height: $tab-button-ios-font-size + 1;
+}
+
+.tab-btn-has-label-only .tab-btn-text {
+  @include margin(2px, 0);
+
+  font-size: $tab-button-ios-font-size + 2;
+  font-size: 14px;
+
+  line-height: 1.1;
+}
+
+.tab-btn-icon {
+  @include margin(4px, null, null, null);
+
+  font-size: $tab-button-ios-icon-size;
+}
+
+.tab-btn-icon::before {
+  vertical-align: top;
+}

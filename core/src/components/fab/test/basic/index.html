@@ -6,7 +6,8 @@
   <title>Floating Action Button - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
+  <script src="/scripts/screenshot/testing.js"></script>
 </head>
 
 <body>
@@ -24,7 +25,7 @@
 
       <pre id="log" style="right:10px; bottom:50px; text-shadow: 0 0 2px rgba(0, 0, 0, 0.24);" slot="fixed">log</pre>
       <ion-button>Test</ion-button>
-      <ion-fab-button disabled>FAB</ion-fab-button>
+      <ion-fab-button disabled onclick="throw 'no clickable'">FAB</ion-fab-button>
 
       <ion-fab vertical="top" horizontal="end" edge id="fab1" slot="fixed">
         <ion-fab-button onclick="clickMainFAB('fab1')" mini class="e2eFabTopRight">

@@ -1,4 +1,5 @@
 import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
+import { IonicConfig } from '@ionic/core';
 import { CommonModule } from '@angular/common';
 
 import { appInitialize } from './app-initialize';
@@ -13,6 +14,7 @@ const DECLARATIONS = [
   d.App,
   d.Avatar,
   d.BackButton,
+  d.Backdrop,
   d.Badge,
   d.Button,
   d.Buttons,
@@ -66,7 +68,6 @@ const DECLARATIONS = [
   d.ReorderGroup,
   d.RippleEffect,
   d.Row,
-  d.Scroll,
   d.Searchbar,
   d.Segment,
   d.SegmentButton,
@@ -80,6 +81,7 @@ const DECLARATIONS = [
   d.Spinner,
   d.SplitPane,
   d.Tab,
+  d.Tabbar,
   d.Tabs,
   d.Text,
   d.Textarea,
@@ -133,7 +135,7 @@ const PROVIDERS = [
   imports: [CommonModule]
 })
 export class IonicModule {
-  static forRoot(config?: { [key: string]: any }): ModuleWithProviders {
+  static forRoot(config?: IonicConfig): ModuleWithProviders {
     return {
       ngModule: IonicModule,
       providers: [

@@ -3,20 +3,29 @@
 // Chip Button
 // --------------------------------------------------
 
-/// @prop - Border radius of the button in the chip
+/// @prop - Border radius of the chip button
 $chip-button-border-radius:     50% !default;
 
-/// @prop - Margin top of the button in the chip
+/// @prop - Margin top of the chip button
 $chip-button-margin-top:        0 !default;
 
-/// @prop - Margin end of the button in the chip
+/// @prop - Margin end of the chip button
 $chip-button-margin-end:        $chip-button-margin-top !default;
 
-/// @prop - Margin bottom of the button in the chip
+/// @prop - Margin bottom of the chip button
 $chip-button-margin-bottom:     $chip-button-margin-top !default;
 
-/// @prop - Margin start of the button in the chip
+/// @prop - Margin start of the chip button
 $chip-button-margin-start:      $chip-button-margin-end !default;
 
-/// @prop - Width and height of the button in the chip
-$chip-button-size:              32px !default;
+/// @prop - Font size of the chip button
+$chip-button-font-size:         32px !default;
+
+/// @prop - Width of the chip button
+$chip-button-width:             32px !default;
+
+/// @prop - Width of the chip button
+$chip-button-height:            100% !default;
+
+/// @prop - Color of the text in the clear chip button
+$chip-button-clear-color:       $text-color-step-400 !default;

@@ -6,7 +6,8 @@
   <title>Tab - Translucent</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
+  <script src="/scripts/screenshot/testing.js"></script>
   <script type="text/javascript">
     window.Ionic.config = { useRouter: true };
   </script>
@@ -15,7 +16,7 @@
 <body>
 
   <ion-app>
-    <ion-tabs color="primary" translucent>
+    <ion-tabs>
       <ion-tab label="Today" icon="calendar" path="" root="translucent-page-tab">
         <ion-route path="" component="translucent-page-tab"></ion-route>
       </ion-tab>
@@ -37,6 +38,8 @@
       <ion-tab label="Search" icon="search">
         <ion-route path="" component="translucent-page-tab"></ion-route>
       </ion-tab>
+
+      <ion-tabbar color="primary" translucent></ion-tabbar>
     </ion-tabs>
 
     <ion-nav-controller></ion-nav-controller>

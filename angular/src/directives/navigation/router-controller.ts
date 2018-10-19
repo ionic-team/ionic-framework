@@ -39,13 +39,12 @@ export class StackController {
     const leavingView = this.getActive();
     this.insertView(enteringView, direction);
     await this.transition(enteringView, leavingView, direction, animated, this.canGoBack(1));
-
     this.cleanup();
   }
 
   pop(deep: number) {
     const view = this.views[this.views.length - deep - 1];
-    this.navCtrl.goBack(view.url);
+    this.navCtrl.navigateBack(view.url);
   }
 
   private insertView(enteringView: RouteView, direction: number) {
@@ -81,9 +80,11 @@ export class StackController {
       .forEach(view => destroyView(view));
 
     for (let i = 0; i < views.length - 1; i++) {
-      const element = views[i].element;
+      const view = views[i];
+      const element = view.element;
       element.setAttribute('aria-hidden', 'true');
       element.classList.add('ion-page-hidden');
+      // view.ref.changeDetectorRef.detach();
     }
 
     this.viewsSnapshot = views.slice();
@@ -106,7 +107,9 @@ export class StackController {
     const containerEl = this.containerEl;
     if (enteringEl && enteringEl !== leavingEl) {
       enteringEl.classList.add('ion-page', 'ion-page-invisible');
-      containerEl.appendChild(enteringEl);
+      if (enteringEl.parentElement !== containerEl) {
+        containerEl.appendChild(enteringEl);
+      }
 
       await containerEl.componentOnReady();
       await containerEl.commit(enteringEl, leavingEl, {
@@ -150,4 +153,5 @@ export interface RouteView {
   element: HTMLElement;
   ref: ComponentRef<any>;
   deactivatedId: number;
+  savedData?: any;
 }

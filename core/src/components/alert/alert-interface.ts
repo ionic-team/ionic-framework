@@ -1,20 +1,27 @@
-import { TextFieldTypes } from '../../interface';
+import { AnimationBuilder, TextFieldTypes } from '../../interface';
 
 export interface AlertOptions {
   header?: string;
   subHeader?: string;
   message?: string;
   cssClass?: string | string[];
-  mode?: string;
   inputs?: AlertInput[];
   buttons?: (AlertButton | string)[];
-  enableBackdropDismiss?: boolean;
+  backdropDismiss?: boolean;
   translucent?: boolean;
+  animated?: boolean;
+
+  mode?: string;
+  keyboardClose?: boolean;
+  id?: string;
+
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
 }
 
 export interface AlertInput {
-  type: TextFieldTypes | 'checkbox' | 'radio';
-  name: string;
+  type?: TextFieldTypes | 'checkbox' | 'radio';
+  name?: string;
   placeholder?: string;
   value?: string;
   label?: string;

@@ -6,7 +6,8 @@
   <title>Chip - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
+  <script src="/scripts/screenshot/testing.js"></script>
 </head>
 
 <body>
@@ -36,7 +37,7 @@
       <h2>Color Chips</h2>
 
       <ion-chip color="primary">
-        <ion-chip-icon name="heart" color="dark"></ion-chip-icon>
+        <ion-chip-icon name="heart"></ion-chip-icon>
         <ion-label>Primary</ion-label>
       </ion-chip>
 
@@ -60,11 +61,21 @@
         <ion-chip-icon name="pin" color="secondary"></ion-chip-icon>
       </ion-chip>
 
+      <ion-chip>
+        <ion-chip-icon fill="solid" name="pin"></ion-chip-icon>
+        <ion-label>Solid Default</ion-label>
+      </ion-chip>
+
+      <ion-chip>
+        <ion-label>Solid Danger</ion-label>
+        <ion-chip-icon fill="solid" name="pin" color="danger"></ion-chip-icon>
+      </ion-chip>
+
       <h2>Avatar Chips</h2>
 
       <ion-chip>
         <ion-avatar>
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+          <img src="/src/components/avatar/test/avatar.svg">
         </ion-avatar>
         <ion-label>Default</ion-label>
       </ion-chip>
@@ -72,7 +83,7 @@
       <ion-chip>
         <ion-label>Right Avatar</ion-label>
         <ion-avatar>
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+          <img src="/src/components/avatar/test/avatar.svg">
         </ion-avatar>
       </ion-chip>
 
@@ -95,7 +106,7 @@
 
       <ion-chip id="chip3">
         <ion-avatar>
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+          <img src="/src/components/avatar/test/avatar.svg">
         </ion-avatar>
         <ion-label>With Avatar</ion-label>
         <ion-chip-button fill="clear" color="dark" onclick="del('chip3')">

@@ -1,42 +1,58 @@
 @import "./item";
 @import "./item.md.vars";
+@import "../label/label.md.vars";
 
 // Material Design Item
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: var(--ion-item-background, transparent);
-  --ion-color-contrast: #{$item-md-text-color};
-  --ion-color-tint: #{$item-md-background-color-active};
-  --ion-color-shade: #{$item-md-border-bottom-color};
+  --background: var(--ion-item-background-color, transparent);
+  --background-activated: #{$item-md-background-color-active};
+  --border-color: #{$item-md-border-bottom-color};
+  --color: #{$item-md-text-color};
   --transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
   --padding-start: #{$item-md-padding-start};
+  --background: var(--ion-item-background-color, transparent);
+  --background-activated: #{$item-md-background-color-active};
+  --color: #{$item-md-text-color};
+  --border-color: #{$item-md-border-bottom-color};
   --inner-padding-end: #{$item-md-padding-end / 2};
-  --padding-start: #{$item-md-padding-start};
+  --inner-border-width: #{0 0 $item-md-border-bottom-width 0};
+  --highlight-height: 2px;
+  --highlight-color-focused: #{$item-md-input-highlight-color};
+  --highlight-color-valid: #{$item-md-input-highlight-color-valid};
+  --highlight-color-invalid: #{$item-md-input-highlight-color-invalid};
 
-  font-family: $item-md-font-family;
   font-size: $item-md-font-size;
   font-weight: normal;
 
   text-transform: none;
 }
 
+
 // Material Design Item Lines
 // --------------------------------------------------
 
-// Default input items have a border
+// Default input items have a full border
 :host(.item-interactive) {
   --border-width: #{0 0 $item-md-border-bottom-width 0};
+  --inner-border-width: 0;
+  --show-full-highlight: 1;
+  --show-inset-highlight: 0;
 }
 
 // Full lines - apply the border to the item
 // Inset lines - apply the border to the item inner
 :host(.item-lines-full) {
   --border-width: #{0 0 $item-md-border-bottom-width 0};
+  --show-full-highlight: 1;
+  --show-inset-highlight: 0;
 }
 
 :host(.item-lines-inset) {
   --inner-border-width: #{0 0 $item-md-border-bottom-width 0};
+  --show-full-highlight: 0;
+  --show-inset-highlight: 1;
 }
 
 // Full lines - remove the border from the item inner (inset list items)
@@ -45,22 +61,14 @@
 :host(.item-lines-inset),
 :host(.item-lines-none) {
   --border-width: 0;
+  --show-full-highlight: 0;
 }
 
 :host(.item-lines-full),
 :host(.item-lines-none) {
   --inner-border-width: 0;
+  --show-inset-highlight: 0;
 }
-
-// Material Design Item Detail Push
-// --------------------------------------------------
-
-.item-detail-icon {
-  color: var(--detail-push-color);
-
-  font-size: 20px;
-}
-
 
 // Material Design Item Slots
 // --------------------------------------------------
@@ -154,7 +162,9 @@
 :host(.item-label-stacked) ::slotted(ion-input),
 :host(.item-label-floating) ::slotted(ion-input),
 :host(.item-label-stacked) ::slotted(ion-textarea),
-:host(.item-label-floating) ::slotted(ion-textarea) {
+:host(.item-label-floating) ::slotted(ion-textarea),
+:host(.item-label-stacked) ::slotted(ion-select),
+:host(.item-label-floating) ::slotted(ion-select) {
   --padding-top: 8px;
   --padding-bottom: 8px;
   --padding-start: 0;
@@ -164,4 +174,9 @@
 :host(:not(.item-label)) ::slotted(ion-input),
 :host(:not(.item-label)) ::slotted(ion-textarea) {
   --padding-start: 0;
+}
+
+:host(.item-has-focus:not(.ion-color)) ::slotted(.label-stacked),
+:host(.item-has-focus:not(.ion-color)) ::slotted(.label-floating) {
+  color: $label-md-text-color-focused;
 }

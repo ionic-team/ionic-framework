@@ -1,7 +1,7 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
 
-import { Color, InputChangeEvent, Mode } from '../../interface';
-import { createColorClasses, hostContext } from '../../utils/theme';
+import { Color, Mode, TextInputChangeEvent } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-segment',
@@ -9,9 +9,9 @@ import { createColorClasses, hostContext } from '../../utils/theme';
     ios: 'segment.ios.scss',
     md: 'segment.md.scss'
   },
-  shadow: true
+  scoped: true
 })
-export class Segment {
+export class Segment implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
@@ -28,15 +28,15 @@ export class Segment {
    */
   @Prop() mode!: Mode;
 
-  /*
-   * If true, the user cannot interact with the segment. Defaults to `false`.
+  /**
+   * If `true`, the user cannot interact with the segment. Defaults to `false`.
    */
   @Prop() disabled = false;
 
   /**
    * the value of the segment.
    */
-  @Prop({ mutable: true }) value?: string;
+  @Prop({ mutable: true }) value?: string | null;
 
   @Watch('value')
   protected valueChanged(value: string | undefined) {
@@ -47,7 +47,7 @@ export class Segment {
   /**
    * Emitted when the value property has changed.
    */
-  @Event() ionChange!: EventEmitter<InputChangeEvent>;
+  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
 
   @Listen('ionSelect')
   segmentClick(ev: CustomEvent) {
@@ -56,7 +56,7 @@ export class Segment {
   }
 
   componentDidLoad() {
-    if (this.value === undefined) {
+    if (this.value == null) {
       const checked = this.getButtons().find(b => b.checked);
       if (checked) {
         this.value = checked.value;
@@ -81,15 +81,8 @@ export class Segment {
       class: {
         ...createColorClasses(this.color),
 
-        'segment-disabled': this.disabled,
-        'in-toolbar': hostContext('ion-toolbar', this.el),
-        'in-color-toolbar': hostContext('ion-toolbar.ion-color', this.el)
+        'segment-disabled': this.disabled
       }
     };
   }
-
-  render() {
-    return <slot></slot>;
-  }
-
 }

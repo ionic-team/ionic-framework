@@ -8,19 +8,48 @@ Popover controllers programmatically control the popover component. Popovers can
 
 ## Methods
 
-#### create()
+### `create<T extends ComponentRef>(opts: PopoverOptions<T>) => Promise<HTMLIonPopoverElement>`
 
 Create a popover overlay with popover options.
 
+#### Parameters
 
-#### dismiss()
+| Name   | Type                | Description |
+| ------ | ------------------- | ----------- |
+| `opts` | `PopoverOptions<T>` |             |
+
+#### Returns
+
+Type: `Promise<HTMLIonPopoverElement>`
+
+
+
+### `dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>`
 
 Dismiss the open popover overlay.
 
+#### Parameters
 
-#### getTop()
+| Name   | Type                  | Description |
+| ------ | --------------------- | ----------- |
+| `data` | `any`                 |             |
+| `role` | `string \| undefined` |             |
+| `id`   | `string \| undefined` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `getTop() => Promise<HTMLIonPopoverElement | undefined>`
 
 Get the most recently opened popover overlay.
+
+#### Returns
+
+Type: `Promise<HTMLIonPopoverElement | undefined>`
+
 
 
 

@@ -1,5 +1,7 @@
 import { Injectable, Optional } from '@angular/core';
+import { Location } from '@angular/common';
 import { NavigationExtras, Router, UrlTree } from '@angular/router';
+import { BackButtonEvent } from '@ionic/core';
 
 export const enum NavIntent {
   Auto,
@@ -16,23 +18,46 @@ export class NavController {
   private stack: string[] = [];
 
   constructor(
+    private location: Location,
     @Optional() private router?: Router
-  ) {}
+  ) {
+    window && window.document.addEventListener('ionBackButton', (ev) => {
+      (ev as BackButtonEvent).detail.register(0, () => this.goBack());
+    });
+  }
 
-  goForward(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
+  navigateForward(url: string | UrlTree | any[], animated?: boolean, extras?: NavigationExtras) {
     this.setIntent(NavIntent.Forward, animated);
-    return this.router!.navigateByUrl(url, extras);
+    if (Array.isArray(url)) {
+      return this.router!.navigate(url, extras);
+    } else {
+      return this.router!.navigateByUrl(url, extras);
+    }
   }
 
-  goBack(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
+  navigateBack(url: string | UrlTree | any[], animated?: boolean, extras?: NavigationExtras) {
     this.setIntent(NavIntent.Back, animated);
-    return this.router!.navigateByUrl(url, extras);
+    extras = { replaceUrl: true, ...extras };
+    if (Array.isArray(url)) {
+      return this.router!.navigate(url, extras);
+    } else {
+      return this.router!.navigateByUrl(url, extras);
+    }
   }
 
-  goRoot(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
+  navigateRoot(url: string | UrlTree | any[], animated?: boolean, extras?: NavigationExtras) {
     this.setIntent(NavIntent.Root, animated);
-    return this.router!.navigateByUrl(url, extras);
+    if (Array.isArray(url)) {
+      return this.router!.navigate(url, extras);
+    } else {
+      return this.router!.navigateByUrl(url, extras);
+    }
   }
+
+  goBack(animated?: boolean) {
+     this.setIntent(NavIntent.Back, animated);
+     return this.location.back();
+   }
 
   setIntent(intent: NavIntent, animated?: boolean) {
     this.intent = intent;

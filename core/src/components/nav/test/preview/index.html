@@ -6,7 +6,8 @@
   <title>Nav</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
+  <script src="/scripts/screenshot/testing.js"></script>
   <script>
     class PageOne extends HTMLElement {
       connectedCallback() {
@@ -40,7 +41,7 @@
             <h1>Page Two</h1>
             <div>
               <ion-nav-push component="page-three">
-                <ion-button class="next">Go to Page Two</ion-button>
+                <ion-button class="next">Go to Page Three</ion-button>
               </ion-nav-push>
             </div>
           </ion-content>

@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -8,7 +8,7 @@ import { createColorClasses } from '../../utils/theme';
   styleUrl: 'chip-icon.scss',
   shadow: true
 })
-export class ChipIcon {
+export class ChipIcon implements ComponentInterface {
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -21,6 +21,12 @@ export class ChipIcon {
    * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
+
+  /**
+   * Set to `"clear"` for a transparent icon or to `"solid"` for a filled background.
+   * Defaults to `"clear"`.
+   */
+  @Prop() fill: 'clear' | 'solid' = 'clear';
 
   /**
    * The icon to use.
@@ -37,12 +43,13 @@ export class ChipIcon {
   hostData() {
     return {
       class: {
-        ...createColorClasses(this.color)
+        ...createColorClasses(this.color),
+        [`chip-icon-${this.fill}`]: true
       }
     };
   }
 
   render() {
-    return <ion-icon name={this.name} src={this.src} mode={this.mode}/>;
+    return <ion-icon name={this.name} src={this.src} mode={this.mode}></ion-icon>;
   }
 }

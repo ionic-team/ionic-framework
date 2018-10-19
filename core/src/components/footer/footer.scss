@@ -14,8 +14,6 @@ ion-footer {
   z-index: $z-index-toolbar;
 }
 
-@supports (padding-top: env(safe-area-inset-top)) {
-  ion-footer ion-toolbar:last-child {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
+ion-footer ion-toolbar:last-child {
+  padding-bottom: var(--ion-safe-area-bottom, 0);
 }

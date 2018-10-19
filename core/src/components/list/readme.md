@@ -11,52 +11,26 @@ Lists support several interactions including swiping items to reveal options, dr
 
 ## Properties
 
-#### inset
-
-boolean
-
-If true, the list will have margin around it and rounded corners. Defaults to `false`.
-
-
-#### lines
-
-string
-
-How the bottom border should be displayed on all items.
-
-
-## Attributes
-
-#### inset
-
-boolean
-
-If true, the list will have margin around it and rounded corners. Defaults to `false`.
-
-
-#### lines
-
-string
-
-How the bottom border should be displayed on all items.
+| Property | Attribute | Description                                                                                               | Type                                       |
+| -------- | --------- | --------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| `inset`  | `inset`   | If `true`, the list will have margin around it and rounded corners. Defaults to `false`.                  | `boolean`                                  |
+| `lines`  | `lines`   | How the bottom border should be displayed on all items. Available options: `"full"`, `"inset"`, `"none"`. | `"full" \| "inset" \| "none" \| undefined` |
+| `mode`   | `mode`    | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                 | `"ios" \| "md"`                            |
 
 
 ## Methods
 
-#### closeSlidingItems()
+### `closeSlidingItems() => Promise<boolean>`
 
-Close the sliding items. Items can also be closed from the [Item Sliding](../../item-sliding/ItemSliding).
-Returns a boolean value of whether it closed an item or not.
+If `ion-item-sliding` are used inside the list, this method closes
+any open sliding item.
 
+Returns `true` if an actual `ion-item-sliding` is closed.
 
-#### getOpenItem()
+#### Returns
 
-Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently open.
+Type: `Promise<boolean>`
 
-
-#### setOpenItem()
-
-Set an [Item Sliding](../../item-sliding/ItemSliding) as the open item.
 
 
 

@@ -1,6 +1,6 @@
 import { QueueApi } from '@stencil/core';
 
-import { gestureController } from './gesture-controller';
+import { GESTURE_CONTROLLER } from './gesture-controller';
 import { createPointerEvents } from './pointer-events';
 import { createPanRecognizer } from './recognizers';
 
@@ -52,7 +52,7 @@ export function createGesture(config: GestureConfig): Gesture {
   );
 
   const pan = createPanRecognizer(finalConfig.direction, finalConfig.threshold, finalConfig.maxAngle);
-  const gesture = gestureController.createGesture({
+  const gesture = GESTURE_CONTROLLER.createGesture({
     name: config.gestureName,
     priority: config.gesturePriority,
     disableScroll: config.disableScroll
@@ -98,7 +98,7 @@ export function createGesture(config: GestureConfig): Gesture {
 
   function pointerMove(ev: UIEvent) {
     // fast path, if gesture is currently captured
-    // do minimun job to get user-land even dispatched
+    // do minimum job to get user-land even dispatched
     if (hasCapturedPan) {
       if (!isMoveQueued && hasFiredStart) {
         isMoveQueued = true;
@@ -111,10 +111,8 @@ export function createGesture(config: GestureConfig): Gesture {
     // gesture is currently being detected
     calcGestureData(detail, ev);
     if (pan.detect(detail.currentX, detail.currentY)) {
-      if (pan.isGesture()) {
-        if (!tryToCapturePan()) {
-          abortGesture();
-        }
+      if (!pan.isGesture() || !tryToCapturePan()) {
+        abortGesture();
       }
     }
   }
@@ -139,11 +137,11 @@ export function createGesture(config: GestureConfig): Gesture {
     hasFiredStart = false;
 
     // reset start position since the real user-land event starts here
-    // If the pan detector threshold is big, not reseting the start position
+    // If the pan detector threshold is big, not resetting the start position
     // will cause a jump in the animation equal to the detector threshold.
     // the array of positions used to calculate the gesture velocity does not
     // need to be cleaned, more points in the positions array always results in a
-    // more acurate value of the velocity.
+    // more accurate value of the velocity.
     detail.startX = detail.currentX;
     detail.startY = detail.currentY;
     detail.startTimeStamp = detail.timeStamp;
@@ -279,7 +277,7 @@ export interface GestureDetail {
   data?: any;
 }
 
-export type GestureCallback = (detail?: GestureDetail) => boolean | void;
+export type GestureCallback = (detail: GestureDetail) => boolean | void;
 
 export interface Gesture {
   setDisabled(disabled: boolean): void;

@@ -6,7 +6,8 @@
   <title>Modal - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
+  <script src="/scripts/screenshot/testing.js"></script>
 </head>
 
 <body>
@@ -19,19 +20,25 @@
     </ion-header>
 
     <ion-content padding>
-      <ion-modal-controller></ion-modal-controller>
       <p>
         <ion-button id="presentModal" class="e2ePresentModal" onclick="presentModal()">Present modal</ion-button>
       </p>
+      <p>
+        <ion-button id="presentModal" class="e2ePresentModal" onclick="presentCloseModal()">Present and close modal</ion-button>
+      </p>
+      <p>
+        <ion-button id="presentModal" class="e2ePresentModal" onclick="presentCloseModal2()">Present and close modal (crash)</ion-button>
+      </p>
     </ion-content>
+    <ion-modal-controller></ion-modal-controller>
 
   </ion-app>
 
   <script>
     window.addEventListener("ionModalDidDismiss", function (e) { console.log('DidDismiss', e) })
     window.addEventListener("ionModalWillDismiss", function (e) { console.log('WillDismiss', e) })
-    async function presentModal() {
 
+    async function createModal() {
       // initialize controller
       const modalController = document.querySelector('ion-modal-controller');
       await modalController.componentOnReady();
@@ -61,7 +68,25 @@
       const modalElement = await modalController.create({
         component: element
       });
-      modalElement.present();
+      return modalElement;
+    }
+
+    async function presentModal() {
+      const modal = await createModal();
+      await modal.present();
+    }
+    async function presentCloseModal() {
+      const modal = await createModal();
+      await modal.present();
+      await modal.dismiss();
+    }
+
+    async function presentCloseModal2() {
+      const modal = await createModal();
+      modal.present();
+      setTimeout(() => {
+        modal.dismiss();
+      }, 20);
     }
   </script>
 </body>

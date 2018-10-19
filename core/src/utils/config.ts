@@ -1,5 +1,61 @@
+import { AnimationBuilder, Mode } from '../interface';
 
-export function setupConfig(config: {[key: string]: any}) {
+export interface IonicConfig {
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  mode?: Mode;
+  persistConfig?: boolean;
+  hardwareBackButton?: boolean;
+  statusTap?: boolean;
+
+  inputShims?: boolean;
+  backButtonIcon?: string;
+  backButtonText?: string;
+  spinner?: string;
+  loadingSpinner?: string;
+  menuIcon?: string;
+  animated?: boolean;
+  pickerSpinner?: string;
+  refreshingIcon?: string;
+  refreshingSpinner?: string;
+  menuType?: string;
+  scrollPadding?: string;
+  inputBlurring?: string;
+  scrollAssist?: boolean;
+  hideCaretOnScroll?: string;
+  infiniteLoadingSpinner?: string;
+  keyboardHeight?: number;
+  swipeBackEnabled?: boolean;
+
+  tabbarPlacement?: string;
+  tabbarLayout?: string;
+  tabbarHighlight?: boolean;
+
+  navAnimation?: AnimationBuilder;
+
+  actionSheetEnter?: AnimationBuilder;
+  alertEnter?: AnimationBuilder;
+  loadingEnter?: AnimationBuilder;
+  modalEnter?: AnimationBuilder;
+  popoverEnter?: AnimationBuilder;
+  toastEnter?: AnimationBuilder;
+  pickerEnter?: AnimationBuilder;
+
+  actionSheetLeave?: AnimationBuilder;
+  alertLeave?: AnimationBuilder;
+  loadingLeave?: AnimationBuilder;
+  modalLeave?: AnimationBuilder;
+  popoverLeave?: AnimationBuilder;
+  toastLeave?: AnimationBuilder;
+  pickerLeave?: AnimationBuilder;
+
+  _forceStatusbarPadding?: boolean;
+  _testing?: boolean;
+}
+
+export function setupConfig(config: IonicConfig) {
   const win = window as any;
   const Ionic = win.Ionic;
   if (Ionic && Ionic.config && Ionic.config.constructor.name !== 'Object') {
@@ -12,26 +68,4 @@ export function setupConfig(config: {[key: string]: any}) {
     ...config
   };
   return win.Ionic.config;
-}
-
-const IONIC_PREFIX = 'ionic:';
-
-export function configFromURL() {
-  const config: any = {};
-  const win = window;
-  win.location.search.slice(1)
-    .split('&')
-    .map(entry => entry.split('='))
-    .map(([key, value]) => [decodeURIComponent(key), decodeURIComponent(value)])
-    .filter(([key]) => startsWith(key, IONIC_PREFIX))
-    .map(([key, value]) => [key.slice(IONIC_PREFIX.length), value])
-    .forEach(([key, value]) => {
-      config[key] = value;
-    });
-
-  return config;
-}
-
-function startsWith(input: string, search: string): boolean {
-  return input.substr(0, search.length) === search;
 }

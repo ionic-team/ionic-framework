@@ -7,9 +7,16 @@
   display: block;
   position: relative;
 
-  text-overflow: ellipsis;
+  background: var(--background);
+  color: var(--color);
+}
 
-  white-space: nowrap;
+:host(.ion-color) {
+  background: current-color(base);
+  color: current-color(contrast);
+}
 
-  overflow: hidden;
+:host(.ion-color) ::slotted(ion-card-title),
+:host(.ion-color) ::slotted(ion-card-subtitle) {
+  color: currentColor;
 }

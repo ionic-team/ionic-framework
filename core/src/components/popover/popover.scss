@@ -3,7 +3,7 @@
 // Popover
 // --------------------------------------------------
 
-ion-popover {
+:host {
   @include position(0, 0, 0, 0);
 
   display: flex;
@@ -30,15 +30,10 @@ ion-popover {
   z-index: $z-index-overlay-wrapper;
 }
 
-.popover-content ion-content,
-.popover-content ion-scroll {
-  contain: none;
+.popover-viewport {
+  --ion-safe-area-top: 0px;
+  --ion-safe-area-right: 0px;
+  --ion-safe-area-bottom: 0px;
+  --ion-safe-area-left: 0px;
 }
 
-.popover-content ion-scroll {
-  position: relative;
-}
-
-ion-popover-controller {
-  display: none;
-}

@@ -8,7 +8,7 @@ export const config: Config = {
     { components: ['ion-alert', 'ion-alert-controller'] },
     { components: ['ion-anchor', 'ion-back-button'] },
     { components: ['ion-animation-controller'] },
-    { components: ['ion-app', 'ion-buttons', 'ion-content', 'ion-footer', 'ion-header', 'ion-scroll', 'ion-title', 'ion-toolbar'] },
+    { components: ['ion-app', 'ion-buttons', 'ion-content', 'ion-footer', 'ion-header', 'ion-title', 'ion-toolbar'] },
     { components: ['ion-avatar', 'ion-badge', 'ion-thumbnail'] },
     { components: ['ion-backdrop'] },
     { components: ['ion-button', 'ion-icon'] },
@@ -31,7 +31,7 @@ export const config: Config = {
     { components: ['ion-img'] },
     { components: ['ion-popover', 'ion-popover-controller'] },
     { components: ['ion-radio', 'ion-radio-group'] },
-    { components: ['ion-range', 'ion-range-knob'] },
+    { components: ['ion-range'] },
     { components: ['ion-refresher', 'ion-refresher-content'] },
     { components: ['ion-reorder', 'ion-reorder-group'] },
     { components: ['ion-ripple-effect'] },
@@ -42,7 +42,7 @@ export const config: Config = {
     { components: ['ion-slides', 'ion-slide'] },
     { components: ['ion-spinner'] },
     { components: ['ion-split-pane'] },
-    { components: ['ion-tabs', 'ion-tab', 'ion-tabbar', 'ion-tab-button'] },
+    { components: ['ion-tabs', 'ion-tab', 'ion-tabbar'] },
     { components: ['ion-text'] },
     { components: ['ion-toast', 'ion-toast-controller'] },
     { components: ['ion-toggle'] },
@@ -53,13 +53,86 @@ export const config: Config = {
   ],
   outputTargets: [
     {
-      type: 'dist'
+      type: 'dist',
+      esmLoaderPath: '../loader'
+    },
+    {
+      type: 'docs',
+      strict: true
     },
     {
       type: 'stats',
       file: 'stats.json'
+    },
+    {
+      type: 'angular',
+      componentCorePackage: '@ionic/core',
+      directivesProxyFile: '../angular/src/directives/proxies.ts',
+      directivesArrayFile: '../angular/src/directives/proxies-list.txt',
+      excludeComponents: [
+        // overlays
+        'ion-action-sheet',
+        'ion-action-sheet-controller',
+        'ion-alert',
+        'ion-alert-controller',
+        'ion-loading',
+        'ion-loading-controller',
+        'ion-modal',
+        'ion-modal-controller',
+        'ion-picker',
+        'ion-picker-controller',
+        'ion-popover',
+        'ion-popover-controller',
+        'ion-toast',
+        'ion-toast-controller',
+        'ion-toast',
+
+        // controllers
+        'ion-menu-controller',
+        'ion-animation-controller',
+
+        // navigation
+        'ion-router',
+        'ion-route',
+        'ion-route-redirect',
+        'ion-router-outlet',
+        'ion-anchor',
+
+        // auxiliar
+        'ion-picker-column',
+        'ion-anchor',
+        'ion-virtual-scroll'
+      ]
     }
   ],
+  testing: {
+    allowableMismatchedPixels: 200,
+    pixelmatchThreshold: 0.1,
+    emulate: [
+      {
+        userAgent: 'iPhone',
+        viewport: {
+          width: 400,
+          height: 800,
+          deviceScaleFactor: 2,
+          isMobile: true,
+          hasTouch: true,
+          isLandscape: false
+        }
+      },
+      {
+        userAgent: 'Android',
+        viewport: {
+          width: 400,
+          height: 800,
+          deviceScaleFactor: 2,
+          isMobile: true,
+          hasTouch: true,
+          isLandscape: false
+        }
+      }
+    ]
+  },
   copy: [{ src: '**/*.scss' }],
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   globalScript: 'src/global/ionic-global.ts',

@@ -1,10 +1,8 @@
-import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
-import { Color, InputChangeEvent, Mode, StyleEvent, TextFieldTypes } from '../../interface';
+import { Color, Mode, StyleEvent, TextFieldTypes, TextInputChangeEvent } from '../../interface';
 import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
-
-import { InputComponent } from './input-base';
 
 @Component({
   tag: 'ion-input',
@@ -14,50 +12,15 @@ import { InputComponent } from './input-base';
   },
   shadow: true
 })
-export class Input implements InputComponent {
+export class Input implements ComponentInterface {
 
   private nativeInput?: HTMLInputElement;
   private inputId = `ion-input-${inputIds++}`;
-  didBlurAfterEdit = false;
+  private didBlurAfterEdit = false;
 
   @State() hasFocus = false;
 
   @Element() el!: HTMLElement;
-
-  /**
-   * Emitted when a keyboard input ocurred.
-   */
-  @Event() ionInput!: EventEmitter<KeyboardEvent>;
-
-  /**
-   * Emitted when the value has changed.
-   */
-  @Event() ionChange!: EventEmitter<InputChangeEvent>;
-
-  /**
-   * Emitted when the styles change.
-   */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
-
-  /**
-   * Emitted when the input loses focus.
-   */
-  @Event() ionBlur!: EventEmitter<void>;
-
-  /**
-   * Emitted when the input has focus.
-   */
-  @Event() ionFocus!: EventEmitter<void>;
-
-  /**
-   * Emitted when the input has been created.
-   */
-  @Event() ionInputDidLoad!: EventEmitter<void>;
-
-  /**
-   * Emitted when the input has been removed.
-   */
-  @Event() ionInputDidUnload!: EventEmitter<void>;
 
   /**
    * The color to use from your application's color palette.
@@ -98,14 +61,14 @@ export class Input implements InputComponent {
   @Prop() autofocus = false;
 
   /**
-   * If true, a clear icon will appear in the input when there is a value. Clicking it clears the input. Defaults to `false`.
+   * If `true`, a clear icon will appear in the input when there is a value. Clicking it clears the input. Defaults to `false`.
    */
   @Prop() clearInput = false;
 
   /**
-   * If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
+   * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
-  @Prop({ mutable: true }) clearOnEdit!: boolean;
+  @Prop({ mutable: true }) clearOnEdit?: boolean;
 
   /**
    * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `0`.
@@ -118,7 +81,7 @@ export class Input implements InputComponent {
   }
 
   /**
-   * If true, the user cannot interact with the input. Defaults to `false`.
+   * If `true`, the user cannot interact with the input. Defaults to `false`.
    */
   @Prop() disabled = false;
 
@@ -153,7 +116,7 @@ export class Input implements InputComponent {
   @Prop() minlength?: number;
 
   /**
-   * If true, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"` or `"file"`, otherwise it is ignored.
+   * If `true`, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"` or `"file"`, otherwise it is ignored.
    */
   @Prop() multiple?: boolean;
 
@@ -173,12 +136,12 @@ export class Input implements InputComponent {
   @Prop() placeholder?: string;
 
   /**
-   * If true, the user cannot modify the value. Defaults to `false`.
+   * If `true`, the user cannot modify the value. Defaults to `false`.
    */
   @Prop() readonly = false;
 
   /**
-   * If true, the user must fill in a value before submitting a form.
+   * If `true`, the user must fill in a value before submitting a form.
    */
   @Prop() required = false;
 
@@ -188,7 +151,7 @@ export class Input implements InputComponent {
   @Prop() results?: number;
 
   /**
-   * If true, the element will have its spelling and grammar checked. Defaults to `false`.
+   * If `true`, the element will have its spelling and grammar checked. Defaults to `false`.
    */
   @Prop() spellcheck = false;
 
@@ -218,13 +181,48 @@ export class Input implements InputComponent {
   @Watch('value')
   protected valueChanged() {
     const inputEl = this.nativeInput;
-    const value = this.value;
+    const value = this.getValue();
     if (inputEl && inputEl.value !== value) {
       inputEl.value = value;
     }
     this.emitStyle();
     this.ionChange.emit({ value });
   }
+
+  /**
+   * Emitted when a keyboard input ocurred.
+   */
+  @Event() ionInput!: EventEmitter<KeyboardEvent>;
+
+  /**
+   * Emitted when the value has changed.
+   */
+  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
+
+  /**
+   * Emitted when the styles change.
+   */
+  @Event() ionStyle!: EventEmitter<StyleEvent>;
+
+  /**
+   * Emitted when the input loses focus.
+   */
+  @Event() ionBlur!: EventEmitter<void>;
+
+  /**
+   * Emitted when the input has focus.
+   */
+  @Event() ionFocus!: EventEmitter<void>;
+
+  /**
+   * Emitted when the input has been created.
+   */
+  @Event() ionInputDidLoad!: EventEmitter<void>;
+
+  /**
+   * Emitted when the input has been removed.
+   */
+  @Event() ionInputDidUnload!: EventEmitter<void>;
 
   componentWillLoad() {
     // By default, password inputs clear after focus when they have content
@@ -246,6 +244,21 @@ export class Input implements InputComponent {
     this.ionInputDidUnload.emit();
   }
 
+  /**
+   * Sets focus on the specified `ion-input`. Use this method instead of the global
+   * `input.focus()`.
+   */
+  @Method()
+  setFocus() {
+    if (this.nativeInput) {
+      this.nativeInput.focus();
+    }
+  }
+
+  private getValue(): string {
+    return this.value || '';
+  }
+
   private emitStyle() {
     this.ionStyle.emit({
       'interactive': true,
@@ -256,15 +269,15 @@ export class Input implements InputComponent {
     });
   }
 
-  private onInput(ev: KeyboardEvent) {
-    const input = ev.target as HTMLInputElement;
+  private onInput = (ev: Event) => {
+    const input = ev.target as HTMLInputElement | null;
     if (input) {
-      this.value = ev.target && (ev.target as HTMLInputElement).value || '';
+      this.value = input.value || '';
     }
-    this.ionInput.emit(ev);
+    this.ionInput.emit(ev as KeyboardEvent);
   }
 
-  private onBlur() {
+  private onBlur = () => {
     this.hasFocus = false;
     this.focusChanged();
     this.emitStyle();
@@ -272,12 +285,29 @@ export class Input implements InputComponent {
     this.ionBlur.emit();
   }
 
-  private onFocus() {
+  private onFocus = () => {
     this.hasFocus = true;
     this.focusChanged();
     this.emitStyle();
 
     this.ionFocus.emit();
+  }
+
+  private onKeydown = () => {
+    if (this.clearOnEdit) {
+      // Did the input value change after it was blurred and edited?
+      if (this.didBlurAfterEdit && this.hasValue()) {
+        // Clear the input
+        this.clearTextInput();
+      }
+
+      // Reset the flag
+      this.didBlurAfterEdit = false;
+    }
+  }
+
+  private clearTextInput = () => {
+    this.value = '';
   }
 
   private focusChanged() {
@@ -287,38 +317,15 @@ export class Input implements InputComponent {
     }
   }
 
-  /**
-   * Check if we need to clear the text input if clearOnEdit is enabled
-   */
-  private onKeydown() {
-    if (!this.clearOnEdit) {
-      return;
-    }
-
-    // Did the input value change after it was blurred and edited?
-    if (this.didBlurAfterEdit && this.hasValue()) {
-      // Clear the input
-      this.clearTextInput();
-    }
-
-    // Reset the flag
-    this.didBlurAfterEdit = false;
-  }
-
-  private clearTextInput() {
-    this.value = '';
-  }
-
   private hasValue(): boolean {
-    return !!this.value;
+    return this.getValue().length > 0;
   }
 
   hostData() {
     return {
       class: {
         ...createColorClasses(this.color),
-
-        'in-item': hostContext('.item', this.el),
+        'in-item': hostContext('ion-item', this.el),
         'has-value': this.hasValue(),
         'has-focus': this.hasFocus
       }
@@ -326,7 +333,7 @@ export class Input implements InputComponent {
   }
 
   render() {
-    renderHiddenInput(this.el, this.name, this.value, this.disabled);
+    renderHiddenInput(this.el, this.name, this.getValue(), this.disabled);
 
     return [
       <input
@@ -355,18 +362,20 @@ export class Input implements InputComponent {
         step={this.step}
         size={this.size}
         type={this.type}
-        value={this.value}
-        onInput={this.onInput.bind(this)}
-        onBlur={this.onBlur.bind(this)}
-        onFocus={this.onFocus.bind(this)}
-        onKeyDown={this.onKeydown.bind(this)}
+        value={this.getValue()}
+        onInput={this.onInput}
+        onBlur={this.onBlur}
+        onFocus={this.onFocus}
+        onKeyDown={this.onKeydown}
       />,
       <slot></slot>,
       (this.clearInput && !this.readonly && !this.disabled) && <button
         type="button"
         class="input-clear-icon"
-        onClick={this.clearTextInput.bind(this)}
-        onMouseDown={this.clearTextInput.bind(this)}/>
+        tabindex="-1"
+        onTouchStart={this.clearTextInput}
+        onMouseDown={this.clearTextInput}
+      />
     ];
   }
 }

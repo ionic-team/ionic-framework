@@ -5,14 +5,12 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{$item-md-divider-background};
-  --ion-color-contrast: #{$item-md-divider-color};
-
-  @include padding-horizontal($item-md-divider-padding-start, null);
+  --background: #{$item-md-divider-background};
+  --color: #{$item-md-divider-color};
+  --padding-start: #{$item-md-divider-padding-start};
 
   border-bottom: $item-md-divider-border-bottom;
 
-  font-family: $item-md-divider-font-family;
   font-size: $item-md-divider-font-size;
 }
 

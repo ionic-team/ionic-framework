@@ -6,7 +6,8 @@
   <title>Loading</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
+  <script src="/scripts/screenshot/testing.js"></script>
 </head>
 
 <body>
@@ -25,7 +26,7 @@
         <ion-button expand="block" onclick="presentLoadingWithOptions({duration: 2000, content: 'Please wait...', spinner: 'hide'})">Show Loading with no spinner</ion-button>
         <ion-button expand="block" onclick="presentLoadingWithOptions({duration: 5000, content: 'Please wait...', translucent: true})">Show Loading with translucent</ion-button>
         <ion-button expand="block" onclick="presentLoadingWithOptions({duration: 5000, content: 'Please wait...', translucent: true, cssClass: 'custom-class custom-loading'})">Show Loading with cssClass</ion-button>
-        <ion-button expand="block" onclick="presentLoadingWithOptions({enableBackdropDismiss: true})">Show Backdrop Click Loading</ion-button>
+        <ion-button expand="block" onclick="presentLoadingWithOptions({backdropDismiss: true})">Show Backdrop Click Loading</ion-button>
 
         <ion-loading-controller></ion-loading-controller>
 
@@ -65,7 +66,7 @@
       const loadingController = document.querySelector('ion-loading-controller');
       await loadingController.componentOnReady();
       const loadingElement = await loadingController.create({
-        content: 'Hellooo',
+        message: 'Hellooo',
         duration: 2000
       });
       return await loadingElement.present();

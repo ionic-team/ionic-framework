@@ -4,36 +4,68 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --background: Background of the item
+   * @prop --background-activated: Background of the activated item
+   * @prop --border-color: Color of the item border
+   * @prop --border-radius: Radius of the item border
+   * @prop --border-style: Style of the item border
+   * @prop --border-width: Width of the item border
+   * @prop --box-shadow: Box shadow of the item
+   * @prop --color: Color of the item
+   *
+   * @prop --detail-icon-color: Color of the item detail icon
+   * @prop --detail-icon-opacity: Opacity of the item detail icon
+   * @prop --detail-icon-font-size: Font size of the item detail icon
+   * @prop --inner-border-width: Width of the item inner border
+   * @prop --inner-box-shadow: Box shadow of the item inner
+   * @prop --inner-padding-bottom: Bottom padding of the item inner
+   * @prop --inner-padding-end: End padding of the item inner
+   * @prop --inner-padding-start: Start padding of the item inner
+   * @prop --inner-padding-top: Top padding of the item inner
+   *
+   * @prop --min-height: Minimum height of the item
+   * @prop --padding-bottom: Bottom padding of the item
+   * @prop --padding-end: End padding of the item
+   * @prop --padding-start: Start padding of the item
+   * @prop --padding-top: Top padding of the item
+   * @prop --transition: Transition of the item
+   *
+   * @prop --highlight-height: The height of the highlight on the item
+   * @prop --highlight-color-focused: The color of the highlight on the item when focused
+   * @prop --highlight-color-valid: The color of the highlight on the item when valid
+   * @prop --highlight-color-invalid: The color of the highlight on the item when invalid
+   */
   --min-height: #{$item-min-height};
-  --background: #{current-color(base)};
-  --background-active: #{current-color(tint)};
-  --color: #{current-color(contrast)};
-  --detail-push-color: #{current-color(shade)};
-  --border-radius: 0;
-  --border-width: 0;
+  --border-radius: 0px;
+  --border-width: 0px;
   --border-style: solid;
-  --border-color: #{current-color(shade)};
-  --inner-border-width: 0;
-  --padding-top: 0;
-  --padding-bottom: 0;
-  --padding-end: 0;
-  --padding-start: 0;
-  --inner-padding-top: 0;
-  --inner-padding-bottom: 0;
-  --inner-padding-start: 0;
-  --inner-padding-end: 0;
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+  --padding-end: 0px;
+  --padding-start: 0px;
   --box-shadow: none;
+  --inner-border-width: 0px;
+  --inner-padding-top: 0px;
+  --inner-padding-bottom: 0px;
+  --inner-padding-start: 0px;
+  --inner-padding-end: 0px;
   --inner-box-shadow: none;
-  --highlight-color-focus: #{ion-color(primary, base)};
-  --highlight-color-valid: #{ion-color(success, base)};
-  --highlight-color-invalid: #{ion-color(danger, base)};
-  --highlight-height: 2px;
+  --show-full-highlight: 0;
+  --show-inset-highlight: 0;
+  --detail-icon-color: currentColor;
+  --detail-icon-font-size: 20px;
+  --detail-icon-opacity: 0.25;
 
   @include font-smoothing();
 
   display: block;
 
-  color: #{current-color(contrast)};
+  position: relative;
+
+  color: var(--color);
+
+  font-family: $font-family-base;
 
   text-align: initial;
   text-decoration: none;
@@ -41,9 +73,35 @@
   box-sizing: border-box;
 }
 
-:host(.activated) {
-  --background: var(--background-active);
+
+// Item with Color
+// --------------------------------------------------
+
+:host(.ion-color) .item-native {
+  background: current-color(base);
+  color: current-color(contrast);
 }
+
+:host(.ion-color) .item-native,
+:host(.ion-color) .item-inner {
+  border-color: current-color(shade);
+}
+
+
+// Activated Item
+// --------------------------------------------------
+
+:host(.activated) .item-native {
+  background: var(--background-activated);
+}
+
+:host(.ion-color.activated) .item-native {
+  background: current-color(tint);
+}
+
+
+// Disabled Item
+// --------------------------------------------------
 
 :host(.item-disabled) {
   cursor: default;
@@ -52,10 +110,18 @@
 }
 
 
+// Native Item
+// --------------------------------------------------
+
 .item-native {
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include border-radius(var(--border-radius));
   @include margin(0);
+  @include padding(
+    var(--padding-top),
+    var(--padding-end),
+    var(--padding-bottom),
+    calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
+  );
   @include text-inherit();
 
   display: flex;
@@ -75,7 +141,7 @@
 
   outline: none;
 
-  background-color: var(--background);
+  background: var(--background);
 
   box-shadow: var(--box-shadow);
   overflow: hidden;
@@ -84,21 +150,27 @@
 
 button, a {
   cursor: pointer;
+  user-select: none;
+
+  -webkit-user-drag: none;
 }
 
-.item-state {
-  @include position(null, 0, 0, 0);
 
-  position: absolute;
-
-  height: var(--highlight-height);
-}
+// Inner Item
+// --------------------------------------------------
 
 .item-inner {
   @include margin(0);
-  @include padding(var(--inner-padding-top), var(--inner-padding-end), var(--inner-padding-bottom), var(--inner-padding-start));
+  @include padding(
+    var(--inner-padding-top),
+    calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end)),
+    var(--inner-padding-bottom),
+    var(--inner-padding-start)
+  );
 
   display: flex;
+
+  position: relative;
 
   flex: 1;
   flex-direction: inherit;
@@ -116,24 +188,20 @@ button, a {
   box-sizing: border-box;
 }
 
-.input-wrapper {
-  display: flex;
+// Item Detail Icon
+// -----------------------------------------
 
-  flex: 1;
-  flex-direction: inherit;
-  align-items: inherit;
-  align-self: stretch;
+.item-detail-icon {
+  color: var(--detail-icon-color);
 
-  text-overflow: ellipsis;
+  font-size: var(--detail-icon-font-size);
 
-  overflow: hidden;
-  box-sizing: border-box;
+  opacity: var(--detail-icon-opacity);
 }
 
-:host([vertical-align-top]),
-:host(.item-input) {
-  align-items: flex-start;
-}
+
+// Item Slots
+// -----------------------------------------
 
 ::slotted(ion-icon) {
   font-size: 1.6em;
@@ -149,27 +217,32 @@ button, a {
 }
 
 
-// FROM LABEL
+// Item Input
+// -----------------------------------------
+
+:host([vertical-align-top]),
+:host(.item-input) {
+  align-items: flex-start;
+}
+
+.input-wrapper {
+  display: flex;
+
+  flex: 1;
+  flex-direction: inherit;
+  align-items: inherit;
+  align-self: stretch;
+
+  text-overflow: ellipsis;
+
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
 :host(.item-label-stacked) .input-wrapper,
 :host(.item-label-floating) .input-wrapper {
   flex: 1;
   flex-direction: column;
-}
-
-:host(.item-label-stacked)::slotted(ion-select),
-:host(.item-label-floating)::slotted(ion-select) {
-  align-self: stretch;
-
-  max-width: 100%;
-}
-
-
-
-
-// TODO: FROM textarea
-
-:host(.item-textarea) {
-  align-items: stretch;
 }
 
 // :host(.item-input-has-focus) a,
@@ -178,16 +251,100 @@ button, a {
 //   pointer-events: auto;
 // }
 
+// Item Input Highlight
+// --------------------------------------------------
 
-// FROM SELECT
+.item-highlight,
+.item-inner-highlight {
+  @include position(null, 0, 0, 0);
+
+  position: absolute;
+
+  background: var(--highlight-background);
+}
+
+.item-highlight {
+  height: var(--full-highlight-height);
+}
+
+.item-inner-highlight {
+  height: var(--inset-highlight-height);
+}
+
+// Item Input Focused
+// --------------------------------------------------
+
+:host(.item-interactive.item-has-focus) {
+  --highlight-background: var(--highlight-color-focused);
+
+  // If the item has a full border and highlight is enabled, show the full item highlight
+  --full-highlight-height: #{calc(var(--highlight-height) * var(--show-full-highlight))};
+
+  // If the item has an inset border and highlight is enabled, show the inset item highlight
+  --inset-highlight-height: #{calc(var(--highlight-height) * var(--show-inset-highlight))};
+}
+
+
+// Item Input Valid
+// --------------------------------------------------
+
+:host(.item-interactive.ion-valid) {
+  --highlight-background: var(--highlight-color-valid);
+}
+
+
+// Item Input Invalid
+// --------------------------------------------------
+
+:host(.item-interactive.ion-invalid) {
+  --highlight-background: var(--highlight-color-invalid);
+}
+
+
+// Item Select
+// -----------------------------------------
+
+:host(.item-label-stacked) ::slotted(ion-select),
+:host(.item-label-floating) ::slotted(ion-select) {
+  --padding-start: 0;
+
+  align-self: stretch;
+
+  width: 100%;
+
+  max-width: 100%;
+}
+
+
+// Item Datetime
+// -----------------------------------------
+
+:host(.item-label-stacked) ::slotted(ion-datetime),
+:host(.item-label-floating) ::slotted(ion-datetime) {
+  --padding-start: 0;
+
+  width: 100%;
+}
+
+
+// Item w/ Multiple Inputs
+// -----------------------------------------
+// Multiple inputs in an item should have the input cover
+// relative to them instead of the item
+
+:host(.item-multiple-inputs) ::slotted(ion-datetime),
 :host(.item-multiple-inputs) ::slotted(ion-select) {
   position: relative;
 }
 
-:host(.item-label-stacked) ::slotted(ion-select),
-:host(.item-label-floating) ::slotted(ion-select) {
-  max-width: 100%;
+
+// Item Textarea
+// -----------------------------------------
+
+:host(.item-textarea) {
+  align-items: stretch;
 }
+
 
 // Item Reorder
 // --------------------------------------------------

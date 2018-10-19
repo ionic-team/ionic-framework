@@ -1,4 +1,4 @@
-import { ElementRef } from '@angular/core';
+import { ElementRef, EventEmitter } from '@angular/core';
 
 export function inputs(instance: any, el: ElementRef, props: string[]) {
   props.forEach(propName => {
@@ -8,9 +8,9 @@ export function inputs(instance: any, el: ElementRef, props: string[]) {
   });
 }
 
-export function proxyEvent(emitter: any, el: Node, eventName: string) {
+export function proxyEvent<T>(emitter: EventEmitter<T>, el: EventTarget, eventName: string) {
   el.addEventListener(eventName, (ev) => {
-    emitter.emit(ev);
+    emitter.emit((ev as any).detail as T);
   });
 }
 
@@ -28,10 +28,6 @@ export function ensureElementInBody(elementName: string) {
     document.body.appendChild(element);
   }
   return element as HTMLStencilElement;
-}
-
-export function objectValues(obj: any): any[] {
-  return Object.keys(obj).map(key => obj[key]);
 }
 
 export function deepEqual(x: any, y: any) {

@@ -5,12 +5,20 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --color: Color of the label
+   */
+  --color: currentColor;
+
   @include margin(0);
 
   display: block;
 
   flex: 1;
 
+  color: var(--color);
+
+  font-family: $font-family-base;
   font-size: inherit;
 
   text-overflow: ellipsis;
@@ -22,7 +30,7 @@
 }
 
 :host(.ion-color) {
-  color: #{current-color(base)};
+  color: current-color(base);
 }
 
 :host([text-wrap]) {

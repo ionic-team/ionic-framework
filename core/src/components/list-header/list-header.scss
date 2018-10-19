@@ -5,6 +5,11 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --background: Background of the list header
+   * @prop --color: Color of the list header text
+   */
+
   @include font-smoothing();
   @include margin(0);
   @include padding(0);
@@ -17,8 +22,13 @@
   width: 100%;
   min-height: 40px;
 
-  background: #{current-color(base)};
-  color: #{current-color(contrast)};
+  background: var(--background);
+  color: var(--color);
 
   overflow: hidden;
+}
+
+:host(.ion-color) {
+  background: current-color(base);
+  color: current-color(contrast);
 }

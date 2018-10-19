@@ -1,9 +1,9 @@
-import { Component, Event, EventEmitter, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 
 @Component({
   tag: 'ion-route-redirect'
 })
-export class RouteRedirect {
+export class RouteRedirect implements ComponentInterface {
 
   /**
    * A redirect route, redirects "from" a URL "to" another URL. This property is that "from" URL.
@@ -39,13 +39,16 @@ export class RouteRedirect {
    */
   @Event() ionRouteRedirectChanged!: EventEmitter;
 
+  @Watch('from')
+  @Watch('to')
+  propDidChange() {
+    this.ionRouteRedirectChanged.emit();
+  }
+
   componentDidLoad() {
     this.ionRouteRedirectChanged.emit();
   }
   componentDidUnload() {
-    this.ionRouteRedirectChanged.emit();
-  }
-  componentDidUpdate() {
     this.ionRouteRedirectChanged.emit();
   }
 }

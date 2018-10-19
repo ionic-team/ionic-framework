@@ -6,7 +6,7 @@
   <title>Ionic Item Sliding</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
 </head>
 
 <body>
@@ -20,10 +20,19 @@
     </ion-header>
 
     <ion-content>
-      <ion-virtual-scroll id="virtual"></ion-virtual-scroll>
+
+      <ion-virtual-scroll id="virtual">
+        <template>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Card Header</ion-card-title>
+            </ion-card-header>
+            <ion-card-content class="content"></ion-card-content>
+          </ion-card>
+        </template>
+      </ion-virtual-scroll>
+
     </ion-content>
-
-
 
   </ion-app>
 
@@ -38,14 +47,7 @@
     }
 
     function renderItem(el, item) {
-      if (!el) {
-        el = document.createElement('ion-card');
-      }
-      el.innerHTML = `
-      <ion-card-header>
-        <ion-card-title>Card Header</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>${item.content}</ion-card-content>`;
+      el.querySelector('.content').textContent = item.content;
       return el;
     }
 

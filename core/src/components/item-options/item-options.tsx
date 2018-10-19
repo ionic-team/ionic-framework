@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
 
 import { Side } from '../../interface';
 import { isEndSide } from '../../utils/helpers';
@@ -10,7 +10,7 @@ import { isEndSide } from '../../utils/helpers';
     md: 'item-options.md.scss'
   }
 })
-export class ItemOptions {
+export class ItemOptions implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'window' }) win!: Window;
@@ -24,25 +24,18 @@ export class ItemOptions {
   /**
    * Emitted when the item has been fully swiped.
    */
-  @Event() ionSwipe!: EventEmitter<void>;
+  @Event() ionSwipe!: EventEmitter<any>;
 
-  @Method()
-  isEndSide() {
-    return isEndSide(this.win, this.side);
-  }
-
-  @Method()
-  width(): number {
-    return this.el.offsetWidth;
-  }
-
+  /** @internal */
   @Method()
   fireSwipeEvent() {
-    this.ionSwipe.emit();
+    this.ionSwipe.emit({
+      side: this.side
+    });
   }
 
   hostData() {
-    const isEnd = this.isEndSide();
+    const isEnd = isEndSide(this.win, this.side);
     return {
       class: {
         'item-options-start': !isEnd,

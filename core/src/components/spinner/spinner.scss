@@ -4,17 +4,23 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --color: Color of the spinner
+   */
+
   display: inline-block;
   position: relative;
 
   width: 28px;
   height: 28px;
 
+  color: var(--color);
+
   user-select: none;
 }
 
 :host(.ion-color) {
-  color: #{current-color(base)};
+  color: current-color(base);
 }
 
 svg {

@@ -5,10 +5,10 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: transparent;
-  --ion-color-contrast: #{$list-md-header-color};
+  --background: transparent;
+  --color: #{$list-md-header-color};
 
-  @include padding-horizontal($list-md-header-padding-start, null);
+  @include padding-horizontal(calc(var(--ion-safe-area-left, 0px) + #{$list-md-header-padding-start}), null);
   @include margin(null, null, $list-md-header-margin-bottom, null);
 
   min-height: $list-md-header-min-height;

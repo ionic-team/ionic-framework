@@ -6,7 +6,8 @@
   <title>Input - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
+  <script src="/scripts/screenshot/testing.js"></script>
 </head>
 
 <body>
@@ -26,6 +27,18 @@
 
         <ion-item>
           <ion-input placeholder="Placeholder"></ion-input>
+        </ion-item>
+
+        <ion-item lines="full" id="fullItem">
+          <ion-input id="fullInput" placeholder="Full"></ion-input>
+        </ion-item>
+
+        <ion-item lines="inset" id="insetItem">
+          <ion-input id="insetInput" placeholder="Inset"></ion-input>
+        </ion-item>
+
+        <ion-item lines="none" id="noneItem">
+          <ion-input id="noneInput" placeholder="None"></ion-input>
         </ion-item>
 
         <ion-item>

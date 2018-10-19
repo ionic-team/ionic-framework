@@ -21,9 +21,6 @@ $chip-md-height:                           32px !default;
 /// @prop - Border radius of the chip
 $chip-md-border-radius:                    16px !default;
 
-/// @prop - Font family of the chip
-$chip-md-font-family:                      $font-family-base !default;
-
 /// @prop - Font size of the chip
 $chip-md-font-size:                        13px !default;
 
@@ -48,14 +45,20 @@ $chip-md-label-margin-bottom:              $chip-md-label-margin-top !default;
 /// @prop - Margin start of the label in the chip
 $chip-md-label-margin-start:               $chip-md-label-margin-end !default;
 
-/// @prop - Background color of the icon in the chip
-$chip-md-icon-background-color:            ion-color(primary, base) !default;
-
-/// @prop - Fill color of the icon in the chip
-$chip-md-icon-fill-color:                  ion-color(primary, contrast) !default;
-
 /// @prop - Width of the avatar in the chip
-$chip-md-avatar-width:                     32px !default;
+$chip-md-avatar-width:                     24px !default;
 
 /// @prop - Height of the avatar in the chip
 $chip-md-avatar-height:                    $chip-md-avatar-width !default;
+
+/// @prop - Margin top of the avatar in the chip
+$chip-md-avatar-margin-top:                0 !default;
+
+/// @prop - Margin end of the avatar in the chip
+$chip-md-avatar-margin-end:                4px !default;
+
+/// @prop - Margin bottom of the avatar in the chip
+$chip-md-avatar-margin-bottom:             $chip-md-avatar-margin-top !default;
+
+/// @prop - Margin start of the avatar in the chip
+$chip-md-avatar-margin-start:              $chip-md-avatar-margin-end !default;

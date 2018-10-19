@@ -2,12 +2,12 @@
 @import "./buttons";
 
 
-// iOS Toolbar Button Default
+// iOS Toolbar Default Button
 // --------------------------------------------------
 
-::slotted(*) .button {
+::slotted(*) ion-button {
   --padding-top: 0;
-  --pading-bottom: 0;
+  --padding-bottom: 0;
   --padding-start: 5px;
   --padding-end: 5px;
   --height: 32px;
@@ -16,13 +16,28 @@
   font-weight: 400;
 }
 
-::slotted(*) .button:not(.button-round) {
+::slotted(*) ion-button:not(.button-round) {
   --border-radius: #{$toolbar-ios-button-border-radius};
 }
 
+// iOS Toolbar with Color Default Button
+// --------------------------------------------------
+
 :host-context(.ion-color)::slotted(*) .button {
-  --ion-color-base: currentColor;
+  --color: currentColor;
+  --color-activated: currentColor;
 }
+
+
+// iOS Toolbar Button Solid
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  ::slotted(*) .button-solid-ios:hover {
+    opacity: .4;
+  }
+}
+
 
 // iOS Toolbar Button Icon
 // --------------------------------------------------
@@ -33,7 +48,6 @@
   font-size: 24px;
 
   line-height: .67;
-  pointer-events: none;
 }
 
 ::slotted(*) ion-icon[slot="end"] {
@@ -43,7 +57,6 @@
   font-size: 24px;
 
   line-height: .67;
-  pointer-events: none;
 }
 
 ::slotted(*) ion-icon[slot="icon-only"] {
@@ -53,44 +66,33 @@
   font-size: 31px;
 
   line-height: .67;
-  pointer-events: none;
 }
 
-::slotted(*) .button.button-clear {
-  --height: 35px;
-}
 
-// iOS Toolbar Button Solid
+// iOS Toolbar Menu Toggle
 // --------------------------------------------------
 
-::slotted(*) .button.button-solid-ios:hover {
-  opacity: .4;
-}
+// .button-menutoggle-ios {
+//   order: map-get($toolbar-order-ios, menu-toggle-start);
 
-  // iOS Toolbar Menu Toggle
-  // --------------------------------------------------
+//   min-width: 36px;
 
-  // .button-menutoggle-ios {
-  //   order: map-get($toolbar-order-ios, menu-toggle-start);
+//   --margin-top: 0;
+//   --margin-bottom: 0;
+//   --margin-start: 6px;
+//   --margin-end: 6px;
 
-  //   min-width: 36px;
+//   --padding-top: 0;
+//   --padding-bottom: 0;
+//   --padding-start: 0;
+//   --padding-end: 0;
 
-  //   --margin-top: 0;
-  //   --margin-bottom: 0;
-  //   --margin-start: 6px;
-  //   --margin-end: 6px;
+//   ion-icon {
+//     @include padding(0, 6px);
 
-  //   --padding-top: 0;
-  //   --padding-bottom: 0;
-  //   --padding-start: 0;
-  //   --padding-end: 0;
-
-  //   ion-icon {
-  //     @include padding(0, 6px);
-
-  //     font-size: 28px;
-  //   }
-  // }
+//     font-size: 28px;
+//   }
+// }
 
 // iOS Toolbar Button Placement
 // --------------------------------------------------

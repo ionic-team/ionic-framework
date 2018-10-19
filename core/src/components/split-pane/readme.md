@@ -42,61 +42,25 @@ SplitPane also provides some predefined media queries that can be used.
 
 ## Properties
 
-#### disabled
-
-boolean
-
-If true, the split pane will be hidden. Defaults to `false`.
-
-
-#### when
-
-any
-
-When the split-pane should be shown.
-Can be a CSS media query expression, or a shortcut expression.
-Can also be a boolean expression.
-
-
-## Attributes
-
-#### disabled
-
-boolean
-
-If true, the split pane will be hidden. Defaults to `false`.
-
-
-#### when
-
-any
-
-When the split-pane should be shown.
-Can be a CSS media query expression, or a shortcut expression.
-Can also be a boolean expression.
+| Property   | Attribute  | Description                                                                                                                           | Type                |
+| ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| `disabled` | `disabled` | If `true`, the split pane will be hidden. Defaults to `false`.                                                                        | `boolean`           |
+| `when`     | --         | When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression. | `boolean \| string` |
 
 
 ## Events
 
-#### ionChange
-
-Emitted when the split pane is visible.
-
-
-#### ionSplitPaneVisible
-
-Expression to be called when the split-pane visibility has changed
+| Event                 | Description                                                        |
+| --------------------- | ------------------------------------------------------------------ |
+| `ionChange`           | Emitted when the split pane is visible.                            |
+| `ionSplitPaneVisible` | Expression to be called when the split-pane visibility has changed |
 
 
-## Methods
+## CSS Custom Properties
 
-#### isPane()
-
-
-#### isVisible()
-
-Returns if the split pane is toggled or not
-
+| Name       | Description          |
+| ---------- | -------------------- |
+| `--border` | Border between panes |
 
 
 ----------------------------------------------

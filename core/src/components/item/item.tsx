@@ -1,4 +1,4 @@
-import { Component, Element, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop, State } from '@stencil/core';
 
 import { Color, CssClassMap, Mode, RouterDirection } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
@@ -11,10 +11,12 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
   },
   shadow: true
 })
-export class Item {
+export class Item implements ComponentInterface {
   private itemStyles = new Map<string, CssClassMap>();
 
   @Element() el!: HTMLStencilElement;
+
+  @State() multipleInputs = false;
 
   @Prop({ context: 'window' }) win!: Window;
 
@@ -32,12 +34,12 @@ export class Item {
   @Prop() mode!: Mode;
 
   /**
-   * If true, a button tag will be rendered and the item will be tappable. Defaults to `false`.
+   * If `true`, a button tag will be rendered and the item will be tappable. Defaults to `false`.
    */
   @Prop() button = false;
 
   /**
-   * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
+   * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
    * is `ios` and an `href`, `onclick` or `button` property is present.
    */
   @Prop() detail?: boolean;
@@ -48,7 +50,7 @@ export class Item {
   @Prop() detailIcon = 'ios-arrow-forward';
 
   /**
-   * If true, the user cannot interact with the item. Defaults to `false`.
+   * If `true`, the user cannot interact with the item. Defaults to `false`.
    */
   @Prop() disabled = false;
 
@@ -60,6 +62,7 @@ export class Item {
 
   /**
    * How the bottom border should be displayed on the item.
+   * Available options: `"full"`, `"inset"`, `"none"`.
    */
   @Prop() lines?: 'full' | 'inset' | 'none';
 
@@ -68,9 +71,6 @@ export class Item {
    * another page using `href`.
    */
   @Prop() routerDirection?: RouterDirection;
-
-  // TODO document this
-  @Prop() state?: 'valid' | 'invalid' | 'focus';
 
   /**
    * The type of the button. Only used when an `onclick` or `button` property is present.
@@ -112,40 +112,45 @@ export class Item {
         button.size = 'small';
       }
     });
+
+    // Check for multiple inputs to change the position to relative
+    const inputs = this.el.querySelectorAll('ion-select, ion-datetime');
+    this.multipleInputs = inputs.length > 1 ? true : false;
   }
 
   private isClickable(): boolean {
-    return !!(this.href || this.el.onclick || this.button);
+    return (this.href !== undefined || this.button);
   }
 
   hostData() {
     const childStyles = {};
-    for (const value of this.itemStyles.values()) {
+    this.itemStyles.forEach(value => {
       Object.assign(childStyles, value);
-    }
+    });
 
     return {
-      'tappable': this.isClickable(),
+      'ion-activatable': this.isClickable(),
       class: {
         ...childStyles,
         ...createColorClasses(this.color),
         [`item-lines-${this.lines}`]: !!this.lines,
         'item-disabled': this.disabled,
         'in-list': hostContext('ion-list', this.el),
-        'item': true
+        'item': true,
+        'item-multiple-inputs': this.multipleInputs
       }
     };
   }
 
   render() {
-    const { href, detail, mode, win, state, detailIcon, el, routerDirection, type } = this;
+    const { href, detail, mode, win, detailIcon, routerDirection, type } = this;
 
     const clickable = this.isClickable();
-    const TagType = clickable ? (href ? 'a' : 'button') : 'div';
+    const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div';
     const attrs = TagType === 'button' ? { type } : { href };
-    const showDetail = detail != null ? detail : mode === 'ios' && clickable;
+    const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
 
-    return (
+    return [
       <TagType
         {...attrs}
         class="item-native"
@@ -157,11 +162,12 @@ export class Item {
             <slot></slot>
           </div>
           <slot name="end"></slot>
-          { showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon"></ion-icon> }
+          {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon"></ion-icon>}
+          <div class="item-inner-highlight"></div>
         </div>
-        { state && <div class="item-state"></div> }
-        { clickable && mode === 'md' && <ion-ripple-effect tapClick={true} parent={el} /> }
-      </TagType>
-    );
+        {clickable && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+      </TagType>,
+      <div class="item-highlight"></div>
+    ];
   }
 }
