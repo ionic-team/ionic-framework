@@ -27,10 +27,16 @@ export class List implements ComponentInterface {
   @Prop() lines?: 'full' | 'inset' | 'none';
 
   /**
-   * If true, the list will have margin around it and rounded corners. Defaults to `false`.
+   * If `true`, the list will have margin around it and rounded corners. Defaults to `false`.
    */
   @Prop() inset = false;
 
+  /**
+   * If `ion-item-sliding` are used inside the list, this method closes
+   * any open sliding item.
+   *
+   * Returns `true` if an actual `ion-item-sliding` is closed.
+   */
   @Method()
   async closeSlidingItems(): Promise<boolean> {
     const item = this.el.querySelector('ion-item-sliding');

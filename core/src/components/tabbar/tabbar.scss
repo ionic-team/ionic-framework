@@ -7,7 +7,6 @@
   );
 
   display: flex;
-  position: relative;
 
   align-items: center;
   justify-content: center;
@@ -21,6 +20,7 @@
   user-select: none;
 
   z-index: $z-index-toolbar;
+  box-sizing: content-box;
 }
 
 :host(.ion-color) {
@@ -81,29 +81,29 @@
 // --------------------------------------------------
 
 :host(.layout-icon-start) .tab-btn {
-  --flex-direction: row;
+  flex-direction: row;
 }
 
 :host(.layout-icon-end) .tab-btn {
-  --flex-direction: row-reverse;
+  flex-direction: row-reverse;
 }
 
 :host(.layout-icon-bottom) .tab-btn {
-  --flex-direction: column-reverse;
+  flex-direction: column-reverse;
 }
 
 :host(.layout-icon-start) .tab-btn,
 :host(.layout-icon-end) .tab-btn,
 :host(.layout-icon-hide) .tab-btn,
 :host(.layout-label-hide) .tab-btn {
-  --justify-content: center;
+  justify-content: center;
 }
 
-:host(.layout-icon-hide) .tab-btn {
+:host(.layout-icon-hide) {
   --icon-display: none;
 }
 
-:host(.layout-label-hide) .tab-btn {
+:host(.layout-label-hide) {
   --label-display: none;
 }
 

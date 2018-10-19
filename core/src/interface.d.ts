@@ -12,6 +12,8 @@ export * from './components/popover/popover-interface';
 export * from './components/nav/nav-interface';
 export * from './components/router/utils/interface';
 export * from './components/range/range-interface';
+export * from './components/refresher/refresher-interface';
+export * from './components/reorder-group/reorder-group-interface';
 export * from './components/content/content-interface';
 export * from './components/select/select-interface';
 export * from './components/select-popover/select-popover-interface';
@@ -40,9 +42,11 @@ export type ComponentTags = keyof StencilIntrinsicElements;
 export type ComponentRef = Function | HTMLElement | string | null;
 export type ComponentProps<T = null> = T extends ComponentTags ? StencilIntrinsicElements[T] : {[key: string]: any};
 export type CssClassMap = { [className: string]: boolean };
-export type BackButtonEvent = CustomEvent<{
+export interface BackButtonDetail {
   register(priority: number, handler: () => Promise<any> | void): void;
-}>
+}
+
+export type BackButtonEvent = CustomEvent<BackButtonDetail>;
 
 export interface FrameworkDelegate {
   attachViewToDom(container: any, component: any, propsOrDataObj?: any, cssClasses?: string[]): Promise<HTMLElement>;

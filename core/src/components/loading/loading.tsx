@@ -26,6 +26,8 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
+
+  /** @internal */
   @Prop() overlayIndex!: number;
 
   /**
@@ -35,7 +37,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
   @Prop() mode!: Mode;
 
   /**
-   * If true, the keyboard will be automatically dismissed when the overlay is presented.
+   * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
    */
   @Prop() keyboardClose = true;
 
@@ -66,12 +68,12 @@ export class Loading implements ComponentInterface, OverlayInterface {
   @Prop() duration = 0;
 
   /**
-   * If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
+   * If `true`, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
    */
   @Prop() backdropDismiss = false;
 
   /**
-   * If true, a backdrop will be displayed behind the loading indicator. Defaults to `true`.
+   * If `true`, a backdrop will be displayed behind the loading indicator. Defaults to `true`.
    */
   @Prop() showBackdrop = true;
 
@@ -82,12 +84,12 @@ export class Loading implements ComponentInterface, OverlayInterface {
   @Prop({ mutable: true }) spinner?: string;
 
   /**
-   * If true, the loading indicator will be translucent. Defaults to `false`.
+   * If `true`, the loading indicator will be translucent. Defaults to `false`.
    */
   @Prop() translucent = false;
 
   /**
-   * If true, the loading indicator will animate. Defaults to `true`.
+   * If `true`, the loading indicator will animate. Defaults to `true`.
    */
   @Prop() animated = true;
 

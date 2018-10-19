@@ -28,12 +28,12 @@ export class SegmentButton implements ComponentInterface {
   @Prop() mode!: Mode;
 
   /**
-   * If true, the segment button is selected. Defaults to `false`.
+   * If `true`, the segment button is selected. Defaults to `false`.
    */
   @Prop({ mutable: true }) checked = false;
 
-  /*
-   * If true, the user cannot interact with the segment button. Default false.
+  /**
+   * If `true`, the user cannot interact with the segment button. Default false.
    */
   @Prop() disabled = false;
 

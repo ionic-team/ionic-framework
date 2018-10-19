@@ -7,6 +7,7 @@ import { EventEmitter } from 'ionicons/dist/types/stencil.core';
 })
 export class Slide implements ComponentInterface {
 
+  /** @internal */
   @Event() ionSlideChanged!: EventEmitter<void>;
 
   componentDidLoad() {

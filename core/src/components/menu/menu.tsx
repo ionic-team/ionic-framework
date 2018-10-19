@@ -77,7 +77,7 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   /**
-   * If true, the menu is disabled. Default `false`.
+   * If `true`, the menu is disabled. Default `false`.
    */
   @Prop({ mutable: true }) disabled = false;
 
@@ -102,7 +102,7 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   /**
-   * If true, swiping the menu is enabled. Default `true`.
+   * If `true`, swiping the menu is enabled. Default `true`.
    */
   @Prop() swipeGesture = true;
 
@@ -117,17 +117,28 @@ export class Menu implements ComponentInterface, MenuI {
   @Prop() maxEdgeStart = 50;
 
   /**
+   * Emitted when the menu is about to be opened.
+   */
+  @Event() ionWillOpen!: EventEmitter<void>;
+
+  /**
+   * Emitted when the menu is about to be closed.
+   */
+  @Event() ionWillClose!: EventEmitter<void>;
+  /**
    * Emitted when the menu is open.
    */
-  @Event() ionOpen!: EventEmitter<void>;
+  @Event() ionDidOpen!: EventEmitter<void>;
 
   /**
    * Emitted when the menu is closed.
    */
-  @Event() ionClose!: EventEmitter<void>;
+  @Event() ionDidClose!: EventEmitter<void>;
 
   /**
    * Emitted when the menu state is changed.
+   *
+   * @internal
    */
   @Event() protected ionMenuChange!: EventEmitter<MenuChangeEventDetail>;
 
@@ -136,15 +147,10 @@ export class Menu implements ComponentInterface, MenuI {
 
     if (this.isServer) {
       this.disabled = true;
-    } else {
-      this.menuCtrl = await this.lazyMenuCtrl.componentOnReady().then(p => p._getInstance());
-    }
-  }
-
-  async componentDidLoad() {
-    if (this.isServer) {
       return;
     }
+
+    const menuCtrl = this.menuCtrl = await this.lazyMenuCtrl.componentOnReady().then(p => p._getInstance());
     const el = this.el;
     const parent = el.parentNode as any;
     const content = this.contentId !== undefined
@@ -166,17 +172,8 @@ export class Menu implements ComponentInterface, MenuI {
     this.typeChanged(this.type, undefined);
     this.sideChanged();
 
-    let isEnabled = !this.disabled;
-    if (isEnabled) {
-      const menus = this.menuCtrl!.getMenusSync();
-      isEnabled = !menus.some((m: any) => {
-        return m.side === this.side && !m.disabled;
-      });
-    }
-
     // register this menu with the app's menu controller
-    this.menuCtrl!._register(this);
-    this.ionMenuChange.emit({ disabled: !isEnabled, open: this._isOpen });
+    menuCtrl!._register(this);
 
     this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
       el: this.doc,
@@ -190,10 +187,11 @@ export class Menu implements ComponentInterface, MenuI {
       onMove: ev => this.onMove(ev),
       onEnd: ev => this.onEnd(ev),
     });
-
-    // mask it as enabled / disabled
-    this.disabled = !isEnabled;
     this.updateState();
+  }
+
+  componentDidLoad() {
+    this.ionMenuChange.emit({ disabled: this.disabled, open: this._isOpen });
   }
 
   componentDidUnload() {
@@ -216,7 +214,7 @@ export class Menu implements ComponentInterface, MenuI {
     this.updateState();
   }
 
-  @Listen('body:click', { enabled: false, capture: true })
+  @Listen('click', { enabled: false, capture: true })
   onBackdropClick(ev: any) {
     if (this.lastOnEnd < ev.timeStamp - 100) {
       const shouldClose = (ev.composedPath)
@@ -231,31 +229,56 @@ export class Menu implements ComponentInterface, MenuI {
     }
   }
 
+  /**
+   * Returns `true` is the menu is open.
+   */
   @Method()
   isOpen(): Promise<boolean> {
     return Promise.resolve(this._isOpen);
   }
 
+  /**
+   * Returns `true` is the menu is active.
+   *
+   * A menu is active when it can be opened or closed, meaning it's enabled
+   * and it's not part of a `ion-split-pane`.
+   */
   @Method()
   isActive(): Promise<boolean> {
     return Promise.resolve(this._isActive());
   }
 
+  /**
+   * Opens the menu. If the menu is already open or it can't be opened,
+   * it returns `false`.
+   */
   @Method()
   open(animated = true): Promise<boolean> {
     return this.setOpen(true, animated);
   }
 
+  /**
+   * Closes the menu. If the menu is already closed or it can't be closed,
+   * it returns `false`.
+   */
   @Method()
   close(animated = true): Promise<boolean> {
     return this.setOpen(false, animated);
   }
 
+  /**
+   * Toggles the menu. If the menu is already open, it will try to close, otherwise it will try to open it.
+   * If the operation can't be completed successfully, it returns `false`.
+   */
   @Method()
   toggle(animated = true): Promise<boolean> {
     return this.setOpen(!this._isOpen, animated);
   }
 
+  /**
+   * Opens or closes the button.
+   * If the operation can't be completed successfully, it returns `false`.
+   */
   @Method()
   setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {
     return this.menuCtrl!._setOpen(this, shouldOpen, animated);
@@ -264,15 +287,15 @@ export class Menu implements ComponentInterface, MenuI {
   async _setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {
     // If the menu is disabled or it is currently being animated, let's do nothing
     if (!this._isActive() || this.isAnimating || shouldOpen === this._isOpen) {
-      return this._isOpen;
+      return false;
     }
 
-    this.beforeAnimation();
+    this.beforeAnimation(shouldOpen);
     await this.loadAnimation();
     await this.startAnimation(shouldOpen, animated);
     this.afterAnimation(shouldOpen);
 
-    return shouldOpen;
+    return true;
   }
 
   private async loadAnimation(): Promise<void> {
@@ -329,7 +352,7 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   private onWillStart(): Promise<void> {
-    this.beforeAnimation();
+    this.beforeAnimation(!this._isOpen);
     return this.loadAnimation();
   }
 
@@ -398,7 +421,7 @@ export class Menu implements ComponentInterface, MenuI {
       .progressEnd(shouldComplete, stepValue, realDur);
   }
 
-  private beforeAnimation() {
+  private beforeAnimation(shouldOpen: boolean) {
     assert(!this.isAnimating, '_before() should not be called while animating');
 
     // this places the menu into the correct location before it animates in
@@ -409,6 +432,11 @@ export class Menu implements ComponentInterface, MenuI {
     }
     this.blocker.block();
     this.isAnimating = true;
+    if (shouldOpen) {
+      this.ionWillOpen.emit();
+    } else {
+      this.ionWillClose.emit();
+    }
   }
 
   private afterAnimation(isOpen: boolean) {
@@ -425,7 +453,7 @@ export class Menu implements ComponentInterface, MenuI {
     }
 
     // add/remove backdrop click listeners
-    this.enableListener(this, 'body:click', isOpen);
+    this.enableListener(this, 'click', isOpen);
 
     if (isOpen) {
       // add css class
@@ -434,7 +462,7 @@ export class Menu implements ComponentInterface, MenuI {
       }
 
       // emit open event
-      this.ionOpen.emit();
+      this.ionDidOpen.emit();
     } else {
       // remove css classes
       this.el.classList.remove(SHOW_MENU);
@@ -446,7 +474,7 @@ export class Menu implements ComponentInterface, MenuI {
       }
 
       // emit close event
-      this.ionClose.emit();
+      this.ionDidClose.emit();
     }
   }
 

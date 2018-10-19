@@ -21,17 +21,17 @@ export class Backdrop implements ComponentInterface {
   @Prop({ context: 'document' }) doc!: Document;
 
   /**
-   * If true, the backdrop will be visible. Defaults to `true`.
+   * If `true`, the backdrop will be visible. Defaults to `true`.
    */
   @Prop() visible = true;
 
   /**
-   * If true, the backdrop will can be clicked and will emit the `ionBackdropTap` event. Defaults to `true`.
+   * If `true`, the backdrop will can be clicked and will emit the `ionBackdropTap` event. Defaults to `true`.
    */
   @Prop() tappable = true;
 
   /**
-   * If true, the backdrop will stop propagation on tap. Defaults to `true`.
+   * If `true`, the backdrop will stop propagation on tap. Defaults to `true`.
    */
   @Prop() stopPropagation = true;
 

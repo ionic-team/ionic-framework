@@ -64,12 +64,9 @@
 
     const infiniteScroll = document.getElementById('infinite-scroll');
     infiniteScroll.addEventListener('ionInfinite', async function () {
-      console.log('Loading data...');
       const data = await getAsyncData();
       infiniteScroll.complete();
       addItems(data);
-
-      console.log('Done');
     });
 
     function addItems(append) {

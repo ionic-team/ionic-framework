@@ -9,10 +9,10 @@ It is the element form of `NavController.push()`
 
 ## Properties
 
-| Property         | Attribute   | Description                                     | Type             |
-| ---------------- | ----------- | ----------------------------------------------- | ---------------- |
-| `componentProps` | --          | Data you want to pass to the component as props | `ComponentProps` |
-| `component`      | `component` | Component to navigate to                        | `NavComponent`   |
+| Property         | Attribute   | Description                                     | Type                                                                       |
+| ---------------- | ----------- | ----------------------------------------------- | -------------------------------------------------------------------------- |
+| `componentProps` | --          | Data you want to pass to the component as props | `undefined \| { [key: string]: any; }`                                     |
+| `component`      | `component` | Component to navigate to                        | `Function \| HTMLElement \| ViewController \| null \| string \| undefined` |
 
 
 ----------------------------------------------

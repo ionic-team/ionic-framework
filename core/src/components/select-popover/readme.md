@@ -10,10 +10,10 @@ SelectPopover is an internal component that is used for create the popover inter
 
 | Property    | Attribute    | Description                      | Type                    |
 | ----------- | ------------ | -------------------------------- | ----------------------- |
-| `header`    | `header`     | Header text for the popover      | `string`                |
-| `message`   | `message`    | Text for popover body            | `string`                |
+| `header`    | `header`     | Header text for the popover      | `string \| undefined`   |
+| `message`   | `message`    | Text for popover body            | `string \| undefined`   |
 | `options`   | --           | Array of options for the popover | `SelectPopoverOption[]` |
-| `subHeader` | `sub-header` | Subheader text for the popover   | `string`                |
+| `subHeader` | `sub-header` | Subheader text for the popover   | `string \| undefined`   |
 
 
 ----------------------------------------------

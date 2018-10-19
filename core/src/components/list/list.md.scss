@@ -12,6 +12,12 @@
   @include position-horizontal(0, null);
 }
 
+.list-md:not(.list-inset):not(.list-md-lines-none) .item:last-child {
+  --inner-border-width: 0;
+  --border-width: #{0 0 $list-md-item-border-bottom-width 0};
+}
+
+
 // Material Design Inset List
 // --------------------------------------------------
 
@@ -56,6 +62,10 @@
   --border-width: #{0 0 $list-md-item-border-bottom-width 0};
 }
 
+.list-md-lines-full .item {
+  --inner-border-width: 0;
+}
+
 
 // Material Design Inset Lines List
 // --------------------------------------------------
@@ -69,10 +79,10 @@
 // Remove the border from items in lists
 // if they are explicitly styled by the item
 // to be different than the list
-.list-md .item-lines-full {
-  --inner-border-width: 0;
-}
-
 .list-md .item-lines-inset {
   --border-width: 0;
+}
+
+.list-md .item-lines-full {
+  --inner-border-width: 0;
 }

@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
   <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
+  <script src="/scripts/screenshot/testing.js"></script>
 </head>
 
 <body>
@@ -78,16 +79,13 @@
   <script>
     const menuCtrl = document.querySelector('ion-menu-controller');
     function openStart() {
-      console.log('Open start menu');
       menuCtrl.open('start');
     }
 
     function push() {
-      console.log('Push page');
     }
 
     async function menu() {
-      console.log('Disable/enable menu');
       menuCtrl.enable(!await menuCtrl.isEnabled());
     }
   </script>

@@ -16,20 +16,20 @@ A button's `role` property can either be `destructive` or `cancel`. Buttons with
 
 ## Properties
 
-| Property          | Attribute          | Description                                                                                                      | Type                             |
-| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | -------------------------------- |
-| `animated`        | `animated`         | If true, the action sheet will animate. Defaults to `true`.                                                      | `boolean`                        |
-| `backdropDismiss` | `backdrop-dismiss` | If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.                    | `boolean`                        |
-| `buttons`         | --                 | An array of buttons for the action sheet.                                                                        | `(ActionSheetButton | string)[]` |
-| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string`, `string[]`             |
-| `enterAnimation`  | --                 | Animation to use when the action sheet is presented.                                                             | `AnimationBuilder`               |
-| `header`          | `header`           | Title for the action sheet.                                                                                      | `string`                         |
-| `keyboardClose`   | `keyboard-close`   | If true, the keyboard will be automatically dismissed when the overlay is presented.                             | `boolean`                        |
-| `leaveAnimation`  | --                 | Animation to use when the action sheet is dismissed.                                                             | `AnimationBuilder`               |
-| `mode`            | `mode`             | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                        | `Mode`                           |
-| `overlayIndex`    | `overlay-index`    |                                                                                                                  | `number`                         |
-| `subHeader`       | `sub-header`       | Subtitle for the action sheet.                                                                                   | `string`                         |
-| `translucent`     | `translucent`      | If true, the action sheet will be translucent. Defaults to `false`.                                              | `boolean`                        |
+| Property          | Attribute          | Description                                                                                                      | Type                              |
+| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| `animated`        | `animated`         | If `true`, the action sheet will animate. Defaults to `true`.                                                    | `boolean`                         |
+| `backdropDismiss` | `backdrop-dismiss` | If `true`, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.                  | `boolean`                         |
+| `buttons`         | --                 | An array of buttons for the action sheet.                                                                        | `(string \| ActionSheetButton)[]` |
+| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string \| string[] \| undefined` |
+| `enterAnimation`  | --                 | Animation to use when the action sheet is presented.                                                             | `AnimationBuilder \| undefined`   |
+| `header`          | `header`           | Title for the action sheet.                                                                                      | `string \| undefined`             |
+| `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                         |
+| `leaveAnimation`  | --                 | Animation to use when the action sheet is dismissed.                                                             | `AnimationBuilder \| undefined`   |
+| `mode`            | `mode`             | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                        | `"ios" \| "md"`                   |
+| `overlayIndex`    | `overlay-index`    |                                                                                                                  | `number`                          |
+| `subHeader`       | `sub-header`       | Subtitle for the action sheet.                                                                                   | `string \| undefined`             |
+| `translucent`     | `translucent`      | If `true`, the action sheet will be translucent. Defaults to `false`.                                            | `boolean`                         |
 
 
 ## Events
@@ -46,12 +46,52 @@ A button's `role` property can either be `destructive` or `cancel`. Buttons with
 
 ## Methods
 
-| Method          | Description                                                         |
-| --------------- | ------------------------------------------------------------------- |
-| `dismiss`       | Dismiss the action sheet overlay after it has been presented.       |
-| `onDidDismiss`  | Returns a promise that resolves when the action-sheet did dismiss.  |
-| `onWillDismiss` | Returns a promise that resolves when the action-sheet will dismiss. |
-| `present`       | Present the action sheet overlay after it has been created.         |
+### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
+
+Dismiss the action sheet overlay after it has been presented.
+
+#### Parameters
+
+| Name   | Type                  | Description |
+| ------ | --------------------- | ----------- |
+| `data` | `any`                 |             |
+| `role` | `string \| undefined` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `onDidDismiss() => Promise<OverlayEventDetail<any>>`
+
+Returns a promise that resolves when the action-sheet did dismiss.
+
+#### Returns
+
+Type: `Promise<OverlayEventDetail<any>>`
+
+
+
+### `onWillDismiss() => Promise<OverlayEventDetail<any>>`
+
+Returns a promise that resolves when the action-sheet will dismiss.
+
+#### Returns
+
+Type: `Promise<OverlayEventDetail<any>>`
+
+
+
+### `present() => Promise<void>`
+
+Present the action sheet overlay after it has been created.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 
 ----------------------------------------------

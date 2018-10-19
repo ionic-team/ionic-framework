@@ -32,18 +32,3 @@ $fab-md-list-button-icon-fill-color:              $fab-md-list-button-text-color
 
 /// @prop - Background color of the activated button in a list
 $fab-md-list-button-background-color-activated:   ion-color(primary, tint) !default;
-
-/// @prop - Transition duration of the transform and opacity of the button in a list
-$fab-md-list-button-transition-duration:          200ms !default;
-
-/// @prop - Speed curve of the transition of the transform and opacity of the button in a list
-$fab-md-list-button-transition-timing-function:   ease !default;
-
-/// @prop - Transition delay of the transform and opacity of the button in a list
-$fab-md-list-button-transition-delay:             10ms !default;
-
-/// @prop - Transition duration of the box-shadow and background-color of the button
-$fab-button-md-transition-duration:               300ms !default;
-
-/// @prop - Speed curve of the transition of the box-shadow and background-color of the button
-$fab-button-md-transition-timing-function:        cubic-bezier(.4, 0, .2, 1) !default;

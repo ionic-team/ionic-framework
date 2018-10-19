@@ -1,7 +1,15 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { Platforms, getPlatforms, isPlatform } from '@ionic/core';
+import { BackButtonDetail, Platforms, getPlatforms, isPlatform } from '@ionic/core';
 import { proxyEvent } from '../util/util';
 
+
+export class BackButtonEmitter extends EventEmitter<BackButtonDetail> {
+  subscribeWithPriority(priority: number, callback: () => Promise<any> | void) {
+    return this.subscribe((ev: BackButtonDetail) => {
+      ev.register(priority, callback);
+    });
+  }
+}
 
 @Injectable()
 export class Platform {
@@ -11,7 +19,7 @@ export class Platform {
   /**
    * @hidden
    */
-  backButton = new EventEmitter<Event>();
+  backButton = new BackButtonEmitter();
 
   /**
    * The pause event emits when the native platform puts the application
@@ -19,26 +27,26 @@ export class Platform {
    * application. This event would emit when a Cordova app is put into
    * the background, however, it would not fire on a standard web browser.
    */
-  pause = new EventEmitter<Event>();
+  pause = new EventEmitter<void>();
 
   /**
    * The resume event emits when the native platform pulls the application
    * out from the background. This event would emit when a Cordova app comes
    * out from the background, however, it would not fire on a standard web browser.
    */
-  resume = new EventEmitter<Event>();
+  resume = new EventEmitter<void>();
 
   /**
    * The resize event emits when the browser window has changed dimensions. This
    * could be from a browser window being physically resized, or from a device
    * changing orientation.
    */
-  resize = new EventEmitter<Event>();
+  resize = new EventEmitter<void>();
 
   constructor() {
     proxyEvent(this.pause, document, 'pause');
     proxyEvent(this.resume, document, 'resume');
-    proxyEvent(this.backButton, document, 'backbutton');
+    proxyEvent(this.backButton, document, 'ionBackButton');
     proxyEvent(this.resize, window, 'resize');
 
     let readyResolve: (value: string) => void;

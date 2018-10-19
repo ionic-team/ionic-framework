@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
-import { ActionSheetButton, ActionSheetOptions, AlertOptions, CssClassMap, Mode, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent } from '../../interface';
+import { ActionSheetButton, ActionSheetOptions, AlertOptions, CssClassMap, Mode, OverlaySelect, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent } from '../../interface';
 import { deferEvent, renderHiddenInput } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
@@ -17,7 +17,7 @@ export class Select implements ComponentInterface {
   private childOpts: HTMLIonSelectOptionElement[] = [];
   private inputId = `ion-sel-${selectIds++}`;
   private labelId?: string;
-  private overlay?: HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement;
+  private overlay?: OverlaySelect;
 
   @Element() el!: HTMLIonSelectElement;
 
@@ -36,7 +36,7 @@ export class Select implements ComponentInterface {
   @Prop() mode!: Mode;
 
   /**
-   * If true, the user cannot interact with the select. Defaults to `false`.
+   * If `true`, the user cannot interact with the select. Defaults to `false`.
    */
   @Prop() disabled = false;
 
@@ -66,7 +66,7 @@ export class Select implements ComponentInterface {
   @Prop() selectedText?: string | null;
 
   /**
-   * If true, the select can accept multiple values.
+   * If `true`, the select can accept multiple values.
    */
   @Prop() multiple = false;
 
@@ -260,8 +260,12 @@ export class Select implements ComponentInterface {
     this.emitStyle();
   }
 
+  /**
+   * Opens the select overlay, it could be an alert, action-sheet or popover,
+   * based in `ion-select` settings.
+   */
   @Method()
-  open(ev?: UIEvent): Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement> {
+  open(ev?: UIEvent): Promise<OverlaySelect> {
     let selectInterface = this.interface;
 
     if ((selectInterface === 'action-sheet' || selectInterface === 'popover') && this.multiple) {
@@ -425,15 +429,15 @@ export class Select implements ComponentInterface {
     return overlay.dismiss();
   }
 
-  onKeyUp() {
+  private onKeyUp = () => {
     this.keyFocus = true;
   }
 
-  onFocus() {
+  private onFocus = () => {
     this.ionFocus.emit();
   }
 
-  onBlur() {
+  private onBlur = () => {
     this.keyFocus = false;
     this.ionBlur.emit();
   }
@@ -500,9 +504,9 @@ export class Select implements ComponentInterface {
         aria-expanded={this.isExpanded ? 'true' : null}
         aria-disabled={this.disabled ? 'true' : null}
         onClick={this.open.bind(this)}
-        onKeyUp={this.onKeyUp.bind(this)}
-        onFocus={this.onFocus.bind(this)}
-        onBlur={this.onBlur.bind(this)}
+        onKeyUp={this.onKeyUp}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
         class="select-cover"
       >
         <slot></slot>

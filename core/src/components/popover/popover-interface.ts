@@ -6,8 +6,6 @@ export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
   showBackdrop?: boolean;
   backdropDismiss?: boolean;
   translucent?: boolean;
-  enterAnimation?: AnimationBuilder;
-  leaveAnimation?: AnimationBuilder;
   cssClass?: string | string[];
   event?: Event;
   delegate?: FrameworkDelegate;
@@ -16,4 +14,7 @@ export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
   mode?: string;
   keyboardClose?: boolean;
   id?: string;
+
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
 }

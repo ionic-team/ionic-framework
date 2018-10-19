@@ -4,6 +4,8 @@
 // --------------------------------------------------
 
 :host {
+  color: var(--color);
+
   pointer-events: all;
 
   text-align: center;
@@ -51,4 +53,11 @@ ion-icon {
   @include padding(0);
 
   pointer-events: none;
+}
+
+// Menu Button with Color
+// --------------------------------------------------
+
+:host(.ion-color) .button-native {
+  color: current-color(base);
 }

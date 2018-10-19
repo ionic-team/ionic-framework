@@ -834,6 +834,12 @@ The `content` prop has been renamed to `contentId` and it points to the DOM id o
 <ion-nav #nav></ion-nav>
 ```
 
+### Events renamed
+
+- `ionClose` was renamed to `ionDidClose`
+- `ionOpen` was renamed to `ionDidOpen`
+
+
 **New Usage Example:**
 
 ```html

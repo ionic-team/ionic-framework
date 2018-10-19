@@ -20,9 +20,6 @@ export class ViewController {
     public params: ComponentProps | undefined
   ) {}
 
-  /**
-   * @hidden
-   */
   async init(container: HTMLElement) {
     this.state = ViewState.Attached;
 
@@ -33,7 +30,6 @@ export class ViewController {
   }
 
   /**
-   * @hidden
    * DOM WRITE
    */
   _destroy() {

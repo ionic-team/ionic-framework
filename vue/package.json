@@ -1,0 +1,73 @@
+{
+  "name": "@ionic/vue",
+  "version": "4.0.0-beta.12",
+  "description": "Vue specific wrappers for @ionic/core",
+  "homepage": "https://moduscreate.com",
+  "author": "Modus Create",
+  "license": "MIT",
+  "repository": "github:ionic-team/ionic",
+  "main": "dist/ionic-vue.common.js",
+  "module": "dist/ionic-vue.esm.js",
+  "unpkg": "dist/ionic-vue.js",
+  "jsdelivr": "dist/ionic-vue.js",
+  "contributors": [
+    "Michael Tintiuc <michael.tintiuc@moduscreate.com>"
+  ],
+  "files": [
+    "src/",
+    "dist/*.js"
+  ],
+  "bugs": {
+    "url": "https://github.com/ionic-team/ionic/issues"
+  },
+  "keywords": [
+    "ionic",
+    "ion",
+    "vuejs",
+    "vue",
+    "router",
+    "routing",
+    "plugin",
+    "component",
+    "navigation",
+    "nav",
+    "transition",
+    "api",
+    "wrapper",
+    "framework",
+    "delegate"
+  ],
+  "scripts": {
+    "dev": "rollup -c",
+    "watch": "rollup -c -w",
+    "build": "NODE_ENV=production rollup -c --configProd",
+    "clean": "node scripts/clean.js",
+    "lint": "eslint src/**/* test/**/*",
+    "test": "jest --coverage --verbose"
+  },
+  "devDependencies": {
+    "babel-jest": "^23.4.2",
+    "babel-preset-env": "^1.7.0",
+    "buble": "^0.19.3",
+    "eslint": "^5.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-jest": "^21.18.0",
+    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-vue": "^4.5.0",
+    "fs-extra": "^7.0.0",
+    "jest": "^23.4.2",
+    "jest-sonar-reporter": "^2.0.0",
+    "jest-vue-preprocessor": "^1.4.0",
+    "rollup": "^0.62.0",
+    "rollup-plugin-buble": "^0.19.2",
+    "rollup-plugin-terser": "^1.0.1",
+    "rollup-plugin-vue": "^4.3.0"
+  },
+  "dependencies": {
+    "vue": "^2.5.17",
+    "vue-template-compiler": "^2.5.17",
+    "vue-router": "^3.0.1",
+    "@ionic/core": "4.0.0-beta.12"
+  }
+}

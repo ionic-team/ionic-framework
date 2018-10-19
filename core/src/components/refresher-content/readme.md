@@ -9,12 +9,12 @@ The refresher content contains the text, icon and spinner to display during a pu
 
 ## Properties
 
-| Property            | Attribute            | Description                                               | Type     |
-| ------------------- | -------------------- | --------------------------------------------------------- | -------- |
-| `pullingIcon`       | `pulling-icon`       | A static icon to display when you begin to pull down      | `string` |
-| `pullingText`       | `pulling-text`       | The text you want to display when you begin to pull down  | `string` |
-| `refreshingSpinner` | `refreshing-spinner` | An animated SVG spinner that shows when refreshing begins | `string` |
-| `refreshingText`    | `refreshing-text`    | The text you want to display when performing a refresh    | `string` |
+| Property            | Attribute            | Description                                               | Type                  |
+| ------------------- | -------------------- | --------------------------------------------------------- | --------------------- |
+| `pullingIcon`       | `pulling-icon`       | A static icon to display when you begin to pull down      | `string \| undefined` |
+| `pullingText`       | `pulling-text`       | The text you want to display when you begin to pull down  | `string \| undefined` |
+| `refreshingSpinner` | `refreshing-spinner` | An animated SVG spinner that shows when refreshing begins | `string \| undefined` |
+| `refreshingText`    | `refreshing-text`    | The text you want to display when performing a refresh    | `string \| undefined` |
 
 
 ----------------------------------------------

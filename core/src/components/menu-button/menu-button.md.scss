@@ -1,8 +1,11 @@
 @import "./menu-button";
-@import "./menu-button.md.vars";
 
 // MD Menu Button
 // --------------------------------------------------
+
+:host {
+  --color: currentColor;
+}
 
 button {
   @include padding(0, 8px);

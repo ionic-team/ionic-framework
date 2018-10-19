@@ -57,6 +57,10 @@ export const config: Config = {
       esmLoaderPath: '../loader'
     },
     {
+      type: 'docs',
+      strict: true
+    },
+    {
       type: 'stats',
       file: 'stats.json'
     },
@@ -93,7 +97,6 @@ export const config: Config = {
         'ion-route-redirect',
         'ion-router-outlet',
         'ion-anchor',
-        'ion-tabbar',
 
         // auxiliar
         'ion-picker-column',
@@ -108,21 +111,25 @@ export const config: Config = {
     emulate: [
       {
         userAgent: 'iPhone',
-        width: 400,
-        height: 800,
-        deviceScaleFactor: 2,
-        isMobile: true,
-        hasTouch: true,
-        isLandscape: false
+        viewport: {
+          width: 400,
+          height: 800,
+          deviceScaleFactor: 2,
+          isMobile: true,
+          hasTouch: true,
+          isLandscape: false
+        }
       },
       {
         userAgent: 'Android',
-        width: 400,
-        height: 800,
-        deviceScaleFactor: 2,
-        isMobile: true,
-        hasTouch: true,
-        isLandscape: false
+        viewport: {
+          width: 400,
+          height: 800,
+          deviceScaleFactor: 2,
+          isMobile: true,
+          hasTouch: true,
+          isLandscape: false
+        }
       }
     ]
   },

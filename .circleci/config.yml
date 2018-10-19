@@ -1,33 +1,147 @@
 version: 2
 
+aliases:
+  - &restore-cache
+      keys:
+        - dependency-cache-{{ checksum "package.json" }}-2
+
+  - &save-cache
+      key: dependency-cache-{{ checksum "package.json" }}-2
+      paths:
+        - node_modules
+
+  - &restore-cache-core
+      keys:
+        - dependency-cache-{{ checksum "core/package.json" }}-2
+
+  - &save-cache-core
+      key: dependency-cache-{{ checksum "core/package.json" }}-2
+      paths:
+        - core/node_modules
+
+
+defaults: &defaults
+  docker:
+    - image: circleci/node:latest-browsers
+  working_directory: /tmp/workspace
+
 jobs:
   build:
-    working_directory: /tmp/workspace
-    docker:
-      - image: circleci/node:latest-browsers
-    branches:
-      # ignore:
-      #   - core
+    <<: *defaults
     steps:
       - checkout
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: Install monorepo node modules
-          command: npm i
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+      - restore_cache: *restore-cache
+      - run: npm install
+      - save_cache: *save-cache
+      - persist_to_workspace:
+          root: /tmp/workspace
           paths:
-            - node_modules
-      - restore_cache:
-          key: dependency-cache-{{ checksum "core/package.json" }}
+            - "*"
+
+  build-core:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - restore_cache: *restore-cache-core
       - run:
-          name: Install core node modules
-          command: npm --prefix core/ i
-      - save_cache:
-          key: dependency-cache-{{ checksum "core/package.json" }}
+          command: npm install
+          working_directory: /tmp/workspace/core
+      - save_cache: *save-cache-core
+      - run:
+          command: npm run build # --max-workers 1 --debug
+          working_directory: /tmp/workspace/core
+      - persist_to_workspace:
+          root: /tmp/workspace
           paths:
-            - core/node_modules
+            - "*"
+
+  test-core-clean-build:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
       - run:
-          name: Validate Core
-          command: npm --prefix core/ run validate.ci
+          name: Checking clean build
+          command: git diff --exit-code
+          working_directory: /tmp/workspace/core
+
+  test-core-lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm run lint
+          working_directory: /tmp/workspace/core
+
+  test-core-spec:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm run test.spec
+          working_directory: /tmp/workspace/core
+
+  test-core-treeshake:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm run test.treeshake
+          working_directory: /tmp/workspace/core
+
+  test-core-screenshot:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Run Screenshot
+          command: npx stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci --runInBand || true
+          working_directory: /tmp/workspace/core
+
+  test-core-screenshot-master:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Run Screenshot
+          command: npx stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci --runInBand --update-screenshot || true
+          working_directory: /tmp/workspace/core
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build
+      - build-core:
+          requires: [build]
+      - test-core-clean-build:
+          requires: [build-core]
+      - test-core-lint:
+          requires: [build-core]
+      - test-core-spec:
+          requires: [build-core]
+      - test-core-treeshake:
+          requires: [build-core]
+      - test-core-screenshot:
+          requires: [build-core]
+          filters:
+            branches:
+              ignore: master
+      - test-core-screenshot-master:
+          requires: [build-core]
+          filters:
+            branches:
+              only: master

@@ -28,6 +28,8 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
+
+  /** @internal */
   @Prop() overlayIndex!: number;
 
   /**
@@ -69,7 +71,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() message?: string;
 
   /**
-   * If true, the keyboard will be automatically dismissed when the overlay is presented.
+   * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
    */
   @Prop() keyboardClose = false;
 
@@ -79,17 +81,17 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() position: 'top' | 'bottom' | 'middle' = 'bottom';
 
   /**
-   * If true, the close button will be displayed. Defaults to `false`.
+   * If `true`, the close button will be displayed. Defaults to `false`.
    */
   @Prop() showCloseButton = false;
 
   /**
-   * If true, the toast will be translucent. Defaults to `false`.
+   * If `true`, the toast will be translucent. Defaults to `false`.
    */
   @Prop() translucent = false;
 
   /**
-   * If true, the toast will animate. Defaults to `true`.
+   * If `true`, the toast will animate. Defaults to `true`.
    */
   @Prop() animated = true;
 

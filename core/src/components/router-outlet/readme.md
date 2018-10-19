@@ -13,30 +13,78 @@ While RouterOutlet has methods for navigating around, it's recommended to use th
 
 ## Properties
 
-| Property           | Attribute  | Description | Type                |
-| ------------------ | ---------- | ----------- | ------------------- |
-| `animated`         | `animated` |             | `boolean`           |
-| `animationBuilder` | --         |             | `AnimationBuilder`  |
-| `delegate`         | --         |             | `FrameworkDelegate` |
-
-
-## Events
-
-| Event              | Description |
-| ------------------ | ----------- |
-| `ionNavDidChange`  |             |
-| `ionNavWillChange` |             |
-| `ionNavWillLoad`   |             |
+| Property    | Attribute  | Description                                                                                                                                                                                    | Type                             |
+| ----------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| `animated`  | `animated` | If `true`, the router-outlet should animate the transition of components. Default to `true`.                                                                                                   | `boolean`                        |
+| `animation` | --         | By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions. | `AnimationBuilder \| undefined`  |
+| `delegate`  | --         |                                                                                                                                                                                                | `FrameworkDelegate \| undefined` |
 
 
 ## Methods
 
-| Method       | Description                                           |
-| ------------ | ----------------------------------------------------- |
-| `commit`     |                                                       |
-| `getRouteId` | Returns the ID for the current route                  |
-| `setRoot`    | Set the root component for the given navigation stack |
-| `setRouteId` |                                                       |
+### `commit(enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions | undefi...`
+
+
+
+#### Parameters
+
+| Name         | Type                               | Description |
+| ------------ | ---------------------------------- | ----------- |
+| `enteringEl` | `HTMLElement`                      |             |
+| `leavingEl`  | `HTMLElement \| undefined`         |             |
+| `opts`       | `RouterOutletOptions \| undefined` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `getRouteId() => Promise<RouteID | undefined>`
+
+
+
+#### Returns
+
+Type: `Promise<RouteID | undefined>`
+
+
+
+### `setRoot(component: ComponentRef, params?: { [key: string]: any; } | undefined, opts?: RouterOutletOption...`
+
+Set the root component for the given navigation stack
+
+#### Parameters
+
+| Name        | Type                                        | Description |
+| ----------- | ------------------------------------------- | ----------- |
+| `component` | `Function \| HTMLElement \| null \| string` |             |
+| `params`    | `undefined \| { [key: string]: any; }`      |             |
+| `opts`      | `RouterOutletOptions \| undefined`          |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `setRouteId(id: string, params: { [key: string]: any; } | undefined, direction: number) => Promise<RouteWrite>`
+
+
+
+#### Parameters
+
+| Name        | Type                                   | Description |
+| ----------- | -------------------------------------- | ----------- |
+| `id`        | `string`                               |             |
+| `params`    | `undefined \| { [key: string]: any; }` |             |
+| `direction` | `number`                               |             |
+
+#### Returns
+
+Type: `Promise<RouteWrite>`
+
+
 
 
 ----------------------------------------------

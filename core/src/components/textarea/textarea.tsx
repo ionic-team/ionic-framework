@@ -47,7 +47,7 @@ export class Textarea implements ComponentInterface {
   @Prop() autofocus = false;
 
   /**
-   * If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
+   * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
   @Prop({ mutable: true }) clearOnEdit = false;
 
@@ -62,7 +62,7 @@ export class Textarea implements ComponentInterface {
   }
 
   /**
-   * If true, the user cannot interact with the textarea. Defaults to `false`.
+   * If `true`, the user cannot interact with the textarea. Defaults to `false`.
    */
   @Prop() disabled = false;
 
@@ -92,17 +92,17 @@ export class Textarea implements ComponentInterface {
   @Prop() placeholder?: string;
 
   /**
-   * If true, the user cannot modify the value. Defaults to `false`.
+   * If `true`, the user cannot modify the value. Defaults to `false`.
    */
   @Prop() readonly = false;
 
   /**
-   * If true, the user must fill in a value before submitting a form.
+   * If `true`, the user must fill in a value before submitting a form.
    */
   @Prop() required = false;
 
   /**
-   * If true, the element will have its spelling and grammar checked. Defaults to `false`.
+   * If `true`, the element will have its spelling and grammar checked. Defaults to `false`.
    */
   @Prop() spellcheck = false;
 
@@ -169,8 +169,12 @@ export class Textarea implements ComponentInterface {
     this.emitStyle();
   }
 
+  /**
+   * Sets focus on the specified `ion-textarea`. Use this method instead of the global
+   * `input.focus()`.
+   */
   @Method()
-  focus() {
+  setFocus() {
     if (this.nativeInput) {
       this.nativeInput.focus();
     }
@@ -187,25 +191,26 @@ export class Textarea implements ComponentInterface {
     });
   }
 
-  private onInput(ev: KeyboardEvent) {
+  private onInput = (ev: Event) => {
     this.value = this.nativeInput!.value;
     this.emitStyle();
-    this.ionInput.emit(ev);
+    this.ionInput.emit(ev as KeyboardEvent);
   }
 
-  private onFocus() {
+  private onFocus = () => {
     this.hasFocus = true;
     this.focusChange();
 
     this.ionFocus.emit();
   }
 
-  private onBlur() {
+  private onBlur = () => {
     this.hasFocus = false;
     this.focusChange();
 
     this.ionBlur.emit();
   }
+
 
   private onKeyDown(ev: KeyboardEvent) {
     this.checkClearOnEdit();
@@ -273,10 +278,10 @@ export class Textarea implements ComponentInterface {
         cols={this.cols}
         rows={this.rows}
         wrap={this.wrap}
-        onInput={this.onInput.bind(this)}
-        onBlur={this.onBlur.bind(this)}
-        onFocus={this.onFocus.bind(this)}
-        onKeyDown={this.onKeyDown.bind(this)}
+        onInput={this.onInput}
+        onBlur={this.onBlur}
+        onFocus={this.onFocus}
+        onKeyDown={this.onKeyDown}
       >
         {this.value}
       </textarea>

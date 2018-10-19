@@ -34,7 +34,7 @@ export class SplitPane implements ComponentInterface {
   @Prop({ context: 'window' }) win!: Window;
 
   /**
-   * If true, the split pane will be hidden. Defaults to `false`.
+   * If `true`, the split pane will be hidden. Defaults to `false`.
    */
   @Prop() disabled = false;
 

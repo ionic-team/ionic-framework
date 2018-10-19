@@ -4,8 +4,6 @@
 .tab-btn {
   @include padding($tab-button-ios-padding-top, $tab-button-ios-padding-end, $tab-button-ios-padding-bottom, $tab-button-ios-padding-start);
   max-width: $tab-button-ios-max-width;
-
-  font-size: $tab-button-ios-font-size;
 }
 
 .tab-btn-text {

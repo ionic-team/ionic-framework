@@ -1,11 +1,10 @@
 @import "./menu-button";
-@import "./menu-button.ios.vars";
 
 // iOS Menu Button
 // --------------------------------------------------
 
 :host {
-  color: #{ion-color(primary, base)};
+  --color: #{ion-color(primary, base)};
 }
 
 :host(.activated) {

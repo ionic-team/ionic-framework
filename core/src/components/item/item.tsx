@@ -34,12 +34,12 @@ export class Item implements ComponentInterface {
   @Prop() mode!: Mode;
 
   /**
-   * If true, a button tag will be rendered and the item will be tappable. Defaults to `false`.
+   * If `true`, a button tag will be rendered and the item will be tappable. Defaults to `false`.
    */
   @Prop() button = false;
 
   /**
-   * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
+   * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
    * is `ios` and an `href`, `onclick` or `button` property is present.
    */
   @Prop() detail?: boolean;
@@ -50,7 +50,7 @@ export class Item implements ComponentInterface {
   @Prop() detailIcon = 'ios-arrow-forward';
 
   /**
-   * If true, the user cannot interact with the item. Defaults to `false`.
+   * If `true`, the user cannot interact with the item. Defaults to `false`.
    */
   @Prop() disabled = false;
 
@@ -71,9 +71,6 @@ export class Item implements ComponentInterface {
    * another page using `href`.
    */
   @Prop() routerDirection?: RouterDirection;
-
-  // TODO document this
-  @Prop() state?: 'valid' | 'invalid' | 'focus';
 
   /**
    * The type of the button. Only used when an `onclick` or `button` property is present.
@@ -146,14 +143,14 @@ export class Item implements ComponentInterface {
   }
 
   render() {
-    const { href, detail, mode, win, state, detailIcon, routerDirection, type } = this;
+    const { href, detail, mode, win, detailIcon, routerDirection, type } = this;
 
     const clickable = this.isClickable();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div';
     const attrs = TagType === 'button' ? { type } : { href };
     const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
 
-    return (
+    return [
       <TagType
         {...attrs}
         class="item-native"
@@ -166,10 +163,11 @@ export class Item implements ComponentInterface {
           </div>
           <slot name="end"></slot>
           {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon"></ion-icon>}
+          <div class="item-inner-highlight"></div>
         </div>
-        {state && <div class="item-state"></div>}
         {clickable && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-      </TagType>
-    );
+      </TagType>,
+      <div class="item-highlight"></div>
+    ];
   }
 }

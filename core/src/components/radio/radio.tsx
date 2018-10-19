@@ -39,13 +39,13 @@ export class Radio implements ComponentInterface {
    */
   @Prop() name: string = this.inputId;
 
-  /*
-   * If true, the user cannot interact with the radio. Defaults to `false`.
+  /**
+   * If `true`, the user cannot interact with the radio. Defaults to `false`.
    */
   @Prop() disabled = false;
 
   /**
-   * If true, the radio is selected. Defaults to `false`.
+   * If `true`, the radio is selected. Defaults to `false`.
    */
   @Prop({ mutable: true }) checked = false;
 
@@ -146,24 +146,24 @@ export class Radio implements ComponentInterface {
     });
   }
 
-  onClick() {
+  private onClick = () => {
     this.checkedChanged(true);
   }
 
-  onChange() {
+  private onChange = () => {
     this.checked = true;
     this.nativeInput.focus();
   }
 
-  onKeyUp() {
+  private onKeyUp = () => {
     this.keyFocus = true;
   }
 
-  onFocus() {
+  private onFocus = () => {
     this.ionFocus.emit();
   }
 
-  onBlur() {
+  private onBlur = () => {
     this.keyFocus = false;
     this.ionBlur.emit();
   }
@@ -188,11 +188,11 @@ export class Radio implements ComponentInterface {
       </div>,
       <input
         type="radio"
-        onClick={this.onClick.bind(this)}
-        onChange={this.onChange.bind(this)}
-        onFocus={this.onFocus.bind(this)}
-        onBlur={this.onBlur.bind(this)}
-        onKeyUp={this.onKeyUp.bind(this)}
+        onClick={this.onClick}
+        onChange={this.onChange}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+        onKeyUp={this.onKeyUp}
         id={this.inputId}
         name={this.name}
         value={this.value}

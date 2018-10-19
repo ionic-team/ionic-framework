@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "4.0.0-beta.12",
+  "version": "4.0.0-beta.13",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -27,11 +27,10 @@
   ],
   "dependencies": {
     "@types/node": "10.11.0",
-    "ionicons": "4.4.4"
+    "ionicons": "4.4.6"
   },
   "devDependencies": {
-    "@stencil/core": "0.13.1",
-    "@stencil/dev-server": "latest",
+    "@stencil/core": "0.14.1-1",
     "@stencil/sass": "0.1.1",
     "@stencil/utils": "latest",
     "@types/jest": "^23.3.1",
@@ -39,13 +38,17 @@
     "@types/swiper": "4.2.1",
     "agadoo": "^1.0.0",
     "autoprefixer": "^9.0.2",
+    "aws-sdk": "^2.320.0",
     "chromedriver": "^2.38.3",
     "clean-css-cli": "^4.1.11",
     "fs-extra": "^7.0.0",
-    "jest": "23.5.0",
+    "jest": "23.6.0",
+    "jest-cli": "23.6.0",
     "np": "^3.0.4",
     "pixelmatch": "4.0.2",
-    "puppeteer": "1.7.0",
+    "puppeteer": "1.8.0",
+    "rollup": "^0.66.4",
+    "rollup-plugin-node-resolve": "^3.4.0",
     "stylelint": "~9.6.0",
     "stylelint-order": "~1.0.0",
     "swiper": "4.4.1",
@@ -75,7 +78,7 @@
     "test": "stencil test --spec --e2e",
     "test.spec": "stencil test --spec",
     "test.e2e": "stencil test --e2e",
-    "test.screenshot": "stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/local.js",
+    "test.screenshot": "stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/dev.js",
     "test.screenshot.ci": "stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci",
     "test.watch": "jest --watch --no-cache",
     "theme-app-build": "stencil build --dev --config scripts/theme-builder/stencil.config.js",
@@ -84,8 +87,7 @@
     "theme-server": "node scripts/theme-builder/server.js",
     "tsc": "./node_modules/.bin/tsc -p .",
     "test.treeshake": "agadoo dist/collection/index.js",
-    "validate": "npm run lint && npm run test && npm run build && npm run test.treeshake",
-    "validate.ci": "npm run lint && npm run test.spec && npm run build --max-workers 1 --debug && npm run test.treeshake"
+    "validate": "npm run lint && npm run test && npm run build && npm run test.treeshake"
   },
   "author": "Ionic Team",
   "license": "MIT",
