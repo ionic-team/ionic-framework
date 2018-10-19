@@ -17,20 +17,20 @@ it('alert: basic', async () => {
   ];
 
   for (const [buttonSelector, message] of alerts) {
-    console.log(buttonSelector)
-    console.log(1)
+    console.log(buttonSelector);
+    console.log(1);
     await page.click(buttonSelector);
-    console.log(2)
+    console.log(2);
     const alert = await page.find('ion-alert');
-    console.log(3)
+    console.log(3);
     const compare = await page.compareScreenshot(message);
-    console.log(4)
+    console.log(4);
     expect(alert).not.toBe(null);
-    console.log(5)
+    console.log(5);
     expect(compare).toMatchScreenshot();
-    console.log(6)
+    console.log(6);
     await alert.callMethod('dismiss');
-    console.log(7)
+    console.log(7);
   }
 
 });

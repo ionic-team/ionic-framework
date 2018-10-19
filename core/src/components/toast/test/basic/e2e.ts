@@ -5,35 +5,35 @@ it('toast: basic', async () => {
     url: '/src/components/toast/test/basic?ionic:_testing=true'
   });
 
-  console.log(1)
+  console.log(1);
 
   const button = await page.find('#showBottomToast');
   await button.click();
 
-  console.log(2)
+  console.log(2);
 
   let toast = await page.find('ion-toast');
   await toast.waitForVisible();
 
-  console.log(3)
+  console.log(3);
 
   let compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
 
-  console.log(4)
+  console.log(4);
 
   await toast.callMethod('dismiss');
   await toast.waitForNotVisible();
 
-  console.log(5)
+  console.log(5);
 
   compare = await page.compareScreenshot('dismissed');
   expect(compare).toMatchScreenshot();
 
-  console.log(6)
+  console.log(6);
 
   toast = await page.find('ion-toast');
   expect(toast).toBeNull();
 
-  console.log(7)
+  console.log(7);
 });
