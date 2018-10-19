@@ -134,3 +134,7 @@ wrongRepo:
   lock: true
   dryRun: false
 
+screenshot:
+  statusContext: "ci/circleci: test-core-screenshot"
+  baseUrl: "https://screenshot.ionicframework.com"
+  dryRun: false
