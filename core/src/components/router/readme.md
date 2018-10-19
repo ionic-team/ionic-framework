@@ -28,10 +28,10 @@ If you're using Angular, please see [ion-router-outlet](../router-outlet) instea
 
 ## Events
 
-| Event                | Description                                     |
-| -------------------- | ----------------------------------------------- |
-| `ionRouteDidChange`  | Emitted when the route had changed              |
-| `ionRouteWillChange` | Event emitted when the route is about to change |
+| Event                | Detail            | Description                                     |
+| -------------------- | ----------------- | ----------------------------------------------- |
+| `ionRouteDidChange`  | RouterEventDetail | Emitted when the route had changed              |
+| `ionRouteWillChange` | RouterEventDetail | Event emitted when the route is about to change |
 
 
 ## Methods

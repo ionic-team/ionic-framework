@@ -26,12 +26,12 @@ These can be controlled from the templates, or programmatically using the MenuCo
 
 ## Events
 
-| Event          | Description                                  |
-| -------------- | -------------------------------------------- |
-| `ionDidClose`  | Emitted when the menu is closed.             |
-| `ionDidOpen`   | Emitted when the menu is open.               |
-| `ionWillClose` | Emitted when the menu is about to be closed. |
-| `ionWillOpen`  | Emitted when the menu is about to be opened. |
+| Event          | Detail | Description                                  |
+| -------------- | ------ | -------------------------------------------- |
+| `ionDidClose`  |        | Emitted when the menu is closed.             |
+| `ionDidOpen`   |        | Emitted when the menu is open.               |
+| `ionWillClose` |        | Emitted when the menu is about to be closed. |
+| `ionWillOpen`  |        | Emitted when the menu is about to be opened. |
 
 
 ## Methods

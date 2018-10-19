@@ -58,13 +58,13 @@ Since select uses the alert, action sheet and popover interfaces, options can be
 
 ## Events
 
-| Event       | Description                              |
-| ----------- | ---------------------------------------- |
-| `ionBlur`   | Emitted when the select loses focus.     |
-| `ionCancel` | Emitted when the selection is cancelled. |
-| `ionChange` | Emitted when the value has changed.      |
-| `ionFocus`  | Emitted when the select has focus.       |
-| `ionStyle`  | Emitted when the styles change.          |
+| Event       | Detail                 | Description                              |
+| ----------- | ---------------------- | ---------------------------------------- |
+| `ionBlur`   |                        | Emitted when the select loses focus.     |
+| `ionCancel` |                        | Emitted when the selection is cancelled. |
+| `ionChange` | SelectInputChangeEvent | Emitted when the value has changed.      |
+| `ionFocus`  |                        | Emitted when the select has focus.       |
+| `ionStyle`  | StyleEvent             | Emitted when the styles change.          |
 
 
 ## Methods

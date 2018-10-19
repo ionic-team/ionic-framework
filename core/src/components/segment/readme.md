@@ -20,9 +20,9 @@ Their functionality is similar to tabs, where selecting one will deselect all ot
 
 ## Events
 
-| Event       | Description                                  |
-| ----------- | -------------------------------------------- |
-| `ionChange` | Emitted when the value property has changed. |
+| Event       | Detail               | Description                                  |
+| ----------- | -------------------- | -------------------------------------------- |
+| `ionChange` | TextInputChangeEvent | Emitted when the value property has changed. |
 
 
 ## CSS Custom Properties
