@@ -271,7 +271,9 @@ export class Datetime implements ComponentInterface {
         {
           text: this.cancelText,
           role: 'cancel',
-          handler: () => this.ionCancel.emit()
+          handler: () => {
+            this.ionCancel.emit();
+          }
         },
         {
           text: this.doneText,

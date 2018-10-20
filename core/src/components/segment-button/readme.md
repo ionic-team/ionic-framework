@@ -19,9 +19,9 @@ Segment buttons are groups of related buttons inside of a [Segment](../../segmen
 
 ## Events
 
-| Event       | Description                                 |
-| ----------- | ------------------------------------------- |
-| `ionSelect` | Emitted when the segment button is clicked. |
+| Event       | Detail | Description                                 |
+| ----------- | ------ | ------------------------------------------- |
+| `ionSelect` |        | Emitted when the segment button is clicked. |
 
 
 ## CSS Custom Properties
