@@ -20,28 +20,28 @@ A button's `role` property can either be `destructive` or `cancel`. Buttons with
 | ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | --------------------------------- |
 | `animated`        | `animated`         | If `true`, the action sheet will animate. Defaults to `true`.                                                    | `boolean`                         |
 | `backdropDismiss` | `backdrop-dismiss` | If `true`, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.                  | `boolean`                         |
-| `buttons`         | --                 | An array of buttons for the action sheet.                                                                        | `(ActionSheetButton \| string)[]` |
-| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string`, `string[]`              |
-| `enterAnimation`  | --                 | Animation to use when the action sheet is presented.                                                             | `AnimationBuilder`                |
-| `header`          | `header`           | Title for the action sheet.                                                                                      | `string`                          |
+| `buttons`         | --                 | An array of buttons for the action sheet.                                                                        | `(string \| ActionSheetButton)[]` |
+| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string \| string[] \| undefined` |
+| `enterAnimation`  | --                 | Animation to use when the action sheet is presented.                                                             | `AnimationBuilder \| undefined`   |
+| `header`          | `header`           | Title for the action sheet.                                                                                      | `string \| undefined`             |
 | `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                         |
-| `leaveAnimation`  | --                 | Animation to use when the action sheet is dismissed.                                                             | `AnimationBuilder`                |
-| `mode`            | `mode`             | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                        | `Mode`                            |
+| `leaveAnimation`  | --                 | Animation to use when the action sheet is dismissed.                                                             | `AnimationBuilder \| undefined`   |
+| `mode`            | `mode`             | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                        | `"ios" \| "md"`                   |
 | `overlayIndex`    | `overlay-index`    |                                                                                                                  | `number`                          |
-| `subHeader`       | `sub-header`       | Subtitle for the action sheet.                                                                                   | `string`                          |
+| `subHeader`       | `sub-header`       | Subtitle for the action sheet.                                                                                   | `string \| undefined`             |
 | `translucent`     | `translucent`      | If `true`, the action sheet will be translucent. Defaults to `false`.                                            | `boolean`                         |
 
 
 ## Events
 
-| Event                       | Description                             |
-| --------------------------- | --------------------------------------- |
-| `ionActionSheetDidDismiss`  | Emitted after the alert has dismissed.  |
-| `ionActionSheetDidLoad`     | Emitted after the alert has loaded.     |
-| `ionActionSheetDidPresent`  | Emitted after the alert has presented.  |
-| `ionActionSheetDidUnload`   | Emitted after the alert has unloaded.   |
-| `ionActionSheetWillDismiss` | Emitted before the alert has dismissed. |
-| `ionActionSheetWillPresent` | Emitted before the alert has presented. |
+| Event                       | Detail             | Description                             |
+| --------------------------- | ------------------ | --------------------------------------- |
+| `ionActionSheetDidDismiss`  | OverlayEventDetail | Emitted after the alert has dismissed.  |
+| `ionActionSheetDidLoad`     |                    | Emitted after the alert has loaded.     |
+| `ionActionSheetDidPresent`  |                    | Emitted after the alert has presented.  |
+| `ionActionSheetDidUnload`   |                    | Emitted after the alert has unloaded.   |
+| `ionActionSheetWillDismiss` | OverlayEventDetail | Emitted before the alert has dismissed. |
+| `ionActionSheetWillPresent` |                    | Emitted before the alert has presented. |
 
 
 ## Methods

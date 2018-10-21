@@ -25,34 +25,34 @@ Alerts can also include several different inputs whose data can be passed back t
 
 ## Properties
 
-| Property          | Attribute          | Description                                                                                                      | Type                        |
-| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| `animated`        | `animated`         | If `true`, the alert will animate. Defaults to `true`.                                                           | `boolean`                   |
-| `backdropDismiss` | `backdrop-dismiss` | If `true`, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.                         | `boolean`                   |
-| `buttons`         | --                 | Array of buttons to be added to the alert.                                                                       | `(AlertButton \| string)[]` |
-| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string`, `string[]`        |
-| `enterAnimation`  | --                 | Animation to use when the alert is presented.                                                                    | `AnimationBuilder`          |
-| `header`          | `header`           | The main title in the heading of the alert.                                                                      | `string`                    |
-| `inputs`          | --                 | Array of input to show in the alert.                                                                             | `AlertInput[]`              |
-| `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                   |
-| `leaveAnimation`  | --                 | Animation to use when the alert is dismissed.                                                                    | `AnimationBuilder`          |
-| `message`         | `message`          | The main message to be displayed in the alert.                                                                   | `string`                    |
-| `mode`            | `mode`             | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                        | `Mode`                      |
-| `overlayIndex`    | `overlay-index`    |                                                                                                                  | `number`                    |
-| `subHeader`       | `sub-header`       | The subtitle in the heading of the alert. Displayed under the title.                                             | `string`                    |
-| `translucent`     | `translucent`      | If `true`, the alert will be translucent. Defaults to `false`.                                                   | `boolean`                   |
+| Property          | Attribute          | Description                                                                                                      | Type                              |
+| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| `animated`        | `animated`         | If `true`, the alert will animate. Defaults to `true`.                                                           | `boolean`                         |
+| `backdropDismiss` | `backdrop-dismiss` | If `true`, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.                         | `boolean`                         |
+| `buttons`         | --                 | Array of buttons to be added to the alert.                                                                       | `(string \| AlertButton)[]`       |
+| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string \| string[] \| undefined` |
+| `enterAnimation`  | --                 | Animation to use when the alert is presented.                                                                    | `AnimationBuilder \| undefined`   |
+| `header`          | `header`           | The main title in the heading of the alert.                                                                      | `string \| undefined`             |
+| `inputs`          | --                 | Array of input to show in the alert.                                                                             | `AlertInput[]`                    |
+| `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                         |
+| `leaveAnimation`  | --                 | Animation to use when the alert is dismissed.                                                                    | `AnimationBuilder \| undefined`   |
+| `message`         | `message`          | The main message to be displayed in the alert.                                                                   | `string \| undefined`             |
+| `mode`            | `mode`             | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                        | `"ios" \| "md"`                   |
+| `overlayIndex`    | `overlay-index`    |                                                                                                                  | `number`                          |
+| `subHeader`       | `sub-header`       | The subtitle in the heading of the alert. Displayed under the title.                                             | `string \| undefined`             |
+| `translucent`     | `translucent`      | If `true`, the alert will be translucent. Defaults to `false`.                                                   | `boolean`                         |
 
 
 ## Events
 
-| Event                 | Description                             |
-| --------------------- | --------------------------------------- |
-| `ionAlertDidDismiss`  | Emitted after the alert has dismissed.  |
-| `ionAlertDidLoad`     | Emitted after the alert has presented.  |
-| `ionAlertDidPresent`  | Emitted after the alert has presented.  |
-| `ionAlertDidUnload`   | Emitted before the alert has presented. |
-| `ionAlertWillDismiss` | Emitted before the alert has dismissed. |
-| `ionAlertWillPresent` | Emitted before the alert has presented. |
+| Event                 | Detail             | Description                             |
+| --------------------- | ------------------ | --------------------------------------- |
+| `ionAlertDidDismiss`  | OverlayEventDetail | Emitted after the alert has dismissed.  |
+| `ionAlertDidLoad`     |                    | Emitted after the alert has presented.  |
+| `ionAlertDidPresent`  |                    | Emitted after the alert has presented.  |
+| `ionAlertDidUnload`   |                    | Emitted before the alert has presented. |
+| `ionAlertWillDismiss` | OverlayEventDetail | Emitted before the alert has dismissed. |
+| `ionAlertWillPresent` |                    | Emitted before the alert has presented. |
 
 
 ## Methods

@@ -64,7 +64,7 @@ export class Tabs implements NavOutlet {
     }
     this.userTabbarEl = this.el.querySelector('ion-tabbar') || undefined;
 
-    await this.initTabs();
+    this.initTabs();
 
     this.ionNavWillLoad.emit();
     this.componentWillUpdate();
@@ -172,11 +172,12 @@ export class Tabs implements NavOutlet {
       tab.btnId = 'tab-' + id;
       tab.id = 'tabpanel-' + id;
     });
-    return Promise.all(tabs.map(tab => tab.componentOnReady()));
   }
 
   private async initSelect(): Promise<void> {
     const tabs = this.tabs;
+    // wait for all tabs to be ready
+    await Promise.all(tabs.map(tab => tab.componentOnReady()));
     if (this.useRouter) {
       if (Build.isDev) {
         const tab = tabs.find(t => t.selected);

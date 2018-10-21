@@ -9,23 +9,23 @@ Unlike RouterOutlet, Nav is not tied to a particular router. Meaning that if we 
 
 ## Properties
 
-| Property       | Attribute       | Description                                                                                                                                                                                    | Type                |
-| -------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| `animated`     | `animated`      | If `true`, the nav should animate the transition of components. Default to `true`.                                                                                                             | `boolean`           |
-| `animation`    | --              | By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions. | `AnimationBuilder`  |
-| `delegate`     | --              |                                                                                                                                                                                                | `FrameworkDelegate` |
-| `rootParams`   | --              | Any parameters for the root component                                                                                                                                                          | `ComponentProps`    |
-| `root`         | `root`          | Root NavComponent to load                                                                                                                                                                      | `NavComponent`      |
-| `swipeGesture` | `swipe-gesture` | If the nav component should allow for swipe-to-go-back.                                                                                                                                        | `boolean`           |
+| Property       | Attribute       | Description                                                                                                                                                                                    | Type                                                                       |
+| -------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `animated`     | `animated`      | If `true`, the nav should animate the transition of components. Default to `true`.                                                                                                             | `boolean`                                                                  |
+| `animation`    | --              | By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions. | `AnimationBuilder \| undefined`                                            |
+| `delegate`     | --              |                                                                                                                                                                                                | `FrameworkDelegate \| undefined`                                           |
+| `rootParams`   | --              | Any parameters for the root component                                                                                                                                                          | `undefined \| { [key: string]: any; }`                                     |
+| `root`         | `root`          | Root NavComponent to load                                                                                                                                                                      | `Function \| HTMLElement \| ViewController \| null \| string \| undefined` |
+| `swipeGesture` | `swipe-gesture` | If the nav component should allow for swipe-to-go-back.                                                                                                                                        | `boolean \| undefined`                                                     |
 
 
 ## Events
 
-| Event              | Description                                     |
-| ------------------ | ----------------------------------------------- |
-| `ionNavDidChange`  | Event fired when the nav has changed components |
-| `ionNavWillChange` | Event fired when the nav will components        |
-| `ionNavWillLoad`   | Event fired when Nav will load a component      |
+| Event              | Detail | Description                                     |
+| ------------------ | ------ | ----------------------------------------------- |
+| `ionNavDidChange`  |        | Event fired when the nav has changed components |
+| `ionNavWillChange` |        | Event fired when the nav will components        |
+| `ionNavWillLoad`   |        | Event fired when Nav will load a component      |
 
 
 ## Methods
@@ -162,7 +162,7 @@ Pop to a specific index in the navigation stack
 
 | Name              | Type                              | Description |
 | ----------------- | --------------------------------- | ----------- |
-| `indexOrViewCtrl` | `number \| ViewController`        |             |
+| `indexOrViewCtrl` | `ViewController \| number`        |             |
 | `opts`            | `NavOptions \| null \| undefined` |             |
 | `done`            | `TransitionDoneFn \| undefined`   |             |
 
@@ -273,7 +273,7 @@ Type: `Promise<boolean>`
 | Name        | Type                                   | Description |
 | ----------- | -------------------------------------- | ----------- |
 | `id`        | `string`                               |             |
-| `params`    | `{ [key: string]: any; } \| undefined` |             |
+| `params`    | `undefined \| { [key: string]: any; }` |             |
 | `direction` | `number`                               |             |
 
 #### Returns

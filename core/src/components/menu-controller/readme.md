@@ -17,7 +17,7 @@ that is open. If a menu is specified, it will close that menu.
 
 | Name     | Type                          | Description |
 | -------- | ----------------------------- | ----------- |
-| `menuId` | `string \| null \| undefined` |             |
+| `menuId` | `null \| string \| undefined` |             |
 
 #### Returns
 
@@ -37,7 +37,7 @@ will also automatically disable all the others that are on the same side.
 | Name           | Type                          | Description |
 | -------------- | ----------------------------- | ----------- |
 | `shouldEnable` | `boolean`                     |             |
-| `menuId`       | `string \| null \| undefined` |             |
+| `menuId`       | `null \| string \| undefined` |             |
 
 #### Returns
 
@@ -48,7 +48,7 @@ Type: `Promise<HTMLIonMenuElement | undefined>`
 ### `get(menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>`
 
 Used to get a menu instance. If a menu is not provided then it will
-return the first menu found. If the specified menu is `left` or `right`, then
+return the first menu found. If the specified menu is `start` or `end`, then
 it will return the enabled menu on that side. Otherwise, it will try to find
 the menu using the menu's `id` property. If a menu is not found then it will
 return `null`.
@@ -57,7 +57,7 @@ return `null`.
 
 | Name     | Type                          | Description |
 | -------- | ----------------------------- | ----------- |
-| `menuId` | `string \| null \| undefined` |             |
+| `menuId` | `null \| string \| undefined` |             |
 
 #### Returns
 
@@ -103,7 +103,7 @@ Returns `true` if the specified menu is enabled.
 
 | Name     | Type                          | Description |
 | -------- | ----------------------------- | ----------- |
-| `menuId` | `string \| null \| undefined` |             |
+| `menuId` | `null \| string \| undefined` |             |
 
 #### Returns
 
@@ -114,13 +114,13 @@ Type: `Promise<boolean>`
 ### `isOpen(menuId?: string | null | undefined) => Promise<boolean>`
 
 Returns `true` if the specified menu is open. If the menu is not specified, it
-will return true if any menu is currently open.
+will return `true` if any menu is currently open.
 
 #### Parameters
 
 | Name     | Type                          | Description |
 | -------- | ----------------------------- | ----------- |
-| `menuId` | `string \| null \| undefined` |             |
+| `menuId` | `null \| string \| undefined` |             |
 
 #### Returns
 
@@ -136,7 +136,7 @@ Open the menu.
 
 | Name     | Type                          | Description |
 | -------- | ----------------------------- | ----------- |
-| `menuId` | `string \| null \| undefined` |             |
+| `menuId` | `null \| string \| undefined` |             |
 
 #### Returns
 
@@ -174,7 +174,7 @@ Used to enable or disable the ability to swipe open the menu.
 | Name           | Type                          | Description |
 | -------------- | ----------------------------- | ----------- |
 | `shouldEnable` | `boolean`                     |             |
-| `menuId`       | `string \| null \| undefined` |             |
+| `menuId`       | `null \| string \| undefined` |             |
 
 #### Returns
 
@@ -191,7 +191,7 @@ will close.
 
 | Name     | Type                          | Description |
 | -------- | ----------------------------- | ----------- |
-| `menuId` | `string \| null \| undefined` |             |
+| `menuId` | `null \| string \| undefined` |             |
 
 #### Returns
 

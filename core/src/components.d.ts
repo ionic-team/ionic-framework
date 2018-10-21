@@ -2451,7 +2451,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
+    * Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle
     */
     'menu'?: string;
     /**
@@ -2469,7 +2469,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
+    * Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle
     */
     'menu'?: string;
     /**
@@ -2489,7 +2489,7 @@ export namespace Components {
     */
     'enable': (shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
     /**
-    * Used to get a menu instance. If a menu is not provided then it will return the first menu found. If the specified menu is `left` or `right`, then it will return the enabled menu on that side. Otherwise, it will try to find the menu using the menu's `id` property. If a menu is not found then it will return `null`.
+    * Used to get a menu instance. If a menu is not provided then it will return the first menu found. If the specified menu is `start` or `end`, then it will return the enabled menu on that side. Otherwise, it will try to find the menu using the menu's `id` property. If a menu is not found then it will return `null`.
     */
     'get': (menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
     /**
@@ -2509,7 +2509,7 @@ export namespace Components {
     */
     'isEnabled': (menuId?: string | null | undefined) => Promise<boolean>;
     /**
-    * Returns `true` if the specified menu is open. If the menu is not specified, it will return true if any menu is currently open.
+    * Returns `true` if the specified menu is open. If the menu is not specified, it will return `true` if any menu is currently open.
     */
     'isOpen': (menuId?: string | null | undefined) => Promise<boolean>;
     /**

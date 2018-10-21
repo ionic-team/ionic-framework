@@ -10,7 +10,7 @@ The `ion-fab-list` element is a container for multiple fab buttons. This collect
 | Property    | Attribute   | Description                                                                                 | Type                                    |
 | ----------- | ----------- | ------------------------------------------------------------------------------------------- | --------------------------------------- |
 | `activated` | `activated` | If `true`, the fab list will be show all fab buttons in the list. Defaults to `false`.      | `boolean`                               |
-| `side`      | `side`      | The side the fab list will show on relative to the main fab button. Defaults to `'bottom'`. | `"start"`, `"end"`, `"top"`, `"bottom"` |
+| `side`      | `side`      | The side the fab list will show on relative to the main fab button. Defaults to `'bottom'`. | `"bottom" \| "end" \| "start" \| "top"` |
 
 
 ----------------------------------------------

@@ -91,7 +91,7 @@ export class MenuController implements MenuControllerI {
 
   /**
    * Returns `true` if the specified menu is open. If the menu is not specified, it
-   * will return true if any menu is currently open.
+   * will return `true` if any menu is currently open.
    */
   @Method()
   async isOpen(menuId?: string | null): Promise<boolean> {
@@ -118,7 +118,7 @@ export class MenuController implements MenuControllerI {
 
   /**
    * Used to get a menu instance. If a menu is not provided then it will
-   * return the first menu found. If the specified menu is `left` or `right`, then
+   * return the first menu found. If the specified menu is `start` or `end`, then
    * it will return the enabled menu on that side. Otherwise, it will try to find
    * the menu using the menu's `id` property. If a menu is not found then it will
    * return `null`.

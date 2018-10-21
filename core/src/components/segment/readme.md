@@ -10,19 +10,19 @@ Their functionality is similar to tabs, where selecting one will deselect all ot
 
 ## Properties
 
-| Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type             |
-| ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
-| `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `Color`          |
-| `disabled` | `disabled` | If `true`, the user cannot interact with the segment. Defaults to `false`.                                                                                                                                                                                             | `boolean`        |
-| `mode`     | `mode`     | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                                                                                                                                                                              | `Mode`           |
-| `value`    | `value`    | the value of the segment.                                                                                                                                                                                                                                              | `string`, `null` |
+| Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                          |
+| ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`         |
+| `disabled` | `disabled` | If `true`, the user cannot interact with the segment. Defaults to `false`.                                                                                                                                                                                             | `boolean`                     |
+| `mode`     | `mode`     | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                                                                                                                                                                              | `"ios" \| "md"`               |
+| `value`    | `value`    | the value of the segment.                                                                                                                                                                                                                                              | `null \| string \| undefined` |
 
 
 ## Events
 
-| Event       | Description                                  |
-| ----------- | -------------------------------------------- |
-| `ionChange` | Emitted when the value property has changed. |
+| Event       | Detail               | Description                                  |
+| ----------- | -------------------- | -------------------------------------------- |
+| `ionChange` | TextInputChangeEvent | Emitted when the value property has changed. |
 
 
 ## CSS Custom Properties
