@@ -56,7 +56,7 @@ export class ReorderGroup implements ComponentInterface {
    *
    * The complete() method exposed as
    */
-  @Event({ bubbles: false }) ionItemReorder!: EventEmitter<ItemReorderDetail>;
+  @Event() ionItemReorder!: EventEmitter<ItemReorderDetail>;
 
   async componentDidLoad() {
     const contentEl = this.el.closest('ion-content');
