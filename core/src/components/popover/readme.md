@@ -4,7 +4,7 @@ A Popover is a dialog that appears on top of the current page. It can be used fo
 
 ### Creating
 
-Popovers can be created using a [Popover Controller](../../popover-controller/PopoverController). They can be customized by passing popover options in the popover controller's create method.
+Popovers can be created using a [Popover Controller](https://beta.ionicframework.com/docs/api/popover-controller). They can be customized by passing popover options in the popover controller's create method.
 
 ### Presenting
 
