@@ -32,10 +32,10 @@ See the [Tabs API Docs](../Tabs/) for more details on configuring Tabs.
 
 ## Events
 
-| Event           | Description                                          |
-| --------------- | ---------------------------------------------------- |
-| `ionSelect`     | Emitted when the current tab is selected.            |
-| `ionTabMutated` | Emitted when the tab props mutates. Used internally. |
+| Event           | Detail | Description                                          |
+| --------------- | ------ | ---------------------------------------------------- |
+| `ionSelect`     |        | Emitted when the current tab is selected.            |
+| `ionTabMutated` |        | Emitted when the tab props mutates. Used internally. |
 
 
 ## Methods

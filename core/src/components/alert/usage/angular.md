@@ -75,7 +75,6 @@ export class AlertExample {
         },
         {
           name: 'name3',
-          type: 'text',
           value: 'http://ionicframework.com',
           type: 'url',
           placeholder: 'Favorite site ever'

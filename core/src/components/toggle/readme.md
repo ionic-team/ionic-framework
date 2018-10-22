@@ -21,12 +21,12 @@ Toggles change the state of a single option. Toggles can be switched on or off b
 
 ## Events
 
-| Event       | Description                                  |
-| ----------- | -------------------------------------------- |
-| `ionBlur`   | Emitted when the toggle loses focus.         |
-| `ionChange` | Emitted when the value property has changed. |
-| `ionFocus`  | Emitted when the toggle has focus.           |
-| `ionStyle`  | Emitted when the styles change.              |
+| Event       | Detail                  | Description                                  |
+| ----------- | ----------------------- | -------------------------------------------- |
+| `ionBlur`   |                         | Emitted when the toggle loses focus.         |
+| `ionChange` | CheckedInputChangeEvent | Emitted when the value property has changed. |
+| `ionFocus`  |                         | Emitted when the toggle has focus.           |
+| `ionStyle`  | StyleEvent              | Emitted when the styles change.              |
 
 
 ## CSS Custom Properties
