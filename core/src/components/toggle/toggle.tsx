@@ -28,6 +28,12 @@ export class Toggle implements ComponentInterface {
   @State() keyFocus = false;
 
   /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  @Prop() mode!: Mode;
+
+  /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
@@ -35,23 +41,17 @@ export class Toggle implements ComponentInterface {
   @Prop() color?: Color;
 
   /**
-   * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
-   */
-  @Prop() mode!: Mode;
-
-  /**
    * The name of the control, which is submitted with the form data.
    */
   @Prop() name: string = this.inputId;
 
   /**
-   * If true, the toggle is selected. Defaults to `false`.
+   * If `true`, the toggle is selected. Defaults to `false`.
    */
   @Prop({ mutable: true }) checked = false;
 
-  /*
-   * If true, the user cannot interact with the toggle. Default false.
+  /**
+   * If `true`, the user cannot interact with the toggle. Default false.
    */
   @Prop() disabled = false;
 
@@ -154,19 +154,19 @@ export class Toggle implements ComponentInterface {
     this.nativeInput.focus();
   }
 
-  private onChange() {
+  private onChange = () => {
     this.checked = !this.checked;
   }
 
-  private onKeyUp() {
+  private onKeyUp = () => {
     this.keyFocus = true;
   }
 
-  private onFocus() {
+  private onFocus = () => {
     this.ionFocus.emit();
   }
 
-  private onBlur() {
+  private onBlur = () => {
     this.keyFocus = false;
     this.ionBlur.emit();
   }
@@ -194,10 +194,10 @@ export class Toggle implements ComponentInterface {
       </div>,
       <input
         type="checkbox"
-        onChange={this.onChange.bind(this)}
-        onFocus={this.onFocus.bind(this)}
-        onBlur={this.onBlur.bind(this)}
-        onKeyUp={this.onKeyUp.bind(this)}
+        onChange={this.onChange}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+        onKeyUp={this.onKeyUp}
         checked={this.checked}
         id={this.inputId}
         name={this.name}

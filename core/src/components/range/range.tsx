@@ -87,13 +87,13 @@ export class Range implements ComponentInterface {
   }
 
   /**
-   * If true, a pin with integer value is shown when the knob
+   * If `true`, a pin with integer value is shown when the knob
    * is pressed. Defaults to `false`.
    */
   @Prop() pin = false;
 
   /**
-   * If true, the knob snaps to tick marks evenly spaced based
+   * If `true`, the knob snaps to tick marks evenly spaced based
    * on the step property value. Defaults to `false`.
    */
   @Prop() snaps = false;
@@ -103,8 +103,8 @@ export class Range implements ComponentInterface {
    */
   @Prop() step = 1;
 
-  /*
-   * If true, the user cannot interact with the range. Defaults to `false`.
+  /**
+   * If `true`, the user cannot interact with the range. Defaults to `false`.
    */
   @Prop() disabled = false;
   @Watch('disabled')

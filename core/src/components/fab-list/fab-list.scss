@@ -22,7 +22,7 @@
 }
 
 ::slotted(.fab-button-in-list) {
-  --size: #{$fab-mini-size};
+  --width: #{$fab-mini-size};
 
   transform: scale(0);
 
@@ -32,14 +32,14 @@
 
 :host(.fab-list-side-top) ::slotted(.fab-button-in-list),
 :host(.fab-list-side-bottom) ::slotted(.fab-button-in-list) {
-  --padding-top: 5px;
-  --padding-bottom: 5px;
+  --margin-top: 5px;
+  --margin-bottom: 5px;
 }
 
 :host(.fab-list-side-start) ::slotted(.fab-button-in-list),
 :host(.fab-list-side-end) ::slotted(.fab-button-in-list) {
-  --padding-start: 5px;
-  --padding-end: 5px;
+  --margin-start: 5px;
+  --margin-end: 5px;
 }
 
 ::slotted(.fab-button-in-list.fab-button-show) {

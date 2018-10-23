@@ -34,9 +34,6 @@ export class Config {
   }
 }
 
-const IONIC_PREFIX = 'ionic:';
-const IONIC_SESSION_KEY = 'ionic-persist-config';
-
 export function configFromSession(): any {
   try {
     const configStr = window.sessionStorage.getItem(IONIC_SESSION_KEY);
@@ -73,3 +70,6 @@ export function configFromURL() {
 function startsWith(input: string, search: string): boolean {
   return input.substr(0, search.length) === search;
 }
+
+const IONIC_PREFIX = 'ionic:';
+const IONIC_SESSION_KEY = 'ionic-persist-config';

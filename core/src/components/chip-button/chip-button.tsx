@@ -25,7 +25,7 @@ export class ChipButton implements ComponentInterface {
   @Prop() mode!: Mode;
 
   /**
-   * If true, the user cannot interact with the chip button. Defaults to `false`.
+   * If `true`, the user cannot interact with the chip button. Defaults to `false`.
    */
   @Prop() disabled = false;
 
@@ -56,11 +56,11 @@ export class ChipButton implements ComponentInterface {
     return (
       <TagType
         type="button"
-        class="chip-button-native"
+        class="button-native"
         disabled={this.disabled}
         href={this.href}
       >
-        <span class="chip-button-inner">
+        <span class="button-inner">
           <slot></slot>
         </span>
         {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}

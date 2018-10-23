@@ -47,12 +47,12 @@ export class Slides implements ComponentInterface {
   }
 
   /**
-   * If true, show the pagination. Defaults to `false`.
+   * If `true`, show the pagination. Defaults to `false`.
    */
   @Prop() pager = false;
 
   /**
-   * If true, show the scrollbar. Defaults to `false`.
+   * If `true`, show the scrollbar. Defaults to `false`.
    */
   @Prop() scrollbar = false;
 
@@ -320,10 +320,7 @@ export class Slides implements ComponentInterface {
       slidesOffsetBefore: 0,
       slidesOffsetAfter: 0,
       touchEventsTarget: 'container',
-      autoplay: {
-        disableOnInteraction: true,
-        stopOnLastSlide: false,
-      },
+      autoplay: false,
       freeMode: false,
       freeModeMomentum: true,
       freeModeMomentumRatio: 1,

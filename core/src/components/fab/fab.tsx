@@ -22,12 +22,16 @@ export class Fab implements ComponentInterface {
   @Prop() vertical?: 'top' | 'bottom' | 'center';
 
   /**
-   * If true, the fab will display on the edge of the header if
+   * If `true`, the fab will display on the edge of the header if
    * `vertical` is `"top"`, and on the edge of the footer if
    * it is `"bottom"`. Should be used with a `fixed` slot.
    */
   @Prop() edge = false;
 
+  /**
+   * If `true`, both the `ion-fab-button` and all `ion-fab-list` inside `ion-fab` will become active.
+   * That means `ion-fab-button` will become a `close` icon and `ion-fab-list` will become visible.
+   */
   @Prop({ mutable: true }) activated = false;
   @Watch('activated')
   activatedChanged() {
@@ -42,7 +46,9 @@ export class Fab implements ComponentInterface {
   }
 
   componentDidLoad() {
-    this.activatedChanged();
+    if (this.activated) {
+      this.activatedChanged();
+    }
   }
 
   @Listen('click')

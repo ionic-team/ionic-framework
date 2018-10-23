@@ -22,6 +22,10 @@
   --opacity: 1;
 
   @include font-smoothing();
+  @include padding-horizontal(
+    var(--ion-safe-area-left),
+    var(--ion-safe-area-right)
+  );
 
   display: block;
 
@@ -54,7 +58,6 @@
     var(--padding-bottom),
     var(--padding-start)
   );
-
   display: flex;
   position: relative;
 

@@ -5,7 +5,7 @@
 // iOS Toolbar Default Button
 // --------------------------------------------------
 
-::slotted(*) .button {
+::slotted(*) ion-button {
   --padding-top: 0;
   --padding-bottom: 0;
   --padding-start: 5px;
@@ -16,7 +16,7 @@
   font-weight: 400;
 }
 
-::slotted(*) .button:not(.button-round) {
+::slotted(*) ion-button:not(.button-round) {
   --border-radius: #{$toolbar-ios-button-border-radius};
 }
 
@@ -29,19 +29,13 @@
 }
 
 
-// iOS Toolbar Clear Button
-// --------------------------------------------------
-
-::slotted(*) .button-clear.activated {
-  color: $toolbar-ios-button-color;
-}
-
-
 // iOS Toolbar Button Solid
 // --------------------------------------------------
 
-::slotted(*) .button-solid-ios:hover {
-  opacity: .4;
+@media (any-hover: hover) {
+  ::slotted(*) .button-solid-ios:hover {
+    opacity: .4;
+  }
 }
 
 
@@ -54,7 +48,6 @@
   font-size: 24px;
 
   line-height: .67;
-  pointer-events: none;
 }
 
 ::slotted(*) ion-icon[slot="end"] {
@@ -64,7 +57,6 @@
   font-size: 24px;
 
   line-height: .67;
-  pointer-events: none;
 }
 
 ::slotted(*) ion-icon[slot="icon-only"] {
@@ -74,7 +66,6 @@
   font-size: 31px;
 
   line-height: .67;
-  pointer-events: none;
 }
 
 

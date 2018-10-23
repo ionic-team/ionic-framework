@@ -19,6 +19,8 @@
 
   border-top: $tabbar-ios-border;
 
+  font-size: $tab-button-ios-font-size;
+
   contain: strict;
 }
 
@@ -39,17 +41,17 @@
 // iOS Tabbar Layout
 // --------------------------------------------------
 
-:host(.layout-icon-end) .tab-btn,
-:host(.layout-icon-start) .tab-btn,
-:host(.layout-icon-hide) .tab-btn {
+:host(.layout-icon-end),
+:host(.layout-icon-start),
+:host(.layout-icon-hide) {
   --label-margin-top: 2px;
   --label-margin-bottom: 2px;
   --label-font-size: 14px;
   --label-line-height: 1.1;
 }
 
-:host(.layout-icon-end) .tab-btn,
-:host(.layout-icon-start) .tab-btn {
+:host(.layout-icon-end),
+:host(.layout-icon-start) {
   --icon-margin-top: 2px;
   --icon-margin-bottom: 1px;
   --icon-min-width: 24px;
@@ -57,6 +59,6 @@
   --icon-font-size: 24px;
 }
 
-:host(.layout-label-hide) .tab-btn {
+:host(.layout-label-hide) {
   --icon-margin: 0;
 }

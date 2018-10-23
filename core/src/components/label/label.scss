@@ -5,11 +5,18 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --color: Color of the label
+   */
+  --color: currentColor;
+
   @include margin(0);
 
   display: block;
 
   flex: 1;
+
+  color: var(--color);
 
   font-family: $font-family-base;
   font-size: inherit;
@@ -23,7 +30,7 @@
 }
 
 :host(.ion-color) {
-  color: #{current-color(base)};
+  color: current-color(base);
 }
 
 :host([text-wrap]) {
@@ -71,4 +78,8 @@
 :host-context(.item-has-focus).label-floating,
 :host-context(.item-has-value).label-floating {
   @include transform(translate3d(0, 0, 0), scale(.8));
+}
+
+:host(.label-no-animate.label-floating) {
+  transition: none;
 }

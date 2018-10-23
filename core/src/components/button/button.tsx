@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
 
-import { Color, CssClassMap, Mode, RouterDirection } from '../../interface';
+import { Color, Mode, RouterDirection } from '../../interface';
 import { hasShadowDom } from '../../utils/helpers';
 import { createColorClasses, openURL } from '../../utils/theme';
 
@@ -39,7 +39,7 @@ export class Button implements ComponentInterface {
   @Prop({ mutable: true }) buttonType = 'button';
 
   /**
-   * If true, the user cannot interact with the button. Defaults to `false`.
+   * If `true`, the user cannot interact with the button. Defaults to `false`.
    */
   @Prop({ reflectToAttr: true }) disabled = false;
 
@@ -81,7 +81,7 @@ export class Button implements ComponentInterface {
   @Prop({ reflectToAttr: true }) size?: 'small' | 'default' | 'large';
 
   /**
-   * If true, activates a button with a heavier font weight.
+   * If `true`, activates a button with a heavier font weight.
    */
   @Prop() strong = false;
 
@@ -108,20 +108,20 @@ export class Button implements ComponentInterface {
     }
   }
 
-  private onFocus() {
+  private onFocus = () => {
     this.ionFocus.emit();
   }
 
-  private onKeyUp() {
+  private onKeyUp = () => {
     this.keyFocus = true;
   }
 
-  private onBlur() {
+  private onBlur = () => {
     this.keyFocus = false;
     this.ionBlur.emit();
   }
 
-  private onClick(ev: Event) {
+  private onClick = (ev: Event) => {
     if (this.type === 'button') {
       return openURL(this.win, this.href, ev, this.routerDirection);
 
@@ -146,25 +146,26 @@ export class Button implements ComponentInterface {
   }
 
   hostData() {
-    const { buttonType, color, expand, fill, mode, shape, size, strong } = this;
+    const { buttonType, keyFocus, disabled, color, expand, fill, shape, size, strong } = this;
 
     return {
       'ion-activatable': true,
       class: {
         ...createColorClasses(color),
-        ...getButtonClassMap(buttonType, mode),
-        ...getButtonTypeClassMap(buttonType, expand, mode),
-        ...getButtonTypeClassMap(buttonType, size, mode),
-        ...getButtonTypeClassMap(buttonType, shape, mode),
-        ...getButtonTypeClassMap(buttonType, strong ? 'strong' : undefined, mode),
-        ...getButtonTypeClassMap(buttonType, fill, mode),
-        'focused': this.keyFocus,
+        [buttonType]: true,
+        [`${buttonType}-${expand}`]: !!expand,
+        [`${buttonType}-${size}`]: !!size,
+        [`${buttonType}-${shape}`]: !!shape,
+        [`${buttonType}-${fill}`]: !!fill,
+        [`${buttonType}-strong`]: strong,
+
+        'focused': keyFocus,
+        'button-disabled': disabled
       }
     };
   }
 
   render() {
-
     const TagType = this.href === undefined ? 'button' : 'a';
     const attrs = (TagType === 'button')
       ? { type: this.type }
@@ -175,10 +176,10 @@ export class Button implements ComponentInterface {
         {...attrs}
         class="button-native"
         disabled={this.disabled}
-        onFocus={this.onFocus.bind(this)}
-        onKeyUp={this.onKeyUp.bind(this)}
-        onBlur={this.onBlur.bind(this)}
-        onClick={this.onClick.bind(this)}
+        onFocus={this.onFocus}
+        onKeyUp={this.onKeyUp}
+        onBlur={this.onBlur}
+        onClick={this.onClick}
       >
         <span class="button-inner">
           <slot name="icon-only"></slot>
@@ -190,32 +191,4 @@ export class Button implements ComponentInterface {
       </TagType>
     );
   }
-}
-
-/**
- * Get the classes based on the button type
- * e.g. alert-button, action-sheet-button
- */
-function getButtonClassMap(buttonType: string | undefined, mode: Mode): CssClassMap {
-  if (buttonType === undefined) {
-    return {};
-  }
-  return {
-    [buttonType]: true,
-    [`${buttonType}-${mode}`]: true
-  };
-}
-
-/**
- * Get the classes based on the type
- * e.g. block, full, round, large
- */
-function getButtonTypeClassMap(buttonType: string, type: string | undefined, mode: Mode): CssClassMap {
-  if (type === undefined) {
-    return {};
-  }
-  return {
-    [`${buttonType}-${type}`]: true,
-    [`${buttonType}-${type}-${mode}`]: true
-  };
 }

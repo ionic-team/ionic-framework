@@ -97,15 +97,44 @@ export class VirtualScroll implements ComponentInterface {
    * should be avoided if possible.
    */
   @Prop() items?: any[];
+
+  /**
+   * An optional function that maps each item within their height.
+   * When this function is provides, heavy optimizations and fast path can be taked by
+   * `ion-virtual-scroll` leading to massive performance improvements.
+   *
+   * This function allows to skip all DOM reads, which can be Doing so leads
+   * to massive performance
+   */
   @Prop() itemHeight?: ItemHeightFn;
 
-  // JSX API
+  /**
+   * NOTE: only JSX API for stencil.
+   *
+   * Provide a render function for the items to be rendered. Returns a JSX virtual-dom.
+   */
   @Prop() renderItem?: (item: any, index: number) => any;
+
+  /**
+   * NOTE: only JSX API for stencil.
+   *
+   * Provide a render function for the header to be rendered. Returns a JSX virtual-dom.
+   */
   @Prop() renderHeader?: (item: any, index: number) => any;
+
+  /**
+   * NOTE: only JSX API for stencil.
+   *
+   * Provide a render function for the footer to be rendered. Returns a JSX virtual-dom.
+   */
   @Prop() renderFooter?: (item: any, index: number) => any;
 
-  // Low level API
+  /**
+   * NOTE: only Vanilla JS API.
+   */
   @Prop() nodeRender?: ItemRenderFn;
+
+  /** @internal */
   @Prop() domRender?: DomRenderFn;
 
   @Watch('itemHeight')
@@ -147,11 +176,20 @@ export class VirtualScroll implements ComponentInterface {
     this.updateVirtualScroll();
   }
 
+  /**
+   * Returns the position of the virtual item at the given index.
+   */
   @Method()
   positionForItem(index: number): Promise<number> {
     return Promise.resolve(positionForIndex(index, this.cells, this.getHeightIndex()));
   }
 
+  /**
+   * This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as
+   * dirty any time the content or their style changes.
+   *
+   * The subset of items to be updated can are specifing by an offset and a length.
+   */
   @Method()
   markDirty(offset: number, len = -1) {
     // TODO: kind of hacky how we do in-place updated of the cells
@@ -193,6 +231,15 @@ export class VirtualScroll implements ComponentInterface {
     this.scheduleUpdate();
   }
 
+  /**
+   * This method marks the tail the items array as dirty, so they can be re-rendered.
+   *
+   * It's equivalent to calling:
+   *
+   * ```
+   * virtualScroll.markDirty(lastItemLen, items.length - lastItemLen);
+   * ```
+   */
   @Method()
   markDirtyTail() {
     if (this.items) {

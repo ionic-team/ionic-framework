@@ -1,5 +1,5 @@
-/* auto-generated angular directive proxies */
 /* tslint:disable */
+/* auto-generated angular directive proxies */
 
 import { fromEvent } from 'rxjs';
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, ViewEncapsulation } from '@angular/core';
@@ -239,12 +239,15 @@ export class Fab {
 }
 
 export declare interface FabButton extends StencilComponents<'IonFabButton'> {}
-@Component({ selector: 'ion-fab-button', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'activated', 'disabled', 'routerDirection', 'href', 'translucent', 'show'] })
+@Component({ selector: 'ion-fab-button', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'activated', 'disabled', 'href', 'routerDirection', 'show', 'translucent', 'type'] })
 export class FabButton {
+  ionFocus: EventEmitter<CustomEvent>;
+  ionBlur: EventEmitter<CustomEvent>;
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyInputs(this, el, ['mode', 'color', 'activated', 'disabled', 'routerDirection', 'href', 'translucent', 'show']);
+    proxyInputs(this, el, ['mode', 'color', 'activated', 'disabled', 'href', 'routerDirection', 'show', 'translucent', 'type']);
+    proxyOutputs(this, el, ['ionFocus', 'ionBlur']);
   }
 }
 
@@ -356,19 +359,19 @@ export class Input {
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyMethods(this, el, ['focus']);
+    proxyMethods(this, el, ['setFocus']);
     proxyInputs(this, el, ['color', 'mode', 'accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'debounce', 'disabled', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'results', 'spellcheck', 'step', 'size', 'type', 'value']);
     proxyOutputs(this, el, ['ionInput', 'ionChange', 'ionStyle', 'ionBlur', 'ionFocus', 'ionInputDidLoad', 'ionInputDidUnload']);
   }
 }
 
 export declare interface Item extends StencilComponents<'IonItem'> {}
-@Component({ selector: 'ion-item', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'button', 'detail', 'detailIcon', 'disabled', 'href', 'lines', 'routerDirection', 'state', 'type'] })
+@Component({ selector: 'ion-item', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'button', 'detail', 'detailIcon', 'disabled', 'href', 'lines', 'routerDirection', 'type'] })
 export class Item {
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyInputs(this, el, ['color', 'mode', 'button', 'detail', 'detailIcon', 'disabled', 'href', 'lines', 'routerDirection', 'state', 'type']);
+    proxyInputs(this, el, ['color', 'mode', 'button', 'detail', 'detailIcon', 'disabled', 'href', 'lines', 'routerDirection', 'type']);
   }
 }
 
@@ -459,15 +462,17 @@ export class ListHeader {
 export declare interface Menu extends StencilComponents<'IonMenu'> {}
 @Component({ selector: 'ion-menu', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['contentId', 'menuId', 'type', 'disabled', 'side', 'swipeGesture', 'maxEdgeStart'] })
 export class Menu {
-  ionOpen: EventEmitter<CustomEvent>;
-  ionClose: EventEmitter<CustomEvent>;
+  ionWillOpen: EventEmitter<CustomEvent>;
+  ionWillClose: EventEmitter<CustomEvent>;
+  ionDidOpen: EventEmitter<CustomEvent>;
+  ionDidClose: EventEmitter<CustomEvent>;
   ionMenuChange: EventEmitter<CustomEvent>;
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
     proxyMethods(this, el, ['isOpen', 'isActive', 'open', 'close', 'toggle', 'setOpen']);
     proxyInputs(this, el, ['contentId', 'menuId', 'type', 'disabled', 'side', 'swipeGesture', 'maxEdgeStart']);
-    proxyOutputs(this, el, ['ionOpen', 'ionClose', 'ionMenuChange']);
+    proxyOutputs(this, el, ['ionWillOpen', 'ionWillClose', 'ionDidOpen', 'ionDidClose', 'ionMenuChange']);
   }
 }
 
@@ -492,7 +497,7 @@ export class MenuToggle {
 }
 
 export declare interface Nav extends StencilComponents<'IonNav'> {}
-@Component({ selector: 'ion-nav', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['swipeGesture', 'animated', 'delegate', 'rootParams', 'root'] })
+@Component({ selector: 'ion-nav', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['delegate', 'swipeGesture', 'animated', 'animation', 'rootParams', 'root'] })
 export class Nav {
   ionNavWillLoad: EventEmitter<CustomEvent>;
   ionNavWillChange: EventEmitter<CustomEvent>;
@@ -501,7 +506,7 @@ export class Nav {
   constructor(r: ElementRef) {
     const el = r.nativeElement;
     proxyMethods(this, el, ['push', 'insert', 'insertPages', 'pop', 'popTo', 'popToRoot', 'removeIndex', 'setRoot', 'setPages', 'setRouteId', 'getRouteId', 'getActive', 'getByIndex', 'canGoBack', 'getPrevious']);
-    proxyInputs(this, el, ['swipeGesture', 'animated', 'delegate', 'rootParams', 'root']);
+    proxyInputs(this, el, ['delegate', 'swipeGesture', 'animated', 'animation', 'rootParams', 'root']);
     proxyOutputs(this, el, ['ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange']);
   }
 }
@@ -622,6 +627,7 @@ export class ReorderGroup {
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
+    proxyMethods(this, el, ['complete']);
     proxyInputs(this, el, ['disabled']);
     proxyOutputs(this, el, ['ionItemReorder']);
   }
@@ -654,7 +660,7 @@ export class Searchbar {
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyMethods(this, el, ['focus']);
+    proxyMethods(this, el, ['setFocus']);
     proxyInputs(this, el, ['color', 'mode', 'animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'debounce', 'placeholder', 'searchIcon', 'showCancelButton', 'spellcheck', 'type', 'value']);
     proxyOutputs(this, el, ['ionInput', 'ionChange', 'ionCancel', 'ionClear', 'ionBlur', 'ionFocus']);
   }
@@ -820,8 +826,20 @@ export class Tab {
   }
 }
 
+export declare interface Tabbar extends StencilComponents<'IonTabbar'> {}
+@Component({ selector: 'ion-tabbar', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'layout', 'placement', 'selectedTab', 'tabs', 'highlight', 'translucent'] })
+export class Tabbar {
+  ionTabbarClick: EventEmitter<CustomEvent>;
+
+  constructor(r: ElementRef) {
+    const el = r.nativeElement;
+    proxyInputs(this, el, ['mode', 'color', 'layout', 'placement', 'selectedTab', 'tabs', 'highlight', 'translucent']);
+    proxyOutputs(this, el, ['ionTabbarClick']);
+  }
+}
+
 export declare interface Tabs extends StencilComponents<'IonTabs'> {}
-@Component({ selector: 'ion-tabs', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'name', 'tabbarHidden', 'tabbarHighlight', 'tabbarLayout', 'tabbarPlacement', 'translucent', 'useRouter'] })
+@Component({ selector: 'ion-tabs', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['name', 'tabbarHidden', 'useRouter'] })
 export class Tabs {
   ionChange: EventEmitter<CustomEvent>;
   ionNavWillLoad: EventEmitter<CustomEvent>;
@@ -831,7 +849,7 @@ export class Tabs {
   constructor(r: ElementRef) {
     const el = r.nativeElement;
     proxyMethods(this, el, ['select', 'setRouteId', 'getRouteId', 'getTab', 'getSelected']);
-    proxyInputs(this, el, ['color', 'name', 'tabbarHidden', 'tabbarHighlight', 'tabbarLayout', 'tabbarPlacement', 'translucent', 'useRouter']);
+    proxyInputs(this, el, ['name', 'tabbarHidden', 'useRouter']);
     proxyOutputs(this, el, ['ionChange', 'ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange']);
   }
 }
@@ -857,7 +875,7 @@ export class Textarea {
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyMethods(this, el, ['focus']);
+    proxyMethods(this, el, ['setFocus']);
     proxyInputs(this, el, ['mode', 'color', 'autocapitalize', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value']);
     proxyOutputs(this, el, ['ionChange', 'ionInput', 'ionStyle', 'ionBlur', 'ionFocus']);
   }
@@ -869,7 +887,7 @@ export class Thumbnail {
 }
 
 export declare interface Toggle extends StencilComponents<'IonToggle'> {}
-@Component({ selector: 'ion-toggle', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'name', 'checked', 'disabled', 'value'] })
+@Component({ selector: 'ion-toggle', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'name', 'checked', 'disabled', 'value'] })
 export class Toggle {
   ionChange: EventEmitter<CustomEvent>;
   ionFocus: EventEmitter<CustomEvent>;
@@ -878,7 +896,7 @@ export class Toggle {
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyInputs(this, el, ['color', 'mode', 'name', 'checked', 'disabled', 'value']);
+    proxyInputs(this, el, ['mode', 'color', 'name', 'checked', 'disabled', 'value']);
     proxyOutputs(this, el, ['ionChange', 'ionFocus', 'ionBlur', 'ionStyle']);
   }
 }

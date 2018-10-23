@@ -8,19 +8,19 @@ SelectOption is a component that is a child element of Select. For more informat
 
 ## Properties
 
-| Property   | Attribute  | Description                                                                    | Type      |
-| ---------- | ---------- | ------------------------------------------------------------------------------ | --------- |
-| `disabled` | `disabled` | If true, the user cannot interact with the select option. Defaults to `false`. | `boolean` |
-| `selected` | `selected` | If true, the element is selected.                                              | `boolean` |
-| `value`    | --         | The text value of the option.                                                  | `any`     |
+| Property   | Attribute  | Description                                                                      | Type      |
+| ---------- | ---------- | -------------------------------------------------------------------------------- | --------- |
+| `disabled` | `disabled` | If `true`, the user cannot interact with the select option. Defaults to `false`. | `boolean` |
+| `selected` | `selected` | If `true`, the element is selected.                                              | `boolean` |
+| `value`    | --         | The text value of the option.                                                    | `any`     |
 
 
 ## Events
 
-| Event                      | Description                             |
-| -------------------------- | --------------------------------------- |
-| `ionSelectOptionDidLoad`   | Emitted when the select option loads.   |
-| `ionSelectOptionDidUnload` | Emitted when the select option unloads. |
+| Event                      | Detail | Description                             |
+| -------------------------- | ------ | --------------------------------------- |
+| `ionSelectOptionDidLoad`   |        | Emitted when the select option loads.   |
+| `ionSelectOptionDidUnload` |        | Emitted when the select option unloads. |
 
 
 ----------------------------------------------

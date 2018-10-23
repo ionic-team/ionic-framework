@@ -5,7 +5,8 @@ import { DisplayWhen, getTestResult } from '../../utils/show-hide-when-utils';
 
 @Component({
   tag: 'ion-show-when',
-  styleUrl: 'show-when.scss'
+  styleUrl: 'show-when.scss',
+  shadow: true
 })
 export class ShowWhen implements ComponentInterface, DisplayWhen {
 
@@ -43,8 +44,8 @@ export class ShowWhen implements ComponentInterface, DisplayWhen {
   @Prop() platform?: string;
 
   /**
-   * If false, and two or more conditions are set, the element will show when all are true.
-   * If true, and two or more conditions are set, the element will show when at least one is true.
+   * If `false`, and two or more conditions are set, the element will show when all are true.
+   * If `true`, and two or more conditions are set, the element will show when at least one is true.
    */
   @Prop() or = false;
 
@@ -63,9 +64,11 @@ export class ShowWhen implements ComponentInterface, DisplayWhen {
     return {
       class: {
         'show-content': this.passesTest,
-        'hide-content': !this.passesTest
       }
     };
   }
 
+  render() {
+    return <slot></slot>;
+  }
 }

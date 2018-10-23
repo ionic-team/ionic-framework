@@ -8,8 +8,6 @@
   @include padding($tab-button-md-padding-top, $tab-button-md-padding-end, $tab-button-md-padding-bottom, $tab-button-md-padding-start);
 
   max-width: 168px;
-
-  font-weight: $tab-button-md-font-weight;
 }
 
 // Material Design Tab Button Text
@@ -23,13 +21,11 @@
 
   transition: $tab-button-md-text-transition;
 
-  font-size: $tab-button-md-font-size;
-
   text-transform: $tab-button-md-text-capitalization;
 }
 
 .tab-btn-selected .tab-btn-text {
-  --label-transform: #{$tab-button-md-text-transform-active};
+  transform: #{$tab-button-md-text-transform-active};
 
   transition: $tab-button-md-text-transition;
 }

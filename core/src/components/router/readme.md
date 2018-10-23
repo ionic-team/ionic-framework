@@ -20,28 +20,74 @@ If you're using Angular, please see [ion-router-outlet](../router-outlet) instea
 
 ## Properties
 
-| Property  | Attribute  | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | Type      |
-| --------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
-| `root`    | `root`     | By default `ion-router` will match the routes at the root path ("/"). That can be changed when                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | `string`  |
-| `useHash` | `use-hash` | The router can work in two "modes": - With hash: `/index.html#/path/to/page` - Without hash: `/path/to/page`  Using one or another might depend in the requirements of your app and/or where it's deployed.  Usually "hash-less" navigation works better for SEO and it's more user friendly too, but it might requires aditional server-side configuration in order to properly work.  On the otherside hash-navigation is much easier to deploy, it even works over the file protocol.  By default, this property is `true`, change to `false` to allow hash-less URLs. | `boolean` |
+| Property  | Attribute  | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | Type      |
+| --------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| `root`    | `root`     | By default `ion-router` will match the routes at the root path ("/"). That can be changed when                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | `string`  |
+| `useHash` | `use-hash` | The router can work in two "modes": - With hash: `/index.html#/path/to/page` - Without hash: `/path/to/page`  Using one or another might depend in the requirements of your app and/or where it's deployed.  Usually "hash-less" navigation works better for SEO and it's more user friendly too, but it might requires additional server-side configuration in order to properly work.  On the otherside hash-navigation is much easier to deploy, it even works over the file protocol.  By default, this property is `true`, change to `false` to allow hash-less URLs. | `boolean` |
 
 
 ## Events
 
-| Event                | Description                                     |
-| -------------------- | ----------------------------------------------- |
-| `ionRouteDidChange`  | Emitted when the route had changed              |
-| `ionRouteWillChange` | Event emitted when the route is about to change |
+| Event                | Detail            | Description                                     |
+| -------------------- | ----------------- | ----------------------------------------------- |
+| `ionRouteDidChange`  | RouterEventDetail | Emitted when the route had changed              |
+| `ionRouteWillChange` | RouterEventDetail | Event emitted when the route is about to change |
 
 
 ## Methods
 
-| Method       | Description                   |
-| ------------ | ----------------------------- |
-| `goBack`     |                               |
-| `navChanged` |                               |
-| `printDebug` |                               |
-| `push`       | Navigate to the specified URL |
+### `goBack() => Promise<void>`
+
+Go back to previous page in the window.history.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `navChanged(intent: number) => Promise<boolean>`
+
+
+
+#### Parameters
+
+| Name     | Type     | Description |
+| -------- | -------- | ----------- |
+| `intent` | `number` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `printDebug() => void`
+
+
+
+#### Returns
+
+Type: `void`
+
+
+
+### `push(url: string, direction?: RouterDirection) => Promise<boolean>`
+
+Navigate to the specified URL.
+
+#### Parameters
+
+| Name        | Type                            | Description |
+| ----------- | ------------------------------- | ----------- |
+| `url`       | `string`                        |             |
+| `direction` | `"back" \| "forward" \| "root"` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
 
 
 ----------------------------------------------

@@ -8,25 +8,196 @@ The MenuController makes it easy to control a Menu. Its methods can be used to d
 
 ## Methods
 
-| Method             | Description                                                                                                                                                                                                                                                                                                                |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `_createAnimation` |                                                                                                                                                                                                                                                                                                                            |
-| `_getInstance`     |                                                                                                                                                                                                                                                                                                                            |
-| `_register`        |                                                                                                                                                                                                                                                                                                                            |
-| `_setActiveMenu`   |                                                                                                                                                                                                                                                                                                                            |
-| `_setOpen`         |                                                                                                                                                                                                                                                                                                                            |
-| `_unregister`      |                                                                                                                                                                                                                                                                                                                            |
-| `close`            | Close the menu. If no menu is specified, then it will close any menu that is open. If a menu is specified, it will close that menu.                                                                                                                                                                                        |
-| `enable`           | Used to enable or disable a menu. For example, there could be multiple left menus, but only one of them should be able to be opened at the same time. If there are multiple menus on the same side, then enabling one menu will also automatically disable all the others that are on the same side.                       |
-| `get`              | Used to get a menu instance. If a menu is not provided then it will return the first menu found. If the specified menu is `left` or `right`, then it will return the enabled menu on that side. Otherwise, it will try to find the menu using the menu's `id` property. If a menu is not found then it will return `null`. |
-| `getMenus`         | Returns an array of all menu instances.                                                                                                                                                                                                                                                                                    |
-| `getOpen`          | Returns the instance of the menu already opened, otherwise `null`.                                                                                                                                                                                                                                                         |
-| `isAnimating`      | Returns true if any menu is currently animating.                                                                                                                                                                                                                                                                           |
-| `isEnabled`        | Returns true if the specified menu is enabled.                                                                                                                                                                                                                                                                             |
-| `isOpen`           | Returns true if the specified menu is open. If the menu is not specified, it will return true if any menu is currently open.                                                                                                                                                                                               |
-| `open`             | Open the menu.                                                                                                                                                                                                                                                                                                             |
-| `swipeGesture`     | Used to enable or disable the ability to swipe open the menu.                                                                                                                                                                                                                                                              |
-| `toggle`           | Toggle the menu. If it's closed, it will open, and if opened, it will close.                                                                                                                                                                                                                                               |
+### `close(menuId?: string | null | undefined) => Promise<boolean>`
+
+Close the menu. If no menu is specified, then it will close any menu
+that is open. If a menu is specified, it will close that menu.
+
+#### Parameters
+
+| Name     | Type                          | Description |
+| -------- | ----------------------------- | ----------- |
+| `menuId` | `null \| string \| undefined` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `enable(shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undef...`
+
+Used to enable or disable a menu. For example, there could be multiple
+left menus, but only one of them should be able to be opened at the same
+time. If there are multiple menus on the same side, then enabling one menu
+will also automatically disable all the others that are on the same side.
+
+#### Parameters
+
+| Name           | Type                          | Description |
+| -------------- | ----------------------------- | ----------- |
+| `shouldEnable` | `boolean`                     |             |
+| `menuId`       | `null \| string \| undefined` |             |
+
+#### Returns
+
+Type: `Promise<HTMLIonMenuElement | undefined>`
+
+
+
+### `get(menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>`
+
+Used to get a menu instance. If a menu is not provided then it will
+return the first menu found. If the specified menu is `start` or `end`, then
+it will return the enabled menu on that side. Otherwise, it will try to find
+the menu using the menu's `id` property. If a menu is not found then it will
+return `null`.
+
+#### Parameters
+
+| Name     | Type                          | Description |
+| -------- | ----------------------------- | ----------- |
+| `menuId` | `null \| string \| undefined` |             |
+
+#### Returns
+
+Type: `Promise<HTMLIonMenuElement | undefined>`
+
+
+
+### `getMenus() => Promise<HTMLIonMenuElement[]>`
+
+Returns an array of all menu instances.
+
+#### Returns
+
+Type: `Promise<HTMLIonMenuElement[]>`
+
+
+
+### `getOpen() => Promise<HTMLIonMenuElement | undefined>`
+
+Returns the instance of the menu already opened, otherwise `null`.
+
+#### Returns
+
+Type: `Promise<HTMLIonMenuElement | undefined>`
+
+
+
+### `isAnimating() => Promise<boolean>`
+
+Returns `true` if any menu is currently animating.
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `isEnabled(menuId?: string | null | undefined) => Promise<boolean>`
+
+Returns `true` if the specified menu is enabled.
+
+#### Parameters
+
+| Name     | Type                          | Description |
+| -------- | ----------------------------- | ----------- |
+| `menuId` | `null \| string \| undefined` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `isOpen(menuId?: string | null | undefined) => Promise<boolean>`
+
+Returns `true` if the specified menu is open. If the menu is not specified, it
+will return `true` if any menu is currently open.
+
+#### Parameters
+
+| Name     | Type                          | Description |
+| -------- | ----------------------------- | ----------- |
+| `menuId` | `null \| string \| undefined` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `open(menuId?: string | null | undefined) => Promise<boolean>`
+
+Open the menu.
+
+#### Parameters
+
+| Name     | Type                          | Description |
+| -------- | ----------------------------- | ----------- |
+| `menuId` | `null \| string \| undefined` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `registerAnimation(name: string, animation: AnimationBuilder) => void`
+
+Registers a new animation that can be used in any `ion-menu`.
+
+```
+   * <ion-menu type="my-animation">
+   * ```
+
+#### Parameters
+
+| Name        | Type               | Description |
+| ----------- | ------------------ | ----------- |
+| `name`      | `string`           |             |
+| `animation` | `AnimationBuilder` |             |
+
+#### Returns
+
+Type: `void`
+
+
+
+### `swipeGesture(shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undef...`
+
+Used to enable or disable the ability to swipe open the menu.
+
+#### Parameters
+
+| Name           | Type                          | Description |
+| -------------- | ----------------------------- | ----------- |
+| `shouldEnable` | `boolean`                     |             |
+| `menuId`       | `null \| string \| undefined` |             |
+
+#### Returns
+
+Type: `Promise<HTMLIonMenuElement | undefined>`
+
+
+
+### `toggle(menuId?: string | null | undefined) => Promise<boolean>`
+
+Toggle the menu. If it's closed, it will open, and if opened, it
+will close.
+
+#### Parameters
+
+| Name     | Type                          | Description |
+| -------- | ----------------------------- | ----------- |
+| `menuId` | `null \| string \| undefined` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
 
 
 ----------------------------------------------

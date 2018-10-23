@@ -6,9 +6,11 @@
 
 :host {
   --box-shadow: #{$fab-md-box-shadow};
-  --transition: #{box-shadow $fab-button-md-transition-duration $fab-button-md-transition-timing-function,
-              background-color $fab-button-md-transition-duration $fab-button-md-transition-timing-function,
-              color $fab-button-md-transition-duration $fab-button-md-transition-timing-function};
+  --transition: #{
+    box-shadow 300ms cubic-bezier(.4, 0, .2, 1),
+    background-color 300ms cubic-bezier(.4, 0, .2, 1),
+    color 300ms cubic-bezier(.4, 0, .2, 1)
+  };
 }
 
 :host(.activated) {
@@ -16,7 +18,7 @@
 }
 
 ::slotted(ion-icon),
-.fab-button-close-icon {
+.close-icon {
   font-size: 24px;
 }
 
@@ -25,13 +27,15 @@
 // --------------------------------------------------
 
 :host(.fab-button-in-list) {
-  --ion-color-contrast: #{$fab-md-list-button-text-color};
-  --ion-color-base: #{$fab-md-list-button-background-color};
-  --transition: #{transform $fab-md-list-button-transition-duration $fab-md-list-button-transition-timing-function $fab-md-list-button-transition-delay,
-              opacity $fab-md-list-button-transition-duration $fab-md-list-button-transition-timing-function $fab-md-list-button-transition-delay,
-              box-shadow $fab-button-md-transition-duration $fab-button-md-transition-timing-function,
-              background-color $fab-button-md-transition-duration $fab-button-md-transition-timing-function,
-              color $fab-button-md-transition-duration $fab-button-md-transition-timing-function};
+  --color: #{$fab-md-list-button-text-color};
+  --background: #{$fab-md-list-button-background-color};
+  --transition: #{
+    transform 200ms ease 10ms ease 10ms
+    opacity 200ms ease 10ms ease 10ms
+    box-shadow 300ms cubic-bezier(.4, 0, .2, 1)
+    background-color 300ms cubic-bezier(.4, 0, .2, 1)
+    color 300ms cubic-bezier(.4, 0, .2, 1)
+  };
 }
 
 :host(.fab-button-in-list.activated) {

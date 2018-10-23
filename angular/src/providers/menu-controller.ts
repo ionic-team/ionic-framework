@@ -6,7 +6,7 @@ const CTRL = 'ion-menu-controller';
 export class MenuController {
 
   /**
-   * Programatically open the Menu.
+   * Programmatically open the Menu.
    * @param [menuId]  Optionally get the menu by its id, or side.
    * @return returns a promise when the menu is fully opened
    */
@@ -16,7 +16,7 @@ export class MenuController {
 
 
   /**
-   * Programatically close the Menu. If no `menuId` is given as the first
+   * Programmatically close the Menu. If no `menuId` is given as the first
    * argument then it'll close any menu which is open. If a `menuId`
    * is given then it'll close that exact menu.
    * @param [menuId]  Optionally get the menu by its id, or side.

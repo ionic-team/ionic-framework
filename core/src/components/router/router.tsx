@@ -42,7 +42,7 @@ export class Router implements ComponentInterface {
    * Using one or another might depend in the requirements of your app and/or where it's deployed.
    *
    * Usually "hash-less" navigation works better for SEO and it's more user friendly too, but it might
-   * requires aditional server-side configuration in order to properly work.
+   * requires additional server-side configuration in order to properly work.
    *
    * On the otherside hash-navigation is much easier to deploy, it even works over the file protocol.
    *
@@ -86,7 +86,9 @@ export class Router implements ComponentInterface {
     ev.detail.register(0, () => this.goBack());
   }
 
-  /** Navigate to the specified URL */
+  /**
+   * Navigate to the specified URL.
+   */
   @Method()
   push(url: string, direction: RouterDirection = 'forward') {
     if (url.startsWith('.')) {
@@ -100,13 +102,16 @@ export class Router implements ComponentInterface {
     return this.writeNavStateRoot(path, intent);
   }
 
+  /**
+   * Go back to previous page in the window.history.
+   */
   @Method()
   goBack() {
-    this.win.history.back(1);
+    this.win.history.back();
     return Promise.resolve(this.waitPromise);
   }
 
-  /** @hidden */
+  /** @internal */
   @Method()
   printDebug() {
     console.debug('CURRENT PATH', this.getPath());
@@ -115,7 +120,7 @@ export class Router implements ComponentInterface {
     printRedirects(readRedirects(this.el));
   }
 
-  /** @hidden */
+  /** @internal */
   @Method()
   async navChanged(intent: number): Promise<boolean> {
     if (this.busy) {

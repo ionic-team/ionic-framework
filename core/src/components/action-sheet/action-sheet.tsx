@@ -26,6 +26,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
+  /** @internal */
   @Prop() overlayIndex!: number;
 
   /**
@@ -35,7 +36,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   @Prop() mode!: Mode;
 
   /**
-   * If true, the keyboard will be automatically dismissed when the overlay is presented.
+   * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
    */
   @Prop() keyboardClose = true;
 
@@ -61,7 +62,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   @Prop() cssClass?: string | string[];
 
   /**
-   * If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
+   * If `true`, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
    */
   @Prop() backdropDismiss = true;
 
@@ -76,12 +77,12 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   @Prop() subHeader?: string;
 
   /**
-   * If true, the action sheet will be translucent. Defaults to `false`.
+   * If `true`, the action sheet will be translucent. Defaults to `false`.
    */
   @Prop() translucent = false;
 
   /**
-   * If true, the action sheet will animate. Defaults to `true`.
+   * If `true`, the action sheet will animate. Defaults to `true`.
    */
   @Prop() animated = true;
 
@@ -170,24 +171,25 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
     return eventMethod(this.el, 'ionActionSheetWillDismiss');
   }
 
-  private buttonClick(button: ActionSheetButton) {
+  private async buttonClick(button: ActionSheetButton) {
     const role = button.role;
     if (isCancel(role)) {
       return this.dismiss(undefined, role);
     }
-    const shouldDismiss = this.callButtonHandler(button);
+    const shouldDismiss = await this.callButtonHandler(button);
     if (shouldDismiss) {
       return this.dismiss(undefined, button.role);
     }
     return Promise.resolve();
   }
 
-  private callButtonHandler(button: ActionSheetButton | undefined): boolean {
+  private async callButtonHandler(button: ActionSheetButton | undefined) {
     if (button && button.handler) {
       // a handler has been provided, execute it
       // pass the handler the values from the inputs
       try {
-        if (button.handler() === false) {
+        const rtn = await button.handler();
+        if (rtn === false) {
           // if the return value of the handler is false then do not dismiss
           return false;
         }

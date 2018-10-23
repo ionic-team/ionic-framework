@@ -40,12 +40,12 @@ export class Checkbox implements ComponentInterface {
   @Prop() name: string = this.inputId;
 
   /**
-   * If true, the checkbox is selected. Defaults to `false`.
+   * If `true`, the checkbox is selected. Defaults to `false`.
    */
   @Prop({ mutable: true }) checked = false;
 
   /**
-   * If true, the user cannot interact with the checkbox. Defaults to `false`.
+   * If `true`, the user cannot interact with the checkbox. Defaults to `false`.
    */
   @Prop() disabled = false;
 
@@ -99,19 +99,19 @@ export class Checkbox implements ComponentInterface {
     });
   }
 
-  onChange() {
+  private onChange = () => {
     this.checked = !this.checked;
   }
 
-  onKeyUp() {
+  private onKeyUp = () => {
     this.keyFocus = true;
   }
 
-  onFocus() {
+  private onFocus = () => {
     this.ionFocus.emit();
   }
 
-  onBlur() {
+  private onBlur = () => {
     this.keyFocus = false;
     this.ionBlur.emit();
   }
@@ -140,10 +140,10 @@ export class Checkbox implements ComponentInterface {
         type="checkbox"
         id={this.inputId}
         aria-labelledby={this.labelId}
-        onChange={this.onChange.bind(this)}
-        onFocus={this.onFocus.bind(this)}
-        onBlur={this.onBlur.bind(this)}
-        onKeyUp={this.onKeyUp.bind(this)}
+        onChange={this.onChange}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+        onKeyUp={this.onKeyUp}
         checked={this.checked}
         name={this.name}
         value={this.value}

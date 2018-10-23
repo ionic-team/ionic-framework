@@ -3,7 +3,7 @@ import { AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, 
 let lastId = 0;
 
 export function createOverlay<T extends HTMLIonOverlayElement>(element: T, opts: object | undefined): Promise<T> {
-  const doc = element.ownerDocument;
+  const doc = element.ownerDocument!;
   connectListeners(doc);
 
   // convert the passed in overlay options into props
@@ -22,24 +22,24 @@ export function createOverlay<T extends HTMLIonOverlayElement>(element: T, opts:
   return element.componentOnReady();
 }
 
-function closeTopOverlay(doc: Document) {
-  const lastOverlay = getOverlay(doc);
-  if (lastOverlay && lastOverlay.backdropDismiss) {
-    return lastOverlay.dismiss(undefined, BACKDROP);
-  }
-  return Promise.resolve();
-}
-
 export function connectListeners(doc: Document) {
   if (lastId === 0) {
     lastId = 1;
     doc.addEventListener('ionBackButton', ev => {
-      (ev as BackButtonEvent).detail.register(100, () => closeTopOverlay(doc));
+      const lastOverlay = getOverlay(doc);
+      if (lastOverlay && lastOverlay.backdropDismiss) {
+        (ev as BackButtonEvent).detail.register(100, () => {
+          return lastOverlay.dismiss(undefined, BACKDROP);
+        });
+      }
     });
 
     doc.addEventListener('keyup', ev => {
       if (ev.key === 'Escape') {
-        closeTopOverlay(doc);
+        const lastOverlay = getOverlay(doc);
+        if (lastOverlay && lastOverlay.backdropDismiss) {
+          lastOverlay.dismiss(undefined, BACKDROP);
+        }
       }
     });
   }
@@ -54,7 +54,7 @@ export function dismissOverlay(doc: Document, data: any, role: string | undefine
 }
 
 export function getOverlays(doc: Document, overlayTag?: string): HTMLIonOverlayElement[] {
-  const overlays = Array.from(getAppRoot(doc).children) as HTMLIonOverlayElement[];
+  const overlays = (Array.from(getAppRoot(doc).children) as HTMLIonOverlayElement[]).filter(c => c.overlayIndex > 0);
   if (overlayTag === undefined) {
     return overlays;
   }
@@ -152,16 +152,17 @@ async function overlayAnimation(
     }
     if (overlay.keyboardClose) {
       animation.beforeAddWrite(() => {
-        const activeElement = baseEl.ownerDocument.activeElement as HTMLElement;
+        const activeElement = baseEl.ownerDocument!.activeElement as HTMLElement;
         if (activeElement && activeElement.matches('input, ion-input, ion-textarea')) {
           activeElement.blur();
         }
       });
     }
     await animation.playAsync();
+    const hasCompleted = animation.hasCompleted;
     animation.destroy();
     overlay.animation = undefined;
-    return animation.hasCompleted;
+    return hasCompleted;
   }
 }
 

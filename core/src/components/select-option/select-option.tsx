@@ -10,12 +10,12 @@ export class SelectOption implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   /**
-   * If true, the user cannot interact with the select option. Defaults to `false`.
+   * If `true`, the user cannot interact with the select option. Defaults to `false`.
    */
   @Prop() disabled = false;
 
   /**
-   * If true, the element is selected.
+   * If `true`, the element is selected.
    */
   @Prop() selected = false;
 

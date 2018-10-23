@@ -38,6 +38,7 @@
    * @prop --padding-bottom: Padding bottom of the button
    * @prop --padding-start: Padding start of the button
    */
+  --width: auto;
   --overflow: hidden;
   --ripple-color: currentColor;
 
@@ -61,7 +62,7 @@
   font-kerning: none;
 }
 
-:host([disabled]) {
+:host(.button-disabled) {
   pointer-events: none;
 }
 

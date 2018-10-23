@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Floating Action Button - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" href="/css/ionic.bundle.css">
+  <link rel="stylesheet" href="/scripts/testing/styles.css">
+</head>
+
+<body>
+  <h3>Default</h3>
+  <p>
+    <ion-fab-button>Default</ion-fab-button>
+    <ion-fab-button mini>Mini</ion-fab-button>
+    <ion-fab-button><ion-icon name="star"></ion-icon></ion-fab-button>
+  </p>
+
+  <h3>Colors</h3>
+  <p>
+    <ion-fab-button color="primary"><ion-icon name="heart"></ion-icon></ion-fab-button>
+    <ion-fab-button color="secondary"><ion-icon name="heart"></ion-icon></ion-fab-button>
+    <ion-fab-button color="tertiary"><ion-icon name="heart"></ion-icon></ion-fab-button>
+    <ion-fab-button color="success"><ion-icon name="heart"></ion-icon></ion-fab-button>
+    <ion-fab-button color="warning"><ion-icon name="heart"></ion-icon></ion-fab-button>
+    <ion-fab-button color="danger"><ion-icon name="heart"></ion-icon></ion-fab-button>
+    <ion-fab-button color="light"><ion-icon name="heart"></ion-icon></ion-fab-button>
+    <ion-fab-button color="medium"><ion-icon name="heart"></ion-icon></ion-fab-button>
+    <ion-fab-button color="dark"><ion-icon name="heart"></ion-icon></ion-fab-button>
+  </p>
+  <p>
+    <ion-fab-button color="primary" class="activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+    <ion-fab-button color="secondary" class="activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+    <ion-fab-button color="tertiary" class="activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+    <ion-fab-button color="success" class="activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+    <ion-fab-button color="warning" class="activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+    <ion-fab-button color="danger" class="activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+    <ion-fab-button color="light" class="activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+    <ion-fab-button color="medium" class="activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+    <ion-fab-button color="dark" class="activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+  </p>
+
+  <h3>Custom</h3>
+
+  <!-- Custom Font -->
+  <ion-fab-button class="large">large</ion-fab-button>
+
+  <!-- Custom Colors -->
+  <ion-fab-button class="custom"><ion-icon name="star"></ion-icon></ion-fab-button>
+  <ion-fab-button class="custom activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+  <ion-fab-button color="secondary" class="custom"><ion-icon name="heart"></ion-icon></ion-fab-button>
+
+  <style>
+    ion-fab-button {
+      display: inline-block;
+      margin-bottom: 5px;
+    }
+
+    .large {
+      font-size: 24px;
+    }
+
+    .custom {
+      --background: lightpink;
+      --background-activated: green;
+      --color: blue;
+      --color-activated: white;
+    }
+  </style>
+</body>
+</html>

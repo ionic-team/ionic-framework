@@ -314,7 +314,7 @@ Content is now a drop-in replacement for `ion-scroll`, that means `ion-content` 
 
 ### resize() was removed
 
-In Ionic 4, `ion-content` layout is based in flex, that means their size will automatically adjust without requiring to call resize() programatically.
+In Ionic 4, `ion-content` layout is based in flex, that means their size will automatically adjust without requiring to call resize() programmatically.
 
 
 ### Attributes Renamed
@@ -833,6 +833,12 @@ The `content` prop has been renamed to `contentId` and it points to the DOM id o
 <ion-menu swipeEnabled="false" content="nav"> </ion-menu>
 <ion-nav #nav></ion-nav>
 ```
+
+### Events renamed
+
+- `ionClose` was renamed to `ionDidClose`
+- `ionOpen` was renamed to `ionDidOpen`
+
 
 **New Usage Example:**
 

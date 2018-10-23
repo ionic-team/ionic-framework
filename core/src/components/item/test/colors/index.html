@@ -6,7 +6,8 @@
   <title>Item - Colors</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
+  <link rel="stylesheet" href="/css/ionic.bundle.css">
+  <link rel="stylesheet" href="/scripts/testing/styles.css">
 </head>
 
 <body>
@@ -30,7 +31,7 @@
           </ion-label>
         </ion-item>
 
-        <ion-item color="dark">
+        <ion-item button color="dark">
           <ion-label>
             <h1>Heading</h1>
             <p>Paragraph</p>
@@ -49,13 +50,13 @@
           </ion-label>
         </ion-item>
 
-        <ion-item onclick="testClick(event)" color="secondary">
+        <ion-item button onclick="testClick(event)" color="secondary">
           <ion-label>
             button[ion-item]
           </ion-label>
         </ion-item>
 
-        <ion-item onclick="testClick(event)" color="secondary" class="activated">
+        <ion-item button onclick="testClick(event)" color="secondary" class="activated">
           <ion-label>
             button[ion-item].activated secondary
           </ion-label>
@@ -70,7 +71,7 @@
           <ion-button slot="end" fill="outline">Outline</ion-button>
         </ion-item>
 
-        <ion-item onclick="testClick(event)" color="dark">
+        <ion-item button onclick="testClick(event)" color="dark">
           <ion-button slot="start">
             <ion-icon slot="start" name="home"></ion-icon>
             Left Icon
@@ -83,7 +84,7 @@
           </ion-label>
         </ion-item>
 
-        <ion-item onclick="testClick(event)" disabled color="dark">
+        <ion-item button onclick="testClick(event)" disabled color="dark">
           <ion-button slot="start">
             <ion-icon slot="start" name="home"></ion-icon>
             Left Icon

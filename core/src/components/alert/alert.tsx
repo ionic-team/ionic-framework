@@ -31,6 +31,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
+  /** @internal */
   @Prop() overlayIndex!: number;
 
   /**
@@ -40,7 +41,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
   @Prop() mode!: Mode;
 
   /**
-   * If true, the keyboard will be automatically dismissed when the overlay is presented.
+   * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
    */
   @Prop() keyboardClose = true;
 
@@ -86,17 +87,17 @@ export class Alert implements ComponentInterface, OverlayInterface {
   @Prop({ mutable: true }) inputs: AlertInput[] = [];
 
   /**
-   * If true, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.
+   * If `true`, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.
    */
   @Prop() backdropDismiss = true;
 
   /**
-   * If true, the alert will be translucent. Defaults to `false`.
+   * If `true`, the alert will be translucent. Defaults to `false`.
    */
   @Prop() translucent = false;
 
   /**
-   * If true, the alert will animate. Defaults to `true`.
+   * If `true`, the alert will animate. Defaults to `true`.
    */
   @Prop() animated = true;
 

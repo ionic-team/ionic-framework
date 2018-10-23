@@ -8,7 +8,7 @@
   --background: #{$list-ios-header-background-color};
   --color: #{$list-ios-header-color};
 
-  @include padding-horizontal($list-ios-header-padding-start, null);
+  @include padding-horizontal(calc(var(--ion-safe-area-left, 0px) + #{$list-ios-header-padding-start}), null);
 
   position: relative;
 

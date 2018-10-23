@@ -22,13 +22,20 @@
 
 
 .radio-icon {
-  display: block;
-  position: relative;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
 
   width: var(--width);
   height: var(--height);
 
   contain: layout size style;
+}
+
+.radio-inner {
+  width: var(--inner-width);
+  height: var(--inner-height);
 }
 
 input {

@@ -32,7 +32,7 @@ export class TextValueAccessor implements ControlValueAccessor {
     });
   }
 
-  @HostListener('input', ['$event.target.value'])
+  @HostListener('ionChange', ['$event.target.value'])
   _handleInputEvent(value: any) {
     this.onChange(value);
 

@@ -26,6 +26,7 @@ export class ItemOptions implements ComponentInterface {
    */
   @Event() ionSwipe!: EventEmitter<any>;
 
+  /** @internal */
   @Method()
   fireSwipeEvent() {
     this.ionSwipe.emit({

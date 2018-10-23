@@ -18,6 +18,11 @@ body.backdrop-no-scroll {
   overflow: hidden;
 }
 
+// TODO: Block scrolling in ion-content, breaks inside ion-modal
+// body.backdrop-no-scroll .ion-page > ion-content {
+//   --overflow: hidden;
+// }
+
 
 // Ionic Colors
 // --------------------------------------------------
@@ -44,10 +49,6 @@ body.backdrop-no-scroll {
   .ion-color-#{$color-name} {
     @include generate-color($color-name);
   }
-}
-
-*::selection {
-  background: var(--ion-color-shade, rgba(0,0,0,0.3));
 }
 
 
@@ -91,15 +92,17 @@ ion-toast-controller,
   opacity: 0;
 }
 
-
 // Ionic Safe Margins
 // --------------------------------------------------
 
 html.plt-ios.plt-hybrid, html.plt-ios.plt-pwa {
   --ion-statusbar-padding: 20px;
 }
-html {
-  --ion-safe-area-top: var(--ion-statusbar-padding);
+
+@supports (padding-top: 20px) {
+  html {
+    --ion-safe-area-top: var(--ion-statusbar-padding);
+  }
 }
 
 // TODO: remove once Safari 11.2 dies

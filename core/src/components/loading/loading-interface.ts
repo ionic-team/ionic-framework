@@ -1,4 +1,4 @@
-import { SpinnerTypes } from '../../interface';
+import { AnimationBuilder, SpinnerTypes } from '../../interface';
 
 export interface LoadingOptions {
   spinner?: SpinnerTypes;
@@ -12,4 +12,7 @@ export interface LoadingOptions {
   mode?: string;
   keyboardClose?: boolean;
   id?: string;
+
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
 }

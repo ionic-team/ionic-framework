@@ -5,8 +5,8 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{$item-ios-divider-background};
-  --ion-color-contrast: #{$item-ios-divider-color};
+  --background: #{$item-ios-divider-background};
+  --color: #{$item-ios-divider-color};
   --padding-start: #{$item-ios-divider-padding-start};
 
   @include border-radius(0);
@@ -18,10 +18,6 @@
 
 .item-divider-inner {
   @include padding-horizontal(null, $item-ios-divider-padding-end / 2);
-
-  @media screen and (orientation: landscape) {
-    @include safe-area-padding-horizontal(null, $item-ios-divider-padding-end / 2);
-  }
 }
 
 

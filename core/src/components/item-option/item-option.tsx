@@ -29,12 +29,12 @@ export class ItemOption implements ComponentInterface {
   @Prop() mode!: Mode;
 
   /**
-   * If true, the user cannot interact with the item option. Defaults to `false`.
+   * If `true`, the user cannot interact with the item option. Defaults to `false`.
    */
   @Prop() disabled = false;
 
   /**
-   * If true, the option will expand to take up the available width and cover any other options. Defaults to `false`.
+   * If `true`, the option will expand to take up the available width and cover any other options. Defaults to `false`.
    */
   @Prop() expandable = false;
 
@@ -65,12 +65,12 @@ export class ItemOption implements ComponentInterface {
     return (
       <TagType
         type="button"
-        class="item-option-native"
+        class="button-native"
         disabled={this.disabled}
         href={this.href}
         onClick={this.clickedOptionButton.bind(this)}
       >
-        <span class="item-option-button-inner">
+        <span class="button-inner">
           <slot name="start"></slot>
           <slot name="top" />
           <slot name="icon-only" />

@@ -6,23 +6,11 @@
   <title>Floating Action Button - Standalone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/core.css">
+  <link rel="stylesheet" href="/css/core.css">
+  <link rel="stylesheet" href="/scripts/testing/styles.css">
 </head>
 
 <body>
-  <f></f>
-  <f></f>
-  <ion-fab-button>FAB</ion-fab-button>
-
-  <ion-fab vertical="top" horizontal="end" id="fab1" slot="fixed">
-    <ion-fab-button onclick="clickMainFAB('fab1')" mini class="e2eFabTopRight"><ion-icon name="add"></ion-icon></ion-fab-button>
-    <ion-fab-list>
-      <ion-fab-button onclick="openSocial('facebook', 'fab1')"><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
-      <ion-fab-button onclick="openSocial('twitter', 'fab1')"><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
-      <ion-fab-button onclick="openSocial('vimeo', 'fab1')"><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
-      <ion-fab-button onclick="openSocial('googleplus', 'fab1')"><ion-icon name="logo-googleplus"></ion-icon></ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
 
   <ion-fab vertical="bottom" horizontal="end" id="fab2" slot="fixed">
     <ion-fab-button onclick="clickMainFAB('fab2')" color="dark" class="e2eFabBottomRight"><ion-icon name="arrow-dropleft"></ion-icon></ion-fab-button>
@@ -35,7 +23,7 @@
   </ion-fab>
 
   <ion-fab vertical="top" horizontal="start" id="fab3" slot="fixed">
-    <ion-fab-button onclick="clickMainFAB('fab3')" color="secondary" class="e2eFabTopLeft"><ion-icon name="arrow-dropright"></ion-icon></ion-fab-button>
+    <ion-fab-button onclick="clickMainFAB('fab3')" color="secondary" class="activated e2eFabTopLeft"><ion-icon name="arrow-dropright"></ion-icon></ion-fab-button>
     <ion-fab-list side="end">
       <ion-fab-button onclick="openSocial('facebook', 'fab3')"><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
       <ion-fab-button onclick="openSocial('twitter', 'fab3')"><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>

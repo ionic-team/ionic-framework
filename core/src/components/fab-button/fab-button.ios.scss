@@ -10,14 +10,13 @@
 }
 
 :host(.activated) {
-  --background: #{current-color(tint)};
   --box-shadow: #{$fab-ios-box-shadow-activated};
   --transform: #{$fab-ios-transform};
   --transition: #{$fab-ios-transition-activated};
 }
 
 ::slotted(ion-icon),
-.fab-button-close-icon {
+.close-icon {
   font-size: $fab-ios-icon-font-size;
 }
 
@@ -25,10 +24,10 @@
 // --------------------------------------------------
 
 :host(.fab-button-in-list) {
-  --ion-color-contrast: #{$fab-ios-list-button-text-color};
-  --ion-color-base: #{$fab-ios-list-button-background-color};
-  --transition: #{transform $fab-ios-list-button-transition-duration $fab-ios-list-button-transition-timing-function $fab-ios-list-button-transition-delay,
-              opacity $fab-ios-list-button-transition-duration $fab-ios-list-button-transition-timing-function $fab-ios-list-button-transition-delay};
+  --background: #{$fab-ios-list-button-background-color};
+  --color: #{$fab-ios-list-button-text-color};
+  --transition: #{transform 200ms ease 10ms,
+              opacity 200ms ease 10ms};
 }
 
 :host(.fab-button-in-list.activated) {

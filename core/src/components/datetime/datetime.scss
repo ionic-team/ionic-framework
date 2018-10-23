@@ -17,14 +17,14 @@
   display: flex;
   position: relative;
 
+  min-width: $datetime-min-width;
+  min-height: $datetime-min-height;
+
   font-family: $font-family-base;
 
   text-overflow: ellipsis;
 
   white-space: nowrap;
-
-  min-width: $datetime-min-width;
-  min-height: $datetime-min-height;
 
   overflow: hidden;
 }

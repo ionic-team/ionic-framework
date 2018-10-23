@@ -1,6 +1,6 @@
 import { EventEmitter } from '@stencil/core';
 
-import { ActionSheetOptions, AlertOptions, Animation, AnimationBuilder, Config, Conforms, LoadingOptions, ModalOptions, Mode, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
+import { Animation, AnimationBuilder, Config, Mode } from '../interface';
 
 export interface OverlayEventDetail<T = any> {
   data?: T;
@@ -43,7 +43,11 @@ export interface HTMLIonOverlayElement extends HTMLStencilElement {
   dismiss(data?: any, role?: string): Promise<boolean>;
 }
 
+export type OverlaySelect = HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement;
+
+// TODO: uncomment when TS 3.0 issues are fixed
 // Overlay checks
+/*
 export type Conforms<T extends Required<B>, B> = T;
 export type HTMLOverlaysElement =
   Conforms<Required<HTMLIonModalElement>, ModalOptions> |
@@ -53,3 +57,4 @@ export type HTMLOverlaysElement =
   Conforms<Required<HTMLIonPopoverElement>, PopoverOptions> |
   Conforms<Required<HTMLIonPickerElement>, PickerOptions> |
   Conforms<Required<HTMLIonLoadingElement>, LoadingOptions>;
+*/

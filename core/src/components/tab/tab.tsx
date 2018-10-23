@@ -14,7 +14,7 @@ export class Tab implements ComponentInterface {
   @Element() el!: HTMLIonTabElement;
 
   /**
-   * If true, sets the tab as the active tab.
+   * If `true`, sets the tab as the active tab.
    */
   @Prop({ mutable: true }) active = false;
 
@@ -60,12 +60,12 @@ export class Tab implements ComponentInterface {
   @Prop({ mutable: true }) name?: string;
 
   /**
-   * If true, the user cannot interact with the tab. Defaults to `false`.
+   * If `true`, the user cannot interact with the tab. Defaults to `false`.
    */
   @Prop() disabled = false;
 
   /**
-   * If true, the tab will be selected. Defaults to `false`.
+   * If `true`, the tab will be selected. Defaults to `false`.
    */
   @Prop() selected = false;
 
@@ -77,12 +77,12 @@ export class Tab implements ComponentInterface {
   }
 
   /**
-   * If true, the tab button is visible within the tabbar. Defaults to `true`.
+   * If `true`, the tab button is visible within the tabbar. Defaults to `true`.
    */
   @Prop() show = true;
 
   /**
-   * If true, hide the tabs on child pages.
+   * If `true`, hide the tabs on child pages.
    */
   @Prop() tabsHideOnSubPages = false;
 

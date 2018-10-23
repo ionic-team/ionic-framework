@@ -26,7 +26,7 @@ export class CardHeader implements ComponentInterface {
   @Prop() mode!: Mode;
 
   /**
-   * If true, the card header will be translucent. Defaults to `false`.
+   * If `true`, the card header will be translucent. Defaults to `false`.
    */
   @Prop() translucent = false;
 

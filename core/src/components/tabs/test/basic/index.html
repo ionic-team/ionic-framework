@@ -6,7 +6,8 @@
   <title>Tab - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
+  <link rel="stylesheet" href="/css/ionic.bundle.css">
+  <link rel="stylesheet" href="/scripts/testing/styles.css">
 </head>
 
 <body>
@@ -27,7 +28,7 @@
         </ion-content>
       </ion-tab>
 
-      <ion-tab label="Schedule" icon="globe">
+      <ion-tab label="Schedule" icon="globe" badge="6" badge-color="danger">
         <ion-header>
           <ion-toolbar>
             <ion-title>Tab Two</ion-title>
@@ -62,6 +63,8 @@
 
       <ion-tab disabled label="Messages" icon="chatboxes" component="page-one">
       </ion-tab>
+
+      <ion-tabbar></ion-tabbar>
     </ion-tabs>
   </ion-app>
 

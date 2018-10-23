@@ -28,12 +28,12 @@ export class SegmentButton implements ComponentInterface {
   @Prop() mode!: Mode;
 
   /**
-   * If true, the segment button is selected. Defaults to `false`.
+   * If `true`, the segment button is selected. Defaults to `false`.
    */
   @Prop({ mutable: true }) checked = false;
 
-  /*
-   * If true, the user cannot interact with the segment button. Default false.
+  /**
+   * If `true`, the user cannot interact with the segment button. Default false.
    */
   @Prop() disabled = false;
 
@@ -71,7 +71,7 @@ export class SegmentButton implements ComponentInterface {
       <button
         type="button"
         aria-pressed={this.checked ? 'true' : null}
-        class="segment-button-native"
+        class="button-native"
         disabled={this.disabled}
         onClick={() => this.checked = true}
       >
