@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import 'rxjs/add/operator/takeUntil';
 
 import { App } from '../app/app';
