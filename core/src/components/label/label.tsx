@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
 import { Color, Mode, StyleEvent } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -38,8 +38,20 @@ export class Label implements ComponentInterface {
    */
   @Event() ionStyle!: EventEmitter<StyleEvent>;
 
+  @State() noAnimate = false;
+
+  componentWillLoad() {
+    this.noAnimate = (this.position === 'floating');
+  }
+
   componentDidLoad() {
     this.positionChanged();
+
+    if (this.noAnimate) {
+      setTimeout(() => {
+        this.noAnimate = false;
+      }, 1000);
+    }
   }
 
   @Watch('position')
@@ -57,6 +69,7 @@ export class Label implements ComponentInterface {
       class: {
         ...createColorClasses(this.color),
         [`label-${position}`]: !!position,
+        [`label-no-animate`]: (this.noAnimate)
       }
     };
   }
