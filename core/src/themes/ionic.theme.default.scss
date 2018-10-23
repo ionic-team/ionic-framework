@@ -145,5 +145,5 @@ $text-color-step-1000:              var(--ion-text-color-step-1000, mix($backgro
 // Default General Colors
 // --------------------------------------------------
 $overlay-background-color:          var(--ion-overlay-background-color, #fafafa) !default;
-$ripple-background-color:           var(--ion-ripple-background-color, #000) !default;
-$placeholder-text-color:            var(--ion-placeholder-text-color, #999) !default;
+$ripple-background-color:           var(--ion-ripple-background-color, $text-color) !default;
+$placeholder-text-color:            var(--ion-placeholder-color, $text-color-step-600) !default;
