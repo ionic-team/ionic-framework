@@ -79,3 +79,7 @@
 :host-context(.item-has-value).label-floating {
   @include transform(translate3d(0, 0, 0), scale(.8));
 }
+
+:host(.label-no-animate.label-floating) {
+  transition: none;
+}

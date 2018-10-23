@@ -16,4 +16,11 @@ it('datetime: standalone', async () => {
 
   compare = await page.compareScreenshot('should open basic picker');
   expect(compare).toMatchScreenshot();
+
+  const octoberOpt = await page.find({ text: 'October' });
+  await octoberOpt.click();
+  await page.waitFor(500);
+
+  compare = await page.compareScreenshot('should click "October" option');
+  expect(compare).toMatchScreenshot();
 });
