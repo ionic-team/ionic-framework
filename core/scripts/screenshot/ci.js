@@ -13,13 +13,15 @@ const s3 = new S3({ apiVersion: '2006-03-01' });
 class CIScreenshotConnector extends IonicConnector {
 
   async initBuild(opts) {
-    const result = await execa.stdout('git', ['log', '-1', '--format=%h%n%an <%ae>%n%ct%n%s']);
-    const [ sha1short, author, timestamp, msg ] = result.split('\n');
+    const result = await execa.stdout('git', ['log', '-1', '--format=%H%n%an <%ae>%n%ct%n%s']);
+    const [ sha1, author, timestamp, msg ] = result.split('\n');
+    const sha1short = sha1.slice(0, 7);
 
     opts.buildId = sha1short;
     opts.buildMessage = msg;
     opts.buildAuthor = author;
     opts.buildUrl = BUILD_URL + sha1short;
+    opts.previewUrl = `https://${S3_BUCKET}/${sha1short}`;
     opts.buildTimestamp = (timestamp * 1000);
 
     await super.initBuild(opts);
@@ -30,7 +32,7 @@ class CIScreenshotConnector extends IonicConnector {
     const stream = fs.createReadStream(file);
     const key = `data/images/${image}`;
 
-    await this.uploadStream(stream, key);
+    await this.uploadStream(stream, key, { ContentType: 'image/png' });
   }
 
   async uploadStream(stream, key, extra = {}) {
@@ -55,16 +57,23 @@ class CIScreenshotConnector extends IonicConnector {
 
     const timespan = this.logger.createTimeSpan(`publishing build started`);
     const images = currentBuild.screenshots.map(screenshot => screenshot.image);
+    const imageBatches = [];
 
-    const uploads = images.map(async image => this.uploadImage(image));
+    while (images.length > 0) {
+      imageBatches.push(images.splice(0, 10));
+    }
+
+    for (const batch of imageBatches) {
+      await Promise.all(batch.map(async image => this.uploadImage(image)));
+    }
 
     const buildBuffer = Buffer.from(JSON.stringify(currentBuild, undefined, 2));
     const buildStream = new stream.PassThrough();
     buildStream.end(buildBuffer);
 
-    uploads.push(
+    const uploads = [
       this.uploadStream(buildStream, `data/builds/${currentBuild.id}.json`, { ContentType: 'application/json' }),
-    );
+    ];
 
     if (this.updateMaster) {
       // master build
@@ -98,6 +107,42 @@ class CIScreenshotConnector extends IonicConnector {
     timespan.finish(`publishing build finished`);
 
     return results;
+  }
+
+  async getScreenshotCache() {
+    const timespan = this.logger.createTimeSpan(`get screenshot cache started`, true);
+
+    try {
+      const ws = fs.createWriteStream(this.screenshotCacheFilePath);
+      const p = `/data/compares/screenshot-cache.json?ts=${Date.now()}`;
+      await this.downloadToStream(ws, p);
+
+    } catch (e) {
+      this.logger.debug(e);
+    }
+
+    timespan.finish(`get screenshot cache finished`);
+
+    return super.getScreenshotCache();
+  }
+
+  async updateScreenshotCache(cache, buildResults) {
+    const timespan = this.logger.createTimeSpan(`update screenshot cache started`, true);
+
+    cache = await super.updateScreenshotCache(cache, buildResults);
+
+    const cacheBuffer = Buffer.from(JSON.stringify(cache, undefined, 2));
+    const cacheStream = new stream.PassThrough();
+    cacheStream.end(cacheBuffer);
+
+    const key = `data/compares/screenshot-cache.json`;
+    this.logger.debug(`uploading: ${key}`);
+
+    await s3.upload({ Bucket: S3_BUCKET, Key: key, Body: cacheStream, ContentType: 'application/json' }).promise();
+
+    timespan.finish(`update screenshot cache finished`);
+
+    return cache;
   }
 
 }

@@ -5,6 +5,8 @@ it('img: standalone', async () => {
     url: '/src/components/img/test/standalone?ionic:_testing=true'
   });
 
+  await page.waitFor(100);
+
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
 });
