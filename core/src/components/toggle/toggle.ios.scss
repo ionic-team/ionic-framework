@@ -40,6 +40,10 @@
   width: 100%;
   height: 100%;
 
+  // Needed to prevent visual glitch in safari/iOS
+  // See https://github.com/ionic-team/ionic/issues/14626
+  transform: translate3d(0,0,0);
+
   transition: background-color $toggle-ios-transition-duration;
 
   background-color: $toggle-ios-border-color-off;
