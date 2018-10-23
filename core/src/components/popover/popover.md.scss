@@ -6,7 +6,6 @@
 
 .popover-content {
   @include border-radius($popover-md-border-radius);
-  @include transform-origin(start, top);
 
   width: $popover-md-width;
   min-width: $popover-md-min-width;
