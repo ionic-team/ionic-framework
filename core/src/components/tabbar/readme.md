@@ -1,6 +1,25 @@
 # ion-tabbar
 
-Tabbar is an internal component for Tabs. Please see the [Tabs documentation](../tabs).
+Tabbar is the UI component that implements the array of button of `ion-tabs`. It's provided by default when `ion-tabs` is used, though, this "implicit" tabbar can not be customized.
+
+In order to have a custom tabbar, it should be provided in user's markup as direct children of `ion-tabs`:
+
+```html
+<style>
+  ion-tabbar {
+    font-size: 20px;
+  }
+</style>
+
+<ion-tabs>
+  <!-- User tabs  -->
+  <ion-tab></ion-tab>
+  <ion-tab></ion-tab>
+
+  <!-- User provided ion-tabbar that can be customized -->
+  <ion-tabbar color="dark" layout="icon-only">
+</ion-tabs>
+```
 
 
 <!-- Auto Generated Below -->
@@ -22,9 +41,9 @@ Tabbar is an internal component for Tabs. Please see the [Tabs documentation](..
 
 ## Events
 
-| Event            | Description                         |
-| ---------------- | ----------------------------------- |
-| `ionTabbarClick` | Emitted when the tab bar is clicked |
+| Event            | Detail            | Description                         |
+| ---------------- | ----------------- | ----------------------------------- |
+| `ionTabbarClick` | HTMLIonTabElement | Emitted when the tab bar is clicked |
 
 
 ----------------------------------------------

@@ -24,10 +24,10 @@ If the FAB button is not wrapped with `<ion-fab>`, it will scroll with the conte
 
 ## Events
 
-| Event      | Description                          |
-| ---------- | ------------------------------------ |
-| `ionBlur`  | Emitted when the button loses focus. |
-| `ionFocus` | Emitted when the button has focus.   |
+| Event      | Detail | Description                          |
+| ---------- | ------ | ------------------------------------ |
+| `ionBlur`  |        | Emitted when the button loses focus. |
+| `ionFocus` |        | Emitted when the button has focus.   |
 
 
 ## CSS Custom Properties

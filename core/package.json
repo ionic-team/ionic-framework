@@ -30,7 +30,7 @@
     "ionicons": "4.4.6"
   },
   "devDependencies": {
-    "@stencil/core": "0.14.0-4",
+    "@stencil/core": "0.14.2",
     "@stencil/sass": "0.1.1",
     "@stencil/utils": "latest",
     "@types/jest": "^23.3.1",
@@ -75,7 +75,7 @@
     "lint.ts": "tslint --project .",
     "lint.ts.fix": "tslint --project . --fix",
     "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
-    "test": "stencil test --spec",
+    "test": "stencil test --spec --e2e",
     "test.spec": "stencil test --spec",
     "test.e2e": "stencil test --e2e",
     "test.screenshot": "stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/dev.js",

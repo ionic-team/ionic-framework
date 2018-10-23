@@ -72,6 +72,7 @@ export const DIRECTIVES = [
   d.Spinner,
   d.SplitPane,
   d.Tab,
+  d.Tabbar,
   d.Tabs,
   d.Text,
   d.Textarea,
