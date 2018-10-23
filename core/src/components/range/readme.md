@@ -35,12 +35,12 @@ left or right of the range.
 
 ## Events
 
-| Event       | Description                                  |
-| ----------- | -------------------------------------------- |
-| `ionBlur`   | Emitted when the range loses focus.          |
-| `ionChange` | Emitted when the value property has changed. |
-| `ionFocus`  | Emitted when the range has focus.            |
-| `ionStyle`  | Emitted when the styles change.              |
+| Event       | Detail           | Description                                  |
+| ----------- | ---------------- | -------------------------------------------- |
+| `ionBlur`   |                  | Emitted when the range loses focus.          |
+| `ionChange` | InputChangeEvent | Emitted when the value property has changed. |
+| `ionFocus`  |                  | Emitted when the range has focus.            |
+| `ionStyle`  | StyleEvent       | Emitted when the styles change.              |
 
 
 ## CSS Custom Properties

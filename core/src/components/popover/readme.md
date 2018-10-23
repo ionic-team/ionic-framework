@@ -36,14 +36,14 @@ To present a popover, call the `present` method on a popover instance. In order 
 
 ## Events
 
-| Event                   | Description                               |
-| ----------------------- | ----------------------------------------- |
-| `ionPopoverDidDismiss`  | Emitted after the popover has dismissed.  |
-| `ionPopoverDidLoad`     | Emitted after the popover has loaded.     |
-| `ionPopoverDidPresent`  | Emitted after the popover has presented.  |
-| `ionPopoverDidUnload`   | Emitted after the popover has unloaded.   |
-| `ionPopoverWillDismiss` | Emitted before the popover has dismissed. |
-| `ionPopoverWillPresent` | Emitted before the popover has presented. |
+| Event                   | Detail             | Description                               |
+| ----------------------- | ------------------ | ----------------------------------------- |
+| `ionPopoverDidDismiss`  | OverlayEventDetail | Emitted after the popover has dismissed.  |
+| `ionPopoverDidLoad`     |                    | Emitted after the popover has loaded.     |
+| `ionPopoverDidPresent`  |                    | Emitted after the popover has presented.  |
+| `ionPopoverDidUnload`   |                    | Emitted after the popover has unloaded.   |
+| `ionPopoverWillDismiss` | OverlayEventDetail | Emitted before the popover has dismissed. |
+| `ionPopoverWillPresent` |                    | Emitted before the popover has presented. |
 
 
 ## Methods

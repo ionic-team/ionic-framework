@@ -38,13 +38,6 @@ In order to have a custom tabbar, it should be provided in user's markup as dire
 | `translucent`    | `translucent`      | If `true`, the tabbar will be translucent. Defaults to `false`.                                                                                                                                                                                                        | `boolean`                                                                                  |
 
 
-## Events
-
-| Event              | Description |
-| ------------------ | ----------- |
-| `ionTabbarChanged` |             |
-
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

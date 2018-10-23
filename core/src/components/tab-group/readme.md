@@ -37,12 +37,12 @@ direct children of `ion-tabs`, like this:
 
 ## Events
 
-| Event              | Description                                                                |
-| ------------------ | -------------------------------------------------------------------------- |
-| `ionChange`        | Emitted when the tab changes.                                              |
-| `ionNavDidChange`  | Emitted when the navigation has finished transitioning to a new component. |
-| `ionNavWillChange` | Emitted when the navigation is about to transition to a new component.     |
-| `ionNavWillLoad`   | Emitted when the navigation will load a component.                         |
+| Event              | Detail                       | Description                                                                |
+| ------------------ | ---------------------------- | -------------------------------------------------------------------------- |
+| `ionChange`        | {tab: HTMLIonTabViewElement} | Emitted when the tab changes.                                              |
+| `ionNavDidChange`  |                              | Emitted when the navigation has finished transitioning to a new component. |
+| `ionNavWillChange` |                              | Emitted when the navigation is about to transition to a new component.     |
+| `ionNavWillLoad`   |                              | Emitted when the navigation will load a component.                         |
 
 
 ## Methods

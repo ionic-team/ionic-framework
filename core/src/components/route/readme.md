@@ -18,9 +18,9 @@ Router is a component that can take a component, and render it when the Browser 
 
 ## Events
 
-| Event                 | Description                                                         |
-| --------------------- | ------------------------------------------------------------------- |
-| `ionRouteDataChanged` | Used internally by `ion-router` to know when this route did change. |
+| Event                 | Detail | Description                                                         |
+| --------------------- | ------ | ------------------------------------------------------------------- |
+| `ionRouteDataChanged` | any    | Used internally by `ion-router` to know when this route did change. |
 
 
 ----------------------------------------------

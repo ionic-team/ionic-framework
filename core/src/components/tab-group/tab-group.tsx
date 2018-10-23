@@ -156,7 +156,7 @@ export class TabGroup implements NavOutlet {
     const tabs = this.tabs = Array.from(this.el.querySelectorAll('ion-tab-view'));
     tabs.forEach(tab => {
       const id = `t-${this.tabsId}-${++this.ids}`;
-      tab.btnId = 'tab-' + id;
+      tab.btnId = `tab-${id}`;
       // tab.id = 'tabpanel-' + id;
     });
   }

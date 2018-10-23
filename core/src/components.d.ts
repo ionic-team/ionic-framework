@@ -4546,10 +4546,6 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * If `true`, show the tab highlight bar under the selected tab.
-    */
-    'highlight': boolean;
-    /**
     * Set the layout of the text and icon in the tabbar.
     */
     'layout': TabbarLayout;
@@ -4575,10 +4571,6 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
-    /**
-    * If `true`, show the tab highlight bar under the selected tab.
-    */
-    'highlight'?: boolean;
     /**
     * Set the layout of the text and icon in the tabbar.
     */
@@ -4616,9 +4608,9 @@ export namespace Components {
     */
     'href'?: string;
     /**
-    * Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
+    * Set the layout of the text and icon in the tabbar.
     */
-    'layout': TabbarLayout;
+    'layout'?: TabbarLayout;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -4642,7 +4634,7 @@ export namespace Components {
     */
     'href'?: string;
     /**
-    * Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
+    * Set the layout of the text and icon in the tabbar.
     */
     'layout'?: TabbarLayout;
     /**

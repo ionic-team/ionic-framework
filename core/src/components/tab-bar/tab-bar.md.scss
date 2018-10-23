@@ -1,15 +1,10 @@
 @import "./tab-bar";
-@import "./tab-bar.md.vars";
+@import "../../themes/ionic.globals.md";
 
 :host {
   // default color / background
-  --color-selected: #{$tabbar-md-text-color-active};
-  --background: #{$tabbar-md-background-color};
-  --background-focused: #{$tabbar-md-background-color-focused};
+  --background: #{$tabbar-md-background};
+  --border: #{1px solid $tabbar-md-border-color};
 
-  height: $tabbar-md-height;
-
-  border-top: $tabbar-md-border;
-
-  contain: strict;
+  height: 56px;
 }

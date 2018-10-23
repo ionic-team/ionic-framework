@@ -40,9 +40,9 @@ export class TabButton implements ComponentInterface {
   @Prop() color?: Color;
 
   /**
-   * Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
+   * Set the layout of the text and icon in the tabbar.
    */
-  @Prop() layout: TabbarLayout = 'icon-top';
+  @Prop({ mutable: true }) layout?: TabbarLayout;
 
   /**
    * The URL which will be used as the `href` within this tab's button anchor.

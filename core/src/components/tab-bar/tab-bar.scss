@@ -17,61 +17,34 @@
   background: var(--background);
   color: var(--color);
 
+  contain: strict;
   user-select: none;
-
   z-index: $z-index-toolbar;
   box-sizing: content-box;
 }
 
 :host(.ion-color) {
   --background: #{current-color(base)};
+}
+
+:host(.ion-color) ::slotted(ion-tab-button) {
   --color: #{current-color(contrast, .7)};
   --color-selected: #{current-color(contrast)};
+}
+
+:host(.placement-top) {
+  order: -1;
+
+  border-bottom: var(--border);
+}
+
+:host(.placement-bottom) {
+  padding-bottom: var(--ion-safe-area-bottom, 0);
+
+  border-top: var(--border);
 }
 
 :host(.tabbar-hidden) {
   /* stylelint-disable-next-line declaration-no-important */
   display: none !important;
-}
-
-:host(.placement-top) {
-  order: -1;
-}
-
-:host(.placement-bottom) {
-  padding-bottom: var(--ion-safe-area-bottom, 0);
-}
-
-
-// Tab Highlight
-// --------------------------------------------------
-
-.tabbar-highlight {
-  @include position(null, null, 0, 0);
-  @include transform-origin(0, 0);
-
-  display: block;
-  position: absolute;
-
-  width: 1px;
-  height: 2px;
-
-  transform: translateZ(0);
-
-  background: currentColor;
-
-  &.animated {
-    transition-duration: 300ms;
-    transition-property: transform;
-    transition-timing-function: cubic-bezier(.4, 0, .2, 1);
-    will-change: transform;
-  }
-}
-
-:host(.placement-top) .tabbar-highlight {
-  bottom: 0;
-}
-
-:host(.placement-bottom) .tabbar-highlight {
-  top: 0;
 }

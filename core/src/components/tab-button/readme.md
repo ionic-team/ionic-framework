@@ -39,9 +39,9 @@ In order to have a custom tabbar, it should be provided in user's markup as dire
 
 ## Events
 
-| Event            | Description                         |
-| ---------------- | ----------------------------------- |
-| `ionTabbarClick` | Emitted when the tab bar is clicked |
+| Event            | Detail            | Description                         |
+| ---------------- | ----------------- | ----------------------------------- |
+| `ionTabbarClick` | TabbarClickDetail | Emitted when the tab bar is clicked |
 
 
 ----------------------------------------------

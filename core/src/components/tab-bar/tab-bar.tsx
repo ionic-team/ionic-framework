@@ -55,15 +55,11 @@ export class TabBar implements ComponentInterface {
   }
 
   /**
-   * If `true`, show the tab highlight bar under the selected tab.
-   */
-  @Prop() highlight = false;
-
-  /**
    * If `true`, the tabbar will be translucent. Defaults to `false`.
    */
   @Prop() translucent = false;
 
+  /** @internal */
   @Event() ionTabbarChanged!: EventEmitter<TabbarChangedDetail>;
 
   @Listen('body:keyboardWillHide')
@@ -82,25 +78,6 @@ export class TabBar implements ComponentInterface {
     this.selectedViewIdChanged();
   }
 
-  componentDidLoad() {
-    this.updateHighlight();
-  }
-
-  @Watch('selectedViewId')
-  @Listen('window:resize')
-  updateHighlight() {
-    if (!this.highlight) {
-      return;
-    }
-    this.queue.read(() => {
-      const btn = this.el.shadowRoot!.querySelector('.tab-btn-selected') as HTMLElement | null;
-      const highlight = this.el.shadowRoot!.querySelector('.tabbar-highlight') as HTMLElement;
-      if (btn && highlight) {
-        highlight.style.transform = `translate3d(${btn.offsetLeft}px,0,0) scaleX(${btn.offsetWidth})`;
-      }
-    });
-  }
-
   hostData() {
     const { color, translucent, placement, keyboardVisible } = this;
     return {
@@ -117,9 +94,8 @@ export class TabBar implements ComponentInterface {
   }
 
   render() {
-    return [
-      <slot></slot>,
-      this.highlight && <div class="animated tabbar-highlight" />
-    ];
+    return (
+      <slot></slot>
+    );
   }
 }
