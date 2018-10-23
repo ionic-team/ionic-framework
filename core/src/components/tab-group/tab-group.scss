@@ -22,8 +22,3 @@
 
   contain: layout size style;
 }
-
-:host(.tabbar-hidden) ion-tabbar,
-:host(.tabbar-hidden)::slotted(ion-tabbar) {
-  display: none;
-}

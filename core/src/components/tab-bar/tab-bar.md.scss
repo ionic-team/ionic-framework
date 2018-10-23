@@ -1,0 +1,15 @@
+@import "./tab-bar";
+@import "./tab-bar.md.vars";
+
+:host {
+  // default color / background
+  --color-selected: #{$tabbar-md-text-color-active};
+  --background: #{$tabbar-md-background-color};
+  --background-focused: #{$tabbar-md-background-color-focused};
+
+  height: $tabbar-md-height;
+
+  border-top: $tabbar-md-border;
+
+  contain: strict;
+}

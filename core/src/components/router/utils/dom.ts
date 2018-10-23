@@ -76,7 +76,7 @@ export function waitUntilNavNode(win: Window) {
   });
 }
 
-const QUERY = ':not([no-router]) ion-nav, :not([no-router]) ion-tabs, :not([no-router]) ion-router-outlet';
+const QUERY = ':not([no-router]) ion-nav, :not([no-router]) ion-tab-group, :not([no-router]) ion-router-outlet';
 
 function searchNavNode(root: HTMLElement | undefined): NavOutletElement | undefined {
   if (!root) {

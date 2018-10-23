@@ -17,9 +17,9 @@ Backdrops are full screen components that overlay other components. They are use
 
 ## Events
 
-| Event            | Detail | Description                          |
-| ---------------- | ------ | ------------------------------------ |
-| `ionBackdropTap` |        | Emitted when the backdrop is tapped. |
+| Event            | Description                          |
+| ---------------- | ------------------------------------ |
+| `ionBackdropTap` | Emitted when the backdrop is tapped. |
 
 
 ----------------------------------------------

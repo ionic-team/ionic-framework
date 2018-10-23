@@ -39,14 +39,14 @@ The toast can be dismissed automatically after a specific amount of time by pass
 
 ## Events
 
-| Event                 | Detail             | Description                             |
-| --------------------- | ------------------ | --------------------------------------- |
-| `ionToastDidDismiss`  | OverlayEventDetail | Emitted after the toast has dismissed.  |
-| `ionToastDidLoad`     |                    | Emitted after the toast has loaded.     |
-| `ionToastDidPresent`  |                    | Emitted after the toast has presented.  |
-| `ionToastDidUnload`   |                    | Emitted after the toast has unloaded.   |
-| `ionToastWillDismiss` | OverlayEventDetail | Emitted before the toast has dismissed. |
-| `ionToastWillPresent` |                    | Emitted before the toast has presented. |
+| Event                 | Description                             |
+| --------------------- | --------------------------------------- |
+| `ionToastDidDismiss`  | Emitted after the toast has dismissed.  |
+| `ionToastDidLoad`     | Emitted after the toast has loaded.     |
+| `ionToastDidPresent`  | Emitted after the toast has presented.  |
+| `ionToastDidUnload`   | Emitted after the toast has unloaded.   |
+| `ionToastWillDismiss` | Emitted before the toast has dismissed. |
+| `ionToastWillPresent` | Emitted before the toast has presented. |
 
 
 ## Methods

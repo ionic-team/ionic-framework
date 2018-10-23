@@ -4,7 +4,6 @@ import { Gesture, GestureDetail, Mode, PickerColumn } from '../../interface';
 import { hapticSelectionChanged } from '../../utils';
 import { clamp } from '../../utils/helpers';
 
-/** @hidden */
 @Component({
   tag: 'ion-picker-column'
 })

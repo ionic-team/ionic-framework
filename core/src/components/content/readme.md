@@ -21,11 +21,11 @@ view component.
 
 ## Events
 
-| Event            | Detail           | Description                                                                                      |
-| ---------------- | ---------------- | ------------------------------------------------------------------------------------------------ |
-| `ionScroll`      | ScrollDetail     | Emitted while scrolling. This event is disabled by default. Look at the property: `scrollEvents` |
-| `ionScrollEnd`   | ScrollBaseDetail | Emitted when the scroll has ended.                                                               |
-| `ionScrollStart` | ScrollBaseDetail | Emitted when the scroll has started.                                                             |
+| Event            | Description                                                                                      |
+| ---------------- | ------------------------------------------------------------------------------------------------ |
+| `ionScroll`      | Emitted while scrolling. This event is disabled by default. Look at the property: `scrollEvents` |
+| `ionScrollEnd`   | Emitted when the scroll has ended.                                                               |
+| `ionScrollStart` | Emitted when the scroll has started.                                                             |
 
 
 ## Methods

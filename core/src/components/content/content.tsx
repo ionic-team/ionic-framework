@@ -333,7 +333,7 @@ function getParentElement(el: any) {
 }
 
 function getPageElement(el: HTMLElement) {
-  const tabs = el.closest('ion-tabs');
+  const tabs = el.closest('ion-tab-group');
   if (tabs) {
     return tabs;
   }

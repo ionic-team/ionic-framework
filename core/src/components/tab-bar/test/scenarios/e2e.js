@@ -5,12 +5,12 @@ const { getElement, waitAndGetElementById, waitForTransition } = require('../../
 
 class E2ETestPage extends Page {
   constructor(driver, platform) {
-    super(driver, `http://localhost:3333/src/components/tabs/test/colors?ionic:mode=${platform}`);
+    super(driver, `http://localhost:3333/src/components/tab-bar/test/scenarios?ionic:mode=${platform}`);
   }
 }
 
 platforms.forEach(platform => {
-  describe('tabs/colors', () => {
+  describe('tab-bar/scenarios', () => {
     register('should init', driver => {
       const page = new E2ETestPage(driver, platform);
       return page.navigate();

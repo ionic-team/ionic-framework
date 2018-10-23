@@ -24,14 +24,14 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 
 ## Events
 
-| Event               | Detail                  | Description                                |
-| ------------------- | ----------------------- | ------------------------------------------ |
-| `ionBlur`           |                         | Emitted when the radio button loses focus. |
-| `ionFocus`          |                         | Emitted when the radio button has focus.   |
-| `ionRadioDidLoad`   |                         | Emitted when the radio loads.              |
-| `ionRadioDidUnload` |                         | Emitted when the radio unloads.            |
-| `ionSelect`         | CheckedInputChangeEvent | Emitted when the radio button is selected. |
-| `ionStyle`          | StyleEvent              | Emitted when the styles change.            |
+| Event               | Description                                |
+| ------------------- | ------------------------------------------ |
+| `ionBlur`           | Emitted when the radio button loses focus. |
+| `ionFocus`          | Emitted when the radio button has focus.   |
+| `ionRadioDidLoad`   | Emitted when the radio loads.              |
+| `ionRadioDidUnload` | Emitted when the radio unloads.            |
+| `ionSelect`         | Emitted when the radio button is selected. |
+| `ionStyle`          | Emitted when the styles change.            |
 
 
 ## CSS Custom Properties

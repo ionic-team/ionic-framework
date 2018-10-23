@@ -45,14 +45,14 @@ Alerts can also include several different inputs whose data can be passed back t
 
 ## Events
 
-| Event                 | Detail             | Description                             |
-| --------------------- | ------------------ | --------------------------------------- |
-| `ionAlertDidDismiss`  | OverlayEventDetail | Emitted after the alert has dismissed.  |
-| `ionAlertDidLoad`     |                    | Emitted after the alert has presented.  |
-| `ionAlertDidPresent`  |                    | Emitted after the alert has presented.  |
-| `ionAlertDidUnload`   |                    | Emitted before the alert has presented. |
-| `ionAlertWillDismiss` | OverlayEventDetail | Emitted before the alert has dismissed. |
-| `ionAlertWillPresent` |                    | Emitted before the alert has presented. |
+| Event                 | Description                             |
+| --------------------- | --------------------------------------- |
+| `ionAlertDidDismiss`  | Emitted after the alert has dismissed.  |
+| `ionAlertDidLoad`     | Emitted after the alert has presented.  |
+| `ionAlertDidPresent`  | Emitted after the alert has presented.  |
+| `ionAlertDidUnload`   | Emitted before the alert has presented. |
+| `ionAlertWillDismiss` | Emitted before the alert has dismissed. |
+| `ionAlertWillPresent` | Emitted before the alert has presented. |
 
 
 ## Methods

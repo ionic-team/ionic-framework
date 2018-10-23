@@ -34,14 +34,14 @@ A button's `role` property can either be `destructive` or `cancel`. Buttons with
 
 ## Events
 
-| Event                       | Detail             | Description                             |
-| --------------------------- | ------------------ | --------------------------------------- |
-| `ionActionSheetDidDismiss`  | OverlayEventDetail | Emitted after the alert has dismissed.  |
-| `ionActionSheetDidLoad`     |                    | Emitted after the alert has loaded.     |
-| `ionActionSheetDidPresent`  |                    | Emitted after the alert has presented.  |
-| `ionActionSheetDidUnload`   |                    | Emitted after the alert has unloaded.   |
-| `ionActionSheetWillDismiss` | OverlayEventDetail | Emitted before the alert has dismissed. |
-| `ionActionSheetWillPresent` |                    | Emitted before the alert has presented. |
+| Event                       | Description                             |
+| --------------------------- | --------------------------------------- |
+| `ionActionSheetDidDismiss`  | Emitted after the alert has dismissed.  |
+| `ionActionSheetDidLoad`     | Emitted after the alert has loaded.     |
+| `ionActionSheetDidPresent`  | Emitted after the alert has presented.  |
+| `ionActionSheetDidUnload`   | Emitted after the alert has unloaded.   |
+| `ionActionSheetWillDismiss` | Emitted before the alert has dismissed. |
+| `ionActionSheetWillPresent` | Emitted before the alert has presented. |
 
 
 ## Methods

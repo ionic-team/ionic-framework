@@ -230,11 +230,11 @@ dates in JavaScript.
 
 ## Events
 
-| Event       | Detail           | Description                                         |
-| ----------- | ---------------- | --------------------------------------------------- |
-| `ionCancel` |                  | Emitted when the datetime selection was cancelled.  |
-| `ionChange` | InputChangeEvent | Emitted when the value (selected date) has changed. |
-| `ionStyle`  | StyleEvent       | Emitted when the styles change.                     |
+| Event       | Description                                         |
+| ----------- | --------------------------------------------------- |
+| `ionCancel` | Emitted when the datetime selection was cancelled.  |
+| `ionChange` | Emitted when the value (selected date) has changed. |
+| `ionStyle`  | Emitted when the styles change.                     |
 
 
 ## Methods

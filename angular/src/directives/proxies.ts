@@ -812,35 +812,33 @@ export class SplitPane {
   }
 }
 
-export declare interface Tab extends StencilComponents<'IonTab'> {}
-@Component({ selector: 'ion-tab', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['active', 'btnId', 'delegate', 'label', 'href', 'icon', 'badge', 'badgeColor', 'component', 'name', 'disabled', 'selected', 'show', 'tabsHideOnSubPages'] })
-export class Tab {
-  ionSelect: EventEmitter<CustomEvent>;
-  ionTabMutated: EventEmitter<CustomEvent>;
+export declare interface TabBar extends StencilComponents<'IonTabBar'> {}
+@Component({ selector: 'ion-tab-bar', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'layout', 'placement', 'selectedViewId', 'highlight', 'translucent'] })
+export class TabBar {
+  ionTabbarChanged: EventEmitter<CustomEvent>;
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyMethods(this, el, ['setActive']);
-    proxyInputs(this, el, ['active', 'btnId', 'delegate', 'label', 'href', 'icon', 'badge', 'badgeColor', 'component', 'name', 'disabled', 'selected', 'show', 'tabsHideOnSubPages']);
-    proxyOutputs(this, el, ['ionSelect', 'ionTabMutated']);
+    proxyInputs(this, el, ['mode', 'color', 'layout', 'placement', 'selectedViewId', 'highlight', 'translucent']);
+    proxyOutputs(this, el, ['ionTabbarChanged']);
   }
 }
 
-export declare interface Tabbar extends StencilComponents<'IonTabbar'> {}
-@Component({ selector: 'ion-tabbar', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'layout', 'placement', 'selectedTab', 'tabs', 'highlight', 'translucent'] })
-export class Tabbar {
+export declare interface TabButton extends StencilComponents<'IonTabButton'> {}
+@Component({ selector: 'ion-tab-button', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'layout', 'href', 'viewId', 'disabled'] })
+export class TabButton {
   ionTabbarClick: EventEmitter<CustomEvent>;
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyInputs(this, el, ['mode', 'color', 'layout', 'placement', 'selectedTab', 'tabs', 'highlight', 'translucent']);
+    proxyInputs(this, el, ['mode', 'color', 'layout', 'href', 'viewId', 'disabled']);
     proxyOutputs(this, el, ['ionTabbarClick']);
   }
 }
 
-export declare interface Tabs extends StencilComponents<'IonTabs'> {}
-@Component({ selector: 'ion-tabs', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['name', 'tabbarHidden', 'useRouter'] })
-export class Tabs {
+export declare interface TabGroup extends StencilComponents<'IonTabGroup'> {}
+@Component({ selector: 'ion-tab-group', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['name', 'useRouter'] })
+export class TabGroup {
   ionChange: EventEmitter<CustomEvent>;
   ionNavWillLoad: EventEmitter<CustomEvent>;
   ionNavWillChange: EventEmitter<CustomEvent>;
@@ -849,8 +847,19 @@ export class Tabs {
   constructor(r: ElementRef) {
     const el = r.nativeElement;
     proxyMethods(this, el, ['select', 'setRouteId', 'getRouteId', 'getTab', 'getSelected']);
-    proxyInputs(this, el, ['name', 'tabbarHidden', 'useRouter']);
+    proxyInputs(this, el, ['name', 'useRouter']);
     proxyOutputs(this, el, ['ionChange', 'ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange']);
+  }
+}
+
+export declare interface TabView extends StencilComponents<'IonTabView'> {}
+@Component({ selector: 'ion-tab-view', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['active', 'btnId', 'delegate', 'component', 'name'] })
+export class TabView {
+
+  constructor(r: ElementRef) {
+    const el = r.nativeElement;
+    proxyMethods(this, el, ['setActive']);
+    proxyInputs(this, el, ['active', 'btnId', 'delegate', 'component', 'name']);
   }
 }
 

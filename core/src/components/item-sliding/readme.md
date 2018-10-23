@@ -38,9 +38,9 @@ Options can be expanded to take up the full width of the item if you swipe past 
 
 ## Events
 
-| Event     | Detail | Description                                |
-| --------- | ------ | ------------------------------------------ |
-| `ionDrag` |        | Emitted when the sliding position changes. |
+| Event     | Description                                |
+| --------- | ------------------------------------------ |
+| `ionDrag` | Emitted when the sliding position changes. |
 
 
 ## Methods
