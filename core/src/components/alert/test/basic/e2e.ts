@@ -19,8 +19,10 @@ it('alert: basic', async () => {
   for (const [buttonSelector, message] of alerts) {
     await page.click(buttonSelector);
     const alert = await page.find('ion-alert');
-    const compare = await page.compareScreenshot(message);
     expect(alert).not.toBe(null);
+    await alert.waitForVisible();
+
+    const compare = await page.compareScreenshot(message);
     expect(compare).toMatchScreenshot();
     await alert.callMethod('dismiss');
   }
