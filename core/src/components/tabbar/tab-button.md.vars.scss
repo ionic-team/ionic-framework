@@ -22,16 +22,16 @@ $tab-button-md-font-size:                       12px !default;
 $tab-button-md-font-weight:                     normal !default;
 
 /// @prop - Text color of the inactive tab button
-$tab-button-md-text-color:                      $tabbar-md-text-color !default;
+$tab-button-md-text-color:                      $tabbar-md-color !default;
 
 /// @prop - Text color of the active tab button
-$tab-button-md-text-color-active:               $tabbar-md-text-color-active !default;
+$tab-button-md-text-color-active:               $tabbar-md-color-activated !default;
 
 /// @prop - Icon color of the inactive tab button
-$tab-button-md-icon-color:                      $tabbar-md-text-color !default;
+$tab-button-md-icon-color:                      $tabbar-md-color !default;
 
 /// @prop - Icon color of the active tab button
-$tab-button-md-icon-color-active:               $tabbar-md-text-color-active !default;
+$tab-button-md-icon-color-active:               $tabbar-md-color-activated !default;
 
 /// @prop - Font size of the active tab button text
 $tab-button-md-font-size-active:                14px !default;
