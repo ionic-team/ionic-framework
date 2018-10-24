@@ -5,6 +5,8 @@ it('radio-group: standalone', async () => {
     url: '/src/components/radio-group/test/standalone?ionic:_testing=true'
   });
 
+  await page.waitFor(250);
+
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
 });

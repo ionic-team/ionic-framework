@@ -7,9 +7,7 @@ it('toast: standalone', async () => {
 
   const button = await page.find('#basic');
   await button.click();
-
-  const toast = await page.find('ion-toast');
-  await toast.waitForVisible();
+  await page.waitForSelector('ion-toast.hydrated');
 
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();

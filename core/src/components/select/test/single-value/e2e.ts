@@ -11,9 +11,7 @@ it('select: single-value', async () => {
   const select = await page.find('#gender');
   await select.click();
 
-  const alert = await page.find('ion-alert');
-  await alert.waitForVisible();
-  await page.waitFor(100);
+  await page.waitForSelector('ion-alert.hydrated');
 
   compare = await page.compareScreenshot('should open gender single select');
   expect(compare).toMatchScreenshot();

@@ -18,6 +18,8 @@ it('alert: basic', async () => {
 
   for (const [buttonSelector, message] of alerts) {
     await page.click(buttonSelector);
+    await page.waitForSelector('ion-alert.hydrated');
+
     const alert = await page.find('ion-alert');
     expect(alert).not.toBe(null);
     await alert.waitForVisible();

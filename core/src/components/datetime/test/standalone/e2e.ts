@@ -10,10 +10,10 @@ it('datetime: standalone', async () => {
 
   const datetime = await page.find('#basic');
   await datetime.click();
+  await page.waitForSelector('ion-picker.hydrated');
 
   const picker = await page.find('ion-picker');
   await picker.waitForVisible();
-  await page.waitFor(250);
 
   compare = await page.compareScreenshot('should open basic picker');
   expect(compare).toMatchScreenshot();

@@ -10,9 +10,7 @@ it('select: multiple-value', async () => {
 
   const select = await page.find('#toppings');
   await select.click();
-
-  const alert = await page.find('ion-alert');
-  await alert.waitForVisible();
+  await page.waitForSelector('ion-alert.hydrated');
 
   compare = await page.compareScreenshot('should open toppings multiple select');
   expect(compare).toMatchScreenshot();

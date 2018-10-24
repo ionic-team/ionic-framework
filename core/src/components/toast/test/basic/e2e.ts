@@ -7,6 +7,7 @@ it('toast: basic', async () => {
 
   const button = await page.find('#showBottomToast');
   await button.click();
+  await page.waitForSelector('ion-toast.hydrated');
 
   let toast = await page.find('ion-toast');
   await toast.waitForVisible();
