@@ -19,7 +19,7 @@ it('action-sheet: alertFromActionSheet', async () => {
 
   const alert = await page.find('ion-alert');
   await alert.waitForVisible();
-  await page.waitFor(100);
+  await page.waitFor(250);
 
   compare = await page.compareScreenshot(`alert open`);
   expect(compare).toMatchScreenshot();

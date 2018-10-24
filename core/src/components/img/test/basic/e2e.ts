@@ -5,7 +5,7 @@ it('img: basic', async () => {
     url: '/src/components/img/test/basic?ionic:_testing=true'
   });
 
-  await page.waitFor(100);
+  await page.waitFor(250);
 
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();

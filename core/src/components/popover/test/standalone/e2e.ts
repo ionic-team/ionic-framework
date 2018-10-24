@@ -6,11 +6,9 @@ it('popover: standalone', async () => {
   });
 
   await page.click('#basic');
-  const popover = await page.find('ion-popover');
-  expect(popover).not.toBeNull();
-
-  await popover.waitForVisible();
-  await page.waitFor(500);
+  const alert = await page.find('ion-popover');
+  await alert.waitForVisible();
+  await page.waitFor(250);
 
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
