@@ -11,7 +11,7 @@ $segment-md-opacity-disabled:                  .3 !default;
 // --------------------------------------------------
 
 /// @prop - Text color of the segment button
-$segment-button-md-text-color:                 $toolbar-md-color-active !default;
+$segment-button-md-text-color:                 $toolbar-md-color-activated !default;
 
 /// @prop - Width of the bottom border on the segment button
 $segment-button-md-border-bottom-width:        2px !default;
@@ -23,7 +23,7 @@ $segment-button-md-border-bottom-color:        rgba(#000, .10) !default;
 $segment-button-md-opacity:                    .7 !default;
 
 /// @prop - Border color of the activated segment button
-$segment-button-md-border-color-activated:     $toolbar-md-color-active !default;
+$segment-button-md-border-color-activated:     $toolbar-md-color-activated !default;
 
 /// @prop - Opacity of the activated segment button
 $segment-button-md-opacity-activated:          1 !default;

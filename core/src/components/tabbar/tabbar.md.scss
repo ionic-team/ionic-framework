@@ -5,9 +5,9 @@
 :host {
   // default color / background
   --color: #{$tab-button-md-text-color};
-  --color-selected: #{$tabbar-md-text-color-active};
-  --background: #{$tabbar-md-background-color};
-  --background-focused: #{$tabbar-md-background-color-focused};
+  --color-selected: #{$tabbar-md-color-activated};
+  --background: #{$tabbar-md-background};
+  --background-focused: #{$tabbar-md-background-focused};
   --icon-transform-selected: #{$tab-button-md-icon-transform-active};
 
   height: $tabbar-md-height;

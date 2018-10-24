@@ -29,8 +29,8 @@ export interface AlertInput {
   disabled?: boolean;
   id?: string;
   handler?: (input: AlertInput) => void;
-  min?: number;
-  max?: number;
+  min?: string | number;
+  max?: string | number;
 }
 
 export interface AlertButton {

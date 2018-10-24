@@ -1,25 +1,5 @@
 export const THEME_VARIABLES = [
     {
-        property: '--ion-alpha-lowest',
-        type: 'percent'
-    },
-    {
-        property: '--ion-alpha-low',
-        type: 'percent'
-    },
-    {
-        property: '--ion-alpha-medium',
-        type: 'percent'
-    },
-    {
-        property: '--ion-alpha-high',
-        type: 'percent'
-    },
-    {
-        property: '--ion-alpha-highest',
-        type: 'percent'
-    },
-    {
         property: '--ion-color-primary'
     },
     {
@@ -266,45 +246,42 @@ export const THEME_VARIABLES = [
         property: '--ion-text-color-step-400'
     },
     {
-        property: '--ion-tabbar-background-color'
+        property: '--ion-tab-bar-background'
     },
     {
-        property: '--ion-tabbar-border-color'
+        property: '--ion-tab-bar-border-color'
     },
     {
-        property: '--ion-tabbar-text-color'
+        property: '--ion-tab-bar-color'
     },
     {
-        property: '--ion-tabbar-text-color-active'
+        property: '--ion-tab-bar-color-activated'
     },
     {
-        property: '--ion-toolbar-background-color'
+        property: '--ion-toolbar-background'
     },
     {
         property: '--ion-toolbar-border-color'
     },
     {
-        property: '--ion-toolbar-color-active'
+        property: '--ion-toolbar-color-activated'
     },
     {
-        property: '--ion-toolbar-color-inactive'
+        property: '--ion-toolbar-color'
     },
     {
-        property: '--ion-toolbar-text-color'
+        property: '--ion-item-background'
     },
     {
-        property: '--ion-item-background-color'
-    },
-    {
-        property: '--ion-item-background-color-active'
+        property: '--ion-item-background-activated'
     },
     {
         property: '--ion-item-border-color'
     },
     {
-        property: '--ion-item-text-color'
+        property: '--ion-item-color'
     },
     {
-        property: '--ion-placeholder-text-color'
+        property: '--ion-placeholder-color'
     }
 ];

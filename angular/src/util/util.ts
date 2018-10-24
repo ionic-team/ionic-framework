@@ -10,7 +10,7 @@ export function inputs(instance: any, el: ElementRef, props: string[]) {
 
 export function proxyEvent<T>(emitter: EventEmitter<T>, el: EventTarget, eventName: string) {
   el.addEventListener(eventName, (ev) => {
-    emitter.emit((ev as any).detail as T);
+    emitter.emit(ev ? (ev as any).detail as T : undefined);
   });
 }
 

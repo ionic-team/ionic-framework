@@ -1,11 +1,9 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('slides: basic', async () => {
+it('themes: css-variables', async () => {
   const page = await newE2EPage({
-    url: '/src/components/slides/test/basic?ionic:_testing=true'
+    url: '/src/themes/test/css-variables?ionic:_testing=true'
   });
-
-  await page.waitFor(500);
 
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
