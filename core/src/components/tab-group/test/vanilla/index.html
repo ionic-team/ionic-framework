@@ -14,15 +14,27 @@
 </head>
 
 <body>
-  <ion-tabs>
-    <ion-tab label="Tab One" icon="star" path="">
+  <ion-tab-group>
+    <ion-tab-view tab-id="tab-one">
       <div class="div-one" slot="not-initialized">Div One</div>
-    </ion-tab>
+    </ion-tab-view>
 
-    <ion-tab label="Tab Two" icon="globe" path="tab2">
+    <ion-tab-view tab-id="tab-two">
       <div class="div-two" slot="not-initialized">Div Two</div>
-    </ion-tab>
-  </ion-tabs>
+    </ion-tab-view>
+
+    <ion-tab-bar>
+      <ion-tab-button tab-id="tab-one">
+        <ion-label>Tab One</ion-label>
+        <ion-icon name="star"></ion-icon>
+      </ion-tab-button>
+
+      <ion-tab-button tab-id="tab-two">
+        <ion-label>Tab Two</ion-label>
+        <ion-icon name="globe"></ion-icon>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tab-group>
 
   <style>
     .div-one {

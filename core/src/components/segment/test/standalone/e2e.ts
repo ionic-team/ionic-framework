@@ -5,6 +5,8 @@ it('segment: standalone', async () => {
     url: '/src/components/segment/test/standalone?ionic:_testing=true'
   });
 
+  await page.waitFor(250);
+
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
 });

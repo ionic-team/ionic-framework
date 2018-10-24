@@ -5,6 +5,8 @@ it('toggle: basic', async () => {
     url: '/src/components/toggle/test/basic?ionic:_testing=true'
   });
 
+  await page.waitFor(250);
+
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
 });

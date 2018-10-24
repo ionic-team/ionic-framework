@@ -14,7 +14,7 @@
 
   <ion-app>
     <ion-tab-group>
-      
+
       <ion-tab-view tab-id="tab-one">
         <ion-header>
           <ion-toolbar>
@@ -61,21 +61,21 @@
         </ion-content>
       </ion-tab-view>
 
-      <ion-tab-view tab-id="page-one" component="page-one"></ion-tab-view>
+      <ion-tab-view tab-id="tab-four" component="page-one"></ion-tab-view>
 
       <ion-tab-bar>
-        <ion-tab-button href="" tab-id="tab-one">
+        <ion-tab-button href="" tab-id="tab-one" class="e2eTabOneButton">
           <ion-label>Plain List</ion-label>
           <ion-icon name="star"></ion-icon>
         </ion-tab-button>
 
-        <ion-tab-button tab-id="schedule">
+        <ion-tab-button tab-id="schedule" class="e2eTabTwoButton">
           <ion-label>Schedule</ion-label>
           <ion-icon name="globe"></ion-icon>
           <ion-badge color="danger">6</ion-badge>
         </ion-tab-button>
 
-        <ion-tab-button tab-id="tab-three">
+        <ion-tab-button tab-id="tab-three" class="e2eTabThreeButton" disabled>
           <ion-label>Stopwatch</ion-label>
           <ion-icon name="logo-facebook"></ion-icon>
           <ion-badge color="primary">6</ion-badge>
@@ -86,7 +86,7 @@
           <ion-icon name="alert"></ion-icon>
         </ion-tab-button>
 
-        <ion-tab-button tab-id="page-one" disabled>
+        <ion-tab-button tab-id="tab-four" class="e2eTabFourButton">
           <ion-label>Messages</ion-label>
           <ion-icon name="chatboxes"></ion-icon>
         </ion-tab-button>
@@ -96,17 +96,23 @@
   </ion-app>
 
   <script>
-    var tab = document.getElementById('tabWithBadge');
 
-    function updateBadgeCount() {
-      var current = parseInt(tab.badge);
-      tab.badge = ++current;
+    class PageOne extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Page Four</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content padding>
+            Page Four
+          </ion-content>
+        `;
+      }
     }
+    customElements.define('page-one', PageOne);
 
-    function updateBadgeColor() {
-      var current = tab.badgeColor;
-      tab.badgeColor = current === 'primary' ? 'danger' : 'primary';
-    }
   </script>
 </body>
 
