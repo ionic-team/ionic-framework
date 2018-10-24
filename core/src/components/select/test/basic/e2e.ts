@@ -10,10 +10,10 @@ it('select: basic', async () => {
 
   let select = await page.find('#gender');
   await select.click();
-  await page.waitForSelector('ion-alert.hydrated');
 
   const alert = await page.find('ion-alert');
   await alert.waitForVisible();
+  await page.waitFor(250);
 
   compare = await page.compareScreenshot('should open gender single select');
   expect(compare).toMatchScreenshot();
@@ -22,10 +22,10 @@ it('select: basic', async () => {
 
   select = await page.find('#customSelect');
   await select.click();
-  await page.waitForSelector('ion-action-sheet.hydrated');
 
   const actionSheet = await page.find('ion-action-sheet');
   await actionSheet.waitForVisible();
+  await page.waitFor(250);
 
   compare = await page.compareScreenshot('should open custom action sheet select');
   expect(compare).toMatchScreenshot();
