@@ -4560,7 +4560,7 @@ export namespace Components {
     /**
     * The selected tab component
     */
-    'selectedViewId'?: string;
+    'selectedTabId'?: string;
     /**
     * If `true`, the tabbar will be translucent. Defaults to `false`.
     */
@@ -4587,7 +4587,7 @@ export namespace Components {
     /**
     * The selected tab component
     */
-    'selectedViewId'?: string;
+    'selectedTabId'?: string;
     /**
     * If `true`, the tabbar will be translucent. Defaults to `false`.
     */
@@ -4616,9 +4616,9 @@ export namespace Components {
     */
     'mode': Mode;
     /**
-    * The tab view's id
+    * A tab id must be provided for each `ion-tab-view`. It's used internally to reference the selected tab or by the router to switch between them.
     */
-    'viewId'?: string;
+    'tabId'?: string;
   }
   interface IonTabButtonAttributes extends StencilHTMLAttributes {
     /**
@@ -4646,9 +4646,9 @@ export namespace Components {
     */
     'onIonTabbarClick'?: (event: CustomEvent<TabbarClickDetail>) => void;
     /**
-    * The tab view's id
+    * A tab id must be provided for each `ion-tab-view`. It's used internally to reference the selected tab or by the router to switch between them.
     */
-    'viewId'?: string;
+    'tabId'?: string;
   }
 
   interface IonTabGroup {
@@ -4670,10 +4670,6 @@ export namespace Components {
     */
     'select': (tabOrIndex: number | HTMLIonTabViewElement) => Promise<boolean>;
     'setRouteId': (id: string) => Promise<RouteWrite>;
-    /**
-    * If `true`, the tabs will use the router and `selectedTab` will not do anything.
-    */
-    'useRouter': boolean;
   }
   interface IonTabGroupAttributes extends StencilHTMLAttributes {
     /**
@@ -4696,10 +4692,6 @@ export namespace Components {
     * Emitted when the navigation will load a component.
     */
     'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
-    /**
-    * If `true`, the tabs will use the router and `selectedTab` will not do anything.
-    */
-    'useRouter'?: boolean;
   }
 
   interface IonTabView {
@@ -4714,13 +4706,13 @@ export namespace Components {
     'component'?: ComponentRef;
     'delegate'?: FrameworkDelegate;
     /**
-    * The name of the tab.
-    */
-    'name'?: string;
-    /**
     * Set the active component for the tab
     */
     'setActive': () => Promise<void>;
+    /**
+    * A tab id must be provided for each `ion-tab-view`. It's used internally to reference the selected tab or by the router to switch between them.
+    */
+    'tabId'?: string;
   }
   interface IonTabViewAttributes extends StencilHTMLAttributes {
     /**
@@ -4734,9 +4726,9 @@ export namespace Components {
     'component'?: ComponentRef;
     'delegate'?: FrameworkDelegate;
     /**
-    * The name of the tab.
+    * A tab id must be provided for each `ion-tab-view`. It's used internally to reference the selected tab or by the router to switch between them.
     */
-    'name'?: string;
+    'tabId'?: string;
   }
 
   interface IonText {

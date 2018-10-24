@@ -13,6 +13,7 @@ export class TabGroup implements NavOutlet {
   private transitioning = false;
   private tabsId = (++tabIds);
   private leavingTab?: HTMLIonTabViewElement;
+  private useRouter = false;
 
   @Element() el!: HTMLStencilElement;
 
@@ -26,11 +27,6 @@ export class TabGroup implements NavOutlet {
    * A unique name for the tabs.
    */
   @Prop() name?: string;
-
-  /**
-   * If `true`, the tabs will use the router and `selectedTab` will not do anything.
-   */
-  @Prop({ mutable: true }) useRouter = false;
 
   /**
    * Emitted when the tab changes.
@@ -53,9 +49,7 @@ export class TabGroup implements NavOutlet {
   @Event() ionNavDidChange!: EventEmitter<void>;
 
   async componentWillLoad() {
-    if (!this.useRouter) {
-      this.useRouter = !!this.doc.querySelector('ion-router') && !this.el.closest('[no-router]');
-    }
+    this.useRouter = !!this.doc.querySelector('ion-router') && !this.el.closest('[no-router]');
     this.initTabs();
 
     this.ionNavWillLoad.emit();
@@ -74,15 +68,15 @@ export class TabGroup implements NavOutlet {
   componentWillUpdate() {
     const tabbar = this.el.querySelector('ion-tab-bar');
     if (tabbar) {
-      const viewId = this.selectedTab ? this.selectedTab.id : undefined;
-      tabbar.selectedViewId = viewId;
+      const tabId = this.selectedTab ? this.selectedTab.tabId : undefined;
+      tabbar.selectedTabId = tabId;
     }
   }
 
   @Listen('ionTabbarClick')
   protected onTabClicked(ev: CustomEvent<TabbarClickDetail>) {
-    const { href, viewId } = ev.detail;
-    const tab = this.tabs.find(t => t.id === viewId);
+    const { href, tabId } = ev.detail;
+    const tab = this.tabs.find(t => t.tabId === tabId);
     if (this.useRouter && href !== undefined) {
       const router = this.doc.querySelector('ion-router');
       if (router) {
@@ -128,7 +122,7 @@ export class TabGroup implements NavOutlet {
   /** @internal */
   @Method()
   async getRouteId(): Promise<RouteID | undefined> {
-    const id = this.selectedTab && this.selectedTab.name;
+    const id = this.selectedTab && this.selectedTab.id;
     return id !== undefined ? { id, element: this.selectedTab } : undefined;
   }
 
@@ -136,7 +130,7 @@ export class TabGroup implements NavOutlet {
   @Method()
   async getTab(tabOrIndex: string | number | HTMLIonTabViewElement): Promise<HTMLIonTabViewElement | undefined> {
     if (typeof tabOrIndex === 'string') {
-      return this.tabs.find(tab => tab.name === tabOrIndex);
+      return this.tabs.find(tab => tab.tabId === tabOrIndex);
     }
     if (typeof tabOrIndex === 'number') {
       return this.tabs[tabOrIndex];
@@ -168,17 +162,7 @@ export class TabGroup implements NavOutlet {
     if (this.useRouter) {
       return;
     }
-
-    // TODO
-    // // find pre-selected tabs
-    // const selectedTab = tabs.;
-    // if (selectedTab) {
-    //   await selectedTab.setActive();
-    // }
-    // this.selectedTab = selectedTab;
-    // if (selectedTab) {
-    //   selectedTab.active = true;
-    // }
+    await this.select(0);
   }
 
   private setActive(selectedTab: HTMLIonTabViewElement): Promise<void> {

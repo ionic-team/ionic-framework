@@ -14,7 +14,7 @@
 
   <ion-app>
     <ion-tab-group>
-      <ion-tab-view id="tab-one">
+      <ion-tab-view tab-id="tab-one">
         <ion-header>
           <ion-toolbar>
             <ion-title>Tab One</ion-title>
@@ -28,7 +28,7 @@
         </ion-content>
       </ion-tab-view>
 
-      <ion-tab-view id="schedule">
+      <ion-tab-view tab-id="schedule">
         <ion-header>
           <ion-toolbar>
             <ion-title>Tab Two</ion-title>
@@ -39,7 +39,7 @@
         </ion-content>
       </ion-tab-view>
 
-      <ion-tab-view id="tab-three">
+      <ion-tab-view tab-id="tab-three">
         <ion-header>
           <ion-toolbar>
             <ion-title>Tab Three</ion-title>
@@ -50,7 +50,7 @@
         </ion-content>
       </ion-tab-view>
 
-      <ion-tab-view id="hidden-tab">
+      <ion-tab-view tab-id="hidden-tab">
         <ion-header>
           <ion-toolbar>
             <ion-title>Hidden Tab</ion-title>
@@ -61,32 +61,32 @@
         </ion-content>
       </ion-tab-view>
 
-      <ion-tab-view id="page-one" component="page-one"></ion-tab-view>
+      <ion-tab-view tab-id="page-one" component="page-one"></ion-tab-view>
 
       <ion-tab-bar>
-        <ion-tab-button view-id="tab-one">
+        <ion-tab-button href="" tab-id="tab-one">
           <ion-label>Plain List</ion-label>
           <ion-icon name="star"></ion-icon>
         </ion-tab-button>
 
-        <ion-tab-button view-id="schedule">
+        <ion-tab-button tab-id="schedule">
           <ion-label>Schedule</ion-label>
           <ion-icon name="globe"></ion-icon>
           <ion-badge color="danger">6</ion-badge>
         </ion-tab-button>
 
-        <ion-tab-button view-id="tab-three">
+        <ion-tab-button tab-id="tab-three">
           <ion-label>Stopwatch</ion-label>
           <ion-icon name="logo-facebook"></ion-icon>
           <ion-badge color="primary">6</ion-badge>
         </ion-tab-button>
 
-        <ion-tab-button view-id="hidden-tab" hidden>
+        <ion-tab-button tab-id="hidden-tab" hidden>
           <ion-label>Hidden</ion-label>
           <ion-icon name="alert"></ion-icon>
         </ion-tab-button>
 
-        <ion-tab-button view-id="page-one" disabled>
+        <ion-tab-button tab-id="page-one" disabled>
           <ion-label>Messages</ion-label>
           <ion-icon name="chatboxes"></ion-icon>
         </ion-tab-button>

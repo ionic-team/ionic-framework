@@ -12,13 +12,13 @@ See the [Tabs API Docs](../Tabs/) for more details on configuring Tabs.
 
 ## Properties
 
-| Property    | Attribute   | Description                                 | Type                                                     |
-| ----------- | ----------- | ------------------------------------------- | -------------------------------------------------------- |
-| `active`    | `active`    | If `true`, sets the tab as the active tab.  | `boolean`                                                |
-| `btnId`     | `btn-id`    |                                             | `string \| undefined`                                    |
-| `component` | `component` | The component to display inside of the tab. | `Function \| HTMLElement \| null \| string \| undefined` |
-| `delegate`  | --          |                                             | `FrameworkDelegate \| undefined`                         |
-| `name`      | `name`      | The name of the tab.                        | `string \| undefined`                                    |
+| Property    | Attribute   | Description                                                                                                                                    | Type                                                     |
+| ----------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| `active`    | `active`    | If `true`, sets the tab as the active tab.                                                                                                     | `boolean`                                                |
+| `btnId`     | `btn-id`    |                                                                                                                                                | `string \| undefined`                                    |
+| `component` | `component` | The component to display inside of the tab.                                                                                                    | `Function \| HTMLElement \| null \| string \| undefined` |
+| `delegate`  | --          |                                                                                                                                                | `FrameworkDelegate \| undefined`                         |
+| `tabId`     | `tab-id`    | A tab id must be provided for each `ion-tab-view`. It's used internally to reference the selected tab or by the router to switch between them. | `string \| undefined`                                    |
 
 
 ## Methods

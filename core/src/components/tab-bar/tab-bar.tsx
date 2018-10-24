@@ -46,11 +46,11 @@ export class TabBar implements ComponentInterface {
   /**
    * The selected tab component
    */
-  @Prop() selectedViewId?: string;
-  @Watch('selectedViewId')
-  selectedViewIdChanged() {
+  @Prop() selectedTabId?: string;
+  @Watch('selectedTabId')
+  selectedTabIdChanged() {
     this.ionTabbarChanged.emit({
-      viewId: this.selectedViewId
+      tabId: this.selectedTabId
     });
   }
 
@@ -75,7 +75,7 @@ export class TabBar implements ComponentInterface {
   }
 
   componentWillLoad() {
-    this.selectedViewIdChanged();
+    this.selectedTabIdChanged();
   }
 
   hostData() {

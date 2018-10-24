@@ -50,9 +50,10 @@ export class TabButton implements ComponentInterface {
   @Prop() href?: string;
 
   /**
-   * The tab view's id
+   * A tab id must be provided for each `ion-tab-view`. It's used internally to reference
+   * the selected tab or by the router to switch between them.
    */
-  @Prop() viewId?: string;
+  @Prop() tabId?: string;
 
   /**
    * The selected tab component
@@ -66,14 +67,14 @@ export class TabButton implements ComponentInterface {
 
   @Listen('parent:ionTabbarChanged')
   onTabbarChanged(ev: CustomEvent<TabbarChangedDetail>) {
-    this.selected = this.viewId === ev.detail.viewId;
+    this.selected = this.tabId === ev.detail.tabId;
   }
 
   @Listen('click')
   onClick(ev: Event) {
     if (!this.disabled) {
       this.ionTabbarClick.emit({
-        viewId: this.viewId,
+        tabId: this.tabId,
         href: this.href
       });
     }

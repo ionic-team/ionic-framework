@@ -29,10 +29,9 @@ direct children of `ion-tabs`, like this:
 
 ## Properties
 
-| Property    | Attribute    | Description                                                                     | Type                  |
-| ----------- | ------------ | ------------------------------------------------------------------------------- | --------------------- |
-| `name`      | `name`       | A unique name for the tabs.                                                     | `string \| undefined` |
-| `useRouter` | `use-router` | If `true`, the tabs will use the router and `selectedTab` will not do anything. | `boolean`             |
+| Property | Attribute | Description                 | Type                  |
+| -------- | --------- | --------------------------- | --------------------- |
+| `name`   | `name`    | A unique name for the tabs. | `string \| undefined` |
 
 
 ## Events

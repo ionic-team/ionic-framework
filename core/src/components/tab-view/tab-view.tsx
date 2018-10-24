@@ -25,20 +25,17 @@ export class TabView implements ComponentInterface {
   @Prop() delegate?: FrameworkDelegate;
 
   /**
+   * A tab id must be provided for each `ion-tab-view`. It's used internally to reference
+   * the selected tab or by the router to switch between them.
+   */
+  @Prop() tabId?: string;
+
+  /**
    * The component to display inside of the tab.
    */
   @Prop() component?: ComponentRef;
 
-  /**
-   * The name of the tab.
-   */
-  @Prop({ mutable: true }) name?: string;
-
   componentWillLoad() {
-    // Set default name
-    if (this.name === undefined && typeof this.component === 'string') {
-      this.name = this.component;
-    }
 
     if (Build.isDev) {
       if (this.component !== undefined && this.el.childElementCount > 0) {
@@ -46,6 +43,11 @@ export class TabView implements ComponentInterface {
       `- Remove the component attribute in: <ion-tab component="${this.component}">` +
       ` or` +
       `- Remove the embedded content inside the ion-tab: <ion-tab></ion-tab>`);
+      }
+
+      if (this.tabId === undefined) {
+        console.error(`Tab views need to have an unique id attribute:
+  <ion-tab-view tab-id="my-unique-id">`);
       }
     }
   }
