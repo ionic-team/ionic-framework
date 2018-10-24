@@ -70,8 +70,7 @@ The recent update of RXJS includes a change in how operators are applied.
 Traditionally, operators were applied like this:
 
 ```typescript
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/switchMap';
+import { debounceTime, switchMap } 'rxjs/operators';
 
 export MyClass {
 
@@ -96,8 +95,7 @@ To use lettable operators, modify the code from above to look like this:
 
 ```typescript
 //Use Deep imports here for smallest bunlde size
-import { debounceTime } from 'rxjs/operators/debounceTime';
-import { switchMap } from 'rxjs/operators/switchMap';
+import { debounceTime, switchMap } from 'rxjs/operators';
 
 export MyClass {
 

@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Optional, Output, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation, forwardRef } from '@angular/core';
 
 import { Subject } from 'rxjs';
-import 'rxjs/add/operator/takeUntil';
+import { takeUntil } 'rxjs/operators';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
