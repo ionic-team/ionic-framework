@@ -13,6 +13,7 @@ it('datetime: basic', async () => {
 
   const picker = await page.find('ion-picker');
   await picker.waitForVisible();
+  await page.waitFor(100);
 
   compare = await page.compareScreenshot('should open custom picker');
   expect(compare).toMatchScreenshot();
