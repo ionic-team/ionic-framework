@@ -16,7 +16,7 @@
   font-size: $tab-button-ios-font-size;
 }
 
-:host(.tab-btn-has-label-only) ::slotted(ion-label) {
+:host(.tab-has-label-only) ::slotted(ion-label) {
   @include margin(2px, 0);
 
   font-size: $tab-button-ios-font-size + 2;
@@ -45,9 +45,9 @@
 // iOS Tabbar Layout
 // --------------------------------------------------
 
-:host(.layout-icon-end) ::slotted(ion-label),
-:host(.layout-icon-start) ::slotted(ion-label),
-:host(.layout-icon-hide) ::slotted(ion-label) {
+:host(.tab-layout-icon-end) ::slotted(ion-label),
+:host(.tab-layout-icon-start) ::slotted(ion-label),
+:host(.tab-layout-icon-hide) ::slotted(ion-label) {
   margin-top: 2px;
   margin-bottom: 2px;
 
@@ -56,8 +56,8 @@
   line-height: 1.1;
 }
 
-:host(.layout-icon-end) ::slotted(ion-icon),
-:host(.layout-icon-start) ::slotted(ion-icon) {
+:host(.tab-layout-icon-end) ::slotted(ion-icon),
+:host(.tab-layout-icon-start) ::slotted(ion-icon) {
   min-width: 24px;
   height: 26px;
 
@@ -67,6 +67,6 @@
   font-size: 24px;
 }
 
-:host(.layout-label-hide) ::slotted(ion-icon) {
+:host(.tab-layout-label-hide) ::slotted(ion-icon) {
   @include margin(0);
 }

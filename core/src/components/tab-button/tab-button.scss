@@ -1,6 +1,8 @@
 @import "../../themes/ionic.globals";
 
 :host {
+  --badge-end: 4%;
+
   flex: 1;
 
   height: 100%;
@@ -52,16 +54,16 @@ a:focus-visible {
   }
 }
 
-:host(.tab-btn-selected) {
+:host(.tab-selected) {
   color: var(--color-selected);
 }
 
-:host(.tab-btn-hidden) {
+:host(.tab-hidden) {
   /* stylelint-disable-next-line declaration-no-important */
   display: none !important;
 }
 
-:host(.tab-btn-disabled) {
+:host(.tab-disabled) {
   pointer-events: none;
 
   opacity: .4;
@@ -94,7 +96,7 @@ a:focus-visible {
   box-sizing: border-box;
 }
 
-:host(.tab-btn-has-label-only) ::slotted(ion-label) {
+:host(.tab-has-label-only) ::slotted(ion-label) {
   white-space: normal;
 }
 
@@ -104,8 +106,7 @@ a:focus-visible {
 // --------------------------------------------------
 
 ::slotted(ion-badge) {
-  @include position(6%, 4%, null, null); // 4% fallback
-  @include position(null, calc(50% - 30px), null, null);
+  @include position(null, var(--badge-end), null, null);
   @include padding(1px, 6px);
 
   box-sizing: border-box;
@@ -119,54 +120,50 @@ a:focus-visible {
   line-height: 16px;
 }
 
-:host(.tab-btn-has-label-only) ::slotted(ion-badge) {
-  @include position-horizontal(null, #{calc(50% - 50px)});
-}
-
-:host(.tab-btn-has-icon-only) ::slotted(ion-badge) {
-  @include position-horizontal(null, #{calc(50% - 30px)});
-}
-
 
 // Tab Button Layout
 // --------------------------------------------------
 
-:host(.layout-icon-start) a {
+:host(.tab-layout-icon-start) a {
   flex-direction: row;
 }
 
-:host(.layout-icon-end) a {
+:host(.tab-layout-icon-end) a {
   flex-direction: row-reverse;
 }
 
-:host(.layout-icon-bottom) a {
+:host(.tab-layout-icon-bottom) a {
   flex-direction: column-reverse;
 }
 
-:host(.layout-icon-start) a,
-:host(.layout-icon-end) a,
-:host(.layout-icon-hide) a,
-:host(.layout-label-hide) a,
-:host(.tab-btn-has-icon-only) a,
-:host(.tab-btn-has-label-only) a {
+:host(.tab-layout-icon-start) a,
+:host(.tab-layout-icon-end) a,
+:host(.tab-layout-icon-hide) a,
+:host(.tab-layout-label-hide) a,
+:host(.tab-has-icon-only) a,
+:host(.tab-has-label-only) a {
   justify-content: center;
 }
 
-:host(.layout-icon-hide) ::slotted(ion-icon) {
+:host(.tab-layout-icon-hide) ::slotted(ion-icon) {
   display: none;
 }
 
-:host(.layout-label-hide) ::slotted(ion-label) {
+:host(.tab-layout-label-hide) ::slotted(ion-label) {
   display: none;
 }
 
-:host(.layout-icon-top),
-:host(.layout-icon-bottom) {
+:host(.tab-layout-icon-top),
+:host(.tab-layout-icon-bottom),
+:host(.tab-layout-icon-only),
+:host(.tab-layout-label-hide),
+:host(.tab-has-icon-only) {
   --badge-end: #{calc(50% - 30px)};
 }
 
-:host(.layout-icon-hide),
-:host(.layout-icon-start),
-:host(.layout-icon-end) {
+:host(.tab-layout-icon-hide),
+:host(.tab-layout-icon-start),
+:host(.tab-layout-icon-end),
+:host(.tab-has-label-only) {
   --badge-end: #{calc(50% - 50px)};
 }

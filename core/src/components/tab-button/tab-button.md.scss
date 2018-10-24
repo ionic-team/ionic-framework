@@ -33,7 +33,7 @@
   text-transform: $tab-button-md-text-capitalization;
 }
 
-::slotted(.tab-btn-selected) ::slotted(ion-label) {
+::slotted(.tab-selected) ::slotted(ion-label) {
   transform: #{$tab-button-md-text-transform-active};
 
   transition: $tab-button-md-text-transition;
@@ -58,31 +58,31 @@
 // Material Design Tabbar Layout
 // --------------------------------------------------
 
-:host(.layout-icon-top) ::slotted(ion-label) {
+:host(.tab-layout-icon-top) ::slotted(ion-label) {
   margin-bottom: -2px;
 }
 
-:host(.layout-icon-bottom) ::slotted(ion-label) {
+:host(.tab-layout-icon-bottom) ::slotted(ion-label) {
   margin-top: -2px;
   // --label-transform: transform-origin(center, top);
 }
 
-:host(.tab-btn-selected) ::slotted(ion-label) {
+:host(.tab-selected) ::slotted(ion-label) {
   transform: #{$tab-button-md-text-transform-active};
 }
 
-:host(.tab-btn-selected) ::slotted(ion-icon) {
+:host(.tab-selected) ::slotted(ion-icon) {
   transform: #{$tab-button-md-icon-transform-active};
 }
 
-:host(.layout-icon-end.tab-btn-selected) ::slotted(ion-icon) {
+:host(.tab-layout-icon-end.tab-selected) ::slotted(ion-icon) {
   transform: #{$tab-button-md-icon-right-transform-active};
 }
 
-:host(.layout-icon-bottom.tab-btn-selected) ::slotted(ion-icon) {
+:host(.tab-layout-icon-bottom.tab-selected) ::slotted(ion-icon) {
   transform: #{$tab-button-md-icon-bottom-transform-active};
 }
 
-:host(.layout-icon-start.tab-btn-selected) ::slotted(ion-icon) {
+:host(.tab-layout-icon-start.tab-selected) ::slotted(ion-icon) {
   transform: #{$tab-button-md-icon-left-transform-active};
 }

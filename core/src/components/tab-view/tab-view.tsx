@@ -13,13 +13,8 @@ export class TabView implements ComponentInterface {
   private loaded = false;
   @Element() el!: HTMLIonTabViewElement;
 
-  /**
-   * If `true`, sets the tab as the active tab.
-   */
-  @Prop({ mutable: true }) active = false;
-
   /** @internal */
-  @Prop() btnId?: string;
+  @Prop({ mutable: true }) active = false;
 
   /** @internal */
   @Prop() delegate?: FrameworkDelegate;
@@ -68,11 +63,12 @@ export class TabView implements ComponentInterface {
   }
 
   hostData() {
-    const { btnId, active, component } = this;
+    const { tabId, active, component } = this;
     return {
-      'aria-labelledby': btnId,
-      'aria-hidden': !active ? 'true' : null,
       'role': 'tabpanel',
+      'aria-hidden': !active ? 'true' : null,
+      'aria-labelledby': `tab-button-${tabId}`,
+      'id': `tab-view-${tabId}`,
       'class': {
         'ion-page': component === undefined,
         'tab-hidden': !active

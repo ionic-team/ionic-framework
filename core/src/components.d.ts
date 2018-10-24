@@ -4610,7 +4610,7 @@ export namespace Components {
     /**
     * Set the layout of the text and icon in the tabbar.
     */
-    'layout'?: TabbarLayout;
+    'layout': TabbarLayout;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -4668,7 +4668,7 @@ export namespace Components {
     /**
     * Index or the Tab instance, of the tab to select.
     */
-    'select': (tabOrIndex: number | HTMLIonTabViewElement) => Promise<boolean>;
+    'select': (tabOrId: string | number | HTMLIonTabViewElement) => Promise<boolean>;
     'setRouteId': (id: string) => Promise<RouteWrite>;
   }
   interface IonTabGroupAttributes extends StencilHTMLAttributes {
@@ -4695,11 +4695,7 @@ export namespace Components {
   }
 
   interface IonTabView {
-    /**
-    * If `true`, sets the tab as the active tab.
-    */
     'active': boolean;
-    'btnId'?: string;
     /**
     * The component to display inside of the tab.
     */
@@ -4715,11 +4711,7 @@ export namespace Components {
     'tabId'?: string;
   }
   interface IonTabViewAttributes extends StencilHTMLAttributes {
-    /**
-    * If `true`, sets the tab as the active tab.
-    */
     'active'?: boolean;
-    'btnId'?: string;
     /**
     * The component to display inside of the tab.
     */

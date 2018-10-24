@@ -14,8 +14,6 @@ import { TabbarChangedDetail } from '../tab-bar/tab-bar-interface';
 })
 export class TabButton implements ComponentInterface {
 
-  private tabGroup?: HTMLIonTabGroupElement;
-
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
@@ -42,7 +40,7 @@ export class TabButton implements ComponentInterface {
   /**
    * Set the layout of the text and icon in the tabbar.
    */
-  @Prop({ mutable: true }) layout?: TabbarLayout;
+  @Prop() layout: TabbarLayout = 'icon-top';
 
   /**
    * The URL which will be used as the `href` within this tab's button anchor.
@@ -82,9 +80,8 @@ export class TabButton implements ComponentInterface {
   }
 
   componentWillLoad() {
-    this.tabGroup = this.el.closest('ion-tab-group') || undefined;
-    if (!this.tabGroup) {
-      console.error('ion-tab-bar should be a direct children of ion-tab-group');
+    if (this.tabId === undefined) {
+      console.warn('ion-tab-button needs a tab-id, so it can be selected');
     }
   }
 
@@ -97,22 +94,23 @@ export class TabButton implements ComponentInterface {
   }
 
   hostData() {
-    const { color, selected, layout, disabled, hasLabel, hasIcon } = this;
+    const { color, tabId, selected, layout, disabled, hasLabel, hasIcon } = this;
     return {
+      'role': 'tab',
       'ion-activatable': true,
       'aria-selected': selected ? 'true' : null,
-      'role': 'tab',
+      'id': `tab-button-${tabId}`,
+      'aria-controls': `tab-view-${tabId}`,
       class: {
         ...createColorClasses(color),
 
-        'tab-btn': true,
-        'tab-btn-selected': selected,
-        'tab-btn-has-label': hasLabel,
-        'tab-btn-has-icon': hasIcon,
-        'tab-btn-has-label-only': hasLabel && !hasIcon,
-        'tab-btn-has-icon-only': hasIcon && !hasLabel,
-        'tab-btn-disabled': disabled,
-        [`layout-${layout}`]: true,
+        'tab-selected': selected,
+        'tab-disabled': disabled,
+        'tab-has-label': hasLabel,
+        'tab-has-icon': hasIcon,
+        'tab-has-label-only': hasLabel && !hasIcon,
+        'tab-has-icon-only': hasIcon && !hasLabel,
+        [`tab-layout-${layout}`]: true,
       }
     };
   }

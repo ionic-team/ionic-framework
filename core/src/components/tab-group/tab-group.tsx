@@ -9,9 +9,7 @@ import { Config, NavOutlet, RouteID, RouteWrite, TabbarClickDetail } from '../..
 })
 export class TabGroup implements NavOutlet {
 
-  private ids = -1;
   private transitioning = false;
-  private tabsId = (++tabIds);
   private leavingTab?: HTMLIonTabViewElement;
   private useRouter = false;
 
@@ -50,8 +48,7 @@ export class TabGroup implements NavOutlet {
 
   async componentWillLoad() {
     this.useRouter = !!this.doc.querySelector('ion-router') && !this.el.closest('[no-router]');
-    this.initTabs();
-
+    this.tabs = Array.from(this.el.querySelectorAll('ion-tab-view'));
     this.ionNavWillLoad.emit();
     this.componentWillUpdate();
   }
@@ -91,8 +88,8 @@ export class TabGroup implements NavOutlet {
    * Index or the Tab instance, of the tab to select.
    */
   @Method()
-  async select(tabOrIndex: number | HTMLIonTabViewElement): Promise<boolean> {
-    const selectedTab = await this.getTab(tabOrIndex);
+  async select(tabOrId: number | string | HTMLIonTabViewElement): Promise<boolean> {
+    const selectedTab = await this.getTab(tabOrId);
     if (!this.shouldSwitch(selectedTab)) {
       return false;
     }
@@ -129,13 +126,18 @@ export class TabGroup implements NavOutlet {
   /** Get the tab at the given index */
   @Method()
   async getTab(tabOrIndex: string | number | HTMLIonTabViewElement): Promise<HTMLIonTabViewElement | undefined> {
+    let tab: HTMLIonTabViewElement | undefined;
     if (typeof tabOrIndex === 'string') {
-      return this.tabs.find(tab => tab.tabId === tabOrIndex);
+      tab = this.tabs.find(t => t.tabId === tabOrIndex);
+    } else if (typeof tabOrIndex === 'number') {
+      tab = this.tabs[tabOrIndex];
+    } else {
+      tab = tabOrIndex;
     }
-    if (typeof tabOrIndex === 'number') {
-      return this.tabs[tabOrIndex];
+    if (!tab) {
+      console.error(`tab with id: "${tabOrIndex}" does not exist`);
     }
-    return tabOrIndex;
+    return tab;
   }
 
   /**
@@ -146,17 +148,9 @@ export class TabGroup implements NavOutlet {
     return Promise.resolve(this.selectedTab);
   }
 
-  private initTabs() {
-    const tabs = this.tabs = Array.from(this.el.querySelectorAll('ion-tab-view'));
-    tabs.forEach(tab => {
-      const id = `t-${this.tabsId}-${++this.ids}`;
-      tab.btnId = `tab-${id}`;
-      // tab.id = 'tabpanel-' + id;
-    });
-  }
-
   private async initSelect(): Promise<void> {
     const tabs = this.tabs;
+
     // wait for all tabs to be ready
     await Promise.all(tabs.map(tab => tab.componentOnReady()));
     if (this.useRouter) {
@@ -220,5 +214,3 @@ export class TabGroup implements NavOutlet {
     ];
   }
 }
-
-let tabIds = -1;
