@@ -77,7 +77,7 @@ export namespace Components {
     /**
     * Create an action sheet overlay with action sheet options.
     */
-    'create': (opts: ActionSheetOptions) => Promise<any>;
+    'create': (opts: ActionSheetOptions) => Promise<HTMLIonActionSheetElement>;
     /**
     * Dismiss the open action sheet overlay.
     */
@@ -85,7 +85,7 @@ export namespace Components {
     /**
     * Get the most recently opened action sheet overlay.
     */
-    'getTop': () => Promise<any>;
+    'getTop': () => Promise<HTMLIonActionSheetElement | undefined>;
   }
   interface IonActionSheetControllerAttributes extends StencilHTMLAttributes {}
 
@@ -228,7 +228,7 @@ export namespace Components {
     /**
     * Create an alert overlay with alert options
     */
-    'create': (opts: AlertOptions) => Promise<any>;
+    'create': (opts: AlertOptions) => Promise<HTMLIonAlertElement>;
     /**
     * Dismiss the open alert overlay.
     */
@@ -236,7 +236,7 @@ export namespace Components {
     /**
     * Get the most recently opened alert overlay.
     */
-    'getTop': () => Promise<any>;
+    'getTop': () => Promise<HTMLIonAlertElement | undefined>;
   }
   interface IonAlertControllerAttributes extends StencilHTMLAttributes {}
 
@@ -2288,7 +2288,7 @@ export namespace Components {
     /**
     * Create a loading overlay with loading options.
     */
-    'create': (opts?: LoadingOptions | undefined) => Promise<any>;
+    'create': (opts?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>;
     /**
     * Dismiss the open loading overlay.
     */
@@ -2296,7 +2296,7 @@ export namespace Components {
     /**
     * Get the most recently opened loading overlay.
     */
-    'getTop': () => Promise<any>;
+    'getTop': () => Promise<HTMLIonLoadingElement | undefined>;
   }
   interface IonLoadingControllerAttributes extends StencilHTMLAttributes {}
 
@@ -2489,19 +2489,19 @@ export namespace Components {
     /**
     * Used to enable or disable a menu. For example, there could be multiple left menus, but only one of them should be able to be opened at the same time. If there are multiple menus on the same side, then enabling one menu will also automatically disable all the others that are on the same side.
     */
-    'enable': (shouldEnable: boolean, menuId?: string | null | undefined) => Promise<any>;
+    'enable': (shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
     /**
     * Used to get a menu instance. If a menu is not provided then it will return the first menu found. If the specified menu is `start` or `end`, then it will return the enabled menu on that side. Otherwise, it will try to find the menu using the menu's `id` property. If a menu is not found then it will return `null`.
     */
-    'get': (menuId?: string | null | undefined) => Promise<any>;
+    'get': (menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
     /**
     * Returns an array of all menu instances.
     */
-    'getMenus': () => Promise<any[]>;
+    'getMenus': () => Promise<HTMLIonMenuElement[]>;
     /**
     * Returns the instance of the menu already opened, otherwise `null`.
     */
-    'getOpen': () => Promise<any>;
+    'getOpen': () => Promise<HTMLIonMenuElement | undefined>;
     /**
     * Returns `true` if any menu is currently animating.
     */
@@ -2525,7 +2525,7 @@ export namespace Components {
     /**
     * Used to enable or disable the ability to swipe open the menu.
     */
-    'swipeGesture': (shouldEnable: boolean, menuId?: string | null | undefined) => Promise<any>;
+    'swipeGesture': (shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
     /**
     * Toggle the menu. If it's closed, it will open, and if opened, it will close.
     */
@@ -2663,7 +2663,7 @@ export namespace Components {
     /**
     * Create a modal overlay with modal options.
     */
-    'create': <T extends ComponentRef>(opts: ModalOptions<T>) => Promise<any>;
+    'create': <T extends ComponentRef>(opts: ModalOptions<T>) => Promise<HTMLIonModalElement>;
     /**
     * Dismiss the open modal overlay.
     */
@@ -2671,7 +2671,7 @@ export namespace Components {
     /**
     * Get the most recently opened modal overlay.
     */
-    'getTop': () => Promise<any>;
+    'getTop': () => Promise<HTMLIonModalElement | undefined>;
   }
   interface IonModalControllerAttributes extends StencilHTMLAttributes {}
 
@@ -2994,7 +2994,7 @@ export namespace Components {
     /**
     * Create a picker overlay with picker options.
     */
-    'create': (opts: PickerOptions) => Promise<any>;
+    'create': (opts: PickerOptions) => Promise<HTMLIonPickerElement>;
     /**
     * Dismiss the open picker overlay.
     */
@@ -3002,7 +3002,7 @@ export namespace Components {
     /**
     * Get the most recently opened picker overlay.
     */
-    'getTop': () => Promise<any>;
+    'getTop': () => Promise<HTMLIonPickerElement | undefined>;
   }
   interface IonPickerControllerAttributes extends StencilHTMLAttributes {}
 
@@ -3149,7 +3149,7 @@ export namespace Components {
     /**
     * Create a popover overlay with popover options.
     */
-    'create': <T extends ComponentRef>(opts: PopoverOptions<T>) => Promise<any>;
+    'create': <T extends ComponentRef>(opts: PopoverOptions<T>) => Promise<HTMLIonPopoverElement>;
     /**
     * Dismiss the open popover overlay.
     */
@@ -3157,7 +3157,7 @@ export namespace Components {
     /**
     * Get the most recently opened popover overlay.
     */
-    'getTop': () => Promise<any>;
+    'getTop': () => Promise<HTMLIonPopoverElement | undefined>;
   }
   interface IonPopoverControllerAttributes extends StencilHTMLAttributes {}
 
@@ -4165,7 +4165,7 @@ export namespace Components {
     /**
     * Opens the select overlay, it could be an alert, action-sheet or popover, based in `ion-select` settings.
     */
-    'open': (ev?: UIEvent | undefined) => Promise<any>;
+    'open': (ev?: UIEvent | undefined) => Promise<OverlaySelect>;
     /**
     * The text to display when the select is empty.
     */
@@ -4685,11 +4685,11 @@ export namespace Components {
     /**
     * Get the currently selected tab
     */
-    'getSelected': () => Promise<any>;
+    'getSelected': () => Promise<HTMLIonTabElement | undefined>;
     /**
     * Get the tab at the given index
     */
-    'getTab': (tabOrIndex: any) => Promise<any>;
+    'getTab': (tabOrIndex: string | number | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>;
     /**
     * A unique name for the tabs.
     */
@@ -4697,7 +4697,7 @@ export namespace Components {
     /**
     * Index or the Tab instance, of the tab to select.
     */
-    'select': (tabOrId: any) => Promise<boolean>;
+    'select': (tabOrId: string | number | HTMLIonTabElement) => Promise<boolean>;
     'setRouteId': (id: string) => Promise<RouteWrite>;
   }
   interface IonTabsAttributes extends StencilHTMLAttributes {
@@ -4937,7 +4937,7 @@ export namespace Components {
     /**
     * Create a toast overlay with toast options.
     */
-    'create': (opts?: ToastOptions | undefined) => Promise<any>;
+    'create': (opts?: ToastOptions | undefined) => Promise<HTMLIonToastElement>;
     /**
     * Dismiss the open toast overlay.
     */
@@ -4945,7 +4945,7 @@ export namespace Components {
     /**
     * Get the most recently opened toast overlay.
     */
-    'getTop': () => Promise<any>;
+    'getTop': () => Promise<HTMLIonToastElement | undefined>;
   }
   interface IonToastControllerAttributes extends StencilHTMLAttributes {}
 

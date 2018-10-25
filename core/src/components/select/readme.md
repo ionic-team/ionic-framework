@@ -69,7 +69,7 @@ Since select uses the alert, action sheet and popover interfaces, options can be
 
 ## Methods
 
-### `open(ev?: UIEvent | undefined) => Promise<any>`
+### `open(ev?: UIEvent | undefined) => Promise<OverlaySelect>`
 
 Opens the select overlay, it could be an alert, action-sheet or popover,
 based in `ion-select` settings.
@@ -82,7 +82,7 @@ based in `ion-select` settings.
 
 #### Returns
 
-Type: `Promise<any>`
+Type: `Promise<OverlaySelect>`
 
 
 

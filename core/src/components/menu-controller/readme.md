@@ -25,7 +25,7 @@ Type: `Promise<boolean>`
 
 
 
-### `enable(shouldEnable: boolean, menuId?: string | null | undefined) => Promise<any>`
+### `enable(shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undef...`
 
 Used to enable or disable a menu. For example, there could be multiple
 left menus, but only one of them should be able to be opened at the same
@@ -41,11 +41,11 @@ will also automatically disable all the others that are on the same side.
 
 #### Returns
 
-Type: `Promise<any>`
+Type: `Promise<HTMLIonMenuElement | undefined>`
 
 
 
-### `get(menuId?: string | null | undefined) => Promise<any>`
+### `get(menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>`
 
 Used to get a menu instance. If a menu is not provided then it will
 return the first menu found. If the specified menu is `start` or `end`, then
@@ -61,27 +61,27 @@ return `null`.
 
 #### Returns
 
-Type: `Promise<any>`
+Type: `Promise<HTMLIonMenuElement | undefined>`
 
 
 
-### `getMenus() => Promise<any[]>`
+### `getMenus() => Promise<HTMLIonMenuElement[]>`
 
 Returns an array of all menu instances.
 
 #### Returns
 
-Type: `Promise<any[]>`
+Type: `Promise<HTMLIonMenuElement[]>`
 
 
 
-### `getOpen() => Promise<any>`
+### `getOpen() => Promise<HTMLIonMenuElement | undefined>`
 
 Returns the instance of the menu already opened, otherwise `null`.
 
 #### Returns
 
-Type: `Promise<any>`
+Type: `Promise<HTMLIonMenuElement | undefined>`
 
 
 
@@ -165,7 +165,7 @@ Type: `void`
 
 
 
-### `swipeGesture(shouldEnable: boolean, menuId?: string | null | undefined) => Promise<any>`
+### `swipeGesture(shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undef...`
 
 Used to enable or disable the ability to swipe open the menu.
 
@@ -178,7 +178,7 @@ Used to enable or disable the ability to swipe open the menu.
 
 #### Returns
 
-Type: `Promise<any>`
+Type: `Promise<HTMLIonMenuElement | undefined>`
 
 
 

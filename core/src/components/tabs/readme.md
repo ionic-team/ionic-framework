@@ -56,41 +56,41 @@ Type: `Promise<RouteID | undefined>`
 
 
 
-### `getSelected() => Promise<any>`
+### `getSelected() => Promise<HTMLIonTabElement | undefined>`
 
 Get the currently selected tab
 
 #### Returns
 
-Type: `Promise<any>`
+Type: `Promise<HTMLIonTabElement | undefined>`
 
 
 
-### `getTab(tabOrIndex: any) => Promise<any>`
+### `getTab(tabOrIndex: string | number | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>`
 
 Get the tab at the given index
 
 #### Parameters
 
-| Name         | Type  | Description |
-| ------------ | ----- | ----------- |
-| `tabOrIndex` | `any` |             |
+| Name         | Type                                    | Description |
+| ------------ | --------------------------------------- | ----------- |
+| `tabOrIndex` | `HTMLIonTabElement \| number \| string` |             |
 
 #### Returns
 
-Type: `Promise<any>`
+Type: `Promise<HTMLIonTabElement | undefined>`
 
 
 
-### `select(tabOrId: any) => Promise<boolean>`
+### `select(tabOrId: string | number | HTMLIonTabElement) => Promise<boolean>`
 
 Index or the Tab instance, of the tab to select.
 
 #### Parameters
 
-| Name      | Type  | Description |
-| --------- | ----- | ----------- |
-| `tabOrId` | `any` |             |
+| Name      | Type                                    | Description |
+| --------- | --------------------------------------- | ----------- |
+| `tabOrId` | `HTMLIonTabElement \| number \| string` |             |
 
 #### Returns
 
