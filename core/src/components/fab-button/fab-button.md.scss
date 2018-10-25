@@ -13,9 +13,11 @@
   --color-focused: var(--color-activated);
   --box-shadow: #{$fab-md-box-shadow};
   --transition: #{
-    box-shadow 300ms cubic-bezier(.4, 0, .2, 1),
-    background-color 300ms cubic-bezier(.4, 0, .2, 1),
-    color 300ms cubic-bezier(.4, 0, .2, 1)
+    box-shadow 280ms cubic-bezier(.4, 0, .2, 1),
+    background-color 280ms cubic-bezier(.4, 0, .2, 1),
+    color 280ms cubic-bezier(.4, 0, .2, 1),
+    opacity 15ms linear 30ms,
+    transform 270ms cubic-bezier(0, 0, .2, 1) 0ms
   };
 }
 
@@ -39,13 +41,6 @@
   --background: #{$fab-md-list-button-background-color};
   --background-activated: #{$fab-md-list-button-background-color-activated};
   --background-focused: var(--background-activated);
-  --transition: #{
-    transform 200ms ease 10ms ease 10ms
-    opacity 200ms ease 10ms ease 10ms
-    box-shadow 300ms cubic-bezier(.4, 0, .2, 1)
-    background-color 300ms cubic-bezier(.4, 0, .2, 1)
-    color 300ms cubic-bezier(.4, 0, .2, 1)
-  };
 }
 
 :host(.fab-button-in-list) ::slotted(ion-icon) {
