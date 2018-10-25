@@ -4,7 +4,7 @@ import { Animation, AnimationBuilder, AnimationController, Config } from '../../
 
 import { Animator } from './animator';
 
-/** @hidden */
+/** @internal */
 @Component({
   tag: 'ion-animation-controller'
 })

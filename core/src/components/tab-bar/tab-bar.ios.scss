@@ -1,0 +1,21 @@
+@import "./tab-bar";
+@import "../../themes/ionic.globals.ios";
+
+// iOS Tabs
+// --------------------------------------------------
+
+:host {
+  // default color / background
+  --background: #{$tabbar-ios-background};
+  --border: #{$hairlines-width solid $tabbar-ios-border-color};
+
+  height: 50px;
+}
+
+// iOS Translucent Tabbar
+// --------------------------------------------------
+
+:host(.tabbar-translucent) {
+  background-color: #{current-color(base, .8)};
+  backdrop-filter: saturate(210%) blur(20px);
+}

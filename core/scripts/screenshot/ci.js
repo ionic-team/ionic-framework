@@ -158,7 +158,7 @@ class CIScreenshotConnector extends IonicConnector {
       await Promise.all(batch.map(async uploadPath => {
         const stream = fs.createReadStream(uploadPath);
         const relPath = path.relative(appRoot, uploadPath);
-        const key = `test/${results.currentBuild.id}/${relPath}`;
+        const key = `data/tests/${results.currentBuild.id}/${relPath}`;
 
         let contentType = 'text/plain';
         if (uploadPath.endsWith('.js')) {

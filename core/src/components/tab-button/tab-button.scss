@@ -1,0 +1,169 @@
+@import "../../themes/ionic.globals";
+
+:host {
+  --badge-end: 4%;
+
+  flex: 1;
+
+  height: 100%;
+
+  color: var(--color);
+}
+
+a {
+  @include text-inherit();
+  @include margin(0);
+  @include padding(
+    var(--padding-top),
+    var(--padding-end),
+    var(--padding-bottom),
+    var(--padding-start),
+  );
+
+  display: flex;
+  position: relative;
+
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+
+  outline: none;
+
+  background: var(--background);
+
+  text-decoration: none;
+
+  cursor: pointer;
+  overflow: hidden;
+  box-sizing: border-box;
+  -webkit-user-drag: none;
+}
+
+a:focus-visible {
+  background: var(--background-focused);
+}
+
+@media (any-hover: hover) {
+  a:hover {
+    color: var(--color-selected);
+  }
+}
+
+:host(.tab-selected) {
+  color: var(--color-selected);
+}
+
+:host(.tab-hidden) {
+  /* stylelint-disable-next-line declaration-no-important */
+  display: none !important;
+}
+
+:host(.tab-disabled) {
+  pointer-events: none;
+
+  opacity: .4;
+}
+
+::slotted(ion-label) {
+  order: 0;
+}
+
+::slotted(ion-icon) {
+  order: -1;
+
+  height: 1em;
+}
+
+::slotted(ion-label),
+::slotted(ion-icon) {
+  display: block;
+
+  align-self: center;
+
+  min-width: 26px;
+  max-width: 100%;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+:host(.tab-has-label-only) ::slotted(ion-label) {
+  white-space: normal;
+}
+
+
+
+// Tab Badges
+// --------------------------------------------------
+
+::slotted(ion-badge) {
+  @include position(null, var(--badge-end), null, null);
+  @include padding(1px, 6px);
+
+  box-sizing: border-box;
+
+  position: absolute;
+
+  height: auto;
+
+  font-size: 12px;
+
+  line-height: 16px;
+}
+
+
+// Tab Button Layout
+// --------------------------------------------------
+
+:host(.tab-layout-icon-start) a {
+  flex-direction: row;
+}
+
+:host(.tab-layout-icon-end) a {
+  flex-direction: row-reverse;
+}
+
+:host(.tab-layout-icon-bottom) a {
+  flex-direction: column-reverse;
+}
+
+:host(.tab-layout-icon-start) a,
+:host(.tab-layout-icon-end) a,
+:host(.tab-layout-icon-hide) a,
+:host(.tab-layout-label-hide) a,
+:host(.tab-has-icon-only) a,
+:host(.tab-has-label-only) a {
+  justify-content: center;
+}
+
+:host(.tab-layout-icon-hide) ::slotted(ion-icon) {
+  display: none;
+}
+
+:host(.tab-layout-label-hide) ::slotted(ion-label) {
+  display: none;
+}
+
+:host(.tab-layout-icon-top),
+:host(.tab-layout-icon-bottom),
+:host(.tab-layout-icon-only),
+:host(.tab-layout-label-hide),
+:host(.tab-has-icon-only) {
+  --badge-end: #{calc(50% - 30px)};
+}
+
+:host(.tab-layout-icon-hide),
+:host(.tab-layout-icon-start),
+:host(.tab-layout-icon-end),
+:host(.tab-has-label-only) {
+  --badge-end: #{calc(50% - 50px)};
+}

@@ -132,7 +132,6 @@ export class Button implements ComponentInterface {
       const form = this.el.closest('form');
       if (form) {
         ev.preventDefault();
-        ev.stopPropagation();
 
         const fakeButton = document.createElement('button');
         fakeButton.type = this.type;
