@@ -6,4 +6,6 @@
 
 :host {
   --color: #{$note-md-color};
+
+  font-size: $note-md-font-size;
 }
