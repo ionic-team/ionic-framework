@@ -158,6 +158,11 @@
 // Material Design Stacked & Floating Inputs
 // --------------------------------------------------
 
+:host(.item-label-floating),
+:host(.item-label-stacked) {
+  --min-height: 65px;
+}
+
 // TODO: refactor
 :host(.item-label-stacked) ::slotted(ion-input),
 :host(.item-label-floating) ::slotted(ion-input),

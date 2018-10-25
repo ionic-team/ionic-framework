@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 import { InputChangeEvent, Mode, PickerColumn, PickerColumnOption, PickerOptions, StyleEvent } from '../../interface';
-import { clamp, deferEvent } from '../../utils/helpers';
+import { clamp } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
 import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getValueFromFormat, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
@@ -179,7 +179,7 @@ export class Datetime implements ComponentInterface {
   /**
    * The value of the datetime as a valid ISO 8601 datetime string.
    */
-  @Prop({ mutable: true }) value?: string;
+  @Prop({ mutable: true }) value?: string | null;
 
   /**
    * Update the datetime value when the value changes
@@ -212,7 +212,7 @@ export class Datetime implements ComponentInterface {
     // first see if locale names were provided in the inputs
     // then check to see if they're in the config
     // if neither were provided then it will use default English names
-    this.ionStyle = deferEvent(this.ionStyle);
+    this.emitStyle();
     this.locale = {
       // this.locale[type] = convertToArrayOfStrings((this[type] ? this[type] : this.config.get(type), type);
       monthNames: convertToArrayOfStrings(this.monthNames, 'monthNames'),
@@ -222,10 +222,6 @@ export class Datetime implements ComponentInterface {
     };
 
     this.updateDatetimeValue(this.value);
-  }
-
-  componentDidLoad() {
-    this.emitStyle();
   }
 
   /**

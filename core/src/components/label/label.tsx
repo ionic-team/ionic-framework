@@ -42,11 +42,10 @@ export class Label implements ComponentInterface {
 
   componentWillLoad() {
     this.noAnimate = (this.position === 'floating');
+    this.emitStyle();
   }
 
   componentDidLoad() {
-    this.positionChanged();
-
     if (this.noAnimate) {
       setTimeout(() => {
         this.noAnimate = false;
@@ -56,6 +55,10 @@ export class Label implements ComponentInterface {
 
   @Watch('position')
   positionChanged() {
+    this.emitStyle();
+  }
+
+  private emitStyle() {
     const position = this.position;
     this.ionStyle.emit({
       'label': true,

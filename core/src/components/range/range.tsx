@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { Color, Gesture, GestureDetail, InputChangeEvent, Mode, RangeValue, StyleEvent } from '../../interface';
-import { clamp, debounceEvent, deferEvent } from '../../utils/helpers';
+import { clamp, debounceEvent } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 import { Knob, RangeEventDetail } from './range-interface';
@@ -148,8 +148,6 @@ export class Range implements ComponentInterface {
   @Event() ionBlur!: EventEmitter<void>;
 
   componentWillLoad() {
-    this.ionStyle = deferEvent(this.ionStyle);
-
     this.updateRatio();
     this.debounceChanged();
     this.emitStyle();

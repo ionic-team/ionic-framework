@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
 import { CheckedInputChangeEvent, Color, Mode, StyleEvent } from '../../interface';
-import { deferEvent, renderHiddenInput } from '../../utils/helpers';
+import { renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 @Component({
@@ -76,10 +76,6 @@ export class Checkbox implements ComponentInterface {
 
   componentWillLoad() {
     this.emitStyle();
-  }
-
-  componentDidLoad() {
-    this.ionStyle = deferEvent(this.ionStyle);
   }
 
   @Watch('checked')
