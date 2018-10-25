@@ -5,10 +5,10 @@ import { attachComponent } from '../../utils/framework-delegate';
 
 @Component({
   tag: 'ion-tab',
-  styleUrl: 'tab-view.scss',
+  styleUrl: 'tab.scss',
   shadow: true
 })
-export class TabView implements ComponentInterface {
+export class Tab implements ComponentInterface {
 
   private loaded = false;
   @Element() el!: HTMLIonTabElement;
@@ -42,7 +42,7 @@ export class TabView implements ComponentInterface {
 
       if (this.tab === undefined) {
         console.error(`Tab views need to have an unique id attribute:
-  <ion-tab tab-id="my-unique-id">`);
+  <ion-tab tab="my-unique-id">`);
       }
     }
   }

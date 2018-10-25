@@ -812,6 +812,17 @@ export class SplitPane {
   }
 }
 
+export declare interface Tab extends StencilComponents<'IonTab'> {}
+@Component({ selector: 'ion-tab', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['active', 'delegate', 'tab', 'component'] })
+export class Tab {
+
+  constructor(r: ElementRef) {
+    const el = r.nativeElement;
+    proxyMethods(this, el, ['setActive']);
+    proxyInputs(this, el, ['active', 'delegate', 'tab', 'component']);
+  }
+}
+
 export declare interface TabBar extends StencilComponents<'IonTabBar'> {}
 @Component({ selector: 'ion-tab-bar', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'layout', 'placement', 'selectedTab', 'translucent'] })
 export class TabBar {
@@ -833,17 +844,6 @@ export class TabButton {
     const el = r.nativeElement;
     proxyInputs(this, el, ['mode', 'color', 'layout', 'href', 'tab', 'disabled']);
     proxyOutputs(this, el, ['ionTabbarClick']);
-  }
-}
-
-export declare interface TabView extends StencilComponents<'IonTab'> {}
-@Component({ selector: 'ion-tab', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['active', 'delegate', 'tab', 'component'] })
-export class TabView {
-
-  constructor(r: ElementRef) {
-    const el = r.nativeElement;
-    proxyMethods(this, el, ['setActive']);
-    proxyInputs(this, el, ['active', 'delegate', 'tab', 'component']);
   }
 }
 
