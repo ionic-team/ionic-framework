@@ -5,6 +5,12 @@
 // --------------------------------------------------
 
 :host {
+  --background: #{$fab-md-background-color};
+  --background-activated: #{$fab-md-background-color-activated};
+  --background-focused: var(--background-activated);
+  --color: #{$fab-md-text-color};
+  --color-activated: #{$fab-md-text-color};
+  --color-focused: var(--color-activated);
   --box-shadow: #{$fab-md-box-shadow};
   --transition: #{
     box-shadow 300ms cubic-bezier(.4, 0, .2, 1),
@@ -28,7 +34,11 @@
 
 :host(.fab-button-in-list) {
   --color: #{$fab-md-list-button-text-color};
+  --color-activated: #{$fab-md-list-button-text-color};
+  --color-focused: var(--color-activated);
   --background: #{$fab-md-list-button-background-color};
+  --background-activated: #{$fab-md-list-button-background-color-activated};
+  --background-focused: var(--background-activated);
   --transition: #{
     transform 200ms ease 10ms ease 10ms
     opacity 200ms ease 10ms ease 10ms
@@ -36,8 +46,4 @@
     background-color 300ms cubic-bezier(.4, 0, .2, 1)
     color 300ms cubic-bezier(.4, 0, .2, 1)
   };
-}
-
-:host(.fab-button-in-list.activated) {
-  --background: #{$fab-md-list-button-background-color-activated};
 }

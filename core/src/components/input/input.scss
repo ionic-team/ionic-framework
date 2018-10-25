@@ -35,12 +35,12 @@
 
   width: 100%;
 
-  background: var(--background);
-  color: var(--color);
-
   /* stylelint-disable */
   /* TODO: find a better solution in padding.css, that does not require !important, */
   padding: 0 !important;
+
+  background: var(--background);
+  color: var(--color);
   /* stylelint-enable */
 
   font-family: $font-family-base;

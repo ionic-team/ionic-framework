@@ -12,23 +12,17 @@ $fab-md-box-shadow-activated:                     0 5px 15px 0 rgba(0, 0, 0, .4)
 /// @prop - Background color of the button
 $fab-md-background-color:                         ion-color(primary, base) !default;
 
+/// @prop - Background color of the activated button
+$fab-md-background-color-activated:               ion-color(primary, shade) !default;
+
 /// @prop - Text color of the button
 $fab-md-text-color:                               ion-color(primary, contrast) !default;
-
-/// @prop - Color of the button icon
-$fab-md-icon-fill-color:                          $fab-md-text-color !default;
-
-/// @prop - Background color of the activated button
-$fab-md-background-color-activated:               ion-color(primary, tint) !default;
 
 /// @prop - Background color of the button in a list
 $fab-md-list-button-background-color:             ion-color(light, base) !default;
 
-/// @prop - Text color of the button in a list
-$fab-md-list-button-text-color:                   ion-color(light, contrast) !default;
-
-/// @prop - Color of the button icon in a list
-$fab-md-list-button-icon-fill-color:              $fab-md-list-button-text-color !default;
-
 /// @prop - Background color of the activated button in a list
-$fab-md-list-button-background-color-activated:   ion-color(primary, tint) !default;
+$fab-md-list-button-background-color-activated:   ion-color(light, shade) !default;
+
+/// @prop - Text color of the button in a list
+$fab-md-list-button-text-color:                   rgba(var(--ion-text-color-rgb, $text-color-rgb), 0.54) !default;
