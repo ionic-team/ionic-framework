@@ -1,0 +1,88 @@
+@import "./tab-button";
+@import "./tab-button.md.vars";
+
+// Material Design Tab Button
+// --------------------------------------------------
+
+:host {
+  --padding-top: #{$tab-button-md-padding-top};
+  --padding-end: #{$tab-button-md-padding-end};
+  --padding-bottom: #{$tab-button-md-padding-bottom};
+  --padding-start: #{$tab-button-md-padding-start};
+  --color: #{$tab-button-md-text-color};
+  --color-selected: #{$tabbar-md-color-activated};
+  --background: transparent;
+  --background-focused: #{$tabbar-md-background-focused};
+
+  max-width: 168px;
+
+  font-size: $tab-button-md-font-size;
+  font-weight: $tab-button-md-font-weight;
+}
+
+
+// Material Design Tab Button Text
+// --------------------------------------------------
+
+::slotted(ion-label) {
+  @include margin($tab-button-md-text-margin-top, $tab-button-md-text-margin-end, $tab-button-md-text-margin-bottom, $tab-button-md-text-margin-start);
+  @include transform-origin(center, bottom);
+
+  transition: $tab-button-md-text-transition;
+
+  text-transform: $tab-button-md-text-capitalization;
+}
+
+::slotted(.tab-selected) ::slotted(ion-label) {
+  transform: #{$tab-button-md-text-transform-active};
+
+  transition: $tab-button-md-text-transition;
+}
+
+// Material Design Tab Button Icon
+// --------------------------------------------------
+
+::slotted(ion-icon) {
+  @include transform-origin(center, center);
+
+  width: $tab-button-md-icon-size;
+  height: $tab-button-md-icon-size;
+
+  transition: $tab-button-md-icon-transition;
+
+  font-size: $tab-button-md-icon-size;
+}
+
+
+
+// Material Design TabButton Layout
+// --------------------------------------------------
+
+:host(.tab-layout-icon-top) ::slotted(ion-label) {
+  margin-bottom: -2px;
+}
+
+:host(.tab-layout-icon-bottom) ::slotted(ion-label) {
+  margin-top: -2px;
+  // --label-transform: transform-origin(center, top);
+}
+
+:host(.tab-selected) ::slotted(ion-label) {
+  transform: #{$tab-button-md-text-transform-active};
+}
+
+:host(.tab-selected) ::slotted(ion-icon) {
+  transform: #{$tab-button-md-icon-transform-active};
+}
+
+:host(.tab-layout-icon-end.tab-selected) ::slotted(ion-icon) {
+  transform: #{$tab-button-md-icon-right-transform-active};
+}
+
+:host(.tab-layout-icon-bottom.tab-selected) ::slotted(ion-icon) {
+  transform: #{$tab-button-md-icon-bottom-transform-active};
+}
+
+:host(.tab-layout-icon-start.tab-selected) ::slotted(ion-icon) {
+  transform: #{$tab-button-md-icon-left-transform-active};
+}

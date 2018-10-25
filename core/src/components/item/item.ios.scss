@@ -142,6 +142,11 @@
 // iOS Stacked & Floating Inputs
 // --------------------------------------------------
 
+:host(.item-label-floating),
+:host(.item-label-stacked) {
+  --min-height: 68px;
+}
+
 :host(.item-label-stacked) ::slotted(ion-input),
 :host(.item-label-floating) ::slotted(ion-input),
 :host(.item-label-stacked) ::slotted(ion-textarea),

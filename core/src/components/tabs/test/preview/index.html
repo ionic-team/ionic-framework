@@ -14,8 +14,8 @@
 
   <ion-app>
     <ion-tabs>
-      <ion-tab label="Plain List" icon="star" path="">
 
+      <ion-tab tab="tab-one">
         <ion-header translucent>
           <ion-toolbar>
             <ion-title>Tab One</ion-title>
@@ -24,10 +24,9 @@
         <ion-content padding fullscreen>
           Tab One
         </ion-content>
-
       </ion-tab>
 
-      <ion-tab label="Schedule" icon="globe" path="tab2">
+      <ion-tab tab="tab-two">
 
         <ion-header translucent>
           <ion-toolbar>
@@ -40,7 +39,7 @@
 
       </ion-tab>
 
-      <ion-tab label="Stopwatch" icon="logo-facebook" path="tab3">
+      <ion-tab tab="tab-three">
 
         <ion-header translucent>
           <ion-toolbar>
@@ -53,8 +52,29 @@
 
       </ion-tab>
 
-      <ion-tab disabled label="Messages" icon="chatboxes" component="page-one" path="tab4">
-      </ion-tab>
+      <ion-tab tab="tab-four" component="page-one"></ion-tab>
+
+      <ion-tab-bar>
+        <ion-tab-button tab="tab-one">
+          <ion-label>Plain List</ion-label>
+          <ion-icon name="star"></ion-icon>
+        </ion-tab-button>
+
+        <ion-tab-button tab="tab-two">
+          <ion-label>Schedule</ion-label>
+          <ion-icon name="globe"></ion-icon>
+        </ion-tab-button>
+
+        <ion-tab-button tab="tab-three">
+          <ion-label>Stopwatch</ion-label>
+          <ion-icon name="logo-facebook"></ion-icon>
+        </ion-tab-button>
+
+        <ion-tab-button tab="tab-four">
+          <ion-label>Messages</ion-label>
+          <ion-icon name="chatboxes"></ion-icon>
+        </ion-tab-button>
+      </ion-tab-bar>
     </ion-tabs>
 
     <style>

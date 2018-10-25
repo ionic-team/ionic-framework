@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Prop } from '@stencil/core';
 
 @Component({
-  tag: 'ion-select-option'
+  tag: 'ion-select-option',
 })
 export class SelectOption implements ComponentInterface {
 
@@ -22,15 +22,17 @@ export class SelectOption implements ComponentInterface {
   /**
    * The text value of the option.
    */
-  @Prop({ mutable: true }) value?: any;
+  @Prop({ mutable: true }) value?: any | null;
 
   /**
    * Emitted when the select option loads.
+   * @internal
    */
   @Event() ionSelectOptionDidLoad!: EventEmitter<void>;
 
   /**
    * Emitted when the select option unloads.
+   * @internal
    */
   @Event() ionSelectOptionDidUnload!: EventEmitter<void>;
 

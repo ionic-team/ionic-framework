@@ -1,0 +1,72 @@
+@import "./tab-button";
+@import "./tab-button.ios.vars";
+
+:host {
+  --padding-top: #{$tab-button-ios-padding-top};
+  --padding-end: #{$tab-button-ios-padding-end};
+  --padding-bottom: #{$tab-button-ios-padding-bottom};
+  --padding-start: #{$tab-button-ios-padding-start};
+  --color: #{$tab-button-ios-text-color};
+  --color-selected: #{$tabbar-ios-color-activated};
+  --background: transparent;
+  --background-focused: #{$tabbar-ios-background-focused};
+
+  max-width: $tab-button-ios-max-width;
+
+  font-size: $tab-button-ios-font-size;
+}
+
+:host(.tab-has-label-only) ::slotted(ion-label) {
+  @include margin(2px, 0);
+
+  font-size: $tab-button-ios-font-size + 2;
+  font-size: 14px;
+
+  line-height: 1.1;
+}
+
+::slotted(ion-label) {
+  @include margin(0, null, 1px, null);
+
+  min-height: $tab-button-ios-font-size + 1;
+}
+
+::slotted(ion-icon) {
+  @include margin(4px, null, null, null);
+
+  font-size: $tab-button-ios-icon-size;
+}
+
+::slotted(ion-icon::before) {
+  vertical-align: top;
+}
+
+
+// iOS TabButton Layout
+// --------------------------------------------------
+
+:host(.tab-layout-icon-end) ::slotted(ion-label),
+:host(.tab-layout-icon-start) ::slotted(ion-label),
+:host(.tab-layout-icon-hide) ::slotted(ion-label) {
+  margin-top: 2px;
+  margin-bottom: 2px;
+
+  font-size: 14px;
+
+  line-height: 1.1;
+}
+
+:host(.tab-layout-icon-end) ::slotted(ion-icon),
+:host(.tab-layout-icon-start) ::slotted(ion-icon) {
+  min-width: 24px;
+  height: 26px;
+
+  margin-top: 2px;
+  margin-bottom: 1px;
+
+  font-size: 24px;
+}
+
+:host(.tab-layout-label-hide) ::slotted(ion-icon) {
+  @include margin(0);
+}

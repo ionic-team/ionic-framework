@@ -1,0 +1,51 @@
+@import "../../themes/ionic.globals";
+
+:host {
+  @include padding-horizontal(
+    var(--ion-safe-area-left),
+    var(--ion-safe-area-right)
+  );
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  order: 1;
+
+  width: auto;
+
+  background: var(--background);
+  color: var(--color);
+
+  contain: strict;
+  user-select: none;
+  z-index: $z-index-toolbar;
+  box-sizing: content-box;
+}
+
+:host(.ion-color) {
+  --background: #{current-color(base)};
+}
+
+:host(.ion-color) ::slotted(ion-tab-button) {
+  --color: #{current-color(contrast, .7)};
+  --color-selected: #{current-color(contrast)};
+  --background-focused: #{current-color(shade)};
+}
+
+:host(.placement-top) {
+  order: -1;
+
+  border-bottom: var(--border);
+}
+
+:host(.placement-bottom) {
+  padding-bottom: var(--ion-safe-area-bottom, 0);
+
+  border-top: var(--border);
+}
+
+:host(.tabbar-hidden) {
+  /* stylelint-disable-next-line declaration-no-important */
+  display: none !important;
+}
