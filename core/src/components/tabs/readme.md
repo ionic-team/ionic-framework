@@ -11,19 +11,19 @@ direct children of `ion-tabs`, like this:
 
 ```html
 <ion-tabs>
-  <ion-tab tab="home">Content</ion-tab>
-  <ion-tab tab="settings">Content 3</ion-tab>
+  <ion-tab tab="home">Home Content</ion-tab>
+  <ion-tab tab="settings">Settings Content</ion-tab>
 
   <ion-tab-bar>
 
     <ion-tab-button tab="home">
       <ion-label>Home</ion-label>
-      <ion-icon name="home"></ion-label>
+      <ion-icon name="home"></ion-icon>
     </ion-tab-button>
 
     <ion-tab-button tab="settings">
       <ion-label>Settings</ion-label>
-      <ion-icon name="gears"></ion-label>
+      <ion-icon name="gear"></ion-icon>
     </ion-tab-button>
 
   </ion-tab-bar>
