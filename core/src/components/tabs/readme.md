@@ -72,15 +72,15 @@ Type: `Promise<HTMLIonTabElement | undefined>`
 
 
 
-### `getTab(tabOrIndex: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>`
+### `getTab(tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>`
 
 Get the tab at the given index
 
 #### Parameters
 
-| Name         | Type                          | Description |
-| ------------ | ----------------------------- | ----------- |
-| `tabOrIndex` | `HTMLIonTabElement \| string` |             |
+| Name  | Type                          | Description |
+| ----- | ----------------------------- | ----------- |
+| `tab` | `HTMLIonTabElement \| string` |             |
 
 #### Returns
 

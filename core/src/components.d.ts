@@ -4562,7 +4562,7 @@ export namespace Components {
     */
     'selectedTab'?: string;
     /**
-    * If `true`, the tabbar will be translucent. Defaults to `false`.
+    * If `true`, the tab bar will be translucent. Defaults to `false`.
     */
     'translucent': boolean;
   }
@@ -4589,7 +4589,7 @@ export namespace Components {
     */
     'selectedTab'?: string;
     /**
-    * If `true`, the tabbar will be translucent. Defaults to `false`.
+    * If `true`, the tab bar will be translucent. Defaults to `false`.
     */
     'translucent'?: boolean;
   }
@@ -4689,7 +4689,7 @@ export namespace Components {
     /**
     * Get the tab at the given index
     */
-    'getTab': (tabOrIndex: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>;
+    'getTab': (tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>;
     /**
     * A unique name for the tabs.
     */

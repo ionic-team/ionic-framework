@@ -1,6 +1,6 @@
 # ion-tab-bar
 
-Tabbar is the UI component that implements the array of button of `ion-tabs`. It's provided by default when `ion-tabs` is used, though, this "implicit" tabbar can not be customized.
+Tab bar is the UI component that implements the array of button of `ion-tabs`. It's provided by default when `ion-tabs` is used, though, this "implicit" tab bar can not be customized.
 
 In order to have a custom tabbar, it should be provided in user's markup as direct children of `ion-tabs`:
 
@@ -34,7 +34,7 @@ In order to have a custom tabbar, it should be provided in user's markup as dire
 | `mode`        | `mode`         | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                                                                                                                                                                              | `"ios" \| "md"`                                                                            |
 | `placement`   | `placement`    | Set the position of the tabbar, relative to the content.                                                                                                                                                                                                               | `"bottom" \| "top"`                                                                        |
 | `selectedTab` | `selected-tab` | The selected tab component                                                                                                                                                                                                                                             | `string \| undefined`                                                                      |
-| `translucent` | `translucent`  | If `true`, the tabbar will be translucent. Defaults to `false`.                                                                                                                                                                                                        | `boolean`                                                                                  |
+| `translucent` | `translucent`  | If `true`, the tab bar will be translucent. Defaults to `false`.                                                                                                                                                                                                       | `boolean`                                                                                  |
 
 
 ----------------------------------------------

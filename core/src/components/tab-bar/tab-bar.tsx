@@ -55,7 +55,7 @@ export class TabBar implements ComponentInterface {
   }
 
   /**
-   * If `true`, the tabbar will be translucent. Defaults to `false`.
+   * If `true`, the tab bar will be translucent. Defaults to `false`.
    */
   @Prop() translucent = false;
 

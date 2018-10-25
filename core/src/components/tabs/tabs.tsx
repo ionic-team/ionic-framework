@@ -125,15 +125,15 @@ export class Tabs implements NavOutlet {
 
   /** Get the tab at the given index */
   @Method()
-  async getTab(tabOrIndex: string | HTMLIonTabElement): Promise<HTMLIonTabElement | undefined> {
-    const tab = (typeof tabOrIndex === 'string')
-      ? this.tabs.find(t => t.tab === tabOrIndex)
-      : tabOrIndex;
+  async getTab(tab: string | HTMLIonTabElement): Promise<HTMLIonTabElement | undefined> {
+    const tabEl = (typeof tab === 'string')
+      ? this.tabs.find(t => t.tab === tab)
+      : tab;
 
-    if (!tab) {
-      console.error(`tab with id: "${tabOrIndex}" does not exist`);
+    if (!tabEl) {
+      console.error(`tab with id: "${tabEl}" does not exist`);
     }
-    return tab;
+    return tabEl;
   }
 
   /**
