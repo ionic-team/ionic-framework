@@ -106,7 +106,77 @@ class CIScreenshotConnector extends IonicConnector {
 
     timespan.finish(`publishing build finished`);
 
+    await this.uploadTests(results);
+
     return results;
+  }
+
+  async uploadTests(results) {
+    const timespan = this.logger.createTimeSpan(`uploading tests started`);
+
+    const appRoot = path.join(__dirname, '..', '..');
+    let uploadPaths = [];
+
+    const cssDir = path.join(appRoot, 'css');
+    fs.readdirSync(cssDir).forEach(cssFile => {
+      uploadPaths.push(path.join(cssDir, cssFile));
+    });
+
+    uploadPaths.push(path.join(appRoot, 'scripts', 'testing', 'styles.css'));
+
+    const distDir = path.join(appRoot, 'dist');
+    uploadPaths.push(path.join(distDir, 'ionic.js'));
+
+    const distIonicDir = path.join(distDir, 'ionic');
+    fs.readdirSync(distIonicDir).forEach(distIonicFile => {
+      uploadPaths.push(path.join(distIonicDir, distIonicFile));
+    });
+
+    // const distIonicSvgDir = path.join(distIonicDir, 'svg');
+    // fs.readdirSync(distIonicSvgDir).forEach(distIonicSvgFile => {
+    //   uploadPaths.push(path.join(distIonicSvgDir, distIonicSvgFile));
+    // });
+
+    results.currentBuild.screenshots.forEach(screenshot => {
+      const testDir = path.dirname(screenshot.testPath);
+      const testIndexHtml = path.join(appRoot, testDir, 'index.html');
+      if (!uploadPaths.includes(testIndexHtml)) {
+        uploadPaths.push(testIndexHtml);
+      }
+    });
+
+    uploadPaths = uploadPaths.filter(p => p.endsWith('.js') || p.endsWith('.css') || p.endsWith('.html') || p.endsWith('.svg'));
+
+    const fileCount = uploadPaths.length;
+
+    const uploadBatches = [];
+    while (uploadPaths.length > 0) {
+      uploadBatches.push(uploadPaths.splice(0, 20));
+    }
+
+    for (const batch of uploadBatches) {
+      await Promise.all(batch.map(async uploadPath => {
+        const stream = fs.createReadStream(uploadPath);
+        const relPath = path.relative(appRoot, uploadPath);
+        const key = `test/${results.currentBuild.id}/${relPath}`;
+
+        let contentType = 'text/plain';
+        if (uploadPath.endsWith('.js')) {
+          contentType = 'application/javascript'
+        } else if (uploadPath.endsWith('.css')) {
+          contentType = 'text/css'
+        } else if (uploadPath.endsWith('.html')) {
+          contentType = 'text/html'
+        } else if (uploadPath.endsWith('.svg')) {
+          contentType = 'image/svg+xml'
+        }
+
+        this.logger.debug(`uploading: ${key} ${contentType}`);
+        await s3.upload({ Bucket: S3_BUCKET, Key: key, Body: stream, ContentType: contentType }).promise();
+      }));
+    }
+
+    timespan.finish(`uploading tests finished: ${fileCount} files`);
   }
 
   async getScreenshotCache() {
