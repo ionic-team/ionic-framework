@@ -3706,7 +3706,7 @@ export namespace Components {
 
   interface IonRoute {
     /**
-    * Name of the component to load/select in the navigation outlet (`ion-tab`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
+    * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
     */
     'component': string;
     /**
@@ -3720,7 +3720,7 @@ export namespace Components {
   }
   interface IonRouteAttributes extends StencilHTMLAttributes {
     /**
-    * Name of the component to load/select in the navigation outlet (`ion-tab`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
+    * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
     */
     'component'?: string;
     /**
@@ -4689,7 +4689,7 @@ export namespace Components {
     /**
     * Get the tab at the given index
     */
-    'getTab': (tabOrIndex: string | number | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>;
+    'getTab': (tabOrIndex: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>;
     /**
     * A unique name for the tabs.
     */
@@ -4697,7 +4697,7 @@ export namespace Components {
     /**
     * Index or the Tab instance, of the tab to select.
     */
-    'select': (tabOrId: string | number | HTMLIonTabElement) => Promise<boolean>;
+    'select': (tabOrId: string | HTMLIonTabElement) => Promise<boolean>;
     'setRouteId': (id: string) => Promise<RouteWrite>;
   }
   interface IonTabsAttributes extends StencilHTMLAttributes {

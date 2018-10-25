@@ -88,7 +88,7 @@ export class Tabs implements NavOutlet {
    * Index or the Tab instance, of the tab to select.
    */
   @Method()
-  async select(tabOrId: number | string | HTMLIonTabElement): Promise<boolean> {
+  async select(tabOrId: string | HTMLIonTabElement): Promise<boolean> {
     const selectedTab = await this.getTab(tabOrId);
     if (!this.shouldSwitch(selectedTab)) {
       return false;
@@ -119,21 +119,17 @@ export class Tabs implements NavOutlet {
   /** @internal */
   @Method()
   async getRouteId(): Promise<RouteID | undefined> {
-    const id = this.selectedTab && this.selectedTab.id;
-    return id !== undefined ? { id, element: this.selectedTab } : undefined;
+    const tabId = this.selectedTab && this.selectedTab.tab;
+    return tabId !== undefined ? { id: tabId, element: this.selectedTab } : undefined;
   }
 
   /** Get the tab at the given index */
   @Method()
-  async getTab(tabOrIndex: string | number | HTMLIonTabElement): Promise<HTMLIonTabElement | undefined> {
-    let tab: HTMLIonTabElement | undefined;
-    if (typeof tabOrIndex === 'string') {
-      tab = this.tabs.find(t => t.tab === tabOrIndex);
-    } else if (typeof tabOrIndex === 'number') {
-      tab = this.tabs[tabOrIndex];
-    } else {
-      tab = tabOrIndex;
-    }
+  async getTab(tabOrIndex: string | HTMLIonTabElement): Promise<HTMLIonTabElement | undefined> {
+    const tab = (typeof tabOrIndex === 'string')
+      ? this.tabs.find(t => t.tab === tabOrIndex)
+      : tabOrIndex;
+
     if (!tab) {
       console.error(`tab with id: "${tabOrIndex}" does not exist`);
     }
@@ -149,14 +145,12 @@ export class Tabs implements NavOutlet {
   }
 
   private async initSelect(): Promise<void> {
-    const tabs = this.tabs;
-
-    // wait for all tabs to be ready
-    await Promise.all(tabs.map(tab => tab.componentOnReady()));
     if (this.useRouter) {
       return;
     }
-    await this.select(0);
+    // wait for all tabs to be ready
+    await Promise.all(this.tabs.map(tab => tab.componentOnReady()));
+    await this.select(this.tabs[0]);
   }
 
   private setActive(selectedTab: HTMLIonTabElement): Promise<void> {

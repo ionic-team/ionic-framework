@@ -10,17 +10,23 @@ In order to customize the style of the `ion-tab-bar`, it should be included in t
 direct children of `ion-tabs`, like this:
 
 ```html
-<style>
-  .my-custom-tabs {
-    font-size: 20px;
-  }
-</style>
 <ion-tabs>
-  <ion-tab label="Indiana Jones"></ion-tab>
-  <ion-tab label="Star Wars"></ion-tab>
-  <ion-tab label="Jurassic Park"></ion-tab>
+  <ion-tab tab="home">Content</ion-tab>
+  <ion-tab tab="settings">Content 3</ion-tab>
 
-  <ion-tab-bar color="danger" layout="icon-start" placement="top"></ion-tab-bar>
+  <ion-tab-bar>
+
+    <ion-tab-button tab="home">
+      <ion-label>Home</ion-label>
+      <ion-icon name="home"></ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="settings">
+      <ion-label>Settings</ion-label>
+      <ion-icon name="gears"></ion-label>
+    </ion-tab-button>
+
+  </ion-tab-bar>
 </ion-tabs>
 ```
 

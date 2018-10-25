@@ -14,7 +14,7 @@ export class Route implements ComponentInterface {
   @Prop() url = '';
 
   /**
-   * Name of the component to load/select in the navigation outlet (`ion-tab`, `ion-nav`)
+   * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`)
    * when the route matches.
    *
    * The value of this property is not always the tagname of the component to load,
