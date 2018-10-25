@@ -88,8 +88,8 @@ export class Tabs implements NavOutlet {
    * Index or the Tab instance, of the tab to select.
    */
   @Method()
-  async select(tabOrId: string | HTMLIonTabElement): Promise<boolean> {
-    const selectedTab = await this.getTab(tabOrId);
+  async select(tab: string | HTMLIonTabElement): Promise<boolean> {
+    const selectedTab = await this.getTab(tab);
     if (!this.shouldSwitch(selectedTab)) {
       return false;
     }

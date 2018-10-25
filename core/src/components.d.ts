@@ -4697,7 +4697,7 @@ export namespace Components {
     /**
     * Index or the Tab instance, of the tab to select.
     */
-    'select': (tabOrId: string | HTMLIonTabElement) => Promise<boolean>;
+    'select': (tab: string | HTMLIonTabElement) => Promise<boolean>;
     'setRouteId': (id: string) => Promise<RouteWrite>;
   }
   interface IonTabsAttributes extends StencilHTMLAttributes {

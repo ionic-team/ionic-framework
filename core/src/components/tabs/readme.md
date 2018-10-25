@@ -88,15 +88,15 @@ Type: `Promise<HTMLIonTabElement | undefined>`
 
 
 
-### `select(tabOrId: string | HTMLIonTabElement) => Promise<boolean>`
+### `select(tab: string | HTMLIonTabElement) => Promise<boolean>`
 
 Index or the Tab instance, of the tab to select.
 
 #### Parameters
 
-| Name      | Type                          | Description |
-| --------- | ----------------------------- | ----------- |
-| `tabOrId` | `HTMLIonTabElement \| string` |             |
+| Name  | Type                          | Description |
+| ----- | ----------------------------- | ----------- |
+| `tab` | `HTMLIonTabElement \| string` |             |
 
 #### Returns
 
