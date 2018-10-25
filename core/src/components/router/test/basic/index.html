@@ -105,26 +105,38 @@
     class TabsPage extends HTMLElement {
       connectedCallback() {
         this.innerHTML = `
-        <ion-tabs>
-<ion-tab component="tab-one"
-  label="Plain List"
-  icon="star"></ion-tab>
+<ion-tabs>
 
-<ion-tab component="tab-two"
-  label="Schedule"
-  icon="globe"></ion-tab>
+  <ion-tab tab="tab-one" component="tab-one"></ion-tab>
+  <ion-tab tab="tab-two" component="tab-two"></ion-tab>
+  <ion-tab tab="tab-three" component="tab-three"></ion-tab>
+  <ion-tab tab="tab-four">
+    inline tab 4
+  </ion-tab>
 
-<ion-tab name="tab3"
-  label="Stopwatch"
-  icon="logo-facebook"
-  component="tab-three"></ion-tab>
+  <ion-tab-bar>
 
-<ion-tab name="tab4"
-  label="Messages"
-  icon="chatboxes"
-  name="tab-four">
-  inline tab 4
-</ion-tab>
+    <ion-tab-button tab="tab-one">
+      <ion-label>Plain List</ion-label>
+      <ion-icon name="star"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab-two">
+      <ion-label>Schedule</ion-label>
+      <ion-icon name="globe"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab-three">
+      <ion-label>Stopwatch</ion-label>
+      <ion-icon name="logo-facebook"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab-four">
+      <ion-label>Messages</ion-label>
+      <ion-icon name="star"></ion-icon>
+    </ion-tab-button>
+
+  </ion-tab-bar>
 </ion-tabs>
 `;
       }
@@ -194,8 +206,8 @@
           <ion-route url="/second-page" component="page-two"> </ion-route>
           <ion-route url="/three/:prop1" component="page-three"> </ion-route>
         </ion-route>
-        <ion-route url="/three" component="tab3"> </ion-route>
-        <ion-route url="/four" component="tab4"> </ion-route>
+        <ion-route url="/three" component="tab-three"> </ion-route>
+        <ion-route url="/four" component="tab-four"> </ion-route>
       </ion-route>
 
     </ion-router>

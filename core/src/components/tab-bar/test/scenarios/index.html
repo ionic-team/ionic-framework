@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Tab - Colors</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <script src="../../../../../dist/ionic.js"></script>
+  <link rel="stylesheet" href="../../../../../css/ionic.bundle.css">
+  <link rel="stylesheet" href="../../../../../scripts/testing/styles.css">
+</head>
+
+<body>
+  <ion-app>
+
+    <!-- Default -->
+    <ion-tab-bar selected-tab="1">
+
+      <ion-tab-button tab='1'>
+        <ion-label>Recents</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab='2'>
+        <ion-label>Favorites</ion-label>
+        <ion-badge>6</ion-badge>
+      </ion-tab-button>
+
+      <ion-tab-button tab='3'>
+        <ion-label>Settings</ion-label>
+      </ion-tab-button>
+
+    </ion-tab-bar>
+
+
+    <!-- Icons -->
+    <ion-tab-bar color="primary" selected-tab="1">
+      <ion-tab-button tab='1'>
+        <ion-icon name="call"></ion-icon>
+      </ion-tab-button>
+
+      <ion-tab-button tab='2' selected-tab="1">
+        <ion-icon name="heart"></ion-icon>
+      </ion-tab-button>
+
+      <ion-tab-button tab='3'>
+        <ion-icon name="settings"></ion-icon>
+      </ion-tab-button>
+    </ion-tab-bar>
+
+    <!-- Icons on top of text -->
+    <ion-tab-bar color="secondary" selected-tab="1">
+      <ion-tab-button tab='1'>
+        <ion-label>Location</ion-label>
+        <ion-icon name="navigate"></ion-icon>
+      </ion-tab-button>
+
+      <ion-tab-button tab='2'>
+        <ion-badge>6</ion-badge>
+        <ion-icon name="heart"></ion-icon>
+      </ion-tab-button>
+
+      <ion-tab-button tab='3'>
+        <ion-label>Radio</ion-label>
+        <ion-icon name="musical-notes"></ion-icon>
+      </ion-tab-button>
+
+    </ion-tab-bar>
+
+
+    <!-- Icons below text -->
+    <ion-tab-bar color="dark" selected-tab="1">
+
+      <ion-tab-button tab='1' layout="icon-bottom">
+        <ion-label>Recents</ion-label>
+        <ion-icon name="call"></ion-icon>
+      </ion-tab-button>
+
+      <ion-tab-button tab='2' layout="icon-top">
+        <ion-badge>6</ion-badge>
+        <ion-label>Favorites</ion-label>
+        <ion-icon name="heart"></ion-icon>
+      </ion-tab-button>
+
+      <ion-tab-button tab='3' layout="icon-bottom">
+        <ion-label>Settings</ion-label>
+        <ion-icon name="settings"></ion-icon>
+      </ion-tab-button>
+
+    </ion-tab-bar>
+
+
+    <!-- Icons right of text -->
+    <ion-tab-bar color="danger" selected-tab="1">
+      <ion-tab-button tab='1' layout="icon-end">
+        <ion-label>Recents</ion-label>
+        <ion-icon name="call"></ion-icon>
+      </ion-tab-button>
+
+      <ion-tab-button tab='2' layout="icon-end">
+        <ion-label>Favorites</ion-label>
+        <ion-icon name="heart"></ion-icon>
+        <ion-badge>6</ion-badge>
+      </ion-tab-button>
+
+      <ion-tab-button tab='3' layout="icon-end">
+        <ion-label>Settings</ion-label>
+        <ion-icon name="settings"></ion-icon>
+      </ion-tab-button>
+
+    </ion-tab-bar>
+
+
+    <!-- Icons left of text -->
+    <ion-tab-bar color="light" selected-tab="1">
+      <ion-tab-button tab='1' layout="icon-start">
+        <ion-label>Recents</ion-label>
+        <ion-icon name="call"></ion-icon>
+      </ion-tab-button>
+
+      <ion-tab-button tab='2' layout="icon-start">
+        <ion-label>Favorites</ion-label>
+        <ion-icon name="heart"></ion-icon>
+        <ion-badge color="danger">6</ion-badge>
+      </ion-tab-button>
+
+      <ion-tab-button tab='3' layout="icon-start">
+        <ion-label>Settings</ion-label>
+        <ion-icon name="settings"></ion-icon>
+      </ion-tab-button>
+
+    </ion-tab-bar>
+
+
+    <!-- No icons -->
+    <ion-tab-bar color="primary" selected-tab="1">
+      <ion-tab-button tab='1' layout="icon-hide">
+        <ion-label>Recents</ion-label>
+        <ion-icon name="call"></ion-icon>
+      </ion-tab-button>
+
+      <ion-tab-button tab='2' layout="icon-hide">
+        <ion-label>Favorites</ion-label>
+        <ion-icon name="heart"></ion-icon>
+        <ion-badge color="danger">6</ion-badge>
+      </ion-tab-button>
+
+      <ion-tab-button tab='3' layout="icon-hide">
+        <ion-label>Settings</ion-label>
+        <ion-icon name="settings"></ion-icon>
+      </ion-tab-button>
+    </ion-tab-bar>
+
+
+    <!-- No label -->
+    <ion-tab-bar color="secondary" selected-tab="1">
+      <ion-tab-button tab='1' layout="label-hide">
+        <ion-label>Recents</ion-label>
+        <ion-icon name="navigate"></ion-icon>
+        <ion-badge>6</ion-badge>
+      </ion-tab-button>
+
+      <ion-tab-button tab='2' layout="label-hide">
+        <ion-label>Favorites</ion-label>
+        <ion-icon name="heart"></ion-icon>
+        <ion-badge color="danger">6</ion-badge>
+      </ion-tab-button>
+
+      <ion-tab-button tab='3' layout="label-hide">
+        <ion-label>Settings</ion-label>
+        <ion-icon name="settings"></ion-icon>
+      </ion-tab-button>
+    </ion-tab-bar>
+
+
+    <!-- No overflow text -->
+    <ion-tab-bar color="danger" selected-tab="1">
+      <ion-tab-button tab='1'>
+        <ion-label>Indiana Jones and the Raiders of the Lost Ark</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab='2'>
+        <ion-label>Indiana Jones and the Temple of Doom</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab='3'>
+        <ion-label>Indiana Jones and the Last Crusade</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+
+  </ion-app>
+
+</body>
+
+</html>

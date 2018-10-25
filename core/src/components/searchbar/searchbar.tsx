@@ -39,7 +39,7 @@ export class Searchbar implements ComponentInterface {
   @Prop() mode!: Mode;
 
   /**
-   * If `true`, enable searchbar animation. Default `false`.
+   * If `true`, enable searchbar animation. Defaults to `false`.
    */
   @Prop() animated = false;
 
@@ -89,12 +89,12 @@ export class Searchbar implements ComponentInterface {
   @Prop() searchIcon?: string;
 
   /**
-   * If `true`, show the cancel button. Default `false`.
+   * If `true`, show the cancel button. Defaults to `false`.
    */
   @Prop() showCancelButton = false;
 
   /**
-   * If `true`, enable spellcheck on the input. Default `false`.
+   * If `true`, enable spellcheck on the input. Defaults to `false`.
    */
   @Prop() spellcheck = false;
 
@@ -106,7 +106,7 @@ export class Searchbar implements ComponentInterface {
   /**
    * the value of the searchbar.
    */
-  @Prop({ mutable: true }) value = '';
+  @Prop({ mutable: true }) value?: string | null = '';
 
   /**
    * Emitted when a keyboard input ocurred.
@@ -141,7 +141,7 @@ export class Searchbar implements ComponentInterface {
   @Watch('value')
   protected valueChanged() {
     const inputEl = this.nativeInput;
-    const value = this.value;
+    const value = this.getValue();
     if (inputEl && inputEl.value !== value) {
       inputEl.value = value;
     }
@@ -176,7 +176,7 @@ export class Searchbar implements ComponentInterface {
     // setTimeout() fixes https://github.com/ionic-team/ionic/issues/7527
     // wait for 4 frames
     setTimeout(() => {
-      const value = this.value;
+      const value = this.getValue();
       if (value !== '') {
         this.value = '';
         this.ionInput.emit();
@@ -235,8 +235,9 @@ export class Searchbar implements ComponentInterface {
    * based on the input value and if it is focused. (ios only)
    */
   private positionElements() {
+    const value = this.getValue();
     const prevAlignLeft = this.shouldAlignLeft;
-    const shouldAlignLeft = (!this.animated || (this.value && this.value.toString().trim() !== '') || !!this.focused);
+    const shouldAlignLeft = (!this.animated || value.trim() !== '' || !!this.focused);
     this.shouldAlignLeft = shouldAlignLeft;
 
     if (this.mode !== 'ios') {
@@ -322,12 +323,16 @@ export class Searchbar implements ComponentInterface {
     }
   }
 
+  private getValue() {
+    return this.value || '';
+  }
+
   hostData() {
     return {
       class: {
         ...createColorClasses(this.color),
         'searchbar-animated': this.animated && this.config.getBoolean('animated', true),
-        'searchbar-has-value': (this.value !== ''),
+        'searchbar-has-value': (this.getValue() !== ''),
         'searchbar-show-cancel': this.showCancelButton,
         'searchbar-left-aligned': this.shouldAlignLeft,
         'searchbar-has-focus': this.focused
@@ -364,7 +369,7 @@ export class Searchbar implements ComponentInterface {
           onFocus={this.onFocus}
           placeholder={this.placeholder}
           type={this.type}
-          value={this.value}
+          value={this.getValue()}
           autoComplete={this.autocomplete}
           autoCorrect={this.autocorrect}
           spellCheck={this.spellcheck}

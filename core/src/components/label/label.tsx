@@ -29,7 +29,6 @@ export class Label implements ComponentInterface {
 
   /**
    * The position determines where and how the label behaves inside an item.
-   * Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
    */
   @Prop() position?: 'fixed' | 'stacked' | 'floating';
 
@@ -42,11 +41,10 @@ export class Label implements ComponentInterface {
 
   componentWillLoad() {
     this.noAnimate = (this.position === 'floating');
+    this.emitStyle();
   }
 
   componentDidLoad() {
-    this.positionChanged();
-
     if (this.noAnimate) {
       setTimeout(() => {
         this.noAnimate = false;
@@ -56,6 +54,10 @@ export class Label implements ComponentInterface {
 
   @Watch('position')
   positionChanged() {
+    this.emitStyle();
+  }
+
+  private emitStyle() {
     const position = this.position;
     this.ionStyle.emit({
       'label': true,

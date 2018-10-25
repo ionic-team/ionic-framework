@@ -21,7 +21,7 @@ export function relocateInput(
     // before it receives the actual focus event
     // We hide the focused input (with the visible caret) invisiable by making it scale(0),
     cloneInputComponent(componentEl, inputEl);
-    const doc = componentEl.ownerDocument;
+    const doc = componentEl.ownerDocument!;
     const tx = doc.dir === 'rtl' ? 9999 : -9999;
     inputEl.style.transform = `translate3d(${tx}px,${inputRelativeY}px,0)`;
     // TODO
@@ -33,7 +33,7 @@ export function relocateInput(
 }
 
 export function isFocused(input: HTMLInputElement): boolean {
-  return input === input.ownerDocument.activeElement;
+  return input === input.ownerDocument!.activeElement;
 }
 
 function removeClone(componentEl: HTMLElement, inputEl: HTMLElement) {
@@ -55,7 +55,7 @@ function cloneInputComponent(componentEl: HTMLElement, inputEl: HTMLInputElement
   // find its parent wrapping component like <ion-input> or <ion-textarea>
   // then clone the entire component
   const parentElement = componentEl.parentElement;
-  const doc = componentEl.ownerDocument;
+  const doc = componentEl.ownerDocument!;
   if (componentEl && parentElement) {
     // DOM READ
     const srcTop = componentEl.offsetTop;
