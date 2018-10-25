@@ -15,7 +15,7 @@ radio button within the same group.
 
 | Property              | Attribute               | Description                                                     | Type      |
 | --------------------- | ----------------------- | --------------------------------------------------------------- | --------- |
-| `allowEmptySelection` | `allow-empty-selection` | If `true`, the radios can be deselected. Defaults to `false`.         | `boolean` |
+| `allowEmptySelection` | `allow-empty-selection` | If `true`, the radios can be deselected. Defaults to `false`.   | `boolean` |
 | `name`                | `name`                  | The name of the control, which is submitted with the form data. | `string`  |
 | `value`               | --                      | the value of the radio group.                                   | `any`     |
 
