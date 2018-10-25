@@ -70,7 +70,7 @@ export class Tabs implements NavOutlet {
     }
   }
 
-  @Listen('ionTabbarClick')
+  @Listen('ionTabButtonClick')
   protected onTabClicked(ev: CustomEvent<TabbarClickDetail>) {
     const { href, tab } = ev.detail;
     const selectedTab = this.tabs.find(t => t.tab === tab);

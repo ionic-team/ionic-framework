@@ -60,10 +60,11 @@ export class TabButton implements ComponentInterface {
 
   /**
    * Emitted when the tab bar is clicked
+   * @internal
    */
-  @Event() ionTabbarClick!: EventEmitter<TabbarClickDetail>;
+  @Event() ionTabButtonClick!: EventEmitter<TabbarClickDetail>;
 
-  @Listen('parent:ionTabbarChanged')
+  @Listen('parent:ionTabBarChanged')
   onTabbarChanged(ev: CustomEvent<TabbarChangedDetail>) {
     this.selected = this.tab === ev.detail.tab;
   }
@@ -71,7 +72,7 @@ export class TabButton implements ComponentInterface {
   @Listen('click')
   onClick(ev: Event) {
     if (!this.disabled) {
-      this.ionTabbarClick.emit({
+      this.ionTabButtonClick.emit({
         tab: this.tab,
         href: this.href
       });

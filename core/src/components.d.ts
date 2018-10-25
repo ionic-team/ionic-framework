@@ -4579,7 +4579,7 @@ export namespace Components {
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
     'mode'?: Mode;
-    'onIonTabbarChanged'?: (event: CustomEvent<TabbarChangedDetail>) => void;
+    'onIonTabBarChanged'?: (event: CustomEvent<TabbarChangedDetail>) => void;
     /**
     * Set the position of the tabbar, relative to the content.
     */
@@ -4644,7 +4644,7 @@ export namespace Components {
     /**
     * Emitted when the tab bar is clicked
     */
-    'onIonTabbarClick'?: (event: CustomEvent<TabbarClickDetail>) => void;
+    'onIonTabButtonClick'?: (event: CustomEvent<TabbarClickDetail>) => void;
     /**
     * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
     */

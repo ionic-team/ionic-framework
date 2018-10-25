@@ -49,7 +49,7 @@ export class TabBar implements ComponentInterface {
   @Prop() selectedTab?: string;
   @Watch('selectedTab')
   selectedTabChanged() {
-    this.ionTabbarChanged.emit({
+    this.ionTabBarChanged.emit({
       tab: this.selectedTab
     });
   }
@@ -60,7 +60,7 @@ export class TabBar implements ComponentInterface {
   @Prop() translucent = false;
 
   /** @internal */
-  @Event() ionTabbarChanged!: EventEmitter<TabbarChangedDetail>;
+  @Event() ionTabBarChanged!: EventEmitter<TabbarChangedDetail>;
 
   @Listen('body:keyboardWillHide')
   protected onKeyboardWillHide() {
