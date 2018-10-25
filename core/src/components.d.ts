@@ -1292,7 +1292,7 @@ export namespace Components {
     /**
     * The value of the datetime as a valid ISO 8601 datetime string.
     */
-    'value'?: string;
+    'value'?: string | null;
     /**
     * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
     */
@@ -1386,7 +1386,7 @@ export namespace Components {
     /**
     * The value of the datetime as a valid ISO 8601 datetime string.
     */
-    'value'?: string;
+    'value'?: string | null;
     /**
     * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
     */
@@ -1847,7 +1847,7 @@ export namespace Components {
     /**
     * The value of the input.
     */
-    'value': string;
+    'value'?: string | null;
   }
   interface IonInputAttributes extends StencilHTMLAttributes {
     /**
@@ -1989,7 +1989,7 @@ export namespace Components {
     /**
     * The value of the input.
     */
-    'value'?: string;
+    'value'?: string | null;
   }
 
   interface IonItemDivider {
@@ -2207,7 +2207,7 @@ export namespace Components {
     */
     'mode': Mode;
     /**
-    * The position determines where and how the label behaves inside an item. Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
+    * The position determines where and how the label behaves inside an item.
     */
     'position'?: 'fixed' | 'stacked' | 'floating';
   }
@@ -2225,7 +2225,7 @@ export namespace Components {
     */
     'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
     /**
-    * The position determines where and how the label behaves inside an item. Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
+    * The position determines where and how the label behaves inside an item.
     */
     'position'?: 'fixed' | 'stacked' | 'floating';
   }
@@ -2564,7 +2564,7 @@ export namespace Components {
     */
     'contentId'?: string;
     /**
-    * If `true`, the menu is disabled. Default `false`.
+    * If `true`, the menu is disabled. Defaults to `false`.
     */
     'disabled': boolean;
     /**
@@ -2596,7 +2596,7 @@ export namespace Components {
     */
     'side': Side;
     /**
-    * If `true`, swiping the menu is enabled. Default `true`.
+    * If `true`, swiping the menu is enabled. Defaults to `true`.
     */
     'swipeGesture': boolean;
     /**
@@ -2614,7 +2614,7 @@ export namespace Components {
     */
     'contentId'?: string;
     /**
-    * If `true`, the menu is disabled. Default `false`.
+    * If `true`, the menu is disabled. Defaults to `false`.
     */
     'disabled'?: boolean;
     /**
@@ -2650,7 +2650,7 @@ export namespace Components {
     */
     'side'?: Side;
     /**
-    * If `true`, swiping the menu is enabled. Default `true`.
+    * If `true`, swiping the menu is enabled. Defaults to `true`.
     */
     'swipeGesture'?: boolean;
     /**
@@ -3308,13 +3308,9 @@ export namespace Components {
 
   interface IonRadioGroup {
     /**
-    * If `true`, the radios can be deselected. Default false.
+    * If `true`, the radios can be deselected. Defaults to `false`.
     */
     'allowEmptySelection': boolean;
-    /**
-    * If `true`, the user cannot interact with the radio group. Default false.
-    */
-    'disabled': boolean;
     /**
     * The name of the control, which is submitted with the form data.
     */
@@ -3326,13 +3322,9 @@ export namespace Components {
   }
   interface IonRadioGroupAttributes extends StencilHTMLAttributes {
     /**
-    * If `true`, the radios can be deselected. Default false.
+    * If `true`, the radios can be deselected. Defaults to `false`.
     */
     'allowEmptySelection'?: boolean;
-    /**
-    * If `true`, the user cannot interact with the radio group. Default false.
-    */
-    'disabled'?: boolean;
     /**
     * The name of the control, which is submitted with the form data.
     */
@@ -3371,7 +3363,7 @@ export namespace Components {
     /**
     * the value of the radio.
     */
-    'value': any | null;
+    'value'?: any | null;
   }
   interface IonRadioAttributes extends StencilHTMLAttributes {
     /**
@@ -3814,7 +3806,7 @@ export namespace Components {
 
   interface IonSearchbar {
     /**
-    * If `true`, enable searchbar animation. Default `false`.
+    * If `true`, enable searchbar animation. Defaults to `false`.
     */
     'animated': boolean;
     /**
@@ -3862,11 +3854,11 @@ export namespace Components {
     */
     'setFocus': () => void;
     /**
-    * If `true`, show the cancel button. Default `false`.
+    * If `true`, show the cancel button. Defaults to `false`.
     */
     'showCancelButton': boolean;
     /**
-    * If `true`, enable spellcheck on the input. Default `false`.
+    * If `true`, enable spellcheck on the input. Defaults to `false`.
     */
     'spellcheck': boolean;
     /**
@@ -3876,11 +3868,11 @@ export namespace Components {
     /**
     * the value of the searchbar.
     */
-    'value': string;
+    'value'?: string | null;
   }
   interface IonSearchbarAttributes extends StencilHTMLAttributes {
     /**
-    * If `true`, enable searchbar animation. Default `false`.
+    * If `true`, enable searchbar animation. Defaults to `false`.
     */
     'animated'?: boolean;
     /**
@@ -3948,11 +3940,11 @@ export namespace Components {
     */
     'searchIcon'?: string;
     /**
-    * If `true`, show the cancel button. Default `false`.
+    * If `true`, show the cancel button. Defaults to `false`.
     */
     'showCancelButton'?: boolean;
     /**
-    * If `true`, enable spellcheck on the input. Default `false`.
+    * If `true`, enable spellcheck on the input. Defaults to `false`.
     */
     'spellcheck'?: boolean;
     /**
@@ -3962,7 +3954,7 @@ export namespace Components {
     /**
     * the value of the searchbar.
     */
-    'value'?: string;
+    'value'?: string | null;
   }
 
   interface IonSegmentButton {
@@ -3975,7 +3967,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * If `true`, the user cannot interact with the segment button. Default false.
+    * If `true`, the user cannot interact with the segment button. Defaults to `false`.
     */
     'disabled': boolean;
     /**
@@ -3997,7 +3989,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * If `true`, the user cannot interact with the segment button. Default false.
+    * If `true`, the user cannot interact with the segment button. Defaults to `false`.
     */
     'disabled'?: boolean;
     /**
@@ -4067,7 +4059,7 @@ export namespace Components {
     /**
     * The text value of the option.
     */
-    'value'?: any;
+    'value'?: any | null;
   }
   interface IonSelectOptionAttributes extends StencilHTMLAttributes {
     /**
@@ -4089,7 +4081,7 @@ export namespace Components {
     /**
     * The text value of the option.
     */
-    'value'?: any;
+    'value'?: any | null;
   }
 
   interface IonSelectPopover {
@@ -4816,7 +4808,7 @@ export namespace Components {
     /**
     * The value of the textarea.
     */
-    'value': string;
+    'value'?: string | null;
     /**
     * Indicates how the control wraps text. Possible values are: `"hard"`, `"soft"`, `"off"`.
     */
@@ -4910,7 +4902,7 @@ export namespace Components {
     /**
     * The value of the textarea.
     */
-    'value'?: string;
+    'value'?: string | null;
     /**
     * Indicates how the control wraps text. Possible values are: `"hard"`, `"soft"`, `"off"`.
     */
@@ -5102,7 +5094,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * If `true`, the user cannot interact with the toggle. Default false.
+    * If `true`, the user cannot interact with the toggle. Defaults to `false`.
     */
     'disabled': boolean;
     /**
@@ -5116,7 +5108,7 @@ export namespace Components {
     /**
     * the value of the toggle.
     */
-    'value': string;
+    'value'?: string | null;
   }
   interface IonToggleAttributes extends StencilHTMLAttributes {
     /**
@@ -5128,7 +5120,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * If `true`, the user cannot interact with the toggle. Default false.
+    * If `true`, the user cannot interact with the toggle. Defaults to `false`.
     */
     'disabled'?: boolean;
     /**
@@ -5158,7 +5150,7 @@ export namespace Components {
     /**
     * the value of the toggle.
     */
-    'value'?: string;
+    'value'?: string | null;
   }
 
   interface IonToolbar {

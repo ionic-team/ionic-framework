@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Listen, Prop, State } from '@stencil/core';
 
-import { Color, CssClassMap, Mode, RouterDirection } from '../../interface';
+import { Color, CssClassMap, Mode, RouterDirection, StyleEvent } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 @Component({
@@ -80,23 +80,25 @@ export class Item implements ComponentInterface {
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   @Listen('ionStyle')
-  itemStyle(ev: UIEvent) {
+  itemStyle(ev: CustomEvent<StyleEvent>) {
     ev.stopPropagation();
 
-    const tagName: string = (ev.target as HTMLElement).tagName;
-    const updatedStyles = ev.detail as any;
-    const updatedKeys = Object.keys(ev.detail);
+    const tagName = (ev.target as HTMLElement).tagName;
+    const updatedStyles = ev.detail;
     const newStyles = {} as any;
     const childStyles = this.itemStyles.get(tagName) || {};
+
     let hasStyleChange = false;
-    for (const key of updatedKeys) {
+    Object.keys(updatedStyles).forEach(key => {
       const itemKey = `item-${key}`;
       const newValue = updatedStyles[key];
       if (newValue !== childStyles[itemKey]) {
         hasStyleChange = true;
       }
-      newStyles[itemKey] = newValue;
-    }
+      if (newValue) {
+        newStyles[itemKey] = true;
+      }
+    });
 
     if (hasStyleChange) {
       this.itemStyles.set(tagName, newStyles);

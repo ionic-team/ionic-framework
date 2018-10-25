@@ -564,13 +564,13 @@ export class Radio {
 }
 
 export declare interface RadioGroup extends StencilComponents<'IonRadioGroup'> {}
-@Component({ selector: 'ion-radio-group', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['allowEmptySelection', 'name', 'disabled', 'value'] })
+@Component({ selector: 'ion-radio-group', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['allowEmptySelection', 'name', 'value'] })
 export class RadioGroup {
   ionChange: EventEmitter<CustomEvent>;
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyInputs(this, el, ['allowEmptySelection', 'name', 'disabled', 'value']);
+    proxyInputs(this, el, ['allowEmptySelection', 'name', 'value']);
     proxyOutputs(this, el, ['ionChange']);
   }
 }
