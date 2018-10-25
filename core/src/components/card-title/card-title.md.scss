@@ -11,6 +11,7 @@
   @include padding($card-md-title-padding-top, $card-md-title-padding-end, $card-md-title-padding-bottom, $card-md-title-padding-start);
 
   font-size: $card-md-title-font-size;
+  font-weight: 500;
 
   line-height: 1.2;
 }
