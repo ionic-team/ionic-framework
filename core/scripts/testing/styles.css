@@ -3,25 +3,25 @@
 @font-face {
   font-family: "mdTestingFont";
   font-weight: 300;
-  src: url("fonts/rb-300.woff");
+  src: url("./fonts/rb-300.woff2");
 }
 
 @font-face {
   font-family: "mdTestingFont";
   font-weight: 400;
-  src: url("fonts/rb-400.woff");
+  src: url("./fonts/rb-400.woff2");
 }
 
 @font-face {
   font-family: "mdTestingFont";
   font-weight: 500;
-  src: url("fonts/rb-500.woff");
+  src: url("./fonts/rb-500.woff2");
 }
 
 @font-face {
   font-family: "mdTestingFont";
   font-weight: 700;
-  src: url("fonts/sf-700.woff");
+  src: url("./fonts/sf-700.woff2");
 }
 
 
@@ -29,25 +29,25 @@
 @font-face {
   font-family: "iosTestingFont";
   font-weight: 400;
-  src: url("fonts/sf-400.woff");
+  src: url("./fonts/sf-400.woff");
 }
 
 @font-face {
   font-family: "iosTestingFont";
   font-weight: 500;
-  src: url("fonts/sf-500.woff");
+  src: url("./fonts/sf-500.woff");
 }
 
 @font-face {
   font-family: "iosTestingFont";
   font-weight: 600;
-  src: url("fonts/sf-600.woff");
+  src: url("./fonts/sf-600.woff");
 }
 
 @font-face {
   font-family: "iosTestingFont";
   font-weight: 700;
-  src: url("fonts/sf-700.woff");
+  src: url("./fonts/sf-700.woff");
 }
 
 
