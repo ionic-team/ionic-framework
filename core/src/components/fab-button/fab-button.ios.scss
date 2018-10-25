@@ -40,6 +40,10 @@
               opacity 200ms ease 10ms};
 }
 
+:host(.fab-button-in-list) ::slotted(ion-icon) {
+  font-size: $fab-ios-list-button-icon-font-size;
+}
+
 
 // Translucent FAB buttons
 // --------------------------------------------------

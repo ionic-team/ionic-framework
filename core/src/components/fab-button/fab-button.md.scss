@@ -25,7 +25,7 @@
 
 ::slotted(ion-icon),
 .close-icon {
-  font-size: 24px;
+  font-size: $fab-md-icon-font-size;
 }
 
 
@@ -46,4 +46,8 @@
     background-color 300ms cubic-bezier(.4, 0, .2, 1)
     color 300ms cubic-bezier(.4, 0, .2, 1)
   };
+}
+
+:host(.fab-button-in-list) ::slotted(ion-icon) {
+  font-size: $fab-md-list-button-icon-font-size;
 }

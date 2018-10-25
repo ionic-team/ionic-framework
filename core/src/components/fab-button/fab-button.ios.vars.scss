@@ -48,6 +48,9 @@ $fab-ios-list-button-background-color-activated:              ion-color(light, s
 /// @prop - Text color of the button in a list
 $fab-ios-list-button-text-color:                              ion-color(light, contrast) !default;
 
+/// @prop - Font size of the button icon in a list
+$fab-ios-list-button-icon-font-size:                          18px !default;
+
 /// @prop - Background color of the button in a list
 $fab-ios-list-button-translucent-background-color-alpha:      .8 !default;
 
