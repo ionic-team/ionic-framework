@@ -72,15 +72,15 @@ Type: `Promise<HTMLIonTabElement | undefined>`
 
 
 
-### `getTab(tabOrIndex: string | number | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>`
+### `getTab(tabOrIndex: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>`
 
 Get the tab at the given index
 
 #### Parameters
 
-| Name         | Type                                    | Description |
-| ------------ | --------------------------------------- | ----------- |
-| `tabOrIndex` | `HTMLIonTabElement \| number \| string` |             |
+| Name         | Type                          | Description |
+| ------------ | ----------------------------- | ----------- |
+| `tabOrIndex` | `HTMLIonTabElement \| string` |             |
 
 #### Returns
 
@@ -88,15 +88,15 @@ Type: `Promise<HTMLIonTabElement | undefined>`
 
 
 
-### `select(tabOrId: string | number | HTMLIonTabElement) => Promise<boolean>`
+### `select(tabOrId: string | HTMLIonTabElement) => Promise<boolean>`
 
 Index or the Tab instance, of the tab to select.
 
 #### Parameters
 
-| Name      | Type                                    | Description |
-| --------- | --------------------------------------- | ----------- |
-| `tabOrId` | `HTMLIonTabElement \| number \| string` |             |
+| Name      | Type                          | Description |
+| --------- | ----------------------------- | ----------- |
+| `tabOrId` | `HTMLIonTabElement \| string` |             |
 
 #### Returns
 
