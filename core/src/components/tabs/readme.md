@@ -36,12 +36,12 @@ direct children of `ion-tabs`, like this:
 
 ## Events
 
-| Event              | Detail                       | Description                                                                |
-| ------------------ | ---------------------------- | -------------------------------------------------------------------------- |
-| `ionChange`        | {tab: HTMLIonTabViewElement} | Emitted when the tab changes.                                              |
-| `ionNavDidChange`  |                              | Emitted when the navigation has finished transitioning to a new component. |
-| `ionNavWillChange` |                              | Emitted when the navigation is about to transition to a new component.     |
-| `ionNavWillLoad`   |                              | Emitted when the navigation will load a component.                         |
+| Event              | Detail                   | Description                                                                |
+| ------------------ | ------------------------ | -------------------------------------------------------------------------- |
+| `ionChange`        | {tab: HTMLIonTabElement} | Emitted when the tab changes.                                              |
+| `ionNavDidChange`  |                          | Emitted when the navigation has finished transitioning to a new component. |
+| `ionNavWillChange` |                          | Emitted when the navigation is about to transition to a new component.     |
+| `ionNavWillLoad`   |                          | Emitted when the navigation will load a component.                         |
 
 
 ## Methods
@@ -56,41 +56,41 @@ Type: `Promise<RouteID | undefined>`
 
 
 
-### `getSelected() => Promise<HTMLIonTabViewElement | undefined>`
+### `getSelected() => Promise<any>`
 
 Get the currently selected tab
 
 #### Returns
 
-Type: `Promise<HTMLIonTabViewElement | undefined>`
+Type: `Promise<any>`
 
 
 
-### `getTab(tabOrIndex: string | number | HTMLIonTabViewElement) => Promise<HTMLIonTabViewElement | undefined>`
+### `getTab(tabOrIndex: any) => Promise<any>`
 
 Get the tab at the given index
 
 #### Parameters
 
-| Name         | Type                                        | Description |
-| ------------ | ------------------------------------------- | ----------- |
-| `tabOrIndex` | `HTMLIonTabViewElement \| number \| string` |             |
+| Name         | Type  | Description |
+| ------------ | ----- | ----------- |
+| `tabOrIndex` | `any` |             |
 
 #### Returns
 
-Type: `Promise<HTMLIonTabViewElement | undefined>`
+Type: `Promise<any>`
 
 
 
-### `select(tabOrIndex: number | HTMLIonTabViewElement) => Promise<boolean>`
+### `select(tabOrId: any) => Promise<boolean>`
 
 Index or the Tab instance, of the tab to select.
 
 #### Parameters
 
-| Name         | Type                              | Description |
-| ------------ | --------------------------------- | ----------- |
-| `tabOrIndex` | `HTMLIonTabViewElement \| number` |             |
+| Name      | Type  | Description |
+| --------- | ----- | ----------- |
+| `tabOrId` | `any` |             |
 
 #### Returns
 

@@ -14,11 +14,11 @@ export class Route implements ComponentInterface {
   @Prop() url = '';
 
   /**
-   * Name of the component to load/select in the navigation outlet (`ion-tab-view`, `ion-nav`)
+   * Name of the component to load/select in the navigation outlet (`ion-tab`, `ion-nav`)
    * when the route matches.
    *
    * The value of this property is not always the tagname of the component to load,
-   * in `ion-tab-group` it actually refers to the name of the `ion-tab-view` to select.
+   * in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
    */
   @Prop() component!: string;
 

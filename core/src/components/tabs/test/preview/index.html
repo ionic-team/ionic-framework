@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Tab - Basic</title>
+  <title>Tab</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <script src="/dist/ionic.js"></script>
   <link rel="stylesheet" href="/css/ionic.bundle.css">
@@ -13,63 +13,75 @@
 <body>
 
   <ion-app>
-    <ion-tab-group>
-      <ion-tab-view tab-id="star-tab">
+    <ion-tabs>
 
-        <ion-header>
+      <ion-tab tab-id="tab-one">
+        <ion-header translucent>
           <ion-toolbar>
             <ion-title>Tab One</ion-title>
           </ion-toolbar>
         </ion-header>
-        <ion-content padding>
+        <ion-content padding fullscreen>
           Tab One
         </ion-content>
+      </ion-tab>
 
-      </ion-tab-view>
+      <ion-tab tab-id="tab-two">
 
-      <ion-tab-view tab-id="globe-tab">
-
-        <ion-header>
+        <ion-header translucent>
           <ion-toolbar>
             <ion-title>Tab Two</ion-title>
           </ion-toolbar>
         </ion-header>
-        <ion-content padding>
+        <ion-content padding fullscreen>
           Tab Two
         </ion-content>
 
-      </ion-tab-view>
+      </ion-tab>
 
-      <ion-tab-view tab-id="facebook-tab">
+      <ion-tab tab-id="tab-three">
 
-        <ion-header>
+        <ion-header translucent>
           <ion-toolbar>
             <ion-title>Tab Three</ion-title>
           </ion-toolbar>
         </ion-header>
-        <ion-content padding>
+        <ion-content padding fullscreen>
           Tab Three
         </ion-content>
 
-      </ion-tab-view>
+      </ion-tab>
 
-      <ion-tab-view tab-id="page-one" disabled icon="chatboxes" component="page-one"></ion-tab-view>
+      <ion-tab tab-id="tab-four" component="page-one"></ion-tab>
 
-      <ion-tab-bar placement="top">
-        <ion-tab-button tab-id="star-tab">
+      <ion-tab-bar>
+        <ion-tab-button tab-id="tab-one">
+          <ion-label>Plain List</ion-label>
           <ion-icon name="star"></ion-icon>
         </ion-tab-button>
 
-        <ion-tab-button tab-id="globe-tab">
+        <ion-tab-button tab-id="tab-two">
+          <ion-label>Schedule</ion-label>
           <ion-icon name="globe"></ion-icon>
         </ion-tab-button>
 
-        <ion-tab-button tab-id="facebook-tab">
+        <ion-tab-button tab-id="tab-three">
+          <ion-label>Stopwatch</ion-label>
           <ion-icon name="logo-facebook"></ion-icon>
         </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tab-group>
 
+        <ion-tab-button tab-id="tab-four">
+          <ion-label>Messages</ion-label>
+          <ion-icon name="chatboxes"></ion-icon>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+    </style>
   </ion-app>
 </body>
 

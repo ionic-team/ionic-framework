@@ -8,7 +8,7 @@ Popover controllers programmatically control the popover component. Popovers can
 
 ## Methods
 
-### `create<T extends ComponentRef>(opts: PopoverOptions<T>) => Promise<HTMLIonPopoverElement>`
+### `create<T extends ComponentRef>(opts: PopoverOptions<T>) => Promise<any>`
 
 Create a popover overlay with popover options.
 
@@ -20,7 +20,7 @@ Create a popover overlay with popover options.
 
 #### Returns
 
-Type: `Promise<HTMLIonPopoverElement>`
+Type: `Promise<any>`
 
 
 
@@ -42,13 +42,13 @@ Type: `Promise<boolean>`
 
 
 
-### `getTop() => Promise<HTMLIonPopoverElement | undefined>`
+### `getTop() => Promise<any>`
 
 Get the most recently opened popover overlay.
 
 #### Returns
 
-Type: `Promise<HTMLIonPopoverElement | undefined>`
+Type: `Promise<any>`
 
 
 

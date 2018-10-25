@@ -24,7 +24,7 @@ async function presentAlert() {
 
 ## Methods
 
-### `create(opts: AlertOptions) => Promise<HTMLIonAlertElement>`
+### `create(opts: AlertOptions) => Promise<any>`
 
 Create an alert overlay with alert options
 
@@ -36,7 +36,7 @@ Create an alert overlay with alert options
 
 #### Returns
 
-Type: `Promise<HTMLIonAlertElement>`
+Type: `Promise<any>`
 
 
 
@@ -58,13 +58,13 @@ Type: `Promise<boolean>`
 
 
 
-### `getTop() => Promise<HTMLIonAlertElement | undefined>`
+### `getTop() => Promise<any>`
 
 Get the most recently opened alert overlay.
 
 #### Returns
 
-Type: `Promise<HTMLIonAlertElement | undefined>`
+Type: `Promise<any>`
 
 
 

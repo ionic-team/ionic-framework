@@ -7,7 +7,7 @@ Action Sheet controllers programmatically control the action sheet component. Ac
 
 ## Methods
 
-### `create(opts: ActionSheetOptions) => Promise<HTMLIonActionSheetElement>`
+### `create(opts: ActionSheetOptions) => Promise<any>`
 
 Create an action sheet overlay with action sheet options.
 
@@ -19,7 +19,7 @@ Create an action sheet overlay with action sheet options.
 
 #### Returns
 
-Type: `Promise<HTMLIonActionSheetElement>`
+Type: `Promise<any>`
 
 
 
@@ -41,13 +41,13 @@ Type: `Promise<boolean>`
 
 
 
-### `getTop() => Promise<HTMLIonActionSheetElement | undefined>`
+### `getTop() => Promise<any>`
 
 Get the most recently opened action sheet overlay.
 
 #### Returns
 
-Type: `Promise<HTMLIonActionSheetElement | undefined>`
+Type: `Promise<any>`
 
 
 

@@ -77,7 +77,7 @@ export namespace Components {
     /**
     * Create an action sheet overlay with action sheet options.
     */
-    'create': (opts: ActionSheetOptions) => Promise<HTMLIonActionSheetElement>;
+    'create': (opts: ActionSheetOptions) => Promise<any>;
     /**
     * Dismiss the open action sheet overlay.
     */
@@ -85,7 +85,7 @@ export namespace Components {
     /**
     * Get the most recently opened action sheet overlay.
     */
-    'getTop': () => Promise<HTMLIonActionSheetElement | undefined>;
+    'getTop': () => Promise<any>;
   }
   interface IonActionSheetControllerAttributes extends StencilHTMLAttributes {}
 
@@ -228,7 +228,7 @@ export namespace Components {
     /**
     * Create an alert overlay with alert options
     */
-    'create': (opts: AlertOptions) => Promise<HTMLIonAlertElement>;
+    'create': (opts: AlertOptions) => Promise<any>;
     /**
     * Dismiss the open alert overlay.
     */
@@ -236,7 +236,7 @@ export namespace Components {
     /**
     * Get the most recently opened alert overlay.
     */
-    'getTop': () => Promise<HTMLIonAlertElement | undefined>;
+    'getTop': () => Promise<any>;
   }
   interface IonAlertControllerAttributes extends StencilHTMLAttributes {}
 
@@ -2288,7 +2288,7 @@ export namespace Components {
     /**
     * Create a loading overlay with loading options.
     */
-    'create': (opts?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>;
+    'create': (opts?: LoadingOptions | undefined) => Promise<any>;
     /**
     * Dismiss the open loading overlay.
     */
@@ -2296,7 +2296,7 @@ export namespace Components {
     /**
     * Get the most recently opened loading overlay.
     */
-    'getTop': () => Promise<HTMLIonLoadingElement | undefined>;
+    'getTop': () => Promise<any>;
   }
   interface IonLoadingControllerAttributes extends StencilHTMLAttributes {}
 
@@ -2489,19 +2489,19 @@ export namespace Components {
     /**
     * Used to enable or disable a menu. For example, there could be multiple left menus, but only one of them should be able to be opened at the same time. If there are multiple menus on the same side, then enabling one menu will also automatically disable all the others that are on the same side.
     */
-    'enable': (shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
+    'enable': (shouldEnable: boolean, menuId?: string | null | undefined) => Promise<any>;
     /**
     * Used to get a menu instance. If a menu is not provided then it will return the first menu found. If the specified menu is `start` or `end`, then it will return the enabled menu on that side. Otherwise, it will try to find the menu using the menu's `id` property. If a menu is not found then it will return `null`.
     */
-    'get': (menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
+    'get': (menuId?: string | null | undefined) => Promise<any>;
     /**
     * Returns an array of all menu instances.
     */
-    'getMenus': () => Promise<HTMLIonMenuElement[]>;
+    'getMenus': () => Promise<any[]>;
     /**
     * Returns the instance of the menu already opened, otherwise `null`.
     */
-    'getOpen': () => Promise<HTMLIonMenuElement | undefined>;
+    'getOpen': () => Promise<any>;
     /**
     * Returns `true` if any menu is currently animating.
     */
@@ -2525,7 +2525,7 @@ export namespace Components {
     /**
     * Used to enable or disable the ability to swipe open the menu.
     */
-    'swipeGesture': (shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
+    'swipeGesture': (shouldEnable: boolean, menuId?: string | null | undefined) => Promise<any>;
     /**
     * Toggle the menu. If it's closed, it will open, and if opened, it will close.
     */
@@ -2663,7 +2663,7 @@ export namespace Components {
     /**
     * Create a modal overlay with modal options.
     */
-    'create': <T extends ComponentRef>(opts: ModalOptions<T>) => Promise<HTMLIonModalElement>;
+    'create': <T extends ComponentRef>(opts: ModalOptions<T>) => Promise<any>;
     /**
     * Dismiss the open modal overlay.
     */
@@ -2671,7 +2671,7 @@ export namespace Components {
     /**
     * Get the most recently opened modal overlay.
     */
-    'getTop': () => Promise<HTMLIonModalElement | undefined>;
+    'getTop': () => Promise<any>;
   }
   interface IonModalControllerAttributes extends StencilHTMLAttributes {}
 
@@ -2994,7 +2994,7 @@ export namespace Components {
     /**
     * Create a picker overlay with picker options.
     */
-    'create': (opts: PickerOptions) => Promise<HTMLIonPickerElement>;
+    'create': (opts: PickerOptions) => Promise<any>;
     /**
     * Dismiss the open picker overlay.
     */
@@ -3002,7 +3002,7 @@ export namespace Components {
     /**
     * Get the most recently opened picker overlay.
     */
-    'getTop': () => Promise<HTMLIonPickerElement | undefined>;
+    'getTop': () => Promise<any>;
   }
   interface IonPickerControllerAttributes extends StencilHTMLAttributes {}
 
@@ -3149,7 +3149,7 @@ export namespace Components {
     /**
     * Create a popover overlay with popover options.
     */
-    'create': <T extends ComponentRef>(opts: PopoverOptions<T>) => Promise<HTMLIonPopoverElement>;
+    'create': <T extends ComponentRef>(opts: PopoverOptions<T>) => Promise<any>;
     /**
     * Dismiss the open popover overlay.
     */
@@ -3157,7 +3157,7 @@ export namespace Components {
     /**
     * Get the most recently opened popover overlay.
     */
-    'getTop': () => Promise<HTMLIonPopoverElement | undefined>;
+    'getTop': () => Promise<any>;
   }
   interface IonPopoverControllerAttributes extends StencilHTMLAttributes {}
 
@@ -3706,7 +3706,7 @@ export namespace Components {
 
   interface IonRoute {
     /**
-    * Name of the component to load/select in the navigation outlet (`ion-tab-view`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tab-group` it actually refers to the name of the `ion-tab-view` to select.
+    * Name of the component to load/select in the navigation outlet (`ion-tab`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
     */
     'component': string;
     /**
@@ -3720,7 +3720,7 @@ export namespace Components {
   }
   interface IonRouteAttributes extends StencilHTMLAttributes {
     /**
-    * Name of the component to load/select in the navigation outlet (`ion-tab-view`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tab-group` it actually refers to the name of the `ion-tab-view` to select.
+    * Name of the component to load/select in the navigation outlet (`ion-tab`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
     */
     'component'?: string;
     /**
@@ -4165,7 +4165,7 @@ export namespace Components {
     /**
     * Opens the select overlay, it could be an alert, action-sheet or popover, based in `ion-select` settings.
     */
-    'open': (ev?: UIEvent | undefined) => Promise<OverlaySelect>;
+    'open': (ev?: UIEvent | undefined) => Promise<any>;
     /**
     * The text to display when the select is empty.
     */
@@ -4560,7 +4560,7 @@ export namespace Components {
     /**
     * The selected tab component
     */
-    'selectedTabId'?: string;
+    'selectedTab'?: string;
     /**
     * If `true`, the tabbar will be translucent. Defaults to `false`.
     */
@@ -4587,7 +4587,7 @@ export namespace Components {
     /**
     * The selected tab component
     */
-    'selectedTabId'?: string;
+    'selectedTab'?: string;
     /**
     * If `true`, the tabbar will be translucent. Defaults to `false`.
     */
@@ -4616,9 +4616,9 @@ export namespace Components {
     */
     'mode': Mode;
     /**
-    * A tab id must be provided for each `ion-tab-view`. It's used internally to reference the selected tab or by the router to switch between them.
+    * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
     */
-    'tabId'?: string;
+    'tab'?: string;
   }
   interface IonTabButtonAttributes extends StencilHTMLAttributes {
     /**
@@ -4646,21 +4646,50 @@ export namespace Components {
     */
     'onIonTabbarClick'?: (event: CustomEvent<TabbarClickDetail>) => void;
     /**
-    * A tab id must be provided for each `ion-tab-view`. It's used internally to reference the selected tab or by the router to switch between them.
+    * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
     */
-    'tabId'?: string;
+    'tab'?: string;
   }
 
-  interface IonTabGroup {
+  interface IonTab {
+    'active': boolean;
+    /**
+    * The component to display inside of the tab.
+    */
+    'component'?: ComponentRef;
+    'delegate'?: FrameworkDelegate;
+    /**
+    * Set the active component for the tab
+    */
+    'setActive': () => Promise<void>;
+    /**
+    * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
+    */
+    'tab'?: string;
+  }
+  interface IonTabAttributes extends StencilHTMLAttributes {
+    'active'?: boolean;
+    /**
+    * The component to display inside of the tab.
+    */
+    'component'?: ComponentRef;
+    'delegate'?: FrameworkDelegate;
+    /**
+    * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
+    */
+    'tab'?: string;
+  }
+
+  interface IonTabs {
     'getRouteId': () => Promise<RouteID | undefined>;
     /**
     * Get the currently selected tab
     */
-    'getSelected': () => Promise<HTMLIonTabViewElement | undefined>;
+    'getSelected': () => Promise<any>;
     /**
     * Get the tab at the given index
     */
-    'getTab': (tabOrIndex: string | number | HTMLIonTabViewElement) => Promise<HTMLIonTabViewElement | undefined>;
+    'getTab': (tabOrIndex: any) => Promise<any>;
     /**
     * A unique name for the tabs.
     */
@@ -4668,10 +4697,10 @@ export namespace Components {
     /**
     * Index or the Tab instance, of the tab to select.
     */
-    'select': (tabOrId: string | number | HTMLIonTabViewElement) => Promise<boolean>;
+    'select': (tabOrId: any) => Promise<boolean>;
     'setRouteId': (id: string) => Promise<RouteWrite>;
   }
-  interface IonTabGroupAttributes extends StencilHTMLAttributes {
+  interface IonTabsAttributes extends StencilHTMLAttributes {
     /**
     * A unique name for the tabs.
     */
@@ -4679,7 +4708,7 @@ export namespace Components {
     /**
     * Emitted when the tab changes.
     */
-    'onIonChange'?: (event: CustomEvent<{tab: HTMLIonTabViewElement}>) => void;
+    'onIonChange'?: (event: CustomEvent<{tab: HTMLIonTabElement}>) => void;
     /**
     * Emitted when the navigation has finished transitioning to a new component.
     */
@@ -4692,35 +4721,6 @@ export namespace Components {
     * Emitted when the navigation will load a component.
     */
     'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
-  }
-
-  interface IonTabView {
-    'active': boolean;
-    /**
-    * The component to display inside of the tab.
-    */
-    'component'?: ComponentRef;
-    'delegate'?: FrameworkDelegate;
-    /**
-    * Set the active component for the tab
-    */
-    'setActive': () => Promise<void>;
-    /**
-    * A tab id must be provided for each `ion-tab-view`. It's used internally to reference the selected tab or by the router to switch between them.
-    */
-    'tabId'?: string;
-  }
-  interface IonTabViewAttributes extends StencilHTMLAttributes {
-    'active'?: boolean;
-    /**
-    * The component to display inside of the tab.
-    */
-    'component'?: ComponentRef;
-    'delegate'?: FrameworkDelegate;
-    /**
-    * A tab id must be provided for each `ion-tab-view`. It's used internally to reference the selected tab or by the router to switch between them.
-    */
-    'tabId'?: string;
   }
 
   interface IonText {
@@ -4937,7 +4937,7 @@ export namespace Components {
     /**
     * Create a toast overlay with toast options.
     */
-    'create': (opts?: ToastOptions | undefined) => Promise<HTMLIonToastElement>;
+    'create': (opts?: ToastOptions | undefined) => Promise<any>;
     /**
     * Dismiss the open toast overlay.
     */
@@ -4945,7 +4945,7 @@ export namespace Components {
     /**
     * Get the most recently opened toast overlay.
     */
-    'getTop': () => Promise<HTMLIonToastElement | undefined>;
+    'getTop': () => Promise<any>;
   }
   interface IonToastControllerAttributes extends StencilHTMLAttributes {}
 
@@ -5382,8 +5382,8 @@ declare global {
     'IonSplitPane': Components.IonSplitPane;
     'IonTabBar': Components.IonTabBar;
     'IonTabButton': Components.IonTabButton;
-    'IonTabGroup': Components.IonTabGroup;
-    'IonTabView': Components.IonTabView;
+    'IonTab': Components.IonTab;
+    'IonTabs': Components.IonTabs;
     'IonText': Components.IonText;
     'IonTextarea': Components.IonTextarea;
     'IonThumbnail': Components.IonThumbnail;
@@ -5486,8 +5486,8 @@ declare global {
     'ion-split-pane': Components.IonSplitPaneAttributes;
     'ion-tab-bar': Components.IonTabBarAttributes;
     'ion-tab-button': Components.IonTabButtonAttributes;
-    'ion-tab-group': Components.IonTabGroupAttributes;
-    'ion-tab-view': Components.IonTabViewAttributes;
+    'ion-tab': Components.IonTabAttributes;
+    'ion-tabs': Components.IonTabsAttributes;
     'ion-text': Components.IonTextAttributes;
     'ion-textarea': Components.IonTextareaAttributes;
     'ion-thumbnail': Components.IonThumbnailAttributes;
@@ -6040,16 +6040,16 @@ declare global {
     new (): HTMLIonTabButtonElement;
   };
 
-  interface HTMLIonTabGroupElement extends Components.IonTabGroup, HTMLStencilElement {}
-  var HTMLIonTabGroupElement: {
-    prototype: HTMLIonTabGroupElement;
-    new (): HTMLIonTabGroupElement;
+  interface HTMLIonTabElement extends Components.IonTab, HTMLStencilElement {}
+  var HTMLIonTabElement: {
+    prototype: HTMLIonTabElement;
+    new (): HTMLIonTabElement;
   };
 
-  interface HTMLIonTabViewElement extends Components.IonTabView, HTMLStencilElement {}
-  var HTMLIonTabViewElement: {
-    prototype: HTMLIonTabViewElement;
-    new (): HTMLIonTabViewElement;
+  interface HTMLIonTabsElement extends Components.IonTabs, HTMLStencilElement {}
+  var HTMLIonTabsElement: {
+    prototype: HTMLIonTabsElement;
+    new (): HTMLIonTabsElement;
   };
 
   interface HTMLIonTextElement extends Components.IonText, HTMLStencilElement {}
@@ -6197,8 +6197,8 @@ declare global {
     'ion-split-pane': HTMLIonSplitPaneElement
     'ion-tab-bar': HTMLIonTabBarElement
     'ion-tab-button': HTMLIonTabButtonElement
-    'ion-tab-group': HTMLIonTabGroupElement
-    'ion-tab-view': HTMLIonTabViewElement
+    'ion-tab': HTMLIonTabElement
+    'ion-tabs': HTMLIonTabsElement
     'ion-text': HTMLIonTextElement
     'ion-textarea': HTMLIonTextareaElement
     'ion-thumbnail': HTMLIonThumbnailElement
@@ -6301,8 +6301,8 @@ declare global {
     'ion-split-pane': HTMLIonSplitPaneElement;
     'ion-tab-bar': HTMLIonTabBarElement;
     'ion-tab-button': HTMLIonTabButtonElement;
-    'ion-tab-group': HTMLIonTabGroupElement;
-    'ion-tab-view': HTMLIonTabViewElement;
+    'ion-tab': HTMLIonTabElement;
+    'ion-tabs': HTMLIonTabsElement;
     'ion-text': HTMLIonTextElement;
     'ion-textarea': HTMLIonTextareaElement;
     'ion-thumbnail': HTMLIonThumbnailElement;

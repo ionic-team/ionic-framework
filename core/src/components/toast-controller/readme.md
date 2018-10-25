@@ -8,7 +8,7 @@ ToastController is a component use to create Toast components. Please see the do
 
 ## Methods
 
-### `create(opts?: ToastOptions | undefined) => Promise<HTMLIonToastElement>`
+### `create(opts?: ToastOptions | undefined) => Promise<any>`
 
 Create a toast overlay with toast options.
 
@@ -20,7 +20,7 @@ Create a toast overlay with toast options.
 
 #### Returns
 
-Type: `Promise<HTMLIonToastElement>`
+Type: `Promise<any>`
 
 
 
@@ -42,13 +42,13 @@ Type: `Promise<boolean>`
 
 
 
-### `getTop() => Promise<HTMLIonToastElement | undefined>`
+### `getTop() => Promise<any>`
 
 Get the most recently opened toast overlay.
 
 #### Returns
 
-Type: `Promise<HTMLIonToastElement | undefined>`
+Type: `Promise<any>`
 
 
 

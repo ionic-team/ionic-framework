@@ -2,10 +2,10 @@ export type TabbarLayout = 'icon-top' | 'icon-start' | 'icon-end' | 'icon-bottom
 export type TabbarPlacement = 'top' | 'bottom';
 
 export interface TabbarChangedDetail {
-  tabId?: string;
+  tab?: string;
 }
 
 export interface TabbarClickDetail {
-  tabId?: string;
+  tab?: string;
   href?: string;
 }

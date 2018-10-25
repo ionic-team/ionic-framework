@@ -10,7 +10,7 @@ Loading controllers programmatically control the loading component. Loadings can
 
 ## Methods
 
-### `create(opts?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>`
+### `create(opts?: LoadingOptions | undefined) => Promise<any>`
 
 Create a loading overlay with loading options.
 
@@ -22,7 +22,7 @@ Create a loading overlay with loading options.
 
 #### Returns
 
-Type: `Promise<HTMLIonLoadingElement>`
+Type: `Promise<any>`
 
 
 
@@ -44,13 +44,13 @@ Type: `Promise<boolean>`
 
 
 
-### `getTop() => Promise<HTMLIonLoadingElement | undefined>`
+### `getTop() => Promise<any>`
 
 Get the most recently opened loading overlay.
 
 #### Returns
 
-Type: `Promise<HTMLIonLoadingElement | undefined>`
+Type: `Promise<any>`
 
 
 

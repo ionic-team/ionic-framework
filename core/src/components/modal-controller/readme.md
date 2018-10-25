@@ -8,7 +8,7 @@ Modal controllers programmatically control the modal component. Modals can be cr
 
 ## Methods
 
-### `create<T extends ComponentRef>(opts: ModalOptions<T>) => Promise<HTMLIonModalElement>`
+### `create<T extends ComponentRef>(opts: ModalOptions<T>) => Promise<any>`
 
 Create a modal overlay with modal options.
 
@@ -20,7 +20,7 @@ Create a modal overlay with modal options.
 
 #### Returns
 
-Type: `Promise<HTMLIonModalElement>`
+Type: `Promise<any>`
 
 
 
@@ -42,13 +42,13 @@ Type: `Promise<boolean>`
 
 
 
-### `getTop() => Promise<HTMLIonModalElement | undefined>`
+### `getTop() => Promise<any>`
 
 Get the most recently opened modal overlay.
 
 #### Returns
 
-Type: `Promise<HTMLIonModalElement | undefined>`
+Type: `Promise<any>`
 
 
 

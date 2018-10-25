@@ -7,7 +7,7 @@
 
 ## Methods
 
-### `create(opts: PickerOptions) => Promise<HTMLIonPickerElement>`
+### `create(opts: PickerOptions) => Promise<any>`
 
 Create a picker overlay with picker options.
 
@@ -19,7 +19,7 @@ Create a picker overlay with picker options.
 
 #### Returns
 
-Type: `Promise<HTMLIonPickerElement>`
+Type: `Promise<any>`
 
 
 
@@ -41,13 +41,13 @@ Type: `Promise<boolean>`
 
 
 
-### `getTop() => Promise<HTMLIonPickerElement | undefined>`
+### `getTop() => Promise<any>`
 
 Get the most recently opened picker overlay.
 
 #### Returns
 
-Type: `Promise<HTMLIonPickerElement | undefined>`
+Type: `Promise<any>`
 
 
 

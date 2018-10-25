@@ -48,10 +48,10 @@ export class TabButton implements ComponentInterface {
   @Prop() href?: string;
 
   /**
-   * A tab id must be provided for each `ion-tab-view`. It's used internally to reference
+   * A tab id must be provided for each `ion-tab`. It's used internally to reference
    * the selected tab or by the router to switch between them.
    */
-  @Prop() tabId?: string;
+  @Prop() tab?: string;
 
   /**
    * The selected tab component
@@ -65,14 +65,14 @@ export class TabButton implements ComponentInterface {
 
   @Listen('parent:ionTabbarChanged')
   onTabbarChanged(ev: CustomEvent<TabbarChangedDetail>) {
-    this.selected = this.tabId === ev.detail.tabId;
+    this.selected = this.tab === ev.detail.tab;
   }
 
   @Listen('click')
   onClick(ev: Event) {
     if (!this.disabled) {
       this.ionTabbarClick.emit({
-        tabId: this.tabId,
+        tab: this.tab,
         href: this.href
       });
     }
@@ -80,8 +80,8 @@ export class TabButton implements ComponentInterface {
   }
 
   componentWillLoad() {
-    if (this.tabId === undefined) {
-      console.warn('ion-tab-button needs a tab-id, so it can be selected');
+    if (this.tab === undefined) {
+      console.warn('ion-tab-button needs a tab, so it can be selected');
     }
   }
 
@@ -94,13 +94,13 @@ export class TabButton implements ComponentInterface {
   }
 
   hostData() {
-    const { color, tabId, selected, layout, disabled, hasLabel, hasIcon } = this;
+    const { color, tab, selected, layout, disabled, hasLabel, hasIcon } = this;
     return {
       'role': 'tab',
       'ion-activatable': true,
       'aria-selected': selected ? 'true' : null,
-      'id': `tab-button-${tabId}`,
-      'aria-controls': `tab-view-${tabId}`,
+      'id': `tab-button-${tab}`,
+      'aria-controls': `tab-view-${tab}`,
       class: {
         ...createColorClasses(color),
 

@@ -813,32 +813,43 @@ export class SplitPane {
 }
 
 export declare interface TabBar extends StencilComponents<'IonTabBar'> {}
-@Component({ selector: 'ion-tab-bar', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'layout', 'placement', 'selectedTabId', 'translucent'] })
+@Component({ selector: 'ion-tab-bar', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'layout', 'placement', 'selectedTab', 'translucent'] })
 export class TabBar {
   ionTabbarChanged: EventEmitter<CustomEvent>;
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyInputs(this, el, ['mode', 'color', 'layout', 'placement', 'selectedTabId', 'translucent']);
+    proxyInputs(this, el, ['mode', 'color', 'layout', 'placement', 'selectedTab', 'translucent']);
     proxyOutputs(this, el, ['ionTabbarChanged']);
   }
 }
 
 export declare interface TabButton extends StencilComponents<'IonTabButton'> {}
-@Component({ selector: 'ion-tab-button', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'layout', 'href', 'tabId', 'disabled'] })
+@Component({ selector: 'ion-tab-button', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'layout', 'href', 'tab', 'disabled'] })
 export class TabButton {
   ionTabbarClick: EventEmitter<CustomEvent>;
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyInputs(this, el, ['mode', 'color', 'layout', 'href', 'tabId', 'disabled']);
+    proxyInputs(this, el, ['mode', 'color', 'layout', 'href', 'tab', 'disabled']);
     proxyOutputs(this, el, ['ionTabbarClick']);
   }
 }
 
-export declare interface TabGroup extends StencilComponents<'IonTabGroup'> {}
-@Component({ selector: 'ion-tab-group', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['name'] })
-export class TabGroup {
+export declare interface TabView extends StencilComponents<'IonTab'> {}
+@Component({ selector: 'ion-tab', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['active', 'delegate', 'tab', 'component'] })
+export class TabView {
+
+  constructor(r: ElementRef) {
+    const el = r.nativeElement;
+    proxyMethods(this, el, ['setActive']);
+    proxyInputs(this, el, ['active', 'delegate', 'tab', 'component']);
+  }
+}
+
+export declare interface Tabs extends StencilComponents<'IonTabs'> {}
+@Component({ selector: 'ion-tabs', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['name'] })
+export class Tabs {
   ionChange: EventEmitter<CustomEvent>;
   ionNavWillLoad: EventEmitter<CustomEvent>;
   ionNavWillChange: EventEmitter<CustomEvent>;
@@ -849,17 +860,6 @@ export class TabGroup {
     proxyMethods(this, el, ['select', 'setRouteId', 'getRouteId', 'getTab', 'getSelected']);
     proxyInputs(this, el, ['name']);
     proxyOutputs(this, el, ['ionChange', 'ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange']);
-  }
-}
-
-export declare interface TabView extends StencilComponents<'IonTabView'> {}
-@Component({ selector: 'ion-tab-view', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['active', 'btnId', 'delegate', 'tabId', 'component'] })
-export class TabView {
-
-  constructor(r: ElementRef) {
-    const el = r.nativeElement;
-    proxyMethods(this, el, ['setActive']);
-    proxyInputs(this, el, ['active', 'btnId', 'delegate', 'tabId', 'component']);
   }
 }
 

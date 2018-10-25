@@ -4,14 +4,14 @@ import { ComponentRef, FrameworkDelegate } from '../../interface';
 import { attachComponent } from '../../utils/framework-delegate';
 
 @Component({
-  tag: 'ion-tab-view',
+  tag: 'ion-tab',
   styleUrl: 'tab-view.scss',
   shadow: true
 })
 export class TabView implements ComponentInterface {
 
   private loaded = false;
-  @Element() el!: HTMLIonTabViewElement;
+  @Element() el!: HTMLIonTabElement;
 
   /** @internal */
   @Prop({ mutable: true }) active = false;
@@ -20,10 +20,10 @@ export class TabView implements ComponentInterface {
   @Prop() delegate?: FrameworkDelegate;
 
   /**
-   * A tab id must be provided for each `ion-tab-view`. It's used internally to reference
+   * A tab id must be provided for each `ion-tab`. It's used internally to reference
    * the selected tab or by the router to switch between them.
    */
-  @Prop() tabId?: string;
+  @Prop() tab?: string;
 
   /**
    * The component to display inside of the tab.
@@ -40,9 +40,9 @@ export class TabView implements ComponentInterface {
       `- Remove the embedded content inside the ion-tab: <ion-tab></ion-tab>`);
       }
 
-      if (this.tabId === undefined) {
+      if (this.tab === undefined) {
         console.error(`Tab views need to have an unique id attribute:
-  <ion-tab-view tab-id="my-unique-id">`);
+  <ion-tab tab-id="my-unique-id">`);
       }
     }
   }
@@ -63,12 +63,12 @@ export class TabView implements ComponentInterface {
   }
 
   hostData() {
-    const { tabId, active, component } = this;
+    const { tab, active, component } = this;
     return {
       'role': 'tabpanel',
       'aria-hidden': !active ? 'true' : null,
-      'aria-labelledby': `tab-button-${tabId}`,
-      'id': `tab-view-${tabId}`,
+      'aria-labelledby': `tab-button-${tab}`,
+      'id': `tab-view-${tab}`,
       'class': {
         'ion-page': component === undefined,
         'tab-hidden': !active

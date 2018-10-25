@@ -47,7 +47,7 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
   const enteringContent = new AnimationC();
 
   if (!contentEl && !enteringToolBarEle && headerEls.length === 0) {
-    enteringContent.addElement(enteringEl.querySelector(':scope > .ion-page, :scope > ion-nav, :scope > ion-tab-group'));
+    enteringContent.addElement(enteringEl.querySelector(':scope > .ion-page, :scope > ion-nav, :scope > ion-tabs'));
   } else {
     enteringContent.addElement(contentEl);
     enteringContent.addElement(headerEls);
