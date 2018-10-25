@@ -55,6 +55,8 @@ import {
   Side,
   SpinnerTypes,
   StyleEvent,
+  TabbarChangedDetail,
+  TabbarClickDetail,
   TabbarLayout,
   TabbarPlacement,
   TextFieldTypes,
@@ -3704,7 +3706,7 @@ export namespace Components {
 
   interface IonRoute {
     /**
-    * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in ion-tabs it actually refers to the name of the `ion-tab` to select.
+    * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
     */
     'component': string;
     /**
@@ -3718,7 +3720,7 @@ export namespace Components {
   }
   interface IonRouteAttributes extends StencilHTMLAttributes {
     /**
-    * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in ion-tabs it actually refers to the name of the `ion-tab` to select.
+    * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
     */
     'component'?: string;
     /**
@@ -4538,146 +4540,13 @@ export namespace Components {
     'when'?: string | boolean;
   }
 
-  interface IonTab {
-    /**
-    * If `true`, sets the tab as the active tab.
-    */
-    'active': boolean;
-    /**
-    * The badge for the tab.
-    */
-    'badge'?: string;
-    /**
-    * The badge color for the tab button.
-    */
-    'badgeColor'?: Color;
-    /**
-    * hidden
-    */
-    'btnId'?: string;
-    /**
-    * The component to display inside of the tab.
-    */
-    'component'?: ComponentRef;
-    /**
-    * hidden
-    */
-    'delegate'?: FrameworkDelegate;
-    /**
-    * If `true`, the user cannot interact with the tab. Defaults to `false`.
-    */
-    'disabled': boolean;
-    /**
-    * The URL which will be used as the `href` within this tab's button anchor.
-    */
-    'href'?: string;
-    /**
-    * The icon for the tab.
-    */
-    'icon'?: string;
-    /**
-    * The label of the tab.
-    */
-    'label'?: string;
-    /**
-    * The name of the tab.
-    */
-    'name'?: string;
-    /**
-    * If `true`, the tab will be selected. Defaults to `false`.
-    */
-    'selected': boolean;
-    /**
-    * Set the active component for the tab
-    */
-    'setActive': () => Promise<void>;
-    /**
-    * If `true`, the tab button is visible within the tabbar. Defaults to `true`.
-    */
-    'show': boolean;
-    /**
-    * If `true`, hide the tabs on child pages.
-    */
-    'tabsHideOnSubPages': boolean;
-  }
-  interface IonTabAttributes extends StencilHTMLAttributes {
-    /**
-    * If `true`, sets the tab as the active tab.
-    */
-    'active'?: boolean;
-    /**
-    * The badge for the tab.
-    */
-    'badge'?: string;
-    /**
-    * The badge color for the tab button.
-    */
-    'badgeColor'?: Color;
-    /**
-    * hidden
-    */
-    'btnId'?: string;
-    /**
-    * The component to display inside of the tab.
-    */
-    'component'?: ComponentRef;
-    /**
-    * hidden
-    */
-    'delegate'?: FrameworkDelegate;
-    /**
-    * If `true`, the user cannot interact with the tab. Defaults to `false`.
-    */
-    'disabled'?: boolean;
-    /**
-    * The URL which will be used as the `href` within this tab's button anchor.
-    */
-    'href'?: string;
-    /**
-    * The icon for the tab.
-    */
-    'icon'?: string;
-    /**
-    * The label of the tab.
-    */
-    'label'?: string;
-    /**
-    * The name of the tab.
-    */
-    'name'?: string;
-    /**
-    * Emitted when the current tab is selected.
-    */
-    'onIonSelect'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the tab props mutates. Used internally.
-    */
-    'onIonTabMutated'?: (event: CustomEvent<void>) => void;
-    /**
-    * If `true`, the tab will be selected. Defaults to `false`.
-    */
-    'selected'?: boolean;
-    /**
-    * If `true`, the tab button is visible within the tabbar. Defaults to `true`.
-    */
-    'show'?: boolean;
-    /**
-    * If `true`, hide the tabs on child pages.
-    */
-    'tabsHideOnSubPages'?: boolean;
-  }
-
-  interface IonTabbar {
+  interface IonTabBar {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
     /**
-    * If `true`, show the tab highlight bar under the selected tab.
-    */
-    'highlight': boolean;
-    /**
-    * Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
+    * Set the layout of the text and icon in the tabbar.
     */
     'layout': TabbarLayout;
     /**
@@ -4685,33 +4554,87 @@ export namespace Components {
     */
     'mode': Mode;
     /**
-    * Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
+    * Set the position of the tabbar, relative to the content.
     */
     'placement': TabbarPlacement;
     /**
     * The selected tab component
     */
-    'selectedTab'?: HTMLIonTabElement;
+    'selectedTab'?: string;
     /**
-    * The tabs to render
-    */
-    'tabs': HTMLIonTabElement[];
-    /**
-    * If `true`, the tabbar will be translucent. Defaults to `false`.
+    * If `true`, the tab bar will be translucent. Defaults to `false`.
     */
     'translucent': boolean;
   }
-  interface IonTabbarAttributes extends StencilHTMLAttributes {
+  interface IonTabBarAttributes extends StencilHTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
     /**
-    * If `true`, show the tab highlight bar under the selected tab.
+    * Set the layout of the text and icon in the tabbar.
     */
-    'highlight'?: boolean;
+    'layout'?: TabbarLayout;
     /**
-    * Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
+    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    */
+    'mode'?: Mode;
+    'onIonTabBarChanged'?: (event: CustomEvent<TabbarChangedDetail>) => void;
+    /**
+    * Set the position of the tabbar, relative to the content.
+    */
+    'placement'?: TabbarPlacement;
+    /**
+    * The selected tab component
+    */
+    'selectedTab'?: string;
+    /**
+    * If `true`, the tab bar will be translucent. Defaults to `false`.
+    */
+    'translucent'?: boolean;
+  }
+
+  interface IonTabButton {
+    /**
+    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+    */
+    'color'?: Color;
+    /**
+    * The selected tab component
+    */
+    'disabled': boolean;
+    /**
+    * The URL which will be used as the `href` within this tab's button anchor.
+    */
+    'href'?: string;
+    /**
+    * Set the layout of the text and icon in the tabbar.
+    */
+    'layout': TabbarLayout;
+    /**
+    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    */
+    'mode': Mode;
+    /**
+    * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
+    */
+    'tab'?: string;
+  }
+  interface IonTabButtonAttributes extends StencilHTMLAttributes {
+    /**
+    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+    */
+    'color'?: Color;
+    /**
+    * The selected tab component
+    */
+    'disabled'?: boolean;
+    /**
+    * The URL which will be used as the `href` within this tab's button anchor.
+    */
+    'href'?: string;
+    /**
+    * Set the layout of the text and icon in the tabbar.
     */
     'layout'?: TabbarLayout;
     /**
@@ -4721,23 +4644,40 @@ export namespace Components {
     /**
     * Emitted when the tab bar is clicked
     */
-    'onIonTabbarClick'?: (event: CustomEvent<HTMLIonTabElement>) => void;
+    'onIonTabButtonClick'?: (event: CustomEvent<TabbarClickDetail>) => void;
     /**
-    * Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
+    * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
     */
-    'placement'?: TabbarPlacement;
+    'tab'?: string;
+  }
+
+  interface IonTab {
+    'active': boolean;
     /**
-    * The selected tab component
+    * The component to display inside of the tab.
     */
-    'selectedTab'?: HTMLIonTabElement;
+    'component'?: ComponentRef;
+    'delegate'?: FrameworkDelegate;
     /**
-    * The tabs to render
+    * Set the active component for the tab
     */
-    'tabs'?: HTMLIonTabElement[];
+    'setActive': () => Promise<void>;
     /**
-    * If `true`, the tabbar will be translucent. Defaults to `false`.
+    * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
     */
-    'translucent'?: boolean;
+    'tab'?: string;
+  }
+  interface IonTabAttributes extends StencilHTMLAttributes {
+    'active'?: boolean;
+    /**
+    * The component to display inside of the tab.
+    */
+    'component'?: ComponentRef;
+    'delegate'?: FrameworkDelegate;
+    /**
+    * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
+    */
+    'tab'?: string;
   }
 
   interface IonTabs {
@@ -4749,7 +4689,7 @@ export namespace Components {
     /**
     * Get the tab at the given index
     */
-    'getTab': (tabOrIndex: string | number | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>;
+    'getTab': (tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>;
     /**
     * A unique name for the tabs.
     */
@@ -4757,16 +4697,8 @@ export namespace Components {
     /**
     * Index or the Tab instance, of the tab to select.
     */
-    'select': (tabOrIndex: number | HTMLIonTabElement) => Promise<boolean>;
+    'select': (tab: string | HTMLIonTabElement) => Promise<boolean>;
     'setRouteId': (id: string) => Promise<RouteWrite>;
-    /**
-    * If `true`, the tabbar will be hidden. Defaults to `false`.
-    */
-    'tabbarHidden': boolean;
-    /**
-    * If `true`, the tabs will use the router and `selectedTab` will not do anything.
-    */
-    'useRouter': boolean;
   }
   interface IonTabsAttributes extends StencilHTMLAttributes {
     /**
@@ -4789,14 +4721,6 @@ export namespace Components {
     * Emitted when the navigation will load a component.
     */
     'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
-    /**
-    * If `true`, the tabbar will be hidden. Defaults to `false`.
-    */
-    'tabbarHidden'?: boolean;
-    /**
-    * If `true`, the tabs will use the router and `selectedTab` will not do anything.
-    */
-    'useRouter'?: boolean;
   }
 
   interface IonText {
@@ -5456,8 +5380,9 @@ declare global {
     'IonSlides': Components.IonSlides;
     'IonSpinner': Components.IonSpinner;
     'IonSplitPane': Components.IonSplitPane;
+    'IonTabBar': Components.IonTabBar;
+    'IonTabButton': Components.IonTabButton;
     'IonTab': Components.IonTab;
-    'IonTabbar': Components.IonTabbar;
     'IonTabs': Components.IonTabs;
     'IonText': Components.IonText;
     'IonTextarea': Components.IonTextarea;
@@ -5559,8 +5484,9 @@ declare global {
     'ion-slides': Components.IonSlidesAttributes;
     'ion-spinner': Components.IonSpinnerAttributes;
     'ion-split-pane': Components.IonSplitPaneAttributes;
+    'ion-tab-bar': Components.IonTabBarAttributes;
+    'ion-tab-button': Components.IonTabButtonAttributes;
     'ion-tab': Components.IonTabAttributes;
-    'ion-tabbar': Components.IonTabbarAttributes;
     'ion-tabs': Components.IonTabsAttributes;
     'ion-text': Components.IonTextAttributes;
     'ion-textarea': Components.IonTextareaAttributes;
@@ -6102,16 +6028,22 @@ declare global {
     new (): HTMLIonSplitPaneElement;
   };
 
+  interface HTMLIonTabBarElement extends Components.IonTabBar, HTMLStencilElement {}
+  var HTMLIonTabBarElement: {
+    prototype: HTMLIonTabBarElement;
+    new (): HTMLIonTabBarElement;
+  };
+
+  interface HTMLIonTabButtonElement extends Components.IonTabButton, HTMLStencilElement {}
+  var HTMLIonTabButtonElement: {
+    prototype: HTMLIonTabButtonElement;
+    new (): HTMLIonTabButtonElement;
+  };
+
   interface HTMLIonTabElement extends Components.IonTab, HTMLStencilElement {}
   var HTMLIonTabElement: {
     prototype: HTMLIonTabElement;
     new (): HTMLIonTabElement;
-  };
-
-  interface HTMLIonTabbarElement extends Components.IonTabbar, HTMLStencilElement {}
-  var HTMLIonTabbarElement: {
-    prototype: HTMLIonTabbarElement;
-    new (): HTMLIonTabbarElement;
   };
 
   interface HTMLIonTabsElement extends Components.IonTabs, HTMLStencilElement {}
@@ -6263,8 +6195,9 @@ declare global {
     'ion-slides': HTMLIonSlidesElement
     'ion-spinner': HTMLIonSpinnerElement
     'ion-split-pane': HTMLIonSplitPaneElement
+    'ion-tab-bar': HTMLIonTabBarElement
+    'ion-tab-button': HTMLIonTabButtonElement
     'ion-tab': HTMLIonTabElement
-    'ion-tabbar': HTMLIonTabbarElement
     'ion-tabs': HTMLIonTabsElement
     'ion-text': HTMLIonTextElement
     'ion-textarea': HTMLIonTextareaElement
@@ -6366,8 +6299,9 @@ declare global {
     'ion-slides': HTMLIonSlidesElement;
     'ion-spinner': HTMLIonSpinnerElement;
     'ion-split-pane': HTMLIonSplitPaneElement;
+    'ion-tab-bar': HTMLIonTabBarElement;
+    'ion-tab-button': HTMLIonTabButtonElement;
     'ion-tab': HTMLIonTabElement;
-    'ion-tabbar': HTMLIonTabbarElement;
     'ion-tabs': HTMLIonTabsElement;
     'ion-text': HTMLIonTextElement;
     'ion-textarea': HTMLIonTextareaElement;

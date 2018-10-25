@@ -40,7 +40,10 @@ export class ItemDivider implements ComponentInterface {
 
   hostData() {
     return {
-      class: createColorClasses(this.color)
+      class: {
+        ...createColorClasses(this.color),
+        'item': true,
+      }
     };
   }
 

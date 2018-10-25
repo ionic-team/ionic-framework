@@ -21,7 +21,7 @@ export class StackController {
       ref: enteringRef,
       element: (enteringRef && enteringRef.location && enteringRef.location.nativeElement) as HTMLElement,
       url: this.getUrl(route),
-      fullpath: document.location.pathname,
+      fullpath: document.location!.pathname,
       deactivatedId: -1
     };
   }

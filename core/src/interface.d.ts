@@ -18,7 +18,7 @@ export * from './components/content/content-interface';
 export * from './components/select/select-interface';
 export * from './components/select-popover/select-popover-interface';
 export * from './components/spinner/spinner-interface';
-export * from './components/tabbar/tabbar-interface';
+export * from './components/tab-bar/tab-bar-interface';
 export * from './components/toast/toast-interface';
 export * from './components/virtual-scroll/virtual-scroll-interface';
 
