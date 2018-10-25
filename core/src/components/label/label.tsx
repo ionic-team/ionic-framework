@@ -29,7 +29,6 @@ export class Label implements ComponentInterface {
 
   /**
    * The position determines where and how the label behaves inside an item.
-   * Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
    */
   @Prop() position?: 'fixed' | 'stacked' | 'floating';
 

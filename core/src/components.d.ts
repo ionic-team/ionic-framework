@@ -2205,7 +2205,7 @@ export namespace Components {
     */
     'mode': Mode;
     /**
-    * The position determines where and how the label behaves inside an item. Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
+    * The position determines where and how the label behaves inside an item.
     */
     'position'?: 'fixed' | 'stacked' | 'floating';
   }
@@ -2223,7 +2223,7 @@ export namespace Components {
     */
     'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
     /**
-    * The position determines where and how the label behaves inside an item. Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
+    * The position determines where and how the label behaves inside an item.
     */
     'position'?: 'fixed' | 'stacked' | 'floating';
   }

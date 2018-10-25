@@ -212,7 +212,6 @@ export class Datetime implements ComponentInterface {
     // first see if locale names were provided in the inputs
     // then check to see if they're in the config
     // if neither were provided then it will use default English names
-    this.emitStyle();
     this.locale = {
       // this.locale[type] = convertToArrayOfStrings((this[type] ? this[type] : this.config.get(type), type);
       monthNames: convertToArrayOfStrings(this.monthNames, 'monthNames'),
@@ -222,6 +221,7 @@ export class Datetime implements ComponentInterface {
     };
 
     this.updateDatetimeValue(this.value);
+    this.emitStyle();
   }
 
   /**
@@ -498,7 +498,7 @@ export class Datetime implements ComponentInterface {
     this.text = renderDatetime(template, this.datetimeValue, this.locale);
   }
 
-  hasValue(): boolean {
+  private hasValue(): boolean {
     const val = this.datetimeValue;
     return Object.keys(val).length > 0;
   }
@@ -534,7 +534,6 @@ export class Datetime implements ComponentInterface {
         onClick={this.open.bind(this)}
         class="datetime-cover"
       >
-        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </button>
     ];
   }
