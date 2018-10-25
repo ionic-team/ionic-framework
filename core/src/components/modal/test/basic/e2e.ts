@@ -6,8 +6,10 @@ it('modal: basic', async () => {
   });
 
   await page.click('.e2ePresentModal');
-  const popover = await page.find('ion-modal');
-  expect(popover).not.toBeNull();
+
+  const modal = await page.find('ion-modal');
+  await modal.waitForVisible();
+  await page.waitFor(250);
 
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
