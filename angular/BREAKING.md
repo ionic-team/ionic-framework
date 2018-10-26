@@ -1384,6 +1384,9 @@ However, there are still global styles that need to be included in order for an 
 
 The basic set of CSS files should be included to ensure the Ionic application behaves natively.
 
+- **core.css**
+Contains styles for the font, structure, and the `color` property for all Ionic components.
+
 - **normalize.css**
 Normalizes the CSS differences between browsers, it's based on https://necolas.github.io/normalize.css/
 
@@ -1392,9 +1395,6 @@ Applies styles to the `<html>` element and defaults `box-sizing` to `border-box`
 
 - **typography.css**
 Changes the `font-family` of the whole page based on the mode selected (iOS or Material Design). It also applies global styles to native HTML elements.
-
-- **colors.css**
-Allows the `color` property to work across all Ionic components.
 
 
 #### Additional CSS Files
@@ -1435,10 +1435,10 @@ To use the css in production, we recommend importing it into a global file, such
 
 ```css
 /** Basic CSS for Ionic Apps */
+@import "~@ionic/angular/css/core.css";
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import "~@ionic/angular/css/colors.css";
 
 /** Optional CSS utilities that can be commented out */
 @import "~@ionic/angular/css/padding.css";
