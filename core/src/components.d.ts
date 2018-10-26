@@ -1275,6 +1275,10 @@ export namespace Components {
     */
     'monthValues'?: number[] | number | string;
     /**
+    * The name of the control, which is submitted with the form data.
+    */
+    'name': string;
+    /**
     * Opens the datetime overlay.
     */
     'open': () => Promise<void>;
@@ -1360,6 +1364,10 @@ export namespace Components {
     * Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`.
     */
     'monthValues'?: number[] | number | string;
+    /**
+    * The name of the control, which is submitted with the form data.
+    */
+    'name'?: string;
     /**
     * Emitted when the datetime selection was cancelled.
     */
