@@ -4,6 +4,7 @@ export * from './index';
 export * from './components/animation-controller/animation-interface';
 export * from './components/alert/alert-interface';
 export * from './components/action-sheet/action-sheet-interface';
+export * from './components/datetime/datetime-interface';
 export * from './components/menu/menu-interface';
 export * from './components/modal/modal-interface';
 export * from './components/picker/picker-interface';
