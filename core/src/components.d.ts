@@ -773,7 +773,7 @@ export namespace Components {
     */
     'name': string;
     /**
-    * The value of the checkbox.
+    * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`. Defaults to `on`.
     */
     'value': string;
   }
@@ -815,7 +815,7 @@ export namespace Components {
     */
     'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
     /**
-    * The value of the checkbox.
+    * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`. Defaults to `on`.
     */
     'value'?: string;
   }
@@ -5017,7 +5017,7 @@ export namespace Components {
     */
     'name': string;
     /**
-    * the value of the toggle.
+    * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`. Defaults to `on`.
     */
     'value'?: string | null;
   }
@@ -5059,7 +5059,7 @@ export namespace Components {
     */
     'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
     /**
-    * the value of the toggle.
+    * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`. Defaults to `on`.
     */
     'value'?: string | null;
   }
