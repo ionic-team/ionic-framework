@@ -21,7 +21,7 @@ export function hasShadowDom(el: HTMLElement) {
   return !!el.shadowRoot && !!(el as any).attachShadow;
 }
 
-export function renderHiddenInput(container: HTMLElement, name: string, value: string, disabled: boolean) {
+export function renderHiddenInput(container: HTMLElement, name: string, value: string | undefined | null, disabled: boolean) {
   if (hasShadowDom(container)) {
     let input = container.querySelector('input.aux-input') as HTMLInputElement | null;
     if (!input) {
@@ -32,7 +32,7 @@ export function renderHiddenInput(container: HTMLElement, name: string, value: s
     }
     input.disabled = disabled;
     input.name = name;
-    input.value = value;
+    input.value = value || '';
   }
 }
 
