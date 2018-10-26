@@ -1,8 +1,8 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('tab-group: basic', async () => {
+it('tabs: basic', async () => {
   const page = await newE2EPage({
-    url: '/src/components/tab-group/test/basic?ionic:_testing=true'
+    url: '/src/components/tabs/test/basic?ionic:_testing=true'
   });
 
   let compare = await page.compareScreenshot();

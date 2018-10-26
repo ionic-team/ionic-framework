@@ -133,7 +133,7 @@ export class Input implements ComponentInterface {
   /**
    * Instructional text that shows before the input has a value.
    */
-  @Prop() placeholder?: string;
+  @Prop() placeholder?: string | null;
 
   /**
    * If `true`, the user cannot modify the value. Defaults to `false`.
@@ -262,6 +262,7 @@ export class Input implements ComponentInterface {
     this.ionStyle.emit({
       'interactive': true,
       'input': true,
+      'has-placeholder': this.placeholder != null,
       'has-value': this.hasValue(),
       'has-focus': this.hasFocus,
       'interactive-disabled': this.disabled,
