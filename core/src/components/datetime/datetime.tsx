@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
-import { InputChangeEvent, Mode, PickerColumn, PickerColumnOption, PickerOptions, StyleEvent } from '../../interface';
+import { DatetimeOptions, InputChangeEvent, Mode, PickerColumn, PickerColumnOption, PickerOptions, StyleEvent } from '../../interface';
 import { clamp } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
@@ -168,7 +168,7 @@ export class Datetime implements ComponentInterface {
    * Any additional options that the picker interface can accept.
    * See the [Picker API docs](../../picker/Picker) for the picker options.
    */
-  @Prop() pickerOptions?: PickerOptions;
+  @Prop() pickerOptions?: DatetimeOptions;
 
   /**
    * The text to display when there's no date selected yet.
