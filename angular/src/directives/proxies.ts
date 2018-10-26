@@ -291,16 +291,6 @@ export class Header {
   }
 }
 
-export declare interface HideWhen extends StencilComponents<'IonHideWhen'> {}
-@Component({ selector: 'ion-hide-when', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['modes', 'orientation', 'mediaQuery', 'size', 'platform', 'or'] })
-export class HideWhen {
-
-  constructor(r: ElementRef) {
-    const el = r.nativeElement;
-    proxyInputs(this, el, ['modes', 'orientation', 'mediaQuery', 'size', 'platform', 'or']);
-  }
-}
-
 export declare interface Icon extends StencilComponents<'IonIcon'> {}
 @Component({ selector: 'ion-icon', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['ariaLabel', 'color', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'size', 'src'] })
 export class Icon {
@@ -727,16 +717,6 @@ export class SelectPopover {
   constructor(r: ElementRef) {
     const el = r.nativeElement;
     proxyInputs(this, el, ['header', 'subHeader', 'message', 'options']);
-  }
-}
-
-export declare interface ShowWhen extends StencilComponents<'IonShowWhen'> {}
-@Component({ selector: 'ion-show-when', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['modes', 'orientation', 'mediaQuery', 'size', 'platform', 'or'] })
-export class ShowWhen {
-
-  constructor(r: ElementRef) {
-    const el = r.nativeElement;
-    proxyInputs(this, el, ['modes', 'orientation', 'mediaQuery', 'size', 'platform', 'or']);
   }
 }
 
