@@ -18,7 +18,6 @@ export const config: Config = {
     { components: ['ion-datetime', 'ion-picker', 'ion-picker-column', 'ion-picker-controller'] },
     { components: ['ion-fab', 'ion-fab-button', 'ion-fab-list'] },
     { components: ['ion-grid', 'ion-row', 'ion-col'] },
-    { components: ['ion-hide-when', 'ion-show-when'] },
     { components: ['ion-infinite-scroll', 'ion-infinite-scroll-content'] },
     { components: ['ion-input'] },
     { components: ['ion-textarea'] },
