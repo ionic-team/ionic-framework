@@ -1,4 +1,4 @@
-import { AnimationBuilder } from '../../interface';
+import { AnimationBuilder, Mode } from '../../interface';
 
 export interface PickerOptions {
   columns: PickerColumn[];
@@ -7,7 +7,7 @@ export interface PickerOptions {
   backdropDismiss?: boolean;
   animated?: boolean;
 
-  mode?: string;
+  mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
 
