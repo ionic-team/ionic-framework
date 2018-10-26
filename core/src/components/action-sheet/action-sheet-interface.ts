@@ -1,4 +1,4 @@
-import { AnimationBuilder } from '../../interface';
+import { AnimationBuilder, Mode } from '../../interface';
 
 export interface ActionSheetOptions {
   header?: string;
@@ -8,7 +8,7 @@ export interface ActionSheetOptions {
   backdropDismiss?: boolean;
   translucent?: boolean;
   animated?: boolean;
-  mode?: string;
+  mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
 

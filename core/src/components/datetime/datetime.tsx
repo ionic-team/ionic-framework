@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
-import { InputChangeEvent, Mode, PickerColumn, PickerColumnOption, PickerOptions, StyleEvent } from '../../interface';
-import { clamp } from '../../utils/helpers';
+import { DatetimeOptions, InputChangeEvent, Mode, PickerColumn, PickerColumnOption, PickerOptions, StyleEvent } from '../../interface';
+import { clamp, renderHiddenInput } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
 import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getValueFromFormat, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
@@ -34,6 +34,11 @@ export class Datetime implements ComponentInterface {
    * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
+
+  /**
+   * The name of the control, which is submitted with the form data.
+   */
+  @Prop() name: string = this.inputId;
 
   /**
    * If `true`, the user cannot interact with the datetime. Defaults to `false`.
@@ -168,7 +173,7 @@ export class Datetime implements ComponentInterface {
    * Any additional options that the picker interface can accept.
    * See the [Picker API docs](../../picker/Picker) for the picker options.
    */
-  @Prop() pickerOptions?: PickerOptions;
+  @Prop() pickerOptions?: DatetimeOptions;
 
   /**
    * The text to display when there's no date selected yet.
@@ -523,6 +528,7 @@ export class Datetime implements ComponentInterface {
     if (datetimeText == null) {
       datetimeText = this.placeholder != null ? this.placeholder : '';
     }
+    renderHiddenInput(this.el, this.name, this.value, this.disabled);
 
     return [
       <div class="datetime-text">{datetimeText}</div>,
@@ -534,7 +540,8 @@ export class Datetime implements ComponentInterface {
         onClick={this.open.bind(this)}
         class="datetime-cover"
       >
-      </button>
+      </button>,
+      <slot></slot>
     ];
   }
 }

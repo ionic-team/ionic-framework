@@ -3,7 +3,9 @@
 // Toast
 // --------------------------------------------------
 
-ion-toast {
+:host {
+  --button-color: inherit;
+
   /**
    * @prop --background: Background of the toast
    * @prop --button-color: Color of the button text
@@ -26,6 +28,12 @@ ion-toast {
   pointer-events: none;
 }
 
+:host(.ion-color) {
+  --color: #{current-color(contrast)};
+  --background: #{current-color(base)};
+  --button-color: inherit;
+}
+
 .toast-wrapper {
   background: var(--background);
 }
@@ -42,7 +50,6 @@ ion-toast {
   bottom: 0;
 }
 
-
 .toast-container {
   display: flex;
 
@@ -53,7 +60,7 @@ ion-toast {
 }
 
 .toast-button {
-  --color: inherit;
+  color: var(--button-color);
 
   font-size: $toast-button-font-size;
 }

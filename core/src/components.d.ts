@@ -20,6 +20,7 @@ import {
   Color,
   ComponentProps,
   ComponentRef,
+  DatetimeOptions,
   DomRenderFn,
   FrameworkDelegate,
   HeaderFn,
@@ -1274,6 +1275,10 @@ export namespace Components {
     */
     'monthValues'?: number[] | number | string;
     /**
+    * The name of the control, which is submitted with the form data.
+    */
+    'name': string;
+    /**
     * Opens the datetime overlay.
     */
     'open': () => Promise<void>;
@@ -1284,7 +1289,7 @@ export namespace Components {
     /**
     * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
     */
-    'pickerOptions'?: PickerOptions;
+    'pickerOptions'?: DatetimeOptions;
     /**
     * The text to display when there's no date selected yet. Using lowercase to match the input attribute
     */
@@ -1360,6 +1365,10 @@ export namespace Components {
     */
     'monthValues'?: number[] | number | string;
     /**
+    * The name of the control, which is submitted with the form data.
+    */
+    'name'?: string;
+    /**
     * Emitted when the datetime selection was cancelled.
     */
     'onIonCancel'?: (event: CustomEvent<void>) => void;
@@ -1378,7 +1387,7 @@ export namespace Components {
     /**
     * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
     */
-    'pickerOptions'?: PickerOptions;
+    'pickerOptions'?: DatetimeOptions;
     /**
     * The text to display when there's no date selected yet. Using lowercase to match the input attribute
     */
@@ -4845,6 +4854,10 @@ export namespace Components {
     */
     'closeButtonText'?: string;
     /**
+    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+    */
+    'color'?: Color;
+    /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
     'cssClass'?: string | string[];
@@ -4911,6 +4924,10 @@ export namespace Components {
     * Text to display in the close button.
     */
     'closeButtonText'?: string;
+    /**
+    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+    */
+    'color'?: Color;
     /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
