@@ -4,7 +4,7 @@
 // iOS Toast
 // --------------------------------------------------
 
-.toast-ios {
+:host {
   --background: #{$toast-ios-background-color};
   --button-color: #{$toast-ios-button-color};
   --color: #{$toast-ios-title-color};
@@ -12,7 +12,7 @@
   font-size: $toast-ios-title-font-size;
 }
 
-.toast-ios .toast-wrapper {
+.toast-wrapper {
   @include position-horizontal(10px, 10px);
   @include margin(auto);
   @include border-radius($toast-ios-border-radius);
@@ -25,19 +25,15 @@
   z-index: $z-index-overlay-wrapper;
 }
 
-.toast-translucent-ios .toast-wrapper {
+:host(.toast-translucent) .toast-wrapper {
   background: $toast-ios-translucent-background-color;
   backdrop-filter: $toast-ios-translucent-filter;
 }
 
-.toast-ios .toast-wrapper.toast-middle {
+.toast-wrapper.toast-middle {
   opacity: .01;
 }
 
-.toast-ios .toast-message {
+.toast-message {
   @include padding($toast-ios-title-padding-top, $toast-ios-title-padding-end, $toast-ios-title-padding-bottom, $toast-ios-title-padding-start);
-}
-
-.toast-ios .toast-button {
-  color: var(--button-color);
 }
