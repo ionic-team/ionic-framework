@@ -10,6 +10,7 @@ it('loading: standalone', async () => {
   expect(loading).not.toBeNull();
 
   await loading.waitForVisible();
+  await page.waitFor(500);
 
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();

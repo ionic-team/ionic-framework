@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 import { Color, Mode, StyleEvent, TextInputChangeEvent } from '../../interface';
-import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
+import { debounceEvent, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 import { submitFormOnEnterPress, KEY_CODES } from '../../utils/forms';
 
@@ -124,14 +124,15 @@ export class Textarea implements ComponentInterface {
   /**
    * The value of the textarea.
    */
-  @Prop({ mutable: true }) value = '';
+  @Prop({ mutable: true }) value?: string | null = '';
 
   /**
    * Update the native input element when the value changes
    */
   @Watch('value')
   protected valueChanged() {
-    const { nativeInput, value } = this;
+    const nativeInput = this.nativeInput;
+    const value = this.getValue();
     if (nativeInput!.value !== value) {
       nativeInput!.value = value;
     }
@@ -163,10 +164,12 @@ export class Textarea implements ComponentInterface {
    */
   @Event() ionFocus!: EventEmitter<void>;
 
-  componentDidLoad() {
-    this.ionStyle = deferEvent(this.ionStyle);
-    this.debounceChanged();
+  componentWillLoad() {
     this.emitStyle();
+  }
+
+  componentDidLoad() {
+    this.debounceChanged();
   }
 
   /**
@@ -247,7 +250,11 @@ export class Textarea implements ComponentInterface {
   }
 
   private hasValue(): boolean {
-    return this.value !== '';
+    return this.getValue() !== '';
+  }
+
+  private getValue(): string {
+    return this.value || '';
   }
 
   hostData() {
@@ -259,7 +266,8 @@ export class Textarea implements ComponentInterface {
   }
 
   render() {
-    renderHiddenInput(this.el, this.name, this.value, this.disabled);
+    const value = this.getValue();
+    renderHiddenInput(this.el, this.name, value, this.disabled);
 
     return (
       <textarea
@@ -283,7 +291,7 @@ export class Textarea implements ComponentInterface {
         onFocus={this.onFocus}
         onKeyDown={this.onKeyDown}
       >
-        {this.value}
+        {value}
       </textarea>
     );
   }

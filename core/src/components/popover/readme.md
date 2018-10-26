@@ -4,7 +4,7 @@ A Popover is a dialog that appears on top of the current page. It can be used fo
 
 ### Creating
 
-Popovers can be created using a [Popover Controller](../../popover-controller/PopoverController). They can be customized by passing popover options in the popover controller's create method.
+Popovers can be created using a [Popover Controller](https://beta.ionicframework.com/docs/api/popover-controller). They can be customized by passing popover options in the popover controller's create method.
 
 ### Presenting
 
@@ -36,14 +36,14 @@ To present a popover, call the `present` method on a popover instance. In order 
 
 ## Events
 
-| Event                   | Description                               |
-| ----------------------- | ----------------------------------------- |
-| `ionPopoverDidDismiss`  | Emitted after the popover has dismissed.  |
-| `ionPopoverDidLoad`     | Emitted after the popover has loaded.     |
-| `ionPopoverDidPresent`  | Emitted after the popover has presented.  |
-| `ionPopoverDidUnload`   | Emitted after the popover has unloaded.   |
-| `ionPopoverWillDismiss` | Emitted before the popover has dismissed. |
-| `ionPopoverWillPresent` | Emitted before the popover has presented. |
+| Event                   | Detail             | Description                               |
+| ----------------------- | ------------------ | ----------------------------------------- |
+| `ionPopoverDidDismiss`  | OverlayEventDetail | Emitted after the popover has dismissed.  |
+| `ionPopoverDidLoad`     |                    | Emitted after the popover has loaded.     |
+| `ionPopoverDidPresent`  |                    | Emitted after the popover has presented.  |
+| `ionPopoverDidUnload`   |                    | Emitted after the popover has unloaded.   |
+| `ionPopoverWillDismiss` | OverlayEventDetail | Emitted before the popover has dismissed. |
+| `ionPopoverWillPresent` |                    | Emitted before the popover has presented. |
 
 
 ## Methods

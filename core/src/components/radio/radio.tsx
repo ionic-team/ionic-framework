@@ -1,7 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
 import { CheckedInputChangeEvent, Color, Mode, StyleEvent } from '../../interface';
-import { deferEvent } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 @Component({
@@ -52,7 +51,7 @@ export class Radio implements ComponentInterface {
   /**
    * the value of the radio.
    */
-  @Prop({ mutable: true }) value!: any | null;
+  @Prop({ mutable: true }) value?: any | null;
 
   /**
    * Emitted when the radio loads.
@@ -85,9 +84,6 @@ export class Radio implements ComponentInterface {
   @Event() ionBlur!: EventEmitter<void>;
 
   componentWillLoad() {
-    this.ionSelect = deferEvent(this.ionSelect);
-    this.ionStyle = deferEvent(this.ionStyle);
-
     if (this.value == null) {
       this.value = this.inputId;
     }
@@ -139,7 +135,7 @@ export class Radio implements ComponentInterface {
     this.emitStyle();
   }
 
-  emitStyle() {
+  private emitStyle() {
     this.ionStyle.emit({
       'radio-checked': this.checked,
       'interactive-disabled': this.disabled,

@@ -19,6 +19,15 @@ aliases:
       paths:
         - core/node_modules
 
+  - &restore-cache-core-stencil
+      keys:
+        - stencil-cache-1
+
+  - &save-cache-core-stencil
+      key: stencil-cache-1
+      paths:
+        - core/.stencil
+        - core/screenshot/images
 
 defaults: &defaults
   docker:
@@ -45,6 +54,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - restore_cache: *restore-cache-core
+      - restore_cache: *restore-cache-core-stencil
       - run:
           command: npm install
           working_directory: /tmp/workspace/core
@@ -52,6 +62,7 @@ jobs:
       - run:
           command: npm run build # --max-workers 1 --debug
           working_directory: /tmp/workspace/core
+      - save_cache: *save-cache-core-stencil
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
@@ -106,7 +117,7 @@ jobs:
           at: /tmp/workspace
       - run:
           name: Run Screenshot
-          command: npx stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci --runInBand || true
+          command: npx stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci || true
           working_directory: /tmp/workspace/core
 
   test-core-screenshot-master:
@@ -117,7 +128,7 @@ jobs:
           at: /tmp/workspace
       - run:
           name: Run Screenshot
-          command: npx stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci --runInBand --update-screenshot || true
+          command: npx stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci --update-screenshot || true
           working_directory: /tmp/workspace/core
 
 workflows:

@@ -20,7 +20,10 @@ export class App implements ComponentInterface {
     rIC(() => {
       const { win, config, queue } = this;
 
-      importTapClick(win);
+      if (!config.getBoolean('_testing')) {
+        importTapClick(win);
+      }
+
       importInputShims(win, config);
       importStatusTap(win, config, queue);
       importHardwareBackButton(win, config);

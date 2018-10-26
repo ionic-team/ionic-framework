@@ -266,7 +266,7 @@ $alert-ios-checkbox-border-color-off:                   $item-ios-border-color !
 $alert-ios-checkbox-border-color-on:                    ion-color(primary, base) !default;
 
 /// @prop - Background color of the checkbox in the alert when off
-$alert-ios-checkbox-background-color-off:               $item-background-color !default;
+$alert-ios-checkbox-background-color-off:               $item-ios-background !default;
 
 /// @prop - Background color of the checkbox in the alert when on
 $alert-ios-checkbox-background-color-on:                ion-color(primary, base) !default;

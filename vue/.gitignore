@@ -3,6 +3,8 @@
 
 dist/
 node_modules/
+src/**/*.js
+types/**/*.map
 
 # ignore log files
 *.log

@@ -16,13 +16,13 @@ $card-md-margin-bottom:               10px !default;
 $card-md-margin-start:                10px !default;
 
 /// @prop - Background color of the card
-$card-md-background-color:            $item-background-color !default;
+$card-md-background-color:            $item-md-background !default;
 
 /// @prop - Box shadow of the card
-$card-md-box-shadow:                  0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12) !default;
+$card-md-box-shadow:                  0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12) !default;
 
 /// @prop - Border radius of the card
-$card-md-border-radius:               2px !default;
+$card-md-border-radius:               4px !default;
 
 /// @prop - Font size of the card
 $card-md-font-size:                   14px !default;
@@ -31,4 +31,4 @@ $card-md-font-size:                   14px !default;
 $card-md-line-height:                 1.5 !default;
 
 /// @prop - Color of the card text
-$card-md-text-color:                  $text-color-step-150 !default;
+$card-md-text-color:                  $text-color-step-450 !default;

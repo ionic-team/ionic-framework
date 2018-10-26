@@ -24,9 +24,9 @@ You can combine the `ionSwipe` event plus the `expandable` directive to create a
 
 ## Events
 
-| Event      | Description                                  |
-| ---------- | -------------------------------------------- |
-| `ionSwipe` | Emitted when the item has been fully swiped. |
+| Event      | Detail | Description                                  |
+| ---------- | ------ | -------------------------------------------- |
+| `ionSwipe` | any    | Emitted when the item has been fully swiped. |
 
 
 ## Methods

@@ -224,17 +224,17 @@ dates in JavaScript.
 | `pickerFormat`    | `picker-format`     | The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.                                                       | `string \| undefined`                       |
 | `pickerOptions`   | --                  | Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.                                                                                                                                                                                                                                                                                                                                                               | `PickerOptions \| undefined`                |
 | `placeholder`     | `placeholder`       | The text to display when there's no date selected yet. Using lowercase to match the input attribute                                                                                                                                                                                                                                                                                                                                                                                               | `null \| string \| undefined`               |
-| `value`           | `value`             | The value of the datetime as a valid ISO 8601 datetime string.                                                                                                                                                                                                                                                                                                                                                                                                                                    | `string \| undefined`                       |
+| `value`           | `value`             | The value of the datetime as a valid ISO 8601 datetime string.                                                                                                                                                                                                                                                                                                                                                                                                                                    | `null \| string \| undefined`               |
 | `yearValues`      | --                  | Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.                                                                         | `number \| number[] \| string \| undefined` |
 
 
 ## Events
 
-| Event       | Description                                         |
-| ----------- | --------------------------------------------------- |
-| `ionCancel` | Emitted when the datetime selection was cancelled.  |
-| `ionChange` | Emitted when the value (selected date) has changed. |
-| `ionStyle`  | Emitted when the styles change.                     |
+| Event       | Detail           | Description                                         |
+| ----------- | ---------------- | --------------------------------------------------- |
+| `ionCancel` |                  | Emitted when the datetime selection was cancelled.  |
+| `ionChange` | InputChangeEvent | Emitted when the value (selected date) has changed. |
+| `ionStyle`  | StyleEvent       | Emitted when the styles change.                     |
 
 
 ## Methods

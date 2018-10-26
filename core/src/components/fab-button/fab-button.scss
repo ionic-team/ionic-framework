@@ -37,12 +37,6 @@
    * @prop --padding-bottom: Padding bottom of the button
    * @prop --padding-start: Padding start of the button
    */
-  --background: #{ion-color(primary, base)};
-  --background-activated: #{ion-color(primary, shade)};
-  --background-focused: #{ion-color(primary, shade)};
-  --color: #{ion-color(primary, contrast)};
-  --color-activated: #{ion-color(primary, contrast)};
-  --color-focused: var(--color-activated);
   --width: #{$fab-size};
   --height: var(--width);
   --margin-start: calc((#{$fab-size} - var(--width)) / 2);

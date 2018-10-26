@@ -18,9 +18,13 @@ it('alert: standalone', async () => {
 
   for (const [buttonSelector, message] of alerts) {
     await page.click(buttonSelector);
+
     const alert = await page.find('ion-alert');
-    const compare = await page.compareScreenshot(message);
     expect(alert).not.toBe(null);
+    await alert.waitForVisible();
+    await page.waitFor(250);
+
+    const compare = await page.compareScreenshot(message);
     expect(compare).toMatchScreenshot();
     await alert.callMethod('dismiss');
   }

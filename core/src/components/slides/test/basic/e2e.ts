@@ -5,6 +5,8 @@ it('slides: basic', async () => {
     url: '/src/components/slides/test/basic?ionic:_testing=true'
   });
 
+  await page.waitFor(500);
+
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
 });

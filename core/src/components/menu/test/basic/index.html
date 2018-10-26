@@ -5,171 +5,57 @@
   <meta charset="UTF-8">
   <title>Menu - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
-  <script src="/scripts/screenshot/testing.js"></script>
-
-  <style>
-    .f {
-      width: 200px;
-      height: 200px;
-      background: blue;
-      margin: 20px auto;
-    }
-
-  </style>
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
   <ion-app>
-    <ion-modal-controller></ion-modal-controller>
-    <ion-menu side="start" class="e2eLeftMenu">
-
+    <ion-menu side="start">
       <ion-header>
-        <ion-toolbar color="secondary">
-          <ion-title>Left Menu</ion-title>
+        <ion-toolbar>
+          <ion-title>Start Menu</ion-title>
         </ion-toolbar>
       </ion-header>
-
       <ion-content>
         <ion-list>
-          <ion-item button onclick="openEnd()">Open end Menu</ion-item>
-          <ion-item button onclick="createModal()">Open Modal</ion-item>
-          <ion-item>Close Menu</ion-item>
-          <ion-item>Close Menu</ion-item>
-          <ion-item>Close Menu</ion-item>
-          <ion-item>Close Menu</ion-item>
-          <ion-item>Close Menu</ion-item>
-          <ion-item>Close Menu</ion-item>
-          <ion-item>Close Menu</ion-item>
-          <ion-item>Close Menu</ion-item>
-          <ion-item>Close Menu</ion-item>
-          <ion-item>Close Menu</ion-item>
+          <ion-item>Menu Item</ion-item>
+          <ion-item>Menu Item</ion-item>
+          <ion-item>Menu Item</ion-item>
+          <ion-item>Menu Item</ion-item>
+          <ion-item>Menu Item</ion-item>
         </ion-list>
       </ion-content>
-
-      <ion-footer>
-        <ion-toolbar color="secondary">
-          <ion-title>Footer</ion-title>
-        </ion-toolbar>
-      </ion-footer>
-
     </ion-menu>
 
     <ion-menu side="end">
       <ion-header>
         <ion-toolbar>
-          <ion-title>Hola</ion-title>
+          <ion-title>End Menu</ion-title>
         </ion-toolbar>
       </ion-header>
-
-      <ion-content padding>
-        hola macho
+      <ion-content>
+        <ion-list>
+          <ion-item>Menu Item</ion-item>
+          <ion-item>Menu Item</ion-item>
+          <ion-item>Menu Item</ion-item>
+          <ion-item>Menu Item</ion-item>
+          <ion-item>Menu Item</ion-item>
+        </ion-list>
       </ion-content>
     </ion-menu>
 
     <div class="ion-page" main>
-
       <ion-header>
         <ion-toolbar>
           <ion-title>Menu - Basic</ion-title>
         </ion-toolbar>
       </ion-header>
-
-      <ion-content padding>
-        <p>
-          <ion-button id="left" onclick="openStart()">Open start menu</ion-button>
-          <ion-button onclick="openEnd()">Open end menu</ion-button>
-        </p>
-        <p>
-          <ion-button onclick="setPush()">Set Push</ion-button>
-          <ion-button onclick="setOverlay()">Set Overlay</ion-button>
-          <ion-button onclick="setReveal()">Set Reveal</ion-button>
-
-          <ion-button onclick="setEnabled()">Set Swipe Enabled False</ion-button>
-        </p>
-
-        <div class="f"></div>
-        <div class="f"></div>
-        <div class="f"></div>
-        <div class="f"></div>
-        <div class="f"></div>
-        <div class="f"></div>
-
-      </ion-content>
-
     </div>
 
   </ion-app>
   <ion-menu-controller></ion-menu-controller>
-
-  <script>
-    const menu = document.querySelector('ion-menu-controller');
-    start();
-
-    async function start() {
-      await menu.componentOnReady();
-      menu.open('start');
-    }
-
-    function openStart() {
-      console.log('Open start menu');
-      menu.open('start');
-    }
-    function openEnd() {
-      console.log('Open end menu');
-      menu.open('end');
-    }
-    async function setPush() {
-      (await menu.get('start')).type = 'push';
-      (await menu.get('end')).type = 'push';
-    }
-    async function setOverlay() {
-      (await menu.get('start')).type = 'overlay';
-      (await menu.get('end')).type = 'overlay';
-    }
-    async function setReveal() {
-      (await menu.get('start')).type = 'reveal';
-      (await menu.get('end')).type = 'reveal';
-    }
-    async function setEnabled() {
-      (await menu.get('start')).swipeGesture = false;
-    }
-
-    async function createModal() {
-      // initialize controller
-      const modalController = document.querySelector('ion-modal-controller');
-      await modalController.componentOnReady();
-
-      // create component to open
-      const element = document.createElement('div');
-      element.innerHTML = `
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Super Modal</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content>
-        <h1>Content of doom</h1>
-        <div>Here's some more content</div>
-        <ion-button class="dismiss">Dismiss Modal</ion-button>
-      </ion-content>
-      `;
-
-      // listen for close event
-      const button = element.querySelector('ion-button');
-      button.addEventListener('click', () => {
-        modalController.dismiss();
-      });
-
-      // present the modal
-      const modalElement = await modalController.create({
-        component: element
-      });
-      await modalElement.present();
-      return modalElement;
-    }
-  </script>
 </body>
 
 </html>

@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 import { Color, Mode, StyleEvent, TextFieldTypes, TextInputChangeEvent } from '../../interface';
-import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
+import { debounceEvent, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 import { submitFormOnEnterPress, KEY_CODES } from '../../utils/forms';
 
@@ -174,7 +174,7 @@ export class Input implements ComponentInterface {
   /**
    * The value of the input.
    */
-  @Prop({ mutable: true }) value = '';
+  @Prop({ mutable: true }) value?: string | null = '';
 
   /**
    * Update the native input element when the value changes
@@ -230,12 +230,11 @@ export class Input implements ComponentInterface {
     if (this.clearOnEdit === undefined && this.type === 'password') {
       this.clearOnEdit = true;
     }
+    this.emitStyle();
   }
 
   componentDidLoad() {
-    this.ionStyle = deferEvent(this.ionStyle);
     this.debounceChanged();
-    this.emitStyle();
 
     this.ionInputDidLoad.emit();
   }
@@ -339,7 +338,8 @@ export class Input implements ComponentInterface {
   }
 
   render() {
-    renderHiddenInput(this.el, this.name, this.getValue(), this.disabled);
+    const value = this.getValue();
+    renderHiddenInput(this.el, this.name, value, this.disabled);
 
     return [
       <input
@@ -368,7 +368,7 @@ export class Input implements ComponentInterface {
         step={this.step}
         size={this.size}
         type={this.type}
-        value={this.getValue()}
+        value={value}
         onInput={this.onInput}
         onBlur={this.onBlur}
         onFocus={this.onFocus}
