@@ -20,6 +20,7 @@ import {
   Color,
   ComponentProps,
   ComponentRef,
+  DatetimeOptions,
   DomRenderFn,
   FrameworkDelegate,
   HeaderFn,
@@ -1288,7 +1289,7 @@ export namespace Components {
     /**
     * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
     */
-    'pickerOptions'?: PickerOptions;
+    'pickerOptions'?: DatetimeOptions;
     /**
     * The text to display when there's no date selected yet. Using lowercase to match the input attribute
     */
@@ -1386,7 +1387,7 @@ export namespace Components {
     /**
     * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
     */
-    'pickerOptions'?: PickerOptions;
+    'pickerOptions'?: DatetimeOptions;
     /**
     * The text to display when there's no date selected yet. Using lowercase to match the input attribute
     */
