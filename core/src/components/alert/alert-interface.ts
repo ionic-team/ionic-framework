@@ -1,4 +1,4 @@
-import { AnimationBuilder, TextFieldTypes, Mode } from '../../interface';
+import { AnimationBuilder, Mode, TextFieldTypes } from '../../interface';
 
 export interface AlertOptions {
   header?: string;
