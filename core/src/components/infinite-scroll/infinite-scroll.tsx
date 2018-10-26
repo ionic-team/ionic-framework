@@ -55,6 +55,10 @@ export class InfiniteScroll implements ComponentInterface {
 
   @Watch('disabled')
   protected disabledChanged(val: boolean) {
+    if (this.disabled) {
+      this.isLoading = false;
+      this.isBusy = false;
+    }
     this.enableScrollEvents(!val);
   }
 
@@ -197,7 +201,8 @@ export class InfiniteScroll implements ComponentInterface {
       !this.disabled &&
       !this.isBusy &&
       !!this.scrollEl &&
-      !this.isLoading);
+      !this.isLoading
+    );
   }
 
   private enableScrollEvents(shouldListen: boolean) {
