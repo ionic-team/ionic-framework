@@ -1,4 +1,4 @@
-import { AnimationBuilder } from '../../interface';
+import { AnimationBuilder, Color, Mode } from '../../interface';
 
 export interface ToastOptions {
   message?: string;
@@ -10,7 +10,8 @@ export interface ToastOptions {
   translucent?: boolean;
   animated?: boolean;
 
-  mode?: string;
+  color?: Color;
+  mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
 

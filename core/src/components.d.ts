@@ -4845,6 +4845,10 @@ export namespace Components {
     */
     'closeButtonText'?: string;
     /**
+    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+    */
+    'color'?: Color;
+    /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
     'cssClass'?: string | string[];
@@ -4911,6 +4915,10 @@ export namespace Components {
     * Text to display in the close button.
     */
     'closeButtonText'?: string;
+    /**
+    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+    */
+    'color'?: Color;
     /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
