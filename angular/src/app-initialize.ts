@@ -14,6 +14,7 @@ export function appInitialize(config: Config) {
       const Ionic = win.Ionic = win.Ionic || {};
 
       Ionic.config = config;
+      Ionic.asyncQueue = false;
 
       Ionic.ael = (elm, eventName, cb, opts) => {
         if (elm.__zone_symbol__addEventListener && skipZone(eventName)) {
