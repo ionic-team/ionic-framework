@@ -355,7 +355,7 @@ export class Input implements ComponentInterface {
         multiple={this.multiple}
         name={this.name}
         pattern={this.pattern}
-        placeholder={this.placeholder}
+        placeholder={this.placeholder || ''}
         results={this.results}
         readOnly={this.readonly}
         required={this.required}
