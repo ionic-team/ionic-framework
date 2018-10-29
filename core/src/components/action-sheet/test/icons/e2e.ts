@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('action-sheet: icons', async () => {
+test('action-sheet: icons', async () => {
   const page = await newE2EPage({
     url: `/src/components/action-sheet/test/icons?ionic:_testing=true`
   });

@@ -135,6 +135,7 @@ wrongRepo:
   dryRun: false
 
 screenshot:
-  statusContext: "ci/circleci: test-core-screenshot"
+  appId: 18001
+  checkName: "build"
   baseUrl: "https://screenshot.ionicframework.com"
   dryRun: false

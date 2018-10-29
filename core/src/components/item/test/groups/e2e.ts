@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('item: groups', async () => {
+test('item: groups', async () => {
   const page = await newE2EPage({
     url: '/src/components/item/test/groups?ionic:_testing=true'
   });
