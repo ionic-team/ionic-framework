@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
 import { CheckedInputChangeEvent, Color, Mode, StyleEvent } from '../../interface';
-import { deferEvent, renderHiddenInput } from '../../utils/helpers';
+import { renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 @Component({
@@ -50,7 +50,12 @@ export class Checkbox implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
-   * The value of the checkbox.
+   * The value of the toggle does not mean if it's checked or not, use the `checked`
+   * property for that.
+   *
+   * The value of a toggle is analogous to the value of a `<input type="checkbox">`,
+   * it's only used when the toggle participates in a native `<form>`.
+   * Defaults to `on`.
    */
   @Prop() value = 'on';
 
@@ -76,10 +81,6 @@ export class Checkbox implements ComponentInterface {
 
   componentWillLoad() {
     this.emitStyle();
-  }
-
-  componentDidLoad() {
-    this.ionStyle = deferEvent(this.ionStyle);
   }
 
   @Watch('checked')

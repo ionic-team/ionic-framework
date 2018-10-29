@@ -10,6 +10,7 @@ it('toast: standalone', async () => {
 
   const toast = await page.find('ion-toast');
   await toast.waitForVisible();
+  await page.waitFor(250);
 
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();

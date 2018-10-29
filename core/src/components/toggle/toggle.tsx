@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, Queu
 
 import { CheckedInputChangeEvent, Color, Gesture, GestureDetail, Mode, StyleEvent } from '../../interface';
 import { hapticSelection } from '../../utils/haptic';
-import { deferEvent, renderHiddenInput } from '../../utils/helpers';
+import { renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 @Component({
@@ -51,14 +51,19 @@ export class Toggle implements ComponentInterface {
   @Prop({ mutable: true }) checked = false;
 
   /**
-   * If `true`, the user cannot interact with the toggle. Default false.
+   * If `true`, the user cannot interact with the toggle. Defaults to `false`.
    */
   @Prop() disabled = false;
 
   /**
-   * the value of the toggle.
+   * The value of the toggle does not mean if it's checked or not, use the `checked`
+   * property for that.
+   *
+   * The value of a toggle is analogous to the value of a `<input type="checkbox">`,
+   * it's only used when the toggle participates in a native `<form>`.
+   * Defaults to `on`.
    */
-  @Prop() value = 'on';
+  @Prop() value?: string | null = 'on';
 
   /**
    * Emitted when the value property has changed.
@@ -90,16 +95,14 @@ export class Toggle implements ComponentInterface {
 
   @Watch('disabled')
   disabledChanged() {
-    this.ionStyle.emit({
-      'interactive-disabled': this.disabled,
-    });
+    this.emitStyle();
     if (this.gesture) {
       this.gesture.setDisabled(this.disabled);
     }
   }
 
   componentWillLoad() {
-    this.ionStyle = deferEvent(this.ionStyle);
+    this.emitStyle();
   }
 
   async componentDidLoad() {
@@ -123,6 +126,12 @@ export class Toggle implements ComponentInterface {
       onEnd: ev => this.onEnd(ev),
     });
     this.disabledChanged();
+  }
+
+  private emitStyle() {
+    this.ionStyle.emit({
+      'interactive-disabled': this.disabled,
+    });
   }
 
   private onStart(detail: GestureDetail) {
@@ -171,6 +180,10 @@ export class Toggle implements ComponentInterface {
     this.ionBlur.emit();
   }
 
+  private getValue() {
+    return this.value || '';
+  }
+
   hostData() {
     return {
       class: {
@@ -186,7 +199,8 @@ export class Toggle implements ComponentInterface {
   }
 
   render() {
-    renderHiddenInput(this.el, this.name, (this.checked ? this.value : ''), this.disabled);
+    const value = this.getValue();
+    renderHiddenInput(this.el, this.name, (this.checked ? value : ''), this.disabled);
 
     return [
       <div class="toggle-icon">
@@ -201,7 +215,7 @@ export class Toggle implements ComponentInterface {
         checked={this.checked}
         id={this.inputId}
         name={this.name}
-        value={this.value}
+        value={value}
         disabled={this.disabled}
         ref={r => this.nativeInput = (r as any)}
       />,

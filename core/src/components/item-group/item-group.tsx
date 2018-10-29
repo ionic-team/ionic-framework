@@ -16,7 +16,10 @@ export class ItemGroup implements ComponentInterface {
 
   hostData() {
     return {
-      class: createThemedClasses(this.mode, 'item-group')
+      class: {
+        ...createThemedClasses(this.mode, 'item-group'),
+        'item': true,
+      }
     };
   }
 }

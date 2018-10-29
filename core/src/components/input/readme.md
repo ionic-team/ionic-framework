@@ -39,20 +39,20 @@ It is meant for text `type` inputs only, such as `"text"`, `"password"`, `"email
 | `spellcheck`     | `spellcheck`     | If `true`, the element will have its spelling and grammar checked. Defaults to `false`.                                                                                                                                                                                                                                                              | `boolean`                                                                             |
 | `step`           | `step`           | Works with the min and max attributes to limit the increments at which a value can be set. Possible values are: `"any"` or a positive floating point number.                                                                                                                                                                                         | `string \| undefined`                                                                 |
 | `type`           | `type`           | The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.                                                                                                                                                                                       | `"date" \| "email" \| "number" \| "password" \| "search" \| "tel" \| "text" \| "url"` |
-| `value`          | `value`          | The value of the input.                                                                                                                                                                                                                                                                                                                              | `string`                                                                              |
+| `value`          | `value`          | The value of the input.                                                                                                                                                                                                                                                                                                                              | `null \| string \| undefined`                                                         |
 
 
 ## Events
 
-| Event               | Description                              |
-| ------------------- | ---------------------------------------- |
-| `ionBlur`           | Emitted when the input loses focus.      |
-| `ionChange`         | Emitted when the value has changed.      |
-| `ionFocus`          | Emitted when the input has focus.        |
-| `ionInput`          | Emitted when a keyboard input ocurred.   |
-| `ionInputDidLoad`   | Emitted when the input has been created. |
-| `ionInputDidUnload` | Emitted when the input has been removed. |
-| `ionStyle`          | Emitted when the styles change.          |
+| Event               | Detail               | Description                              |
+| ------------------- | -------------------- | ---------------------------------------- |
+| `ionBlur`           |                      | Emitted when the input loses focus.      |
+| `ionChange`         | TextInputChangeEvent | Emitted when the value has changed.      |
+| `ionFocus`          |                      | Emitted when the input has focus.        |
+| `ionInput`          | KeyboardEvent        | Emitted when a keyboard input ocurred.   |
+| `ionInputDidLoad`   |                      | Emitted when the input has been created. |
+| `ionInputDidUnload` |                      | Emitted when the input has been removed. |
+| `ionStyle`          | StyleEvent           | Emitted when the styles change.          |
 
 
 ## Methods

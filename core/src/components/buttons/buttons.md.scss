@@ -34,10 +34,10 @@
 // --------------------------------------------------
 
 ::slotted(*) .button-solid {
-  --color: #{$toolbar-md-background-color};
-  --color-activated: #{$toolbar-md-background-color};
-  --background: #{$toolbar-md-text-color};
-  --background-activated: #{$toolbar-md-text-color};
+  --color: #{$toolbar-md-background};
+  --color-activated: #{$toolbar-md-background};
+  --background: #{$toolbar-md-color};
+  --background-activated: #{$toolbar-md-color};
 }
 
 

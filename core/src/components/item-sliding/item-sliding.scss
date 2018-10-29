@@ -23,8 +23,6 @@ ion-item-sliding .item {
 
   transition: transform 500ms cubic-bezier(.36, .66, .04, 1);
 
-  background: $item-background-color;
-
   opacity: 1;
   z-index: $z-index-item-options + 1;
   pointer-events: none;

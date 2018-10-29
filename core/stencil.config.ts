@@ -18,7 +18,6 @@ export const config: Config = {
     { components: ['ion-datetime', 'ion-picker', 'ion-picker-column', 'ion-picker-controller'] },
     { components: ['ion-fab', 'ion-fab-button', 'ion-fab-list'] },
     { components: ['ion-grid', 'ion-row', 'ion-col'] },
-    { components: ['ion-hide-when', 'ion-show-when'] },
     { components: ['ion-infinite-scroll', 'ion-infinite-scroll-content'] },
     { components: ['ion-input'] },
     { components: ['ion-textarea'] },
@@ -42,7 +41,7 @@ export const config: Config = {
     { components: ['ion-slides', 'ion-slide'] },
     { components: ['ion-spinner'] },
     { components: ['ion-split-pane'] },
-    { components: ['ion-tabs', 'ion-tab', 'ion-tabbar'] },
+    { components: ['ion-tabs', 'ion-tab', 'ion-tab-bar', 'ion-tab-button'] },
     { components: ['ion-text'] },
     { components: ['ion-toast', 'ion-toast-controller'] },
     { components: ['ion-toggle'] },
@@ -97,7 +96,6 @@ export const config: Config = {
         'ion-route-redirect',
         'ion-router-outlet',
         'ion-anchor',
-        'ion-tabbar',
 
         // auxiliar
         'ion-picker-column',

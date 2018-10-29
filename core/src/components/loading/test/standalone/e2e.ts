@@ -9,6 +9,9 @@ it('loading: standalone', async () => {
   const loading = await page.find('ion-loading');
   expect(loading).not.toBeNull();
 
+  await loading.waitForVisible();
+  await page.waitFor(500);
+
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
 });

@@ -15,14 +15,6 @@ SelectOption is a component that is a child element of Select. For more informat
 | `value`    | --         | The text value of the option.                                                    | `any`     |
 
 
-## Events
-
-| Event                      | Description                             |
-| -------------------------- | --------------------------------------- |
-| `ionSelectOptionDidLoad`   | Emitted when the select option loads.   |
-| `ionSelectOptionDidUnload` | Emitted when the select option unloads. |
-
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

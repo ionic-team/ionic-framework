@@ -32,14 +32,14 @@ Modals can be created using a [Modal Controller](../../modal-controller/ModalCon
 
 ## Events
 
-| Event                 | Description                             |
-| --------------------- | --------------------------------------- |
-| `ionModalDidDismiss`  | Emitted after the modal has dismissed.  |
-| `ionModalDidLoad`     | Emitted after the modal has loaded.     |
-| `ionModalDidPresent`  | Emitted after the modal has presented.  |
-| `ionModalDidUnload`   | Emitted after the modal has unloaded.   |
-| `ionModalWillDismiss` | Emitted before the modal has dismissed. |
-| `ionModalWillPresent` | Emitted before the modal has presented. |
+| Event                 | Detail             | Description                             |
+| --------------------- | ------------------ | --------------------------------------- |
+| `ionModalDidDismiss`  | OverlayEventDetail | Emitted after the modal has dismissed.  |
+| `ionModalDidLoad`     |                    | Emitted after the modal has loaded.     |
+| `ionModalDidPresent`  |                    | Emitted after the modal has presented.  |
+| `ionModalDidUnload`   |                    | Emitted after the modal has unloaded.   |
+| `ionModalWillDismiss` | OverlayEventDetail | Emitted before the modal has dismissed. |
+| `ionModalWillPresent` |                    | Emitted before the modal has presented. |
 
 
 ## Methods

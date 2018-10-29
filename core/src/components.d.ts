@@ -20,6 +20,7 @@ import {
   Color,
   ComponentProps,
   ComponentRef,
+  DatetimeOptions,
   DomRenderFn,
   FrameworkDelegate,
   HeaderFn,
@@ -55,6 +56,8 @@ import {
   Side,
   SpinnerTypes,
   StyleEvent,
+  TabbarChangedDetail,
+  TabbarClickDetail,
   TabbarLayout,
   TabbarPlacement,
   TextFieldTypes,
@@ -770,7 +773,7 @@ export namespace Components {
     */
     'name': string;
     /**
-    * The value of the checkbox.
+    * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`. Defaults to `on`.
     */
     'value': string;
   }
@@ -812,7 +815,7 @@ export namespace Components {
     */
     'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
     /**
-    * The value of the checkbox.
+    * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`. Defaults to `on`.
     */
     'value'?: string;
   }
@@ -1272,6 +1275,10 @@ export namespace Components {
     */
     'monthValues'?: number[] | number | string;
     /**
+    * The name of the control, which is submitted with the form data.
+    */
+    'name': string;
+    /**
     * Opens the datetime overlay.
     */
     'open': () => Promise<void>;
@@ -1282,7 +1289,7 @@ export namespace Components {
     /**
     * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
     */
-    'pickerOptions'?: PickerOptions;
+    'pickerOptions'?: DatetimeOptions;
     /**
     * The text to display when there's no date selected yet. Using lowercase to match the input attribute
     */
@@ -1290,7 +1297,7 @@ export namespace Components {
     /**
     * The value of the datetime as a valid ISO 8601 datetime string.
     */
-    'value'?: string;
+    'value'?: string | null;
     /**
     * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
     */
@@ -1358,6 +1365,10 @@ export namespace Components {
     */
     'monthValues'?: number[] | number | string;
     /**
+    * The name of the control, which is submitted with the form data.
+    */
+    'name'?: string;
+    /**
     * Emitted when the datetime selection was cancelled.
     */
     'onIonCancel'?: (event: CustomEvent<void>) => void;
@@ -1376,7 +1387,7 @@ export namespace Components {
     /**
     * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
     */
-    'pickerOptions'?: PickerOptions;
+    'pickerOptions'?: DatetimeOptions;
     /**
     * The text to display when there's no date selected yet. Using lowercase to match the input attribute
     */
@@ -1384,7 +1395,7 @@ export namespace Components {
     /**
     * The value of the datetime as a valid ISO 8601 datetime string.
     */
-    'value'?: string;
+    'value'?: string | null;
     /**
     * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
     */
@@ -1593,59 +1604,6 @@ export namespace Components {
     'translucent'?: boolean;
   }
 
-  interface IonHideWhen {
-    /**
-    * If the current media query matches this value, the element will hide.
-    */
-    'mediaQuery'?: string;
-    /**
-    * If the current platform matches the given value, the element will hide. Accepts a comma separated list of modes to match against.
-    */
-    'modes': string;
-    /**
-    * If `false`, and two or more conditions are set, the element will hide when all are true. If `true`, and two or more conditions are set, the element will hide when at least one is true.
-    */
-    'or': boolean;
-    /**
-    * If the current orientation matches this value, the element will hide.
-    */
-    'orientation'?: string;
-    /**
-    * If the current platform matches the given value, the element will hide. Accepts a comma separated list of platforms to match against.
-    */
-    'platform'?: string;
-    /**
-    * If the current screen width matches the given size, the element will hide. Uses the build in sizes of xs, sm, md, lg, xl.
-    */
-    'size'?: string;
-  }
-  interface IonHideWhenAttributes extends StencilHTMLAttributes {
-    /**
-    * If the current media query matches this value, the element will hide.
-    */
-    'mediaQuery'?: string;
-    /**
-    * If the current platform matches the given value, the element will hide. Accepts a comma separated list of modes to match against.
-    */
-    'modes'?: string;
-    /**
-    * If `false`, and two or more conditions are set, the element will hide when all are true. If `true`, and two or more conditions are set, the element will hide when at least one is true.
-    */
-    'or'?: boolean;
-    /**
-    * If the current orientation matches this value, the element will hide.
-    */
-    'orientation'?: string;
-    /**
-    * If the current platform matches the given value, the element will hide. Accepts a comma separated list of platforms to match against.
-    */
-    'platform'?: string;
-    /**
-    * If the current screen width matches the given size, the element will hide. Uses the build in sizes of xs, sm, md, lg, xl.
-    */
-    'size'?: string;
-  }
-
   interface IonImg {
     /**
     * This attribute defines the alternative text describing the image. Users will see this text displayed if the image URL is wrong, the image is not in one of the supported formats, or if the image is not yet downloaded.
@@ -1845,7 +1803,7 @@ export namespace Components {
     /**
     * The value of the input.
     */
-    'value': string;
+    'value'?: string | null;
   }
   interface IonInputAttributes extends StencilHTMLAttributes {
     /**
@@ -1987,7 +1945,7 @@ export namespace Components {
     /**
     * The value of the input.
     */
-    'value'?: string;
+    'value'?: string | null;
   }
 
   interface IonItemDivider {
@@ -2205,7 +2163,7 @@ export namespace Components {
     */
     'mode': Mode;
     /**
-    * The position determines where and how the label behaves inside an item. Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
+    * The position determines where and how the label behaves inside an item.
     */
     'position'?: 'fixed' | 'stacked' | 'floating';
   }
@@ -2223,7 +2181,7 @@ export namespace Components {
     */
     'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
     /**
-    * The position determines where and how the label behaves inside an item. Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
+    * The position determines where and how the label behaves inside an item.
     */
     'position'?: 'fixed' | 'stacked' | 'floating';
   }
@@ -2562,7 +2520,7 @@ export namespace Components {
     */
     'contentId'?: string;
     /**
-    * If `true`, the menu is disabled. Default `false`.
+    * If `true`, the menu is disabled. Defaults to `false`.
     */
     'disabled': boolean;
     /**
@@ -2594,7 +2552,7 @@ export namespace Components {
     */
     'side': Side;
     /**
-    * If `true`, swiping the menu is enabled. Default `true`.
+    * If `true`, swiping the menu is enabled. Defaults to `true`.
     */
     'swipeGesture': boolean;
     /**
@@ -2612,7 +2570,7 @@ export namespace Components {
     */
     'contentId'?: string;
     /**
-    * If `true`, the menu is disabled. Default `false`.
+    * If `true`, the menu is disabled. Defaults to `false`.
     */
     'disabled'?: boolean;
     /**
@@ -2648,7 +2606,7 @@ export namespace Components {
     */
     'side'?: Side;
     /**
-    * If `true`, swiping the menu is enabled. Default `true`.
+    * If `true`, swiping the menu is enabled. Defaults to `true`.
     */
     'swipeGesture'?: boolean;
     /**
@@ -3306,13 +3264,9 @@ export namespace Components {
 
   interface IonRadioGroup {
     /**
-    * If `true`, the radios can be deselected. Default false.
+    * If `true`, the radios can be deselected. Defaults to `false`.
     */
     'allowEmptySelection': boolean;
-    /**
-    * If `true`, the user cannot interact with the radio group. Default false.
-    */
-    'disabled': boolean;
     /**
     * The name of the control, which is submitted with the form data.
     */
@@ -3324,13 +3278,9 @@ export namespace Components {
   }
   interface IonRadioGroupAttributes extends StencilHTMLAttributes {
     /**
-    * If `true`, the radios can be deselected. Default false.
+    * If `true`, the radios can be deselected. Defaults to `false`.
     */
     'allowEmptySelection'?: boolean;
-    /**
-    * If `true`, the user cannot interact with the radio group. Default false.
-    */
-    'disabled'?: boolean;
     /**
     * The name of the control, which is submitted with the form data.
     */
@@ -3369,7 +3319,7 @@ export namespace Components {
     /**
     * the value of the radio.
     */
-    'value': any | null;
+    'value'?: any | null;
   }
   interface IonRadioAttributes extends StencilHTMLAttributes {
     /**
@@ -3704,7 +3654,7 @@ export namespace Components {
 
   interface IonRoute {
     /**
-    * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in ion-tabs it actually refers to the name of the `ion-tab` to select.
+    * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
     */
     'component': string;
     /**
@@ -3718,7 +3668,7 @@ export namespace Components {
   }
   interface IonRouteAttributes extends StencilHTMLAttributes {
     /**
-    * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in ion-tabs it actually refers to the name of the `ion-tab` to select.
+    * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
     */
     'component'?: string;
     /**
@@ -3812,7 +3762,7 @@ export namespace Components {
 
   interface IonSearchbar {
     /**
-    * If `true`, enable searchbar animation. Default `false`.
+    * If `true`, enable searchbar animation. Defaults to `false`.
     */
     'animated': boolean;
     /**
@@ -3860,11 +3810,11 @@ export namespace Components {
     */
     'setFocus': () => void;
     /**
-    * If `true`, show the cancel button. Default `false`.
+    * If `true`, show the cancel button. Defaults to `false`.
     */
     'showCancelButton': boolean;
     /**
-    * If `true`, enable spellcheck on the input. Default `false`.
+    * If `true`, enable spellcheck on the input. Defaults to `false`.
     */
     'spellcheck': boolean;
     /**
@@ -3874,11 +3824,11 @@ export namespace Components {
     /**
     * the value of the searchbar.
     */
-    'value': string;
+    'value'?: string | null;
   }
   interface IonSearchbarAttributes extends StencilHTMLAttributes {
     /**
-    * If `true`, enable searchbar animation. Default `false`.
+    * If `true`, enable searchbar animation. Defaults to `false`.
     */
     'animated'?: boolean;
     /**
@@ -3946,11 +3896,11 @@ export namespace Components {
     */
     'searchIcon'?: string;
     /**
-    * If `true`, show the cancel button. Default `false`.
+    * If `true`, show the cancel button. Defaults to `false`.
     */
     'showCancelButton'?: boolean;
     /**
-    * If `true`, enable spellcheck on the input. Default `false`.
+    * If `true`, enable spellcheck on the input. Defaults to `false`.
     */
     'spellcheck'?: boolean;
     /**
@@ -3960,7 +3910,7 @@ export namespace Components {
     /**
     * the value of the searchbar.
     */
-    'value'?: string;
+    'value'?: string | null;
   }
 
   interface IonSegmentButton {
@@ -3973,7 +3923,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * If `true`, the user cannot interact with the segment button. Default false.
+    * If `true`, the user cannot interact with the segment button. Defaults to `false`.
     */
     'disabled': boolean;
     /**
@@ -3995,7 +3945,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * If `true`, the user cannot interact with the segment button. Default false.
+    * If `true`, the user cannot interact with the segment button. Defaults to `false`.
     */
     'disabled'?: boolean;
     /**
@@ -4065,7 +4015,7 @@ export namespace Components {
     /**
     * The text value of the option.
     */
-    'value'?: any;
+    'value'?: any | null;
   }
   interface IonSelectOptionAttributes extends StencilHTMLAttributes {
     /**
@@ -4087,7 +4037,7 @@ export namespace Components {
     /**
     * The text value of the option.
     */
-    'value'?: any;
+    'value'?: any | null;
   }
 
   interface IonSelectPopover {
@@ -4242,59 +4192,6 @@ export namespace Components {
     * the value of the select.
     */
     'value'?: any | null;
-  }
-
-  interface IonShowWhen {
-    /**
-    * If the current media query matches this value, the element will show.
-    */
-    'mediaQuery'?: string;
-    /**
-    * If the current platform matches the given value, the element will show. Accepts a comma separated list of modes to match against.
-    */
-    'modes': string;
-    /**
-    * If `false`, and two or more conditions are set, the element will show when all are true. If `true`, and two or more conditions are set, the element will show when at least one is true.
-    */
-    'or': boolean;
-    /**
-    * If the current orientation matches this value, the element will show.
-    */
-    'orientation'?: string;
-    /**
-    * If the current platform matches the given value, the element will show. Accepts a comma separated list of platform to match against.
-    */
-    'platform'?: string;
-    /**
-    * If the current screen width matches the given size, the element will show. Uses the build in sizes of xs, sm, md, lg, xl.
-    */
-    'size'?: string;
-  }
-  interface IonShowWhenAttributes extends StencilHTMLAttributes {
-    /**
-    * If the current media query matches this value, the element will show.
-    */
-    'mediaQuery'?: string;
-    /**
-    * If the current platform matches the given value, the element will show. Accepts a comma separated list of modes to match against.
-    */
-    'modes'?: string;
-    /**
-    * If `false`, and two or more conditions are set, the element will show when all are true. If `true`, and two or more conditions are set, the element will show when at least one is true.
-    */
-    'or'?: boolean;
-    /**
-    * If the current orientation matches this value, the element will show.
-    */
-    'orientation'?: string;
-    /**
-    * If the current platform matches the given value, the element will show. Accepts a comma separated list of platform to match against.
-    */
-    'platform'?: string;
-    /**
-    * If the current screen width matches the given size, the element will show. Uses the build in sizes of xs, sm, md, lg, xl.
-    */
-    'size'?: string;
   }
 
   interface IonSkeletonText {
@@ -4538,146 +4435,13 @@ export namespace Components {
     'when'?: string | boolean;
   }
 
-  interface IonTab {
-    /**
-    * If `true`, sets the tab as the active tab.
-    */
-    'active': boolean;
-    /**
-    * The badge for the tab.
-    */
-    'badge'?: string;
-    /**
-    * The badge color for the tab button.
-    */
-    'badgeColor'?: Color;
-    /**
-    * hidden
-    */
-    'btnId'?: string;
-    /**
-    * The component to display inside of the tab.
-    */
-    'component'?: ComponentRef;
-    /**
-    * hidden
-    */
-    'delegate'?: FrameworkDelegate;
-    /**
-    * If `true`, the user cannot interact with the tab. Defaults to `false`.
-    */
-    'disabled': boolean;
-    /**
-    * The URL which will be used as the `href` within this tab's button anchor.
-    */
-    'href'?: string;
-    /**
-    * The icon for the tab.
-    */
-    'icon'?: string;
-    /**
-    * The label of the tab.
-    */
-    'label'?: string;
-    /**
-    * The name of the tab.
-    */
-    'name'?: string;
-    /**
-    * If `true`, the tab will be selected. Defaults to `false`.
-    */
-    'selected': boolean;
-    /**
-    * Set the active component for the tab
-    */
-    'setActive': () => Promise<void>;
-    /**
-    * If `true`, the tab button is visible within the tabbar. Defaults to `true`.
-    */
-    'show': boolean;
-    /**
-    * If `true`, hide the tabs on child pages.
-    */
-    'tabsHideOnSubPages': boolean;
-  }
-  interface IonTabAttributes extends StencilHTMLAttributes {
-    /**
-    * If `true`, sets the tab as the active tab.
-    */
-    'active'?: boolean;
-    /**
-    * The badge for the tab.
-    */
-    'badge'?: string;
-    /**
-    * The badge color for the tab button.
-    */
-    'badgeColor'?: Color;
-    /**
-    * hidden
-    */
-    'btnId'?: string;
-    /**
-    * The component to display inside of the tab.
-    */
-    'component'?: ComponentRef;
-    /**
-    * hidden
-    */
-    'delegate'?: FrameworkDelegate;
-    /**
-    * If `true`, the user cannot interact with the tab. Defaults to `false`.
-    */
-    'disabled'?: boolean;
-    /**
-    * The URL which will be used as the `href` within this tab's button anchor.
-    */
-    'href'?: string;
-    /**
-    * The icon for the tab.
-    */
-    'icon'?: string;
-    /**
-    * The label of the tab.
-    */
-    'label'?: string;
-    /**
-    * The name of the tab.
-    */
-    'name'?: string;
-    /**
-    * Emitted when the current tab is selected.
-    */
-    'onIonSelect'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the tab props mutates. Used internally.
-    */
-    'onIonTabMutated'?: (event: CustomEvent<void>) => void;
-    /**
-    * If `true`, the tab will be selected. Defaults to `false`.
-    */
-    'selected'?: boolean;
-    /**
-    * If `true`, the tab button is visible within the tabbar. Defaults to `true`.
-    */
-    'show'?: boolean;
-    /**
-    * If `true`, hide the tabs on child pages.
-    */
-    'tabsHideOnSubPages'?: boolean;
-  }
-
-  interface IonTabbar {
+  interface IonTabBar {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
     /**
-    * If `true`, show the tab highlight bar under the selected tab.
-    */
-    'highlight': boolean;
-    /**
-    * Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
+    * Set the layout of the text and icon in the tabbar.
     */
     'layout': TabbarLayout;
     /**
@@ -4685,33 +4449,87 @@ export namespace Components {
     */
     'mode': Mode;
     /**
-    * Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
+    * Set the position of the tabbar, relative to the content.
     */
     'placement': TabbarPlacement;
     /**
     * The selected tab component
     */
-    'selectedTab'?: HTMLIonTabElement;
+    'selectedTab'?: string;
     /**
-    * The tabs to render
-    */
-    'tabs': HTMLIonTabElement[];
-    /**
-    * If `true`, the tabbar will be translucent. Defaults to `false`.
+    * If `true`, the tab bar will be translucent. Defaults to `false`.
     */
     'translucent': boolean;
   }
-  interface IonTabbarAttributes extends StencilHTMLAttributes {
+  interface IonTabBarAttributes extends StencilHTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
     /**
-    * If `true`, show the tab highlight bar under the selected tab.
+    * Set the layout of the text and icon in the tabbar.
     */
-    'highlight'?: boolean;
+    'layout'?: TabbarLayout;
     /**
-    * Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
+    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    */
+    'mode'?: Mode;
+    'onIonTabBarChanged'?: (event: CustomEvent<TabbarChangedDetail>) => void;
+    /**
+    * Set the position of the tabbar, relative to the content.
+    */
+    'placement'?: TabbarPlacement;
+    /**
+    * The selected tab component
+    */
+    'selectedTab'?: string;
+    /**
+    * If `true`, the tab bar will be translucent. Defaults to `false`.
+    */
+    'translucent'?: boolean;
+  }
+
+  interface IonTabButton {
+    /**
+    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+    */
+    'color'?: Color;
+    /**
+    * The selected tab component
+    */
+    'disabled': boolean;
+    /**
+    * The URL which will be used as the `href` within this tab's button anchor.
+    */
+    'href'?: string;
+    /**
+    * Set the layout of the text and icon in the tabbar.
+    */
+    'layout': TabbarLayout;
+    /**
+    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    */
+    'mode': Mode;
+    /**
+    * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
+    */
+    'tab'?: string;
+  }
+  interface IonTabButtonAttributes extends StencilHTMLAttributes {
+    /**
+    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+    */
+    'color'?: Color;
+    /**
+    * The selected tab component
+    */
+    'disabled'?: boolean;
+    /**
+    * The URL which will be used as the `href` within this tab's button anchor.
+    */
+    'href'?: string;
+    /**
+    * Set the layout of the text and icon in the tabbar.
     */
     'layout'?: TabbarLayout;
     /**
@@ -4721,23 +4539,40 @@ export namespace Components {
     /**
     * Emitted when the tab bar is clicked
     */
-    'onIonTabbarClick'?: (event: CustomEvent<HTMLIonTabElement>) => void;
+    'onIonTabButtonClick'?: (event: CustomEvent<TabbarClickDetail>) => void;
     /**
-    * Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
+    * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
     */
-    'placement'?: TabbarPlacement;
+    'tab'?: string;
+  }
+
+  interface IonTab {
+    'active': boolean;
     /**
-    * The selected tab component
+    * The component to display inside of the tab.
     */
-    'selectedTab'?: HTMLIonTabElement;
+    'component'?: ComponentRef;
+    'delegate'?: FrameworkDelegate;
     /**
-    * The tabs to render
+    * Set the active component for the tab
     */
-    'tabs'?: HTMLIonTabElement[];
+    'setActive': () => Promise<void>;
     /**
-    * If `true`, the tabbar will be translucent. Defaults to `false`.
+    * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
     */
-    'translucent'?: boolean;
+    'tab'?: string;
+  }
+  interface IonTabAttributes extends StencilHTMLAttributes {
+    'active'?: boolean;
+    /**
+    * The component to display inside of the tab.
+    */
+    'component'?: ComponentRef;
+    'delegate'?: FrameworkDelegate;
+    /**
+    * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
+    */
+    'tab'?: string;
   }
 
   interface IonTabs {
@@ -4749,7 +4584,7 @@ export namespace Components {
     /**
     * Get the tab at the given index
     */
-    'getTab': (tabOrIndex: string | number | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>;
+    'getTab': (tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>;
     /**
     * A unique name for the tabs.
     */
@@ -4757,16 +4592,8 @@ export namespace Components {
     /**
     * Index or the Tab instance, of the tab to select.
     */
-    'select': (tabOrIndex: number | HTMLIonTabElement) => Promise<boolean>;
+    'select': (tab: string | HTMLIonTabElement) => Promise<boolean>;
     'setRouteId': (id: string) => Promise<RouteWrite>;
-    /**
-    * If `true`, the tabbar will be hidden. Defaults to `false`.
-    */
-    'tabbarHidden': boolean;
-    /**
-    * If `true`, the tabs will use the router and `selectedTab` will not do anything.
-    */
-    'useRouter': boolean;
   }
   interface IonTabsAttributes extends StencilHTMLAttributes {
     /**
@@ -4789,14 +4616,6 @@ export namespace Components {
     * Emitted when the navigation will load a component.
     */
     'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
-    /**
-    * If `true`, the tabbar will be hidden. Defaults to `false`.
-    */
-    'tabbarHidden'?: boolean;
-    /**
-    * If `true`, the tabs will use the router and `selectedTab` will not do anything.
-    */
-    'useRouter'?: boolean;
   }
 
   interface IonText {
@@ -4892,7 +4711,7 @@ export namespace Components {
     /**
     * The value of the textarea.
     */
-    'value': string;
+    'value'?: string | null;
     /**
     * Indicates how the control wraps text. Possible values are: `"hard"`, `"soft"`, `"off"`.
     */
@@ -4986,7 +4805,7 @@ export namespace Components {
     /**
     * The value of the textarea.
     */
-    'value'?: string;
+    'value'?: string | null;
     /**
     * Indicates how the control wraps text. Possible values are: `"hard"`, `"soft"`, `"off"`.
     */
@@ -5034,6 +4853,10 @@ export namespace Components {
     * Text to display in the close button.
     */
     'closeButtonText'?: string;
+    /**
+    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+    */
+    'color'?: Color;
     /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
@@ -5101,6 +4924,10 @@ export namespace Components {
     * Text to display in the close button.
     */
     'closeButtonText'?: string;
+    /**
+    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+    */
+    'color'?: Color;
     /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
@@ -5178,7 +5005,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * If `true`, the user cannot interact with the toggle. Default false.
+    * If `true`, the user cannot interact with the toggle. Defaults to `false`.
     */
     'disabled': boolean;
     /**
@@ -5190,9 +5017,9 @@ export namespace Components {
     */
     'name': string;
     /**
-    * the value of the toggle.
+    * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`. Defaults to `on`.
     */
-    'value': string;
+    'value'?: string | null;
   }
   interface IonToggleAttributes extends StencilHTMLAttributes {
     /**
@@ -5204,7 +5031,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * If `true`, the user cannot interact with the toggle. Default false.
+    * If `true`, the user cannot interact with the toggle. Defaults to `false`.
     */
     'disabled'?: boolean;
     /**
@@ -5232,9 +5059,9 @@ export namespace Components {
     */
     'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
     /**
-    * the value of the toggle.
+    * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`. Defaults to `on`.
     */
-    'value'?: string;
+    'value'?: string | null;
   }
 
   interface IonToolbar {
@@ -5399,7 +5226,6 @@ declare global {
     'IonFooter': Components.IonFooter;
     'IonGrid': Components.IonGrid;
     'IonHeader': Components.IonHeader;
-    'IonHideWhen': Components.IonHideWhen;
     'IonImg': Components.IonImg;
     'IonInfiniteScrollContent': Components.IonInfiniteScrollContent;
     'IonInfiniteScroll': Components.IonInfiniteScroll;
@@ -5450,14 +5276,14 @@ declare global {
     'IonSelectOption': Components.IonSelectOption;
     'IonSelectPopover': Components.IonSelectPopover;
     'IonSelect': Components.IonSelect;
-    'IonShowWhen': Components.IonShowWhen;
     'IonSkeletonText': Components.IonSkeletonText;
     'IonSlide': Components.IonSlide;
     'IonSlides': Components.IonSlides;
     'IonSpinner': Components.IonSpinner;
     'IonSplitPane': Components.IonSplitPane;
+    'IonTabBar': Components.IonTabBar;
+    'IonTabButton': Components.IonTabButton;
     'IonTab': Components.IonTab;
-    'IonTabbar': Components.IonTabbar;
     'IonTabs': Components.IonTabs;
     'IonText': Components.IonText;
     'IonTextarea': Components.IonTextarea;
@@ -5502,7 +5328,6 @@ declare global {
     'ion-footer': Components.IonFooterAttributes;
     'ion-grid': Components.IonGridAttributes;
     'ion-header': Components.IonHeaderAttributes;
-    'ion-hide-when': Components.IonHideWhenAttributes;
     'ion-img': Components.IonImgAttributes;
     'ion-infinite-scroll-content': Components.IonInfiniteScrollContentAttributes;
     'ion-infinite-scroll': Components.IonInfiniteScrollAttributes;
@@ -5553,14 +5378,14 @@ declare global {
     'ion-select-option': Components.IonSelectOptionAttributes;
     'ion-select-popover': Components.IonSelectPopoverAttributes;
     'ion-select': Components.IonSelectAttributes;
-    'ion-show-when': Components.IonShowWhenAttributes;
     'ion-skeleton-text': Components.IonSkeletonTextAttributes;
     'ion-slide': Components.IonSlideAttributes;
     'ion-slides': Components.IonSlidesAttributes;
     'ion-spinner': Components.IonSpinnerAttributes;
     'ion-split-pane': Components.IonSplitPaneAttributes;
+    'ion-tab-bar': Components.IonTabBarAttributes;
+    'ion-tab-button': Components.IonTabButtonAttributes;
     'ion-tab': Components.IonTabAttributes;
-    'ion-tabbar': Components.IonTabbarAttributes;
     'ion-tabs': Components.IonTabsAttributes;
     'ion-text': Components.IonTextAttributes;
     'ion-textarea': Components.IonTextareaAttributes;
@@ -5758,12 +5583,6 @@ declare global {
   var HTMLIonHeaderElement: {
     prototype: HTMLIonHeaderElement;
     new (): HTMLIonHeaderElement;
-  };
-
-  interface HTMLIonHideWhenElement extends Components.IonHideWhen, HTMLStencilElement {}
-  var HTMLIonHideWhenElement: {
-    prototype: HTMLIonHideWhenElement;
-    new (): HTMLIonHideWhenElement;
   };
 
   interface HTMLIonImgElement extends Components.IonImg, HTMLStencilElement {}
@@ -6066,12 +5885,6 @@ declare global {
     new (): HTMLIonSelectElement;
   };
 
-  interface HTMLIonShowWhenElement extends Components.IonShowWhen, HTMLStencilElement {}
-  var HTMLIonShowWhenElement: {
-    prototype: HTMLIonShowWhenElement;
-    new (): HTMLIonShowWhenElement;
-  };
-
   interface HTMLIonSkeletonTextElement extends Components.IonSkeletonText, HTMLStencilElement {}
   var HTMLIonSkeletonTextElement: {
     prototype: HTMLIonSkeletonTextElement;
@@ -6102,16 +5915,22 @@ declare global {
     new (): HTMLIonSplitPaneElement;
   };
 
+  interface HTMLIonTabBarElement extends Components.IonTabBar, HTMLStencilElement {}
+  var HTMLIonTabBarElement: {
+    prototype: HTMLIonTabBarElement;
+    new (): HTMLIonTabBarElement;
+  };
+
+  interface HTMLIonTabButtonElement extends Components.IonTabButton, HTMLStencilElement {}
+  var HTMLIonTabButtonElement: {
+    prototype: HTMLIonTabButtonElement;
+    new (): HTMLIonTabButtonElement;
+  };
+
   interface HTMLIonTabElement extends Components.IonTab, HTMLStencilElement {}
   var HTMLIonTabElement: {
     prototype: HTMLIonTabElement;
     new (): HTMLIonTabElement;
-  };
-
-  interface HTMLIonTabbarElement extends Components.IonTabbar, HTMLStencilElement {}
-  var HTMLIonTabbarElement: {
-    prototype: HTMLIonTabbarElement;
-    new (): HTMLIonTabbarElement;
   };
 
   interface HTMLIonTabsElement extends Components.IonTabs, HTMLStencilElement {}
@@ -6206,7 +6025,6 @@ declare global {
     'ion-footer': HTMLIonFooterElement
     'ion-grid': HTMLIonGridElement
     'ion-header': HTMLIonHeaderElement
-    'ion-hide-when': HTMLIonHideWhenElement
     'ion-img': HTMLIonImgElement
     'ion-infinite-scroll-content': HTMLIonInfiniteScrollContentElement
     'ion-infinite-scroll': HTMLIonInfiniteScrollElement
@@ -6257,14 +6075,14 @@ declare global {
     'ion-select-option': HTMLIonSelectOptionElement
     'ion-select-popover': HTMLIonSelectPopoverElement
     'ion-select': HTMLIonSelectElement
-    'ion-show-when': HTMLIonShowWhenElement
     'ion-skeleton-text': HTMLIonSkeletonTextElement
     'ion-slide': HTMLIonSlideElement
     'ion-slides': HTMLIonSlidesElement
     'ion-spinner': HTMLIonSpinnerElement
     'ion-split-pane': HTMLIonSplitPaneElement
+    'ion-tab-bar': HTMLIonTabBarElement
+    'ion-tab-button': HTMLIonTabButtonElement
     'ion-tab': HTMLIonTabElement
-    'ion-tabbar': HTMLIonTabbarElement
     'ion-tabs': HTMLIonTabsElement
     'ion-text': HTMLIonTextElement
     'ion-textarea': HTMLIonTextareaElement
@@ -6309,7 +6127,6 @@ declare global {
     'ion-footer': HTMLIonFooterElement;
     'ion-grid': HTMLIonGridElement;
     'ion-header': HTMLIonHeaderElement;
-    'ion-hide-when': HTMLIonHideWhenElement;
     'ion-img': HTMLIonImgElement;
     'ion-infinite-scroll-content': HTMLIonInfiniteScrollContentElement;
     'ion-infinite-scroll': HTMLIonInfiniteScrollElement;
@@ -6360,14 +6177,14 @@ declare global {
     'ion-select-option': HTMLIonSelectOptionElement;
     'ion-select-popover': HTMLIonSelectPopoverElement;
     'ion-select': HTMLIonSelectElement;
-    'ion-show-when': HTMLIonShowWhenElement;
     'ion-skeleton-text': HTMLIonSkeletonTextElement;
     'ion-slide': HTMLIonSlideElement;
     'ion-slides': HTMLIonSlidesElement;
     'ion-spinner': HTMLIonSpinnerElement;
     'ion-split-pane': HTMLIonSplitPaneElement;
+    'ion-tab-bar': HTMLIonTabBarElement;
+    'ion-tab-button': HTMLIonTabButtonElement;
     'ion-tab': HTMLIonTabElement;
-    'ion-tabbar': HTMLIonTabbarElement;
     'ion-tabs': HTMLIonTabsElement;
     'ion-text': HTMLIonTextElement;
     'ion-textarea': HTMLIonTextareaElement;

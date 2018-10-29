@@ -1,6 +1,6 @@
-import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Method, Prop } from '@stencil/core';
 
-import { Color, ComponentRef, FrameworkDelegate } from '../../interface';
+import { ComponentRef, FrameworkDelegate } from '../../interface';
 import { attachComponent } from '../../utils/framework-delegate';
 
 @Component({
@@ -13,94 +13,24 @@ export class Tab implements ComponentInterface {
   private loaded = false;
   @Element() el!: HTMLIonTabElement;
 
-  /**
-   * If `true`, sets the tab as the active tab.
-   */
+  /** @internal */
   @Prop({ mutable: true }) active = false;
 
-  /** hidden */
-  @Prop() btnId?: string;
-
-  /** hidden */
+  /** @internal */
   @Prop() delegate?: FrameworkDelegate;
 
   /**
-   * The label of the tab.
+   * A tab id must be provided for each `ion-tab`. It's used internally to reference
+   * the selected tab or by the router to switch between them.
    */
-  @Prop() label?: string;
-
-  /**
-   * The URL which will be used as the `href` within this tab's button anchor.
-   */
-  @Prop() href?: string;
-
-  /**
-   * The icon for the tab.
-   */
-  @Prop() icon?: string;
-
-  /**
-   * The badge for the tab.
-   */
-  @Prop() badge?: string;
-
-  /**
-   * The badge color for the tab button.
-   */
-  @Prop() badgeColor?: Color;
+  @Prop() tab?: string;
 
   /**
    * The component to display inside of the tab.
    */
   @Prop() component?: ComponentRef;
 
-  /**
-   * The name of the tab.
-   */
-  @Prop({ mutable: true }) name?: string;
-
-  /**
-   * If `true`, the user cannot interact with the tab. Defaults to `false`.
-   */
-  @Prop() disabled = false;
-
-  /**
-   * If `true`, the tab will be selected. Defaults to `false`.
-   */
-  @Prop() selected = false;
-
-  @Watch('selected')
-  selectedChanged(selected: boolean) {
-    if (selected) {
-      this.ionSelect.emit();
-    }
-  }
-
-  /**
-   * If `true`, the tab button is visible within the tabbar. Defaults to `true`.
-   */
-  @Prop() show = true;
-
-  /**
-   * If `true`, hide the tabs on child pages.
-   */
-  @Prop() tabsHideOnSubPages = false;
-
-  /**
-   * Emitted when the current tab is selected.
-   */
-  @Event() ionSelect!: EventEmitter<void>;
-
-  /**
-   * Emitted when the tab props mutates. Used internally.
-   */
-  @Event() ionTabMutated!: EventEmitter<void>;
-
   componentWillLoad() {
-    // Set default name
-    if (this.name === undefined && typeof this.component === 'string') {
-      this.name = this.component;
-    }
 
     if (Build.isDev) {
       if (this.component !== undefined && this.el.childElementCount > 0) {
@@ -109,18 +39,12 @@ export class Tab implements ComponentInterface {
       ` or` +
       `- Remove the embedded content inside the ion-tab: <ion-tab></ion-tab>`);
       }
-    }
-  }
 
-  @Watch('label')
-  @Watch('href')
-  @Watch('show')
-  @Watch('disabled')
-  @Watch('badge')
-  @Watch('badgeColor')
-  @Watch('icon')
-  onPropChanged() {
-    this.ionTabMutated.emit();
+      if (this.tab === undefined) {
+        console.error(`Tab views need to have an unique id attribute:
+  <ion-tab tab="my-unique-id">`);
+      }
+    }
   }
 
   /** Set the active component for the tab */
@@ -139,11 +63,12 @@ export class Tab implements ComponentInterface {
   }
 
   hostData() {
-    const { btnId, active, component } = this;
+    const { tab, active, component } = this;
     return {
-      'aria-labelledby': btnId,
-      'aria-hidden': !active ? 'true' : null,
       'role': 'tabpanel',
+      'aria-hidden': !active ? 'true' : null,
+      'aria-labelledby': `tab-button-${tab}`,
+      'id': `tab-view-${tab}`,
       'class': {
         'ion-page': component === undefined,
         'tab-hidden': !active

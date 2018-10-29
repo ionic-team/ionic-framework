@@ -15,7 +15,7 @@ export class TabsDelegate {
     }
   }
 
-  @HostListener('ionTabbarClick', ['$event'])
+  @HostListener('ionTabButtonClick', ['$event'])
   onTabbarClick(ev: UIEvent) {
     const tabElm: HTMLIonTabElement = ev.detail as any;
     if (this.router && tabElm && tabElm.href) {

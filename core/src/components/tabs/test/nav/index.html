@@ -5,9 +5,9 @@
   <meta charset="UTF-8">
   <title>Tab - Nav</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
-  <script src="/scripts/screenshot/testing.js"></script>
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
   <script type="text/javascript">
     window.Ionic.config = { useRouter: true };
   </script>
@@ -252,19 +252,36 @@
 
 <body>
 
-  <ion-app useRouter='false'>
+  <ion-app>
     <ion-tabs>
-      <ion-tab label="Plain List" icon="star" path="">
+      <ion-tab tab="plain-list">
         <ion-nav root="page-one"></ion-nav>
       </ion-tab>
 
-      <ion-tab label="Schedule" icon="globe" path="tab2">
+      <ion-tab tab="schedule">
         <ion-nav root="page-four"></ion-nav>
       </ion-tab>
 
-      <ion-tab label="Stopwatch" icon="logo-facebook" path="tab3">
+      <ion-tab tab="stopwatch">
         <ion-nav root="page-seven"></ion-nav>
       </ion-tab>
+
+      <ion-tab-bar>
+        <ion-tab-button tab="plain-list">
+          <ion-label>Plain List</ion-label>
+          <ion-icon name="star"></ion-icon>
+        </ion-tab-button>
+
+        <ion-tab-button tab="schedule">
+          <ion-label>Schedule</ion-label>
+          <ion-icon name="globe"></ion-icon>
+        </ion-tab-button>
+
+        <ion-tab-button tab="stopwatch">
+          <ion-label>Stopwatch</ion-label>
+          <ion-icon name="logo-facebook"></ion-icon>
+        </ion-tab-button>
+      </ion-tab-bar>
     </ion-tabs>
   </ion-app>
 </body>

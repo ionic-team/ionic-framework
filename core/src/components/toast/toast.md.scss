@@ -4,14 +4,14 @@
 // Material Design Toast
 // --------------------------------------------------
 
-.toast-md {
+:host {
   --background: #{$toast-md-background};
   --color: #{$toast-md-title-color};
 
   font-size: $toast-md-title-font-size;
 }
 
-.toast-md .toast-wrapper {
+.toast-wrapper {
   @include position-horizontal(0, 0);
   @include margin(auto);
 
@@ -24,18 +24,18 @@
   z-index: $z-index-overlay-wrapper;
 }
 
-.toast-md .toast-wrapper.toast-top {
+.toast-wrapper.toast-top {
   padding-top: var(--ion-safe-area-top, 0);
 }
 
-.toast-md .toast-wrapper.toast-bottom {
+.toast-wrapper.toast-bottom {
   padding-bottom: var(--ion-safe-area-bottom, 0);
 }
 
-.toast-md .toast-wrapper.toast-middle {
+.toast-wrapper.toast-middle {
   opacity: .01;
 }
 
-.toast-md .toast-message {
+.toast-message {
   @include padding($toast-md-title-padding-top, $toast-md-title-padding-end, $toast-md-title-padding-bottom, $toast-md-title-padding-start);
 }

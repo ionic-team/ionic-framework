@@ -134,3 +134,8 @@ wrongRepo:
   lock: true
   dryRun: false
 
+screenshot:
+  appId: 18001
+  checkName: "build"
+  baseUrl: "https://screenshot.ionicframework.com"
+  dryRun: false

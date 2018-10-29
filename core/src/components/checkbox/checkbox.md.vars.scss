@@ -8,7 +8,7 @@
 $checkbox-md-disabled-opacity:           .3 !default;
 
 /// @prop - Background color of the checkbox icon when off
-$checkbox-md-icon-background-color-off:  $item-background-color !default;
+$checkbox-md-icon-background-color-off:  $item-md-background !default;
 
 /// @prop - Background color of focus indicator for checkbox when focused
 $checkbox-md-background-color-focused:   ion-color(primary, tint) !default;

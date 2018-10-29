@@ -4,6 +4,7 @@ export * from './index';
 export * from './components/animation-controller/animation-interface';
 export * from './components/alert/alert-interface';
 export * from './components/action-sheet/action-sheet-interface';
+export * from './components/datetime/datetime-interface';
 export * from './components/menu/menu-interface';
 export * from './components/modal/modal-interface';
 export * from './components/picker/picker-interface';
@@ -18,7 +19,7 @@ export * from './components/content/content-interface';
 export * from './components/select/select-interface';
 export * from './components/select-popover/select-popover-interface';
 export * from './components/spinner/spinner-interface';
-export * from './components/tabbar/tabbar-interface';
+export * from './components/tab-bar/tab-bar-interface';
 export * from './components/toast/toast-interface';
 export * from './components/virtual-scroll/virtual-scroll-interface';
 
