@@ -7,11 +7,11 @@
 .action-sheet-title {
   @include padding($action-sheet-md-title-padding-top, $action-sheet-md-title-padding-end, $action-sheet-md-title-padding-bottom, $action-sheet-md-title-padding-start);
 
+  height: $action-sheet-md-title-height;
+
   color: $action-sheet-md-title-color;
 
   font-size: $action-sheet-md-title-font-size;
-
-  height: $action-sheet-md-title-height;
 
   text-align: $action-sheet-md-text-align;
 }
@@ -27,9 +27,9 @@
 // -----------------------------------------
 
 .action-sheet-group {
-  background-color: $action-sheet-md-background-color;
 
   max-height: 50%;
+  background-color: $action-sheet-md-background-color;
 }
 
 .action-sheet-group:first-child {
@@ -70,9 +70,9 @@
   @include padding(null, null, 4px, null);
   @include margin($action-sheet-md-icon-margin-top, $action-sheet-md-icon-margin-end, $action-sheet-md-icon-margin-bottom, $action-sheet-md-icon-margin-start);
 
-  font-size: $action-sheet-md-icon-font-size;
-
   color: $action-sheet-md-icon-color;
+
+  font-size: $action-sheet-md-icon-font-size;
 }
 
 .action-sheet-button-inner {
