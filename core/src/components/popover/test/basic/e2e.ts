@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('popover: basic', async () => {
+test('popover: basic', async () => {
   const page = await newE2EPage({
     url: '/src/components/popover/test/basic?ionic:_testing=true'
   });
