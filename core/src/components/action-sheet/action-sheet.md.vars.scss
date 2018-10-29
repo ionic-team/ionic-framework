@@ -10,19 +10,22 @@ $action-sheet-md-text-align:                            start !default;
 $action-sheet-md-background-color:                      $overlay-md-background-color !default;
 
 /// @prop - Padding top of the action sheet
-$action-sheet-md-padding-top:                           8px !default;
+$action-sheet-md-padding-top:                           0 !default;
 
 /// @prop - Padding bottom of the action sheet
-$action-sheet-md-padding-bottom:                        8px !default;
+$action-sheet-md-padding-bottom:                        0 !default;
+
+/// @prop - Height of the action sheet title
+$action-sheet-md-title-height:                          60px !default;
 
 /// @prop - Color of the action sheet title
-$action-sheet-md-title-color:                           $text-color-step-400 !default;
+$action-sheet-md-title-color:                           rgba(var(--ion-text-color-rgb, $text-color-rgb), 0.54) !default;
 
 /// @prop - Font size of the action sheet title
 $action-sheet-md-title-font-size:                       16px !default;
 
 /// @prop - Padding top of the action sheet title
-$action-sheet-md-title-padding-top:                     11px !default;
+$action-sheet-md-title-padding-top:                     20px !default;
 
 /// @prop - Padding end of the action sheet title
 $action-sheet-md-title-padding-end:                     16px !default;
@@ -49,7 +52,7 @@ $action-sheet-md-sub-title-padding-bottom:              0 !default;
 $action-sheet-md-sub-title-padding-start:               $action-sheet-md-sub-title-padding-end !default;
 
 /// @prop - Minimum height of the action sheet button
-$action-sheet-md-button-height:                         48px !default;
+$action-sheet-md-button-height:                         52px !default;
 
 /// @prop - Text color of the action sheet button
 $action-sheet-md-button-text-color:                     $text-color-step-150 !default;
@@ -92,3 +95,6 @@ $action-sheet-md-icon-margin-bottom:                    0 !default;
 
 /// @prop - Margin start of the icon in the action sheet button
 $action-sheet-md-icon-margin-start:                     0 !default;
+
+/// @prop - Color of the icon in the action sheet button
+$action-sheet-md-icon-color:                            $action-sheet-md-title-color !default;
