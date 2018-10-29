@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('menu-button: standalone', async () => {
+test('menu-button: standalone', async () => {
   const page = await newE2EPage({
     url: '/src/components/menu-button/test/standalone?ionic:_testing=true'
   });

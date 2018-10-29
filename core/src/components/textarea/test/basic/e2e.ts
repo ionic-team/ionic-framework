@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('textarea: basic', async () => {
+test('textarea: basic', async () => {
   const page = await newE2EPage({
     url: '/src/components/textarea/test/basic?ionic:_testing=true'
   });

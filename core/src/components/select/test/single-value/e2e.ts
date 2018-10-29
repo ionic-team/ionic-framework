@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('select: single-value', async () => {
+test('select: single-value', async () => {
   const page = await newE2EPage({
     url: '/src/components/select/test/single-value?ionic:_testing=true'
   });
