@@ -8,6 +8,24 @@
   <script src="../../../../../dist/ionic.js"></script>
   <link rel="stylesheet" href="../../../../../css/ionic.bundle.css">
   <link rel="stylesheet" href="../../../../../scripts/testing/styles.css">
+
+  <style>
+  .custom-tabbar {
+    overflow: visible;
+    contain: none;
+  }
+  .main-tab {
+    --padding-top: 18px;
+
+    border-radius: 50%;
+    max-width: 80px;
+    height: 80px;
+    background: #848484;
+    color: white;
+    font-size: 16px;
+  }
+
+  </style>
 </head>
 
 <body>
@@ -185,6 +203,24 @@
       <ion-tab-button tab='3'>
         <ion-label>Indiana Jones and the Last Crusade</ion-label>
       </ion-tab-button>
+    </ion-tab-bar>
+
+    <!-- Custom TabBar -->
+    <ion-tab-bar selected-tab="1" class="custom-tabbar">
+      <ion-tab-button tab='1'>
+        <ion-label>Location</ion-label>
+        <ion-icon name="navigate"></ion-icon>
+      </ion-tab-button>
+
+      <ion-tab-button tab='2' class="main-tab">
+        <ion-icon src="/src/components/tab-bar/test/scenarios/camera.svg"></ion-icon>
+      </ion-tab-button>
+
+      <ion-tab-button tab='3'>
+        <ion-label>Radio</ion-label>
+        <ion-icon name="musical-notes"></ion-icon>
+      </ion-tab-button>
+
     </ion-tab-bar>
 
   </ion-app>
