@@ -4,7 +4,6 @@ import { Gesture, GestureDetail, Mode, PickerColumn } from '../../interface';
 import { hapticSelectionChanged } from '../../utils';
 import { clamp } from '../../utils/helpers';
 
-/** @hidden */
 @Component({
   tag: 'ion-picker-column'
 })
@@ -116,7 +115,10 @@ export class PickerColumnCmp implements ComponentInterface {
           translateY = 0;
           translateZ = 90;
           transform = `rotateX(${rotateX}deg) `;
+        } else {
+          translateY = -9999;
         }
+
       } else {
         translateZ = 0;
         translateY = optOffset;

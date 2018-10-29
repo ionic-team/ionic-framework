@@ -5,6 +5,8 @@ it('themes: css-variables', async () => {
     url: '/src/themes/test/css-variables?ionic:_testing=true'
   });
 
+  await page.waitFor(250);
+
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
 });

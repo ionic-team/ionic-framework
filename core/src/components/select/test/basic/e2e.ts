@@ -13,6 +13,7 @@ it('select: basic', async () => {
 
   const alert = await page.find('ion-alert');
   await alert.waitForVisible();
+  await page.waitFor(250);
 
   compare = await page.compareScreenshot('should open gender single select');
   expect(compare).toMatchScreenshot();
@@ -24,6 +25,7 @@ it('select: basic', async () => {
 
   const actionSheet = await page.find('ion-action-sheet');
   await actionSheet.waitForVisible();
+  await page.waitFor(250);
 
   compare = await page.compareScreenshot('should open custom action sheet select');
   expect(compare).toMatchScreenshot();

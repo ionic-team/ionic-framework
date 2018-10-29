@@ -33,7 +33,7 @@ export class SegmentButton implements ComponentInterface {
   @Prop({ mutable: true }) checked = false;
 
   /**
-   * If `true`, the user cannot interact with the segment button. Default false.
+   * If `true`, the user cannot interact with the segment button. Defaults to `false`.
    */
   @Prop() disabled = false;
 
