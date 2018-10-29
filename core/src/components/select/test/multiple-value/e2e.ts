@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('select: multiple-value', async () => {
+test('select: multiple-value', async () => {
   const page = await newE2EPage({
     url: '/src/components/select/test/multiple-value?ionic:_testing=true'
   });
