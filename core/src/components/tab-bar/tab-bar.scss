@@ -17,6 +17,8 @@
   background: var(--background);
   color: var(--color);
 
+  text-align: center;
+
   contain: strict;
   user-select: none;
   z-index: $z-index-toolbar;
