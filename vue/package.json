@@ -2,49 +2,37 @@
   "name": "@ionic/vue",
   "version": "4.0.0-beta.12",
   "description": "Vue specific wrappers for @ionic/core",
-  "homepage": "https://moduscreate.com",
-  "author": "Modus Create",
-  "license": "MIT",
-  "repository": "github:ionic-team/ionic",
   "main": "dist/ionic-vue.common.js",
-  "typings": "types/index.d.ts",
+  "types": "dist/types/index.d.ts",
   "module": "dist/ionic-vue.esm.js",
   "unpkg": "dist/ionic-vue.js",
   "jsdelivr": "dist/ionic-vue.js",
-  "contributors": [
-    "Michael Tintiuc <michael.tintiuc@moduscreate.com>"
-  ],
-  "files": [
-    "src/",
-    "types/",
-    "dist/*.js",
-    "dist/*.ts"
-  ],
+  "contributors": ["Michael Tintiuc <michael.tintiuc@moduscreate.com>"],
+  "files": ["dist/"],
   "bugs": {
     "url": "https://github.com/ionic-team/ionic/issues"
   },
   "keywords": [
     "ionic",
-    "ion",
-    "vuejs",
-    "vue",
-    "typescript",
-    "router",
-    "routing",
-    "plugin",
-    "component",
-    "navigation",
-    "nav",
-    "transition",
-    "api",
-    "wrapper",
     "framework",
-    "delegate"
+    "vue",
+    "mobile",
+    "app",
+    "webapp",
+    "capacitor",
+    "cordova",
+    "progressive web app",
+    "pwa"
   ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ionic-team/ionic.git"
+  },
   "scripts": {
     "dev": "rollup -c",
     "watch": "rollup -c -w",
-    "build": "NODE_ENV=production rollup -c --configProd",
+    "build": "npm run clean && NODE_ENV=production rollup -c --configProd",
     "clean": "node scripts/clean.js",
     "lint": "tslint --project .",
     "lint.fix": "tslint --project . --fix",
@@ -60,12 +48,12 @@
     "tslint-ionic-rules": "0.0.19",
     "typescript": "3.1.1",
     "vue-class-component": "^6.2.0",
-    "vue-property-decorator": "^7.2.0"
-  },
-  "dependencies": {
+    "vue-property-decorator": "^7.2.0",
     "vue": "^2.5.17",
     "vue-template-compiler": "^2.5.17",
-    "vue-router": "^3.0.1",
+    "vue-router": "^3.0.1"
+  },
+  "dependencies": {
     "@ionic/core": "4.0.0-beta.12"
   }
 }

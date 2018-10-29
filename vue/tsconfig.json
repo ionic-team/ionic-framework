@@ -6,7 +6,7 @@
     "allowUnreachableCode": false,
     "declaration": true,
     "declarationMap": true,
-    "declarationDir": "types",
+    "declarationDir": "dist/types",
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",

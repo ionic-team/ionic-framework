@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from '../router';
 import Component from 'vue-class-component';
-import { IonBackButton } from '../interfaces';
 
 @Component
 export default class CatchIonicGoBack extends Vue {
@@ -10,7 +9,7 @@ export default class CatchIonicGoBack extends Vue {
     if (!event.target) return;
 
     // We only care for the event coming from Ionic's back button
-    const backButton = (event.target as HTMLElement).closest('ion-back-button') as IonBackButton;
+    const backButton = (event.target as HTMLElement).closest('ion-back-button') as HTMLIonBackButtonElement;
     if (!backButton) return;
 
     const $router = this.$router as Router;
