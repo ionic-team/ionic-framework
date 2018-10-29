@@ -24,7 +24,14 @@ export class SelectValueAccessor implements ControlValueAccessor {
   onChange: (value: any) => void;
   onTouched: () => void;
 
+  /**
+   * Whether onChange should be mutted (not be fired). Will be true only when writeValue was called, which
+   * means that value changed inside angular form (e.g. calling setValue on a control).
+   */
+  private muteOnChange: boolean;
+
   writeValue(value: any) {
+    this.muteOnChange = true;
     this.element.nativeElement.value = value;
 
     requestAnimationFrame(() => {
@@ -34,7 +41,11 @@ export class SelectValueAccessor implements ControlValueAccessor {
 
   @HostListener('ionChange', ['$event.target.value'])
   _handleChangeEvent(value: any) {
-    this.onChange(value);
+    if (!this.muteOnChange) {
+      this.onChange(value);
+    }
+
+    this.muteOnChange = false;
 
     requestAnimationFrame(() => {
       setIonicClasses(this.element);
