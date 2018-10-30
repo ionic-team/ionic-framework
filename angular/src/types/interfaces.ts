@@ -4,6 +4,7 @@ export interface IonicGlobal {
   ael?: (elm: any, eventName: string, cb: (ev: Event) => void, opts: any) => void;
   raf?: (ts: number) => void;
   rel?: (elm: any, eventName: string, cb: (ev: Event) => void, opts: any) => void;
+  asyncQueue?: boolean;
 }
 
 export interface IonicWindow extends Window {
