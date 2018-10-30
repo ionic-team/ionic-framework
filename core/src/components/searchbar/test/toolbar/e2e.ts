@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('searchbar: toolbar', async () => {
+test('searchbar: toolbar', async () => {
   const page = await newE2EPage({
     url: '/src/components/searchbar/test/toolbar?ionic:_testing=true'
   });

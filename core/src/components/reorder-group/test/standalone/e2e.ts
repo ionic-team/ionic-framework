@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('reorder: standalone', async () => {
+test('reorder: standalone', async () => {
   const page = await newE2EPage({
     url: '/src/components/reorder-group/test/standalone?ionic:_testing=true'
   });

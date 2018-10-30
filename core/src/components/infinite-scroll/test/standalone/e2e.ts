@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('infinite-scroll: standalone', async () => {
+test('infinite-scroll: standalone', async () => {
   const page = await newE2EPage({
     url: '/src/components/infinite-scroll/test/standalone?ionic:_testing=true'
   });
