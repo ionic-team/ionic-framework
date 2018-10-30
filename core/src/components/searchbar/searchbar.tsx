@@ -24,6 +24,7 @@ export class Searchbar implements ComponentInterface {
   @Prop({ context: 'document' }) doc!: Document;
 
   @State() focused = false;
+  @State() noAnimate = true;
 
   /**
    * The color to use from your application's color palette.
@@ -151,6 +152,10 @@ export class Searchbar implements ComponentInterface {
   componentDidLoad() {
     this.positionElements();
     this.debounceChanged();
+
+    setTimeout(() => {
+      this.noAnimate = false;
+    }, 300);
   }
 
   /**
@@ -328,10 +333,13 @@ export class Searchbar implements ComponentInterface {
   }
 
   hostData() {
+    const animated = this.animated && this.config.getBoolean('animated', true);
+
     return {
       class: {
         ...createColorClasses(this.color),
-        'searchbar-animated': this.animated && this.config.getBoolean('animated', true),
+        'searchbar-animated': animated,
+        'searchbar-no-animate': animated && this.noAnimate,
         'searchbar-has-value': (this.getValue() !== ''),
         'searchbar-show-cancel': this.showCancelButton,
         'searchbar-left-aligned': this.shouldAlignLeft,
