@@ -82,8 +82,6 @@ noReply:
 
 labelPullRequest:
   labels:
-    - label: v3
-      branch: v3
     - label: angular
       branch: master
       path: ^angular
@@ -94,6 +92,14 @@ labelPullRequest:
 
 wrongRepo:
   repos:
+    - label: "ionitron: v3"
+      repo: ionic-v3
+      message: >
+        Thanks for the issue! We have moved the source code and issues for Ionic 3 into a separate repository.
+        I am moving this issue to the repository for Ionic 3. Please track this issue over there.
+
+
+        Thank you for using Ionic!
     - label: "ionitron: cli"
       repo: ionic-cli
       message: >
@@ -135,6 +141,7 @@ wrongRepo:
   dryRun: false
 
 screenshot:
-  statusContext: "ci/circleci: test-core-screenshot"
+  appId: 18001
+  checkName: "build"
   baseUrl: "https://screenshot.ionicframework.com"
   dryRun: false

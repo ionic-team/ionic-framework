@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('list: inset', async () => {
+test('list: inset', async () => {
   const page = await newE2EPage({
     url: '/src/components/list/test/inset?ionic:_testing=true'
   });
