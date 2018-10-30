@@ -24,7 +24,15 @@ export class NumericValueAccessor implements ControlValueAccessor {
   onChange: (value: any) => void;
   onTouched: () => void;
 
+  /**
+   * Whether onChange should be mutted (not be fired). Will be true only when writeValue was called, which
+   * means that value changed inside angular form (e.g. calling setValue on a control).
+   */
+  private muteOnChange = false;
+
   writeValue(value: any) {
+    this.muteOnChange = true;
+
     // The value needs to be normalized for IE9, otherwise it is set to 'null' when null
     // Probably not an issue for us, but it doesn't really cost anything either
     this.element.nativeElement.value = value == null ? '' : value;
@@ -33,7 +41,11 @@ export class NumericValueAccessor implements ControlValueAccessor {
 
   @HostListener('ionChange', ['$event.target.value'])
   _handleInputEvent(value: any) {
-    this.onChange(value);
+    if (!this.muteOnChange) {
+      this.onChange(value);
+    }
+    
+    this.muteOnChange = false;
 
     requestAnimationFrame(() => {
       setIonicClasses(this.element);

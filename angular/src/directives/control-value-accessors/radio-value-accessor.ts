@@ -25,7 +25,14 @@ export class RadioValueAccessor implements ControlValueAccessor {
     this.onTouched = () => {/**/};
   }
 
+  /**
+   * Whether onChange should be mutted (not be fired). Will be true only when writeValue was called, which
+   * means that value changed inside angular form (e.g. calling setValue on a control).
+   */
+  private muteOnChange = false;
+
   writeValue(value: any) {
+    this.muteOnChange = true;
     this.element.nativeElement.checked = this.value = value;
 
     requestAnimationFrame(() => {
@@ -35,7 +42,11 @@ export class RadioValueAccessor implements ControlValueAccessor {
 
   @HostListener('ionSelect', ['$event.target.checked'])
   _handleIonSelect(value: any) {
-    this.onChange(value);
+    if (!this.muteOnChange) {
+      this.onChange(value);
+    }
+
+    this.muteOnChange = false;
 
     requestAnimationFrame(() => {
       setIonicClasses(this.element);
