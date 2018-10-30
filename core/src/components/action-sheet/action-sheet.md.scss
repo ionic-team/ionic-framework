@@ -7,6 +7,8 @@
 .action-sheet-title {
   @include padding($action-sheet-md-title-padding-top, $action-sheet-md-title-padding-end, $action-sheet-md-title-padding-bottom, $action-sheet-md-title-padding-start);
 
+  height: $action-sheet-md-title-height;
+
   color: $action-sheet-md-title-color;
 
   font-size: $action-sheet-md-title-font-size;
@@ -63,7 +65,10 @@
 }
 
 .action-sheet-icon {
+  @include padding(null, null, 4px, null);
   @include margin($action-sheet-md-icon-margin-top, $action-sheet-md-icon-margin-end, $action-sheet-md-icon-margin-bottom, $action-sheet-md-icon-margin-start);
+
+  color: $action-sheet-md-icon-color;
 
   font-size: $action-sheet-md-icon-font-size;
 }

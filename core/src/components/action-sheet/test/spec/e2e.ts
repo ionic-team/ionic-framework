@@ -1,11 +1,11 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-test('action-sheet: basic', async () => {
+test('action-sheet: spec', async () => {
   const page = await newE2EPage({
-    url: `/src/components/action-sheet/test/basic?ionic:_testing=true`
+    url: `/src/components/action-sheet/test/spec?ionic:_testing=true`
   });
 
-  const presentBtn = await page.find('#basic');
+  const presentBtn = await page.find('#spec');
   await presentBtn.click();
 
   let actionSheet = await page.find('ion-action-sheet');
