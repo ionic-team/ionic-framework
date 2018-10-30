@@ -10,7 +10,7 @@
   --knob-box-shadow: none;
   --knob-size: 18px;
   --bar-height: #{$range-md-bar-height};
-  --bar-background: #{$range-md-bar-background-color};
+  --bar-background: #{ion-color(primary, base, 0.26)};
   --bar-background-active: #{ion-color(primary, base)};
   --height: #{$range-md-slider-height};
   --pin-background: #{ion-color(primary, base)};
@@ -24,9 +24,14 @@
 :host(.ion-color) .range-bar-active,
 :host(.ion-color) .range-knob,
 :host(.ion-color) .range-pin,
-:host(.ion-color) .range-pin::before {
+:host(.ion-color) .range-pin::before,
+:host(.ion-color) .range-tick {
   background: current-color(base);
   color: current-color(contrast);
+}
+
+:host(.ion-color) .range-bar {
+  background: current-color(base, 0.26);
 }
 
 // TODO: REVIEW
@@ -61,23 +66,19 @@
 }
 
 .range-tick {
-  @include margin-horizontal(-($range-md-tick-width / 2), null);
-  @include border-radius($range-md-tick-border-radius);
-
   position: absolute;
-  top: ($range-md-hit-height / 2) - ($range-md-tick-height / 2) + ($range-md-bar-height / 2);
+  top: calc((var(--height) - var(--bar-height)) / 2);
+  width: var(--bar-height);
+  height: var(--bar-height);
 
-  width: $range-md-tick-width;
-  height: $range-md-tick-height;
-
-  background: $range-md-tick-background-color;
+  background: var(--bar-background-active);
 
   z-index: 1;
   pointer-events: none;
 }
 
 .range-tick-active {
-  background: $range-md-tick-active-background-color;
+  background: transparent;
 }
 
 .range-pin {
@@ -127,7 +128,9 @@
   transform: scale(1);
 }
 
-:host(.range-disabled) .range-bar-active {
+:host(.range-disabled) .range-bar-active,
+:host(.range-disabled) .range-bar,
+:host(.range-disabled) .range-tick {
   background-color: $range-md-bar-background-color;
 }
 
