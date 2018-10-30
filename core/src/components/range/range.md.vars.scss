@@ -36,12 +36,6 @@ $range-md-knob-height:                       $range-md-knob-width !default;
 /// @prop - Background of the range knob
 $range-md-knob-background-color:             $range-md-bar-active-background-color !default;
 
-/// @prop - Background of the range knob when the value is the minimum
-$range-md-knob-min-background-color:         $background-color !default;
-
-/// @prop - Border of the range knob when the value is the minimum
-$range-md-knob-min-border:                   2px solid $range-md-bar-background-color !default;
-
 /// @prop - Width of the range tick
 $range-md-tick-width:                        2px !default;
 

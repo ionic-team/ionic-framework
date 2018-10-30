@@ -128,20 +128,6 @@
   transform: scale(1);
 }
 
-.range-knob-min.range-knob-min {
-  .range-knob {
-    border: $range-md-knob-min-border;
-
-    background: $range-md-knob-min-background-color;
-  }
-
-  .range-pin,
-  .range-pin::before {
-    background: $range-md-pin-min-background-color;
-    color: ion-color(primary, contrast);
-  }
-}
-
 :host(.range-disabled) .range-bar-active {
   background-color: $range-md-bar-background-color;
 }
