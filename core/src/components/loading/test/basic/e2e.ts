@@ -7,8 +7,7 @@ test('loading: basic', async () => {
 
   await page.click('#basic');
   const loading = await page.find('ion-loading');
-  expect(loading).not.toBeNull();
-
+  await page.waitFor(250);
   await loading.waitForVisible();
 
   const compare = await page.compareScreenshot();
