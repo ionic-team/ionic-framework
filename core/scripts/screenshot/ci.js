@@ -132,10 +132,10 @@ class CIScreenshotConnector extends IonicConnector {
       uploadPaths.push(path.join(distIonicDir, distIonicFile));
     });
 
-    // const distIonicSvgDir = path.join(distIonicDir, 'svg');
-    // fs.readdirSync(distIonicSvgDir).forEach(distIonicSvgFile => {
-    //   uploadPaths.push(path.join(distIonicSvgDir, distIonicSvgFile));
-    // });
+    const distIonicSvgDir = path.join(distIonicDir, 'svg');
+    fs.readdirSync(distIonicSvgDir).forEach(distIonicSvgFile => {
+      uploadPaths.push(path.join(distIonicSvgDir, distIonicSvgFile));
+    });
 
     results.currentBuild.screenshots.forEach(screenshot => {
       const testDir = path.dirname(screenshot.testPath);
