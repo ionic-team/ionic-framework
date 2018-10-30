@@ -28,7 +28,7 @@ export class TextValueAccessor implements ControlValueAccessor {
    * Whether onChange should be mutted (not be fired). Will be true only when writeValue was called, which
    * means that value changed inside angular form (e.g. calling setValue on a control).
    */
-  private muteOnChange: boolean;
+  private muteOnChange = false;
 
   writeValue(value: any) {
     this.muteOnChange = true;
