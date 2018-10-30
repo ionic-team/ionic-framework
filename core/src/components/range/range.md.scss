@@ -83,11 +83,10 @@
 .range-pin {
   @include padding($range-md-pin-padding-vertical, $range-md-pin-padding-horizontal);
   @include border-radius(50%);
-  @include transform(translate3d(0, 28px, 0), scale(.01));
+  @include transform(translate3d(0, 0, 0), scale(.01));
 
   display: inline-block;
   position: relative;
-  top: -20px;
 
   min-width: 28px;
   height: 28px;
@@ -121,7 +120,7 @@
 }
 
 .range-knob-pressed .range-pin {
-  @include transform(translate3d(0, 0, 0), scale(1));
+  @include transform(translate3d(0, -24px, 0), scale(1));
 }
 
 :host(:not(.range-has-pin)) .range-knob-pressed .range-knob {
