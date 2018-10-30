@@ -11,12 +11,16 @@ test('item: inputs', async () => {
 
   // Disable everything
   await page.click('#btnDisabled');
+  await page.waitFor(250);
+
   compare = await page.compareScreenshot('should disable all');
   expect(compare).toMatchScreenshot();
 
   // Reenable and set some value
   await page.click('#btnDisabled');
   await page.click('#btnSomeValue');
+  await page.waitFor(250);
+
   compare = await page.compareScreenshot('should reenable and set value');
   expect(compare).toMatchScreenshot();
 
