@@ -15,7 +15,7 @@ test('tabs: basic', async () => {
 
   const button3 = await page.find('.e2eTabThreeButton');
   await button3.click();
-  compare = await page.compareScreenshot(`tab three`);
+  compare = await page.compareScreenshot(`tab three, disabled`);
   expect(compare).toMatchScreenshot();
 
   const button4 = await page.find('.e2eTabFourButton');
