@@ -68,6 +68,7 @@
 .range-tick {
   position: absolute;
   top: calc((var(--height) - var(--bar-height)) / 2);
+
   width: var(--bar-height);
   height: var(--bar-height);
 
