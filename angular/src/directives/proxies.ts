@@ -332,7 +332,6 @@ export class Img {
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
     const el = r.nativeElement;
-    proxyComponent
     proxyInputs(this, el, ['alt', 'src']);
     proxyOutputs(this, el, ['ionImgDidLoad']);
   }
