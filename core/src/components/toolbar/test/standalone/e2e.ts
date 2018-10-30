@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('toolbar: standalone', async () => {
+test('toolbar: standalone', async () => {
   const page = await newE2EPage({
     url: '/src/components/toolbar/test/standalone'
   });

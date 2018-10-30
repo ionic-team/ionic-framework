@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('toast: standalone', async () => {
+test('toast: standalone', async () => {
   const page = await newE2EPage({
     url: '/src/components/toast/test/standalone?ionic:_testing=true'
   });

@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('popover: standalone', async () => {
+test('popover: standalone', async () => {
   const page = await newE2EPage({
     url: '/src/components/popover/test/standalone?ionic:_testing=true'
   });

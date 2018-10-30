@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('tab-group: placements', async () => {
+test('tab: placements', async () => {
   const page = await newE2EPage({
     url: '/src/components/tabs/test/placements?ionic:_testing=true'
   });
