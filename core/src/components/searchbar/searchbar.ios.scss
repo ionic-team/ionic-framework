@@ -143,6 +143,11 @@
   pointer-events: none;
 }
 
+:host(.searchbar-no-animate) .searchbar-search-icon,
+:host(.searchbar-no-animate) .searchbar-input,
+:host(.searchbar-no-animate) .searchbar-cancel-button {
+  transition-duration: 0ms;
+}
 
 // Searchbar Color
 // -----------------------------------------
