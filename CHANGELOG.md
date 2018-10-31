@@ -1,5 +1,5 @@
-<a name="4.0.0-beta.14"></a>
-# [4.0.0-beta.14](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.13...v4.0.0-beta.14) (2018-10-31)
+<a name="4.0.0-beta.15-0"></a>
+# [4.0.0-beta.15-0](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.13...v4.0.0-beta.15-0) (2018-10-31)
 
 ## Rethinking Tabs
 
@@ -129,6 +129,7 @@ Lastly, this change also fixes some outstanding issues with Tabs, so we're excit
 * **tabs:** name prop is not longer used ([6d11cc1](https://github.com/ionic-team/ionic/commit/6d11cc1))
 * **theming:** update global css variable naming and default values  ([#16003](https://github.com/ionic-team/ionic/issues/16003)) ([b2021fd](https://github.com/ionic-team/ionic/commit/b2021fd)), closes [#15989](https://github.com/ionic-team/ionic/issues/15989) [#15559](https://github.com/ionic-team/ionic/issues/15559)
 * **toggle:** fix box-shadow overflow in toggle ([#15955](https://github.com/ionic-team/ionic/issues/15955)) ([8a4dc74](https://github.com/ionic-team/ionic/commit/8a4dc74)), closes [#14626](https://github.com/ionic-team/ionic/issues/14626)
+* **angular:** fix ngModel accessor ([fab8b60](https://github.com/ionic-team/ionic/commit/fab8b60))
 
 
 ### Features
