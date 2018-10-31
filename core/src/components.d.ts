@@ -4586,20 +4586,12 @@ export namespace Components {
     */
     'getTab': (tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>;
     /**
-    * A unique name for the tabs.
-    */
-    'name'?: string;
-    /**
     * Index or the Tab instance, of the tab to select.
     */
     'select': (tab: string | HTMLIonTabElement) => Promise<boolean>;
     'setRouteId': (id: string) => Promise<RouteWrite>;
   }
   interface IonTabsAttributes extends StencilHTMLAttributes {
-    /**
-    * A unique name for the tabs.
-    */
-    'name'?: string;
     /**
     * Emitted when the tab changes.
     */

@@ -1,13 +1,11 @@
 # ion-tabs
 
-Tabs are a top level navigation component for created multiple stacked navs.
+Tabs are a top level navigation component to implement a tab-based navigation.
 The component is a container of individual [Tab](../Tab/) components.
 
-`ion-tabs` is a styleless component that works as a router outlet in
-order to handle navigation. When the user does not provide a `ion-tab-bar` in their markup, `ion-tabs`, by default provides one. Notice that `ion-tab-bar` is the UI component that can be used to switch between tabs.
-
-In order to customize the style of the `ion-tab-bar`, it should be included in the user's markup as
-direct children of `ion-tabs`, like this:
+`ion-tabs` is a styleless component that works as a router outlet in order to handle navigation.
+This component does not provide any UI feedback or mechanism to switch between tabs.
+In order to do so, an `ion-tab-bar` should be provided as a direct child of `ion-tabs`:
 
 ```html
 <ion-tabs>
@@ -30,14 +28,40 @@ direct children of `ion-tabs`, like this:
 </ion-tabs>
 ```
 
+Note that both `ion-tabs` and `ion-tab-bar` can be used as standalone elements. They don’t depend on each other to work, but they are usually used together in order to implement a tab-based navigation that feels like a native app.
+
+## The "tab" property
+
+Each `ion-tab-button` will activate one of the tabs when tapped.
+In order to link the button to the `ion-tab` container, a matching `tab` property must be used.
+
+```html
+<ion-tab tab="settings">
+[...]
+<ion-tab-button tab="settings">
+```
+
+This `ion-tab-button` and `ion-tab` are now linked by the common `tab` property.
+
+The `tab` property identifies each tab, and it has to be unique within the scope of the same `ion-tabs`. It's very important to set the same property to `ion-tab` and `ion-tab-button`, even if you are only using one. e.g. You could use the `ion-tab-bar` without using `ion-tabs`. In this case you should still give each `ion-tab` the property of `tab="something"`.
+
+### Router integration
+
+When the ionic's router (`ion-router`) is used, the `tab` property matches the "component" of `ion-route`:
+
+The following route within the scope of a `ion-tabs` outlet:
+
+```html
+<ion-route path="/settings-page" component="settings"></ion-route>
+```
+
+Would match the following tab:
+
+```html
+<ion-tab tab="settings" component="settings-component"></ion-tab>
+```
+
 <!-- Auto Generated Below -->
-
-
-## Properties
-
-| Property | Attribute | Description                 | Type                  |
-| -------- | --------- | --------------------------- | --------------------- |
-| `name`   | `name`    | A unique name for the tabs. | `string \| undefined` |
 
 
 ## Events
