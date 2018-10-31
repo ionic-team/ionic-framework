@@ -55,10 +55,9 @@ input {
   contain: strict;
 }
 
-.checkbox-inner {
-  border-color: var(--checkmark-color);
-
-  opacity: 0;
+.checkbox-icon path {
+  fill: none;
+  stroke: var(--checkmark-color);
 }
 
 // Checked Checkbox
@@ -68,10 +67,6 @@ input {
   border-color: var(--border-color-checked);
 
   background: var(--background-checked);
-}
-
-:host(.checkbox-checked) .checkbox-inner {
-  opacity: 1;
 }
 
 // Disabled Checkbox
