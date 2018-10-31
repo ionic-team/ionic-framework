@@ -47,12 +47,6 @@ $button-md-letter-spacing:                              0.06em;
 /// @prop - Box shadow of the button
 $button-md-box-shadow:                                  0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12) !default;
 
-/// @prop - Duration of the transition of the button
-$button-md-transition-duration:                         300ms !default;
-
-/// @prop - Speed curve of the transition of the button
-$button-md-transition-timing-function:                  cubic-bezier(.4, 0, .2, 1) !default;
-
 /// @prop - Opacity of the activated button
 $button-md-opacity-activated:                           1 !default;
 
