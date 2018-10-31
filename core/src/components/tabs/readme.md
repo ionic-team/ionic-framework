@@ -33,13 +33,6 @@ direct children of `ion-tabs`, like this:
 <!-- Auto Generated Below -->
 
 
-## Properties
-
-| Property | Attribute | Description                 | Type                  |
-| -------- | --------- | --------------------------- | --------------------- |
-| `name`   | `name`    | A unique name for the tabs. | `string \| undefined` |
-
-
 ## Events
 
 | Event              | Detail                   | Description                                                                |
