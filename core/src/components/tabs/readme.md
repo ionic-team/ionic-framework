@@ -44,7 +44,7 @@ In order to link the button to the `ion-tab` container, a matching `tab` propert
 This `ion-tab-button` and `ion-tab` are now linked by the common `tab` property.
 
 The `tab` property identifies each tab, and it has to be unique within the scope of the same `ion-tabs`.
-It's very important to set the same property to `ion-tab` and `ion-tab-button`, even if used in standlone mode.
+It's very important to set the same property to `ion-tab` and `ion-tab-button`, even if used in standalone mode.
 
 
 ### Router integration
