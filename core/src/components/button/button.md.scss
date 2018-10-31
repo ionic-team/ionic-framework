@@ -15,9 +15,9 @@
   --padding-start: #{$button-md-padding-start};
   --padding-end: #{$button-md-padding-end};
   --height: #{$button-md-height};
-  --transition: #{box-shadow $button-md-transition-duration $button-md-transition-timing-function,
-                  background-color $button-md-transition-duration $button-md-transition-timing-function,
-                  color $button-md-transition-duration $button-md-transition-timing-function};
+  --transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),
+                background-color 15ms linear,
+                color 15ms linear;
 
   font-size: #{$button-md-font-size};
   font-weight: #{$button-md-font-weight};
