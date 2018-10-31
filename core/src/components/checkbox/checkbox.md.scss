@@ -11,7 +11,7 @@
   --border-radius: calc(var(--size) * .125);
   --border-width: #{$checkbox-md-icon-border-width};
   --border-style: #{$checkbox-md-icon-border-style};
-  --border-color: rgba(0, 0, 0, .54);
+  --border-color: #{$checkbox-md-icon-border-color-off};
 
   // Background
   --background: #{$checkbox-md-icon-background-color-off};
@@ -26,11 +26,13 @@
   stroke-dashoffset: 30;
   stroke-width: 3px;
 
-  transition: stroke-dashoffset 90ms linear 45ms;
+  transition-duration: 0ms;
 }
 
 :host(.checkbox-checked) .checkbox-icon path {
   stroke-dashoffset: 0;
+
+  transition: stroke-dashoffset 90ms linear 45ms;
 }
 
 
