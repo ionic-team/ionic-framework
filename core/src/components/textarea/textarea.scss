@@ -41,6 +41,8 @@
   color: var(--color);
 
   font-family: $font-family-base;
+
+  z-index: $z-index-item-input;
 }
 
 :host(.ion-color) {

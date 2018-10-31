@@ -24,6 +24,7 @@
   position: relative;
 
   user-select: none;
+  z-index: $z-index-item-input;
 }
 
 :host(.ion-color) {
