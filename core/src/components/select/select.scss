@@ -17,7 +17,6 @@
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
   display: flex;
-
   position: relative;
 
   color: var(--color);
@@ -25,6 +24,7 @@
   font-family: $font-family-base;
 
   overflow: hidden;
+  z-index: $z-index-item-input;
 }
 
 :host(.in-item) {
