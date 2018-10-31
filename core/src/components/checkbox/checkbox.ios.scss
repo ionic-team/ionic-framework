@@ -69,14 +69,14 @@
 // iOS Checkbox Within An Item
 // -----------------------------------------
 
-// :host-context(.item)
 :host(.in-item) {
-  @include margin($checkbox-ios-item-start-margin-top, $checkbox-ios-item-start-margin-end, $checkbox-ios-item-start-margin-bottom, $checkbox-ios-item-start-margin-start);
+  // end position by default
+  @include margin($checkbox-ios-item-end-margin-top, $checkbox-ios-item-end-margin-end, $checkbox-ios-item-end-margin-bottom, $checkbox-ios-item-end-margin-start);
 
   display: block;
   position: static;
 }
 
-:host(.in-item[slot="end"]) {
-  @include margin($checkbox-ios-item-end-margin-top, $checkbox-ios-item-end-margin-end, $checkbox-ios-item-end-margin-bottom, $checkbox-ios-item-end-margin-start);
+:host(.in-item[slot="start"]) {
+  @include margin($checkbox-ios-item-start-margin-top, $checkbox-ios-item-start-margin-end, $checkbox-ios-item-start-margin-bottom, $checkbox-ios-item-start-margin-start);
 }
