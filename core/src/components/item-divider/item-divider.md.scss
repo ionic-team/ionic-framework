@@ -15,7 +15,7 @@
 }
 
 .item-divider-inner {
-  @include padding-horizontal($item-md-divider-padding-start, $item-md-divider-padding-end);
+  @include padding-horizontal(null, $item-md-divider-padding-end);
 }
 
 

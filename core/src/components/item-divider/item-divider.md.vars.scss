@@ -17,7 +17,7 @@ $item-md-divider-font-size:          14px !default;
 $item-md-divider-border-bottom:      1px solid $item-md-border-color !default;
 
 /// @prop - Padding start for the divider
-$item-md-divider-padding-start:      null !default;
+$item-md-divider-padding-start:      $item-md-padding-start !default;
 
 /// @prop - Padding end for the divider
 $item-md-divider-padding-end:        0 !default;
