@@ -59,7 +59,6 @@ import {
   TabbarChangedDetail,
   TabbarClickDetail,
   TabbarLayout,
-  TabbarPlacement,
   TextFieldTypes,
   TextInputChangeEvent,
   ToastOptions,
@@ -4441,17 +4440,13 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * Set the layout of the text and icon in the tabbar.
+    * Set the layout of the text and icon in the tab bar.
     */
     'layout': TabbarLayout;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
     'mode': Mode;
-    /**
-    * Set the position of the tabbar, relative to the content.
-    */
-    'placement': TabbarPlacement;
     /**
     * The selected tab component
     */
@@ -4467,7 +4462,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * Set the layout of the text and icon in the tabbar.
+    * Set the layout of the text and icon in the tab bar.
     */
     'layout'?: TabbarLayout;
     /**
@@ -4475,10 +4470,6 @@ export namespace Components {
     */
     'mode'?: Mode;
     'onIonTabBarChanged'?: (event: CustomEvent<TabbarChangedDetail>) => void;
-    /**
-    * Set the position of the tabbar, relative to the content.
-    */
-    'placement'?: TabbarPlacement;
     /**
     * The selected tab component
     */
@@ -4586,20 +4577,12 @@ export namespace Components {
     */
     'getTab': (tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>;
     /**
-    * A unique name for the tabs.
-    */
-    'name'?: string;
-    /**
     * Index or the Tab instance, of the tab to select.
     */
     'select': (tab: string | HTMLIonTabElement) => Promise<boolean>;
     'setRouteId': (id: string) => Promise<RouteWrite>;
   }
   interface IonTabsAttributes extends StencilHTMLAttributes {
-    /**
-    * A unique name for the tabs.
-    */
-    'name'?: string;
     /**
     * Emitted when the tab changes.
     */

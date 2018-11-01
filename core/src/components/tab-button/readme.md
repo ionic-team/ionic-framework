@@ -1,25 +1,8 @@
 # ion-tab-bar
 
-Tab bar is the UI component that implements the array of button of `ion-tabs`. It's provided by default when `ion-tabs` is used, though, this "implicit" tab bar can not be customized.
+Tab bar is a UI component that hold the array of [tab buttons](../tab-button). The Tab bar can provide a global setting for different tab/icon layouts as well as different positions for the bar itself.
 
-In order to have a custom tab bar, it should be provided in user's markup as direct children of `ion-tabs`:
-
-```html
-<style>
-  ion-tab-bar {
-    font-size: 20px;
-  }
-</style>
-
-<ion-tabs>
-  <!-- User tabs  -->
-  <ion-tab></ion-tab>
-  <ion-tab></ion-tab>
-
-  <!-- User provided ion-tab-bar that can be customized -->
-  <ion-tab-bar color="dark" layout="icon-only">
-</ion-tabs>
-```
+See the [Tabs API Docs](../Tabs/) for more details on configuring Tabs.
 
 
 <!-- Auto Generated Below -->

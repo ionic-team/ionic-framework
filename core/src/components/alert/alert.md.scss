@@ -60,6 +60,10 @@
   @include padding($alert-md-message-empty-padding-top, $alert-md-message-empty-padding-end, $alert-md-message-empty-padding-bottom, $alert-md-message-empty-padding-start);
 }
 
+.alert-head + .alert-message {
+  padding-top: 0;
+}
+
 
 // Material Design Alert Input
 // --------------------------------------------------
@@ -255,7 +259,7 @@
 // --------------------------------------------------
 
 .alert-button-group {
-  @include padding($alert-md-button-group-padding-top, $alert-md-button-group-padding-end, $alert-md-button-group-padding-bottom, $alert-md-button-group-padding-start);
+  @include padding(8px);
 
   box-sizing: border-box;
 

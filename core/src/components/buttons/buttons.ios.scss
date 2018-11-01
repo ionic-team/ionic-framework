@@ -24,8 +24,8 @@
 // --------------------------------------------------
 
 :host-context(.ion-color)::slotted(*) .button {
-  --color: currentColor;
-  --color-activated: currentColor;
+  --color: initial;
+  --color-activated: initial;
 }
 
 
