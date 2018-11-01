@@ -21,12 +21,12 @@ Licensed under MIT
 
 ## Properties
 
-| Property    | Attribute   | Description                                                                                  | Type            |
-| ----------- | ----------- | -------------------------------------------------------------------------------------------- | --------------- |
-| `mode`      | `mode`      | The mode determines which platform styles to use.                                            | `"ios" \| "md"` |
-| `options`   | --          | Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options | `any`           |
-| `pager`     | `pager`     | If `true`, show the pagination. Defaults to `false`.                                         | `boolean`       |
-| `scrollbar` | `scrollbar` | If `true`, show the scrollbar. Defaults to `false`.                                          | `boolean`       |
+| Property    | Attribute   | Description                                                                                  | Type            | Default     |
+| ----------- | ----------- | -------------------------------------------------------------------------------------------- | --------------- | ----------- |
+| `mode`      | `mode`      | The mode determines which platform styles to use.                                            | `"ios" \| "md"` | `undefined` |
+| `options`   | --          | Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options | `any`           | `{}`        |
+| `pager`     | `pager`     | If `true`, show the pagination. Defaults to `false`.                                         | `boolean`       | `false`     |
+| `scrollbar` | `scrollbar` | If `true`, show the scrollbar. Defaults to `false`.                                          | `boolean`       | `false`     |
 
 
 ## Events

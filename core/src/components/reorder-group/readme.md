@@ -51,9 +51,9 @@ This utility is really handy when
 
 ## Properties
 
-| Property   | Attribute  | Description                                                | Type      |
-| ---------- | ---------- | ---------------------------------------------------------- | --------- |
-| `disabled` | `disabled` | If `true`, the reorder will be hidden. Defaults to `true`. | `boolean` |
+| Property   | Attribute  | Description                                                | Type      | Default |
+| ---------- | ---------- | ---------------------------------------------------------- | --------- | ------- |
+| `disabled` | `disabled` | If `true`, the reorder will be hidden. Defaults to `true`. | `boolean` | `true`  |
 
 
 ## Events
