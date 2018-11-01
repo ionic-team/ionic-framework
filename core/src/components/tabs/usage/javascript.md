@@ -9,7 +9,7 @@
   <ion-tab tab="tab-map" component="page-map"></ion-tab>
   <ion-tab tab="tab-about" component="page-about"></ion-tab>
 
-  <ion-tab-bar>
+  <ion-tab-bar slot="bottom">
     <ion-tab-button tab="tab-schedule">
       <ion-icon name="calendar"></ion-icon>
       <ion-label>Schedule</ion-label>

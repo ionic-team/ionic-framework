@@ -865,14 +865,14 @@ export class Tab {
 }
 
 export declare interface TabBar extends StencilComponents<'IonTabBar'> {}
-@Component({ selector: 'ion-tab-bar', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'layout', 'placement', 'selectedTab', 'translucent'] })
+@Component({ selector: 'ion-tab-bar', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'layout', 'selectedTab', 'translucent'] })
 export class TabBar {
   ionTabBarChanged: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
     const el = r.nativeElement;
-    proxyInputs(this, el, ['mode', 'color', 'layout', 'placement', 'selectedTab', 'translucent']);
+    proxyInputs(this, el, ['mode', 'color', 'layout', 'selectedTab', 'translucent']);
     proxyOutputs(this, el, ['ionTabBarChanged']);
   }
 }
