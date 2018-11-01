@@ -1,5 +1,5 @@
 @import "../../themes/ionic.globals.md";
-@import "../item/item.vars";
+@import "../item/item.md.vars";
 
 // Material Design Alert
 // --------------------------------------------------
@@ -329,4 +329,4 @@ $alert-md-checkbox-label-text-color:          $text-color-step-150 !default;
 $alert-md-checkbox-label-font-size:           16px !default;
 
 /// @prop - Height of the tappable inputs in the checkbox alert
-$alert-md-tappable-height:                    $item-min-height !default;
+$alert-md-tappable-height:                    $item-md-min-height !default;

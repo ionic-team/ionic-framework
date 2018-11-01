@@ -5,7 +5,8 @@
 // --------------------------------------------------
 
 .list-md {
-  @include margin(-1px, $list-md-margin-end, $list-md-margin-bottom, $list-md-margin-start);
+  @include margin($list-md-margin-top, $list-md-margin-end, $list-md-margin-bottom, $list-md-margin-start);
+  @include padding($list-md-padding-top, $list-md-padding-end, $list-md-padding-bottom, $list-md-padding-start);
 
   background: $item-md-background;
 }

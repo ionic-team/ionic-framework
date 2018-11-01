@@ -11,22 +11,19 @@ $label-md-text-color:                 $text-color-step-600 !default;
 $label-md-text-color-focused:         ion-color(primary, base) !default;
 
 /// @prop - Margin top of the label
-$label-md-margin-top:                 $item-md-padding-top !default;
+$label-md-margin-top:                 13px !default;
 
 /// @prop - Margin end of the label
-$label-md-margin-end:                 ($item-md-padding-end / 2) !default;
+$label-md-margin-end:                 0 !default;
 
 /// @prop - Margin bottom of the label
-$label-md-margin-bottom:              $item-md-padding-bottom !default;
+$label-md-margin-bottom:              10px !default;
 
 /// @prop - Margin start of the label
 $label-md-margin-start:               0 !default;
-
-/// @prop - Font size of the label when the text wraps
-$label-md-text-wrap-font-size:        14px !default;
 
 /// @prop - Line height of the label when the text wraps
 $label-md-text-wrap-line-height:      1.5 !default;
 
 /// @prop - Color of the item paragraph
-$item-md-paragraph-text-color:              $text-color-step-400 !default;
+$item-md-paragraph-text-color:        $text-color-step-400 !default;
