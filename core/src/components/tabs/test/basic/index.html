@@ -8,6 +8,12 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../dist/ionic.js"></script>
+
+  <style>
+  :root {
+    --ion-safe-area-bottom: 40px;
+  }
+  </style>
 </head>
 
 <body>
@@ -63,7 +69,7 @@
 
       <ion-tab tab="tab-four" component="page-one"></ion-tab>
 
-      <ion-tab-bar>
+      <ion-tab-bar slot="bottom">
         <ion-tab-button href="" tab="tab-one" class="e2eTabOneButton">
           <ion-label>Tab One</ion-label>
           <ion-icon name="star"></ion-icon>

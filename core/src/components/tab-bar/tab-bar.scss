@@ -10,7 +10,6 @@
 
   align-items: center;
   justify-content: center;
-  order: 1;
 
   width: auto;
 
@@ -22,7 +21,9 @@
   contain: strict;
   user-select: none;
   z-index: $z-index-toolbar;
-  box-sizing: content-box;
+
+  /* stylelint-disable-next-line declaration-no-important */
+  box-sizing: content-box !important;
 }
 
 :host(.ion-color) {
@@ -35,13 +36,11 @@
   --background-focused: #{current-color(shade)};
 }
 
-:host(.placement-top) {
-  order: -1;
-
+:host([slot="top"]) {
   border-bottom: var(--border);
 }
 
-:host(.placement-bottom) {
+:host([slot="bottom"]) {
   padding-bottom: var(--ion-safe-area-bottom, 0);
 
   border-top: var(--border);
