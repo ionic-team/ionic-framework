@@ -73,14 +73,15 @@
 // -----------------------------------------
 
 :host(.in-item) {
-  @include margin($checkbox-md-item-start-margin-top, $checkbox-md-item-start-margin-end, $checkbox-md-item-start-margin-bottom, $checkbox-md-item-start-margin-start);
+  // end position by default
+  @include margin($checkbox-md-item-end-margin-top, $checkbox-md-item-end-margin-end, $checkbox-md-item-end-margin-bottom, $checkbox-md-item-end-margin-start);
 
   display: block;
   position: static;
 }
 
-:host(.in-item[slot="end"]) {
-  @include margin($checkbox-md-item-end-margin-top, $checkbox-md-item-end-margin-end, $checkbox-md-item-end-margin-bottom, $checkbox-md-item-end-margin-start);
+:host(.in-item[slot="start"]) {
+  @include margin($checkbox-md-item-start-margin-top, $checkbox-md-item-start-margin-end, $checkbox-md-item-start-margin-bottom, $checkbox-md-item-start-margin-start);
 }
 
 // REVIEW

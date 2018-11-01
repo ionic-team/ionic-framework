@@ -25,6 +25,7 @@
   font-family: $font-family-base;
 
   user-select: none;
+  z-index: $z-index-item-input;
 }
 
 ::slotted(ion-label) {

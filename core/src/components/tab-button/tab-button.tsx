@@ -82,7 +82,8 @@ export class TabButton implements ComponentInterface {
 
   componentWillLoad() {
     if (this.tab === undefined) {
-      console.warn('ion-tab-button needs a tab, so it can be selected');
+      console.warn(`ion-tab-button needs a tab name, so it can be selected.
+  <ion-tab-button tab="TAB_NAME">`);
     }
   }
 

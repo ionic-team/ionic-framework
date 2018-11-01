@@ -19,21 +19,15 @@ export class RadioValueAccessor implements ControlValueAccessor {
 
   onChange: (value: any) => void;
   onTouched: () => void;
+  private lastValue: any;
 
   constructor(private element: ElementRef) {
     this.onChange = () => {/**/};
     this.onTouched = () => {/**/};
   }
 
-  /**
-   * Whether onChange should be mutted (not be fired). Will be true only when writeValue was called, which
-   * means that value changed inside angular form (e.g. calling setValue on a control).
-   */
-  private muteOnChange = false;
-
   writeValue(value: any) {
-    this.muteOnChange = true;
-    this.element.nativeElement.checked = this.value = value;
+    this.element.nativeElement.checked = this.lastValue = this.value = value;
 
     requestAnimationFrame(() => {
       setIonicClasses(this.element);
@@ -42,11 +36,10 @@ export class RadioValueAccessor implements ControlValueAccessor {
 
   @HostListener('ionSelect', ['$event.target.checked'])
   _handleIonSelect(value: any) {
-    if (!this.muteOnChange) {
+    if (value !== this.lastValue) {
+      this.lastValue = value;
       this.onChange(value);
     }
-
-    this.muteOnChange = false;
 
     requestAnimationFrame(() => {
       setIonicClasses(this.element);

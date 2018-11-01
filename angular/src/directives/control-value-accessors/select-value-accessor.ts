@@ -23,16 +23,10 @@ export class SelectValueAccessor implements ControlValueAccessor {
 
   onChange: (value: any) => void;
   onTouched: () => void;
-
-  /**
-   * Whether onChange should be mutted (not be fired). Will be true only when writeValue was called, which
-   * means that value changed inside angular form (e.g. calling setValue on a control).
-   */
-  private muteOnChange = false;
+  private lastValue: any;
 
   writeValue(value: any) {
-    this.muteOnChange = true;
-    this.element.nativeElement.value = value;
+    this.element.nativeElement.value = this.lastValue = value;
 
     requestAnimationFrame(() => {
       setIonicClasses(this.element);
@@ -41,11 +35,10 @@ export class SelectValueAccessor implements ControlValueAccessor {
 
   @HostListener('ionChange', ['$event.target.value'])
   _handleChangeEvent(value: any) {
-    if (!this.muteOnChange) {
+    if (value !== this.lastValue) {
+      this.lastValue = value;
       this.onChange(value);
     }
-
-    this.muteOnChange = false;
 
     requestAnimationFrame(() => {
       setIonicClasses(this.element);
