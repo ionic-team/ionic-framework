@@ -42,8 +42,9 @@ Checkboxes allow the selection of multiple options from a set of options. They a
 | `--border-style`         | Border style of the checkbox icon              |
 | `--border-width`         | Border width of the checkbox icon              |
 | `--checkmark-color`      | Color of the checkbox checkmark when checked   |
-| `--size`                 | Size of the checkbox icon                      |
+| `--height`               | Height of the checkbox icon                    |
 | `--transition`           | Transition of the checkbox icon                |
+| `--width`                | Width of the checkbox icon                     |
 
 
 ----------------------------------------------
