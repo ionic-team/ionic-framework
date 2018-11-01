@@ -196,10 +196,11 @@ export class Tabs implements NavOutlet {
 
   render() {
     return [
+      <slot name="top"></slot>,
       <div class="tabs-inner">
         <slot></slot>
       </div>,
-      <slot name="tabbar"></slot>
+      <slot name="bottom"></slot>
     ];
   }
 }
