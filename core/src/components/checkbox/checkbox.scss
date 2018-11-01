@@ -57,8 +57,10 @@ input {
   contain: strict;
 }
 
-.checkbox-inner {
-  border-color: var(--checkmark-color);
+.checkbox-icon path {
+  fill: none;
+  stroke: var(--checkmark-color);
+  stroke-width: 1;
 
   opacity: 0;
 }
@@ -72,7 +74,7 @@ input {
   background: var(--background-checked);
 }
 
-:host(.checkbox-checked) .checkbox-inner {
+:host(.checkbox-checked) .checkbox-icon path {
   opacity: 1;
 }
 

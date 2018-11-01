@@ -18,23 +18,9 @@
   --transition: #{background $checkbox-md-transition-duration $checkbox-md-transition-easing};
 }
 
-// Material Design Checkbox Inner Checkmark: Checked
-// -----------------------------------------
 
-:host(.checkbox-checked) .checkbox-inner {
-  @include position(calc(var(--size) * .05), null, null, calc(var(--size) * .3));
-
-  position: absolute;
-
-  width: calc(var(--size) * .3125);
-  height: calc(var(--size) * .625);
-
-  transform: rotate(45deg);
-
-  border-width: calc(var(--size) * .125);
-  border-top-width: 0;
-  border-left-width: 0;
-  border-style: $checkbox-md-icon-checkmark-style;
+.checkbox-icon path {
+  stroke-width: 3;
 }
 
 
