@@ -119,11 +119,8 @@ $item-md-icon-end-slot-margin-end:          null !default;
 /// @prop - Color for an icon in the start/end slot
 $item-md-icon-slot-color:                   rgba(var(--ion-text-color-rgb, $text-color-rgb), 0.54) !default;
 
-/// @prop - Height of an icon in the start/end slot
-$item-md-icon-slot-height:                  24px !default;
-
-/// @prop - Width of an icon in the start/end slot
-$item-md-icon-slot-width:                   $item-md-icon-slot-height !default;
+/// @prop - Font size of an icon in the start/end slot
+$item-md-icon-slot-font-size:                  24px !default;
 
 
 // Label Slots

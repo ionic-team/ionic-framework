@@ -35,9 +35,7 @@
 // --------------------------------------------------
 
 ::slotted(ion-icon) {
-  width: $item-md-icon-slot-width;
-
-  height: $item-md-icon-slot-height;
+  font-size: $item-md-icon-slot-font-size;
 
   color: $item-md-icon-slot-color;
 }
