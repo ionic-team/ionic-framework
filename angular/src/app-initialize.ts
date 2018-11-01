@@ -14,6 +14,7 @@ export function appInitialize(config: Config) {
       const Ionic = win.Ionic = win.Ionic || {};
 
       Ionic.config = config;
+      Ionic.asyncQueue = false;
 
       Ionic.ael = (elm, eventName, cb, opts) => {
         if (elm.__zone_symbol__addEventListener && skipZone(eventName)) {
@@ -45,12 +46,10 @@ export function appInitialize(config: Config) {
   };
 }
 
-const SKIP_ZONE = [
-  'scroll',
-  'touchmove',
-  'mousemove'
+const PASS_ZONE = [
+  'click',
 ];
 
 function skipZone(eventName: string) {
-  return SKIP_ZONE.indexOf(eventName) >= 0;
+  return PASS_ZONE.indexOf(eventName) < 0;
 }

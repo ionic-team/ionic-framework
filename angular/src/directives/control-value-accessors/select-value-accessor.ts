@@ -23,9 +23,10 @@ export class SelectValueAccessor implements ControlValueAccessor {
 
   onChange: (value: any) => void;
   onTouched: () => void;
+  private lastValue: any;
 
   writeValue(value: any) {
-    this.element.nativeElement.value = value;
+    this.element.nativeElement.value = this.lastValue = value;
 
     requestAnimationFrame(() => {
       setIonicClasses(this.element);
@@ -34,7 +35,10 @@ export class SelectValueAccessor implements ControlValueAccessor {
 
   @HostListener('ionChange', ['$event.target.value'])
   _handleChangeEvent(value: any) {
-    this.onChange(value);
+    if (value !== this.lastValue) {
+      this.lastValue = value;
+      this.onChange(value);
+    }
 
     requestAnimationFrame(() => {
       setIonicClasses(this.element);

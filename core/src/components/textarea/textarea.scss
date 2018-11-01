@@ -18,8 +18,8 @@
    * @prop --padding-start: Start padding of the textarea
    */
   --background: initial;
-  --color: currentColor;
-  --placeholder-color: currentColor;
+  --color: initial;
+  --placeholder-color: initial;
   --placeholder-font-style: inherit;
   --placeholder-font-weight: inherit;
   --placeholder-opacity: .5;
@@ -41,6 +41,8 @@
   color: var(--color);
 
   font-family: $font-family-base;
+
+  z-index: $z-index-item-input;
 }
 
 :host(.ion-color) {

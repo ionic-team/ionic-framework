@@ -45,7 +45,7 @@
 
 :host(.ion-color)::slotted(*) ion-chip-icon,
 :host(.ion-color)::slotted(*) ion-chip-button {
-  --color: currentColor;
+  --color: initial;
 }
 
 ::slotted(*) ion-label {

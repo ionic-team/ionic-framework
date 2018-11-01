@@ -23,15 +23,19 @@ export class BooleanValueAccessor implements ControlValueAccessor {
 
   onChange: (value: any) => void;
   onTouched: () => void;
+  private lastValue: any;
 
   writeValue(value: any) {
-    this.element.nativeElement.checked = value;
+    this.element.nativeElement.checked = this.lastValue = value;
     setIonicClasses(this.element);
   }
 
   @HostListener('ionChange', ['$event.target.checked'])
   _handleIonChange(value: any) {
-    this.onChange(value);
+    if (value !== this.lastValue) {
+      this.lastValue = value;
+      this.onChange(value);
+    }
 
     requestAnimationFrame(() => {
       setIonicClasses(this.element);

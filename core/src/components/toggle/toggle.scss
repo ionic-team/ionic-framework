@@ -21,6 +21,7 @@
   cursor: pointer;
   touch-action: none;
   user-select: none;
+  z-index: $z-index-item-input;
 }
 
 :host(.toggle-key) input {
