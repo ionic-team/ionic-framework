@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Prop } from '@stencil/core';
 
-import { Config } from '../../interface';
+import { Config, SpinnerTypes } from '../../interface';
 
 @Component({
   tag: 'ion-refresher-content'
@@ -22,7 +22,7 @@ export class RefresherContent implements ComponentInterface {
   /**
    * An animated SVG spinner that shows when refreshing begins
    */
-  @Prop({ mutable: true }) refreshingSpinner?: string;
+  @Prop({ mutable: true }) refreshingSpinner?: SpinnerTypes;
 
   /**
    * The text you want to display when performing a refresh

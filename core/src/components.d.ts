@@ -127,7 +127,7 @@ export namespace Components {
     */
     'leaveAnimation'?: AnimationBuilder;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -186,7 +186,7 @@ export namespace Components {
     */
     'leaveAnimation'?: AnimationBuilder;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -286,7 +286,7 @@ export namespace Components {
     */
     'message'?: string;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -353,7 +353,7 @@ export namespace Components {
     */
     'message'?: string;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -448,7 +448,7 @@ export namespace Components {
     */
     'icon'?: string | null;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -470,7 +470,7 @@ export namespace Components {
     */
     'icon'?: string | null;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -518,7 +518,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
   }
@@ -528,14 +528,14 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
   }
 
   interface IonButton {
     /**
-    * The type of button. Possible values are: `"button"`, `"bar-button"`.
+    * The type of button.
     */
     'buttonType': string;
     /**
@@ -559,7 +559,7 @@ export namespace Components {
     */
     'href'?: string;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -567,11 +567,11 @@ export namespace Components {
     */
     'routerDirection'?: RouterDirection;
     /**
-    * The button shape. Possible values are: `"round"`.
+    * The button shape.
     */
     'shape'?: 'round';
     /**
-    * The button size. Possible values are: `"small"`, `"default"`, `"large"`.
+    * The button size.
     */
     'size'?: 'small' | 'default' | 'large';
     /**
@@ -579,13 +579,13 @@ export namespace Components {
     */
     'strong': boolean;
     /**
-    * The type of the button. Possible values are: `"submit"`, `"reset"` and `"button"`. Default value is: `"button"`
+    * The type of the button. Default value is: `"button"`
     */
     'type': 'submit' | 'reset' | 'button';
   }
   interface IonButtonAttributes extends StencilHTMLAttributes {
     /**
-    * The type of button. Possible values are: `"button"`, `"bar-button"`.
+    * The type of button.
     */
     'buttonType'?: string;
     /**
@@ -609,7 +609,7 @@ export namespace Components {
     */
     'href'?: string;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -625,11 +625,11 @@ export namespace Components {
     */
     'routerDirection'?: RouterDirection;
     /**
-    * The button shape. Possible values are: `"round"`.
+    * The button shape.
     */
     'shape'?: 'round';
     /**
-    * The button size. Possible values are: `"small"`, `"default"`, `"large"`.
+    * The button size.
     */
     'size'?: 'small' | 'default' | 'large';
     /**
@@ -637,7 +637,7 @@ export namespace Components {
     */
     'strong'?: boolean;
     /**
-    * The type of the button. Possible values are: `"submit"`, `"reset"` and `"button"`. Default value is: `"button"`
+    * The type of the button. Default value is: `"button"`
     */
     'type'?: 'submit' | 'reset' | 'button';
   }
@@ -647,13 +647,13 @@ export namespace Components {
 
   interface IonCardContent {
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
   }
   interface IonCardContentAttributes extends StencilHTMLAttributes {
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
   }
@@ -664,7 +664,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -678,7 +678,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -693,7 +693,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
   }
@@ -703,7 +703,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
   }
@@ -714,7 +714,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
   }
@@ -724,7 +724,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
   }
@@ -735,7 +735,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
   }
@@ -745,7 +745,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
   }
@@ -764,7 +764,7 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -790,7 +790,7 @@ export namespace Components {
     */
     'disabled'?: boolean;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -837,7 +837,7 @@ export namespace Components {
     */
     'href'?: string;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
   }
@@ -859,7 +859,7 @@ export namespace Components {
     */
     'href'?: string;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
   }
@@ -874,7 +874,7 @@ export namespace Components {
     */
     'fill': 'clear' | 'solid';
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -896,7 +896,7 @@ export namespace Components {
     */
     'fill'?: 'clear' | 'solid';
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -915,7 +915,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
   }
@@ -925,7 +925,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
   }
@@ -1258,7 +1258,7 @@ export namespace Components {
     */
     'minuteValues'?: number[] | number | string;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -1348,7 +1348,7 @@ export namespace Components {
     */
     'minuteValues'?: number[] | number | string;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -1419,7 +1419,7 @@ export namespace Components {
     */
     'href'?: string;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -1435,7 +1435,7 @@ export namespace Components {
     */
     'translucent': boolean;
     /**
-    * The type of the button. Possible values are: `"submit"`, `"reset"` and `"button"`. Default value is: `"button"`
+    * The type of the button. Default value is: `"button"`
     */
     'type': 'submit' | 'reset' | 'button';
   }
@@ -1457,7 +1457,7 @@ export namespace Components {
     */
     'href'?: string;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -1481,7 +1481,7 @@ export namespace Components {
     */
     'translucent'?: boolean;
     /**
-    * The type of the button. Possible values are: `"submit"`, `"reset"` and `"button"`. Default value is: `"button"`
+    * The type of the button. Default value is: `"button"`
     */
     'type'?: 'submit' | 'reset' | 'button';
   }
@@ -1521,11 +1521,11 @@ export namespace Components {
     */
     'edge': boolean;
     /**
-    * Where to align the fab horizontally in the viewport. Possible values are: `"center"`, `"start"`, `"end"`.
+    * Where to align the fab horizontally in the viewport.
     */
     'horizontal'?: 'start' | 'end' | 'center';
     /**
-    * Where to align the fab vertically in the viewport. Possible values are: `"top"`, `"center"`, `"bottom"`.
+    * Where to align the fab vertically in the viewport.
     */
     'vertical'?: 'top' | 'bottom' | 'center';
   }
@@ -1539,18 +1539,18 @@ export namespace Components {
     */
     'edge'?: boolean;
     /**
-    * Where to align the fab horizontally in the viewport. Possible values are: `"center"`, `"start"`, `"end"`.
+    * Where to align the fab horizontally in the viewport.
     */
     'horizontal'?: 'start' | 'end' | 'center';
     /**
-    * Where to align the fab vertically in the viewport. Possible values are: `"top"`, `"center"`, `"bottom"`.
+    * Where to align the fab vertically in the viewport.
     */
     'vertical'?: 'top' | 'bottom' | 'center';
   }
 
   interface IonFooter {
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -1560,7 +1560,7 @@ export namespace Components {
   }
   interface IonFooterAttributes extends StencilHTMLAttributes {
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -1584,7 +1584,7 @@ export namespace Components {
 
   interface IonHeader {
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -1594,7 +1594,7 @@ export namespace Components {
   }
   interface IonHeaderAttributes extends StencilHTMLAttributes {
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -1632,7 +1632,7 @@ export namespace Components {
     /**
     * An animated SVG spinner that shows while loading.
     */
-    'loadingSpinner'?: string;
+    'loadingSpinner'?: SpinnerTypes;
     /**
     * Optional text to display while loading.
     */
@@ -1642,7 +1642,7 @@ export namespace Components {
     /**
     * An animated SVG spinner that shows while loading.
     */
-    'loadingSpinner'?: string;
+    'loadingSpinner'?: SpinnerTypes;
     /**
     * Optional text to display while loading.
     */
@@ -1748,7 +1748,7 @@ export namespace Components {
     */
     'minlength'?: number;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -1796,7 +1796,7 @@ export namespace Components {
     */
     'step'?: string;
     /**
-    * The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
+    * The type of control to display. The default type is text.
     */
     'type': TextFieldTypes;
     /**
@@ -1866,7 +1866,7 @@ export namespace Components {
     */
     'minlength'?: number;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -1938,7 +1938,7 @@ export namespace Components {
     */
     'step'?: string;
     /**
-    * The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
+    * The type of control to display. The default type is text.
     */
     'type'?: TextFieldTypes;
     /**
@@ -1953,7 +1953,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
   }
@@ -1963,7 +1963,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
   }
@@ -1989,7 +1989,7 @@ export namespace Components {
     */
     'href'?: string;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
   }
@@ -2011,7 +2011,7 @@ export namespace Components {
     */
     'href'?: string;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
   }
@@ -2093,11 +2093,11 @@ export namespace Components {
     */
     'href'?: string;
     /**
-    * How the bottom border should be displayed on the item. Available options: `"full"`, `"inset"`, `"none"`.
+    * How the bottom border should be displayed on the item.
     */
     'lines'?: 'full' | 'inset' | 'none';
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -2105,7 +2105,7 @@ export namespace Components {
     */
     'routerDirection'?: RouterDirection;
     /**
-    * The type of the button. Only used when an `onclick` or `button` property is present. Possible values are: `"submit"`, `"reset"` and `"button"`. Default value is: `"button"`
+    * The type of the button. Only used when an `onclick` or `button` property is present. Default value is: `"button"`
     */
     'type': 'submit' | 'reset' | 'button';
   }
@@ -2135,11 +2135,11 @@ export namespace Components {
     */
     'href'?: string;
     /**
-    * How the bottom border should be displayed on the item. Available options: `"full"`, `"inset"`, `"none"`.
+    * How the bottom border should be displayed on the item.
     */
     'lines'?: 'full' | 'inset' | 'none';
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -2147,7 +2147,7 @@ export namespace Components {
     */
     'routerDirection'?: RouterDirection;
     /**
-    * The type of the button. Only used when an `onclick` or `button` property is present. Possible values are: `"submit"`, `"reset"` and `"button"`. Default value is: `"button"`
+    * The type of the button. Only used when an `onclick` or `button` property is present. Default value is: `"button"`
     */
     'type'?: 'submit' | 'reset' | 'button';
   }
@@ -2158,7 +2158,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -2172,7 +2172,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -2191,7 +2191,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
   }
@@ -2201,7 +2201,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
   }
@@ -2216,11 +2216,11 @@ export namespace Components {
     */
     'inset': boolean;
     /**
-    * How the bottom border should be displayed on all items. Available options: `"full"`, `"inset"`, `"none"`.
+    * How the bottom border should be displayed on all items.
     */
     'lines'?: 'full' | 'inset' | 'none';
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
   }
@@ -2230,11 +2230,11 @@ export namespace Components {
     */
     'inset'?: boolean;
     /**
-    * How the bottom border should be displayed on all items. Available options: `"full"`, `"inset"`, `"none"`.
+    * How the bottom border should be displayed on all items.
     */
     'lines'?: 'full' | 'inset' | 'none';
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
   }
@@ -2293,7 +2293,7 @@ export namespace Components {
     */
     'message'?: string;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -2314,9 +2314,9 @@ export namespace Components {
     */
     'showBackdrop': boolean;
     /**
-    * The name of the spinner to display. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`, `"circles"`, `"crescent"`.
+    * The name of the spinner to display.
     */
-    'spinner'?: string;
+    'spinner'?: SpinnerTypes | 'hide';
     /**
     * If `true`, the loading indicator will be translucent. Defaults to `false`.
     */
@@ -2356,7 +2356,7 @@ export namespace Components {
     */
     'message'?: string;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -2389,9 +2389,9 @@ export namespace Components {
     */
     'showBackdrop'?: boolean;
     /**
-    * The name of the spinner to display. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`, `"circles"`, `"crescent"`.
+    * The name of the spinner to display.
     */
-    'spinner'?: string;
+    'spinner'?: SpinnerTypes | 'hide';
     /**
     * If `true`, the loading indicator will be translucent. Defaults to `false`.
     */
@@ -2412,7 +2412,7 @@ export namespace Components {
     */
     'menu'?: string;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
   }
@@ -2430,7 +2430,7 @@ export namespace Components {
     */
     'menu'?: string;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
   }
@@ -2669,7 +2669,7 @@ export namespace Components {
     */
     'leaveAnimation'?: AnimationBuilder;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -2725,7 +2725,7 @@ export namespace Components {
     */
     'leaveAnimation'?: AnimationBuilder;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -2923,7 +2923,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
   }
@@ -2933,7 +2933,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
   }
@@ -3007,7 +3007,7 @@ export namespace Components {
     */
     'leaveAnimation'?: AnimationBuilder;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -3066,7 +3066,7 @@ export namespace Components {
     */
     'leaveAnimation'?: AnimationBuilder;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -3159,7 +3159,7 @@ export namespace Components {
     */
     'leaveAnimation'?: AnimationBuilder;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -3223,7 +3223,7 @@ export namespace Components {
     */
     'leaveAnimation'?: AnimationBuilder;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -3308,7 +3308,7 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -3334,7 +3334,7 @@ export namespace Components {
     */
     'disabled'?: boolean;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -3397,7 +3397,7 @@ export namespace Components {
     */
     'min': number;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -3447,7 +3447,7 @@ export namespace Components {
     */
     'min'?: number;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -3500,7 +3500,7 @@ export namespace Components {
     /**
     * An animated SVG spinner that shows when refreshing begins
     */
-    'refreshingSpinner'?: string;
+    'refreshingSpinner'?: SpinnerTypes;
     /**
     * The text you want to display when performing a refresh
     */
@@ -3518,7 +3518,7 @@ export namespace Components {
     /**
     * An animated SVG spinner that shows when refreshing begins
     */
-    'refreshingSpinner'?: string;
+    'refreshingSpinner'?: SpinnerTypes;
     /**
     * The text you want to display when performing a refresh
     */
@@ -3793,7 +3793,7 @@ export namespace Components {
     */
     'debounce': number;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -3859,7 +3859,7 @@ export namespace Components {
     */
     'debounce'?: number;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -3926,7 +3926,7 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -3948,7 +3948,7 @@ export namespace Components {
     */
     'disabled'?: boolean;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -3971,7 +3971,7 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -3989,7 +3989,7 @@ export namespace Components {
     */
     'disabled'?: boolean;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -4094,7 +4094,7 @@ export namespace Components {
     */
     'interfaceOptions': any;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -4144,7 +4144,7 @@ export namespace Components {
     */
     'interfaceOptions'?: any;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -4245,7 +4245,7 @@ export namespace Components {
     */
     'lockSwipes': (shouldLockSwipes: boolean) => Promise<void>;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -4287,7 +4287,7 @@ export namespace Components {
   }
   interface IonSlidesAttributes extends StencilHTMLAttributes {
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -4378,7 +4378,7 @@ export namespace Components {
     */
     'duration'?: number;
     /**
-    * The name of the SVG spinner to use. If a name is not provided, the platform's default spinner will be used. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`, `"circles"`, `"crescent"`.
+    * The name of the SVG spinner to use. If a name is not provided, the platform's default spinner will be used.
     */
     'name'?: SpinnerTypes;
     /**
@@ -4396,7 +4396,7 @@ export namespace Components {
     */
     'duration'?: number;
     /**
-    * The name of the SVG spinner to use. If a name is not provided, the platform's default spinner will be used. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`, `"circles"`, `"crescent"`.
+    * The name of the SVG spinner to use. If a name is not provided, the platform's default spinner will be used.
     */
     'name'?: SpinnerTypes;
     /**
@@ -4444,7 +4444,7 @@ export namespace Components {
     */
     'layout': TabbarLayout;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -4466,7 +4466,7 @@ export namespace Components {
     */
     'layout'?: TabbarLayout;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     'onIonTabBarChanged'?: (event: CustomEvent<TabbarChangedDetail>) => void;
@@ -4498,7 +4498,7 @@ export namespace Components {
     */
     'layout': TabbarLayout;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -4524,7 +4524,7 @@ export namespace Components {
     */
     'layout'?: TabbarLayout;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -4607,7 +4607,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
   }
@@ -4617,7 +4617,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
   }
@@ -4660,7 +4660,7 @@ export namespace Components {
     */
     'minlength'?: number;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -4696,9 +4696,9 @@ export namespace Components {
     */
     'value'?: string | null;
     /**
-    * Indicates how the control wraps text. Possible values are: `"hard"`, `"soft"`, `"off"`.
+    * Indicates how the control wraps text.
     */
-    'wrap'?: string;
+    'wrap'?: 'hard' | 'soft' | 'off';
   }
   interface IonTextareaAttributes extends StencilHTMLAttributes {
     /**
@@ -4738,7 +4738,7 @@ export namespace Components {
     */
     'minlength'?: number;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -4790,9 +4790,9 @@ export namespace Components {
     */
     'value'?: string | null;
     /**
-    * Indicates how the control wraps text. Possible values are: `"hard"`, `"soft"`, `"off"`.
+    * Indicates how the control wraps text.
     */
-    'wrap'?: string;
+    'wrap'?: 'hard' | 'soft' | 'off';
   }
 
   interface IonThumbnail {}
@@ -4869,7 +4869,7 @@ export namespace Components {
     */
     'message'?: string;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -4882,7 +4882,7 @@ export namespace Components {
     'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
     'overlayIndex': number;
     /**
-    * The position of the toast on the screen. Possible values: "top", "middle", "bottom".
+    * The position of the toast on the screen.
     */
     'position': 'top' | 'bottom' | 'middle';
     /**
@@ -4936,7 +4936,7 @@ export namespace Components {
     */
     'message'?: string;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -4965,7 +4965,7 @@ export namespace Components {
     'onIonToastWillPresent'?: (event: CustomEvent<void>) => void;
     'overlayIndex'?: number;
     /**
-    * The position of the toast on the screen. Possible values: "top", "middle", "bottom".
+    * The position of the toast on the screen.
     */
     'position'?: 'top' | 'bottom' | 'middle';
     /**
@@ -4992,7 +4992,7 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
@@ -5018,7 +5018,7 @@ export namespace Components {
     */
     'disabled'?: boolean;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
@@ -5053,7 +5053,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode': Mode;
   }
@@ -5063,7 +5063,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
   }

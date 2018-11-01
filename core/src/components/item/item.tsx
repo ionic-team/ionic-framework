@@ -29,7 +29,6 @@ export class Item implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
@@ -62,7 +61,6 @@ export class Item implements ComponentInterface {
 
   /**
    * How the bottom border should be displayed on the item.
-   * Available options: `"full"`, `"inset"`, `"none"`.
    */
   @Prop() lines?: 'full' | 'inset' | 'none';
 
@@ -74,7 +72,6 @@ export class Item implements ComponentInterface {
 
   /**
    * The type of the button. Only used when an `onclick` or `button` property is present.
-   * Possible values are: `"submit"`, `"reset"` and `"button"`.
    * Default value is: `"button"`
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';

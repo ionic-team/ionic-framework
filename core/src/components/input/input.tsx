@@ -31,7 +31,6 @@ export class Input implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
@@ -91,7 +90,8 @@ export class Input implements ComponentInterface {
   }
 
   /**
-   * A hint to the browser for which keyboard to display. This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
+   * A hint to the browser for which keyboard to display.
+   * This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
    */
   @Prop() inputmode?: string;
 
@@ -156,7 +156,8 @@ export class Input implements ComponentInterface {
   @Prop() spellcheck = false;
 
   /**
-   * Works with the min and max attributes to limit the increments at which a value can be set. Possible values are: `"any"` or a positive floating point number.
+   * Works with the min and max attributes to limit the increments at which a value can be set.
+   * Possible values are: `"any"` or a positive floating point number.
    */
   @Prop() step?: string;
 
@@ -166,7 +167,7 @@ export class Input implements ComponentInterface {
   @Prop() size?: number;
 
   /**
-   * The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
+   * The type of control to display. The default type is text.
    */
   @Prop() type: TextFieldTypes = 'text';
 

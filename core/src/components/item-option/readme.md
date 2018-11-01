@@ -15,7 +15,7 @@ action for the item.
 | `disabled`   | `disabled`   | If `true`, the user cannot interact with the item option. Defaults to `false`.                                                                                                                                                                                         | `boolean`             |
 | `expandable` | `expandable` | If `true`, the option will expand to take up the available width and cover any other options. Defaults to `false`.                                                                                                                                                     | `boolean`             |
 | `href`       | `href`       | Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.                                                                                                                                                | `string \| undefined` |
-| `mode`       | `mode`       | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                                                                                                                                                                              | `"ios" \| "md"`       |
+| `mode`       | `mode`       | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       |
 
 
 ## CSS Custom Properties

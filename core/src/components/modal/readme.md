@@ -25,7 +25,7 @@ Modals can be created using a [Modal Controller](../../modal-controller/ModalCon
 | `enterAnimation`  | --                 | Animation to use when the modal is presented.                                                                    | `AnimationBuilder \| undefined`             |
 | `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                                   |
 | `leaveAnimation`  | --                 | Animation to use when the modal is dismissed.                                                                    | `AnimationBuilder \| undefined`             |
-| `mode`            | `mode`             | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                        | `"ios" \| "md"`                             |
+| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                             |
 | `overlayIndex`    | `overlay-index`    |                                                                                                                  | `number`                                    |
 | `showBackdrop`    | `show-backdrop`    | If `true`, a backdrop will be displayed behind the modal. Defaults to `true`.                                    | `boolean`                                   |
 

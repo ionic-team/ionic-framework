@@ -24,7 +24,6 @@ export class Textarea implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
@@ -116,9 +115,9 @@ export class Textarea implements ComponentInterface {
   @Prop() rows?: number;
 
   /**
-   * Indicates how the control wraps text. Possible values are: `"hard"`, `"soft"`, `"off"`.
+   * Indicates how the control wraps text.
    */
-  @Prop() wrap?: string;
+  @Prop() wrap?: 'hard' | 'soft' | 'off';
 
   /**
    * The value of the textarea.

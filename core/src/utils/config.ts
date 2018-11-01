@@ -3,7 +3,6 @@ import { AnimationBuilder, Mode } from '../interface';
 export interface IonicConfig {
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   mode?: Mode;
   persistConfig?: boolean;

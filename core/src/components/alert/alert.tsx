@@ -31,12 +31,12 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
+
   /** @internal */
   @Prop() overlayIndex!: number;
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 

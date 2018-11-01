@@ -29,8 +29,7 @@ export class Spinner implements ComponentInterface {
 
   /**
    * The name of the SVG spinner to use. If a name is not provided, the platform's default
-   * spinner will be used. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`,
-   * `"circles"`, `"crescent"`.
+   * spinner will be used.
    */
   @Prop() name?: SpinnerTypes;
 

@@ -26,7 +26,7 @@ A button's `role` property can either be `destructive` or `cancel`. Buttons with
 | `header`          | `header`           | Title for the action sheet.                                                                                      | `string \| undefined`             |
 | `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                         |
 | `leaveAnimation`  | --                 | Animation to use when the action sheet is dismissed.                                                             | `AnimationBuilder \| undefined`   |
-| `mode`            | `mode`             | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                        | `"ios" \| "md"`                   |
+| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                   |
 | `overlayIndex`    | `overlay-index`    |                                                                                                                  | `number`                          |
 | `subHeader`       | `sub-header`       | Subtitle for the action sheet.                                                                                   | `string \| undefined`             |
 | `translucent`     | `translucent`      | If `true`, the action sheet will be translucent. Defaults to `false`.                                            | `boolean`                         |

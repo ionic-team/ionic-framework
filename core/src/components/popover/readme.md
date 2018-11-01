@@ -28,7 +28,7 @@ To present a popover, call the `present` method on a popover instance. In order 
 | `event`           | --                 | The event to pass to the popover animation.                                                                      | `any`                                       |
 | `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                                   |
 | `leaveAnimation`  | --                 | Animation to use when the popover is dismissed.                                                                  | `AnimationBuilder \| undefined`             |
-| `mode`            | `mode`             | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                        | `"ios" \| "md"`                             |
+| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                             |
 | `overlayIndex`    | `overlay-index`    |                                                                                                                  | `number`                                    |
 | `showBackdrop`    | `show-backdrop`    | If `true`, a backdrop will be displayed behind the popover. Defaults to `true`.                                  | `boolean`                                   |
 | `translucent`     | `translucent`      | If `true`, the popover will be translucent. Defaults to `false`.                                                 | `boolean`                                   |

@@ -20,7 +20,6 @@ export class FabButton implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
@@ -65,7 +64,6 @@ export class FabButton implements ComponentInterface {
 
   /**
    * The type of the button.
-   * Possible values are: `"submit"`, `"reset"` and `"button"`.
    * Default value is: `"button"`
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';

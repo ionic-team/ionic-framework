@@ -28,13 +28,11 @@ export class Button implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
    * The type of button.
-   * Possible values are: `"button"`, `"bar-button"`.
    */
   @Prop({ mutable: true }) buttonType = 'button';
 
@@ -70,13 +68,11 @@ export class Button implements ComponentInterface {
 
   /**
    * The button shape.
-   * Possible values are: `"round"`.
    */
   @Prop({ reflectToAttr: true }) shape?: 'round';
 
   /**
    * The button size.
-   * Possible values are: `"small"`, `"default"`, `"large"`.
    */
   @Prop({ reflectToAttr: true }) size?: 'small' | 'default' | 'large';
 
@@ -87,7 +83,6 @@ export class Button implements ComponentInterface {
 
   /**
    * The type of the button.
-   * Possible values are: `"submit"`, `"reset"` and `"button"`.
    * Default value is: `"button"`
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
