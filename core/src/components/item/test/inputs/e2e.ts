@@ -26,16 +26,22 @@ test('item: inputs', async () => {
 
   // Set "null"
   await page.click('#btnNullValue');
+  await page.waitFor(250);
+
   compare = await page.compareScreenshot('should set null');
   expect(compare).toMatchScreenshot();
 
   // Set "empty"
   await page.click('#btnEmptyValue');
+  await page.waitFor(250);
+
   compare = await page.compareScreenshot('should set empty');
   expect(compare).toMatchScreenshot();
 
   // Set "empty"
   await page.click('#btnEmptyValue');
+  await page.waitFor(250);
+
   compare = await page.compareScreenshot('should set empty');
   expect(compare).toMatchScreenshot();
 });

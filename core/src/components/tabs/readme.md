@@ -43,7 +43,7 @@ In order to link the button to the `ion-tab` container, a matching `tab` propert
 
 This `ion-tab-button` and `ion-tab` are now linked by the common `tab` property.
 
-The `tab` property identifies each tab, and it has to be unique within the scope of the same `ion-tabs`. It's very important to set the same property to `ion-tab` and `ion-tab-button`, even if you are only using one. e.g. You could use the `ion-tab-bar` without using `ion-tabs`. In this case you should still give each `ion-tab` the property of `tab="something"`.
+The `tab` property identifies each tab, and it has to be unique within the scope of the same `ion-tabs`. It's important to set the same property to `ion-tab` and `ion-tab-button`, even if you are only using one. e.g. You could use the `ion-tab-bar` without using `ion-tabs`. In this case you should still give each `ion-tab` the property of `tab="something"`.
 
 ### Router integration
 
@@ -59,6 +59,26 @@ Would match the following tab:
 
 ```html
 <ion-tab tab="settings" component="settings-component"></ion-tab>
+```
+
+### Angular Router integration
+
+Using tabs with Angular's router is fairly straight forward. The only additional requirement is that an href is supplied to update the browser URL. In this way, the correct `ion-tab` is selected, and the URl is updated.
+
+```html
+
+<ion-tabs>
+  <ion-tab-bar>
+    <ion-tab-button tab="schedule" href="/app/tabs/(schedule:schedule)">
+      <ion-icon name="calendar"></ion-icon>
+      <ion-label>Schedule</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+
+  <ion-tab tab="schedule">
+    <ion-router-outlet name="schedule"></ion-router-outlet>
+  </ion-tab>
+</ion-tabs>
 ```
 
 <!-- Auto Generated Below -->
