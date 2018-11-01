@@ -5,10 +5,11 @@
 // --------------------------------------------------
 
 :host {
-  --size: #{$checkbox-md-icon-size};
+  --height: #{$checkbox-md-icon-size};
+  --width: #{$checkbox-md-icon-size};
 
   // Border
-  --border-radius: calc(var(--size) * .125);
+  --border-radius: calc(var(--height) * .125);
   --border-width: #{$checkbox-md-icon-border-width};
   --border-style: #{$checkbox-md-icon-border-style};
   --border-color: #{$checkbox-md-icon-border-color-off};
