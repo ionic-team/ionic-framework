@@ -134,9 +134,12 @@ export class Checkbox implements ComponentInterface {
     renderHiddenInput(this.el, this.name, this.value, this.disabled);
 
     return [
-      <div class="checkbox-icon">
-        <div class="checkbox-inner"></div>
-      </div>,
+      <svg class="checkbox-icon" viewBox="0 0 24 24">
+        { this.mode === 'md'
+          ? <path d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+          : <path d="M5.9,12.5l3.8,3.8l8.8-8.8"/>
+        }
+      </svg>,
       <input
         type="checkbox"
         id={this.inputId}
