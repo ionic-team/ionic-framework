@@ -14,7 +14,7 @@ import { createColorClasses } from '../../utils/theme';
 })
 export class Searchbar implements ComponentInterface {
 
-  private nativeInput!: HTMLInputElement;
+  private nativeInput?: HTMLInputElement;
   private isCancelVisible = false;
   private shouldAlignLeft = true;
 
@@ -164,7 +164,9 @@ export class Searchbar implements ComponentInterface {
    */
   @Method()
   setFocus() {
-    this.nativeInput.focus();
+    if (this.nativeInput) {
+      this.nativeInput.focus();
+    }
   }
 
   /**
@@ -202,7 +204,9 @@ export class Searchbar implements ComponentInterface {
     this.ionCancel.emit();
     this.onClearInput();
 
-    this.nativeInput.blur();
+    if (this.nativeInput) {
+      this.nativeInput.blur();
+    }
   }
 
   /**
@@ -262,8 +266,11 @@ export class Searchbar implements ComponentInterface {
    * Positions the input placeholder
    */
   private positionPlaceholder() {
-    const isRTL = this.doc.dir === 'rtl';
     const inputEl = this.nativeInput;
+    if (!inputEl) {
+      return;
+    }
+    const isRTL = this.doc.dir === 'rtl';
     const iconEl = (this.el.shadowRoot || this.el).querySelector('.searchbar-search-icon') as HTMLElement;
 
     if (this.shouldAlignLeft) {
