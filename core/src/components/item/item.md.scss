@@ -100,10 +100,11 @@
 // --------------------------------------------------
 
 ::slotted(ion-icon) {
-  color: $item-md-icon-slot-color;
+  width: $item-md-icon-slot-width;
 
   height: $item-md-icon-slot-height;
-  width: $item-md-icon-slot-width;
+
+  color: $item-md-icon-slot-color;
 }
 
 ::slotted(ion-icon[slot]) {
@@ -125,9 +126,9 @@
 ::slotted(ion-note) {
   @include margin(0);
 
-  font-size: $item-md-note-slot-font-size;
-
   align-self: flex-start;
+
+  font-size: $item-md-note-slot-font-size;
 }
 
 ::slotted(ion-note[slot]) {
