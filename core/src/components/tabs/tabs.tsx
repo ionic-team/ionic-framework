@@ -22,11 +22,6 @@ export class Tabs implements NavOutlet {
   @Prop({ context: 'document' }) doc!: Document;
 
   /**
-   * A unique name for the tabs.
-   */
-  @Prop() name?: string;
-
-  /**
    * Emitted when the tab changes.
    */
   @Event() ionChange!: EventEmitter<{tab: HTMLIonTabElement}>;

@@ -23,17 +23,21 @@ export class NumericValueAccessor implements ControlValueAccessor {
 
   onChange: (value: any) => void;
   onTouched: () => void;
+  private lastValue: any;
 
   writeValue(value: any) {
     // The value needs to be normalized for IE9, otherwise it is set to 'null' when null
     // Probably not an issue for us, but it doesn't really cost anything either
-    this.element.nativeElement.value = value == null ? '' : value;
+    this.element.nativeElement.value = this.lastValue = value == null ? '' : value;
     setIonicClasses(this.element);
   }
 
   @HostListener('ionChange', ['$event.target.value'])
   _handleInputEvent(value: any) {
-    this.onChange(value);
+    if (value !== this.lastValue) {
+      this.lastValue = value;
+      this.onChange(value);
+    }
 
     requestAnimationFrame(() => {
       setIonicClasses(this.element);

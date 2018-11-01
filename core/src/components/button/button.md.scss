@@ -15,9 +15,9 @@
   --padding-start: #{$button-md-padding-start};
   --padding-end: #{$button-md-padding-end};
   --height: #{$button-md-height};
-  --transition: #{box-shadow $button-md-transition-duration $button-md-transition-timing-function,
-                  background-color $button-md-transition-duration $button-md-transition-timing-function,
-                  color $button-md-transition-duration $button-md-transition-timing-function};
+  --transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),
+                background-color 15ms linear,
+                color 15ms linear;
 
   font-size: #{$button-md-font-size};
   font-weight: #{$button-md-font-weight};
@@ -42,12 +42,20 @@
 // --------------------------------------------------
 
 :host(.button-outline) {
-  --border-width: 1px;
+  --border-width: 2px;
   --border-style: solid;
   --box-shadow: none;
   --background-activated: transparent;
   --background-focused: #{ion-color(primary, base, .1)};
   --color-activated: #{ion-color(primary, base)};
+}
+
+:host(.button-outline:hover) .button-native {
+  background: ion-color(primary, base, .04);
+}
+
+:host(.button-outline.ion-color:hover) .button-native {
+  background: current-color(base, .04);
 }
 
 :host(.button-outline.activated.ion-color) .button-native {
@@ -64,6 +72,14 @@
   --background-focused: #{ion-color(primary, base, .1)};
   --color-activated: #{ion-color(primary, base)};
   --color-focused: #{ion-color(primary, base)};
+}
+
+:host(.button-clear:hover) .button-native {
+  background: ion-color(primary, base, .04);
+}
+
+:host(.button-clear.ion-color:hover) .button-native {
+  background: current-color(base, .04);
 }
 
 

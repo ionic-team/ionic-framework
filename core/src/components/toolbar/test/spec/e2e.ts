@@ -1,8 +1,8 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-test('tab: placements', async () => {
+test('toolbar: spec', async () => {
   const page = await newE2EPage({
-    url: '/src/components/tabs/test/placements?ionic:_testing=true'
+    url: '/src/components/toolbar/test/spec'
   });
 
   const compare = await page.compareScreenshot();

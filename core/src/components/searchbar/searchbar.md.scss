@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  --clear-button-color: currentColor;
+  --clear-button-color: initial;
   --cancel-button-color: #{$searchbar-md-cancel-button-color};
   --color: #{$searchbar-md-input-text-color};
   --icon-color: #{$searchbar-md-input-search-icon-color};
