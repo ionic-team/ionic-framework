@@ -28,7 +28,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   @Prop() delegate?: FrameworkDelegate;
 
   /**
-   * If `true`, the router-outlet should animate the transition of components. Default to `true`.
+   * If `true`, the router-outlet should animate the transition of components.
    */
   @Prop() animated = true;
 

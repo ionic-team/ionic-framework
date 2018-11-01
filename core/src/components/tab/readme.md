@@ -12,12 +12,12 @@ See the [Tabs API Docs](../Tabs/) for more details on configuring Tabs.
 
 ## Properties
 
-| Property    | Attribute   | Description                                                                                                                               | Type                                                     |
-| ----------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| `active`    | `active`    |                                                                                                                                           | `boolean`                                                |
-| `component` | `component` | The component to display inside of the tab.                                                                                               | `Function \| HTMLElement \| null \| string \| undefined` |
-| `delegate`  | --          |                                                                                                                                           | `FrameworkDelegate \| undefined`                         |
-| `tab`       | `tab`       | A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them. | `string \| undefined`                                    |
+| Property    | Attribute   | Description                                                                                                                               | Type                                                     | Default     |
+| ----------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- | ----------- |
+| `active`    | `active`    |                                                                                                                                           | `boolean`                                                | `false`     |
+| `component` | `component` | The component to display inside of the tab.                                                                                               | `Function \| HTMLElement \| null \| string \| undefined` | `undefined` |
+| `delegate`  | --          |                                                                                                                                           | `FrameworkDelegate \| undefined`                         | `undefined` |
+| `tab`       | `tab`       | A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them. | `string \| undefined`                                    | `undefined` |
 
 
 ## Methods

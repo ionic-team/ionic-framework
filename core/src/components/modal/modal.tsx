@@ -37,7 +37,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
@@ -73,17 +72,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Prop() cssClass?: string | string[];
 
   /**
-   * If `true`, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.
+   * If `true`, the modal will be dismissed when the backdrop is clicked.
    */
   @Prop() backdropDismiss = true;
 
   /**
-   * If `true`, a backdrop will be displayed behind the modal. Defaults to `true`.
+   * If `true`, a backdrop will be displayed behind the modal.
    */
   @Prop() showBackdrop = true;
 
   /**
-   * If `true`, the modal will animate. Defaults to `true`.
+   * If `true`, the modal will animate.
    */
   @Prop() animated = true;
 
