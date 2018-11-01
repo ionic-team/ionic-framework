@@ -19,6 +19,7 @@
   --background-checked: #{ion-color(primary, base)};
   --border-color-checked: #{ion-color(primary, base)};
   --checkmark-color: #{ion-color(primary, contrast)};
+  --transition: none;
 
   display: inline-block;
   position: relative;
