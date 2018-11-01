@@ -1,6 +1,6 @@
 // Core Ionic types
 // tslint:disable-next-line:no-import-side-effect
-import '@ionic/core';
+import { IonicConfig } from '@ionic/core';
 
 // Webpack import for ionicons
 // @ts-ignore
@@ -14,7 +14,7 @@ import '@ionic/core/dist/ionic/svg';
 import { defineCustomElements } from '@ionic/core/loader';
 import { IonicWindow } from './interfaces';
 
-export function appInitialize(config: any) {
+export function appInitialize(config?: IonicConfig) {
   const win: IonicWindow = window as any;
   const Ionic = (win.Ionic = win.Ionic || {});
 

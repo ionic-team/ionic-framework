@@ -7,8 +7,12 @@
   "module": "dist/ionic-vue.esm.js",
   "unpkg": "dist/ionic-vue.js",
   "jsdelivr": "dist/ionic-vue.js",
-  "contributors": ["Michael Tintiuc <michael.tintiuc@moduscreate.com>"],
-  "files": ["dist/"],
+  "contributors": [
+    "Michael Tintiuc <michael.tintiuc@moduscreate.com>"
+  ],
+  "files": [
+    "dist/"
+  ],
   "bugs": {
     "url": "https://github.com/ionic-team/ionic/issues"
   },

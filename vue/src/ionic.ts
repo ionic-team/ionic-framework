@@ -1,110 +1,92 @@
-import Vue, { PluginFunction } from 'vue';
-import { ApiCache, FrameworkDelegate } from './interfaces';
-import Delegate from './framework-delegate';
-import ProxyController from './proxy-controller';
-import ProxyMenuController from './proxy-menu-controller';
-import ProxyDelegateController from './proxy-delegate-controller';
+import { PluginFunction, default as VueImport } from 'vue';
+import {
+  ActionSheetController,
+  AlertController,
+  LoadingController,
+  MenuController,
+  ModalController,
+  PopoverController,
+  ToastController
+} from './controllers';
+import { IonicConfig } from '@ionic/core';
 import { appInitialize } from './app-initialize';
 
-let _Vue: typeof Vue, _Delegate: FrameworkDelegate;
-
-export default class Api {
-  static cache: ApiCache;
-  static installed = false;
-  static install: PluginFunction<never>;
-
-  // Create or return a ActionSheetController instance
-  get actionSheetController(): ProxyController {
-    return getOrCreateController('ion-action-sheet-controller');
-  }
-
-  // Create or return an AlertController instance
-  get alertController(): ProxyController {
-    return getOrCreateController('ion-alert-controller');
-  }
-
-  // Create or return a LoadingController instance
-  get loadingController(): ProxyController {
-    return getOrCreateController('ion-loading-controller');
-  }
-
-  // Create or return a MenuController instance
-  get menuController(): ProxyMenuController {
-    return getOrCreateMenuController('ion-menu-controller');
-  }
-
-  // Create or return a ModalController instance
-  get modalController(): ProxyDelegateController {
-    return getOrCreateDelegatedController('ion-modal-controller');
-  }
-
-  // Create or return a PopoverController instance
-  get popoverController(): ProxyDelegateController {
-    return getOrCreateDelegatedController('ion-popover-controller');
-  }
-
-  // Create or return a ToastController instance
-  get toastController(): ProxyController {
-    return getOrCreateController('ion-toast-controller');
-  }
+export interface Controllers {
+  actionSheetController: ActionSheetController;
+  alertController: AlertController;
+  loadingController: LoadingController;
+  menuController: MenuController;
+  modalController: ModalController;
+  popoverController: PopoverController;
+  toastController: ToastController;
 }
 
-// Cached controllers
-Api.cache = {
-  'ion-action-sheet-controller': null,
-  'ion-alert-controller': null,
-  'ion-loading-controller': null,
-  'ion-menu-controller': null,
-  'ion-modal-controller': null,
-  'ion-popover-controller': null,
-  'ion-toast-controller': null,
-};
+function createApi() {
+  const cache: Partial<Controllers> = {};
+  const api: Controllers = {
+    get actionSheetController() {
+      if (!cache.actionSheetController) {
+        cache.actionSheetController = new ActionSheetController();
+      }
+      return cache.actionSheetController;
+    },
+    get alertController() {
+      if (!cache.alertController) {
+        cache.alertController = new AlertController();
+      }
+      return cache.alertController;
+    },
+    get loadingController() {
+      if (!cache.loadingController) {
+        cache.loadingController = new LoadingController();
+      }
+      return cache.loadingController;
+    },
+    get menuController() {
+      if (!cache.menuController) {
+        cache.menuController = new MenuController();
+      }
+      return cache.menuController;
+    },
+    get modalController() {
+      if (!cache.modalController) {
+        cache.modalController = new ModalController();
+      }
+      return cache.modalController;
+    },
+    get popoverController() {
+      if (!cache.popoverController) {
+        cache.popoverController = new PopoverController();
+      }
+      return cache.popoverController;
+    },
+    get toastController() {
+      if (!cache.toastController) {
+        cache.toastController = new ToastController();
+      }
+      return cache.toastController;
+    }
+  };
 
-Api.install = (Vue, config: any): void => {
-  // If installed - skip
-  if (Api.installed && _Vue === Vue) {
+  return api;
+}
+
+let Vue: typeof VueImport;
+
+export const install: PluginFunction<IonicConfig> = (_Vue, config) => {
+  if (Vue && _Vue === Vue) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.error(
+        '[Ionic] already installed. Vue.use(Ionic) should be called only once.'
+      );
+    }
     return;
   }
+  Vue = _Vue;
 
-  _Vue = Vue;
-  _Delegate = new Delegate(Vue);
-
-  Api.installed = true;
-
-  // Ignore Ionic custom elements
   Vue.config.ignoredElements.push(/^ion-/);
   appInitialize(config);
-  // Give access to the API methods
   Object.defineProperty(Vue.prototype, '$ionic', {
-    get() {
-      return new Api();
-    },
+    get() { return createApi(); }
   });
 };
-
-// Get existing Base controller instance or initialize a new one
-function getOrCreateController(tag: string): ProxyController {
-  if (!Api.cache[tag]) {
-    Api.cache[tag] = new ProxyController(tag);
-  }
-
-  return Api.cache[tag];
-}
-
-// Get existing Menu controller instance or initialize a new one
-function getOrCreateMenuController(tag: string): ProxyMenuController {
-  if (!Api.cache[tag]) {
-    Api.cache[tag] = new ProxyMenuController(tag);
-  }
-
-  return Api.cache[tag];
-}
-
-// Get existing Delegated controller instance or initialize a new one
-function getOrCreateDelegatedController(tag: string): ProxyDelegateController {
-  if (!Api.cache[tag]) {
-    Api.cache[tag] = new ProxyDelegateController(tag, _Delegate);
-  }
-
-  return Api.cache[tag];
-}
