@@ -1,7 +1,7 @@
 ```html
 <ion-tabs>
 
-  <ion-tab-bar>
+  <ion-tab-bar slot="bottom">
     <ion-tab-button tab="schedule" href="/app/tabs/(schedule:schedule)">
       <ion-icon name="calendar"></ion-icon>
       <ion-label>Schedule</ion-label>

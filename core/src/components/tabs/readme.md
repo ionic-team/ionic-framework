@@ -12,7 +12,7 @@ In order to do so, an `ion-tab-bar` should be provided as a direct child of `ion
   <ion-tab tab="home">Home Content</ion-tab>
   <ion-tab tab="settings">Settings Content</ion-tab>
 
-  <ion-tab-bar>
+  <ion-tab-bar slot="bottom">
 
     <ion-tab-button tab="home">
       <ion-label>Home</ion-label>
@@ -29,6 +29,8 @@ In order to do so, an `ion-tab-bar` should be provided as a direct child of `ion
 ```
 
 Note that both `ion-tabs` and `ion-tab-bar` can be used as standalone elements. They don’t depend on each other to work, but they are usually used together in order to implement a tab-based navigation that feels like a native app.
+
+`ion-tab-bar` always needs `slot="bottom"` in order to be projected into `ion-tabs` at the right place.
 
 ## The "tab" property
 
@@ -68,7 +70,7 @@ Using tabs with Angular's router is fairly straight forward. The only additional
 ```html
 
 <ion-tabs>
-  <ion-tab-bar>
+  <ion-tab-bar slot="bottom">
     <ion-tab-button tab="schedule" href="/app/tabs/(schedule:schedule)">
       <ion-icon name="calendar"></ion-icon>
       <ion-label>Schedule</ion-label>
