@@ -10,6 +10,7 @@ import {
 } from './controllers';
 import { IonicConfig } from '@ionic/core';
 import { appInitialize } from './app-initialize';
+import { VueDelegate } from './controllers/vue-delegate';
 
 export interface Controllers {
   actionSheetController: ActionSheetController;
@@ -21,8 +22,16 @@ export interface Controllers {
   toastController: ToastController;
 }
 
+declare module 'vue/types/vue' {
+  interface Vue {
+    $ionic: Controllers;
+  }
+}
+
+
 function createApi() {
   const cache: Partial<Controllers> = {};
+  const vueDelegate = new VueDelegate(Vue);
   const api: Controllers = {
     get actionSheetController() {
       if (!cache.actionSheetController) {
@@ -50,13 +59,13 @@ function createApi() {
     },
     get modalController() {
       if (!cache.modalController) {
-        cache.modalController = new ModalController();
+        cache.modalController = new ModalController(vueDelegate);
       }
       return cache.modalController;
     },
     get popoverController() {
       if (!cache.popoverController) {
-        cache.popoverController = new PopoverController();
+        cache.popoverController = new PopoverController(vueDelegate);
       }
       return cache.popoverController;
     },

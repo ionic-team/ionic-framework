@@ -1,7 +1,8 @@
 import { VueConstructor } from 'vue';
-import { EsModule, FrameworkDelegate, HTMLVueElement, WebpackFunction } from './interfaces';
+import { FrameworkDelegate, ViewLifecycle } from '@ionic/core';
+import { EsModule, HTMLVueElement, WebpackFunction } from '../interfaces';
 
-export default class Delegate implements FrameworkDelegate {
+export class VueDelegate implements FrameworkDelegate {
   constructor(public vue: VueConstructor) {}
 
   // Attach the passed Vue component to DOM
@@ -13,6 +14,7 @@ export default class Delegate implements FrameworkDelegate {
 
       // Append the element to DOM
       parentElement.appendChild(component as HTMLElement);
+      bindLifecycleEvents(component, parentElement);
       return Promise.resolve(component as HTMLElement);
     }
 
@@ -52,6 +54,24 @@ export default class Delegate implements FrameworkDelegate {
   vueComponent(controller: VueConstructor, opts?: object) {
     return new controller(opts).$mount();
   }
+}
+
+const LIFECYCLES = [
+  ViewLifecycle.WillEnter,
+  ViewLifecycle.DidEnter,
+  ViewLifecycle.WillLeave,
+  ViewLifecycle.DidLeave,
+  ViewLifecycle.WillUnload
+];
+
+export function bindLifecycleEvents(instance: any, element: HTMLElement) {
+  LIFECYCLES.forEach(eventName => {
+    element.addEventListener(eventName, (ev: any) => {
+      if (typeof instance[eventName] === 'function') {
+        instance[eventName](ev.detail);
+      }
+    });
+  });
 }
 
 // Check Symbol support
