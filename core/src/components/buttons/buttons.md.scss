@@ -25,8 +25,8 @@
 // --------------------------------------------------
 
 :host-context(.ion-color)::slotted(*) .button {
-  --color: currentColor;
-  --color-activated: currentColor;
+  --color: initial;
+  --color-activated: initial;
 }
 
 
@@ -45,7 +45,7 @@
 // --------------------------------------------------
 
 ::slotted(*) .button-outline {
-  --color: currentColor;
+  --color: initial;
   --color-activated: currentColor;
   --background: transparent;
   --background-activated: transparent;
@@ -57,7 +57,7 @@
 // --------------------------------------------------
 
 ::slotted(*) .button-clear {
-  --color: currentColor;
+  --color: initial;
   --color-activated: currentColor;
   --background: transparent;
 }

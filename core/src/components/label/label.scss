@@ -8,7 +8,7 @@
   /**
    * @prop --color: Color of the label
    */
-  --color: currentColor;
+  --color: initial;
 
   @include margin(0);
 
