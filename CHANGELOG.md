@@ -1,5 +1,5 @@
-<a name="4.0.0-beta.15-0"></a>
-# [4.0.0-beta.15-0](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.13...v4.0.0-beta.15-0) (2018-10-31)
+<a name="4.0.0-beta.15"></a>
+# [4.0.0-beta.15](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.13...v4.0.0-beta.15) (2018-11-01)
 
 ## Rethinking Tabs
 
@@ -130,6 +130,10 @@ Lastly, this change also fixes some outstanding issues with Tabs, so we're excit
 * **theming:** update global css variable naming and default values  ([#16003](https://github.com/ionic-team/ionic/issues/16003)) ([b2021fd](https://github.com/ionic-team/ionic/commit/b2021fd)), closes [#15989](https://github.com/ionic-team/ionic/issues/15989) [#15559](https://github.com/ionic-team/ionic/issues/15559)
 * **toggle:** fix box-shadow overflow in toggle ([#15955](https://github.com/ionic-team/ionic/issues/15955)) ([8a4dc74](https://github.com/ionic-team/ionic/commit/8a4dc74)), closes [#14626](https://github.com/ionic-team/ionic/issues/14626)
 * **angular:** fix ngModel accessor ([fab8b60](https://github.com/ionic-team/ionic/commit/fab8b60))
+* **color:** edge currentColor bug ([#16177](https://github.com/ionic-team/ionic/issues/16177)) ([fce30eb](https://github.com/ionic-team/ionic/commit/fce30eb)), closes [#16168](https://github.com/ionic-team/ionic/issues/16168)
+* **searchbar:** fix crash on cancel event ([#16181](https://github.com/ionic-team/ionic/issues/16181)) ([9c79d98](https://github.com/ionic-team/ionic/commit/9c79d98)), closes [#16143](https://github.com/ionic-team/ionic/issues/16143)
+* **tab-bar:** safe-bottom area is applied correctly ([#16179](https://github.com/ionic-team/ionic/issues/16179)) ([1532bd2](https://github.com/ionic-team/ionic/commit/1532bd2)), closes [#16175](https://github.com/ionic-team/ionic/issues/16175)
+* **tabs:** use slot instead of placement ([72f0a76](https://github.com/ionic-team/ionic/commit/72f0a76))
 
 
 ### Features
