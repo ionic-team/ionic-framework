@@ -11,7 +11,7 @@ Unlike RouterOutlet, Nav is not tied to a particular router. Meaning that if we 
 
 | Property       | Attribute       | Description                                                                                                                                                                                    | Type                                                                       | Default     |
 | -------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ----------- |
-| `animated`     | `animated`      | If `true`, the nav should animate the transition of components. Default to `true`.                                                                                                             | `boolean`                                                                  | `true`      |
+| `animated`     | `animated`      | If `true`, the nav should animate the transition of components.                                                                                                                                | `boolean`                                                                  | `true`      |
 | `animation`    | --              | By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions. | `AnimationBuilder \| undefined`                                            | `undefined` |
 | `delegate`     | --              |                                                                                                                                                                                                | `FrameworkDelegate \| undefined`                                           | `undefined` |
 | `rootParams`   | --              | Any parameters for the root component                                                                                                                                                          | `undefined \| { [key: string]: any; }`                                     | `undefined` |
@@ -21,11 +21,11 @@ Unlike RouterOutlet, Nav is not tied to a particular router. Meaning that if we 
 
 ## Events
 
-| Event              | Detail | Description                                     |
-| ------------------ | ------ | ----------------------------------------------- |
-| `ionNavDidChange`  |        | Event fired when the nav has changed components |
-| `ionNavWillChange` |        | Event fired when the nav will components        |
-| `ionNavWillLoad`   |        | Event fired when Nav will load a component      |
+| Event              | Description                                     | Detail |
+| ------------------ | ----------------------------------------------- | ------ |
+| `ionNavDidChange`  | Event fired when the nav has changed components | void   |
+| `ionNavWillChange` | Event fired when the nav will components        | void   |
+| `ionNavWillLoad`   | Event fired when Nav will load a component      | void   |
 
 
 ## Methods

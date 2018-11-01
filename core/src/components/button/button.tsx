@@ -37,7 +37,7 @@ export class Button implements ComponentInterface {
   @Prop({ mutable: true }) buttonType = 'button';
 
   /**
-   * If `true`, the user cannot interact with the button. Defaults to `false`.
+   * If `true`, the user cannot interact with the button.
    */
   @Prop({ reflectToAttr: true }) disabled = false;
 
@@ -83,7 +83,6 @@ export class Button implements ComponentInterface {
 
   /**
    * The type of the button.
-   * Default value is: `"button"`
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 

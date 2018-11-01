@@ -40,27 +40,27 @@ export class Input implements ComponentInterface {
   @Prop() accept?: string;
 
   /**
-   * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
+   * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
    */
-  @Prop() autocapitalize = 'none';
+  @Prop() autocapitalize: 'on' | 'off' | 'words' | 'characters' = 'off';
 
   /**
-   * Indicates whether the value of the control can be automatically completed by the browser. Defaults to `"off"`.
+   * Indicates whether the value of the control can be automatically completed by the browser.
    */
-  @Prop() autocomplete = 'off';
+  @Prop() autocomplete: 'on' | 'off' = 'off';
 
   /**
-   * Whether autocorrection should be enabled when the user is entering/editing the text value. Defaults to `"off"`.
+   * Whether autocorrection should be enabled when the user is entering/editing the text value.
    */
-  @Prop() autocorrect = 'off';
+  @Prop() autocorrect: 'on' | 'off' = 'off';
 
   /**
-   * This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
+   * This Boolean attribute lets you specify that a form control should have input focus when the page loads.
    */
   @Prop() autofocus = false;
 
   /**
-   * If `true`, a clear icon will appear in the input when there is a value. Clicking it clears the input. Defaults to `false`.
+   * If `true`, a clear icon will appear in the input when there is a value. Clicking it clears the input.
    */
   @Prop() clearInput = false;
 
@@ -70,7 +70,7 @@ export class Input implements ComponentInterface {
   @Prop({ mutable: true }) clearOnEdit?: boolean;
 
   /**
-   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `0`.
+   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
    */
   @Prop() debounce = 0;
 
@@ -80,7 +80,7 @@ export class Input implements ComponentInterface {
   }
 
   /**
-   * If `true`, the user cannot interact with the input. Defaults to `false`.
+   * If `true`, the user cannot interact with the input.
    */
   @Prop() disabled = false;
 
@@ -136,7 +136,7 @@ export class Input implements ComponentInterface {
   @Prop() placeholder?: string;
 
   /**
-   * If `true`, the user cannot modify the value. Defaults to `false`.
+   * If `true`, the user cannot modify the value.
    */
   @Prop() readonly = false;
 
@@ -151,7 +151,7 @@ export class Input implements ComponentInterface {
   @Prop() results?: number;
 
   /**
-   * If `true`, the element will have its spelling and grammar checked. Defaults to `false`.
+   * If `true`, the element will have its spelling and grammar checked.
    */
   @Prop() spellcheck = false;
 

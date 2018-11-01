@@ -35,12 +35,12 @@ export class Textarea implements ComponentInterface {
   @Prop() color?: Color;
 
   /**
-   * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
+   * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
    */
   @Prop() autocapitalize = 'none';
 
   /**
-   * This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
+   * This Boolean attribute lets you specify that a form control should have input focus when the page loads.
    */
   @Prop() autofocus = false;
 
@@ -50,7 +50,7 @@ export class Textarea implements ComponentInterface {
   @Prop({ mutable: true }) clearOnEdit = false;
 
   /**
-   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `0`.
+   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
    */
   @Prop() debounce = 0;
 
@@ -60,7 +60,7 @@ export class Textarea implements ComponentInterface {
   }
 
   /**
-   * If `true`, the user cannot interact with the textarea. Defaults to `false`.
+   * If `true`, the user cannot interact with the textarea.
    */
   @Prop() disabled = false;
 
@@ -90,7 +90,7 @@ export class Textarea implements ComponentInterface {
   @Prop() placeholder?: string;
 
   /**
-   * If `true`, the user cannot modify the value. Defaults to `false`.
+   * If `true`, the user cannot modify the value.
    */
   @Prop() readonly = false;
 
@@ -100,7 +100,7 @@ export class Textarea implements ComponentInterface {
   @Prop() required = false;
 
   /**
-   * If `true`, the element will have its spelling and grammar checked. Defaults to `false`.
+   * If `true`, the element will have its spelling and grammar checked.
    */
   @Prop() spellcheck = false;
 

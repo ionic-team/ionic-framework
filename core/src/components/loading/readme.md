@@ -20,8 +20,8 @@ The loading indicator can be dismissed automatically after a specific amount of 
 
 | Property          | Attribute          | Description                                                                                                      | Type                                                                                                | Default     |
 | ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | ----------- |
-| `animated`        | `animated`         | If `true`, the loading indicator will animate. Defaults to `true`.                                               | `boolean`                                                                                           | `true`      |
-| `backdropDismiss` | `backdrop-dismiss` | If `true`, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.            | `boolean`                                                                                           | `false`     |
+| `animated`        | `animated`         | If `true`, the loading indicator will animate.                                                                   | `boolean`                                                                                           | `true`      |
+| `backdropDismiss` | `backdrop-dismiss` | If `true`, the loading indicator will be dismissed when the backdrop is clicked.                                 | `boolean`                                                                                           | `false`     |
 | `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string \| string[] \| undefined`                                                                   | `undefined` |
 | `duration`        | `duration`         | Number of milliseconds to wait before dismissing the loading indicator.                                          | `number`                                                                                            | `0`         |
 | `enterAnimation`  | --                 | Animation to use when the loading indicator is presented.                                                        | `AnimationBuilder \| undefined`                                                                     | `undefined` |
@@ -30,21 +30,21 @@ The loading indicator can be dismissed automatically after a specific amount of 
 | `message`         | `message`          | Optional text content to display in the loading indicator.                                                       | `string \| undefined`                                                                               | `undefined` |
 | `mode`            | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                                                                                     | `undefined` |
 | `overlayIndex`    | `overlay-index`    |                                                                                                                  | `number`                                                                                            | `undefined` |
-| `showBackdrop`    | `show-backdrop`    | If `true`, a backdrop will be displayed behind the loading indicator. Defaults to `true`.                        | `boolean`                                                                                           | `true`      |
+| `showBackdrop`    | `show-backdrop`    | If `true`, a backdrop will be displayed behind the loading indicator.                                            | `boolean`                                                                                           | `true`      |
 | `spinner`         | `spinner`          | The name of the spinner to display.                                                                              | `"bubbles" \| "circles" \| "crescent" \| "dots" \| "hide" \| "lines" \| "lines-small" \| undefined` | `undefined` |
-| `translucent`     | `translucent`      | If `true`, the loading indicator will be translucent. Defaults to `false`.                                       | `boolean`                                                                                           | `false`     |
+| `translucent`     | `translucent`      | If `true`, the loading indicator will be translucent.                                                            | `boolean`                                                                                           | `false`     |
 
 
 ## Events
 
-| Event                   | Detail             | Description                               |
-| ----------------------- | ------------------ | ----------------------------------------- |
-| `ionLoadingDidDismiss`  | OverlayEventDetail | Emitted after the loading has dismissed.  |
-| `ionLoadingDidLoad`     |                    | Emitted after the loading has loaded.     |
-| `ionLoadingDidPresent`  |                    | Emitted after the loading has presented.  |
-| `ionLoadingDidUnload`   |                    | Emitted after the loading has unloaded.   |
-| `ionLoadingWillDismiss` | OverlayEventDetail | Emitted before the loading has dismissed. |
-| `ionLoadingWillPresent` |                    | Emitted before the loading has presented. |
+| Event                   | Description                               | Detail             |
+| ----------------------- | ----------------------------------------- | ------------------ |
+| `ionLoadingDidDismiss`  | Emitted after the loading has dismissed.  | OverlayEventDetail |
+| `ionLoadingDidLoad`     | Emitted after the loading has loaded.     | void               |
+| `ionLoadingDidPresent`  | Emitted after the loading has presented.  | void               |
+| `ionLoadingDidUnload`   | Emitted after the loading has unloaded.   | void               |
+| `ionLoadingWillDismiss` | Emitted before the loading has dismissed. | OverlayEventDetail |
+| `ionLoadingWillPresent` | Emitted before the loading has presented. | void               |
 
 
 ## Methods

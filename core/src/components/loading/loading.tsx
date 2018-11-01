@@ -67,12 +67,12 @@ export class Loading implements ComponentInterface, OverlayInterface {
   @Prop() duration = 0;
 
   /**
-   * If `true`, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
+   * If `true`, the loading indicator will be dismissed when the backdrop is clicked.
    */
   @Prop() backdropDismiss = false;
 
   /**
-   * If `true`, a backdrop will be displayed behind the loading indicator. Defaults to `true`.
+   * If `true`, a backdrop will be displayed behind the loading indicator.
    */
   @Prop() showBackdrop = true;
 
@@ -82,12 +82,12 @@ export class Loading implements ComponentInterface, OverlayInterface {
   @Prop({ mutable: true }) spinner?: SpinnerTypes | 'hide';
 
   /**
-   * If `true`, the loading indicator will be translucent. Defaults to `false`.
+   * If `true`, the loading indicator will be translucent.
    */
   @Prop() translucent = false;
 
   /**
-   * If `true`, the loading indicator will animate. Defaults to `true`.
+   * If `true`, the loading indicator will animate.
    */
   @Prop() animated = true;
 

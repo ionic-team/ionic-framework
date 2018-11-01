@@ -27,8 +27,8 @@ Alerts can also include several different inputs whose data can be passed back t
 
 | Property          | Attribute          | Description                                                                                                      | Type                              | Default     |
 | ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | --------------------------------- | ----------- |
-| `animated`        | `animated`         | If `true`, the alert will animate. Defaults to `true`.                                                           | `boolean`                         | `true`      |
-| `backdropDismiss` | `backdrop-dismiss` | If `true`, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.                         | `boolean`                         | `true`      |
+| `animated`        | `animated`         | If `true`, the alert will animate.                                                                               | `boolean`                         | `true`      |
+| `backdropDismiss` | `backdrop-dismiss` | If `true`, the alert will be dismissed when the backdrop is clicked.                                             | `boolean`                         | `true`      |
 | `buttons`         | --                 | Array of buttons to be added to the alert.                                                                       | `(string \| AlertButton)[]`       | `[]`        |
 | `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string \| string[] \| undefined` | `undefined` |
 | `enterAnimation`  | --                 | Animation to use when the alert is presented.                                                                    | `AnimationBuilder \| undefined`   | `undefined` |
@@ -40,19 +40,19 @@ Alerts can also include several different inputs whose data can be passed back t
 | `mode`            | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                   | `undefined` |
 | `overlayIndex`    | `overlay-index`    |                                                                                                                  | `number`                          | `undefined` |
 | `subHeader`       | `sub-header`       | The subtitle in the heading of the alert. Displayed under the title.                                             | `string \| undefined`             | `undefined` |
-| `translucent`     | `translucent`      | If `true`, the alert will be translucent. Defaults to `false`.                                                   | `boolean`                         | `false`     |
+| `translucent`     | `translucent`      | If `true`, the alert will be translucent.                                                                        | `boolean`                         | `false`     |
 
 
 ## Events
 
-| Event                 | Detail             | Description                             |
-| --------------------- | ------------------ | --------------------------------------- |
-| `ionAlertDidDismiss`  | OverlayEventDetail | Emitted after the alert has dismissed.  |
-| `ionAlertDidLoad`     |                    | Emitted after the alert has presented.  |
-| `ionAlertDidPresent`  |                    | Emitted after the alert has presented.  |
-| `ionAlertDidUnload`   |                    | Emitted before the alert has presented. |
-| `ionAlertWillDismiss` | OverlayEventDetail | Emitted before the alert has dismissed. |
-| `ionAlertWillPresent` |                    | Emitted before the alert has presented. |
+| Event                 | Description                             | Detail             |
+| --------------------- | --------------------------------------- | ------------------ |
+| `ionAlertDidDismiss`  | Emitted after the alert has dismissed.  | OverlayEventDetail |
+| `ionAlertDidLoad`     | Emitted after the alert has presented.  | void               |
+| `ionAlertDidPresent`  | Emitted after the alert has presented.  | void               |
+| `ionAlertDidUnload`   | Emitted before the alert has presented. | void               |
+| `ionAlertWillDismiss` | Emitted before the alert has dismissed. | OverlayEventDetail |
+| `ionAlertWillPresent` | Emitted before the alert has presented. | void               |
 
 
 ## Methods

@@ -61,7 +61,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   @Prop() cssClass?: string | string[];
 
   /**
-   * If `true`, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
+   * If `true`, the action sheet will be dismissed when the backdrop is clicked.
    */
   @Prop() backdropDismiss = true;
 
@@ -76,12 +76,12 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   @Prop() subHeader?: string;
 
   /**
-   * If `true`, the action sheet will be translucent. Defaults to `false`.
+   * If `true`, the action sheet will be translucent.
    */
   @Prop() translucent = false;
 
   /**
-   * If `true`, the action sheet will animate. Defaults to `true`.
+   * If `true`, the action sheet will animate.
    */
   @Prop() animated = true;
 

@@ -31,12 +31,12 @@ export class FabButton implements ComponentInterface {
   @Prop() color?: Color;
 
   /**
-   * If `true`, the fab button will be show a close icon. Defaults to `false`.
+   * If `true`, the fab button will be show a close icon.
    */
   @Prop() activated = false;
 
   /**
-   * If `true`, the user cannot interact with the fab button. Defaults to `false`.
+   * If `true`, the user cannot interact with the fab button.
    */
   @Prop() disabled = false;
 
@@ -58,13 +58,12 @@ export class FabButton implements ComponentInterface {
   @Prop() show = false;
 
   /**
-   * If `true`, the fab button will be translucent. Defaults to `false`.
+   * If `true`, the fab button will be translucent.
    */
   @Prop() translucent = false;
 
   /**
    * The type of the button.
-   * Default value is: `"button"`
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 

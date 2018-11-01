@@ -38,12 +38,12 @@ export class Radio implements ComponentInterface {
   @Prop() name: string = this.inputId;
 
   /**
-   * If `true`, the user cannot interact with the radio. Defaults to `false`.
+   * If `true`, the user cannot interact with the radio.
    */
   @Prop() disabled = false;
 
   /**
-   * If `true`, the radio is selected. Defaults to `false`.
+   * If `true`, the radio is selected.
    */
   @Prop({ mutable: true }) checked = false;
 

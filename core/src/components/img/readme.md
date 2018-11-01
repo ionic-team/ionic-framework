@@ -16,9 +16,9 @@ Img is a tag that will lazily load an image when ever the tag is in the viewport
 
 ## Events
 
-| Event           | Detail | Description                        |
-| --------------- | ------ | ---------------------------------- |
-| `ionImgDidLoad` |        | Emitted when the img src is loaded |
+| Event           | Description                        | Detail |
+| --------------- | ---------------------------------- | ------ |
+| `ionImgDidLoad` | Emitted when the img src is loaded | void   |
 
 
 ----------------------------------------------

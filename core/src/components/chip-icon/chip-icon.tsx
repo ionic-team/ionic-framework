@@ -23,7 +23,6 @@ export class ChipIcon implements ComponentInterface {
 
   /**
    * Set to `"clear"` for a transparent icon or to `"solid"` for a filled background.
-   * Defaults to `"clear"`.
    */
   @Prop() fill: 'clear' | 'solid' = 'clear';
 

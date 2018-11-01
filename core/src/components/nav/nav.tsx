@@ -46,7 +46,7 @@ export class Nav implements NavOutlet {
   }
 
   /**
-   * If `true`, the nav should animate the transition of components. Default to `true`.
+   * If `true`, the nav should animate the transition of components.
    */
   @Prop() animated = true;
 

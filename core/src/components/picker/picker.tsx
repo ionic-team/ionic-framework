@@ -70,17 +70,17 @@ export class Picker implements ComponentInterface, OverlayInterface {
   @Prop() duration = 0;
 
   /**
-   * If `true`, a backdrop will be displayed behind the picker. Defaults to `true`.
+   * If `true`, a backdrop will be displayed behind the picker.
    */
   @Prop() showBackdrop = true;
 
   /**
-   * If `true`, the picker will be dismissed when the backdrop is clicked. Defaults to `true`.
+   * If `true`, the picker will be dismissed when the backdrop is clicked.
    */
   @Prop() backdropDismiss = true;
 
   /**
-   * If `true`, the picker will animate. Defaults to `true`.
+   * If `true`, the picker will animate.
    */
   @Prop() animated = true;
 

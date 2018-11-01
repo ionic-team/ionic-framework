@@ -35,17 +35,17 @@ export class Select implements ComponentInterface {
   @Prop() mode!: Mode;
 
   /**
-   * If `true`, the user cannot interact with the select. Defaults to `false`.
+   * If `true`, the user cannot interact with the select.
    */
   @Prop() disabled = false;
 
   /**
-   * The text to display on the cancel button. Default: `Cancel`.
+   * The text to display on the cancel button.
    */
   @Prop() cancelText = 'Cancel';
 
   /**
-   * The text to display on the ok button. Default: `OK`.
+   * The text to display on the ok button.
    */
   @Prop() okText = 'OK';
 
@@ -70,7 +70,7 @@ export class Select implements ComponentInterface {
   @Prop() multiple = false;
 
   /**
-   * The interface the select should use: `action-sheet`, `popover` or `alert`. Default: `alert`.
+   * The interface the select should use: `action-sheet`, `popover` or `alert`.
    */
   @Prop() interface: SelectInterface = 'alert';
 

@@ -17,20 +17,20 @@ refresher.
 
 | Property           | Attribute           | Description                                                                                                                                       | Type      | Default             |
 | ------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------------------- |
-| `closeDuration`    | `close-duration`    | Time it takes to close the refresher. Defaults to `280ms`.                                                                                        | `string`  | `'280ms'`           |
-| `disabled`         | `disabled`          | If `true`, the refresher will be hidden. Defaults to `false`.                                                                                     | `boolean` | `false`             |
+| `closeDuration`    | `close-duration`    | Time it takes to close the refresher.                                                                                                             | `string`  | `'280ms'`           |
+| `disabled`         | `disabled`          | If `true`, the refresher will be hidden.                                                                                                          | `boolean` | `false`             |
 | `pullMax`          | `pull-max`          | The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`. | `number`  | `this.pullMin + 60` |
-| `pullMin`          | `pull-min`          | The minimum distance the user must pull down until the refresher will go into the `refreshing` state. Defaults to `60`.                           | `number`  | `60`                |
-| `snapbackDuration` | `snapback-duration` | Time it takes the refresher to to snap back to the `refreshing` state. Defaults to `280ms`.                                                       | `string`  | `'280ms'`           |
+| `pullMin`          | `pull-min`          | The minimum distance the user must pull down until the refresher will go into the `refreshing` state.                                             | `number`  | `60`                |
+| `snapbackDuration` | `snapback-duration` | Time it takes the refresher to to snap back to the `refreshing` state.                                                                            | `string`  | `'280ms'`           |
 
 
 ## Events
 
-| Event        | Detail               | Description                                                                                                                                                                                                                                                                  |
-| ------------ | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ionPull`    |                      | Emitted while the user is pulling down the content and exposing the refresher.                                                                                                                                                                                               |
-| `ionRefresh` | RefresherEventDetail | Emitted when the user lets go of the content and has pulled down further than the `pullMin` or pulls the content down and exceeds the pullMax. Updates the refresher state to `refreshing`. The `complete()` method should be called when the async operation has completed. |
-| `ionStart`   |                      | Emitted when the user begins to start pulling down.                                                                                                                                                                                                                          |
+| Event        | Description                                                                                                                                                                                                                                                                  | Detail               |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| `ionPull`    | Emitted while the user is pulling down the content and exposing the refresher.                                                                                                                                                                                               | void                 |
+| `ionRefresh` | Emitted when the user lets go of the content and has pulled down further than the `pullMin` or pulls the content down and exceeds the pullMax. Updates the refresher state to `refreshing`. The `complete()` method should be called when the async operation has completed. | RefresherEventDetail |
+| `ionStart`   | Emitted when the user begins to start pulling down.                                                                                                                                                                                                                          | void                 |
 
 
 ## Methods

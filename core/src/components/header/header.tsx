@@ -21,7 +21,6 @@ export class Header implements ComponentInterface {
    * If `true`, the header will be translucent.
    * Note: In order to scroll content behind the header, the `fullscreen`
    * attribute needs to be set on the content.
-   * Defaults to `false`.
    */
   @Prop() translucent = false;
 

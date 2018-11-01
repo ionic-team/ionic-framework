@@ -13,16 +13,16 @@ Their functionality is similar to tabs, where selecting one will deselect all ot
 | Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                          | Default     |
 | ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ----------- |
 | `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`         | `undefined` |
-| `disabled` | `disabled` | If `true`, the user cannot interact with the segment. Defaults to `false`.                                                                                                                                                                                             | `boolean`                     | `false`     |
+| `disabled` | `disabled` | If `true`, the user cannot interact with the segment.                                                                                                                                                                                                                  | `boolean`                     | `false`     |
 | `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`               | `undefined` |
 | `value`    | `value`    | the value of the segment.                                                                                                                                                                                                                                              | `null \| string \| undefined` | `undefined` |
 
 
 ## Events
 
-| Event       | Detail               | Description                                  |
-| ----------- | -------------------- | -------------------------------------------- |
-| `ionChange` | TextInputChangeEvent | Emitted when the value property has changed. |
+| Event       | Description                                  | Detail               |
+| ----------- | -------------------------------------------- | -------------------- |
+| `ionChange` | Emitted when the value property has changed. | TextInputChangeEvent |
 
 
 ## CSS Custom Properties

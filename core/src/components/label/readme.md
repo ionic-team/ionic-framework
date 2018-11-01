@@ -17,9 +17,9 @@ Label is a wrapper element that can be used in combination with `ion-item`, `ion
 
 ## Events
 
-| Event      | Detail     | Description                     |
-| ---------- | ---------- | ------------------------------- |
-| `ionStyle` | StyleEvent | Emitted when the styles change. |
+| Event      | Description                     | Detail     |
+| ---------- | ------------------------------- | ---------- |
+| `ionStyle` | Emitted when the styles change. | StyleEvent |
 
 
 ## CSS Custom Properties

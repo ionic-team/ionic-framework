@@ -44,7 +44,7 @@ export class Range implements ComponentInterface {
 
   /**
    * How long, in milliseconds, to wait to trigger the
-   * `ionChange` event after each change in the range value. Default `0`.
+   * `ionChange` event after each change in the range value.
    */
   @Prop() debounce = 0;
 
@@ -59,12 +59,12 @@ export class Range implements ComponentInterface {
   @Prop() name = '';
 
   /**
-   * Show two knobs. Defaults to `false`.
+   * Show two knobs.
    */
   @Prop() dualKnobs = false;
 
   /**
-   * Minimum integer value of the range. Defaults to `0`.
+   * Minimum integer value of the range.
    */
   @Prop() min = 0;
   @Watch('min')
@@ -75,7 +75,7 @@ export class Range implements ComponentInterface {
   }
 
   /**
-   * Maximum integer value of the range. Defaults to `100`.
+   * Maximum integer value of the range.
    */
   @Prop() max = 100;
   @Watch('max')
@@ -87,23 +87,23 @@ export class Range implements ComponentInterface {
 
   /**
    * If `true`, a pin with integer value is shown when the knob
-   * is pressed. Defaults to `false`.
+   * is pressed.
    */
   @Prop() pin = false;
 
   /**
    * If `true`, the knob snaps to tick marks evenly spaced based
-   * on the step property value. Defaults to `false`.
+   * on the step property value.
    */
   @Prop() snaps = false;
 
   /**
-   * Specifies the value granularity. Defaults to `1`.
+   * Specifies the value granularity.
    */
   @Prop() step = 1;
 
   /**
-   * If `true`, the user cannot interact with the range. Defaults to `false`.
+   * If `true`, the user cannot interact with the range.
    */
   @Prop() disabled = false;
   @Watch('disabled')

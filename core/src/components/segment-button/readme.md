@@ -10,18 +10,18 @@ Segment buttons are groups of related buttons inside of a [Segment](../../segmen
 
 | Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                  | Default               |
 | ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | --------------------- |
-| `checked`  | `checked`  | If `true`, the segment button is selected. Defaults to `false`.                                                                                                                                                                                                        | `boolean`             | `false`               |
+| `checked`  | `checked`  | If `true`, the segment button is selected.                                                                                                                                                                                                                             | `boolean`             | `false`               |
 | `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` | `undefined`           |
-| `disabled` | `disabled` | If `true`, the user cannot interact with the segment button. Defaults to `false`.                                                                                                                                                                                      | `boolean`             | `false`               |
+| `disabled` | `disabled` | If `true`, the user cannot interact with the segment button.                                                                                                                                                                                                           | `boolean`             | `false`               |
 | `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined`           |
 | `value`    | `value`    | The value of the segment button.                                                                                                                                                                                                                                       | `string`              | `'ion-sb-' + (ids++)` |
 
 
 ## Events
 
-| Event       | Detail | Description                                 |
-| ----------- | ------ | ------------------------------------------- |
-| `ionSelect` |        | Emitted when the segment button is clicked. |
+| Event       | Description                                 | Detail |
+| ----------- | ------------------------------------------- | ------ |
+| `ionSelect` | Emitted when the segment button is clicked. | void   |
 
 
 ## CSS Custom Properties

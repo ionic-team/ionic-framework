@@ -15,7 +15,7 @@ While RouterOutlet has methods for navigating around, it's recommended to use th
 
 | Property    | Attribute  | Description                                                                                                                                                                                    | Type                             | Default     |
 | ----------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | ----------- |
-| `animated`  | `animated` | If `true`, the router-outlet should animate the transition of components. Default to `true`.                                                                                                   | `boolean`                        | `true`      |
+| `animated`  | `animated` | If `true`, the router-outlet should animate the transition of components.                                                                                                                      | `boolean`                        | `true`      |
 | `animation` | --         | By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions. | `AnimationBuilder \| undefined`  | `undefined` |
 | `delegate`  | --         |                                                                                                                                                                                                | `FrameworkDelegate \| undefined` | `undefined` |
 

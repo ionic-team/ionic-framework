@@ -28,12 +28,12 @@ export class ItemOption implements ComponentInterface {
   @Prop() mode!: Mode;
 
   /**
-   * If `true`, the user cannot interact with the item option. Defaults to `false`.
+   * If `true`, the user cannot interact with the item option.
    */
   @Prop() disabled = false;
 
   /**
-   * If `true`, the option will expand to take up the available width and cover any other options. Defaults to `false`.
+   * If `true`, the option will expand to take up the available width and cover any other options.
    */
   @Prop() expandable = false;
 

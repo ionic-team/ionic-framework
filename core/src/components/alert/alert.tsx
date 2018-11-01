@@ -87,17 +87,17 @@ export class Alert implements ComponentInterface, OverlayInterface {
   @Prop({ mutable: true }) inputs: AlertInput[] = [];
 
   /**
-   * If `true`, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.
+   * If `true`, the alert will be dismissed when the backdrop is clicked.
    */
   @Prop() backdropDismiss = true;
 
   /**
-   * If `true`, the alert will be translucent. Defaults to `false`.
+   * If `true`, the alert will be translucent.
    */
   @Prop() translucent = false;
 
   /**
-   * If `true`, the alert will animate. Defaults to `true`.
+   * If `true`, the alert will animate.
    */
   @Prop() animated = true;
 
