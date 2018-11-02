@@ -1,10 +1,10 @@
-export type TabbarLayout = 'icon-top' | 'icon-start' | 'icon-end' | 'icon-bottom' | 'icon-hide' | 'label-hide';
+export type TabButtonLayout = 'icon-top' | 'icon-start' | 'icon-end' | 'icon-bottom' | 'icon-hide' | 'label-hide';
 
-export interface TabbarChangedDetail {
+export interface TabBarChangedDetail {
   tab?: string;
 }
 
-export interface TabbarClickDetail {
+export interface TabButtonClickDetail {
   tab?: string;
   href?: string;
 }

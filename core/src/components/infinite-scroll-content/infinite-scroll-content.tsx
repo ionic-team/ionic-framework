@@ -19,7 +19,7 @@ export class InfiniteScrollContent implements ComponentInterface {
   /**
    * An animated SVG spinner that shows while loading.
    */
-  @Prop({ mutable: true }) loadingSpinner?: SpinnerTypes;
+  @Prop({ mutable: true }) loadingSpinner?: SpinnerTypes | null;
 
   /**
    * Optional text to display while loading.
