@@ -6,10 +6,9 @@ import { createColorClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-chip',
   styleUrls: {
-    ios: 'chip.ios.scss',
-    md: 'chip.md.scss'
+    md: 'chip.md.new.scss'
   },
-  scoped: true
+  shadow: true
 })
 export class Chip implements ComponentInterface {
   /**
@@ -19,6 +18,9 @@ export class Chip implements ComponentInterface {
    */
   @Prop() color?: Color;
 
+  @Prop() removable = false;
+  @Prop() outline = false;
+
   /**
    * The mode determines which platform styles to use.
    */
@@ -26,7 +28,19 @@ export class Chip implements ComponentInterface {
 
   hostData() {
     return {
-      class: createColorClasses(this.color),
+      'ion-activatable': true,
+      class: {
+        ...createColorClasses(this.color),
+        'chip-outline': this.outline,
+      }
     };
+  }
+
+  render() {
+    return [
+      <slot></slot>,
+      this.removable ? <ion-icon class="chip-remove-button" name="close-circle"></ion-icon> : null,
+      <ion-ripple-effect></ion-ripple-effect>
+    ];
   }
 }

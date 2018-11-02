@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Chip - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app mode="ios">
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Chip - Basic</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content id="content" padding style="text-align: center">
+      <ion-chip><ion-label>Some Label</ion-label></ion-chip>
+      <ion-chip style="--border-radius: 4px;">
+        Some Label
+      </ion-chip>
+      <ion-chip color="primary">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        Some Label
+      </ion-chip>
+      <ion-chip color="tertiary">
+        <ion-icon name="reverse-camera"></ion-icon>
+        Some Label
+      </ion-chip>
+      <ion-chip>
+        <ion-icon name="calendar"></ion-icon>
+        Some Label
+      </ion-chip>
+      <ion-chip>
+        <ion-avatar>
+          <img src="/src/components/avatar/test/avatar.svg"/>
+        </ion-avatar>
+        Some Label
+      </ion-chip>
+      <ion-chip removable>
+        Some Label
+      </ion-chip>
+      <ion-chip outline removable>
+        Some Label
+      </ion-chip>
+      <ion-chip outline color="danger">
+        <ion-avatar>
+          <img src="/src/components/avatar/test/avatar.svg"/>
+        </ion-avatar>
+        Some Label
+      </ion-chip>
+      <ion-chip outline removable color="success">
+        Some Label
+      </ion-chip>
+      <ion-chip color="secondary" style="--border-radius: 4px;" outline>
+        Some Label
+      </ion-chip>
+    </ion-content>
+
+  </ion-app>
+</body>
+
+</html>
