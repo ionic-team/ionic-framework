@@ -1766,7 +1766,7 @@ export namespace Components {
     /**
     * Instructional text that shows before the input has a value.
     */
-    'placeholder'?: string;
+    'placeholder'?: string | null;
     /**
     * If `true`, the user cannot modify the value.
     */
@@ -1912,7 +1912,7 @@ export namespace Components {
     /**
     * Instructional text that shows before the input has a value.
     */
-    'placeholder'?: string;
+    'placeholder'?: string | null;
     /**
     * If `true`, the user cannot modify the value.
     */
@@ -4670,7 +4670,7 @@ export namespace Components {
     /**
     * Instructional text that shows before the input has a value.
     */
-    'placeholder'?: string;
+    'placeholder'?: string | null;
     /**
     * If `true`, the user cannot modify the value.
     */
@@ -4768,7 +4768,7 @@ export namespace Components {
     /**
     * Instructional text that shows before the input has a value.
     */
-    'placeholder'?: string;
+    'placeholder'?: string | null;
     /**
     * If `true`, the user cannot modify the value.
     */
