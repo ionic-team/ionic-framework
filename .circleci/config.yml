@@ -3,35 +3,35 @@ version: 2
 aliases:
   - &restore-cache
       keys:
-        - dependency-cache-{{ checksum "package.json" }}-2
+        - dependency-cache-{{ checksum "package.json" }}-3
 
   - &save-cache
-      key: dependency-cache-{{ checksum "package.json" }}-2
+      key: dependency-cache-{{ checksum "package.json" }}-3
       paths:
         - node_modules
 
   - &restore-cache-core
       keys:
-        - dependency-cache-{{ checksum "core/package.json" }}-2
+        - dependency-cache-{{ checksum "core/package.json" }}-3
 
   - &save-cache-core
-      key: dependency-cache-{{ checksum "core/package.json" }}-2
+      key: dependency-cache-{{ checksum "core/package.json" }}-3
       paths:
         - core/node_modules
 
   - &restore-cache-core-stencil
       keys:
-        - stencil-cache-1
+        - stencil-cache-2
 
   - &save-cache-core-stencil
-      key: stencil-cache-1
+      key: stencil-cache-2
       paths:
         - core/.stencil
         - core/screenshot/images
 
 defaults: &defaults
   docker:
-    - image: circleci/node:latest-browsers
+    - image: circleci/node:10-browsers
   working_directory: /tmp/workspace
 
 jobs:

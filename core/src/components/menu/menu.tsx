@@ -77,7 +77,7 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   /**
-   * If `true`, the menu is disabled. Defaults to `false`.
+   * If `true`, the menu is disabled.
    */
   @Prop({ mutable: true }) disabled = false;
 
@@ -92,7 +92,7 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   /**
-   * Which side of the view the menu should be placed. Default `"start"`.
+   * Which side of the view the menu should be placed.
    */
   @Prop({ reflectToAttr: true }) side: Side = 'start';
 
@@ -102,7 +102,7 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   /**
-   * If `true`, swiping the menu is enabled. Defaults to `true`.
+   * If `true`, swiping the menu is enabled.
    */
   @Prop() swipeGesture = true;
 

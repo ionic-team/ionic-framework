@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 
-import { Animation, AnimationBuilder, Config, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { Animation, AnimationBuilder, Config, Mode, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 
@@ -32,7 +32,6 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
@@ -68,28 +67,27 @@ export class Loading implements ComponentInterface, OverlayInterface {
   @Prop() duration = 0;
 
   /**
-   * If `true`, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
+   * If `true`, the loading indicator will be dismissed when the backdrop is clicked.
    */
   @Prop() backdropDismiss = false;
 
   /**
-   * If `true`, a backdrop will be displayed behind the loading indicator. Defaults to `true`.
+   * If `true`, a backdrop will be displayed behind the loading indicator.
    */
   @Prop() showBackdrop = true;
 
   /**
-   * The name of the spinner to display. Possible values are: `"lines"`, `"lines-small"`, `"dots"`,
-   * `"bubbles"`, `"circles"`, `"crescent"`.
+   * The name of the spinner to display.
    */
-  @Prop({ mutable: true }) spinner?: string;
+  @Prop({ mutable: true }) spinner?: SpinnerTypes | 'hide';
 
   /**
-   * If `true`, the loading indicator will be translucent. Defaults to `false`.
+   * If `true`, the loading indicator will be translucent.
    */
   @Prop() translucent = false;
 
   /**
-   * If `true`, the loading indicator will animate. Defaults to `true`.
+   * If `true`, the loading indicator will animate.
    */
   @Prop() animated = true;
 

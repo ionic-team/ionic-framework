@@ -31,7 +31,6 @@ export class Datetime implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
@@ -41,7 +40,7 @@ export class Datetime implements ComponentInterface {
   @Prop() name: string = this.inputId;
 
   /**
-   * If `true`, the user cannot interact with the datetime. Defaults to `false`.
+   * If `true`, the user cannot interact with the datetime.
    */
   @Prop() disabled = false;
 
@@ -90,12 +89,12 @@ export class Datetime implements ComponentInterface {
   @Prop() pickerFormat?: string;
 
   /**
-   * The text to display on the picker's cancel button. Default: `Cancel`.
+   * The text to display on the picker's cancel button.
    */
   @Prop() cancelText = 'Cancel';
 
   /**
-   * The text to display on the picker's "Done" button. Default: `Done`.
+   * The text to display on the picker's "Done" button.
    */
   @Prop() doneText = 'Done';
 

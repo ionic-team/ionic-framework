@@ -22,7 +22,6 @@ export class TabBar implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
@@ -50,7 +49,7 @@ export class TabBar implements ComponentInterface {
   }
 
   /**
-   * If `true`, the tab bar will be translucent. Defaults to `false`.
+   * If `true`, the tab bar will be translucent.
    */
   @Prop() translucent = false;
 

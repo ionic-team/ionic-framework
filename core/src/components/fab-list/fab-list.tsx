@@ -9,7 +9,7 @@ export class FabList implements ComponentInterface {
   @Element() el!: HTMLIonFabElement;
 
   /**
-   * If `true`, the fab list will be show all fab buttons in the list. Defaults to `false`.
+   * If `true`, the fab list will be show all fab buttons in the list.
    */
   @Prop() activated = false;
 
@@ -25,7 +25,7 @@ export class FabList implements ComponentInterface {
   }
 
   /**
-   * The side the fab list will show on relative to the main fab button. Defaults to `'bottom'`.
+   * The side the fab list will show on relative to the main fab button.
    */
   @Prop() side: 'start' | 'end' | 'top' | 'bottom' = 'bottom';
 
