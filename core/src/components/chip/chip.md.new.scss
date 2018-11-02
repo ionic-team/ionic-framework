@@ -74,7 +74,7 @@ ion-icon,
 }
 
 :host(.chip-outline) {
-  border: solid 1px rgba(0,0,0,0.24);
+  border: solid 1px rgba(0,0,0,0.32);
 
   background: transparent;
 }
@@ -84,7 +84,7 @@ ion-icon,
 }
 
 :host(.ion-color.chip-outline) {
-  border-color: current-color(base, 0.24);
+  border-color: current-color(base, 0.32);
 }
 
 :host(.ion-color) {
