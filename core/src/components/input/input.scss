@@ -88,6 +88,10 @@
   &:-webkit-autofill {
     background-color: transparent;
   }
+
+  &::-ms-clear {
+    display: none;
+  }
 }
 
 .native-input[disabled] {

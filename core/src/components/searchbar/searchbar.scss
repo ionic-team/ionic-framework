@@ -93,7 +93,8 @@
     opacity: var(--placeholder-opacity);
   }
 
-  &::-webkit-search-cancel-button {
+  &::-webkit-search-cancel-button,
+  &::-ms-clear {
     display: none;
   }
 }
