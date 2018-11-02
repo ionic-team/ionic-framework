@@ -13,6 +13,7 @@
     <ion-tab-button tab="tab-schedule">
       <ion-icon name="calendar"></ion-icon>
       <ion-label>Schedule</ion-label>
+      <ion-badge>6</ion-badge>
     </ion-tab-button>
     <ion-tab-button tab="tab-speaker">
       <ion-icon name="contacts"></ion-icon>

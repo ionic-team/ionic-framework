@@ -17,6 +17,7 @@ In order to do so, an `ion-tab-bar` should be provided as a direct child of `ion
     <ion-tab-button tab="home">
       <ion-label>Home</ion-label>
       <ion-icon name="home"></ion-icon>
+      <ion-badge>6</ion-badge>
     </ion-tab-button>
 
     <ion-tab-button tab="settings">

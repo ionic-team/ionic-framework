@@ -15,7 +15,7 @@ async function presentLoadingWithOptions() {
   await loadingController.componentOnReady();
 
   const loading = await loadingController.create({
-    spinner: 'hide',
+    spinner: null,
     duration: 5000,
     message: 'Please wait...',
     translucent: true,

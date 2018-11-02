@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { Color, Mode, TabbarChangedDetail, TabbarLayout } from '../../interface';
+import { Color, Mode, TabBarChangedDetail, TabButtonLayout } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -35,7 +35,7 @@ export class TabBar implements ComponentInterface {
   /**
    * Set the layout of the text and icon in the tab bar.
    */
-  @Prop() layout: TabbarLayout = 'icon-top';
+  @Prop() layout: TabButtonLayout = 'icon-top';
 
   /**
    * The selected tab component
@@ -54,7 +54,7 @@ export class TabBar implements ComponentInterface {
   @Prop() translucent = false;
 
   /** @internal */
-  @Event() ionTabBarChanged!: EventEmitter<TabbarChangedDetail>;
+  @Event() ionTabBarChanged!: EventEmitter<TabBarChangedDetail>;
 
   @Listen('body:keyboardWillHide')
   protected onKeyboardWillHide() {
