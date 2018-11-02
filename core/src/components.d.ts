@@ -164,7 +164,7 @@ export namespace Components {
     /**
     * An array of buttons for the action sheet.
     */
-    'buttons': (ActionSheetButton | string)[];
+    'buttons'?: (ActionSheetButton | string)[];
     /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
@@ -213,7 +213,7 @@ export namespace Components {
     * Emitted before the alert has presented.
     */
     'onIonActionSheetWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
+    'overlayIndex'?: number;
     /**
     * Subtitle for the action sheet.
     */
@@ -380,7 +380,7 @@ export namespace Components {
     * Emitted before the alert has presented.
     */
     'onIonAlertWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
+    'overlayIndex'?: number;
     /**
     * The subtitle in the heading of the alert. Displayed under the title.
     */
@@ -918,6 +918,8 @@ export namespace Components {
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
+    'outline': boolean;
+    'removable': boolean;
   }
   interface IonChipAttributes extends StencilHTMLAttributes {
     /**
@@ -928,6 +930,8 @@ export namespace Components {
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
+    'outline'?: boolean;
+    'removable'?: boolean;
   }
 
   interface IonCol {
@@ -2383,7 +2387,7 @@ export namespace Components {
     * Emitted before the loading has presented.
     */
     'onIonLoadingWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
+    'overlayIndex'?: number;
     /**
     * If `true`, a backdrop will be displayed behind the loading indicator.
     */
@@ -2611,7 +2615,7 @@ export namespace Components {
     /**
     * The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.
     */
-    'type': string;
+    'type'?: string;
   }
 
   interface IonModalController {
@@ -2702,7 +2706,7 @@ export namespace Components {
     /**
     * The component to display inside of the modal.
     */
-    'component': ComponentRef;
+    'component'?: ComponentRef;
     /**
     * The data to pass to the modal component.
     */
@@ -2752,7 +2756,7 @@ export namespace Components {
     * Emitted before the modal has presented.
     */
     'onIonModalWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
+    'overlayIndex'?: number;
     /**
     * If `true`, a backdrop will be displayed behind the modal.
     */
@@ -2942,7 +2946,7 @@ export namespace Components {
     'col': PickerColumn;
   }
   interface IonPickerColumnAttributes extends StencilHTMLAttributes {
-    'col': PickerColumn;
+    'col'?: PickerColumn;
   }
 
   interface IonPickerController {
@@ -3093,7 +3097,7 @@ export namespace Components {
     * Emitted before the picker has presented.
     */
     'onIonPickerWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
+    'overlayIndex'?: number;
     /**
     * If `true`, a backdrop will be displayed behind the picker.
     */
@@ -3196,7 +3200,7 @@ export namespace Components {
     /**
     * The component to display inside of the popover.
     */
-    'component': ComponentRef;
+    'component'?: ComponentRef;
     /**
     * The data to pass to the popover component.
     */
@@ -3250,7 +3254,7 @@ export namespace Components {
     * Emitted before the popover has presented.
     */
     'onIonPopoverWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
+    'overlayIndex'?: number;
     /**
     * If `true`, a backdrop will be displayed behind the popover.
     */
@@ -3669,7 +3673,7 @@ export namespace Components {
     /**
     * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
     */
-    'component': string;
+    'component'?: string;
     /**
     * A key value `{ 'red': true, 'blue': 'white'}` containing props that should be passed to the defined component when rendered.
     */
@@ -4963,7 +4967,7 @@ export namespace Components {
     * Emitted before the toast has presented.
     */
     'onIonToastWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
+    'overlayIndex'?: number;
     /**
     * The position of the toast on the screen.
     */
