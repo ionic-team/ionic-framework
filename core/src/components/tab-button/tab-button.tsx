@@ -1,8 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State } from '@stencil/core';
 
-import { Color, Mode, TabbarClickDetail, TabbarLayout } from '../../interface';
+import { Color, Mode, TabButtonClickDetail, TabButtonLayout, TabBarChangedDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
-import { TabbarChangedDetail } from '../tab-bar/tab-bar-interface';
 
 @Component({
   tag: 'ion-tab-button',
@@ -37,9 +36,9 @@ export class TabButton implements ComponentInterface {
   @Prop() color?: Color;
 
   /**
-   * Set the layout of the text and icon in the tabbar.
+   * Set the layout of the text and icon in the tab bar.
    */
-  @Prop() layout: TabbarLayout = 'icon-top';
+  @Prop() layout: TabButtonLayout = 'icon-top';
 
   /**
    * The URL which will be used as the `href` within this tab's button anchor.
@@ -61,10 +60,10 @@ export class TabButton implements ComponentInterface {
    * Emitted when the tab bar is clicked
    * @internal
    */
-  @Event() ionTabButtonClick!: EventEmitter<TabbarClickDetail>;
+  @Event() ionTabButtonClick!: EventEmitter<TabButtonClickDetail>;
 
   @Listen('parent:ionTabBarChanged')
-  onTabbarChanged(ev: CustomEvent<TabbarChangedDetail>) {
+  onTabBarChanged(ev: CustomEvent<TabBarChangedDetail>) {
     this.selected = this.tab === ev.detail.tab;
   }
 

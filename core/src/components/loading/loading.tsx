@@ -79,7 +79,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
   /**
    * The name of the spinner to display.
    */
-  @Prop({ mutable: true }) spinner?: SpinnerTypes | 'hide';
+  @Prop({ mutable: true }) spinner?: SpinnerTypes | null;
 
   /**
    * If `true`, the loading indicator will be translucent.
@@ -203,7 +203,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
     return [
       <ion-backdrop visible={this.showBackdrop} tappable={false} />,
       <div class="loading-wrapper" role="dialog">
-        {this.spinner !== 'hide' && (
+        {this.spinner && (
           <div class="loading-spinner">
             <ion-spinner name={this.spinner} />
           </div>
