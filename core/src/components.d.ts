@@ -4494,9 +4494,9 @@ export namespace Components {
     */
     'href'?: string;
     /**
-    * Set the layout of the text and icon in the tabbar.
+    * Set the layout of the text and icon in the tab bar. It defaults to `'icon-top'`.
     */
-    'layout': TabButtonLayout;
+    'layout'?: TabButtonLayout;
     /**
     * The mode determines which platform styles to use.
     */
@@ -4520,7 +4520,7 @@ export namespace Components {
     */
     'href'?: string;
     /**
-    * Set the layout of the text and icon in the tabbar.
+    * Set the layout of the text and icon in the tab bar. It defaults to `'icon-top'`.
     */
     'layout'?: TabButtonLayout;
     /**

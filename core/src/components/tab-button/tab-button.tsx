@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State } from '@stencil/core';
 
-import { Color, Mode, TabBarChangedDetail, TabButtonClickDetail, TabButtonLayout } from '../../interface';
+import { Color, Config, Mode, TabBarChangedDetail, TabButtonClickDetail, TabButtonLayout } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -17,6 +17,7 @@ export class TabButton implements ComponentInterface {
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'document' }) doc!: Document;
+  @Prop({ context: 'config' }) config!: Config;
 
   /**
    * The selected tab component
@@ -37,8 +38,9 @@ export class TabButton implements ComponentInterface {
 
   /**
    * Set the layout of the text and icon in the tab bar.
+   * It defaults to `'icon-top'`.
    */
-  @Prop() layout: TabButtonLayout = 'icon-top';
+  @Prop() layout?: TabButtonLayout;
 
   /**
    * The URL which will be used as the `href` within this tab's button anchor.
@@ -79,6 +81,9 @@ export class TabButton implements ComponentInterface {
   }
 
   componentWillLoad() {
+    if (this.layout === undefined) {
+      this.layout = this.config.get('tabButtonLayout', 'icon-top');
+    }
     if (this.tab === undefined) {
       console.warn(`ion-tab-button needs a tab name, so it can be selected.
   <ion-tab-button tab="TAB_NAME">`);
