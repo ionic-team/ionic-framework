@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State } from '@stencil/core';
 
-import { Color, Mode, TabButtonClickDetail, TabButtonLayout, TabBarChangedDetail } from '../../interface';
+import { Color, Mode, TabBarChangedDetail, TabButtonClickDetail, TabButtonLayout } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
