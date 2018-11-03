@@ -87,7 +87,7 @@ export class Textarea implements ComponentInterface {
   /**
    * Instructional text that shows before the input has a value.
    */
-  @Prop() placeholder?: string;
+  @Prop() placeholder?: string | null;
 
   /**
    * If `true`, the user cannot modify the value.
@@ -187,6 +187,7 @@ export class Textarea implements ComponentInterface {
       'textarea': true,
       'input': true,
       'interactive-disabled': this.disabled,
+      'has-placeholder': this.placeholder != null,
       'has-value': this.hasValue(),
       'has-focus': this.hasFocus
     });
@@ -272,7 +273,7 @@ export class Textarea implements ComponentInterface {
         maxLength={this.maxlength}
         minLength={this.minlength}
         name={this.name}
-        placeholder={this.placeholder}
+        placeholder={this.placeholder || ''}
         readOnly={this.readonly}
         required={this.required}
         spellCheck={this.spellcheck}

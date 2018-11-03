@@ -1,6 +1,36 @@
 <a name="4.0.0-beta.15"></a>
 # [4.0.0-beta.15](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.13...v4.0.0-beta.15) (2018-11-01)
 
+# Breaking Changes
+
+## Removed Global CSS Variables
+
+The following global CSS variables have been removed for the reasons listed.
+
+| Variable Name                     | Reason                                          |
+| ----------------------------------| ------------------------------------------------|
+| `--ion-toolbar-color-inactive`    | Unused                                          |
+| `--ion-ripple-background-color`   | Unused / Ripple color is based on component     |
+| `--ion-header-size`               | Removed in favor of using CSS for h1-h6         |
+| `--ion-header-step`               | Removed in favor of using CSS for h1-h6         |
+
+## Renamed Global CSS Variables
+
+The following global CSS variables have been renamed for the reasons listed.
+
+| Old Variable Name                        | New Variable Name                  | Reason                                                                        |
+| -----------------------------------------| -----------------------------------| ------------------------------------------------------------------------------|
+| `--ion-toolbar-text-color`               | `--ion-toolbar-color`              | Variable is not limited to text color                                         |
+| `--ion-toolbar-color-active`             | `--ion-toolbar-color-activated`    | Consistency with our component variables                                      |
+| `--ion-tabbar-text-color`                | `--ion-tab-bar-color`              | Variable is not limited to text color                                         |
+| `--ion-tabbar-text-color-active`         | `--ion-tab-bar-color-activated`    | Consistency with our component variables                                      |
+| `--ion-tabbar-background-color`          | `--ion-tab-bar-background`         | Applies to the background property                                            |
+| `--ion-tabbar-background-color-focused`  | `--ion-tab-bar-background-focused` | Applies to the background property                                            |
+| `--ion-item-background-color`            | `--ion-item-background`            | Applies to the background property                                            |
+| `--ion-item-background-color-active`     | `--ion-item-background-activated`  | Applies to the background property / Consistency with our component variables |
+| `--ion-item-text-color`                  | `--ion-item-color`                 | Variable is not limited to text color                                         |
+| `--ion-placeholder-text-color`           | `--ion-placeholder-color`          | Consistency with other variables                                              |
+
 ## Rethinking Tabs
 
 One of the most valuable and complex components in Ionic's toolkit is Tabs. Tabs started off as a simple component that would create a tabbed interface to allow users to switch between different views in a way that was consistent with native UX paradigms.

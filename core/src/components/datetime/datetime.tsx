@@ -247,6 +247,7 @@ export class Datetime implements ComponentInterface {
     this.ionStyle.emit({
       'interactive': true,
       'datetime': true,
+      'has-placeholder': this.placeholder != null,
       'has-value': this.hasValue(),
       'interactive-disabled': this.disabled,
     });

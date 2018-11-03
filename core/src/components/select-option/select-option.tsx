@@ -37,7 +37,7 @@ export class SelectOption implements ComponentInterface {
   @Event() ionSelectOptionDidUnload!: EventEmitter<void>;
 
   componentWillLoad() {
-    if (this.value == null) {
+    if (this.value === undefined) {
       this.value = this.el.textContent || '';
     }
   }

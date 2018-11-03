@@ -56,9 +56,9 @@ import {
   Side,
   SpinnerTypes,
   StyleEvent,
-  TabbarChangedDetail,
-  TabbarClickDetail,
-  TabbarLayout,
+  TabBarChangedDetail,
+  TabButtonClickDetail,
+  TabButtonLayout,
   TextFieldTypes,
   TextInputChangeEvent,
   ToastOptions,
@@ -1632,7 +1632,7 @@ export namespace Components {
     /**
     * An animated SVG spinner that shows while loading.
     */
-    'loadingSpinner'?: SpinnerTypes;
+    'loadingSpinner'?: SpinnerTypes | null;
     /**
     * Optional text to display while loading.
     */
@@ -1642,7 +1642,7 @@ export namespace Components {
     /**
     * An animated SVG spinner that shows while loading.
     */
-    'loadingSpinner'?: SpinnerTypes;
+    'loadingSpinner'?: SpinnerTypes | null;
     /**
     * Optional text to display while loading.
     */
@@ -1700,7 +1700,7 @@ export namespace Components {
     */
     'autocomplete': 'on' | 'off';
     /**
-    * Whether autocorrection should be enabled when the user is entering/editing the text value.
+    * Whether auto correction should be enabled when the user is entering/editing the text value.
     */
     'autocorrect': 'on' | 'off';
     /**
@@ -1766,7 +1766,7 @@ export namespace Components {
     /**
     * Instructional text that shows before the input has a value.
     */
-    'placeholder'?: string;
+    'placeholder'?: string | null;
     /**
     * If `true`, the user cannot modify the value.
     */
@@ -1818,7 +1818,7 @@ export namespace Components {
     */
     'autocomplete'?: 'on' | 'off';
     /**
-    * Whether autocorrection should be enabled when the user is entering/editing the text value.
+    * Whether auto correction should be enabled when the user is entering/editing the text value.
     */
     'autocorrect'?: 'on' | 'off';
     /**
@@ -1912,7 +1912,7 @@ export namespace Components {
     /**
     * Instructional text that shows before the input has a value.
     */
-    'placeholder'?: string;
+    'placeholder'?: string | null;
     /**
     * If `true`, the user cannot modify the value.
     */
@@ -2316,7 +2316,7 @@ export namespace Components {
     /**
     * The name of the spinner to display.
     */
-    'spinner'?: SpinnerTypes | 'hide';
+    'spinner'?: SpinnerTypes | null;
     /**
     * If `true`, the loading indicator will be translucent.
     */
@@ -2391,7 +2391,7 @@ export namespace Components {
     /**
     * The name of the spinner to display.
     */
-    'spinner'?: SpinnerTypes | 'hide';
+    'spinner'?: SpinnerTypes | null;
     /**
     * If `true`, the loading indicator will be translucent.
     */
@@ -3492,7 +3492,7 @@ export namespace Components {
     /**
     * A static icon to display when you begin to pull down
     */
-    'pullingIcon'?: string;
+    'pullingIcon'?: string | null;
     /**
     * The text you want to display when you begin to pull down
     */
@@ -3500,7 +3500,7 @@ export namespace Components {
     /**
     * An animated SVG spinner that shows when refreshing begins
     */
-    'refreshingSpinner'?: SpinnerTypes;
+    'refreshingSpinner'?: SpinnerTypes | null;
     /**
     * The text you want to display when performing a refresh
     */
@@ -3510,7 +3510,7 @@ export namespace Components {
     /**
     * A static icon to display when you begin to pull down
     */
-    'pullingIcon'?: string;
+    'pullingIcon'?: string | null;
     /**
     * The text you want to display when you begin to pull down
     */
@@ -3518,7 +3518,7 @@ export namespace Components {
     /**
     * An animated SVG spinner that shows when refreshing begins
     */
-    'refreshingSpinner'?: SpinnerTypes;
+    'refreshingSpinner'?: SpinnerTypes | null;
     /**
     * The text you want to display when performing a refresh
     */
@@ -4442,7 +4442,7 @@ export namespace Components {
     /**
     * Set the layout of the text and icon in the tab bar.
     */
-    'layout': TabbarLayout;
+    'layout': TabButtonLayout;
     /**
     * The mode determines which platform styles to use.
     */
@@ -4464,12 +4464,12 @@ export namespace Components {
     /**
     * Set the layout of the text and icon in the tab bar.
     */
-    'layout'?: TabbarLayout;
+    'layout'?: TabButtonLayout;
     /**
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
-    'onIonTabBarChanged'?: (event: CustomEvent<TabbarChangedDetail>) => void;
+    'onIonTabBarChanged'?: (event: CustomEvent<TabBarChangedDetail>) => void;
     /**
     * The selected tab component
     */
@@ -4494,9 +4494,9 @@ export namespace Components {
     */
     'href'?: string;
     /**
-    * Set the layout of the text and icon in the tabbar.
+    * Set the layout of the text and icon in the tab bar. It defaults to `'icon-top'`.
     */
-    'layout': TabbarLayout;
+    'layout'?: TabButtonLayout;
     /**
     * The mode determines which platform styles to use.
     */
@@ -4520,9 +4520,9 @@ export namespace Components {
     */
     'href'?: string;
     /**
-    * Set the layout of the text and icon in the tabbar.
+    * Set the layout of the text and icon in the tab bar. It defaults to `'icon-top'`.
     */
-    'layout'?: TabbarLayout;
+    'layout'?: TabButtonLayout;
     /**
     * The mode determines which platform styles to use.
     */
@@ -4530,7 +4530,7 @@ export namespace Components {
     /**
     * Emitted when the tab bar is clicked
     */
-    'onIonTabButtonClick'?: (event: CustomEvent<TabbarClickDetail>) => void;
+    'onIonTabButtonClick'?: (event: CustomEvent<TabButtonClickDetail>) => void;
     /**
     * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
     */
@@ -4670,7 +4670,7 @@ export namespace Components {
     /**
     * Instructional text that shows before the input has a value.
     */
-    'placeholder'?: string;
+    'placeholder'?: string | null;
     /**
     * If `true`, the user cannot modify the value.
     */
@@ -4768,7 +4768,7 @@ export namespace Components {
     /**
     * Instructional text that shows before the input has a value.
     */
-    'placeholder'?: string;
+    'placeholder'?: string | null;
     /**
     * If `true`, the user cannot modify the value.
     */
