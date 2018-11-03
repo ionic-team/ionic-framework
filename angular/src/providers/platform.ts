@@ -4,6 +4,9 @@ import { proxyEvent } from '../util/util';
 
 
 export class BackButtonEmitter extends EventEmitter<BackButtonDetail> {
+  constructor() {
+    super();
+  }
   subscribeWithPriority(priority: number, callback: () => Promise<any> | void) {
     return this.subscribe((ev: BackButtonDetail) => {
       ev.register(priority, callback);
