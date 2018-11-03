@@ -59,12 +59,12 @@ function importTapClick(win: Window) {
 }
 
 function importInputShims(win: Window, config: Config) {
-  const inputShims = config.getBoolean('inputShims', needInputShims(win));
-  if (inputShims) {
+  // const inputShims = config.getBoolean('inputShims', needInputShims(win));
+  // if (inputShims) {
     import('../../utils/input-shims/input-shims').then(module => module.startInputShims(win.document, config));
-  }
+  // }
 }
 
-function needInputShims(win: Window) {
-  return isPlatform(win, 'ios') && isPlatform(win, 'mobile');
-}
+// function needInputShims(win: Window) {
+//   return isPlatform(win, 'ios') && isPlatform(win, 'mobile');
+// }
