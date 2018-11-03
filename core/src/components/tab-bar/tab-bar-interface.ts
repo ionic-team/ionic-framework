@@ -5,6 +5,6 @@ export interface TabBarChangedDetail {
 }
 
 export interface TabButtonClickDetail {
-  tab?: string;
+  tab: string;
   href?: string;
 }

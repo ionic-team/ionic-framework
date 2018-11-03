@@ -51,7 +51,7 @@ export class TabButton implements ComponentInterface {
    * A tab id must be provided for each `ion-tab`. It's used internally to reference
    * the selected tab or by the router to switch between them.
    */
-  @Prop() tab?: string;
+  @Prop() tab!: string;
 
   /**
    * The selected tab component
@@ -83,10 +83,6 @@ export class TabButton implements ComponentInterface {
   componentWillLoad() {
     if (this.layout === undefined) {
       this.layout = this.config.get('tabButtonLayout', 'icon-top');
-    }
-    if (this.tab === undefined) {
-      console.warn(`ion-tab-button needs a tab name, so it can be selected.
-  <ion-tab-button tab="TAB_NAME">`);
     }
   }
 
