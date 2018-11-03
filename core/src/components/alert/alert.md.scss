@@ -81,6 +81,10 @@
     font-family: inherit;
     font-weight: inherit;
   }
+
+  &::-ms-clear {
+    display: none;
+  }
 }
 
 .alert-input:focus {

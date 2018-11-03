@@ -21,12 +21,11 @@ export class CardHeader implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
-   * If `true`, the card header will be translucent. Defaults to `false`.
+   * If `true`, the card header will be translucent.
    */
   @Prop() translucent = false;
 

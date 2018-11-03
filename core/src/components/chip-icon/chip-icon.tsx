@@ -18,13 +18,11 @@ export class ChipIcon implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
    * Set to `"clear"` for a transparent icon or to `"solid"` for a filled background.
-   * Defaults to `"clear"`.
    */
   @Prop() fill: 'clear' | 'solid' = 'clear';
 

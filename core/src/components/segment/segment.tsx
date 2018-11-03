@@ -24,12 +24,11 @@ export class Segment implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
-   * If `true`, the user cannot interact with the segment. Defaults to `false`.
+   * If `true`, the user cannot interact with the segment.
    */
   @Prop() disabled = false;
 

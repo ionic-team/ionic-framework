@@ -27,7 +27,6 @@ export class Slides implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
@@ -47,12 +46,12 @@ export class Slides implements ComponentInterface {
   }
 
   /**
-   * If `true`, show the pagination. Defaults to `false`.
+   * If `true`, show the pagination.
    */
   @Prop() pager = false;
 
   /**
-   * If `true`, show the scrollbar. Defaults to `false`.
+   * If `true`, show the scrollbar.
    */
   @Prop() scrollbar = false;
 

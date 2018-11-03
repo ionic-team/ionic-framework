@@ -22,7 +22,7 @@ function calcScrollData(
   inputRect: ClientRect,
   contentRect: ClientRect,
   keyboardHeight: number,
-  plaformHeight: number
+  platformHeight: number
 ): ScrollData {
   // compute input's Y values relative to the body
   const inputTop = inputRect.top;
@@ -30,13 +30,13 @@ function calcScrollData(
 
   // compute visible area
   const visibleAreaTop = contentRect.top;
-  const visibleAreaBottom = Math.min(contentRect.bottom, plaformHeight - keyboardHeight);
+  const visibleAreaBottom = Math.min(contentRect.bottom, platformHeight - keyboardHeight);
 
   // compute safe area
-  const safeAreaTop = visibleAreaTop + 10;
-  const safeAreaBottom = visibleAreaBottom / 2.0;
+  const safeAreaTop = visibleAreaTop + 15;
+  const safeAreaBottom = visibleAreaBottom * 0.5;
 
-  // figure out if each edge of teh input is within the safe area
+  // figure out if each edge of the input is within the safe area
   const distanceToBottom = safeAreaBottom - inputBottom;
   const distanceToTop = safeAreaTop - inputTop;
 

@@ -30,7 +30,6 @@ export class Checkbox implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
@@ -40,12 +39,12 @@ export class Checkbox implements ComponentInterface {
   @Prop() name: string = this.inputId;
 
   /**
-   * If `true`, the checkbox is selected. Defaults to `false`.
+   * If `true`, the checkbox is selected.
    */
   @Prop({ mutable: true }) checked = false;
 
   /**
-   * If `true`, the user cannot interact with the checkbox. Defaults to `false`.
+   * If `true`, the user cannot interact with the checkbox.
    */
   @Prop() disabled = false;
 
@@ -55,7 +54,6 @@ export class Checkbox implements ComponentInterface {
    *
    * The value of a toggle is analogous to the value of a `<input type="checkbox">`,
    * it's only used when the toggle participates in a native `<form>`.
-   * Defaults to `on`.
    */
   @Prop() value = 'on';
 

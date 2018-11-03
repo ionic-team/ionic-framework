@@ -10,7 +10,7 @@ export class SelectOption implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   /**
-   * If `true`, the user cannot interact with the select option. Defaults to `false`.
+   * If `true`, the user cannot interact with the select option.
    */
   @Prop() disabled = false;
 
@@ -37,7 +37,7 @@ export class SelectOption implements ComponentInterface {
   @Event() ionSelectOptionDidUnload!: EventEmitter<void>;
 
   componentWillLoad() {
-    if (this.value == null) {
+    if (this.value === undefined) {
       this.value = this.el.textContent || '';
     }
   }

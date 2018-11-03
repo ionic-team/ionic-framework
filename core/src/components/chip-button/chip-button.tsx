@@ -20,18 +20,16 @@ export class ChipButton implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
-   * If `true`, the user cannot interact with the chip button. Defaults to `false`.
+   * If `true`, the user cannot interact with the chip button.
    */
   @Prop() disabled = false;
 
   /**
    * Set to `"clear"` for a transparent button or to `"solid"` for a filled background.
-   * Defaults to `"clear"`.
    */
   @Prop() fill: 'clear' | 'solid' = 'clear';
 

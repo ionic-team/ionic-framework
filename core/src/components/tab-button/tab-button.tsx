@@ -1,8 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State } from '@stencil/core';
 
-import { Color, Mode, TabbarClickDetail, TabbarLayout } from '../../interface';
+import { Color, Config, Mode, TabBarChangedDetail, TabButtonClickDetail, TabButtonLayout } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
-import { TabbarChangedDetail } from '../tab-bar/tab-bar-interface';
 
 @Component({
   tag: 'ion-tab-button',
@@ -18,6 +17,7 @@ export class TabButton implements ComponentInterface {
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'document' }) doc!: Document;
+  @Prop({ context: 'config' }) config!: Config;
 
   /**
    * The selected tab component
@@ -26,7 +26,6 @@ export class TabButton implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
@@ -38,9 +37,10 @@ export class TabButton implements ComponentInterface {
   @Prop() color?: Color;
 
   /**
-   * Set the layout of the text and icon in the tabbar.
+   * Set the layout of the text and icon in the tab bar.
+   * It defaults to `'icon-top'`.
    */
-  @Prop() layout: TabbarLayout = 'icon-top';
+  @Prop() layout?: TabButtonLayout;
 
   /**
    * The URL which will be used as the `href` within this tab's button anchor.
@@ -62,10 +62,10 @@ export class TabButton implements ComponentInterface {
    * Emitted when the tab bar is clicked
    * @internal
    */
-  @Event() ionTabButtonClick!: EventEmitter<TabbarClickDetail>;
+  @Event() ionTabButtonClick!: EventEmitter<TabButtonClickDetail>;
 
   @Listen('parent:ionTabBarChanged')
-  onTabbarChanged(ev: CustomEvent<TabbarChangedDetail>) {
+  onTabBarChanged(ev: CustomEvent<TabBarChangedDetail>) {
     this.selected = this.tab === ev.detail.tab;
   }
 
@@ -81,6 +81,9 @@ export class TabButton implements ComponentInterface {
   }
 
   componentWillLoad() {
+    if (this.layout === undefined) {
+      this.layout = this.config.get('tabButtonLayout', 'icon-top');
+    }
     if (this.tab === undefined) {
       console.warn(`ion-tab-button needs a tab name, so it can be selected.
   <ion-tab-button tab="TAB_NAME">`);

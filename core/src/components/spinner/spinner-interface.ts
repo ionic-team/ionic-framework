@@ -1,7 +1,5 @@
 
-import { SPINNERS } from './spinner-configs';
-
-export type SpinnerTypes = keyof typeof SPINNERS;
+export { SpinnerTypes } from './spinner-configs';
 
 export interface SpinnerConfigs {
   [spinnerName: string]: SpinnerConfig;

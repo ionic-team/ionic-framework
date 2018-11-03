@@ -10,7 +10,9 @@ import { Component, ComponentInterface, Prop } from '@stencil/core';
 })
 export class SkeletonText implements ComponentInterface {
 
-  /** Width for the element to render at. Default is 100% */
+  /**
+   * Width for the element to render at.
+   */
   @Prop() width = '100%';
 
   render() {
