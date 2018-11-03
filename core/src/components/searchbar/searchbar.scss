@@ -16,8 +16,8 @@
    * @prop --placeholder-opacity: Opacity of the searchbar placeholder
    */
   --placeholder-color: initial;
-  --placeholder-font-style: inherit;
-  --placeholder-font-weight: inherit;
+  --placeholder-font-style: initial;
+  --placeholder-font-weight: initial;
   --placeholder-opacity: .5;
 
   @include font-smoothing();
@@ -93,7 +93,8 @@
     opacity: var(--placeholder-opacity);
   }
 
-  &::-webkit-search-cancel-button {
+  &::-webkit-search-cancel-button,
+  &::-ms-clear {
     display: none;
   }
 }
