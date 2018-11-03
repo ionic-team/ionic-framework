@@ -50,7 +50,7 @@ export class Input implements ComponentInterface {
   @Prop() autocomplete: 'on' | 'off' = 'off';
 
   /**
-   * Whether autocorrection should be enabled when the user is entering/editing the text value.
+   * Whether auto correction should be enabled when the user is entering/editing the text value.
    */
   @Prop() autocorrect: 'on' | 'off' = 'off';
 

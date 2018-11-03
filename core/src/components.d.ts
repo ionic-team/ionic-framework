@@ -1700,7 +1700,7 @@ export namespace Components {
     */
     'autocomplete': 'on' | 'off';
     /**
-    * Whether autocorrection should be enabled when the user is entering/editing the text value.
+    * Whether auto correction should be enabled when the user is entering/editing the text value.
     */
     'autocorrect': 'on' | 'off';
     /**
@@ -1818,7 +1818,7 @@ export namespace Components {
     */
     'autocomplete'?: 'on' | 'off';
     /**
-    * Whether autocorrection should be enabled when the user is entering/editing the text value.
+    * Whether auto correction should be enabled when the user is entering/editing the text value.
     */
     'autocorrect'?: 'on' | 'off';
     /**
