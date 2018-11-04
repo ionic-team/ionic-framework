@@ -12,7 +12,7 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Pr
   const wrapperAnimation = new AnimationC();
   wrapperAnimation.addElement(baseEl.querySelector('.alert-wrapper'));
 
-  backdropAnimation.fromTo('opacity', 0.01, 0.5);
+  backdropAnimation.fromTo('opacity', 0.01, 0.32);
 
   wrapperAnimation.fromTo('opacity', 0.01, 1).fromTo('scale', 0.9, 1);
 

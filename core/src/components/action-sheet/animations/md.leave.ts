@@ -13,7 +13,7 @@ export function mdLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Pr
   const wrapperAnimation = new AnimationC();
   wrapperAnimation.addElement(baseEl.querySelector('.action-sheet-wrapper'));
 
-  backdropAnimation.fromTo('opacity', 0.26, 0);
+  backdropAnimation.fromTo('opacity', 0.32, 0);
   wrapperAnimation.fromTo('translateY', '0%', '100%');
 
   const ani = baseAnimation
