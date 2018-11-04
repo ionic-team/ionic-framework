@@ -86,7 +86,7 @@ $toggle-md-item-start-padding-start:              2px !default;
 $toggle-md-item-end-padding-top:                  12px !default;
 
 /// @prop - Padding end of the toggle positioned on the end in an item
-$toggle-md-item-end-padding-end:                  ($item-md-padding-end / 2) !default;
+$toggle-md-item-end-padding-end:                  0 !default;
 
 /// @prop - Padding bottom of the toggle positioned on the end in an item
 $toggle-md-item-end-padding-bottom:               12px !default;

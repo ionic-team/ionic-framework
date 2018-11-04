@@ -57,7 +57,7 @@ export class Menu implements ComponentInterface, MenuI {
    * The display type of the menu.
    * Available options: `"overlay"`, `"reveal"`, `"push"`.
    */
-  @Prop({ mutable: true }) type!: string;
+  @Prop({ mutable: true }) type?: string;
 
   @Watch('type')
   typeChanged(type: string, oldType: string | undefined) {
@@ -143,7 +143,9 @@ export class Menu implements ComponentInterface, MenuI {
   @Event() protected ionMenuChange!: EventEmitter<MenuChangeEventDetail>;
 
   async componentWillLoad() {
-    this.type = this.type || this.config.get('menuType', this.mode === 'ios' ? 'reveal' : 'overlay');
+    if (this.type === undefined) {
+      this.type = this.config.get('menuType', this.mode === 'ios' ? 'reveal' : 'overlay');
+    }
 
     if (this.isServer) {
       this.disabled = true;
@@ -169,7 +171,7 @@ export class Menu implements ComponentInterface, MenuI {
     // add menu's content classes
     content.classList.add('menu-content');
 
-    this.typeChanged(this.type, undefined);
+    this.typeChanged(this.type!, undefined);
     this.sideChanged();
 
     // register this menu with the app's menu controller
@@ -313,7 +315,7 @@ export class Menu implements ComponentInterface, MenuI {
       this.animation = undefined;
     }
     // Create new animation
-    this.animation = await this.menuCtrl!._createAnimation(this.type, this);
+    this.animation = await this.menuCtrl!._createAnimation(this.type!, this);
   }
 
   private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
