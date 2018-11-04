@@ -21,6 +21,10 @@
   font-size: $range-md-pin-font-size;
 }
 
+:host(.ion-color) .range-bar {
+  background: current-color(base, 0.26);
+}
+
 :host(.ion-color) .range-bar-active,
 :host(.ion-color) .range-knob,
 :host(.ion-color) .range-pin,
@@ -28,10 +32,6 @@
 :host(.ion-color) .range-tick {
   background: current-color(base);
   color: current-color(contrast);
-}
-
-:host(.ion-color) .range-bar {
-  background: current-color(base, 0.26);
 }
 
 // TODO: REVIEW
