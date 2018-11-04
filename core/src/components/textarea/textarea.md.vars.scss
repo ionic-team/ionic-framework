@@ -11,7 +11,7 @@ $textarea-md-font-size:                      inherit !default;
 $textarea-md-padding-top:                     $item-md-padding-top !default;
 
 /// @prop - Margin end of the textarea
-$textarea-md-padding-end:                     ($item-md-padding-end / 2) !default;
+$textarea-md-padding-end:                     0 !default;
 
 /// @prop - Margin bottom of the textarea
 $textarea-md-padding-bottom:                  $item-md-padding-bottom !default;
