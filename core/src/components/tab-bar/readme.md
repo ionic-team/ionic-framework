@@ -36,6 +36,15 @@ In order to have a custom tab bar, it should be provided in user's markup as dir
 | `translucent` | `translucent`  | If `true`, the tab bar will be translucent.                                                                                                                                                                                                                            | `boolean`                                                                                  | `false`      |
 
 
+## CSS Custom Properties
+
+| Name           | Description               |
+| -------------- | ------------------------- |
+| `--background` | Background of the tab bar |
+| `--border`     | Border of the tab bar     |
+| `--color`      | Color of the tab bar      |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
