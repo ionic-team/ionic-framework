@@ -20,6 +20,20 @@ See the [Tabs API Docs](../Tabs/) for more details on configuring Tabs.
 | `tab`      | `tab`      | A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.                                                                                                                              | `string`                                                                                                | `undefined` |
 
 
+## CSS Custom Properties
+
+| Name                    | Description                           |
+| ----------------------- | ------------------------------------- |
+| `--background`          | Background of the tab button          |
+| `--background-selected` | Background of the selected tab button |
+| `--color`               | Color of the tab button               |
+| `--color-selected`      | Color of the selected tab button      |
+| `--padding-bottom`      | Bottom padding of the tab button      |
+| `--padding-end`         | End padding of the tab button         |
+| `--padding-start`       | Start padding of the tab button       |
+| `--padding-top`         | Top padding of the tab button         |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
