@@ -14,12 +14,24 @@ import { Path, join, normalize } from '@angular-devkit/core';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { addPackageToPackageJson } from './../utils/package';
 import { addModuleImportToRootModule } from './../utils/ast';
-import { addStyle, getWorkspace } from './../utils/config';
+import { addStyle, getWorkspace, addArchitectBuilder } from './../utils/config';
 import { Schema as IonAddOptions } from './schema';
 
 function addIonicAngularToPackageJson(): Rule {
   return (host: Tree) => {
     addPackageToPackageJson(host, 'dependencies', '@ionic/angular', 'latest');
+    return host;
+  };
+}
+
+function addIonicAngularToolkitToPackageJson(): Rule {
+  return (host: Tree) => {
+    addPackageToPackageJson(
+      host,
+      'devDependencies',
+      '@ionic/angular-toolkit',
+      'latest'
+    );
     return host;
   };
 }
@@ -50,7 +62,37 @@ function addIonicStyles(): Rule {
       'src/theme/variables.css'
     ].forEach(entry => {
       addStyle(host, entry);
-    })
+    });
+    return host;
+  };
+}
+
+function addIonicBuilder(): Rule {
+  return (host: Tree) => {
+    addArchitectBuilder(host, 'ionic-cordova-serve', {
+      builder: '@ionic/angular-toolkit:cordova-serve',
+      options: {
+        cordovaBuildTarget: 'app:ionic-cordova-build',
+        devServerTarget: 'app:serve'
+      },
+      configurations: {
+        production: {
+          cordovaBuildTarget: 'app:ionic-cordova-build:production',
+          devServerTarget: 'app:serve:production'
+        }
+      }
+    });
+    addArchitectBuilder(host, 'ionic-cordova-build', {
+      builder: '@ionic/angular-toolkit:cordova-build',
+      options: {
+        browserTarget: 'app:build'
+      },
+      configurations: {
+        production: {
+          browserTarget: 'app:build:production'
+        }
+      }
+    });
     return host;
   };
 }
@@ -82,7 +124,9 @@ export default function ngAdd(options: IonAddOptions): Rule {
     return chain([
       // @ionic/angular
       addIonicAngularToPackageJson(),
+      addIonicAngularToolkitToPackageJson(),
       addIonicAngularModuleToAppModule(),
+      addIonicBuilder(),
       addIonicStyles(),
       mergeWith(rootTemplateSource),
       // install freshly added dependencies

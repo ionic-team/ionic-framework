@@ -46,11 +46,14 @@ function copySchematicsJson(){
   const fileSrc = path.join(__dirname, '..', 'src', 'schematics', 'add', 'files');
   const dst = path.join(__dirname, '..', 'dist','schematics', 'collection.json');
   const fileDst = path.join(__dirname, '..', 'dist', 'schematics', 'add', 'files');
+  const schemaSrc = path.join(__dirname, '..', 'src', 'schematics', 'add', 'schema.json');
+  const schemaDst = path.join(__dirname, '..', 'dist', 'schematics', 'add', 'schema.json');
 
   fs.removeSync(dst);
   fs.removeSync(fileDst);
   fs.copySync(src, dst);
   fs.copySync(fileSrc,fileDst);
+  fs.copySync(schemaSrc, schemaDst);
 
 }
 

@@ -64,6 +64,18 @@ export function addStyle(host: Tree, stylePath: string) {
   }
 }
 
+export function addArchitectBuilder(host: Tree, builderName: string, builderOpts: any){
+  const config = readConfig(host);
+  const appConfig = getAngularAppConfig(config);
+
+  if (appConfig) {
+    appConfig.architect[builderName] = builderOpts
+    writeConfig(host, config);
+  } else {
+    throw new SchematicsException(`Cannot find valid app`);
+  }
+}
+
 export type WorkspaceSchema = experimental.workspace.WorkspaceSchema;
 
 export function getWorkspacePath(host: Tree): string {

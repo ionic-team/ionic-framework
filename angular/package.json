@@ -47,12 +47,12 @@
     "@ionic/core": "4.0.0-beta.12"
   },
   "peerDependencies": {
-    "@angular-devkit/core": "~0.7.2",
-    "@angular-devkit/schematics": "~0.7.2"
+    "@angular-devkit/core": "~0.8.5",
+    "@angular-devkit/schematics": "~0.8.5"
   },
   "devDependencies": {
-    "@angular-devkit/core": "~0.7.2",
-    "@angular-devkit/schematics": "~0.7.2",
+    "@angular-devkit/core": "~0.8.5",
+    "@angular-devkit/schematics": "~0.8.5",
     "@angular/common": "^6.1.0",
     "@angular/compiler": "^6.1.0",
     "@angular/compiler-cli": "^6.1.0",
