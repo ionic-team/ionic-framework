@@ -105,6 +105,15 @@ Type: `Promise<void>`
 
 
 
+## CSS Custom Properties
+
+| Name           | Description                 |
+| -------------- | --------------------------- |
+| `--background` | Background of the alert     |
+| `--max-height` | Maximum height of the alert |
+| `--min-width`  | Minimum width of the alert  |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
