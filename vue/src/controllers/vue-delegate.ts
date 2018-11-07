@@ -1,9 +1,22 @@
-import { VueConstructor } from 'vue';
+import { VueConstructor, default as Vue } from 'vue';
 import { FrameworkDelegate, ViewLifecycle } from '@ionic/core';
 import { EsModule, HTMLVueElement, WebpackFunction } from '../interfaces';
 
+
+// Handle creation of sync and async components
+function createVueComponent(vue: VueConstructor, component: WebpackFunction | object | VueConstructor): Promise<VueConstructor> {
+  return Promise.resolve(
+    typeof component === 'function' && (component as WebpackFunction).cid === undefined
+      ? (component as WebpackFunction)().then((cmp: any) => vue.extend(isESModule(cmp) ? cmp.default : cmp))
+      : vue.extend(component)
+  );
+}
+
 export class VueDelegate implements FrameworkDelegate {
-  constructor(public vue: VueConstructor) {}
+  constructor(
+    public vue: VueConstructor,
+    public $root: Vue
+  ) {}
 
   // Attach the passed Vue component to DOM
   attachViewToDom(parentElement: HTMLElement, component: HTMLElement | WebpackFunction | object | VueConstructor, opts?: object, classes?: string[]): Promise<HTMLElement> {
@@ -19,15 +32,18 @@ export class VueDelegate implements FrameworkDelegate {
     }
 
     // Get the Vue controller
-    return this.vueController(component).then((controller: VueConstructor) => {
-      const vueComponent = this.vueComponent(controller, opts);
+    return createVueComponent(this.vue, component).then((Component: VueConstructor) => {
+      const componentInstance = new Component({
+        propsData: opts
+      });
+      componentInstance.$mount();
 
       // Add any classes to the Vue component's root element
-      addClasses(vueComponent.$el, classes);
+      addClasses(componentInstance.$el, classes);
 
       // Append the Vue component to DOM
-      parentElement.appendChild(vueComponent.$el);
-      return vueComponent.$el;
+      parentElement.appendChild(componentInstance.$el);
+      return componentInstance.$el;
     });
   }
 
@@ -39,20 +55,6 @@ export class VueDelegate implements FrameworkDelegate {
     }
 
     return Promise.resolve();
-  }
-
-  // Handle creation of sync and async components
-  vueController(component: WebpackFunction | object | VueConstructor): Promise<VueConstructor> {
-    return Promise.resolve(
-      typeof component === 'function' && (component as WebpackFunction).cid === undefined
-        ? (component as WebpackFunction)().then((cmp: any) => this.vue.extend(isESModule(cmp) ? cmp.default : cmp))
-        : this.vue.extend(component)
-    );
-  }
-
-  // Create a new instance of the Vue component
-  vueComponent(controller: VueConstructor, opts?: object) {
-    return new controller(opts).$mount();
   }
 }
 

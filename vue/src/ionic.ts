@@ -1,4 +1,4 @@
-import { PluginFunction, default as VueImport } from 'vue';
+import { PluginFunction, VueConstructor, default as VueImport } from 'vue';
 import {
   ActionSheetController,
   AlertController,
@@ -29,9 +29,9 @@ declare module 'vue/types/vue' {
 }
 
 
-function createApi() {
+function createApi(Vue: VueConstructor, $root: VueImport) {
   const cache: Partial<Controllers> = {};
-  const vueDelegate = new VueDelegate(Vue);
+  const vueDelegate = new VueDelegate(Vue, $root);
   const api: Controllers = {
     get actionSheetController() {
       if (!cache.actionSheetController) {
@@ -95,7 +95,8 @@ export const install: PluginFunction<IonicConfig> = (_Vue, config) => {
 
   Vue.config.ignoredElements.push(/^ion-/);
   appInitialize(config);
+
   Object.defineProperty(Vue.prototype, '$ionic', {
-    get() { return createApi(); }
+    get() { return createApi(Vue, this.$root); }
   });
 };
