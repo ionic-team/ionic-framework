@@ -1,76 +1,16 @@
 /* stylelint-disable */
 @import "../../themes/ionic.globals";
 
-:host {
-  --border-radius: 16px;
-
-  display: inline-flex;
-
-  align-items: center;
-
-  height: 32px;
-
-  margin: 4px;
-
-  padding: 7px 12px;
-
-  border-radius: var(--border-radius);
-  line-height: 1;
-
-  background-color: rgba(0,0,0,0.08);
-
-  overflow: hidden;
-  position: relative;
-
-  color: rgba(0,0,0,0.87);
-  font-family: Roboto;
-
-  font-size: 14px;
-
-  vertical-align: middle;
-  box-sizing: border-box !important;
-}
-
 :host(:hover) {
   background: rgba(0,0,0,0.12);
+
   cursor: pointer;
 }
 
 :host(.ion-color:hover) {
   background: current-color(base, 0.12);
+
   cursor: pointer;
-}
-
-ion-icon,
-::slotted(ion-icon) {
-  color: rgba(0,0,0,0.54);
-}
-
-::slotted(ion-icon),
-::slotted(ion-avatar) {
-  order: -1;
-
-  margin-right: 8px;
-}
-
-::slotted(ion-icon) {
-
-  margin-left: -4px;
-  font-size: 20px;
-}
-
-::slotted(ion-avatar) {
-  width: 24px;
-  height: 24px;
-
-  margin-left: -8px;
-}
-
-.chip-remove-button {
-
-  margin-right: -4px;
-  margin-left: 8px;
-  font-size: 18px;
 }
 
 :host(.chip-outline) {
