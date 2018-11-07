@@ -35,7 +35,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
@@ -84,22 +83,22 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() keyboardClose = false;
 
   /**
-   * The position of the toast on the screen. Possible values: "top", "middle", "bottom".
+   * The position of the toast on the screen.
    */
   @Prop() position: 'top' | 'bottom' | 'middle' = 'bottom';
 
   /**
-   * If `true`, the close button will be displayed. Defaults to `false`.
+   * If `true`, the close button will be displayed.
    */
   @Prop() showCloseButton = false;
 
   /**
-   * If `true`, the toast will be translucent. Defaults to `false`.
+   * If `true`, the toast will be translucent.
    */
   @Prop() translucent = false;
 
   /**
-   * If `true`, the toast will animate. Defaults to `true`.
+   * If `true`, the toast will animate.
    */
   @Prop() animated = true;
 

@@ -8,18 +8,18 @@ Backdrops are full screen components that overlay other components. They are use
 
 ## Properties
 
-| Property          | Attribute          | Description                                                                                               | Type      |
-| ----------------- | ------------------ | --------------------------------------------------------------------------------------------------------- | --------- |
-| `stopPropagation` | `stop-propagation` | If `true`, the backdrop will stop propagation on tap. Defaults to `true`.                                 | `boolean` |
-| `tappable`        | `tappable`         | If `true`, the backdrop will can be clicked and will emit the `ionBackdropTap` event. Defaults to `true`. | `boolean` |
-| `visible`         | `visible`          | If `true`, the backdrop will be visible. Defaults to `true`.                                              | `boolean` |
+| Property          | Attribute          | Description                                                                           | Type      | Default |
+| ----------------- | ------------------ | ------------------------------------------------------------------------------------- | --------- | ------- |
+| `stopPropagation` | `stop-propagation` | If `true`, the backdrop will stop propagation on tap.                                 | `boolean` | `true`  |
+| `tappable`        | `tappable`         | If `true`, the backdrop will can be clicked and will emit the `ionBackdropTap` event. | `boolean` | `true`  |
+| `visible`         | `visible`          | If `true`, the backdrop will be visible.                                              | `boolean` | `true`  |
 
 
 ## Events
 
-| Event            | Detail | Description                          |
-| ---------------- | ------ | ------------------------------------ |
-| `ionBackdropTap` |        | Emitted when the backdrop is tapped. |
+| Event            | Description                          | Detail |
+| ---------------- | ------------------------------------ | ------ |
+| `ionBackdropTap` | Emitted when the backdrop is tapped. | void   |
 
 
 ----------------------------------------------

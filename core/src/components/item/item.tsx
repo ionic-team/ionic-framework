@@ -29,12 +29,11 @@ export class Item implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
-   * If `true`, a button tag will be rendered and the item will be tappable. Defaults to `false`.
+   * If `true`, a button tag will be rendered and the item will be tappable.
    */
   @Prop() button = false;
 
@@ -45,12 +44,12 @@ export class Item implements ComponentInterface {
   @Prop() detail?: boolean;
 
   /**
-   * The icon to use when `detail` is set to `true`. Defaults to `"ios-arrow-forward"`.
+   * The icon to use when `detail` is set to `true`.
    */
   @Prop() detailIcon = 'ios-arrow-forward';
 
   /**
-   * If `true`, the user cannot interact with the item. Defaults to `false`.
+   * If `true`, the user cannot interact with the item.
    */
   @Prop() disabled = false;
 
@@ -62,7 +61,6 @@ export class Item implements ComponentInterface {
 
   /**
    * How the bottom border should be displayed on the item.
-   * Available options: `"full"`, `"inset"`, `"none"`.
    */
   @Prop() lines?: 'full' | 'inset' | 'none';
 
@@ -74,8 +72,6 @@ export class Item implements ComponentInterface {
 
   /**
    * The type of the button. Only used when an `onclick` or `button` property is present.
-   * Possible values are: `"submit"`, `"reset"` and `"button"`.
-   * Default value is: `"button"`
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 

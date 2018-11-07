@@ -5,6 +5,7 @@
 // --------------------------------------------------
 
 :host {
+  --min-height: #{$item-ios-min-height};
   --transition: background-color 200ms linear;
   --padding-start: #{$item-ios-padding-start};
   --inner-padding-end: #{$item-ios-padding-end / 2};

@@ -8,7 +8,7 @@
   /**
    * @prop --color: Color of the label
    */
-  --color: currentColor;
+  --color: initial;
 
   @include margin(0);
 
@@ -76,6 +76,7 @@
 }
 
 :host-context(.item-has-focus).label-floating,
+:host-context(.item-has-placeholder).label-floating,
 :host-context(.item-has-value).label-floating {
   @include transform(translate3d(0, 0, 0), scale(.8));
 }

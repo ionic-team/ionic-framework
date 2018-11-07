@@ -29,7 +29,6 @@ export class Toggle implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
@@ -46,12 +45,12 @@ export class Toggle implements ComponentInterface {
   @Prop() name: string = this.inputId;
 
   /**
-   * If `true`, the toggle is selected. Defaults to `false`.
+   * If `true`, the toggle is selected.
    */
   @Prop({ mutable: true }) checked = false;
 
   /**
-   * If `true`, the user cannot interact with the toggle. Defaults to `false`.
+   * If `true`, the user cannot interact with the toggle.
    */
   @Prop() disabled = false;
 
@@ -61,7 +60,6 @@ export class Toggle implements ComponentInterface {
    *
    * The value of a toggle is analogous to the value of a `<input type="checkbox">`,
    * it's only used when the toggle participates in a native `<form>`.
-   * Defaults to `on`.
    */
   @Prop() value?: string | null = 'on';
 

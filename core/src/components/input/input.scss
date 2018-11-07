@@ -16,16 +16,16 @@
    * @prop --placeholder-font-weight: Font weight of the input placeholder text
    * @prop --placeholder-opacity: Opacity of the input placeholder text
    */
-  --placeholder-color: currentColor;
-  --placeholder-font-style: inherit;
-  --placeholder-font-weight: inherit;
+  --placeholder-color: initial;
+  --placeholder-font-style: initial;
+  --placeholder-font-weight: initial;
   --placeholder-opacity: .5;
   --padding-top: 0;
   --padding-end: 0;
   --padding-bottom: 0;
   --padding-start: 0;
   --background: transparent;
-  --color: inherit;
+  --color: initial;
 
   display: flex;
   position: relative;
@@ -44,6 +44,8 @@
   /* stylelint-enable */
 
   font-family: $font-family-base;
+
+  z-index: $z-index-item-input;
 }
 
 :host(.ion-color) {
@@ -86,6 +88,10 @@
   &:-webkit-autofill {
     background-color: transparent;
   }
+
+  &::-ms-clear {
+    display: none;
+  }
 }
 
 .native-input[disabled] {
@@ -102,17 +108,11 @@
 // This will only show when the scroll assist is configured
 // otherwise the .input-cover will not be rendered at all
 // The input cover is not clickable when the input is disabled
-
-.input-cover {
+.cloned-input {
   @include position(0, null, null, 0);
 
   position: absolute;
 
-  width: 100%;
-  height: 100%;
-}
-
-:host([disabled]) .input-cover {
   pointer-events: none;
 }
 
@@ -144,10 +144,6 @@
 // Input Has focus
 // --------------------------------------------------
 // When the input has focus, then the input cover should be hidden
-
-:host(.has-focus) .input-cover {
-  display: none;
-}
 
 :host(.has-focus) {
   pointer-events: none;

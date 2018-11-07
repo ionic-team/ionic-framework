@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { Color, Mode, TabbarChangedDetail, TabbarLayout, TabbarPlacement } from '../../interface';
+import { Color, Mode, TabBarChangedDetail, TabButtonLayout } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -22,7 +22,6 @@ export class TabBar implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
@@ -34,14 +33,9 @@ export class TabBar implements ComponentInterface {
   @Prop() color?: Color;
 
   /**
-   * Set the layout of the text and icon in the tabbar.
+   * Set the layout of the text and icon in the tab bar.
    */
-  @Prop() layout: TabbarLayout = 'icon-top';
-
-  /**
-   * Set the position of the tabbar, relative to the content.
-   */
-  @Prop() placement: TabbarPlacement = 'bottom';
+  @Prop() layout: TabButtonLayout = 'icon-top';
 
   /**
    * The selected tab component
@@ -55,12 +49,12 @@ export class TabBar implements ComponentInterface {
   }
 
   /**
-   * If `true`, the tab bar will be translucent. Defaults to `false`.
+   * If `true`, the tab bar will be translucent.
    */
   @Prop() translucent = false;
 
   /** @internal */
-  @Event() ionTabBarChanged!: EventEmitter<TabbarChangedDetail>;
+  @Event() ionTabBarChanged!: EventEmitter<TabBarChangedDetail>;
 
   @Listen('body:keyboardWillHide')
   protected onKeyboardWillHide() {
@@ -69,7 +63,7 @@ export class TabBar implements ComponentInterface {
 
   @Listen('body:keyboardWillShow')
   protected onKeyboardWillShow() {
-    if (this.placement === 'bottom') {
+    if (this.el.getAttribute('slot') === 'bottom') {
       this.keyboardVisible = true;
     }
   }
@@ -79,15 +73,13 @@ export class TabBar implements ComponentInterface {
   }
 
   hostData() {
-    const { color, translucent, placement, keyboardVisible } = this;
+    const { color, translucent, keyboardVisible } = this;
     return {
-      role: 'tablist',
+      'role': 'tablist',
       'aria-hidden': keyboardVisible ? 'true' : null,
-      'slot': 'tabbar',
       class: {
         ...createColorClasses(color),
         'tabbar-translucent': translucent,
-        [`placement-${placement}`]: true,
         'tabbar-hidden': keyboardVisible,
       }
     };

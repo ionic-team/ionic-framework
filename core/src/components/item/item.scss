@@ -36,7 +36,6 @@
    * @prop --highlight-color-valid: The color of the highlight on the item when valid
    * @prop --highlight-color-invalid: The color of the highlight on the item when invalid
    */
-  --min-height: #{$item-min-height};
   --border-radius: 0px;
   --border-width: 0px;
   --border-style: solid;
@@ -53,7 +52,7 @@
   --inner-box-shadow: none;
   --show-full-highlight: 0;
   --show-inset-highlight: 0;
-  --detail-icon-color: currentColor;
+  --detail-icon-color: initial;
   --detail-icon-font-size: 20px;
   --detail-icon-opacity: 0.25;
 

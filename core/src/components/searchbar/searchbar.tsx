@@ -14,7 +14,7 @@ import { createColorClasses } from '../../utils/theme';
 })
 export class Searchbar implements ComponentInterface {
 
-  private nativeInput!: HTMLInputElement;
+  private nativeInput?: HTMLInputElement;
   private isCancelVisible = false;
   private shouldAlignLeft = true;
 
@@ -24,6 +24,7 @@ export class Searchbar implements ComponentInterface {
   @Prop({ context: 'document' }) doc!: Document;
 
   @State() focused = false;
+  @State() noAnimate = true;
 
   /**
    * The color to use from your application's color palette.
@@ -34,32 +35,31 @@ export class Searchbar implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
-   * If `true`, enable searchbar animation. Defaults to `false`.
+   * If `true`, enable searchbar animation.
    */
   @Prop() animated = false;
 
   /**
-   * Set the input's autocomplete property. Default `"off"`.
+   * Set the input's autocomplete property.
    */
   @Prop() autocomplete: 'on' | 'off' = 'off';
 
   /**
-   * Set the input's autocorrect property. Default `"off"`.
+   * Set the input's autocorrect property.
    */
   @Prop() autocorrect: 'on' | 'off' = 'off';
 
   /**
-   * Set the cancel button icon. Only applies to `md` mode. Defaults to `"md-arrow-back"`.
+   * Set the cancel button icon. Only applies to `md` mode.
    */
   @Prop() cancelButtonIcon = 'md-arrow-back';
 
   /**
-   * Set the the cancel button text. Only applies to `ios` mode. Default: `"Cancel"`.
+   * Set the the cancel button text. Only applies to `ios` mode.
    */
   @Prop() cancelButtonText = 'Cancel';
 
@@ -69,7 +69,7 @@ export class Searchbar implements ComponentInterface {
   @Prop() clearIcon?: string;
 
   /**
-   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `250`.
+   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
    */
   @Prop() debounce = 250;
 
@@ -79,29 +79,29 @@ export class Searchbar implements ComponentInterface {
   }
 
   /**
-   * Set the input's placeholder. Default `"Search"`.
+   * Set the input's placeholder.
    */
   @Prop() placeholder = 'Search';
 
   /**
-   * The icon to use as the search icon. Defaults to `"search"`.
+   * The icon to use as the search icon.
    */
-  @Prop() searchIcon?: string;
+  @Prop() searchIcon = 'search';
 
   /**
-   * If `true`, show the cancel button. Defaults to `false`.
+   * If `true`, show the cancel button.
    */
   @Prop() showCancelButton = false;
 
   /**
-   * If `true`, enable spellcheck on the input. Defaults to `false`.
+   * If `true`, enable spellcheck on the input.
    */
   @Prop() spellcheck = false;
 
   /**
-   * Set the type of the input. Values: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, `"url"`. Default `"search"`.
+   * Set the type of the input.
    */
-  @Prop() type = 'search';
+  @Prop() type: 'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url' = 'search';
 
   /**
    * the value of the searchbar.
@@ -151,6 +151,10 @@ export class Searchbar implements ComponentInterface {
   componentDidLoad() {
     this.positionElements();
     this.debounceChanged();
+
+    setTimeout(() => {
+      this.noAnimate = false;
+    }, 300);
   }
 
   /**
@@ -159,7 +163,9 @@ export class Searchbar implements ComponentInterface {
    */
   @Method()
   setFocus() {
-    this.nativeInput.focus();
+    if (this.nativeInput) {
+      this.nativeInput.focus();
+    }
   }
 
   /**
@@ -197,7 +203,9 @@ export class Searchbar implements ComponentInterface {
     this.ionCancel.emit();
     this.onClearInput();
 
-    this.nativeInput.blur();
+    if (this.nativeInput) {
+      this.nativeInput.blur();
+    }
   }
 
   /**
@@ -257,8 +265,11 @@ export class Searchbar implements ComponentInterface {
    * Positions the input placeholder
    */
   private positionPlaceholder() {
-    const isRTL = this.doc.dir === 'rtl';
     const inputEl = this.nativeInput;
+    if (!inputEl) {
+      return;
+    }
+    const isRTL = this.doc.dir === 'rtl';
     const iconEl = (this.el.shadowRoot || this.el).querySelector('.searchbar-search-icon') as HTMLElement;
 
     if (this.shouldAlignLeft) {
@@ -328,10 +339,13 @@ export class Searchbar implements ComponentInterface {
   }
 
   hostData() {
+    const animated = this.animated && this.config.getBoolean('animated', true);
+
     return {
       class: {
         ...createColorClasses(this.color),
-        'searchbar-animated': this.animated && this.config.getBoolean('animated', true),
+        'searchbar-animated': animated,
+        'searchbar-no-animate': animated && this.noAnimate,
         'searchbar-has-value': (this.getValue() !== ''),
         'searchbar-show-cancel': this.showCancelButton,
         'searchbar-left-aligned': this.shouldAlignLeft,
@@ -342,7 +356,7 @@ export class Searchbar implements ComponentInterface {
 
   render() {
     const clearIcon = this.clearIcon || (this.mode === 'ios' ? 'ios-close-circle' : 'md-close');
-    const searchIcon = this.searchIcon || 'search';
+    const searchIcon = this.searchIcon;
 
     const cancelButton = this.showCancelButton && (
       <button

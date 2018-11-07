@@ -40,11 +40,6 @@ export function enableInputBlurring(doc: Document) {
       return;
     }
 
-    // skip if div is a cover
-    if (tapped.classList.contains('input-cover')) {
-      return;
-    }
-
     focused = false;
     // TODO: find a better way, why 50ms?
     setTimeout(() => {

@@ -27,6 +27,7 @@
   white-space: nowrap;
 
   overflow: hidden;
+  z-index: $z-index-item-input;
 }
 
 :host(.in-item) {

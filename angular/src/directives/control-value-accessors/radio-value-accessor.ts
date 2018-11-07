@@ -19,6 +19,7 @@ export class RadioValueAccessor implements ControlValueAccessor {
 
   onChange: (value: any) => void;
   onTouched: () => void;
+  private lastValue: any;
 
   constructor(private element: ElementRef) {
     this.onChange = () => {/**/};
@@ -26,7 +27,7 @@ export class RadioValueAccessor implements ControlValueAccessor {
   }
 
   writeValue(value: any) {
-    this.element.nativeElement.checked = this.value = value;
+    this.element.nativeElement.checked = this.lastValue = this.value = value;
 
     requestAnimationFrame(() => {
       setIonicClasses(this.element);
@@ -35,7 +36,10 @@ export class RadioValueAccessor implements ControlValueAccessor {
 
   @HostListener('ionSelect', ['$event.target.checked'])
   _handleIonSelect(value: any) {
-    this.onChange(value);
+    if (value !== this.lastValue) {
+      this.lastValue = value;
+      this.onChange(value);
+    }
 
     requestAnimationFrame(() => {
       setIonicClasses(this.element);

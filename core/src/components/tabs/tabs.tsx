@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
 
-import { Config, NavOutlet, RouteID, RouteWrite, TabbarClickDetail } from '../../interface';
+import { Config, NavOutlet, RouteID, RouteWrite, TabButtonClickDetail } from '../../interface';
 
 @Component({
   tag: 'ion-tabs',
@@ -20,11 +20,6 @@ export class Tabs implements NavOutlet {
 
   @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'document' }) doc!: Document;
-
-  /**
-   * A unique name for the tabs.
-   */
-  @Prop() name?: string;
 
   /**
    * Emitted when the tab changes.
@@ -63,15 +58,15 @@ export class Tabs implements NavOutlet {
   }
 
   componentWillUpdate() {
-    const tabbar = this.el.querySelector('ion-tab-bar');
-    if (tabbar) {
+    const tabBar = this.el.querySelector('ion-tab-bar');
+    if (tabBar) {
       const tab = this.selectedTab ? this.selectedTab.tab : undefined;
-      tabbar.selectedTab = tab;
+      tabBar.selectedTab = tab;
     }
   }
 
   @Listen('ionTabButtonClick')
-  protected onTabClicked(ev: CustomEvent<TabbarClickDetail>) {
+  protected onTabClicked(ev: CustomEvent<TabButtonClickDetail>) {
     const { href, tab } = ev.detail;
     const selectedTab = this.tabs.find(t => t.tab === tab);
     if (this.useRouter && href !== undefined) {
@@ -201,10 +196,11 @@ export class Tabs implements NavOutlet {
 
   render() {
     return [
+      <slot name="top"></slot>,
       <div class="tabs-inner">
         <slot></slot>
       </div>,
-      <slot name="tabbar"></slot>
+      <slot name="bottom"></slot>
     ];
   }
 }
