@@ -21,34 +21,34 @@ Licensed under MIT
 
 ## Properties
 
-| Property    | Attribute   | Description                                                                                  | Type            | Default     |
-| ----------- | ----------- | -------------------------------------------------------------------------------------------- | --------------- | ----------- |
-| `mode`      | `mode`      | The mode determines which platform styles to use.                                            | `"ios" \| "md"` | `undefined` |
-| `options`   | --          | Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options | `any`           | `{}`        |
-| `pager`     | `pager`     | If `true`, show the pagination.                                                              | `boolean`       | `false`     |
-| `scrollbar` | `scrollbar` | If `true`, show the scrollbar.                                                               | `boolean`       | `false`     |
+| Property    | Attribute   | Description                                                                                  | Type            |
+| ----------- | ----------- | -------------------------------------------------------------------------------------------- | --------------- |
+| `mode`      | `mode`      | The mode determines which platform styles to use.                                            | `"ios" \| "md"` |
+| `options`   | --          | Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options | `any`           |
+| `pager`     | `pager`     | If `true`, show the pagination.                                                              | `boolean`       |
+| `scrollbar` | `scrollbar` | If `true`, show the scrollbar.                                                               | `boolean`       |
 
 
 ## Events
 
-| Event                     | Description                                                 | Detail |
-| ------------------------- | ----------------------------------------------------------- | ------ |
-| `ionSlideDidChange`       | Emitted after the active slide has changed.                 | void   |
-| `ionSlideDoubleTap`       | Emitted when the user double taps on the slide's container. | void   |
-| `ionSlideDrag`            | Emitted when the slider is actively being moved.            | void   |
-| `ionSlideNextEnd`         | Emitted when the next slide has ended.                      | void   |
-| `ionSlideNextStart`       | Emitted when the next slide has started.                    | void   |
-| `ionSlidePrevEnd`         | Emitted when the previous slide has ended.                  | void   |
-| `ionSlidePrevStart`       | Emitted when the previous slide has started.                | void   |
-| `ionSlideReachEnd`        | Emitted when the slider is at the last slide.               | void   |
-| `ionSlideReachStart`      | Emitted when the slider is at its initial position.         | void   |
-| `ionSlideTap`             | Emitted when the user taps/clicks on the slide's container. | void   |
-| `ionSlideTouchEnd`        | Emitted when the user releases the touch.                   | void   |
-| `ionSlideTouchStart`      | Emitted when the user first touches the slider.             | void   |
-| `ionSlideTransitionEnd`   | Emitted when the slide transition has ended.                | void   |
-| `ionSlideTransitionStart` | Emitted when the slide transition has started.              | void   |
-| `ionSlideWillChange`      | Emitted before the active slide has changed.                | void   |
-| `ionSlidesDidLoad`        | Emitted after Swiper initialization                         | void   |
+| Event                     | Detail | Description                                                 |
+| ------------------------- | ------ | ----------------------------------------------------------- |
+| `ionSlideDidChange`       |        | Emitted after the active slide has changed.                 |
+| `ionSlideDoubleTap`       |        | Emitted when the user double taps on the slide's container. |
+| `ionSlideDrag`            |        | Emitted when the slider is actively being moved.            |
+| `ionSlideNextEnd`         |        | Emitted when the next slide has ended.                      |
+| `ionSlideNextStart`       |        | Emitted when the next slide has started.                    |
+| `ionSlidePrevEnd`         |        | Emitted when the previous slide has ended.                  |
+| `ionSlidePrevStart`       |        | Emitted when the previous slide has started.                |
+| `ionSlideReachEnd`        |        | Emitted when the slider is at the last slide.               |
+| `ionSlideReachStart`      |        | Emitted when the slider is at its initial position.         |
+| `ionSlideTap`             |        | Emitted when the user taps/clicks on the slide's container. |
+| `ionSlideTouchEnd`        |        | Emitted when the user releases the touch.                   |
+| `ionSlideTouchStart`      |        | Emitted when the user first touches the slider.             |
+| `ionSlideTransitionEnd`   |        | Emitted when the slide transition has ended.                |
+| `ionSlideTransitionStart` |        | Emitted when the slide transition has started.              |
+| `ionSlideWillChange`      |        | Emitted before the active slide has changed.                |
+| `ionSlidesDidLoad`        |        | Emitted after Swiper initialization                         |
 
 
 ## Methods

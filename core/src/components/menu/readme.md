@@ -13,25 +13,25 @@ These can be controlled from the templates, or programmatically using the MenuCo
 
 ## Properties
 
-| Property       | Attribute        | Description                                                                                                        | Type                  | Default     |
-| -------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------ | --------------------- | ----------- |
-| `contentId`    | `content-id`     | The content's id the menu should use.                                                                              | `string \| undefined` | `undefined` |
-| `disabled`     | `disabled`       | If `true`, the menu is disabled.                                                                                   | `boolean`             | `false`     |
-| `maxEdgeStart` | `max-edge-start` | The edge threshold for dragging the menu open. If a drag/swipe happens over this value, the menu is not triggered. | `number`              | `50`        |
-| `menuId`       | `menu-id`        | An id for the menu.                                                                                                | `string \| undefined` | `undefined` |
-| `side`         | `side`           | Which side of the view the menu should be placed.                                                                  | `"end" \| "start"`    | `'start'`   |
-| `swipeGesture` | `swipe-gesture`  | If `true`, swiping the menu is enabled.                                                                            | `boolean`             | `true`      |
-| `type`         | `type`           | The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.                                | `string \| undefined` | `undefined` |
+| Property       | Attribute        | Description                                                                                                        | Type                  |
+| -------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------ | --------------------- |
+| `contentId`    | `content-id`     | The content's id the menu should use.                                                                              | `string \| undefined` |
+| `disabled`     | `disabled`       | If `true`, the menu is disabled.                                                                                   | `boolean`             |
+| `maxEdgeStart` | `max-edge-start` | The edge threshold for dragging the menu open. If a drag/swipe happens over this value, the menu is not triggered. | `number`              |
+| `menuId`       | `menu-id`        | An id for the menu.                                                                                                | `string \| undefined` |
+| `side`         | `side`           | Which side of the view the menu should be placed.                                                                  | `"end" \| "start"`    |
+| `swipeGesture` | `swipe-gesture`  | If `true`, swiping the menu is enabled.                                                                            | `boolean`             |
+| `type`         | `type`           | The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.                                | `string \| undefined` |
 
 
 ## Events
 
-| Event          | Description                                  | Detail |
-| -------------- | -------------------------------------------- | ------ |
-| `ionDidClose`  | Emitted when the menu is closed.             | void   |
-| `ionDidOpen`   | Emitted when the menu is open.               | void   |
-| `ionWillClose` | Emitted when the menu is about to be closed. | void   |
-| `ionWillOpen`  | Emitted when the menu is about to be opened. | void   |
+| Event          | Detail | Description                                  |
+| -------------- | ------ | -------------------------------------------- |
+| `ionDidClose`  |        | Emitted when the menu is closed.             |
+| `ionDidOpen`   |        | Emitted when the menu is open.               |
+| `ionWillClose` |        | Emitted when the menu is about to be closed. |
+| `ionWillOpen`  |        | Emitted when the menu is about to be opened. |
 
 
 ## Methods

@@ -31,16 +31,16 @@ Options can be expanded to take up the full width of the item if you swipe past 
 
 ## Properties
 
-| Property   | Attribute  | Description                                                | Type      | Default |
-| ---------- | ---------- | ---------------------------------------------------------- | --------- | ------- |
-| `disabled` | `disabled` | If `true`, the user cannot interact with the sliding-item. | `boolean` | `false` |
+| Property   | Attribute  | Description                                                | Type      |
+| ---------- | ---------- | ---------------------------------------------------------- | --------- |
+| `disabled` | `disabled` | If `true`, the user cannot interact with the sliding-item. | `boolean` |
 
 
 ## Events
 
-| Event     | Description                                | Detail |
-| --------- | ------------------------------------------ | ------ |
-| `ionDrag` | Emitted when the sliding position changes. | void   |
+| Event     | Detail | Description                                |
+| --------- | ------ | ------------------------------------------ |
+| `ionDrag` |        | Emitted when the sliding position changes. |
 
 
 ## Methods
