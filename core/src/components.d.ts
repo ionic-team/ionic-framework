@@ -819,96 +819,6 @@ export namespace Components {
     'value'?: string;
   }
 
-  interface IonChipButton {
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
-    /**
-    * If `true`, the user cannot interact with the chip button.
-    */
-    'disabled': boolean;
-    /**
-    * Set to `"clear"` for a transparent button or to `"solid"` for a filled background.
-    */
-    'fill': 'clear' | 'solid';
-    /**
-    * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
-    */
-    'href'?: string;
-    /**
-    * The mode determines which platform styles to use.
-    */
-    'mode': Mode;
-  }
-  interface IonChipButtonAttributes extends StencilHTMLAttributes {
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
-    /**
-    * If `true`, the user cannot interact with the chip button.
-    */
-    'disabled'?: boolean;
-    /**
-    * Set to `"clear"` for a transparent button or to `"solid"` for a filled background.
-    */
-    'fill'?: 'clear' | 'solid';
-    /**
-    * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
-    */
-    'href'?: string;
-    /**
-    * The mode determines which platform styles to use.
-    */
-    'mode'?: Mode;
-  }
-
-  interface IonChipIcon {
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
-    /**
-    * Set to `"clear"` for a transparent icon or to `"solid"` for a filled background.
-    */
-    'fill': 'clear' | 'solid';
-    /**
-    * The mode determines which platform styles to use.
-    */
-    'mode': Mode;
-    /**
-    * The icon to use. Possible values are the same as `"ion-icon"`.
-    */
-    'name'?: string;
-    /**
-    * The icon src to use. Possible values are the same as `"ion-icon"`.
-    */
-    'src'?: string;
-  }
-  interface IonChipIconAttributes extends StencilHTMLAttributes {
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
-    /**
-    * Set to `"clear"` for a transparent icon or to `"solid"` for a filled background.
-    */
-    'fill'?: 'clear' | 'solid';
-    /**
-    * The mode determines which platform styles to use.
-    */
-    'mode'?: Mode;
-    /**
-    * The icon to use. Possible values are the same as `"ion-icon"`.
-    */
-    'name'?: string;
-    /**
-    * The icon src to use. Possible values are the same as `"ion-icon"`.
-    */
-    'src'?: string;
-  }
-
   interface IonChip {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
@@ -5205,8 +5115,6 @@ declare global {
     'IonCardTitle': Components.IonCardTitle;
     'IonCard': Components.IonCard;
     'IonCheckbox': Components.IonCheckbox;
-    'IonChipButton': Components.IonChipButton;
-    'IonChipIcon': Components.IonChipIcon;
     'IonChip': Components.IonChip;
     'IonCol': Components.IonCol;
     'IonContent': Components.IonContent;
@@ -5307,8 +5215,6 @@ declare global {
     'ion-card-title': Components.IonCardTitleAttributes;
     'ion-card': Components.IonCardAttributes;
     'ion-checkbox': Components.IonCheckboxAttributes;
-    'ion-chip-button': Components.IonChipButtonAttributes;
-    'ion-chip-icon': Components.IonChipIconAttributes;
     'ion-chip': Components.IonChipAttributes;
     'ion-col': Components.IonColAttributes;
     'ion-content': Components.IonContentAttributes;
@@ -5502,18 +5408,6 @@ declare global {
   var HTMLIonCheckboxElement: {
     prototype: HTMLIonCheckboxElement;
     new (): HTMLIonCheckboxElement;
-  };
-
-  interface HTMLIonChipButtonElement extends Components.IonChipButton, HTMLStencilElement {}
-  var HTMLIonChipButtonElement: {
-    prototype: HTMLIonChipButtonElement;
-    new (): HTMLIonChipButtonElement;
-  };
-
-  interface HTMLIonChipIconElement extends Components.IonChipIcon, HTMLStencilElement {}
-  var HTMLIonChipIconElement: {
-    prototype: HTMLIonChipIconElement;
-    new (): HTMLIonChipIconElement;
   };
 
   interface HTMLIonChipElement extends Components.IonChip, HTMLStencilElement {}
@@ -6004,8 +5898,6 @@ declare global {
     'ion-card-title': HTMLIonCardTitleElement
     'ion-card': HTMLIonCardElement
     'ion-checkbox': HTMLIonCheckboxElement
-    'ion-chip-button': HTMLIonChipButtonElement
-    'ion-chip-icon': HTMLIonChipIconElement
     'ion-chip': HTMLIonChipElement
     'ion-col': HTMLIonColElement
     'ion-content': HTMLIonContentElement
@@ -6106,8 +5998,6 @@ declare global {
     'ion-card-title': HTMLIonCardTitleElement;
     'ion-card': HTMLIonCardElement;
     'ion-checkbox': HTMLIonCheckboxElement;
-    'ion-chip-button': HTMLIonChipButtonElement;
-    'ion-chip-icon': HTMLIonChipIconElement;
     'ion-chip': HTMLIonChipElement;
     'ion-col': HTMLIonColElement;
     'ion-content': HTMLIonContentElement;

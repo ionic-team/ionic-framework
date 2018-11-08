@@ -33,7 +33,8 @@ export class Chip implements ComponentInterface {
     return {
       'ion-activatable': true,
       class: {
-        ...createColorClasses(this.color)
+        ...createColorClasses(this.color),
+        'chip-outline': this.outline
       }
     };
   }
