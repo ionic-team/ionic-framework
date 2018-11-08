@@ -16,7 +16,7 @@
 }
 
 
-// Material Design Toolbar Content
+// Toolbar: Content
 // --------------------------------------------------
 
 .toolbar-content {
@@ -25,4 +25,14 @@
 
   min-width: 0;
   max-width: 100%;
+}
+
+// Toolbar: Segment
+// --------------------------------------------------
+
+:host(.toolbar-segment) {
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
 }
