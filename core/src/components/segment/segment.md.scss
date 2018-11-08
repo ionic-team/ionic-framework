@@ -28,6 +28,9 @@
   color: #{current-color(base)};
 }
 
+:host(.ion-color)::slotted(.segment-button-checked.activated) {
+  color: #{current-color(base)};
+}
 
 // Segment: Toolbar Color
 // --------------------------------------------------

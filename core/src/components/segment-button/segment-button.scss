@@ -122,7 +122,11 @@
 
 :host(.activated) {
   background: var(--background-activated);
-  color: var(--color);
+  color: var(--color-activated);
+}
+
+:host(.segment-button-checked.activated) {
+  color: var(--color-checked-activated);
 }
 
 // Segment Button: Disabled

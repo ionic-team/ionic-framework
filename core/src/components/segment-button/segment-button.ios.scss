@@ -12,6 +12,8 @@
   --background-disabled: #{$segment-button-ios-background-color-disabled};
   --border-color: #{ion-color(primary, base)};
   --color: #{ion-color(primary, base)};
+  --color-activated: var(--color);
+  --color-checked-activated: var(--color-activated);
   --color-checked: #{ion-color(primary, contrast)};
   --color-disabled: #{ion-color(primary, base, $segment-button-ios-opacity-disabled)};
   --color-checked-disabled: #{ion-color(primary, contrast, $segment-button-ios-opacity-disabled)};
