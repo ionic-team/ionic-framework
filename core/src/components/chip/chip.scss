@@ -37,7 +37,12 @@
   box-sizing: border-box;
 }
 
-:host(:hover) {
+:host(:focus) {
+  outline: none;
+}
+
+:host(:hover),
+:host(:focus) {
   --background: rgba(0, 0, 0, .16);
 }
 
@@ -53,7 +58,8 @@
   color: current-color(shade);
 }
 
-:host(.ion-color:hover) {
+:host(.ion-color:hover),
+:host(.ion-color:focus) {
   background: current-color(base, .12);
 }
 
@@ -79,7 +85,8 @@
   border-color: current-color(base, .32);
 }
 
-:host(.chip-outline:not(.ion-color):hover) {
+:host(.chip-outline:not(.ion-color):hover),
+:host(.chip-outline:not(.ion-color):focus) {
   background: rgba(0, 0, 0, .04);
 }
 
