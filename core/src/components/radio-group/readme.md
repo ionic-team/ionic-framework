@@ -13,18 +13,18 @@ radio button within the same group.
 
 ## Properties
 
-| Property              | Attribute               | Description                                                     | Type      |
-| --------------------- | ----------------------- | --------------------------------------------------------------- | --------- |
-| `allowEmptySelection` | `allow-empty-selection` | If `true`, the radios can be deselected. Defaults to `false`.   | `boolean` |
-| `name`                | `name`                  | The name of the control, which is submitted with the form data. | `string`  |
-| `value`               | --                      | the value of the radio group.                                   | `any`     |
+| Property              | Attribute               | Description                                                     | Type      | Default        |
+| --------------------- | ----------------------- | --------------------------------------------------------------- | --------- | -------------- |
+| `allowEmptySelection` | `allow-empty-selection` | If `true`, the radios can be deselected.                        | `boolean` | `false`        |
+| `name`                | `name`                  | The name of the control, which is submitted with the form data. | `string`  | `this.inputId` |
+| `value`               | --                      | the value of the radio group.                                   | `any`     | `undefined`    |
 
 
 ## Events
 
-| Event       | Detail           | Description                         |
-| ----------- | ---------------- | ----------------------------------- |
-| `ionChange` | InputChangeEvent | Emitted when the value has changed. |
+| Event       | Description                         | Detail           |
+| ----------- | ----------------------------------- | ---------------- |
+| `ionChange` | Emitted when the value has changed. | InputChangeEvent |
 
 
 ----------------------------------------------

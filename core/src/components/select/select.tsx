@@ -18,6 +18,7 @@ export class Select implements ComponentInterface {
   private inputId = `ion-sel-${selectIds++}`;
   private labelId?: string;
   private overlay?: OverlaySelect;
+  private didInit = false;
 
   @Element() el!: HTMLIonSelectElement;
 
@@ -27,26 +28,24 @@ export class Select implements ComponentInterface {
 
   @State() isExpanded = false;
   @State() keyFocus = false;
-  @State() text = '';
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
-   * If `true`, the user cannot interact with the select. Defaults to `false`.
+   * If `true`, the user cannot interact with the select.
    */
   @Prop() disabled = false;
 
   /**
-   * The text to display on the cancel button. Default: `Cancel`.
+   * The text to display on the cancel button.
    */
   @Prop() cancelText = 'Cancel';
 
   /**
-   * The text to display on the ok button. Default: `OK`.
+   * The text to display on the ok button.
    */
   @Prop() okText = 'OK';
 
@@ -71,7 +70,7 @@ export class Select implements ComponentInterface {
   @Prop() multiple = false;
 
   /**
-   * The interface the select should use: `action-sheet`, `popover` or `alert`. Default: `alert`.
+   * The interface the select should use: `action-sheet`, `popover` or `alert`.
    */
   @Prop() interface: SelectInterface = 'alert';
 
@@ -121,140 +120,49 @@ export class Select implements ComponentInterface {
 
   @Watch('value')
   valueChanged() {
-    // this select value just changed
-    // double check the select option with this value is checked
-    if (this.value === undefined) {
-      // set to undefined
-      // ensure all that are checked become unchecked
-      this.childOpts.filter(o => o.selected).forEach(selectOption => {
-        selectOption.selected = false;
+    if (this.didInit) {
+      this.updateOptions();
+      this.ionChange.emit({
+        value: this.value,
       });
-      this.text = '';
-
-    } else {
-      let hasChecked = false;
-      const texts: string[] = [];
-
-      this.childOpts.forEach(selectOption => {
-        if ((Array.isArray(this.value) && this.value.includes(selectOption.value)) || (selectOption.value === this.value)) {
-          if (!selectOption.selected && (this.multiple || !hasChecked)) {
-            // correct value for this select option
-            // but this select option isn't checked yet
-            // and we haven't found a checked yet
-            // so CHECK IT!
-            selectOption.selected = true;
-
-          } else if (!this.multiple && hasChecked && selectOption.selected) {
-            // somehow we've got multiple select options
-            // with the same value, but only one can be checked
-            selectOption.selected = false;
-          }
-
-          // remember we've got a checked select option button now
-          hasChecked = true;
-
-        } else if (selectOption.selected) {
-          // this select option doesn't have the correct value
-          // and it's also checked, so let's uncheck it
-          selectOption.selected = false;
-        }
-
-        if (selectOption.selected) {
-          texts.push(selectOption.textContent || '');
-        }
-      });
-
-      this.text = texts.join(', ');
+      this.emitStyle();
     }
-
-    // emit the new value
-    this.ionChange.emit({
-      value: this.value,
-      text: this.text
-    });
-    this.emitStyle();
   }
 
   @Listen('ionSelectOptionDidLoad')
-  optLoad(ev: CustomEvent) {
-    const selectOption = ev.target as HTMLIonSelectOptionElement;
-    this.childOpts = Array.from(this.el.querySelectorAll('ion-select-option'));
-
-    if (this.value != null && (Array.isArray(this.value) && this.value.includes(selectOption.value)) || (selectOption.value === this.value)) {
-      // this select has a value and this
-      // option equals the correct select value
-      // so let's check this select option
-      selectOption.selected = true;
-
-    } else if (Array.isArray(this.value) && this.multiple && selectOption.selected) {
-      // if the value is an array we need to push the option on
-      this.value.push(selectOption.value);
-
-    } else if (this.value === undefined && selectOption.selected) {
-      // this select does not have a value
-      // but this select option is checked, so let's set the
-      // select's value from the checked select option
-      this.value = selectOption.value;
-
-    } else if (selectOption.selected) {
-      // if it doesn't match one of the above cases, but the
-      // select option is still checked, then we need to uncheck it
-      selectOption.selected = false;
-    }
-  }
-
   @Listen('ionSelectOptionDidUnload')
-  optUnload(ev: CustomEvent) {
-    const index = this.childOpts.indexOf(ev.target as HTMLIonSelectOptionElement);
-    if (index > -1) {
-      this.childOpts.splice(index, 1);
+  async selectOptionChanged() {
+    await this.loadOptions();
+    if (this.didInit) {
+      this.updateOptions();
     }
   }
 
-  @Listen('ionSelect')
-  onSelect(ev: CustomEvent) {
-    // ionSelect only come from the checked select option
-    this.childOpts.forEach(selectOption => {
-      if (selectOption === ev.target) {
-        this.value = selectOption.value;
-      } else {
-        selectOption.selected = false;
-      }
-    });
-  }
+  async componentDidLoad() {
+    await this.loadOptions();
 
-  componentWillLoad() {
-    if (!this.value) {
-      this.value = this.multiple ? [] : undefined;
-    }
-  }
-  componentDidLoad() {
     const label = this.getLabel();
     if (label) {
       this.labelId = label.id = this.name + '-lbl';
     }
 
-    if (this.multiple) {
-      // there are no values set at this point
-      // so check to see who should be selected
-      const checked = this.childOpts.filter(o => o.selected);
-
-      (this.value as string[]).length = 0;
-      checked.forEach(o => {
-        // doing this instead of map() so we don't
-        // fire off an unnecessary change event
-        (this.value as string[]).push(o.value);
-      });
-      this.text = checked.map(o => o.textContent).join(', ');
-
-    } else {
-      const checked = this.childOpts.find(o => o.selected);
-      if (checked) {
-        this.value = checked.value;
-        this.text = checked.textContent || '';
+    if (this.value === undefined) {
+      if (this.multiple) {
+        // there are no values set at this point
+        // so check to see who should be selected
+        const checked = this.childOpts.filter(o => o.selected);
+        this.value = checked.map(o => o.value);
+      } else {
+        const checked = this.childOpts.find(o => o.selected);
+        if (checked) {
+          this.value = checked.value;
+        }
       }
     }
+    this.updateOptions();
     this.emitStyle();
+    this.el.forceUpdate();
+    this.didInit = true;
   }
 
   /**
@@ -284,14 +192,6 @@ export class Select implements ComponentInterface {
     }
 
     return this.openAlert();
-  }
-
-  private getLabel() {
-    const item = this.el.closest('ion-item');
-    if (item) {
-      return item.querySelector('ion-label');
-    }
-    return null;
   }
 
   private async openPopover(ev: UIEvent) {
@@ -340,6 +240,7 @@ export class Select implements ComponentInterface {
       } as ActionSheetButton;
     });
 
+    // Add "cancel" button
     actionSheetButtons.push({
       text: this.cancelText,
       role: 'cancel',
@@ -426,6 +327,58 @@ export class Select implements ComponentInterface {
     return overlay.dismiss();
   }
 
+  private async loadOptions() {
+    this.childOpts = await Promise.all(
+      Array.from(this.el.querySelectorAll('ion-select-option')).map(o => o.componentOnReady())
+    );
+  }
+
+  private updateOptions() {
+    // iterate all options, updating the selected prop
+    let canSelect = true;
+    for (const selectOption of this.childOpts) {
+      const selected = canSelect && isOptionSelected(this.value, selectOption.value);
+      selectOption.selected = selected;
+
+      // if current option is selected and select is single-option, we can't select
+      // any option more
+      if (selected && !this.multiple) {
+        canSelect = false;
+      }
+    }
+  }
+
+  private getLabel() {
+    const item = this.el.closest('ion-item');
+    if (item) {
+      return item.querySelector('ion-label');
+    }
+    return null;
+  }
+
+  private hasValue(): boolean {
+    return this.getText() !== '';
+  }
+
+  private getText(): string {
+    const selectedText = this.selectedText;
+    if (selectedText != null && selectedText !== '') {
+      return selectedText;
+    }
+    return generateText(this.childOpts, this.value);
+  }
+
+  private emitStyle() {
+    this.ionStyle.emit({
+      'interactive': true,
+      'select': true,
+      'has-placeholder': this.placeholder != null,
+      'has-value': this.hasValue(),
+      'interactive-disabled': this.disabled,
+      'select-disabled': this.disabled
+    });
+  }
+
   private onKeyUp = () => {
     this.keyFocus = true;
   }
@@ -437,23 +390,6 @@ export class Select implements ComponentInterface {
   private onBlur = () => {
     this.keyFocus = false;
     this.ionBlur.emit();
-  }
-
-  hasValue(): boolean {
-    if (Array.isArray(this.value)) {
-      return this.value.length > 0;
-    }
-    return (this.value != null && this.value !== undefined && this.value !== '');
-  }
-
-  private emitStyle() {
-    this.ionStyle.emit({
-      'interactive': true,
-      'select': true,
-      'has-value': this.hasValue(),
-      'interactive-disabled': this.disabled,
-      'select-disabled': this.disabled
-    });
   }
 
   hostData() {
@@ -470,8 +406,7 @@ export class Select implements ComponentInterface {
     renderHiddenInput(this.el, this.name, parseValue(this.value), this.disabled);
 
     let addPlaceholderClass = false;
-
-    let selectText = this.selectedText || this.text;
+    let selectText = this.getText();
     if (selectText === '' && this.placeholder != null) {
       selectText = this.placeholder;
       addPlaceholderClass = true;
@@ -521,6 +456,38 @@ function parseValue(value: any) {
     return value.join(',');
   }
   return value.toString();
+}
+
+function isOptionSelected(currentValue: any[] | any, optionValue: any) {
+  if (currentValue === undefined) {
+    return false;
+  }
+  if (Array.isArray(currentValue)) {
+    return currentValue.includes(optionValue);
+  } else {
+    return currentValue === optionValue;
+  }
+}
+
+function generateText(opts: HTMLIonSelectOptionElement[], value: any | any[]) {
+  if (value === undefined) {
+    return '';
+  }
+  if (Array.isArray(value)) {
+    return value
+      .map(v => textForValue(opts, v))
+      .filter(opt => opt !== null)
+      .join(', ');
+  } else {
+    return textForValue(opts, value) || '';
+  }
+}
+
+function textForValue(opts: HTMLIonSelectOptionElement[], value: any): string | null {
+  const selectOpt = opts.find(opt => opt.value === value);
+  return selectOpt
+    ? selectOpt.textContent
+    : null;
 }
 
 let selectIds = 0;

@@ -1,6 +1,12 @@
 @import "../../themes/ionic.globals";
 
 :host {
+  /**
+   * @prop --background: Background of the tab bar
+   * @prop --border: Border of the tab bar
+   * @prop --color: Color of the tab bar
+   */
+
   @include padding-horizontal(
     var(--ion-safe-area-left),
     var(--ion-safe-area-right)

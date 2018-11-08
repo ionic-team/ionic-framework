@@ -17,6 +17,7 @@ In order to do so, an `ion-tab-bar` should be provided as a direct child of `ion
     <ion-tab-button tab="home">
       <ion-label>Home</ion-label>
       <ion-icon name="home"></ion-icon>
+      <ion-badge>6</ion-badge>
     </ion-tab-button>
 
     <ion-tab-button tab="settings">
@@ -88,12 +89,12 @@ Using tabs with Angular's router is fairly straight forward. The only additional
 
 ## Events
 
-| Event              | Detail                   | Description                                                                |
-| ------------------ | ------------------------ | -------------------------------------------------------------------------- |
-| `ionChange`        | {tab: HTMLIonTabElement} | Emitted when the tab changes.                                              |
-| `ionNavDidChange`  |                          | Emitted when the navigation has finished transitioning to a new component. |
-| `ionNavWillChange` |                          | Emitted when the navigation is about to transition to a new component.     |
-| `ionNavWillLoad`   |                          | Emitted when the navigation will load a component.                         |
+| Event              | Description                                                                | Detail                   |
+| ------------------ | -------------------------------------------------------------------------- | ------------------------ |
+| `ionChange`        | Emitted when the tab changes.                                              | {tab: HTMLIonTabElement} |
+| `ionNavDidChange`  | Emitted when the navigation has finished transitioning to a new component. | void                     |
+| `ionNavWillChange` | Emitted when the navigation is about to transition to a new component.     | void                     |
+| `ionNavWillLoad`   | Emitted when the navigation will load a component.                         | void                     |
 
 
 ## Methods

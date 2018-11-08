@@ -6,6 +6,7 @@
 // --------------------------------------------------
 
 :host {
+  --min-height: #{$item-md-min-height};
   --background: var(--ion-item-background, transparent);
   --background-activated: #{$item-md-background-activated};
   --border-color: #{$item-md-border-bottom-color};
@@ -16,7 +17,7 @@
   --background-activated: #{$item-md-background-activated};
   --color: #{$item-md-color};
   --border-color: #{$item-md-border-bottom-color};
-  --inner-padding-end: #{$item-md-padding-end / 2};
+  --inner-padding-end: #{$item-md-padding-end};
   --inner-border-width: #{0 0 $item-md-border-bottom-width 0};
   --highlight-height: 2px;
   --highlight-color-focused: #{$item-md-input-highlight-color};
@@ -70,38 +71,129 @@
   --show-inset-highlight: 0;
 }
 
+
+// Material Design Multi-line Item
+// --------------------------------------------------
+
+// TODO this works if manually adding the class / work with prop?
+// Multi-line items should align the slotted content at the top
+:host(.item-multi-line) ::slotted([slot="start"]),
+:host(.item-multi-line) ::slotted([slot="end"]) {
+  @include margin($item-md-multi-line-slot-margin-top, $item-md-multi-line-slot-margin-end, $item-md-multi-line-slot-margin-bottom, $item-md-multi-line-slot-margin-start);
+
+  align-self: flex-start;
+}
+
 // Material Design Item Slots
 // --------------------------------------------------
 
-::slotted(:not(.interactive)[slot="start"]),
-::slotted(:not(.interactive)[slot="end"]) {
-  @include margin($item-md-slot-margin-top, $item-md-slot-margin-end, $item-md-slot-margin-bottom, $item-md-slot-margin-start);
+::slotted(:not(.interactive)[slot="start"]) {
+  @include margin-horizontal($item-md-start-slot-margin-start, $item-md-start-slot-margin-end);
 }
 
-::slotted(ion-icon[slot="start"]),
-::slotted(ion-icon[slot="end"]) {
+::slotted(:not(.interactive)[slot="end"]) {
+  @include margin-horizontal($item-md-end-slot-margin-start, $item-md-end-slot-margin-end);
+}
+
+
+// Material Design Slotted Icon
+// --------------------------------------------------
+
+::slotted(ion-icon) {
+
+  color: $item-md-icon-slot-color;
+
+  font-size: $item-md-icon-slot-font-size;
+}
+
+::slotted(ion-icon[slot]) {
   @include margin($item-md-icon-slot-margin-top, $item-md-icon-slot-margin-end, $item-md-icon-slot-margin-bottom, $item-md-icon-slot-margin-start);
 }
 
-// TODO
-::slotted(ion-icon[slot="start"]) + .item-inner,
-::slotted(ion-icon[slot="start"]) + .item-interactive {
-  @include margin-horizontal($item-md-padding-start + ($item-md-padding-start / 2), null);
+::slotted(ion-icon[slot="start"]) {
+  @include margin-horizontal($item-md-icon-start-slot-margin-start, $item-md-icon-start-slot-margin-end);
+}
+
+::slotted(ion-icon[slot="end"]) {
+  @include margin-horizontal($item-md-icon-end-slot-margin-start, $item-md-icon-end-slot-margin-end);
+}
+
+
+// Material Design Slotted Note
+// --------------------------------------------------
+
+::slotted(ion-note) {
+  @include margin(0);
+
+  align-self: flex-start;
+
+  font-size: $item-md-note-slot-font-size;
+}
+
+::slotted(ion-note[slot]) {
+  @include padding($item-md-note-slot-padding-top, $item-md-note-slot-padding-end, $item-md-note-slot-padding-bottom, $item-md-note-slot-padding-start);
+}
+
+::slotted(ion-note[slot="start"]) {
+  @include padding-horizontal($item-md-note-start-slot-padding-start, $item-md-note-start-slot-padding-end);
+}
+
+::slotted(ion-note[slot="end"]) {
+  @include padding-horizontal($item-md-note-end-slot-padding-start, $item-md-note-end-slot-padding-end);
+}
+
+
+// Material Design Item Avatar
+// --------------------------------------------------
+
+::slotted(ion-avatar) {
+  width: $item-md-avatar-width;
+  height: $item-md-avatar-height;
+}
+
+
+// Material Design Item Thumbnail
+// --------------------------------------------------
+
+::slotted(ion-thumbnail) {
+  width: $item-md-thumbnail-width;
+  height: $item-md-thumbnail-height;
+}
+
+// Material Design Item Avatar/Thumbnail
+// --------------------------------------------------
+
+::slotted(ion-avatar),
+::slotted(ion-thumbnail) {
+  @include margin($item-md-media-slot-margin-top, $item-md-media-slot-margin-end, $item-md-media-slot-margin-bottom, $item-md-media-slot-margin-start);
 }
 
 ::slotted(ion-avatar[slot="start"]),
 ::slotted(ion-thumbnail[slot="start"]) {
-  @include margin(($item-md-padding-end / 2), $item-md-padding-end, ($item-md-padding-end / 2), 0);
+  @include margin-horizontal($item-md-media-start-slot-margin-start, $item-md-media-start-slot-margin-end);
 }
 
 ::slotted(ion-avatar[slot="end"]),
 ::slotted(ion-thumbnail[slot="end"]) {
-  @include margin(($item-md-padding-end / 2));
+  @include margin-horizontal($item-md-media-end-slot-margin-start, $item-md-media-end-slot-margin-end);
 }
+
+
+// Material Design Floating/Stacked Label
+// --------------------------------------------------
 
 :host(.item-label-stacked) ::slotted([slot="end"]),
 :host(.item-label-floating) ::slotted([slot="end"]) {
   @include margin($item-md-label-slot-end-margin-top, $item-md-label-slot-end-margin-end, $item-md-label-slot-end-margin-bottom, $item-md-label-slot-end-margin-start);
+}
+
+
+// Material Design Toggle/Radio Item
+// --------------------------------------------------
+
+:host(.item-toggle) ::slotted(ion-label),
+:host(.item-radio) ::slotted(ion-label) {
+  @include margin-horizontal(0, null);
 }
 
 
@@ -122,28 +214,6 @@
 // TODO, review
 ::slotted(.button-small-md) ion-icon[slot="icon-only"] {
   @include padding(0);
-}
-
-// Material Design Item Avatar
-// --------------------------------------------------
-
-::slotted(ion-avatar) {
-  width: $item-md-avatar-width;
-  height: $item-md-avatar-height;
-}
-
-
-// Material Design Item Thumbnail
-// --------------------------------------------------
-
-::slotted(ion-thumbnail) {
-  width: $item-md-thumbnail-width;
-  height: $item-md-thumbnail-height;
-}
-
-:host(.item-toggle) ::slotted(ion-label),
-:host(.item-radio) ::slotted(ion-label) {
-  @include margin-horizontal(0, null);
 }
 
 

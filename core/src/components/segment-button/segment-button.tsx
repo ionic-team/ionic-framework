@@ -26,17 +26,16 @@ export class SegmentButton implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
-   * If `true`, the segment button is selected. Defaults to `false`.
+   * If `true`, the segment button is selected.
    */
   @Prop({ mutable: true }) checked = false;
 
   /**
-   * If `true`, the user cannot interact with the segment button. Defaults to `false`.
+   * If `true`, the user cannot interact with the segment button.
    */
   @Prop() disabled = false;
 

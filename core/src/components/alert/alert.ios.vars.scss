@@ -1,5 +1,5 @@
 @import "../../themes/ionic.globals.ios";
-@import "../item/item.vars";
+@import "../item/item.ios.vars";
 
 // iOS Alert
 // --------------------------------------------------
@@ -299,4 +299,4 @@ $alert-ios-checkbox-icon-transform:                     rotate(45deg) !default;
 $alert-ios-translucent-filter:                          saturate(180%) blur(20px) !default;
 
 /// @prop - Height of the tappable inputs in the checkbox alert
-$alert-ios-tappable-height:                             $item-min-height !default;
+$alert-ios-tappable-height:                             $item-ios-min-height !default;
