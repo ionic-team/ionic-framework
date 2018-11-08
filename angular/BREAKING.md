@@ -20,7 +20,6 @@ A list of the breaking changes introduced to each component in Ionic Angular v4.
 - [Alert](#alert)
 - [Back Button](#back-button)
 - [Button](#button)
-- [Chip](#chip)
 - [Colors](#colors)
 - [Content](#content)
 - [Datetime](#datetime)
@@ -248,34 +247,6 @@ The `small` and `large` attributes are now combined under the `size` attribute. 
 <ion-button expand="full">
   Full-width Button
 </ion-button>
-```
-
-## Chip
-
-### Markup Changed
-
-Buttons inside of an `<ion-chip>` container should now be written as an `<ion-chip-button>` element. Ionic will determine when to render an anchor tag based on the presence of an `href` attribute.
-
-**Old Usage Example:**
-
-```html
-<ion-chip>
-  <ion-label>Default</ion-label>
-  <ion-button clear color="light">
-    <ion-icon name="close-circle"></ion-icon>
-  </ion-button>
-</ion-chip>
-```
-
-**New Usage Example:**
-
-```html
-<ion-chip>
-  <ion-label>Default</ion-label>
-  <ion-chip-button fill="clear" color="light">
-    <ion-icon name="close-circle"></ion-icon>
-  </ion-chip-button>
-</ion-chip>
 ```
 
 

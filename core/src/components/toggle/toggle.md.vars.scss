@@ -14,7 +14,7 @@ $toggle-md-track-width:                           36px !default;
 $toggle-md-track-height:                          14px !default;
 
 /// @prop - Background color of the toggle track
-$toggle-md-track-background-color-off:            $item-md-border-color !default;
+$toggle-md-track-background-color-off:            ion-color(medium, tint) !default;
 
 /// @prop - Background color alpha of the checked toggle track
 $toggle-md-track-background-color-alpha-on:       .5 !default;
