@@ -48,7 +48,7 @@ A list of the breaking changes introduced to each component in Ionic Angular v4.
 - [Range](#range)
 - [Refresher](#refresher)
 - [Scroll](#scroll)
-- [Segment](#segment)
+- [Segment Button](#segment-button)
 - [Select](#select)
 - [Spinner](#spinner)
 - [Tabs](#tabs)
@@ -1199,9 +1199,25 @@ div.scrollable {
 ```
 
 
-## Segment
+## Segment Button
 
-The markup hasn't changed for Segments, but now writing `<ion-segment-button>` will render a native button element inside of it.
+Segment Button text is now required to be wrapped in an `ion-label`.
+
+*Old usage:*
+
+```html
+<ion-segment-button>
+  Item One
+</ion-segment-button>
+```
+
+*New usage:*
+
+```html
+<ion-segment-button>
+  <ion-label>Item One</ion-label>
+</ion-segment-button>
+```
 
 
 ## Select

@@ -86,15 +86,15 @@
 
       <div padding>
         <ion-segment>
-          <ion-segment-button>Seg 1</ion-segment-button>
-          <ion-segment-button>Seg 2</ion-segment-button>
-          <ion-segment-button>Seg 3</ion-segment-button>
+          <ion-segment-button><ion-label>Seg 1</ion-label></ion-segment-button>
+          <ion-segment-button><ion-label>Seg 2</ion-label></ion-segment-button>
+          <ion-segment-button><ion-label>Seg 3</ion-label></ion-segment-button>
         </ion-segment>
 
         <ion-segment disabled>
-          <ion-segment-button>Seg 2 1</ion-segment-button>
-          <ion-segment-button checked>Seg 2 2</ion-segment-button>
-          <ion-segment-button>Seg 2 3</ion-segment-button>
+          <ion-segment-button><ion-label>Seg 2 1</ion-label></ion-segment-button>
+          <ion-segment-button checked><ion-label>Seg 2 2</ion-label></ion-segment-button>
+          <ion-segment-button><ion-label>Seg 2 3</ion-label></ion-segment-button>
         </ion-segment>
 
         <ion-segment color="dark" value="Reading List">
@@ -111,25 +111,25 @@
 
         <ion-segment name="dynamicPropDisable" disabled color="danger">
           <ion-segment-button value="Bookmarks">
-            Bookmarks
+            <ion-label>Bookmarks</ion-label>
           </ion-segment-button>
           <ion-segment-button value="Reading List">
-            Reading List
+            <ion-label>Reading List</ion-label>
           </ion-segment-button>
           <ion-segment-button value="Shared Links">
-            Shared Links
+            <ion-label>Shared Links</ion-label>
           </ion-segment-button>
         </ion-segment>
 
         <ion-segment id="finalSegment" name="dynamicAttrElem" color="secondary" value="active">
           <ion-segment-button value="active">
-            Active
+            <ion-label>Active</ion-label>
           </ion-segment-button>
           <ion-segment-button name="dynamicAttrDisable" value="disabled" disabled="true">
-            Disabled
+            <ion-label>Disabled</ion-label>
           </ion-segment-button>
           <ion-segment-button value="inactive" disabled="false">
-            Inactive
+            <ion-label>Inactive</ion-label>
           </ion-segment-button>
         </ion-segment>
 
@@ -195,7 +195,7 @@
           for (var i = 0; i < length; i++) {
             dynamicButtons.innerHTML += `
                 <ion-segment-button value="segment-${i}">
-                  Btn ${i}
+                  <ion-label>Btn ${i}</ion-label>
                 </ion-segment-button>`;
           }
         }

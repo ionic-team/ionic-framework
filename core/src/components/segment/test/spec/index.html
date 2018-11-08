@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Segment - Spec</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header no-border>
+      <ion-toolbar>
+        <ion-title>Segment - Spec</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <!-- Label only -->
+      <ion-segment>
+        <ion-segment-button checked>
+          <ion-label>Item One</ion-label>
+        </ion-segment-button>
+        <ion-segment-button>
+          <ion-label>Item Two</ion-label>
+        </ion-segment-button>
+        <ion-segment-button>
+          <ion-label>Item Three</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <!-- Icon only -->
+      <ion-segment>
+        <ion-segment-button>
+          <ion-icon name="call"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button checked>
+          <ion-icon name="heart"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button>
+          <ion-icon name="pin"></ion-icon>
+        </ion-segment-button>
+      </ion-segment>
+
+      <!-- Icon top -->
+      <ion-segment>
+        <ion-segment-button layout="icon-top">
+          <ion-label>Item One</ion-label>
+          <ion-icon name="call"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button checked layout="icon-top">
+          <ion-label>Item Two</ion-label>
+          <ion-icon name="heart"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button layout="icon-top">
+          <ion-label>Item Three</ion-label>
+          <ion-icon name="pin"></ion-icon>
+        </ion-segment-button>
+      </ion-segment>
+
+      <!-- Icon bottom -->
+      <ion-segment>
+        <ion-segment-button checked layout="icon-bottom">
+          <ion-icon name="call"></ion-icon>
+          <ion-label>Item One</ion-label>
+        </ion-segment-button>
+        <ion-segment-button layout="icon-bottom">
+          <ion-icon name="heart"></ion-icon>
+          <ion-label>Item Two</ion-label>
+        </ion-segment-button>
+        <ion-segment-button layout="icon-bottom">
+          <ion-icon name="pin"></ion-icon>
+          <ion-label>Item Three</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <!-- Icon start -->
+      <ion-segment>
+        <ion-segment-button checked layout="icon-start">
+          <ion-label>Item One</ion-label>
+          <ion-icon name="call"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button layout="icon-start">
+          <ion-label>Item Two</ion-label>
+          <ion-icon name="heart"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button layout="icon-start">
+          <ion-label>Item Three</ion-label>
+          <ion-icon name="pin"></ion-icon>
+        </ion-segment-button>
+      </ion-segment>
+
+      <!-- Icon end -->
+      <ion-segment>
+        <ion-segment-button checked layout="icon-end">
+          <ion-icon name="call"></ion-icon>
+          <ion-label>Item One</ion-label>
+        </ion-segment-button>
+        <ion-segment-button disabled layout="icon-end">
+          <ion-icon name="heart"></ion-icon>
+          <ion-label>Item Two</ion-label>
+        </ion-segment-button>
+        <ion-segment-button layout="icon-end">
+          <ion-icon name="pin"></ion-icon>
+          <ion-label>Item Three</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <!-- Disabled -->
+      <ion-segment disabled>
+        <ion-segment-button checked layout="icon-end">
+          <ion-icon name="call"></ion-icon>
+          <ion-label>Item One</ion-label>
+        </ion-segment-button>
+        <ion-segment-button layout="icon-end">
+          <ion-icon name="heart"></ion-icon>
+          <ion-label>Item Two</ion-label>
+        </ion-segment-button>
+        <ion-segment-button layout="icon-end">
+          <ion-icon name="pin"></ion-icon>
+          <ion-label>Item Three</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <!-- Color -->
+      <ion-segment color="secondary">
+        <ion-segment-button checked layout="icon-end">
+          <ion-icon name="call"></ion-icon>
+          <ion-label>Item One</ion-label>
+        </ion-segment-button>
+        <ion-segment-button disabled layout="icon-end">
+          <ion-icon name="heart"></ion-icon>
+          <ion-label>Item Two</ion-label>
+        </ion-segment-button>
+        <ion-segment-button layout="icon-end">
+          <ion-icon name="pin"></ion-icon>
+          <ion-label>Item Three</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <!-- Overflow Icons -->
+      <ion-segment color="tertiary">
+        <ion-segment-button>
+          <ion-icon name="home"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button checked>
+          <ion-icon name="heart"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button>
+          <ion-icon name="pin"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button>
+          <ion-icon name="star"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button>
+          <ion-icon name="call"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button>
+          <ion-icon name="globe"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button>
+          <ion-icon name="basket"></ion-icon>
+        </ion-segment-button>
+      </ion-segment>
+
+    </ion-content>
+
+    <style>
+      ion-content {
+        --background: #e5e5e5;
+      }
+
+      ion-segment {
+        background: white;
+        margin-bottom: 12px;
+      }
+
+    </style>
+  </ion-app>
+</body>
+
+</html>
