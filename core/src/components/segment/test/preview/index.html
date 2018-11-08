@@ -18,7 +18,7 @@
       </ion-toolbar>
 
       <ion-toolbar color="primary">
-        <ion-segment id="modeLayout">
+        <ion-segment scrollable id="modeLayout">
           <ion-segment-button checked>
             <ion-icon name="compass"></ion-icon>
             <ion-label>Explore</ion-label>
@@ -30,6 +30,14 @@
           <ion-segment-button>
             <ion-icon name="briefcase"></ion-icon>
             <ion-label>Trips</ion-label>
+          </ion-segment-button>
+          <ion-segment-button>
+            <ion-icon name="person"></ion-icon>
+            <ion-label>Account</ion-label>
+          </ion-segment-button>
+          <ion-segment-button>
+            <ion-icon name="settings"></ion-icon>
+            <ion-label>Settings</ion-label>
           </ion-segment-button>
         </ion-segment>
       </ion-toolbar>
@@ -95,7 +103,7 @@
       </ion-segment>
 
       <!-- Icon start -->
-      <ion-segment>
+      <ion-segment scrollable>
         <ion-segment-button checked layout="icon-start">
           <ion-label>Item One</ion-label>
           <ion-icon name="call"></ion-icon>
@@ -111,7 +119,7 @@
       </ion-segment>
 
       <!-- Icon end -->
-      <ion-segment>
+      <ion-segment scrollable>
         <ion-segment-button checked layout="icon-end">
           <ion-icon name="call"></ion-icon>
           <ion-label>Item One</ion-label>
@@ -127,7 +135,7 @@
       </ion-segment>
 
       <!-- Disabled -->
-      <ion-segment disabled>
+      <ion-segment scrollable disabled>
         <ion-segment-button checked layout="icon-end">
           <ion-icon name="call"></ion-icon>
           <ion-label>Item One</ion-label>
@@ -143,7 +151,7 @@
       </ion-segment>
 
       <!-- Color -->
-      <ion-segment color="secondary">
+      <ion-segment scrollable color="secondary">
         <ion-segment-button checked layout="icon-end">
           <ion-icon name="call"></ion-icon>
           <ion-label>Item One</ion-label>
@@ -159,7 +167,7 @@
       </ion-segment>
 
       <!-- Overflow Icons -->
-      <ion-segment color="tertiary">
+      <ion-segment scrollable color="tertiary">
         <ion-segment-button>
           <ion-icon name="home"></ion-icon>
         </ion-segment-button>

@@ -10,18 +10,13 @@
 
   flex: 1;
   align-items: center;
-
-  overflow-x: scroll;
+  justify-content: center;
 
   width: 100%;
 
   font-family: $font-family-base;
 
   text-align: center;
-}
-
-:host(::-webkit-scrollbar) {
-  display: none;
 }
 
 
@@ -31,4 +26,20 @@
 :host(.segment-disabled),
 ::slotted(.segment-button-disabled) {
   pointer-events: none;
+}
+
+
+// Segment: Scrollable
+// --------------------------------------------------
+
+:host(.segment-scrollable) {
+  justify-content: start;
+
+  width: auto;
+
+  overflow-x: scroll;
+}
+
+:host(.segment-scrollable::-webkit-scrollbar) {
+  display: none;
 }

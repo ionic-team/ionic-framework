@@ -3984,6 +3984,10 @@ export namespace Components {
     */
     'mode': Mode;
     /**
+    * If `true`, the segment buttons will overflow and the user can swipe to see them.
+    */
+    'scrollable': boolean;
+    /**
     * the value of the segment.
     */
     'value'?: string | null;
@@ -4009,6 +4013,10 @@ export namespace Components {
     * Emitted when the styles change.
     */
     'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
+    /**
+    * If `true`, the segment buttons will overflow and the user can swipe to see them.
+    */
+    'scrollable'?: boolean;
     /**
     * the value of the segment.
     */

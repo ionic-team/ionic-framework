@@ -33,6 +33,11 @@ export class Segment implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
+   * If `true`, the segment buttons will overflow and the user can swipe to see them.
+   */
+  @Prop() scrollable = false;
+
+  /**
    * the value of the segment.
    */
   @Prop({ mutable: true }) value?: string | null;
@@ -94,7 +99,8 @@ export class Segment implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
-        'segment-disabled': this.disabled
+        'segment-disabled': this.disabled,
+        'segment-scrollable': this.scrollable
       }
     };
   }

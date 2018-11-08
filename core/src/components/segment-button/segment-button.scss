@@ -58,7 +58,7 @@
   --icon-size: 1em;
   --indicator-color: transparent;
 
-  flex: auto;
+  flex: 1 0 auto;
   flex-direction: column;
 
   height: 100%;
@@ -104,9 +104,9 @@
   width: 100%;
 
   min-width: inherit;
-
   max-width: inherit;
   height: 100%;
+
   min-height: inherit;
   max-height: inherit;
 
@@ -120,7 +120,6 @@
 
   contain: content;
   cursor: pointer;
-  overflow: hidden;
 }
 
 
@@ -194,6 +193,10 @@
 // --------------------------------------------------
 
 ::slotted(ion-label) {
+
+  display: block;
+
+  align-self: center;
   // @include margin(var(--label-margin-top), var(--label-margin-end), var(--label-margin-bottom), var(--label-margin-start));
 
   margin-top: var(--label-margin-top);
@@ -201,17 +204,12 @@
   margin-bottom: var(--label-margin-bottom);
   margin-left: var(--label-margin-start);
 
-  display: block;
-
-  align-self: center;
-
   line-height: 22px;
 
   text-overflow: ellipsis;
 
   white-space: nowrap;
 
-  overflow: hidden;
   box-sizing: border-box;
 }
 
@@ -220,14 +218,14 @@
 // --------------------------------------------------
 
 ::slotted(ion-icon) {
+
+  order: var(--icon-order);
   // @include margin(var(--icon-margin-top), var(--icon-margin-end), var(--icon-margin-bottom), var(--icon-margin-start));
 
   margin-top: var(--icon-margin-top);
   margin-right: var(--icon-margin-end);
   margin-bottom: var(--icon-margin-bottom);
   margin-left: var(--icon-margin-start);
-
-  order: var(--icon-order);
 
   font-size: var(--icon-size);
 }

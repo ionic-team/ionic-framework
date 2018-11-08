@@ -4,13 +4,6 @@
 // Material Design Segment
 // --------------------------------------------------
 
-:host {
-  // The safe keyword needs browser support
-  // but with it can move this to main styles
-  // justify-content: safe center;
-  justify-content: start;
-}
-
 :host(.segment-disabled) {
   opacity: $segment-md-opacity-disabled;
 }

@@ -24,11 +24,11 @@
   --label-margin-bottom: 12px;
   --icon-margin-top: 12px;
   --icon-margin-bottom: 12px;
+
   min-width: $segment-button-md-min-width;
 
+  max-width: $segment-button-md-max-width;
   min-height: $segment-button-md-min-height;
-
-  // max-width: $segment-button-md-max-width;
 
   font-size: $segment-button-md-font-size;
   font-weight: $segment-button-md-font-weight;
