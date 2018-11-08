@@ -13,13 +13,11 @@
 <body onload="listenForEvent()">
   <ion-app>
 
-    <ion-header no-border>
+    <ion-header>
       <ion-toolbar>
         <ion-title>Segment - Basic</ion-title>
       </ion-toolbar>
-    </ion-header>
 
-    <ion-content>
       <ion-toolbar>
         <ion-segment class="event-tester" value="Free">
           <ion-segment-button value="Paid">
@@ -83,7 +81,9 @@
           </ion-segment-button>
         </ion-segment>
       </ion-toolbar>
+    </ion-header>
 
+    <ion-content>
       <div padding>
         <ion-segment>
           <ion-segment-button><ion-label>Seg 1</ion-label></ion-segment-button>

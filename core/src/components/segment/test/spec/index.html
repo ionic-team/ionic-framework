@@ -10,12 +10,28 @@
   <script src="../../../../../dist/ionic.js"></script>
 </head>
 
-<body>
+<body onLoad="setLayout()">
   <ion-app>
-
-    <ion-header no-border>
-      <ion-toolbar>
+    <ion-header>
+      <ion-toolbar color="tertiary">
         <ion-title>Segment - Spec</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="tertiary">
+        <ion-segment id="modeLayout">
+          <ion-segment-button checked>
+            <ion-icon name="compass"></ion-icon>
+            <ion-label>Explore</ion-label>
+          </ion-segment-button>
+          <ion-segment-button>
+            <ion-icon name="airplane"></ion-icon>
+            <ion-label>Flights</ion-label>
+          </ion-segment-button>
+          <ion-segment-button>
+            <ion-icon name="briefcase"></ion-icon>
+            <ion-label>Trips</ion-label>
+          </ion-segment-button>
+        </ion-segment>
       </ion-toolbar>
     </ion-header>
 
@@ -172,14 +188,30 @@
     <style>
       ion-content {
         --background: #e5e5e5;
+        --padding-top: 16px;
       }
 
-      ion-segment {
+      ion-content ion-segment {
         background: white;
         margin-bottom: 12px;
       }
 
     </style>
+
+    <script>
+      function setLayout() {
+        var mode = Ionic.mode;
+        console.log('mode', mode);
+
+        var segment = document.getElementById("modeLayout");
+        var segmentButtons = segment.querySelectorAll("ion-segment-button");
+
+        for (var i = 0; i < segmentButtons.length; i++) {
+          segmentButtons[i].layout = (mode === 'ios') ? 'icon-hide' : 'icon-top';
+        }
+      }
+
+    </script>
   </ion-app>
 </body>
 
