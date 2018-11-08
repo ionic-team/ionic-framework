@@ -1,13 +1,16 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 
-import { Color, Mode } from '../../interface';
+import { Color, Mode, SegmentButtonLayout } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 let ids = 0;
 
 @Component({
   tag: 'ion-segment-button',
-  styleUrl: 'segment-button.scss',
+  styleUrls: {
+    ios: 'segment-button.ios.scss',
+    md: 'segment-button.md.scss'
+  },
   shadow: true
 })
 export class SegmentButton implements ComponentInterface {
@@ -38,6 +41,11 @@ export class SegmentButton implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
+   * Set the layout of the text and icon in the segment.
+   */
+  @Prop() layout: SegmentButtonLayout = 'icon-hide';
+
+  /**
    * The value of the segment button.
    */
   @Prop() value: string = 'ion-sb-' + (ids++);
@@ -62,6 +70,7 @@ export class SegmentButton implements ComponentInterface {
         ...createColorClasses(color),
         'segment-button-disabled': disabled,
         'segment-button-checked': checked,
+        [`segment-button-layout-${this.layout}`]: true
       }
     };
   }
@@ -77,7 +86,8 @@ export class SegmentButton implements ComponentInterface {
       >
         <slot></slot>
         {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-      </button>
+      </button>,
+      <div class="segment-button-indicator"></div>
     ];
   }
 }

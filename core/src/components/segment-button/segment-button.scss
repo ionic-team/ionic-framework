@@ -5,8 +5,8 @@
 
 :host {
   /**
-   * @prop --btn-background: Background of the button
-   * @prop --btn-border-color: Color of the button border
+   * @prop --background: Background of the button
+   * @prop --border-color: Color of the button border
    * @prop --border-radius: Radius of the button border
    * @prop --border-style: Style of the button border
    * @prop --border-width: Width of the button border
@@ -26,12 +26,18 @@
   --padding-top: 0;
   --padding-bottom: 0;
   --icon-size: 1em;
-  --btn-background: inherit;
-  --btn-border-color: inherit;
+  --indicator-color: transparent;
 
-  flex: 1;
+  flex: auto;
+  flex-direction: column;
 
-  color: inherit;
+  height: 100%;
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  color: var(--color);
 
   text-decoration: none;
   text-overflow: ellipsis;
@@ -40,48 +46,192 @@
   font-kerning: none;
 }
 
-:host(:first-of-type) .button-native {
-  --padding-end: 0;
-
+:host(:first-of-type) {
   @include border-radius(var(--border-radius), 0, 0, var(--border-radius));
 }
 
-:host(:not(:first-of-type)) .button-native {
+:host(:not(:first-of-type)) {
   border-left-width: 0;
 }
 
-:host(:last-of-type) .button-native {
-  --padding-start: 0;
-
+:host(:last-of-type) {
   @include border-radius(0, var(--border-radius), var(--border-radius), 0);
 }
 
 .button-native {
+  @include border-radius(inherit);
   @include text-inherit();
   @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
-  display: block;
+  display: flex;
   position: relative;
 
+  flex-direction: inherit;
+  align-items: center;
+  justify-content: center;
+
   width: 100%;
+
+  min-width: inherit;
+
+  max-width: inherit;
   height: 100%;
+  min-height: inherit;
+  max-height: inherit;
 
   transition: var(--transition);
 
-  border-width: var(--border-width);
-  border-style: var(--border-style);
-  border-color: var(--btn-border-color);
+  border: none;
 
   outline: none;
 
-  background: var(--btn-background);
+  background: var(--background);
 
   contain: content;
   cursor: pointer;
   overflow: hidden;
 }
 
+
+
+// Segment Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:hover) {
+    background: var(--background-hover);
+  }
+}
+
+
+// Segment Button: Checked
+// --------------------------------------------------
+
+:host(.segment-button-checked) {
+  background: var(--background-checked);
+  color: var(--color-checked);
+}
+
+:host(.segment-button-checked) .segment-button-indicator {
+  background-color: var(--indicator-color-checked);
+}
+
+// Segment Button: Activated
+// --------------------------------------------------
+
+:host(.activated) {
+  background: var(--background-activated);
+  color: var(--color);
+}
+
+// Segment Button: Disabled
+// --------------------------------------------------
+
+:host(.segment-button-disabled) {
+  color: var(--color-disabled);
+}
+
+// Segment Button: Checked & Disabled
+// --------------------------------------------------
+
+:host(.segment-button-disabled.segment-button-checked) {
+  color: var(--color-checked-disabled);
+}
+
+// Segment Button: Indicator
+// --------------------------------------------------
+
+.segment-button-indicator {
+
+  align-self: flex-end;
+
+  width: 100%;
+
+  height: 2px;
+
+  background-color: var(--indicator-color);
+
+  opacity: 1;
+}
+
+
+// Segment Button Label
+// --------------------------------------------------
+
+::slotted(ion-label) {
+  // @include margin(var(--label-margin-top), var(--label-margin-end), var(--label-margin-bottom), var(--label-margin-start));
+
+  margin-top: var(--label-margin-top);
+  margin-end: var(--label-margin-end);
+  margin-bottom: var(--label-margin-bottom);
+  margin-start: var(--label-margin-start);
+
+  display: block;
+
+  align-self: center;
+
+  line-height: 22px;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+
+// Segment Button Icon
+// --------------------------------------------------
+
 ::slotted(ion-icon) {
+  // @include margin(var(--icon-margin-top), var(--icon-margin-end), var(--icon-margin-bottom), var(--icon-margin-start));
+
+  margin-top: var(--icon-margin-top);
+  margin-end: var(--icon-margin-end);
+  margin-bottom: var(--icon-margin-bottom);
+  margin-start: var(--icon-margin-start);
+
+  order: var(--icon-order);
+
   font-size: var(--icon-size);
+}
+
+
+// Segment Button Layout
+// --------------------------------------------------
+
+// Layout: icon top
+:host(.segment-button-layout-icon-top) {
+  --label-margin-top: 0;
+  --icon-margin-bottom: 0;
+  --icon-order: -1;
+}
+
+// Layout: icon bottom
+:host(.segment-button-layout-icon-bottom) {
+  --label-margin-bottom: 0;
+  --icon-margin-top: 0;
+  --icon-order: 1;
+}
+
+// Layout: icon start / end
+:host(.segment-button-layout-icon-start),
+:host(.segment-button-layout-icon-end) {
+  flex-direction: row;
+}
+
+// Layout: icon start
+:host(.segment-button-layout-icon-start) {
+  --label-margin-start: 8px;
+  --label-margin-end: 0;
+  --icon-order: -1;
+}
+
+// Layout: icon end
+:host(.segment-button-layout-icon-end) {
+  --label-margin-start: 0;
+  --label-margin-end: 8px;
+  --icon-order: 1;
 }

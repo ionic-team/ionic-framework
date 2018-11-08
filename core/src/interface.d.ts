@@ -16,6 +16,7 @@ export * from './components/range/range-interface';
 export * from './components/refresher/refresher-interface';
 export * from './components/reorder-group/reorder-group-interface';
 export * from './components/content/content-interface';
+export * from './components/segment-button/segment-button-interface';
 export * from './components/select/select-interface';
 export * from './components/select-popover/select-popover-interface';
 export * from './components/spinner/spinner-interface';

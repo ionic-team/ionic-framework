@@ -1,0 +1,58 @@
+@import "./segment-button";
+@import "./segment-button.md.vars";
+
+// Material Design Segment Button
+// --------------------------------------------------
+
+:host {
+  --padding-top: #{$segment-button-md-padding-top};
+  --padding-end: #{$segment-button-md-padding-end};
+  --padding-bottom: #{$segment-button-md-padding-bottom};
+  --padding-start: #{$segment-button-md-padding-start};
+  --transition: #{$segment-button-md-transition};
+  --transition-delay: #{$segment-button-md-transition-delay};
+  --indicator-transition: display .25s cubic-bezier(.4, 0, .2, 1) .1s;
+  --icon-size: #{$segment-button-md-icon-size};
+  --background: #{$segment-button-md-background};
+  --background-hover: #{$segment-button-md-background-hover};
+  --background-activated: #{$segment-button-md-background-activated};
+  --color: #{$segment-button-md-text-color};
+  --color-checked: #{$segment-button-md-text-color-activated};
+  --indicator-color: transparent;
+  --indicator-color-checked: #{$segment-button-md-text-color-activated};
+  --label-margin-top: 12px;
+  --label-margin-bottom: 12px;
+  --icon-margin-top: 12px;
+  --icon-margin-bottom: 12px;
+  min-width: $segment-button-md-min-width;
+
+  min-height: $segment-button-md-min-height;
+
+  // max-width: $segment-button-md-max-width;
+
+  font-size: $segment-button-md-font-size;
+  font-weight: $segment-button-md-font-weight;
+
+  letter-spacing: $segment-button-md-letter-spacing;
+
+  line-height: $segment-button-md-line-height;
+
+  text-transform: uppercase;
+}
+
+// Segment Button: Checked
+// --------------------------------------------------
+
+:host(.activated),
+:host(.segment-button-checked) {
+  --border-color: #{$segment-button-md-border-bottom-color-activated};
+
+  opacity: $segment-button-md-opacity-activated;
+}
+
+// Segment Button: Disabled
+// --------------------------------------------------
+
+:host(.segment-button-disabled) {
+  opacity: $segment-button-md-opacity-disabled;
+}

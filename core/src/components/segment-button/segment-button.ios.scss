@@ -1,0 +1,39 @@
+@import "./segment-button";
+@import "./segment-button.ios.vars";
+
+// iOS Segment Button
+// --------------------------------------------------
+
+:host {
+  --background: #{$segment-button-ios-background-color};
+  --background-hover: #{$segment-button-ios-background-color-hover};
+  --background-activated: #{$segment-button-ios-background-color-activated};
+  --background-checked: #{$segment-button-ios-background-color-checked};
+  --background-disabled: #{$segment-button-ios-background-color-disabled};
+  --border-color: #{ion-color(primary, base)};
+  --color: #{ion-color(primary, base)};
+  --color-checked: #{ion-color(primary, contrast)};
+  --color-disabled: #{ion-color(primary, base, $segment-button-ios-opacity-disabled)};
+  --color-checked-disabled: #{ion-color(primary, contrast, $segment-button-ios-opacity-disabled)};
+  --border-radius: #{$segment-button-ios-border-radius};
+  --border-width: #{$segment-button-ios-border-width};
+  --border-style: solid;
+  --transition: #{$segment-button-ios-transition};
+  --icon-size: #{$segment-button-ios-icon-size};
+
+  width: 100%;
+
+  min-height: #{$segment-button-ios-height};
+
+  font-size: #{$segment-button-ios-font-size};
+
+  line-height: #{$segment-button-ios-line-height};
+}
+
+
+// Segment Button: Indicator
+// --------------------------------------------------
+
+.segment-button-indicator {
+  display: none;
+}

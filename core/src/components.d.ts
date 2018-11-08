@@ -50,6 +50,7 @@ import {
   RouteWrite,
   ScrollBaseDetail,
   ScrollDetail,
+  SegmentButtonLayout,
   SelectInputChangeEvent,
   SelectInterface,
   SelectPopoverOption,
@@ -3926,6 +3927,10 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
+    * Set the layout of the text and icon in the segment.
+    */
+    'layout': SegmentButtonLayout;
+    /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
     'mode': Mode;
@@ -3947,6 +3952,10 @@ export namespace Components {
     * If `true`, the user cannot interact with the segment button. Defaults to `false`.
     */
     'disabled'?: boolean;
+    /**
+    * Set the layout of the text and icon in the segment.
+    */
+    'layout'?: SegmentButtonLayout;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -3996,6 +4005,10 @@ export namespace Components {
     * Emitted when the value property has changed.
     */
     'onIonChange'?: (event: CustomEvent<TextInputChangeEvent>) => void;
+    /**
+    * Emitted when the styles change.
+    */
+    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
     /**
     * the value of the segment.
     */

@@ -5,81 +5,62 @@
 // --------------------------------------------------
 
 :host {
-  --background: transparent;
-  --background-checked: #{ion-color(primary, base)};
-  --border-color: currentColor;
-  --border-color-checked: #{ion-color(primary, base)};
-  --border-color-disabled: #{ion-color(primary, base)};
-  --color: #{ion-color(primary, base)};
-  --color-checked: #{ion-color(primary, contrast)};
-  --color-disabled: #{ion-color(primary, base, $segment-button-ios-opacity-disabled)};
+  // The safe keyword needs browser support
+  // but with it can move this to main styles
+  // justify-content: safe center;
+  justify-content: center;
 }
 
 :host(.segment-disabled) {
   opacity: $segment-ios-opacity-disabled;
 }
 
-// iOS Segment Button
+// Segment: Color
 // --------------------------------------------------
 
-::slotted(ion-segment-button) {
-  --border-radius: #{$segment-button-ios-border-radius};
-  --border-width: #{$segment-button-ios-border-width};
-  --border-style: solid;
-  --transition: 100ms all linear;
-  --icon-size: #{$segment-button-ios-icon-size};
-
-  height: #{$segment-button-ios-height};
-
-  font-size: #{$segment-button-ios-font-size};
-
-  line-height: #{$segment-button-ios-line-height};
-}
-
-::slotted(.segment-button-disabled) {
-  --btn-border-color: var(--border-color-disabled);
-
-  color: var(--color-disabled);
-}
-
 :host(.ion-color)::slotted(ion-segment-button) {
+  --border-color: #{current-color(base)};
+  --background-hover: #{current-color(base, .04)};
+  --background-activated: #{current-color(base, .16)};
+
   color: #{current-color(base)};
 }
 
 :host(.ion-color)::slotted(.segment-button-checked) {
-  --btn-background: #{current-color(base)};
-  --btn-border-color: #{current-color(base)};
+  background: #{current-color(base)};
   color: #{current-color(contrast)};
 }
 
 :host(.ion-color)::slotted(.segment-button-disabled) {
-  --btn-border-color: #{current-color(base)};
-  color: #{current-color(base, $segment-button-ios-background-color-alpha-disabled)};
+  color: #{current-color(base, $segment-ios-opacity-disabled)};
 }
 
-// iOS Segment in Toolbar
+:host(.ion-color)::slotted(.segment-button-checked.segment-button-disabled) {
+  color: #{current-color(contrast, $segment-ios-opacity-disabled)};
+}
+
+
+// Segment: Default Toolbar
 // --------------------------------------------------
-:host-context(ion-toolbar) {
-  @include position(0, 0, 0, 0);
-  @include margin(0);
-
-  position: absolute;
-}
 
 :host-context(ion-toolbar)::slotted(ion-segment-button) {
   max-width: $segment-button-ios-toolbar-button-max-width;
-  height: $segment-button-ios-toolbar-button-height;
+  min-height: $segment-button-ios-toolbar-button-height;
 
   font-size: $segment-button-ios-toolbar-font-size;
 
   line-height: $segment-button-ios-toolbar-line-height;
 }
 
-:host-context(ion-toolbar.ion-color):not(.ion-color) {
+// Segment: Color Toolbar
+// --------------------------------------------------
+
+:host-context(ion-toolbar.ion-color):not(.ion-color)::slotted(ion-segment-button) {
   --color: #{current-color(contrast)};
-  --color-checked: #{current-color(base)};
   --color-disabled: #{current-color(contrast, $segment-button-ios-opacity-disabled)};
+  --color-checked: #{current-color(base)};
+  --color-checked-disabled: #{current-color(contrast, $segment-button-ios-opacity-disabled)};
+  --background-activated: #{current-color(contrast, $segment-button-ios-opacity-activated)};
   --background-checked: #{current-color(contrast)};
-  --border-color-checked: #{current-color(contrast)};
-  --border-color-disabled: #{current-color(contrast)};
+  --border-color: #{current-color(contrast)};
 }
