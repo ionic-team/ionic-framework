@@ -42,7 +42,7 @@ export class SegmentButton implements ComponentInterface {
   /**
    * Set the layout of the text and icon in the segment.
    */
-  @Prop() layout: SegmentButtonLayout = 'icon-hide';
+  @Prop() layout!: SegmentButtonLayout;
 
   /**
    * The value of the segment button.

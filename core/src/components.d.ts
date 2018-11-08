@@ -165,7 +165,7 @@ export namespace Components {
     /**
     * An array of buttons for the action sheet.
     */
-    'buttons': (ActionSheetButton | string)[];
+    'buttons'?: (ActionSheetButton | string)[];
     /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
@@ -214,7 +214,7 @@ export namespace Components {
     * Emitted before the alert has presented.
     */
     'onIonActionSheetWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
+    'overlayIndex'?: number;
     /**
     * Subtitle for the action sheet.
     */
@@ -381,7 +381,7 @@ export namespace Components {
     * Emitted before the alert has presented.
     */
     'onIonAlertWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
+    'overlayIndex'?: number;
     /**
     * The subtitle in the heading of the alert. Displayed under the title.
     */
@@ -2384,7 +2384,7 @@ export namespace Components {
     * Emitted before the loading has presented.
     */
     'onIonLoadingWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
+    'overlayIndex'?: number;
     /**
     * If `true`, a backdrop will be displayed behind the loading indicator.
     */
@@ -2703,7 +2703,7 @@ export namespace Components {
     /**
     * The component to display inside of the modal.
     */
-    'component': ComponentRef;
+    'component'?: ComponentRef;
     /**
     * The data to pass to the modal component.
     */
@@ -2753,7 +2753,7 @@ export namespace Components {
     * Emitted before the modal has presented.
     */
     'onIonModalWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
+    'overlayIndex'?: number;
     /**
     * If `true`, a backdrop will be displayed behind the modal.
     */
@@ -2943,7 +2943,7 @@ export namespace Components {
     'col': PickerColumn;
   }
   interface IonPickerColumnAttributes extends StencilHTMLAttributes {
-    'col': PickerColumn;
+    'col'?: PickerColumn;
   }
 
   interface IonPickerController {
@@ -3094,7 +3094,7 @@ export namespace Components {
     * Emitted before the picker has presented.
     */
     'onIonPickerWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
+    'overlayIndex'?: number;
     /**
     * If `true`, a backdrop will be displayed behind the picker.
     */
@@ -3197,7 +3197,7 @@ export namespace Components {
     /**
     * The component to display inside of the popover.
     */
-    'component': ComponentRef;
+    'component'?: ComponentRef;
     /**
     * The data to pass to the popover component.
     */
@@ -3251,7 +3251,7 @@ export namespace Components {
     * Emitted before the popover has presented.
     */
     'onIonPopoverWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
+    'overlayIndex'?: number;
     /**
     * If `true`, a backdrop will be displayed behind the popover.
     */
@@ -3641,7 +3641,7 @@ export namespace Components {
     /**
     * A redirect route, redirects "from" a URL "to" another URL. This property is that "from" URL. It needs to be an exact match of the navigated URL in order to apply.  The path specified in this value is always an absolute path, even if the initial `/` slash is not specified.
     */
-    'from': string;
+    'from'?: string;
     /**
     * Internal event that fires when any value of this rule is added/removed from the DOM, or any of his public properties changes.  `ion-router` captures this event in order to update his internal registry of router rules.
     */
@@ -3649,7 +3649,7 @@ export namespace Components {
     /**
     * A redirect route, redirects "from" a URL "to" another URL. This property is that "to" URL. When the defined `ion-route-redirect` rule matches, the router will redirect to the path specified in this property.  The value of this property is always an absolute path inside the scope of routes defined in `ion-router` it can't be used with another router or to perform a redirection to a different domain.  Note that this is a virtual redirect, it will not cause a real browser refresh, again, it's a redirect inside the context of ion-router.  When this property is not specified or his value is `undefined` the whole redirect route is noop, even if the "from" value matches.
     */
-    'to': string | undefined | null;
+    'to'?: string | undefined | null;
   }
 
   interface IonRoute {
@@ -3670,7 +3670,7 @@ export namespace Components {
     /**
     * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
     */
-    'component': string;
+    'component'?: string;
     /**
     * A key value `{ 'red': true, 'blue': 'white'}` containing props that should be passed to the defined component when rendered.
     */
@@ -4547,7 +4547,7 @@ export namespace Components {
     /**
     * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
     */
-    'tab': string;
+    'tab'?: string;
   }
 
   interface IonTab {
@@ -4576,7 +4576,7 @@ export namespace Components {
     /**
     * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
     */
-    'tab': string;
+    'tab'?: string;
   }
 
   interface IonTabs {
@@ -4976,7 +4976,7 @@ export namespace Components {
     * Emitted before the toast has presented.
     */
     'onIonToastWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
+    'overlayIndex'?: number;
     /**
     * The position of the toast on the screen.
     */

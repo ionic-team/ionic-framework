@@ -51,10 +51,7 @@ export class Toolbar implements ComponentInterface {
       }
     });
 
-    console.log('hasStyleChange', hasStyleChange);
-
     if (hasStyleChange) {
-      console.log('newStyles', newStyles);
       this.childrenStyles.set(tagName, newStyles);
       this.el.forceUpdate();
     }

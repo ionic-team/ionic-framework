@@ -163,9 +163,9 @@
   // @include margin(var(--label-margin-top), var(--label-margin-end), var(--label-margin-bottom), var(--label-margin-start));
 
   margin-top: var(--label-margin-top);
-  margin-end: var(--label-margin-end);
+  margin-right: var(--label-margin-end);
   margin-bottom: var(--label-margin-bottom);
-  margin-start: var(--label-margin-start);
+  margin-left: var(--label-margin-start);
 
   display: block;
 
@@ -189,9 +189,9 @@
   // @include margin(var(--icon-margin-top), var(--icon-margin-end), var(--icon-margin-bottom), var(--icon-margin-start));
 
   margin-top: var(--icon-margin-top);
-  margin-end: var(--icon-margin-end);
+  margin-right: var(--icon-margin-end);
   margin-bottom: var(--icon-margin-bottom);
-  margin-start: var(--icon-margin-start);
+  margin-left: var(--icon-margin-start);
 
   order: var(--icon-order);
 
@@ -234,4 +234,14 @@
   --label-margin-start: 0;
   --label-margin-end: 8px;
   --icon-order: 1;
+}
+
+// Layout: icon hide
+:host(.segment-button-layout-icon-hide) ::slotted(ion-icon) {
+  display: none;
+}
+
+// Layout: label hide
+:host(.segment-button-layout-label-hide) ::slotted(ion-label) {
+  display: none;
 }
