@@ -36,6 +36,8 @@
 // --------------------------------------------------
 
 :host-context(ion-toolbar.ion-color):not(.ion-color)::slotted(ion-segment-button) {
+  --background-hover: #{current-color(base)};
+  --background-activated: #{current-color(base)};
   --color: #{current-color(contrast, .6)};
   --color-checked: #{current-color(contrast)};
   --indicator-color-checked: #{current-color(contrast)};

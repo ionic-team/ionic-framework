@@ -69,6 +69,7 @@
   --color-disabled: #{current-color(contrast, $segment-button-ios-opacity-disabled)};
   --color-checked: #{current-color(base)};
   --color-checked-disabled: #{current-color(contrast, $segment-button-ios-opacity-disabled)};
+  --background-hover: #{current-color(contrast, $segment-button-ios-opacity-hover)};
   --background-activated: #{current-color(contrast, $segment-button-ios-opacity-activated)};
   --background-checked: #{current-color(contrast)};
   --border-color: #{current-color(contrast)};

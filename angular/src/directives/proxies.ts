@@ -710,24 +710,25 @@ export declare interface Segment extends StencilComponents<'IonSegment'> {}
 @Component({ selector: 'ion-segment', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'disabled', 'value'] })
 export class Segment {
   ionChange: EventEmitter<CustomEvent>;
+  ionStyle: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
     const el = r.nativeElement;
     proxyInputs(this, el, ['color', 'mode', 'disabled', 'value']);
-    proxyOutputs(this, el, ['ionChange']);
+    proxyOutputs(this, el, ['ionChange', 'ionStyle']);
   }
 }
 
 export declare interface SegmentButton extends StencilComponents<'IonSegmentButton'> {}
-@Component({ selector: 'ion-segment-button', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'checked', 'disabled', 'value'] })
+@Component({ selector: 'ion-segment-button', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'checked', 'disabled', 'layout', 'value'] })
 export class SegmentButton {
   ionSelect: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
     const el = r.nativeElement;
-    proxyInputs(this, el, ['color', 'mode', 'checked', 'disabled', 'value']);
+    proxyInputs(this, el, ['color', 'mode', 'checked', 'disabled', 'layout', 'value']);
     proxyOutputs(this, el, ['ionSelect']);
   }
 }
