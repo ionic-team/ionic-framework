@@ -61,6 +61,11 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() closeButtonText?: string;
 
   /**
+   * Icon to display in the close button.
+   */
+  @Prop() closeButtonIcon?: string;
+
+  /**
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
    */
@@ -205,7 +210,10 @@ export class Toast implements ComponentInterface, OverlayInterface {
           }
           {this.showCloseButton &&
             <ion-button fill="clear" ion-activatable class="toast-button" onClick={() => this.dismiss(undefined, 'cancel')}>
-              {this.closeButtonText || 'Close'}
+              {this.closeButtonText || (this.closeButtonIcon ? '' : 'Close')}
+              {this.closeButtonIcon && (
+                <ion-icon name={this.closeButtonIcon} slot={this.closeButtonText ? 'end' : 'icon-only'} />
+              )}
             </ion-button>
           }
         </div>

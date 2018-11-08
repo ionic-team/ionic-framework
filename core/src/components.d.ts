@@ -4833,6 +4833,10 @@ export namespace Components {
     */
     'animated': boolean;
     /**
+    * Icon to display in the close button.
+    */
+    'closeButtonIcon'?: string;
+    /**
     * Text to display in the close button.
     */
     'closeButtonText'?: string;
@@ -4903,6 +4907,10 @@ export namespace Components {
     * If `true`, the toast will animate.
     */
     'animated'?: boolean;
+    /**
+    * Icon to display in the close button.
+    */
+    'closeButtonIcon'?: string;
     /**
     * Text to display in the close button.
     */
