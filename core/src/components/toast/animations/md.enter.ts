@@ -7,8 +7,8 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, pos
   const baseAnimation = new AnimationC();
 
   const wrapperAnimation = new AnimationC();
-  const wrapperEle = baseEl.querySelector('.toast-wrapper') as HTMLElement;
-  wrapperAnimation.addElement(wrapperEle);
+  const wrapperEl = baseEl.querySelector('.toast-wrapper') as HTMLElement;
+  wrapperAnimation.addElement(wrapperEl);
 
   switch (position) {
     case 'top':
@@ -16,9 +16,9 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, pos
       break;
     case 'middle':
       const topPosition = Math.floor(
-        baseEl.clientHeight / 2 - wrapperEle.clientHeight / 2
+        baseEl.clientHeight / 2 - wrapperEl.clientHeight / 2
       );
-      wrapperEle.style.top = `${topPosition}px`;
+      wrapperEl.style.top = `${topPosition}px`;
       wrapperAnimation.fromTo('opacity', 0.01, 1);
       break;
     default:

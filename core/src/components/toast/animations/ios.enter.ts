@@ -7,8 +7,9 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, po
   const baseAnimation = new AnimationC();
 
   const wrapperAnimation = new AnimationC();
-  const wrapperEle = baseEl.querySelector('.toast-wrapper') as HTMLElement;
-  wrapperAnimation.addElement(wrapperEle);
+  const wrapperEl = baseEl.querySelector('.toast-wrapper') as HTMLElement;
+
+  wrapperAnimation.addElement(wrapperEl);
 
   const bottom = `calc(-10px - var(--ion-safe-area-bottom, 0px))`;
   const top = `calc(10px + var(--ion-safe-area-top, 0px))`;
@@ -19,9 +20,9 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, po
       break;
     case 'middle':
       const topPosition = Math.floor(
-        baseEl.clientHeight / 2 - wrapperEle.clientHeight / 2
+        baseEl.clientHeight / 2 - wrapperEl.clientHeight / 2
       );
-      wrapperEle.style.top = `${topPosition}px`;
+      wrapperEl.style.top = `${topPosition}px`;
       wrapperAnimation.fromTo('opacity', 0.01, 1);
       break;
     default:

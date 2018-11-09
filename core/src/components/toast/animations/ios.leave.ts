@@ -7,8 +7,8 @@ export function iosLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement, po
   const baseAnimation = new AnimationC();
 
   const wrapperAnimation = new AnimationC();
-  const wrapperEle = baseEl.querySelector('.toast-wrapper') as HTMLElement;
-  wrapperAnimation.addElement(wrapperEle);
+  const wrapperEl = baseEl.querySelector('.toast-wrapper') as HTMLElement;
+  wrapperAnimation.addElement(wrapperEl);
 
   const bottom = `calc(-10px - var(--ion-safe-area-bottom, 0px))`;
   const top = `calc(10px + var(--ion-safe-area-top, 0px))`;

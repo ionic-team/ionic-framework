@@ -7,8 +7,8 @@ export function mdLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement, pos
   const baseAnimation = new AnimationC();
 
   const wrapperAnimation = new AnimationC();
-  const wrapperEle = baseEl.querySelector('.toast-wrapper') as HTMLElement;
-  wrapperAnimation.addElement(wrapperEle);
+  const wrapperEl = baseEl.querySelector('.toast-wrapper') as HTMLElement;
+  wrapperAnimation.addElement(wrapperEl);
 
   switch (position) {
     case 'top':
