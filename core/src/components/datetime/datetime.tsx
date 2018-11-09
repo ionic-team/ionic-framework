@@ -198,6 +198,14 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
+   * Update the datetime value when the value changes
+   */
+  @Watch('displayFormat')
+  protected displayFormatChanged() {
+    this.updateText();
+  }
+
+  /**
    * Emitted when the datetime selection was cancelled.
    */
   @Event() ionCancel!: EventEmitter<void>;
