@@ -8,6 +8,14 @@
   <link href="../../../../../css/core.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../dist/ionic.js"></script>
+  <style>
+    .ion-page ion-content {
+      --padding-top: 16px;
+      --padding-end: 16px;
+      --padding-bottom: 16px;
+      --padding-start: 16px;
+    }
+  </style>
 </head>
 
 <body>
@@ -28,7 +36,7 @@
       </ion-content>
     </ion-menu>
 
-    <ion-menu side="end">
+    <ion-menu side="end" type="push">
       <ion-header>
         <ion-toolbar>
           <ion-title>End Menu</ion-title>
@@ -51,9 +59,25 @@
           <ion-title>Menu - Standalone</ion-title>
         </ion-toolbar>
       </ion-header>
+      <ion-content>
+        <ion-button expand="block" onclick="openStart()">Open Start Menu</ion-button>
+        <ion-button expand="block" onclick="openEnd()">Open End Menu</ion-button>
+      </ion-content>
     </div>
 
   <ion-menu-controller></ion-menu-controller>
+
+  <script>
+    function openStart() {
+      document.querySelector('ion-menu-controller')
+        .open('start');
+    }
+
+    function openEnd() {
+      document.querySelector('ion-menu-controller')
+        .open('end');
+    }
+  </script>
 </body>
 
 </html>
