@@ -210,9 +210,9 @@ export class Toast implements ComponentInterface, OverlayInterface {
           }
           {this.showCloseButton &&
             <ion-button fill="clear" ion-activatable class="toast-button" onClick={() => this.dismiss(undefined, 'cancel')}>
-              {this.closeButtonText || (this.closeButtonIcon ? '' : 'Close')}
+              {this.closeButtonText || (Boolean(this.closeButtonIcon) ? '' : 'Close')}
               {this.closeButtonIcon && (
-                <ion-icon name={this.closeButtonIcon} slot={this.closeButtonText ? 'end' : 'icon-only'} />
+                <ion-icon name={this.closeButtonIcon} slot={Boolean(this.closeButtonText) ? 'end' : 'icon-only'} />
               )}
             </ion-button>
           }
