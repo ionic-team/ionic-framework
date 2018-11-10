@@ -228,8 +228,8 @@ This method marks the tail the items array as dirty, so they can be re-rendered.
 It's equivalent to calling:
 
 ```
-   * virtualScroll.markDirty(lastItemLen, items.length - lastItemLen);
-   * ```
+virtualScroll.markDirty(lastItemLen, items.length - lastItemLen);
+```
 
 #### Returns
 
