@@ -1,7 +1,6 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-
-import { setIonicClasses } from './util/set-ionic-classes';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ValueAccessor } from './value-accessor';
 
 @Directive({
   /* tslint:disable-next-line:directive-selector */
@@ -14,55 +13,14 @@ import { setIonicClasses } from './util/set-ionic-classes';
     }
   ]
 })
-export class TextValueAccessor implements ControlValueAccessor {
+export class TextValueAccessor extends ValueAccessor {
 
-  constructor(private element: ElementRef) {
-    this.onChange = () => {/**/};
-    this.onTouched = () => {/**/};
-  }
-
-  onChange: (value: any) => void;
-  onTouched: () => void;
-  private lastValue: any;
-
-  writeValue(value: any) {
-    this.element.nativeElement.value = this.lastValue = value;
-
-    requestAnimationFrame(() => {
-      setIonicClasses(this.element);
-    });
+  constructor(el: ElementRef) {
+    super(el);
   }
 
   @HostListener('ionChange', ['$event.target.value'])
   _handleInputEvent(value: any) {
-    if (value !== this.lastValue) {
-      this.lastValue = value;
-      this.onChange(value);
-    }
-
-    requestAnimationFrame(() => {
-      setIonicClasses(this.element);
-    });
-  }
-
-  @HostListener('ionBlur')
-  _handleBlurEvent() {
-    this.onTouched();
-
-    requestAnimationFrame(() => {
-      setIonicClasses(this.element);
-    });
-  }
-
-  registerOnChange(fn: (value: any) => void) {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: () => void) {
-    this.onTouched = fn;
-  }
-
-  setDisabledState(isDisabled: boolean) {
-    this.element.nativeElement.disabled = isDisabled;
+    this.handleChangeEvent(value);
   }
 }
