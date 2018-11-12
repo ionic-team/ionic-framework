@@ -1612,7 +1612,7 @@ export namespace Components {
     /**
     * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
     */
-    'autocapitalize': 'on' | 'off' | 'words' | 'characters';
+    'autocapitalize': string;
     /**
     * Indicates whether the value of the control can be automatically completed by the browser.
     */
@@ -1730,7 +1730,7 @@ export namespace Components {
     /**
     * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
     */
-    'autocapitalize'?: 'on' | 'off' | 'words' | 'characters';
+    'autocapitalize'?: string;
     /**
     * Indicates whether the value of the control can be automatically completed by the browser.
     */
