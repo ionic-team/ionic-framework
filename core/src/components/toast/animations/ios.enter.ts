@@ -3,10 +3,12 @@ import { Animation } from '../../../interface';
 /**
  * iOS Toast Enter Animation
  */
-export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, position: string): Promise<Animation> {
+export function iosEnterAnimation(AnimationC: Animation, baseEl: ShadowRoot, position: string): Promise<Animation> {
   const baseAnimation = new AnimationC();
 
   const wrapperAnimation = new AnimationC();
+
+  const hostEl = baseEl.host || baseEl;
   const wrapperEl = baseEl.querySelector('.toast-wrapper') as HTMLElement;
 
   wrapperAnimation.addElement(wrapperEl);
@@ -20,7 +22,7 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, po
       break;
     case 'middle':
       const topPosition = Math.floor(
-        baseEl.clientHeight / 2 - wrapperEl.clientHeight / 2
+        hostEl.clientHeight / 2 - wrapperEl.clientHeight / 2
       );
       wrapperEl.style.top = `${topPosition}px`;
       wrapperAnimation.fromTo('opacity', 0.01, 1);
@@ -30,7 +32,7 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, po
       break;
   }
   return Promise.resolve(baseAnimation
-    .addElement(baseEl)
+    .addElement(hostEl)
     .easing('cubic-bezier(.155,1.105,.295,1.12)')
     .duration(400)
     .add(wrapperAnimation));

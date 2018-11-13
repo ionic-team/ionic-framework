@@ -132,7 +132,7 @@ function getAppRoot(doc: Document) {
 async function overlayAnimation(
   overlay: OverlayInterface,
   animationBuilder: AnimationBuilder,
-  baseEl: HTMLElement,
+  baseEl: any,
   opts: any
 ): Promise<boolean> {
   if (overlay.animation) {

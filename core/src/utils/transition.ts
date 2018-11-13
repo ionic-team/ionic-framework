@@ -216,7 +216,7 @@ export interface TransitionOptions extends NavOptions {
   queue: QueueApi;
   progressCallback?: ((ani: Animation) => void);
   window: Window;
-  baseEl: HTMLElement;
+  baseEl: any;
   enteringEl: HTMLElement;
   leavingEl: HTMLElement | undefined;
 }

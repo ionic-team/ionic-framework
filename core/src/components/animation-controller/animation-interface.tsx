@@ -41,7 +41,7 @@ export interface Animation {
   hasCompleted: boolean;
 }
 
-export type AnimationBuilder = (Animation: Animation, baseEl: HTMLElement, opts?: any) => Promise<Animation>;
+export type AnimationBuilder = (Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>;
 
 export interface PlayOptions {
   duration?: number;

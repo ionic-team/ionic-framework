@@ -3,10 +3,12 @@ import { Animation } from '../../../interface';
 /**
  * md Toast Leave Animation
  */
-export function mdLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement, position: string): Promise<Animation> {
+export function mdLeaveAnimation(AnimationC: Animation, baseEl: ShadowRoot, position: string): Promise<Animation> {
   const baseAnimation = new AnimationC();
 
   const wrapperAnimation = new AnimationC();
+
+  const hostEl = baseEl.host || baseEl;
   const wrapperEl = baseEl.querySelector('.toast-wrapper') as HTMLElement;
 
   wrapperAnimation.addElement(wrapperEl);
@@ -26,7 +28,7 @@ export function mdLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement, pos
       break;
   }
   return Promise.resolve(baseAnimation
-    .addElement(baseEl)
+    .addElement(hostEl)
     .easing('cubic-bezier(.36,.66,.04,1)')
     .duration(300)
     .add(wrapperAnimation));
