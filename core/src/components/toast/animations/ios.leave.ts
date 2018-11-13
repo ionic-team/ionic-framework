@@ -8,6 +8,7 @@ export function iosLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement, po
 
   const wrapperAnimation = new AnimationC();
   const wrapperEl = baseEl.querySelector('.toast-wrapper') as HTMLElement;
+
   wrapperAnimation.addElement(wrapperEl);
 
   const bottom = `calc(-10px - var(--ion-safe-area-bottom, 0px))`;

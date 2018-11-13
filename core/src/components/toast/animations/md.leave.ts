@@ -8,17 +8,21 @@ export function mdLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement, pos
 
   const wrapperAnimation = new AnimationC();
   const wrapperEl = baseEl.querySelector('.toast-wrapper') as HTMLElement;
+
   wrapperAnimation.addElement(wrapperEl);
+
+  const bottom = `calc(-8px - var(--ion-safe-area-bottom, 0px))`;
+  const top = `calc(8px + var(--ion-safe-area-top, 0px))`;
 
   switch (position) {
     case 'top':
-      wrapperAnimation.fromTo('translateY', '0px', '-100%');
+      wrapperAnimation.fromTo('translateY', top, '-100%');
       break;
     case 'middle':
       wrapperAnimation.fromTo('opacity', 0.99, 0);
       break;
     default:
-      wrapperAnimation.fromTo('translateY', `0px`, '100%');
+      wrapperAnimation.fromTo('translateY', bottom, '100%');
       break;
   }
   return Promise.resolve(baseAnimation
