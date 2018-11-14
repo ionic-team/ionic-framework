@@ -97,7 +97,6 @@ const DECLARATIONS = [
   // navigation
   c.IonBackButton,
   c.IonRouterOutlet,
-  c.RouterDirection,
   c.NavDelegate,
   c.TabDelegate,
   c.TabsDelegate,

@@ -56,6 +56,7 @@ import {
   Side,
   SpinnerTypes,
   StyleEvent,
+  SwipeGestureHandler,
   TabBarChangedDetail,
   TabButtonClickDetail,
   TabButtonLayout,
@@ -403,7 +404,7 @@ export namespace Components {
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
-    'routerDirection'?: RouterDirection;
+    'routerDirection': RouterDirection;
   }
   interface IonAnchorAttributes extends StencilHTMLAttributes {
     /**
@@ -565,7 +566,7 @@ export namespace Components {
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
-    'routerDirection'?: RouterDirection;
+    'routerDirection': RouterDirection;
     /**
     * The button shape.
     */
@@ -1343,7 +1344,7 @@ export namespace Components {
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
-    'routerDirection'?: RouterDirection;
+    'routerDirection': RouterDirection;
     /**
     * If `true`, the fab button will show when in a fab-list.
     */
@@ -2021,7 +2022,7 @@ export namespace Components {
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
-    'routerDirection'?: RouterDirection;
+    'routerDirection': RouterDirection;
     /**
     * The type of the button. Only used when an `onclick` or `button` property is present.
     */
@@ -3614,11 +3615,9 @@ export namespace Components {
     'commit': (enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
     'delegate'?: FrameworkDelegate;
     'getRouteId': () => Promise<RouteID | undefined>;
-    /**
-    * Set the root component for the given navigation stack
-    */
-    'setRoot': (component: ComponentRef, params?: { [key: string]: any; } | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
+    'mode': Mode;
     'setRouteId': (id: string, params: { [key: string]: any; } | undefined, direction: number) => Promise<RouteWrite>;
+    'swipeHandler'?: SwipeGestureHandler;
   }
   interface IonRouterOutletAttributes extends StencilHTMLAttributes {
     /**
@@ -3630,9 +3629,11 @@ export namespace Components {
     */
     'animation'?: AnimationBuilder;
     'delegate'?: FrameworkDelegate;
+    'mode'?: Mode;
     'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
     'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
     'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
+    'swipeHandler'?: SwipeGestureHandler;
   }
 
   interface IonRouter {

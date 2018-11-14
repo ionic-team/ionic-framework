@@ -11,3 +11,4 @@ export const enum ViewLifecycle {
 // util functions
 export * from './utils/platform';
 export * from './utils/config';
+export * from './utils/gesture/swipe-back';
