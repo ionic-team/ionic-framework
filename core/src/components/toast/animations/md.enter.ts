@@ -13,12 +13,13 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: ShadowRoot, posi
 
   wrapperAnimation.addElement(wrapperEl);
 
-  const bottom = `calc(-8px - var(--ion-safe-area-bottom, 0px))`;
+  const bottom = `calc(8px + var(--ion-safe-area-bottom, 0px))`;
   const top = `calc(8px + var(--ion-safe-area-top, 0px))`;
 
   switch (position) {
     case 'top':
-      wrapperAnimation.fromTo('translateY', '-100%', top);
+      wrapperEl.style.top = top;
+      wrapperAnimation.fromTo('opacity', 0.01, 1);
       break;
     case 'middle':
       const topPosition = Math.floor(
@@ -28,7 +29,8 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: ShadowRoot, posi
       wrapperAnimation.fromTo('opacity', 0.01, 1);
       break;
     default:
-      wrapperAnimation.fromTo('translateY', '100%', bottom);
+      wrapperEl.style.bottom = bottom;
+      wrapperAnimation.fromTo('opacity', 0.01, 1);
       break;
   }
   return Promise.resolve(baseAnimation

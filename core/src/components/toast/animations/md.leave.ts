@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * md Toast Leave Animation
  */
-export function mdLeaveAnimation(AnimationC: Animation, baseEl: ShadowRoot, position: string): Promise<Animation> {
+export function mdLeaveAnimation(AnimationC: Animation, baseEl: ShadowRoot): Promise<Animation> {
   const baseAnimation = new AnimationC();
 
   const wrapperAnimation = new AnimationC();
@@ -13,20 +13,8 @@ export function mdLeaveAnimation(AnimationC: Animation, baseEl: ShadowRoot, posi
 
   wrapperAnimation.addElement(wrapperEl);
 
-  const bottom = `calc(-8px - var(--ion-safe-area-bottom, 0px))`;
-  const top = `calc(8px + var(--ion-safe-area-top, 0px))`;
+  wrapperAnimation.fromTo('opacity', 0.99, 0);
 
-  switch (position) {
-    case 'top':
-      wrapperAnimation.fromTo('translateY', top, '-100%');
-      break;
-    case 'middle':
-      wrapperAnimation.fromTo('opacity', 0.99, 0);
-      break;
-    default:
-      wrapperAnimation.fromTo('translateY', bottom, '100%');
-      break;
-  }
   return Promise.resolve(baseAnimation
     .addElement(hostEl)
     .easing('cubic-bezier(.36,.66,.04,1)')
