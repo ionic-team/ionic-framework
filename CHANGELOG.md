@@ -62,26 +62,26 @@ Here, we have an `ion-tab` element that accepts an icon, a label, and a link to 
   <ion-tab-bar>
 
     <!-- No ion-tab, just a link that looks like a tab -->
-    <ion-tab-button href=”https://beta.ionicframework.com”>
-      <!-- <a href=”https://beta.ionicframework.com”> -->
+    <ion-tab-button href="https://beta.ionicframework.com">
+      <!-- <a href="https://beta.ionicframework.com"> -->
       <ion-icon name="globe"></ion-icon>
       <ion-label>Schedule</ion-label>
     </ion-tab-button>
 
     <!-- No ion-tab, just a button that looks like a tab -->
-    <ion-tab-button (click)=”openCamera()”>
+    <ion-tab-button (click)="openCamera()">
       <ion-icon name="camera"></ion-icon>
       <ion-label>Photo</ion-label>
     </ion-tab-button>
 
     <!-- Connected to ion-tab, on click will show the ion-tab with id home-view -->
-    <ion-tab-button tab=”home-view”>
+    <ion-tab-button tab="home-view">
       <ion-icon name="home"></ion-icon>
       <ion-label>Home</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 
-  <ion-tab tab=”home-view”>
+  <ion-tab tab="home-view">
     <ion-content></ion-content>
     <!-- or -->
     <ion-nav></ion-nav>
@@ -104,10 +104,10 @@ To connect the `ion-tab-button` to the `ion-tab`, the `tab` property must be add
 ```html
 <ion-tabs>
   <ion-tab-bar>
-    <ion-tab-button tab=”home-view”></ion-tab-button>
+    <ion-tab-button tab="home-view"></ion-tab-button>
   </ion-tab-bar>
 
-  <ion-tab tab=”home-view”></ion-tab>
+  <ion-tab tab="home-view"></ion-tab>
 </ion-tabs>
 ```
 
