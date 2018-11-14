@@ -89,9 +89,9 @@ export class NavController {
   }
 
   private guessDirection() {
-    const index = this.stack.indexOf(document.location.href);
+    const index = this.stack.indexOf(document.location!.href);
     if (index === -1) {
-      this.stack.push(document.location.href);
+      this.stack.push(document.location!.href);
       return 1;
     } else if (index < this.stack.length - 1) {
       this.stack = this.stack.slice(0, index + 1);

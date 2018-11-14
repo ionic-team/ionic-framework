@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, Watch } from '@stencil/core';
 
-import { AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, NavOutlet, RouteID, RouteWrite, RouterOutletOptions } from '../../interface';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Gesture, Mode, NavOutlet, RouteID, RouteWrite, RouterOutletOptions, SwipeGestureHandler } from '../../interface';
 import { transition } from '../../utils';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 
@@ -14,8 +14,8 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   private activeEl: HTMLElement | undefined;
   private activeComponent: any;
   private waitPromise?: Promise<void>;
-
-  mode!: Mode;
+  private gesture?: Gesture;
+  private ani?: Animation;
 
   @Element() el!: HTMLElement;
 
@@ -23,6 +23,9 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'window' }) win!: Window;
   @Prop({ context: 'queue' }) queue!: QueueApi;
+
+  /** @internal */
+  @Prop() mode!: Mode;
 
   /** @internal */
   @Prop() delegate?: FrameworkDelegate;
@@ -38,50 +41,49 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
    */
   @Prop() animation?: AnimationBuilder;
 
-  /**
-   * @internal
-   */
+  /** @internal */
+  @Prop() swipeHandler?: SwipeGestureHandler;
+  @Watch('swipeHandler')
+  swipeHandlerChanged() {
+    if (this.gesture) {
+      this.gesture.setDisabled(this.swipeHandler === undefined);
+    }
+  }
+
+  /** @internal */
   @Event() ionNavWillLoad!: EventEmitter<void>;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Event() ionNavWillChange!: EventEmitter<void>;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Event() ionNavDidChange!: EventEmitter<void>;
 
   componentWillLoad() {
     this.ionNavWillLoad.emit();
   }
 
-  componentDidUnload() {
-    this.activeEl = this.activeComponent = undefined;
+  async componentDidLoad() {
+    this.gesture = (await import('../../utils/gesture/swipe-back')).createSwipeBackGesture(
+      this.el,
+      this.queue,
+      () => !!this.swipeHandler && this.swipeHandler.canStart(),
+      () => this.swipeHandler && this.swipeHandler.onStart(),
+      step => this.ani && this.ani.progressStep(step),
+      (shouldComplete, step, dur) => {
+        if (this.ani) {
+          this.ani.progressEnd(shouldComplete, step, dur);
+        }
+        if (this.swipeHandler) {
+          this.swipeHandler.onEnd(shouldComplete);
+        }
+      }
+    );
+    this.swipeHandlerChanged();
   }
 
-  /**
-   * Set the root component for the given navigation stack
-   */
-  @Method()
-  async setRoot(component: ComponentRef, params?: ComponentProps, opts?: RouterOutletOptions): Promise<boolean> {
-    if (this.activeComponent === component) {
-      return false;
-    }
-
-    // attach entering view to DOM
-    const leavingEl = this.activeEl;
-    const enteringEl = await attachComponent(this.delegate, this.el, component, ['ion-page', 'ion-page-invisible'], params);
-
-    this.activeComponent = component;
-    this.activeEl = enteringEl;
-
-    // commit animation
-    await this.commit(enteringEl, leavingEl, opts);
-    await detachComponent(this.delegate, leavingEl);
-
-    return true;
+  componentDidUnload() {
+    this.activeEl = this.activeComponent = undefined;
   }
 
   /** @internal */
@@ -121,27 +123,32 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     } : undefined;
   }
 
-  private async lock() {
-    const p = this.waitPromise;
-    let resolve!: () => void;
-    this.waitPromise = new Promise(r => resolve = r);
-
-    if (p !== undefined) {
-      await p;
+  private async setRoot(component: ComponentRef, params?: ComponentProps, opts?: RouterOutletOptions): Promise<boolean> {
+    if (this.activeComponent === component) {
+      return false;
     }
-    return resolve;
+
+    // attach entering view to DOM
+    const leavingEl = this.activeEl;
+    const enteringEl = await attachComponent(this.delegate, this.el, component, ['ion-page', 'ion-page-invisible'], params);
+
+    this.activeComponent = component;
+    this.activeEl = enteringEl;
+
+    // commit animation
+    await this.commit(enteringEl, leavingEl, opts);
+    await detachComponent(this.delegate, leavingEl);
+
+    return true;
   }
 
-  async transition(enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions): Promise<boolean> {
-    // isTransitioning acts as a lock to prevent reentering
+  private async transition(enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts: RouterOutletOptions = {}): Promise<boolean> {
     if (leavingEl === enteringEl) {
       return false;
     }
 
     // emit nav will change event
     this.ionNavWillChange.emit();
-
-    opts = opts || {};
 
     const { mode, queue, animationCtrl, win, el } = this;
     const animated = this.animated && this.config.getBoolean('animated', true);
@@ -157,7 +164,10 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
       enteringEl,
       leavingEl,
       baseEl: el,
-
+      progressCallback: (opts.progressAnimation
+        ? ani => this.ani = ani
+        : undefined
+      ),
       ...opts
     });
 
@@ -167,10 +177,20 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     return true;
   }
 
+  private async lock() {
+    const p = this.waitPromise;
+    let resolve!: () => void;
+    this.waitPromise = new Promise(r => resolve = r);
+
+    if (p !== undefined) {
+      await p;
+    }
+    return resolve;
+  }
+
   render() {
-    return [
-      this.mode === 'ios' && <div class="nav-decor"/>,
+    return (
       <slot></slot>
-    ];
+    );
   }
 }

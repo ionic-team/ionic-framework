@@ -25,8 +25,6 @@ const DECLARATIONS = [
   d.CardTitle,
   d.Checkbox,
   d.Chip,
-  d.ChipButton,
-  d.ChipIcon,
   d.Col,
   d.Content,
   d.Datetime,
@@ -99,7 +97,6 @@ const DECLARATIONS = [
   // navigation
   c.IonBackButton,
   c.IonRouterOutlet,
-  c.RouterDirection,
   c.NavDelegate,
   c.TabDelegate,
   c.TabsDelegate,

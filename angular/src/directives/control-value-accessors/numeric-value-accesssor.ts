@@ -1,7 +1,6 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-
-import { setIonicClasses } from './util/set-ionic-classes';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ValueAccessor } from './value-accessor';
 
 @Directive({
   /* tslint:disable-next-line:directive-selector */
@@ -14,56 +13,20 @@ import { setIonicClasses } from './util/set-ionic-classes';
     }
   ]
 })
-export class NumericValueAccessor implements ControlValueAccessor {
+export class NumericValueAccessor extends ValueAccessor {
 
-  constructor(private element: ElementRef) {
-    this.onChange = () => {/**/};
-    this.onTouched = () => {/**/};
-  }
-
-  onChange: (value: any) => void;
-  onTouched: () => void;
-  private lastValue: any;
-
-  writeValue(value: any) {
-    // The value needs to be normalized for IE9, otherwise it is set to 'null' when null
-    // Probably not an issue for us, but it doesn't really cost anything either
-    this.element.nativeElement.value = this.lastValue = value == null ? '' : value;
-    setIonicClasses(this.element);
+  constructor(el: ElementRef) {
+    super(el);
   }
 
   @HostListener('ionChange', ['$event.target.value'])
-  _handleInputEvent(value: any) {
-    if (value !== this.lastValue) {
-      this.lastValue = value;
-      this.onChange(value);
-    }
-
-    requestAnimationFrame(() => {
-      setIonicClasses(this.element);
-    });
-  }
-
-  @HostListener('ionBlur')
-  _handleBlurEvent() {
-    this.onTouched();
-
-    requestAnimationFrame(() => {
-      setIonicClasses(this.element);
-    });
+  _handleIonChange(value: any) {
+    this.handleChangeEvent(value);
   }
 
   registerOnChange(fn: (_: number | null) => void) {
-    this.onChange = value => {
+    super.registerOnChange(value => {
       fn(value === '' ? null : parseFloat(value));
-    };
-  }
-
-  registerOnTouched(fn: () => void) {
-    this.onTouched = fn;
-  }
-
-  setDisabledState(isDisabled: boolean) {
-    this.element.nativeElement.disabled = isDisabled;
+    });
   }
 }
