@@ -44,18 +44,8 @@ Segment buttons are groups of related buttons inside of a [Segment](../../segmen
 | `--color-checked-activated` | Color of the checked & activated segment button                     |
 | `--color-checked-disabled`  | Color of the checked & disabled segment button                      |
 | `--color-disabled`          | Color of the disabled segment button                                |
-| `--icon-margin-bottom`      | Bottom margin of the segment button icon                            |
-| `--icon-margin-end`         | End margin of the segment button icon                               |
-| `--icon-margin-start`       | Start margin of the segment button icon                             |
-| `--icon-margin-top`         | Top margin of the segment button icon                               |
-| `--icon-order`              | Order of the segment button icon                                    |
-| `--icon-size`               | Font size of the segment button icon                                |
 | `--indicator-color`         | Color of the indicator (highlight) under the segment button         |
 | `--indicator-color-checked` | Color of the indicator (highlight) under the checked segment button |
-| `--label-margin-bottom`     | Bottom margin of the segment button label                           |
-| `--label-margin-end`        | End margin of the segment button label                              |
-| `--label-margin-start`      | Start margin of the segment button label                            |
-| `--label-margin-top`        | Top margin of the segment button label                              |
 | `--margin-bottom`           | Bottom margin of the segment button                                 |
 | `--margin-end`              | End margin of the segment button                                    |
 | `--margin-start`            | Start margin of the segment button                                  |

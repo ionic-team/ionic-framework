@@ -21,7 +21,6 @@
   --border-width: #{$segment-button-ios-border-width};
   --border-style: solid;
   --transition: #{$segment-button-ios-transition};
-  --icon-size: #{$segment-button-ios-icon-size};
 
   min-height: #{$segment-button-ios-height};
 
@@ -36,4 +35,12 @@
 
 .segment-button-indicator {
   display: none;
+}
+
+
+// Segment Button: Icon
+// --------------------------------------------------
+
+::slotted(ion-icon) {
+  font-size: $segment-button-ios-icon-size;
 }

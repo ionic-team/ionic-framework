@@ -685,7 +685,7 @@ export class Searchbar {
 }
 
 export declare interface Segment extends StencilComponents<'IonSegment'> {}
-@Component({ selector: 'ion-segment', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'disabled', 'value'] })
+@Component({ selector: 'ion-segment', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'disabled', 'scrollable', 'value'] })
 export class Segment {
   ionChange: EventEmitter<CustomEvent>;
   ionStyle: EventEmitter<CustomEvent>;
@@ -693,7 +693,7 @@ export class Segment {
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
     const el = r.nativeElement;
-    proxyInputs(this, el, ['color', 'mode', 'disabled', 'value']);
+    proxyInputs(this, el, ['color', 'mode', 'disabled', 'scrollable', 'value']);
     proxyOutputs(this, el, ['ionChange', 'ionStyle']);
   }
 }

@@ -35,18 +35,6 @@
    *
    * @prop --transition: Transition of the segment button
    *
-   * @prop --icon-size: Font size of the segment button icon
-   * @prop --icon-margin-top: Top margin of the segment button icon
-   * @prop --icon-margin-end: End margin of the segment button icon
-   * @prop --icon-margin-bottom: Bottom margin of the segment button icon
-   * @prop --icon-margin-start: Start margin of the segment button icon
-   * @prop --icon-order: Order of the segment button icon
-   *
-   * @prop --label-margin-top: Top margin of the segment button label
-   * @prop --label-margin-end: End margin of the segment button label
-   * @prop --label-margin-bottom: Bottom margin of the segment button label
-   * @prop --label-margin-start: Start margin of the segment button label
-   *
    * @prop --indicator-color: Color of the indicator (highlight) under the segment button
    * @prop --indicator-color-checked: Color of the indicator (highlight) under the checked segment button
    *
@@ -55,7 +43,6 @@
   --padding-end: 0;
   --padding-top: 0;
   --padding-bottom: 0;
-  --icon-size: 1em;
   --indicator-color: transparent;
 
   flex: 1 0 auto;
@@ -193,16 +180,9 @@
 // --------------------------------------------------
 
 ::slotted(ion-label) {
-
   display: block;
 
   align-self: center;
-  // @include margin(var(--label-margin-top), var(--label-margin-end), var(--label-margin-bottom), var(--label-margin-start));
-
-  margin-top: var(--label-margin-top);
-  margin-right: var(--label-margin-end);
-  margin-bottom: var(--label-margin-bottom);
-  margin-left: var(--label-margin-start);
 
   line-height: 22px;
 
@@ -214,38 +194,29 @@
 }
 
 
-// Segment Button Icon
-// --------------------------------------------------
-
-::slotted(ion-icon) {
-
-  order: var(--icon-order);
-  // @include margin(var(--icon-margin-top), var(--icon-margin-end), var(--icon-margin-bottom), var(--icon-margin-start));
-
-  margin-top: var(--icon-margin-top);
-  margin-right: var(--icon-margin-end);
-  margin-bottom: var(--icon-margin-bottom);
-  margin-left: var(--icon-margin-start);
-
-  font-size: var(--icon-size);
-}
-
-
 // Segment Button Layout
 // --------------------------------------------------
 
 // Layout: icon top
-:host(.segment-button-layout-icon-top) {
-  --label-margin-top: 0;
-  --icon-margin-bottom: 0;
-  --icon-order: -1;
+:host(.segment-button-layout-icon-top) ::slotted(ion-label) {
+  @include margin(0, null, null, null);
+}
+
+:host(.segment-button-layout-icon-top) ::slotted(ion-icon) {
+  @include margin(null, null, 0, null);
+
+  order: -1;
 }
 
 // Layout: icon bottom
-:host(.segment-button-layout-icon-bottom) {
-  --label-margin-bottom: 0;
-  --icon-margin-top: 0;
-  --icon-order: 1;
+:host(.segment-button-layout-icon-bottom) ::slotted(ion-label) {
+  @include margin(null, null, 0, null);
+}
+
+:host(.segment-button-layout-icon-bottom) ::slotted(ion-icon) {
+  @include margin(0, null, null, null);
+
+  order: 1;
 }
 
 // Layout: icon start / end
@@ -255,17 +226,21 @@
 }
 
 // Layout: icon start
-:host(.segment-button-layout-icon-start) {
-  --label-margin-start: 8px;
-  --label-margin-end: 0;
-  --icon-order: -1;
+:host(.segment-button-layout-icon-start) ::slotted(ion-label) {
+  @include margin-horizontal(8px, 0);
+}
+
+:host(.segment-button-layout-icon-start) ::slotted(ion-icon) {
+  order: -1;
 }
 
 // Layout: icon end
-:host(.segment-button-layout-icon-end) {
-  --label-margin-start: 0;
-  --label-margin-end: 8px;
-  --icon-order: 1;
+:host(.segment-button-layout-icon-end) ::slotted(ion-label) {
+  @include margin-horizontal(0, 8px);
+}
+
+:host(.segment-button-layout-icon-end) ::slotted(ion-icon) {
+  order: 1;
 }
 
 // Layout: icon hide
