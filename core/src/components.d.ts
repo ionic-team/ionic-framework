@@ -4500,6 +4500,7 @@ export namespace Components {
     */
     'select': (tab: string | HTMLIonTabElement) => Promise<boolean>;
     'setRouteId': (id: string) => Promise<RouteWrite>;
+    'useRouter': boolean;
   }
   interface IonTabsAttributes extends StencilHTMLAttributes {
     /**
@@ -4518,6 +4519,7 @@ export namespace Components {
     * Emitted when the navigation will load a component.
     */
     'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
+    'useRouter'?: boolean;
   }
 
   interface IonText {
