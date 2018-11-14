@@ -110,17 +110,6 @@
 }
 
 
-
-// Segment Button: Hover
-// --------------------------------------------------
-
-@media (any-hover: hover) {
-  :host(:hover) {
-    background: var(--background-hover);
-  }
-}
-
-
 // Segment Button: Checked
 // --------------------------------------------------
 
@@ -158,6 +147,17 @@
 :host(.segment-button-disabled.segment-button-checked) {
   color: var(--color-checked-disabled);
 }
+
+
+// Segment Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:hover) {
+    background: var(--background-hover);
+  }
+}
+
 
 // Segment Button: Indicator
 // --------------------------------------------------
