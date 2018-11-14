@@ -204,7 +204,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
       <div class={wrapperClass}>
         <div class="toast-container">
           {this.message !== undefined &&
-            <div class="toast-message" innerHTML={this.message}></div>
+            <div class="toast-message">{this.message}</div>
           }
           {this.showCloseButton &&
             <ion-button fill="clear" ion-activatable class="toast-button" onClick={() => this.dismiss(undefined, 'cancel')}>
