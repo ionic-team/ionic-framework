@@ -53,8 +53,8 @@ export class StackController {
 
   startBackTransition() {
     this.transition(
-      this.views[this.views.length - 2],
-      this.views[this.views.length - 1],
+      this.views[this.views.length - 2], // entering view
+      this.views[this.views.length - 1], // leaving view
       -1,
       true,
       true,
