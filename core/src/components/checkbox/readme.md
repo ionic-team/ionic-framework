@@ -27,7 +27,6 @@ Checkboxes allow the selection of multiple options from a set of options. They a
 | `ionBlur`   | Emitted when the toggle loses focus.           | void                    |
 | `ionChange` | Emitted when the checked property has changed. | CheckedInputChangeEvent |
 | `ionFocus`  | Emitted when the toggle has focus.             | void                    |
-| `ionStyle`  | Emitted when the styles change.                | StyleEvent              |
 
 
 ## CSS Custom Properties

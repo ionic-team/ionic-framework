@@ -43,7 +43,6 @@ The textarea component accepts the [native textarea attributes](https://develope
 | `ionChange` | Emitted when the input value has changed. | TextInputChangeEvent |
 | `ionFocus`  | Emitted when the input has focus.         | void                 |
 | `ionInput`  | Emitted when a keyboard input ocurred.    | KeyboardEvent        |
-| `ionStyle`  | Emitted when the styles change.           | StyleEvent           |
 
 
 ## Methods

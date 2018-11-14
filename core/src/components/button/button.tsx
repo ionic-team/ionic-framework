@@ -143,6 +143,7 @@ export class Button implements ComponentInterface {
 
     return {
       'ion-activatable': true,
+      'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...createColorClasses(color),
         [buttonType]: true,

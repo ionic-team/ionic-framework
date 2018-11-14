@@ -54,6 +54,12 @@ export class RippleEffect implements ComponentInterface {
       setTimeout(() => div.remove(), duration + 50);
     });
   }
+
+  hostData() {
+    return {
+      role: 'presentation'
+    };
+  }
 }
 
 const RIPPLE_FACTOR = 35;

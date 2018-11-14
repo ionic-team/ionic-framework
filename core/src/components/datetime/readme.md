@@ -235,7 +235,6 @@ dates in JavaScript.
 | ----------- | --------------------------------------------------- | ---------------- |
 | `ionCancel` | Emitted when the datetime selection was cancelled.  | void             |
 | `ionChange` | Emitted when the value (selected date) has changed. | InputChangeEvent |
-| `ionStyle`  | Emitted when the styles change.                     | StyleEvent       |
 
 
 ## Methods

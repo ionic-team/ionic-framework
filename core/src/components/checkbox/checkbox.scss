@@ -35,7 +35,7 @@
   --checkmark-color: #{current-color(contrast)};
 }
 
-input {
+button {
   @include input-cover();
 }
 

@@ -128,6 +128,7 @@ export class Item implements ComponentInterface {
 
     return {
       'ion-activatable': this.isClickable(),
+      'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...childStyles,
         ...createColorClasses(this.color),

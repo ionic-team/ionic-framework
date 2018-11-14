@@ -33,6 +33,7 @@ export class Label implements ComponentInterface {
 
   /**
    * Emitted when the styles change.
+   * @internal
    */
   @Event() ionStyle!: EventEmitter<StyleEvent>;
 

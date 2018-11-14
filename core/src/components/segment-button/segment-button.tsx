@@ -57,6 +57,8 @@ export class SegmentButton implements ComponentInterface {
     const { disabled, checked, color } = this;
     return {
       'ion-activatable': true,
+      'aria-disabled': this.disabled ? 'true' : null,
+
       class: {
         ...createColorClasses(color),
         'segment-button-disabled': disabled,
