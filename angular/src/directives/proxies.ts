@@ -869,7 +869,7 @@ export class TabButton {
 }
 
 export declare interface Tabs extends StencilComponents<'IonTabs'> {}
-@Component({ selector: 'ion-tabs', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>' })
+@Component({ selector: 'ion-tabs', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['useRouter'] })
 export class Tabs {
   ionChange: EventEmitter<CustomEvent>;
   ionNavWillLoad: EventEmitter<CustomEvent>;
@@ -880,6 +880,7 @@ export class Tabs {
     c.detach();
     const el = r.nativeElement;
     proxyMethods(this, el, ['select', 'setRouteId', 'getRouteId', 'getTab', 'getSelected']);
+    proxyInputs(this, el, ['useRouter']);
     proxyOutputs(this, el, ['ionChange', 'ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange']);
   }
 }
