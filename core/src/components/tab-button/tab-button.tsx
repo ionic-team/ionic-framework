@@ -74,7 +74,8 @@ export class TabButton implements ComponentInterface {
     if (!this.disabled) {
       this.ionTabButtonClick.emit({
         tab: this.tab,
-        href: this.href
+        href: this.href,
+        selected: this.selected
       });
     }
     ev.preventDefault();
