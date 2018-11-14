@@ -6,5 +6,6 @@ export interface TabBarChangedDetail {
 
 export interface TabButtonClickDetail {
   tab: string;
+  selected: boolean;
   href?: string;
 }
