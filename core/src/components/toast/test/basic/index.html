@@ -21,8 +21,8 @@
 
       <ion-content id="content" padding>
         <ion-button expand="block" id="showBottomToast" onclick="presentToast('bottom')">Show Toast Bottom</ion-button>
-        <ion-button expand="block" onclick="presentToast('top')">Show Toast Top</ion-button>
-        <ion-button expand="block" onclick="presentToast('middle')">Show Toast Middle</ion-button>
+        <ion-button expand="block" id="showTopToast" onclick="presentToast('top')">Show Toast Top</ion-button>
+        <ion-button expand="block" id="showMiddleToast" onclick="presentToast('middle')">Show Toast Middle</ion-button>
         <ion-button expand="block" onclick="presentToastWithOptions({message: 'Two-line message<br> with action.', showCloseButton: true, closeButtonText: 'Action'})">Show Toast with long message</ion-button>
         <ion-button expand="block" onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true})">Show Toast with Close Button</ion-button>
         <ion-button expand="block" onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, closeButtonText: 'closing time'})">Show Toast with Custom Close Button Text</ion-button>
