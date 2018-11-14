@@ -13,7 +13,7 @@ export const enum NavIntent {
 @Injectable()
 export class NavController {
 
-  private intent: NavIntent = NavIntent.Auto;
+  private intent: NavIntent = NavIntent.Root;
   private animated = true;
   private stack: string[] = [];
 
@@ -79,8 +79,8 @@ export class NavController {
       animated = this.animated;
       direction = intentToDirection(this.intent);
     }
-    this.intent = NavIntent.Auto;
-    this.animated = true;
+    this.intent = NavIntent.Root;
+    this.animated = false;
 
     return {
       direction,
