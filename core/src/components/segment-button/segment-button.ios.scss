@@ -67,7 +67,7 @@
 
 :host(.segment-button-layout-icon-top) ::slotted(ion-icon),
 :host(.segment-button-layout-icon-bottom) ::slotted(ion-label) {
-    @include margin(null, null, 0, null);
+  @include margin(null, null, 0, null);
 }
 
 // Layout: icon start
