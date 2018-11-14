@@ -13,7 +13,7 @@ export const enum NavIntent {
 @Injectable()
 export class NavController {
 
-  private intent: NavIntent = NavIntent.Auto;
+  private intent: NavIntent = NavIntent.Root;
   private animated = true;
   private stack: string[] = [];
 
@@ -79,8 +79,8 @@ export class NavController {
       animated = this.animated;
       direction = intentToDirection(this.intent);
     }
-    this.intent = NavIntent.Auto;
-    this.animated = true;
+    this.intent = NavIntent.Root;
+    this.animated = false;
 
     return {
       direction,
@@ -89,9 +89,9 @@ export class NavController {
   }
 
   private guessDirection() {
-    const index = this.stack.indexOf(document.location.href);
+    const index = this.stack.indexOf(document.location!.href);
     if (index === -1) {
-      this.stack.push(document.location.href);
+      this.stack.push(document.location!.href);
       return 1;
     } else if (index < this.stack.length - 1) {
       this.stack = this.stack.slice(0, index + 1);

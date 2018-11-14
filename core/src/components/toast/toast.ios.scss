@@ -30,10 +30,26 @@
   backdrop-filter: $toast-ios-translucent-filter;
 }
 
+.toast-wrapper.toast-top {
+  @include transform(translate3d(0, -100%, 0));
+
+  top: 0;
+}
+
 .toast-wrapper.toast-middle {
   opacity: .01;
 }
 
+.toast-wrapper.toast-bottom {
+  @include transform(translate3d(0, 100%, 0));
+
+  bottom: 0;
+}
+
 .toast-message {
   @include padding($toast-ios-title-padding-top, $toast-ios-title-padding-end, $toast-ios-title-padding-bottom, $toast-ios-title-padding-start);
+}
+
+.toast-button {
+  font-size: $toast-button-font-size;
 }

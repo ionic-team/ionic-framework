@@ -68,7 +68,7 @@ export class Item implements ComponentInterface {
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
-  @Prop() routerDirection?: RouterDirection;
+  @Prop() routerDirection: RouterDirection = 'forward';
 
   /**
    * The type of the button. Only used when an `onclick` or `button` property is present.

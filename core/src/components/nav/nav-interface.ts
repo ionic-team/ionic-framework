@@ -12,6 +12,12 @@ export interface NavResult {
   direction?: NavDirection;
 }
 
+export interface SwipeGestureHandler {
+  canStart(): boolean;
+  onStart(): void;
+  onEnd(shouldComplete: boolean): void;
+}
+
 export interface RouterOutletOptions {
   animated?: boolean;
   animationBuilder?: AnimationBuilder;
@@ -23,6 +29,7 @@ export interface RouterOutletOptions {
   mode?: Mode;
   keyboardClose?: boolean;
   skipIfBusy?: boolean;
+  progressAnimation?: boolean;
 }
 
 export interface NavOptions extends RouterOutletOptions {

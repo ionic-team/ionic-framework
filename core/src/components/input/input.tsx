@@ -42,7 +42,7 @@ export class Input implements ComponentInterface {
   /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
    */
-  @Prop() autocapitalize: 'on' | 'off' | 'words' | 'characters' = 'off';
+  @Prop() autocapitalize = 'off';
 
   /**
    * Indicates whether the value of the control can be automatically completed by the browser.
