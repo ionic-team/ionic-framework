@@ -198,24 +198,12 @@
 // --------------------------------------------------
 
 // Layout: icon top
-:host(.segment-button-layout-icon-top) ::slotted(ion-label) {
-  @include margin(0, null, null, null);
-}
-
 :host(.segment-button-layout-icon-top) ::slotted(ion-icon) {
-  @include margin(null, null, 0, null);
-
   order: -1;
 }
 
 // Layout: icon bottom
-:host(.segment-button-layout-icon-bottom) ::slotted(ion-label) {
-  @include margin(null, null, 0, null);
-}
-
 :host(.segment-button-layout-icon-bottom) ::slotted(ion-icon) {
-  @include margin(0, null, null, null);
-
   order: 1;
 }
 
@@ -225,18 +213,8 @@
   flex-direction: row;
 }
 
-// Layout: icon start
-:host(.segment-button-layout-icon-start) ::slotted(ion-label) {
-  @include margin-horizontal(8px, 0);
-}
-
 :host(.segment-button-layout-icon-start) ::slotted(ion-icon) {
   order: -1;
-}
-
-// Layout: icon end
-:host(.segment-button-layout-icon-end) ::slotted(ion-label) {
-  @include margin-horizontal(0, 8px);
 }
 
 :host(.segment-button-layout-icon-end) ::slotted(ion-icon) {
