@@ -129,6 +129,15 @@ Type: `Promise<boolean>`
 
 
 
+## CSS Custom Properties
+
+| Name            | Description             |
+| --------------- | ----------------------- |
+| `--background`  | Background of the menu  |
+| `--width`       | Width of the menu       |
+| `--width-small` | Width of the small menu |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

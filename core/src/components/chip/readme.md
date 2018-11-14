@@ -1,34 +1,25 @@
 # ion-chip
 
-Chips represent complex entities in small blocks, such as a contact. A chip can contain several different elements such as avatars, text, buttons, and icons.
+Chips represent complex entities in small blocks, such as a contact. A chip can contain several different elements such as avatars, text, and icons.
 
 <!-- Auto Generated Below -->
 
 
 ## Properties
 
-| Property | Attribute | Description                                                                                                                                                                                                                                                            | Type                  | Default     |
-| -------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
-| `color`  | `color`   | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` | `undefined` |
-| `mode`   | `mode`    | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined` |
+| Property  | Attribute | Description                                                                                                                                                                                                                                                            | Type                  | Default     |
+| --------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
+| `color`   | `color`   | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` | `undefined` |
+| `mode`    | `mode`    | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined` |
+| `outline` | `outline` | Display an outline style button.                                                                                                                                                                                                                                       | `boolean`             | `false`     |
 
 
 ## CSS Custom Properties
 
-| Name                     | Description                      |
-| ------------------------ | -------------------------------- |
-| `--avatar-height`        | Height of the chip avatar        |
-| `--avatar-margin-bottom` | Margin bottom of the chip avatar |
-| `--avatar-margin-end`    | Margin end of the chip avatar    |
-| `--avatar-margin-start`  | Margin start of the chip avatar  |
-| `--avatar-margin-top`    | Margin top of the chip avatar    |
-| `--avatar-width`         | Width of the chip avatar         |
-| `--background`           | Background of the chip           |
-| `--color`                | Color of the chip                |
-| `--label-margin-bottom`  | Margin bottom of the chip label  |
-| `--label-margin-end`     | Margin end of the chip label     |
-| `--label-margin-start`   | Margin start of the chip label   |
-| `--label-margin-top`     | Margin top of the chip label     |
+| Name           | Description            |
+| -------------- | ---------------------- |
+| `--background` | Background of the chip |
+| `--color`      | Color of the chip      |
 
 
 ----------------------------------------------

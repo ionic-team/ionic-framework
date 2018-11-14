@@ -16,6 +16,13 @@ Menu Button is component that automatically creates the icon and functionality t
 | `mode`     | `mode`      | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined` |
 
 
+## CSS Custom Properties
+
+| Name      | Description              |
+| --------- | ------------------------ |
+| `--color` | Color of the menu button |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

@@ -168,35 +168,13 @@ export class Checkbox {
 }
 
 export declare interface Chip extends StencilComponents<'IonChip'> {}
-@Component({ selector: 'ion-chip', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode'] })
+@Component({ selector: 'ion-chip', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'outline'] })
 export class Chip {
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
     const el = r.nativeElement;
-    proxyInputs(this, el, ['color', 'mode']);
-  }
-}
-
-export declare interface ChipButton extends StencilComponents<'IonChipButton'> {}
-@Component({ selector: 'ion-chip-button', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'disabled', 'fill', 'href'] })
-export class ChipButton {
-
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
-    c.detach();
-    const el = r.nativeElement;
-    proxyInputs(this, el, ['color', 'mode', 'disabled', 'fill', 'href']);
-  }
-}
-
-export declare interface ChipIcon extends StencilComponents<'IonChipIcon'> {}
-@Component({ selector: 'ion-chip-icon', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'fill', 'name', 'src'] })
-export class ChipIcon {
-
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
-    c.detach();
-    const el = r.nativeElement;
-    proxyInputs(this, el, ['color', 'mode', 'fill', 'name', 'src']);
+    proxyInputs(this, el, ['color', 'mode', 'outline']);
   }
 }
 

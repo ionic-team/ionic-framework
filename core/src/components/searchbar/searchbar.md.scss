@@ -32,7 +32,7 @@
 // -----------------------------------------
 
 .searchbar-cancel-button {
-  @include position(0, null, null, 10px);
+  @include position(0, null, null, 5px);
   @include margin(0);
 
   display: none;

@@ -14,7 +14,7 @@ export const config: Config = {
     { components: ['ion-button', 'ion-icon'] },
     { components: ['ion-card', 'ion-card-content', 'ion-card-header', 'ion-card-title', 'ion-card-subtitle'] },
     { components: ['ion-checkbox'] },
-    { components: ['ion-chip', 'ion-chip-button', 'ion-chip-icon'] },
+    { components: ['ion-chip'] },
     { components: ['ion-datetime', 'ion-picker', 'ion-picker-column', 'ion-picker-controller'] },
     { components: ['ion-fab', 'ion-fab-button', 'ion-fab-list'] },
     { components: ['ion-grid', 'ion-row', 'ion-col'] },

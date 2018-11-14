@@ -56,6 +56,7 @@ import {
   Side,
   SpinnerTypes,
   StyleEvent,
+  SwipeGestureHandler,
   TabBarChangedDetail,
   TabButtonClickDetail,
   TabButtonLayout,
@@ -403,7 +404,7 @@ export namespace Components {
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
-    'routerDirection'?: RouterDirection;
+    'routerDirection': RouterDirection;
   }
   interface IonAnchorAttributes extends StencilHTMLAttributes {
     /**
@@ -565,7 +566,7 @@ export namespace Components {
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
-    'routerDirection'?: RouterDirection;
+    'routerDirection': RouterDirection;
     /**
     * The button shape.
     */
@@ -819,96 +820,6 @@ export namespace Components {
     'value'?: string;
   }
 
-  interface IonChipButton {
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
-    /**
-    * If `true`, the user cannot interact with the chip button.
-    */
-    'disabled': boolean;
-    /**
-    * Set to `"clear"` for a transparent button or to `"solid"` for a filled background.
-    */
-    'fill': 'clear' | 'solid';
-    /**
-    * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
-    */
-    'href'?: string;
-    /**
-    * The mode determines which platform styles to use.
-    */
-    'mode': Mode;
-  }
-  interface IonChipButtonAttributes extends StencilHTMLAttributes {
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
-    /**
-    * If `true`, the user cannot interact with the chip button.
-    */
-    'disabled'?: boolean;
-    /**
-    * Set to `"clear"` for a transparent button or to `"solid"` for a filled background.
-    */
-    'fill'?: 'clear' | 'solid';
-    /**
-    * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
-    */
-    'href'?: string;
-    /**
-    * The mode determines which platform styles to use.
-    */
-    'mode'?: Mode;
-  }
-
-  interface IonChipIcon {
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
-    /**
-    * Set to `"clear"` for a transparent icon or to `"solid"` for a filled background.
-    */
-    'fill': 'clear' | 'solid';
-    /**
-    * The mode determines which platform styles to use.
-    */
-    'mode': Mode;
-    /**
-    * The icon to use. Possible values are the same as `"ion-icon"`.
-    */
-    'name'?: string;
-    /**
-    * The icon src to use. Possible values are the same as `"ion-icon"`.
-    */
-    'src'?: string;
-  }
-  interface IonChipIconAttributes extends StencilHTMLAttributes {
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
-    /**
-    * Set to `"clear"` for a transparent icon or to `"solid"` for a filled background.
-    */
-    'fill'?: 'clear' | 'solid';
-    /**
-    * The mode determines which platform styles to use.
-    */
-    'mode'?: Mode;
-    /**
-    * The icon to use. Possible values are the same as `"ion-icon"`.
-    */
-    'name'?: string;
-    /**
-    * The icon src to use. Possible values are the same as `"ion-icon"`.
-    */
-    'src'?: string;
-  }
-
   interface IonChip {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
@@ -918,6 +829,10 @@ export namespace Components {
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
+    /**
+    * Display an outline style button.
+    */
+    'outline': boolean;
   }
   interface IonChipAttributes extends StencilHTMLAttributes {
     /**
@@ -928,6 +843,10 @@ export namespace Components {
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
+    /**
+    * Display an outline style button.
+    */
+    'outline'?: boolean;
   }
 
   interface IonCol {
@@ -1425,7 +1344,7 @@ export namespace Components {
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
-    'routerDirection'?: RouterDirection;
+    'routerDirection': RouterDirection;
     /**
     * If `true`, the fab button will show when in a fab-list.
     */
@@ -1694,7 +1613,7 @@ export namespace Components {
     /**
     * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
     */
-    'autocapitalize': 'on' | 'off' | 'words' | 'characters';
+    'autocapitalize': string;
     /**
     * Indicates whether the value of the control can be automatically completed by the browser.
     */
@@ -1812,7 +1731,7 @@ export namespace Components {
     /**
     * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
     */
-    'autocapitalize'?: 'on' | 'off' | 'words' | 'characters';
+    'autocapitalize'?: string;
     /**
     * Indicates whether the value of the control can be automatically completed by the browser.
     */
@@ -2103,7 +2022,7 @@ export namespace Components {
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
-    'routerDirection'?: RouterDirection;
+    'routerDirection': RouterDirection;
     /**
     * The type of the button. Only used when an `onclick` or `button` property is present.
     */
@@ -3696,11 +3615,9 @@ export namespace Components {
     'commit': (enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
     'delegate'?: FrameworkDelegate;
     'getRouteId': () => Promise<RouteID | undefined>;
-    /**
-    * Set the root component for the given navigation stack
-    */
-    'setRoot': (component: ComponentRef, params?: { [key: string]: any; } | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
+    'mode': Mode;
     'setRouteId': (id: string, params: { [key: string]: any; } | undefined, direction: number) => Promise<RouteWrite>;
+    'swipeHandler'?: SwipeGestureHandler;
   }
   interface IonRouterOutletAttributes extends StencilHTMLAttributes {
     /**
@@ -3712,9 +3629,11 @@ export namespace Components {
     */
     'animation'?: AnimationBuilder;
     'delegate'?: FrameworkDelegate;
+    'mode'?: Mode;
     'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
     'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
     'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
+    'swipeHandler'?: SwipeGestureHandler;
   }
 
   interface IonRouter {
@@ -5197,8 +5116,6 @@ declare global {
     'IonCardTitle': Components.IonCardTitle;
     'IonCard': Components.IonCard;
     'IonCheckbox': Components.IonCheckbox;
-    'IonChipButton': Components.IonChipButton;
-    'IonChipIcon': Components.IonChipIcon;
     'IonChip': Components.IonChip;
     'IonCol': Components.IonCol;
     'IonContent': Components.IonContent;
@@ -5299,8 +5216,6 @@ declare global {
     'ion-card-title': Components.IonCardTitleAttributes;
     'ion-card': Components.IonCardAttributes;
     'ion-checkbox': Components.IonCheckboxAttributes;
-    'ion-chip-button': Components.IonChipButtonAttributes;
-    'ion-chip-icon': Components.IonChipIconAttributes;
     'ion-chip': Components.IonChipAttributes;
     'ion-col': Components.IonColAttributes;
     'ion-content': Components.IonContentAttributes;
@@ -5494,18 +5409,6 @@ declare global {
   var HTMLIonCheckboxElement: {
     prototype: HTMLIonCheckboxElement;
     new (): HTMLIonCheckboxElement;
-  };
-
-  interface HTMLIonChipButtonElement extends Components.IonChipButton, HTMLStencilElement {}
-  var HTMLIonChipButtonElement: {
-    prototype: HTMLIonChipButtonElement;
-    new (): HTMLIonChipButtonElement;
-  };
-
-  interface HTMLIonChipIconElement extends Components.IonChipIcon, HTMLStencilElement {}
-  var HTMLIonChipIconElement: {
-    prototype: HTMLIonChipIconElement;
-    new (): HTMLIonChipIconElement;
   };
 
   interface HTMLIonChipElement extends Components.IonChip, HTMLStencilElement {}
@@ -5996,8 +5899,6 @@ declare global {
     'ion-card-title': HTMLIonCardTitleElement
     'ion-card': HTMLIonCardElement
     'ion-checkbox': HTMLIonCheckboxElement
-    'ion-chip-button': HTMLIonChipButtonElement
-    'ion-chip-icon': HTMLIonChipIconElement
     'ion-chip': HTMLIonChipElement
     'ion-col': HTMLIonColElement
     'ion-content': HTMLIonContentElement
@@ -6098,8 +5999,6 @@ declare global {
     'ion-card-title': HTMLIonCardTitleElement;
     'ion-card': HTMLIonCardElement;
     'ion-checkbox': HTMLIonCheckboxElement;
-    'ion-chip-button': HTMLIonChipButtonElement;
-    'ion-chip-icon': HTMLIonChipIconElement;
     'ion-chip': HTMLIonChipElement;
     'ion-col': HTMLIonColElement;
     'ion-content': HTMLIonContentElement;
