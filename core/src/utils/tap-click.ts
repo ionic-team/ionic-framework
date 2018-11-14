@@ -137,15 +137,15 @@ export function startTapClick(doc: Document) {
     }
   }
 
-  doc.body.addEventListener('click', onBodyClick, true);
-  doc.body.addEventListener('ionScrollStart', () => {
+  doc.addEventListener('click', onBodyClick, true);
+  doc.addEventListener('ionScrollStart', () => {
     scrolling = true;
     cancelActive();
   });
-  doc.body.addEventListener('ionScrollEnd', () => {
+  doc.addEventListener('ionScrollEnd', () => {
     scrolling = false;
   });
-  doc.body.addEventListener('ionGestureCaptured', cancelActive);
+  doc.addEventListener('ionGestureCaptured', cancelActive);
 
   doc.addEventListener('touchstart', onTouchStart, true);
   doc.addEventListener('touchcancel', onTouchEnd, true);

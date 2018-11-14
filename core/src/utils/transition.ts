@@ -76,16 +76,19 @@ async function getAnimationBuilder(opts: TransitionOptions): Promise<AnimationBu
 async function animation(animationBuilder: AnimationBuilder, opts: TransitionOptions): Promise<TransitionResult> {
   await waitForReady(opts, true);
 
-  const trns = await opts.animationCtrl.create(animationBuilder, opts.baseEl, opts);
-  fireWillEvents(opts.window, opts.enteringEl, opts.leavingEl);
-  await playTransition(trns, opts);
+  const trans = await opts.animationCtrl.create(animationBuilder, opts.baseEl, opts);
+  fireWillEvents(opts.enteringEl, opts.leavingEl);
+  await playTransition(trans, opts);
+  if (opts.progressCallback) {
+    opts.progressCallback(undefined);
+  }
 
-  if (trns.hasCompleted) {
-    fireDidEvents(opts.window, opts.enteringEl, opts.leavingEl);
+  if (trans.hasCompleted) {
+    fireDidEvents(opts.enteringEl, opts.leavingEl);
   }
   return {
-    hasCompleted: trns.hasCompleted,
-    animation: trns
+    hasCompleted: trans.hasCompleted,
+    animation: trans
   };
 }
 
@@ -95,8 +98,8 @@ async function noAnimation(opts: TransitionOptions): Promise<TransitionResult> {
 
   await waitForReady(opts, false);
 
-  fireWillEvents(opts.window, enteringEl, leavingEl);
-  fireDidEvents(opts.window, enteringEl, leavingEl);
+  fireWillEvents(enteringEl, leavingEl);
+  fireDidEvents(enteringEl, leavingEl);
 
   return {
     hasCompleted: true
@@ -144,20 +147,19 @@ function playTransition(trans: Animation, opts: TransitionOptions): Promise<Anim
   return promise;
 }
 
-function fireWillEvents(win: Window, enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined) {
-  lifecycle(win, leavingEl, ViewLifecycle.WillLeave);
-  lifecycle(win, enteringEl, ViewLifecycle.WillEnter);
+function fireWillEvents(enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined) {
+  lifecycle(leavingEl, ViewLifecycle.WillLeave);
+  lifecycle(enteringEl, ViewLifecycle.WillEnter);
 }
 
-function fireDidEvents(win: Window, enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined) {
-  lifecycle(win, enteringEl, ViewLifecycle.DidEnter);
-  lifecycle(win, leavingEl, ViewLifecycle.DidLeave);
+function fireDidEvents(enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined) {
+  lifecycle(enteringEl, ViewLifecycle.DidEnter);
+  lifecycle(leavingEl, ViewLifecycle.DidLeave);
 }
 
-export function lifecycle(win: Window, el: HTMLElement | undefined, eventName: ViewLifecycle) {
+export function lifecycle(el: HTMLElement | undefined, eventName: ViewLifecycle) {
   if (el) {
-    const CEvent: typeof CustomEvent = (win as any).CustomEvent;
-    const event = new CEvent(eventName, {
+    const event = new CustomEvent(eventName, {
       bubbles: false,
       cancelable: false,
     });
@@ -214,7 +216,7 @@ function setZIndex(
 export interface TransitionOptions extends NavOptions {
   animationCtrl: HTMLIonAnimationControllerElement;
   queue: QueueApi;
-  progressCallback?: ((ani: Animation) => void);
+  progressCallback?: ((ani: Animation | undefined) => void);
   window: Window;
   baseEl: HTMLElement;
   enteringEl: HTMLElement;

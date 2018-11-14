@@ -137,7 +137,6 @@ export class Menu implements ComponentInterface, MenuI {
 
   /**
    * Emitted when the menu state is changed.
-   *
    * @internal
    */
   @Event() protected ionMenuChange!: EventEmitter<MenuChangeEventDetail>;

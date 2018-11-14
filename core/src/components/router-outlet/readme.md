@@ -13,11 +13,13 @@ While RouterOutlet has methods for navigating around, it's recommended to use th
 
 ## Properties
 
-| Property    | Attribute  | Description                                                                                                                                                                                    | Type                             | Default     |
-| ----------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | ----------- |
-| `animated`  | `animated` | If `true`, the router-outlet should animate the transition of components.                                                                                                                      | `boolean`                        | `true`      |
-| `animation` | --         | By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions. | `AnimationBuilder \| undefined`  | `undefined` |
-| `delegate`  | --         |                                                                                                                                                                                                | `FrameworkDelegate \| undefined` | `undefined` |
+| Property       | Attribute  | Description                                                                                                                                                                                    | Type                               | Default     |
+| -------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- | ----------- |
+| `animated`     | `animated` | If `true`, the router-outlet should animate the transition of components.                                                                                                                      | `boolean`                          | `true`      |
+| `animation`    | --         | By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions. | `AnimationBuilder \| undefined`    | `undefined` |
+| `delegate`     | --         |                                                                                                                                                                                                | `FrameworkDelegate \| undefined`   | `undefined` |
+| `mode`         | `mode`     |                                                                                                                                                                                                | `"ios" \| "md"`                    | `undefined` |
+| `swipeHandler` | --         |                                                                                                                                                                                                | `SwipeGestureHandler \| undefined` | `undefined` |
 
 
 ## Methods
@@ -47,24 +49,6 @@ Type: `Promise<boolean>`
 #### Returns
 
 Type: `Promise<RouteID | undefined>`
-
-
-
-### `setRoot(component: ComponentRef, params?: { [key: string]: any; } | undefined, opts?: RouterOutletOption...`
-
-Set the root component for the given navigation stack
-
-#### Parameters
-
-| Name        | Type                                        | Description |
-| ----------- | ------------------------------------------- | ----------- |
-| `component` | `Function \| HTMLElement \| null \| string` |             |
-| `params`    | `undefined \| { [key: string]: any; }`      |             |
-| `opts`      | `RouterOutletOptions \| undefined`          |             |
-
-#### Returns
-
-Type: `Promise<boolean>`
 
 
 

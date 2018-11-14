@@ -58,7 +58,7 @@ export class Button implements ComponentInterface {
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
-  @Prop() routerDirection?: RouterDirection;
+  @Prop() routerDirection: RouterDirection = 'forward';
 
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.
