@@ -87,6 +87,13 @@ Using tabs with Angular's router is fairly straight forward. The only additional
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property    | Attribute    | Description | Type      | Default |
+| ----------- | ------------ | ----------- | --------- | ------- |
+| `useRouter` | `use-router` |             | `boolean` | `false` |
+
+
 ## Events
 
 | Event              | Description                                                                | Detail                   |
