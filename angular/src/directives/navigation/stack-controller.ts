@@ -1,4 +1,4 @@
-import { ComponentRef } from '@angular/core';
+import { ComponentRef, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { NavController } from '../../providers/nav-controller';
@@ -8,12 +8,15 @@ export class StackController {
 
   private viewsSnapshot: RouteView[] = [];
   private views: RouteView[] = [];
+  private runningTransition?: Promise<boolean>;
+  private skipTransition = false;
 
   constructor(
     private stack: boolean,
     private containerEl: HTMLIonRouterOutletElement,
     private router: Router,
     private navCtrl: NavController,
+    private zone: NgZone,
   ) {}
 
   createView(enteringRef: ComponentRef<any>, route: ActivatedRoute): RouteView {
@@ -22,7 +25,6 @@ export class StackController {
       element: (enteringRef && enteringRef.location && enteringRef.location.nativeElement) as HTMLElement,
       url: this.getUrl(route),
       fullpath: document.location!.pathname,
-      deactivatedId: -1
     };
   }
 
@@ -31,21 +33,42 @@ export class StackController {
     return this.views.find(vw => vw.url === activatedUrlKey);
   }
 
+  async setActive(enteringView: RouteView, direction: number, animated: boolean) {
+    const leavingView = this.getActive();
+    this.insertView(enteringView, direction);
+    await this.transition(enteringView, leavingView, direction, animated, this.canGoBack(1), false);
+    this.cleanup();
+  }
+
   canGoBack(deep: number): boolean {
     return this.views.length > deep;
   }
 
-  async setActive(enteringView: RouteView, direction: number, animated: boolean) {
-    const leavingView = this.getActive();
-    this.insertView(enteringView, direction);
-    await this.transition(enteringView, leavingView, direction, animated, this.canGoBack(1));
-    this.cleanup();
+  pop(deep: number) {
+    this.zone.run(() => {
+      const view = this.views[this.views.length - deep - 1];
+      this.navCtrl.navigateBack(view.url);
+    });
   }
 
-  pop(deep: number) {
-    const view = this.views[this.views.length - deep - 1];
-    this.navCtrl.navigateBack(view.url);
+  startBackTransition() {
+    this.transition(
+      this.views[this.views.length - 2],
+      this.views[this.views.length - 1],
+      -1,
+      true,
+      true,
+      true
+    );
   }
+
+  endBackTransition(shouldComplete: boolean) {
+    if (shouldComplete) {
+      this.skipTransition = true;
+      this.pop(1);
+    }
+  }
+
 
   private insertView(enteringView: RouteView, direction: number) {
     // no stack
@@ -100,8 +123,17 @@ export class StackController {
     leavingView: RouteView | undefined,
     direction: number,
     animated: boolean,
-    showGoBack: boolean
+    showGoBack: boolean,
+    progressAnimation: boolean
   ) {
+    if (this.runningTransition) {
+      await this.runningTransition;
+      this.runningTransition = undefined;
+    }
+    if (this.skipTransition) {
+      this.skipTransition = false;
+      return;
+    }
     const enteringEl = enteringView ? enteringView.element : undefined;
     const leavingEl = leavingView ? leavingView.element : undefined;
     const containerEl = this.containerEl;
@@ -112,12 +144,14 @@ export class StackController {
       }
 
       await containerEl.componentOnReady();
-      await containerEl.commit(enteringEl, leavingEl, {
+      this.runningTransition = containerEl.commit(enteringEl, leavingEl, {
         duration: !animated ? 0 : undefined,
         direction: direction === 1 ? 'forward' : 'back',
         deepWait: true,
-        showGoBack
+        showGoBack,
+        progressAnimation
       });
+      await this.runningTransition;
     }
   }
 
@@ -125,26 +159,13 @@ export class StackController {
     const urlTree = this.router.createUrlTree(['.'], { relativeTo: activatedRoute });
     return this.router.serializeUrl(urlTree);
   }
-
 }
 
-export function destroyView(view: RouteView) {
+function destroyView(view: RouteView) {
   if (view) {
     // TODO lifecycle event
     view.ref.destroy();
   }
-}
-
-export function getLastDeactivatedRef(views: RouteView[]) {
-  if (views.length < 2) {
-    return null;
-  }
-
-  return views.sort((a, b) => {
-    if (a.deactivatedId > b.deactivatedId) return -1;
-    if (a.deactivatedId < b.deactivatedId) return 1;
-    return 0;
-  })[0].ref;
 }
 
 export interface RouteView {
@@ -152,6 +173,5 @@ export interface RouteView {
   fullpath: string;
   element: HTMLElement;
   ref: ComponentRef<any>;
-  deactivatedId: number;
   savedData?: any;
 }
