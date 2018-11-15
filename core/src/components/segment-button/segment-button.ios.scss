@@ -68,6 +68,14 @@
 }
 
 
+// Segment Button: Activated
+// --------------------------------------------------
+
+:host(.activated) {
+  background: var(--background-activated);
+}
+
+
 // Segment: Checked & Activated
 // --------------------------------------------------
 

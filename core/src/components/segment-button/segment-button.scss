@@ -124,7 +124,6 @@
 // --------------------------------------------------
 
 :host(.activated) {
-  background: var(--background-activated);
   color: var(--color-activated);
 }
 
@@ -214,4 +213,11 @@
 // Layout: label hide
 :host(.segment-button-layout-label-hide) ::slotted(ion-label) {
   display: none;
+}
+
+// Segment Button Ripple
+// --------------------------------------------------
+
+ion-ripple-effect {
+  color: var(--ripple-color);
 }

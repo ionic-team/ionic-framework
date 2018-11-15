@@ -19,6 +19,7 @@
   --color-checked-disabled: var(--color-checked);
   --indicator-color: transparent;
   --indicator-color-checked: var(--color-checked);
+  --ripple-color: var(--color-checked);
 
   min-width: $segment-button-md-min-width;
 
@@ -90,6 +91,14 @@
 // Layout: icon end
 :host(.segment-button-layout-icon-end) ::slotted(ion-label) {
   @include margin-horizontal(0, 8px);
+}
+
+
+// Segment: Checked & Activated
+// --------------------------------------------------
+
+:host(.segment-button-checked.activated) {
+  color: var(--color-checked);
 }
 
 
