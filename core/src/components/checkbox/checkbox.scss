@@ -42,6 +42,7 @@ input {
 .checkbox-icon {
   @include border-radius(var(--border-radius));
 
+  display: block;
   position: relative;
 
   width: var(--width);
@@ -56,6 +57,7 @@ input {
   background: var(--background);
 
   contain: strict;
+  box-sizing: border-box;
 }
 
 .checkbox-icon path {
