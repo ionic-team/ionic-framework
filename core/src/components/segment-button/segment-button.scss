@@ -149,16 +149,6 @@
 }
 
 
-// Segment Button: Hover
-// --------------------------------------------------
-
-@media (any-hover: hover) {
-  :host(:hover) {
-    background: var(--background-hover);
-  }
-}
-
-
 // Segment Button: Indicator
 // --------------------------------------------------
 

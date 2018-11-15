@@ -91,3 +91,13 @@
 :host(.segment-button-layout-icon-end) ::slotted(ion-label) {
   @include margin-horizontal(0, 8px);
 }
+
+
+// Segment Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:hover) {
+    background: var(--background-hover);
+  }
+}
