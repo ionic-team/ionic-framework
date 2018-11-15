@@ -32,7 +32,6 @@ Segment buttons are groups of related buttons inside of a [Segment](../../segmen
 | `--background`              | Background of the segment button                                    |
 | `--background-activated`    | Background of the activated (pressed) segment button                |
 | `--background-checked`      | Background of the checked segment button                            |
-| `--background-disabled`     | Background of the disabled segment button                           |
 | `--background-hover`        | Background of the segment button on hover                           |
 | `--border-color`            | Color of the segment button border                                  |
 | `--border-radius`           | Radius of the segment button border                                 |
@@ -41,7 +40,6 @@ Segment buttons are groups of related buttons inside of a [Segment](../../segmen
 | `--color`                   | Color of the segment button                                         |
 | `--color-activated`         | Color of the activated (pressed) segment button                     |
 | `--color-checked`           | Color of the checked segment button                                 |
-| `--color-checked-activated` | Color of the checked & activated segment button                     |
 | `--color-checked-disabled`  | Color of the checked & disabled segment button                      |
 | `--color-disabled`          | Color of the disabled segment button                                |
 | `--indicator-color`         | Color of the indicator (highlight) under the segment button         |

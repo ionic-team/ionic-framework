@@ -9,13 +9,11 @@
    * @prop --background-hover: Background of the segment button on hover
    * @prop --background-activated: Background of the activated (pressed) segment button
    * @prop --background-checked: Background of the checked segment button
-   * @prop --background-disabled: Background of the disabled segment button
    *
    * @prop --color: Color of the segment button
    * @prop --color-activated: Color of the activated (pressed) segment button
    * @prop --color-checked: Color of the checked segment button
    * @prop --color-disabled: Color of the disabled segment button
-   * @prop --color-checked-activated: Color of the checked & activated segment button
    * @prop --color-checked-disabled: Color of the checked & disabled segment button
    *
    * @prop --border-radius: Radius of the segment button border
@@ -130,9 +128,6 @@
   color: var(--color-activated);
 }
 
-:host(.segment-button-checked.activated) {
-  color: var(--color-checked-activated);
-}
 
 // Segment Button: Disabled
 // --------------------------------------------------

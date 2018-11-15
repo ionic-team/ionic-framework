@@ -133,6 +133,18 @@
           </ion-segment-button>
         </ion-segment>
 
+        <ion-segment name="dynamicAttrElem" value="disabled">
+          <ion-segment-button value="active">
+            <ion-label>Active</ion-label>
+          </ion-segment-button>
+          <ion-segment-button name="dynamicAttrDisable" value="disabled" disabled="true">
+            <ion-label>Disabled</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="inactive" disabled="false">
+            <ion-label>Inactive</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+
         <!-- Dynamic Buttons -->
         <ion-segment id="dynamicButtons" color="dark"></ion-segment>
       </div>

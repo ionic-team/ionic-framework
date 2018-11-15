@@ -9,11 +9,9 @@
   --background-hover: #{$segment-button-ios-background-color-hover};
   --background-activated: #{$segment-button-ios-background-color-activated};
   --background-checked: #{$segment-button-ios-background-color-checked};
-  --background-disabled: #{$segment-button-ios-background-color-disabled};
-  --border-color: #{ion-color(primary, base)};
-  --color: #{ion-color(primary, base)};
+  --border-color: #{$segment-button-ios-border-color};
+  --color: #{$segment-button-ios-text-color};
   --color-activated: var(--color);
-  --color-checked-activated: var(--color-activated);
   --color-checked: #{ion-color(primary, contrast)};
   --color-disabled: #{ion-color(primary, base, $segment-button-ios-opacity-disabled)};
   --color-checked-disabled: #{ion-color(primary, contrast, $segment-button-ios-opacity-disabled)};
@@ -67,4 +65,13 @@
   :host(:hover:not(.segment-button-checked)) {
     background: var(--background-hover);
   }
+}
+
+
+// Segment: Checked & Activated
+// --------------------------------------------------
+
+:host(.segment-button-checked.activated) {
+  background: var(--background-checked);
+  color: var(--color-checked);
 }
