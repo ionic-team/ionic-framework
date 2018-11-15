@@ -1699,6 +1699,10 @@ export namespace Components {
     */
     'readonly': boolean;
     /**
+    * If `true`, the user must fill in a value before submitting a form.
+    */
+    'required': boolean;
+    /**
     * Sets focus on the specified `ion-input`. Use this method instead of the global `input.focus()`.
     */
     'setFocus': () => void;
@@ -1836,6 +1840,10 @@ export namespace Components {
     * If `true`, the user cannot modify the value.
     */
     'readonly'?: boolean;
+    /**
+    * If `true`, the user must fill in a value before submitting a form.
+    */
+    'required'?: boolean;
     /**
     * The initial size of the control. This value is in pixels unless the value of the type attribute is `"text"` or `"password"`, in which case it is an integer number of characters. This attribute applies only when the `type` attribute is set to `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
     */
