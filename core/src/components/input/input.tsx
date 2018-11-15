@@ -141,6 +141,11 @@ export class Input implements ComponentInterface {
   @Prop() readonly = false;
 
   /**
+   * If `true`, the user must fill in a value before submitting a form.
+   */
+  @Prop() required = false;
+
+  /**
    * If `true`, the element will have its spelling and grammar checked.
    */
   @Prop() spellcheck = false;
@@ -329,6 +334,7 @@ export class Input implements ComponentInterface {
 
     return [
       <input
+        class="native-input"
         ref={input => this.nativeInput = input}
         aria-labelledby={labelId}
         disabled={this.disabled}
@@ -337,7 +343,6 @@ export class Input implements ComponentInterface {
         autoComplete={this.autocomplete}
         autoCorrect={this.autocorrect}
         autoFocus={this.autofocus}
-        class="native-input"
         inputMode={this.inputmode}
         min={this.min}
         max={this.max}
@@ -348,6 +353,7 @@ export class Input implements ComponentInterface {
         pattern={this.pattern}
         placeholder={this.placeholder || ''}
         readOnly={this.readonly}
+        required={this.required}
         spellCheck={this.spellcheck}
         step={this.step}
         size={this.size}
