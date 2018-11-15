@@ -3541,7 +3541,7 @@ export namespace Components {
     /**
     * Adds the ripple effect to the parent element
     */
-    'addRipple': (pageX: number, pageY: number) => void;
+    'addRipple': (pageX: number, pageY: number) => Promise<() => void>;
   }
   interface IonRippleEffectAttributes extends StencilHTMLAttributes {}
 
