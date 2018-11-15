@@ -89,6 +89,10 @@
     background-color: transparent;
   }
 
+  &:invalid {
+    box-shadow: none;
+  }
+
   &::-ms-clear {
     display: none;
   }
