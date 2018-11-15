@@ -40,7 +40,7 @@ export class TabButton implements ComponentInterface {
    * Set the layout of the text and icon in the tab bar.
    * It defaults to `'icon-top'`.
    */
-  @Prop() layout?: TabButtonLayout;
+  @Prop({ mutable: true }) layout?: TabButtonLayout;
 
   /**
    * The URL which will be used as the `href` within this tab's button anchor.
