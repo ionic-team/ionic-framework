@@ -31,11 +31,8 @@
 // --------------------------------------------------
 
 :host(.button-solid) {
+  --background-activated: var(--background);
   --box-shadow: #{$button-md-box-shadow};
-}
-
-:host(.button-solid.activated) {
-  --box-shadow: #{$button-md-box-shadow-activated};
 }
 
 // Material Design Outline Button

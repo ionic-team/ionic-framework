@@ -8,6 +8,7 @@ export function startTapClick(doc: Document) {
   let scrolling = false;
 
   let activatableEle: HTMLElement | undefined;
+  let activeRipple: Promise<() => void> | undefined;
   let activeDefer: any;
 
   const clearDefers = new WeakMap<HTMLElement, any>();
@@ -116,11 +117,14 @@ export function startTapClick(doc: Document) {
 
     const rippleEffect = getRippleEffect(el);
     if (rippleEffect && rippleEffect.addRipple) {
-      rippleEffect.addRipple(x, y);
+      activeRipple = rippleEffect.addRipple(x, y);
     }
   }
 
   function removeActivated(smooth: boolean) {
+    if (activeRipple !== undefined) {
+      activeRipple.then(remove => remove());
+    }
     const active = activatableEle;
     if (!active) {
       return;
