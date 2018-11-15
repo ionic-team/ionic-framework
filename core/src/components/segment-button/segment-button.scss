@@ -59,6 +59,8 @@
 
   white-space: nowrap;
   font-kerning: none;
+
+  overflow: hidden;
 }
 
 :host(:first-of-type) {
