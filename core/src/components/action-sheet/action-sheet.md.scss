@@ -60,10 +60,6 @@
   overflow: hidden;
 }
 
-.action-sheet-button.activated {
-  background: $action-sheet-md-button-background-activated;
-}
-
 .action-sheet-icon {
   @include padding(null, null, 4px, null);
   @include margin($action-sheet-md-icon-margin-top, $action-sheet-md-icon-margin-end, $action-sheet-md-icon-margin-bottom, $action-sheet-md-icon-margin-start);

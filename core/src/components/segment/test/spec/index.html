@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Segment</title>
+  <title>Segment - Spec</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
@@ -13,12 +13,12 @@
 <body onLoad="setLayout()">
   <ion-app>
     <ion-header>
-      <ion-toolbar color="primary">
-        <ion-title>Segment</ion-title>
+      <ion-toolbar color="tertiary">
+        <ion-title>Segment - Spec</ion-title>
       </ion-toolbar>
 
-      <ion-toolbar color="primary">
-        <ion-segment scrollable id="modeLayout">
+      <ion-toolbar color="tertiary">
+        <ion-segment id="modeLayout">
           <ion-segment-button checked>
             <ion-icon name="compass"></ion-icon>
             <ion-label>Explore</ion-label>
@@ -30,14 +30,6 @@
           <ion-segment-button>
             <ion-icon name="briefcase"></ion-icon>
             <ion-label>Trips</ion-label>
-          </ion-segment-button>
-          <ion-segment-button>
-            <ion-icon name="person"></ion-icon>
-            <ion-label>Account</ion-label>
-          </ion-segment-button>
-          <ion-segment-button>
-            <ion-icon name="settings"></ion-icon>
-            <ion-label>Settings</ion-label>
           </ion-segment-button>
         </ion-segment>
       </ion-toolbar>
@@ -166,7 +158,7 @@
         </ion-segment-button>
       </ion-segment>
 
-      <!-- Overflow Icons -->
+      <!-- Scrollable Icons -->
       <ion-segment scrollable color="tertiary">
         <ion-segment-button>
           <ion-icon name="home"></ion-icon>
@@ -203,7 +195,6 @@
         background: white;
         margin-bottom: 12px;
       }
-
     </style>
 
     <script>
