@@ -61,10 +61,14 @@ export class SegmentButton implements ComponentInterface {
     }
   }
 
+  private onClick = () => {
+    this.checked = true;
+  }
+
   hostData() {
     const { disabled, checked, color } = this;
     return {
-      'ion-activatable': true,
+      'ion-activatable': 'instant',
       class: {
         ...createColorClasses(color),
         'segment-button-disabled': disabled,
@@ -81,7 +85,7 @@ export class SegmentButton implements ComponentInterface {
         aria-pressed={this.checked ? 'true' : null}
         class="button-native"
         disabled={this.disabled}
-        onClick={() => this.checked = true}
+        onClick={this.onClick}
       >
         <slot></slot>
         {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
