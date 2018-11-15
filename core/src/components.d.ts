@@ -50,6 +50,7 @@ import {
   RouteWrite,
   ScrollBaseDetail,
   ScrollDetail,
+  SegmentButtonLayout,
   SelectInputChangeEvent,
   SelectInterface,
   SelectPopoverOption,
@@ -3845,6 +3846,10 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
+    * Set the layout of the text and icon in the segment.
+    */
+    'layout': SegmentButtonLayout;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -3866,6 +3871,10 @@ export namespace Components {
     * If `true`, the user cannot interact with the segment button.
     */
     'disabled'?: boolean;
+    /**
+    * Set the layout of the text and icon in the segment.
+    */
+    'layout': SegmentButtonLayout;
     /**
     * The mode determines which platform styles to use.
     */
@@ -3894,6 +3903,10 @@ export namespace Components {
     */
     'mode': Mode;
     /**
+    * If `true`, the segment buttons will overflow and the user can swipe to see them.
+    */
+    'scrollable': boolean;
+    /**
     * the value of the segment.
     */
     'value'?: string | null;
@@ -3915,6 +3928,14 @@ export namespace Components {
     * Emitted when the value property has changed.
     */
     'onIonChange'?: (event: CustomEvent<TextInputChangeEvent>) => void;
+    /**
+    * Emitted when the styles change.
+    */
+    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
+    /**
+    * If `true`, the segment buttons will overflow and the user can swipe to see them.
+    */
+    'scrollable'?: boolean;
     /**
     * the value of the segment.
     */

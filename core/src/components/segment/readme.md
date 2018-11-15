@@ -10,12 +10,13 @@ Their functionality is similar to tabs, where selecting one will deselect all ot
 
 ## Properties
 
-| Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                          | Default     |
-| ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ----------- |
-| `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`         | `undefined` |
-| `disabled` | `disabled` | If `true`, the user cannot interact with the segment.                                                                                                                                                                                                                  | `boolean`                     | `false`     |
-| `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`               | `undefined` |
-| `value`    | `value`    | the value of the segment.                                                                                                                                                                                                                                              | `null \| string \| undefined` | `undefined` |
+| Property     | Attribute    | Description                                                                                                                                                                                                                                                            | Type                          | Default     |
+| ------------ | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ----------- |
+| `color`      | `color`      | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`         | `undefined` |
+| `disabled`   | `disabled`   | If `true`, the user cannot interact with the segment.                                                                                                                                                                                                                  | `boolean`                     | `false`     |
+| `mode`       | `mode`       | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`               | `undefined` |
+| `scrollable` | `scrollable` | If `true`, the segment buttons will overflow and the user can swipe to see them.                                                                                                                                                                                       | `boolean`                     | `false`     |
+| `value`      | `value`      | the value of the segment.                                                                                                                                                                                                                                              | `null \| string \| undefined` | `undefined` |
 
 
 ## Events
@@ -23,20 +24,7 @@ Their functionality is similar to tabs, where selecting one will deselect all ot
 | Event       | Description                                  | Detail               |
 | ----------- | -------------------------------------------- | -------------------- |
 | `ionChange` | Emitted when the value property has changed. | TextInputChangeEvent |
-
-
-## CSS Custom Properties
-
-| Name                      | Description                      |
-| ------------------------- | -------------------------------- |
-| `--background`            | Background of segment            |
-| `--background-checked`    | Background of checked segment    |
-| `--border-color`          | Color of segment border          |
-| `--border-color-checked`  | Color of checked segment border  |
-| `--border-color-disabled` | Color of disabled segment border |
-| `--color`                 | Color of segment text            |
-| `--color-checked`         | Color of checked segment text    |
-| `--color-disabled`        | Color of disabled segment text   |
+| `ionStyle`  | Emitted when the styles change.              | StyleEvent           |
 
 
 ----------------------------------------------
