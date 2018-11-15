@@ -369,7 +369,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
                 {i.label}
               </div>
             </div>
-            {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
           </button>
         ))}
       </div>
@@ -429,6 +428,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
             <span class="alert-button-inner">
               {button.text}
             </span>
+            {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
           </button>
         )}
       </div>
