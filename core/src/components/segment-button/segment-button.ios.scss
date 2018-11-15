@@ -42,40 +42,29 @@
 // --------------------------------------------------
 
 ::slotted(ion-icon) {
-  @include margin(4px, null, 4px, null);
-
   font-size: $segment-button-ios-icon-size;
-}
-
-
-// Segment Button: Label
-// --------------------------------------------------
-
-::slotted(ion-label) {
-  @include margin(4px, null, 4px, null);
 }
 
 
 // Segment Button: Layout
 // --------------------------------------------------
 
-// Layout: icon top / icon bottom
-:host(.segment-button-layout-icon-top) ::slotted(ion-label),
-:host(.segment-button-layout-icon-bottom) ::slotted(ion-icon) {
-  @include margin(0, null, null, null);
-}
-
-:host(.segment-button-layout-icon-top) ::slotted(ion-icon),
-:host(.segment-button-layout-icon-bottom) ::slotted(ion-label) {
-  @include margin(null, null, 0, null);
-}
-
 // Layout: icon start
 :host(.segment-button-layout-icon-start) ::slotted(ion-label) {
-  @include margin-horizontal(4px, 0);
+  @include margin-horizontal(2px, 0);
 }
 
 // Layout: icon end
 :host(.segment-button-layout-icon-end) ::slotted(ion-label) {
-  @include margin-horizontal(0, 4px);
+  @include margin-horizontal(0, 2px);
+}
+
+
+// Segment Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:hover:not(.segment-button-checked)) {
+    background: var(--background-hover);
+  }
 }
