@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 import { Color, Mode, StyleEvent, TextFieldTypes, TextInputChangeEvent } from '../../interface';
-import { debounceEvent, findItemLabel } from '../../utils/helpers';
+import { debounceEvent, findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 @Component({
@@ -10,7 +10,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
     ios: 'input.ios.scss',
     md: 'input.md.scss'
   },
-  scoped: true
+  shadow: true
 })
 export class Input implements ComponentInterface {
 
@@ -326,6 +326,8 @@ export class Input implements ComponentInterface {
 
   render() {
     const value = this.getValue();
+    renderHiddenInput(false, this.el, this.name, value, this.disabled);
+
     const labelId = this.inputId + '-lbl';
     const label = findItemLabel(this.el);
     if (label) {
@@ -364,6 +366,7 @@ export class Input implements ComponentInterface {
         onFocus={this.onFocus}
         onKeyDown={this.onKeydown}
       />,
+      <slot></slot>,
       (this.clearInput && !this.readonly && !this.disabled) && <button
         type="button"
         class="input-clear-icon"
