@@ -34,7 +34,7 @@ $segment-button-ios-text-color:                       ion-color(primary, contras
 $segment-button-ios-border-width:                     1px !default;
 
 /// @prop - Height of the segment button
-$segment-button-ios-height:                           32px !default;
+$segment-button-ios-height:                           24px !default;
 
 /// @prop - Line height of the segment button
 $segment-button-ios-line-height:                      37px !default;
@@ -56,9 +56,6 @@ $segment-button-ios-transition:                       100ms all linear !default;
 
 /// @prop - Max width of the segment button in a toolbar
 $segment-button-ios-toolbar-button-max-width:         100px !default;
-
-/// @prop - Height of the segment button in a toolbar
-$segment-button-ios-toolbar-button-height:            30px !default;
 
 /// @prop - Line height of the segment button in a toolbar
 $segment-button-ios-toolbar-line-height:              22px !default;
