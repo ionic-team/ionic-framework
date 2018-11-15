@@ -42,7 +42,7 @@ export class SegmentButton implements ComponentInterface {
   /**
    * Set the layout of the text and icon in the segment.
    */
-  @Prop() layout!: SegmentButtonLayout;
+  @Prop() layout?: SegmentButtonLayout;
 
   /**
    * The value of the segment button.
@@ -73,7 +73,7 @@ export class SegmentButton implements ComponentInterface {
         ...createColorClasses(color),
         'segment-button-disabled': disabled,
         'segment-button-checked': checked,
-        [`segment-button-layout-${this.layout}`]: true
+        [`segment-button-layout-${this.layout}`]: !!this.layout
       }
     };
   }

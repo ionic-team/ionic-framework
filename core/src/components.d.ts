@@ -3848,7 +3848,7 @@ export namespace Components {
     /**
     * Set the layout of the text and icon in the segment.
     */
-    'layout': SegmentButtonLayout;
+    'layout'?: SegmentButtonLayout;
     /**
     * The mode determines which platform styles to use.
     */
@@ -3874,7 +3874,7 @@ export namespace Components {
     /**
     * Set the layout of the text and icon in the segment.
     */
-    'layout': SegmentButtonLayout;
+    'layout'?: SegmentButtonLayout;
     /**
     * The mode determines which platform styles to use.
     */
