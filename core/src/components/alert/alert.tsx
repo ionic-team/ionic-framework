@@ -323,7 +323,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
           <button
             type="button"
             onClick={() => this.cbClick(i)}
-            aria-checked={i.checked ? 'true' : null}
+            aria-checked={`${i.checked}`}
             id={i.id}
             disabled={i.disabled}
             tabIndex={0}
@@ -356,7 +356,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
           <button
             type="button"
             onClick={() => this.rbClick(i)}
-            aria-checked={i.checked ? 'true' : null}
+            aria-checked={`${i.checked}`}
             disabled={i.disabled}
             id={i.id}
             tabIndex={0}

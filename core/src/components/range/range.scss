@@ -28,6 +28,10 @@
   z-index: $z-index-item-input;
 }
 
+:host(.range-disabled) {
+  pointer-events: none;
+}
+
 ::slotted(ion-label) {
   flex: initial;
 }
@@ -35,9 +39,6 @@
 ::slotted(ion-icon[slot]) {
   font-size: 24px;
 }
-
-
-
 
 .range-slider {
   position: relative;

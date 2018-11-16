@@ -20,6 +20,17 @@
       margin: 1rem;
     }
 
+    .block {
+      position: relative;
+      display: block;
+      background: #262626;
+      color: white;
+      width: 300px;
+      height: 300px;
+      border-radius: 20px;
+      margin: 1rem;
+    }
+
   </style>
 </head>
 
@@ -45,23 +56,23 @@
       <p>
         <ion-button size="large" fill="clear">Large</ion-button>
       </p>
-      <div class="my-block">
+      <div class="my-block" ion-activatable>
         <ion-ripple-effect></ion-ripple-effect>
         This is just a div + effect behind
         <ion-button onclick="buttonClicked()">Nested button</ion-button>
       </div>
-      <div class="my-block">
+      <div class="my-block" ion-activatable>
         This is just a div + effect on top
         <ion-button onclick="buttonClicked()">Nested button</ion-button>
         <ion-ripple-effect></ion-ripple-effect>
       </div>
 
-      <div class="my-block">
+      <div class="my-block" ion-activatable>
         This is just a div + effect
         <ion-ripple-effect></ion-ripple-effect>
       </div>
 
-      <a class="my-block">
+      <a class="my-block" ion-activatable>
         This is just a a + effect on top
         <ion-button onclick="buttonClicked()">Nested button</ion-button>
         <ion-ripple-effect></ion-ripple-effect>
@@ -72,6 +83,10 @@
         <ion-button onclick="buttonClicked()">Nested button</ion-button>
         <ion-ripple-effect></ion-ripple-effect>
       </button>
+
+      <a class="block" ion-activatable>
+        <ion-ripple-effect></ion-ripple-effect>
+      </a>
     </ion-content>
 
   </ion-app>

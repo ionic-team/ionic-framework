@@ -210,6 +210,8 @@ export declare interface Datetime extends StencilComponents<'IonDatetime'> {}
 export class Datetime {
   ionCancel: EventEmitter<CustomEvent>;
   ionChange: EventEmitter<CustomEvent>;
+  ionFocus: EventEmitter<CustomEvent>;
+  ionBlur: EventEmitter<CustomEvent>;
   ionStyle: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
@@ -217,7 +219,7 @@ export class Datetime {
     const el = r.nativeElement;
     proxyMethods(this, el, ['open']);
     proxyInputs(this, el, ['mode', 'name', 'disabled', 'min', 'max', 'displayFormat', 'pickerFormat', 'cancelText', 'doneText', 'yearValues', 'monthValues', 'dayValues', 'hourValues', 'minuteValues', 'monthNames', 'monthShortNames', 'dayNames', 'dayShortNames', 'pickerOptions', 'placeholder', 'value']);
-    proxyOutputs(this, el, ['ionCancel', 'ionChange', 'ionStyle']);
+    proxyOutputs(this, el, ['ionCancel', 'ionChange', 'ionFocus', 'ionBlur', 'ionStyle']);
   }
 }
 
@@ -341,22 +343,22 @@ export class InfiniteScrollContent {
 }
 
 export declare interface Input extends StencilComponents<'IonInput'> {}
-@Component({ selector: 'ion-input', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'debounce', 'disabled', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'results', 'spellcheck', 'step', 'size', 'type', 'value'] })
+@Component({ selector: 'ion-input', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'debounce', 'disabled', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'spellcheck', 'step', 'size', 'type', 'value'] })
 export class Input {
   ionInput: EventEmitter<CustomEvent>;
   ionChange: EventEmitter<CustomEvent>;
-  ionStyle: EventEmitter<CustomEvent>;
   ionBlur: EventEmitter<CustomEvent>;
   ionFocus: EventEmitter<CustomEvent>;
   ionInputDidLoad: EventEmitter<CustomEvent>;
   ionInputDidUnload: EventEmitter<CustomEvent>;
+  ionStyle: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
     const el = r.nativeElement;
     proxyMethods(this, el, ['setFocus']);
-    proxyInputs(this, el, ['color', 'mode', 'accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'debounce', 'disabled', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'results', 'spellcheck', 'step', 'size', 'type', 'value']);
-    proxyOutputs(this, el, ['ionInput', 'ionChange', 'ionStyle', 'ionBlur', 'ionFocus', 'ionInputDidLoad', 'ionInputDidUnload']);
+    proxyInputs(this, el, ['color', 'mode', 'accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'debounce', 'disabled', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'spellcheck', 'step', 'size', 'type', 'value']);
+    proxyOutputs(this, el, ['ionInput', 'ionChange', 'ionBlur', 'ionFocus', 'ionInputDidLoad', 'ionInputDidUnload', 'ionStyle']);
   }
 }
 

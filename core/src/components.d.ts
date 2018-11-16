@@ -1288,6 +1288,10 @@ export namespace Components {
     */
     'name'?: string;
     /**
+    * Emitted when the datetime loses focus.
+    */
+    'onIonBlur'?: (event: CustomEvent<void>) => void;
+    /**
     * Emitted when the datetime selection was cancelled.
     */
     'onIonCancel'?: (event: CustomEvent<void>) => void;
@@ -1295,6 +1299,10 @@ export namespace Components {
     * Emitted when the value (selected date) has changed.
     */
     'onIonChange'?: (event: CustomEvent<InputChangeEvent>) => void;
+    /**
+    * Emitted when the datetime has focus.
+    */
+    'onIonFocus'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted when the styles change.
     */
@@ -1696,10 +1704,6 @@ export namespace Components {
     */
     'required': boolean;
     /**
-    * This is a nonstandard attribute supported by Safari that only applies when the type is `"search"`. Its value should be a nonnegative decimal integer.
-    */
-    'results'?: number;
-    /**
     * Sets focus on the specified `ion-input`. Use this method instead of the global `input.focus()`.
     */
     'setFocus': () => void;
@@ -1841,10 +1845,6 @@ export namespace Components {
     * If `true`, the user must fill in a value before submitting a form.
     */
     'required'?: boolean;
-    /**
-    * This is a nonstandard attribute supported by Safari that only applies when the type is `"search"`. Its value should be a nonnegative decimal integer.
-    */
-    'results'?: number;
     /**
     * The initial size of the control. This value is in pixels unless the value of the type attribute is `"text"` or `"password"`, in which case it is an integer number of characters. This attribute applies only when the `type` attribute is set to `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
     */
@@ -4052,7 +4052,7 @@ export namespace Components {
     /**
     * Opens the select overlay, it could be an alert, action-sheet or popover, based in `ion-select` settings.
     */
-    'open': (ev?: UIEvent | undefined) => Promise<OverlaySelect>;
+    'open': (ev?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>;
     /**
     * The text to display when the select is empty.
     */

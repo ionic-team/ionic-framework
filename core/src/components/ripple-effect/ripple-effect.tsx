@@ -66,6 +66,12 @@ export class RippleEffect implements ComponentInterface {
       });
     });
   }
+
+  hostData() {
+    return {
+      role: 'presentation'
+    };
+  }
 }
 
 function removeRipple(ripple: HTMLElement) {

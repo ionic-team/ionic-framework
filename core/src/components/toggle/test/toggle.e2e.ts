@@ -77,6 +77,9 @@ describe('toggle', () => {
     // spy on the ionChange event
     const ionChange = await page.spyOnEvent('ionChange');
 
+    // check aria
+    expect(toggle).toEqualAttribute('aria-checked', 'true');
+
     // find the hidden input in the light dom
     const hiddenInput = await page.find('ion-toggle input[type=hidden]');
 
@@ -85,16 +88,6 @@ describe('toggle', () => {
 
     // hidden in put should have aux-input class
     expect(hiddenInput).toHaveClass('aux-input');
-
-    // find the checkbox input in the shadow dom
-    const checkboxInput = await page.find('ion-toggle >>> input[type=checkbox]');
-
-    // checkbox input should have value on
-    expect(checkboxInput).toEqualAttribute('value', 'on');
-
-    // checkbox input should have checked property true
-    const checkedValue = await checkboxInput.getProperty('checked');
-    expect(checkedValue).toBe(true);
 
     // set checked true again, no actual change
     toggle.setProperty('checked', true);
@@ -116,7 +109,7 @@ describe('toggle', () => {
     expect(checkedValue2).toBe(false);
 
     // hidden input property should no value
-    expect(hiddenInput).toEqualAttribute('value', '');
+    expect(toggle).toEqualAttribute('aria-checked', 'false');
 
     expect(ionChange).toHaveReceivedEventTimes(1);
 

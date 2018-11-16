@@ -64,12 +64,11 @@ Since select uses the alert, action sheet and popover interfaces, options can be
 | `ionCancel` | Emitted when the selection is cancelled. | void                   |
 | `ionChange` | Emitted when the value has changed.      | SelectInputChangeEvent |
 | `ionFocus`  | Emitted when the select has focus.       | void                   |
-| `ionStyle`  | Emitted when the styles change.          | StyleEvent             |
 
 
 ## Methods
 
-### `open(ev?: UIEvent | undefined) => Promise<OverlaySelect>`
+### `open(ev?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPo...`
 
 Opens the select overlay, it could be an alert, action-sheet or popover,
 based in `ion-select` settings.
@@ -82,7 +81,7 @@ based in `ion-select` settings.
 
 #### Returns
 
-Type: `Promise<OverlaySelect>`
+Type: `Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>`
 
 
 

@@ -233,9 +233,10 @@ dates in JavaScript.
 
 | Event       | Description                                         | Detail           |
 | ----------- | --------------------------------------------------- | ---------------- |
+| `ionBlur`   | Emitted when the datetime loses focus.              | void             |
 | `ionCancel` | Emitted when the datetime selection was cancelled.  | void             |
 | `ionChange` | Emitted when the value (selected date) has changed. | InputChangeEvent |
-| `ionStyle`  | Emitted when the styles change.                     | StyleEvent       |
+| `ionFocus`  | Emitted when the datetime has focus.                | void             |
 
 
 ## Methods
