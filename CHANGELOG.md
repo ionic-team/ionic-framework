@@ -64,6 +64,33 @@ Segment Button now requires the text to be wrapped in an `ion-label` element for
 * **angular:** remove duplicated code in value-accessor ([bfbbeca](https://github.com/ionic-team/ionic/commit/bfbbeca))
 
 
+### Dependencies
+
+If you are using @ionic/angular, please update the version number of any @angular packages in your package.json file to `7.0.3`.
+
+```
+"dependencies": {
+  "@angular/common": "~7.0.3",
+  "@angular/core": "~7.0.3",
+  "@angular/forms": "~7.0.3",
+  "@angular/http": "~7.0.3",
+  "@angular/platform-browser": "~7.0.3",
+  "@angular/platform-browser-dynamic": "~7.0.3",
+  "@angular/router": "~7.0.3",
+  "rxjs": "6.3.3",
+```
+
+```
+"devDependencies": {
+  "@angular-devkit/architect": "~0.10.5",
+  "@angular-devkit/build-angular": "~0.10.5",
+  "@angular-devkit/core": "~0.7.5",
+  "@angular-devkit/schematics": "~0.7.5",
+  "@angular/cli": "~7.0.3",
+  "@angular/compiler": "~7.0.3",
+  "@angular/compiler-cli": "~7.0.3",
+  "@angular/language-service": "~7.0.3",
+```
 
 <a name="4.0.0-beta.15"></a>
 # [4.0.0-beta.15](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.13...v4.0.0-beta.15) (2018-11-01)
