@@ -1,3 +1,70 @@
+<a name="4.0.0-beta.16"></a>
+# [4.0.0-beta.16](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.15...v4.0.0-beta.16) (2018-11-16)
+
+
+### BREAKING CHANGES
+
+Segment Button now requires the text to be wrapped in an `ion-label` element for improved styling.
+
+*Old usage:*
+
+ ```html
+<ion-segment-button>
+  Item One
+</ion-segment-button>
+```
+ *New usage:*
+
+ ```html
+<ion-segment-button>
+  <ion-label>Item One</ion-label>
+</ion-segment-button>
+```
+### Bug Fixes
+
+* **alert:** use tint for md button active background ([#16278](https://github.com/ionic-team/ionic/issues/16278)) ([0fec722](https://github.com/ionic-team/ionic/commit/0fec722))
+* **all:** update types to be required ([#16218](https://github.com/ionic-team/ionic/issues/16218)) ([091625d](https://github.com/ionic-team/ionic/commit/091625d))
+* **angular:** add swipe-to-go-back gesture ([108691d](https://github.com/ionic-team/ionic/commit/108691d))
+* **angular:** adds tabs stack ([adae8d4](https://github.com/ionic-team/ionic/commit/adae8d4))
+* **angular:** disable transition heuristics by default ([d9172b7](https://github.com/ionic-team/ionic/commit/d9172b7))
+* **angular:** es6 build ([#16207](https://github.com/ionic-team/ionic/issues/16207)) ([a981116](https://github.com/ionic-team/ionic/commit/a981116)), closes [#15979](https://github.com/ionic-team/ionic/issues/15979)
+* **angular:** fix handler outside zone ([b8dae5e](https://github.com/ionic-team/ionic/commit/b8dae5e)), closes [#16338](https://github.com/ionic-team/ionic/issues/16338)
+* **backdrop:** update opacity to match MD spec ([#16188](https://github.com/ionic-team/ionic/issues/16188)) ([3c9ed31](https://github.com/ionic-team/ionic/commit/3c9ed31))
+* **checkbox:** align vertically ([#16331](https://github.com/ionic-team/ionic/issues/16331)) ([bd3ca42](https://github.com/ionic-team/ionic/commit/bd3ca42))
+* **checkbox:** match MD spec ([#16186](https://github.com/ionic-team/ionic/issues/16186)) ([240171a](https://github.com/ionic-team/ionic/commit/240171a))
+* **gesture:** release gesture when it's disabled ([c9b4e66](https://github.com/ionic-team/ionic/commit/c9b4e66)), closes [#16335](https://github.com/ionic-team/ionic/issues/16335)
+* **input:** remove clear icon in edge ([59bee23](https://github.com/ionic-team/ionic/commit/59bee23))
+* **input:** remove red shadow for firefox ([767d299](https://github.com/ionic-team/ionic/commit/767d299)), closes [#16318](https://github.com/ionic-team/ionic/issues/16318)
+* **input:** scroll assist works in with shadow-dom ([#16206](https://github.com/ionic-team/ionic/issues/16206)) ([d817cc3](https://github.com/ionic-team/ionic/commit/d817cc3)), closes [#15888](https://github.com/ionic-team/ionic/issues/15888) [#15294](https://github.com/ionic-team/ionic/issues/15294) [#15895](https://github.com/ionic-team/ionic/issues/15895)
+* **inputs:** fix aria with shadow-dom ([#16329](https://github.com/ionic-team/ionic/issues/16329)) ([fd79b57](https://github.com/ionic-team/ionic/commit/fd79b57))
+* **inputs:** inherit in edge causes problems ([0abf992](https://github.com/ionic-team/ionic/commit/0abf992))
+* **item:** update to match Material Design spec ([#16182](https://github.com/ionic-team/ionic/issues/16182)) ([e416c23](https://github.com/ionic-team/ionic/commit/e416c23)), closes [#14799](https://github.com/ionic-team/ionic/issues/14799)
+* **label:** placeholder + floating label ([#16111](https://github.com/ionic-team/ionic/issues/16111)) ([a8be529](https://github.com/ionic-team/ionic/commit/a8be529))
+* **list-header:** match MD bottom margin, match MD text color ([#16274](https://github.com/ionic-team/ionic/issues/16274)) ([6794447](https://github.com/ionic-team/ionic/commit/6794447))
+* **menu:** update box-shadow for MD to match spec ([#16183](https://github.com/ionic-team/ionic/issues/16183)) ([335acf9](https://github.com/ionic-team/ionic/commit/335acf9))
+* **range:** increase MD horizontal padding ([#16312](https://github.com/ionic-team/ionic/issues/16312)) ([5d00501](https://github.com/ionic-team/ionic/commit/5d00501))
+* **range:** use fully opaque base in color active bar ([#16224](https://github.com/ionic-team/ionic/issues/16224)) ([0757126](https://github.com/ionic-team/ionic/commit/0757126))
+* **ripple-effect:** follow MD spec ([#16330](https://github.com/ionic-team/ionic/issues/16330)) ([6d59446](https://github.com/ionic-team/ionic/commit/6d59446))
+* **searchbar:** align cancel button to center with search icon position ([#16259](https://github.com/ionic-team/ionic/issues/16259)) ([5957867](https://github.com/ionic-team/ionic/commit/5957867))
+* **segment-button:** make layout optional ([e9e33ad](https://github.com/ionic-team/ionic/commit/e9e33ad))
+* **tab-button:** layout is mutable ([#16332](https://github.com/ionic-team/ionic/issues/16332)) ([02a266c](https://github.com/ionic-team/ionic/commit/02a266c))
+* **tabs:** works with no href ([8e0f1ba](https://github.com/ionic-team/ionic/commit/8e0f1ba))
+* **toast:** update toast design to match MD spec ([#16323](https://github.com/ionic-team/ionic/issues/16323)) ([188a635](https://github.com/ionic-team/ionic/commit/188a635)), closes [#16271](https://github.com/ionic-team/ionic/issues/16271)
+* **toggle:** match MD toggle track background for off state ([#16277](https://github.com/ionic-team/ionic/issues/16277)) ([8e2a6dd](https://github.com/ionic-team/ionic/commit/8e2a6dd))
+
+
+### Features
+
+* **segment:** adds global variable for targeting segment in toolbar ([#16344](https://github.com/ionic-team/ionic/issues/16344)) ([10971cc](https://github.com/ionic-team/ionic/commit/10971cc))
+* **segment:** adds scrollable and layout props and updates to follow the spec  ([#16273](https://github.com/ionic-team/ionic/issues/16273)) ([256745c](https://github.com/ionic-team/ionic/commit/256745c)), closes [#16232](https://github.com/ionic-team/ionic/issues/16232) [#16081](https://github.com/ionic-team/ionic/issues/16081) [#14853](https://github.com/ionic-team/ionic/issues/14853)
+
+
+### Performance Improvements
+
+* **angular:** remove duplicated code in value-accessor ([bfbbeca](https://github.com/ionic-team/ionic/commit/bfbbeca))
+
+
+
 <a name="4.0.0-beta.15"></a>
 # [4.0.0-beta.15](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.13...v4.0.0-beta.15) (2018-11-01)
 
