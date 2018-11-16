@@ -8,6 +8,7 @@
   "unpkg": "dist/ionic-vue.js",
   "jsdelivr": "dist/ionic-vue.js",
   "contributors": [
+    "Josh Thomas <josh@ionic.io>",
     "Michael Tintiuc <michael.tintiuc@moduscreate.com>"
   ],
   "files": [
