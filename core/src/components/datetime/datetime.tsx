@@ -580,8 +580,7 @@ export class Datetime implements ComponentInterface {
         onFocus={this.onFocus}
         onBlur={this.onBlur}
       >
-      </button>,
-      <slot></slot>
+      </button>
     ];
   }
 }

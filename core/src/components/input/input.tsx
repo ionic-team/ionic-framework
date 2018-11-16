@@ -366,7 +366,6 @@ export class Input implements ComponentInterface {
         onFocus={this.onFocus}
         onKeyDown={this.onKeydown}
       />,
-      <slot></slot>,
       (this.clearInput && !this.readonly && !this.disabled) && <button
         type="button"
         class="input-clear-icon"

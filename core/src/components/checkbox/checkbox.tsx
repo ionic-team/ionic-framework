@@ -138,7 +138,7 @@ export class Checkbox implements ComponentInterface {
   }
 
   render() {
-    renderHiddenInput(true, this.el, this.name, this.value, this.disabled);
+    renderHiddenInput(true, this.el, this.name, (this.checked ? this.value : ''), this.disabled);
 
     return [
       <svg class="checkbox-icon" viewBox="0 0 24 24">

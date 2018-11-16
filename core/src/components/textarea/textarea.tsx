@@ -271,7 +271,7 @@ export class Textarea implements ComponentInterface {
       label.id = labelId;
     }
 
-    return [
+    return (
       <textarea
         class="native-textarea"
         ref={el => this.nativeInput = el}
@@ -294,9 +294,8 @@ export class Textarea implements ComponentInterface {
         onKeyDown={this.onKeyDown}
       >
         {value}
-      </textarea>,
-      <slot></slot>
-    ];
+      </textarea>
+    );
   }
 }
 

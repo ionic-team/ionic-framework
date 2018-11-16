@@ -206,12 +206,11 @@ export class Toggle implements ComponentInterface {
     const value = this.getValue();
     renderHiddenInput(true, this.el, this.name, (this.checked ? value : ''), this.disabled);
 
-    return [
+    return (
       <div class="toggle-icon">
         <div class="toggle-inner"/>
-      </div>,
-      <slot></slot>
-    ];
+      </div>
+    );
   }
 }
 
