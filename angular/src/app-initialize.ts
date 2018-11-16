@@ -32,24 +32,27 @@ export function appInitialize(config: Config) {
         }
       };
 
-      Ionic.raf = (cb: any) => {
-        if (win.__zone_symbol__requestAnimationFrame) {
-          win.__zone_symbol__requestAnimationFrame(cb);
-        } else {
-          win.requestAnimationFrame(cb);
-        }
-      };
-
       // define all of Ionic's custom elements
       defineCustomElements(win);
     }
   };
 }
 
-const PASS_ZONE = [
-  'click',
+const SKIP_ZONE = [
+  'scroll',
+  'resize',
+
+  'touchstart',
+  'touchmove',
+  'touchend',
+
+  'mousedown',
+  'mousemove',
+  'mouseup',
+
+  'ionStyle',
 ];
 
 function skipZone(eventName: string) {
-  return PASS_ZONE.indexOf(eventName) < 0;
+  return SKIP_ZONE.indexOf(eventName) >= 0;
 }
