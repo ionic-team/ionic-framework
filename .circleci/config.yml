@@ -77,7 +77,6 @@ jobs:
       - run:
           name: Checking clean build
           command: git diff --exit-code
-          working_directory: /tmp/workspace/core
 
   test-core-lint:
     <<: *defaults
@@ -131,6 +130,14 @@ jobs:
           command: npx stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci --update-screenshot || true
           working_directory: /tmp/workspace/core
 
+  deploy-dev-master:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run: npm run release.dev
+
 workflows:
   version: 2
   build:
@@ -153,6 +160,11 @@ workflows:
               ignore: master
       - test-core-screenshot-master:
           requires: [build-core]
+          filters:
+            branches:
+              only: master
+      - deploy-dev-master:
+          requires: [test-core-clean-build, test-core-lint, test-core-spec, test-core-treeshake, test-core-screenshot-master]
           filters:
             branches:
               only: master

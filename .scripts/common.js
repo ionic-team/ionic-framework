@@ -20,7 +20,7 @@ function readPkg(project) {
 function writePkg(project, pkg) {
   const packageJsonPath = packagePath(project);
   const text = JSON.stringify(pkg, null, 2);
-  return fs.writeFileSync(packageJsonPath, text);
+  return fs.writeFileSync(packageJsonPath, `${text}\n`);
 }
 
 function packagePath(project) {
@@ -132,6 +132,69 @@ function preparePackage(tasks, package, version) {
   });
 }
 
+function updatePackageVersions(tasks, packages, version) {
+  packages.forEach(package => {
+    updatePackageVersion(tasks, package, version);
+
+    tasks.push(
+      {
+        title: `${package} update @ionic/core dependency, if present ${tc.dim(`(${version})`)}`,
+        task: async () => {
+          if (package !== 'core') {
+            const pkg = readPkg(package);
+            updateDependency(pkg, '@ionic/core', version);
+            writePkg(package, pkg);
+          }
+        },
+      }
+    )
+  });
+}
+
+function updatePackageVersion(tasks, package, version) {
+  const projectRoot = projectPath(package);
+
+  tasks.push(
+    {
+      title: `${package}: update package.json ${tc.dim(`(${version})`)}`,
+      task: async () => {
+        await execa('npm', ['version', version], { cwd: projectRoot });
+      }
+    }
+  );
+}
+
+function publishPackages(tasks, packages, version, tag = 'latest') {
+  // first verify version
+  packages.forEach(package => {
+    if (package === 'core') {
+      return;
+    }
+
+    tasks.push({
+      title: `${package}: check version (must match: ${version})`,
+      task: () => {
+        const pkg = readPkg(package);
+
+        if (version !== pkg.version) {
+          throw new Error(`${pkg.name} version ${pkg.version} must match ${version}`);
+        }
+      }
+    });
+  });
+
+  // next publish
+  packages.forEach(package => {
+    const projectRoot = projectPath(package);
+
+    tasks.push({
+      title: `${package}: publish to ${tag} tag`,
+      task: async () => {
+        await execa('npm', ['publish', '--tag', tag], { cwd: projectRoot });
+      },
+    });
+  });
+}
 
 function updateDependency(pkg, dependency, version) {
   if (pkg.dependencies && pkg.dependencies[dependency]) {
@@ -151,13 +214,17 @@ function isVersionGreater(oldVersion, newVersion) {
 
 
 module.exports = {
+  checkGit,
   isValidVersion,
   isVersionGreater,
-  readPkg,
-  writePkg,
-  rootDir,
-  projectPath,
-  checkGit,
   packages,
-  preparePackage
+  preparePackage,
+  projectPath,
+  publishPackages,
+  readPkg,
+  rootDir,
+  updateDependency,
+  updatePackageVersion,
+  updatePackageVersions,
+  writePkg,
 };
