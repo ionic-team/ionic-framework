@@ -551,7 +551,7 @@ export class Datetime implements ComponentInterface {
     return {
       'role': 'combobox',
       'aria-disabled': this.disabled ? 'true' : null,
-      'aria-expanded': this.isExpanded ? 'true' : null,
+      'aria-expanded': `${this.isExpanded}`,
       'aria-haspopup': 'true',
       'aria-labelledby': labelId,
       class: {

@@ -389,7 +389,7 @@ export class Select implements ComponentInterface {
     return {
       'role': 'combobox',
       'aria-disabled': this.disabled ? 'true' : null,
-      'aria-expanded': this.isExpanded ? 'true' : null,
+      'aria-expanded': `${this.isExpanded}`,
       'aria-haspopup': 'dialog',
       'aria-labelledby': labelId,
       class: {
