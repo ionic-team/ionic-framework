@@ -32,6 +32,20 @@
         </ion-segment>
       </ion-toolbar>
 
+      <ion-toolbar class="themed">
+        <ion-segment value="Top">
+          <ion-segment-button value="Paid">
+            <ion-label>Paid</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="Free">
+            <ion-label>Free</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="Top">
+            <ion-label>Top</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
       <ion-toolbar color="primary">
         <ion-segment value="Free">
           <ion-segment-button value="Paid">
@@ -242,6 +256,22 @@
     <ion-content padding>
       Segment in Toolbar
     </ion-content>
+
+    <style>
+      .themed {
+        --ion-toolbar-background: #3880ff;
+      }
+
+      .ios .themed {
+        --ion-toolbar-color-unchecked: #fff;
+        --ion-toolbar-color-checked: #3880ff;
+      }
+
+      .md .themed {
+        --ion-toolbar-color-unchecked: rgba(255, 255, 255, 0.6);
+        --ion-toolbar-color-checked: #fff;
+      }
+    </style>
 
   </ion-app>
 </body>
