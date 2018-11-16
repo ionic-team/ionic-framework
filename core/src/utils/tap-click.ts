@@ -8,6 +8,7 @@ export function startTapClick(doc: Document) {
   let scrolling = false;
 
   let activatableEle: HTMLElement | undefined;
+  let activeRipple: Promise<() => void> | undefined;
   let activeDefer: any;
 
   const clearDefers = new WeakMap<HTMLElement, any>();
@@ -101,11 +102,12 @@ export function startTapClick(doc: Document) {
         clearDefers.delete(el);
       }
 
+      const delay = isInstant(el) ? 0 : ADD_ACTIVATED_DEFERS;
       el.classList.remove(ACTIVATED);
       activeDefer = setTimeout(() => {
         addActivated(el, x, y);
         activeDefer = undefined;
-      }, ADD_ACTIVATED_DEFERS);
+      }, delay);
     }
     activatableEle = el;
   }
@@ -116,17 +118,20 @@ export function startTapClick(doc: Document) {
 
     const rippleEffect = getRippleEffect(el);
     if (rippleEffect && rippleEffect.addRipple) {
-      rippleEffect.addRipple(x, y);
+      activeRipple = rippleEffect.addRipple(x, y);
     }
   }
 
   function removeActivated(smooth: boolean) {
+    if (activeRipple !== undefined) {
+      activeRipple.then(remove => remove());
+    }
     const active = activatableEle;
     if (!active) {
       return;
     }
     const time = CLEAR_STATE_DEFERS - Date.now() + lastActivated;
-    if (smooth && time > 0) {
+    if (smooth && time > 0 && !isInstant(active)) {
       const deferId = setTimeout(() => {
         active.classList.remove(ACTIVATED);
         clearDefers.delete(active);
@@ -167,6 +172,10 @@ function getActivatableTarget(ev: any): any {
   } else {
     return ev.target.closest('[ion-activatable]');
   }
+}
+
+function isInstant(el: HTMLElement) {
+  return el.getAttribute('ion-activatable') === 'instant';
 }
 
 function getRippleEffect(el: HTMLElement) {

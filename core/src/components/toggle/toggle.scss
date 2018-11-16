@@ -17,6 +17,8 @@
 
   display: inline-block;
 
+  outline: none;
+
   contain: content;
   cursor: pointer;
   touch-action: none;
@@ -26,10 +28,6 @@
 
 :host(.toggle-key) input {
   border: 2px solid #5e9ed6;
-}
-
-:host(:focus) {
-  outline: none;
 }
 
 :host(.toggle-disabled) {

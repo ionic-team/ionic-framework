@@ -14,13 +14,13 @@
   <ion-toolbar>
     <ion-segment value="Free">
       <ion-segment-button value="Paid">
-        Paid
+        <ion-label>Paid</ion-label>
       </ion-segment-button>
       <ion-segment-button value="Free">
-        Free
+        <ion-label>Free</ion-label>
       </ion-segment-button>
       <ion-segment-button value="Top">
-        Top
+        <ion-label>Top</ion-label>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -39,13 +39,13 @@
 
   <ion-segment id="browserSegment" color="danger">
     <ion-segment-button href="#bookmarks" value="bookmarks">
-      Bookmarks
+      <ion-label>Bookmarks</ion-label>
     </ion-segment-button>
     <ion-segment-button href="#reading" value="reading">
-      Reading List
+      <ion-label>Reading List</ion-label>
     </ion-segment-button>
     <ion-segment-button href="#links" value="links">
-      Shared Links
+      <ion-label>Shared Links</ion-label>
     </ion-segment-button>
   </ion-segment>
 
@@ -53,25 +53,40 @@
 
   <ion-segment color="secondary" value="active">
     <ion-segment-button value="active">
-      Active
+     <ion-label>Active</ion-label>
     </ion-segment-button>
     <ion-segment-button value="disabled" disabled="true">
-      Disabled
+      <ion-label>Disabled</ion-label>
     </ion-segment-button>
     <ion-segment-button value="inactive" disabled="false">
-      Inactive
+      <ion-label>Inactive</ion-label>
     </ion-segment-button>
   </ion-segment>
 
   <ion-segment class="custom" value="active">
     <ion-segment-button value="active">
-      Active
+      <ion-label>Active</ion-label>
     </ion-segment-button>
     <ion-segment-button value="disabled" disabled="true">
-      Disabled
+      <ion-label>Disabled</ion-label>
     </ion-segment-button>
     <ion-segment-button value="inactive" disabled="false">
-      Inactive
+      <ion-label>Inactive</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-segment class="custom-icon" value="instagram">
+    <ion-segment-button layout="icon-top" class="segment-facebook" value="facebook">
+      <ion-label>Facebook</ion-label>
+      <ion-icon name="logo-facebook"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button layout="icon-top" class="segment-instagram" value="instagram">
+      <ion-label>Instagram</ion-label>
+      <ion-icon name="logo-instagram"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button layout="icon-top" class="segment-slack" value="slack">
+      <ion-label>Slack</ion-label>
+      <ion-icon name="logo-slack"></ion-icon>
     </ion-segment-button>
   </ion-segment>
 
@@ -144,6 +159,25 @@
     --color-checked: papayawhip;
     --color-disabled: rgba(0,0,0,0.3);
     --color: navy;
+  }
+
+  .segment-facebook {
+    --background-hover: rgba(59, 89, 153, .04);
+    --color-checked: #3b5999;
+  }
+
+  .segment-instagram {
+    --background-hover: rgba(228, 64, 95, .04);
+    --color-checked: #e4405f;
+  }
+
+  .segment-slack {
+    --background-hover: rgba(58, 175, 133, .04);
+    --color-checked: #3aaf85;
+  }
+
+  .custom-icon ion-icon {
+    font-size: 44px;
   }
 </style>
 </html>

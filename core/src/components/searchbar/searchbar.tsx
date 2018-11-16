@@ -376,7 +376,7 @@ export class Searchbar implements ComponentInterface {
     return [
       <div class="searchbar-input-container">
         <input
-          ref={el => this.nativeInput = el as HTMLInputElement}
+          ref={el => this.nativeInput = el}
           class="searchbar-input"
           onInput={this.onInput}
           onBlur={this.onBlur}

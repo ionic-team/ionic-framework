@@ -31,7 +31,6 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 | `ionRadioDidLoad`   | Emitted when the radio loads.              | void                    |
 | `ionRadioDidUnload` | Emitted when the radio unloads.            | void                    |
 | `ionSelect`         | Emitted when the radio button is selected. | CheckedInputChangeEvent |
-| `ionStyle`          | Emitted when the styles change.            | StyleEvent              |
 
 
 ## CSS Custom Properties

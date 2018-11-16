@@ -26,7 +26,6 @@ Toggles change the state of a single option. Toggles can be switched on or off b
 | `ionBlur`   | Emitted when the toggle loses focus.         | void                    |
 | `ionChange` | Emitted when the value property has changed. | CheckedInputChangeEvent |
 | `ionFocus`  | Emitted when the toggle has focus.           | void                    |
-| `ionStyle`  | Emitted when the styles change.              | StyleEvent              |
 
 
 ## CSS Custom Properties

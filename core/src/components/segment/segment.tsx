@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
 
-import { Color, Mode, TextInputChangeEvent } from '../../interface';
+import { Color, Mode, StyleEvent, TextInputChangeEvent } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -33,6 +33,11 @@ export class Segment implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
+   * If `true`, the segment buttons will overflow and the user can swipe to see them.
+   */
+  @Prop() scrollable = false;
+
+  /**
    * the value of the segment.
    */
   @Prop({ mutable: true }) value?: string | null;
@@ -48,10 +53,19 @@ export class Segment implements ComponentInterface {
    */
   @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
 
+  /**
+   * Emitted when the styles change.
+   */
+  @Event() ionStyle!: EventEmitter<StyleEvent>;
+
   @Listen('ionSelect')
   segmentClick(ev: CustomEvent) {
     const selectedButton = ev.target as HTMLIonSegmentButtonElement;
     this.value = selectedButton.value;
+  }
+
+  componentWillLoad() {
+    this.emitStyle();
   }
 
   componentDidLoad() {
@@ -62,6 +76,12 @@ export class Segment implements ComponentInterface {
       }
     }
     this.updateButtons();
+  }
+
+  private emitStyle() {
+    this.ionStyle.emit({
+      'segment': true
+    });
   }
 
   private updateButtons() {
@@ -79,8 +99,8 @@ export class Segment implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
-
-        'segment-disabled': this.disabled
+        'segment-disabled': this.disabled,
+        'segment-scrollable': this.scrollable
       }
     };
   }

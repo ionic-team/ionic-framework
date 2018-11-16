@@ -1,0 +1,76 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Segment Button
+// --------------------------------------------------
+
+/// @prop - Background of the segment button
+$segment-button-ios-background-color:                 transparent !default;
+
+/// @prop - Background of the checked segment button
+$segment-button-ios-background-color-checked:         ion-color(primary, base) !default;
+
+/// @prop - Opacity of the segment button on hover
+$segment-button-ios-opacity-hover:                    .1 !default;
+
+/// @prop - Opacity of the segment button when pressed
+$segment-button-ios-opacity-activated:                .16 !default;
+
+/// @prop - Opacity of the disabled segment button
+$segment-button-ios-opacity-disabled:                 .3 !default;
+
+/// @prop - Background of the segment button on hover
+$segment-button-ios-background-color-hover:           ion-color(primary, base, $segment-button-ios-opacity-hover) !default;
+
+/// @prop - Background of the activated segment button
+$segment-button-ios-background-color-activated:       ion-color(primary, base, $segment-button-ios-opacity-activated) !default;
+
+/// @prop - Background of the disabled segment button
+$segment-button-ios-background-color-disabled:        ion-color(primary, base, $segment-button-ios-opacity-disabled) !default;
+
+/// @prop - Text color of the segment button
+$segment-button-ios-text-color:                       ion-color(primary, base) !default;
+
+/// @prop - Text color of the checked segment button
+$segment-button-ios-text-color-checked:               ion-color(primary, contrast) !default;
+
+/// @prop - Border width of the segment button
+$segment-button-ios-border-width:                     1px !default;
+
+/// @prop - Height of the segment button
+$segment-button-ios-height:                           24px !default;
+
+/// @prop - Line height of the segment button
+$segment-button-ios-line-height:                      37px !default;
+
+/// @prop - Font size of the segment button
+$segment-button-ios-font-size:                        13px !default;
+
+/// @prop - Border radius of the segment button
+$segment-button-ios-border-radius:                    4px !default;
+
+/// @prop - Border color of the segment button
+$segment-button-ios-border-color:                     ion-color(primary, base) !default;
+
+/// @prop - Size of an icon in the segment button
+$segment-button-ios-icon-size:                        26px !default;
+
+/// @prop - Line height of an icon in the segment button
+$segment-button-ios-icon-line-height:                 28px !default;
+
+/// @prop - Transition of the segment button
+$segment-button-ios-transition:                       100ms all linear !default;
+
+/// @prop - Max width of the segment button in a toolbar
+$segment-button-ios-toolbar-button-max-width:         100px !default;
+
+/// @prop - Line height of the segment button in a toolbar
+$segment-button-ios-toolbar-line-height:              22px !default;
+
+/// @prop - Font size of the segment button in a toolbar
+$segment-button-ios-toolbar-font-size:                12px !default;
+
+/// @prop - Size of an icon in the segment button in a toolbar
+$segment-button-ios-toolbar-icon-size:                22px !default;
+
+/// @prop - Line height of an icon in the segment button in a toolbar
+$segment-button-ios-toolbar-icon-line-height:         24px !default;

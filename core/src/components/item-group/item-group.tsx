@@ -16,6 +16,7 @@ export class ItemGroup implements ComponentInterface {
 
   hostData() {
     return {
+      'role': 'group',
       class: {
         ...createThemedClasses(this.mode, 'item-group'),
         'item': true,

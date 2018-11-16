@@ -8,13 +8,11 @@
 :host {
   --min-height: #{$item-md-min-height};
   --background: var(--ion-item-background, transparent);
-  --background-activated: #{$item-md-background-activated};
+  --background-activated: var(--background);
   --border-color: #{$item-md-border-bottom-color};
   --color: #{$item-md-color};
   --transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
   --padding-start: #{$item-md-padding-start};
-  --background: #{$item-md-background};
-  --background-activated: #{$item-md-background-activated};
   --color: #{$item-md-color};
   --border-color: #{$item-md-border-bottom-color};
   --inner-padding-end: #{$item-md-padding-end};

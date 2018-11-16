@@ -73,9 +73,9 @@ export class Tabs implements NavOutlet {
   protected onTabClicked(ev: CustomEvent<TabButtonClickDetail>) {
     const { href, tab } = ev.detail;
     const selectedTab = this.tabs.find(t => t.tab === tab);
-    if (this.useRouter) {
+    if (this.useRouter && href !== undefined) {
       const router = this.doc.querySelector('ion-router');
-      if (router && href !== undefined) {
+      if (router) {
         router.push(href);
       }
     } else if (selectedTab) {

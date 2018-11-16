@@ -14,6 +14,8 @@
   box-sizing: border-box;
 
   user-select: none;
+
+  z-index: $z-index-item-input;
 }
 
 :host(.radio-disabled) {
@@ -38,7 +40,7 @@
   height: var(--inner-height);
 }
 
-input {
+button {
   @include input-cover();
 }
 

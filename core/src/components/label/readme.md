@@ -15,13 +15,6 @@ Label is a wrapper element that can be used in combination with `ion-item`, `ion
 | `position` | `position` | The position determines where and how the label behaves inside an item.                                                                                                                                                                                                | `"fixed" \| "floating" \| "stacked" \| undefined` | `undefined` |
 
 
-## Events
-
-| Event      | Description                     | Detail     |
-| ---------- | ------------------------------- | ---------- |
-| `ionStyle` | Emitted when the styles change. | StyleEvent |
-
-
 ## CSS Custom Properties
 
 | Name      | Description        |

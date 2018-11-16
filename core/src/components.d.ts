@@ -50,6 +50,7 @@ import {
   RouteWrite,
   ScrollBaseDetail,
   ScrollDetail,
+  SegmentButtonLayout,
   SelectInputChangeEvent,
   SelectInterface,
   SelectPopoverOption,
@@ -1287,6 +1288,10 @@ export namespace Components {
     */
     'name'?: string;
     /**
+    * Emitted when the datetime loses focus.
+    */
+    'onIonBlur'?: (event: CustomEvent<void>) => void;
+    /**
     * Emitted when the datetime selection was cancelled.
     */
     'onIonCancel'?: (event: CustomEvent<void>) => void;
@@ -1294,6 +1299,10 @@ export namespace Components {
     * Emitted when the value (selected date) has changed.
     */
     'onIonChange'?: (event: CustomEvent<InputChangeEvent>) => void;
+    /**
+    * Emitted when the datetime has focus.
+    */
+    'onIonFocus'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted when the styles change.
     */
@@ -1695,10 +1704,6 @@ export namespace Components {
     */
     'required': boolean;
     /**
-    * This is a nonstandard attribute supported by Safari that only applies when the type is `"search"`. Its value should be a nonnegative decimal integer.
-    */
-    'results'?: number;
-    /**
     * Sets focus on the specified `ion-input`. Use this method instead of the global `input.focus()`.
     */
     'setFocus': () => void;
@@ -1840,10 +1845,6 @@ export namespace Components {
     * If `true`, the user must fill in a value before submitting a form.
     */
     'required'?: boolean;
-    /**
-    * This is a nonstandard attribute supported by Safari that only applies when the type is `"search"`. Its value should be a nonnegative decimal integer.
-    */
-    'results'?: number;
     /**
     * The initial size of the control. This value is in pixels unless the value of the type attribute is `"text"` or `"password"`, in which case it is an integer number of characters. This attribute applies only when the `type` attribute is set to `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
     */
@@ -3541,7 +3542,7 @@ export namespace Components {
     /**
     * Adds the ripple effect to the parent element
     */
-    'addRipple': (pageX: number, pageY: number) => void;
+    'addRipple': (pageX: number, pageY: number) => Promise<() => void>;
   }
   interface IonRippleEffectAttributes extends StencilHTMLAttributes {}
 
@@ -3845,6 +3846,10 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
+    * Set the layout of the text and icon in the segment.
+    */
+    'layout'?: SegmentButtonLayout;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -3866,6 +3871,10 @@ export namespace Components {
     * If `true`, the user cannot interact with the segment button.
     */
     'disabled'?: boolean;
+    /**
+    * Set the layout of the text and icon in the segment.
+    */
+    'layout'?: SegmentButtonLayout;
     /**
     * The mode determines which platform styles to use.
     */
@@ -3894,6 +3903,10 @@ export namespace Components {
     */
     'mode': Mode;
     /**
+    * If `true`, the segment buttons will overflow and the user can swipe to see them.
+    */
+    'scrollable': boolean;
+    /**
     * the value of the segment.
     */
     'value'?: string | null;
@@ -3915,6 +3928,14 @@ export namespace Components {
     * Emitted when the value property has changed.
     */
     'onIonChange'?: (event: CustomEvent<TextInputChangeEvent>) => void;
+    /**
+    * Emitted when the styles change.
+    */
+    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
+    /**
+    * If `true`, the segment buttons will overflow and the user can swipe to see them.
+    */
+    'scrollable'?: boolean;
     /**
     * the value of the segment.
     */
@@ -4031,7 +4052,7 @@ export namespace Components {
     /**
     * Opens the select overlay, it could be an alert, action-sheet or popover, based in `ion-select` settings.
     */
-    'open': (ev?: UIEvent | undefined) => Promise<OverlaySelect>;
+    'open': (ev?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>;
     /**
     * The text to display when the select is empty.
     */

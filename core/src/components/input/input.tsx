@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 import { Color, Mode, StyleEvent, TextFieldTypes, TextInputChangeEvent } from '../../interface';
-import { debounceEvent, renderHiddenInput } from '../../utils/helpers';
+import { debounceEvent, findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 @Component({
@@ -146,11 +146,6 @@ export class Input implements ComponentInterface {
   @Prop() required = false;
 
   /**
-   * This is a nonstandard attribute supported by Safari that only applies when the type is `"search"`. Its value should be a nonnegative decimal integer.
-   */
-  @Prop() results?: number;
-
-  /**
    * If `true`, the element will have its spelling and grammar checked.
    */
   @Prop() spellcheck = false;
@@ -181,13 +176,8 @@ export class Input implements ComponentInterface {
    */
   @Watch('value')
   protected valueChanged() {
-    const inputEl = this.nativeInput;
-    const value = this.getValue();
-    if (inputEl && inputEl.value !== value) {
-      inputEl.value = value;
-    }
     this.emitStyle();
-    this.ionChange.emit({ value });
+    this.ionChange.emit({ value: this.value });
   }
 
   /**
@@ -199,11 +189,6 @@ export class Input implements ComponentInterface {
    * Emitted when the value has changed.
    */
   @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
-
-  /**
-   * Emitted when the styles change.
-   */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
 
   /**
    * Emitted when the input loses focus.
@@ -225,6 +210,12 @@ export class Input implements ComponentInterface {
    */
   @Event() ionInputDidUnload!: EventEmitter<void>;
 
+  /**
+   * Emitted when the styles change.
+   * @internal
+   */
+  @Event() ionStyle!: EventEmitter<StyleEvent>;
+
   componentWillLoad() {
     // By default, password inputs clear after focus when they have content
     if (this.clearOnEdit === undefined && this.type === 'password') {
@@ -240,7 +231,6 @@ export class Input implements ComponentInterface {
   }
 
   componentDidUnload() {
-    this.nativeInput = undefined;
     this.ionInputDidUnload.emit();
   }
 
@@ -324,6 +314,7 @@ export class Input implements ComponentInterface {
 
   hostData() {
     return {
+      'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...createColorClasses(this.color),
         'in-item': hostContext('ion-item', this.el),
@@ -335,19 +326,25 @@ export class Input implements ComponentInterface {
 
   render() {
     const value = this.getValue();
-    renderHiddenInput(this.el, this.name, value, this.disabled);
+    renderHiddenInput(false, this.el, this.name, value, this.disabled);
+
+    const labelId = this.inputId + '-lbl';
+    const label = findItemLabel(this.el);
+    if (label) {
+      label.id = labelId;
+    }
 
     return [
       <input
-        ref={input => this.nativeInput = input as any}
-        aria-disabled={this.disabled ? 'true' : null}
+        class="native-input"
+        ref={input => this.nativeInput = input}
+        aria-labelledby={labelId}
+        disabled={this.disabled}
         accept={this.accept}
         autoCapitalize={this.autocapitalize}
         autoComplete={this.autocomplete}
         autoCorrect={this.autocorrect}
         autoFocus={this.autofocus}
-        class="native-input"
-        disabled={this.disabled}
         inputMode={this.inputmode}
         min={this.min}
         max={this.max}
@@ -357,7 +354,6 @@ export class Input implements ComponentInterface {
         name={this.name}
         pattern={this.pattern}
         placeholder={this.placeholder || ''}
-        results={this.results}
         readOnly={this.readonly}
         required={this.required}
         spellCheck={this.spellcheck}
@@ -370,7 +366,6 @@ export class Input implements ComponentInterface {
         onFocus={this.onFocus}
         onKeyDown={this.onKeydown}
       />,
-      <slot></slot>,
       (this.clearInput && !this.readonly && !this.disabled) && <button
         type="button"
         class="input-clear-icon"

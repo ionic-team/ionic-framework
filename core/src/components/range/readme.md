@@ -40,7 +40,6 @@ left or right of the range.
 | `ionBlur`   | Emitted when the range loses focus.          | void             |
 | `ionChange` | Emitted when the value property has changed. | InputChangeEvent |
 | `ionFocus`  | Emitted when the range has focus.            | void             |
-| `ionStyle`  | Emitted when the styles change.              | StyleEvent       |
 
 
 ## CSS Custom Properties
