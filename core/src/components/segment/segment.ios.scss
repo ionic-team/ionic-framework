@@ -50,6 +50,13 @@
   line-height: $segment-button-ios-toolbar-line-height;
 }
 
+:host-context(ion-toolbar):not(.ion-color)::slotted(ion-segment-button) {
+  --background-checked: var(--color);
+  --border-color: var(--color);
+  --color: #{var(--ion-toolbar-color-unchecked, $segment-button-ios-text-color)};
+  --color-checked: #{var(--ion-toolbar-color-checked, $segment-button-ios-text-color-checked)};
+}
+
 // Segment: Color Toolbar
 // --------------------------------------------------
 

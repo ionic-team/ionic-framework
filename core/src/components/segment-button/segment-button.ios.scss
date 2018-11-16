@@ -12,7 +12,7 @@
   --border-color: #{$segment-button-ios-border-color};
   --color: #{$segment-button-ios-text-color};
   --color-activated: var(--color);
-  --color-checked: #{ion-color(primary, contrast)};
+  --color-checked: #{$segment-button-ios-text-color-checked};
   --color-disabled: #{ion-color(primary, base, $segment-button-ios-opacity-disabled)};
   --color-checked-disabled: #{ion-color(primary, contrast, $segment-button-ios-opacity-disabled)};
   --border-radius: #{$segment-button-ios-border-radius};

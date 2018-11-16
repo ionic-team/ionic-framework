@@ -26,6 +26,16 @@
   color: #{current-color(base)};
 }
 
+
+// Segment: Default Toolbar
+// --------------------------------------------------
+
+:host-context(ion-toolbar):not(.ion-color)::slotted(ion-segment-button) {
+  --color: #{var(--ion-toolbar-color-unchecked, $segment-button-md-text-color)};
+  --color-checked: #{var(--ion-toolbar-color-checked, $segment-button-md-text-color-checked)};
+}
+
+
 // Segment: Toolbar Color
 // --------------------------------------------------
 
