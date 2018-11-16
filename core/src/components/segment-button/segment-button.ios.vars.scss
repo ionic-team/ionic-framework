@@ -30,6 +30,9 @@ $segment-button-ios-background-color-disabled:        ion-color(primary, base, $
 /// @prop - Text color of the segment button
 $segment-button-ios-text-color:                       ion-color(primary, base) !default;
 
+/// @prop - Text color of the checked segment button
+$segment-button-ios-text-color-checked:               ion-color(primary, contrast) !default;
+
 /// @prop - Border width of the segment button
 $segment-button-ios-border-width:                     1px !default;
 
