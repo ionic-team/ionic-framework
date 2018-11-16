@@ -2,7 +2,7 @@
 
 Ionic Vue.js specific building blocks on top of [@ionic/core](https://www.npmjs.com/package/@ionic/core) components.
 
-To get started simply install `@ionic/vue` with npm into your project and then register it as a plugin to your vue application.
+To get started simply install `@ionic/vue` and `@ionic/core` with npm into your project and then register `@ionic/vue` as a plugin to your vue application.
   
 ```ts
 import Vue from 'vue';
