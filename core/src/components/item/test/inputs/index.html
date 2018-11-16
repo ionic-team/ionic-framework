@@ -20,7 +20,7 @@
     </ion-header>
 
     <ion-content padding-vertical>
-      <form>
+      <form onsubmit="return onSubmit(event)">
       <ion-list>
         <ion-item>
           <ion-label>Simple item</ion-label>
@@ -60,7 +60,7 @@
 
         <ion-item>
           <ion-label>Input (placeholder)</ion-label>
-          <ion-input id="placeholder" placeholder="Placeholder"></ion-input>
+          <ion-input name="input2" id="placeholder" placeholder="Placeholder"></ion-input>
         </ion-item>
 
         <ion-item>
@@ -74,7 +74,8 @@
         </ion-item>
       </ion-list>
 
-      <ion-button type="submit">Submit</ion-button>
+      <ion-button id="submit" type="submit">Submit</ion-button>
+      <p id="form-result"></p>
     </form>
 
       <ion-list>
@@ -183,6 +184,16 @@
 
     function testClick(ev) {
       console.log('CLICK!', ev.target.tagName, ev.target.textContent.trim());
+    }
+
+    function onSubmit(ev) {
+      const data = new FormData(ev.target);
+      const json = {};
+      data.forEach((value, key) => {
+        json[key] = value;
+      })
+      document.getElementById('form-result').textContent = JSON.stringify(json);
+      return false;
     }
 
   </script>
