@@ -15,7 +15,7 @@ export async function attachComponent(
   }
 
   const el: any = (typeof component === 'string')
-    ? container.ownerDocument.createElement(component)
+    ? container.ownerDocument && container.ownerDocument.createElement(component)
     : component;
 
   if (cssClasses) {
