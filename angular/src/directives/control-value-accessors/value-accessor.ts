@@ -47,6 +47,7 @@ function setIonicClasses(element: ElementRef) {
 
     classList.remove(
       'ion-valid',
+      'ion-invalid',
       'ion-touched',
       'ion-untouched',
       'ion-dirty',
