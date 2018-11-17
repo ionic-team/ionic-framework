@@ -112,8 +112,8 @@ export class SplitPane implements ComponentInterface {
       this.visible = q.matches;
     };
     const mediaList = this.win.matchMedia(mediaQuery);
-    mediaList.addListener(callback);
-    this.rmL = () => mediaList.removeListener(callback);
+    mediaList.addListener(callback as any);
+    this.rmL = () => mediaList.removeListener(callback as any);
     this.visible = mediaList.matches;
   }
 
