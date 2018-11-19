@@ -29,7 +29,7 @@ Because of updates to the Material Design spec, `ion-chip` no longer requires a 
 
 ```html
 <ion-chip>
-  <ion-chip-icon name="checkmark"><ion-chip-button>
+  <ion-chip-icon name="checkmark"><ion-chip-icon>
 </ion-chip>
 ```
 
