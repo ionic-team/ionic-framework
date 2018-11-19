@@ -1,7 +1,7 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { ValueAccessor } from './value-accessor';
+import { ValueAccessor, setIonicClasses } from './value-accessor';
 
 @Directive({
   /* tslint:disable-next-line:directive-selector */
@@ -18,6 +18,11 @@ export class BooleanValueAccessor extends ValueAccessor {
 
   constructor(el: ElementRef) {
     super(el);
+  }
+
+  writeValue(value: any) {
+    this.el.nativeElement.checked = this.lastValue = value == null ? '' : value;
+    setIonicClasses(this.el);
   }
 
   @HostListener('ionChange', ['$event.target.checked'])
