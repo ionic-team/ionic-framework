@@ -1,7 +1,7 @@
 import { ComponentRef, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { NavController } from '../../providers/nav-controller';
+import { NavController, NavDirection } from '../../providers/nav-controller';
 
 
 export class StackController {
@@ -32,7 +32,7 @@ export class StackController {
     return this.views.find(vw => vw.url === activatedUrlKey);
   }
 
-  async setActive(enteringView: RouteView, direction: number, animated: boolean) {
+  async setActive(enteringView: RouteView, direction: NavDirection, animated: boolean) {
     const leavingView = this.getActive();
     this.insertView(enteringView, direction);
     await this.transition(enteringView, leavingView, direction, animated, this.canGoBack(1), false);
@@ -54,7 +54,7 @@ export class StackController {
     this.transition(
       this.views[this.views.length - 2], // entering view
       this.views[this.views.length - 1], // leaving view
-      -1,
+      'back',
       true,
       true,
       true
@@ -69,7 +69,7 @@ export class StackController {
   }
 
 
-  private insertView(enteringView: RouteView, direction: number) {
+  private insertView(enteringView: RouteView, direction: NavDirection) {
     // no stack
     if (!this.stack) {
       this.views = [enteringView];
@@ -77,7 +77,7 @@ export class StackController {
     }
 
     // stack setRoot
-    if (direction === 0) {
+    if (direction === 'root') {
       this.views = [enteringView];
       return;
     }
@@ -87,7 +87,7 @@ export class StackController {
     if (index >= 0) {
       this.views = this.views.slice(0, index + 1);
     } else {
-      if (direction === 1) {
+      if (direction === 'forward') {
         this.views.push(enteringView);
       } else {
         this.views = [enteringView];
@@ -120,7 +120,7 @@ export class StackController {
   private async transition(
     enteringView: RouteView | undefined,
     leavingView: RouteView | undefined,
-    direction: number,
+    direction: NavDirection,
     animated: boolean,
     showGoBack: boolean,
     progressAnimation: boolean
@@ -145,7 +145,7 @@ export class StackController {
       await containerEl.componentOnReady();
       this.runningTransition = containerEl.commit(enteringEl, leavingEl, {
         duration: !animated ? 0 : undefined,
-        direction: direction === 1 ? 'forward' : 'back',
+        direction: direction === 'forward' ? 'forward' : 'back', // TODO: refactor
         deepWait: true,
         showGoBack,
         progressAnimation
