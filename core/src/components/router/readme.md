@@ -46,32 +46,6 @@ Type: `Promise<void>`
 
 
 
-### `navChanged(intent: number) => Promise<boolean>`
-
-
-
-#### Parameters
-
-| Name     | Type     | Description |
-| -------- | -------- | ----------- |
-| `intent` | `number` |             |
-
-#### Returns
-
-Type: `Promise<boolean>`
-
-
-
-### `printDebug() => void`
-
-
-
-#### Returns
-
-Type: `void`
-
-
-
 ### `push(url: string, direction?: RouterDirection) => Promise<boolean>`
 
 Navigate to the specified URL.

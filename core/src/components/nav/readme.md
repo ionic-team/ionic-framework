@@ -13,9 +13,8 @@ Unlike RouterOutlet, Nav is not tied to a particular router. Meaning that if we 
 | -------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ----------- |
 | `animated`     | `animated`      | If `true`, the nav should animate the transition of components.                                                                                                                                | `boolean`                                                                  | `true`      |
 | `animation`    | --              | By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions. | `AnimationBuilder \| undefined`                                            | `undefined` |
-| `delegate`     | --              |                                                                                                                                                                                                | `FrameworkDelegate \| undefined`                                           | `undefined` |
-| `rootParams`   | --              | Any parameters for the root component                                                                                                                                                          | `undefined \| { [key: string]: any; }`                                     | `undefined` |
 | `root`         | `root`          | Root NavComponent to load                                                                                                                                                                      | `Function \| HTMLElement \| ViewController \| null \| string \| undefined` | `undefined` |
+| `rootParams`   | --              | Any parameters for the root component                                                                                                                                                          | `undefined \| { [key: string]: any; }`                                     | `undefined` |
 | `swipeGesture` | `swipe-gesture` | If the nav component should allow for swipe-to-go-back.                                                                                                                                        | `boolean \| undefined`                                                     | `undefined` |
 
 
@@ -88,17 +87,7 @@ Type: `Promise<ViewController | undefined>`
 
 
 
-### `getRouteId() => Promise<RouteID | undefined>`
-
-
-
-#### Returns
-
-Type: `Promise<RouteID | undefined>`
-
-
-
-### `insert<T extends NavComponent>(insertIndex: number, component: T, componentProps?: ComponentProps<T> | ...`
+### `insert<T extends NavComponent>(insertIndex: number, component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>`
 
 Inserts a component into the nav stack at the specified index. This is useful if you need to add a component at any point in your navigation stack.
 
@@ -118,7 +107,7 @@ Type: `Promise<boolean>`
 
 
 
-### `insertPages(insertIndex: number, insertComponents: NavComponent[], opts?: NavOptions | null | undefined, don...`
+### `insertPages(insertIndex: number, insertComponents: NavComponent[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>`
 
 Inserts an array of components into the nav stack at the specified index. The last component in the array will become instantiated as a view, and animate in to become the active view.
 
@@ -154,7 +143,7 @@ Type: `Promise<boolean>`
 
 
 
-### `popTo(indexOrViewCtrl: number | ViewController, opts?: NavOptions | null | undefined, done?: Transitio...`
+### `popTo(indexOrViewCtrl: number | ViewController, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>`
 
 Pop to a specific index in the navigation stack
 
@@ -189,7 +178,7 @@ Type: `Promise<boolean>`
 
 
 
-### `push<T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opt...`
+### `push<T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>`
 
 Push a new component onto the current navigation stack. Pass any additional information along as an object. This additional information is accessible through NavParams
 
@@ -208,7 +197,7 @@ Type: `Promise<boolean>`
 
 
 
-### `removeIndex(startIndex: number, removeCount?: number, opts?: NavOptions | null | undefined, done?: Transitio...`
+### `removeIndex(startIndex: number, removeCount?: number, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>`
 
 Removes a page from the nav stack at the specified index.
 
@@ -227,7 +216,7 @@ Type: `Promise<boolean>`
 
 
 
-### `setPages(views: any[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Prom...`
+### `setPages(views: any[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>`
 
 Set the views of the current navigation stack and navigate to the last view. By default animations are disabled, but they can be enabled by passing options to the navigation controller.You can also pass any navigation params to the individual pages in the array.
 
@@ -245,7 +234,7 @@ Type: `Promise<boolean>`
 
 
 
-### `setRoot<T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opt...`
+### `setRoot<T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>`
 
 Set the root for the current navigation stack.
 
@@ -261,24 +250,6 @@ Set the root for the current navigation stack.
 #### Returns
 
 Type: `Promise<boolean>`
-
-
-
-### `setRouteId(id: string, params: { [key: string]: any; } | undefined, direction: number) => Promise<RouteWrite>`
-
-
-
-#### Parameters
-
-| Name        | Type                                   | Description |
-| ----------- | -------------------------------------- | ----------- |
-| `id`        | `string`                               |             |
-| `params`    | `undefined \| { [key: string]: any; }` |             |
-| `direction` | `number`                               |             |
-
-#### Returns
-
-Type: `Promise<RouteWrite>`
 
 
 
