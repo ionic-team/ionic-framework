@@ -3,7 +3,7 @@ import { newE2EPage } from '@stencil/core/testing';
 const navChanged = () => new Promise(resolve => window.addEventListener('ionNavDidChange', resolve));
 
 // TODO: get this to pass
-it.skip('nav: nested', async () => {
+test.skip('nav: nested', async () => {
 
   const page = await newE2EPage({
     url: '/src/components/nav/test/nested?ionic:_testing=true'

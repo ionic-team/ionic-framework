@@ -16,6 +16,7 @@ export * from './components/range/range-interface';
 export * from './components/refresher/refresher-interface';
 export * from './components/reorder-group/reorder-group-interface';
 export * from './components/content/content-interface';
+export * from './components/segment-button/segment-button-interface';
 export * from './components/select/select-interface';
 export * from './components/select-popover/select-popover-interface';
 export * from './components/spinner/spinner-interface';
@@ -34,7 +35,7 @@ export * from './global/config';
 export * from './utils/overlays-interface';
 
 // Global types
-export type TextFieldTypes = 'date' | 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url';
+export type TextFieldTypes = 'date' | 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' | 'time';
 export type Side = 'start' | 'end';
 export type PredefinedColors = 'primary' | 'secondary' | 'tertiary' | 'success' | 'warning' | 'danger' | 'light' | 'medium' | 'dark';
 export type Color = PredefinedColors | string;

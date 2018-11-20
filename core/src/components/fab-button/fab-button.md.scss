@@ -6,7 +6,7 @@
 
 :host {
   --background: #{$fab-md-background-color};
-  --background-activated: #{$fab-md-background-color-activated};
+  --background-activated: var(--background);
   --background-focused: var(--background-activated);
   --color: #{$fab-md-text-color};
   --color-activated: #{$fab-md-text-color};

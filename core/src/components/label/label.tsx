@@ -23,7 +23,6 @@ export class Label implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
@@ -34,6 +33,7 @@ export class Label implements ComponentInterface {
 
   /**
    * Emitted when the styles change.
+   * @internal
    */
   @Event() ionStyle!: EventEmitter<StyleEvent>;
 

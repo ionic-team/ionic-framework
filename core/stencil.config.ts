@@ -1,6 +1,9 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
 
+// @ts-ignore
+import { apiSpecGenerator } from './scripts/api-spec-generator';
+
 export const config: Config = {
   namespace: 'Ionic',
   bundles: [
@@ -14,7 +17,7 @@ export const config: Config = {
     { components: ['ion-button', 'ion-icon'] },
     { components: ['ion-card', 'ion-card-content', 'ion-card-header', 'ion-card-title', 'ion-card-subtitle'] },
     { components: ['ion-checkbox'] },
-    { components: ['ion-chip', 'ion-chip-button', 'ion-chip-icon'] },
+    { components: ['ion-chip'] },
     { components: ['ion-datetime', 'ion-picker', 'ion-picker-column', 'ion-picker-controller'] },
     { components: ['ion-fab', 'ion-fab-button', 'ion-fab-list'] },
     { components: ['ion-grid', 'ion-row', 'ion-col'] },
@@ -64,7 +67,14 @@ export const config: Config = {
       file: 'stats.json'
     },
     {
+      type: 'docs-custom',
+      generator: apiSpecGenerator({
+        file: 'api.txt'
+      })
+    },
+    {
       type: 'angular',
+      useDirectives: false,
       componentCorePackage: '@ionic/core',
       directivesProxyFile: '../angular/src/directives/proxies.ts',
       directivesArrayFile: '../angular/src/directives/proxies-list.txt',

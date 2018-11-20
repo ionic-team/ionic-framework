@@ -25,6 +25,11 @@
   font-family: $font-family-base;
 
   user-select: none;
+  z-index: $z-index-item-input;
+}
+
+:host(.range-disabled) {
+  pointer-events: none;
 }
 
 ::slotted(ion-label) {
@@ -34,9 +39,6 @@
 ::slotted(ion-icon[slot]) {
   font-size: 24px;
 }
-
-
-
 
 .range-slider {
   position: relative;

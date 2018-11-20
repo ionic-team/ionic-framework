@@ -42,8 +42,7 @@ export class VirtualScroll implements ComponentInterface {
    * the scrollable area. This height value can only use `px` units.
    * Note that the actual rendered size of each cell comes from the
    * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions before the item has been rendered. Default is
-   * `45`.
+   * initial dimensions before the item has been rendered.
    */
   @Prop() approxItemHeight = 45;
 
@@ -54,7 +53,7 @@ export class VirtualScroll implements ComponentInterface {
    * the scrollable area. This height value can only use `px` units.
    * Note that the actual rendered size of each cell comes from the
    * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions before the item has been rendered. Default is `40px`.
+   * initial dimensions before the item has been rendered.
    */
   @Prop() approxHeaderHeight = 40;
 
@@ -65,7 +64,7 @@ export class VirtualScroll implements ComponentInterface {
    * the scrollable area. This value can use either `px` or `%` units.
    * Note that the actual rendered size of each cell comes from the
    * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions before the item has been rendered. Default is `100%`.
+   * initial dimensions before the item has been rendered.
    */
   @Prop() approxFooterHeight = 40;
 

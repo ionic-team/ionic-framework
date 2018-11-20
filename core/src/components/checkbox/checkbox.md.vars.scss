@@ -17,7 +17,7 @@ $checkbox-md-background-color-focused:   ion-color(primary, tint) !default;
 $checkbox-md-icon-background-color-on:   ion-color(primary, base) !default;
 
 /// @prop - Size of the checkbox icon
-$checkbox-md-icon-size:                  16px !default;
+$checkbox-md-icon-size:                  18px !default;
 
 /// @prop - Width of the checkbox icon checkmark
 $checkbox-md-icon-checkmark-width:       2px !default;
@@ -38,19 +38,19 @@ $checkbox-md-icon-border-style:          solid !default;
 $checkbox-md-icon-border-radius:         2px !default;
 
 /// @prop - Border color of the checkbox icon when off
-$checkbox-md-icon-border-color-off:      $border-md-color !default;
+$checkbox-md-icon-border-color-off:      rgba(0, 0, 0, .54) !default;
 
 /// @prop - Border color of the checkbox icon when on
 $checkbox-md-icon-border-color-on:       ion-color(primary, base) !default;
 
 /// @prop - Transition duration of the checkbox
-$checkbox-md-transition-duration:        280ms !default;
+$checkbox-md-transition-duration:        180ms !default;
 
 /// @prop - Transition easing of the checkbox
 $checkbox-md-transition-easing:          cubic-bezier(.4, 0, .2, 1) !default;
 
 /// @prop - Margin top of the start checkbox item
-$checkbox-md-item-start-margin-top:      9px !default;
+$checkbox-md-item-start-margin-top:      18px !default;
 
 /// @prop - Margin end of the start checkbox item
 $checkbox-md-item-start-margin-end:      36px !default;
@@ -62,13 +62,13 @@ $checkbox-md-item-start-margin-bottom:   $checkbox-md-item-start-margin-top !def
 $checkbox-md-item-start-margin-start:    4px !default;
 
 /// @prop - Margin top of the end checkbox item
-$checkbox-md-item-end-margin-top:        11px !default;
+$checkbox-md-item-end-margin-top:        18px !default;
 
 /// @prop - Margin end of the end checkbox item
-$checkbox-md-item-end-margin-end:        10px !default;
+$checkbox-md-item-end-margin-end:        0 !default;
 
 /// @prop - Margin bottom of the end checkbox item
-$checkbox-md-item-end-margin-bottom:     10px !default;
+$checkbox-md-item-end-margin-bottom:     $checkbox-md-item-end-margin-top !default;
 
 /// @prop - Margin start of the end checkbox item
 $checkbox-md-item-end-margin-start:      0 !default;

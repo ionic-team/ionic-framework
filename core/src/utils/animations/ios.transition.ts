@@ -32,9 +32,7 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
   if (leavingEl && navEl) {
     const navDecor = new AnimationC();
     navDecor
-      .addElement(navEl)
-      .beforeAddClass('show-decor')
-      .afterRemoveClass('show-decor');
+      .addElement(navEl);
 
     rootTransition.add(navDecor);
   }

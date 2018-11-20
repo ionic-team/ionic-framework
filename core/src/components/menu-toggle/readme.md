@@ -11,10 +11,10 @@ In case it's desired to keep `ion-menu-toggle` always visible, the `autoHide` pr
 
 ## Properties
 
-| Property   | Attribute   | Description                                                                                                                                                                                                                                         | Type                  |
-| ---------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
-| `autoHide` | `auto-hide` | Automatically hides the content when the corresponding menu is not active.  By default, it's `true`. Change it to `false` in order to keep `ion-menu-toggle` always visible regardless the state of the menu.                                       | `boolean`             |
-| `menu`     | `menu`      | Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle.  If this property is not used, `ion-menu-toggle` will toggle the first menu that is active. | `string \| undefined` |
+| Property   | Attribute   | Description                                                                                                                                                                                                                                         | Type                  | Default     |
+| ---------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
+| `autoHide` | `auto-hide` | Automatically hides the content when the corresponding menu is not active.  By default, it's `true`. Change it to `false` in order to keep `ion-menu-toggle` always visible regardless the state of the menu.                                       | `boolean`             | `true`      |
+| `menu`     | `menu`      | Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle.  If this property is not used, `ion-menu-toggle` will toggle the first menu that is active. | `string \| undefined` | `undefined` |
 
 
 ----------------------------------------------

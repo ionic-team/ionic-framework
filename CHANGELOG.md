@@ -1,3 +1,298 @@
+<a name="4.0.0-beta.16"></a>
+# [4.0.0-beta.16](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.15...v4.0.0-beta.16) (2018-11-16)
+
+
+### BREAKING CHANGES
+
+Segment Button now requires the text to be wrapped in an `ion-label` element for improved styling.
+
+*Old usage:*
+
+ ```html
+<ion-segment-button>
+  Item One
+</ion-segment-button>
+```
+ *New usage:*
+
+ ```html
+<ion-segment-button>
+  <ion-label>Item One</ion-label>
+</ion-segment-button>
+```
+
+#### Simplifying Chip
+
+Because of updates to the Material Design spec, `ion-chip` no longer requires a chip-specific version of `ion-icon` or `ion-button`. Chips themselves should be interactive and don't require a nested button.
+
+*Old usage:*
+
+```html
+<ion-chip>
+  <ion-chip-icon name="checkmark"><ion-chip-icon>
+</ion-chip>
+```
+
+*New usage:*
+
+```html
+<ion-chip>
+  <ion-icon name="checkmark"></ion-icon>
+</ion-chip>
+```
+
+
+### Bug Fixes
+
+* **alert:** use tint for md button active background ([#16278](https://github.com/ionic-team/ionic/issues/16278)) ([0fec722](https://github.com/ionic-team/ionic/commit/0fec722))
+* **all:** update types to be required ([#16218](https://github.com/ionic-team/ionic/issues/16218)) ([091625d](https://github.com/ionic-team/ionic/commit/091625d))
+* **angular:** add swipe-to-go-back gesture ([108691d](https://github.com/ionic-team/ionic/commit/108691d))
+* **angular:** adds tabs stack ([adae8d4](https://github.com/ionic-team/ionic/commit/adae8d4))
+* **angular:** disable transition heuristics by default ([d9172b7](https://github.com/ionic-team/ionic/commit/d9172b7))
+* **angular:** es6 build ([#16207](https://github.com/ionic-team/ionic/issues/16207)) ([a981116](https://github.com/ionic-team/ionic/commit/a981116)), closes [#15979](https://github.com/ionic-team/ionic/issues/15979)
+* **angular:** fix handler outside zone ([b8dae5e](https://github.com/ionic-team/ionic/commit/b8dae5e)), closes [#16338](https://github.com/ionic-team/ionic/issues/16338)
+* **backdrop:** update opacity to match MD spec ([#16188](https://github.com/ionic-team/ionic/issues/16188)) ([3c9ed31](https://github.com/ionic-team/ionic/commit/3c9ed31))
+* **checkbox:** align vertically ([#16331](https://github.com/ionic-team/ionic/issues/16331)) ([bd3ca42](https://github.com/ionic-team/ionic/commit/bd3ca42))
+* **checkbox:** match MD spec ([#16186](https://github.com/ionic-team/ionic/issues/16186)) ([240171a](https://github.com/ionic-team/ionic/commit/240171a))
+* **gesture:** release gesture when it's disabled ([c9b4e66](https://github.com/ionic-team/ionic/commit/c9b4e66)), closes [#16335](https://github.com/ionic-team/ionic/issues/16335)
+* **input:** remove clear icon in edge ([59bee23](https://github.com/ionic-team/ionic/commit/59bee23))
+* **input:** remove red shadow for firefox ([767d299](https://github.com/ionic-team/ionic/commit/767d299)), closes [#16318](https://github.com/ionic-team/ionic/issues/16318)
+* **input:** scroll assist works in with shadow-dom ([#16206](https://github.com/ionic-team/ionic/issues/16206)) ([d817cc3](https://github.com/ionic-team/ionic/commit/d817cc3)), closes [#15888](https://github.com/ionic-team/ionic/issues/15888) [#15294](https://github.com/ionic-team/ionic/issues/15294) [#15895](https://github.com/ionic-team/ionic/issues/15895)
+* **inputs:** fix aria with shadow-dom ([#16329](https://github.com/ionic-team/ionic/issues/16329)) ([fd79b57](https://github.com/ionic-team/ionic/commit/fd79b57))
+* **inputs:** inherit in edge causes problems ([0abf992](https://github.com/ionic-team/ionic/commit/0abf992))
+* **item:** update to match Material Design spec ([#16182](https://github.com/ionic-team/ionic/issues/16182)) ([e416c23](https://github.com/ionic-team/ionic/commit/e416c23)), closes [#14799](https://github.com/ionic-team/ionic/issues/14799)
+* **label:** placeholder + floating label ([#16111](https://github.com/ionic-team/ionic/issues/16111)) ([a8be529](https://github.com/ionic-team/ionic/commit/a8be529))
+* **list-header:** match MD bottom margin, match MD text color ([#16274](https://github.com/ionic-team/ionic/issues/16274)) ([6794447](https://github.com/ionic-team/ionic/commit/6794447))
+* **menu:** update box-shadow for MD to match spec ([#16183](https://github.com/ionic-team/ionic/issues/16183)) ([335acf9](https://github.com/ionic-team/ionic/commit/335acf9))
+* **range:** increase MD horizontal padding ([#16312](https://github.com/ionic-team/ionic/issues/16312)) ([5d00501](https://github.com/ionic-team/ionic/commit/5d00501))
+* **range:** use fully opaque base in color active bar ([#16224](https://github.com/ionic-team/ionic/issues/16224)) ([0757126](https://github.com/ionic-team/ionic/commit/0757126))
+* **ripple-effect:** follow MD spec ([#16330](https://github.com/ionic-team/ionic/issues/16330)) ([6d59446](https://github.com/ionic-team/ionic/commit/6d59446))
+* **searchbar:** align cancel button to center with search icon position ([#16259](https://github.com/ionic-team/ionic/issues/16259)) ([5957867](https://github.com/ionic-team/ionic/commit/5957867))
+* **segment-button:** make layout optional ([e9e33ad](https://github.com/ionic-team/ionic/commit/e9e33ad))
+* **tab-button:** layout is mutable ([#16332](https://github.com/ionic-team/ionic/issues/16332)) ([02a266c](https://github.com/ionic-team/ionic/commit/02a266c))
+* **tabs:** works with no href ([8e0f1ba](https://github.com/ionic-team/ionic/commit/8e0f1ba))
+* **toast:** update toast design to match MD spec ([#16323](https://github.com/ionic-team/ionic/issues/16323)) ([188a635](https://github.com/ionic-team/ionic/commit/188a635)), closes [#16271](https://github.com/ionic-team/ionic/issues/16271)
+* **toggle:** match MD toggle track background for off state ([#16277](https://github.com/ionic-team/ionic/issues/16277)) ([8e2a6dd](https://github.com/ionic-team/ionic/commit/8e2a6dd))
+
+
+### Features
+
+* **segment:** adds global variable for targeting segment in toolbar ([#16344](https://github.com/ionic-team/ionic/issues/16344)) ([10971cc](https://github.com/ionic-team/ionic/commit/10971cc))
+* **segment:** adds scrollable and layout props and updates to follow the spec  ([#16273](https://github.com/ionic-team/ionic/issues/16273)) ([256745c](https://github.com/ionic-team/ionic/commit/256745c)), closes [#16232](https://github.com/ionic-team/ionic/issues/16232) [#16081](https://github.com/ionic-team/ionic/issues/16081) [#14853](https://github.com/ionic-team/ionic/issues/14853)
+
+
+### Performance Improvements
+
+* **angular:** remove duplicated code in value-accessor ([bfbbeca](https://github.com/ionic-team/ionic/commit/bfbbeca))
+
+
+### Dependencies
+
+If you are using @ionic/angular, please update the version number of any @angular packages in your package.json file to `7.0.3`.
+
+```
+"dependencies": {
+  "@angular/common": "~7.0.3",
+  "@angular/core": "~7.0.3",
+  "@angular/forms": "~7.0.3",
+  "@angular/http": "~7.0.3",
+  "@angular/platform-browser": "~7.0.3",
+  "@angular/platform-browser-dynamic": "~7.0.3",
+  "@angular/router": "~7.0.3",
+  "rxjs": "6.3.3",
+```
+
+```
+"devDependencies": {
+  "@angular-devkit/architect": "~0.10.5",
+  "@angular-devkit/build-angular": "~0.10.5",
+  "@angular-devkit/core": "~7.0.5",
+  "@angular-devkit/schematics": "~7.0.5",
+  "@angular/cli": "~7.0.3",
+  "@angular/compiler": "~7.0.3",
+  "@angular/compiler-cli": "~7.0.3",
+  "@angular/language-service": "~7.0.3",
+```
+
+<a name="4.0.0-beta.15"></a>
+# [4.0.0-beta.15](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.13...v4.0.0-beta.15) (2018-11-01)
+
+# Breaking Changes
+
+## Removed Global CSS Variables
+
+The following global CSS variables have been removed for the reasons listed.
+
+| Variable Name                     | Reason                                          |
+| ----------------------------------| ------------------------------------------------|
+| `--ion-toolbar-color-inactive`    | Unused                                          |
+| `--ion-ripple-background-color`   | Unused / Ripple color is based on component     |
+| `--ion-header-size`               | Removed in favor of using CSS for h1-h6         |
+| `--ion-header-step`               | Removed in favor of using CSS for h1-h6         |
+
+## Renamed Global CSS Variables
+
+The following global CSS variables have been renamed for the reasons listed.
+
+| Old Variable Name                        | New Variable Name                  | Reason                                                                        |
+| -----------------------------------------| -----------------------------------| ------------------------------------------------------------------------------|
+| `--ion-toolbar-text-color`               | `--ion-toolbar-color`              | Variable is not limited to text color                                         |
+| `--ion-toolbar-color-active`             | `--ion-toolbar-color-activated`    | Consistency with our component variables                                      |
+| `--ion-tabbar-text-color`                | `--ion-tab-bar-color`              | Variable is not limited to text color                                         |
+| `--ion-tabbar-text-color-active`         | `--ion-tab-bar-color-activated`    | Consistency with our component variables                                      |
+| `--ion-tabbar-background-color`          | `--ion-tab-bar-background`         | Applies to the background property                                            |
+| `--ion-tabbar-background-color-focused`  | `--ion-tab-bar-background-focused` | Applies to the background property                                            |
+| `--ion-item-background-color`            | `--ion-item-background`            | Applies to the background property                                            |
+| `--ion-item-background-color-active`     | `--ion-item-background-activated`  | Applies to the background property / Consistency with our component variables |
+| `--ion-item-text-color`                  | `--ion-item-color`                 | Variable is not limited to text color                                         |
+| `--ion-placeholder-text-color`           | `--ion-placeholder-color`          | Consistency with other variables                                              |
+
+## Rethinking Tabs
+
+One of the most valuable and complex components in Ionic's toolkit is Tabs. Tabs started off as a simple component that would create a tabbed interface to allow users to switch between different views in a way that was consistent with native UX paradigms.
+
+Over time, we started hearing people ask for more features to be added: "Can we have one tab button that is just a button?" "Can I customize how the tab buttons are displayed?" "Can I use a custom icon in the tab?"
+
+Traditionally, these features, and many others, were difficult to accomplish because Tabs was doing a lot of magic behind the scenes to generate the Tab bar and buttons. With this in mind, we thought it was time for a refresh to offer as much flexibility as possible within Tabs.
+
+In order to do this, we had to change how Tabs were written in an app. Prior to Beta 14, Tabs would look like this:
+
+```html
+<ion-tabs>
+  <ion-tab label="Home" icon="home" href="/tabs/(home:home)">
+    <ion-router-outlet name="home"></ion-router-outlet>
+  </ion-tab>
+  <ion-tab label="About" icon="information-circle" href="/tabs/(about:about)">
+    <ion-router-outlet name="about"></ion-router-outlet>
+  </ion-tab>
+  <ion-tab label="Contact" icon="contacts" href="/tabs/(contact:contact)">
+    <ion-router-outlet name="contact"></ion-router-outlet>
+  </ion-tab>
+</ion-tabs>
+```
+
+Here, we have an `ion-tab` element that accepts an icon, a label, and a link to navigate to as properties. This is pretty much how Tabs have worked all the way back to Ionic 1. In Beta 14, we've removed some of the magic from Tabs which allows for more customization:
+
+```html
+<ion-tabs>
+  <ion-tab-bar>
+
+    <!-- No ion-tab, just a link that looks like a tab -->
+    <ion-tab-button href="https://beta.ionicframework.com">
+      <!-- <a href="https://beta.ionicframework.com"> -->
+      <ion-icon name="globe"></ion-icon>
+      <ion-label>Schedule</ion-label>
+    </ion-tab-button>
+
+    <!-- No ion-tab, just a button that looks like a tab -->
+    <ion-tab-button (click)="openCamera()">
+      <ion-icon name="camera"></ion-icon>
+      <ion-label>Photo</ion-label>
+    </ion-tab-button>
+
+    <!-- Connected to ion-tab, on click will show the ion-tab with id home-view -->
+    <ion-tab-button tab="home-view">
+      <ion-icon name="home"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+
+  <ion-tab tab="home-view">
+    <ion-content></ion-content>
+    <!-- or -->
+    <ion-nav></ion-nav>
+    <!-- or -->
+    <ion-router-outlet></ion-router-outlet>
+  </ion-tab>
+
+</ion-tabs>
+```
+
+There's a lot going on here, so let's break it down:
+
+1. A single parent `ion-tabs` wraps the entire layout. Same as before.
+2. A new element, `ion-tab-bar`, creates the Tab Bar which will contain buttons.
+3. A new element, `ion-tab-button`, is used to create each button in the Tab Bar. These could be static links to different routes, buttons with click handlers on them, or link to whole tab views.
+4. The `ion-tab` component becomes a separate container that has inline content (`ion-content`), a navigation component (`ion-nav`) or a router outlet (`ion-router-outlet`).
+
+To connect the `ion-tab-button` to the `ion-tab`, the `tab` property must be added to both of these components. For example:
+
+```html
+<ion-tabs>
+  <ion-tab-bar>
+    <ion-tab-button tab="home-view"></ion-tab-button>
+  </ion-tab-bar>
+
+  <ion-tab tab="home-view"></ion-tab>
+</ion-tabs>
+```
+
+Since the `tab` property is the same on the `ion-tab-button` and `ion-tab`, when the Tab Button is tapped, the `home-view` Tab will become active. This takes the magic out of Tabs while making the behavior between the tab buttons and the views much more explicit.
+
+Some other benefits of this refactor include:
+
+- Can now be written as a standalone Tab Bar (with no attached Tab)
+- Works with a navigation component or a plain content element
+- Works with shadow DOM and allows easy customization of the Tab Bar
+- Gives full control over the elements inside of the Tab Bar
+- Integrates nicely with other frameworks that have different ways of rendering element nodes
+
+Lastly, this change also fixes some outstanding issues with Tabs, so we're excited to get this out to you all!
+
+
+### Bug Fixes
+
+* **action-sheet:** update Action Sheet design to match MD spec ([#16135](https://github.com/ionic-team/ionic/issues/16135)) ([068303d](https://github.com/ionic-team/ionic/commit/068303d))
+* **alert:** match MD spec ([#16145](https://github.com/ionic-team/ionic/issues/16145)) ([287aec8](https://github.com/ionic-team/ionic/commit/287aec8))
+* **alert:** update alert min/max interface ([#15987](https://github.com/ionic-team/ionic/issues/15987)) ([a0c60ff](https://github.com/ionic-team/ionic/commit/a0c60ff)), closes [#15986](https://github.com/ionic-team/ionic/issues/15986)
+* **angular:** generate proxies for ion-tabbar ([#15954](https://github.com/ionic-team/ionic/issues/15954)) ([45b46b4](https://github.com/ionic-team/ionic/commit/45b46b4))
+* **angular:** make sure angular form control onChange is fired when needed ([#16126](https://github.com/ionic-team/ionic/issues/16126)) ([d5f2e6f](https://github.com/ionic-team/ionic/commit/d5f2e6f))
+* **badge:** match MD padding ([#16134](https://github.com/ionic-team/ionic/issues/16134)) ([615c518](https://github.com/ionic-team/ionic/commit/615c518))
+* **button:** match MD spec timing, outline, hover ([#16160](https://github.com/ionic-team/ionic/issues/16160)) ([0faa355](https://github.com/ionic-team/ionic/commit/0faa355))
+* **button:** match updated MD specs ([#16144](https://github.com/ionic-team/ionic/issues/16144)) ([e9579d5](https://github.com/ionic-team/ionic/commit/e9579d5))
+* **card:** adjust styles to match MD ([#16093](https://github.com/ionic-team/ionic/issues/16093)) ([44b0eab](https://github.com/ionic-team/ionic/commit/44b0eab))
+* **checkbox:** end position by default ([9da51b3](https://github.com/ionic-team/ionic/commit/9da51b3))
+* **cordova:** fix resume event in cordova browser ([#15945](https://github.com/ionic-team/ionic/issues/15945)) ([4318520](https://github.com/ionic-team/ionic/commit/4318520)), closes [#15944](https://github.com/ionic-team/ionic/issues/15944)
+* **datetime:** can participate in native <form> ([#16106](https://github.com/ionic-team/ionic/issues/16106)) ([aad7711](https://github.com/ionic-team/ionic/commit/aad7711)), closes [#16075](https://github.com/ionic-team/ionic/issues/16075)
+* **datetime:** pickerOptions are all optional ([#16101](https://github.com/ionic-team/ionic/issues/16101)) ([f014181](https://github.com/ionic-team/ionic/commit/f014181)), closes [#16095](https://github.com/ionic-team/ionic/issues/16095)
+* **fab-button:** use correct background in list and update the md icon color ([#16092](https://github.com/ionic-team/ionic/issues/16092)) ([9dfc863](https://github.com/ionic-team/ionic/commit/9dfc863)), closes [#16091](https://github.com/ionic-team/ionic/issues/16091)
+* **header:** update box shadow to match MD spec ([#16149](https://github.com/ionic-team/ionic/issues/16149)) ([00544e9](https://github.com/ionic-team/ionic/commit/00544e9))
+* **infinite-scroll:** disabled resets loading/busy state ([#16107](https://github.com/ionic-team/ionic/issues/16107)) ([33448c6](https://github.com/ionic-team/ionic/commit/33448c6)), closes [#15994](https://github.com/ionic-team/ionic/issues/15994)
+* **inputs:** add z-index for all inputs ([92ee4ef](https://github.com/ionic-team/ionic/commit/92ee4ef)), closes [#16157](https://github.com/ionic-team/ionic/issues/16157)
+* **inputs:** disabled handling ([#16071](https://github.com/ionic-team/ionic/issues/16071)) ([ef6895a](https://github.com/ionic-team/ionic/commit/ef6895a))
+* **label:** do not animate float labels on initial load ([#16036](https://github.com/ionic-team/ionic/issues/16036)) ([e644fc9](https://github.com/ionic-team/ionic/commit/e644fc9))
+* **note:** update note font size for MD ([#16088](https://github.com/ionic-team/ionic/issues/16088)) ([6f2b9b0](https://github.com/ionic-team/ionic/commit/6f2b9b0))
+* **picker:** delay option animate until after options initialized ([#16037](https://github.com/ionic-team/ionic/issues/16037)) ([a74e565](https://github.com/ionic-team/ionic/commit/a74e565))
+* **picker:** fix iOS picker options that shouldn't be showing ([#16055](https://github.com/ionic-team/ionic/issues/16055)) ([02ef52b](https://github.com/ionic-team/ionic/commit/02ef52b))
+* **popover:** update border radius to match MD ([#16086](https://github.com/ionic-team/ionic/issues/16086)) ([9c733e9](https://github.com/ionic-team/ionic/commit/9c733e9))
+* **popover:** update the box shadow to match MD spec ([#16089](https://github.com/ionic-team/ionic/issues/16089)) ([fdb7da9](https://github.com/ionic-team/ionic/commit/fdb7da9))
+* **radio:** match MD sizing ([#16087](https://github.com/ionic-team/ionic/issues/16087)) ([6723248](https://github.com/ionic-team/ionic/commit/6723248))
+* **range:** match MD spec ([#16150](https://github.com/ionic-team/ionic/issues/16150)) ([b2f493f](https://github.com/ionic-team/ionic/commit/b2f493f))
+* **reorder-group:** event bubbles up ([#16030](https://github.com/ionic-team/ionic/issues/16030)) ([ce80b24](https://github.com/ionic-team/ionic/commit/ce80b24)), closes [#16010](https://github.com/ionic-team/ionic/issues/16010)
+* **screenshot:** update screenshot ci ([#15969](https://github.com/ionic-team/ionic/issues/15969)) ([80b5c8c](https://github.com/ionic-team/ionic/commit/80b5c8c))
+* **searchbar:** do not animate during initial load ([#16147](https://github.com/ionic-team/ionic/issues/16147)) ([e94b522](https://github.com/ionic-team/ionic/commit/e94b522))
+* **tab-bar:** align tab text to the center ([#16130](https://github.com/ionic-team/ionic/issues/16130)) ([67eb7cf](https://github.com/ionic-team/ionic/commit/67eb7cf)), closes [#15273](https://github.com/ionic-team/ionic/issues/15273)
+* **tabs:** name prop is not longer used ([6d11cc1](https://github.com/ionic-team/ionic/commit/6d11cc1))
+* **theming:** update global css variable naming and default values  ([#16003](https://github.com/ionic-team/ionic/issues/16003)) ([b2021fd](https://github.com/ionic-team/ionic/commit/b2021fd)), closes [#15989](https://github.com/ionic-team/ionic/issues/15989) [#15559](https://github.com/ionic-team/ionic/issues/15559)
+* **toggle:** fix box-shadow overflow in toggle ([#15955](https://github.com/ionic-team/ionic/issues/15955)) ([8a4dc74](https://github.com/ionic-team/ionic/commit/8a4dc74)), closes [#14626](https://github.com/ionic-team/ionic/issues/14626)
+* **angular:** fix ngModel accessor ([fab8b60](https://github.com/ionic-team/ionic/commit/fab8b60))
+* **color:** edge currentColor bug ([#16177](https://github.com/ionic-team/ionic/issues/16177)) ([fce30eb](https://github.com/ionic-team/ionic/commit/fce30eb)), closes [#16168](https://github.com/ionic-team/ionic/issues/16168)
+* **searchbar:** fix crash on cancel event ([#16181](https://github.com/ionic-team/ionic/issues/16181)) ([9c79d98](https://github.com/ionic-team/ionic/commit/9c79d98)), closes [#16143](https://github.com/ionic-team/ionic/issues/16143)
+* **tab-bar:** safe-bottom area is applied correctly ([#16179](https://github.com/ionic-team/ionic/issues/16179)) ([1532bd2](https://github.com/ionic-team/ionic/commit/1532bd2)), closes [#16175](https://github.com/ionic-team/ionic/issues/16175)
+* **tabs:** use slot instead of placement ([72f0a76](https://github.com/ionic-team/ionic/commit/72f0a76))
+
+
+### Features
+
+* **toast:** add "color" prop ([#16100](https://github.com/ionic-team/ionic/issues/16100)) ([c982856](https://github.com/ionic-team/ionic/commit/c982856)), closes [#16099](https://github.com/ionic-team/ionic/issues/16099)
+
+
+### Performance Improvements
+
+* **angular:** disable async queue ([#16118](https://github.com/ionic-team/ionic/issues/16118)) ([c2f5803](https://github.com/ionic-team/ionic/commit/c2f5803))
+
+
+
 <a name="4.0.0-beta.13"></a>
 # [4.0.0-beta.13](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.12...v4.0.0-beta.13) (2018-10-14)
 

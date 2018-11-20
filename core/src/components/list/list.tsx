@@ -16,18 +16,16 @@ export class List implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
    * How the bottom border should be displayed on all items.
-   * Available options: `"full"`, `"inset"`, `"none"`.
    */
   @Prop() lines?: 'full' | 'inset' | 'none';
 
   /**
-   * If `true`, the list will have margin around it and rounded corners. Defaults to `false`.
+   * If `true`, the list will have margin around it and rounded corners.
    */
   @Prop() inset = false;
 

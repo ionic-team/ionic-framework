@@ -73,7 +73,6 @@
 // Default Solid Color
 :host(.button-solid) {
   --background: #{ion-color(primary, base)};
-  --background-activated: #{ion-color(primary, shade)};
   --background-focused: #{ion-color(primary, shade)};
   --color: #{ion-color(primary, contrast)};
   --color-activated: #{ion-color(primary, contrast)};
@@ -87,8 +86,7 @@
 }
 
 // Focused/Activated Solid Button with Color
-:host(.button-solid.ion-color.focused) .button-native,
-:host(.button-solid.ion-color.activated) .button-native {
+:host(.button-solid.ion-color.focused) .button-native {
   background: #{current-color(shade)};
 }
 
@@ -220,7 +218,7 @@
   line-height: 1;
 
   box-shadow: var(--box-shadow);
-  contain: content;
+  contain: layout style;
   cursor: pointer;
   opacity: var(--opacity);
   overflow: var(--overflow);

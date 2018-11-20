@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('refresher: basic', async () => {
+test('refresher: basic', async () => {
   const page = await newE2EPage({
     url: '/src/components/refresher/test/basic?ionic:_testing=true'
   });

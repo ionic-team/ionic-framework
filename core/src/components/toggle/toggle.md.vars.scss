@@ -14,7 +14,7 @@ $toggle-md-track-width:                           36px !default;
 $toggle-md-track-height:                          14px !default;
 
 /// @prop - Background color of the toggle track
-$toggle-md-track-background-color-off:            $item-md-border-color !default;
+$toggle-md-track-background-color-off:            ion-color(medium, tint) !default;
 
 /// @prop - Background color alpha of the checked toggle track
 $toggle-md-track-background-color-alpha-on:       .5 !default;
@@ -86,7 +86,7 @@ $toggle-md-item-start-padding-start:              2px !default;
 $toggle-md-item-end-padding-top:                  12px !default;
 
 /// @prop - Padding end of the toggle positioned on the end in an item
-$toggle-md-item-end-padding-end:                  ($item-md-padding-end / 2) !default;
+$toggle-md-item-end-padding-end:                  0 !default;
 
 /// @prop - Padding bottom of the toggle positioned on the end in an item
 $toggle-md-item-end-padding-bottom:               12px !default;

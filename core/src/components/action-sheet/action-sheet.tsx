@@ -31,7 +31,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
@@ -62,7 +61,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   @Prop() cssClass?: string | string[];
 
   /**
-   * If `true`, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
+   * If `true`, the action sheet will be dismissed when the backdrop is clicked.
    */
   @Prop() backdropDismiss = true;
 
@@ -77,12 +76,12 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   @Prop() subHeader?: string;
 
   /**
-   * If `true`, the action sheet will be translucent. Defaults to `false`.
+   * If `true`, the action sheet will be translucent.
    */
   @Prop() translucent = false;
 
   /**
-   * If `true`, the action sheet will animate. Defaults to `true`.
+   * If `true`, the action sheet will animate.
    */
   @Prop() animated = true;
 
@@ -242,6 +241,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                   {b.icon && <ion-icon icon={b.icon} lazy={false} class="action-sheet-icon" />}
                   {b.text}
                 </span>
+                {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
               </button>
             )}
           </div>

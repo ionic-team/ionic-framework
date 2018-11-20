@@ -4,71 +4,45 @@
 // Material Design Segment
 // --------------------------------------------------
 
-:host {
-  --background: transparent;
-  --background-checked: transparent;
-  --border-color: #{$segment-button-md-border-bottom-color};
-  --color: #{$segment-button-md-text-color};
-  --color-checked: #{$segment-button-md-text-color};
-}
-
 :host(.segment-disabled) {
   opacity: $segment-md-opacity-disabled;
 }
 
-// Material Design Segment Button Color
+// Segment: Color
 // --------------------------------------------------
 
-:host-context(ion-toolbar.ion-color):not(.ion-color) {
-  --color: #{current-color(contrast)};
-  --color-checked: #{current-color(contrast)};
-}
-
 :host(.ion-color)::slotted(ion-segment-button) {
-  --color: #{current-color(base)};
+  --background-hover: #{current-color(base, .04)};
+  --background-activated: #{current-color(base, .16)};
+  --ripple-color: #{current-color(base)};
 }
 
 :host(.ion-color)::slotted(.segment-button-checked) {
+  --indicator-color-checked: #{current-color(base)};
+  color: #{current-color(base)};
+}
+
+:host(.ion-color)::slotted(.segment-button-checked.activated) {
   color: #{current-color(base)};
 }
 
 
-// Material Design Segment Button
+// Segment: Default Toolbar
 // --------------------------------------------------
 
-::slotted(ion-segment-button) {
-  --padding-top: #{$segment-button-md-padding-top};
-  --padding-end: #{$segment-button-md-padding-end};
-  --padding-bottom: #{$segment-button-md-padding-bottom};
-  --padding-start: #{$segment-button-md-padding-start};
-  --border-width: #{0 0 $segment-button-md-border-bottom-width 0};
-  --border-style: solid;
-  --transition: #{$segment-button-md-transition};
-  --icon-size: #{$segment-button-md-icon-size};
-
-  height: $segment-button-md-height;
-
-  font-size: $segment-button-md-font-size;
-  font-weight: $segment-button-md-font-weight;
-
-  line-height: $segment-button-md-line-height;
-
-  text-transform: uppercase;
-
-  opacity: $segment-button-md-opacity;
+:host-context(ion-toolbar):not(.ion-color)::slotted(ion-segment-button) {
+  --color: #{var(--ion-toolbar-color-unchecked, $segment-button-md-text-color)};
+  --color-checked: #{var(--ion-toolbar-color-checked, $segment-button-md-text-color-checked)};
 }
 
-// Checked Segment Button
+
+// Segment: Toolbar Color
 // --------------------------------------------------
 
-::slotted(.activated),
-::slotted(.segment-button-checked) {
-  opacity: $segment-button-md-opacity-activated;
-}
-
-// Disabled Segment Button
-// --------------------------------------------------
-
-::slotted(.segment-button-disabled) {
-  opacity: $segment-button-md-opacity-disabled;
+:host-context(ion-toolbar.ion-color):not(.ion-color)::slotted(ion-segment-button) {
+  --background-hover: #{current-color(contrast, .04)};
+  --background-activated: #{current-color(base)};
+  --color: #{current-color(contrast, .6)};
+  --color-checked: #{current-color(contrast)};
+  --indicator-color-checked: #{current-color(contrast)};
 }

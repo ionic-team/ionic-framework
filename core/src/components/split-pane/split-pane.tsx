@@ -34,7 +34,7 @@ export class SplitPane implements ComponentInterface {
   @Prop({ context: 'window' }) win!: Window;
 
   /**
-   * If `true`, the split pane will be hidden. Defaults to `false`.
+   * If `true`, the split pane will be hidden.
    */
   @Prop() disabled = false;
 
@@ -108,10 +108,12 @@ export class SplitPane implements ComponentInterface {
     }
 
     // Listen on media query
-    const callback = (q: MediaQueryList) => this.visible = q.matches;
+    const callback = (q: MediaQueryList) => {
+      this.visible = q.matches;
+    };
     const mediaList = this.win.matchMedia(mediaQuery);
-    mediaList.addListener(callback);
-    this.rmL = () => mediaList.removeListener(callback);
+    mediaList.addListener(callback as any);
+    this.rmL = () => mediaList.removeListener(callback as any);
     this.visible = mediaList.matches;
   }
 

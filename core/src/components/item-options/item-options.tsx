@@ -16,7 +16,7 @@ export class ItemOptions implements ComponentInterface {
   @Prop({ context: 'window' }) win!: Window;
 
   /**
-   * The side the option button should be on. Possible values: `"start"` and `"end"`. Defaults to `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
+   * The side the option button should be on. Possible values: `"start"` and `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
    *
    */
   @Prop() side: Side = 'end';

@@ -180,7 +180,7 @@ export function createGesture(config: GestureConfig): Gesture {
 
   // END *************************
 
-  function pointerUp(ev: UIEvent) {
+  function pointerUp(ev: UIEvent | undefined) {
     const tmpHasCaptured = hasCapturedPan;
     const tmpHasFiredStart = hasFiredStart;
     reset();
@@ -206,6 +206,9 @@ export function createGesture(config: GestureConfig): Gesture {
 
   return {
     setDisabled(disabled: boolean) {
+      if (disabled && hasCapturedPan) {
+        pointerUp(undefined);
+      }
       pointerEvents.setDisabled(disabled);
     },
     destroy() {
@@ -215,7 +218,10 @@ export function createGesture(config: GestureConfig): Gesture {
   };
 }
 
-function calcGestureData(detail: GestureDetail, ev: UIEvent) {
+function calcGestureData(detail: GestureDetail, ev: UIEvent | undefined) {
+  if (!ev) {
+    return;
+  }
   const prevX = detail.currentX;
   const prevY = detail.currentY;
   const prevT = detail.timeStamp;

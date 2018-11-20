@@ -20,7 +20,6 @@ A list of the breaking changes introduced to each component in Ionic Angular v4.
 - [Alert](#alert)
 - [Back Button](#back-button)
 - [Button](#button)
-- [Chip](#chip)
 - [Colors](#colors)
 - [Content](#content)
 - [Datetime](#datetime)
@@ -48,7 +47,7 @@ A list of the breaking changes introduced to each component in Ionic Angular v4.
 - [Range](#range)
 - [Refresher](#refresher)
 - [Scroll](#scroll)
-- [Segment](#segment)
+- [Segment Button](#segment-button)
 - [Select](#select)
 - [Spinner](#spinner)
 - [Tabs](#tabs)
@@ -248,34 +247,6 @@ The `small` and `large` attributes are now combined under the `size` attribute. 
 <ion-button expand="full">
   Full-width Button
 </ion-button>
-```
-
-## Chip
-
-### Markup Changed
-
-Buttons inside of an `<ion-chip>` container should now be written as an `<ion-chip-button>` element. Ionic will determine when to render an anchor tag based on the presence of an `href` attribute.
-
-**Old Usage Example:**
-
-```html
-<ion-chip>
-  <ion-label>Default</ion-label>
-  <ion-button clear color="light">
-    <ion-icon name="close-circle"></ion-icon>
-  </ion-button>
-</ion-chip>
-```
-
-**New Usage Example:**
-
-```html
-<ion-chip>
-  <ion-label>Default</ion-label>
-  <ion-chip-button fill="clear" color="light">
-    <ion-icon name="close-circle"></ion-icon>
-  </ion-chip-button>
-</ion-chip>
 ```
 
 
@@ -1199,9 +1170,25 @@ div.scrollable {
 ```
 
 
-## Segment
+## Segment Button
 
-The markup hasn't changed for Segments, but now writing `<ion-segment-button>` will render a native button element inside of it.
+Segment Button text is now required to be wrapped in an `ion-label`.
+
+*Old usage:*
+
+```html
+<ion-segment-button>
+  Item One
+</ion-segment-button>
+```
+
+*New usage:*
+
+```html
+<ion-segment-button>
+  <ion-label>Item One</ion-label>
+</ion-segment-button>
+```
 
 
 ## Select

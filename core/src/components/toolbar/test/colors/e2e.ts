@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('toolbar: colors', async () => {
+test('toolbar: colors', async () => {
   const page = await newE2EPage({
     url: '/src/components/toolbar/test/colors'
   });

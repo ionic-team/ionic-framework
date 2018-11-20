@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('action-sheet: cssClass', async () => {
+test('action-sheet: cssClass', async () => {
   const page = await newE2EPage({
     url: `/src/components/action-sheet/test/custom-css?ionic:_testing=true`
   });

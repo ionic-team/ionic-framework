@@ -1,13 +1,16 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 
-import { Color, Mode } from '../../interface';
+import { Color, Mode, SegmentButtonLayout } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 let ids = 0;
 
 @Component({
   tag: 'ion-segment-button',
-  styleUrl: 'segment-button.scss',
+  styleUrls: {
+    ios: 'segment-button.ios.scss',
+    md: 'segment-button.md.scss'
+  },
   shadow: true
 })
 export class SegmentButton implements ComponentInterface {
@@ -23,19 +26,23 @@ export class SegmentButton implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
-   * If `true`, the segment button is selected. Defaults to `false`.
+   * If `true`, the segment button is selected.
    */
   @Prop({ mutable: true }) checked = false;
 
   /**
-   * If `true`, the user cannot interact with the segment button. Defaults to `false`.
+   * If `true`, the user cannot interact with the segment button.
    */
   @Prop() disabled = false;
+
+  /**
+   * Set the layout of the text and icon in the segment.
+   */
+  @Prop() layout?: SegmentButtonLayout;
 
   /**
    * The value of the segment button.
@@ -54,14 +61,21 @@ export class SegmentButton implements ComponentInterface {
     }
   }
 
+  private onClick = () => {
+    this.checked = true;
+  }
+
   hostData() {
     const { disabled, checked, color } = this;
     return {
-      'ion-activatable': true,
+      'ion-activatable': 'instant',
+      'aria-disabled': this.disabled ? 'true' : null,
+
       class: {
         ...createColorClasses(color),
         'segment-button-disabled': disabled,
         'segment-button-checked': checked,
+        [`segment-button-layout-${this.layout}`]: !!this.layout
       }
     };
   }
@@ -73,11 +87,12 @@ export class SegmentButton implements ComponentInterface {
         aria-pressed={this.checked ? 'true' : null}
         class="button-native"
         disabled={this.disabled}
-        onClick={() => this.checked = true}
+        onClick={this.onClick}
       >
         <slot></slot>
         {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-      </button>
+      </button>,
+      <div class="segment-button-indicator"></div>
     ];
   }
 }

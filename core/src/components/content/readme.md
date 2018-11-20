@@ -9,23 +9,23 @@ view component.
 
 ## Properties
 
-| Property          | Attribute          | Description                                                                                                                                                                                                                                                            | Type                   |
-| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- |
-| `color`           | `color`            | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`  |
-| `forceOverscroll` | `force-overscroll` | If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.       | `boolean \| undefined` |
-| `fullscreen`      | `fullscreen`       | If `true`, the content will scroll behind the headers and footers. This effect can easily be seen by setting the toolbar to transparent.                                                                                                                               | `boolean`              |
-| `scrollEvents`    | `scroll-events`    | Because of performance reasons, ionScroll events are disabled by default, in order to enable them and start listening from (ionScroll), set this property to `true`.                                                                                                   | `boolean`              |
-| `scrollX`         | `scroll-x`         | If you want to enable the content scrolling in the X axis, set this property to `true`.                                                                                                                                                                                | `boolean`              |
-| `scrollY`         | `scroll-y`         | If you want to disable the content scrolling in the Y axis, set this property to `false`.                                                                                                                                                                              | `boolean`              |
+| Property          | Attribute          | Description                                                                                                                                                                                                                                                            | Type                   | Default     |
+| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ----------- |
+| `color`           | `color`            | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`  | `undefined` |
+| `forceOverscroll` | `force-overscroll` | If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.       | `boolean \| undefined` | `undefined` |
+| `fullscreen`      | `fullscreen`       | If `true`, the content will scroll behind the headers and footers. This effect can easily be seen by setting the toolbar to transparent.                                                                                                                               | `boolean`              | `false`     |
+| `scrollEvents`    | `scroll-events`    | Because of performance reasons, ionScroll events are disabled by default, in order to enable them and start listening from (ionScroll), set this property to `true`.                                                                                                   | `boolean`              | `false`     |
+| `scrollX`         | `scroll-x`         | If you want to enable the content scrolling in the X axis, set this property to `true`.                                                                                                                                                                                | `boolean`              | `false`     |
+| `scrollY`         | `scroll-y`         | If you want to disable the content scrolling in the Y axis, set this property to `false`.                                                                                                                                                                              | `boolean`              | `true`      |
 
 
 ## Events
 
-| Event            | Detail           | Description                                                                                      |
-| ---------------- | ---------------- | ------------------------------------------------------------------------------------------------ |
-| `ionScroll`      | ScrollDetail     | Emitted while scrolling. This event is disabled by default. Look at the property: `scrollEvents` |
-| `ionScrollEnd`   | ScrollBaseDetail | Emitted when the scroll has ended.                                                               |
-| `ionScrollStart` | ScrollBaseDetail | Emitted when the scroll has started.                                                             |
+| Event            | Description                                                                                      | Detail           |
+| ---------------- | ------------------------------------------------------------------------------------------------ | ---------------- |
+| `ionScroll`      | Emitted while scrolling. This event is disabled by default. Look at the property: `scrollEvents` | ScrollDetail     |
+| `ionScrollEnd`   | Emitted when the scroll has ended.                                                               | ScrollBaseDetail |
+| `ionScrollStart` | Emitted when the scroll has started.                                                             | ScrollBaseDetail |
 
 
 ## Methods

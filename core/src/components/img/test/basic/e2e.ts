@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('img: basic', async () => {
+test('img: basic', async () => {
   const page = await newE2EPage({
     url: '/src/components/img/test/basic?ionic:_testing=true'
   });

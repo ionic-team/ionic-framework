@@ -13,6 +13,9 @@ import { createColorClasses, openURL } from '../../utils/theme';
   shadow: true,
 })
 export class Button implements ComponentInterface {
+
+  private inToolbar = false;
+
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'window' }) win!: Window;
@@ -28,18 +31,16 @@ export class Button implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
    * The type of button.
-   * Possible values are: `"button"`, `"bar-button"`.
    */
   @Prop({ mutable: true }) buttonType = 'button';
 
   /**
-   * If `true`, the user cannot interact with the button. Defaults to `false`.
+   * If `true`, the user cannot interact with the button.
    */
   @Prop({ reflectToAttr: true }) disabled = false;
 
@@ -60,7 +61,7 @@ export class Button implements ComponentInterface {
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
-  @Prop() routerDirection?: RouterDirection;
+  @Prop() routerDirection: RouterDirection = 'forward';
 
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.
@@ -70,13 +71,11 @@ export class Button implements ComponentInterface {
 
   /**
    * The button shape.
-   * Possible values are: `"round"`.
    */
   @Prop({ reflectToAttr: true }) shape?: 'round';
 
   /**
    * The button size.
-   * Possible values are: `"small"`, `"default"`, `"large"`.
    */
   @Prop({ reflectToAttr: true }) size?: 'small' | 'default' | 'large';
 
@@ -87,8 +86,6 @@ export class Button implements ComponentInterface {
 
   /**
    * The type of the button.
-   * Possible values are: `"submit"`, `"reset"` and `"button"`.
-   * Default value is: `"button"`
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
@@ -103,9 +100,7 @@ export class Button implements ComponentInterface {
   @Event() ionBlur!: EventEmitter<void>;
 
   componentWillLoad() {
-    if (this.fill === undefined) {
-      this.fill = this.el.closest('ion-buttons') ? 'clear' : 'solid';
-    }
+    this.inToolbar = !!this.el.closest('ion-buttons');
   }
 
   private onFocus = () => {
@@ -145,10 +140,14 @@ export class Button implements ComponentInterface {
   }
 
   hostData() {
-    const { buttonType, keyFocus, disabled, color, expand, fill, shape, size, strong } = this;
-
+    const { buttonType, keyFocus, disabled, color, expand, shape, size, strong } = this;
+    let fill = this.fill;
+    if (fill === undefined) {
+      fill = this.inToolbar ? 'clear' : 'solid';
+    }
     return {
       'ion-activatable': true,
+      'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...createColorClasses(color),
         [buttonType]: true,
@@ -186,7 +185,7 @@ export class Button implements ComponentInterface {
           <slot></slot>
           <slot name="end"></slot>
         </span>
-        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+        {this.mode === 'md' && <ion-ripple-effect type={this.inToolbar ? 'unbounded' : 'bounded'}></ion-ripple-effect>}
       </TagType>
     );
   }

@@ -9,10 +9,10 @@ It is the element form a calling `NavController.setRoot()`
 
 ## Properties
 
-| Property         | Attribute   | Description                                              | Type                                                                       |
-| ---------------- | ----------- | -------------------------------------------------------- | -------------------------------------------------------------------------- |
-| `componentProps` | --          | Data you want to pass to the component as props          | `undefined \| { [key: string]: any; }`                                     |
-| `component`      | `component` | Component you want to make root for the navigation stack | `Function \| HTMLElement \| ViewController \| null \| string \| undefined` |
+| Property         | Attribute   | Description                                              | Type                                                                       | Default     |
+| ---------------- | ----------- | -------------------------------------------------------- | -------------------------------------------------------------------------- | ----------- |
+| `component`      | `component` | Component you want to make root for the navigation stack | `Function \| HTMLElement \| ViewController \| null \| string \| undefined` | `undefined` |
+| `componentProps` | --          | Data you want to pass to the component as props          | `undefined \| { [key: string]: any; }`                                     | `undefined` |
 
 
 ----------------------------------------------

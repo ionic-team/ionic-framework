@@ -8,7 +8,7 @@ import { Component, ComponentInterface, Prop } from '@stencil/core';
 export class Grid implements ComponentInterface {
 
   /**
-   * If `true`, the grid will have a fixed width based on the screen size. Defaults to `false`.
+   * If `true`, the grid will have a fixed width based on the screen size.
    */
   @Prop() fixed = false;
 

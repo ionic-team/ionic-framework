@@ -160,12 +160,14 @@ export class Router implements ComponentInterface {
   }
 
   private historyDirection() {
-    if (this.win.history.state === null) {
+    const win = this.win;
+
+    if (win.history.state === null) {
       this.state++;
-      this.win.history.replaceState(this.state, this.win.document.title, this.win.document.location.href);
+      win.history.replaceState(this.state, win.document.title, win.document.location && win.document.location.href);
     }
 
-    const state = this.win.history.state;
+    const state = win.history.state;
     const lastState = this.lastState;
     this.lastState = state;
 

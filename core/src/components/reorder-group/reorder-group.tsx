@@ -37,7 +37,7 @@ export class ReorderGroup implements ComponentInterface {
   @Prop({ context: 'document' }) doc!: Document;
 
   /**
-   * If `true`, the reorder will be hidden. Defaults to `true`.
+   * If `true`, the reorder will be hidden.
    */
   @Prop() disabled = true;
   @Watch('disabled')

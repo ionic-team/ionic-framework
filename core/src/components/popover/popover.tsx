@@ -39,7 +39,6 @@ export class Popover implements ComponentInterface, OverlayInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
@@ -75,7 +74,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
   @Prop() cssClass?: string | string[];
 
   /**
-   * If `true`, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.
+   * If `true`, the popover will be dismissed when the backdrop is clicked.
    */
   @Prop() backdropDismiss = true;
 
@@ -85,17 +84,17 @@ export class Popover implements ComponentInterface, OverlayInterface {
   @Prop() event: any;
 
   /**
-   * If `true`, a backdrop will be displayed behind the popover. Defaults to `true`.
+   * If `true`, a backdrop will be displayed behind the popover.
    */
   @Prop() showBackdrop = true;
 
   /**
-   * If `true`, the popover will be translucent. Defaults to `false`.
+   * If `true`, the popover will be translucent.
    */
   @Prop() translucent = false;
 
   /**
-   * If `true`, the popover will animate. Defaults to `true`.
+   * If `true`, the popover will animate.
    */
   @Prop() animated = true;
 
