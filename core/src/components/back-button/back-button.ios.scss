@@ -30,8 +30,6 @@
 }
 
 .button-native {
-  transform: translateZ(0);
-
   overflow: visible;
   z-index: $back-button-ios-button-z-index;
 }

@@ -68,7 +68,6 @@
   background: var(--handle-background);
 
   box-shadow: $toggle-md-handle-box-shadow;
-  will-change: transform, background-color;
   contain: strict;
 }
 
