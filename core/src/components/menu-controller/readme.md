@@ -25,7 +25,7 @@ Type: `Promise<boolean>`
 
 
 
-### `enable(shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undef...`
+### `enable(shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>`
 
 Used to enable or disable a menu. For example, there could be multiple
 left menus, but only one of them should be able to be opened at the same
@@ -165,7 +165,7 @@ Type: `void`
 
 
 
-### `swipeGesture(shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undef...`
+### `swipeGesture(shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>`
 
 Used to enable or disable the ability to swipe open the menu.
 

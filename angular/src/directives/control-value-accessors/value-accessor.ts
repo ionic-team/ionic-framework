@@ -5,9 +5,9 @@ export class ValueAccessor implements ControlValueAccessor {
 
   private onChange: (value: any) => void = () => {/**/};
   private onTouched: () => void = () => {/**/};
-  private lastValue: any;
+  protected lastValue: any;
 
-  constructor(private el: ElementRef) {}
+  constructor(protected el: ElementRef) {}
 
   writeValue(value: any) {
     this.el.nativeElement.value = this.lastValue = value == null ? '' : value;
@@ -41,22 +41,28 @@ export class ValueAccessor implements ControlValueAccessor {
   }
 }
 
-function setIonicClasses(element: ElementRef) {
+export function setIonicClasses(element: ElementRef) {
   requestAnimationFrame(() => {
     const classList = (element.nativeElement as HTMLElement).classList;
 
     classList.remove(
       'ion-valid',
+      'ion-invalid',
       'ion-touched',
       'ion-untouched',
       'ion-dirty',
       'ion-pristine'
     );
 
-    classList.forEach((cls: string) => {
-      if (cls.startsWith('ng-')) {
-        classList.add(`ion-${cls.substr(3)}`);
+    for (let i = 0; i < classList.length; i++) {
+      const item = classList.item(i);
+      if (item && startsWith(item, 'ng-')) {
+        classList.add(`ion-${item.substr(3)}`);
       }
-    });
+    }
   });
+}
+
+function startsWith(input: string, search: string): boolean {
+  return input.substr(0, search.length) === search;
 }

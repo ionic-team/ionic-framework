@@ -1,7 +1,7 @@
 
 export function isTextInputFocused(doc: Document): boolean {
   const activeElement = doc.activeElement;
-  if (isTextInput(activeElement) && activeElement.parentElement) {
+  if (activeElement && isTextInput(activeElement) && activeElement.parentElement) {
     return activeElement.parentElement.querySelector(':focus') === activeElement;
   }
   return false;

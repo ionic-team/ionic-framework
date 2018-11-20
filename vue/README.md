@@ -35,7 +35,7 @@ ionic capacitor run
 
 ## Current known limitations
 
-This is an alpha release of @ionic/vue so please understand that there are some missing pieces but know that many of the componets will work.
+This is an alpha release of @ionic/vue so please understand that there are some missing pieces but know that many of the components will work.
 * The shorthand `v-model` binding is currently not supported
 * Stack navigation for deep transitions is under heavy development at this time.
 

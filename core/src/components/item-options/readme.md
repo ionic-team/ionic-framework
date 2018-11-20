@@ -29,19 +29,6 @@ You can combine the `ionSwipe` event plus the `expandable` directive to create a
 | `ionSwipe` | Emitted when the item has been fully swiped. | any    |
 
 
-## Methods
-
-### `fireSwipeEvent() => void`
-
-
-
-#### Returns
-
-Type: `void`
-
-
-
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

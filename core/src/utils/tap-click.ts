@@ -1,7 +1,8 @@
+import { Config } from '../interface';
 
 import { now, pointerCoord } from './helpers';
 
-export function startTapClick(doc: Document) {
+export function startTapClick(doc: Document, config: Config) {
   let lastTouch = -MOUSE_WAIT * 10;
   let lastActivated = 0;
   let cancelled = false;
@@ -11,6 +12,7 @@ export function startTapClick(doc: Document) {
   let activeRipple: Promise<() => void> | undefined;
   let activeDefer: any;
 
+  const useRippleEffect = config.getBoolean('animated', true) && config.getBoolean('rippleEffect', true);
   const clearDefers = new WeakMap<HTMLElement, any>();
 
   function onBodyClick(ev: Event) {
@@ -116,7 +118,7 @@ export function startTapClick(doc: Document) {
     lastActivated = Date.now();
     el.classList.add(ACTIVATED);
 
-    const rippleEffect = getRippleEffect(el);
+    const rippleEffect = useRippleEffect && getRippleEffect(el);
     if (rippleEffect && rippleEffect.addRipple) {
       activeRipple = rippleEffect.addRipple(x, y);
     }

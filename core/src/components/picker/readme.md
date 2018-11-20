@@ -21,7 +21,6 @@ A Picker is a dialog that displays a row of buttons and columns underneath. It a
 | `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                         | `true`      |
 | `leaveAnimation`  | --                 | Animation to use when the picker is dismissed.                                                                   | `AnimationBuilder \| undefined`   | `undefined` |
 | `mode`            | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                   | `undefined` |
-| `overlayIndex`    | `overlay-index`    |                                                                                                                  | `number`                          | `undefined` |
 | `showBackdrop`    | `show-backdrop`    | If `true`, a backdrop will be displayed behind the picker.                                                       | `boolean`                         | `true`      |
 
 

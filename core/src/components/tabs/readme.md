@@ -87,13 +87,6 @@ Using tabs with Angular's router is fairly straight forward. The only additional
 <!-- Auto Generated Below -->
 
 
-## Properties
-
-| Property    | Attribute    | Description | Type      | Default |
-| ----------- | ------------ | ----------- | --------- | ------- |
-| `useRouter` | `use-router` |             | `boolean` | `false` |
-
-
 ## Events
 
 | Event              | Description                                                                | Detail                   |
@@ -105,16 +98,6 @@ Using tabs with Angular's router is fairly straight forward. The only additional
 
 
 ## Methods
-
-### `getRouteId() => Promise<RouteID | undefined>`
-
-
-
-#### Returns
-
-Type: `Promise<RouteID | undefined>`
-
-
 
 ### `getSelected() => Promise<HTMLIonTabElement | undefined>`
 
@@ -155,22 +138,6 @@ Index or the Tab instance, of the tab to select.
 #### Returns
 
 Type: `Promise<boolean>`
-
-
-
-### `setRouteId(id: string) => Promise<RouteWrite>`
-
-
-
-#### Parameters
-
-| Name | Type     | Description |
-| ---- | -------- | ----------- |
-| `id` | `string` |             |
-
-#### Returns
-
-Type: `Promise<RouteWrite>`
 
 
 

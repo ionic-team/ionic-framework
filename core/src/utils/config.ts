@@ -8,6 +8,12 @@ export interface IonicConfig {
   animated?: boolean;
 
   /**
+   * When it's set to `false`, it disables all material-design ripple-effects across the app.
+   * Defaults to `true`.
+   */
+  rippleEffect?: boolean;
+
+  /**
    * The mode determines which platform styles to use for the whole application.
    */
   mode?: Mode;

@@ -124,7 +124,7 @@ export function doRender(
 
 function createNode(el: HTMLElement, type: CellType): HTMLElement | null {
   const template = getTemplate(el, type);
-  if (template) {
+  if (template && el.ownerDocument) {
     return el.ownerDocument.importNode(template.content, true).children[0] as HTMLElement;
   }
   return null;
