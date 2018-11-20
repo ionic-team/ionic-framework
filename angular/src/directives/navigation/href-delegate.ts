@@ -35,7 +35,10 @@ export class HrefDelegate {
     
     if (this.routerLink || this.routerLinkWithHref || url) {
       ev.preventDefault();
-      this.navCtrl.setDirection(this.routerDirection);
+
+      if (this.routerDirection) {
+        this.navCtrl.setDirection(this.routerDirection);
+      }
 
       if (this.routerLink) {
         this.routerLink.onClick();
