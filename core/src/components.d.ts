@@ -3543,8 +3543,11 @@ export namespace Components {
     * Adds the ripple effect to the parent element
     */
     'addRipple': (pageX: number, pageY: number) => Promise<() => void>;
+    'unbounded': boolean;
   }
-  interface IonRippleEffectAttributes extends StencilHTMLAttributes {}
+  interface IonRippleEffectAttributes extends StencilHTMLAttributes {
+    'unbounded'?: boolean;
+  }
 
   interface IonRouteRedirect {
     /**
