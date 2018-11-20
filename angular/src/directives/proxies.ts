@@ -652,13 +652,14 @@ export class ReorderGroup {
 }
 
 export declare interface RippleEffect extends StencilComponents<'IonRippleEffect'> {}
-@Component({ selector: 'ion-ripple-effect', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>' })
+@Component({ selector: 'ion-ripple-effect', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['type'] })
 export class RippleEffect {
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
     const el = r.nativeElement;
     proxyMethods(this, el, ['addRipple']);
+    proxyInputs(this, el, ['type']);
   }
 }
 

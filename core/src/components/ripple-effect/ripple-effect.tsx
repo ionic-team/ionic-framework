@@ -13,6 +13,17 @@ export class RippleEffect implements ComponentInterface {
   @Prop({ context: 'window' }) win!: Window;
 
   /**
+   * Sets the type of ripple-effect:
+   *
+   * - `bounded`: the ripple effect expands from the user's click position
+   * - `unbounded`: the ripple effect expands from the center of the button and overflows the container.
+   *
+   * NOTE: Surfaces for bounded ripples should have the overflow property set to hidden,
+   * while surfaces for unbounded ripples should have it set to visible.
+   */
+  @Prop() type: 'bounded' | 'unbounded' = 'bounded';
+
+  /**
    * Adds the ripple effect to the parent element
    */
   @Method()
@@ -23,13 +34,17 @@ export class RippleEffect implements ComponentInterface {
         const width = rect.width;
         const height = rect.height;
         const hypotenuse = Math.sqrt(width * width + height * height);
-        const maxRadius = hypotenuse + PADDING;
         const maxDim = Math.max(height, width);
-        const posX = pageX - rect.left;
-        const posY = pageY - rect.top;
-
+        const maxRadius = this.unbounded ? maxDim : hypotenuse + PADDING;
         const initialSize = Math.floor(maxDim * INITIAL_ORIGIN_SCALE);
         const finalScale = maxRadius / initialSize;
+        let posX = pageX - rect.left;
+        let posY = pageY - rect.top;
+        if (this.type) {
+          posX = width * 0.5;
+          posY = height * 0.5;
+        }
+
         const x = posX - initialSize * 0.5;
         const y = posY - initialSize * 0.5;
         const moveX = width * 0.5 - posX;
@@ -57,9 +72,16 @@ export class RippleEffect implements ComponentInterface {
     });
   }
 
+  private get unbounded() {
+    return this.type === 'unbounded';
+  }
+
   hostData() {
     return {
-      role: 'presentation'
+      role: 'presentation',
+      class: {
+        'unbounded': this.unbounded
+      }
     };
   }
 }
