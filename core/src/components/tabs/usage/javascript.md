@@ -9,9 +9,13 @@
     <ion-nav></ion-nav>
   </ion-tab>
 
-  <ion-tab tab="tab-map" component="page-map"></ion-tab>
+  <ion-tab tab="tab-map" component="page-map">
+    <ion-nav></ion-nav>
+  </ion-tab>
 
-  <ion-tab tab="tab-about" component="page-about"></ion-tab>
+  <ion-tab tab="tab-about" component="page-about">
+    <ion-nav></ion-nav>
+  </ion-tab>
 
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="tab-schedule">
