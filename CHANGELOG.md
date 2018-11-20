@@ -106,8 +106,8 @@ If you are using @ionic/angular, please update the version number of any @angula
 "devDependencies": {
   "@angular-devkit/architect": "~0.10.5",
   "@angular-devkit/build-angular": "~0.10.5",
-  "@angular-devkit/core": "~0.7.5",
-  "@angular-devkit/schematics": "~0.7.5",
+  "@angular-devkit/core": "~7.0.5",
+  "@angular-devkit/schematics": "~7.0.5",
   "@angular/cli": "~7.0.3",
   "@angular/compiler": "~7.0.3",
   "@angular/compiler-cli": "~7.0.3",
