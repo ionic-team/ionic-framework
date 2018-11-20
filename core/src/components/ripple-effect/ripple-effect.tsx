@@ -1,7 +1,5 @@
 import { Component, ComponentInterface, Element, Method, Prop, QueueApi } from '@stencil/core';
 
-import { Config } from '../../interface';
-
 @Component({
   tag: 'ion-ripple-effect',
   styleUrl: 'ripple-effect.scss',
@@ -13,20 +11,12 @@ export class RippleEffect implements ComponentInterface {
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'window' }) win!: Window;
-  @Prop({ context: 'config' }) config!: Config;
 
   /**
    * Adds the ripple effect to the parent element
    */
   @Method()
   async addRipple(pageX: number, pageY: number) {
-    if (this.config.getBoolean('animated', true)) {
-      return this.prepareRipple(pageX, pageY);
-    }
-    return () => { return; };
-  }
-
-  private prepareRipple(pageX: number, pageY: number) {
     return new Promise<() => void>(resolve => {
       this.queue.read(() => {
         const rect = this.el.getBoundingClientRect();
