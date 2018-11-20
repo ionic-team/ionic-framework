@@ -1,6 +1,6 @@
+import { Config } from '../interface';
 
 import { now, pointerCoord } from './helpers';
-import { Config } from '../interface';
 
 export function startTapClick(doc: Document, config: Config) {
   let lastTouch = -MOUSE_WAIT * 10;
