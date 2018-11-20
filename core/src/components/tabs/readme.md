@@ -22,7 +22,7 @@ In order to do so, an `ion-tab-bar` should be provided as a direct child of `ion
 
     <ion-tab-button tab="settings">
       <ion-label>Settings</ion-label>
-      <ion-icon name="gear"></ion-icon>
+      <ion-icon name="settings"></ion-icon>
     </ion-tab-button>
 
   </ion-tab-bar>
