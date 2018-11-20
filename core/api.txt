@@ -740,6 +740,7 @@ ion-reorder-group,method,complete,complete(listOrReorder?: boolean | any[] | und
 ion-reorder-group,event,ionItemReorder,ItemReorderDetail,true
 
 
+ion-ripple-effect,prop,type,"bounded" | "unbounded",'bounded',false
 ion-ripple-effect,method,addRipple,addRipple(pageX: number, pageY: number) => Promise<() => void>
 
 ion-route-redirect,prop,from,string,undefined,false
@@ -943,6 +944,7 @@ ion-tab-button,style,--padding-bottom
 ion-tab-button,style,--padding-end
 ion-tab-button,style,--padding-start
 ion-tab-button,style,--padding-top
+ion-tab-button,style,--ripple-color
 
 ion-tab,prop,component,Function | HTMLElement | null | string | undefined,undefined,false
 ion-tab,prop,tab,string,undefined,false
