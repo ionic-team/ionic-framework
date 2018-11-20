@@ -1,15 +1,15 @@
 import { Directive, ElementRef, HostListener, Input, Optional } from '@angular/core';
 import { Router, RouterLink, RouterLinkWithHref } from '@angular/router';
 import { NavController, NavIntent } from '../../providers/nav-controller';
-
-export type RouterDirection =  'forward' | 'back' | 'root' | 'auto';
+import { Router } from '@angular/router';
+import { NavController, NavDirection } from '../../providers/nav-controller';
 
 @Directive({
-  selector: '[routerDirection],ion-anchor,ion-button,ion-item'
+  selector: '[routerLink],[routerDirection],ion-anchor,ion-button,ion-item'
 })
 export class HrefDelegate {
 
-  @Input() routerDirection: RouterDirection = 'forward';
+  @Input() routerDirection: NavDirection = 'forward';
 
   @Input()
   set href(value: string) {
@@ -25,12 +25,7 @@ export class HrefDelegate {
     @Optional() private routerLinkWithHref: RouterLinkWithHref,
     private navCtrl: NavController,
     private elementRef: ElementRef
-  ) {
-
-    if (routerLink || routerLinkWithHref) {
-      this.elementRef.nativeElement.button = true;
-    }
-  }
+  ) {}
 
   @HostListener('click', ['$event', '$event.button', '$event.ctrlKey', '$event.metaKey', '$event.shiftKey'])
   onClick(ev: Event, button: number, ctrlKey: boolean, metaKey: boolean, shiftKey: boolean) {
@@ -42,7 +37,7 @@ export class HrefDelegate {
     
     if (this.routerLink || this.routerLinkWithHref || url) {
       ev.preventDefault();
-      this.navCtrl.setIntent(textToIntent(this.routerDirection));
+      this.navCtrl.setIntent(this.routerDirection);
 
       if (this.routerLink) {
         this.routerLink.onClick();
@@ -52,14 +47,5 @@ export class HrefDelegate {
         this.router.navigateByUrl(url);
       }
     }
-  }
-}
-
-function textToIntent(direction: RouterDirection) {
-  switch (direction) {
-    case 'forward': return NavIntent.Forward;
-    case 'back': return NavIntent.Back;
-    case 'root': return NavIntent.Root;
-    default: return NavIntent.Auto;
   }
 }
