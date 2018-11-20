@@ -185,7 +185,7 @@ export class Button implements ComponentInterface {
           <slot></slot>
           <slot name="end"></slot>
         </span>
-        {this.mode === 'md' && <ion-ripple-effect unbounded={this.inToolbar}></ion-ripple-effect>}
+        {this.mode === 'md' && <ion-ripple-effect type={this.inToolbar ? 'unbounded' : 'bounded'}></ion-ripple-effect>}
       </TagType>
     );
   }

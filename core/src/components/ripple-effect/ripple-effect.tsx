@@ -12,7 +12,16 @@ export class RippleEffect implements ComponentInterface {
   @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'window' }) win!: Window;
 
-  @Prop() unbounded = false;
+  /**
+   * Sets the type of ripple-effect:
+   *
+   * - `bounded`: the ripple effect expands from the user's click position
+   * - `unbounded`: the ripple effect expands from the center of the button and overflows the container.
+   *
+   * NOTE: Surfaces for bounded ripples should have the overflow property set to hidden,
+   * while surfaces for unbounded ripples should have it set to visible.
+   */
+  @Prop() type: 'bounded' | 'unbounded' = 'bounded';
 
   /**
    * Adds the ripple effect to the parent element
@@ -31,7 +40,7 @@ export class RippleEffect implements ComponentInterface {
         const finalScale = maxRadius / initialSize;
         let posX = pageX - rect.left;
         let posY = pageY - rect.top;
-        if (this.unbounded) {
+        if (this.type) {
           posX = width * 0.5;
           posY = height * 0.5;
         }
@@ -61,6 +70,10 @@ export class RippleEffect implements ComponentInterface {
         });
       });
     });
+  }
+
+  private get unbounded() {
+    return this.type === 'unbounded';
   }
 
   hostData() {
