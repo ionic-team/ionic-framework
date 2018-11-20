@@ -56,7 +56,7 @@ export class BackButton {
 export declare interface Backdrop extends StencilComponents<'IonBackdrop'> {}
 @Component({ selector: 'ion-backdrop', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['visible', 'tappable', 'stopPropagation'] })
 export class Backdrop {
-  ionBackdropTap: EventEmitter<CustomEvent>;
+  ionBackdropTap!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -80,8 +80,8 @@ export class Badge {
 export declare interface Button extends StencilComponents<'IonButton'> {}
 @Component({ selector: 'ion-button', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'buttonType', 'disabled', 'expand', 'fill', 'routerDirection', 'href', 'shape', 'size', 'strong', 'type'] })
 export class Button {
-  ionFocus: EventEmitter<CustomEvent>;
-  ionBlur: EventEmitter<CustomEvent>;
+  ionFocus!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -154,10 +154,10 @@ export class CardTitle {
 export declare interface Checkbox extends StencilComponents<'IonCheckbox'> {}
 @Component({ selector: 'ion-checkbox', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'name', 'checked', 'disabled', 'value'] })
 export class Checkbox {
-  ionChange: EventEmitter<CustomEvent>;
-  ionFocus: EventEmitter<CustomEvent>;
-  ionBlur: EventEmitter<CustomEvent>;
-  ionStyle: EventEmitter<CustomEvent>;
+  ionChange!: EventEmitter<CustomEvent>;
+  ionFocus!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
+  ionStyle!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -192,9 +192,9 @@ export class Col {
 export declare interface Content extends StencilComponents<'IonContent'> {}
 @Component({ selector: 'ion-content', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'fullscreen', 'forceOverscroll', 'scrollX', 'scrollY', 'scrollEvents'] })
 export class Content {
-  ionScrollStart: EventEmitter<CustomEvent>;
-  ionScroll: EventEmitter<CustomEvent>;
-  ionScrollEnd: EventEmitter<CustomEvent>;
+  ionScrollStart!: EventEmitter<CustomEvent>;
+  ionScroll!: EventEmitter<CustomEvent>;
+  ionScrollEnd!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -208,11 +208,11 @@ export class Content {
 export declare interface Datetime extends StencilComponents<'IonDatetime'> {}
 @Component({ selector: 'ion-datetime', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'name', 'disabled', 'min', 'max', 'displayFormat', 'pickerFormat', 'cancelText', 'doneText', 'yearValues', 'monthValues', 'dayValues', 'hourValues', 'minuteValues', 'monthNames', 'monthShortNames', 'dayNames', 'dayShortNames', 'pickerOptions', 'placeholder', 'value'] })
 export class Datetime {
-  ionCancel: EventEmitter<CustomEvent>;
-  ionChange: EventEmitter<CustomEvent>;
-  ionFocus: EventEmitter<CustomEvent>;
-  ionBlur: EventEmitter<CustomEvent>;
-  ionStyle: EventEmitter<CustomEvent>;
+  ionCancel!: EventEmitter<CustomEvent>;
+  ionChange!: EventEmitter<CustomEvent>;
+  ionFocus!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
+  ionStyle!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -238,8 +238,8 @@ export class Fab {
 export declare interface FabButton extends StencilComponents<'IonFabButton'> {}
 @Component({ selector: 'ion-fab-button', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'activated', 'disabled', 'href', 'routerDirection', 'show', 'translucent', 'type'] })
 export class FabButton {
-  ionFocus: EventEmitter<CustomEvent>;
-  ionBlur: EventEmitter<CustomEvent>;
+  ionFocus!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -307,7 +307,7 @@ export class Icon {
 export declare interface Img extends StencilComponents<'IonImg'> {}
 @Component({ selector: 'ion-img', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['alt', 'src'] })
 export class Img {
-  ionImgDidLoad: EventEmitter<CustomEvent>;
+  ionImgDidLoad!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -320,7 +320,7 @@ export class Img {
 export declare interface InfiniteScroll extends StencilComponents<'IonInfiniteScroll'> {}
 @Component({ selector: 'ion-infinite-scroll', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['threshold', 'disabled', 'position'] })
 export class InfiniteScroll {
-  ionInfinite: EventEmitter<CustomEvent>;
+  ionInfinite!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -345,13 +345,13 @@ export class InfiniteScrollContent {
 export declare interface Input extends StencilComponents<'IonInput'> {}
 @Component({ selector: 'ion-input', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'debounce', 'disabled', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'spellcheck', 'step', 'size', 'type', 'value'] })
 export class Input {
-  ionInput: EventEmitter<CustomEvent>;
-  ionChange: EventEmitter<CustomEvent>;
-  ionBlur: EventEmitter<CustomEvent>;
-  ionFocus: EventEmitter<CustomEvent>;
-  ionInputDidLoad: EventEmitter<CustomEvent>;
-  ionInputDidUnload: EventEmitter<CustomEvent>;
-  ionStyle: EventEmitter<CustomEvent>;
+  ionInput!: EventEmitter<CustomEvent>;
+  ionChange!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
+  ionFocus!: EventEmitter<CustomEvent>;
+  ionInputDidLoad!: EventEmitter<CustomEvent>;
+  ionInputDidUnload!: EventEmitter<CustomEvent>;
+  ionStyle!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -403,7 +403,7 @@ export class ItemOption {
 export declare interface ItemOptions extends StencilComponents<'IonItemOptions'> {}
 @Component({ selector: 'ion-item-options', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['side'] })
 export class ItemOptions {
-  ionSwipe: EventEmitter<CustomEvent>;
+  ionSwipe!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -417,7 +417,7 @@ export class ItemOptions {
 export declare interface ItemSliding extends StencilComponents<'IonItemSliding'> {}
 @Component({ selector: 'ion-item-sliding', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['disabled'] })
 export class ItemSliding {
-  ionDrag: EventEmitter<CustomEvent>;
+  ionDrag!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -431,7 +431,7 @@ export class ItemSliding {
 export declare interface Label extends StencilComponents<'IonLabel'> {}
 @Component({ selector: 'ion-label', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'position'] })
 export class Label {
-  ionStyle: EventEmitter<CustomEvent>;
+  ionStyle!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -467,11 +467,11 @@ export class ListHeader {
 export declare interface Menu extends StencilComponents<'IonMenu'> {}
 @Component({ selector: 'ion-menu', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['contentId', 'menuId', 'type', 'disabled', 'side', 'swipeGesture', 'maxEdgeStart'] })
 export class Menu {
-  ionWillOpen: EventEmitter<CustomEvent>;
-  ionWillClose: EventEmitter<CustomEvent>;
-  ionDidOpen: EventEmitter<CustomEvent>;
-  ionDidClose: EventEmitter<CustomEvent>;
-  ionMenuChange: EventEmitter<CustomEvent>;
+  ionWillOpen!: EventEmitter<CustomEvent>;
+  ionWillClose!: EventEmitter<CustomEvent>;
+  ionDidOpen!: EventEmitter<CustomEvent>;
+  ionDidClose!: EventEmitter<CustomEvent>;
+  ionMenuChange!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -507,9 +507,9 @@ export class MenuToggle {
 export declare interface Nav extends StencilComponents<'IonNav'> {}
 @Component({ selector: 'ion-nav', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['delegate', 'swipeGesture', 'animated', 'animation', 'rootParams', 'root'] })
 export class Nav {
-  ionNavWillLoad: EventEmitter<CustomEvent>;
-  ionNavWillChange: EventEmitter<CustomEvent>;
-  ionNavDidChange: EventEmitter<CustomEvent>;
+  ionNavWillLoad!: EventEmitter<CustomEvent>;
+  ionNavWillChange!: EventEmitter<CustomEvent>;
+  ionNavDidChange!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -561,12 +561,12 @@ export class Note {
 export declare interface Radio extends StencilComponents<'IonRadio'> {}
 @Component({ selector: 'ion-radio', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'name', 'disabled', 'checked', 'value'] })
 export class Radio {
-  ionRadioDidLoad: EventEmitter<CustomEvent>;
-  ionRadioDidUnload: EventEmitter<CustomEvent>;
-  ionStyle: EventEmitter<CustomEvent>;
-  ionSelect: EventEmitter<CustomEvent>;
-  ionFocus: EventEmitter<CustomEvent>;
-  ionBlur: EventEmitter<CustomEvent>;
+  ionRadioDidLoad!: EventEmitter<CustomEvent>;
+  ionRadioDidUnload!: EventEmitter<CustomEvent>;
+  ionStyle!: EventEmitter<CustomEvent>;
+  ionSelect!: EventEmitter<CustomEvent>;
+  ionFocus!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -579,7 +579,7 @@ export class Radio {
 export declare interface RadioGroup extends StencilComponents<'IonRadioGroup'> {}
 @Component({ selector: 'ion-radio-group', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['allowEmptySelection', 'name', 'value'] })
 export class RadioGroup {
-  ionChange: EventEmitter<CustomEvent>;
+  ionChange!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -592,10 +592,10 @@ export class RadioGroup {
 export declare interface Range extends StencilComponents<'IonRange'> {}
 @Component({ selector: 'ion-range', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'debounce', 'name', 'dualKnobs', 'min', 'max', 'pin', 'snaps', 'step', 'disabled', 'value'] })
 export class Range {
-  ionChange: EventEmitter<CustomEvent>;
-  ionStyle: EventEmitter<CustomEvent>;
-  ionFocus: EventEmitter<CustomEvent>;
-  ionBlur: EventEmitter<CustomEvent>;
+  ionChange!: EventEmitter<CustomEvent>;
+  ionStyle!: EventEmitter<CustomEvent>;
+  ionFocus!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -608,9 +608,9 @@ export class Range {
 export declare interface Refresher extends StencilComponents<'IonRefresher'> {}
 @Component({ selector: 'ion-refresher', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['pullMin', 'pullMax', 'closeDuration', 'snapbackDuration', 'disabled'] })
 export class Refresher {
-  ionRefresh: EventEmitter<CustomEvent>;
-  ionPull: EventEmitter<CustomEvent>;
-  ionStart: EventEmitter<CustomEvent>;
+  ionRefresh!: EventEmitter<CustomEvent>;
+  ionPull!: EventEmitter<CustomEvent>;
+  ionStart!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -640,7 +640,7 @@ export class Reorder {
 export declare interface ReorderGroup extends StencilComponents<'IonReorderGroup'> {}
 @Component({ selector: 'ion-reorder-group', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['disabled'] })
 export class ReorderGroup {
-  ionItemReorder: EventEmitter<CustomEvent>;
+  ionItemReorder!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -670,12 +670,12 @@ export class Row {
 export declare interface Searchbar extends StencilComponents<'IonSearchbar'> {}
 @Component({ selector: 'ion-searchbar', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'debounce', 'placeholder', 'searchIcon', 'showCancelButton', 'spellcheck', 'type', 'value'] })
 export class Searchbar {
-  ionInput: EventEmitter<CustomEvent>;
-  ionChange: EventEmitter<CustomEvent>;
-  ionCancel: EventEmitter<CustomEvent>;
-  ionClear: EventEmitter<CustomEvent>;
-  ionBlur: EventEmitter<CustomEvent>;
-  ionFocus: EventEmitter<CustomEvent>;
+  ionInput!: EventEmitter<CustomEvent>;
+  ionChange!: EventEmitter<CustomEvent>;
+  ionCancel!: EventEmitter<CustomEvent>;
+  ionClear!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
+  ionFocus!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -689,8 +689,8 @@ export class Searchbar {
 export declare interface Segment extends StencilComponents<'IonSegment'> {}
 @Component({ selector: 'ion-segment', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'disabled', 'scrollable', 'value'] })
 export class Segment {
-  ionChange: EventEmitter<CustomEvent>;
-  ionStyle: EventEmitter<CustomEvent>;
+  ionChange!: EventEmitter<CustomEvent>;
+  ionStyle!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -703,7 +703,7 @@ export class Segment {
 export declare interface SegmentButton extends StencilComponents<'IonSegmentButton'> {}
 @Component({ selector: 'ion-segment-button', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'checked', 'disabled', 'layout', 'value'] })
 export class SegmentButton {
-  ionSelect: EventEmitter<CustomEvent>;
+  ionSelect!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -716,11 +716,11 @@ export class SegmentButton {
 export declare interface Select extends StencilComponents<'IonSelect'> {}
 @Component({ selector: 'ion-select', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'disabled', 'cancelText', 'okText', 'placeholder', 'name', 'selectedText', 'multiple', 'interface', 'interfaceOptions', 'value'] })
 export class Select {
-  ionChange: EventEmitter<CustomEvent>;
-  ionCancel: EventEmitter<CustomEvent>;
-  ionFocus: EventEmitter<CustomEvent>;
-  ionBlur: EventEmitter<CustomEvent>;
-  ionStyle: EventEmitter<CustomEvent>;
+  ionChange!: EventEmitter<CustomEvent>;
+  ionCancel!: EventEmitter<CustomEvent>;
+  ionFocus!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
+  ionStyle!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -734,8 +734,8 @@ export class Select {
 export declare interface SelectOption extends StencilComponents<'IonSelectOption'> {}
 @Component({ selector: 'ion-select-option', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['disabled', 'selected', 'value'] })
 export class SelectOption {
-  ionSelectOptionDidLoad: EventEmitter<CustomEvent>;
-  ionSelectOptionDidUnload: EventEmitter<CustomEvent>;
+  ionSelectOptionDidLoad!: EventEmitter<CustomEvent>;
+  ionSelectOptionDidUnload!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -770,7 +770,7 @@ export class SkeletonText {
 export declare interface Slide extends StencilComponents<'IonSlide'> {}
 @Component({ selector: 'ion-slide', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>' })
 export class Slide {
-  ionSlideChanged: EventEmitter<CustomEvent>;
+  ionSlideChanged!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -782,22 +782,22 @@ export class Slide {
 export declare interface Slides extends StencilComponents<'IonSlides'> {}
 @Component({ selector: 'ion-slides', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'options', 'pager', 'scrollbar'] })
 export class Slides {
-  ionSlidesDidLoad: EventEmitter<CustomEvent>;
-  ionSlideTap: EventEmitter<CustomEvent>;
-  ionSlideDoubleTap: EventEmitter<CustomEvent>;
-  ionSlideWillChange: EventEmitter<CustomEvent>;
-  ionSlideDidChange: EventEmitter<CustomEvent>;
-  ionSlideNextStart: EventEmitter<CustomEvent>;
-  ionSlidePrevStart: EventEmitter<CustomEvent>;
-  ionSlideNextEnd: EventEmitter<CustomEvent>;
-  ionSlidePrevEnd: EventEmitter<CustomEvent>;
-  ionSlideTransitionStart: EventEmitter<CustomEvent>;
-  ionSlideTransitionEnd: EventEmitter<CustomEvent>;
-  ionSlideDrag: EventEmitter<CustomEvent>;
-  ionSlideReachStart: EventEmitter<CustomEvent>;
-  ionSlideReachEnd: EventEmitter<CustomEvent>;
-  ionSlideTouchStart: EventEmitter<CustomEvent>;
-  ionSlideTouchEnd: EventEmitter<CustomEvent>;
+  ionSlidesDidLoad!: EventEmitter<CustomEvent>;
+  ionSlideTap!: EventEmitter<CustomEvent>;
+  ionSlideDoubleTap!: EventEmitter<CustomEvent>;
+  ionSlideWillChange!: EventEmitter<CustomEvent>;
+  ionSlideDidChange!: EventEmitter<CustomEvent>;
+  ionSlideNextStart!: EventEmitter<CustomEvent>;
+  ionSlidePrevStart!: EventEmitter<CustomEvent>;
+  ionSlideNextEnd!: EventEmitter<CustomEvent>;
+  ionSlidePrevEnd!: EventEmitter<CustomEvent>;
+  ionSlideTransitionStart!: EventEmitter<CustomEvent>;
+  ionSlideTransitionEnd!: EventEmitter<CustomEvent>;
+  ionSlideDrag!: EventEmitter<CustomEvent>;
+  ionSlideReachStart!: EventEmitter<CustomEvent>;
+  ionSlideReachEnd!: EventEmitter<CustomEvent>;
+  ionSlideTouchStart!: EventEmitter<CustomEvent>;
+  ionSlideTouchEnd!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -822,8 +822,8 @@ export class Spinner {
 export declare interface SplitPane extends StencilComponents<'IonSplitPane'> {}
 @Component({ selector: 'ion-split-pane', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['disabled', 'when'] })
 export class SplitPane {
-  ionChange: EventEmitter<CustomEvent>;
-  ionSplitPaneVisible: EventEmitter<CustomEvent>;
+  ionChange!: EventEmitter<CustomEvent>;
+  ionSplitPaneVisible!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -848,7 +848,7 @@ export class Tab {
 export declare interface TabBar extends StencilComponents<'IonTabBar'> {}
 @Component({ selector: 'ion-tab-bar', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'layout', 'selectedTab', 'translucent'] })
 export class TabBar {
-  ionTabBarChanged: EventEmitter<CustomEvent>;
+  ionTabBarChanged!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -861,7 +861,7 @@ export class TabBar {
 export declare interface TabButton extends StencilComponents<'IonTabButton'> {}
 @Component({ selector: 'ion-tab-button', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'layout', 'href', 'tab', 'disabled'] })
 export class TabButton {
-  ionTabButtonClick: EventEmitter<CustomEvent>;
+  ionTabButtonClick!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -874,10 +874,10 @@ export class TabButton {
 export declare interface Tabs extends StencilComponents<'IonTabs'> {}
 @Component({ selector: 'ion-tabs', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['useRouter'] })
 export class Tabs {
-  ionChange: EventEmitter<CustomEvent>;
-  ionNavWillLoad: EventEmitter<CustomEvent>;
-  ionNavWillChange: EventEmitter<CustomEvent>;
-  ionNavDidChange: EventEmitter<CustomEvent>;
+  ionChange!: EventEmitter<CustomEvent>;
+  ionNavWillLoad!: EventEmitter<CustomEvent>;
+  ionNavWillChange!: EventEmitter<CustomEvent>;
+  ionNavDidChange!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -902,11 +902,11 @@ export class Text {
 export declare interface Textarea extends StencilComponents<'IonTextarea'> {}
 @Component({ selector: 'ion-textarea', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'autocapitalize', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value'] })
 export class Textarea {
-  ionChange: EventEmitter<CustomEvent>;
-  ionInput: EventEmitter<CustomEvent>;
-  ionStyle: EventEmitter<CustomEvent>;
-  ionBlur: EventEmitter<CustomEvent>;
-  ionFocus: EventEmitter<CustomEvent>;
+  ionChange!: EventEmitter<CustomEvent>;
+  ionInput!: EventEmitter<CustomEvent>;
+  ionStyle!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
+  ionFocus!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
@@ -925,10 +925,10 @@ export class Thumbnail {
 export declare interface Toggle extends StencilComponents<'IonToggle'> {}
 @Component({ selector: 'ion-toggle', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'name', 'checked', 'disabled', 'value'] })
 export class Toggle {
-  ionChange: EventEmitter<CustomEvent>;
-  ionFocus: EventEmitter<CustomEvent>;
-  ionBlur: EventEmitter<CustomEvent>;
-  ionStyle: EventEmitter<CustomEvent>;
+  ionChange!: EventEmitter<CustomEvent>;
+  ionFocus!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
+  ionStyle!: EventEmitter<CustomEvent>;
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
