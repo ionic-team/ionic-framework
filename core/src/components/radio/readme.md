@@ -19,7 +19,7 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 | `disabled` | `disabled` | If `true`, the user cannot interact with the radio.                                                                                                                                                                                                                    | `boolean`             | `false`        |
 | `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined`    |
 | `name`     | `name`     | The name of the control, which is submitted with the form data.                                                                                                                                                                                                        | `string`              | `this.inputId` |
-| `value`    | --         | the value of the radio.                                                                                                                                                                                                                                                | `any`                 | `undefined`    |
+| `value`    | `value`    | the value of the radio.                                                                                                                                                                                                                                                | `any`                 | `undefined`    |
 
 
 ## Events

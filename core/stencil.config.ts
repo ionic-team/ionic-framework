@@ -1,6 +1,9 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
 
+// @ts-ignore
+import { apiSpecGenerator } from './scripts/api-spec-generator';
+
 export const config: Config = {
   namespace: 'Ionic',
   bundles: [
@@ -62,6 +65,12 @@ export const config: Config = {
     {
       type: 'stats',
       file: 'stats.json'
+    },
+    {
+      type: 'docs-custom',
+      generator: apiSpecGenerator({
+        file: 'api.txt'
+      })
     },
     {
       type: 'angular',
