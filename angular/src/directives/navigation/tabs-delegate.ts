@@ -8,7 +8,7 @@ import { NavController } from '../../providers';
 })
 export class TabsDelegate {
 
-  @ContentChildren(TabDelegate) tabs: QueryList<TabDelegate>;
+  @ContentChildren(TabDelegate) tabs!: QueryList<TabDelegate>;
 
   constructor(
     @Optional() private navCtrl: NavController,
@@ -23,9 +23,8 @@ export class TabsDelegate {
     return tabDelegate ? tabDelegate.getLastUrl() : undefined;
   }
 
-  @HostListener('ionTabButtonClick', ['$event'])
-  onTabbarClick(ev: any) {
-    const detail = ev.detail as TabButtonClickDetail;
+  @HostListener('ionTabButtonClick', ['$event.detail'])
+  onTabbarClick(detail: TabButtonClickDetail) {
     const { tab, href, selected } = detail;
     if (tab && href) {
       const url = selected
