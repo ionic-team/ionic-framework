@@ -23,8 +23,7 @@ export class StackController {
     return {
       ref: enteringRef,
       element: (enteringRef && enteringRef.location && enteringRef.location.nativeElement) as HTMLElement,
-      url: this.getUrl(route),
-      fullpath: document.location!.pathname,
+      url: this.getUrl(route)
     };
   }
 
@@ -170,7 +169,6 @@ function destroyView(view: RouteView) {
 
 export interface RouteView {
   url: string;
-  fullpath: string;
   element: HTMLElement;
   ref: ComponentRef<any>;
   savedData?: any;
