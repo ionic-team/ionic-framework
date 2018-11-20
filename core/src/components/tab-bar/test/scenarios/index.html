@@ -8,24 +8,6 @@
   <script src="../../../../../dist/ionic.js"></script>
   <link rel="stylesheet" href="../../../../../css/ionic.bundle.css">
   <link rel="stylesheet" href="../../../../../scripts/testing/styles.css">
-
-  <style>
-    .custom-tabbar {
-      margin-top: 30px;
-      overflow: visible;
-      contain: none;
-    }
-
-    .main-tab {
-      border-radius: 50%;
-      max-width: 80px;
-      height: 80px;
-      background: #3880ff;
-      color: white;
-      font-size: 16px;
-    }
-
-  </style>
 </head>
 
 <body>
@@ -203,7 +185,7 @@
     </ion-tab-button>
   </ion-tab-bar>
 
-  <!-- Custom TabBar -->
+  <!-- Custom Tab Bar -->
   <ion-tab-bar selected-tab="1" class="custom-tabbar">
     <ion-tab-button tab="1">
       <ion-label>Location</ion-label>
@@ -220,6 +202,51 @@
     </ion-tab-button>
 
   </ion-tab-bar>
+
+  <!-- Custom Tab Bar Colors -->
+  <ion-tab-bar selected-tab="1" class="custom-tabbar-color">
+    <ion-tab-button tab="1">
+      <ion-label>Location</ion-label>
+      <ion-icon name="navigate"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="2">
+      <ion-icon name="settings"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="3">
+      <ion-label>Radio</ion-label>
+      <ion-icon name="musical-notes"></ion-icon>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+
+  <style>
+    .custom-tabbar {
+      margin-top: 30px;
+      margin-bottom: 30px;
+      overflow: visible;
+      contain: none;
+    }
+
+    .main-tab {
+      border-radius: 50%;
+      max-width: 80px;
+      height: 80px;
+      background: #3880ff;
+      color: white;
+      font-size: 16px;
+    }
+
+    .custom-tabbar-color {
+      --background: #7044ff;
+    }
+
+    .custom-tabbar-color ion-tab-button {
+      --color: rgba(255, 255, 255, .7);
+      --color-selected: white;
+    }
+  </style>
 </body>
 
 </html>
