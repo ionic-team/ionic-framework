@@ -1,7 +1,5 @@
 import { Directive, ElementRef, HostListener, Input, Optional } from '@angular/core';
 import { Router, RouterLink, RouterLinkWithHref } from '@angular/router';
-import { NavController, NavIntent } from '../../providers/nav-controller';
-import { Router } from '@angular/router';
 import { NavController, NavDirection } from '../../providers/nav-controller';
 
 @Directive({
@@ -37,7 +35,7 @@ export class HrefDelegate {
     
     if (this.routerLink || this.routerLinkWithHref || url) {
       ev.preventDefault();
-      this.navCtrl.setIntent(this.routerDirection);
+      this.navCtrl.setDirection(this.routerDirection);
 
       if (this.routerLink) {
         this.routerLink.onClick();
