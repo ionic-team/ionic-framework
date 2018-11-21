@@ -17,6 +17,10 @@ $opacity-duration: $fade-in-duration + $fade-out-duration;
   contain: strict;
 }
 
+:host(.unbounded) {
+  contain: layout size style;
+}
+
 .ripple-effect {
   @include border-radius(50%);
 
