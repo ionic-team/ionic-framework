@@ -25,28 +25,21 @@ export class HrefDelegate {
     private elementRef: ElementRef
   ) {}
 
-  @HostListener('click', ['$event', '$event.button', '$event.ctrlKey', '$event.metaKey', '$event.shiftKey'])
-  onClick(ev: Event, button: number, ctrlKey: boolean, metaKey: boolean, shiftKey: boolean) {
+  @HostListener('click', ['$event'])
+  onClick(ev: Event) {
     
     let url: string | null = this.href;
     if (!this.router || (url && (url[0] === '#' || url.indexOf('://') > -1))) {
       url = null;
     }
     
-    if (this.routerLink || this.routerLinkWithHref || url) {
+    if (this.routerDirection && (this.routerLink || this.routerLinkWithHref || url)) {
+      this.navCtrl.setDirection(this.routerDirection);
+    }
+
+    if (!this.routerLink && !this.routerLinkWithHref && url) {
       ev.preventDefault();
-
-      if (this.routerDirection) {
-        this.navCtrl.setDirection(this.routerDirection);
-      }
-
-      if (this.routerLink) {
-        this.routerLink.onClick();
-      } else if (this.routerLinkWithHref) {
-        this.routerLinkWithHref.onClick(button, ctrlKey, metaKey, shiftKey);
-      } else if (url != null) {
-        this.router.navigateByUrl(url);
-      }
+      this.router.navigateByUrl(url);
     }
   }
 }
