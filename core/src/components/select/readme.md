@@ -68,7 +68,7 @@ Since select uses the alert, action sheet and popover interfaces, options can be
 
 ## Methods
 
-### `open(ev?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>`
+### `open(ev?: UIEvent | undefined) => Promise<HTMLIonPopoverElement | HTMLIonActionSheetElement | HTMLIonAlertElement | undefined>`
 
 Opens the select overlay, it could be an alert, action-sheet or popover,
 based in `ion-select` settings.
@@ -81,7 +81,7 @@ based in `ion-select` settings.
 
 #### Returns
 
-Type: `Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>`
+Type: `Promise<HTMLIonPopoverElement | HTMLIonActionSheetElement | HTMLIonAlertElement | undefined>`
 
 
 
