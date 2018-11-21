@@ -9,7 +9,7 @@ import { createColorClasses } from '../../utils/theme';
     ios: 'label.ios.scss',
     md: 'label.md.scss'
   },
-  scoped: true
+  shadow: true
 })
 export class Label implements ComponentInterface {
   @Element() el!: HTMLElement;
@@ -74,5 +74,9 @@ export class Label implements ComponentInterface {
         [`label-no-animate`]: (this.noAnimate)
       }
     };
+  }
+
+  render() {
+    return <slot></slot>;
   }
 }
