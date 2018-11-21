@@ -14,11 +14,11 @@
 
 Notice that `@ionic/core` lives in `core`.
 
-### 3. Run `npm run dev`
+### 3. Run `npm start`
 
 Make sure you are inside the `core` directory.
 
-    npm run dev
+    npm start
 
 With the `dev` command, Ionic components will be built with [Stencil](https://stenciljs.com/), changes to source files are watched, a local http server will startup, and http://localhost:3333/ will open in a browser.
 
@@ -30,7 +30,7 @@ As changes are made in an editor to source files, the e2e app will live-reload.
 
 ## How to contribute
 
-1. `npm run dev` allows you to modify the components and have live reloading, just like another ionic app.
+1. `npm start` allows you to modify the components and have live reloading, just like another ionic app.
 
 2. When everything looks good, run  `npm run validate` to verify the tests linter and production build passes.
 

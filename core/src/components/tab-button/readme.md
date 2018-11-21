@@ -32,6 +32,7 @@ See the [Tabs API Docs](../Tabs/) for more details on configuring Tabs.
 | `--padding-end`         | End padding of the tab button         |
 | `--padding-start`       | Start padding of the tab button       |
 | `--padding-top`         | Top padding of the tab button         |
+| `--ripple-color`        | Color of the button ripple effect     |
 
 
 ----------------------------------------------

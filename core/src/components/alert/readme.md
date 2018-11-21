@@ -38,7 +38,6 @@ Alerts can also include several different inputs whose data can be passed back t
 | `leaveAnimation`  | --                 | Animation to use when the alert is dismissed.                                                                    | `AnimationBuilder \| undefined`   | `undefined` |
 | `message`         | `message`          | The main message to be displayed in the alert.                                                                   | `string \| undefined`             | `undefined` |
 | `mode`            | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                   | `undefined` |
-| `overlayIndex`    | `overlay-index`    |                                                                                                                  | `number`                          | `undefined` |
 | `subHeader`       | `sub-header`       | The subtitle in the heading of the alert. Displayed under the title.                                             | `string \| undefined`             | `undefined` |
 | `translucent`     | `translucent`      | If `true`, the alert will be translucent.                                                                        | `boolean`                         | `false`     |
 

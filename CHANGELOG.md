@@ -20,6 +20,28 @@ Segment Button now requires the text to be wrapped in an `ion-label` element for
   <ion-label>Item One</ion-label>
 </ion-segment-button>
 ```
+
+#### Simplifying Chip
+
+Because of updates to the Material Design spec, `ion-chip` no longer requires a chip-specific version of `ion-icon` or `ion-button`. Chips themselves should be interactive and don't require a nested button.
+
+*Old usage:*
+
+```html
+<ion-chip>
+  <ion-chip-icon name="checkmark"><ion-chip-icon>
+</ion-chip>
+```
+
+*New usage:*
+
+```html
+<ion-chip>
+  <ion-icon name="checkmark"></ion-icon>
+</ion-chip>
+```
+
+
 ### Bug Fixes
 
 * **alert:** use tint for md button active background ([#16278](https://github.com/ionic-team/ionic/issues/16278)) ([0fec722](https://github.com/ionic-team/ionic/commit/0fec722))
@@ -84,8 +106,8 @@ If you are using @ionic/angular, please update the version number of any @angula
 "devDependencies": {
   "@angular-devkit/architect": "~0.10.5",
   "@angular-devkit/build-angular": "~0.10.5",
-  "@angular-devkit/core": "~0.7.5",
-  "@angular-devkit/schematics": "~0.7.5",
+  "@angular-devkit/core": "~7.0.5",
+  "@angular-devkit/schematics": "~7.0.5",
   "@angular/cli": "~7.0.3",
   "@angular/compiler": "~7.0.3",
   "@angular/compiler-cli": "~7.0.3",

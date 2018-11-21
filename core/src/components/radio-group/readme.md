@@ -17,7 +17,7 @@ radio button within the same group.
 | --------------------- | ----------------------- | --------------------------------------------------------------- | --------- | -------------- |
 | `allowEmptySelection` | `allow-empty-selection` | If `true`, the radios can be deselected.                        | `boolean` | `false`        |
 | `name`                | `name`                  | The name of the control, which is submitted with the form data. | `string`  | `this.inputId` |
-| `value`               | --                      | the value of the radio group.                                   | `any`     | `undefined`    |
+| `value`               | `value`                 | the value of the radio group.                                   | `any`     | `undefined`    |
 
 
 ## Events
