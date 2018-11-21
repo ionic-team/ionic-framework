@@ -127,9 +127,6 @@ export class Platform {
    * ```
    */
   platforms(): string[] {
-    this.backButton.subscribe((ev: BackButtonDetail) => {
-      ev.register(100, () => console.log('dooo something'));
-    });
     return getPlatforms(window);
   }
 
