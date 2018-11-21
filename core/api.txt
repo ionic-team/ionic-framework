@@ -855,7 +855,8 @@ ion-select,prop,okText,string,'OK',false
 ion-select,prop,placeholder,null | string | undefined,undefined,false
 ion-select,prop,selectedText,null | string | undefined,undefined,false
 ion-select,prop,value,any,undefined,false
-ion-select,method,open,open(ev?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>ion-select,event,ionBlur,void,true
+ion-select,method,open,open(ev?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>
+ion-select,event,ionBlur,void,true
 ion-select,event,ionCancel,void,true
 ion-select,event,ionChange,SelectInputChangeEvent,true
 ion-select,event,ionFocus,void,true
