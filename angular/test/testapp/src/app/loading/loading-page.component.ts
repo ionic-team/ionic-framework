@@ -26,7 +26,7 @@ export class LoadingPageComponent {
   async clickMe() {
     const loading = await this.loadingController.create({
       duration: 1000,
-      content: 'Ahem. Please wait.'
+      message: 'Ahem. Please wait.'
     });
     return loading.present();
   }
