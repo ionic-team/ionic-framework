@@ -7,10 +7,7 @@
    * @prop --color: Color of the tab bar
    */
 
-  @include padding-horizontal(
-    var(--ion-safe-area-left),
-    var(--ion-safe-area-right)
-  );
+  @include padding-horizontal(var(--ion-safe-area-left), var(--ion-safe-area-right));
 
   display: flex;
 
@@ -33,13 +30,14 @@
 }
 
 :host(.ion-color) {
-  --background: #{current-color(base)};
+  background: #{current-color(base)};
 }
 
 :host(.ion-color) ::slotted(ion-tab-button) {
-  --color: #{current-color(contrast, .7)};
-  --color-selected: #{current-color(contrast)};
   --background-focused: #{current-color(shade)};
+  --color-selected: #{current-color(contrast)};;
+
+  color: #{current-color(contrast, .7)};
 }
 
 :host([slot="top"]) {
