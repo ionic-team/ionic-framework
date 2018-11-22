@@ -20,9 +20,9 @@ import { VirtualContext } from './virtual-utils';
 })
 export class VirtualScroll {
 
-  @ContentChild(VirtualItem) itmTmp: VirtualItem;
-  @ContentChild(VirtualHeader) hdrTmp: VirtualHeader;
-  @ContentChild(VirtualFooter) ftrTmp: VirtualFooter;
+  @ContentChild(VirtualItem) itmTmp!: VirtualItem;
+  @ContentChild(VirtualHeader) hdrTmp!: VirtualHeader;
+  @ContentChild(VirtualFooter) ftrTmp!: VirtualFooter;
 
   constructor(
     private el: ElementRef,

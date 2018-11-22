@@ -12,32 +12,33 @@
    * @prop --padding-start: Start padding of the tab button
    * @prop --ripple-color: Color of the button ripple effect
    */
-  --badge-end: 4%;
   --ripple-color: var(--color-selected);
 
   flex: 1;
+
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   height: 100%;
 
   color: var(--color);
 }
 
+// Tab Button: Native
+// --------------------------------------------------
+
 a {
-  @include text-inherit();
   @include margin(0);
-  @include padding(
-    var(--padding-top),
-    var(--padding-end),
-    var(--padding-bottom),
-    var(--padding-start),
-  );
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include text-inherit();
 
   display: flex;
   position: relative;
 
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+  flex-direction: inherit;
+  align-items: inherit;
+  justify-content: inherit;
 
   width: 100%;
   height: 100%;
@@ -66,6 +67,10 @@ a:focus-visible {
   }
 }
 
+
+// Tab Button: States
+// --------------------------------------------------
+
 :host(.tab-selected) {
   color: var(--color-selected);
 }
@@ -81,15 +86,9 @@ a:focus-visible {
   opacity: .4;
 }
 
-::slotted(ion-label) {
-  order: 0;
-}
 
-::slotted(ion-icon) {
-  order: -1;
-
-  height: 1em;
-}
+// Tab Button: Label / Icon
+// --------------------------------------------------
 
 ::slotted(ion-label),
 ::slotted(ion-icon) {
@@ -97,7 +96,6 @@ a:focus-visible {
 
   align-self: center;
 
-  min-width: 26px;
   max-width: 100%;
 
   text-overflow: ellipsis;
@@ -108,53 +106,47 @@ a:focus-visible {
   box-sizing: border-box;
 }
 
+::slotted(ion-label) {
+  order: 0;
+}
+
+::slotted(ion-icon) {
+  order: -1;
+
+  height: 1em;
+}
+
+
 :host(.tab-has-label-only) ::slotted(ion-label) {
   white-space: normal;
 }
 
 
-
-// Tab Badges
+// Tab Button: Badge
 // --------------------------------------------------
 
 ::slotted(ion-badge) {
-  @include position(null, var(--badge-end), null, null);
-  @include padding(1px, 6px);
-
   box-sizing: border-box;
 
   position: absolute;
 
-  height: auto;
-
-  font-size: 12px;
-
-  line-height: 16px;
+  z-index: 1;
 }
 
 
-// Tab Button Layout
+// Tab Button: Layout
 // --------------------------------------------------
 
-:host(.tab-layout-icon-start) a {
+:host(.tab-layout-icon-start) {
   flex-direction: row;
 }
 
-:host(.tab-layout-icon-end) a {
+:host(.tab-layout-icon-end) {
   flex-direction: row-reverse;
 }
 
-:host(.tab-layout-icon-bottom) a {
+:host(.tab-layout-icon-bottom) {
   flex-direction: column-reverse;
-}
-
-:host(.tab-layout-icon-start) a,
-:host(.tab-layout-icon-end) a,
-:host(.tab-layout-icon-hide) a,
-:host(.tab-layout-label-hide) a,
-:host(.tab-has-icon-only) a,
-:host(.tab-has-label-only) a {
-  justify-content: center;
 }
 
 :host(.tab-layout-icon-hide) ::slotted(ion-icon) {
@@ -163,21 +155,6 @@ a:focus-visible {
 
 :host(.tab-layout-label-hide) ::slotted(ion-label) {
   display: none;
-}
-
-:host(.tab-layout-icon-top),
-:host(.tab-layout-icon-bottom),
-:host(.tab-layout-icon-only),
-:host(.tab-layout-label-hide),
-:host(.tab-has-icon-only) {
-  --badge-end: #{calc(50% - 30px)};
-}
-
-:host(.tab-layout-icon-hide),
-:host(.tab-layout-icon-start),
-:host(.tab-layout-icon-end),
-:host(.tab-has-label-only) {
-  --badge-end: #{calc(50% - 50px)};
 }
 
 ion-ripple-effect {
