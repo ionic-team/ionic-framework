@@ -3,11 +3,13 @@ import { Router, RouterLink, RouterLinkWithHref } from '@angular/router';
 import { NavController, NavDirection } from '../../providers/nav-controller';
 
 @Directive({
-  selector: '[routerLink],[routerDirection],ion-anchor,ion-button,ion-item'
+  selector: '[routerLink],[routerDirection]'
 })
 export class HrefDelegate {
 
   @Input() routerDirection: NavDirection = 'forward';
+
+  @Input() target: any;
 
   @Input()
   set href(value: string) {
@@ -27,10 +29,14 @@ export class HrefDelegate {
 
   @HostListener('click', ['$event'])
   onClick(ev: Event) {
-    
+
     let url: string | null = this.href;
     if (!this.router || (url && (url[0] === '#' || url.indexOf('://') > -1))) {
       url = null;
+    }
+
+    if (typeof this.target === 'string' && this.target != '_self') {
+      return;
     }
     
     if (this.routerDirection && (this.routerLink || this.routerLinkWithHref || url)) {
