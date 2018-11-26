@@ -12,7 +12,7 @@ export class Fab implements ComponentInterface {
   /**
    * Where to align the fab horizontally in the viewport.
    */
-  @Prop() horizontal?: 'start' | 'end' | 'center' | null;
+  @Prop() horizontal?: 'start' | 'end' | 'center';
 
   /**
    * Where to align the fab vertically in the viewport.

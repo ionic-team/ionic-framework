@@ -355,7 +355,7 @@ ion-fab-list,prop,side,"bottom" | "end" | "start" | "top",'bottom',false
 ion-fab
 ion-fab,prop,activated,boolean,false,false
 ion-fab,prop,edge,boolean,false,false
-ion-fab,prop,horizontal,"center" | "end" | "start" | null | undefined,undefined,false
+ion-fab,prop,horizontal,"center" | "end" | "start" | undefined,undefined,false
 ion-fab,prop,vertical,"bottom" | "center" | "top" | undefined,undefined,false
 ion-fab,method,close,close() => void
 

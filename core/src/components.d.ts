@@ -1451,7 +1451,7 @@ export namespace Components {
     /**
     * Where to align the fab horizontally in the viewport.
     */
-    'horizontal'?: 'start' | 'end' | 'center' | null;
+    'horizontal'?: 'start' | 'end' | 'center';
     /**
     * Where to align the fab vertically in the viewport.
     */
@@ -1469,7 +1469,7 @@ export namespace Components {
     /**
     * Where to align the fab horizontally in the viewport.
     */
-    'horizontal'?: 'start' | 'end' | 'center' | null;
+    'horizontal'?: 'start' | 'end' | 'center';
     /**
     * Where to align the fab vertically in the viewport.
     */
