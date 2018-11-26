@@ -3,6 +3,7 @@ import { Component, ComponentInterface, Element, Listen, Prop, State } from '@st
 import { Color, CssClassMap, Mode, RouterDirection, StyleEvent } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
+
 @Component({
   tag: 'ion-item',
   styleUrls: {
@@ -106,7 +107,7 @@ export class Item implements ComponentInterface {
     // Change the button size to small for each ion-button in the item
     // unless the size is explicitly set
     Array.from(this.el.querySelectorAll('ion-button')).forEach(button => {
-      if (!button.size) {
+      if (button.size === undefined) {
         button.size = 'small';
       }
     });
@@ -132,7 +133,7 @@ export class Item implements ComponentInterface {
       class: {
         ...childStyles,
         ...createColorClasses(this.color),
-        [`item-lines-${this.lines}`]: !!this.lines,
+        [`item-lines-${this.lines}`]: this.lines !== undefined,
         'item-disabled': this.disabled,
         'in-list': hostContext('ion-list', this.el),
         'item': true,

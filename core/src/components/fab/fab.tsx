@@ -12,7 +12,7 @@ export class Fab implements ComponentInterface {
   /**
    * Where to align the fab horizontally in the viewport.
    */
-  @Prop() horizontal?: 'start' | 'end' | 'center';
+  @Prop() horizontal?: 'start' | 'end' | 'center' | null;
 
   /**
    * Where to align the fab vertically in the viewport.
@@ -68,8 +68,8 @@ export class Fab implements ComponentInterface {
   hostData() {
     return {
       class: {
-        [`fab-horizontal-${this.horizontal}`]: !!this.horizontal,
-        [`fab-vertical-${this.vertical}`]: !!this.vertical,
+        [`fab-horizontal-${this.horizontal}`]: this.horizontal !== undefined,
+        [`fab-vertical-${this.vertical}`]: this.vertical !== undefined,
         'fab-edge': this.edge
       }
     };

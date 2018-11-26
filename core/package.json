@@ -27,10 +27,10 @@
   ],
   "dependencies": {
     "@types/node": "10.11.0",
-    "ionicons": "4.4.7"
+    "ionicons": "4.4.8"
   },
   "devDependencies": {
-    "@stencil/core": "0.16.0-5",
+    "@stencil/core": "0.16.0-6",
     "@stencil/sass": "0.1.1",
     "@stencil/utils": "latest",
     "@types/jest": "^23.3.1",
@@ -53,7 +53,7 @@
     "stylelint-order": "~1.0.0",
     "swiper": "4.4.1",
     "tslint": "^5.10.0",
-    "tslint-ionic-rules": "0.0.19",
+    "tslint-ionic-rules": "0.0.20",
     "tslint-react": "^3.6.0",
     "typescript": "^2.9.2"
   },
