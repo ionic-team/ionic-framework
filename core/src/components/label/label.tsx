@@ -61,7 +61,7 @@ export class Label implements ComponentInterface {
     const position = this.position;
     this.ionStyle.emit({
       'label': true,
-      [`label-${position}`]: !!position
+      [`label-${position}`]: position !== undefined
     });
   }
 
@@ -70,7 +70,7 @@ export class Label implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
-        [`label-${position}`]: !!position,
+        [`label-${position}`]: position !== undefined,
         [`label-no-animate`]: (this.noAnimate)
       }
     };

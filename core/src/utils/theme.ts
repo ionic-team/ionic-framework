@@ -17,7 +17,7 @@ export function createColorClasses(color: Color | undefined | null): CssClassMap
 export function createThemedClasses(mode: Mode | undefined, name: string): CssClassMap {
   return {
     [name]: true,
-    [`${name}-${mode}`]: !!mode
+    [`${name}-${mode}`]: mode !== undefined
   };
 }
 
