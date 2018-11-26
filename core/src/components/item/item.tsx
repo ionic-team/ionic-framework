@@ -3,7 +3,6 @@ import { Component, ComponentInterface, Element, Listen, Prop, State } from '@st
 import { Color, CssClassMap, Mode, RouterDirection, StyleEvent } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
-
 @Component({
   tag: 'ion-item',
   styleUrls: {
