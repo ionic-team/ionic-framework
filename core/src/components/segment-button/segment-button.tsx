@@ -75,7 +75,7 @@ export class SegmentButton implements ComponentInterface {
         ...createColorClasses(color),
         'segment-button-disabled': disabled,
         'segment-button-checked': checked,
-        [`segment-button-layout-${this.layout}`]: !!this.layout
+        [`segment-button-layout-${this.layout}`]: this.layout !== undefined
       }
     };
   }

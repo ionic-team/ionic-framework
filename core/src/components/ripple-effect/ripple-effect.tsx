@@ -40,11 +40,10 @@ export class RippleEffect implements ComponentInterface {
         const finalScale = maxRadius / initialSize;
         let posX = pageX - rect.left;
         let posY = pageY - rect.top;
-        if (this.type) {
+        if (this.unbounded) {
           posX = width * 0.5;
           posY = height * 0.5;
         }
-
         const x = posX - initialSize * 0.5;
         const y = posY - initialSize * 0.5;
         const moveX = width * 0.5 - posX;
