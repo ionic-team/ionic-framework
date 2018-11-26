@@ -17,6 +17,7 @@ function apiSpecGenerator(opts) {
 
 function generateComponent(component, content) {
   content.push('');
+  content.push(component.tag);
 
   component.props.forEach(prop => {
     content.push(`${component.tag},prop,${prop.name},${prop.type},${prop.default},${prop.required}`);
