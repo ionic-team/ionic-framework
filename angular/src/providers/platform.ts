@@ -3,15 +3,8 @@ import { BackButtonDetail, Platforms, getPlatforms, isPlatform } from '@ionic/co
 import { proxyEvent } from '../util/util';
 
 
-export class BackButtonEmitter extends EventEmitter<BackButtonDetail> {
-  constructor() {
-    super();
-  }
-  subscribeWithPriority(priority: number, callback: () => Promise<any> | void) {
-    return this.subscribe((ev: BackButtonDetail) => {
-      ev.register(priority, callback);
-    });
-  }
+export interface BackButtonEmitter extends EventEmitter<BackButtonDetail> {
+  subscribeWithPriority(priority: number, callback: () => Promise<any> | void): void;
 }
 
 @Injectable()
@@ -22,7 +15,7 @@ export class Platform {
   /**
    * @hidden
    */
-  backButton = new BackButtonEmitter();
+  backButton: BackButtonEmitter = new EventEmitter<BackButtonDetail>() as any;
 
   /**
    * The pause event emits when the native platform puts the application
@@ -47,6 +40,12 @@ export class Platform {
   resize = new EventEmitter<void>();
 
   constructor() {
+    this.backButton.subscribeWithPriority = function(priority, callback) {
+      return this.subscribe((ev: BackButtonDetail) => {
+        ev.register(priority, callback);
+      });
+    };
+
     proxyEvent(this.pause, document, 'pause');
     proxyEvent(this.resume, document, 'resume');
     proxyEvent(this.backButton, document, 'ionBackButton');
