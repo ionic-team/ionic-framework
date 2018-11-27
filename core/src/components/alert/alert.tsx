@@ -156,7 +156,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
       type: i.type || 'text',
       name: i.name || `${index}`,
       placeholder: i.placeholder || '',
-      value: i.value || '',
+      value: i.value,
       label: i.label,
       checked: !!i.checked,
       disabled: !!i.disabled,
