@@ -4,10 +4,6 @@
 // Material Design Label
 // --------------------------------------------------
 
-:host-context(.item) {
-  @include margin($label-md-margin-top, $label-md-margin-end, $label-md-margin-bottom, $label-md-margin-start);
-}
-
 :host([text-wrap]) {
   line-height: $label-md-text-wrap-line-height;
 }

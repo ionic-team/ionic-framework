@@ -4,10 +4,6 @@
 // iOS Label
 // --------------------------------------------------
 
-:host-context(.item) {
-  @include margin($label-ios-margin-top, $label-ios-margin-end, $label-ios-margin-bottom, $label-ios-margin-start);
-}
-
 :host([text-wrap]) {
   font-size: $label-ios-text-wrap-font-size;
 
