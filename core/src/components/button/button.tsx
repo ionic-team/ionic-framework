@@ -151,10 +151,10 @@ export class Button implements ComponentInterface {
       class: {
         ...createColorClasses(color),
         [buttonType]: true,
-        [`${buttonType}-${expand}`]: !!expand,
-        [`${buttonType}-${size}`]: !!size,
-        [`${buttonType}-${shape}`]: !!shape,
-        [`${buttonType}-${fill}`]: !!fill,
+        [`${buttonType}-${expand}`]: expand !== undefined,
+        [`${buttonType}-${size}`]: size !== undefined,
+        [`${buttonType}-${shape}`]: shape !== undefined,
+        [`${buttonType}-${fill}`]: true,
         [`${buttonType}-strong`]: strong,
 
         'focused': keyFocus,

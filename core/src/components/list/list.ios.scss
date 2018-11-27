@@ -10,15 +10,6 @@
   background: $item-ios-background;
 }
 
-.list-ios:not(.list-inset):not(.list-ios-lines-none) .item:last-child {
-  --inner-border-width: 0;
-  --border-width: #{0 0 $list-ios-item-border-bottom-width 0};
-}
-// .list-ios:not(.list-inset) + .list-ios:not(.list-inset) ion-list-header {
-//   @include margin(-$list-ios-margin-top, null, null, null);
-//   @include padding(0, null, null, null);
-// }
-
 
 // iOS Inset List
 // --------------------------------------------------

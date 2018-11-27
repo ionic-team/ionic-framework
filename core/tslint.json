@@ -16,6 +16,7 @@
     "no-console": false,
     "no-unbound-method": true,
     "no-floating-promises": false,
+    "no-invalid-template-strings": true,
 
     "jsx-key": false,
     "jsx-self-close": false,

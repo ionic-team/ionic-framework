@@ -13,15 +13,15 @@ $overlay-ios-background-color:              var(--ion-overlay-background-color, 
 
 // iOS Tabs & Tab bar
 // --------------------------------------------------
-$tabbar-ios-background:                     var(--ion-tab-bar-background, #f8f8f8) !default;
-$tabbar-ios-background-focused:             var(--ion-tab-bar-background-focused, get-color-shade(#f8f8f8)) !default;
+$tabbar-ios-background:                     var(--ion-tab-bar-background, #fff) !default;
+$tabbar-ios-background-focused:             var(--ion-tab-bar-background-focused, get-color-shade(#fff)) !default;
 $tabbar-ios-border-color:                   var(--ion-tab-bar-border-color, var(--ion-border-color, rgba(0, 0, 0, .2))) !default;
 $tabbar-ios-color:                          var(--ion-tab-bar-color, $text-color-step-550) !default;
 $tabbar-ios-color-activated:                var(--ion-tab-bar-color-activated, ion-color(primary, base)) !default;
 
 // iOS Toolbar
 // --------------------------------------------------
-$toolbar-ios-background:                    var(--ion-toolbar-background, #f8f8f8) !default;
+$toolbar-ios-background:                    var(--ion-toolbar-background, #fff) !default;
 $toolbar-ios-border-color:                  var(--ion-toolbar-border-color, var(--ion-border-color, rgba(0, 0, 0, .2))) !default;
 $toolbar-ios-color:                         var(--ion-toolbar-color, $text-color) !default;
 $toolbar-ios-color-activated:               var(--ion-toolbar-color-activated, ion-color(primary, base)) !default;
