@@ -23,7 +23,7 @@ export interface AlertInput {
   type?: TextFieldTypes | 'checkbox' | 'radio';
   name?: string;
   placeholder?: string;
-  value?: string;
+  value?: any;
   label?: string;
   checked?: boolean;
   disabled?: boolean;

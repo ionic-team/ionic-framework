@@ -46,7 +46,14 @@
   "dependencies": {
     "@ionic/core": "4.0.0-beta.16"
   },
+  "peerDependencies": {
+    "@angular-devkit/core": "^7.0.3",
+    "@angular-devkit/schematics": "^7.0.3"
+  },
   "devDependencies": {
+    "@angular-devkit/core": "^7.0.3",
+    "@angular-devkit/schematics": "^7.0.3",
+    "@types/node": "~10.12.0",
     "@angular/common": "^7.0.3",
     "@angular/compiler": "^7.0.3",
     "@angular/compiler-cli": "^7.0.3",
@@ -62,5 +69,6 @@
     "tslint-ionic-rules": "0.0.17",
     "typescript": "3.1.6",
     "zone.js": "^0.8.26"
-  }
+  },
+  "schematics": "./dist/schematics/collection.json"
 }
