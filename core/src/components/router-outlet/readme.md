@@ -1,11 +1,12 @@
 # ion-router-outlet
 
-RouterOutlet is a component used in routing within an Angular app. RouterOutlet behaves in a similar way as Angular's built-in RouterOutlet component, but contains the logic for providing a stacked navigation, and animating views in an out.
+Router Outlet is a component used in routing within an Angular app.
+Router Outlet behaves in a similar way as Angular's built-in Router Outlet component, but contains the logic for providing a stacked navigation, and animating views in and out.
 
 
 > Note: this is only meant for Angular projects. For vanilla JavaScript, use `ion-router` and `ion-route` instead.
 
-While RouterOutlet has methods for navigating around, it's recommended to use the navigation methods in Angular's router.
+While Router Outlet has methods for navigating around, it's recommended to use the navigation methods in Angular's router.
 
 
 ### Life Cycle Hooks
