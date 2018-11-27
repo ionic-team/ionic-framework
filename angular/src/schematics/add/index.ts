@@ -53,7 +53,7 @@ function addIonicStyles(): Rule {
       'node_modules/@ionic/angular/css/normalize.css',
       'node_modules/@ionic/angular/css/structure.css',
       'node_modules/@ionic/angular/css/typography.css',
-      'node_modules/@ionic/angular/css/colors.css',
+      'node_modules/@ionic/angular/css/core.css',
       'node_modules/@ionic/angular/css/padding.css',
       'node_modules/@ionic/angular/css/float-elements.css',
       'node_modules/@ionic/angular/css/text-alignment.css',
