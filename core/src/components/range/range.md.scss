@@ -34,13 +34,14 @@
   color: current-color(contrast);
 }
 
-::slotted([slot="start"]) {
-  @include margin(0, 14px, 0, 0);
-}
+// TODO: REVIEW
+// .range-md [slot="range-start"] {
+//   @include margin(0, 12px, 0, 0);
+// }
 
-::slotted([slot="end"]) {
-  @include margin(0, 0, 0, 14px);
-}
+// .range-md [slot="range-end"] {
+//   @include margin(0, 0, 0, 12px);
+// }
 
 :host(.range-has-pin) {
   @include padding($range-md-padding-vertical + $range-md-pin-font-size + $range-md-pin-padding-vertical, null, null, null);
