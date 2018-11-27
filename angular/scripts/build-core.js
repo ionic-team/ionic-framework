@@ -59,6 +59,5 @@ function copySchematicsJson(){
 
 copyIonicons();
 copyCSS();
-buildIonicAngular();
 buildSchematics();
 copySchematicsJson()

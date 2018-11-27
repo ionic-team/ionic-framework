@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@angular-devkit/core": "^7.0.3",
-    "@angular-devkit/schematics": "^7.0.3"",
+    "@angular-devkit/schematics": "^7.0.3",
     "@types/node": "~10.12.0",
     "@angular/common": "^7.0.3",
     "@angular/compiler": "^7.0.3",
