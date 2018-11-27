@@ -22,6 +22,14 @@
   background: current-color(base);
 }
 
+::slotted([slot="start"]) {
+  @include margin(0, 16px, 0, 0);
+}
+
+::slotted([slot="end"]) {
+  @include margin(0, 0, 0, 16px);
+}
+
 :host(.range-has-pin) {
   @include padding($range-ios-padding-vertical + $range-ios-pin-font-size, null, null, null);
 }
