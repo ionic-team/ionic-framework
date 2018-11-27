@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Listen, Prop, State } from '@stencil/core';
 
-import { Color, CssClassMap, Mode, RouterDirection } from '../../interface';
+import { Color, CssClassMap, Mode, RouterDirection, StyleEvent } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 @Component({
@@ -29,12 +29,11 @@ export class Item implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
-   * If `true`, a button tag will be rendered and the item will be tappable. Defaults to `false`.
+   * If `true`, a button tag will be rendered and the item will be tappable.
    */
   @Prop() button = false;
 
@@ -45,12 +44,12 @@ export class Item implements ComponentInterface {
   @Prop() detail?: boolean;
 
   /**
-   * The icon to use when `detail` is set to `true`. Defaults to `"ios-arrow-forward"`.
+   * The icon to use when `detail` is set to `true`.
    */
   @Prop() detailIcon = 'ios-arrow-forward';
 
   /**
-   * If `true`, the user cannot interact with the item. Defaults to `false`.
+   * If `true`, the user cannot interact with the item.
    */
   @Prop() disabled = false;
 
@@ -62,7 +61,6 @@ export class Item implements ComponentInterface {
 
   /**
    * How the bottom border should be displayed on the item.
-   * Available options: `"full"`, `"inset"`, `"none"`.
    */
   @Prop() lines?: 'full' | 'inset' | 'none';
 
@@ -70,33 +68,33 @@ export class Item implements ComponentInterface {
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
-  @Prop() routerDirection?: RouterDirection;
+  @Prop() routerDirection: RouterDirection = 'forward';
 
   /**
    * The type of the button. Only used when an `onclick` or `button` property is present.
-   * Possible values are: `"submit"`, `"reset"` and `"button"`.
-   * Default value is: `"button"`
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   @Listen('ionStyle')
-  itemStyle(ev: UIEvent) {
+  itemStyle(ev: CustomEvent<StyleEvent>) {
     ev.stopPropagation();
 
-    const tagName: string = (ev.target as HTMLElement).tagName;
-    const updatedStyles = ev.detail as any;
-    const updatedKeys = Object.keys(ev.detail);
+    const tagName = (ev.target as HTMLElement).tagName;
+    const updatedStyles = ev.detail;
     const newStyles = {} as any;
     const childStyles = this.itemStyles.get(tagName) || {};
+
     let hasStyleChange = false;
-    for (const key of updatedKeys) {
+    Object.keys(updatedStyles).forEach(key => {
       const itemKey = `item-${key}`;
       const newValue = updatedStyles[key];
       if (newValue !== childStyles[itemKey]) {
         hasStyleChange = true;
       }
-      newStyles[itemKey] = newValue;
-    }
+      if (newValue) {
+        newStyles[itemKey] = true;
+      }
+    });
 
     if (hasStyleChange) {
       this.itemStyles.set(tagName, newStyles);
@@ -108,7 +106,7 @@ export class Item implements ComponentInterface {
     // Change the button size to small for each ion-button in the item
     // unless the size is explicitly set
     Array.from(this.el.querySelectorAll('ion-button')).forEach(button => {
-      if (!button.size) {
+      if (button.size === undefined) {
         button.size = 'small';
       }
     });
@@ -130,10 +128,11 @@ export class Item implements ComponentInterface {
 
     return {
       'ion-activatable': this.isClickable(),
+      'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...childStyles,
         ...createColorClasses(this.color),
-        [`item-lines-${this.lines}`]: !!this.lines,
+        [`item-lines-${this.lines}`]: this.lines !== undefined,
         'item-disabled': this.disabled,
         'in-list': hostContext('ion-list', this.el),
         'item': true,

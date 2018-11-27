@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('grid: offsets', async () => {
+test('grid: offsets', async () => {
   const page = await newE2EPage({
     url: '/src/components/grid/test/offsets?ionic:_testing=true'
   });

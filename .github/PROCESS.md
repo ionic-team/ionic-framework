@@ -2,6 +2,11 @@
 
 This document is to describe the internal process that the Ionic team uses for issue management and project planning.
 
+## Table of contents
+ * [Project Boards](#project-boards)
+ * [Managing Issues](#managing-issues)
+ * [Workflow](#workflow)
+
 ## Project Boards
 
 The project boards are located under the `Projects` tab in GitHub: https://github.com/ionic-team/ionic/projects/
@@ -71,3 +76,91 @@ NOTE: be sure to perform those actions in the order stated. If you add the comme
 If there is a response to the question, the bot will remove the `needs reply` and apply the `triage` label. The issue will then go through the triage handling again.
 
 if there is no response within 30 days, the issue will be closed and locked.
+
+## Workflow
+
+We have two long-living branches:
+
+- `master`: completed features, bug fixes, refactors, chores
+- `stable`: the latest release
+
+### Examples
+
+#### Making a Change
+
+1. Create a branch from `master`.
+1. Make changes. Limit your changes to a "unit of work", meaning don't include irrelevant changes that may confuse and delay the change.
+1. Push changes.
+1. Create a PR with the base of `master`.
+1. Have someone approve your change (optional right now--at your discretion).
+
+    <img width="236" alt="image" src="https://user-images.githubusercontent.com/236501/47031893-913e0480-d136-11e8-9d9a-4b6297a4d7ba.png">
+
+1. Wait for status checks to succeed. Fix errors if any occur.
+
+    <img width="223" alt="All checks have passed" src="https://user-images.githubusercontent.com/236501/47031830-62c02980-d136-11e8-9055-08af1b717304.png">
+
+1. Click **Squash and merge**. Use the dropdown to select this option if necessary.
+
+    <img width="192" alt="Squash and merge button" src="https://user-images.githubusercontent.com/236501/47031620-da418900-d135-11e8-91ff-e84f2478b2b3.png">
+
+1. During confirmation, rewrite the commit message using our [Commit Message Format guidelines](https://github.com/ionic-team/ionic/blob/master/.github/CONTRIBUTING.md#commit-message-format). Keep the `(#1234)` at the end; it will create a link to the PR in the commit history and `CHANGELOG.md`. This is where commits on `master` become permanent.
+
+    <img width="672" alt="Squash and merge confirmation" src="https://user-images.githubusercontent.com/236501/47031753-31dff480-d136-11e8-9116-03934961bdc2.png">
+
+1. Confirm squash and merge into `master`.
+
+#### Merging Changes from `master` into your Branch
+
+1. Pull the latest changes locally.
+1. Merge the changes, fixing any conflicts.
+1. Push the merged changes.
+
+OR
+
+1. Click **Update branch** on the PR:
+
+    <img width="672" alt="Update branch button" src="https://user-images.githubusercontent.com/236501/47032205-66a07b80-d137-11e8-8c9b-ee37d2d147c9.png">
+
+1. Pull the merged changes locally.
+
+#### Making a Release
+
+1. Freeze `master`. Only the person doing the release should be modifying `master`.
+1. Follow the [Making a Change](#making-a-change) steps to prepare the release.
+
+    - Run `npm run release.prepare`
+    - Version changes
+    - `CHANGELOG.MD` tweaks
+
+1. Create a PR to merge `master` into `stable`.
+1. Click **Merge pull request**. Use the dropdown to select this option if necessary. This will preserve the commit history from `master` by creating a merge commit.
+
+    <img width="191" alt="Merge pull request button" src="https://user-images.githubusercontent.com/236501/47032669-8be1b980-d138-11e8-9a90-d1518c223184.png">
+
+1. CI builds `stable`, performing the release.
+1. Unfreeze `master`.
+
+#### Hotfixes
+
+Hotfixes bypass `master` and should only be used for urgent fixes that can't wait for the next release to be ready.
+
+1. Create a branch from `stable`.
+1. Make changes.
+1. Run `npm run release.prepare`.
+1. Push changes.
+1. Create a PR, making sure the PR will merge into `stable`.
+1. Click **Squash and merge**. Use the dropdown to select this option if necessary.
+
+    <img width="192" alt="Squash and merge button" src="https://user-images.githubusercontent.com/236501/47031620-da418900-d135-11e8-91ff-e84f2478b2b3.png">
+
+1. During confirmation, rewrite the commit message using our [Commit Message Format guidelines](https://github.com/ionic-team/ionic/blob/master/.github/CONTRIBUTING.md#commit-message-format). Keep the `(#1234)` at the end; it will create a link to the PR in the commit history and `CHANGELOG.md`. This is where commits on `master` become permanent.
+
+    <img width="672" alt="Squash and merge confirmation" src="https://user-images.githubusercontent.com/236501/47031753-31dff480-d136-11e8-9116-03934961bdc2.png">
+
+1. Confirm squash and merge into `stable`.
+1. CI builds `stable`, performing the release.
+1. Create a PR to merge `stable` into `master`.
+1. Click **Merge pull request**. Use the dropdown to select this option if necessary.
+
+    <img width="191" alt="Merge pull request button" src="https://user-images.githubusercontent.com/236501/47032669-8be1b980-d138-11e8-9a90-d1518c223184.png">

@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('radio: basic', async () => {
+test('radio: basic', async () => {
   const page = await newE2EPage({
     url: '/src/components/radio/test/basic?ionic:_testing=true'
   });

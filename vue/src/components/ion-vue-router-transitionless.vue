@@ -4,18 +4,13 @@
   </div>
 </template>
 
-<script>
-import catchIonicGoBack from '../mixins/catch-ionic-go-back.js'
+<script lang="ts">
+import { Prop } from 'vue-property-decorator';
+import Component, { mixins } from 'vue-class-component';
+import CatchIonicGoBack from '../mixins/catch-ionic-go-back';
 
-export default {
-  name: 'IonVueRouter',
-  mixins: [catchIonicGoBack],
-  props: {
-    // A name to call "named views" by
-    name: {
-      type: String,
-      default: 'default',
-    },
-  },
+@Component
+export default class IonVueRouter extends mixins(CatchIonicGoBack) {
+  @Prop({ default: 'default'}) name!: string;
 }
 </script>

@@ -4,10 +4,6 @@
 // iOS Label
 // --------------------------------------------------
 
-:host {
-  @include margin($label-ios-margin-top, $label-ios-margin-end, $label-ios-margin-bottom, $label-ios-margin-start);
-}
-
 :host([text-wrap]) {
   font-size: $label-ios-text-wrap-font-size;
 
@@ -21,7 +17,7 @@
 :host(.label-stacked) {
   @include margin(null, null, 4px, null);
 
-  font-size: 12px;
+  font-size: 13.6px;
 }
 
 :host(.label-floating) {

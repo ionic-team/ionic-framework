@@ -20,7 +20,6 @@ export class FabButton implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
@@ -32,12 +31,12 @@ export class FabButton implements ComponentInterface {
   @Prop() color?: Color;
 
   /**
-   * If `true`, the fab button will be show a close icon. Defaults to `false`.
+   * If `true`, the fab button will be show a close icon.
    */
   @Prop() activated = false;
 
   /**
-   * If `true`, the user cannot interact with the fab button. Defaults to `false`.
+   * If `true`, the user cannot interact with the fab button.
    */
   @Prop() disabled = false;
 
@@ -51,7 +50,7 @@ export class FabButton implements ComponentInterface {
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
-  @Prop() routerDirection?: RouterDirection;
+  @Prop() routerDirection: RouterDirection = 'forward';
 
   /**
    * If `true`, the fab button will show when in a fab-list.
@@ -59,14 +58,12 @@ export class FabButton implements ComponentInterface {
   @Prop() show = false;
 
   /**
-   * If `true`, the fab button will be translucent. Defaults to `false`.
+   * If `true`, the fab button will be translucent.
    */
   @Prop() translucent = false;
 
   /**
    * The type of the button.
-   * Possible values are: `"submit"`, `"reset"` and `"button"`.
-   * Default value is: `"button"`
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
@@ -97,6 +94,7 @@ export class FabButton implements ComponentInterface {
     const inList = hostContext('ion-fab-list', this.el);
     return {
       'ion-activatable': true,
+      'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...createColorClasses(this.color),
         'fab-button-in-list': inList,

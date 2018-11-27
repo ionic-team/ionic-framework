@@ -14,32 +14,30 @@ Modals can be created using a [Modal Controller](../../modal-controller/ModalCon
 
 ## Properties
 
-| Property          | Attribute          | Description                                                                                                      | Type                 |
-| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | -------------------- |
-| `animated`        | `animated`         | If `true`, the modal will animate. Defaults to `true`.                                                           | `boolean`            |
-| `backdropDismiss` | `backdrop-dismiss` | If `true`, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.                         | `boolean`            |
-| `componentProps`  | --                 | The data to pass to the modal component.                                                                         | `ComponentProps`     |
-| `component`       | `component`        | The component to display inside of the modal.                                                                    | `ComponentRef`       |
-| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string`, `string[]` |
-| `delegate`        | --                 |                                                                                                                  | `FrameworkDelegate`  |
-| `enterAnimation`  | --                 | Animation to use when the modal is presented.                                                                    | `AnimationBuilder`   |
-| `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`            |
-| `leaveAnimation`  | --                 | Animation to use when the modal is dismissed.                                                                    | `AnimationBuilder`   |
-| `mode`            | `mode`             | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                        | `Mode`               |
-| `overlayIndex`    | `overlay-index`    |                                                                                                                  | `number`             |
-| `showBackdrop`    | `show-backdrop`    | If `true`, a backdrop will be displayed behind the modal. Defaults to `true`.                                    | `boolean`            |
+| Property          | Attribute          | Description                                                                                                      | Type                                                                                   | Default     |
+| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ----------- |
+| `animated`        | `animated`         | If `true`, the modal will animate.                                                                               | `boolean`                                                                              | `true`      |
+| `backdropDismiss` | `backdrop-dismiss` | If `true`, the modal will be dismissed when the backdrop is clicked.                                             | `boolean`                                                                              | `true`      |
+| `component`       | `component`        | The component to display inside of the modal.                                                                    | `Function \| HTMLElement \| null \| string`                                            | `undefined` |
+| `componentProps`  | --                 | The data to pass to the modal component.                                                                         | `undefined \| { [key: string]: any; }`                                                 | `undefined` |
+| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string \| string[] \| undefined`                                                      | `undefined` |
+| `enterAnimation`  | --                 | Animation to use when the modal is presented.                                                                    | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
+| `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                                                                              | `true`      |
+| `leaveAnimation`  | --                 | Animation to use when the modal is dismissed.                                                                    | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
+| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                                                                        | `undefined` |
+| `showBackdrop`    | `show-backdrop`    | If `true`, a backdrop will be displayed behind the modal.                                                        | `boolean`                                                                              | `true`      |
 
 
 ## Events
 
-| Event                 | Description                             |
-| --------------------- | --------------------------------------- |
-| `ionModalDidDismiss`  | Emitted after the modal has dismissed.  |
-| `ionModalDidLoad`     | Emitted after the modal has loaded.     |
-| `ionModalDidPresent`  | Emitted after the modal has presented.  |
-| `ionModalDidUnload`   | Emitted after the modal has unloaded.   |
-| `ionModalWillDismiss` | Emitted before the modal has dismissed. |
-| `ionModalWillPresent` | Emitted before the modal has presented. |
+| Event                 | Description                             | Detail             |
+| --------------------- | --------------------------------------- | ------------------ |
+| `ionModalDidDismiss`  | Emitted after the modal has dismissed.  | OverlayEventDetail |
+| `ionModalDidLoad`     | Emitted after the modal has loaded.     | void               |
+| `ionModalDidPresent`  | Emitted after the modal has presented.  | void               |
+| `ionModalDidUnload`   | Emitted after the modal has unloaded.   | void               |
+| `ionModalWillDismiss` | Emitted before the modal has dismissed. | OverlayEventDetail |
+| `ionModalWillPresent` | Emitted before the modal has presented. | void               |
 
 
 ## Methods

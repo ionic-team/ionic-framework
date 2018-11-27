@@ -96,6 +96,9 @@
     font-weight: inherit;
   }
 
+  &::-ms-clear {
+    display: none;
+  }
 }
 
 

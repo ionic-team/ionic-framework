@@ -1,8 +1,8 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
 
-import { Animation, AnimationBuilder, Config, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { Animation, AnimationBuilder, Color, Config, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { dismiss, eventMethod, present } from '../../utils/overlays';
-import { createThemedClasses, getClassMap } from '../../utils/theme';
+import { createColorClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
@@ -14,7 +14,8 @@ import { mdLeaveAnimation } from './animations/md.leave';
   styleUrls: {
     ios: 'toast.ios.scss',
     md: 'toast.md.scss'
-  }
+  },
+  shadow: true
 })
 export class Toast implements ComponentInterface, OverlayInterface {
 
@@ -27,16 +28,25 @@ export class Toast implements ComponentInterface, OverlayInterface {
   animation: Animation | undefined;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
+
   @Prop({ context: 'config' }) config!: Config;
 
-  /** @internal */
+  /**
+   * @internal
+   */
   @Prop() overlayIndex!: number;
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
+
+  /**
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
+   */
+  @Prop() color?: Color;
 
   /**
    * Animation to use when the toast is presented.
@@ -76,22 +86,22 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() keyboardClose = false;
 
   /**
-   * The position of the toast on the screen. Possible values: "top", "middle", "bottom".
+   * The position of the toast on the screen.
    */
   @Prop() position: 'top' | 'bottom' | 'middle' = 'bottom';
 
   /**
-   * If `true`, the close button will be displayed. Defaults to `false`.
+   * If `true`, the close button will be displayed.
    */
   @Prop() showCloseButton = false;
 
   /**
-   * If `true`, the toast will be translucent. Defaults to `false`.
+   * If `true`, the toast will be translucent.
    */
   @Prop() translucent = false;
 
   /**
-   * If `true`, the toast will animate. Defaults to `true`.
+   * If `true`, the toast will animate.
    */
   @Prop() animated = true;
 
@@ -173,16 +183,14 @@ export class Toast implements ComponentInterface, OverlayInterface {
   }
 
   hostData() {
-    const themedClasses = this.translucent ? createThemedClasses(this.mode, 'toast-translucent') : {};
-
     return {
       style: {
         zIndex: 60000 + this.overlayIndex,
       },
       class: {
-        ...themedClasses,
-        ...createThemedClasses(this.mode, 'toast'),
-        ...getClassMap(this.cssClass)
+        ...createColorClasses(this.color),
+        ...getClassMap(this.cssClass),
+        'toast-translucent': this.translucent
       }
     };
   }

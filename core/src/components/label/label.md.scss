@@ -4,13 +4,7 @@
 // Material Design Label
 // --------------------------------------------------
 
-:host {
-  @include margin($label-md-margin-top, $label-md-margin-end, $label-md-margin-bottom, $label-md-margin-start);
-}
-
 :host([text-wrap]) {
-  font-size: $label-md-text-wrap-font-size;
-
   line-height: $label-md-text-wrap-line-height;
 }
 
@@ -19,7 +13,7 @@
 // --------------------------------------------------
 
 :host(.label-stacked) {
-  font-size: 12px;
+  font-size: 12.8px;
 }
 
 :host(.label-floating) {
@@ -69,7 +63,7 @@
 
   font-size: 14px;
 
-  line-height: normal;
+  line-height: 20px;
 
   text-overflow: inherit;
 

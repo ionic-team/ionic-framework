@@ -20,7 +20,10 @@ export class App implements ComponentInterface {
     rIC(() => {
       const { win, config, queue } = this;
 
-      importTapClick(win);
+      if (!config.getBoolean('_testing')) {
+        importTapClick(win, config);
+      }
+
       importInputShims(win, config);
       importStatusTap(win, config, queue);
       importHardwareBackButton(win, config);
@@ -51,8 +54,8 @@ function importStatusTap(win: Window, config: Config, queue: QueueApi) {
   }
 }
 
-function importTapClick(win: Window) {
-  import('../../utils/tap-click').then(module => module.startTapClick(win.document));
+function importTapClick(win: Window, config: Config) {
+  import('../../utils/tap-click').then(module => module.startTapClick(win.document, config));
 }
 
 function importInputShims(win: Window, config: Config) {

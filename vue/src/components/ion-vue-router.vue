@@ -23,123 +23,112 @@
   </ion-router-outlet>
 </template>
 
-<script>
-import catchIonicGoBack from '../mixins/catch-ionic-go-back.js'
+<script lang="ts">
+import { Prop } from 'vue-property-decorator';
+import Component, { mixins } from 'vue-class-component';
+import CatchIonicGoBack from '../mixins/catch-ionic-go-back';
+import { IonRouterOutlet } from '../interfaces';
 
-export default {
-  name: 'IonVueRouter',
-  mixins: [catchIonicGoBack],
-  props: {
-    // A name to call "named views" by
-    name: {
-      type: String,
-      default: 'default',
-    },
-    // Set CSS classes during transitions
-    bindCSS: {
-      type: Boolean,
-      default: false,
-    },
-    // Animate transitions or not
-    animated: {
-      type: Boolean,
-      default: true,
-    },
-  },
-  data() {
-    return {
-      // Currently visible component
-      leavingEl: null,
+@Component
+export default class IonVueRouter extends mixins(CatchIonicGoBack) {
+  @Prop({ default: 'default'}) name!: string;
+  @Prop({ default: false }) bindCSS!: boolean;
+  @Prop({ default: true }) animated!: boolean;
 
-      // Component to be rendered
-      enteringEl: null,
+  // Currently visible component
+  leavingEl: HTMLElement;
+  // Component to be rendered
+  enteringEl: HTMLElement;
+  // Flag to see if we're still in a transition
+  inTransition = false;
+  customTransition = false;
 
-      // Flag to see if we're still in a transition
-      inTransition: false,
-
-      customTransition: false,
-    }
-  },
   created() {
     // Cancel navigation if there's a running transition
-    this.$router.beforeEach((to, from, next) => {
+    this.$router.beforeEach((to, _from, next) => {
       this.customTransition = to.meta.customTransition || false
       return this.$nextTick(() => {
-        return next(!this.inTransition)
+        return next(!this.inTransition as false);
       })
     })
-  },
-  methods: {
-    transition(enteringEl, leavingEl) {
-      // Get the reference to the Ionic component handling the transitions
-      const ionRouterOutlet = this.$refs.ionRouterOutlet
+  }
 
-      // The Ionic framework didn't load - skip animations
-      if (typeof ionRouterOutlet.componentOnReady === 'undefined') {
-        return
-      }
+  transition(enteringEl: HTMLElement, leavingEl: HTMLElement) {
+    // Get the reference to the Ionic component handling the transitions
+    const ionRouterOutlet = this.$refs.ionRouterOutlet as IonRouterOutlet;
 
-      // Skip animations if there's no component to navigate to
-      // or the current and the "to-be-rendered" components are the same
-      if (!enteringEl || enteringEl === leavingEl) {
-        return
-      }
+    // The Ionic framework didn't load - skip animations
+    if (typeof ionRouterOutlet.componentOnReady === 'undefined') {
+      return;
+    }
 
-      // Add the proper Ionic classes, important for smooth transitions
-      enteringEl.classList.add('ion-page', 'ion-page-invisible')
+    // Skip animations if there's no component to navigate to
+    // or the current and the "to-be-rendered" components are the same
+    if (!enteringEl || enteringEl === leavingEl) {
+      return;
+    }
 
-      // Commit to the transition as soon as the Ionic Router Outlet is ready
-      return ionRouterOutlet.componentOnReady().then(el => {
-        return el.commit(enteringEl, leavingEl, {
-          deepWait: true,
-          duration: this.getDuration(),
-          direction: this.getDirection(),
-          showGoBack: this.$router.canGoBack(),
-        })
-      })
-    },
-    // Instant transition if we don't want to animate
-    getDuration() {
-      return !this.animated ? 0 : undefined
-    },
-    // Get the navigation direction from the router
-    getDirection() {
-      return this.$router.direction === 1 ? 'forward' : 'back'
-    },
-    // Set the component to be rendered before we render the new route
-    beforeEnter(el) {
-      this.enteringEl = el
-    },
-    // Remember the current component before we leave the route
-    beforeLeave(el) {
-      this.leavingEl = el
-    },
-    // Transition when we leave the route
-    leave(el, done) {
-      const promise = this.transition(this.enteringEl, el)
+    // Add the proper Ionic classes, important for smooth transitions
+    enteringEl.classList.add('ion-page', 'ion-page-invisible')
 
-      this.inTransition = true
+    // Commit to the transition as soon as the Ionic Router Outlet is ready
+    return ionRouterOutlet.componentOnReady().then(el => {
+      return el.commit(enteringEl, leavingEl, {
+        deepWait: true,
+        duration: this.getDuration(),
+        direction: this.getDirection(),
+        showGoBack: this.$router.canGoBack(),
+      });
+    });
+  }
 
-      // Skip any transition if we don't get back a Promise
-      if (!promise) {
-        this.inTransition = false
-        return done()
-      }
+  // Instant transition if we don't want to animate
+  getDuration() {
+    return !this.animated ? 0 : undefined;
+  }
 
-      // Perform navigation once the transition was finished
-      return promise.then(() => {
-        this.inTransition = false
-        return done(true)
-      })
-    },
-    // Enter the new route
-    enter(el, done) {
-      done()
-    },
-    afterEnter(/* el */) {},
-    enterCancelled(/* el */) {},
-    afterLeave(/* el */) {},
-    leaveCancelled(/* el */) {},
-  },
+  // Get the navigation direction from the router
+  getDirection() {
+    return this.$router.direction === 1 ? 'forward' : 'back';
+  }
+
+  // Set the component to be rendered before we render the new route
+  beforeEnter(el: HTMLElement) {
+    this.enteringEl = el;
+  }
+
+  // Remember the current component before we leave the route
+  beforeLeave(el: HTMLElement) {
+    this.leavingEl = el;
+  }
+
+  // Transition when we leave the route
+  leave(el: HTMLElement, done: (opts?: boolean) => void): void {
+    const promise = this.transition(this.enteringEl, el);
+
+    this.inTransition = true;
+
+    // Skip any transition if we don't get back a Promise
+    if (!promise) {
+      this.inTransition = false;
+      return done();
+    }
+
+    // Perform navigation once the transition was finished
+    promise.then(() => {
+      this.inTransition = false;
+      return done(true);
+    });
+  }
+
+  // Enter the new route
+  enter(_el: HTMLElement, done: () => void): void {
+    done();
+  }
+
+  afterEnter(/* el */) {}
+  enterCancelled(/* el */) {}
+  afterLeave(/* el */) {}
+  leaveCancelled(/* el */) {}
 }
 </script>

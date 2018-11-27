@@ -100,4 +100,4 @@ const spinners = {
 };
 
 export const SPINNERS: SpinnerConfigs = spinners;
-export type SpinnerTypes = keyof typeof SPINNERS;
+export type SpinnerTypes = keyof typeof spinners;

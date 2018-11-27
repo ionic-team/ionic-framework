@@ -1,8 +1,3 @@
-$css-variable-prefix: "--ion-" !default;
-$default-color-variation: base !default;
-$default-color-prefix: color- !default;
-
-
 // Gets the active color's css variable from a variation. Alpha is optional.
 // --------------------------------------------------------------------------------------------
 // Example usage:
@@ -29,7 +24,7 @@ $default-color-prefix: color- !default;
   $value: map-get($values, $variation);
   $variable: --ion-color-#{$name}-#{$variation};
 
-  @if ($variation == $default-color-variation) {
+  @if ($variation == base) {
     $variable: --ion-color-#{$name};
   }
 

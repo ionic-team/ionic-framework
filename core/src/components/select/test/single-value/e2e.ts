@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('select: single-value', async () => {
+test('select: single-value', async () => {
   const page = await newE2EPage({
     url: '/src/components/select/test/single-value?ionic:_testing=true'
   });
@@ -13,6 +13,7 @@ it('select: single-value', async () => {
 
   const alert = await page.find('ion-alert');
   await alert.waitForVisible();
+  await page.waitFor(250);
 
   compare = await page.compareScreenshot('should open gender single select');
   expect(compare).toMatchScreenshot();

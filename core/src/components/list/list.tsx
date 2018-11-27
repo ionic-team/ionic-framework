@@ -16,18 +16,16 @@ export class List implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
    * How the bottom border should be displayed on all items.
-   * Available options: `"full"`, `"inset"`, `"none"`.
    */
   @Prop() lines?: 'full' | 'inset' | 'none';
 
   /**
-   * If `true`, the list will have margin around it and rounded corners. Defaults to `false`.
+   * If `true`, the list will have margin around it and rounded corners.
    */
   @Prop() inset = false;
 
@@ -50,9 +48,9 @@ export class List implements ComponentInterface {
     return {
       class: {
         ...createThemedClasses(this.mode, 'list'),
-        [`list-lines-${this.lines}`]: !!this.lines,
+        [`list-lines-${this.lines}`]: this.lines !== undefined,
         'list-inset': this.inset,
-        [`list-${this.mode}-lines-${this.lines}`]: !!this.lines
+        [`list-${this.mode}-lines-${this.lines}`]: this.lines !== undefined
       }
     };
   }

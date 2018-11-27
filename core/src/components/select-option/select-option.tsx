@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Prop } from '@stencil/core';
 
 @Component({
-  tag: 'ion-select-option'
+  tag: 'ion-select-option',
 })
 export class SelectOption implements ComponentInterface {
 
@@ -10,7 +10,7 @@ export class SelectOption implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   /**
-   * If `true`, the user cannot interact with the select option. Defaults to `false`.
+   * If `true`, the user cannot interact with the select option.
    */
   @Prop() disabled = false;
 
@@ -22,20 +22,22 @@ export class SelectOption implements ComponentInterface {
   /**
    * The text value of the option.
    */
-  @Prop({ mutable: true }) value?: any;
+  @Prop({ mutable: true }) value?: any | null;
 
   /**
    * Emitted when the select option loads.
+   * @internal
    */
   @Event() ionSelectOptionDidLoad!: EventEmitter<void>;
 
   /**
    * Emitted when the select option unloads.
+   * @internal
    */
   @Event() ionSelectOptionDidUnload!: EventEmitter<void>;
 
   componentWillLoad() {
-    if (this.value == null) {
+    if (this.value === undefined) {
       this.value = this.el.textContent || '';
     }
   }

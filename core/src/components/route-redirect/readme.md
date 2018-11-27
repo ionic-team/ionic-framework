@@ -8,7 +8,7 @@ This route has only two configurable values:
  - `from`
  - `to`
 
-Their meaning is obvious under the context of a redirection, that ocurrs `from` a given URL `to` another given URL.
+Their meaning is obvious under the context of a redirection, that occurs `from` a given URL `to` another given URL.
 
 In other for a redirection to occurs the `from` path needs to be an exact match of the navigated URL.
 
@@ -29,7 +29,7 @@ Let's say we have this two redirection rules:
 
 And the user navigates to `/admin`. The router will then redirect to `/login` and stop there.
 
-It WILL NOT never evalute more than one redirection rule in a roll.
+It WILL NOT never evaluate more than one redirection rule in a roll.
 
 
 ## Examples
@@ -71,17 +71,17 @@ Another approach is to modify the value of `to`, since given `to` the value of `
 
 ## Properties
 
-| Property | Attribute | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | Type     |
-| -------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `from`   | `from`    | A redirect route, redirects "from" a URL "to" another URL. This property is that "from" URL. It needs to be an exact match of the navigated URL in order to apply.  The path specified in this value is always an absolute path, even if the initial `/` slash is not specified.                                                                                                                                                                                                                                                                                                                                                                                                                | `string` |
-| `to`     | `to`      | A redirect route, redirects "from" a URL "to" another URL. This property is that "to" URL. When the defined `ion-route-redirect` rule matches, the router will redirect to the path specified in this property.  The value of this property is always an absolute path inside the scope of routes defined in `ion-router` it can't be used with another router or to perfom a redirection to a different domain.  Note that this is a virtual redirect, it will not cause a real browser refresh, again, it's a redirect inside the context of ion-router.  When this property is not specified or his value is `undefined` the whole redirect route is noop, even if the "from" value matches. | `string` |
+| Property | Attribute | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | Type                          | Default     |
+| -------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------- | ----------- |
+| `from`   | `from`    | A redirect route, redirects "from" a URL "to" another URL. This property is that "from" URL. It needs to be an exact match of the navigated URL in order to apply.  The path specified in this value is always an absolute path, even if the initial `/` slash is not specified.                                                                                                                                                                                                                                                                                                                                                                                                                 | `string`                      | `undefined` |
+| `to`     | `to`      | A redirect route, redirects "from" a URL "to" another URL. This property is that "to" URL. When the defined `ion-route-redirect` rule matches, the router will redirect to the path specified in this property.  The value of this property is always an absolute path inside the scope of routes defined in `ion-router` it can't be used with another router or to perform a redirection to a different domain.  Note that this is a virtual redirect, it will not cause a real browser refresh, again, it's a redirect inside the context of ion-router.  When this property is not specified or his value is `undefined` the whole redirect route is noop, even if the "from" value matches. | `null \| string \| undefined` | `undefined` |
 
 
 ## Events
 
-| Event                     | Description                                                                                                                                                                                                               |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ionRouteRedirectChanged` | Internal event that fires when any value of this rule is added/removed from the DOM, or any of his public properties changes.  `ion-router` captures this event in order to update his internal registry of router rules. |
+| Event                     | Description                                                                                                                                                                                                               | Detail |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
+| `ionRouteRedirectChanged` | Internal event that fires when any value of this rule is added/removed from the DOM, or any of his public properties changes.  `ion-router` captures this event in order to update his internal registry of router rules. | void   |
 
 
 ----------------------------------------------

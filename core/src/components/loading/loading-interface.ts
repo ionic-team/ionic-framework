@@ -1,7 +1,7 @@
-import { AnimationBuilder, SpinnerTypes } from '../../interface';
+import { AnimationBuilder, Mode, SpinnerTypes } from '../../interface';
 
 export interface LoadingOptions {
-  spinner?: SpinnerTypes;
+  spinner?: SpinnerTypes | null;
   message?: string;
   cssClass?: string | string[];
   showBackdrop?: boolean;
@@ -9,7 +9,7 @@ export interface LoadingOptions {
   translucent?: boolean;
   animated?: boolean;
 
-  mode?: string;
+  mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
 

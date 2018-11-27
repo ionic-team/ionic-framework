@@ -71,7 +71,7 @@
       <ion-fab-button><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
     </ion-fab-list>
     <ion-fab-list side="start">
-      <ion-fab-button><ion-icon name="logo-googleplus"></ion-icon></ion-fab-button>
+      <ion-fab-button><ion-icon name="logo-instagram"></ion-icon></ion-fab-button>
     </ion-fab-list>
     <ion-fab-list side="end">
       <ion-fab-button><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>

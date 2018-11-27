@@ -5,9 +5,9 @@
   <meta charset="UTF-8">
   <title>Input - Textarea</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
-  <script src="/scripts/screenshot/testing.js"></script>
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
@@ -107,23 +107,18 @@
 
         var isTrue = el[prop] ? false : true;
         el[prop] = isTrue;
-        console.log('in toggleBoolean, setting', prop, 'to', isTrue);
       }
 
       function toggleString(id, prop) {
         var el = document.getElementById(id);
-        console.log('INPUT ELE', el);
-
         var newString = el[prop] === 'dynamic' ? 'changed' : 'dynamic';
         el[prop] = newString;
-        console.log('in toggleString, setting', prop, 'to', newString);
       }
 
       function clearString(id, prop) {
         var el = document.getElementById(id);
 
         el[prop] = '';
-        console.log('in toggleString, setting', prop, 'to', '');
       }
     </script>
   </ion-app>

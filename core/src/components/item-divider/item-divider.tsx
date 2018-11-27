@@ -24,7 +24,6 @@ export class ItemDivider implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
@@ -32,7 +31,7 @@ export class ItemDivider implements ComponentInterface {
     // Change the button size to small for each ion-button in the item
     // unless the size is explicitly set
     Array.from(this.el.querySelectorAll('ion-button')).forEach(button => {
-      if (!button.size) {
+      if (button.size === undefined) {
         button.size = 'small';
       }
     });
@@ -40,7 +39,10 @@ export class ItemDivider implements ComponentInterface {
 
   hostData() {
     return {
-      class: createColorClasses(this.color)
+      class: {
+        ...createColorClasses(this.color),
+        'item': true,
+      }
     };
   }
 

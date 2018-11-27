@@ -1,4 +1,4 @@
-import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate } from '../../interface';
+import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
 
 export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
   component: T;
@@ -11,7 +11,7 @@ export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
   delegate?: FrameworkDelegate;
   animated?: boolean;
 
-  mode?: string;
+  mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
 

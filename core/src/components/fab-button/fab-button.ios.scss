@@ -5,6 +5,12 @@
 // --------------------------------------------------
 
 :host {
+  --background: #{$fab-ios-background-color};
+  --background-activated: #{$fab-ios-background-color-activated};
+  --background-focused: var(--background-activated);
+  --color: #{$fab-ios-text-color};
+  --color-activated: #{$fab-ios-text-color};
+  --color-focused: var(--color-activated);
   --box-shadow: #{$fab-ios-box-shadow};
   --transition: #{$fab-ios-transition};
 }
@@ -25,13 +31,17 @@
 
 :host(.fab-button-in-list) {
   --background: #{$fab-ios-list-button-background-color};
+  --background-activated: #{$fab-ios-list-button-background-color-activated};
+  --background-focused: var(--background-activated);
   --color: #{$fab-ios-list-button-text-color};
+  --color-activated: #{$fab-ios-list-button-text-color};
+  --color-focused: var(--color-activated);
   --transition: #{transform 200ms ease 10ms,
               opacity 200ms ease 10ms};
 }
 
-:host(.fab-button-in-list.activated) {
-  --background: #{$fab-ios-list-button-background-color-activated};
+:host(.fab-button-in-list) ::slotted(ion-icon) {
+  font-size: $fab-ios-list-button-icon-font-size;
 }
 
 

@@ -17,7 +17,7 @@ export function mdLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Pr
     .fromTo('opacity', 0.99, 0)
     .fromTo('translateY', '0px', '40px');
 
-  backdropAnimation.fromTo('opacity', 0.4, 0.0);
+  backdropAnimation.fromTo('opacity', 0.32, 0.0);
 
   return Promise.resolve(baseAnimation
     .addElement(baseEl)

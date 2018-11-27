@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
 
-import { Color, Config, Mode } from '../../interface';
+import { Color, Config, CssClassMap, Mode, StyleEvent } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -12,6 +12,9 @@ import { createColorClasses } from '../../utils/theme';
   shadow: true
 })
 export class Toolbar implements ComponentInterface {
+  private childrenStyles = new Map<string, CssClassMap>();
+
+  @Element() el!: HTMLStencilElement;
 
   @Prop({ context: 'config' }) config!: Config;
 
@@ -24,13 +27,47 @@ export class Toolbar implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
+  @Listen('ionStyle')
+  childrenStyle(ev: CustomEvent<StyleEvent>) {
+    ev.stopPropagation();
+
+    const tagName = (ev.target as HTMLElement).tagName;
+    const updatedStyles = ev.detail;
+    const newStyles = {} as any;
+    const childStyles = this.childrenStyles.get(tagName) || {};
+
+    let hasStyleChange = false;
+    Object.keys(updatedStyles).forEach(key => {
+      const childKey = `toolbar-${key}`;
+      const newValue = updatedStyles[key];
+      if (newValue !== childStyles[childKey]) {
+        hasStyleChange = true;
+      }
+      if (newValue) {
+        newStyles[childKey] = true;
+      }
+    });
+
+    if (hasStyleChange) {
+      this.childrenStyles.set(tagName, newStyles);
+      this.el.forceUpdate();
+    }
+  }
+
   hostData() {
+    const childStyles = {};
+    this.childrenStyles.forEach(value => {
+      Object.assign(childStyles, value);
+    });
+
     return {
-      class: createColorClasses(this.color)
+      class: {
+        ...childStyles,
+        ...createColorClasses(this.color)
+      }
     };
   }
 

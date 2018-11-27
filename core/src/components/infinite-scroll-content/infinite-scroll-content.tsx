@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Prop } from '@stencil/core';
 
-import { Config, Mode } from '../../interface';
+import { Config, Mode, SpinnerTypes } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
 @Component({
@@ -19,7 +19,7 @@ export class InfiniteScrollContent implements ComponentInterface {
   /**
    * An animated SVG spinner that shows while loading.
    */
-  @Prop({ mutable: true }) loadingSpinner?: string;
+  @Prop({ mutable: true }) loadingSpinner?: SpinnerTypes | null;
 
   /**
    * Optional text to display while loading.

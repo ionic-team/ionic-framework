@@ -18,7 +18,7 @@ export class Route implements ComponentInterface {
    * when the route matches.
    *
    * The value of this property is not always the tagname of the component to load,
-   * in ion-tabs it actually refers to the name of the `ion-tab` to select.
+   * in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
    */
   @Prop() component!: string;
 

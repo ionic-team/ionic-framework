@@ -1,0 +1,56 @@
+@import "../../themes/ionic.globals";
+
+:host {
+  /**
+   * @prop --background: Background of the tab bar
+   * @prop --border: Border of the tab bar
+   * @prop --color: Color of the tab bar
+   */
+
+  @include padding-horizontal(var(--ion-safe-area-left), var(--ion-safe-area-right));
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: auto;
+
+  background: var(--background);
+  color: var(--color);
+
+  text-align: center;
+
+  contain: strict;
+  user-select: none;
+  z-index: $z-index-toolbar;
+
+  /* stylelint-disable-next-line declaration-no-important */
+  box-sizing: content-box !important;
+}
+
+:host(.ion-color) {
+  background: #{current-color(base)};
+}
+
+:host(.ion-color) ::slotted(ion-tab-button) {
+  --background-focused: #{current-color(shade)};
+  --color-selected: #{current-color(contrast)};;
+
+  color: #{current-color(contrast, .7)};
+}
+
+:host([slot="top"]) {
+  border-bottom: var(--border);
+}
+
+:host([slot="bottom"]) {
+  padding-bottom: var(--ion-safe-area-bottom, 0);
+
+  border-top: var(--border);
+}
+
+:host(.tabbar-hidden) {
+  /* stylelint-disable-next-line declaration-no-important */
+  display: none !important;
+}

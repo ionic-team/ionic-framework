@@ -37,7 +37,7 @@ export class ReorderGroup implements ComponentInterface {
   @Prop({ context: 'document' }) doc!: Document;
 
   /**
-   * If `true`, the reorder will be hidden. Defaults to `true`.
+   * If `true`, the reorder will be hidden.
    */
   @Prop() disabled = true;
   @Watch('disabled')
@@ -56,7 +56,7 @@ export class ReorderGroup implements ComponentInterface {
    *
    * The complete() method exposed as
    */
-  @Event({ bubbles: false }) ionItemReorder!: EventEmitter<ItemReorderDetail>;
+  @Event() ionItemReorder!: EventEmitter<ItemReorderDetail>;
 
   async componentDidLoad() {
     const contentEl = this.el.closest('ion-content');

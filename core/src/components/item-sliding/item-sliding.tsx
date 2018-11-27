@@ -49,7 +49,7 @@ export class ItemSliding implements ComponentInterface {
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
-   * If `true`, the user cannot interact with the sliding-item. Defaults to `false`.
+   * If `true`, the user cannot interact with the sliding-item.
    */
   @Prop() disabled = false;
   @Watch('disabled')

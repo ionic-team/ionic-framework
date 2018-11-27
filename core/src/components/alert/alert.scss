@@ -4,6 +4,11 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --background: Background of the alert
+   * @prop --min-width: Minimum width of the alert
+   * @prop --max-height: Maximum height of the alert
+   */
   --min-width: #{$alert-min-width};
   --max-height: #{$alert-max-height};
 

@@ -9,7 +9,7 @@ class IonicConnector extends ScreenshotConnector {
     const timespan = this.logger.createTimeSpan(`pull master screenshot images started`);
 
     const ws = fs.createWriteStream(this.masterBuildFilePath);
-    const p = `/data/builds/master.json`;
+    const p = `/data/builds/master.json?ts=${Date.now()}`;
     await this.downloadToStream(ws, p);
     const masterBuild = await this.getMasterBuild();
 

@@ -4,6 +4,7 @@ export * from './index';
 export * from './components/animation-controller/animation-interface';
 export * from './components/alert/alert-interface';
 export * from './components/action-sheet/action-sheet-interface';
+export * from './components/datetime/datetime-interface';
 export * from './components/menu/menu-interface';
 export * from './components/modal/modal-interface';
 export * from './components/picker/picker-interface';
@@ -15,10 +16,11 @@ export * from './components/range/range-interface';
 export * from './components/refresher/refresher-interface';
 export * from './components/reorder-group/reorder-group-interface';
 export * from './components/content/content-interface';
+export * from './components/segment-button/segment-button-interface';
 export * from './components/select/select-interface';
 export * from './components/select-popover/select-popover-interface';
 export * from './components/spinner/spinner-interface';
-export * from './components/tabbar/tabbar-interface';
+export * from './components/tab-bar/tab-bar-interface';
 export * from './components/toast/toast-interface';
 export * from './components/virtual-scroll/virtual-scroll-interface';
 
@@ -33,7 +35,7 @@ export * from './global/config';
 export * from './utils/overlays-interface';
 
 // Global types
-export type TextFieldTypes = 'date' | 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url';
+export type TextFieldTypes = 'date' | 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' | 'time';
 export type Side = 'start' | 'end';
 export type PredefinedColors = 'primary' | 'secondary' | 'tertiary' | 'success' | 'warning' | 'danger' | 'light' | 'medium' | 'dark';
 export type Color = PredefinedColors | string;

@@ -4,6 +4,10 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --color: Color of the menu button
+   */
+
   color: var(--color);
 
   pointer-events: all;

@@ -1,4 +1,4 @@
-import { AnimationBuilder, TextFieldTypes } from '../../interface';
+import { AnimationBuilder, Mode, TextFieldTypes } from '../../interface';
 
 export interface AlertOptions {
   header?: string;
@@ -11,7 +11,7 @@ export interface AlertOptions {
   translucent?: boolean;
   animated?: boolean;
 
-  mode?: string;
+  mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
 
@@ -23,14 +23,14 @@ export interface AlertInput {
   type?: TextFieldTypes | 'checkbox' | 'radio';
   name?: string;
   placeholder?: string;
-  value?: string;
+  value?: any;
   label?: string;
   checked?: boolean;
   disabled?: boolean;
   id?: string;
   handler?: (input: AlertInput) => void;
-  min?: number;
-  max?: number;
+  min?: string | number;
+  max?: string | number;
 }
 
 export interface AlertButton {

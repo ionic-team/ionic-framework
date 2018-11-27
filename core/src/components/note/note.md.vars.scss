@@ -4,4 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Text color of the note
-$note-md-color:          $text-color-step-800 !default;
+$note-md-color:          $text-color-step-400 !default;
+
+/// @prop - Font size of the note
+$note-md-font-size:      14px !default;

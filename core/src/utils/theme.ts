@@ -17,7 +17,7 @@ export function createColorClasses(color: Color | undefined | null): CssClassMap
 export function createThemedClasses(mode: Mode | undefined, name: string): CssClassMap {
   return {
     [name]: true,
-    [`${name}-${mode}`]: !!mode
+    [`${name}-${mode}`]: mode !== undefined
   };
 }
 
@@ -38,7 +38,7 @@ export function getClassMap(classes: string | string[] | undefined): CssClassMap
   return map;
 }
 
-export async function openURL(win: Window, url: string | undefined | null, ev: Event | undefined | null, direction?: RouterDirection): Promise<boolean> {
+export async function openURL(win: Window, url: string | undefined | null, ev: Event | undefined | null, direction: RouterDirection): Promise<boolean> {
   if (url != null && url[0] !== '#' && url.indexOf('://') === -1) {
     const router = win.document.querySelector('ion-router');
     if (router) {

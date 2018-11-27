@@ -10,20 +10,23 @@
    * @prop --border-radius: Border radius of the checkbox icon
    * @prop --border-width: Border width of the checkbox icon
    * @prop --border-style: Border style of the checkbox icon
-   * @prop --size: Size of the checkbox icon
    * @prop --transition: Transition of the checkbox icon
    * @prop --background-checked: Background of the checkbox icon when checked
    * @prop --border-color-checked: Border color of the checkbox icon when checked
    * @prop --checkmark-color: Color of the checkbox checkmark when checked
+   * @prop --height: Height of the checkbox icon
+   * @prop --width: Width of the checkbox icon
    */
   --background-checked: #{ion-color(primary, base)};
   --border-color-checked: #{ion-color(primary, base)};
   --checkmark-color: #{ion-color(primary, contrast)};
+  --transition: none;
 
   display: inline-block;
   position: relative;
 
   user-select: none;
+  z-index: $z-index-item-input;
 }
 
 :host(.ion-color) {
@@ -32,17 +35,18 @@
   --checkmark-color: #{current-color(contrast)};
 }
 
-input {
+button {
   @include input-cover();
 }
 
 .checkbox-icon {
   @include border-radius(var(--border-radius));
 
+  display: block;
   position: relative;
 
-  width: var(--size);
-  height: var(--size);
+  width: var(--width);
+  height: var(--height);
 
   transition: var(--transition);
 
@@ -53,10 +57,13 @@ input {
   background: var(--background);
 
   contain: strict;
+  box-sizing: border-box;
 }
 
-.checkbox-inner {
-  border-color: var(--checkmark-color);
+.checkbox-icon path {
+  fill: none;
+  stroke: var(--checkmark-color);
+  stroke-width: 1;
 
   opacity: 0;
 }
@@ -70,7 +77,7 @@ input {
   background: var(--background-checked);
 }
 
-:host(.checkbox-checked) .checkbox-inner {
+:host(.checkbox-checked) .checkbox-icon path {
   opacity: 1;
 }
 

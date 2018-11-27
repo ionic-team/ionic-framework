@@ -5,16 +5,14 @@
 // --------------------------------------------------
 
 .list-md {
-  @include margin(-1px, $list-md-margin-end, $list-md-margin-bottom, $list-md-margin-start);
+  @include margin($list-md-margin-top, $list-md-margin-end, $list-md-margin-bottom, $list-md-margin-start);
+  @include padding($list-md-padding-top, $list-md-padding-end, $list-md-padding-bottom, $list-md-padding-start);
+
+  background: $item-md-background;
 }
 
 .list-md > .input:last-child::after {
   @include position-horizontal(0, null);
-}
-
-.list-md:not(.list-inset):not(.list-md-lines-none) .item:last-child {
-  --inner-border-width: 0;
-  --border-width: #{0 0 $list-md-item-border-bottom-width 0};
 }
 
 

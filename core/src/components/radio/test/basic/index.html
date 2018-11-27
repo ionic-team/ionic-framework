@@ -5,9 +5,9 @@
   <meta charset="UTF-8">
   <title>Radio - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
-  <script src="/scripts/screenshot/testing.js"></script>
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
@@ -47,7 +47,7 @@
           </ion-item-divider>
           <ion-item>
             <ion-label>Pepperoni</ion-label>
-            <ion-radio slot="end" name="pepperoni" checked></ion-radio>
+            <ion-radio slot="end" name="pepperoni" checked id="pepperoni-radio"></ion-radio>
           </ion-item>
 
           <ion-item>
@@ -143,6 +143,12 @@
     </ion-content>
 
     <script>
+      const radio = document.getElementById('pepperoni-radio');
+      if (radio) {
+        radio.addEventListener('ionSelect', (ev) => {
+          console.log(ev.detail);
+        });
+      }
       var radioValues = ['fruitRadio', 'pizzaRadio', 'veggiesRadio'];
       printRadioValues();
 

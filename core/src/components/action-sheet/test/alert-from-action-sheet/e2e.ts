@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-it('action-sheet: alertFromActionSheet', async () => {
+test('action-sheet: alertFromActionSheet', async () => {
   const page = await newE2EPage({
     url: `/src/components/action-sheet/test/alert-from-action-sheet?ionic:_testing=true`
   });
@@ -19,6 +19,7 @@ it('action-sheet: alertFromActionSheet', async () => {
 
   const alert = await page.find('ion-alert');
   await alert.waitForVisible();
+  await page.waitFor(250);
 
   compare = await page.compareScreenshot(`alert open`);
   expect(compare).toMatchScreenshot();

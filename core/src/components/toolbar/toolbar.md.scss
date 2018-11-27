@@ -5,18 +5,18 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{$toolbar-md-background-color};
-  --color: #{$toolbar-md-text-color};
+  --background: #{$toolbar-md-background};
+  --color: #{$toolbar-md-color};
   --border-color: #{$toolbar-md-border-color};
-  --padding-top: #{$toolbar-md-padding};
-  --padding-bottom: #{$toolbar-md-padding};
-  --padding-start: #{$toolbar-md-padding};
-  --padding-end: #{$toolbar-md-padding};
-  --min-height: #{$toolbar-md-height};
+  --padding-top: 4px;
+  --padding-bottom: 4px;
+  --padding-start: 4px;
+  --padding-end: 4px;
+  --min-height: 56px;
 }
 
 
-// Material Design Toolbar Content
+// Toolbar: Content
 // --------------------------------------------------
 
 .toolbar-content {
@@ -25,4 +25,14 @@
 
   min-width: 0;
   max-width: 100%;
+}
+
+// Toolbar: Segment
+// --------------------------------------------------
+
+:host(.toolbar-segment) {
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
 }

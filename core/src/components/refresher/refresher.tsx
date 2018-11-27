@@ -38,7 +38,7 @@ export class Refresher implements ComponentInterface {
 
   /**
    * The minimum distance the user must pull down until the
-   * refresher will go into the `refreshing` state. Defaults to `60`.
+   * refresher will go into the `refreshing` state.
    */
   @Prop() pullMin = 60;
 
@@ -51,17 +51,17 @@ export class Refresher implements ComponentInterface {
 
   // TODO: NEVER USED
   /**
-   * Time it takes to close the refresher. Defaults to `280ms`.
+   * Time it takes to close the refresher.
    */
   @Prop() closeDuration = '280ms';
 
   /**
-   * Time it takes the refresher to to snap back to the `refreshing` state. Defaults to `280ms`.
+   * Time it takes the refresher to to snap back to the `refreshing` state.
    */
   @Prop() snapbackDuration = '280ms';
 
   /**
-   * If `true`, the refresher will be hidden. Defaults to `false`.
+   * If `true`, the refresher will be hidden.
    */
   @Prop() disabled = false;
   @Watch('disabled')

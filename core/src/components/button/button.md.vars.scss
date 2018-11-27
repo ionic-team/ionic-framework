@@ -31,7 +31,7 @@ $button-md-padding-start:                               1.1em !default;
 $button-md-height:                                      36px !default;
 
 /// @prop - Border radius of the button
-$button-md-border-radius:                               2px !default;
+$button-md-border-radius:                               4px !default;
 
 /// @prop - Font size of the button text
 $button-md-font-size:                                   14px !default;
@@ -42,22 +42,16 @@ $button-md-font-weight:                                 500 !default;
 /// @prop - Capitalization of the button text
 $button-md-text-transform:                              uppercase !default;
 
-$button-md-letter-spacing: 0;
+$button-md-letter-spacing:                              0.06em;
 
 /// @prop - Box shadow of the button
-$button-md-box-shadow:                                  0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12) !default;
-
-/// @prop - Duration of the transition of the button
-$button-md-transition-duration:                         300ms !default;
-
-/// @prop - Speed curve of the transition of the button
-$button-md-transition-timing-function:                  cubic-bezier(.4, 0, .2, 1) !default;
+$button-md-box-shadow:                                  0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12) !default;
 
 /// @prop - Opacity of the activated button
 $button-md-opacity-activated:                           1 !default;
 
 /// @prop - Box shadow of the activated button
-$button-md-box-shadow-activated:                        0 3px 5px rgba(0, 0, 0, .14), 0 3px 5px rgba(0, 0, 0, .21) !default;
+$button-md-box-shadow-activated:                        0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12) !default;
 
 /// @prop - Background color of the ripple on the button
 $button-md-ripple-background-color:                     $text-color-step-400 !default;

@@ -1,5 +1,5 @@
 export interface TextInputChangeEvent {
-  value: string | undefined;
+  value: string | undefined | null;
 }
 
 export interface CheckedInputChangeEvent extends TextInputChangeEvent {
@@ -12,7 +12,6 @@ export interface InputChangeEvent {
 
 export interface SelectInputChangeEvent {
   value: any | any[] | undefined | null;
-  text: string | undefined | null;
 }
 
 export interface StyleEvent {

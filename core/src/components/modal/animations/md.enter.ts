@@ -16,7 +16,7 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Pr
     .fromTo('opacity', 0.01, 1)
     .fromTo('translateY', '40px', '0px');
 
-  backdropAnimation.fromTo('opacity', 0.01, 0.4);
+  backdropAnimation.fromTo('opacity', 0.01, 0.32);
 
   return Promise.resolve(baseAnimation
     .addElement(baseEl)

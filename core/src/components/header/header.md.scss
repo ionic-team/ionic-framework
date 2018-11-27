@@ -1,21 +1,22 @@
 @import "./header";
+@import "./header.md.vars";
 
 // Material Design Header
 // --------------------------------------------------
 
 .header-md::after {
-  // using datauri png background image for improved scroll performance
-  // rather than using `box-shadow: 0 2px 5px rgba(0,0,0,0.26);`
-  // noticable performance difference on older Android devices
-  @include position(null, null, -5px, 0);
-  @include background-position(start, 0, top, -2px);
+  // Using a datauri png background image for improved scroll
+  // performance rather than using a box-shadow. There is a
+  // noticeable performance difference on older Android devices.
+  @include position(null, null, -$header-md-box-shadow-height, 0);
+  @include background-position(start, 0, top, 0);
 
   position: absolute;
 
   width: 100%;
-  height: 5px;
+  height: $header-md-box-shadow-height;
 
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAHBAMAAADzDtBxAAAAD1BMVEUAAAAAAAAAAAAAAAAAAABPDueNAAAABXRSTlMUCS0gBIh/TXEAAAAaSURBVAjXYxCEAgY4UIICBmMogMsgFLtAAQCNSwXZKOdPxgAAAABJRU5ErkJggg==");
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAIBAMAAAACWGKkAAAAFVBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAASAQCkAAAAB3RSTlMFTEIzJBcOYhQUIwAAAB9JREFUCNdjEIQCBiUoYDCGAgYXKGAIhQKGNChgwAAAorMLKSCkL40AAAAASUVORK5CYII=");
   background-repeat: repeat-x;
 
   content: "";
