@@ -8,7 +8,7 @@ RouterOutlet is a component used in routing within an Angular app. RouterOutlet 
 While RouterOutlet has methods for navigating around, it's recommended to use the navigation methods in Angular's router.
 
 
-### Life Cycle hooks
+### Life Cycle Hooks
 
 Routes rendered in a Router Outlet have access to specific Ionic events that are wired up to animations
 
@@ -21,7 +21,7 @@ Routes rendered in a Router Outlet have access to specific Ionic events that are
 | `ionViewDidLeave`  | Fired when the component being routed from has animated.         |
 
 
-These event tie into Ionic's animation system and can be used to coordinate parts of your app when a Components is done with it's animation. These evetns are not a replacement for Angular's own event system, but an addition.
+These event tie into Ionic's animation system and can be used to coordinate parts of your app when a Components is done with it's animation. These events are not a replacement for Angular's own event system, but an addition.
 
 For handling Router Guards, the older `ionViewCanEnter` and `ionViewCanLeave` have been replaced with their framework specific equivalent. For Angular, there are [Router Guards](https://angular.io/guide/router#milestone-5-route-guards).
 
