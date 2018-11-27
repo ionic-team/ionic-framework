@@ -9,10 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
     "jsxFactory": "h",
-    "lib": [
-      "dom",
-      "es2017"
-    ],
+    "lib": ["dom", "es2017"],
     "module": "es2015",
     "moduleResolution": "node",
     "noImplicitAny": true,
@@ -26,7 +23,6 @@
     "strictPropertyInitialization": false,
     "target": "es5"
   },
-  "files": [
-    "src/index.ts"
-  ]
+  "exclude": ["node_modules", "src/schematics"],
+  "files": ["src/index.ts"]
 }
