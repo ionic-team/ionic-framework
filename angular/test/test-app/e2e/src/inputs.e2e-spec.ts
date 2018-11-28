@@ -7,7 +7,18 @@ describe('inputs', () => {
     await browser.get('/inputs');
   });
 
-  it('should have default values', async () => {
+  it('should have default value', async () => {
+    expect(await getProperty('ion-checkbox', 'checked')).toEqual(true);
+    expect(await getProperty('ion-toggle', 'checked')).toEqual(true);
+    expect(await getProperty('ion-input', 'value')).toEqual('some text');
+    expect(await getProperty('ion-datetime', 'value')).toEqual('1994-03-15');
+    expect(await getProperty('ion-select', 'value')).toEqual('nes');
+    expect(await getProperty('ion-range', 'value')).toEqual(10);
+  });
+
+  it('should have reset value', async () => {
+    await element(by.css('#reset-button')).click();
+
     expect(await getProperty('ion-checkbox', 'checked')).toEqual(false);
     expect(await getProperty('ion-toggle', 'checked')).toEqual(false);
     expect(await getProperty('ion-input', 'value')).toEqual('');
@@ -17,6 +28,7 @@ describe('inputs', () => {
   });
 
   it('should get some value', async () => {
+    await element(by.css('#reset-button')).click();
     await element(by.css('#set-button')).click();
 
     expect(await getProperty('ion-checkbox', 'checked')).toEqual(true);
@@ -28,6 +40,8 @@ describe('inputs', () => {
   });
 
   it('change values should update angular', async () => {
+    await element(by.css('#reset-button')).click();
+
     await setProperty('ion-checkbox', 'checked', true);
     await setProperty('ion-toggle', 'checked', true);
     await setProperty('ion-input', 'value', 'hola');

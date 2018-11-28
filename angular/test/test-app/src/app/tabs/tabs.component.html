@@ -1,0 +1,21 @@
+<ion-tabs>
+  <ion-tab tab="tab-one">
+    <ion-router-outlet name="tab-one"></ion-router-outlet>
+  </ion-tab>
+
+  <ion-tab tab="tab-two">
+    <ion-router-outlet name="tab-one"></ion-router-outlet>
+  </ion-tab>
+
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="tab-one">
+      <ion-label>Tab One</ion-label>
+      <ion-icon name="add"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab-two">
+      <ion-label>Tab Two</ion-label>
+      <ion-icon name="plane"></ion-icon>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
