@@ -81,7 +81,7 @@ jobs:
           command: npm install
           working_directory: /tmp/workspace/angular
       - run:
-          command: npm run link @ionic/core
+          command: sudo npm link @ionic/core
           working_directory: /tmp/workspace/angular
       - run:
           command: npm run build
