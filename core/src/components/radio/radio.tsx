@@ -105,7 +105,7 @@ export class Radio implements ComponentInterface {
   }
 
   componentWillLoad() {
-    if (this.value == null) {
+    if (this.value === undefined) {
       this.value = this.inputId;
     }
     this.emitStyle();

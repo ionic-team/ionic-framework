@@ -23,7 +23,7 @@ export class NavController {
       if (ev instanceof NavigationStart) {
         const id = (ev.restoredState) ? ev.restoredState.navigationId : ev.id;
         this.guessDirection = id < this.lastNavId ? 'back' : 'forward';
-        this.lastNavId = id;
+        this.lastNavId = this.guessDirection === 'forward' ? ev.id : id;
       }
     });
 
@@ -77,6 +77,7 @@ export class NavController {
 
     if (this.direction === 'auto') {
       direction = this.guessDirection;
+      console.log('guessed', direction);
       animated = direction !== 'root';
     } else {
       animated = this.animated;

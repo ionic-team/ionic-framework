@@ -1,7 +1,7 @@
 # ion-tabs
 
 Tabs are a top level navigation component to implement a tab-based navigation.
-The component is a container of individual [Tab](../Tab/) components.
+The component is a container of individual [Tab](../tab/) components.
 
 `ion-tabs` is a styleless component that works as a router outlet in order to handle navigation.
 This component does not provide any UI feedback or mechanism to switch between tabs.
@@ -22,7 +22,7 @@ In order to do so, an `ion-tab-bar` should be provided as a direct child of `ion
 
     <ion-tab-button tab="settings">
       <ion-label>Settings</ion-label>
-      <ion-icon name="gear"></ion-icon>
+      <ion-icon name="settings"></ion-icon>
     </ion-tab-button>
 
   </ion-tab-bar>

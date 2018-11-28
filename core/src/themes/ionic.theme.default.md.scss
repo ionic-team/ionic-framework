@@ -14,15 +14,15 @@ $overlay-md-background-color:               var(--ion-overlay-background-color, 
 
 // Material Design Tabs & Tab bar
 // --------------------------------------------------
-$tabbar-md-background:                      var(--ion-tab-bar-background, #f8f8f8) !default;
-$tabbar-md-background-focused:              var(--ion-tab-bar-background-focused, get-color-shade(#f8f8f8)) !default;
+$tabbar-md-background:                      var(--ion-tab-bar-background, #fff) !default;
+$tabbar-md-background-focused:              var(--ion-tab-bar-background-focused, get-color-shade(#fff)) !default;
 $tabbar-md-border-color:                    var(--ion-tab-bar-border-color, var(--ion-border-color, rgba(0, 0, 0, .07))) !default;
 $tabbar-md-color:                           var(--ion-tab-bar-color, $text-color-step-400) !default;
 $tabbar-md-color-activated:                 var(--ion-tab-bar-color-activated, ion-color(primary, base)) !default;
 
 // Material Design Toolbar
 // --------------------------------------------------
-$toolbar-md-background:                     var(--ion-toolbar-background, #f8f8f8) !default;
+$toolbar-md-background:                     var(--ion-toolbar-background, #fff) !default;
 $toolbar-md-border-color:                   var(--ion-toolbar-border-color, $border-md-color) !default;
 $toolbar-md-color:                          var(--ion-toolbar-color, var(--ion-text-color, #424242)) !default;
 $toolbar-md-color-activated:                var(--ion-toolbar-color-activated, #4a4a4a) !default;

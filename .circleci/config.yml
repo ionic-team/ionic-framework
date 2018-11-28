@@ -63,6 +63,29 @@ jobs:
           command: npm run build # --max-workers 1 --debug
           working_directory: /tmp/workspace/core
       - save_cache: *save-cache-core-stencil
+      - run:
+          command: sudo npm link
+          working_directory: /tmp/workspace/core
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - "*"
+
+  build-angular:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm install
+          working_directory: /tmp/workspace/angular
+      - run:
+          command: sudo npm link @ionic/core
+          working_directory: /tmp/workspace/angular
+      - run:
+          command: npm run build
+          working_directory: /tmp/workspace/angular
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
@@ -131,6 +154,19 @@ jobs:
           command: npx stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci --update-screenshot || true
           working_directory: /tmp/workspace/core
 
+  test-angular:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm install
+          working_directory: /tmp/workspace/angular/test/test-app
+      - run:
+          command: npm test
+          working_directory: /tmp/workspace/angular/test/test-app
+
 workflows:
   version: 2
   build:
@@ -138,6 +174,10 @@ workflows:
       - build
       - build-core:
           requires: [build]
+      - build-angular:
+          requires: [build-core]
+      - test-angular:
+          requires: [build-angular]
       - test-core-clean-build:
           requires: [build-core]
       - test-core-lint:
