@@ -95,9 +95,12 @@ wrongRepo:
     - label: "ionitron: v3"
       repo: ionic-v3
       message: >
-        Thanks for the issue! We have moved the source code and issues for Ionic 3 into a separate repository.
-        I am moving this issue to the repository for Ionic 3. Please track this issue over there.
+        This issue has been automatically identified as an Ionic 3 issue. We recently moved Ionic 3 to
+        its own repository. I am moving this issue to the repository for Ionic 3. Please track this issue
+        over there.
 
+        If I've made a mistake, and if this issue is still relevant to Ionic 4, please let the Ionic
+        Framework team know!
 
         Thank you for using Ionic!
     - label: "ionitron: cli"
