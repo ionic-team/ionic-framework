@@ -11,6 +11,7 @@ import { ModalExampleComponent } from './modal-example/modal-example.component';
 import { RouterLinkComponent } from './router-link/router-link.component';
 import { RouterLinkPageComponent } from './router-link-page/router-link-page.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import { TabsComponent } from './tabs/tabs.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { HomePageComponent } from './home-page/home-page.component';
     ModalExampleComponent,
     RouterLinkComponent,
     RouterLinkPageComponent,
-    HomePageComponent
+    HomePageComponent,
+    TabsComponent
   ],
   imports: [
     BrowserModule,

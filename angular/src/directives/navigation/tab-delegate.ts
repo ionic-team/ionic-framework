@@ -31,7 +31,7 @@ export class TabDelegate {
     return this.outlet ? this.outlet.getLastUrl() : undefined;
   }
 
-  @HostListener('ionRouterOutletActivated', ['$event'])
+  @HostListener('ionRouterOutletActivated')
   async onNavChanged() {
     const tab = this.nativeEl;
     await tab.componentOnReady();
