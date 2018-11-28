@@ -64,7 +64,7 @@ jobs:
           working_directory: /tmp/workspace/core
       - save_cache: *save-cache-core-stencil
       - run:
-          command: npm link
+          command: sudo npm link
           working_directory: /tmp/workspace/core
       - persist_to_workspace:
           root: /tmp/workspace
