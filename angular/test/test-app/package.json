@@ -4,10 +4,13 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "sync:build": "sh scripts/build-ionic.sh",
+    "sync": "sh scripts/sync.sh",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "npm run sync:build"
   },
   "private": true,
   "dependencies": {

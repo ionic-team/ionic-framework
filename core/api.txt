@@ -939,7 +939,6 @@ ion-select,event,ionBlur,void,true
 ion-select,event,ionCancel,void,true
 ion-select,event,ionChange,SelectInputChangeEvent,true
 ion-select,event,ionFocus,void,true
-ion-select,css-prop,--color
 ion-select,css-prop,--icon-color
 ion-select,css-prop,--padding-bottom
 ion-select,css-prop,--padding-end
