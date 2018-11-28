@@ -1,9 +1,10 @@
 import { browser, element, by } from 'protractor';
+import { getProperty, setProperty } from './utils';
 
-describe('input', () => {
+describe('inputs', () => {
 
   beforeEach(async () => {
-    await browser.get('/inputs-test');
+    await browser.get('/inputs');
   });
 
   it('should have default values', async () => {
@@ -42,16 +43,3 @@ describe('input', () => {
     expect(await element(by.css('#range-note')).getText()).toEqual('20');
   });
 });
-
-function getProperty(selector: string, property: string) {
-  return browser.executeScript(`
-    return document.querySelector('${selector}')['${property}'];
-  `);
-}
-
-function setProperty(selector: string, property: string, value: any) {
-  const text = JSON.stringify(value);
-  return browser.executeScript(`
-    document.querySelector('${selector}')['${property}'] = ${text};
-  `);
-}

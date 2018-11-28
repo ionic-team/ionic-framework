@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-inputs-test',
-  templateUrl: './inputs-test.component.html',
-  styleUrls: ['./inputs-test.component.css']
+  selector: 'app-inputs',
+  templateUrl: './inputs.component.html',
 })
-export class InputsTestComponent {
+export class InputsComponent {
 
   datetime: string;
   input: string;

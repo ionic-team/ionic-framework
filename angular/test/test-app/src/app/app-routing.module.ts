@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { InputsTestComponent } from './inputs-test/inputs-test.component';
+import { InputsComponent } from './inputs/inputs.component';
+import { ModalComponent } from './modal/modal.component';
+import { RouterLinkComponent } from './router-link/router-link.component';
+import { RouterLinkPageComponent } from './router-link-page/router-link-page.component';
+import { HomePageComponent } from './home-page/home-page.component';
 
 const routes: Routes = [
-  {
-    path: 'inputs-test',
-    component: InputsTestComponent
-  }
+  { path: '', component: HomePageComponent },
+  { path: 'inputs', component: InputsComponent },
+  { path: 'modals', component: ModalComponent },
+  { path: 'router-link', component: RouterLinkComponent },
+  { path: 'router-link-page', component: RouterLinkPageComponent }
 ];
 
 @NgModule({
