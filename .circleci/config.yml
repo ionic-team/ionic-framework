@@ -177,7 +177,7 @@ workflows:
       - build-angular:
           requires: [build-core]
       - test-angular:
-        requires: [build-angular]
+          requires: [build-angular]
       - test-core-clean-build:
           requires: [build-core]
       - test-core-lint:
