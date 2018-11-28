@@ -9,7 +9,7 @@
     "build": "ng build --prod",
     "test": "ng e2e --prod",
     "lint": "ng lint",
-    "postinstall": "npm run sync:build"
+    "postinstall": "npm run sync"
   },
   "private": true,
   "dependencies": {
