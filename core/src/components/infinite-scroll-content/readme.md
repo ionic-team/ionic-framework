@@ -5,6 +5,21 @@ The `ion-infinite-scroll-content` component is the default child used by the `io
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+```html
+<ion-content>
+  <ion-infinite-scroll>
+    <ion-infinite-scroll-content
+      loading-spinner="bubbles"
+      loading-text="Loading more data…">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+```
+
+
+
 ## Properties
 
 | Property         | Attribute         | Description                                       | Type                                                                                              | Default     |

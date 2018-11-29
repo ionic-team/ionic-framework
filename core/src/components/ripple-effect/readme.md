@@ -6,6 +6,21 @@ The ripple effect component adds the [Material Design ink ripple interaction eff
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+```html
+<div>
+  <ion-ripple-effect></ion-ripple-effect>
+  A plain div with a ripple effect
+</div>
+
+<button>
+  <ion-ripple-effect></ion-ripple-effect>
+  Button
+</button>
+```
+
+
 ## Properties
 
 | Property | Attribute | Description                                                                                                                                                                                                                                                                                                                                                         | Type                       | Default     |

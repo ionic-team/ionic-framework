@@ -40,6 +40,28 @@ SplitPane also provides some predefined media queries that can be used.
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+```html
+<ion-split-pane>
+  <!--  our side menu  -->
+  <ion-menu>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+  </ion-menu>
+
+  <!-- the main content -->
+  <ion-content main>
+    <h1>Hello</h1>
+  </ion-content>
+</ion-split-pane>
+```
+
+
+
 ## Properties
 
 | Property   | Attribute  | Description                                                                                                                           | Type                | Default       |

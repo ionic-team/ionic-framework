@@ -14,6 +14,24 @@ To present a popover, call the `present` method on a popover instance. In order 
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+```javascript
+async function presentPopover(ev) {
+  const popoverController = document.querySelector('ion-popover-controller');
+  await popoverController.componentOnReady();
+
+  const popover = await popoverController.create({
+    component: 'popover-example-page',
+    translucent: true
+    event: ev,
+  });
+  return await popover.present();
+}
+```
+
+
+
 ## Properties
 
 | Property          | Attribute          | Description                                                                                                      | Type                                                                                   | Default     |
