@@ -2,7 +2,7 @@
   "name": "@ionic/docs",
   "version": "4.0.0-beta.17",
   "description": "Pre-packaged API documentation for the Ionic docs.",
-  "main": "docs.json",
+  "main": "core.json",
   "files": [
     "core.json"
   ],
