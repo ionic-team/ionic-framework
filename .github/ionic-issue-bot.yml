@@ -13,10 +13,10 @@ closeAndLock:
 
 
         Thank you for using Ionic!
-    - label: "ionitron: ionic pro"
+    - label: "ionitron: appflow"
       message: >
-        Thanks for the issue! This issue appears to be related to Ionic Pro. We use this issue tracker exclusively for
-        bug reports and feature requests. Please use the [Ionic Pro Support Forum](https://ionic.zendesk.com/hc/en-us/requests/new)
+        Thanks for the issue! This issue appears to be related to Ionic Appflow. We use this issue tracker exclusively for
+        bug reports and feature requests. Please use the [Ionic Appflow Support Forum](https://ionic.zendesk.com/hc/en-us/requests/new)
         to report this issue.
 
 
@@ -65,7 +65,7 @@ stale:
 noReply:
   days: 30
   maxIssuesPerRun: 100
-  label: needs reply
+  label: "needs: reply"
   responseLabel: triage
   exemptProjects: true
   exemptMilestones: true
@@ -82,12 +82,18 @@ noReply:
 
 labelPullRequest:
   labels:
-    - label: angular
+    - label: "package: angular"
       branch: master
       path: ^angular
-    - label: core
+    - label: "package: core"
       branch: master
       path: ^core
+    - label: "package: react"
+      branch: master
+      path: ^react
+    - label: "package: vue"
+      branch: master
+      path: ^vue
   dryRun: false
 
 wrongRepo:
@@ -95,8 +101,13 @@ wrongRepo:
     - label: "ionitron: v3"
       repo: ionic-v3
       message: >
-        Thanks for the issue! We have moved the source code and issues for Ionic 3 into a separate repository.
-        I am moving this issue to the repository for Ionic 3. Please track this issue over there.
+        This issue has been automatically identified as an Ionic 3 issue. We recently moved Ionic 3 to
+        its own repository. I am moving this issue to the repository for Ionic 3. Please track this issue
+        over there.
+
+
+        If I've made a mistake, and if this issue is still relevant to Ionic 4, please let the Ionic
+        Framework team know!
 
 
         Thank you for using Ionic!

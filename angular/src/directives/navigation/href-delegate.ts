@@ -32,9 +32,11 @@ export class HrefDelegate {
       this.navCtrl.setDirection(this.routerDirection);
     }
 
-    if (!this.routerLink && this.router && url != null && url[0] !== '#' && url.indexOf('://') === -1) {
+    if (!this.routerLink && this.router && url != null && url[0] !== '#' && !SCHEME.test(url)) {
       ev.preventDefault();
       this.router.navigateByUrl(url);
     }
   }
 }
+
+const SCHEME = /^[a-z][a-z0-9+\-.]*:/;

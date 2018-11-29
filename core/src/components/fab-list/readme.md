@@ -5,6 +5,29 @@ The `ion-fab-list` element is a container for multiple fab buttons. This collect
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Angular / javascript
+
+```html
+<ion-fab vertical="bottom" horizontal="end">
+  <ion-fab-button>Share</ion-fab-button>
+
+  <ion-fab-list side="top">
+    <ion-fab-button>Facebook</ion-fab-button>
+    <ion-fab-button>Twitter</ion-fab-button>
+    <ion-fab-button>Youtube</ion-fab-button>
+  </ion-fab-list>
+
+  <ion-fab-list side="start">
+    <ion-fab-button>Vimeo</ion-fab-button>
+  </ion-fab-list>
+
+</ion-fab>
+```
+
+
+
 ## Properties
 
 | Property    | Attribute   | Description                                                         | Type                                    | Default    |

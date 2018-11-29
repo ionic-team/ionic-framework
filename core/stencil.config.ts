@@ -109,14 +109,13 @@ export const config: Config = {
 
         // auxiliar
         'ion-picker-column',
-        'ion-anchor',
         'ion-virtual-scroll'
       ]
     }
   ],
   testing: {
     allowableMismatchedPixels: 200,
-    pixelmatchThreshold: 0.1,
+    pixelmatchThreshold: 0.05,
     emulate: [
       {
         userAgent: 'iPhone',

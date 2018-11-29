@@ -1,18 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-inputs-test',
-  templateUrl: './inputs-test.component.html',
-  styleUrls: ['./inputs-test.component.css']
+  selector: 'app-inputs',
+  templateUrl: './inputs.component.html',
 })
-export class InputsTestComponent {
+export class InputsComponent {
 
-  datetime: string;
-  input: string;
-  checkbox = false;
-  toggle = false;
-  select: string;
-  range: number;
+  datetime = '1994-03-15';
+  input = 'some text';
+  checkbox = true;
+  toggle = true;
+  select = 'nes';
+  range = 10;
 
   setValues() {
     console.log('set values');

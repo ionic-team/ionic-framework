@@ -1,4 +1,8 @@
 {
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictMetadataEmit" : true
+  },
   "compilerOptions": {
     "alwaysStrict": true,
     "strict": true,
