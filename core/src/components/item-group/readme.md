@@ -10,7 +10,7 @@ Item groups are containers that organize similar items together. They can contai
 
 ## Usage
 
-### Angular/javascript
+### Angular / javascript
 
 ```html
 <ion-item-group>

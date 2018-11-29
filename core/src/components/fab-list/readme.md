@@ -7,7 +7,7 @@ The `ion-fab-list` element is a container for multiple fab buttons. This collect
 
 ## Usage
 
-### Angular/javascript
+### Angular / javascript
 
 ```html
 <ion-fab vertical="bottom" horizontal="end">

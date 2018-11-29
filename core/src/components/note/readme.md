@@ -8,7 +8,7 @@ Notes are text elements generally used as subtitles that provide more informatio
 
 ## Usage
 
-### Angular/javascript
+### Angular / javascript
 
 ```html
 <!-- Default Note -->

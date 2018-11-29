@@ -8,7 +8,7 @@ Badges are inline block elements that usually appear near another element. Typic
 
 ## Usage
 
-### Angular/javascript
+### Angular / javascript
 
 ```html
 <!-- Default -->

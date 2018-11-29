@@ -7,7 +7,7 @@ Item Dividers are block elements that can be used to separate items in a list. T
 
 ## Usage
 
-### Angular/javascript
+### Angular / javascript
 
 ```html
 <ion-item-divider>

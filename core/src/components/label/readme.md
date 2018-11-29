@@ -8,7 +8,7 @@ Label is a wrapper element that can be used in combination with `ion-item`, `ion
 
 ## Usage
 
-### Angular/javascript
+### Angular / javascript
 
 ```html
 <!-- Default Label -->

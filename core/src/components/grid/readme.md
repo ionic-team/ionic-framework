@@ -12,7 +12,7 @@ See [Grid Layout](/docs/layout/grid) for more information.
 
 ## Usage
 
-### Angular/javascript
+### Angular / javascript
 
 ```html
 <ion-grid>

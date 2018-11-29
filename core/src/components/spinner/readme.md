@@ -11,7 +11,7 @@ The default spinner to use is based on the platform. The default spinner for `io
 
 ## Usage
 
-### Angular/javascript
+### Angular / javascript
 
 ```html
 <!-- Default Spinner -->

@@ -11,7 +11,7 @@ sub-components to reflect this. Please see `ion-card-content`,
 
 ## Usage
 
-### Angular/javascript
+### Angular / javascript
 
 ```html
 <ion-card>

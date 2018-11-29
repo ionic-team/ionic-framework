@@ -7,7 +7,7 @@ Chips represent complex entities in small blocks, such as a contact. A chip can 
 
 ## Usage
 
-### Angular/javascript
+### Angular / javascript
 
 ```html
 <ion-chip>

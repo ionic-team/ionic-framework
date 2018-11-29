@@ -9,7 +9,7 @@ If the FAB button is not wrapped with `<ion-fab>`, it will scroll with the conte
 
 ## Usage
 
-### Angular/javascript
+### Angular / javascript
 
 ```html
 <ion-content>

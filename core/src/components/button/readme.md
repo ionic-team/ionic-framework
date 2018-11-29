@@ -37,7 +37,7 @@ This attribute specifies the size of the button. Setting this attribute will cha
 
 ## Usage
 
-### Angular/javascript
+### Angular / javascript
 
 ```html
 <!-- Default -->

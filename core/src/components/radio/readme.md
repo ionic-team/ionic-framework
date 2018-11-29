@@ -12,7 +12,7 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 
 ## Usage
 
-### Angular/javascript
+### Angular / javascript
 
 ```html
 <ion-list>

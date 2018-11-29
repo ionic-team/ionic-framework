@@ -13,7 +13,7 @@ radio button within the same group.
 
 ## Usage
 
-### Angular/javascript
+### Angular / javascript
 
 ```html
 <ion-list>

@@ -7,7 +7,7 @@ Fabs are container elements that contain one or more fab buttons. They should be
 
 ## Usage
 
-### Angular/javascript
+### Angular / javascript
 
 ```html
 <ion-content>
