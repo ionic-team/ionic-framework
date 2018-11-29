@@ -63,6 +63,10 @@ export const config: Config = {
       strict: true
     },
     {
+      type: 'docs-json',
+      file: '../docs/core.json'
+    },
+    {
       type: 'stats',
       file: 'stats.json'
     },
