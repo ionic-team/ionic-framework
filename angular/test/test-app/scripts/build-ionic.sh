@@ -1,11 +1,12 @@
-# Build core
 pushd ../../..
 
+# Build core
 pushd core
 npm run build
-npm run link
+npm link
 popd
 
+# Build angular
 pushd angular
 npm link @ionic/core
 npm run build

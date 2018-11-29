@@ -10,7 +10,8 @@ export class NavController {
 
   private direction: NavDirection = DEFAULT_DIRECTION;
   private animated = DEFAULT_ANIMATED;
-  private guessDirection: NavDirection = 'root';
+  private guessDirection: NavDirection = 'forward';
+  private guessAnimation = false;
   private lastNavId = -1;
 
   constructor(
@@ -22,6 +23,7 @@ export class NavController {
     router.events.subscribe(ev => {
       if (ev instanceof NavigationStart) {
         const id = (ev.restoredState) ? ev.restoredState.navigationId : ev.id;
+        this.guessAnimation = !ev.restoredState;
         this.guessDirection = id < this.lastNavId ? 'back' : 'forward';
         this.lastNavId = this.guessDirection === 'forward' ? ev.id : id;
       }
@@ -77,8 +79,8 @@ export class NavController {
 
     if (this.direction === 'auto') {
       direction = this.guessDirection;
-      console.log('guessed', direction);
-      animated = direction !== 'root';
+      animated = this.guessAnimation;
+      console.debug('[nav-controller] guessed nav direction', direction, 'animated', animated);
     } else {
       animated = this.animated;
       direction = this.direction;
