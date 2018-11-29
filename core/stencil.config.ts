@@ -109,7 +109,6 @@ export const config: Config = {
 
         // auxiliar
         'ion-picker-column',
-        'ion-anchor',
         'ion-virtual-scroll'
       ]
     }

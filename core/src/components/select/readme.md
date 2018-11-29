@@ -90,7 +90,6 @@ Type: `Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverE
 
 | Name                  | Description                          |
 | --------------------- | ------------------------------------ |
-| `--color`             | Color of the select text             |
 | `--icon-color`        | Color of the select icon             |
 | `--padding-bottom`    | Bottom padding of the select         |
 | `--padding-end`       | End padding of the select            |
