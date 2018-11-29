@@ -10,6 +10,8 @@ See the [tabs documentation](../tabs) for more details on configuring tabs.
 
 ## Usage
 
+### Javascript
+
 ```html
 <ion-tabs>
 

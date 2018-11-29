@@ -7,6 +7,22 @@ The `ion-infinite-scroll-content` component is the default child used by the `io
 
 ## Usage
 
+### Angular
+
+```html
+<ion-content>
+  <ion-infinite-scroll>
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data…">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+```
+
+
+### Javascript
+
 ```html
 <ion-content>
   <ion-infinite-scroll>

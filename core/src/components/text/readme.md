@@ -8,6 +8,8 @@ The text component is a simple component that can be used to style the text colo
 
 ## Usage
 
+### Javascript
+
 ```html
 <ion-text color="secondary">
   <h1>H1: The quick brown fox jumps over the lazy dog</h1>

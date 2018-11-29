@@ -10,6 +10,8 @@ Thumbnails can be used by themselves or inside of any element. If placed inside 
 
 ## Usage
 
+### Javascript
+
 ```html
 <ion-thumbnail>
   <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">

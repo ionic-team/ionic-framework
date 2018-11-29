@@ -9,6 +9,8 @@ Unlike ItemDivider, ListHeaders are styled to be stand-out from the rest of the 
 
 ## Usage
 
+### Javascript
+
 ```html
 <ion-list>
   <ion-list-header>

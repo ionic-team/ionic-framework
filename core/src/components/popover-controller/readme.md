@@ -8,6 +8,8 @@ Popover controllers programmatically control the popover component. Popovers can
 
 ## Usage
 
+### Javascript
+
 ```javascript
 async function presentPopover() {
   const popoverController = document.querySelector('ion-popover-controller');

@@ -10,6 +10,8 @@ It's important to note that ion-header needs to be the one of the three root ele
 
 ## Usage
 
+### Javascript
+
 ```html
 <ion-header>
   <ion-toolbar>

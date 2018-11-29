@@ -9,6 +9,8 @@
 
 ## Usage
 
+### Javascript
+
 ```html
 <ion-header>
 

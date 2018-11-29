@@ -8,6 +8,8 @@ The ripple effect component adds the [Material Design ink ripple interaction eff
 
 ## Usage
 
+### Javascript
+
 ```html
 <div>
   <ion-ripple-effect></ion-ripple-effect>

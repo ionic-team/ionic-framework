@@ -20,6 +20,8 @@ If you're using Angular, please see [ion-router-outlet](../router-outlet) instea
 
 ## Usage
 
+### Javascript
+
 ```html
 <ion-router>
   <ion-route component="page-tabs">

@@ -10,6 +10,8 @@ Loading controllers programmatically control the loading component. Loadings can
 
 ## Usage
 
+### Javascript
+
 ```javascript
 async function presentLoading() {
   const loadingController = document.querySelector('ion-loading-controller');

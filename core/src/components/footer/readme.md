@@ -8,6 +8,8 @@ Footer can be a wrapper for ion-toolbar to make sure the content area is sized c
 
 ## Usage
 
+### Javascript
+
 ```html
 <ion-content></ion-content>
 

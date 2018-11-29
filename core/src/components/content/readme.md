@@ -9,6 +9,21 @@ view component.
 
 ## Usage
 
+### Angular
+
+```html
+<ion-content
+  [scrollEvents]="true"
+  (ionScrollStart)="logScrollStart()"
+  (ionScroll)="logScrolling($event)"
+  (ionScrollEnd)="logScrollEnd()">
+</ion-content>
+```
+
+
+
+### Javascript
+
 ```html
 <ion-content></ion-content>
 ```
