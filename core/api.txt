@@ -755,6 +755,10 @@ ion-radio,event,ionRadioDidUnload,void,true
 ion-radio,event,ionSelect,CheckedInputChangeEvent,true
 ion-radio,css-prop,--color
 ion-radio,css-prop,--color-checked
+ion-radio,css-prop,--height
+ion-radio,css-prop,--inner-height
+ion-radio,css-prop,--inner-width
+ion-radio,css-prop,--width
 
 ion-range
 ion-range,prop,color,string | undefined,undefined,false
