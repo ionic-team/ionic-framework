@@ -82,12 +82,18 @@ noReply:
 
 labelPullRequest:
   labels:
-    - label: angular
+    - label: "package: angular"
       branch: master
       path: ^angular
-    - label: core
+    - label: "package: core"
       branch: master
       path: ^core
+    - label: "package: react"
+      branch: master
+      path: ^react
+    - label: "package: vue"
+      branch: master
+      path: ^vue
   dryRun: false
 
 wrongRepo:
