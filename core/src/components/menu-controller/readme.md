@@ -154,10 +154,10 @@ Registers a new animation that can be used in any `ion-menu`.
 
 #### Parameters
 
-| Name        | Type               | Description |
-| ----------- | ------------------ | ----------- |
-| `name`      | `string`           |             |
-| `animation` | `AnimationBuilder` |             |
+| Name        | Type                                                                    | Description |
+| ----------- | ----------------------------------------------------------------------- | ----------- |
+| `name`      | `string`                                                                |             |
+| `animation` | `(Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>` |             |
 
 #### Returns
 

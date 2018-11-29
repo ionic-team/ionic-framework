@@ -177,6 +177,15 @@
 }
 
 
+// Material Design Slotted Label
+// --------------------------------------------------
+
+::slotted(ion-label) {
+  @include margin(13px, 0, 10px, 0);
+}
+
+
+
 // Material Design Floating/Stacked Label
 // --------------------------------------------------
 

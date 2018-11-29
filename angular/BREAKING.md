@@ -49,6 +49,7 @@ A list of the breaking changes introduced to each component in Ionic Angular v4.
 - [Scroll](#scroll)
 - [Segment Button](#segment-button)
 - [Select](#select)
+- [Show When / Hide When](#show-when--hide-when)
 - [Spinner](#spinner)
 - [Tabs](#tabs)
 - [Text / Typography](#text--typography)
@@ -1224,6 +1225,195 @@ this.customOptions = {
   subTitle: 'Select your toppings'
 };
 ```
+
+## Show When / Hide When
+
+The `showWhen` and `hideWhen` directives (`ion-show-when` and `ion-hide-when` components) have been removed in v4 in favor of using CSS and [media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries) to accomplish the desired look.
+
+### Media Query Examples
+
+Examples of media queries in CSS:
+
+```css
+/* targeting only portrait orientation */
+@media (orientation: portrait) {
+  /* CSS to apply when orientation is portrait goes here */
+}
+
+/* targeting only landscape orientation */
+@media (orientation: landscape) {
+  /* CSS to apply when orientation is landscape goes here */
+}
+
+/* targeting minimum width */
+@media (min-width: 300px) {
+  /* CSS to apply when the minimum width is 300px goes here */
+}
+
+/* targeting both minimum width and maximum width */
+@media (min-width: 300px) and (max-width: 600px) {
+  /* CSS to apply when the minimum width is 300px and maximum width is 600px goes here */
+}
+```
+
+### Showing and Hiding by Breakpoint
+
+The default breakpoints used by Ionic can be used internally if desired:
+
+| Breakpoint | Screen Width |
+| -----------| -------------|
+| `xs`       | `0`          |
+| `sm`       | `576px`      |
+| `md`       | `768px`      |
+| `lg`       | `992px`      |
+| `xl`       | `1200px`     |
+
+For example, to hide all `h3` elements when the minimum breakpoint is `sm`, the following CSS can be used:
+
+```css
+/* Hide all h3 elements when the minimum width is 576px (sm breakpoint) */
+@media (min-width: 576px) {
+  h3 {
+    display: none;
+  }
+}
+```
+
+You can even create your own reusable classes for this, such as the following:
+
+```css
+/* Hide all elements with the .hide-xs-up class when the minimum width is 0px (xs breakpoint) */
+@media (min-width: 0px) {
+  .hide-xs-up {
+    display: none;
+  }
+}
+
+/* Hide all elements with the .hide-sm-up class when the minimum width is 576px (sm breakpoint) */
+@media (min-width: 576px) {
+  .hide-sm-up {
+    display: none;
+  }
+}
+
+/* Repeat above for the other breakpoints */
+```
+
+This can also be combined to only show specific elements when there is a min width:
+
+```css
+@media (min-width: 0px) {
+  /* Hide all elements with the .hide-xs-up class when the minimum width is 0px (xs breakpoint) */
+  .hide-xs-up {
+    display: none;
+  }
+
+  /* Show all elements with the .show-xs-up class when the minimum width is 0px (xs breakpoint) */
+  .show-xs-up {
+    display: block;
+  }
+}
+
+@media (min-width: 576px) {
+  /* Hide all elements with the .hide-sm-up class when the minimum width is 576px (sm breakpoint) */
+  .hide-sm-up {
+    display: none;
+  }
+
+  /* Show all elements with the .show-sm-up class when the minimum width is 576px (sm breakpoint) */
+  .show-sm-up {
+    display: block;
+  }
+}
+
+/* Repeat above for the other breakpoints */
+```
+
+If you'd only like to show the element when it is in that specific breakpoint, but don't want to add multiple classes to achieve it, you can combine `min-width` and `max-width` to target specific breakpoints:
+
+```css
+@media (min-width: 0px) and (max-width: 575px) {
+  /* Hide all elements with the .hide-xs-only class when the minimum width is 0px (xs breakpoint) and the maximum width is 575px (right before sm breakpoint) */
+  .show-xs-only {
+    display: block;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+  /* Hide all elements with the .hide-sm-only class when the minimum width is 576px (sm breakpoint) and the maximum width is 767px (right before md breakpoint) */
+  .show-sm-only {
+    display: block;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  /* Hide all elements with the .hide-md-only class when the minimum width is 768px (md breakpoint) and the maximum width is 991px (right before lg breakpoint) */
+  .show-md-only {
+    display: block;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  /* Hide all elements with the .hide-lg-only class when the minimum width is 992px (lg breakpoint) and the maximum width is 1199px (right before xl breakpoint) */
+  .show-lg-only {
+    display: block;
+  }
+}
+
+/* Not necessary for xl since there isn't a larger breakpoint, can use the show-xl-up */
+```
+
+### Showing and Hiding by Mode
+
+Styling based on the mode can be achieved by targeting an element with the mode class as the parent.
+
+For example, to hide all `h3` elements when the mode is `md`, the following CSS can be used:
+
+```css
+/* Hide all h3 elements when the mode is md */
+.md h3 {
+  display: none;
+}
+```
+
+Similar to breakpoints, a class can be created to make this easier. For example, to hide all elements with the `.hide-ios` class in `ios` mode:
+
+```css
+/* Hide all elements when the mode is ios and they have the .hide-ios class */
+.ios .hide-ios {
+  display: none;
+}
+```
+
+### Showing and Hiding by Platform
+
+Styling based on the platform is similar to styling by mode and can be achieved by targeting an element with the class `plt-{PLATFORM}` where {PLATFORM} is the name of the platform to be styled, from the following list:
+
+```
+ipad
+iphone
+ios
+android
+phablet
+tablet
+cordova
+capacitor
+electron
+pwa
+mobile
+desktop
+hybrid
+```
+
+For example, to hide all `h3` elements when the platform is `desktop`, the following CSS can be used:
+
+```css
+/* Hide all h3 elements when the platform is desktop */
+.plt-desktop h3 {
+  display: none;
+}
+```
+
 
 ## Spinner
 
