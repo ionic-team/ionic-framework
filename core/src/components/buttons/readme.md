@@ -57,6 +57,7 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
 </ion-toolbar>
 ```
 
+
 ### Javascript
 
 ```html
@@ -100,6 +101,7 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
   </ion-buttons>
 </ion-toolbar>
 ```
+
 
 
 ----------------------------------------------

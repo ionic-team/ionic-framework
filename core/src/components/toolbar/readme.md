@@ -184,6 +184,7 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
 </ion-toolbar>
 ```
 
+
 ### Javascript
 
 ```html
@@ -339,6 +340,7 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
   <ion-title>Dark Toolbar</ion-title>
 </ion-toolbar>
 ```
+
 
 
 ## Properties

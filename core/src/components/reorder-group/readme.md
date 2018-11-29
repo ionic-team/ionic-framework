@@ -168,6 +168,7 @@ reorderGroup.addEventListener('ionItemReorder', ({detail}) => {
 ```
 
 
+
 ## Properties
 
 | Property   | Attribute  | Description                            | Type      | Default |

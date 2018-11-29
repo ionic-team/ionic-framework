@@ -41,6 +41,7 @@ The text component is a simple component that can be used to style the text colo
 ```
 
 
+
 ## Properties
 
 | Property | Attribute | Description                                                                                                                                                                                                                                                            | Type                  | Default     |

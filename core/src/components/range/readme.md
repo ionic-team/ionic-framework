@@ -50,8 +50,6 @@ left or right of the range.
 ```
 
 
-
-
 ### Javascript
 
 ```html

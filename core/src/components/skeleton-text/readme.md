@@ -13,6 +13,7 @@ Skeleton Text is a component for rendering placeholder content. The element will
 
 
 
+
 ## Properties
 
 | Property | Attribute | Description                         | Type     | Default  |

@@ -26,6 +26,7 @@ Thumbnails can be used by themselves or inside of any element. If placed inside 
 ```
 
 
+
 ## CSS Custom Properties
 
 | Name              | Description                    |

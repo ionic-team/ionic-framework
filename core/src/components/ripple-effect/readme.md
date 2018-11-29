@@ -23,6 +23,7 @@ The ripple effect component adds the [Material Design ink ripple interaction eff
 ```
 
 
+
 ## Properties
 
 | Property | Attribute | Description                                                                                                                                                                                                                                                                                                                                                         | Type                       | Default     |

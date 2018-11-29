@@ -75,6 +75,7 @@ Lists support several interactions including swiping items to reveal options, dr
 </ion-list>
 ```
 
+
 ### Javascript
 
 ```html
@@ -138,6 +139,7 @@ Lists support several interactions including swiping items to reveal options, dr
   </ion-item-sliding>
 </ion-list>
 ```
+
 
 
 ## Properties

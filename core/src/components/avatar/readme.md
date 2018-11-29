@@ -32,6 +32,7 @@ Avatars can be used by themselves or inside of any element. If placed inside of 
 </ion-item>
 ```
 
+
 ### Javascript
 
 ```html
@@ -53,6 +54,7 @@ Avatars can be used by themselves or inside of any element. If placed inside of 
   <ion-label>Item Avatar</ion-label>
 </ion-item>
 ```
+
 
 
 ## CSS Custom Properties

@@ -63,6 +63,7 @@ To change what is displayed in the back button, use the `text` and `icon` proper
 </ion-header>
 ```
 
+
 ### Javascript
 
 ```html
@@ -112,6 +113,7 @@ To change what is displayed in the back button, use the `text` and `icon` proper
   </ion-toolbar>
 </ion-header>
 ```
+
 
 
 ## Properties

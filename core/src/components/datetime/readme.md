@@ -313,6 +313,7 @@ this.customPickerOptions = {
 }
 ```
 
+
 ### Javascript
 
 ```html
@@ -426,6 +427,7 @@ var customPickerButtons = {
 var customPickerOptions = document.getElementById('customPickerOptions');
 customPickerOptions.pickerOptions = customPickerButtons;
 ```
+
 
 
 ## Properties

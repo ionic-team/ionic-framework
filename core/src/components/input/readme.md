@@ -56,6 +56,7 @@ It is meant for text `type` inputs only, such as `"text"`, `"password"`, `"email
 </ion-item>
 ```
 
+
 ### Javascript
 
 ```html
@@ -101,6 +102,7 @@ It is meant for text `type` inputs only, such as `"text"`, `"password"`, `"email
   <ion-input></ion-input>
 </ion-item>
 ```
+
 
 
 ## Properties

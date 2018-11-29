@@ -21,7 +21,6 @@ view component.
 ```
 
 
-
 ### Javascript
 
 ```html
