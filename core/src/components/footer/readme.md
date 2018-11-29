@@ -6,6 +6,22 @@ Footer can be a wrapper for ion-toolbar to make sure the content area is sized c
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Javascript
+
+```html
+<ion-content></ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title>Footer</ion-title>
+  </ion-toolbar>
+</ion-footer>
+```
+
+
+
 ## Properties
 
 | Property      | Attribute     | Description                                                                                                                                               | Type            | Default     |

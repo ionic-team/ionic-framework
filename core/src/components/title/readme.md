@@ -7,6 +7,22 @@
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Javascript
+
+```html
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+```
+
+
+
 ## Properties
 
 | Property | Attribute | Description                                                                                                                                                                                                                                                            | Type                  | Default     |
