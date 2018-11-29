@@ -46,7 +46,7 @@
   flex: 1 0 auto;
   flex-direction: column;
 
-  height: 100%;
+  height: auto;
 
   border-width: var(--border-width);
   border-style: var(--border-style);
@@ -92,7 +92,7 @@
 
   min-width: inherit;
   max-width: inherit;
-  height: 100%;
+  height: auto;
 
   min-height: inherit;
   max-height: inherit;
