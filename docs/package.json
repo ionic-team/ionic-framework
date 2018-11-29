@@ -4,11 +4,8 @@
   "description": "Pre-packaged API documentation for the Ionic docs.",
   "main": "docs.json",
   "files": [
-    "docs.json"
+    "core.json"
   ],
-  "scripts": {
-    "build": "npm run build.docs.json --prefix ../core"
-  },
   "author": "Ionic Team",
   "license": "MIT",
   "repository": {
