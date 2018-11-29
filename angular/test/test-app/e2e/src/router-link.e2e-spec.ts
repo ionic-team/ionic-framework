@@ -32,7 +32,12 @@ describe('router-link', () => {
       await testForward();
     });
 
-    it('should go forward with button + navigateForward', async () => {
+    it('should go forward with button + navigateByUrl()', async () => {
+      await element(by.css('#button')).click();
+      await testForward();
+    });
+
+    it('should go forward with button + navigateForward()', async () => {
       await element(by.css('#button-forward')).click();
       await testForward();
     });
