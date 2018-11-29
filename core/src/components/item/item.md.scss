@@ -7,7 +7,7 @@
 
 :host {
   --min-height: #{$item-md-min-height};
-  --background: var(--ion-item-background, transparent);
+  --background: #{$item-md-background};
   --background-activated: var(--background);
   --border-color: #{$item-md-border-bottom-color};
   --color: #{$item-md-color};

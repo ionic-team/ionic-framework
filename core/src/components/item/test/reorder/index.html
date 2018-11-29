@@ -113,7 +113,7 @@
       for (var i = 0; i < items.length; i++) {
         groupEl.innerHTML += `
           <ion-item onClick="clickedButton(${i})"
-            style="min-height: ${i * 2 + 35}px; background-color: rgb(${255 - i * 4}, ${255 - i * 4}, ${255 - i * 4})">
+            style="min-height: ${i * 2 + 35}px; --background: rgb(${255 - i * 4}, ${255 - i * 4}, ${255 - i * 4})">
             ${i}
             <ion-reorder slot="end"></ion-reorder>
           </ion-item>`;
