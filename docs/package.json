@@ -1,0 +1,22 @@
+{
+  "name": "@ionic/docs",
+  "version": "4.0.0-beta.17",
+  "description": "Pre-packaged API documentation for the Ionic docs.",
+  "main": "docs.json",
+  "files": [
+    "docs.json"
+  ],
+  "scripts": {
+    "build": "npm run build.docs.json --prefix ../core"
+  },
+  "author": "Ionic Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ionic-team/ionic-docs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ionic-team/ionic-docs/issues"
+  },
+  "homepage": "https://github.com/ionic-team/ionic-docs#readme"
+}

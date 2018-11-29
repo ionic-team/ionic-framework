@@ -37,6 +37,7 @@ scripts/build/e2e-generated-tsconfig.json
 *.css.ts
 
 stats.json
+docs/docs.json
 
 # demo stuff
 demos/node_modules
