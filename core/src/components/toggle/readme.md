@@ -7,6 +7,87 @@ Toggles change the state of a single option. Toggles can be switched on or off b
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Angular
+
+```html
+<!-- Default Toggle -->
+<ion-toggle></ion-toggle>
+
+<!-- Disabled Toggle -->
+<ion-toggle disabled></ion-toggle>
+
+<!-- Checked Toggle -->
+<ion-toggle checked></ion-toggle>
+
+<!-- Toggle Colors -->
+<ion-toggle color="primary"></ion-toggle>
+<ion-toggle color="secondary"></ion-toggle>
+<ion-toggle color="danger"></ion-toggle>
+<ion-toggle color="light"></ion-toggle>
+<ion-toggle color="dark"></ion-toggle>
+
+<!-- Toggles in a List -->
+<ion-list>
+  <ion-item>
+    <ion-label>Pepperoni</ion-label>
+    <ion-toggle [(ngModel)]="pepperoni"></ion-toggle>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Sausage</ion-label>
+    <ion-toggle [(ngModel)]="sausage" disabled="true"></ion-toggle>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Mushrooms</ion-label>
+    <ion-toggle [(ngModel)]="mushrooms"></ion-toggle>
+  </ion-item>
+</ion-list>
+```
+
+
+### Javascript
+
+```html
+<!-- Default Toggle -->
+<ion-toggle></ion-toggle>
+
+<!-- Disabled Toggle -->
+<ion-toggle disabled></ion-toggle>
+
+<!-- Checked Toggle -->
+<ion-toggle checked></ion-toggle>
+
+<!-- Toggle Colors -->
+<ion-toggle color="primary"></ion-toggle>
+<ion-toggle color="secondary"></ion-toggle>
+<ion-toggle color="danger"></ion-toggle>
+<ion-toggle color="light"></ion-toggle>
+<ion-toggle color="dark"></ion-toggle>
+
+<!-- Toggles in a List -->
+<ion-list>
+  <ion-item>
+    <ion-label>Pepperoni</ion-label>
+    <ion-toggle slot="end" value="pepperoni" checked></ion-toggle>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Sausage</ion-label>
+    <ion-toggle slot="end" value="sausage" disabled></ion-toggle>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Mushrooms</ion-label>
+    <ion-toggle slot="end" value="mushrooms"></ion-toggle>
+  </ion-item>
+</ion-list>
+```
+
+
+
 ## Properties
 
 | Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                          |
@@ -21,12 +102,20 @@ Toggles change the state of a single option. Toggles can be switched on or off b
 
 ## Events
 
+<<<<<<< HEAD
 | Event       | Detail                  | Description                                  |
 | ----------- | ----------------------- | -------------------------------------------- |
 | `ionBlur`   |                         | Emitted when the toggle loses focus.         |
 | `ionChange` | CheckedInputChangeEvent | Emitted when the value property has changed. |
 | `ionFocus`  |                         | Emitted when the toggle has focus.           |
 | `ionStyle`  | StyleEvent              | Emitted when the styles change.              |
+=======
+| Event       | Description                                  | Detail                  |
+| ----------- | -------------------------------------------- | ----------------------- |
+| `ionBlur`   | Emitted when the toggle loses focus.         | void                    |
+| `ionChange` | Emitted when the value property has changed. | CheckedInputChangeEvent |
+| `ionFocus`  | Emitted when the toggle has focus.           | void                    |
+>>>>>>> master
 
 
 ## CSS Custom Properties

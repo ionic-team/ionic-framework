@@ -1,7 +1,7 @@
 # ion-tabs
 
 Tabs are a top level navigation component to implement a tab-based navigation.
-The component is a container of individual [Tab](../Tab/) components.
+The component is a container of individual [Tab](../tab/) components.
 
 `ion-tabs` is a styleless component that works as a router outlet in order to handle navigation.
 This component does not provide any UI feedback or mechanism to switch between tabs.
@@ -22,7 +22,7 @@ In order to do so, an `ion-tab-bar` should be provided as a direct child of `ion
 
     <ion-tab-button tab="settings">
       <ion-label>Settings</ion-label>
-      <ion-icon name="gear"></ion-icon>
+      <ion-icon name="settings"></ion-icon>
     </ion-tab-button>
 
   </ion-tab-bar>
@@ -87,6 +87,105 @@ Using tabs with Angular's router is fairly straight forward. The only additional
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Angular
+
+```html
+<ion-tabs>
+
+  <ion-tab tab="schedule">
+    <ion-router-outlet name="schedule"></ion-router-outlet>
+  </ion-tab>
+
+  <ion-tab tab="speakers">
+    <ion-router-outlet name="speakers"></ion-router-outlet>
+  </ion-tab>
+
+  <ion-tab tab="map">
+    <ion-router-outlet name="map"></ion-router-outlet>
+  </ion-tab>
+
+  <ion-tab tab="about">
+    <ion-router-outlet name="about"></ion-router-outlet>
+  </ion-tab>
+
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="schedule" href="/app/tabs/(schedule:schedule)">
+      <ion-icon name="calendar"></ion-icon>
+      <ion-label>Schedule</ion-label>
+      <ion-badge>6</ion-badge>
+    </ion-tab-button>
+
+    <ion-tab-button tab="speakers" href="/app/tabs/(speakers:speakers)">
+      <ion-icon name="contacts"></ion-icon>
+      <ion-label>Speakers</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="map" href="/app/tabs/(map:map)">
+      <ion-icon name="map"></ion-icon>
+      <ion-label>Map</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="about" href="/app/tabs/(about:about)">
+      <ion-icon name="information-circle"></ion-icon>
+      <ion-label>About</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+
+</ion-tabs>
+```
+
+
+### Javascript
+
+```html
+<ion-tabs>
+
+  <ion-tab tab="tab-schedule">
+    <ion-nav></ion-nav>
+  </ion-tab>
+
+  <ion-tab tab="tab-speaker">
+    <ion-nav></ion-nav>
+  </ion-tab>
+
+  <ion-tab tab="tab-map" component="page-map">
+    <ion-nav></ion-nav>
+  </ion-tab>
+
+  <ion-tab tab="tab-about" component="page-about">
+    <ion-nav></ion-nav>
+  </ion-tab>
+
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="tab-schedule">
+      <ion-icon name="calendar"></ion-icon>
+      <ion-label>Schedule</ion-label>
+      <ion-badge>6</ion-badge>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab-speaker">
+      <ion-icon name="contacts"></ion-icon>
+      <ion-label>Speakers</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab-map">
+      <ion-icon name="map"></ion-icon>
+      <ion-label>Map</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab-about">
+      <ion-icon name="information-circle"></ion-icon>
+      <ion-label>About</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+
+</ion-tabs>
+```
+
+
+
 ## Events
 
 | Event              | Detail                   | Description                                                                |
@@ -98,16 +197,6 @@ Using tabs with Angular's router is fairly straight forward. The only additional
 
 
 ## Methods
-
-### `getRouteId() => Promise<RouteID | undefined>`
-
-
-
-#### Returns
-
-Type: `Promise<RouteID | undefined>`
-
-
 
 ### `getSelected() => Promise<HTMLIonTabElement | undefined>`
 
@@ -148,22 +237,6 @@ Index or the Tab instance, of the tab to select.
 #### Returns
 
 Type: `Promise<boolean>`
-
-
-
-### `setRouteId(id: string) => Promise<RouteWrite>`
-
-
-
-#### Parameters
-
-| Name | Type     | Description |
-| ---- | -------- | ----------- |
-| `id` | `string` |             |
-
-#### Returns
-
-Type: `Promise<RouteWrite>`
 
 
 

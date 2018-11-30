@@ -31,6 +31,7 @@
 // --------------------------------------------------
 
 :host(.button-solid) {
+  --background-activated: var(--background);
   --box-shadow: #{$button-md-box-shadow};
 }
 

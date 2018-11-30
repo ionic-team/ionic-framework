@@ -48,9 +48,24 @@
 <body>
   <ion-app>
     <ion-tabs>
-      <ion-tab label="Lists" icon="list">
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="list">
+          <ion-label>Lists</ion-label>
+          <ion-icon name="list"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button tab="colors">
+          <ion-label>Colors</ion-label>
+          <ion-icon name="brush"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button tab="other">
+          <ion-label>Other</ion-label>
+          <ion-icon name="more"></ion-icon>
+        </ion-tab-button>
+      </ion-tab-bar>
+
+      <ion-tab tab="list">
         <ion-header>
-          <ion-toolbar>
+          <ion-toolbar color="primary">
             <ion-title>Lists</ion-title>
 
             <div class="right-container">
@@ -280,7 +295,7 @@
         </ion-content>
       </ion-tab>
 
-      <ion-tab label="Colors" icon="brush">
+      <ion-tab tab="colors">
         <ion-header>
           <ion-toolbar>
             <ion-title>Colors</ion-title>
@@ -636,7 +651,7 @@
         </ion-content>
       </ion-tab>
 
-      <ion-tab label="Other" icon="more">
+      <ion-tab tab="other">
         <ion-header>
           <ion-toolbar>
             <ion-title>Other</ion-title>
@@ -656,12 +671,7 @@
           </div>
         </ion-content>
       </ion-tab>
-
-      <ion-tabbar></ion-tabbar>
     </ion-tabs>
-
-
-
   </ion-app>
 
   <script>

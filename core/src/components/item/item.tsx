@@ -68,7 +68,7 @@ export class Item implements ComponentInterface {
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
-  @Prop() routerDirection?: RouterDirection;
+  @Prop() routerDirection: RouterDirection = 'forward';
 
   /**
    * The type of the button. Only used when an `onclick` or `button` property is present.
@@ -106,7 +106,7 @@ export class Item implements ComponentInterface {
     // Change the button size to small for each ion-button in the item
     // unless the size is explicitly set
     Array.from(this.el.querySelectorAll('ion-button')).forEach(button => {
-      if (!button.size) {
+      if (button.size === undefined) {
         button.size = 'small';
       }
     });
@@ -128,10 +128,11 @@ export class Item implements ComponentInterface {
 
     return {
       'ion-activatable': this.isClickable(),
+      'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...childStyles,
         ...createColorClasses(this.color),
-        [`item-lines-${this.lines}`]: !!this.lines,
+        [`item-lines-${this.lines}`]: this.lines !== undefined,
         'item-disabled': this.disabled,
         'in-list': hostContext('ion-list', this.el),
         'item': true,

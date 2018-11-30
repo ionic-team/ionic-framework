@@ -1,60 +1,130 @@
-@import "./chip.vars";
-
-// Chip
-// --------------------------------------------------
+@import "../../themes/ionic.globals";
 
 :host {
   /**
    * @prop --background: Background of the chip
    * @prop --color: Color of the chip
-   *
-   * @prop --label-margin-top: Margin top of the chip label
-   * @prop --label-margin-end: Margin end of the chip label
-   * @prop --label-margin-bottom: Margin bottom of the chip label
-   * @prop --label-margin-start: Margin start of the chip label
-   *
-   * @prop --avatar-width: Width of the chip avatar
-   * @prop --avatar-height: Height of the chip avatar
-   * @prop --avatar-margin-top: Margin top of the chip avatar
-   * @prop --avatar-margin-end: Margin end of the chip avatar
-   * @prop --avatar-margin-bottom: Margin bottom of the chip avatar
-   * @prop --avatar-margin-start: Margin start of the chip avatar
    */
+  --background: rgba(0, 0, 0, .12);
+  --color: rgba(0, 0, 0, .87);
 
+  @include border-radius(16px);
   @include font-smoothing();
+  @include margin(4px);
+  @include padding(7px, 12px);
 
   display: inline-flex;
 
+  position: relative;
+
   align-items: center;
-  align-self: center;
+
+  height: 32px;
 
   background: var(--background);
   color: var(--color);
 
   font-family: $font-family-base;
-  font-weight: normal;
+  font-size: 14px;
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  overflow: hidden;
 
   vertical-align: middle;
   box-sizing: border-box;
 }
 
+:host(:focus) {
+  outline: none;
+}
+
+:host(:hover),
+:host(:focus) {
+  --background: rgba(0, 0, 0, .16);
+}
+
+:host(.activated) {
+  --background: rgba(0, 0, 0, .20);
+}
+
+
+// Colors
+
 :host(.ion-color) {
-  background: current-color(base);
-  color: current-color(contrast);
+  background: current-color(base, .08);
+  color: current-color(shade);
 }
 
-:host(.ion-color)::slotted(*) ion-chip-icon,
-:host(.ion-color)::slotted(*) ion-chip-button {
-  --color: initial;
+:host(.ion-color:hover),
+:host(.ion-color:focus) {
+  background: current-color(base, .12);
 }
 
-::slotted(*) ion-label {
-  @include margin(var(--label-margin-top), var(--label-margin-end), var(--label-margin-bottom), var(--label-margin-start));
+:host(.ion-color.activated) {
+  background: current-color(base, .16);
 }
 
-::slotted(*) ion-avatar {
-  @include margin(var(--avatar-margin-top), var(--avatar-margin-end), var(--avatar-margin-bottom), var(--avatar-margin-start));
 
-  width: var(--avatar-width);
-  height: var(--avatar-height);
+// Outline
+
+:host(.chip-outline) {
+  border-width: 1px;
+  border-style: solid;
+}
+
+:host(.chip-outline:not(.ion-color)) {
+  border-color: rgba(0, 0, 0, .32);
+
+  background: transparent;
+}
+
+:host(.chip-outline.ion-color) {
+  border-color: current-color(base, .32);
+}
+
+:host(.chip-outline:not(.ion-color):hover),
+:host(.chip-outline:not(.ion-color):focus) {
+  background: rgba(0, 0, 0, .04);
+}
+
+:host(.chip-outline.activated:not(.ion-color)) {
+  background: rgba(0, 0, 0, .08);
+}
+
+
+// Icon
+
+::slotted(ion-icon) {
+  font-size: 20px;
+}
+
+:host(:not(.ion-color)) ::slotted(ion-icon) {
+  color: rgba(0, 0, 0, .54);
+}
+
+::slotted(ion-icon:first-child) {
+  @include margin(-4px, 8px, -4px, -4px);
+}
+
+::slotted(ion-icon:last-child) {
+  @include margin(-4px, -4px, -4px, 8px);
+}
+
+
+// Avatar
+
+::slotted(ion-avatar) {
+  width: 24px;
+  height: 24px;
+}
+
+::slotted(ion-avatar:first-child) {
+  @include margin(-4px, 8px, -4px, -8px);
+}
+
+::slotted(ion-avatar:last-child) {
+  @include margin(-4px, -8px, -4px, 8px);
 }

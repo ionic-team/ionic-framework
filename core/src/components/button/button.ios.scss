@@ -26,6 +26,11 @@
 
 // iOS Solid Button
 // --------------------------------------------------
+
+:host(.button-solid) {
+  --background-activated: #{ion-color(primary, shade)};
+}
+
 @media (any-hover: hover) {
   :host(.button-solid:hover) {
     --opacity: #{$button-ios-opacity-hover};

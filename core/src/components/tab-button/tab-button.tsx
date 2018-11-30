@@ -40,7 +40,7 @@ export class TabButton implements ComponentInterface {
    * Set the layout of the text and icon in the tab bar.
    * It defaults to `'icon-top'`.
    */
-  @Prop() layout?: TabButtonLayout;
+  @Prop({ mutable: true }) layout?: TabButtonLayout;
 
   /**
    * The URL which will be used as the `href` within this tab's button anchor.
@@ -74,7 +74,8 @@ export class TabButton implements ComponentInterface {
     if (!this.disabled) {
       this.ionTabButtonClick.emit({
         tab: this.tab,
-        href: this.href
+        href: this.href,
+        selected: this.selected
       });
     }
     ev.preventDefault();
@@ -121,7 +122,7 @@ export class TabButton implements ComponentInterface {
     return (
       <a href={href || '#'}>
         <slot></slot>
-        {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+        {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
       </a>
     );
   }

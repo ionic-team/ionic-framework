@@ -23,6 +23,7 @@
   --padding-start: 0;
   --padding-end: 0;
   --box-shadow: none;
+  --overflow: visible;
 
   @include margin-horizontal(2px, 2px);
 }

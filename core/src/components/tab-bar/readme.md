@@ -1,28 +1,37 @@
 # ion-tab-bar
 
-Tab bar is the UI component that implements the array of button of `ion-tabs`. It's provided by default when `ion-tabs` is used, though, this "implicit" tab bar can not be customized.
-
-In order to have a custom tab bar, it should be provided in user's markup as direct children of `ion-tabs`:
-
-```html
-<style>
-  ion-tab-bar {
-    font-size: 20px;
-  }
-</style>
-
-<ion-tabs>
-  <!-- User tabs  -->
-  <ion-tab></ion-tab>
-  <ion-tab></ion-tab>
-
-  <!-- User provided ion-tab-bar that can be customized -->
-  <ion-tab-bar slot="bottom" color="dark" layout="icon-only">
-</ion-tabs>
-```
+The tab bar is a UI component that contains a set of [tab buttons](../tab-button). A tab bar must be provided inside of [tabs](../tabs) to communicate with each [tab](../tab).
 
 
 <!-- Auto Generated Below -->
+
+
+## Usage
+
+### Angular / javascript
+
+```html
+<ion-tabs>
+  <!-- Tab views -->
+  <ion-tab tab="account"></ion-tab>
+  <ion-tab tab="contact"></ion-tab>
+  <ion-tab tab="settings"></ion-tab>
+
+  <!-- Tab bar -->
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="account">
+      <ion-icon name="person"></ion-icon>
+    </ion-tab-button>
+    <ion-tab-button tab="contact">
+      <ion-icon name="call"></ion-icon>
+    </ion-tab-button>
+    <ion-tab-button tab="settings">
+      <ion-icon name="settings"></ion-icon>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
+```
+
 
 
 ## Properties

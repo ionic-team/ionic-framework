@@ -6,6 +6,25 @@ Popover controllers programmatically control the popover component. Popovers can
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Javascript
+
+```javascript
+async function presentPopover() {
+  const popoverController = document.querySelector('ion-popover-controller');
+  await popoverController.componentOnReady();
+
+  const popoverElement = await popoverController.create({
+    component: 'profile-page',
+    event: event
+  });
+  return await popoverElement.present();
+}
+```
+
+
+
 ## Methods
 
 ### `create<T extends ComponentRef>(opts: PopoverOptions<T>) => Promise<HTMLIonPopoverElement>`

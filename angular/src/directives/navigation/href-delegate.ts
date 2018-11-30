@@ -1,15 +1,15 @@
 import { Directive, ElementRef, HostListener, Input, Optional } from '@angular/core';
 import { Router } from '@angular/router';
+import { NavController, NavDirection } from '../../providers/nav-controller';
+
 
 @Directive({
-  selector: 'ion-anchor,ion-button,ion-item'
+  selector: '[routerLink],[routerDirection],ion-anchor,ion-button,ion-item'
 })
 export class HrefDelegate {
 
-  @Input()
-  set routerLink(_: any) {
-    this.elementRef.nativeElement.button = true;
-  }
+  @Input() routerLink: any;
+  @Input() routerDirection: NavDirection = 'forward';
 
   @Input()
   set href(value: string) {
@@ -21,15 +21,22 @@ export class HrefDelegate {
 
   constructor(
     @Optional() private router: Router,
+    private navCtrl: NavController,
     private elementRef: ElementRef
   ) {}
 
   @HostListener('click', ['$event'])
   onClick(ev: Event) {
     const url = this.href;
-    if (this.router && url != null && url[0] !== '#' && url.indexOf('://') === -1) {
+    if (this.routerDirection) {
+      this.navCtrl.setDirection(this.routerDirection);
+    }
+
+    if (!this.routerLink && this.router && url != null && url[0] !== '#' && !SCHEME.test(url)) {
       ev.preventDefault();
       this.router.navigateByUrl(url);
     }
   }
 }
+
+const SCHEME = /^[a-z][a-z0-9+\-.]*:/;

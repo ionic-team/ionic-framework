@@ -5,7 +5,6 @@
 
 :host {
   /**
-   * @prop --color: Color of the select text
    * @prop --icon-color: Color of the select icon
    * @prop --padding-top: Top padding of the select
    * @prop --padding-end: End padding of the select
@@ -18,8 +17,6 @@
 
   display: flex;
   position: relative;
-
-  color: var(--color);
 
   font-family: $font-family-base;
 
@@ -46,7 +43,7 @@
   color: var(--placeholder-color);
 }
 
-.select-cover {
+button {
   @include input-cover();
 }
 
@@ -87,8 +84,4 @@
 
 ::slotted(ion-select-option) {
   display: none;
-}
-
-button:focus {
-  outline: none;
 }

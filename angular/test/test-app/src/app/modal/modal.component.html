@@ -1,0 +1,16 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title>
+        Modal test
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+<ion-content padding>
+  <ion-button button (click)="openModal()" id="action-button">Open Modal</ion-button>
+  <p>
+    onWillDismiss: <span id="onWillDismiss">{{onWillDismiss}}</span>
+  </p>
+  <p>
+    onDidDismiss: <span id="onDidDismiss">{{onDidDismiss}}</span>
+  </p>
+</ion-content>

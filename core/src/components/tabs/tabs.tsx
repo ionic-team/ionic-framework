@@ -11,7 +11,6 @@ export class Tabs implements NavOutlet {
 
   private transitioning = false;
   private leavingTab?: HTMLIonTabElement;
-  private useRouter = false;
 
   @Element() el!: HTMLStencilElement;
 
@@ -20,6 +19,9 @@ export class Tabs implements NavOutlet {
 
   @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'document' }) doc!: Document;
+
+  /** @internal */
+  @Prop({ mutable: true }) useRouter = false;
 
   /**
    * Emitted when the tab changes.
@@ -42,7 +44,9 @@ export class Tabs implements NavOutlet {
   @Event() ionNavDidChange!: EventEmitter<void>;
 
   async componentWillLoad() {
-    this.useRouter = !!this.doc.querySelector('ion-router') && !this.el.closest('[no-router]');
+    if (!this.useRouter) {
+      this.useRouter = !!this.doc.querySelector('ion-router') && !this.el.closest('[no-router]');
+    }
     this.tabs = Array.from(this.el.querySelectorAll('ion-tab'));
     this.ionNavWillLoad.emit();
     this.componentWillUpdate();

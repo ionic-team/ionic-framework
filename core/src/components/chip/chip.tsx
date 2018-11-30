@@ -9,7 +9,7 @@ import { createColorClasses } from '../../utils/theme';
     ios: 'chip.ios.scss',
     md: 'chip.md.scss'
   },
-  scoped: true
+  shadow: true
 })
 export class Chip implements ComponentInterface {
   /**
@@ -24,9 +24,25 @@ export class Chip implements ComponentInterface {
    */
   @Prop() mode!: Mode;
 
+  /**
+   * Display an outline style button.
+   */
+  @Prop() outline = false;
+
   hostData() {
     return {
-      class: createColorClasses(this.color),
+      'ion-activatable': true,
+      class: {
+        ...createColorClasses(this.color),
+        'chip-outline': this.outline
+      }
     };
+  }
+
+  render() {
+    return [
+      <slot></slot>,
+      this.mode === 'md' ? <ion-ripple-effect></ion-ripple-effect> : null
+    ];
   }
 }

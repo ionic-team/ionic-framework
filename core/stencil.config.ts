@@ -1,6 +1,9 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
 
+// @ts-ignore
+import { apiSpecGenerator } from './scripts/api-spec-generator';
+
 export const config: Config = {
   namespace: 'Ionic',
   bundles: [
@@ -14,7 +17,7 @@ export const config: Config = {
     { components: ['ion-button', 'ion-icon'] },
     { components: ['ion-card', 'ion-card-content', 'ion-card-header', 'ion-card-title', 'ion-card-subtitle'] },
     { components: ['ion-checkbox'] },
-    { components: ['ion-chip', 'ion-chip-button', 'ion-chip-icon'] },
+    { components: ['ion-chip'] },
     { components: ['ion-datetime', 'ion-picker', 'ion-picker-column', 'ion-picker-controller'] },
     { components: ['ion-fab', 'ion-fab-button', 'ion-fab-list'] },
     { components: ['ion-grid', 'ion-row', 'ion-col'] },
@@ -60,8 +63,18 @@ export const config: Config = {
       strict: true
     },
     {
+      type: 'docs-json',
+      file: '../docs/core.json'
+    },
+    {
       type: 'stats',
       file: 'stats.json'
+    },
+    {
+      type: 'docs-custom',
+      generator: apiSpecGenerator({
+        file: 'api.txt'
+      })
     },
     {
       type: 'angular',
@@ -100,14 +113,13 @@ export const config: Config = {
 
         // auxiliar
         'ion-picker-column',
-        'ion-anchor',
         'ion-virtual-scroll'
       ]
     }
   ],
   testing: {
     allowableMismatchedPixels: 200,
-    pixelmatchThreshold: 0.1,
+    pixelmatchThreshold: 0.05,
     emulate: [
       {
         userAgent: 'iPhone',

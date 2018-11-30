@@ -133,6 +133,7 @@ export class Range implements ComponentInterface {
 
   /**
    * Emitted when the styles change.
+   * @internal
    */
   @Event() ionStyle!: EventEmitter<StyleEvent>;
 
@@ -417,6 +418,7 @@ export class Range implements ComponentInterface {
     ];
   }
 }
+
 interface RangeKnob {
   knob: string;
   value: number;

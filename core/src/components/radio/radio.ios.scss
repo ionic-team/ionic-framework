@@ -25,9 +25,6 @@
 // -----------------------------------------
 
 :host(.radio-checked) .radio-inner {
-  width: 5px;
-  height: 12px;
-
   transform: rotate(45deg);
 
   border-width: $radio-ios-icon-border-width;

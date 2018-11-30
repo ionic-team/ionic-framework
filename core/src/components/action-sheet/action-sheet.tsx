@@ -241,6 +241,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                   {b.icon && <ion-icon icon={b.icon} lazy={false} class="action-sheet-icon" />}
                   {b.text}
                 </span>
+                {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
               </button>
             )}
           </div>

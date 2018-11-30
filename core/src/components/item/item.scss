@@ -169,8 +169,6 @@ button, a {
 
   display: flex;
 
-  position: relative;
-
   flex: 1;
   flex-direction: inherit;
   align-items: inherit;
@@ -213,6 +211,10 @@ button, a {
   --margin-end: 0;
 
   z-index: 1;
+}
+
+::slotted(ion-label) {
+  flex: 1;
 }
 
 

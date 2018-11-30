@@ -38,6 +38,14 @@
 }
 
 
+// Material Design Slotted Label
+// --------------------------------------------------
+
+::slotted(ion-label) {
+  @include margin(10px, 8px, 10px, 0);
+}
+
+
 // iOS Item Divider Content
 // --------------------------------------------------
 
