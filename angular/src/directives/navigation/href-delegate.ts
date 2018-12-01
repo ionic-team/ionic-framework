@@ -1,42 +1,59 @@
 import { Directive, ElementRef, HostListener, Input, Optional } from '@angular/core';
-import { Router } from '@angular/router';
 import { NavController, NavDirection } from '../../providers/nav-controller';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { LocationStrategy } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 
 @Directive({
-  selector: '[routerLink],[routerDirection],ion-anchor,ion-button,ion-item'
+  selector: '[routerLink]'
 })
 export class HrefDelegate {
 
-  @Input() routerLink: any;
+  private subscription?: Subscription;
+
   @Input() routerDirection: NavDirection = 'forward';
 
-  @Input()
-  set href(value: string) {
-    this.elementRef.nativeElement.href = value;
-  }
-  get href() {
-    return this.elementRef.nativeElement.href;
+  constructor(
+    private router: Router,
+    private locationStrategy: LocationStrategy,
+    private navCtrl: NavController,
+    private elementRef: ElementRef,
+    @Optional() private routerLink?: RouterLink,
+  ) {
+    if (this.routerLink) {
+      this.subscription = router.events.subscribe(s => {
+        if (s instanceof NavigationEnd) {
+          this.updateTargetUrlAndHref();
+        }
+      });
+    }
   }
 
-  constructor(
-    @Optional() private router: Router,
-    private navCtrl: NavController,
-    private elementRef: ElementRef
-  ) {}
+  updateTargetUrlAndHref() {
+    if (this.routerLink) {
+      const href = this.locationStrategy.prepareExternalUrl(this.router.serializeUrl(this.routerLink.urlTree));
+      console.log(href);
+      this.elementRef.nativeElement.href = href;
+    }
+  }
+
+  ngOnChanges(): any {
+    this.updateTargetUrlAndHref();
+  }
+
+  ngOnDestroy(): any {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 
   @HostListener('click', ['$event'])
-  onClick(ev: Event) {
-    const url = this.href;
+  onClick(ev: UIEvent) {
     if (this.routerDirection) {
       this.navCtrl.setDirection(this.routerDirection);
     }
-
-    if (!this.routerLink && this.router && url != null && url[0] !== '#' && !SCHEME.test(url)) {
-      ev.preventDefault();
-      this.router.navigateByUrl(url);
-    }
+    ev.preventDefault();
   }
 }
 
-const SCHEME = /^[a-z][a-z0-9+\-.]*:/;
