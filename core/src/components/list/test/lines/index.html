@@ -10,7 +10,7 @@
   <script src="../../../../../dist/ionic.js"></script>
 </head>
 
-<body>
+<body onLoad="didLoad()">
   <ion-app>
 
     <ion-header>
@@ -80,7 +80,28 @@
         <div><ion-item lines="none">The Legend of Zelda</ion-item></div>
         <div><ion-item lines="none">Pac-Man</ion-item></div>
       </ion-list>
+
+      <ion-list id="dynamicLines">
+        <ion-list-header>Lines based on mode</ion-list-header>
+        <ion-item>Pokémon Yellow</ion-item>
+        <ion-item>Super Metroid</ion-item>
+        <ion-item>Mega Man X</ion-item>
+        <ion-item>The Legend of Zelda</ion-item>
+        <ion-item>Pac-Man</ion-item>
+      </ion-list>
     </ion-content>
+
+    <script>
+      var dynamicList = document.getElementById('dynamicLines');
+      var lastItem = document.querySelector('#dynamicLines ion-item:last-child');
+
+      function didLoad() {
+        var mode = Ionic.mode;
+
+        dynamicList.lines = mode === 'ios' ? 'inset' : 'none';
+        lastItem.lines = mode === 'ios' ? 'full' : 'none';
+      }
+    </script>
 
   </ion-app>
 </body>
