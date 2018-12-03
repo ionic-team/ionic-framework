@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Progress Bar - Basic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+    <script src="../../../../../dist/ionic.js"></script>
+    <style>
+        .custom-bar-background {
+            --bar-background: red;
+        }
+
+        .no-bar-background {
+            --bar-background: none;
+        }
+
+        ion-progress-bar {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <ion-app>
+        <ion-header>
+            <ion-toolbar>
+                <ion-title>Progress Bar - Basic</ion-title>
+            </ion-toolbar>
+        </ion-header>
+
+        <ion-content class="outer-content">
+
+            <ion-progress-bar color="secondary" animation="indeterminate"></ion-progress-bar>
+
+            <ion-progress-bar color="secondary" animation="query"></ion-progress-bar>
+
+            <ion-progress-bar color="tertiary" animation="determinate" value="75" class="no-bar-background"></ion-progress-bar>
+
+            <ion-progress-bar color="tertiary" animation="determinate" value="75" class="custom-bar-background"></ion-progress-bar>
+
+            <ion-progress-bar color="tertiary" animation="determinate" value="50"></ion-progress-bar>
+
+        </ion-content>
+
+    </ion-app>
+</body>
+
+</html>

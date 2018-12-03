@@ -1,0 +1,108 @@
+@import "../../themes/ionic.globals";
+// Progress bar
+// --------------------------------------------------
+:host {
+    /**
+     * @prop --bar-background: Background of the progress bar
+     * @prop --height: Height of the progress bar
+     * @prop --border-radius: Border Radius of the progress bar
+     */
+    --height: 4px;
+    --border-radius: 2px;
+    --bar-background: rgba(0, 0, 0, .12);
+    overflow: hidden;
+    box-sizing: border-box;
+    display: block;
+}
+
+:host(.ion-color) {
+    --color: #{current-color(base)};
+}
+
+/** 
+ * Source: https://github.com/Dogfalo/materialize/blob/v1-dev/sass/components/_global.scss
+ * MIT LIcense
+ **/
+
+.progress-bar {
+    overflow: hidden;
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+    height: var(--height);
+    width: 100%;
+    background-color: var(--bar-background);
+    .determinate,
+    .indeterminate,
+    .query {
+        border-radius: var(--border-radius);
+        background-color: var(--color);
+    }
+    .determinate {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        transition: width .3s linear;
+    }
+    .indeterminate,
+    .query {
+        &:before {
+            content: '';
+            position: absolute;
+            background-color: inherit;
+            top: 0;
+            left: 0;
+            bottom: 0;
+        }
+    }
+    .indeterminate {
+        &:before {
+            will-change: left, right;
+            animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+        }
+    }
+    .query {
+        &:before {
+            will-change: left, right;
+            animation: query 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+        }
+    }
+}
+
+// Animation Keyframes
+// --------------------------------------------------
+@mixin keyframes($animation-name) {
+    @keyframes #{$animation-name} {
+        @content;
+    }
+}
+
+@include keyframes(indeterminate) {
+    0% {
+        left: -35%;
+        right: 100%;
+    }
+    60% {
+        left: 100%;
+        right: -90%;
+    }
+    100% {
+        left: 100%;
+        right: -90%;
+    }
+}
+
+@include keyframes(query) {
+    0% {
+        left: 100%;
+        right: -35%;
+    }
+    60% {
+        left: -90%;
+        right: 100%;
+    }
+    100% {
+        left: -90%;
+        right: 100%;
+    }
+}

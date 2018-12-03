@@ -3181,6 +3181,43 @@ export namespace Components {
     'translucent'?: boolean;
   }
 
+  interface IonProgressBar {
+    /**
+    * Sets the animation style of the progress bar Options are determinate (no animation), indeterminate (animate from left to right) and query (animate from right to left)
+    */
+    'animation': 'determinate' | 'indeterminate' | 'query';
+    /**
+    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+    */
+    'color'?: Color;
+    /**
+    * The mode determines which platform styles to use.
+    */
+    'mode': Mode;
+    /**
+    * The width of the progress bar
+    */
+    'value': number;
+  }
+  interface IonProgressBarAttributes extends StencilHTMLAttributes {
+    /**
+    * Sets the animation style of the progress bar Options are determinate (no animation), indeterminate (animate from left to right) and query (animate from right to left)
+    */
+    'animation'?: 'determinate' | 'indeterminate' | 'query';
+    /**
+    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+    */
+    'color'?: Color;
+    /**
+    * The mode determines which platform styles to use.
+    */
+    'mode'?: Mode;
+    /**
+    * The width of the progress bar
+    */
+    'value'?: number;
+  }
+
   interface IonRadioGroup {
     /**
     * If `true`, the radios can be deselected.
@@ -5189,6 +5226,7 @@ declare global {
     'IonPicker': Components.IonPicker;
     'IonPopoverController': Components.IonPopoverController;
     'IonPopover': Components.IonPopover;
+    'IonProgressBar': Components.IonProgressBar;
     'IonRadioGroup': Components.IonRadioGroup;
     'IonRadio': Components.IonRadio;
     'IonRange': Components.IonRange;
@@ -5289,6 +5327,7 @@ declare global {
     'ion-picker': Components.IonPickerAttributes;
     'ion-popover-controller': Components.IonPopoverControllerAttributes;
     'ion-popover': Components.IonPopoverAttributes;
+    'ion-progress-bar': Components.IonProgressBarAttributes;
     'ion-radio-group': Components.IonRadioGroupAttributes;
     'ion-radio': Components.IonRadioAttributes;
     'ion-range': Components.IonRangeAttributes;
@@ -5689,6 +5728,12 @@ declare global {
     new (): HTMLIonPopoverElement;
   };
 
+  interface HTMLIonProgressBarElement extends Components.IonProgressBar, HTMLStencilElement {}
+  var HTMLIonProgressBarElement: {
+    prototype: HTMLIonProgressBarElement;
+    new (): HTMLIonProgressBarElement;
+  };
+
   interface HTMLIonRadioGroupElement extends Components.IonRadioGroup, HTMLStencilElement {}
   var HTMLIonRadioGroupElement: {
     prototype: HTMLIonRadioGroupElement;
@@ -5972,6 +6017,7 @@ declare global {
     'ion-picker': HTMLIonPickerElement
     'ion-popover-controller': HTMLIonPopoverControllerElement
     'ion-popover': HTMLIonPopoverElement
+    'ion-progress-bar': HTMLIonProgressBarElement
     'ion-radio-group': HTMLIonRadioGroupElement
     'ion-radio': HTMLIonRadioElement
     'ion-range': HTMLIonRangeElement
@@ -6072,6 +6118,7 @@ declare global {
     'ion-picker': HTMLIonPickerElement;
     'ion-popover-controller': HTMLIonPopoverControllerElement;
     'ion-popover': HTMLIonPopoverElement;
+    'ion-progress-bar': HTMLIonProgressBarElement;
     'ion-radio-group': HTMLIonRadioGroupElement;
     'ion-radio': HTMLIonRadioElement;
     'ion-range': HTMLIonRangeElement;
