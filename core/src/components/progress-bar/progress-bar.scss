@@ -19,7 +19,7 @@
 
     --buffer-background: rgba(0, 0, 0, .30);
     --buffer-size: 10px;
-    --buffer-speed: 1.0s;
+    --buffer-speed: 0.5s;
 
     overflow: hidden;
     box-sizing: border-box;
@@ -126,6 +126,7 @@
     .buffer-circles {
         position: absolute;
         top: 0;
+        right:-10px;
         z-index: -1;
         display: block;
         width: 100%;
@@ -134,7 +135,7 @@
         background-size: var(--buffer-size) var(--buffer-size);
         background-repeat: repeat-x;
         background-position: 5px center;
-        animation: buffering var(--buffer-speed) infinite;
+        animation: buffering var(--buffer-speed) infinite linear;
         @include rtl() {
             animation-direction: reverse;
         }
@@ -184,6 +185,6 @@
 
 @include keyframes(buffering) {
     to {
-        transform: translateX(10px);
+        transform: translateX(-10px);
     }
 }
