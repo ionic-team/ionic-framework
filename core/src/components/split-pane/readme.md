@@ -85,25 +85,18 @@ SplitPane also provides some predefined media queries that can be used.
 
 ## Properties
 
-<<<<<<< HEAD
-| Property   | Attribute  | Description                                                                                                                           | Type                |
-| ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| `disabled` | `disabled` | If `true`, the split pane will be hidden.                                                                                             | `boolean`           |
-| `when`     | --         | When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression. | `boolean \| string` |
-=======
 | Property   | Attribute  | Description                                                                                                                           | Type                | Default       |
 | ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | ------------- |
 | `disabled` | `disabled` | If `true`, the split pane will be hidden.                                                                                             | `boolean`           | `false`       |
 | `when`     | `when`     | When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression. | `boolean \| string` | `QUERY['lg']` |
->>>>>>> master
 
 
 ## Events
 
-| Event                 | Detail             | Description                                                        |
-| --------------------- | ------------------ | ------------------------------------------------------------------ |
-| `ionChange`           | {visible: boolean} | Emitted when the split pane is visible.                            |
-| `ionSplitPaneVisible` |                    | Expression to be called when the split-pane visibility has changed |
+| Event                 | Description                                                        | Detail             |
+| --------------------- | ------------------------------------------------------------------ | ------------------ |
+| `ionChange`           | Emitted when the split pane is visible.                            | {visible: boolean} |
+| `ionSplitPaneVisible` | Expression to be called when the split-pane visibility has changed | void               |
 
 
 ## CSS Custom Properties

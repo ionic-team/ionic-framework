@@ -43,16 +43,6 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 
 ## Properties
 
-<<<<<<< HEAD
-| Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                  |
-| ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
-| `checked`  | `checked`  | If `true`, the radio is selected.                                                                                                                                                                                                                                      | `boolean`             |
-| `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` |
-| `disabled` | `disabled` | If `true`, the user cannot interact with the radio.                                                                                                                                                                                                                    | `boolean`             |
-| `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       |
-| `name`     | `name`     | The name of the control, which is submitted with the form data.                                                                                                                                                                                                        | `string`              |
-| `value`    | --         | the value of the radio.                                                                                                                                                                                                                                                | `any`                 |
-=======
 | Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                  | Default        |
 | ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | -------------- |
 | `checked`  | `checked`  | If `true`, the radio is selected.                                                                                                                                                                                                                                      | `boolean`             | `false`        |
@@ -61,21 +51,10 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 | `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined`    |
 | `name`     | `name`     | The name of the control, which is submitted with the form data.                                                                                                                                                                                                        | `string`              | `this.inputId` |
 | `value`    | `value`    | the value of the radio.                                                                                                                                                                                                                                                | `any`                 | `undefined`    |
->>>>>>> master
 
 
 ## Events
 
-<<<<<<< HEAD
-| Event               | Detail                  | Description                                |
-| ------------------- | ----------------------- | ------------------------------------------ |
-| `ionBlur`           |                         | Emitted when the radio button loses focus. |
-| `ionFocus`          |                         | Emitted when the radio button has focus.   |
-| `ionRadioDidLoad`   |                         | Emitted when the radio loads.              |
-| `ionRadioDidUnload` |                         | Emitted when the radio unloads.            |
-| `ionSelect`         | CheckedInputChangeEvent | Emitted when the radio button is selected. |
-| `ionStyle`          | StyleEvent              | Emitted when the styles change.            |
-=======
 | Event               | Description                                | Detail                  |
 | ------------------- | ------------------------------------------ | ----------------------- |
 | `ionBlur`           | Emitted when the radio button loses focus. | void                    |
@@ -83,7 +62,6 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 | `ionRadioDidLoad`   | Emitted when the radio loads.              | void                    |
 | `ionRadioDidUnload` | Emitted when the radio unloads.            | void                    |
 | `ionSelect`         | Emitted when the radio button is selected. | CheckedInputChangeEvent |
->>>>>>> master
 
 
 ## CSS Custom Properties

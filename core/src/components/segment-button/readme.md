@@ -318,15 +318,6 @@ for (let i = 0; i < segmentButtons.length; i++) {
 
 ## Properties
 
-<<<<<<< HEAD
-| Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                  |
-| ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
-| `checked`  | `checked`  | If `true`, the segment button is selected.                                                                                                                                                                                                                             | `boolean`             |
-| `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` |
-| `disabled` | `disabled` | If `true`, the user cannot interact with the segment button.                                                                                                                                                                                                           | `boolean`             |
-| `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       |
-| `value`    | `value`    | The value of the segment button.                                                                                                                                                                                                                                       | `string`              |
-=======
 | Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                                                                                                    | Default               |
 | ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | --------------------- |
 | `checked`  | `checked`  | If `true`, the segment button is selected.                                                                                                                                                                                                                             | `boolean`                                                                                               | `false`               |
@@ -335,14 +326,13 @@ for (let i = 0; i < segmentButtons.length; i++) {
 | `layout`   | `layout`   | Set the layout of the text and icon in the segment.                                                                                                                                                                                                                    | `"icon-bottom" \| "icon-end" \| "icon-hide" \| "icon-start" \| "icon-top" \| "label-hide" \| undefined` | `undefined`           |
 | `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                                                                                         | `undefined`           |
 | `value`    | `value`    | The value of the segment button.                                                                                                                                                                                                                                       | `string`                                                                                                | `'ion-sb-' + (ids++)` |
->>>>>>> master
 
 
 ## Events
 
-| Event       | Detail | Description                                 |
-| ----------- | ------ | ------------------------------------------- |
-| `ionSelect` |        | Emitted when the segment button is clicked. |
+| Event       | Description                                 | Detail |
+| ----------- | ------------------------------------------- | ------ |
+| `ionSelect` | Emitted when the segment button is clicked. | void   |
 
 
 ## CSS Custom Properties

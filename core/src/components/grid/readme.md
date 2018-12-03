@@ -198,9 +198,9 @@ See [Grid Layout](/docs/layout/grid) for more information.
 
 ## Properties
 
-| Property | Attribute | Description                                                           | Type      |
-| -------- | --------- | --------------------------------------------------------------------- | --------- |
-| `fixed`  | `fixed`   | If `true`, the grid will have a fixed width based on the screen size. | `boolean` |
+| Property | Attribute | Description                                                           | Type      | Default |
+| -------- | --------- | --------------------------------------------------------------------- | --------- | ------- |
+| `fixed`  | `fixed`   | If `true`, the grid will have a fixed width based on the screen size. | `boolean` | `false` |
 
 
 ## CSS Custom Properties

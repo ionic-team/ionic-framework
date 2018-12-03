@@ -529,24 +529,6 @@ async function presentAlertCheckbox() {
 
 ## Properties
 
-<<<<<<< HEAD
-| Property          | Attribute          | Description                                                                                                      | Type                              |
-| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | --------------------------------- |
-| `animated`        | `animated`         | If `true`, the alert will animate.                                                                               | `boolean`                         |
-| `backdropDismiss` | `backdrop-dismiss` | If `true`, the alert will be dismissed when the backdrop is clicked.                                             | `boolean`                         |
-| `buttons`         | --                 | Array of buttons to be added to the alert.                                                                       | `(string \| AlertButton)[]`       |
-| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string \| string[] \| undefined` |
-| `enterAnimation`  | --                 | Animation to use when the alert is presented.                                                                    | `AnimationBuilder \| undefined`   |
-| `header`          | `header`           | The main title in the heading of the alert.                                                                      | `string \| undefined`             |
-| `inputs`          | --                 | Array of input to show in the alert.                                                                             | `AlertInput[]`                    |
-| `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                         |
-| `leaveAnimation`  | --                 | Animation to use when the alert is dismissed.                                                                    | `AnimationBuilder \| undefined`   |
-| `message`         | `message`          | The main message to be displayed in the alert.                                                                   | `string \| undefined`             |
-| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                   |
-| `overlayIndex`    | `overlay-index`    |                                                                                                                  | `number`                          |
-| `subHeader`       | `sub-header`       | The subtitle in the heading of the alert. Displayed under the title.                                             | `string \| undefined`             |
-| `translucent`     | `translucent`      | If `true`, the alert will be translucent.                                                                        | `boolean`                         |
-=======
 | Property          | Attribute          | Description                                                                                                      | Type                                                                                   | Default     |
 | ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ----------- |
 | `animated`        | `animated`         | If `true`, the alert will animate.                                                                               | `boolean`                                                                              | `true`      |
@@ -562,19 +544,18 @@ async function presentAlertCheckbox() {
 | `mode`            | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                                                                        | `undefined` |
 | `subHeader`       | `sub-header`       | The subtitle in the heading of the alert. Displayed under the title.                                             | `string \| undefined`                                                                  | `undefined` |
 | `translucent`     | `translucent`      | If `true`, the alert will be translucent.                                                                        | `boolean`                                                                              | `false`     |
->>>>>>> master
 
 
 ## Events
 
-| Event                 | Detail             | Description                             |
-| --------------------- | ------------------ | --------------------------------------- |
-| `ionAlertDidDismiss`  | OverlayEventDetail | Emitted after the alert has dismissed.  |
-| `ionAlertDidLoad`     |                    | Emitted after the alert has presented.  |
-| `ionAlertDidPresent`  |                    | Emitted after the alert has presented.  |
-| `ionAlertDidUnload`   |                    | Emitted before the alert has presented. |
-| `ionAlertWillDismiss` | OverlayEventDetail | Emitted before the alert has dismissed. |
-| `ionAlertWillPresent` |                    | Emitted before the alert has presented. |
+| Event                 | Description                             | Detail             |
+| --------------------- | --------------------------------------- | ------------------ |
+| `ionAlertDidDismiss`  | Emitted after the alert has dismissed.  | OverlayEventDetail |
+| `ionAlertDidLoad`     | Emitted after the alert has presented.  | void               |
+| `ionAlertDidPresent`  | Emitted after the alert has presented.  | void               |
+| `ionAlertDidUnload`   | Emitted before the alert has presented. | void               |
+| `ionAlertWillDismiss` | Emitted before the alert has dismissed. | OverlayEventDetail |
+| `ionAlertWillPresent` | Emitted before the alert has presented. | void               |
 
 
 ## Methods

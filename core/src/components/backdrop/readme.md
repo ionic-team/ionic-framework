@@ -77,18 +77,18 @@ backdrop.stopPropagation = false;
 
 ## Properties
 
-| Property          | Attribute          | Description                                                                           | Type      |
-| ----------------- | ------------------ | ------------------------------------------------------------------------------------- | --------- |
-| `stopPropagation` | `stop-propagation` | If `true`, the backdrop will stop propagation on tap.                                 | `boolean` |
-| `tappable`        | `tappable`         | If `true`, the backdrop will can be clicked and will emit the `ionBackdropTap` event. | `boolean` |
-| `visible`         | `visible`          | If `true`, the backdrop will be visible.                                              | `boolean` |
+| Property          | Attribute          | Description                                                                           | Type      | Default |
+| ----------------- | ------------------ | ------------------------------------------------------------------------------------- | --------- | ------- |
+| `stopPropagation` | `stop-propagation` | If `true`, the backdrop will stop propagation on tap.                                 | `boolean` | `true`  |
+| `tappable`        | `tappable`         | If `true`, the backdrop will can be clicked and will emit the `ionBackdropTap` event. | `boolean` | `true`  |
+| `visible`         | `visible`          | If `true`, the backdrop will be visible.                                              | `boolean` | `true`  |
 
 
 ## Events
 
-| Event            | Detail | Description                          |
-| ---------------- | ------ | ------------------------------------ |
-| `ionBackdropTap` |        | Emitted when the backdrop is tapped. |
+| Event            | Description                          | Detail |
+| ---------------- | ------------------------------------ | ------ |
+| `ionBackdropTap` | Emitted when the backdrop is tapped. | void   |
 
 
 ----------------------------------------------

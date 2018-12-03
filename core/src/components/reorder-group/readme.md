@@ -171,16 +171,16 @@ reorderGroup.addEventListener('ionItemReorder', ({detail}) => {
 
 ## Properties
 
-| Property   | Attribute  | Description                            | Type      |
-| ---------- | ---------- | -------------------------------------- | --------- |
-| `disabled` | `disabled` | If `true`, the reorder will be hidden. | `boolean` |
+| Property   | Attribute  | Description                            | Type      | Default |
+| ---------- | ---------- | -------------------------------------- | --------- | ------- |
+| `disabled` | `disabled` | If `true`, the reorder will be hidden. | `boolean` | `true`  |
 
 
 ## Events
 
-| Event            | Detail            | Description                                                                                                                                                                                          |
-| ---------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ionItemReorder` | ItemReorderDetail | Event that needs to be listen to in order to respond to reorder action. `ion-reorder-group` uses this event to delegate to the user the reordering of data array.   The complete() method exposed as |
+| Event            | Description                                                                                                                                                                                          | Detail            |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
+| `ionItemReorder` | Event that needs to be listen to in order to respond to reorder action. `ion-reorder-group` uses this event to delegate to the user the reordering of data array.   The complete() method exposed as | ItemReorderDetail |
 
 
 ## Methods

@@ -39,19 +39,6 @@ If the FAB button is not wrapped with `<ion-fab>`, it will scroll with the conte
 
 ## Properties
 
-<<<<<<< HEAD
-| Property          | Attribute          | Description                                                                                                                                                                                                                                                            | Type                                         |
-| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
-| `activated`       | `activated`        | If `true`, the fab button will be show a close icon.                                                                                                                                                                                                                   | `boolean`                                    |
-| `color`           | `color`            | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`                        |
-| `disabled`        | `disabled`         | If `true`, the user cannot interact with the fab button.                                                                                                                                                                                                               | `boolean`                                    |
-| `href`            | `href`             | Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.                                                                                                                                                | `string \| undefined`                        |
-| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                              |
-| `routerDirection` | `router-direction` | When using a router, it specifies the transition direction when navigating to another page using `href`.                                                                                                                                                               | `"back" \| "forward" \| "root" \| undefined` |
-| `show`            | `show`             | If `true`, the fab button will show when in a fab-list.                                                                                                                                                                                                                | `boolean`                                    |
-| `translucent`     | `translucent`      | If `true`, the fab button will be translucent.                                                                                                                                                                                                                         | `boolean`                                    |
-| `type`            | `type`             | The type of the button.                                                                                                                                                                                                                                                | `"button" \| "reset" \| "submit"`            |
-=======
 | Property          | Attribute          | Description                                                                                                                                                                                                                                                            | Type                              | Default     |
 | ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | ----------- |
 | `activated`       | `activated`        | If `true`, the fab button will be show a close icon.                                                                                                                                                                                                                   | `boolean`                         | `false`     |
@@ -63,15 +50,14 @@ If the FAB button is not wrapped with `<ion-fab>`, it will scroll with the conte
 | `show`            | `show`             | If `true`, the fab button will show when in a fab-list.                                                                                                                                                                                                                | `boolean`                         | `false`     |
 | `translucent`     | `translucent`      | If `true`, the fab button will be translucent.                                                                                                                                                                                                                         | `boolean`                         | `false`     |
 | `type`            | `type`             | The type of the button.                                                                                                                                                                                                                                                | `"button" \| "reset" \| "submit"` | `'button'`  |
->>>>>>> master
 
 
 ## Events
 
-| Event      | Detail | Description                          |
-| ---------- | ------ | ------------------------------------ |
-| `ionBlur`  |        | Emitted when the button loses focus. |
-| `ionFocus` |        | Emitted when the button has focus.   |
+| Event      | Description                          | Detail |
+| ---------- | ------------------------------------ | ------ |
+| `ionBlur`  | Emitted when the button loses focus. | void   |
+| `ionFocus` | Emitted when the button has focus.   | void   |
 
 
 ## CSS Custom Properties
