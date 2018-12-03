@@ -18,15 +18,20 @@ export class ProgressBar implements ComponentInterface {
   @Prop() mode!: Mode;
 
   /**
-   * Sets the animation style of the progress bar
+   * Sets the indicator style of the progress bar
    * Options are determinate (no animation), indeterminate (animate from left to right) and query (animate from right to left)
    */
-  @Prop() animation: 'determinate' | 'indeterminate' | 'query' = 'determinate';
+  @Prop() indicator: 'determinate' | 'indeterminate' | 'query' | 'buffer' = 'determinate';
 
   /**
-   * The width of the progress bar
+   * The width of the progress bar in percent - 0 ... 100
    */
   @Prop() value = 0;
+
+  /**
+   * The width of the buffer in percent - 0 ... 100
+   */
+  @Prop() buffer = 0;
 
   /**
    * The color to use from your application's color palette.
@@ -39,6 +44,7 @@ export class ProgressBar implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
+        [this.indicator]: true,
       }
     };
   }
@@ -46,7 +52,10 @@ export class ProgressBar implements ComponentInterface {
   render() {
     return (
       <div class="progress-bar">
-        <div class={this.animation} style={{ width: `${this.value}%` }}></div>
+        <div class="progress" style={{ width: `${this.value}%` }}></div>
+        <div class="buffer-circles"></div>
+        <div class="buffer-bar" style={{ width: `${this.buffer}%` }}></div>
+        <div class="buffer" style={{ width: `${this.buffer}%` }}></div>
       </div>
     );
   }

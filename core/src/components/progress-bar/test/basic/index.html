@@ -17,6 +17,14 @@
             --bar-background: none;
         }
 
+        .bar-slow-speed {
+            --bar-speed: 6s;
+        }
+
+        .bar-high-speed {
+            --bar-speed: 1s;
+        }
+
         ion-progress-bar {
             margin: 10px 0;
         }
@@ -32,20 +40,100 @@
         </ion-header>
 
         <ion-content class="outer-content">
+            <ion-list>
+                <ion-list-header>
+                    <ion-label>
+                        Indeterminate
+                    </ion-label>
+                </ion-list-header>
+                <ion-progress-bar indicator="indeterminate"></ion-progress-bar>
+                <ion-list-header>
+                    <ion-label>
+                        Indeterminate (slow speed)
+                    </ion-label>
+                </ion-list-header>
+                <ion-progress-bar class="bar-slow-speed" indicator="indeterminate"></ion-progress-bar>
+                <ion-list-header>
+                    <ion-label>
+                        Indeterminate (high speed)
+                    </ion-label>
+                </ion-list-header>
+                <ion-progress-bar class="bar-high-speed" indicator="indeterminate"></ion-progress-bar>
+                <ion-list-header>
+                    <ion-label>
+                        Indeterminate with Primary color
+                    </ion-label>
+                </ion-list-header>
+                <ion-progress-bar color="primary" indicator="indeterminate"></ion-progress-bar>
+                <ion-list-header>
+                    <ion-label>
+                        Query
+                    </ion-label>
+                </ion-list-header>
+                <ion-progress-bar indicator="query"></ion-progress-bar>
+                <ion-list-header>
+                    <ion-label>
+                        Determinate
+                    </ion-label>
+                </ion-list-header>
+                <ion-progress-bar value="50"></ion-progress-bar>
 
-            <ion-progress-bar color="secondary" animation="indeterminate"></ion-progress-bar>
+                <ion-list-header>
+                    <ion-label>
+                        Determinate (Primary color)
+                    </ion-label>
+                </ion-list-header>
+                <ion-progress-bar color="primary" value="50"></ion-progress-bar>
 
-            <ion-progress-bar color="secondary" animation="query"></ion-progress-bar>
+                <ion-list-header>
+                    <ion-label>
+                        Determinate (with no bar background)
+                    </ion-label>
+                </ion-list-header>
+                <ion-progress-bar class="no-bar-background" indicator="determinate" value="75"></ion-progress-bar>
 
-            <ion-progress-bar color="tertiary" animation="determinate" value="75" class="no-bar-background"></ion-progress-bar>
+                <ion-list-header>
+                    <ion-label>
+                        Determinate (with a custom background)
+                    </ion-label>
+                </ion-list-header>
+                <ion-progress-bar class="custom-bar-background" indicator="determinate" value="75"></ion-progress-bar>
 
-            <ion-progress-bar color="tertiary" animation="determinate" value="75" class="custom-bar-background"></ion-progress-bar>
+                <ion-list-header>
+                    <ion-label>
+                        Determinate (change progress with slider)
+                    </ion-label>
+                </ion-list-header>
+                <ion-progress-bar id="progressBar"></ion-progress-bar>
 
-            <ion-progress-bar color="tertiary" animation="determinate" value="50"></ion-progress-bar>
+                <ion-item>
+                    <ion-range pin="true" value="0" id="progressValue">
+                        <ion-label slot="start">0</ion-label>
+                        <ion-label slot="end">100</ion-label>
+                    </ion-range>
+                </ion-item>
+
+                <ion-list-header>
+                    <ion-label>
+                        Buffer
+                    </ion-label>
+                </ion-list-header>
+                <ion-progress-bar color="secondary" indicator="buffer" value="20" buffer="40"></ion-progress-bar>
+
+            </ion-list>
 
         </ion-content>
 
     </ion-app>
+
+    <script>
+        const progressValue = document.getElementById('progressValue');
+        const progressBar = document.getElementById('progressBar');
+
+        progressValue.addEventListener('ionChange', function (ev) {
+            progressBar.value = ev.detail.value;
+        });
+    </script>
 </body>
 
 </html>

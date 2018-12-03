@@ -3183,37 +3183,45 @@ export namespace Components {
 
   interface IonProgressBar {
     /**
-    * Sets the animation style of the progress bar Options are determinate (no animation), indeterminate (animate from left to right) and query (animate from right to left)
+    * The width of the buffer in percent - 0 ... 100
     */
-    'animation': 'determinate' | 'indeterminate' | 'query';
+    'buffer': number;
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Sets the indicator style of the progress bar Options are determinate (no animation), indeterminate (animate from left to right) and query (animate from right to left)
+    */
+    'indicator': 'determinate' | 'indeterminate' | 'query' | 'buffer';
     /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
-    * The width of the progress bar
+    * The width of the progress bar in percent - 0 ... 100
     */
     'value': number;
   }
   interface IonProgressBarAttributes extends StencilHTMLAttributes {
     /**
-    * Sets the animation style of the progress bar Options are determinate (no animation), indeterminate (animate from left to right) and query (animate from right to left)
+    * The width of the buffer in percent - 0 ... 100
     */
-    'animation'?: 'determinate' | 'indeterminate' | 'query';
+    'buffer'?: number;
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
     /**
+    * Sets the indicator style of the progress bar Options are determinate (no animation), indeterminate (animate from left to right) and query (animate from right to left)
+    */
+    'indicator'?: 'determinate' | 'indeterminate' | 'query' | 'buffer';
+    /**
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
-    * The width of the progress bar
+    * The width of the progress bar in percent - 0 ... 100
     */
     'value'?: number;
   }

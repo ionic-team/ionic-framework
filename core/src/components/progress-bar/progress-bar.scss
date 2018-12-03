@@ -1,15 +1,20 @@
 @import "../../themes/ionic.globals";
+$progress-buffer-circles-svg: "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjxzdmcgd2lkdGg9IjEyIiBoZWlnaHQ9IjQiIHZpZXdQb3J0PSIwIDAgMTIgNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxlbGxpcHNlIGN4PSIyIiBjeT0iMiIgcng9IjIiIHJ5PSIyIj4KICAgIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9ImN4IiBmcm9tPSIyIiB0bz0iLTEwIiBkdXI9IjAuNnMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiAvPgogIDwvZWxsaXBzZT4KICA8ZWxsaXBzZSBjeD0iMTQiIGN5PSIyIiByeD0iMiIgcnk9IjIiIGNsYXNzPSJsb2FkZXIiPgogICAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0iY3giIGZyb209IjE0IiB0bz0iMiIgZHVyPSIwLjZzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgLz4KICA8L2VsbGlwc2U+Cjwvc3ZnPgo=" !default;
 // Progress bar
 // --------------------------------------------------
 :host {
     /**
      * @prop --bar-background: Background of the progress bar
+     * @prop --buffer-background: Background of the buffer bar
      * @prop --height: Height of the progress bar
      * @prop --border-radius: Border Radius of the progress bar
+     * @prop --bar-speed: Speed of the progress bar
      */
     --height: 4px;
     --border-radius: 2px;
     --bar-background: rgba(0, 0, 0, .12);
+    --buffer-background: rgba(0, 0, 0, .30);
+    --bar-speed: 2.1s;
     overflow: hidden;
     box-sizing: border-box;
     display: block;
@@ -17,6 +22,8 @@
 
 :host(.ion-color) {
     --color: #{current-color(base)};
+    --bar-background: rgba(#{current-color(base-rgb)}, .12);
+    --buffer-background: rgba(#{current-color(base-rgb)}, .30);
 }
 
 /** 
@@ -32,20 +39,28 @@
     height: var(--height);
     width: 100%;
     background-color: var(--bar-background);
-    .determinate,
-    .indeterminate,
-    .query {
+    .progress {
         border-radius: var(--border-radius);
         background-color: var(--color);
     }
-    .determinate {
+}
+
+:host(.determinate),
+:host(.buffer) {
+    .progress {
         position: absolute;
         top: 0;
         bottom: 0;
         transition: width .3s linear;
     }
-    .indeterminate,
-    .query {
+    @include rtl() {
+        transform: rotate(180deg);
+    }
+}
+
+:host(.indeterminate),
+:host(.query) {
+    .progress {
         &:before {
             content: '';
             position: absolute;
@@ -55,19 +70,71 @@
             bottom: 0;
         }
     }
-    .indeterminate {
+}
+
+:host(.indeterminate) {
+    .progress {
         &:before {
             will-change: left, right;
-            animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
-        }
-    }
-    .query {
-        &:before {
-            will-change: left, right;
-            animation: query 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+            animation: indeterminate var(--bar-speed) cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
         }
     }
 }
+
+:host(.query) {
+    .progress {
+        &:before {
+            will-change: left, right;
+            animation: query var(--bar-speed) cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+            transform: rotate(180deg);
+        }
+    }
+}
+
+:host(.buffer) {
+    .buffer {
+        position: absolute;
+        display: block;
+        top: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        background-color: var(--buffer-background);
+    }
+    .buffer-bar {
+        position: absolute;
+        display: block;
+        top: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        background-color: var(--ion-background-color, #fff);
+    }
+
+    .buffer-circles {
+        position: absolute;
+        top: 0;
+        z-index: -1;
+        display: block;
+        width: 100%;
+        height: var(--height);
+        background-image: linear-gradient(to right, rgba(255, 255, 255, .7), rgba(255, 255, 255, .7)), linear-gradient(to right, #000, #000);
+        mask: url(#{$progress-buffer-circles-svg});
+        animation: buffering var(--bar-speed) infinite;
+        @include rtl() {
+            animation-direction: reverse;
+        }
+    }
+    .progress {
+        display: block;
+    }
+}
+
+.buffer-circles, .buffer, .buffer-bar {
+    display: none;
+}
+
+
 
 // Animation Keyframes
 // --------------------------------------------------
@@ -104,5 +171,11 @@
     100% {
         left: -90%;
         right: 100%;
+    }
+}
+
+@keyframes buffering {
+    to {
+        transform: translateX(-10px);
     }
 }
