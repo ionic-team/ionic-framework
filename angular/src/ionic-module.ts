@@ -56,6 +56,7 @@ const DECLARATIONS = [
   d.NavPush,
   d.NavSetRoot,
   d.Note,
+  d.ProgressBar,
   d.Radio,
   d.RadioGroup,
   d.Range,
