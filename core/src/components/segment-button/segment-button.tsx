@@ -42,7 +42,7 @@ export class SegmentButton implements ComponentInterface {
   /**
    * Set the layout of the text and icon in the segment.
    */
-  @Prop() layout?: SegmentButtonLayout;
+  @Prop() layout?: SegmentButtonLayout = 'icon-top';
 
   /**
    * The value of the segment button.
@@ -65,17 +65,28 @@ export class SegmentButton implements ComponentInterface {
     this.checked = true;
   }
 
+  private get hasLabel() {
+    return !!this.el.querySelector('ion-label');
+  }
+
+  private get hasIcon() {
+    return !!this.el.querySelector('ion-icon');
+  }
+
   hostData() {
-    const { disabled, checked, color } = this;
+    const { disabled, checked, color, layout, hasIcon, hasLabel } = this;
     return {
       'ion-activatable': 'instant',
-      'aria-disabled': this.disabled ? 'true' : null,
-
+      'aria-disabled': disabled ? 'true' : null,
       class: {
         ...createColorClasses(color),
+        'segment-button-has-label': hasLabel,
+        'segment-button-has-icon': hasIcon,
+        'segment-button-has-label-only': hasLabel && !hasIcon,
+        'segment-button-has-icon-only': hasIcon && !hasLabel,
         'segment-button-disabled': disabled,
         'segment-button-checked': checked,
-        [`segment-button-layout-${this.layout}`]: this.layout !== undefined
+        [`segment-button-layout-${layout}`]: true
       }
     };
   }
