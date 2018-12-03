@@ -160,7 +160,7 @@
 
   clear: both;
 
-  contain: strict;
+  contain: content;
 }
 
 :host(.button-block) .button-native::after {
@@ -182,7 +182,7 @@
 
   width: 100%;
 
-  contain: strict;
+  contain: content;
 }
 
 :host(.button-full:not(.button-round)) .button-native {
