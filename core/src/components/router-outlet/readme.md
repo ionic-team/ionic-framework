@@ -39,5 +39,3 @@ For handling Router Guards, the older `ionViewCanEnter` and `ionViewCanLeave` ha
 
 
 ----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
