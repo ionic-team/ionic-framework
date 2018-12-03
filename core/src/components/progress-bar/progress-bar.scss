@@ -39,6 +39,7 @@
  **/
 
 .progress-bar {
+    contain: strict;
     overflow: hidden;
     box-sizing: border-box;
     display: block;
