@@ -1,6 +1,6 @@
-import { Component, Listen, State }                            from '@stencil/core';
-import { DATA_URL, STORED_DEMO_MODE_KEY, STORED_DEMO_URL_KEY } from '../helpers';
+import { Component, Listen, State } from '@stencil/core';
 
+import { DATA_URL, STORED_DEMO_MODE_KEY, STORED_DEMO_URL_KEY } from '../helpers';
 
 @Component({
   tag: 'theme-builder',
@@ -18,7 +18,7 @@ export class ThemeBuilder {
   themeData: { name: string }[];
   @State() themeName = '';
 
-  componentWillLoad () {
+  componentWillLoad() {
     return fetch(DATA_URL).then(rsp => {
       return rsp.json().then(data => {
         this.demoData = data.demos;
@@ -30,7 +30,7 @@ export class ThemeBuilder {
     });
   }
 
-  initUrl () {
+  initUrl() {
     console.log('ThemeBuilder initUrl');
     const storedUrl = localStorage.getItem(STORED_DEMO_URL_KEY);
     const defaultUrl = this.demoData[0].url;
@@ -42,47 +42,52 @@ export class ThemeBuilder {
   }
 
   @Listen('demoModeChange')
-  onDemoModeChange (ev) {
+  onDemoModeChange(ev) {
     this.demoMode = ev.detail;
     localStorage.setItem(STORED_DEMO_MODE_KEY, this.demoMode);
   }
 
   @Listen('demoUrlChange')
-  onDemoUrlChange (ev) {
+  onDemoUrlChange(ev) {
     this.demoUrl = ev.detail;
     localStorage.setItem(STORED_DEMO_URL_KEY, this.demoUrl);
   }
 
   @Listen('propertiesUsed')
-  onPropertiesUsed (ev) {
+  onPropertiesUsed(ev) {
     this.propertiesUsed = ev.detail.properties;
   }
 
   @Listen('propertyHoverStart')
-  onPropertyHoverStart (ev) {
+  onPropertyHoverStart(ev) {
     this.hoverProperty = ev.detail.property;
   }
 
   @Listen('propertyHoverStop')
-  onPropertyHoverStop () {
+  onPropertyHoverStop() {
     this.hoverProperty = undefined;
   }
 
   @Listen('themeCssChange')
-  onThemeCssChange (ev) {
+  onThemeCssChange(ev) {
     this.cssText = ev.detail.cssText;
     this.themeName = ev.detail.themeName;
 
     console.log('ThemeBuilder themeCssChange', this.themeName);
   }
 
-  render () {
+  render() {
     return [
       <main>
         <section class="preview-column">
           <demo-selection demoData={this.demoData} demoUrl={this.demoUrl} demoMode={this.demoMode}></demo-selection>
-          <app-preview demoUrl={this.demoUrl} demoMode={this.demoMode} cssText={this.cssText}
-                       hoverProperty={this.hoverProperty}></app-preview>
+          <app-preview
+            demoUrl={this.demoUrl}
+            demoMode={this.demoMode}
+            cssText={this.cssText}
+            hoverProperty={this.hoverProperty}
+          >
+          </app-preview>
         </section>
 
         <section class="selector-column">

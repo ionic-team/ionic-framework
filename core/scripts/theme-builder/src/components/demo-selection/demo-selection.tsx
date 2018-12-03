@@ -1,6 +1,5 @@
 import { Component, Event, EventEmitter, Prop } from '@stencil/core';
 
-
 @Component({
   tag: 'demo-selection',
   styleUrl: 'demo-selection.css',
@@ -14,15 +13,15 @@ export class DemoSelection {
   @Prop() demoUrl: string;
   @Event() demoUrlChange!: EventEmitter;
 
-  onChangeMode (ev) {
+  onChangeMode(ev) {
     this.demoModeChange.emit(ev.currentTarget.value);
   }
 
-  onChangeUrl (ev) {
+  onChangeUrl(ev) {
     this.demoUrlChange.emit(ev.currentTarget.value);
   }
 
-  render () {
+  render() {
     return [
       <div>
 

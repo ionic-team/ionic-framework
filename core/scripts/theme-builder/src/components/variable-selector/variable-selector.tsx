@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { ComputedType }                                                  from '../../theme-variables';
-import { Color }                                                         from '../Color';
 
+import { ComputedType } from '../../theme-variables';
+import { Color } from '../Color';
 
 @Component({
   tag: 'variable-selector',
@@ -20,13 +20,13 @@ export class VariableSelector {
   @Prop({ mutable: true }) value: Color | string | number;
 
   @Method()
-  getProperty () {
+  getProperty() {
     return this.property;
   }
 
-  onChange (ev) {
-    const input: HTMLInputElement = ev.currentTarget,
-      value = ev.currentTarget.value;
+  onChange(ev) {
+    const input: HTMLInputElement = ev.currentTarget;
+    const value = ev.currentTarget.value;
     if (input.type === 'color') {
       this.value = new Color(value);
     } else if (input.type === 'text') {
@@ -46,7 +46,7 @@ export class VariableSelector {
   }
 
   @Listen('dblclick')
-  onMouseUp (ev) {
+  onMouseUp(ev) {
     if (ev.altKey) {
       const color = this.value as Color;
 
@@ -62,8 +62,9 @@ export class VariableSelector {
 
   render() {
     if (this.value instanceof Color || this.value == null) {
-      const color = this.value && this.value as Color,
-        value = color.hex, {r, g, b} = color.rgb;
+      const color = this.value && this.value as Color;
+      const value = color.hex;
+      const { r, g, b } = color.rgb;
 
       this.el.style.setProperty('--variable-selector-color', `rgba(${r}, ${g}, ${b}, .5`);
       return [

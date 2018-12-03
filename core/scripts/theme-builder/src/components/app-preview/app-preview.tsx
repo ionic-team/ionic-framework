@@ -1,6 +1,6 @@
 import { Component, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
-import { Color }                                               from '../Color';
 
+import { Color } from '../Color';
 
 @Component({
   tag: 'app-preview',
@@ -12,12 +12,12 @@ export class AppPreview {
   @Prop() cssText: string;
   @Prop() demoMode: string;
   @Prop() demoUrl: string;
-  hasIframeListener: boolean = false;
+  hasIframeListener = false;
   @Prop() hoverProperty: string;
   iframe: HTMLIFrameElement;
   @Event() propertiesUsed!: EventEmitter;
 
-  applyStyles () {
+  applyStyles() {
     if (this.iframe && this.iframe.contentDocument && this.iframe.contentDocument.documentElement) {
       const iframeDoc = this.iframe.contentDocument;
       const themerStyleId = 'themer-style';
@@ -38,19 +38,19 @@ export class AppPreview {
   }
 
   @Watch('cssText')
-  onCssTextChange () {
+  onCssTextChange() {
     console.log('AppPreview onCssTextChange');
 
     this.applyStyles();
   }
 
   @Watch('hoverProperty')
-  onHoverPropertyChange () {
+  onHoverPropertyChange() {
     const el = this.iframe.contentDocument.documentElement;
     el.style.cssText = '';
     if (this.hoverProperty) {
-      const computed = window.getComputedStyle(el),
-        value = computed.getPropertyValue(this.hoverProperty);
+      const computed = window.getComputedStyle(el);
+      const value = computed.getPropertyValue(this.hoverProperty);
 
       if (Color.isColor(value)) {
         el.style.setProperty(this.hoverProperty, '#ff0000');
@@ -60,28 +60,28 @@ export class AppPreview {
     }
   }
 
-  onIframeLoad () {
+  onIframeLoad() {
     this.applyStyles();
 
     this.iframe.contentDocument.documentElement.addEventListener('mousemove', this.onIframeMouseMove.bind(this));
   }
 
-  onIframeMouseMove (ev) {
+  onIframeMouseMove(ev) {
     if (ev.ctrlKey) {
       const el: HTMLElement = this.iframe.contentDocument.documentElement;
 
       if (!el.classList.contains('theme-property-searching')) {
         el.classList.add('theme-property-searching');
       }
-      const sheets = (this.iframe.contentDocument.styleSheets),
-        items: Element[] = Array.from(ev.currentTarget.querySelectorAll(':hover')),
-        properties = [];
+      const sheets = (this.iframe.contentDocument.styleSheets);
+      const items: Element[] = Array.from(ev.currentTarget.querySelectorAll(':hover'));
+      const properties = [];
 
       items.forEach(item => {
-        for (let i in sheets) {
+        for (const i in sheets) {
           const sheet: CSSStyleSheet = sheets[i] as CSSStyleSheet,
             rules = sheet.rules || sheet.cssRules;
-          for (let r in rules) {
+          for (const r in rules) {
             const rule: CSSStyleRule = rules[r] as CSSStyleRule;
             if (item.matches(rule.selectorText)) {
               const matches = rule.cssText.match(/(--ion.+?),/mgi);
@@ -99,8 +99,8 @@ export class AppPreview {
     }
   }
 
-  @Listen('body:keyup', {capture: true})
-  onKeyUp (ev: KeyboardEvent) {
+  @Listen('body:keyup', { capture: true })
+  onKeyUp(ev: KeyboardEvent) {
     if (ev.keyCode === 17) {
       const el: HTMLElement = this.iframe.contentDocument.documentElement;
       el.classList.remove('theme-property-searching');
@@ -111,7 +111,7 @@ export class AppPreview {
     }
   }
 
-  render () {
+  render() {
     const url = `${this.demoUrl}?ionic:mode=${this.demoMode}`;
 
     return [

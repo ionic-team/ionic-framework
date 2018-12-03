@@ -1,6 +1,6 @@
-import { Component, Element, Prop }                                from '@stencil/core';
-import { deleteCssUrl, getThemeUrl, saveCssUrl, STORED_THEME_KEY } from '../helpers';
+import { Component, Element, Prop } from '@stencil/core';
 
+import { STORED_THEME_KEY, deleteCssUrl, getThemeUrl, saveCssUrl } from '../helpers';
 
 @Component({
   tag: 'css-text',
@@ -12,7 +12,7 @@ export class CssText {
   @Element() el!: HTMLElement;
   @Prop() themeName: string;
 
-  createNew (ev: UIEvent) {
+  createNew(ev: UIEvent) {
     ev.stopPropagation();
     ev.preventDefault();
 
@@ -30,7 +30,7 @@ export class CssText {
     }
   }
 
-  deleteTheme (ev: UIEvent) {
+  deleteTheme(ev: UIEvent) {
     ev.stopPropagation();
     ev.preventDefault();
 
@@ -50,7 +50,7 @@ export class CssText {
     }
   }
 
-  render () {
+  render() {
 
     return [
       <h1>
@@ -75,7 +75,7 @@ export class CssText {
     ];
   }
 
-  saveCss (themeName: string, cssText: string) {
+  saveCss(themeName: string, cssText: string) {
     const url = saveCssUrl(themeName, cssText);
 
     fetch(url).then(rsp => {
@@ -87,7 +87,7 @@ export class CssText {
     });
   }
 
-  submitUpdate (ev: UIEvent) {
+  submitUpdate(ev: UIEvent) {
     ev.stopPropagation();
     ev.preventDefault();
 
