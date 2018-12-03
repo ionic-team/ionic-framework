@@ -5,19 +5,27 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{$item-ios-divider-background};
-  --color: #{$item-ios-divider-color};
-  --padding-start: #{$item-ios-divider-padding-start};
+  --background: #{$item-divider-ios-background};
+  --color: #{$item-divider-ios-color};
+  --padding-start: #{$item-divider-ios-padding-start};
 
   @include border-radius(0);
 
   position: relative;
 
-  font-size: $item-ios-divider-font-size;
+  border-width: $item-divider-ios-border-width;
+  border-style: solid;
+  border-color: $item-divider-ios-border-color;
+
+  font-size: $item-divider-ios-font-size;
+
+  min-height: $item-divider-ios-min-height;
+
+  text-transform: uppercase;
 }
 
 .item-divider-inner {
-  @include padding-horizontal(null, $item-ios-divider-padding-end / 2);
+  @include padding-horizontal(null, $item-divider-ios-padding-end / 2);
 }
 
 
