@@ -877,7 +877,7 @@ ion-segment-button
 ion-segment-button,prop,checked,boolean,false,false
 ion-segment-button,prop,color,string | undefined,undefined,false
 ion-segment-button,prop,disabled,boolean,false,false
-ion-segment-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide" | undefined,undefined,false
+ion-segment-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide" | undefined,'icon-top',false
 ion-segment-button,prop,mode,"ios" | "md",undefined,false
 ion-segment-button,prop,value,string,'ion-sb-' + (ids++),false
 ion-segment-button,event,ionSelect,void,true
