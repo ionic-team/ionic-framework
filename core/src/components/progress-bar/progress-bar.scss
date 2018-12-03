@@ -1,20 +1,26 @@
 @import "../../themes/ionic.globals";
-$progress-buffer-circles-svg: "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjxzdmcgd2lkdGg9IjEyIiBoZWlnaHQ9IjQiIHZpZXdQb3J0PSIwIDAgMTIgNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxlbGxpcHNlIGN4PSIyIiBjeT0iMiIgcng9IjIiIHJ5PSIyIj4KICAgIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9ImN4IiBmcm9tPSIyIiB0bz0iLTEwIiBkdXI9IjAuNnMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiAvPgogIDwvZWxsaXBzZT4KICA8ZWxsaXBzZSBjeD0iMTQiIGN5PSIyIiByeD0iMiIgcnk9IjIiIGNsYXNzPSJsb2FkZXIiPgogICAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0iY3giIGZyb209IjE0IiB0bz0iMiIgZHVyPSIwLjZzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgLz4KICA8L2VsbGlwc2U+Cjwvc3ZnPgo=" !default;
 // Progress bar
 // --------------------------------------------------
 :host {
     /**
-     * @prop --bar-background: Background of the progress bar
-     * @prop --buffer-background: Background of the buffer bar
      * @prop --height: Height of the progress bar
      * @prop --border-radius: Border Radius of the progress bar
+     * @prop --bar-background: Background of the progress bar
      * @prop --bar-speed: Speed of the progress bar
+     * @prop --buffer-background: Background of the buffer bar
+     * @prop --buffer-size: Size of the buffer circles
+     * @prop --buffer-speed: Speed of the buffer circles
      */
     --height: 4px;
     --border-radius: 2px;
+
     --bar-background: rgba(0, 0, 0, .12);
-    --buffer-background: rgba(0, 0, 0, .30);
     --bar-speed: 2.1s;
+
+    --buffer-background: rgba(0, 0, 0, .30);
+    --buffer-size: 10px;
+    --buffer-speed: 1.0s;
+
     overflow: hidden;
     box-sizing: border-box;
     display: block;
@@ -24,6 +30,7 @@ $progress-buffer-circles-svg: "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4
     --color: #{current-color(base)};
     --bar-background: rgba(#{current-color(base-rgb)}, .12);
     --buffer-background: rgba(#{current-color(base-rgb)}, .30);
+    --buffer-color: #{current-color(base)};
 }
 
 /** 
@@ -39,7 +46,6 @@ $progress-buffer-circles-svg: "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4
     height: var(--height);
     width: 100%;
     background-color: var(--bar-background);
-
 }
 
 .progress {
@@ -47,7 +53,9 @@ $progress-buffer-circles-svg: "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4
     background-color: var(--color);
 }
 
-.buffer-circles, .buffer, .buffer-bar {
+.buffer-circles,
+.buffer,
+.buffer-bar {
     display: none;
 }
 
@@ -92,7 +100,6 @@ $progress-buffer-circles-svg: "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4
         &:before {
             will-change: left, right;
             animation: query var(--bar-speed) cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
-            transform: rotate(180deg);
         }
     }
 }
@@ -116,7 +123,6 @@ $progress-buffer-circles-svg: "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4
         height: 100%;
         background-color: var(--ion-background-color, #fff);
     }
-
     .buffer-circles {
         position: absolute;
         top: 0;
@@ -124,9 +130,11 @@ $progress-buffer-circles-svg: "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4
         display: block;
         width: 100%;
         height: var(--height);
-        background-image: linear-gradient(to right, rgba(255, 255, 255, .7), rgba(255, 255, 255, .7)), linear-gradient(to right, #000, #000);
-        mask: url(#{$progress-buffer-circles-svg});
-        animation: buffering var(--bar-speed) infinite;
+        background: radial-gradient(ellipse at center, var(--buffer-color) 0%, var(--buffer-color) 30%, transparent 30%);
+        background-size: var(--buffer-size) var(--buffer-size);
+        background-repeat: repeat-x;
+        background-position: 5px center;
+        animation: buffering var(--buffer-speed) infinite;
         @include rtl() {
             animation-direction: reverse;
         }
@@ -135,7 +143,6 @@ $progress-buffer-circles-svg: "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4
         display: block;
     }
 }
-
 
 // Animation Keyframes
 // --------------------------------------------------
@@ -175,8 +182,8 @@ $progress-buffer-circles-svg: "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4
     }
 }
 
-@keyframes buffering {
+@include keyframes(buffering) {
     to {
-        transform: translateX(-10px);
+        transform: translateX(10px);
     }
 }
