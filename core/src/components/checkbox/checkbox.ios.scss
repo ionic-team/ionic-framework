@@ -5,9 +5,6 @@
 // --------------------------------------------------
 
 :host {
-  --height: #{$checkbox-ios-icon-size};
-  --width: #{$checkbox-ios-icon-size};
-
   // Border
   --border-radius: #{$checkbox-ios-icon-border-radius};
   --border-width: #{$checkbox-ios-icon-border-width};
@@ -16,6 +13,9 @@
 
   // Background
   --background: #{$checkbox-ios-background-color-off};
+
+  height: #{$checkbox-ios-icon-size};
+  width: #{$checkbox-ios-icon-size};
 }
 
 

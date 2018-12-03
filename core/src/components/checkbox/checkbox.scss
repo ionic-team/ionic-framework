@@ -14,8 +14,6 @@
    * @prop --background-checked: Background of the checkbox icon when checked
    * @prop --border-color-checked: Border color of the checkbox icon when checked
    * @prop --checkmark-color: Color of the checkbox checkmark when checked
-   * @prop --height: Height of the checkbox icon
-   * @prop --width: Width of the checkbox icon
    */
   --background-checked: #{ion-color(primary, base)};
   --border-color-checked: #{ion-color(primary, base)};
@@ -45,8 +43,8 @@ button {
   display: block;
   position: relative;
 
-  width: var(--width);
-  height: var(--height);
+  width: 100%;
+  height: 100%;
 
   transition: var(--transition);
 
