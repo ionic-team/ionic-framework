@@ -106,9 +106,8 @@ export class StackController {
       const element = view.element;
       element.setAttribute('aria-hidden', 'true');
       element.classList.add('ion-page-hidden');
-      // view.ref.changeDetectorRef.detach();
+      view.ref.changeDetectorRef.detach();
     }
-
     this.viewsSnapshot = views.slice();
   }
 
@@ -132,6 +131,9 @@ export class StackController {
     if (this.skipTransition) {
       this.skipTransition = false;
       return;
+    }
+    if (enteringView) {
+      enteringView.ref.changeDetectorRef.reattach();
     }
     const enteringEl = enteringView ? enteringView.element : undefined;
     const leavingEl = leavingView ? leavingView.element : undefined;
