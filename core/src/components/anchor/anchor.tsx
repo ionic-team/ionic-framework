@@ -42,7 +42,7 @@ export class Anchor implements ComponentInterface {
     return (
       <a
         href={this.href}
-        onClick={ev => openURL(this.win, this.href, ev, this.routerDirection)}
+        onClick={(ev: Event) => openURL(this.win, this.href, ev, this.routerDirection)}
       >
         <slot></slot>
       </a>
