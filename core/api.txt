@@ -333,18 +333,12 @@ ion-fab-button,css-prop,--box-shadow
 ion-fab-button,css-prop,--color
 ion-fab-button,css-prop,--color-activated
 ion-fab-button,css-prop,--color-focused
-ion-fab-button,css-prop,--height
-ion-fab-button,css-prop,--margin-bottom
-ion-fab-button,css-prop,--margin-end
-ion-fab-button,css-prop,--margin-start
-ion-fab-button,css-prop,--margin-top
 ion-fab-button,css-prop,--padding-bottom
 ion-fab-button,css-prop,--padding-end
 ion-fab-button,css-prop,--padding-start
 ion-fab-button,css-prop,--padding-top
 ion-fab-button,css-prop,--ripple-color
 ion-fab-button,css-prop,--transition
-ion-fab-button,css-prop,--width
 
 ion-fab-list
 ion-fab-list,prop,activated,boolean,false,false
