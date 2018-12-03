@@ -1,7 +1,6 @@
 # ion-progress-bar
 
-`ion-progress-bar` is a component that adds a `ProgressBar`.
-
+A progress bar visualize the progression of an operation.
 
 
 <!-- Auto Generated Below -->
@@ -12,11 +11,20 @@
 ### Javascript
 
 ```html
+<!-- Default Progressbar -->
 <ion-progress-bar></ion-progress-bar>
 
-<ion-progress-bar color="secondary" animation="indeterminate"></ion-progress-bar>
+<!-- Default Progressbar with 50 percent -->
+<ion-progress-bar value="50"></ion-progress-bar>
 
-<ion-progress-bar color="tertiary" animation="determinate" value="50"></ion-progress-bar>
+<!-- Colorize Progressbar -->
+<ion-progress-bar color="primary" value="50"></ion-progress-bar>
+<ion-progress-bar color="secondary" value="50"></ion-progress-bar>
+
+<!-- Other indicators -->
+<ion-progress-bar indicator="indeterminate"></ion-progress-bar>
+<ion-progress-bar indicator="query"></ion-progress-bar>
+<ion-progress-bar indicator="buffer" ></ion-progress-bar>
 ```
 
 
@@ -40,6 +48,8 @@
 | `--bar-speed`         | Speed of the progress bar         |
 | `--border-radius`     | Border Radius of the progress bar |
 | `--buffer-background` | Background of the buffer bar      |
+| `--buffer-size`       | Size of the buffer circles        |
+| `--buffer-speed`      | Speed of the buffer circles       |
 | `--height`            | Height of the progress bar        |
 
 

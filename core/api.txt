@@ -745,6 +745,8 @@ ion-progress-bar,css-prop,--bar-background
 ion-progress-bar,css-prop,--bar-speed
 ion-progress-bar,css-prop,--border-radius
 ion-progress-bar,css-prop,--buffer-background
+ion-progress-bar,css-prop,--buffer-size
+ion-progress-bar,css-prop,--buffer-speed
 ion-progress-bar,css-prop,--height
 
 ion-radio-group
