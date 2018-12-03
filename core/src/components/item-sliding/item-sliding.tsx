@@ -5,14 +5,14 @@ import { Gesture, GestureDetail } from '../../interface';
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
 
-const enum ItemSide {
+enum ItemSide {
   None = 0,
   Start = 1 << 0,
   End = 1 << 1,
   Both = Start | End
 }
 
-const enum SlidingState {
+enum SlidingState {
   Disabled = 1 << 1,
   Enabled = 1 << 2,
   End = 1 << 3,

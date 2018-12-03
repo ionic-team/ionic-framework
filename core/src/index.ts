@@ -1,6 +1,6 @@
 
 // lifecycle
-export const enum ViewLifecycle {
+export enum ViewLifecycle {
   WillEnter = 'ionViewWillEnter',
   DidEnter = 'ionViewDidEnter',
   WillLeave = 'ionViewWillLeave',

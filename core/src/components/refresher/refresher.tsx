@@ -360,7 +360,7 @@ export class Refresher implements ComponentInterface {
   }
 }
 
-const enum RefresherState {
+enum RefresherState {
   Inactive = 1 << 0,
   Pulling = 1 << 1,
   Ready = 1 << 2,

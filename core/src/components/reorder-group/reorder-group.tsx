@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Pr
 import { Gesture, GestureDetail, ItemReorderDetail } from '../../interface';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/haptic';
 
-const enum ReordeGroupState {
+enum ReordeGroupState {
   Idle = 0,
   Active = 1,
   Complete = 2

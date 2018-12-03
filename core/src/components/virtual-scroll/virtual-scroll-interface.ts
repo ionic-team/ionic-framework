@@ -1,11 +1,11 @@
 
-export const enum CellType {
+export enum CellType {
   Item,
   Header,
   Footer
 }
 
-export const enum NodeChange {
+export enum NodeChange {
   NoChange,
   Position,
   Cell,

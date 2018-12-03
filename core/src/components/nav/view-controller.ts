@@ -2,7 +2,7 @@ import { ComponentProps, FrameworkDelegate } from '../../interface';
 import { attachComponent } from '../../utils/framework-delegate';
 import { assert } from '../../utils/helpers';
 
-export const enum ViewState {
+export enum ViewState {
   New = 1,
   Attached,
   Destroyed

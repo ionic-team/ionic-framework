@@ -1,5 +1,5 @@
 
-export const enum RouterIntent {
+export enum RouterIntent {
   None = 0,
   Forward = 1,
   Back = -1,
