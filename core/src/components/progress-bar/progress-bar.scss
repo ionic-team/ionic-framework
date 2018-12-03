@@ -39,10 +39,16 @@ $progress-buffer-circles-svg: "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4
     height: var(--height);
     width: 100%;
     background-color: var(--bar-background);
-    .progress {
-        border-radius: var(--border-radius);
-        background-color: var(--color);
-    }
+
+}
+
+.progress {
+    border-radius: var(--border-radius);
+    background-color: var(--color);
+}
+
+.buffer-circles, .buffer, .buffer-bar {
+    display: none;
 }
 
 :host(.determinate),
@@ -129,11 +135,6 @@ $progress-buffer-circles-svg: "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4
         display: block;
     }
 }
-
-.buffer-circles, .buffer, .buffer-bar {
-    display: none;
-}
-
 
 
 // Animation Keyframes
