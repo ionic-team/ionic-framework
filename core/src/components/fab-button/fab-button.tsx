@@ -122,7 +122,7 @@ export class FabButton implements ComponentInterface {
         onFocus={this.onFocus}
         onKeyUp={this.onKeyUp}
         onBlur={this.onBlur}
-        onClick={ev => openURL(this.win, this.href, ev, this.routerDirection)}
+        onClick={(ev: Event) => openURL(this.win, this.href, ev, this.routerDirection)}
       >
         <span class="close-icon">
           <ion-icon name="close" lazy={false}></ion-icon>
