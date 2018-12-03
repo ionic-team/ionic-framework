@@ -558,6 +558,17 @@ export class Note {
   }
 }
 
+export declare interface ProgressBar extends StencilComponents<'IonProgressBar'> {}
+@Component({ selector: 'ion-progress-bar', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'indicator', 'value', 'buffer', 'color'] })
+export class ProgressBar {
+
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    const el = r.nativeElement;
+    proxyInputs(this, el, ['mode', 'indicator', 'value', 'buffer', 'color']);
+  }
+}
+
 export declare interface Radio extends StencilComponents<'IonRadio'> {}
 @Component({ selector: 'ion-radio', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'name', 'disabled', 'checked', 'value'] })
 export class Radio {
