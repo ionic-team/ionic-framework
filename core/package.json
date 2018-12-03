@@ -81,10 +81,6 @@
     "test.screenshot": "stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/dev.js",
     "test.screenshot.ci": "stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci",
     "test.watch": "jest --watch --no-cache",
-    "theme-app-build": "stencil build --dev --config scripts/theme-builder/stencil.config.js",
-    "theme-builder": "sd concurrent \"npm run theme-app-build\" \"stencil build --dev --watch\" \"stencil-dev-server\" \"npm run theme-server\" ",
-    "theme-builder:dev": "sd concurrent \"npm run theme-app-build -- --watch\" \"stencil build --dev --watch\" \"stencil-dev-server\" \"npm run theme-server\" ",
-    "theme-server": "node scripts/theme-builder/server.js",
     "tsc": "./node_modules/.bin/tsc -p .",
     "test.treeshake": "agadoo dist/collection/index.js",
     "validate": "npm run lint && npm run test && npm run build && npm run test.treeshake"
