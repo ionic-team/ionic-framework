@@ -150,7 +150,6 @@ ion-button,css-prop,--box-shadow
 ion-button,css-prop,--color
 ion-button,css-prop,--color-activated
 ion-button,css-prop,--color-focused
-ion-button,css-prop,--height
 ion-button,css-prop,--margin-bottom
 ion-button,css-prop,--margin-end
 ion-button,css-prop,--margin-start
@@ -162,7 +161,6 @@ ion-button,css-prop,--padding-start
 ion-button,css-prop,--padding-top
 ion-button,css-prop,--ripple-color
 ion-button,css-prop,--transition
-ion-button,css-prop,--width
 
 ion-buttons
 

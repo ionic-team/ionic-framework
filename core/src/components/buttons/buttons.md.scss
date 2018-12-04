@@ -9,8 +9,9 @@
   --padding-bottom: 0;
   --padding-start: 8px;
   --padding-end: 8px;
-  --height: 32px;
   --box-shadow: none;
+
+  height: 32px;
 
   font-size: #{$toolbar-md-button-font-size};
   font-weight: 500;
