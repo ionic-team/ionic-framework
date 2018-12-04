@@ -201,16 +201,6 @@ Present the action sheet overlay after it has been created.
 Type: `Promise<void>`
 
 
-
-
-## CSS Custom Properties
-
-| Name          | Description                       |
-| ------------- | --------------------------------- |
-| `--max-width` | Maximum width of the action sheet |
-| `--width`     | Width of the action sheet         |
-
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
