@@ -93,6 +93,16 @@
   @include margin-horizontal(0, 8px);
 }
 
+// Layout: icon only
+:host(.segment-button-has-icon-only) ::slotted(ion-icon) {
+  @include margin(12px, null, 12px, null);
+}
+
+// Layout: label only
+:host(.segment-button-has-label-only) ::slotted(ion-label) {
+  @include margin(12px, null, 12px, null);
+}
+
 
 // Segment: Checked & Activated
 // --------------------------------------------------

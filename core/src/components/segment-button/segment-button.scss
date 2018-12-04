@@ -149,7 +149,6 @@
 // --------------------------------------------------
 
 .segment-button-indicator {
-
   align-self: flex-end;
 
   width: 100%;
@@ -159,6 +158,14 @@
   background-color: var(--indicator-color);
 
   opacity: 1;
+}
+
+
+// Segment Button Icon
+// --------------------------------------------------
+
+::slotted(ion-icon) {
+  order: -1;
 }
 
 
@@ -183,28 +190,19 @@
 // Segment Button Layout
 // --------------------------------------------------
 
-// Layout: icon top
-:host(.segment-button-layout-icon-top) ::slotted(ion-icon) {
-  order: -1;
-}
-
-// Layout: icon bottom
-:host(.segment-button-layout-icon-bottom) ::slotted(ion-icon) {
-  order: 1;
-}
-
-// Layout: icon start / end
-:host(.segment-button-layout-icon-start),
-:host(.segment-button-layout-icon-end) {
+// Layout: icon start
+:host(.segment-button-layout-icon-start) {
   flex-direction: row;
 }
 
-:host(.segment-button-layout-icon-start) ::slotted(ion-icon) {
-  order: -1;
+// Layout: icon end
+:host(.segment-button-layout-icon-end) {
+  flex-direction: row-reverse;
 }
 
-:host(.segment-button-layout-icon-end) ::slotted(ion-icon) {
-  order: 1;
+// Layout: icon bottom
+:host(.segment-button-layout-icon-bottom) {
+  flex-direction: column-reverse;
 }
 
 // Layout: icon hide
