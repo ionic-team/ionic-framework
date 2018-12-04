@@ -2,12 +2,13 @@
 
 <!-- Please make sure you are posting an issue pertaining to the Ionic Framework. If you are having an issue with the Ionic Pro services (Ionic View, Ionic Deploy, etc.) please consult the Ionic Pro support portal (http://support.ionicjs.com) -->
 
-**Ionic version:**  (check one with "x")
-(For Ionic 1.x issues, please use https://github.com/ionic-team/ionic-v1)
-(For Ionic 2.x & 3.x issues, please use https://github.com/ionic-team/ionic-v3)
+**Ionic version:**
+<!-- (For Ionic 1.x issues, please use https://github.com/ionic-team/ionic-v1) -->
+<!-- (For Ionic 2.x & 3.x issues, please use https://github.com/ionic-team/ionic-v3) -->
 [ ] **4.x**
 
-**I'm submitting a ...**  (check one with "x")
+**I'm submitting a ...** 
+<!--  (check one with "x") -->
 [ ] bug report
 [ ] feature request
 
@@ -41,7 +42,8 @@ insert short code snippets here
 **Other information:**
 <!-- List any other information that is relevant to your issue. Stack traces, related issues, suggestions on how to fix, Stack Overflow links, forum links, etc. -->
 
-**Ionic info:** (run `ionic info` from a terminal/cmd prompt and paste output below):
+**Ionic info:** 
+<!-- (run `ionic info` from a terminal/cmd prompt and paste output below): -->
 
 ```
 insert the output from ionic info here
