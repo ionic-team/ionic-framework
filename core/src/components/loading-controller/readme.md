@@ -1,7 +1,16 @@
 # ion-loading-controller
 
-Loading controllers programmatically control the loading component. Loadings can be created and dismissed from the loading controller. View the [Loading](../../loading/Loading) documentation for a full list of options to pass upon creation.
+Loading controllers programmatically control the loading component. Loadings can be created and dismissed from the loading controller. View the [Loading](../loading) documentation for a full list of options to pass upon creation.
 
+
+
+
+<!-- Auto Generated Below -->
+
+
+## Usage
+
+### Javascript
 
 ```javascript
 async function presentLoading() {
@@ -9,7 +18,7 @@ async function presentLoading() {
   await loadingController.componentOnReady();
 
   const loadingElement = await loadingController.create({
-    content: 'Please wait...',
+    message: 'Please wait...',
     spinner: 'crescent',
     duration: 2000
   });
@@ -18,18 +27,51 @@ async function presentLoading() {
 ```
 
 
-<!-- Auto Generated Below -->
-
 
 ## Methods
 
-#### create()
+### `create(opts?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>`
+
+Create a loading overlay with loading options.
+
+#### Parameters
+
+| Name   | Type                          | Description |
+| ------ | ----------------------------- | ----------- |
+| `opts` | `LoadingOptions \| undefined` |             |
+
+#### Returns
+
+Type: `Promise<HTMLIonLoadingElement>`
 
 
-#### dismiss()
+
+### `dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>`
+
+Dismiss the open loading overlay.
+
+#### Parameters
+
+| Name   | Type                  | Description |
+| ------ | --------------------- | ----------- |
+| `data` | `any`                 |             |
+| `role` | `string \| undefined` |             |
+| `id`   | `string \| undefined` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
 
 
-#### getTop()
+
+### `getTop() => Promise<HTMLIonLoadingElement | undefined>`
+
+Get the most recently opened loading overlay.
+
+#### Returns
+
+Type: `Promise<HTMLIonLoadingElement | undefined>`
+
 
 
 

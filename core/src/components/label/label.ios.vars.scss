@@ -1,12 +1,8 @@
 @import "../../themes/ionic.globals.ios";
-
 @import "../item/item.ios.vars";
 
 // iOS Label
 // --------------------------------------------------
-
-/// @prop - Font family of the label
-$label-ios-font-family:                $font-family-ios-base !default;
 
 /// @prop - Text color of the label by an input, select, or datetime
 $label-ios-text-color:                 null !default;
@@ -31,3 +27,6 @@ $label-ios-text-wrap-font-size:        14px !default;
 
 /// @prop - Line height of the label when the text wraps
 $label-ios-text-wrap-line-height:      1.5 !default;
+
+/// @prop - Color of the item paragraph
+$item-ios-paragraph-text-color:        $text-color-step-600 !default;

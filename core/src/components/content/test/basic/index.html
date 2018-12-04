@@ -1,59 +1,46 @@
 <!DOCTYPE html>
 <html dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <title>Content - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
+
 <body>
   <ion-app>
 
-      <ion-header id="header">
-        <ion-toolbar style="display: none" id="toolbar2">
-          <ion-title>Hidden Toolbar</ion-title>
-        </ion-toolbar>
-        <ion-toolbar>
-          <ion-title>Content - Basic</ion-title>
-        </ion-toolbar>
-      </ion-header>
+    <ion-header id="header">
+      <ion-toolbar style="display: none" id="toolbar2">
+        <ion-title>Hidden Toolbar</ion-title>
+      </ion-toolbar>
+      <ion-toolbar>
+        <ion-title>Content - Basic</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-      <div style="display: flex; flex: 1">
-        <ion-content padding style="text-align: center; flex: 2" id="content">
-          <f></f>
-          <ion-button onclick="toggleFullscreen()">Toggle content.fullscreen</ion-button>
-          <p>
-            <ion-button onclick="toggleDisplay('header')" color="secondary">Toggle header</ion-button>
-            <ion-button onclick="toggleDisplay('footer')" color="secondary">Toggle footer</ion-button>
-            <ion-button onclick="toggleDisplay('toolbar2')" color="secondary">Toggle 2nd toolbar</ion-button>
-          </p>
-          <p>
-            <ion-button onclick="toggleDisplay('content2')" color="danger">Toggle bottom content</ion-button>
-            <ion-button onclick="toggleDisplay('content3')" color="danger">Toggle right content</ion-button>
-          </p>
-          <p>
-            <ion-button onclick="myanimation()" color="dark">Animate</ion-button>
-          </p>
-          <f></f>
-          <f></f>
-          <f></f>
-          <f></f>
-          <f></f>
-          <f></f>
-          <f></f>
-          <f></f>
-        </ion-content>
-        <ion-content padding style="display: none" id="content3">
-          <f></f>
-          <f></f>
-          <f></f>
-          <f></f>
-          <f></f>
-          <f></f>
-        </ion-content>
-      </div>
-
-      <ion-content padding style="display: none" id="content2">
+    <div style="display: flex; flex: 1">
+      <ion-content padding style="text-align: center; flex: 2" id="content">
+        <ion-content>
+        <f style="height: 50%"></f>
+        <ion-button onclick="toggleFullscreen()">Toggle content.fullscreen</ion-button>
+        <p>
+          <ion-button onclick="toggleDisplay('header')" color="secondary">Toggle header</ion-button>
+          <ion-button onclick="toggleDisplay('footer')" color="secondary">Toggle footer</ion-button>
+          <ion-button onclick="toggleDisplay('toolbar2')" color="secondary">Toggle 2nd toolbar</ion-button>
+        </p>
+        <p>
+          <ion-button onclick="toggleDisplay('content2')" color="danger">Toggle bottom content</ion-button>
+          <ion-button onclick="toggleDisplay('content3')" color="danger">Toggle right content</ion-button>
+        </p>
+        <p>
+          <ion-button onclick="myanimation()" color="dark">Animate</ion-button>
+        </p>
+        <f></f>
+        <f></f>
         <f></f>
         <f></f>
         <f></f>
@@ -61,12 +48,31 @@
         <f></f>
         <f></f>
       </ion-content>
+      </ion-content>
+      <ion-content padding style="display: none" id="content3">
+        <f></f>
+        <f></f>
+        <f></f>
+        <f></f>
+        <f></f>
+        <f></f>
+      </ion-content>
+    </div>
 
-      <ion-footer id="footer">
-        <ion-toolbar>
-          <ion-title>Footer</ion-title>
-        </ion-toolbar>
-      </ion-footer>
+    <ion-content padding style="display: none" id="content2">
+      <f></f>
+      <f></f>
+      <f></f>
+      <f></f>
+      <f></f>
+      <f></f>
+    </ion-content>
+
+    <ion-footer id="footer">
+      <ion-toolbar>
+        <ion-title>Footer</ion-title>
+      </ion-toolbar>
+    </ion-footer>
 
     <script>
       const content = document.getElementById('content');
@@ -101,9 +107,6 @@
         animation: ani1 5s infinite;
       }
 
-      #content2 ion-scroll {
-        background: black;
-      }
       @keyframes ani1 {
         0% {
           transform: translateX(0)
@@ -121,16 +124,19 @@
           transform: translateX(0%);
         }
       }
+
       ion-content.animation {
         animation-delay: 500ms;
       }
-      ion-footer.animation  {
+
+      ion-footer.animation {
         animation-delay: 1000ms;
       }
 
       .toolbar-background {
         background: #f8f8f8b8;
       }
+
       f {
         display: block;
         margin: 15px auto;
@@ -142,7 +148,9 @@
       f:last-of-type {
         background: yellow;
       }
+
     </style>
   </ion-app>
 </body>
+
 </html>

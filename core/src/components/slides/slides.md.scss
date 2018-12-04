@@ -1,26 +1,14 @@
-@import "./slides-vendor";
+@import "./slides";
 @import "./slides.md.vars";
 
-.slides-md .swiper-pagination-bullet {
-  background-color: $slides-md-bullet-background-color;
-}
+// Material Design Slides
+// --------------------------------------------------
 
-.slides-md .swiper-pagination-bullet-active {
-  background-color: $slides-md-bullet-background-color-active;
-}
-
-.slides-md .swiper-pagination-progress {
-  background-color: $slides-md-progress-background-color;
-}
-
-.slides-md .swiper-pagination-progress .swiper-pagination-progressbar {
-  background-color: $slides-md-progress-bar-background-color;
-}
-
-.slides-md .swiper-scrollbar {
-  background-color: $slides-md-scroll-bar-background-color;
-}
-
-.slides-md .swiper-scrollbar-drag {
-  background-color: $slides-md-scroll-bar-drag-background-color;
+.slides-md {
+  --bullet-background: #{$slides-md-bullet-background};
+  --bullet-background-active: #{$slides-md-bullet-background-active};
+  --progress-bar-background: #{$slides-md-progress-bar-background};
+  --progress-bar-background-active: #{$slides-md-progress-bar-background-active};
+  --scroll-bar-background: #{$slides-md-scroll-bar-background};
+  --scroll-bar-background-active: #{$slides-md-scroll-bar-drag-background};
 }

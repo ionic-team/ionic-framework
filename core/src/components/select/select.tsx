@@ -1,17 +1,8 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
-import { CssClassMap } from '../../index';
-import { HTMLIonSelectOptionElementEvent } from '../select-option/select-option';
-import { BlurEvent, FocusEvent, SelectInputChangeEvent, StyleEvent } from '../../utils/input-interfaces';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
-import { ActionSheetButton, ActionSheetOptions  } from '../action-sheet/action-sheet';
-import { AlertOptions } from '../alert/alert';
-import { PopoverOptions } from '../popover/popover';
-
-import { ActionSheetController } from '../action-sheet-controller/action-sheet-controller';
-import { AlertController } from '../alert-controller/alert-controller';
-import { PopoverController } from '../popover-controller/popover-controller';
-import { SelectPopoverOption } from '../select-popover/select-popover';
-
+import { ActionSheetButton, ActionSheetOptions, AlertOptions, CssClassMap, Mode, OverlaySelect, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent } from '../../interface';
+import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
+import { hostContext } from '../../utils/theme';
 
 @Component({
   tag: 'ion-select',
@@ -19,70 +10,68 @@ import { SelectPopoverOption } from '../select-popover/select-popover';
     ios: 'select.ios.scss',
     md: 'select.md.scss'
   },
-  host: {
-    theme: 'select'
-  }
+  shadow: true
 })
-export class Select {
+export class Select implements ComponentInterface {
 
   private childOpts: HTMLIonSelectOptionElement[] = [];
-  private selectId: string;
-  private labelId: string;
-  private overlay: HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined;
-  private styleTmr: any;
-  private mode: string;
+  private inputId = `ion-sel-${selectIds++}`;
+  private overlay?: OverlaySelect;
+  private didInit = false;
 
-  @Element() private el: HTMLIonSelectElement;
+  @Element() el!: HTMLIonSelectElement;
+
+  @Prop({ connect: 'ion-action-sheet-controller' }) actionSheetCtrl!: HTMLIonActionSheetControllerElement;
+  @Prop({ connect: 'ion-alert-controller' }) alertCtrl!: HTMLIonAlertControllerElement;
+  @Prop({ connect: 'ion-popover-controller' }) popoverCtrl!: HTMLIonPopoverControllerElement;
 
   @State() isExpanded = false;
-
-  @State() keyFocus: boolean;
-
-  @State() text: string;
-
-  @Prop({ connect: 'ion-action-sheet-controller' }) actionSheetCtrl: ActionSheetController;
-  @Prop({ connect: 'ion-alert-controller' }) alertCtrl: AlertController;
-  @Prop({ connect: 'ion-popover-controller' }) popoverCtrl: PopoverController;
+  @State() keyFocus = false;
 
   /**
-   * If true, the user cannot interact with the select. Defaults to `false`.
+   * The mode determines which platform styles to use.
+   */
+  @Prop() mode!: Mode;
+
+  /**
+   * If `true`, the user cannot interact with the select.
    */
   @Prop() disabled = false;
 
   /**
-   * The text to display on the cancel button. Default: `Cancel`.
+   * The text to display on the cancel button.
    */
   @Prop() cancelText = 'Cancel';
 
   /**
-   * The text to display on the ok button. Default: `OK`.
+   * The text to display on the ok button.
    */
   @Prop() okText = 'OK';
 
   /**
    * The text to display when the select is empty.
    */
-  @Prop() placeholder: string;
+  @Prop() placeholder?: string | null;
 
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop({ mutable: true }) name: string;
+  @Prop() name: string = this.inputId;
 
   /**
    * The text to display instead of the selected option's value.
    */
-  @Prop() selectedText: string;
+  @Prop() selectedText?: string | null;
 
   /**
-   * If true, the select can accept multiple values.
+   * If `true`, the select can accept multiple values.
    */
-  @Prop() multiple: boolean;
+  @Prop() multiple = false;
 
   /**
-   * The interface the select should use: `action-sheet`, `popover` or `alert`. Default: `alert`.
+   * The interface the select should use: `action-sheet`, `popover` or `alert`.
    */
-  @Prop() interface = 'alert';
+  @Prop() interface: SelectInterface = 'alert';
 
   /**
    * Any additional options that the `alert`, `action-sheet` or `popover` interface
@@ -96,33 +85,33 @@ export class Select {
   /**
    * the value of the select.
    */
-  @Prop({ mutable: true }) value: string | string[] | null = null;
+  @Prop({ mutable: true }) value?: any | null;
 
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange: EventEmitter<SelectInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<SelectInputChangeEvent>;
 
   /**
    * Emitted when the selection is cancelled.
    */
-  @Event() ionCancel: EventEmitter;
+  @Event() ionCancel!: EventEmitter<void>;
 
   /**
    * Emitted when the select has focus.
    */
-  @Event() ionFocus: EventEmitter<FocusEvent>;
+  @Event() ionFocus!: EventEmitter<void>;
 
   /**
    * Emitted when the select loses focus.
    */
-  @Event() ionBlur: EventEmitter<BlurEvent>;
+  @Event() ionBlur!: EventEmitter<void>;
 
   /**
    * Emitted when the styles change.
+   * @internal
    */
-  @Event() ionStyle: EventEmitter<StyleEvent>;
-
+  @Event() ionStyle!: EventEmitter<StyleEvent>;
 
   @Watch('disabled')
   disabledChanged() {
@@ -131,161 +120,69 @@ export class Select {
 
   @Watch('value')
   valueChanged() {
-    // this select value just changed
-    // double check the select option with this value is checked
-    if (this.value === undefined) {
-      // set to undefined
-      // ensure all that are checked become unchecked
-      this.childOpts.filter(o => o.selected).forEach(selectOption => {
-        selectOption.selected = false;
+    if (this.didInit) {
+      this.updateOptions();
+      this.ionChange.emit({
+        value: this.value,
       });
-      this.text = '';
-
-    } else {
-      let hasChecked = false;
-      const texts: string[] = [];
-
-      this.childOpts.forEach(selectOption => {
-        if ((Array.isArray(this.value) && this.value.indexOf(selectOption.value) > -1) || (selectOption.value === this.value)) {
-          if (!selectOption.selected && (this.multiple || !hasChecked)) {
-            // correct value for this select option
-            // but this select option isn't checked yet
-            // and we haven't found a checked yet
-            // so CHECK IT!
-            selectOption.selected = true;
-
-          } else if (!this.multiple && hasChecked && selectOption.selected) {
-            // somehow we've got multiple select options
-            // with the same value, but only one can be checked
-            selectOption.selected = false;
-          }
-
-          // remember we've got a checked select option button now
-          hasChecked = true;
-
-        } else if (selectOption.selected) {
-          // this select option doesn't have the correct value
-          // and it's also checked, so let's uncheck it
-          selectOption.selected = false;
-        }
-
-        if (selectOption.selected) {
-          texts.push(selectOption.textContent);
-        }
-      });
-
-      this.text = texts.join(', ');
+      this.emitStyle();
     }
-
-    // emit the new value
-    this.ionChange.emit({
-      value: this.value,
-      text: this.text
-    });
-    this.emitStyle();
   }
 
   @Listen('ionSelectOptionDidLoad')
-  optLoad(ev: HTMLIonSelectOptionElementEvent) {
-    const selectOption = ev.target;
-    this.childOpts = Array.from(this.el.querySelectorAll('ion-select-option'));
-
-    if (this.value !== undefined && (Array.isArray(this.value) && this.value.indexOf(selectOption.value) > -1) || (selectOption.value === this.value)) {
-      // this select has a value and this
-      // option equals the correct select value
-      // so let's check this select option
-      selectOption.selected = true;
-
-    } else if (Array.isArray(this.value) && this.multiple && selectOption.selected) {
-      // if the value is an array we need to push the option on
-      this.value.push(selectOption.value);
-
-    } else if (this.value === undefined && selectOption.selected) {
-      // this select does not have a value
-      // but this select option is checked, so let's set the
-      // select's value from the checked select option
-      this.value = selectOption.value;
-
-    } else if (selectOption.selected) {
-      // if it doesn't match one of the above cases, but the
-      // select option is still checked, then we need to uncheck it
-      selectOption.selected = false;
-    }
-  }
-
   @Listen('ionSelectOptionDidUnload')
-  optUnload(ev: HTMLIonSelectOptionElementEvent) {
-    const index = this.childOpts.indexOf(ev.target);
-    if (index > -1) {
-      this.childOpts.splice(index, 1);
+  async selectOptionChanged() {
+    await this.loadOptions();
+    if (this.didInit) {
+      this.updateOptions();
     }
   }
 
-  @Listen('ionSelect')
-  onSelect(ev: HTMLIonSelectOptionElementEvent) {
-    // ionSelect only come from the checked select option
-    this.childOpts.forEach(selectOption => {
-      if (selectOption === ev.target) {
-        this.value = selectOption.value;
+  async componentDidLoad() {
+    await this.loadOptions();
+
+    if (this.value === undefined) {
+      if (this.multiple) {
+        // there are no values set at this point
+        // so check to see who should be selected
+        const checked = this.childOpts.filter(o => o.selected);
+        this.value = checked.map(o => o.value);
       } else {
-        selectOption.selected = false;
-      }
-    });
-  }
-
-  constructor() {
-    this.selectId = 'ion-sel-' + (selectIds++);
-  }
-
-  componentWillLoad() {
-    if (!this.value) {
-      this.value = this.multiple ? [] : undefined;
-    }
-    this.name = this.name || this.selectId;
-  }
-
-  componentDidLoad() {
-    const label = this.getLabel();
-    if (label) {
-      this.labelId = label.id = this.name + '-lbl';
-    }
-
-    if (this.multiple) {
-      // there are no values set at this point
-      // so check to see who should be selected
-      const checked = this.childOpts.filter(o => o.selected);
-
-      (this.value as string[]).length = 0;
-      checked.forEach(o => {
-        // doing this instead of map() so we don't
-        // fire off an unecessary change event
-        (this.value as string[]).push(o.value);
-      });
-      this.text = checked.map(o => o.textContent).join(', ');
-
-    } else {
-      const checked = this.childOpts.find(o => o.selected);
-      if (checked) {
-        this.value = checked.value;
-        this.text = checked.textContent;
+        const checked = this.childOpts.find(o => o.selected);
+        if (checked) {
+          this.value = checked.value;
+        }
       }
     }
+    this.updateOptions();
     this.emitStyle();
+    this.el.forceUpdate();
+    this.didInit = true;
   }
 
-  private getLabel() {
-    const item = this.el.closest('ion-item');
-    if (item) {
-      return item.querySelector('ion-label');
+  /**
+   * Opens the select overlay, it could be an alert, action-sheet or popover,
+   * based in `ion-select` settings.
+   */
+  @Method()
+  async open(ev?: UIEvent): Promise<OverlaySelect | undefined> {
+    if (this.disabled || this.isExpanded) {
+      return undefined;
     }
-    return null;
+    const overlay = this.overlay = await this.createOverlay(ev);
+    this.isExpanded = true;
+    overlay.onDidDismiss().then(() => {
+      this.overlay = undefined;
+      this.isExpanded = false;
+    });
+    await overlay.present();
+    return overlay;
   }
 
-  private open(ev: UIEvent) {
+  private createOverlay(ev?: UIEvent): Promise<OverlaySelect> {
     let selectInterface = this.interface;
-
     if ((selectInterface === 'action-sheet' || selectInterface === 'popover') && this.multiple) {
-      console.warn('Select interface cannot be "' + selectInterface + '" with a multi-value select. Using the "alert" interface instead.');
+      console.warn(`Select interface cannot be "${selectInterface}" with a multi-value select. Using the "alert" interface instead.`);
       selectInterface = 'alert';
     }
 
@@ -295,24 +192,26 @@ export class Select {
     }
 
     if (selectInterface === 'popover') {
-      return this.openPopover(ev);
+      return this.openPopover(ev!);
     }
-
     if (selectInterface === 'action-sheet') {
       return this.openActionSheet();
     }
-
     return this.openAlert();
   }
 
   private async openPopover(ev: UIEvent) {
-    const interfaceOptions = {...this.interfaceOptions};
+    const interfaceOptions = this.interfaceOptions;
 
-    const popoverOpts: PopoverOptions = Object.assign(interfaceOptions, {
+    const popoverOpts: PopoverOptions = {
+      ...interfaceOptions,
+
       component: 'ion-select-popover',
+      cssClass: ['select-popover', interfaceOptions.cssClass],
+      event: ev,
       componentProps: {
-        title: interfaceOptions.title,
-        subTitle: interfaceOptions.subTitle,
+        header: interfaceOptions.header,
+        subHeader: interfaceOptions.subHeader,
         message: interfaceOptions.message,
         value: this.value,
         options: this.childOpts.map(o => {
@@ -327,20 +226,12 @@ export class Select {
             }
           } as SelectPopoverOption;
         })
-      },
-      cssClass: 'select-popover' + (interfaceOptions.cssClass ? ' ' + interfaceOptions.cssClass : ''),
-      ev: ev
-    });
-
-    const popover = this.overlay = await this.popoverCtrl.create(popoverOpts);
-    await popover.present();
-    this.isExpanded = true;
-    return popover;
+      }
+    };
+    return this.popoverCtrl.create(popoverOpts);
   }
 
   private async openActionSheet() {
-    const interfaceOptions = {...this.interfaceOptions};
-
     const actionSheetButtons = this.childOpts.map(option => {
       return {
         role: (option.selected ? 'selected' : ''),
@@ -351,37 +242,40 @@ export class Select {
       } as ActionSheetButton;
     });
 
+    // Add "cancel" button
     actionSheetButtons.push({
       text: this.cancelText,
       role: 'cancel',
       handler: () => {
-        this.ionCancel.emit(this);
+        this.ionCancel.emit();
       }
     });
 
-    const actionSheetOpts: ActionSheetOptions = Object.assign(interfaceOptions, {
+    const interfaceOptions = this.interfaceOptions;
+    const actionSheetOpts: ActionSheetOptions = {
+      ...interfaceOptions,
+
       buttons: actionSheetButtons,
-      cssClass: 'select-action-sheet' + (interfaceOptions.cssClass ? ' ' + interfaceOptions.cssClass : '')
-    });
-
-    const actionSheet = this.overlay = await this.actionSheetCtrl.create(actionSheetOpts);
-    await actionSheet.present();
-
-    this.isExpanded = true;
-    return actionSheet;
+      cssClass: ['select-action-sheet', interfaceOptions.cssClass]
+    };
+    return this.actionSheetCtrl.create(actionSheetOpts);
   }
 
   private async openAlert() {
-    const interfaceOptions = {...this.interfaceOptions};
 
     const label = this.getLabel();
     const labelText = (label) ? label.textContent : null;
 
-    const alertOpts: AlertOptions = Object.assign(interfaceOptions, {
-      title: interfaceOptions.title ? interfaceOptions.title : labelText,
+    const interfaceOptions = this.interfaceOptions;
+    const inputType = (this.multiple ? 'checkbox' : 'radio');
+
+    const alertOpts: AlertOptions = {
+      ...interfaceOptions,
+
+      header: interfaceOptions.header ? interfaceOptions.header : labelText,
       inputs: this.childOpts.map(o => {
         return {
-          type: (this.multiple ? 'checkbox' : 'radio'),
+          type: inputType,
           label: o.textContent,
           value: o.value,
           checked: o.selected,
@@ -393,7 +287,7 @@ export class Select {
           text: this.cancelText,
           role: 'cancel',
           handler: () => {
-            this.ionCancel.emit(this);
+            this.ionCancel.emit();
           }
         },
         {
@@ -403,70 +297,103 @@ export class Select {
           }
         }
       ],
-      cssClass: 'select-alert ' +
-                (this.multiple ? 'multiple-select-alert' : 'single-select-alert') +
-                (interfaceOptions.cssClass ? ' ' + interfaceOptions.cssClass : '')
-    });
-
-    const alert = this.overlay = await this.alertCtrl.create(alertOpts);
-    await alert.present();
-
-    this.isExpanded = true;
-    return alert;
+      cssClass: ['select-alert', interfaceOptions.cssClass,
+                 (this.multiple ? 'multiple-select-alert' : 'single-select-alert')]
+    };
+    return this.alertCtrl.create(alertOpts);
   }
 
   /**
    * Close the select interface.
    */
-  private close(): Promise<void> {
+  private close(): Promise<boolean> {
     // TODO check !this.overlay || !this.isFocus()
     if (!this.overlay) {
-      return Promise.resolve();
+      return Promise.resolve(false);
     }
-
-    const overlay = this.overlay;
-    this.overlay = undefined;
-
-    this.isExpanded = false;
-
-    return overlay.dismiss();
+    return this.overlay.dismiss();
   }
 
-  onKeyUp() {
+  private async loadOptions() {
+    this.childOpts = await Promise.all(
+      Array.from(this.el.querySelectorAll('ion-select-option')).map(o => o.componentOnReady())
+    );
+  }
+
+  private updateOptions() {
+    // iterate all options, updating the selected prop
+    let canSelect = true;
+    for (const selectOption of this.childOpts) {
+      const selected = canSelect && isOptionSelected(this.value, selectOption.value);
+      selectOption.selected = selected;
+
+      // if current option is selected and select is single-option, we can't select
+      // any option more
+      if (selected && !this.multiple) {
+        canSelect = false;
+      }
+    }
+  }
+
+  private getLabel() {
+    return findItemLabel(this.el);
+  }
+
+  private hasValue(): boolean {
+    return this.getText() !== '';
+  }
+
+  private getText(): string {
+    const selectedText = this.selectedText;
+    if (selectedText != null && selectedText !== '') {
+      return selectedText;
+    }
+    return generateText(this.childOpts, this.value);
+  }
+
+  private emitStyle() {
+    this.ionStyle.emit({
+      'interactive': true,
+      'select': true,
+      'has-placeholder': this.placeholder != null,
+      'has-value': this.hasValue(),
+      'interactive-disabled': this.disabled,
+      'select-disabled': this.disabled
+    });
+  }
+
+  private onClick = (ev: UIEvent) => {
+    this.open(ev);
+  }
+
+  private onKeyUp = () => {
     this.keyFocus = true;
   }
 
-  onFocus() {
+  private onFocus = () => {
     this.ionFocus.emit();
   }
 
-  onBlur() {
+  private onBlur = () => {
     this.keyFocus = false;
     this.ionBlur.emit();
   }
 
-  hasValue(): boolean {
-    if (Array.isArray(this.value)) {
-      return this.value.length > 0;
-    }
-    return (this.value !== null && this.value !== undefined && this.value !== '');
-  }
-
-  private emitStyle() {
-    clearTimeout(this.styleTmr);
-
-    this.styleTmr = setTimeout(() => {
-      this.ionStyle.emit({
-        'select': true,
-        'select-disabled': this.disabled,
-        'input-has-value': this.hasValue()
-      });
-    });
-  }
-
   hostData() {
+    const labelId = this.inputId + '-lbl';
+    const label = findItemLabel(this.el);
+    if (label) {
+      label.id = labelId;
+    }
+
     return {
+      'role': 'combobox',
+      'aria-disabled': this.disabled ? 'true' : null,
+      'aria-expanded': `${this.isExpanded}`,
+      'aria-haspopup': 'dialog',
+      'aria-labelledby': labelId,
       class: {
+        'in-item': hostContext('ion-item', this.el),
         'select-disabled': this.disabled,
         'select-key': this.keyFocus
       }
@@ -474,10 +401,17 @@ export class Select {
   }
 
   render() {
-    let addPlaceholderClass = false;
+    renderHiddenInput(true, this.el, this.name, parseValue(this.value), this.disabled);
 
-    let selectText = this.selectedText || this.text;
-    if (!selectText && this.placeholder) {
+    const labelId = this.inputId + '-lbl';
+    const label = findItemLabel(this.el);
+    if (label) {
+      label.id = labelId;
+    }
+
+    let addPlaceholderClass = false;
+    let selectText = this.getText();
+    if (selectText === '' && this.placeholder != null) {
       selectText = this.placeholder;
       addPlaceholderClass = true;
     }
@@ -488,32 +422,64 @@ export class Select {
     };
 
     return [
-      <div
-        role='textbox'
-        aria-multiline='false'
-        class={ selectTextClasses }>{ selectText }
+      <div class={selectTextClasses}>
+        {selectText}
       </div>,
-      <div class='select-icon' role='presentation'>
-        <div class='select-icon-inner'></div>
+      <div class="select-icon" role="presentation">
+        <div class="select-icon-inner"></div>
       </div>,
       <button
-        type='button'
-        role='combobox'
-        aria-haspopup='dialog'
-        aria-expanded={this.isExpanded}
-        aria-labelledby={this.labelId}
-        aria-disabled={this.disabled ? 'true' : false}
-        onClick={this.open.bind(this)}
-        onKeyUp={this.onKeyUp.bind(this)}
-        onFocus={this.onFocus.bind(this)}
-        onBlur={this.onBlur.bind(this)}
-        class='select-cover'>
-        <slot></slot>
-        {this.mode === 'md' && <ion-ripple-effect useTapClick={true}/>}
-      </button>,
-      <input type='hidden' name={this.name} value={this.value}/>
+        type="button"
+        onClick={this.onClick}
+        onKeyUp={this.onKeyUp}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+      >
+      </button>
     ];
   }
+}
+
+function parseValue(value: any) {
+  if (value == null) {
+    return undefined;
+  }
+  if (Array.isArray(value)) {
+    return value.join(',');
+  }
+  return value.toString();
+}
+
+function isOptionSelected(currentValue: any[] | any, optionValue: any) {
+  if (currentValue === undefined) {
+    return false;
+  }
+  if (Array.isArray(currentValue)) {
+    return currentValue.includes(optionValue);
+  } else {
+    return currentValue === optionValue;
+  }
+}
+
+function generateText(opts: HTMLIonSelectOptionElement[], value: any | any[]) {
+  if (value === undefined) {
+    return '';
+  }
+  if (Array.isArray(value)) {
+    return value
+      .map(v => textForValue(opts, v))
+      .filter(opt => opt !== null)
+      .join(', ');
+  } else {
+    return textForValue(opts, value) || '';
+  }
+}
+
+function textForValue(opts: HTMLIonSelectOptionElement[], value: any): string | null {
+  const selectOpt = opts.find(opt => opt.value === value);
+  return selectOpt
+    ? selectOpt.textContent
+    : null;
 }
 
 let selectIds = 0;

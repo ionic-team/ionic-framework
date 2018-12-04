@@ -3,35 +3,12 @@
 // Reorder
 // --------------------------------------------------
 
-.reorder[slot] {
+:host([slot]) {
   display: none;
 
   line-height: 0;
-}
 
-.reorder-enabled .reorder {
-  display: block;
-
-  cursor: grab;
-
-  pointer-events: all;
-  touch-action: none;
-}
-
-.reorder-selected,
-.reorder-selected .reorder {
-  cursor: grabbing;
-}
-
-.reorder-selected {
-  position: relative;
-  z-index: $z-index-reorder-selected;
-
-  box-shadow: 0 0 10px rgba(0, 0, 0, .4);
-  opacity: .8;
-
-  // scss-lint:disable ImportantRule
-  transition: none !important;
+  z-index: 100;
 }
 
 
@@ -39,29 +16,7 @@
 // --------------------------------------------------
 
 .reorder-icon {
-  @include transform(translate3d($reorder-initial-transform, 0, 0));
-
   display: block;
 
-  font-size: 1.3em;
-  transition: transform 140ms ease-in;
-}
-
-.reorder-icon svg {
-  min-width: 1em;
-}
-
-.reorder[slot="start"] .reorder-icon {
-  @include transform(translate3d(-$reorder-initial-transform, 0, 0));
-}
-
-.reorder-visible .reorder .reorder-icon {
-  @include transform(translate3d(0, 0, 0));
-}
-
-// Item Reorder
-// --------------------------------------------------
-
-.item .reorder[slot] {
-  @include margin(0, null);
+  font-size: 22px;
 }

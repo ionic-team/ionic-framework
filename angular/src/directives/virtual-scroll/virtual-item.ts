@@ -4,7 +4,7 @@ import { VirtualContext } from './virtual-utils';
 /**
  * @hidden
  */
-@Directive({selector: '[virtualItem]'})
+@Directive({ selector: '[virtualItem]' })
 export class VirtualItem {
   constructor(public templateRef: TemplateRef<VirtualContext>, public viewContainer: ViewContainerRef) {}
 }

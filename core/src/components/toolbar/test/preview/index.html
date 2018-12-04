@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <title>Toolbar</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
+
 <body>
   <ion-app>
     <ion-content>
@@ -85,11 +89,7 @@
 
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-menu-toggle auto-hide="false">
-            <ion-button>
-              <ion-icon slot="icon-only" name="menu"></ion-icon>
-            </ion-button>
-          </ion-menu-toggle>
+          <ion-menu-button auto-hide="false"></ion-menu-button>
         </ion-buttons>
         <ion-buttons slot="secondary">
           <ion-button>
@@ -107,11 +107,7 @@
         </ion-buttons>
         <ion-title>Right side menu toggle</ion-title>
         <ion-buttons slot="end">
-          <ion-menu-toggle auto-hide="false">
-            <ion-button>
-              <ion-icon slot="icon-only" name="menu"></ion-icon>
-            </ion-button>
-          </ion-menu-toggle>
+          <ion-menu-button auto-hide="false"></ion-menu-button>
         </ion-buttons>
       </ion-toolbar>
 
@@ -175,15 +171,14 @@
     .rainbow-content {
       background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
     }
+
   </style>
 
   <script>
     function buttonClick(ev) {
-      console.log('clicked button', ev);
+
     }
   </script>
 </body>
+
 </html>
-
-
-

@@ -1,19 +1,19 @@
 
-import { Animation } from '../../../index';
+import { Animation } from '../../../interface';
 
 /**
  * MD Action Sheet Enter Animation
  */
-export default function mdEnterAnimation(Animation: Animation, baseEl: HTMLElement): Promise<Animation> {
-  const baseAnimation = new Animation();
+export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+  const baseAnimation = new AnimationC();
 
-  const backdropAnimation = new Animation();
+  const backdropAnimation = new AnimationC();
   backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
 
-  const wrapperAnimation = new Animation();
+  const wrapperAnimation = new AnimationC();
   wrapperAnimation.addElement(baseEl.querySelector('.action-sheet-wrapper'));
 
-  backdropAnimation.fromTo('opacity', 0.01, 0.26);
+  backdropAnimation.fromTo('opacity', 0.01, 0.32);
   wrapperAnimation.fromTo('translateY', '100%', '0%');
 
   const ani = baseAnimation

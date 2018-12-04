@@ -1,0 +1,71 @@
+{
+  "name": "@ionic/vue",
+  "version": "4.0.0-beta.12",
+  "description": "Vue specific wrappers for @ionic/core",
+  "homepage": "https://moduscreate.com",
+  "author": "Modus Create",
+  "license": "MIT",
+  "repository": "github:ionic-team/ionic",
+  "main": "dist/ionic-vue.common.js",
+  "typings": "types/index.d.ts",
+  "module": "dist/ionic-vue.esm.js",
+  "unpkg": "dist/ionic-vue.js",
+  "jsdelivr": "dist/ionic-vue.js",
+  "contributors": [
+    "Michael Tintiuc <michael.tintiuc@moduscreate.com>"
+  ],
+  "files": [
+    "src/",
+    "types/",
+    "dist/*.js",
+    "dist/*.ts"
+  ],
+  "bugs": {
+    "url": "https://github.com/ionic-team/ionic/issues"
+  },
+  "keywords": [
+    "ionic",
+    "ion",
+    "vuejs",
+    "vue",
+    "typescript",
+    "router",
+    "routing",
+    "plugin",
+    "component",
+    "navigation",
+    "nav",
+    "transition",
+    "api",
+    "wrapper",
+    "framework",
+    "delegate"
+  ],
+  "scripts": {
+    "dev": "rollup -c",
+    "watch": "rollup -c -w",
+    "build": "NODE_ENV=production rollup -c --configProd",
+    "clean": "node scripts/clean.js",
+    "lint": "tslint --project .",
+    "lint.fix": "tslint --project . --fix",
+    "test": "jest --coverage --verbose"
+  },
+  "devDependencies": {
+    "rollup": "^0.62.0",
+    "rollup-plugin-terser": "^1.0.1",
+    "rollup-plugin-vue": "^4.3.0",
+    "rollup-plugin-typescript2": "^0.17.1",
+    "tslib": "1.9.3",
+    "tslint": "5.11.0",
+    "tslint-ionic-rules": "0.0.19",
+    "typescript": "3.1.1",
+    "vue-class-component": "^6.2.0",
+    "vue-property-decorator": "^7.2.0"
+  },
+  "dependencies": {
+    "vue": "^2.5.17",
+    "vue-template-compiler": "^2.5.17",
+    "vue-router": "^3.0.1",
+    "@ionic/core": "4.0.0-beta.12"
+  }
+}

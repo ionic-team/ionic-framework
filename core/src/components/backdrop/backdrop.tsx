@@ -1,4 +1,6 @@
-import { Component, Event, EventEmitter, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Event, EventEmitter, Listen, Prop } from '@stencil/core';
+
+import { GESTURE_CONTROLLER } from '../../utils/gesture/gesture-controller';
 import { now } from '../../utils/helpers';
 
 @Component({
@@ -7,35 +9,55 @@ import { now } from '../../utils/helpers';
     ios: 'backdrop.ios.scss',
     md: 'backdrop.md.scss'
   },
-  host: {
-    theme: 'backdrop'
-  }
+  shadow: true
 })
-export class Backdrop {
+export class Backdrop implements ComponentInterface {
 
   private lastClick = -10000;
+  private blocker = GESTURE_CONTROLLER.createBlocker({
+    disableScroll: true
+  });
 
+  @Prop({ context: 'document' }) doc!: Document;
+
+  /**
+   * If `true`, the backdrop will be visible.
+   */
   @Prop() visible = true;
+
+  /**
+   * If `true`, the backdrop will can be clicked and will emit the `ionBackdropTap` event.
+   */
   @Prop() tappable = true;
+
+  /**
+   * If `true`, the backdrop will stop propagation on tap.
+   */
   @Prop() stopPropagation = true;
 
-  @Event() ionBackdropTap: EventEmitter;
+  /**
+   * Emitted when the backdrop is tapped.
+   */
+  @Event() ionBackdropTap!: EventEmitter<void>;
 
   componentDidLoad() {
-    registerBackdrop(this);
+    if (this.stopPropagation) {
+      this.blocker.block();
+    }
   }
 
   componentDidUnload() {
-    unregisterBackdrop(this);
+    this.blocker.destroy();
   }
 
-  @Listen('touchstart', {passive: false, capture: true})
+  @Listen('touchstart', { passive: false, capture: true })
   protected onTouchStart(ev: TouchEvent) {
     this.lastClick = now(ev);
     this.emitTap(ev);
   }
 
-  @Listen('mousedown', {passive: false, capture: true})
+  @Listen('click', { passive: false, capture: true })
+  @Listen('mousedown', { passive: false, capture: true })
   protected onMouseDown(ev: TouchEvent) {
     if (this.lastClick < now(ev) - 2500) {
       this.emitTap(ev);
@@ -60,20 +82,5 @@ export class Backdrop {
         'backdrop-no-tappable': !this.tappable,
       }
     };
-  }
-}
-
-const BACKDROP_NO_SCROLL = 'backdrop-no-scroll';
-const activeBackdrops = new Set();
-
-function registerBackdrop(backdrop: any) {
-  activeBackdrops.add(backdrop);
-  document.body.classList.add(BACKDROP_NO_SCROLL);
-}
-
-function unregisterBackdrop(backdrop: any) {
-  activeBackdrops.delete(backdrop);
-  if (activeBackdrops.size === 0) {
-    document.body.classList.remove(BACKDROP_NO_SCROLL);
   }
 }

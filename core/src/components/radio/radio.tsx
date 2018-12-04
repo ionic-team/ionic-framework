@@ -1,8 +1,8 @@
-import { BlurEvent, CheckedInputChangeEvent, FocusEvent, RadioButtonInput, StyleEvent } from '../../utils/input-interfaces';
-import { Component, ComponentDidLoad, ComponentDidUnload, ComponentWillLoad, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { createThemedClasses } from '../../utils/theme';
-import { CssClassMap } from '../../index';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
+import { CheckedInputChangeEvent, Color, Mode, StyleEvent } from '../../interface';
+import { findItemLabel } from '../../utils/helpers';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 @Component({
   tag: 'ion-radio',
@@ -10,111 +10,78 @@ import { CssClassMap } from '../../index';
     ios: 'radio.ios.scss',
     md: 'radio.md.scss'
   },
-  host: {
-    theme: 'radio'
-  }
+  shadow: true
 })
-export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUnload, ComponentWillLoad {
-  private checkedTmr: any;
-  private didLoad: boolean;
-  private inputId: string;
-  private nativeInput: HTMLInputElement;
-  private styleTmr: any;
+export class Radio implements ComponentInterface {
 
+  private inputId = `ion-rb-${radioButtonIds++}`;
 
-  @State() keyFocus: boolean;
+  @State() keyFocus = false;
+
+  @Element() el!: HTMLElement;
 
   /**
-   * The color to use from your Sass `$colors` map.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color: string;
+  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop() name: string;
+  @Prop() name: string = this.inputId;
 
-  /*
-   * If true, the user cannot interact with the radio. Defaults to `false`.
+  /**
+   * If `true`, the user cannot interact with the radio.
    */
   @Prop() disabled = false;
 
   /**
-   * If true, the radio is selected. Defaults to `false`.
+   * If `true`, the radio is selected.
    */
   @Prop({ mutable: true }) checked = false;
 
   /**
    * the value of the radio.
    */
-  @Prop({ mutable: true }) value: string;
+  @Prop({ mutable: true }) value?: any | null;
 
   /**
    * Emitted when the radio loads.
    */
-  @Event() ionRadioDidLoad: EventEmitter;
+  @Event() ionRadioDidLoad!: EventEmitter<void>;
 
   /**
    * Emitted when the radio unloads.
    */
-  @Event() ionRadioDidUnload: EventEmitter;
+  @Event() ionRadioDidUnload!: EventEmitter<void>;
 
   /**
    * Emitted when the styles change.
+   * @internal
    */
-  @Event() ionStyle: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEvent>;
 
   /**
    * Emitted when the radio button is selected.
    */
-  @Event() ionSelect: EventEmitter<CheckedInputChangeEvent>;
+  @Event() ionSelect!: EventEmitter<CheckedInputChangeEvent>;
 
   /**
    * Emitted when the radio button has focus.
    */
-  @Event() ionFocus: EventEmitter<FocusEvent>;
+  @Event() ionFocus!: EventEmitter<void>;
 
   /**
    * Emitted when the radio button loses focus.
    */
-  @Event() ionBlur: EventEmitter<BlurEvent>;
-
-
-  componentWillLoad() {
-    this.inputId = 'ion-rb-' + (radioButtonIds++);
-    if (this.value === undefined) {
-      this.value = this.inputId;
-    }
-    this.emitStyle();
-  }
-
-  componentDidLoad() {
-    this.ionRadioDidLoad.emit({ radio: this });
-    this.nativeInput.checked = this.checked;
-    this.didLoad = true;
-
-    const parentItem = this.nativeInput.closest('ion-item');
-    if (parentItem) {
-      const itemLabel = parentItem.querySelector('ion-label');
-      if (itemLabel) {
-        itemLabel.id = this.inputId + '-lbl';
-        this.nativeInput.setAttribute('aria-labelledby', itemLabel.id);
-      }
-    }
-  }
-
-  componentDidUnload() {
-    this.ionRadioDidUnload.emit({ radio: this });
-  }
+  @Event() ionBlur!: EventEmitter<void>;
 
   @Watch('color')
   colorChanged() {
@@ -123,105 +90,96 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
 
   @Watch('checked')
   checkedChanged(isChecked: boolean) {
-    if (this.nativeInput.checked !== isChecked) {
-      // keep the checked value and native input `nync
-      this.nativeInput.checked = isChecked;
+    if (isChecked) {
+      this.ionSelect.emit({
+        checked: true,
+        value: this.value
+      });
     }
-
-    clearTimeout(this.checkedTmr);
-    this.checkedTmr = setTimeout(() => {
-      // only emit ionSelect when checked is true
-      if (this.didLoad && isChecked) {
-        this.ionSelect.emit({
-          checked: isChecked,
-          value: this.value
-        });
-      }
-    });
-
     this.emitStyle();
   }
 
   @Watch('disabled')
-  disabledChanged(isDisabled: boolean) {
-    this.nativeInput.disabled = isDisabled;
+  disabledChanged() {
     this.emitStyle();
   }
 
-  emitStyle() {
-    clearTimeout(this.styleTmr);
+  componentWillLoad() {
+    if (this.value === undefined) {
+      this.value = this.inputId;
+    }
+    this.emitStyle();
+  }
 
-    this.styleTmr = setTimeout(() => {
-      this.ionStyle.emit({
-        ...createThemedClasses(this.mode, this.color, 'radio'),
-        'radio-checked': this.checked,
-        'radio-disabled': this.disabled
-      });
+  componentDidLoad() {
+    this.ionRadioDidLoad.emit();
+  }
+
+  componentDidUnload() {
+    this.ionRadioDidUnload.emit();
+  }
+
+  private emitStyle() {
+    this.ionStyle.emit({
+      'radio-checked': this.checked,
+      'interactive-disabled': this.disabled,
     });
   }
 
-  onClick() {
-    this.checkedChanged(true);
-  }
-
-  onChange() {
+  private onClick = () => {
     this.checked = true;
-    this.nativeInput.focus();
   }
 
-  onKeyUp() {
+  private onKeyUp = () => {
     this.keyFocus = true;
   }
 
-  onFocus() {
+  private onFocus = () => {
     this.ionFocus.emit();
   }
 
-  onBlur() {
+  private onBlur = () => {
     this.keyFocus = false;
     this.ionBlur.emit();
   }
 
   hostData() {
-    const hostAttrs: any = {
-      'class': {
+    const labelId = this.inputId + '-lbl';
+    const label = findItemLabel(this.el);
+    if (label) {
+      label.id = labelId;
+    }
+    return {
+      'role': 'radio',
+      'aria-disabled': this.disabled ? 'true' : null,
+      'aria-checked': `${this.checked}`,
+      'aria-labelledby': labelId,
+      class: {
+        ...createColorClasses(this.color),
+        'in-item': hostContext('ion-item', this.el),
+        'interactive': true,
         'radio-checked': this.checked,
         'radio-disabled': this.disabled,
         'radio-key': this.keyFocus
       }
     };
-
-    return hostAttrs;
   }
 
   render() {
-    const radioClasses: CssClassMap = {
-      'radio-icon': true,
-      'radio-checked': this.checked
-    };
     return [
-      <div class={radioClasses}>
-        <div class='radio-inner'/>
+      <div class="radio-icon">
+        <div class="radio-inner"/>
       </div>,
-      <input
-        type='radio'
-        onClick={this.onClick.bind(this)}
-        onChange={this.onChange.bind(this)}
-        onFocus={this.onFocus.bind(this)}
-        onBlur={this.onBlur.bind(this)}
-        onKeyUp={this.onKeyUp.bind(this)}
-        id={this.inputId}
-        name={this.name}
-        value={this.value}
-        disabled={this.disabled}
-        ref={r => this.nativeInput = (r as any)}/>
+      <button
+        type="button"
+        onClick={this.onClick}
+        onKeyUp={this.onKeyUp}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+      >
+      </button>,
     ];
   }
-}
-
-
-export interface HTMLIonRadioElementEvent extends CustomEvent {
-  target: HTMLIonRadioElement;
 }
 
 let radioButtonIds = 0;

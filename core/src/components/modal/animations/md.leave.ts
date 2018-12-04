@@ -1,15 +1,15 @@
-import { Animation } from '../../../index';
+import { Animation } from '../../../interface';
 
 /**
  * Md Modal Leave Animation
  */
-export default function mdLeaveAnimation(Animation: Animation, baseEl: HTMLElement): Promise<Animation> {
-  const baseAnimation = new Animation();
+export function mdLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+  const baseAnimation = new AnimationC();
 
-  const backdropAnimation = new Animation();
+  const backdropAnimation = new AnimationC();
   backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
 
-  const wrapperAnimation = new Animation();
+  const wrapperAnimation = new AnimationC();
   const wrapperEl = baseEl.querySelector('.modal-wrapper');
   wrapperAnimation.addElement(wrapperEl);
 
@@ -17,7 +17,7 @@ export default function mdLeaveAnimation(Animation: Animation, baseEl: HTMLEleme
     .fromTo('opacity', 0.99, 0)
     .fromTo('translateY', '0px', '40px');
 
-  backdropAnimation.fromTo('opacity', 0.4, 0.0);
+  backdropAnimation.fromTo('opacity', 0.32, 0.0);
 
   return Promise.resolve(baseAnimation
     .addElement(baseEl)

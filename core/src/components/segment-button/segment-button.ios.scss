@@ -4,148 +4,82 @@
 // iOS Segment Button
 // --------------------------------------------------
 
-ion-segment-button {
-  &:first-of-type .segment-button-ios {
-    @include border-radius($segment-button-ios-border-radius, 0, 0, $segment-button-ios-border-radius);
-    @include margin-horizontal(null, 0);
-  }
+:host {
+  --background: #{$segment-button-ios-background-color};
+  --background-hover: #{$segment-button-ios-background-color-hover};
+  --background-activated: #{$segment-button-ios-background-color-activated};
+  --background-checked: #{$segment-button-ios-background-color-checked};
+  --border-color: #{$segment-button-ios-border-color};
+  --color: #{$segment-button-ios-text-color};
+  --color-activated: var(--color);
+  --color-checked: #{$segment-button-ios-text-color-checked};
+  --color-disabled: #{ion-color(primary, base, $segment-button-ios-opacity-disabled)};
+  --color-checked-disabled: #{ion-color(primary, contrast, $segment-button-ios-opacity-disabled)};
+  --border-radius: #{$segment-button-ios-border-radius};
+  --border-width: #{$segment-button-ios-border-width};
+  --border-style: solid;
+  --transition: #{$segment-button-ios-transition};
 
-  &:not(:first-of-type) .segment-button-ios {
-    border-left-width: 0;
-  }
+  min-height: #{$segment-button-ios-height};
 
-  &:last-of-type .segment-button-ios {
-    @include border-radius(0, $segment-button-ios-border-radius, $segment-button-ios-border-radius, 0);
-    @include margin-horizontal(0, null);
+  font-size: #{$segment-button-ios-font-size};
 
-    border-left-width: 0;
-  }
+  line-height: #{$segment-button-ios-line-height};
 }
 
-.segment-button-ios {
-  flex: 1;
 
-  height: $segment-button-ios-height;
-
-  border-width: $segment-button-ios-border-width;
-  border-style: solid;
-  border-color: $segment-button-ios-background-color-activated;
-
-  font-size: $segment-button-ios-font-size;
-  line-height: $segment-button-ios-line-height;
-
-  color: $segment-button-ios-background-color-activated;
-  background-color: $segment-button-ios-background-color;
-
-  ion-icon {
-    font-size: $segment-button-ios-icon-size;
-    line-height: $segment-button-ios-icon-line-height;
-  }
-
-  &.segment-activated {
-    color: $segment-button-ios-text-color;
-    background-color: $segment-button-ios-background-color-activated;
-    transition: $segment-button-ios-transition-activated;
-  }
-
-  &:hover:not(.segment-activated) {
-    background-color: $segment-button-ios-background-color-hover;
-    transition: $segment-button-ios-transition-hover;
-  }
-
-  &:active:not(.segment-activated) {
-    background-color: $segment-button-ios-background-color-active;
-    transition: $segment-button-ios-transition-active;
-  }
-}
-
-// iOS Segment Button RTL
+// Segment Button: Indicator
 // --------------------------------------------------
 
-[dir="rtl"] ion-segment-button {
-  &:first-of-type .segment-button-ios {
-    border-left-width: 0;
-  }
-
-  &:last-of-type .segment-button-ios {
-    border-left-width: $segment-button-ios-border-width;
-  }
+.segment-button-indicator {
+  display: none;
 }
 
 
-// iOS Segment Button Disabled
+// Segment Button: Icon
 // --------------------------------------------------
 
-.segment-ios .segment-button-disabled {
-  color: $segment-button-ios-background-color-disabled;
-
-  pointer-events: none;
+::slotted(ion-icon) {
+  font-size: $segment-button-ios-icon-size;
 }
 
 
-// iOS Segment Button in Toolbar
+// Segment Button: Layout
 // --------------------------------------------------
 
-.toolbar-ios ion-segment-button {
-  max-width: $segment-button-ios-toolbar-button-max-width;
+// Layout: icon start
+:host(.segment-button-layout-icon-start) ::slotted(ion-label) {
+  @include margin-horizontal(2px, 0);
 }
 
-.toolbar-ios .segment-button-ios {
-  height: $segment-button-ios-toolbar-button-height;
+// Layout: icon end
+:host(.segment-button-layout-icon-end) ::slotted(ion-label) {
+  @include margin-horizontal(0, 2px);
+}
 
-  font-size: $segment-button-ios-toolbar-font-size;
-  line-height: $segment-button-ios-toolbar-line-height;
 
-  ion-icon {
-    font-size: $segment-button-ios-toolbar-icon-size;
-    line-height: $segment-button-ios-toolbar-icon-line-height;
+// Segment Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:hover:not(.segment-button-checked)) {
+    background: var(--background-hover);
   }
 }
 
 
-// iOS Segment Button Mixin
+// Segment Button: Activated
 // --------------------------------------------------
 
-@mixin ios-segment-button($color-name) {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-
-  .segment-ios-#{$color-name} {
-
-    .segment-button {
-      border-color: $color-base;
-      color: $color-base;
-
-      &:hover:not(.segment-activated) {
-        background-color: ion-color($colors-ios, $color-name, base, ios, $segment-button-ios-background-color-alpha-hover);
-      }
-
-      &:active:not(.segment-activated) {
-        background-color: ion-color($colors-ios, $color-name, base, ios, $segment-button-ios-background-color-alpha-active);
-      }
-
-      &.segment-activated {
-        color: $color-contrast;
-        background-color: $color-base;
-      }
-    }
-
-    .segment-button-disabled {
-      color: ion-color($colors-ios, $color-name, base, ios, $segment-button-ios-background-color-alpha-disabled);
-    }
-  }
+:host(.activated) {
+  background: var(--background-activated);
 }
 
 
-// iOS Segment Color Generation
+// Segment: Checked & Activated
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-ios {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-
-  @include ios-segment-button($color-name);
-
-  .toolbar-ios-#{$color-name} .segment-button-ios.segment-activated {
-    color: $color-base;
-  }
+:host(.segment-button-checked.activated) {
+  background: var(--background-checked);
+  color: var(--color-checked);
 }

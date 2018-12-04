@@ -1,49 +1,48 @@
-import { Component, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Listen, Prop } from '@stencil/core';
 
-
-export interface SelectPopoverOption {
-  text: string;
-  value: string;
-  disabled: boolean;
-  checked: boolean;
-  handler?: Function;
-}
+import { Mode, SelectPopoverOption } from '../../interface';
 
 @Component({
   tag: 'ion-select-popover',
-  host: {
-    theme: 'select-popover'
-  }}
-)
-export class SelectPopover {
-  private mode: string;
+  styleUrl: 'select-popover.scss',
+  scoped: true
+})
+export class SelectPopover implements ComponentInterface {
 
-  @Prop() header: string;
+  mode!: Mode;
 
-  @Prop() subHeader: string;
+  /** Header text for the popover */
+  @Prop() header?: string;
 
-  @Prop() message: string;
+  /** Subheader text for the popover */
+  @Prop() subHeader?: string;
 
+  /** Text for popover body */
+  @Prop() message?: string;
+
+  /** Array of options for the popover */
   @Prop() options: SelectPopoverOption[] = [];
 
   @Listen('ionSelect')
   onSelect(ev: any) {
     const option = this.options.find(o => o.value === ev.target.value);
-    option && option.handler && option.handler();
+    if (option && option.handler) {
+      option.handler();
+    }
   }
 
   render() {
     return (
-      <ion-list no-lines={this.mode === 'md'}>
-        { this.header ? <ion-list-header>{this.header}</ion-list-header> : null }
-        { this.subHeader || this.message
-          ? <ion-item>
-              <ion-label>
-                { this.subHeader ? <h3>{this.subHeader}</h3> : null }
-                { this.message ? <p>{this.message}</p> : null }
-              </ion-label>
-            </ion-item>
-            : null}
+      <ion-list>
+        {this.header !== undefined && <ion-list-header>{this.header}</ion-list-header>}
+        { (this.subHeader !== undefined || this.message !== undefined) &&
+          <ion-item>
+            <ion-label text-wrap>
+              {this.subHeader !== undefined && <h3>{this.subHeader}</h3>}
+              {this.message !== undefined && <p>{this.message}</p>}
+            </ion-label>
+          </ion-item>
+        }
         <ion-radio-group>
           {this.options.map(option =>
             <ion-item>
@@ -53,7 +52,8 @@ export class SelectPopover {
               <ion-radio
                 checked={option.checked}
                 value={option.value}
-                disabled={option.disabled}>
+                disabled={option.disabled}
+              >
               </ion-radio>
             </ion-item>
           )}
@@ -62,5 +62,3 @@ export class SelectPopover {
     );
   }
 }
-
-

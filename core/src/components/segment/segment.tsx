@@ -1,5 +1,7 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
 
+import { Color, Mode, StyleEvent, TextInputChangeEvent } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-segment',
@@ -7,80 +9,99 @@ import { Component, Element, Event, EventEmitter, Listen, Prop, Watch } from '@s
     ios: 'segment.ios.scss',
     md: 'segment.md.scss'
   },
-  host: {
-    theme: 'segment'
-  }
+  scoped: true
 })
-export class Segment {
-  @Element() private el: HTMLElement;
+export class Segment implements ComponentInterface {
+
+  @Element() el!: HTMLElement;
 
   /**
-   * The color to use for the text color.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color: string;
+  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
-  /*
-   * If true, the user cannot interact with the segment. Defaults to `false`.
+  /**
+   * If `true`, the user cannot interact with the segment.
    */
   @Prop() disabled = false;
 
   /**
+   * If `true`, the segment buttons will overflow and the user can swipe to see them.
+   */
+  @Prop() scrollable = false;
+
+  /**
    * the value of the segment.
    */
-  @Prop({ mutable: true }) value: string;
+  @Prop({ mutable: true }) value?: string | null;
 
   @Watch('value')
-  protected valueChanged(val: string) {
-    this.selectButton(val);
-    this.ionChange.emit();
+  protected valueChanged(value: string | undefined) {
+    this.updateButtons();
+    this.ionChange.emit({ value });
   }
 
   /**
    * Emitted when the value property has changed.
    */
-  @Event() ionChange: EventEmitter;
+  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
 
+  /**
+   * Emitted when the styles change.
+   */
+  @Event() ionStyle!: EventEmitter<StyleEvent>;
 
-  componentDidLoad() {
-    this.selectButton(this.value);
-  }
-
-  @Listen('ionClick')
+  @Listen('ionSelect')
   segmentClick(ev: CustomEvent) {
     const selectedButton = ev.target as HTMLIonSegmentButtonElement;
-
     this.value = selectedButton.value;
   }
 
-  selectButton(val: string) {
-    const buttons = this.el.querySelectorAll('ion-segment-button');
+  componentWillLoad() {
+    this.emitStyle();
+  }
 
-    for (let i = 0; i < buttons.length; i++) {
-      const button = buttons[i];
-
-      button.activated = (button.value === val);
-
-      // If there is no value set on the segment and a button
-      // is checked we should activate it
-      if (!val && button.checked) {
-        button.activated = button.checked;
+  componentDidLoad() {
+    if (this.value == null) {
+      const checked = this.getButtons().find(b => b.checked);
+      if (checked) {
+        this.value = checked.value;
       }
     }
+    this.updateButtons();
+  }
+
+  private emitStyle() {
+    this.ionStyle.emit({
+      'segment': true
+    });
+  }
+
+  private updateButtons() {
+    const value = this.value;
+    for (const button of this.getButtons()) {
+      button.checked = (button.value === value);
+    }
+  }
+
+  private getButtons() {
+    return Array.from(this.el.querySelectorAll('ion-segment-button'));
   }
 
   hostData() {
     return {
       class: {
-        'segment-disabled': this.disabled
+        ...createColorClasses(this.color),
+        'segment-disabled': this.disabled,
+        'segment-scrollable': this.scrollable
       }
     };
   }
-
 }

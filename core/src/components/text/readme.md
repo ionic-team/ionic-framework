@@ -3,6 +3,13 @@
 The text component is a simple component that can be used to style the text color of any element. The `ion-text` element should wrap the element in order to change the text color of that element.
 
 
+<!-- Auto Generated Below -->
+
+
+## Usage
+
+### Javascript
+
 ```html
 <ion-text color="secondary">
   <h1>H1: The quick brown fox jumps over the lazy dog</h1>
@@ -34,48 +41,13 @@ The text component is a simple component that can be used to style the text colo
 ```
 
 
-<!-- Auto Generated Below -->
-
 
 ## Properties
 
-#### color
-
-string
-
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
-
-
-#### mode
-
-
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-
-
-## Attributes
-
-#### color
-
-string
-
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
-
-
-#### mode
-
-
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-
+| Property | Attribute | Description                                                                                                                                                                                                                                                            | Type                  | Default     |
+| -------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
+| `color`  | `color`   | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` | `undefined` |
+| `mode`   | `mode`    | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined` |
 
 
 ----------------------------------------------

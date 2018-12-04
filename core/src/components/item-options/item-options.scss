@@ -4,19 +4,11 @@
 // --------------------------------------------------
 
 ion-item-options {
-  position: absolute;
-  z-index: $z-index-item-options;
-  display: none;
-
-  height: 100%;
-
-  font-size: 14px;
-
   @include multi-dir() {
-    // scss-lint:disable PropertySpelling
+    /* stylelint-disable property-blacklist */
     top: 0;
-
     right: 0;
+    /* stylelint-enable property-blacklist */
   }
 
   @include ltr() {
@@ -26,25 +18,33 @@ ion-item-options {
   @include rtl() {
     justify-content: flex-start;
 
-    &:not(.item-options-right) {
-      // scss-lint:disable PropertySpelling
+    &:not(.item-options-end) {
+      /* stylelint-disable property-blacklist */
       right: auto;
       left: 0;
+      /* stylelint-enable property-blacklist */
 
       justify-content: flex-end;
     }
   }
 
-  &.hydrated {
-    visibility: hidden;
-  }
+  display: none;
+  position: absolute;
+
+  height: 100%;
+
+  font-size: 14px;
+
+  user-select: none;
+  z-index: $z-index-item-options;
 }
 
-.item-options-left {
+.item-options-start {
   @include multi-dir() {
-    // scss-lint:disable PropertySpelling
+    /* stylelint-disable property-blacklist */
     right: auto;
     left: 0;
+    /* stylelint-enable property-blacklist */
   }
 
   @include ltr() {
@@ -56,9 +56,19 @@ ion-item-options {
   }
 }
 
+.item-options-start ion-item-option:first-child {
+  @include padding-horizontal(null, var(--ion-safe-area-left));
+
+}
+
+.item-options-end ion-item-option:last-child {
+  @include padding-horizontal(null, var(--ion-safe-area-right));
+
+}
+
 .item-sliding-active-slide {
   @include rtl() {
-    &.item-sliding-active-options-left ion-item-options:not(.item-options-right) {
+    &.item-sliding-active-options-start ion-item-options:not(.item-options-end) {
       width: 100%;
 
       visibility: visible;
@@ -69,8 +79,8 @@ ion-item-options {
     display: flex;
   }
 
-  &.item-sliding-active-options-left .item-options-left,
-  &.item-sliding-active-options-right ion-item-options:not(.item-options-left) {
+  &.item-sliding-active-options-start .item-options-start,
+  &.item-sliding-active-options-end ion-item-options:not(.item-options-start) {
     width: 100%;
 
     visibility: visible;

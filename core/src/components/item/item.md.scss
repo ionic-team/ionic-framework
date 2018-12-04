@@ -1,176 +1,150 @@
 @import "./item";
 @import "./item.md.vars";
+@import "../label/label.md.vars";
 
 // Material Design Item
 // --------------------------------------------------
 
-.item-md {
-  @include padding-horizontal($item-md-padding-start, 0);
+:host {
+  --min-height: #{$item-md-min-height};
+  --background: #{$item-md-background};
+  --background-activated: var(--background);
+  --border-color: #{$item-md-border-bottom-color};
+  --color: #{$item-md-color};
+  --transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
+  --padding-start: #{$item-md-padding-start};
+  --color: #{$item-md-color};
+  --border-color: #{$item-md-border-bottom-color};
+  --inner-padding-end: #{$item-md-padding-end};
+  --inner-border-width: #{0 0 $item-md-border-bottom-width 0};
+  --highlight-height: 2px;
+  --highlight-color-focused: #{$item-md-input-highlight-color};
+  --highlight-color-valid: #{$item-md-input-highlight-color-valid};
+  --highlight-color-invalid: #{$item-md-input-highlight-color-invalid};
 
-  position: relative;
-
-  font-family: $item-md-font-family;
   font-size: $item-md-font-size;
   font-weight: normal;
+
   text-transform: none;
-
-  color: $item-md-text-color;
-  background-color: $item-md-background-color;
-  box-shadow: none;
-  transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
-}
-
-.item-md.activated {
-  background-color: $item-md-background-color-active;
-}
-
-.item-md[no-lines] {
-  border-width: 0;
-}
-
-.item-md h1 {
-  @include margin(0, 0, 2px);
-
-  font-size: 24px;
-  font-weight: normal;
-}
-
-.item-md h2 {
-  @include margin(2px, 0);
-
-  font-size: 16px;
-  font-weight: normal;
-}
-
-.item-md h3,
-.item-md h4,
-.item-md h5,
-.item-md h6 {
-  @include margin(2px, 0);
-
-  font-size: 14px;
-  font-weight: normal;
-  line-height: normal;
-}
-
-.item-md p {
-  @include margin(0, 0, 2px);
-
-  overflow: inherit;
-
-  font-size: 14px;
-  line-height: normal;
-  text-overflow: inherit;
-  color: $item-md-paragraph-text-color;
-}
-
-.item-md .item-inner {
-  @include padding-horizontal(null, ($item-md-padding-end / 2));
-
-  border-bottom: 1px solid $item-md-border-color;
 }
 
 
-// Material Design Items in Lists
-// --------------------------------------------------
-// Removed the requirement that their immmediate
-// parent is listed this adds support for other list components
-
-ion-list,
-ion-reorder-group > ion-gesture {
-  > ion-item:first-child .item-md,
-  > ion-item-sliding:first-child .item-md {
-    border-top: 1px solid $item-md-border-color;
-  }
-
-  > ion-item:last-child .item-md,
-  > ion-item-sliding:last-child .item-md {
-    border-bottom: 1px solid $item-md-border-color;
-  }
-
-  > ion-item:last-child .item-md .item-inner,
-  > ion-item-sliding:last-child .item-md .item-inner {
-    border-bottom: 0;
-  }
-}
-
-// If the item has the no-lines attribute remove the bottom border from:
-// the item itself (for last-child items)
-// the item-inner class (if it is not last)
-ion-item[no-lines],
-ion-item[no-lines] .item-inner {
-  border-width: 0;
-}
-
-
-// Material Design Item Detail Push
+// Material Design Item Lines
 // --------------------------------------------------
 
-// Only show the forward arrow icon if true
-.item-md.item-detail-push .item-inner {
-  @include item-push-svg-url($item-md-detail-push-color);
-  @include padding-horizontal(null, 32px);
-  @include background-position(end, $item-md-padding-end - 2, center);
-
-  background-repeat: no-repeat;
-  background-size: 14px 14px;
+// Default input items have a full border
+:host(.item-interactive) {
+  --border-width: #{0 0 $item-md-border-bottom-width 0};
+  --inner-border-width: 0;
+  --show-full-highlight: 1;
+  --show-inset-highlight: 0;
 }
 
+// Full lines - apply the border to the item
+// Inset lines - apply the border to the item inner
+:host(.item-lines-full) {
+  --border-width: #{0 0 $item-md-border-bottom-width 0};
+  --show-full-highlight: 1;
+  --show-inset-highlight: 0;
+}
+
+:host(.item-lines-inset) {
+  --inner-border-width: #{0 0 $item-md-border-bottom-width 0};
+  --show-full-highlight: 0;
+  --show-inset-highlight: 1;
+}
+
+// Full lines - remove the border from the item inner (inset list items)
+// Inset lines - remove the border on the item (full list items)
+// No lines - remove the border on both (full / inset list items)
+:host(.item-lines-inset),
+:host(.item-lines-none) {
+  --border-width: 0;
+  --show-full-highlight: 0;
+}
+
+:host(.item-lines-full),
+:host(.item-lines-none) {
+  --inner-border-width: 0;
+  --show-inset-highlight: 0;
+}
+
+
+// Material Design Multi-line Item
+// --------------------------------------------------
+
+// TODO this works if manually adding the class / work with prop?
+// Multi-line items should align the slotted content at the top
+:host(.item-multi-line) ::slotted([slot="start"]),
+:host(.item-multi-line) ::slotted([slot="end"]) {
+  @include margin($item-md-multi-line-slot-margin-top, $item-md-multi-line-slot-margin-end, $item-md-multi-line-slot-margin-bottom, $item-md-multi-line-slot-margin-start);
+
+  align-self: flex-start;
+}
 
 // Material Design Item Slots
 // --------------------------------------------------
 
-.item-md [slot="start"],
-.item-md [slot="end"] {
-  @include margin($item-md-slot-margin-top, $item-md-slot-margin-end, $item-md-slot-margin-bottom, $item-md-slot-margin-start);
+::slotted(:not(.interactive)[slot="start"]) {
+  @include margin-horizontal($item-md-start-slot-margin-start, $item-md-start-slot-margin-end);
 }
 
-.item-md > ion-icon[slot="start"],
-.item-md > ion-icon[slot="end"] {
+::slotted(:not(.interactive)[slot="end"]) {
+  @include margin-horizontal($item-md-end-slot-margin-start, $item-md-end-slot-margin-end);
+}
+
+
+// Material Design Slotted Icon
+// --------------------------------------------------
+
+::slotted(ion-icon) {
+
+  color: $item-md-icon-slot-color;
+
+  font-size: $item-md-icon-slot-font-size;
+}
+
+::slotted(ion-icon[slot]) {
   @include margin($item-md-icon-slot-margin-top, $item-md-icon-slot-margin-end, $item-md-icon-slot-margin-bottom, $item-md-icon-slot-margin-start);
 }
 
-.item-md > ion-icon[slot="start"] + .item-inner,
-.item-md > ion-icon[slot="start"] + .item-input {
-  @include margin-horizontal($item-md-padding-start + ($item-md-padding-start / 2), null);
+::slotted(ion-icon[slot="start"]) {
+  @include margin-horizontal($item-md-icon-start-slot-margin-start, $item-md-icon-start-slot-margin-end);
 }
 
-.item-md ion-avatar[slot="start"],
-.item-md ion-thumbnail[slot="start"] {
-  @include margin(($item-md-padding-end / 2), $item-md-padding-end, ($item-md-padding-end / 2), 0);
-}
-
-.item-md ion-avatar[slot="end"],
-.item-md ion-thumbnail[slot="end"] {
-  @include margin(($item-md-padding-end / 2));
-}
-
-.item-md.item-label-stacked [slot="end"],
-.item-md.item-label-floating [slot="end"] {
-  @include margin($item-md-label-slot-end-margin-top, $item-md-label-slot-end-margin-end, $item-md-label-slot-end-margin-bottom, $item-md-label-slot-end-margin-start);
+::slotted(ion-icon[slot="end"]) {
+  @include margin-horizontal($item-md-icon-end-slot-margin-start, $item-md-icon-end-slot-margin-end);
 }
 
 
-// Material Design Item Button
+// Material Design Slotted Note
 // --------------------------------------------------
 
-.item-md .button-small-md {
-  @include padding(0, .6em);
+::slotted(ion-note) {
+  @include margin(0);
 
-  height: 25px;
+  align-self: flex-start;
 
-  font-size: 12px;
+  font-size: $item-md-note-slot-font-size;
 }
 
-.item-md .button-small-md ion-icon[slot="icon-only"] {
-  @include padding(0);
-
+::slotted(ion-note[slot]) {
+  @include padding($item-md-note-slot-padding-top, $item-md-note-slot-padding-end, $item-md-note-slot-padding-bottom, $item-md-note-slot-padding-start);
 }
+
+::slotted(ion-note[slot="start"]) {
+  @include padding-horizontal($item-md-note-start-slot-padding-start, $item-md-note-start-slot-padding-end);
+}
+
+::slotted(ion-note[slot="end"]) {
+  @include padding-horizontal($item-md-note-end-slot-padding-start, $item-md-note-end-slot-padding-end);
+}
+
 
 // Material Design Item Avatar
 // --------------------------------------------------
 
-.item-md ion-avatar {
+::slotted(ion-avatar) {
   width: $item-md-avatar-width;
   height: $item-md-avatar-height;
 }
@@ -179,39 +153,112 @@ ion-item[no-lines] .item-inner {
 // Material Design Item Thumbnail
 // --------------------------------------------------
 
-.item-md ion-thumbnail {
+::slotted(ion-thumbnail) {
   width: $item-md-thumbnail-width;
   height: $item-md-thumbnail-height;
 }
 
-
-// Generate Material Design Item and Item Divider Colors
+// Material Design Item Avatar/Thumbnail
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-md {
-  $color-base: ion-color($colors-md, $color-name, base, md);
-  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
-  $color-shade: ion-color($colors-md, $color-name, shade, md);
-  $color-tint: ion-color($colors-md, $color-name, tint, md);
+::slotted(ion-avatar),
+::slotted(ion-thumbnail) {
+  @include margin($item-md-media-slot-margin-top, $item-md-media-slot-margin-end, $item-md-media-slot-margin-bottom, $item-md-media-slot-margin-start);
+}
 
-  .item-md-#{$color-name} {
-    color: $color-contrast;
-    background-color: $color-base;
+::slotted(ion-avatar[slot="start"]),
+::slotted(ion-thumbnail[slot="start"]) {
+  @include margin-horizontal($item-md-media-start-slot-margin-start, $item-md-media-start-slot-margin-end);
+}
 
-    .item-inner {
-      border-bottom-color: $color-shade;
-    }
+::slotted(ion-avatar[slot="end"]),
+::slotted(ion-thumbnail[slot="end"]) {
+  @include margin-horizontal($item-md-media-end-slot-margin-start, $item-md-media-end-slot-margin-end);
+}
 
-    p {
-      color: $color-contrast;
-    }
 
-    &.activated {
-      background-color: $color-tint;
-    }
-  }
+// Material Design Slotted Label
+// --------------------------------------------------
 
-  .item-md-#{$color-name}.item-detail-push .item-inner {
-    @include item-push-svg-url($color-shade);
-  }
+::slotted(ion-label) {
+  @include margin(13px, 0, 10px, 0);
+}
+
+
+
+// Material Design Floating/Stacked Label
+// --------------------------------------------------
+
+:host(.item-label-stacked) ::slotted([slot="end"]),
+:host(.item-label-floating) ::slotted([slot="end"]) {
+  @include margin($item-md-label-slot-end-margin-top, $item-md-label-slot-end-margin-end, $item-md-label-slot-end-margin-bottom, $item-md-label-slot-end-margin-start);
+}
+
+
+// Material Design Toggle/Radio Item
+// --------------------------------------------------
+
+:host(.item-toggle) ::slotted(ion-label),
+:host(.item-radio) ::slotted(ion-label) {
+  @include margin-horizontal(0, null);
+}
+
+
+// Material Design Item Button
+// --------------------------------------------------
+
+::slotted(.button-small-md) {
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: .6em;
+  --padding-end: .6em;
+  --height: 25px;
+
+  font-size: 12px;
+}
+
+
+// TODO, review
+::slotted(.button-small-md) ion-icon[slot="icon-only"] {
+  @include padding(0);
+}
+
+
+// Material Design Radio Item Label: Checked
+// -----------------------------------------
+
+// .item-radio-checked.item-md ion-label {
+//   color: $radio-md-color-on;
+// }
+
+
+// Material Design Stacked & Floating Inputs
+// --------------------------------------------------
+
+:host(.item-label-floating),
+:host(.item-label-stacked) {
+  --min-height: 65px;
+}
+
+// TODO: refactor
+:host(.item-label-stacked) ::slotted(ion-input),
+:host(.item-label-floating) ::slotted(ion-input),
+:host(.item-label-stacked) ::slotted(ion-textarea),
+:host(.item-label-floating) ::slotted(ion-textarea),
+:host(.item-label-stacked) ::slotted(ion-select),
+:host(.item-label-floating) ::slotted(ion-select) {
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --padding-start: 0;
+}
+
+
+:host(:not(.item-label)) ::slotted(ion-input),
+:host(:not(.item-label)) ::slotted(ion-textarea) {
+  --padding-start: 0;
+}
+
+:host(.item-has-focus:not(.ion-color)) ::slotted(.label-stacked),
+:host(.item-has-focus:not(.ion-color)) ::slotted(.label-floating) {
+  color: $label-md-text-color-focused;
 }

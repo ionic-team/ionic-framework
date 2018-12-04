@@ -5,42 +5,44 @@
   <meta charset="UTF-8">
   <title>Popover</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <script src="/dist/ionic.js"></script>
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
   <ion-app>
 
-      <ion-header>
-        <ion-toolbar color="primary">
-          <ion-buttons slot="secondary">
-            <ion-button onclick="presentPopover({component: 'profile-page', ev: event })">
-              <ion-icon slot="icon-only" name="person"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-          <ion-title>Popover</ion-title>
-        </ion-toolbar>
-      </ion-header>
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-buttons slot="secondary">
+          <ion-button onclick="presentPopover({component: 'profile-page', event: event })">
+            <ion-icon slot="icon-only" name="person"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Popover</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-      <ion-content id="content" padding>
-        <ion-button class="e2eShowPopover" expand="block" onclick="presentPopover({ component: 'profile-page', ev: event })">Show Popover</ion-button>
-        <ion-button expand="block" onclick="presentPopover({ component: 'translucent-page', ev: event, translucent: true })">Show Translucent Popover</ion-button>
-        <ion-button expand="block" color="secondary" onclick="presentPopover({ component: 'list-page', ev: event })">Show Long List Popover</ion-button>
-        <ion-button expand="block" color="danger" onclick="presentPopover({ component: 'profile-page' })">No Event Popover</ion-button>
+    <ion-content id="content" padding>
+      <ion-button class="e2eShowPopover" expand="block" onclick="presentPopover({ component: 'profile-page', event: event })">Show Popover</ion-button>
+      <ion-button expand="block" onclick="presentPopover({ component: 'translucent-page', event: event, translucent: true })">Show Translucent Popover</ion-button>
+      <ion-button expand="block" color="secondary" onclick="presentPopover({ component: 'list-page', event: event })">Show Long List Popover</ion-button>
+      <ion-button expand="block" color="danger" onclick="presentPopover({ component: 'profile-page' })">No Event Popover</ion-button>
 
-        <ion-popover-controller></ion-popover-controller>
-      </ion-content>
+      <ion-popover-controller></ion-popover-controller>
+    </ion-content>
 
-      <ion-footer>
-        <ion-toolbar color="primary">
-          <ion-buttons slot="primary">
-            <ion-button onclick="presentPopover({component: 'profile-page', ev: event })">
-              <ion-icon slot="icon-only" name="person"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-          <ion-title>Popover</ion-title>
-        </ion-toolbar>
-      </ion-footer>
+    <ion-footer>
+      <ion-toolbar color="primary">
+        <ion-buttons slot="primary">
+          <ion-button onclick="presentPopover({component: 'profile-page', event: event })">
+            <ion-icon slot="icon-only" name="person"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Popover</ion-title>
+      </ion-toolbar>
+    </ion-footer>
 
   </ion-app>
   <script>

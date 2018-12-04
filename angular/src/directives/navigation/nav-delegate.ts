@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, Directive, ElementRef, Injector } from '@angular/core';
+import { ComponentFactoryResolver, Directive, ElementRef, Injector, ViewContainerRef } from '@angular/core';
 import { AngularDelegate } from '../../providers/angular-delegate';
 
 @Directive({
@@ -7,10 +7,11 @@ import { AngularDelegate } from '../../providers/angular-delegate';
 export class NavDelegate {
   constructor(
     ref: ElementRef,
-    cfr: ComponentFactoryResolver,
+    resolver: ComponentFactoryResolver,
     injector: Injector,
     angularDelegate: AngularDelegate,
+    location: ViewContainerRef
   ) {
-    ref.nativeElement.delegate = angularDelegate.create(cfr, injector);
+    ref.nativeElement.delegate = angularDelegate.create(resolver, injector, location);
   }
 }

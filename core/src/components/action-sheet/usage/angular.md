@@ -1,4 +1,4 @@
-```javascript
+```typescript
 import { Component } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 
@@ -11,9 +11,9 @@ export class ActionSheetExample {
 
   constructor(public actionSheetController: ActionSheetController) {}
 
-  presentActionSheet() {
-    const actionSheet = this.actionSheetController.create({
-      header: "Albums",
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Albums',
       buttons: [{
         text: 'Delete',
         role: 'destructive',
@@ -48,8 +48,7 @@ export class ActionSheetExample {
         }
       }]
     });
-
-    actionSheet.present();
+    await actionSheet.present();
   }
 
 }

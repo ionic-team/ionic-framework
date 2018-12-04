@@ -1,4 +1,6 @@
-import { RouteChain, RouterDirection } from './interfaces';
+import { RouteChain } from '../../../interface';
+
+import { RouterIntent } from './constants';
 
 export function generatePath(segments: string[]): string {
   const path = segments
@@ -8,7 +10,7 @@ export function generatePath(segments: string[]): string {
   return '/' + path;
 }
 
-export function chainToPath(chain: RouteChain): string[]|null {
+export function chainToPath(chain: RouteChain): string[] | null {
   const path = [];
   for (const route of chain) {
     for (const segment of route.path) {
@@ -26,31 +28,54 @@ export function chainToPath(chain: RouteChain): string[]|null {
   return path;
 }
 
-export function writePath(history: History, base: string, usePath: boolean, path: string[], direction: RouterDirection, state: number) {
-  path = [base, ...path];
-  let url = generatePath(path);
-  if (usePath) {
+export function writePath(history: History, root: string, useHash: boolean, path: string[], intent: RouterIntent, state: number) {
+  let url = generatePath([
+    ...parsePath(root),
+    ...path
+  ]);
+  if (useHash) {
     url = '#' + url;
   }
-  if (direction === RouterDirection.Forward) {
+  if (intent === RouterIntent.Forward) {
     history.pushState(state, '', url);
   } else {
     history.replaceState(state, '', url);
   }
 }
 
-export function readPath(loc: Location, base: string, useHash: boolean): string[] | null {
-  const path = useHash
-    ? loc.hash.substr(1)
-    : loc.pathname;
-
-  if (path.startsWith(base)) {
-    return parsePath(path.slice(base.length));
+export function removePrefix(prefix: string[], path: string[]): string[] | null {
+  if (prefix.length > path.length) {
+    return null;
   }
-  return null;
+  if (prefix.length <= 1 && prefix[0] === '') {
+    return path;
+  }
+  for (let i = 0; i < prefix.length; i++) {
+    if (prefix[i].length > 0 && prefix[i] !== path[i]) {
+      return null;
+    }
+  }
+  if (path.length === prefix.length) {
+    return [''];
+  }
+  return path.slice(prefix.length);
 }
 
-export function parsePath(path: string|null|undefined): string[] {
+export function readPath(loc: Location, root: string, useHash: boolean): string[] | null {
+  let pathname = loc.pathname;
+  if (useHash) {
+    const hash = loc.hash;
+    pathname = (hash[0] === '#')
+      ? hash.slice(1)
+      : '';
+  }
+
+  const prefix = parsePath(root);
+  const path = parsePath(pathname);
+  return removePrefix(prefix, path);
+}
+
+export function parsePath(path: string | undefined | null): string[] {
   if (path == null) {
     return [''];
   }
@@ -64,4 +89,3 @@ export function parsePath(path: string|null|undefined): string[] {
     return segments;
   }
 }
-

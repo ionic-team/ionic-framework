@@ -1,22 +1,22 @@
-import {
-  ApplicationRef,
-  ComponentFactoryResolver,
-  Injectable,
-  Injector,
-} from '@angular/core';
-
+import { ApplicationRef, ComponentFactoryResolver, Injectable, InjectionToken, Injector, NgZone, ViewContainerRef } from '@angular/core';
 import { FrameworkDelegate, ViewLifecycle } from '@ionic/core';
+import { NavParams } from '../directives/navigation/nav-params';
 
 
 @Injectable()
 export class AngularDelegate {
 
   constructor(
+    private zone: NgZone,
     private appRef: ApplicationRef
   ) {}
 
-  create(cfr: ComponentFactoryResolver, injector: Injector) {
-    return new AngularFrameworkDelegate(cfr, injector, this.appRef);
+  create(
+    resolver: ComponentFactoryResolver,
+    injector: Injector,
+    location?: ViewContainerRef,
+  ) {
+    return new AngularFrameworkDelegate(resolver, injector, location, this.appRef, this.zone);
   }
 }
 
@@ -26,40 +26,76 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
   private elRefMap = new WeakMap<HTMLElement, any>();
 
   constructor(
-    private cfr: ComponentFactoryResolver,
+    private resolver: ComponentFactoryResolver,
     private injector: Injector,
-    private appRef: ApplicationRef
+    private location: ViewContainerRef | undefined,
+    private appRef: ApplicationRef,
+    private zone: NgZone,
   ) {}
 
-  attachViewToDom(container: any, component: any, data?: any, cssClasses?: string[]): Promise<any> {
-
-    const componentFactory = this.cfr.resolveComponentFactory(component);
-    const hostElement = document.createElement(componentFactory.selector);
-    if (data) {
-      Object.assign(hostElement, data);
-    }
-
-    const childInjector = Injector.create([], this.injector);
-    const componentRef = componentFactory.create(childInjector, [], hostElement);
-    for (const clazz of cssClasses) {
-      hostElement.classList.add(clazz);
-    }
-    bindLifecycleEvents(componentRef.instance, hostElement);
-    container.appendChild(hostElement);
-
-    this.appRef.attachView(componentRef.hostView);
-    this.elRefMap.set(hostElement, componentRef);
-    return Promise.resolve(hostElement);
+  attachViewToDom(container: any, component: any, params?: any, cssClasses?: string[]): Promise<any> {
+    return new Promise(resolve => {
+      this.zone.run(() => {
+        const el = attachView(
+          this.resolver, this.injector, this.location, this.appRef, this.elRefMap,
+          container, component, params, cssClasses
+        );
+        resolve(el);
+      });
+    });
   }
 
   removeViewFromDom(_container: any, component: any): Promise<void> {
-    const componentRef = this.elRefMap.get(component);
-    if (componentRef) {
-      componentRef.destroy();
-      this.elRefMap.delete(component);
-    }
-    return Promise.resolve();
+    return new Promise(resolve => {
+      this.zone.run(() => {
+        const componentRef = this.elRefMap.get(component);
+        if (componentRef) {
+          componentRef.destroy();
+          this.elRefMap.delete(component);
+        }
+        resolve();
+      });
+    });
   }
+}
+
+export function attachView(
+  resolver: ComponentFactoryResolver,
+  injector: Injector,
+  location: ViewContainerRef | undefined,
+  appRef: ApplicationRef,
+  elRefMap: WeakMap<HTMLElement, any>,
+  container: any, component: any, params: any, cssClasses: string[] | undefined
+) {
+  const factory = resolver.resolveComponentFactory(component);
+  const childInjector = Injector.create({
+    providers: getProviders(params),
+    parent: injector
+  });
+  const componentRef = (location)
+    ? location.createComponent(factory, location.length, childInjector)
+    : factory.create(childInjector);
+
+  const instance = componentRef.instance;
+  const hostElement = componentRef.location.nativeElement;
+  if (params) {
+    Object.assign(instance, params);
+  }
+  if (cssClasses) {
+    for (const clazz of cssClasses) {
+      hostElement.classList.add(clazz);
+    }
+  }
+  bindLifecycleEvents(instance, hostElement);
+  container.appendChild(hostElement);
+
+  if (!location) {
+    appRef.attachView(componentRef.hostView);
+  }
+
+  componentRef.changeDetectorRef.reattach();
+  elRefMap.set(hostElement, componentRef);
+  return hostElement;
 }
 
 const LIFECYCLES = [
@@ -72,10 +108,28 @@ const LIFECYCLES = [
 
 export function bindLifecycleEvents(instance: any, element: HTMLElement) {
   LIFECYCLES.forEach(eventName => {
-    element.addEventListener(eventName, (ev: CustomEvent) => {
+    element.addEventListener(eventName, (ev: any) => {
       if (typeof instance[eventName] === 'function') {
         instance[eventName](ev.detail);
       }
     });
   });
+}
+
+const NavParamsToken = new InjectionToken<any>('NavParamsToken');
+
+
+function getProviders(params: {[key: string]: any}) {
+  return [
+    {
+      provide: NavParamsToken, useValue: params
+    },
+    {
+      provide: NavParams, useFactory: provideNavParamsInjectable, deps: [NavParamsToken]
+    }
+  ];
+}
+
+function provideNavParamsInjectable(params: {[key: string]: any}) {
+  return new NavParams(params);
 }

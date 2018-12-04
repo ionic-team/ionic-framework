@@ -5,14 +5,16 @@
   <meta charset="UTF-8">
   <title>Split Pane</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
   <ion-app>
     <ion-split-pane id="splitPane">
 
-      <ion-menu side="left">
+      <ion-menu side="start">
 
         <ion-header>
           <ion-toolbar color="secondary">
@@ -22,7 +24,7 @@
 
         <ion-content>
           <ion-list>
-            <ion-item>Open Right Menu</ion-item>
+            <ion-item>Open end Menu</ion-item>
             <ion-item>Close Menu</ion-item>
             <ion-item>Close Menu</ion-item>
             <ion-item>Close Menu</ion-item>
@@ -51,9 +53,7 @@
           <ion-toolbar>
 
             <ion-buttons slot="start">
-              <ion-menu-toggle>
-                <ion-button><ion-icon slot="icon-only" name="menu"></ion-icon></ion-button>
-              </ion-menu-toggle>
+              <ion-menu-button></ion-menu-button>
             </ion-buttons>
 
             <ion-title>Navigation</ion-title>
@@ -78,17 +78,14 @@
 
   <script>
     const menuCtrl = document.querySelector('ion-menu-controller');
-    function openLeft() {
-      console.log('Open left menu');
+    function openStart() {
       menuCtrl.open('left');
     }
 
     function push() {
-      console.log('Push page');
     }
 
     function menu() {
-      console.log('Disable/enable menu');
       menuCtrl.enable(!menuCtrl.isEnabled());
     }
   </script>
@@ -105,6 +102,8 @@
     f:last-child {
       background-color: red;
     }
+
   </style>
 </body>
+
 </html>

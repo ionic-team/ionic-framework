@@ -1,0 +1,16 @@
+@import "./menu-button";
+
+// MD Menu Button
+// --------------------------------------------------
+
+:host {
+  --color: initial;
+}
+
+button {
+  @include padding(0, 8px);
+}
+
+ion-icon {
+  font-size: 26px;
+}

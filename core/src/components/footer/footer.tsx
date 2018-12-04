@@ -1,5 +1,6 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
 
+import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
 @Component({
@@ -7,33 +8,31 @@ import { createThemedClasses } from '../../utils/theme';
   styleUrls: {
     ios: 'footer.ios.scss',
     md: 'footer.md.scss'
-  },
-  host: {
-    theme: 'footer'
   }
 })
-export class Footer {
-  mode: string;
-  color: string;
+export class Footer implements ComponentInterface {
 
   /**
-   * If true, the footer will be translucent.
+   * The mode determines which platform styles to use.
+   */
+  @Prop() mode!: Mode;
+
+  /**
+   * If `true`, the footer will be translucent.
    * Note: In order to scroll content behind the footer, the `fullscreen`
    * attribute needs to be set on the content.
-   * Defaults to `false`.
    */
   @Prop() translucent = false;
 
   hostData() {
-    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'header-translucent') : {};
-
-    const hostClasses = {
-      ...themedClasses
-    };
+    const themedClasses = createThemedClasses(this.mode, 'footer');
+    const translucentClasses = this.translucent ? createThemedClasses(this.mode, 'footer-translucent') : null;
 
     return {
-      class: hostClasses
+      class: {
+        ...themedClasses,
+        ...translucentClasses
+      }
     };
   }
-
 }

@@ -7,7 +7,7 @@ export class OverlayBaseController<Opts, Overlay> {
     return proxyMethod(this.ctrl, 'create', opts);
   }
 
-  dismiss(data?: any, role?: string, id = -1): Promise<void> {
+  dismiss(data?: any, role?: string, id?: string): Promise<void> {
     return proxyMethod(this.ctrl, 'dismiss', data, role, id);
   }
 

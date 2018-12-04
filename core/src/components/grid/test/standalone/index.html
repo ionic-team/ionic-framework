@@ -5,7 +5,9 @@
   <meta charset="UTF-8">
   <title>Grid - Standalone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
@@ -34,7 +36,7 @@
     </ion-row>
 
     <ion-row>
-      <ion-col col-6>
+      <ion-col size="6">
         <div>
           ion-col[width-50]
         </div>
@@ -52,7 +54,7 @@
     </ion-row>
 
     <ion-row>
-      <ion-col col-3>
+      <ion-col size="3">
         <div>
           ion-col[width-25]
         </div>
@@ -62,7 +64,7 @@
           ion-col
         </div>
       </ion-col>
-      <ion-col col-3>
+      <ion-col size="3">
         <div>
           ion-col[width-25]
         </div>
@@ -70,12 +72,12 @@
     </ion-row>
 
     <ion-row>
-      <ion-col col-3>
+      <ion-col size="3">
         <div>
           ion-col[width-25]
         </div>
       </ion-col>
-      <ion-col col-3 offset-3>
+      <ion-col size="3" offset="3">
         <div>
           ion-col[width-25][offset-25]
         </div>
@@ -90,17 +92,23 @@
       </ion-col>
       <ion-col>
         <div>
-          ion-col<br>#
+          ion-col
+          <br>#
         </div>
       </ion-col>
       <ion-col>
         <div>
-          ion-col<br>#<br>#
+          ion-col
+          <br>#
+          <br>#
         </div>
       </ion-col>
       <ion-col>
         <div>
-          ion-col<br>#<br>#<br>#
+          ion-col
+          <br>#
+          <br>#
+          <br>#
         </div>
       </ion-col>
     </ion-row>
@@ -123,7 +131,9 @@
       </ion-col>
       <ion-col>
         <div>
-          ion-col<br>#<br>#
+          ion-col
+          <br>#
+          <br>#
         </div>
       </ion-col>
     </ion-row>
@@ -146,7 +156,9 @@
       </ion-col>
       <ion-col>
         <div>
-          ion-col<br>#<br>#
+          ion-col
+          <br>#
+          <br>#
         </div>
       </ion-col>
     </ion-row>
@@ -169,7 +181,9 @@
       </ion-col>
       <ion-col>
         <div>
-          ion-col<br>#<br>#
+          ion-col
+          <br>#
+          <br>#
         </div>
       </ion-col>
     </ion-row>
@@ -192,28 +206,30 @@
       </ion-col>
       <ion-col>
         <div>
-          ion-col<br>#<br>#
+          ion-col
+          <br>#
+          <br>#
         </div>
       </ion-col>
     </ion-row>
 
     <ion-row>
-      <ion-col col-12 col-sm>
+      <ion-col size="12" col-sm>
         <div>
           [responsive-sm] ion-col
         </div>
       </ion-col>
-      <ion-col col-12 col-sm>
+      <ion-col size="12" col-sm>
         <div>
           [responsive-sm] ion-col
         </div>
       </ion-col>
-      <ion-col col-12 col-sm>
+      <ion-col size="12" col-sm>
         <div>
           [responsive-sm] ion-col
         </div>
       </ion-col>
-      <ion-col col-12 col-sm>
+      <ion-col size="12" col-sm>
         <div>
           [responsive-sm] ion-col
         </div>
@@ -221,22 +237,22 @@
     </ion-row>
 
     <ion-row>
-      <ion-col col-12 col-md>
+      <ion-col size="12" col-md>
         <div>
           [responsive-md] ion-col
         </div>
       </ion-col>
-      <ion-col col-12 col-md>
+      <ion-col size="12" col-md>
         <div>
           [responsive-md] ion-col
         </div>
       </ion-col>
-      <ion-col col-12 col-md>
+      <ion-col size="12" col-md>
         <div>
           [responsive-md] ion-col
         </div>
       </ion-col>
-      <ion-col col-12 col-md>
+      <ion-col size="12" col-md>
         <div>
           [responsive-md] ion-col
         </div>
@@ -244,12 +260,12 @@
     </ion-row>
 
     <ion-row responsive-lg>
-      <ion-col col-6 offset-3>
+      <ion-col size="6" offset="3">
         <div>
           [responsive-lg] ion-col[width-50][offset-25]
         </div>
       </ion-col>
-      <ion-col col-3>
+      <ion-col size="3">
         <div>
           [responsive-lg] ion-col[width-25]
         </div>
@@ -263,6 +279,8 @@
       border: 1px solid #ddd;
       padding: 10px 5px;
     }
+
   </style>
 </body>
+
 </html>

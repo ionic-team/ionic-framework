@@ -2,9 +2,21 @@
 
 Item groups are containers that organize similar items together. They can contain item dividers to divide the items into multiple sections.
 
+
+
+
+<!-- Auto Generated Below -->
+
+
+## Usage
+
+### Angular / javascript
+
 ```html
 <ion-item-group>
-  <ion-item-divider>A</ion-item-divider>
+  <ion-item-divider>
+    <ion-label>A</ion-label>
+  </ion-item-divider>
 
   <ion-item>
     <ion-label>Angola</ion-label>
@@ -18,7 +30,9 @@ Item groups are containers that organize similar items together. They can contai
 </ion-item-group>
 
 <ion-item-group>
-  <ion-item-divider>B</ion-item-divider>
+  <ion-item-divider>
+    <ion-label>B</ion-label>
+  </ion-item-divider>
 
   <ion-item>
     <ion-label>Bangladesh</ion-label>
@@ -30,14 +44,14 @@ Item groups are containers that organize similar items together. They can contai
     <ion-label>Belgium</ion-label>
   </ion-item>
 </ion-item-group>
-```
 
-They can also be used to group sliding items:
 
-```html
+<!-- They can also be used to group sliding items -->
 <ion-item-group>
   <ion-item-divider>
-    Fruits
+    <ion-label>
+      Fruits
+    </ion-label>
   </ion-item-divider>
 
   <ion-item-sliding>
@@ -69,7 +83,9 @@ They can also be used to group sliding items:
 
 <ion-item-group>
   <ion-item-divider>
-    Vegetables
+    <ion-label>
+      Vegetables
+    </ion-label>
   </ion-item-divider>
 
   <ion-item-sliding>
@@ -99,8 +115,6 @@ They can also be used to group sliding items:
   </ion-item-sliding>
 </ion-item-group>
 ```
-
-<!-- Auto Generated Below -->
 
 
 

@@ -5,7 +5,9 @@
   <meta charset="UTF-8">
   <title>Select - Standalone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
@@ -58,5 +60,23 @@
     <ion-select-option>1998</ion-select-option>
     <ion-select-option>1999</ion-select-option>
   </ion-select>
+
+  <ion-select class="custom" placeholder="Day">
+    <ion-select-option>Sunday</ion-select-option>
+    <ion-select-option>Monday</ion-select-option>
+    <ion-select-option>Tuesday</ion-select-option>
+    <ion-select-option>Wednesday</ion-select-option>
+    <ion-select-option>Thursday</ion-select-option>
+    <ion-select-option>Friday</ion-select-option>
+    <ion-select-option>Saturday</ion-select-option>
+  </ion-select>
+
+  <style>
+    .custom {
+      --color: crimson;
+      --icon-color: pink;
+      --placeholder-color: teal;
+    }
+  </style>
 </body>
 </html>

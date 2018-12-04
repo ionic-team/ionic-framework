@@ -3,60 +3,56 @@
 // Datetime
 // --------------------------------------------------
 
-ion-datetime {
-  position: relative;
+:host {
+  /**
+   * @prop --padding-top: Padding top of the datetime
+   * @prop --padding-end: Padding end of the datetime
+   * @prop --padding-bottom: Padding bottom of the datetime
+   * @prop --padding-start: Padding start of the datetime
+   *
+   * @prop --placeholder-color: Color of the datetime placeholder
+   */
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
   display: flex;
-  overflow: hidden;
-}
+  position: relative;
 
-.datetime-cover {
-  @include position(0, null, null, 0);
+  min-width: $datetime-min-width;
+  min-height: $datetime-min-height;
 
-  position: absolute;
+  font-family: $font-family-base;
 
-  width: 100%;
-  height: 100%;
-
-  border: 0;
-
-  background: transparent;
-  cursor: pointer;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
-}
-
-.datetime-text {
-  overflow: hidden;
-
-  flex: 1;
-
-  min-width: $datetime-text-min-width;
-  min-height: $datetime-text-min-height;
-
-  font-size: inherit;
-  line-height: $datetime-text-line-height;
   text-overflow: ellipsis;
+
   white-space: nowrap;
+
+  overflow: hidden;
+  z-index: $z-index-item-input;
 }
 
-.datetime-disabled,
-.item-datetime-disabled ion-label {
-  opacity: $datetime-disabled-opacity;
+:host(.in-item) {
+  position: static;
+}
 
+:host(.datetime-placeholder) {
+  color: var(--placeholder-color);
+}
+
+:host(.datetime-disabled) {
+  opacity: .3;
   pointer-events: none;
 }
 
-.item-label-stacked ion-datetime,
-.item-label-floating ion-datetime {
-  @include padding-horizontal(0, null);
-
-  width: 100%;
+button {
+  @include input-cover();
 }
 
-.item .datetime {
-  position: static;
+.datetime-text {
+  @include text-inherit();
+
+  flex: 1;
+
+  min-height: inherit;
+
+  overflow: inherit;
 }

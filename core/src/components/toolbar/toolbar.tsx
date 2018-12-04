@@ -1,7 +1,7 @@
-import { Component, Prop } from '@stencil/core';
-import { createThemedClasses } from '../../utils/theme';
-import { Config } from '../../index';
+import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
 
+import { Color, Config, CssClassMap, Mode, StyleEvent } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-toolbar',
@@ -9,62 +9,80 @@ import { Config } from '../../index';
     ios: 'toolbar.ios.scss',
     md: 'toolbar.md.scss'
   },
-  host: {
-    theme: 'toolbar'
-  }
+  shadow: true
 })
-export class Toolbar {
+export class Toolbar implements ComponentInterface {
+  private childrenStyles = new Map<string, CssClassMap>();
 
-  @Prop({ context: 'config' }) config: Config;
+  @Element() el!: HTMLStencilElement;
+
+  @Prop({ context: 'config' }) config!: Config;
 
   /**
-   * The color to use from your Sass `$colors` map.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color: string;
+  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
-  /**
-   * If true, the toolbar will be translucent.
-   * Note: In order to scroll content behind the toolbar, the `fullscreen`
-   * attribute needs to be set on the content.
-   * Defaults to `false`.
-   */
-  @Prop() translucent = false;
+  @Listen('ionStyle')
+  childrenStyle(ev: CustomEvent<StyleEvent>) {
+    ev.stopPropagation();
+
+    const tagName = (ev.target as HTMLElement).tagName;
+    const updatedStyles = ev.detail;
+    const newStyles = {} as any;
+    const childStyles = this.childrenStyles.get(tagName) || {};
+
+    let hasStyleChange = false;
+    Object.keys(updatedStyles).forEach(key => {
+      const childKey = `toolbar-${key}`;
+      const newValue = updatedStyles[key];
+      if (newValue !== childStyles[childKey]) {
+        hasStyleChange = true;
+      }
+      if (newValue) {
+        newStyles[childKey] = true;
+      }
+    });
+
+    if (hasStyleChange) {
+      this.childrenStyles.set(tagName, newStyles);
+      this.el.forceUpdate();
+    }
+  }
 
   hostData() {
-    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'toolbar-translucent') : {};
-
-    const hostClasses = {
-      ...themedClasses,
-      'statusbar-padding': this.config.getBoolean('statusbarPadding')
-    };
+    const childStyles = {};
+    this.childrenStyles.forEach(value => {
+      Object.assign(childStyles, value);
+    });
 
     return {
-      class: hostClasses
+      class: {
+        ...childStyles,
+        ...createColorClasses(this.color)
+      }
     };
   }
 
   render() {
-    const backgroundCss = createThemedClasses(this.mode, this.color, 'toolbar-background');
-    const contentCss = createThemedClasses(this.mode, this.color, 'toolbar-content');
-
     return [
-      <div class={backgroundCss}></div>,
-      <slot name='start'></slot>,
-      <slot name='secondary'></slot>,
-      <div class={contentCss}>
-        <slot></slot>
-      </div>,
-      <slot name='primary'></slot>,
-      <slot name='end'></slot>
+      <div class="toolbar-background"></div>,
+      <div class="toolbar-container">
+        <slot name="start"></slot>
+        <slot name="secondary"></slot>
+        <div class="toolbar-content">
+          <slot></slot>
+        </div>
+        <slot name="primary"></slot>
+        <slot name="end"></slot>
+      </div>
     ];
   }
 }

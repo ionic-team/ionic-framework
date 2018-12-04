@@ -1,11 +1,9 @@
-const engine = (window as any).TapticEngine;
-
 /**
  * Check to see if the Haptic Plugin is available
- * @return {boolean} Returns true or false if the plugin is available
- *
+ * @return Returns `true` or false if the plugin is available
  */
-export function hapticAvailable() {
+export function hapticAvailable(): boolean {
+  const engine = (window as any).TapticEngine;
   return !!engine;
 }
 
@@ -14,21 +12,30 @@ export function hapticAvailable() {
  * (not for gestures)
  */
 export function hapticSelection() {
-  engine && engine.selection();
+  const engine = (window as any).TapticEngine;
+  if (engine) {
+    engine.selection();
+  }
 }
 
 /**
  * Tell the haptic engine that a gesture for a selection change is starting.
  */
 export function hapticSelectionStart() {
-  engine && engine.gestureSelectionStart();
+  const engine = (window as any).TapticEngine;
+  if (engine) {
+    engine.gestureSelectionStart();
+  }
 }
 
 /**
  * Tell the haptic engine that a selection changed during a gesture.
  */
 export function hapticSelectionChanged() {
-  engine && engine.gestureSelectionChanged();
+  const engine = (window as any).TapticEngine;
+  if (engine) {
+    engine.gestureSelectionChanged();
+  }
 }
 
 /**
@@ -36,21 +43,30 @@ export function hapticSelectionChanged() {
  * called lest resources are not properly recycled.
  */
 export function hapticSelectionEnd() {
-  engine && engine.gestureSelectionEnd();
+  const engine = (window as any).TapticEngine;
+  if (engine) {
+    engine.gestureSelectionEnd();
+  }
 }
 
 /**
  * Use this to indicate success/failure/warning to the user.
  * options should be of the type `{ type: 'success' }` (or `warning`/`error`)
  */
-export function hapticNotification(options: { type: string }) {
-  engine && engine.notification(options);
+export function hapticNotification(options: { type: 'success' | 'warning' | 'error' }) {
+  const engine = (window as any).TapticEngine;
+  if (engine) {
+    engine.notification(options);
+  }
 }
 
 /**
  * Use this to indicate success/failure/warning to the user.
  * options should be of the type `{ style: 'light' }` (or `medium`/`heavy`)
  */
-export function hapticImpact(options: { style: string }) {
-  engine && engine.impact(options);
+export function hapticImpact(options: { style: 'light' | 'medium' | 'heavy' }) {
+  const engine = (window as any).TapticEngine;
+  if (engine) {
+    engine.impact(options);
+  }
 }

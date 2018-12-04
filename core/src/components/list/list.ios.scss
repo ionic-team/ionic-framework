@@ -6,54 +6,31 @@
 
 .list-ios {
   @include margin(-1px, $list-ios-margin-end, $list-ios-margin-bottom, $list-ios-margin-start);
-}
 
-
-// If the item has the no-lines attribute remove the bottom border from:
-// the item itself (for last-child items)
-// the item-inner class (if it is not last)
-.list-ios .item[no-lines],
-.list-ios .item[no-lines] .item-inner {
-  border-width: 0;
-}
-
-.list-ios:not([inset]) + .list-ios:not([inset]) ion-list-header {
-  @include margin(-$list-ios-margin-top, null, null, null);
-  @include padding(0, null, null, null);
+  background: $item-ios-background;
 }
 
 
 // iOS Inset List
 // --------------------------------------------------
 
-.list-ios[inset] {
+.list-ios.list-inset {
   @include margin($list-inset-ios-margin-top, $list-inset-ios-margin-end, $list-inset-ios-margin-bottom, $list-inset-ios-margin-start);
   @include border-radius($list-inset-ios-border-radius);
 }
 
-.list-ios[inset] ion-list-header {
-  background-color: $item-ios-background-color;
+.list-ios.list-inset ion-item {
+  --border-width: 0 0 1px 0;
+  --inner-border-width: 0;
 }
 
-.list-ios[inset] .item {
-  border-bottom: 1px solid $item-ios-border-color;
+.list-ios.list-inset ion-item:last-child {
+  --border-width: 0;
+  --inner-border-width: 0;
 }
 
-.list-ios[inset] .item-inner {
-  border-bottom: 0;
-}
 
-.list-ios[inset] > ion-item:first-child .item,
-.list-ios[inset] > ion-item-sliding:first-child .item {
-  border-top: 0;
-}
-
-.list-ios[inset] > ion-item:last-child .item,
-.list-ios[inset] > ion-item-sliding:last-child .item {
-  border-bottom: 0;
-}
-
-.list-ios[inset] + ion-list[inset] {
+.list-ios.list-inset + ion-list.list-inset {
   @include margin(0, null, null, null);
 }
 
@@ -61,8 +38,40 @@
 // iOS No Lines List
 // --------------------------------------------------
 
-.list-ios[no-lines] ion-list-header,
-.list-ios[no-lines] .item,
-.list-ios[no-lines] .item-inner {
-  border-width: 0;
+.list-ios-lines-none .item {
+  --border-width: 0;
+  --inner-border-width: 0;
+}
+
+// iOS Full Lines List
+// --------------------------------------------------
+
+.list-ios-lines-full .item,
+.list-ios .item-lines-full {
+  --border-width: #{0 0 $list-ios-item-border-bottom-width 0};
+}
+
+.list-ios-lines-full .item {
+  --inner-border-width: 0;
+}
+
+
+// iOS Inset Lines List
+// --------------------------------------------------
+
+.list-ios-lines-inset .item,
+.list-ios .item-lines-inset {
+  --inner-border-width: #{0 0 $list-ios-item-border-bottom-width 0};
+}
+
+
+// Remove the border from items in lists
+// if they are explicitly styled by the item
+// to be different than the list
+.list-ios .item-lines-inset {
+  --border-width: 0;
+}
+
+.list-ios .item-lines-full {
+  --inner-border-width: 0;
 }

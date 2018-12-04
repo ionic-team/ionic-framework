@@ -34,8 +34,7 @@
   "devDependencies": {
     "@ionic/core": "next",
     "react": "latest",
-    "react-dom": "latest",
-    "typescript": "~2.5.2"
+    "react-dom": "latest"
   },
   "dependencies": {
     "@stencil/core": "next"

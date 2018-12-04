@@ -5,12 +5,3 @@
 
 /// @prop - Border radius of the badge
 $badge-md-border-radius:            4px !default;
-
-/// @prop - Font family of the badge
-$badge-md-font-family:              $font-family-md-base !default;
-
-/// @prop - Background color of the badge
-$badge-md-background-color:         ion-color($colors-md, primary, base, md) !default;
-
-/// @prop - Text color of the badge
-$badge-md-text-color:               ion-color($colors-md, $badge-md-background-color, contrast, md) !default;

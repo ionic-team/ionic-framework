@@ -1,49 +1,57 @@
-import { Component, Method } from '@stencil/core';
+import { Component, ComponentInterface, Element, Method, Prop } from '@stencil/core';
 
-import { ItemSliding } from '../item-sliding/item-sliding';
-
+import { Mode } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-list',
   styleUrls: {
     ios: 'list.ios.scss',
     md: 'list.md.scss'
-  },
-  host: {
-    theme: 'list'
   }
 })
-export class List {
-  private openItem: ItemSliding | null;
+export class List implements ComponentInterface {
+
+  @Element() el!: HTMLElement;
 
   /**
-   * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently opene.
+   * The mode determines which platform styles to use.
    */
-  @Method()
-  getOpenItem() {
-    return this.openItem;
-  }
+  @Prop() mode!: Mode;
 
   /**
-   * Set an [Item Sliding](../../item-sliding/ItemSliding) as the open item.
+   * How the bottom border should be displayed on all items.
    */
-  @Method()
-  setOpenItem(itemSliding: ItemSliding | null) {
-    this.openItem = itemSliding;
-  }
+  @Prop() lines?: 'full' | 'inset' | 'none';
 
   /**
-   * Close the sliding items. Items can also be closed from the [Item Sliding](../../item-sliding/ItemSliding).
-   * Returns a boolean value of whether it closed an item or not.
+   * If `true`, the list will have margin around it and rounded corners.
+   */
+  @Prop() inset = false;
+
+  /**
+   * If `ion-item-sliding` are used inside the list, this method closes
+   * any open sliding item.
+   *
+   * Returns `true` if an actual `ion-item-sliding` is closed.
    */
   @Method()
-  closeSlidingItems(): boolean {
-    if (this.openItem) {
-      this.openItem.close();
-      this.openItem = null;
-      return true;
+  async closeSlidingItems(): Promise<boolean> {
+    const item = this.el.querySelector('ion-item-sliding');
+    if (item && item.closeOpened) {
+      return item.closeOpened();
     }
     return false;
   }
 
+  hostData() {
+    return {
+      class: {
+        ...createThemedClasses(this.mode, 'list'),
+        [`list-lines-${this.lines}`]: this.lines !== undefined,
+        'list-inset': this.inset,
+        [`list-${this.mode}-lines-${this.lines}`]: this.lines !== undefined
+      }
+    };
+  }
 }

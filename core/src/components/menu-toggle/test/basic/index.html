@@ -5,12 +5,14 @@
   <meta charset="UTF-8">
   <title>Menu Toggle - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <script src="/dist/ionic.js"></script>
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
   <ion-app>
-    <ion-menu side="left" class="e2eLeftMenu">
+    <ion-menu side="start" class="e2eLeftMenu">
 
       <ion-header>
         <ion-toolbar color="secondary">
@@ -20,7 +22,7 @@
 
       <ion-content>
         <ion-list>
-          <ion-item>Open Right Menu</ion-item>
+          <ion-item>Open end Menu</ion-item>
           <ion-item>Close Menu</ion-item>
           <ion-item>Close Menu</ion-item>
           <ion-item>Close Menu</ion-item>
@@ -43,7 +45,7 @@
 
     </ion-menu>
 
-    <ion-menu side="right">
+    <ion-menu side="end">
       <ion-header>
         <ion-toolbar>
           <ion-title>Hola</ion-title>
@@ -71,14 +73,14 @@
       </ion-header>
 
       <ion-content padding>
-          <div>
-              <ion-button onclick="openDefault()">Menu Button Will Open Default</ion-button>
-          </div>
         <div>
-            <ion-button onclick="openLeft()">Menu Button Will Open Left</ion-button>
+          <ion-button onclick="openDefault()">Menu Button Will Open Default</ion-button>
         </div>
         <div>
-            <ion-button onclick="openRight()">Menu Button Will Open Right</ion-button>
+          <ion-button onclick="openStart()">Menu Button Will Open start</ion-button>
+        </div>
+        <div>
+          <ion-button onclick="openEnd()">Menu Button Will Open end</ion-button>
         </div>
       </ion-content>
 
@@ -94,19 +96,22 @@
       menuButton.menu = null;
     }
 
-    async function openLeft() {
+    async function openStart() {
       const menuButton = document.querySelector('ion-menu-toggle');
       await menuButton.componentOnReady();
-      menuButton.menu = 'left';
+      menuButton.menu = 'start';
     }
 
-    async function openRight() {
+    async function openEnd() {
       const menuButton = document.querySelector('ion-menu-toggle');
       await menuButton.componentOnReady();
-      menuButton.menu = 'right';
+      menuButton.menu = 'end';
     }
   </script>
   <style>
+
+
   </style>
 </body>
+
 </html>

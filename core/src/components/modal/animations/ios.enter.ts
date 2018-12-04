@@ -1,16 +1,15 @@
-import { Animation } from '../../../index';
-
+import { Animation } from '../../../interface';
 
 /**
  * iOS Modal Enter Animation
  */
-export default function iosEnterAnimation(Animation: Animation, baseEl: HTMLElement): Promise<Animation> {
-  const baseAnimation = new Animation();
+export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+  const baseAnimation = new AnimationC();
 
-  const backdropAnimation = new Animation();
+  const backdropAnimation = new AnimationC();
   backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
 
-  const wrapperAnimation = new Animation();
+  const wrapperAnimation = new AnimationC();
   wrapperAnimation.addElement(baseEl.querySelector('.modal-wrapper'));
 
   wrapperAnimation.beforeStyles({ 'opacity': 1 })
@@ -34,7 +33,6 @@ export default function iosEnterAnimation(Animation: Animation, baseEl: HTMLElem
 
 // }
 
-
 // export class ModalSlideOut {
 //   constructor(el: HTMLElement) {
 //     let backdrop = new Animation(this.plt, el.querySelector('ion-backdrop'));
@@ -56,7 +54,6 @@ export default function iosEnterAnimation(Animation: Animation, baseEl: HTMLElem
 //   }
 // }
 
-
 // export class ModalMDSlideIn {
 //   constructor(el: HTMLElement) {
 //     const backdrop = new Animation(this.plt, el.querySelector('ion-backdrop'));
@@ -73,7 +70,6 @@ export default function iosEnterAnimation(Animation: Animation, baseEl: HTMLElem
 //       .add(wrapper);
 //   }
 // }
-
 
 // export class ModalMDSlideOut {
 //   constructor(el: HTMLElement) {

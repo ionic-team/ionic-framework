@@ -1,5 +1,6 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
 
+import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
 @Component({
@@ -7,33 +8,31 @@ import { createThemedClasses } from '../../utils/theme';
   styleUrls: {
     ios: 'header.ios.scss',
     md: 'header.md.scss'
-  },
-  host: {
-    theme: 'header'
   }
 })
-export class Header {
-  mode: string;
-  color: string;
+export class Header implements ComponentInterface {
 
   /**
-   * If true, the header will be translucent.
+   * The mode determines which platform styles to use.
+   */
+  @Prop() mode!: Mode;
+
+  /**
+   * If `true`, the header will be translucent.
    * Note: In order to scroll content behind the header, the `fullscreen`
    * attribute needs to be set on the content.
-   * Defaults to `false`.
    */
   @Prop() translucent = false;
 
   hostData() {
-    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'header-translucent') : {};
-
-    const hostClasses = {
-      ...themedClasses
-    };
+    const themedClasses = createThemedClasses(this.mode, 'header');
+    const translucentClasses = this.translucent ? createThemedClasses(this.mode, 'header-translucent') : null;
 
     return {
-      class: hostClasses
+      class: {
+        ...themedClasses,
+        ...translucentClasses
+      }
     };
   }
-
 }

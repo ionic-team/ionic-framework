@@ -1,6 +1,6 @@
 @import "./backdrop";
 @import "./backdrop.md.vars";
 
-.backdrop-md {
+:host {
   background-color: $backdrop-md-color;
 }

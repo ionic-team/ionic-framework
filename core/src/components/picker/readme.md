@@ -9,230 +9,96 @@ A Picker is a dialog that displays a row of buttons and columns underneath. It a
 
 ## Properties
 
-#### buttons
-
-
-
-Array of buttons to be displayed at the top of the picker.
-
-
-#### columns
-
-
-
-Array of columns to be displayed in the picker.
-
-
-#### cssClass
-
-
-
-Additional classes to apply for custom CSS. If multiple classes are
-provided they should be separated by spaces.
-
-
-#### duration
-
-number
-
-Number of milliseconds to wait before dismissing the picker.
-
-
-#### enableBackdropDismiss
-
-boolean
-
-If true, the picker will be dismissed when the backdrop is clicked. Defaults to `true`.
-
-
-#### enterAnimation
-
-
-
-Animation to use when the picker is presented.
-
-
-#### keyboardClose
-
-boolean
-
-
-#### leaveAnimation
-
-
-
-Animation to use when the picker is dismissed.
-
-
-#### overlayId
-
-number
-
-
-#### showBackdrop
-
-boolean
-
-If true, a backdrop will be displayed behind the picker. Defaults to `true`.
-
-
-#### willAnimate
-
-boolean
-
-If true, the picker will animate. Defaults to `true`.
-
-
-## Attributes
-
-#### buttons
-
-
-
-Array of buttons to be displayed at the top of the picker.
-
-
-#### columns
-
-
-
-Array of columns to be displayed in the picker.
-
-
-#### css-class
-
-
-
-Additional classes to apply for custom CSS. If multiple classes are
-provided they should be separated by spaces.
-
-
-#### duration
-
-number
-
-Number of milliseconds to wait before dismissing the picker.
-
-
-#### enable-backdrop-dismiss
-
-boolean
-
-If true, the picker will be dismissed when the backdrop is clicked. Defaults to `true`.
-
-
-#### enter-animation
-
-
-
-Animation to use when the picker is presented.
-
-
-#### keyboard-close
-
-boolean
-
-
-#### leave-animation
-
-
-
-Animation to use when the picker is dismissed.
-
-
-#### overlay-id
-
-number
-
-
-#### show-backdrop
-
-boolean
-
-If true, a backdrop will be displayed behind the picker. Defaults to `true`.
-
-
-#### will-animate
-
-boolean
-
-If true, the picker will animate. Defaults to `true`.
+| Property          | Attribute          | Description                                                                                                      | Type                                                                                   | Default     |
+| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ----------- |
+| `animated`        | `animated`         | If `true`, the picker will animate.                                                                              | `boolean`                                                                              | `true`      |
+| `backdropDismiss` | `backdrop-dismiss` | If `true`, the picker will be dismissed when the backdrop is clicked.                                            | `boolean`                                                                              | `true`      |
+| `buttons`         | --                 | Array of buttons to be displayed at the top of the picker.                                                       | `PickerButton[]`                                                                       | `[]`        |
+| `columns`         | --                 | Array of columns to be displayed in the picker.                                                                  | `PickerColumn[]`                                                                       | `[]`        |
+| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string \| string[] \| undefined`                                                      | `undefined` |
+| `duration`        | `duration`         | Number of milliseconds to wait before dismissing the picker.                                                     | `number`                                                                               | `0`         |
+| `enterAnimation`  | --                 | Animation to use when the picker is presented.                                                                   | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
+| `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                                                                              | `true`      |
+| `leaveAnimation`  | --                 | Animation to use when the picker is dismissed.                                                                   | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
+| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                                                                        | `undefined` |
+| `showBackdrop`    | `show-backdrop`    | If `true`, a backdrop will be displayed behind the picker.                                                       | `boolean`                                                                              | `true`      |
 
 
 ## Events
 
-#### ionPickerDidDismiss
-
-Emitted after the picker has dismissed.
-
-
-#### ionPickerDidLoad
-
-Emitted after the picker has loaded.
-
-
-#### ionPickerDidPresent
-
-Emitted after the picker has presented.
-
-
-#### ionPickerDidUnload
-
-Emitted after the picker has unloaded.
-
-
-#### ionPickerWillDismiss
-
-Emitted before the picker has dismissed.
-
-
-#### ionPickerWillPresent
-
-Emitted before the picker has presented.
+| Event                  | Description                              | Detail             |
+| ---------------------- | ---------------------------------------- | ------------------ |
+| `ionPickerDidDismiss`  | Emitted after the picker has dismissed.  | OverlayEventDetail |
+| `ionPickerDidLoad`     | Emitted after the picker has loaded.     | void               |
+| `ionPickerDidPresent`  | Emitted after the picker has presented.  | void               |
+| `ionPickerDidUnload`   | Emitted after the picker has unloaded.   | void               |
+| `ionPickerWillDismiss` | Emitted before the picker has dismissed. | OverlayEventDetail |
+| `ionPickerWillPresent` | Emitted before the picker has presented. | void               |
 
 
 ## Methods
 
-#### addButton()
-
-
-#### addColumn()
-
-
-#### dismiss()
+### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
 
 Dismiss the picker overlay after it has been presented.
 
+#### Parameters
 
-#### getColumn()
+| Name   | Type                  | Description |
+| ------ | --------------------- | ----------- |
+| `data` | `any`                 |             |
+| `role` | `string \| undefined` |             |
 
+#### Returns
 
-#### getColumns()
-
-
-#### onDidDismiss()
-
-Returns a promise that resolves when the picker did dismiss. It also accepts a callback
-that is called in the same circustances.
-
-```
-const {data, role} = await picker.onDidDismiss();
-```
+Type: `Promise<boolean>`
 
 
-#### onWillDismiss()
 
-Returns a promise that resolves when the picker will dismiss. It also accepts a callback
-that is called in the same circustances.
+### `getColumn(name: string) => Promise<PickerColumn | undefined>`
 
-```
-const {data, role} = await picker.onWillDismiss();
-```
+Returns the column the matches the specified name
+
+#### Parameters
+
+| Name   | Type     | Description |
+| ------ | -------- | ----------- |
+| `name` | `string` |             |
+
+#### Returns
+
+Type: `Promise<PickerColumn | undefined>`
 
 
-#### present()
+
+### `onDidDismiss() => Promise<OverlayEventDetail<any>>`
+
+Returns a promise that resolves when the picker did dismiss.
+
+#### Returns
+
+Type: `Promise<OverlayEventDetail<any>>`
+
+
+
+### `onWillDismiss() => Promise<OverlayEventDetail<any>>`
+
+Returns a promise that resolves when the picker will dismiss.
+
+#### Returns
+
+Type: `Promise<OverlayEventDetail<any>>`
+
+
+
+### `present() => Promise<void>`
 
 Present the picker overlay after it has been created.
+
+#### Returns
+
+Type: `Promise<void>`
+
 
 
 

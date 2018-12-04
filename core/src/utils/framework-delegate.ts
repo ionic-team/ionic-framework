@@ -1,11 +1,12 @@
-import { ComponentRef } from '..';
+import { ComponentRef, FrameworkDelegate } from '../interface';
 
-export interface FrameworkDelegate {
-  attachViewToDom(container: any, component: any, propsOrDataObj?: any, cssClasses?: string[]): Promise<HTMLElement>;
-  removeViewFromDom(container: any, component: any): Promise<void>;
-}
-
-export function attachComponent(delegate: FrameworkDelegate, container: Element, component: ComponentRef, cssClasses?: string[], componentProps?: {[key: string]: any}): Promise<HTMLElement> {
+export async function attachComponent(
+  delegate: FrameworkDelegate | undefined,
+  container: Element,
+  component: ComponentRef,
+  cssClasses?: string[],
+  componentProps?: {[key: string]: any}
+): Promise<HTMLElement> {
   if (delegate) {
     return delegate.attachViewToDom(container, component, componentProps, cssClasses);
   }
@@ -13,21 +14,25 @@ export function attachComponent(delegate: FrameworkDelegate, container: Element,
     throw new Error('framework delegate is missing');
   }
 
-  const el = (typeof component === 'string')
-    ? document.createElement(component)
+  const el: any = (typeof component === 'string')
+    ? container.ownerDocument && container.ownerDocument.createElement(component)
     : component;
 
-  cssClasses && cssClasses.forEach(c => el.classList.add(c));
-  componentProps && Object.assign(el, componentProps);
+  if (cssClasses) {
+    cssClasses.forEach(c => el.classList.add(c));
+  }
+  if (componentProps) {
+    Object.assign(el, componentProps);
+  }
 
   container.appendChild(el);
-  if ((el as any).componentOnReady) {
-    return (el as any).componentOnReady();
+  if (el.componentOnReady) {
+    await el.componentOnReady();
   }
-  return Promise.resolve(el);
+  return el;
 }
 
-export function detachComponent(delegate: FrameworkDelegate, element: HTMLElement) {
+export function detachComponent(delegate: FrameworkDelegate | undefined, element: HTMLElement | undefined) {
   if (element) {
     if (delegate) {
       const container = element.parentElement;

@@ -4,26 +4,11 @@
 // Material Design Badge
 // --------------------------------------------------
 
-.badge-md {
+:host {
+  --padding-top: 3px;
+  --padding-end: 4px;
+  --padding-bottom: 4px;
+  --padding-start: 4px;
+
   @include border-radius($badge-md-border-radius);
-
-  font-family: $badge-md-font-family;
-
-  color: $badge-md-text-color;
-  background-color: $badge-md-background-color;
 }
-
-
-// Generate Material Design Badge Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-md {
-  $base-color: ion-color($colors-md, $color-name, base, md);
-  $contrast-color: ion-color($colors-md, $color-name, contrast, md);
-
-  .badge-md-#{$color-name} {
-    color: $contrast-color;
-    background-color: $base-color;
-  }
-}
-

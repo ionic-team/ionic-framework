@@ -5,7 +5,9 @@
   <meta charset="UTF-8">
   <title>Action Sheet - Translucent</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <script src="/dist/ionic.js"></script>
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
@@ -29,15 +31,15 @@
 
         <ion-grid>
           <ion-row>
-            <ion-col col-4><f class="red"></f></ion-col>
-            <ion-col col-4><f class="green"></f></ion-col>
-            <ion-col col-4><f class="blue"></f></ion-col>
-            <ion-col col-4><f class="yellow"></f></ion-col>
-            <ion-col col-4><f class="pink"></f></ion-col>
-            <ion-col col-4><f class="purple"></f></ion-col>
-            <ion-col col-4><f class="black"></f></ion-col>
-            <ion-col col-4><f class="fuchsia"></f></ion-col>
-            <ion-col col-4><f class="orange"></f></ion-col>
+            <ion-col size="4"><f class="red"></f></ion-col>
+            <ion-col size="4"><f class="green"></f></ion-col>
+            <ion-col size="4"><f class="blue"></f></ion-col>
+            <ion-col size="4"><f class="yellow"></f></ion-col>
+            <ion-col size="4"><f class="pink"></f></ion-col>
+            <ion-col size="4"><f class="purple"></f></ion-col>
+            <ion-col size="4"><f class="black"></f></ion-col>
+            <ion-col size="4"><f class="fuchsia"></f></ion-col>
+            <ion-col size="4"><f class="orange"></f></ion-col>
           </ion-row>
         </ion-grid>
       </ion-content>
@@ -96,7 +98,7 @@
       const actionSheetController = document.querySelector('ion-action-sheet-controller');
       await actionSheetController.componentOnReady();
       const actionSheetElement = await actionSheetController.create({
-        enableBackdropDismiss: false,
+        backdropDismiss: false,
         buttons: [{
           text: 'Archive',
           handler: () => {

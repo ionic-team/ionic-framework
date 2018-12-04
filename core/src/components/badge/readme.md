@@ -2,16 +2,28 @@
 
 Badges are inline block elements that usually appear near another element. Typically they contain a number or other characters. They can be used as a notification that there are additional items associated with an element and indicate how many items there are.
 
+
+<!-- Auto Generated Below -->
+
+
+## Usage
+
+### Angular / javascript
+
 ```html
+<!-- Default -->
 <ion-badge>99</ion-badge>
 
 <!-- Colors -->
 <ion-badge color="primary">11</ion-badge>
 <ion-badge color="secondary">22</ion-badge>
-<ion-badge color="warning">33</ion-badge>
-<ion-badge color="danger">44</ion-badge>
-<ion-badge color="light">55</ion-badge>
-<ion-badge color="dark">66</ion-badge>
+<ion-badge color="tertiary">33</ion-badge>
+<ion-badge color="success">44</ion-badge>
+<ion-badge color="warning">55</ion-badge>
+<ion-badge color="danger">66</ion-badge>
+<ion-badge color="light">77</ion-badge>
+<ion-badge color="medium">88</ion-badge>
+<ion-badge color="dark">99</ion-badge>
 
 <!-- Item with badge on left and right -->
 <ion-item>
@@ -22,48 +34,25 @@ Badges are inline block elements that usually appear near another element. Typic
 ```
 
 
-<!-- Auto Generated Below -->
-
 
 ## Properties
 
-#### color
-
-string
-
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
+| Property | Attribute | Description                                                                                                                                                                                                                                                            | Type                  | Default     |
+| -------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
+| `color`  | `color`   | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` | `undefined` |
+| `mode`   | `mode`    | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined` |
 
 
-#### mode
+## CSS Custom Properties
 
-
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-
-
-## Attributes
-
-#### color
-
-string
-
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
-
-
-#### mode
-
-
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-
+| Name               | Description                 |
+| ------------------ | --------------------------- |
+| `--background`     | Background of the badge     |
+| `--color`          | Text color of the badge     |
+| `--padding-bottom` | Padding bottom of the badge |
+| `--padding-end`    | Padding end of the badge    |
+| `--padding-start`  | Padding start of the badge  |
+| `--padding-top`    | Padding top of the badge    |
 
 
 ----------------------------------------------

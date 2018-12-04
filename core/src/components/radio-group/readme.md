@@ -6,11 +6,18 @@ button that belongs to a radio group unchecks any previous checked
 radio button within the same group.
 
 
+
+
+<!-- Auto Generated Below -->
+
+
+## Usage
+
+### Angular / javascript
+
 ```html
 <ion-list>
-
   <ion-radio-group>
-
     <ion-list-header>
       Auto Manufacturers
     </ion-list-header>
@@ -39,78 +46,26 @@ radio button within the same group.
       <ion-label>Studebaker</ion-label>
       <ion-radio value="studebaker"></ion-radio>
     </ion-item>
-
   </ion-radio-group>
-
 </ion-list>
 ```
 
 
-<!-- Auto Generated Below -->
-
 
 ## Properties
 
-#### allowEmptySelection
-
-boolean
-
-
-#### disabled
-
-boolean
-
-Indicates that the user cannot interact with the control.
-
-
-#### name
-
-string
-
-The name of the control, which is submitted with the form data.
-
-
-#### value
-
-string
-
-the value of the radio group.
-
-
-## Attributes
-
-#### allow-empty-selection
-
-boolean
-
-
-#### disabled
-
-boolean
-
-Indicates that the user cannot interact with the control.
-
-
-#### name
-
-string
-
-The name of the control, which is submitted with the form data.
-
-
-#### value
-
-string
-
-the value of the radio group.
+| Property              | Attribute               | Description                                                     | Type      | Default        |
+| --------------------- | ----------------------- | --------------------------------------------------------------- | --------- | -------------- |
+| `allowEmptySelection` | `allow-empty-selection` | If `true`, the radios can be deselected.                        | `boolean` | `false`        |
+| `name`                | `name`                  | The name of the control, which is submitted with the form data. | `string`  | `this.inputId` |
+| `value`               | `value`                 | the value of the radio group.                                   | `any`     | `undefined`    |
 
 
 ## Events
 
-#### ionChange
-
-Emitted when the value has changed.
-
+| Event       | Description                         | Detail           |
+| ----------- | ----------------------------------- | ---------------- |
+| `ionChange` | Emitted when the value has changed. | InputChangeEvent |
 
 
 ----------------------------------------------

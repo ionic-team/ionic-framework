@@ -5,7 +5,9 @@
   <meta charset="UTF-8">
   <title>Toolbar - Standalone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
@@ -48,11 +50,20 @@
   <ion-toolbar color="dark">
     <ion-title>Dark</ion-title>
   </ion-toolbar>
+
+  <ion-toolbar class="custom">
+    <ion-title>Custom</ion-title>
+  </ion-toolbar>
 </body>
 
 <style>
   body {
     margin: 0;
+  }
+
+  .custom {
+    --background: papayawhip;
+    --color: crimson;
   }
 </style>
 </html>

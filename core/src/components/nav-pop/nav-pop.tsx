@@ -1,19 +1,18 @@
-import { Component, Element, Listen } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen } from '@stencil/core';
 
 @Component({
   tag: 'ion-nav-pop',
 })
-export class NavPop {
+export class NavPop implements ComponentInterface {
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   @Listen('child:click')
-  pop(): Promise<any> {
+  pop() {
     const nav = this.el.closest('ion-nav');
     if (nav) {
-      return nav.pop();
+      nav.pop({ skipIfBusy: true });
     }
-    return Promise.resolve(null);
   }
 
 }

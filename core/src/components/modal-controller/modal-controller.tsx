@@ -1,52 +1,36 @@
-import { Component, Listen, Method } from '@stencil/core';
-import { ModalOptions } from '../../index';
-import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
+import { Component, ComponentInterface, Method, Prop } from '@stencil/core';
 
+import { ComponentRef, ModalOptions, OverlayController } from '../../interface';
+import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
 @Component({
   tag: 'ion-modal-controller'
 })
-export class ModalController implements OverlayController {
+export class ModalController implements ComponentInterface, OverlayController {
 
-  private modals = new Map<number, HTMLIonModalElement>();
+  @Prop({ context: 'document' }) doc!: Document;
 
-  @Listen('body:ionModalWillPresent')
-  protected modalWillPresent(ev: any) {
-    this.modals.set(ev.target.overlayId, ev.target);
-  }
-
-  @Listen('body:ionModalWillDismiss')
-  @Listen('body:ionModalDidUnload')
-  protected modalWillDismiss(ev: any) {
-    this.modals.delete(ev.target.overlayId);
-  }
-
-  @Listen('body:keyup.escape')
-  protected escapeKeyUp() {
-    removeLastOverlay(this.modals);
-  }
-
-  /*
+  /**
    * Create a modal overlay with modal options.
    */
   @Method()
-  create(opts?: ModalOptions): Promise<HTMLIonModalElement> {
-    return createOverlay(document.createElement('ion-modal'), opts);
+  create<T extends ComponentRef>(opts: ModalOptions<T>): Promise<HTMLIonModalElement> {
+    return createOverlay(this.doc.createElement('ion-modal'), opts);
   }
 
-  /*
+  /**
    * Dismiss the open modal overlay.
    */
   @Method()
-  dismiss(data?: any, role?: string, modalId = -1) {
-    return dismissOverlay(data, role, this.modals, modalId);
+  dismiss(data?: any, role?: string, id?: string) {
+    return dismissOverlay(this.doc, data, role, 'ion-modal', id);
   }
 
-  /*
+  /**
    * Get the most recently opened modal overlay.
    */
   @Method()
-  getTop(): HTMLIonModalElement {
-    return getTopOverlay(this.modals);
+  async getTop(): Promise<HTMLIonModalElement | undefined> {
+    return getOverlay(this.doc, 'ion-modal') as HTMLIonModalElement;
   }
 }

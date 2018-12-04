@@ -1,132 +1,132 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config } from '../../index';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+
+import { Animation, AnimationBuilder, Config, Mode, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
+import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
-import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
 
-import iosEnterAnimation from './animations/ios.enter';
-import iosLeaveAnimation from './animations/ios.leave';
-
-import mdEnterAnimation from './animations/md.enter';
-import mdLeaveAnimation from './animations/md.leave';
+import { iosEnterAnimation } from './animations/ios.enter';
+import { iosLeaveAnimation } from './animations/ios.leave';
+import { mdEnterAnimation } from './animations/md.enter';
+import { mdLeaveAnimation } from './animations/md.leave';
 
 @Component({
   tag: 'ion-loading',
   styleUrls: {
     ios: 'loading.ios.scss',
     md: 'loading.md.scss'
-  },
-  host: {
-    theme: 'loading'
   }
 })
-export class Loading implements OverlayInterface {
-
+export class Loading implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
 
   presented = false;
-  animation: Animation;
-  color: string;
-  mode: string;
+  animation?: Animation;
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
-  @Prop({ context: 'config' }) config: Config;
-  @Prop() overlayId: number;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
+  @Prop({ context: 'config' }) config!: Config;
+
+  /** @internal */
+  @Prop() overlayIndex!: number;
+
+  /**
+   * The mode determines which platform styles to use.
+   */
+  @Prop() mode!: Mode;
+
+  /**
+   * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
+   */
   @Prop() keyboardClose = true;
 
   /**
    * Animation to use when the loading indicator is presented.
    */
-  @Prop() enterAnimation: AnimationBuilder;
+  @Prop() enterAnimation?: AnimationBuilder;
 
   /**
    * Animation to use when the loading indicator is dismissed.
    */
-  @Prop() leaveAnimation: AnimationBuilder;
+  @Prop() leaveAnimation?: AnimationBuilder;
 
   /**
    * Optional text content to display in the loading indicator.
    */
-  @Prop() content: string;
+  @Prop() message?: string;
 
   /**
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
    */
-  @Prop() cssClass: string | string[];
-
-  /**
-   * If true, the loading indicator will dismiss when the page changes. Defaults to `false`.
-   */
-  @Prop() dismissOnPageChange = false;
+  @Prop() cssClass?: string | string[];
 
   /**
    * Number of milliseconds to wait before dismissing the loading indicator.
    */
-  @Prop() duration: number;
+  @Prop() duration = 0;
 
   /**
-   * If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
+   * If `true`, the loading indicator will be dismissed when the backdrop is clicked.
    */
-  @Prop() enableBackdropDismiss = false;
+  @Prop() backdropDismiss = false;
 
   /**
-   * If true, a backdrop will be displayed behind the loading indicator. Defaults to `true`.
+   * If `true`, a backdrop will be displayed behind the loading indicator.
    */
   @Prop() showBackdrop = true;
 
   /**
-   * The name of the spinner to display. Possible values are: `"lines"`, `"lines-small"`, `"dots"`,
-   * `"bubbles"`, `"circles"`, `"crescent"`.
+   * The name of the spinner to display.
    */
-  @Prop() spinner: string;
+  @Prop({ mutable: true }) spinner?: SpinnerTypes | null;
 
   /**
-   * If true, the loading indicator will be translucent. Defaults to `false`.
+   * If `true`, the loading indicator will be translucent.
    */
   @Prop() translucent = false;
 
   /**
-   * If true, the loading indicator will animate. Defaults to `true`.
+   * If `true`, the loading indicator will animate.
    */
-  @Prop() willAnimate = true;
+  @Prop() animated = true;
 
   /**
    * Emitted after the loading has unloaded.
    */
-  @Event() ionLoadingDidUnload: EventEmitter<void>;
+  @Event() ionLoadingDidUnload!: EventEmitter<void>;
 
   /**
    * Emitted after the loading has loaded.
    */
-  @Event() ionLoadingDidLoad: EventEmitter<void>;
+  @Event() ionLoadingDidLoad!: EventEmitter<void>;
 
   /**
    * Emitted after the loading has presented.
    */
-  @Event({eventName: 'ionLoadingDidPresent'}) didPresent: EventEmitter<void>;
+  @Event({ eventName: 'ionLoadingDidPresent' }) didPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the loading has presented.
    */
-  @Event({eventName: 'ionLoadingWillPresent'}) willPresent: EventEmitter<void>;
+  @Event({ eventName: 'ionLoadingWillPresent' }) willPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the loading has dismissed.
    */
-  @Event({eventName: 'ionLoadingWillDismiss'}) willDismiss: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionLoadingWillDismiss' }) willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the loading has dismissed.
    */
-  @Event({eventName: 'ionLoadingDidDismiss'}) didDismiss: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionLoadingDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   componentWillLoad() {
-    if (!this.spinner) {
+    if (this.spinner === undefined) {
       this.spinner = this.config.get('loadingSpinner', this.mode === 'ios' ? 'lines' : 'crescent');
     }
   }
+
   componentDidLoad() {
     this.ionLoadingDidLoad.emit();
   }
@@ -137,7 +137,7 @@ export class Loading implements OverlayInterface {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    this.dismiss(null, BACKDROP);
+    this.dismiss(undefined, BACKDROP);
   }
 
   /**
@@ -148,7 +148,10 @@ export class Loading implements OverlayInterface {
     await present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation, undefined);
 
     if (this.duration > 0) {
-      this.durationTimeout = setTimeout(() => this.dismiss(), this.duration + 10);
+      this.durationTimeout = setTimeout(
+        () => this.dismiss(),
+        this.duration + 10
+      );
     }
   }
 
@@ -156,7 +159,7 @@ export class Loading implements OverlayInterface {
    * Dismiss the loading overlay after it has been presented.
    */
   @Method()
-  dismiss(data?: any, role?: string): Promise<void> {
+  dismiss(data?: any, role?: string): Promise<boolean> {
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
@@ -164,39 +167,32 @@ export class Loading implements OverlayInterface {
   }
 
   /**
-   * Returns a promise that resolves when the loading did dismiss. It also accepts a callback
-   * that is called in the same circustances.
-   *
-   * ```
-   * const {data, role} = await loading.onDidDismiss();
-   * ```
+   * Returns a promise that resolves when the loading did dismiss.
    */
   @Method()
-  onDidDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionLoadingDidDismiss', callback);
+  onDidDismiss(): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionLoadingDidDismiss');
   }
 
   /**
-   * Returns a promise that resolves when the loading will dismiss. It also accepts a callback
-   * that is called in the same circustances.
-   *
-   * ```
-   * const {data, role} = await loading.onWillDismiss();
-   * ```
+   * Returns a promise that resolves when the loading will dismiss.
    */
   @Method()
-  onWillDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionLoadingWillDismiss', callback);
+  onWillDismiss(): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionLoadingWillDismiss');
   }
 
   hostData() {
-    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'loading-translucent') : {};
+    const themedClasses = this.translucent
+      ? createThemedClasses(this.mode, 'loading-translucent')
+      : {};
 
     return {
       style: {
-        zIndex: 20000 + this.overlayId,
+        zIndex: 40000 + this.overlayIndex
       },
       class: {
+        ...createThemedClasses(this.mode, 'loading'),
         ...themedClasses,
         ...getClassMap(this.cssClass)
       }
@@ -205,26 +201,16 @@ export class Loading implements OverlayInterface {
 
   render() {
     return [
-      <ion-backdrop visible={this.showBackdrop} tappable={false} />,
-      <div class='loading-wrapper' role='dialog'>
+      <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss} />,
+      <div class="loading-wrapper" role="dialog">
+        {this.spinner && (
+          <div class="loading-spinner">
+            <ion-spinner name={this.spinner} />
+          </div>
+        )}
 
-        { this.spinner !== 'hide' &&
-        <div class='loading-spinner'>
-          <ion-spinner name={this.spinner}></ion-spinner>
-        </div>}
-
-        { this.content && <div class='loading-content'>{this.content}</div>}
+        {this.message && <div class="loading-content">{this.message}</div>}
       </div>
     ];
   }
-}
-
-export interface LoadingOptions {
-  spinner?: string;
-  content?: string;
-  cssClass?: string | string[];
-  showBackdrop?: boolean;
-  dismissOnPageChange?: boolean;
-  duration?: number;
-  translucent?: boolean;
 }

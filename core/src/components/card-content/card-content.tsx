@@ -1,26 +1,25 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
+
+import { Mode } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-card-content',
   styleUrls: {
     ios: 'card-content.ios.scss',
     md: 'card-content.md.scss'
-  },
-  host: {
-    theme: 'card-content'
   }
 })
-export class CardContent {
-  /**
-   * The color to use for the text.
-   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   */
-  @Prop() color: string;
+export class CardContent implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
+  hostData() {
+    return {
+      class: createThemedClasses(this.mode, 'card-content')
+    };
+  }
 }

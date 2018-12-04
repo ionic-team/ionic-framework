@@ -1,6 +1,7 @@
-import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
-import { Side, isRightSide } from '../../utils/helpers';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
 
+import { Side } from '../../interface';
+import { isEndSide } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-item-options',
@@ -9,42 +10,37 @@ import { Side, isRightSide } from '../../utils/helpers';
     md: 'item-options.md.scss'
   }
 })
-export class ItemOptions {
-  @Element() private el: HTMLElement;
+export class ItemOptions implements ComponentInterface {
+  @Element() el!: HTMLElement;
+
+  @Prop({ context: 'window' }) win!: Window;
 
   /**
-   * The side the option button should be on. Defaults to `"right"`.
-   * If you have multiple `ion-item-options`, a side must be provided for each.
+   * The side the option button should be on. Possible values: `"start"` and `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
+   *
    */
-  @Prop() side: Side = 'right';
+  @Prop() side: Side = 'end';
 
   /**
    * Emitted when the item has been fully swiped.
    */
-  @Event() ionSwipe: EventEmitter;
+  @Event() ionSwipe!: EventEmitter<any>;
 
+  /** @internal */
   @Method()
-  isRightSide() {
-    return isRightSide(this.side, true);
-  }
-
-  @Method()
-  width(): number {
-    return this.el.offsetWidth;
-  }
-
-  @Method()
-  fireSwipeEvent(value: any) {
-    this.ionSwipe.emit(value);
+  fireSwipeEvent() {
+    this.ionSwipe.emit({
+      side: this.side
+    });
   }
 
   hostData() {
+    const isEnd = isEndSide(this.win, this.side);
     return {
       class: {
-        'item-options-left': !this.isRightSide(),
-        'item-options-right': this.isRightSide()
+        'item-options-start': !isEnd,
+        'item-options-end': isEnd
       }
     };
   }
-
 }

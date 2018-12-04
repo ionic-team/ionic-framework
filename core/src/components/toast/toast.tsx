@@ -1,14 +1,13 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config } from '../../index';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
 
-import { createThemedClasses, getClassMap } from '../../utils/theme';
-import { OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
+import { Animation, AnimationBuilder, Color, Config, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { dismiss, eventMethod, present } from '../../utils/overlays';
+import { createColorClasses, getClassMap } from '../../utils/theme';
 
-import iosEnterAnimation from './animations/ios.enter';
-import iosLeaveAnimation from './animations/ios.leave';
-
-import mdEnterAnimation from './animations/md.enter';
-import mdLeaveAnimation from './animations/md.leave';
+import { iosEnterAnimation } from './animations/ios.enter';
+import { iosLeaveAnimation } from './animations/ios.leave';
+import { mdEnterAnimation } from './animations/md.enter';
+import { mdLeaveAnimation } from './animations/md.leave';
 
 @Component({
   tag: 'ion-toast',
@@ -16,113 +15,125 @@ import mdLeaveAnimation from './animations/md.leave';
     ios: 'toast.ios.scss',
     md: 'toast.md.scss'
   },
-  host: {
-    theme: 'toast'
-  }
+  shadow: true
 })
-export class Toast implements OverlayInterface {
+export class Toast implements ComponentInterface, OverlayInterface {
 
   private durationTimeout: any;
 
   presented = false;
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  mode: string;
-  color: string;
   animation: Animation | undefined;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
-  @Prop({ context: 'config' }) config: Config;
-  @Prop() overlayId: number;
-  @Prop() keyboardClose = false;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
+
+  @Prop({ context: 'config' }) config!: Config;
+
+  /**
+   * @internal
+   */
+  @Prop() overlayIndex!: number;
+
+  /**
+   * The mode determines which platform styles to use.
+   */
+  @Prop() mode!: Mode;
+
+  /**
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
+   */
+  @Prop() color?: Color;
 
   /**
    * Animation to use when the toast is presented.
    */
-  @Prop() enterAnimation: AnimationBuilder;
+  @Prop() enterAnimation?: AnimationBuilder;
 
   /**
    * Animation to use when the toast is dismissed.
    */
-  @Prop() leaveAnimation: AnimationBuilder;
+  @Prop() leaveAnimation?: AnimationBuilder;
 
   /**
    * Text to display in the close button.
    */
-  @Prop() closeButtonText: string;
+  @Prop() closeButtonText?: string;
 
   /**
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
    */
-  @Prop() cssClass: string | string[];
-
-  /**
-   * If true, the toast will dismiss when the page changes. Defaults to `false`.
-   */
-  @Prop() dismissOnPageChange: boolean;
+  @Prop() cssClass?: string | string[];
 
   /**
    * How many milliseconds to wait before hiding the toast. By default, it will show
    * until `dismiss()` is called.
    */
-  @Prop() duration: number;
+  @Prop() duration = 0;
 
   /**
    * Message to be shown in the toast.
    */
-  @Prop() message: string;
+  @Prop() message?: string;
 
   /**
-   * The position of the toast on the screen. Possible values: "top", "middle", "bottom".
+   * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
    */
-  @Prop() position: string;
+  @Prop() keyboardClose = false;
 
   /**
-   * If true, the close button will be displayed. Defaults to `false`.
+   * The position of the toast on the screen.
+   */
+  @Prop() position: 'top' | 'bottom' | 'middle' = 'bottom';
+
+  /**
+   * If `true`, the close button will be displayed.
    */
   @Prop() showCloseButton = false;
 
   /**
-   * If true, the toast will be translucent. Defaults to `false`.
+   * If `true`, the toast will be translucent.
    */
   @Prop() translucent = false;
 
   /**
-   * If true, the toast will animate. Defaults to `true`.
+   * If `true`, the toast will animate.
    */
-  @Prop() willAnimate = true;
+  @Prop() animated = true;
 
   /**
    * Emitted after the toast has loaded.
    */
-  @Event() ionToastDidLoad: EventEmitter<void>;
+  @Event() ionToastDidLoad!: EventEmitter<void>;
 
   /**
    * Emitted after the toast has presented.
    */
-  @Event({eventName: 'ionToastDidPresent'}) didPresent: EventEmitter<void>;
+  @Event({ eventName: 'ionToastDidPresent' }) didPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the toast has presented.
    */
-  @Event({eventName: 'ionToastWillPresent'}) willPresent: EventEmitter<void>;
+  @Event({ eventName: 'ionToastWillPresent' }) willPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the toast has dismissed.
    */
-  @Event({eventName: 'ionToastWillDismiss'}) willDismiss: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionToastWillDismiss' }) willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the toast has dismissed.
    */
-  @Event({eventName: 'ionToastDidDismiss'}) didDismiss: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionToastDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the toast has unloaded.
    */
-  @Event() ionToastDidUnload: EventEmitter<void>;
+  @Event() ionToastDidUnload!: EventEmitter<void>;
 
   componentDidLoad() {
     this.ionToastDidLoad.emit();
@@ -130,14 +141,6 @@ export class Toast implements OverlayInterface {
 
   componentDidUnload() {
     this.ionToastDidUnload.emit();
-  }
-
-  @Listen('ionDismiss')
-  protected onDismiss(ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.dismiss();
   }
 
   /**
@@ -148,7 +151,7 @@ export class Toast implements OverlayInterface {
     await present(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, this.position);
 
     if (this.duration > 0) {
-      this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
+      this.durationTimeout = setTimeout(() => this.dismiss(undefined, 'timeout'), this.duration);
     }
   }
 
@@ -156,7 +159,7 @@ export class Toast implements OverlayInterface {
    * Dismiss the toast overlay after it has been presented.
    */
   @Method()
-  dismiss(data?: any, role?: string): Promise<void> {
+  dismiss(data?: any, role?: string): Promise<boolean> {
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
@@ -164,75 +167,52 @@ export class Toast implements OverlayInterface {
   }
 
   /**
-   * Returns a promise that resolves when the toast did dismiss. It also accepts a callback
-   * that is called in the same circustances.
-   *
-   * ```
-   * const {data, role} = await toast.onDidDismiss();
-   * ```
+   * Returns a promise that resolves when the toast did dismiss.
    */
   @Method()
-  onDidDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionToastDidDismiss', callback);
+  onDidDismiss(): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionToastDidDismiss');
   }
 
   /**
-   * Returns a promise that resolves when the toast will dismiss. It also accepts a callback
-   * that is called in the same circustances.
-   *
-   * ```
-   * const {data, role} = await toast.onWillDismiss();
-   * ```
+   * Returns a promise that resolves when the toast will dismiss.
    */
   @Method()
-  onWillDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionToastWillDismiss', callback);
+  onWillDismiss(): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionToastWillDismiss');
   }
 
   hostData() {
-    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'toast-translucent') : {};
-
     return {
+      style: {
+        zIndex: 60000 + this.overlayIndex,
+      },
       class: {
-        ...themedClasses,
-        ...getClassMap(this.cssClass)
+        ...createColorClasses(this.color),
+        ...getClassMap(this.cssClass),
+        'toast-translucent': this.translucent
       }
     };
   }
 
   render() {
-    const position = this.position ? this.position : 'bottom';
     const wrapperClass = {
       'toast-wrapper': true,
-      [`toast-${position}`]: true
+      [`toast-${this.position}`]: true
     };
     return (
       <div class={wrapperClass}>
-        <div class='toast-container'>
-          {this.message
-            ? <div class='toast-message'>{this.message}</div>
-            : null}
-          {this.showCloseButton
-            ? <ion-button fill='clear' color='light' class='toast-button' onClick={() => this.dismiss()}>
-                {this.closeButtonText || 'Close'}
-              </ion-button>
-            : null}
+        <div class="toast-container">
+          {this.message !== undefined &&
+            <div class="toast-message">{this.message}</div>
+          }
+          {this.showCloseButton &&
+            <ion-button fill="clear" ion-activatable class="toast-button" onClick={() => this.dismiss(undefined, 'cancel')}>
+              {this.closeButtonText || 'Close'}
+            </ion-button>
+          }
         </div>
       </div>
     );
   }
-
-}
-
-export interface ToastOptions {
-  message?: string;
-  cssClass?: string | string[];
-  duration?: number;
-  showCloseButton?: boolean;
-  closeButtonText?: string;
-  dismissOnPageChange?: boolean;
-  position?: string;
-  translucent?: boolean;
-  enterAnimation?: AnimationBuilder;
-  leaveAnimation?: AnimationBuilder;
 }

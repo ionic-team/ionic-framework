@@ -1,25 +1,30 @@
-import { Component, Element, Listen, Prop } from '@stencil/core';
-import { ComponentProps } from '../..';
-import { NavComponent } from '../nav/nav-util';
+import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
+
+import { ComponentProps, NavComponent } from '../../interface';
 
 @Component({
-  tag: 'ion-nav-set-root',
+  tag: 'ion-nav-set-root'
 })
-export class NavSetRoot {
+export class NavSetRoot implements ComponentInterface {
+  @Element() el!: HTMLElement;
 
-  @Element() el: HTMLElement;
-  @Prop() component: NavComponent;
-  @Prop() componentProps: ComponentProps;
-  @Prop() url: string;
+  /**
+   * Component you want to make root for the navigation stack
+   *
+   */
+  @Prop() component?: NavComponent;
+
+  /**
+   * Data you want to pass to the component as props
+   */
+  @Prop() componentProps?: ComponentProps;
 
   @Listen('child:click')
-  push(): Promise<any> {
+  push() {
     const nav = this.el.closest('ion-nav');
-    if (nav) {
-      const toPush = this.url || this.component;
-      return nav.setRoot(toPush, this.componentProps);
+    const toPush = this.component;
+    if (nav && toPush !== undefined) {
+      nav.setRoot(toPush, this.componentProps, { skipIfBusy: true });
     }
-    return Promise.resolve(null);
   }
-
 }

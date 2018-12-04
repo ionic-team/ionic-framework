@@ -5,13 +5,15 @@
   <meta charset="UTF-8">
   <title>Loading - Standalone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
   <button id="basic" onclick="presentLoading()">Show Loading</button>
   <button onclick="presentLoadingWithOptions({duration: 2000, content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.'})">Show Loading with long content</button>
-  <button onclick="presentLoadingWithOptions({duration: 2000, content: 'Loading Please Wait...', spinner: 'hide'})">Show Loading with no spinner</button>
+  <button onclick="presentLoadingWithOptions({duration: 2000, content: 'Loading Please Wait...', spinner: null})">Show Loading with no spinner</button>
   <button onclick="presentLoadingWithOptions({duration: 5000, content: 'Loading Please Wait...', translucent: true})">Show Loading with translucent</button>
   <button onclick="presentLoadingWithOptions({duration: 5000, content: 'Loading Please Wait...', translucent: true, cssClass: 'custom-class custom-loading'})">Show Loading with cssClass</button>
 
@@ -37,7 +39,7 @@
       await loadingController.componentOnReady();
       const loadingElement = await loadingController.create({
         message: 'Hellooo',
-        duration: 2000
+        duration: 5000
       });
       return await loadingElement.present();
     }

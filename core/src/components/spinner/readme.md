@@ -4,6 +4,15 @@ The Spinner component provides a variety of animated SVG spinners. Spinners are 
 
 The default spinner to use is based on the platform. The default spinner for `ios` is `"lines"`, and the default for `android` is `"crescent"`. If the platform is not `ios` or `android`, the spinner will default to `crescent`. If the `name` property is set, then that spinner will be used instead of the platform specific spinner.
 
+
+
+<!-- Auto Generated Below -->
+
+
+## Usage
+
+### Angular / javascript
+
 ```html
 <!-- Default Spinner -->
 <ion-spinner></ion-spinner>
@@ -31,94 +40,22 @@ The default spinner to use is based on the platform. The default spinner for `io
 ```
 
 
-<!-- Auto Generated Below -->
-
 
 ## Properties
 
-#### color
-
-string
-
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
-
-
-#### duration
-
-number
-
-Duration of the spinner animation in milliseconds. The default varies based on the spinner.
+| Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                                                                                      | Default     |
+| ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------- |
+| `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`                                                                     | `undefined` |
+| `duration` | `duration` | Duration of the spinner animation in milliseconds. The default varies based on the spinner.                                                                                                                                                                            | `number \| undefined`                                                                     | `undefined` |
+| `name`     | `name`     | The name of the SVG spinner to use. If a name is not provided, the platform's default spinner will be used.                                                                                                                                                            | `"bubbles" \| "circles" \| "crescent" \| "dots" \| "lines" \| "lines-small" \| undefined` | `undefined` |
+| `paused`   | `paused`   | If `true`, the spinner's animation will be paused.                                                                                                                                                                                                                     | `boolean`                                                                                 | `false`     |
 
 
-#### mode
+## CSS Custom Properties
 
-
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-
-
-#### name
-
-string
-
-The name of the SVG spinner to use. If a name is not provided, the platform's default
-spinner will be used. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`,
-`"circles"`, `"crescent"`.
-
-
-#### paused
-
-boolean
-
-If true, the spinner's animation will be paused. Defaults to `false`.
-
-
-## Attributes
-
-#### color
-
-string
-
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
-
-
-#### duration
-
-number
-
-Duration of the spinner animation in milliseconds. The default varies based on the spinner.
-
-
-#### mode
-
-
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-
-
-#### name
-
-string
-
-The name of the SVG spinner to use. If a name is not provided, the platform's default
-spinner will be used. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`,
-`"circles"`, `"crescent"`.
-
-
-#### paused
-
-boolean
-
-If true, the spinner's animation will be paused. Defaults to `false`.
-
+| Name      | Description          |
+| --------- | -------------------- |
+| `--color` | Color of the spinner |
 
 
 ----------------------------------------------

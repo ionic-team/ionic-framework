@@ -1,36 +1,36 @@
-import { Component, Element, Prop } from '@stencil/core';
-import { DomController, GestureDetail, PickerColumn, PickerColumnOption } from '../../index';
-import { clamp } from '../../utils/helpers';
-import { hapticSelectionChanged } from '../../utils';
+import { Component, ComponentInterface, Element, Prop, QueueApi } from '@stencil/core';
 
+import { Gesture, GestureDetail, Mode, PickerColumn } from '../../interface';
+import { hapticSelectionChanged } from '../../utils';
+import { clamp } from '../../utils/helpers';
 
 @Component({
-  tag: 'ion-picker-column',
-  host: {
-    theme: 'picker-col'
-  }
+  tag: 'ion-picker-column'
 })
-export class PickerColumnCmp {
-  private mode: string;
+export class PickerColumnCmp implements ComponentInterface {
+  mode!: Mode;
 
-  private bounceFrom: number;
-  private lastIndex: number;
-  private lastTempIndex: number;
-  private minY: number;
-  private maxY: number;
-  private optHeight: number;
-  private pos: number[] = [];
-  private rotateFactor: number;
-  private scaleFactor: number;
-  private startY: number;
-  private velocity: number;
+  private bounceFrom!: number;
+  private lastIndex?: number;
+  private minY!: number;
+  private maxY!: number;
+  private optHeight = 0;
+  private rotateFactor = 0;
+  private scaleFactor = 1;
+  private velocity = 0;
   private y = 0;
+  private optsEl?: HTMLElement;
+  private gesture?: Gesture;
+  private rafId: any;
+  private tmrId: any;
+  private noAnimate = true;
 
-  @Element() private el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop({ context: 'dom' }) dom: DomController;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
 
-  @Prop() col: PickerColumn;
+  /** @internal */
+  @Prop() col!: PickerColumn;
 
   componentWillLoad() {
     let pickerRotateFactor = 0;
@@ -45,97 +45,101 @@ export class PickerColumnCmp {
     this.scaleFactor = pickerScaleFactor;
   }
 
-  componentDidLoad() {
-    // get the scrollable element within the column
-    const colEl = this.el.querySelector('.picker-opts');
-
+  async componentDidLoad() {
     // get the height of one option
-    this.optHeight = (colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0);
+    const colEl = this.optsEl;
+    if (colEl) {
+      this.optHeight = (colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0);
+    }
 
     this.refresh();
+
+    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
+      el: this.el,
+      queue: this.queue,
+      gestureName: 'picker-swipe',
+      gesturePriority: 100,
+      threshold: 0,
+      onStart: ev => this.onStart(ev),
+      onMove: ev => this.onMove(ev),
+      onEnd: ev => this.onEnd(ev),
+    });
+    this.gesture.setDisabled(false);
+
+    this.tmrId = setTimeout(() => {
+      this.noAnimate = false;
+      this.refresh(true);
+    }, 250);
   }
 
-  private optClick(ev: Event, index: number) {
-    if (!this.velocity) {
-      ev.preventDefault();
-      ev.stopPropagation();
-
-      this.setSelected(index, 150);
-    }
+  componentDidUnload() {
+    cancelAnimationFrame(this.rafId);
+    clearTimeout(this.tmrId);
   }
 
   private setSelected(selectedIndex: number, duration: number) {
     // if there is a selected index, then figure out it's y position
     // if there isn't a selected index, then just use the top y position
-    const y = (selectedIndex > -1) ? ((selectedIndex * this.optHeight) * -1) : 0;
+    const y = (selectedIndex > -1) ? -(selectedIndex * this.optHeight) : 0;
 
     this.velocity = 0;
 
     // set what y position we're at
-    this.update(y, duration, true, true);
+    cancelAnimationFrame(this.rafId);
+    this.update(y, duration, true);
   }
 
-  private update(y: number, duration: number, saveY: boolean, emitChange: boolean) {
+  private update(y: number, duration: number, saveY: boolean) {
+    if (!this.optsEl) {
+      return;
+    }
+
     // ensure we've got a good round number :)
-    y = Math.round(y);
-
-    let i: number;
-    let button: any;
-    let opt: PickerColumnOption;
-    let optOffset: number;
-    let visible: boolean;
-    let translateY: number;
-    let translateZ: number;
-    let rotateX: number;
-    let transform: string;
-    let selected: boolean;
-
-    const parent = this.el.querySelector('.picker-opts');
-    const children = parent.children;
-    const length = children.length;
-    const selectedIndex = this.col.selectedIndex = Math.min(Math.max(Math.round(-y / this.optHeight), 0), length - 1);
-
+    let translateY = 0;
+    let translateZ = 0;
+    const { col, rotateFactor } = this;
+    const selectedIndex = col.selectedIndex = this.indexForY(-y);
     const durationStr = (duration === 0) ? null : duration + 'ms';
     const scaleStr = `scale(${this.scaleFactor})`;
 
-    for (i = 0; i < length; i++) {
-      button = children[i];
-      opt = this.col.options[i];
-      optOffset = (i * this.optHeight) + y;
-      visible = true;
-      transform = '';
+    const children = this.optsEl.children;
+    for (let i = 0; i < children.length; i++) {
+      const button = children[i] as HTMLElement;
+      const opt = col.options[i];
+      const optOffset = (i * this.optHeight) + y;
+      let transform = '';
 
-      if (this.rotateFactor !== 0) {
-        rotateX = optOffset * this.rotateFactor;
-        if (Math.abs(rotateX) > 90) {
-          visible = false;
-        } else {
+      if (rotateFactor !== 0) {
+        const rotateX = optOffset * rotateFactor;
+        if (Math.abs(rotateX) <= 90) {
           translateY = 0;
           translateZ = 90;
           transform = `rotateX(${rotateX}deg) `;
+        } else {
+          translateY = -9999;
         }
+
       } else {
         translateZ = 0;
         translateY = optOffset;
-        if (Math.abs(translateY) > 170) {
-          visible = false;
-        }
       }
 
-      selected = selectedIndex === i;
-      if (visible) {
-        transform += `translate3d(0px,${translateY}px,${translateZ}px) `;
-        if (this.scaleFactor !== 1 && !selected) {
-          transform += scaleStr;
-        }
-      } else {
-        transform = 'translate3d(-9999px,0px,0px)';
+      const selected = selectedIndex === i;
+      transform += `translate3d(0px,${translateY}px,${translateZ}px) `;
+      if (this.scaleFactor !== 1 && !selected) {
+        transform += scaleStr;
       }
+
       // Update transition duration
-      if (duration !== opt.duration) {
+      if (this.noAnimate) {
+        opt.duration = 0;
+        button.style.transitionDuration = '';
+
+      } else if (duration !== opt.duration) {
         opt.duration = duration;
         button.style.transitionDuration = durationStr;
       }
+
       // Update transform
       if (transform !== opt.transform) {
         opt.transform = transform;
@@ -157,32 +161,15 @@ export class PickerColumnCmp {
       this.y = y;
     }
 
-    if (emitChange) {
-      if (this.lastIndex === undefined) {
-        // have not set a last index yet
-        this.lastIndex = this.col.selectedIndex;
-
-      } else if (this.lastIndex !== this.col.selectedIndex) {
-        // new selected index has changed from the last index
-        // update the lastIndex and emit that it has changed
-        this.lastIndex = this.col.selectedIndex;
-        // TODO ionChange event
-        // var ionChange = this.ionChange;
-        // if (ionChange.observers.length > 0) {
-        //   this._zone.run(ionChange.emit.bind(ionChange, this.col.options[this.col.selectedIndex]));
-        // }
-      }
+    if (this.lastIndex !== selectedIndex) {
+      // have not set a last index yet
+      hapticSelectionChanged();
+      this.lastIndex = selectedIndex;
     }
   }
 
   private decelerate() {
-    let y = 0;
-
-    if (isNaN(this.y) || !this.optHeight) {
-      // fallback in case numbers get outta wack
-      this.update(y, 0, true, true);
-
-    } else if (Math.abs(this.velocity) > 0) {
+    if (this.velocity !== 0) {
       // still decelerating
       this.velocity *= DECELERATION_FRICTION;
 
@@ -191,7 +178,7 @@ export class PickerColumnCmp {
         ? Math.max(this.velocity, 1)
         : Math.min(this.velocity, -1);
 
-      y = Math.round(this.y - this.velocity);
+      let y = this.y + this.velocity;
 
       if (y > this.minY) {
         // whoops, it's trying to scroll up farther than the options we have!
@@ -204,13 +191,11 @@ export class PickerColumnCmp {
         this.velocity = 0;
       }
 
-      const notLockedIn = (y % this.optHeight !== 0 || Math.abs(this.velocity) > 1);
-
-      this.update(y, 0, true, !notLockedIn);
-
+      this.update(y, 0, true);
+      const notLockedIn = (Math.round(y) % this.optHeight !== 0) || (Math.abs(this.velocity) > 1);
       if (notLockedIn) {
         // isn't locked in yet, keep decelerating until it is
-        this.dom.raf(() => this.decelerate());
+        this.rafId = requestAnimationFrame(() => this.decelerate());
       }
 
     } else if (this.y % this.optHeight !== 0) {
@@ -222,40 +207,23 @@ export class PickerColumnCmp {
 
       this.decelerate();
     }
+  }
 
-    const currentIndex = Math.max(Math.abs(Math.round(y / this.optHeight)), 0);
-
-    if (currentIndex !== this.lastTempIndex) {
-      // Trigger a haptic event for physical feedback that the index has changed
-      hapticSelectionChanged();
-    }
-    this.lastTempIndex = currentIndex;
+  private indexForY(y: number) {
+    return Math.min(Math.max(Math.abs(Math.round(y / this.optHeight)), 0), this.col.options.length - 1);
   }
 
   // TODO should this check disabled?
-  private canStart() {
-    return true;
-  }
 
-  private onDragStart(detail: GestureDetail): boolean {
-    console.debug('picker, onDragStart', detail, this.startY);
-
+  private onStart(detail: GestureDetail) {
     // We have to prevent default in order to block scrolling under the picker
     // but we DO NOT have to stop propagation, since we still want
     // some "click" events to capture
-    if (detail.event) {
-      detail.event.preventDefault();
-      detail.event.stopPropagation();
-    }
-
-    // remember where the pointer started from
-    this.startY = detail.startY;
+    detail.event.preventDefault();
+    detail.event.stopPropagation();
 
     // reset everything
-    this.velocity = 0;
-    this.pos.length = 0;
-    this.pos.push(this.startY, Date.now());
-
+    cancelAnimationFrame(this.rafId);
     const options = this.col.options;
     let minY = (options.length - 1);
     let maxY = 0;
@@ -266,26 +234,16 @@ export class PickerColumnCmp {
       }
     }
 
-    this.minY = (minY * this.optHeight * -1);
-    this.maxY = (maxY * this.optHeight * -1);
-    return true;
+    this.minY = -(minY * this.optHeight);
+    this.maxY = -(maxY * this.optHeight);
   }
 
-  private onDragMove(detail: GestureDetail) {
-    if (detail.event) {
-      detail.event.preventDefault();
-      detail.event.stopPropagation();
-    }
-
-    const currentY = detail.currentY;
-    this.pos.push(currentY, Date.now());
-
-    if (this.startY === null) {
-      return;
-    }
+  private onMove(detail: GestureDetail) {
+    detail.event.preventDefault();
+    detail.event.stopPropagation();
 
     // update the scroll position relative to pointer start position
-    let y = this.y + (currentY - this.startY);
+    let y = this.y + detail.deltaY;
 
     if (y > this.minY) {
       // scrolling up higher than scroll area
@@ -301,66 +259,34 @@ export class PickerColumnCmp {
       this.bounceFrom = 0;
     }
 
-    this.update(y, 0, false, false);
-
-    const currentIndex = Math.max(Math.abs(Math.round(y / this.optHeight)), 0);
-    if (currentIndex !== this.lastTempIndex) {
-      this.lastTempIndex = currentIndex;
-    }
+    this.update(y, 0, false);
   }
 
-  private onDragEnd(detail: GestureDetail) {
-    if (this.startY === null) {
-      return;
-    }
-
-    console.debug('picker, onDragEnd', detail);
-
-    this.velocity = 0;
-
+  private onEnd(detail: GestureDetail) {
     if (this.bounceFrom > 0) {
       // bounce back up
-      this.update(this.minY, 100, true, true);
+      this.update(this.minY, 100, true);
       return;
     } else if (this.bounceFrom < 0) {
       // bounce back down
-      this.update(this.maxY, 100, true, true);
+      this.update(this.maxY, 100, true);
       return;
     }
 
-    const endY = detail.currentY;
+    this.velocity = clamp(-MAX_PICKER_SPEED, detail.velocityY * 23, MAX_PICKER_SPEED);
+    if (this.velocity === 0 && detail.deltaY === 0) {
+      const opt = (detail.event.target as Element).closest('.picker-opt');
+      if (opt && opt.hasAttribute('opt-index')) {
+        this.setSelected(parseInt(opt.getAttribute('opt-index')!, 10), TRANSITION_DURATION);
+      }
 
-    this.pos.push(endY, Date.now());
-
-    const endPos = (this.pos.length - 1);
-    let startPos = endPos;
-    const timeRange = (Date.now() - 100);
-
-    // move pointer to position measured 100ms ago
-    for (let i = endPos; i > 0 && this.pos[i] > timeRange; i -= 2) {
-      startPos = i;
+    } else {
+      this.y += detail.deltaY;
+      this.decelerate();
     }
-
-    if (startPos !== endPos) {
-      // compute relative movement between these two points
-      const timeOffset = (this.pos[endPos] - this.pos[startPos]);
-      const movedTop = (this.pos[startPos - 1] - this.pos[endPos - 1]);
-
-      // based on XXms compute the movement to apply for each render step
-      const velocity = ((movedTop / timeOffset) * FRAME_MS);
-      this.velocity = clamp(-MAX_PICKER_SPEED, velocity, MAX_PICKER_SPEED);
-    }
-
-    if (Math.abs(endY - this.startY) > 3) {
-      const y = this.y + (endY - this.startY);
-      this.update(y, 0, true, true);
-    }
-
-    this.startY = null;
-    this.decelerate();
   }
 
-  private refresh() {
+  private refresh(forceRefresh?: boolean) {
     let min = this.col.options.length - 1;
     let max = 0;
     const options = this.col.options;
@@ -371,17 +297,18 @@ export class PickerColumnCmp {
       }
     }
 
-    const selectedIndex = clamp(min, this.col.selectedIndex, max);
-    if (this.col.prevSelected !== selectedIndex) {
+    const selectedIndex = clamp(min, this.col.selectedIndex || 0, max);
+    if (this.col.prevSelected !== selectedIndex || forceRefresh) {
       const y = (selectedIndex * this.optHeight) * -1;
       this.velocity = 0;
-      this.update(y, 150, true, false);
+      this.update(y, TRANSITION_DURATION, true);
     }
   }
 
   hostData() {
     return {
       class: {
+        'picker-col': true,
         'picker-opts-left': this.col.align === 'left',
         'picker-opts-right': this.col.align === 'right'
       },
@@ -393,64 +320,38 @@ export class PickerColumnCmp {
 
   render() {
     const col = this.col;
-
-    const options = this.col.options.map(o => {
-      if (typeof o === 'string') {
-        o = { text: o };
-      }
-      return o;
-    })
-    .filter(clientInformation => clientInformation !== null);
-
-    const results: JSX.Element[] = [];
-
-    if (col.prefix) {
-      results.push(
-        <div class='picker-prefix' style={{width: col.prefixWidth}}>
+    const Button = 'button' as any;
+    return [
+      col.prefix && (
+        <div class="picker-prefix" style={{ width: col.prefixWidth! }}>
           {col.prefix}
         </div>
-      );
-    }
-
-    results.push(
-      <ion-gesture
-        canStart={this.canStart.bind(this)}
-        onStart={this.onDragStart.bind(this)}
-        onMove={this.onDragMove.bind(this)}
-        onEnd={this.onDragEnd.bind(this)}
-        gestureName='picker-swipe'
-        gesturePriority={10}
-        type='pan'
-        direction='y'
-        passive={false}
-        threshold={0}
-        attachTo='parent'
-      ></ion-gesture>,
-      <div class='picker-opts' style={{maxWidth: col.optionsWidth}}>
-        {options.map((o, index) =>
-          <button
-            class={{'picker-opt': true, 'picker-opt-disabled': o.disabled}}
-            disable-activated
-            onClick={() => this.optClick(event, index)}>
+      ),
+      <div
+        class="picker-opts"
+        style={{ maxWidth: col.optionsWidth! }}
+        ref={el => this.optsEl = el}
+      >
+        { col.options.map((o, index) =>
+          <Button
+            type="button"
+            class={{ 'picker-opt': true, 'picker-opt-disabled': !!o.disabled }}
+            opt-index={index}
+          >
             {o.text}
-          </button>
+          </Button>
         )}
-      </div>
-    );
-
-    if (col.suffix) {
-      results.push(
-        <div class='picker-suffix' style={{width: col.suffixWidth}}>
+      </div>,
+      col.suffix && (
+        <div class="picker-suffix" style={{ width: col.suffixWidth! }}>
           {col.suffix}
         </div>
-      );
-    }
-
-    return results;
+      )
+    ];
   }
 }
 
-export const PICKER_OPT_SELECTED = 'picker-opt-selected';
-export const DECELERATION_FRICTION = 0.97;
-export const FRAME_MS = (1000 / 60);
-export const MAX_PICKER_SPEED = 60;
+const PICKER_OPT_SELECTED = 'picker-opt-selected';
+const DECELERATION_FRICTION = 0.97;
+const MAX_PICKER_SPEED = 90;
+const TRANSITION_DURATION = 150;

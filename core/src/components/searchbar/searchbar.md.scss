@@ -4,10 +4,14 @@
 // Material Design Searchbar
 // --------------------------------------------------
 
-.searchbar-md {
-  @include padding($searchbar-md-padding-top, $searchbar-md-padding-end, $searchbar-md-padding-bottom, $searchbar-md-padding-start);
+:host {
+  --clear-button-color: initial;
+  --cancel-button-color: #{$searchbar-md-cancel-button-color};
+  --color: #{$searchbar-md-input-text-color};
+  --icon-color: #{$searchbar-md-input-search-icon-color};
+  --background: #{$searchbar-md-input-background-color};
 
-  font-family: $searchbar-md-font-family;
+  @include padding($searchbar-md-padding-top, $searchbar-md-padding-end, $searchbar-md-padding-bottom, $searchbar-md-padding-start);
 
   background: $searchbar-md-background;
 }
@@ -16,9 +20,8 @@
 // Searchbar Search Icon
 // -----------------------------------------
 
-.searchbar-search-icon-md {
+.searchbar-search-icon {
   @include position(11px, null, null, 16px);
-  @include svg-background-image($searchbar-md-input-search-icon-svg, true);
 
   width: $searchbar-md-input-search-icon-size + 1;
   height: $searchbar-md-input-search-icon-size + 1;
@@ -28,8 +31,8 @@
 // Searchbar Cancel Icon
 // -----------------------------------------
 
-.searchbar-cancel-button-md {
-  @include position(0, null, null, 10px);
+.searchbar-cancel-button {
+  @include position(0, null, null, 5px);
   @include margin(0);
 
   display: none;
@@ -37,25 +40,22 @@
   height: 100%;
 
   border: 0;
-  font-size: $searchbar-md-cancel-button-font-size;
 
-  color: $searchbar-md-cancel-button-color;
   background-color: $searchbar-md-cancel-button-background-color;
+
+  font-size: $searchbar-md-cancel-button-font-size;
 }
 
 // Searchbar Search & Cancel Icon
 // -----------------------------------------
 
-.searchbar-search-icon-md,
-.searchbar-cancel-button-md {
+.searchbar-search-icon,
+.searchbar-cancel-button {
   position: absolute;
-
-  background-repeat: no-repeat;
-  background-size: $searchbar-md-input-search-icon-size;
 }
 
-.searchbar-search-icon-md.activated,
-.searchbar-cancel-button-md.activated {
+.searchbar-search-icon.activated,
+.searchbar-cancel-button.activated {
   background-color: transparent;
 }
 
@@ -63,8 +63,7 @@
 // Searchbar Input Field
 // -----------------------------------------
 
-.searchbar-md .searchbar-input {
-  @include placeholder($searchbar-md-input-placeholder-color);
+.searchbar-input {
   @include padding(6px, 55px);
   @include border-radius($searchbar-md-input-border-radius);
   @include background-position(start, 8px, center);
@@ -75,9 +74,7 @@
   font-weight: 400;
 
   line-height: $searchbar-md-input-line-height;
-  color: $searchbar-md-input-text-color;
 
-  background-color: $searchbar-md-input-background-color;
   box-shadow: $searchbar-md-input-box-shadow;
 }
 
@@ -85,36 +82,37 @@
 // Searchbar Clear Input Icon
 // -----------------------------------------
 
-.searchbar-md .searchbar-clear-icon {
+.searchbar-clear-button {
   @include position(0, 13px, null, null);
-  @include svg-background-image($searchbar-md-input-clear-icon-svg);
   @include padding(0);
-  @include background-position(center);
 
   position: absolute;
 
-  width: $searchbar-md-input-clear-icon-size;
   height: 100%;
 
   border: 0;
+
   background-color: transparent;
-  background-repeat: no-repeat;
-  background-size: $searchbar-md-input-clear-icon-size;
 }
 
-.searchbar-md .searchbar-clear-icon.activated {
+.searchbar-clear-button.activated {
   background-color: transparent;
+}
+
+.searchbar-clear-icon {
+  width: $searchbar-md-input-clear-icon-size;
+  height: 100%;
 }
 
 
 // Searchbar Focused
 // -----------------------------------------
 
-.searchbar-has-focus.searchbar-show-cancel .searchbar-search-icon-md {
+:host(.searchbar-has-focus.searchbar-show-cancel) .searchbar-search-icon {
   display: none;
 }
 
-.searchbar-has-focus.searchbar-show-cancel .searchbar-cancel-button-md {
+:host(.searchbar-has-focus.searchbar-show-cancel) .searchbar-cancel-button {
   display: inline-flex;
 }
 
@@ -122,6 +120,6 @@
 // Searchbar in Toolbar
 // -----------------------------------------
 
-.toolbar .searchbar-md {
+:host-context(ion-toolbar) {
   @include padding(3px);
 }

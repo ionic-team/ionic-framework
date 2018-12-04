@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <title>Back Button</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
+
 <body onload="loadFirstPage()">
   <ion-app>
     <ion-nav></ion-nav>
@@ -65,7 +69,7 @@
     // okay cool, we're in the DOM now
     await nav.push(secondPage);
 
-    const nextButton = secondPage.querySelector('ion-button .next');
+    const nextButton = secondPage.querySelector('ion-button.next');
     nextButton.addEventListener('click', async () => {
       await goToPageThree(nav);
     });
@@ -78,7 +82,7 @@
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
-            <ion-back-button color="danger" text="Text!" icon="add"></ion-back-button>
+            <ion-back-button text="Text!" icon="add"></ion-back-button>
           </ion-buttons>
           <ion-title>Page Three</ion-title>
         </ion-toolbar>
@@ -86,11 +90,41 @@
       <ion-content padding>
         <h1>Page Three</h1>
         <p>Custom back button</p>
+        <ion-button class="next">Go to Page Four</ion-button>
       </ion-content>
     `;
 
     // okay cool, we're in the DOM now
     await nav.push(thirdPage);
+
+    const nextButton = thirdPage.querySelector('ion-button.next');
+    nextButton.addEventListener('click', async () => {
+      await goToPageFour(nav);
+    });
+  }
+
+  async function goToPageFour(nav) {
+    const fourthPage = document.createElement('div');
+    fourthPage.classList.add('fourth-page');
+    fourthPage.innerHTML = `
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-menu-button auto-hide="false"></ion-menu-button>
+            <ion-back-button color="danger"></ion-back-button>
+          </ion-buttons>
+          <ion-title>Page Four</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content padding>
+        <h1>Page Four</h1>
+        <p>Back button and menu button</p>
+      </ion-content>
+    `;
+
+    // okay cool, we're in the DOM now
+    await nav.push(fourthPage);
   }
 </script>
+
 </html>

@@ -1,6 +1,37 @@
 # ion-item-sliding
 
-A Sliding item is a component that contains an item that can be dragged to reveal buttons. It requires an [Item](../Item) component as a child. All options to reveal should be placed in the item options element.
+A sliding item contains an item that can be dragged to reveal buttons. It requires an [item](../item) component as a child. All options to reveal should be placed in the [item options](../item-options) element.
+
+
+### Swipe Direction
+
+By default, the buttons are placed on the `"end"` side. This means that options are revealed when the sliding item is swiped from end to start, i.e. from right to left in LTR, but from left to right in RTL. To place them on the opposite side, so that they are revealed when swiping in the opposite direction, set the `side` attribute to `"start"` on the [`ion-item-options`]((../item-options) element. Up to two `ion-item-options` can be used at the same time in order to reveal two different sets of options depending on the swiping direction.
+
+
+### Options Layout
+
+By default if an icon is placed with text in the [item option](../item-option), it will display the icon on top of the text, but the icon slot can be changed to any of the following to position it in the option.
+
+| Slot        | description                                                              |
+| ----------- | ------------------------------------------------------------------------ |
+| `start`     | In LTR, start is the left side of the button, and in RTL it is the right |
+| `top`       | The icon is above the text                                               |
+| `icon-only` | The icon is the only content of the button                               |
+| `bottom`    | The icon is below the text                                               |
+| `end`       | In LTR, end is the right side of the button, and in RTL it is the left   |
+
+
+### Expandable Options
+
+Options can be expanded to take up the full width of the item if you swipe past a certain point. This can be combined with the `ionSwipe` event to call methods on the class.
+
+
+<!-- Auto Generated Below -->
+
+
+## Usage
+
+### Angular
 
 ```html
 <ion-list>
@@ -8,12 +39,33 @@ A Sliding item is a component that contains an item that can be dragged to revea
     <ion-item>
       <ion-label>Item</ion-label>
     </ion-item>
-    <ion-item-options side="left">
+    <ion-item-options side="start">
+      <ion-item-option (click)="favorite(item)">Favorite</ion-item-option>
+      <ion-item-option color="danger" (click)="share(item)">Share</ion-item-option>
+    </ion-item-options>
+
+    <ion-item-options side="end">
+      <ion-item-option (click)="unread(item)">Unread</ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
+</ion-list>
+```
+
+
+### Javascript
+
+```html
+<ion-list>
+  <ion-item-sliding>
+    <ion-item>
+      <ion-label>Item</ion-label>
+    </ion-item>
+    <ion-item-options side="start">
       <ion-item-option onClick="favorite(item)">Favorite</ion-item-option>
       <ion-item-option color="danger" onClick="share(item)">Share</ion-item-option>
     </ion-item-options>
 
-    <ion-item-options side="right">
+    <ion-item-options side="end">
       <ion-item-option onClick="unread(item)">Unread</ion-item-option>
     </ion-item-options>
   </ion-item-sliding>
@@ -21,109 +73,65 @@ A Sliding item is a component that contains an item that can be dragged to revea
 ```
 
 
-### Direction
 
-By default, the options are revealed when the sliding item is swiped from right to left, so the buttons are placed on the right side. It's also possible to reveal them from the right side by setting the `side` attribute on the `ion-item-options` element. Up to two `ion-item-options` can be used at the same time in order to reveal two different sets of options depending on the swiping direction.
+## Properties
 
-```html
-<ion-item-options side="right">
-  <ion-item-option onClick="archive(item)">
-    <ion-icon name="archive"></ion-icon>
-    Archive
-  </ion-item-option>
-</ion-item-options>
-
-<ion-item-options side="left">
-  <ion-item-option onClick="archive(item)">
-    <ion-icon name="archive"></ion-icon>
-    Archive
-  </ion-item-option>
-</ion-item-options>
-```
-
-
-### Events
-
-It's possible to know the current relative position of the sliding item by subscribing to the ionDrag` event.
-
-```html
-<ion-item-sliding>
-  <ion-item>
-    <ion-label>Item</ion-label>
-  </ion-item>
-  <ion-item-options>
-    <ion-item-option>Favorite</ion-item-option>
-  </ion-item-options>
-</ion-item-sliding>
-```
-
-
-### Layout
-By default if an icon is placed with text in the option button, it will display the icon on top of the text. This can be changed to display the icon to the left of the text by setting `icon-start` as an attribute on the `<ion-item-options>` element.
-
-```html
-<ion-item-options icon-start>
-   <ion-item-option onClick="archive(item)">
-     <ion-icon name="archive"></ion-icon>
-     Archive
-   </ion-item-option>
- </ion-item-options>
-
-```
-
-
-### Expandable Options
-
-Options can be expanded to take up the full width of the item if you swipe past a certain point. This can be combined with the `ionSwipe` event to call methods on the class.
-
-```html
-<ion-item-sliding>
-  <ion-item>
-    <ion-label>Item</ion-label>
-  </ion-item>
-  <ion-item-options>
-    <ion-item-option expandable onClick="delete(item)">Delete</ion-item-option>
-  </ion-item-options>
-</ion-item-sliding>
-```
-
-We can call `delete` by either clicking the option, or by doing a full swipe on the item.
-
-
-<!-- Auto Generated Below -->
+| Property   | Attribute  | Description                                                | Type      | Default |
+| ---------- | ---------- | ---------------------------------------------------------- | --------- | ------- |
+| `disabled` | `disabled` | If `true`, the user cannot interact with the sliding-item. | `boolean` | `false` |
 
 
 ## Events
 
-#### ionDrag
-
-Emitted when the sliding position changes.
+| Event     | Description                                | Detail |
+| --------- | ------------------------------------------ | ------ |
+| `ionDrag` | Emitted when the sliding position changes. | void   |
 
 
 ## Methods
 
-#### close()
+### `close() => Promise<void>`
 
 Close the sliding item. Items can also be closed from the [List](../../list/List).
 
+#### Returns
 
-#### closeOpened()
+Type: `Promise<void>`
+
+
+
+### `closeOpened() => Promise<boolean>`
 
 Close all of the sliding items in the list. Items can also be closed from the [List](../../list/List).
 
+#### Returns
 
-#### getOpenAmount()
+Type: `Promise<boolean>`
+
+
+
+### `getOpenAmount() => Promise<number>`
 
 Get the amount the item is open in pixels.
 
+#### Returns
 
-#### getSlidingRatio()
+Type: `Promise<number>`
+
+
+
+### `getSlidingRatio() => Promise<number>`
 
 Get the ratio of the open amount of the item compared to the width of the options.
 If the number returned is positive, then the options on the right side are open.
 If the number returned is negative, then the options on the left side are open.
 If the absolute value of the number is greater than 1, the item is open more than
 the width of the options.
+
+#### Returns
+
+Type: `Promise<number>`
+
 
 
 

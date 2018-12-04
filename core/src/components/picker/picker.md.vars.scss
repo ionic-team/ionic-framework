@@ -3,9 +3,6 @@
 // Material Design Picker
 // --------------------------------------------------
 
-/// @prop - Font family of the picker
-$picker-md-font-family:                             $font-family-md-base !default;
-
 /// @prop - Height of the picker wrapper
 $picker-md-height:                                  260px !default;
 
@@ -13,7 +10,7 @@ $picker-md-height:                                  260px !default;
 $picker-md-border-color:                            $item-md-border-color !default;
 
 /// @prop - Background Color of the picker wrapper
-$picker-md-background-color:                        $background-md-color !default;
+$picker-md-background-color:                        $background-color !default;
 
 /// @prop - Top Background Color of the picker wrapper gradient
 $picker-md-top-background-color:                    $picker-md-background-color !default;
@@ -22,7 +19,7 @@ $picker-md-top-background-color:                    $picker-md-background-color 
 $picker-md-bottom-background-color-alpha:           .8 !default;
 
 /// @prop - Bottom Background Color of the picker wrapper gradient
-$picker-md-bottom-background-color:                 css-var($background-md-color-value, background-md-color, $picker-md-bottom-background-color-alpha) !default;
+$picker-md-bottom-background-color:                 rgba(var(--ion-background-color-rgb, $background-color-rgb), $picker-md-bottom-background-color-alpha) !default;
 
 /// @prop - Height of the picker toolbar
 $picker-md-toolbar-height:                          44px !default;
@@ -34,7 +31,7 @@ $picker-md-toolbar-background-color:                $picker-md-top-background-co
 $picker-md-button-height:                           $picker-md-toolbar-height !default;
 
 /// @prop - Text color of the picker button
-$picker-md-button-text-color:                       ion-color($colors-md, primary, base, md) !default;
+$picker-md-button-text-color:                       ion-color(primary, base) !default;
 
 /// @prop - Background of the picker button
 $picker-md-button-background-color:                 transparent !default;
@@ -67,7 +64,7 @@ $picker-md-option-padding-bottom:                   $picker-md-option-padding-to
 $picker-md-option-padding-start:                    $picker-md-option-padding-end !default;
 
 /// @prop - Text color of the picker option
-$picker-md-option-text-color:                       $item-md-text-color !default;
+$picker-md-option-text-color:                       $item-md-color !default;
 
 /// @prop - Font size of the picker option
 $picker-md-option-font-size:                        22px !default;
@@ -79,4 +76,4 @@ $picker-md-option-height:                           42px !default;
 $picker-md-option-offset-y:                         (($picker-md-height - $picker-md-toolbar-height) / 2) - ($picker-md-option-height / 2) - 10 !default;
 
 /// @prop - Text color of the selected picker option
-$picker-md-option-selected-color:                   ion-color($colors-md, primary, base, md) !default;
+$picker-md-option-selected-color:                   ion-color(primary, base) !default;

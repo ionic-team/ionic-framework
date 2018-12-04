@@ -1,63 +1,39 @@
 # ion-fab-list
 
-The `ion-fab-list` element is a container for multiple FAB buttons. This collection of FAB buttons contains actions related to the main FAB button and is flung out on click. To specify the side of the main button to show the list on, use the following:
+The `ion-fab-list` element is a container for multiple fab buttons. This collection of fab buttons contains actions related to the main fab button and is flung out on click. To specify what side the buttons should appear on, set the `side` property to 'start', 'end', 'top', 'bottom'
 
-```
-[top] - Show the list of buttons above the main FAB button
-[bottom] - Show the list of buttons under the main FAB button
-[left] - Show the list of buttons to the left of the main FAB button
-[right] - Show the list of buttons to the right of the main FAB button
-```
+<!-- Auto Generated Below -->
+
+
+## Usage
+
+### Angular / javascript
 
 ```html
-<ion-fab bottom right>
+<ion-fab vertical="bottom" horizontal="end">
   <ion-fab-button>Share</ion-fab-button>
+
   <ion-fab-list side="top">
     <ion-fab-button>Facebook</ion-fab-button>
     <ion-fab-button>Twitter</ion-fab-button>
     <ion-fab-button>Youtube</ion-fab-button>
   </ion-fab-list>
-  <ion-fab-list side="left">
+
+  <ion-fab-list side="start">
     <ion-fab-button>Vimeo</ion-fab-button>
   </ion-fab-list>
+
 </ion-fab>
 ```
 
 
-<!-- Auto Generated Below -->
-
 
 ## Properties
 
-#### activated
-
-boolean
-
-If true, the fab list will be show all fab buttons in the list. Defaults to `false`.
-
-
-#### side
-
-
-
-The side the fab list will show on relative to the main fab button. Defaults to `'bottom'`.
-
-
-## Attributes
-
-#### activated
-
-boolean
-
-If true, the fab list will be show all fab buttons in the list. Defaults to `false`.
-
-
-#### side
-
-
-
-The side the fab list will show on relative to the main fab button. Defaults to `'bottom'`.
-
+| Property    | Attribute   | Description                                                         | Type                                    | Default    |
+| ----------- | ----------- | ------------------------------------------------------------------- | --------------------------------------- | ---------- |
+| `activated` | `activated` | If `true`, the fab list will be show all fab buttons in the list.   | `boolean`                               | `false`    |
+| `side`      | `side`      | The side the fab list will show on relative to the main fab button. | `"bottom" \| "end" \| "start" \| "top"` | `'bottom'` |
 
 
 ----------------------------------------------

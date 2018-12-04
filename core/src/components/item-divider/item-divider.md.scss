@@ -4,110 +4,160 @@
 // Material Design Item Divider
 // --------------------------------------------------
 
-.item-divider-md {
-  @include padding-horizontal($item-md-divider-padding-start, null);
+:host {
+  --background: #{$item-md-divider-background};
+  --color: #{$item-md-divider-color};
+  --padding-start: #{$item-md-divider-padding-start};
 
   border-bottom: $item-md-divider-border-bottom;
 
-  font-family: $item-md-divider-font-family;
   font-size: $item-md-divider-font-size;
-
-  color: $item-md-divider-color;
-  background-color: $item-md-divider-background;
 }
 
-.item-divider-md .item-divider-inner {
-  @include padding-horizontal(null, ($item-md-divider-padding-end / 2));
+.item-divider-inner {
+  @include padding-horizontal(null, $item-md-divider-padding-end);
 }
 
 
 // Material Design Item Divider Slots
 // --------------------------------------------------
 
-.item-divider-md [slot="start"],
-.item-divider-md [slot="end"] {
-  @include margin($item-md-slot-margin-top, $item-md-slot-margin-end, $item-md-slot-margin-bottom, $item-md-slot-margin-start);
+::slotted([slot="start"]) {
+  @include margin-horizontal($item-md-start-slot-margin-start, $item-md-start-slot-margin-end);
 }
 
-.item-divider-md ion-icon[slot="start"],
-.item-divider-md ion-icon[slot="end"] {
+::slotted([slot="end"]) {
+  @include margin-horizontal($item-md-end-slot-margin-start, $item-md-end-slot-margin-end);
+}
+
+
+// Material Design Slotted Label
+// --------------------------------------------------
+
+::slotted(ion-label) {
+  @include margin(13px, 0, 10px, 0);
+}
+
+
+// Material Design Slotted Icon
+// --------------------------------------------------
+
+::slotted(ion-icon) {
+
+  color: $item-md-icon-slot-color;
+
+  font-size: $item-md-icon-slot-font-size;
+}
+
+::slotted(ion-icon[slot]) {
   @include margin($item-md-icon-slot-margin-top, $item-md-icon-slot-margin-end, $item-md-icon-slot-margin-bottom, $item-md-icon-slot-margin-start);
 }
 
-.item-divider-md ion-icon[slot="start"] + .item-inner,
-.item-divider-md ion-icon[slot="start"] + .item-input {
-  @include margin-horizontal($item-md-padding-start + ($item-md-padding-start / 2), null);
+::slotted(ion-icon[slot="start"]) {
+  @include margin-horizontal($item-md-icon-start-slot-margin-start, $item-md-icon-start-slot-margin-end);
 }
 
-.item-divider-md ion-avatar[slot="start"],
-.item-divider-md ion-thumbnail[slot="start"] {
-  @include margin(($item-md-padding-end / 2), $item-md-padding-end, ($item-md-padding-end / 2), 0);
+::slotted(ion-icon[slot="end"]) {
+  @include margin-horizontal($item-md-icon-end-slot-margin-start, $item-md-icon-end-slot-margin-end);
 }
 
-.item-divider-md ion-avatar[slot="end"],
-.item-divider-md ion-thumbnail[slot="end"] {
-  @include margin(($item-md-padding-end / 2));
+
+// Material Design Slotted Note
+// --------------------------------------------------
+
+::slotted(ion-note) {
+  @include margin(0);
+
+  align-self: flex-start;
+
+  font-size: $item-md-note-slot-font-size;
+}
+
+::slotted(ion-note[slot]) {
+  @include padding($item-md-note-slot-padding-top, $item-md-note-slot-padding-end, $item-md-note-slot-padding-bottom, $item-md-note-slot-padding-start);
+}
+
+::slotted(ion-note[slot="start"]) {
+  @include padding-horizontal($item-md-note-start-slot-padding-start, $item-md-note-start-slot-padding-end);
+}
+
+::slotted(ion-note[slot="end"]) {
+  @include padding-horizontal($item-md-note-end-slot-padding-start, $item-md-note-end-slot-padding-end);
+}
+
+
+// Material Design Item Divider Avatar
+// --------------------------------------------------
+
+::slotted(ion-avatar) {
+  width: $item-md-avatar-width;
+  height: $item-md-avatar-height;
+}
+
+
+// Material Design Item Divider Thumbnail
+// --------------------------------------------------
+
+::slotted(ion-thumbnail) {
+  width: $item-md-thumbnail-width;
+  height: $item-md-thumbnail-height;
+}
+
+// Material Design Item Divider Avatar/Thumbnail
+// --------------------------------------------------
+
+::slotted(ion-avatar),
+::slotted(ion-thumbnail) {
+  @include margin($item-md-media-slot-margin-top, $item-md-media-slot-margin-end, $item-md-media-slot-margin-bottom, $item-md-media-slot-margin-start);
+}
+
+::slotted(ion-avatar[slot="start"]),
+::slotted(ion-thumbnail[slot="start"]) {
+  @include margin-horizontal($item-md-media-start-slot-margin-start, $item-md-media-start-slot-margin-end);
+}
+
+::slotted(ion-avatar[slot="end"]),
+::slotted(ion-thumbnail[slot="end"]) {
+  @include margin-horizontal($item-md-media-end-slot-margin-start, $item-md-media-end-slot-margin-end);
 }
 
 
 // Material Design Item Divider Content
 // --------------------------------------------------
 
-.item-divider-md h1 {
+::slotted(h1) {
   @include margin(0, 0, 2px);
 
   font-size: 24px;
   font-weight: normal;
 }
 
-.item-divider-md h2 {
+::slotted(h2) {
   @include margin(2px, 0);
 
   font-size: 16px;
   font-weight: normal;
 }
 
-.item-divider-md h3,
-.item-divider-md h4,
-.item-divider-md h5,
-.item-divider-md h6 {
+::slotted(h3, h4, h5, h6) {
   @include margin(2px, 0);
 
   font-size: 14px;
   font-weight: normal;
+
   line-height: normal;
 }
 
-.item-divider-md p {
+::slotted(p) {
   @include margin(0, 0, 2px);
 
-  overflow: inherit;
+  color: $item-md-paragraph-text-color;
 
   font-size: 14px;
+
   line-height: normal;
+
   text-overflow: inherit;
-  color: $item-md-paragraph-text-color;
-}
 
-
-// Generate Material Design Item Divider Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-md {
-  $color-base: ion-color($colors-md, $color-name, base, md);
-  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
-  $color-shade: ion-color($colors-md, $color-name, tint, md);
-
-  .item-divider-md-#{$color-name} {
-    color: $color-contrast;
-    background-color: $color-base;
-
-    p {
-      color: $color-contrast;
-    }
-
-    &.activated {
-      background-color: $color-shade;
-    }
-  }
+  overflow: inherit;
 }

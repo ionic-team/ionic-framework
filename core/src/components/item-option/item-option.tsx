@@ -1,38 +1,39 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
 
+import { Color, Mode } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-item-option',
-  host: {
-    theme: 'item-option'
-  },
   styleUrls: {
     ios: 'item-option.ios.scss',
     md: 'item-option.md.scss'
-  }
+  },
+  shadow: true
 })
-export class ItemOption {
+export class ItemOption implements ComponentInterface {
+
+  @Element() el!: HTMLElement;
+
   /**
-   * The color to use from your Sass `$colors` map.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color: string;
+  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
   /**
-   * If true, the user cannot interact with the item option. Defaults to `false`.
+   * If `true`, the user cannot interact with the item option.
    */
   @Prop() disabled = false;
 
   /**
-   * If true, the option will expand to take up the available width and cover any other options. Defaults to `false`.
+   * If `true`, the option will expand to take up the available width and cover any other options.
    */
   @Prop() expandable = false;
 
@@ -40,40 +41,44 @@ export class ItemOption {
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
-  @Prop() href: string;
+  @Prop() href?: string;
 
-  clickedOptionButton(ev: Event): boolean {
+  private clickedOptionButton(ev: Event): boolean {
     const el = (ev.target as HTMLElement).closest('ion-item-option');
     return !!el;
   }
 
   hostData() {
     return {
+      'ion-activatable': true,
       class: {
-        'item-option-expandable': this.expandable
+        ...createColorClasses(this.color),
+        'item-option-expandable': this.expandable,
       }
     };
   }
 
   render() {
-    const TagType = this.href ? 'a' : 'button';
+    const TagType = this.href === undefined ? 'button' : 'a';
 
     return (
       <TagType
-        class='item-option-button'
+        type="button"
+        class="button-native"
         disabled={this.disabled}
         href={this.href}
-        onClick={this.clickedOptionButton.bind(this)}>
-        <span class='item-option-button-inner'>
-          <slot name='start'></slot>
-          <slot name='top'></slot>
-          <slot name='icon-only'></slot>
+        onClick={this.clickedOptionButton.bind(this)}
+      >
+        <span class="button-inner">
+          <slot name="start"></slot>
+          <slot name="top" />
+          <slot name="icon-only" />
           <slot></slot>
-          <slot name='bottom'></slot>
-          <slot name='end'></slot>
+          <slot name="bottom" />
+          <slot name="end"></slot>
         </span>
+        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </TagType>
     );
   }
-
 }

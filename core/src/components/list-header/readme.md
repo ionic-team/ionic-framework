@@ -1,49 +1,45 @@
 # ion-list-header
 
+ListHeader a header component for a list.
+Unlike ItemDivider, ListHeaders are styled to be stand-out from the rest of the list items.
 
 
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Javascript
+
+```html
+<ion-list>
+  <ion-list-header>
+    <ion-label>Items</ion-label>
+  </ion-list-header>
+  <ion-item>Item 1</ion-item>
+  <ion-item>Item 2</ion-item>
+  <ion-item>Item 3</ion-item>
+  <ion-item>Item 4</ion-item>
+  <ion-item>Item 5</ion-item>
+</ion-list>
+```
+
+
+
 ## Properties
 
-#### color
-
-string
-
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
+| Property | Attribute | Description                                                                                                                                                                                                                                                            | Type                  | Default     |
+| -------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
+| `color`  | `color`   | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` | `undefined` |
+| `mode`   | `mode`    | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined` |
 
 
-#### mode
+## CSS Custom Properties
 
-
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-
-
-## Attributes
-
-#### color
-
-string
-
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
-
-
-#### mode
-
-
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-
+| Name           | Description                   |
+| -------------- | ----------------------------- |
+| `--background` | Background of the list header |
+| `--color`      | Color of the list header text |
 
 
 ----------------------------------------------

@@ -3,6 +3,61 @@
 Checkboxes allow the selection of multiple options from a set of options. They appear as checked (ticked) when activated. Clicking on a checkbox will toggle the `checked` property. They can also be checked programmatically by setting the `checked` property.
 
 
+
+
+<!-- Auto Generated Below -->
+
+
+## Usage
+
+### Angular
+
+```html
+<!-- Default Checkbox -->
+<ion-checkbox></ion-checkbox>
+
+<!-- Disabled Checkbox -->
+<ion-checkbox disabled="true"></ion-checkbox>
+
+<!-- Checked Checkbox -->
+<ion-checkbox checked="true"></ion-checkbox>
+
+<!-- Checkbox Colors -->
+<ion-checkbox color="primary"></ion-checkbox>
+<ion-checkbox color="secondary"></ion-checkbox>
+<ion-checkbox color="danger"></ion-checkbox>
+<ion-checkbox color="light"></ion-checkbox>
+<ion-checkbox color="dark"></ion-checkbox>
+
+<!-- Checkboxes in a List -->
+<ion-list>
+  <ion-item *ngFor="let entry of form">
+    <ion-label>{{entry.val}}</ion-label>
+    <ion-checkbox slot="end" [(ngModel)]="entry.isChecked"></ion-checkbox>
+  </ion-item>
+</ion-list>
+```
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-page-home',
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss']
+})
+export class HomePage {
+  public form = [
+      { val: 'Pepperoni', isChecked: true },
+      { val: 'Sausage', isChecked: false },
+      { val: 'Mushroom', isChecked: false }
+    ];
+}
+```
+
+
+### Javascript
+
 ```html
 <!-- Default Checkbox -->
 <ion-checkbox></ion-checkbox>
@@ -40,122 +95,43 @@ Checkboxes allow the selection of multiple options from a set of options. They a
 ```
 
 
-<!-- Auto Generated Below -->
-
 
 ## Properties
 
-#### checked
-
-boolean
-
-If true, the checkbox is selected. Defaults to `false`.
-
-
-#### color
-
-string
-
-The color to use.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-
-
-#### disabled
-
-boolean
-
-If true, the user cannot interact with the checkbox. Defaults to `false`.
-
-
-#### mode
-
-
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
-
-#### name
-
-string
-
-The name of the control, which is submitted with the form data.
-
-
-#### value
-
-string
-
-the value of the checkbox.
-
-
-## Attributes
-
-#### checked
-
-boolean
-
-If true, the checkbox is selected. Defaults to `false`.
-
-
-#### color
-
-string
-
-The color to use.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-
-
-#### disabled
-
-boolean
-
-If true, the user cannot interact with the checkbox. Defaults to `false`.
-
-
-#### mode
-
-
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
-
-#### name
-
-string
-
-The name of the control, which is submitted with the form data.
-
-
-#### value
-
-string
-
-the value of the checkbox.
+| Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                  | Default        |
+| ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | -------------- |
+| `checked`  | `checked`  | If `true`, the checkbox is selected.                                                                                                                                                                                                                                   | `boolean`             | `false`        |
+| `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` | `undefined`    |
+| `disabled` | `disabled` | If `true`, the user cannot interact with the checkbox.                                                                                                                                                                                                                 | `boolean`             | `false`        |
+| `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined`    |
+| `name`     | `name`     | The name of the control, which is submitted with the form data.                                                                                                                                                                                                        | `string`              | `this.inputId` |
+| `value`    | `value`    | The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.                  | `string`              | `'on'`         |
 
 
 ## Events
 
-#### ionBlur
-
-Emitted when the toggle loses focus.
-
-
-#### ionChange
-
-Emitted when the checked property has changed.
+| Event       | Description                                    | Detail                  |
+| ----------- | ---------------------------------------------- | ----------------------- |
+| `ionBlur`   | Emitted when the toggle loses focus.           | void                    |
+| `ionChange` | Emitted when the checked property has changed. | CheckedInputChangeEvent |
+| `ionFocus`  | Emitted when the toggle has focus.             | void                    |
 
 
-#### ionFocus
+## CSS Custom Properties
 
-Emitted when the toggle has focus.
-
-
-#### ionStyle
-
-Emitted when the styles change.
-
+| Name                     | Description                                    |
+| ------------------------ | ---------------------------------------------- |
+| `--background`           | Background of the checkbox icon                |
+| `--background-checked`   | Background of the checkbox icon when checked   |
+| `--border-color`         | Border color of the checkbox icon              |
+| `--border-color-checked` | Border color of the checkbox icon when checked |
+| `--border-radius`        | Border radius of the checkbox icon             |
+| `--border-style`         | Border style of the checkbox icon              |
+| `--border-width`         | Border width of the checkbox icon              |
+| `--checkmark-color`      | Color of the checkbox checkmark when checked   |
+| `--height`               | Height of the checkbox icon                    |
+| `--transition`           | Transition of the checkbox icon                |
+| `--width`                | Width of the checkbox icon                     |
 
 
 ----------------------------------------------

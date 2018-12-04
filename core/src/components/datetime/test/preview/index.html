@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <title>Datetime</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <script src="/dist/ionic.js"></script>
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
+
 <body>
   <ion-app>
 
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Datetime</ion-title>
-          <ion-buttons slot="primary">
-            <ion-button onclick="toggleBoolean('dynamicDisabled', 'disabled')">
+    <ion-header translucent>
+      <ion-toolbar>
+        <ion-title>Datetime</ion-title>
+        <ion-buttons slot="primary">
+          <ion-button onclick="toggleBoolean('dynamicDisabled', 'disabled')">
             (disabled)
             </ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
 
-      <ion-content id="content" class="outer-content test-content">
+      <ion-content id="content" fullscreen class="outer-content test-content">
         <ion-list>
           <ion-item>
             <ion-label>MMMM</ion-label>
@@ -43,17 +47,17 @@
           </ion-item>
 
           <ion-item>
-            <ion-label stacked>MMMM YY</ion-label>
+            <ion-label position="stacked">MMMM YY</ion-label>
             <ion-datetime display-format="MMMM YY" min="1989-06-04" max="2004-08-23" value="1994-12-15T13:47:20.789"></ion-datetime>
           </ion-item>
 
           <ion-item>
-            <ion-label floating>MM/DD/YYYY</ion-label>
+            <ion-label position="floating">MM/DD/YYYY</ion-label>
             <ion-datetime display-format="MM/DD/YYYY" min="1994-03-14" max="2012-12-09" value="2002-09-23T15:03:46.789" class="e2eOpenMMDDYYYY"></ion-datetime>
           </ion-item>
 
           <ion-item>
-            <ion-label floating>MM/DD/YYYY</ion-label>
+            <ion-label position="floating">MM/DD/YYYY</ion-label>
             <ion-datetime display-format="MM/DD/YYYY" min="1994-03-14" max="2012-12-09" class="e2eOpenMMDDYYYY"></ion-datetime>
           </ion-item>
 
@@ -91,7 +95,7 @@
 
           <ion-item>
             <ion-label>Leap years, summer months</ion-label>
-            <ion-datetime id="customYearValues" display-format="MM/YYYY" pickerFormat="MMMM YYYY" month-values="6,7,8"></ion-datetime>
+            <ion-datetime id="customYearValues" display-format="MM/YYYY" picker-format="MMMM YYYY" month-values="6,7,8"></ion-datetime>
           </ion-item>
 
           <ion-item>
@@ -121,6 +125,12 @@
         </ion-list>
 
       </ion-content>
+
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+    </style>
 
     <script>
       var yearValuesArray = [2020, 2016, 2008, 2004, 2000, 1996];
@@ -164,7 +174,5 @@
     </script>
   </ion-app>
 </body>
+
 </html>
-
-
-

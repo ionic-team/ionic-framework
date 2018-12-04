@@ -1,12 +1,11 @@
-import { mockDocument, mockElement } from '@stencil/core/testing';
-import { Nav } from '../nav';
-import { ViewController } from '../view-controller';
+import { mockWindow } from '@stencil/core/mock-doc';
+
+import { Config } from '../../../global/config';
+import { ComponentProps } from '../../../interface';
 import { AnimationControllerImpl } from '../../animation-controller/animation-controller';
-import { createConfigController } from '../../../global/config-controller';
-
-import { NavDirection, NavOptions, ViewState } from '../nav-util';
-import { mockLifecycle } from '../../../utils/transition';
-
+import { Nav } from '../nav';
+import { NavOptions } from '../nav-interface';
+import { ViewController, ViewState } from '../view-controller';
 
 describe('NavController', () => {
 
@@ -23,78 +22,78 @@ describe('NavController', () => {
 
       // Push 1
       const view1 = mockView(MockView1);
-      await nav.push(view1, null, {animate: false}, push1Done);
+      await nav.push(view1, null, { animated: false }, push1Done);
 
       const hasCompleted = true;
       const requiresTransition = true;
       expect(push1Done).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, view1, undefined, NavDirection.Forward
+        hasCompleted, requiresTransition, view1, undefined, 'forward'
       );
-      expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
+      expect(nav.getLength()).toEqual(1);
+      expect(nav['views'][0].component).toEqual(MockView1);
 
       // Push 2
       const view2 = mockView(MockView2);
-      await nav.push(view2, null, {animate: false}, push2Done);
+      await nav.push(view2, null, { animated: false }, push2Done);
 
       expect(push2Done).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, view2, view1, NavDirection.Forward
+        hasCompleted, requiresTransition, view2, view1, 'forward'
       );
 
-      expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.getByIndex(1).component).toEqual(MockView2);
+      expect(nav.getLength()).toEqual(2);
+      expect(nav['views'][0].component).toEqual(MockView1);
+      expect(nav['views'][1].component).toEqual(MockView2);
 
       // Push 3
       const view3 = mockView(MockView3);
-      await nav.push(view3, null, {animate: false}, push3Done);
+      await nav.push(view3, null, { animated: false }, push3Done);
 
       expect(push3Done).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, view3, view2, NavDirection.Forward
+        hasCompleted, requiresTransition, view3, view2, 'forward'
       );
-      expect(nav.length()).toEqual(3);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.getByIndex(1).component).toEqual(MockView2);
-      expect(nav.getByIndex(2).component).toEqual(MockView3);
+      expect(nav.getLength()).toEqual(3);
+      expect(nav['views'][0].component).toEqual(MockView1);
+      expect(nav['views'][1].component).toEqual(MockView2);
+      expect(nav['views'][2].component).toEqual(MockView3);
 
       // Push 4
       const view4 = mockView(MockView4);
-      await nav.push(view4, null, {animate: false}, push4Done);
+      await nav.push(view4, null, { animated: false }, push4Done);
       expect(push4Done).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, view4, view3, NavDirection.Forward
+        hasCompleted, requiresTransition, view4, view3, 'forward'
       );
-      expect(nav.length()).toEqual(4);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.getByIndex(1).component).toEqual(MockView2);
-      expect(nav.getByIndex(2).component).toEqual(MockView3);
-      expect(nav.getByIndex(3).component).toEqual(MockView4);
+      expect(nav.getLength()).toEqual(4);
+      expect(nav['views'][0].component).toEqual(MockView1);
+      expect(nav['views'][1].component).toEqual(MockView2);
+      expect(nav['views'][2].component).toEqual(MockView3);
+      expect(nav['views'][3].component).toEqual(MockView4);
 
       // Pop 1
-      await nav.pop({animate: false}, pop1Done);
+      await nav.pop({ animated: false }, pop1Done);
       expect(pop1Done).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, view3, view4, NavDirection.Back
+        hasCompleted, requiresTransition, view3, view4, 'back'
       );
-      expect(nav.length()).toEqual(3);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.getByIndex(1).component).toEqual(MockView2);
-      expect(nav.getByIndex(2).component).toEqual(MockView3);
+      expect(nav.getLength()).toEqual(3);
+      expect(nav['views'][0].component).toEqual(MockView1);
+      expect(nav['views'][1].component).toEqual(MockView2);
+      expect(nav['views'][2].component).toEqual(MockView3);
 
       // Pop 2
-      await nav.pop({animate: false}, pop2Done);
+      await nav.pop({ animated: false }, pop2Done);
       expect(pop2Done).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, view2, view3, NavDirection.Back
+        hasCompleted, requiresTransition, view2, view3, 'back'
       );
-      expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.getByIndex(1).component).toEqual(MockView2);
+      expect(nav.getLength()).toEqual(2);
+      expect(nav['views'][0].component).toEqual(MockView1);
+      expect(nav['views'][1].component).toEqual(MockView2);
 
       // Pop 3
-      await nav.pop({animate: false}, pop3Done);
+      await nav.pop({ animated: false }, pop3Done);
       expect(pop3Done).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, view1, view2, NavDirection.Back
+        hasCompleted, requiresTransition, view1, view2, 'back'
       );
-      expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
+      expect(nav.getLength()).toEqual(1);
+      expect(nav['views'][0].component).toEqual(MockView1);
 
     }, 10000);
   });
@@ -108,10 +107,10 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, view1, undefined, NavDirection.Forward
+        hasCompleted, requiresTransition, view1, undefined, 'forward'
       );
-      expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
+      expect(nav.getLength()).toEqual(1);
+      expect(nav['views'][0].component).toEqual(MockView1);
       expect(nav['isTransitioning']).toEqual(false);
 
     }, 10000);
@@ -126,11 +125,11 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, view2, view1, NavDirection.Forward
+        hasCompleted, requiresTransition, view2, view1, 'forward'
       );
-      expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.getByIndex(1).component).toEqual(MockView2);
+      expect(nav.getLength()).toEqual(2);
+      expect(nav['views'][0].component).toEqual(MockView1);
+      expect(nav['views'][1].component).toEqual(MockView2);
       expect(nav['isTransitioning']).toEqual(false);
 
     }, 10000);
@@ -146,18 +145,14 @@ describe('NavController', () => {
 
       await nav.push(view2, null, null, trnsDone);
 
-      // expect(instance1.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance1.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance1.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance1.ionViewCanLeave).toHaveBeenCalled();
       expect(instance1.ionViewWillLeave).toHaveBeenCalled();
       expect(instance1.ionViewDidLeave).toHaveBeenCalled();
       expect(instance1.ionViewWillUnload).not.toHaveBeenCalled();
 
-      // expect(instance2.ionViewCanEnter).toHaveBeenCalled();
       expect(instance2.ionViewWillEnter).toHaveBeenCalled();
       expect(instance2.ionViewDidEnter).toHaveBeenCalled();
-      // expect(instance2.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance2.ionViewWillLeave).not.toHaveBeenCalled();
       expect(instance2.ionViewDidLeave).not.toHaveBeenCalled();
       expect(instance2.ionViewWillUnload).not.toHaveBeenCalled();
@@ -165,10 +160,9 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, view2, view1, NavDirection.Forward
+        hasCompleted, requiresTransition, view2, view1, 'forward'
       );
-      expect(nav.length()).toEqual(2);
-
+      expect(nav.getLength()).toEqual(2);
 
     }, 10000);
   });
@@ -183,10 +177,8 @@ describe('NavController', () => {
       mockViews(nav, [mockView(MockView1), mockView(MockView2), mockView(MockView3)]);
 
       await nav.insert(0, view4, null, opts, trnsDone);
-      // expect(instance4.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance4.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance4.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance4.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance4.ionViewWillLeave).not.toHaveBeenCalled();
       expect(instance4.ionViewDidLeave).not.toHaveBeenCalled();
       expect(instance4.ionViewWillUnload).not.toHaveBeenCalled();
@@ -196,9 +188,9 @@ describe('NavController', () => {
       expect(trnsDone).toHaveBeenCalledWith(
         hasCompleted, requiresTransition, undefined, undefined, undefined
       );
-      expect(nav.length()).toEqual(4);
-      expect(nav.getByIndex(0).component).toEqual(MockView4);
-      expect(nav.getByIndex(nav.length() - 1).component).toEqual(MockView3);
+      expect(nav.getLength()).toEqual(4);
+      expect(nav['views'][0].component).toEqual(MockView4);
+      expect(nav['views'][nav.getLength() - 1].component).toEqual(MockView3);
 
     }, 10000);
 
@@ -213,10 +205,10 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, view2, view1, NavDirection.Forward
+        hasCompleted, requiresTransition, view2, view1, 'forward'
       );
-      expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(nav.length() - 1).component).toEqual(MockView2);
+      expect(nav.getLength()).toEqual(2);
+      expect(nav['views'][nav.getLength() - 1].component).toEqual(MockView2);
 
     }, 10000);
 
@@ -229,17 +221,17 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, view2, view1, NavDirection.Forward
+        hasCompleted, requiresTransition, view2, view1, 'forward'
       );
-      expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(nav.length() - 1).component).toEqual(MockView2);
+      expect(nav.getLength()).toEqual(2);
+      expect(nav['views'][nav.getLength() - 1].component).toEqual(MockView2);
 
     }, 10000);
 
-    it('should not insert if null view', (done) => {
+    it('should not insert if null view', done => {
       mockViews(nav, [mockView(MockView1)]);
 
-      nav.insert(-1, null, null, null, trnsDone).then(() => {
+      nav.insert(-1, null as any, null, null, trnsDone).then(() => {
         fail('it should not succeed');
         done();
 
@@ -249,55 +241,11 @@ describe('NavController', () => {
         const rejectReason = new Error('invalid views to insert');
         expect(err).toEqual(rejectReason);
         expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, rejectReason);
-        expect(nav.length()).toEqual(1);
-        expect(nav.getByIndex(nav.length() - 1).component).toEqual(MockView1);
+        expect(nav.getLength()).toEqual(1);
+        expect(nav['views'][nav.getLength() - 1].component).toEqual(MockView1);
         done();
       });
     }, 10000);
-
-    // it('should not insert any view in the stack if canLeave returns false', async () => {
-    //   const view1 = mockView(MockView1);
-    //   const view2 = mockView(MockView2);
-    //   const view3 = mockView(MockView3);
-    //   mockViews(nav, [view1, view2]);
-
-    //   const instance2 = spyOnLifecycles(view2);
-
-    //   let count = 0;
-    //   instance2.ionViewCanLeave = function () {
-    //     count++;
-    //     return (count === 3);
-    //   };
-
-    //   await nav.push(view3);
-    //   expect(nav.length()).toEqual(2);
-    //   await nav.push(view3);
-    //   expect(nav.length()).toEqual(2);
-    //   await nav.push(view3);
-    //   expect(nav.length()).toEqual(3);
-
-    // }, 10000);
-
-    // it('should not remove any view from the stack if canLeave returns false', async () => {
-    //   const view1 = mockView(MockView1);
-    //   const view2 = mockView(MockView2);
-    //   mockViews(nav, [view1, view2]);
-
-    //   const instance2 = spyOnLifecycles(view2);
-
-    //   let count = 0;
-    //   instance2.ionViewCanLeave = function () {
-    //     count++;
-    //     return (count === 3);
-    //   };
-
-    //   await nav.pop();
-    //   expect(nav.length()).toEqual(2);
-    //   await nav.pop();
-    //   expect(nav.length()).toEqual(2);
-    //   await nav.pop();
-    //   expect(nav.length()).toEqual(1);
-    // }, 10000);
 
   });
 
@@ -315,10 +263,8 @@ describe('NavController', () => {
 
       const view5 = mockView(MockView5);
       await nav.insertPages(1, [view4, view5], null, trnsDone);
-      // expect(instance4.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance4.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance4.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance4.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance4.ionViewWillLeave).not.toHaveBeenCalled();
       expect(instance4.ionViewDidLeave).not.toHaveBeenCalled();
       expect(instance4.ionViewWillUnload).not.toHaveBeenCalled();
@@ -328,22 +274,22 @@ describe('NavController', () => {
       expect(trnsDone).toHaveBeenCalledWith(
         hasCompleted, requiresTransition, undefined, undefined, undefined
       );
-      expect(nav.length()).toEqual(5);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.getByIndex(1).component).toEqual(MockView4);
-      expect(nav.getByIndex(2).component).toEqual(MockView5);
-      expect(nav.getByIndex(3).component).toEqual(MockView2);
-      expect(nav.getByIndex(4).component).toEqual(MockView3);
+      expect(nav.getLength()).toEqual(5);
+      expect(nav['views'][0].component).toEqual(MockView1);
+      expect(nav['views'][1].component).toEqual(MockView4);
+      expect(nav['views'][2].component).toEqual(MockView5);
+      expect(nav['views'][3].component).toEqual(MockView2);
+      expect(nav['views'][4].component).toEqual(MockView3);
 
-      expect(nav.getByIndex(1).nav).toEqual(nav);
-      expect(nav.getByIndex(2).nav).toEqual(nav);
+      expect(nav['views'][1].nav).toEqual(nav);
+      expect(nav['views'][2].nav).toEqual(nav);
 
     }, 10000);
   });
 
   describe('pop', () => {
 
-    it('should not pop when no views in the stack', (done) => {
+    it('should not pop when no views in the stack', done => {
       nav.pop(null, trnsDone).then(() => {
         fail('it should not succeed');
         done();
@@ -355,7 +301,7 @@ describe('NavController', () => {
           hasCompleted, requiresTransition, rejectReason
         );
         expect(err).toEqual(rejectReason);
-        expect(nav.length()).toEqual(0);
+        expect(nav.getLength()).toEqual(0);
         expect(nav['isTransitioning']).toEqual(false);
         done();
       });
@@ -370,18 +316,14 @@ describe('NavController', () => {
 
       await nav.pop(null, trnsDone);
 
-      // expect(instance1.ionViewCanEnter).toHaveBeenCalled();
       expect(instance1.ionViewWillEnter).toHaveBeenCalled();
       expect(instance1.ionViewDidEnter).toHaveBeenCalled();
-      // expect(instance1.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance1.ionViewWillLeave).not.toHaveBeenCalled();
       expect(instance1.ionViewDidLeave).not.toHaveBeenCalled();
       expect(instance1.ionViewWillUnload).not.toHaveBeenCalled();
 
-      // expect).not.toHaveBeenCalled();
       expect(instance2.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance2.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance2.ionViewCanLeave).toHaveBeenCalled();
       expect(instance2.ionViewWillLeave).toHaveBeenCalled();
       expect(instance2.ionViewDidLeave).toHaveBeenCalled();
       expect(instance2.ionViewWillUnload).toHaveBeenCalled();
@@ -389,12 +331,11 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, view1, view2, NavDirection.Back
+        hasCompleted, requiresTransition, view1, view2, 'back'
       );
-      expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
+      expect(nav.getLength()).toEqual(1);
+      expect(nav['views'][0].component).toEqual(MockView1);
       expect(nav['isTransitioning']).toEqual(false);
-
 
     }, 10000);
 
@@ -413,12 +354,11 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, view2, view3, NavDirection.Back
+        hasCompleted, requiresTransition, view2, view3, 'back'
       );
-      expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.getByIndex(1).component).toEqual(MockView2);
-
+      expect(nav.getLength()).toEqual(2);
+      expect(nav['views'][0].component).toEqual(MockView1);
+      expect(nav['views'][1].component).toEqual(MockView2);
 
     }, 10000);
 
@@ -434,12 +374,11 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, view2, view4, NavDirection.Back
+        hasCompleted, requiresTransition, view2, view4, 'back'
       );
-      expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.getByIndex(1).component).toEqual(MockView2);
-
+      expect(nav.getLength()).toEqual(2);
+      expect(nav['views'][0].component).toEqual(MockView1);
+      expect(nav['views'][1].component).toEqual(MockView2);
 
     }, 10000);
 
@@ -457,34 +396,26 @@ describe('NavController', () => {
 
       await nav.popTo(0, null, trnsDone);
 
-      // expect(instance1.ionViewCanEnter).toHaveBeenCalled();
       expect(instance1.ionViewWillEnter).toHaveBeenCalled();
       expect(instance1.ionViewDidEnter).toHaveBeenCalled();
-      // expect(instance1.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance1.ionViewWillLeave).not.toHaveBeenCalled();
       expect(instance1.ionViewDidLeave).not.toHaveBeenCalled();
       expect(instance1.ionViewWillUnload).not.toHaveBeenCalled();
 
-      // expect(instance2.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance2.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance2.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance2.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance2.ionViewWillLeave).toHaveBeenCalled();
       expect(instance2.ionViewDidLeave).toHaveBeenCalled();
       expect(instance2.ionViewWillUnload).toHaveBeenCalled();
 
-      // expect(instance3.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance3.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance3.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance3.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance3.ionViewWillLeave).toHaveBeenCalled();
       expect(instance3.ionViewDidLeave).toHaveBeenCalled();
       expect(instance3.ionViewWillUnload).toHaveBeenCalled();
 
-      // expect(instance4.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance4.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance4.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance4.ionViewCanLeave).toHaveBeenCalled();
       expect(instance4.ionViewWillLeave).toHaveBeenCalled();
       expect(instance4.ionViewDidLeave).toHaveBeenCalled();
       expect(instance4.ionViewWillUnload).toHaveBeenCalled();
@@ -492,10 +423,10 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, view1, view4, NavDirection.Back
+        hasCompleted, requiresTransition, view1, view4, 'back'
       );
-      expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
+      expect(nav.getLength()).toEqual(1);
+      expect(nav['views'][0].component).toEqual(MockView1);
 
     }, 10000);
 
@@ -517,34 +448,26 @@ describe('NavController', () => {
 
       await nav.popToRoot(null, trnsDone);
 
-      // expect(instance1.ionViewCanEnter).toHaveBeenCalled();
       expect(instance1.ionViewWillEnter).toHaveBeenCalled();
       expect(instance1.ionViewDidEnter).toHaveBeenCalled();
-      // expect(instance1.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance1.ionViewWillLeave).not.toHaveBeenCalled();
       expect(instance1.ionViewDidLeave).not.toHaveBeenCalled();
       expect(instance1.ionViewWillUnload).not.toHaveBeenCalled();
 
-      // expect(instance2.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance2.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance2.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance2.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance2.ionViewWillLeave).toHaveBeenCalled();
       expect(instance2.ionViewDidLeave).toHaveBeenCalled();
       expect(instance2.ionViewWillUnload).toHaveBeenCalled();
 
-      // expect(instance3.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance3.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance3.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance3.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance3.ionViewWillLeave).toHaveBeenCalled();
       expect(instance3.ionViewDidLeave).toHaveBeenCalled();
       expect(instance3.ionViewWillUnload).toHaveBeenCalled();
 
-      // expect(instance4.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance4.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance4.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance4.ionViewCanLeave).toHaveBeenCalled();
       expect(instance4.ionViewWillLeave).toHaveBeenCalled();
       expect(instance4.ionViewDidLeave).toHaveBeenCalled();
       expect(instance4.ionViewWillUnload).toHaveBeenCalled();
@@ -552,11 +475,10 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, view1, view4, NavDirection.Back
+        hasCompleted, requiresTransition, view1, view4, 'back'
       );
-      expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-
+      expect(nav.getLength()).toEqual(1);
+      expect(nav['views'][0].component).toEqual(MockView1);
 
     }, 10000);
 
@@ -570,9 +492,8 @@ describe('NavController', () => {
       expect(trnsDone).toHaveBeenCalledWith(
         hasCompleted, requiresTransition, undefined, undefined, undefined
       );
-      expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-
+      expect(nav.getLength()).toEqual(1);
+      expect(nav['views'][0].component).toEqual(MockView1);
 
     }, 10000);
 
@@ -594,34 +515,26 @@ describe('NavController', () => {
 
       await nav.removeIndex(0, 3, null, trnsDone);
 
-      // expect(instance1.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance1.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance1.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance1.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance1.ionViewWillLeave).toHaveBeenCalled();
       expect(instance1.ionViewDidLeave).toHaveBeenCalled();
       expect(instance1.ionViewWillUnload).toHaveBeenCalled();
 
-      // expect(instance2.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance2.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance2.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance2.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance2.ionViewWillLeave).toHaveBeenCalled();
       expect(instance2.ionViewDidLeave).toHaveBeenCalled();
       expect(instance2.ionViewWillUnload).toHaveBeenCalled();
 
-      // expect(instance3.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance3.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance3.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance3.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance3.ionViewWillLeave).toHaveBeenCalled();
       expect(instance3.ionViewDidLeave).toHaveBeenCalled();
       expect(instance3.ionViewWillUnload).toHaveBeenCalled();
 
-      // expect(instance4.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance4.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance4.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance4.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance4.ionViewWillLeave).not.toHaveBeenCalled();
       expect(instance4.ionViewDidLeave).not.toHaveBeenCalled();
       expect(instance4.ionViewWillUnload).not.toHaveBeenCalled();
@@ -631,9 +544,8 @@ describe('NavController', () => {
       expect(trnsDone).toHaveBeenCalledWith(
         hasCompleted, requiresTransition, undefined, undefined, undefined
       );
-      expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView4);
-
+      expect(nav.getLength()).toEqual(1);
+      expect(nav['views'][0].component).toEqual(MockView4);
 
     }, 10000);
 
@@ -653,42 +565,32 @@ describe('NavController', () => {
 
       await nav.removeIndex(2, 2, null, trnsDone);
 
-      // expect(instance1.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance1.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance1.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance1.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance1.ionViewWillLeave).not.toHaveBeenCalled();
       expect(instance1.ionViewDidLeave).not.toHaveBeenCalled();
       expect(instance1.ionViewWillUnload).not.toHaveBeenCalled();
 
-      // expect(instance2.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance2.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance2.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance2.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance2.ionViewWillLeave).not.toHaveBeenCalled();
       expect(instance2.ionViewDidLeave).not.toHaveBeenCalled();
       expect(instance2.ionViewWillUnload).not.toHaveBeenCalled();
 
-      // expect(instance3.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance3.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance3.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance3.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance3.ionViewWillLeave).toHaveBeenCalled();
       expect(instance3.ionViewDidLeave).toHaveBeenCalled();
       expect(instance3.ionViewWillUnload).toHaveBeenCalled();
 
-      // expect(instance4.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance4.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance4.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance4.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance4.ionViewWillLeave).toHaveBeenCalled();
       expect(instance4.ionViewDidLeave).toHaveBeenCalled();
       expect(instance4.ionViewWillUnload).toHaveBeenCalled();
 
-      // expect(instance5.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance5.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance5.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance5.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance5.ionViewWillLeave).not.toHaveBeenCalled();
       expect(instance5.ionViewDidLeave).not.toHaveBeenCalled();
       expect(instance5.ionViewWillUnload).not.toHaveBeenCalled();
@@ -698,11 +600,10 @@ describe('NavController', () => {
       expect(trnsDone).toHaveBeenCalledWith(
         hasCompleted, requiresTransition, undefined, undefined, undefined
       );
-      expect(nav.length()).toEqual(3);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.getByIndex(1).component).toEqual(MockView2);
-      expect(nav.getByIndex(2).component).toEqual(MockView5);
-
+      expect(nav.getLength()).toEqual(3);
+      expect(nav['views'][0].component).toEqual(MockView1);
+      expect(nav['views'][1].component).toEqual(MockView2);
+      expect(nav['views'][2].component).toEqual(MockView5);
 
     }, 10000);
 
@@ -720,34 +621,26 @@ describe('NavController', () => {
 
       await nav.removeIndex(2, 2, null, trnsDone);
 
-      // expect(instance1.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance1.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance1.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance1.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance1.ionViewWillLeave).not.toHaveBeenCalled();
       expect(instance1.ionViewDidLeave).not.toHaveBeenCalled();
       expect(instance1.ionViewWillUnload).not.toHaveBeenCalled();
 
-      // expect(instance2.ionViewCanEnter).toHaveBeenCalled();
       expect(instance2.ionViewWillEnter).toHaveBeenCalled();
       expect(instance2.ionViewDidEnter).toHaveBeenCalled();
-      // expect(instance2.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance2.ionViewWillLeave).not.toHaveBeenCalled();
       expect(instance2.ionViewDidLeave).not.toHaveBeenCalled();
       expect(instance2.ionViewWillUnload).not.toHaveBeenCalled();
 
-      // expect(instance3.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance3.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance3.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance3.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance3.ionViewWillLeave).toHaveBeenCalled();
       expect(instance3.ionViewDidLeave).toHaveBeenCalled();
       expect(instance3.ionViewWillUnload).toHaveBeenCalled();
 
-      // expect(instance4.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance4.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance4.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance4.ionViewCanLeave).toHaveBeenCalled();
       expect(instance4.ionViewWillLeave).toHaveBeenCalled();
       expect(instance4.ionViewDidLeave).toHaveBeenCalled();
       expect(instance4.ionViewWillUnload).toHaveBeenCalled();
@@ -755,12 +648,11 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, view2, view4, NavDirection.Back
+        hasCompleted, requiresTransition, view2, view4, 'back'
       );
-      expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.getByIndex(1).component).toEqual(MockView2);
-
+      expect(nav.getLength()).toEqual(2);
+      expect(nav['views'][0].component).toEqual(MockView1);
+      expect(nav['views'][1].component).toEqual(MockView2);
 
     }, 10000);
 
@@ -779,26 +671,20 @@ describe('NavController', () => {
       const instance3 = spyOnLifecycles(view3);
 
       await nav.setRoot(view3, null, null, trnsDone);
-      // expect(instance1.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance1.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance1.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance1.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance1.ionViewWillLeave).toHaveBeenCalled();
       expect(instance1.ionViewDidLeave).toHaveBeenCalled();
       expect(instance1.ionViewWillUnload).toHaveBeenCalled();
 
-      // expect(instance2.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance2.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance2.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance2.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance2.ionViewWillLeave).toHaveBeenCalled();
       expect(instance2.ionViewDidLeave).toHaveBeenCalled();
       expect(instance2.ionViewWillUnload).toHaveBeenCalled();
 
-      // expect(instance3.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance3.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance3.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance3.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance3.ionViewWillLeave).not.toHaveBeenCalled();
       expect(instance3.ionViewDidLeave).not.toHaveBeenCalled();
       expect(instance3.ionViewWillUnload).not.toHaveBeenCalled();
@@ -808,9 +694,8 @@ describe('NavController', () => {
       expect(trnsDone).toHaveBeenCalledWith(
         hasCompleted, requiresTransition, undefined, undefined, undefined
       );
-      expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView3);
-
+      expect(nav.getLength()).toEqual(1);
+      expect(nav['views'][0].component).toEqual(MockView3);
 
     }, 10000);
 
@@ -825,26 +710,20 @@ describe('NavController', () => {
       const instance3 = spyOnLifecycles(view3);
 
       await nav.setRoot(view2, null, null, trnsDone);
-      // expect(instance1.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance1.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance1.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance1.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance1.ionViewWillLeave).toHaveBeenCalled();
       expect(instance1.ionViewDidLeave).toHaveBeenCalled();
       expect(instance1.ionViewWillUnload).toHaveBeenCalled();
 
-      // expect(instance2.ionViewCanEnter).toHaveBeenCalled();
       expect(instance2.ionViewWillEnter).toHaveBeenCalled();
       expect(instance2.ionViewDidEnter).toHaveBeenCalled();
-      // expect(instance2.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance2.ionViewWillLeave).not.toHaveBeenCalled();
       expect(instance2.ionViewDidLeave).not.toHaveBeenCalled();
       expect(instance2.ionViewWillUnload).not.toHaveBeenCalled();
 
-      // expect(instance3.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance3.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance3.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance3.ionViewCanLeave).toHaveBeenCalled();
       expect(instance3.ionViewWillLeave).toHaveBeenCalled();
       expect(instance3.ionViewDidLeave).toHaveBeenCalled();
       expect(instance3.ionViewWillUnload).toHaveBeenCalled();
@@ -852,10 +731,10 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, view2, view3, NavDirection.Back
+        hasCompleted, requiresTransition, view2, view3, 'back'
       );
-      expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView2);
+      expect(nav.getLength()).toEqual(1);
+      expect(nav['views'][0].component).toEqual(MockView2);
 
     }, 10000);
 
@@ -870,26 +749,20 @@ describe('NavController', () => {
       const instance3 = spyOnLifecycles(view3);
 
       await nav.setRoot(view1, null, null, trnsDone);
-      // expect(instance1.ionViewCanEnter).toHaveBeenCalled();
       expect(instance1.ionViewWillEnter).toHaveBeenCalled();
       expect(instance1.ionViewDidEnter).toHaveBeenCalled();
-      // expect(instance1.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance1.ionViewWillLeave).not.toHaveBeenCalled();
       expect(instance1.ionViewDidLeave).not.toHaveBeenCalled();
       expect(instance1.ionViewWillUnload).not.toHaveBeenCalled();
 
-      // expect(instance2.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance2.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance2.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance2.ionViewCanLeave).not.toHaveBeenCalled();
       expect(instance2.ionViewWillLeave).toHaveBeenCalled();
       expect(instance2.ionViewDidLeave).toHaveBeenCalled();
       expect(instance2.ionViewWillUnload).toHaveBeenCalled();
 
-      // expect(instance3.ionViewCanEnter).not.toHaveBeenCalled();
       expect(instance3.ionViewWillEnter).not.toHaveBeenCalled();
       expect(instance3.ionViewDidEnter).not.toHaveBeenCalled();
-      // expect(instance3.ionViewCanLeave).toHaveBeenCalled();
       expect(instance3.ionViewWillLeave).toHaveBeenCalled();
       expect(instance3.ionViewDidLeave).toHaveBeenCalled();
       expect(instance3.ionViewWillUnload).toHaveBeenCalled();
@@ -897,12 +770,10 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, view1, view3, NavDirection.Back
+        hasCompleted, requiresTransition, view1, view3, 'back'
       );
-      expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-
-
+      expect(nav.getLength()).toEqual(1);
+      expect(nav['views'][0].component).toEqual(MockView1);
 
     }, 10000);
 
@@ -925,11 +796,10 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, view4, view3, NavDirection.Back
+        hasCompleted, requiresTransition, view4, view3, 'back'
       );
-      expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView4);
-
+      expect(nav.getLength()).toEqual(1);
+      expect(nav['views'][0].component).toEqual(MockView4);
 
     }, 10000);
   });
@@ -947,69 +817,48 @@ describe('NavController', () => {
       const view4 = mockView(MockView4);
       const view5 = mockView(MockView5);
 
-      await nav.setPages([{
-        page: view4
-      }, {
-        page: view5
-      }], null, trnsDone);
+      await nav.setPages([
+        { page: view4 },
+        { page: view5 }
+      ], null, trnsDone);
       expect(instance1.ionViewWillUnload).toHaveBeenCalled();
       expect(instance2.ionViewWillUnload).toHaveBeenCalled();
 
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, view5, view2, NavDirection.Back
+        hasCompleted, requiresTransition, view5, view2, 'back'
       );
-      expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(0).component).toEqual(MockView4);
-      expect(nav.getByIndex(1).component).toEqual(MockView5);
-
+      expect(nav.getLength()).toEqual(2);
+      expect(nav['views'][0].component).toEqual(MockView4);
+      expect(nav['views'][1].component).toEqual(MockView5);
 
     }, 10000);
 
   });
 
-
-  describe('componentDidUnload', () => {
-
-    it('should not crash when destroyed while transitioning', (done) => {
-      const view1 = mockView(MockView1);
-      nav.push(view1).then((succeded: boolean) => {
-        expect(succeded).toEqual(false);
-        done();
-      }).catch(() => {
-        fail('should never get here');
-        done();
-      });
-      nav.componentDidUnload();
-    }, 10000);
-  });
-
-  describe('canSwipeBack', () => {
+  describe('canStart', () => {
     it('should not swipe back when its not enabled', () => {
-      nav.swipeBackEnabled = false;
+      nav.swipeGesture = false;
 
       const view1 = mockView();
       const view2 = mockView();
       mockViews(nav, [view1, view2]);
 
-      const result = nav['canSwipeBack']();
+      const result = nav['canStart']();
       expect(result).toEqual(false);
     });
 
     it('should swipe back when has a view to go back to', () => {
-      nav.swipeBackEnabled = true;
+      nav.swipeGesture = true;
       const view1 = mockView();
       const view2 = mockView();
       mockViews(nav, [view1, view2]);
 
-      const result = nav['canSwipeBack']();
+      const result = nav['canStart']();
       expect(result).toEqual(true);
     });
   });
-
-
-  let nav: Nav;
 
   function spyOnLifecycles(view: ViewController) {
     const element = view.element as any;
@@ -1031,7 +880,6 @@ describe('NavController', () => {
       },
     });
 
-
     const instance = {
       ionViewWillEnter: jest.spyOn(element, 'ionViewWillEnter'),
       ionViewDidEnter: jest.spyOn(element, 'ionViewDidEnter'),
@@ -1040,70 +888,72 @@ describe('NavController', () => {
       ionViewWillUnload: jest.spyOn(element, 'ionViewWillUnload'),
     };
 
-    element.addEventListener('ionViewWillEnter', element.ionViewWillEnter);
-    element.addEventListener('ionViewDidEnter', element.ionViewDidEnter);
-    element.addEventListener('ionViewWillLeave', element.ionViewWillLeave);
-    element.addEventListener('ionViewDidLeave', element.ionViewDidLeave);
-    element.addEventListener('ionViewWillUnload', element.ionViewWillUnload);
+    element.dispatchEvent = (ev: CustomEvent) => {
+      switch(ev.type) {
+        case 'ionViewWillEnter': element.ionViewWillEnter(); break;
+        case 'ionViewDidEnter': element.ionViewDidEnter(); break;
+        case 'ionViewWillLeave': element.ionViewWillLeave(); break;
+        case 'ionViewDidLeave': element.ionViewDidLeave(); break;
+        case 'ionViewWillUnload': element.ionViewWillUnload(); break;
+      }
+    };
     return instance;
   }
 
   let trnsDone: jest.Mock;
-  beforeEach(() => {
+  let nav: Nav;
+  let win: Window;
+
+  beforeEach(async () => {
     trnsDone = jest.fn();
+    win = mockWindow();
     nav = mockNavController();
   });
 
-});
+  const MockView = 'mock-view';
+  const MockView1 = 'mock-view1';
+  const MockView2 = 'mock-view2';
+  const MockView3 = 'mock-view3';
+  const MockView4 = 'mock-view4';
+  const MockView5 = 'mock-view5';
 
-const MockView = 'mock-view';
-const MockView1 = 'mock-view1';
-const MockView2 = 'mock-view2';
-const MockView3 = 'mock-view3';
-const MockView4 = 'mock-view4';
-const MockView5 = 'mock-view5';
-const dom = mockDocument();
+  function mockView(component?: any, params?: ComponentProps) {
+    if (!component) {
+      component = MockView;
+    }
 
-
-mockLifecycle(function(name: string, params: any) {
-  const event = dom.createEvent('CustomEvent');
-  event.initCustomEvent(name, false, false, params.detail);
-  return event;
-});
-
-function mockView(component ?: any, data ?: any) {
-  if (!component) {
-    component = MockView;
+    const view = new ViewController(component, params);
+    view.element = win.document.createElement(component) as HTMLElement;
+    return view;
   }
 
-  const view = new ViewController(component, data);
-  view.element = mockElement(component) as HTMLElement;
-  return view;
-}
+  function mockViews(navI: Nav, views: ViewController[]) {
+    navI['views'] = views;
+    views.forEach(v => {
+      v.nav = navI;
+    });
+  }
 
-function mockViews(nav: Nav, views: ViewController[]) {
-  nav['views'] = views;
-  views.forEach(v => {
-    v.nav = nav;
-  });
-}
+  function mockNavController(): Nav {
+    const navI = new Nav() as any;
+    navI.animated = false;
+    navI.el = win.document.createElement('ion-nav');
+    navI.win = win;
+    navI.queue = { write: (fn: any) => fn(), read: (fn: any) => fn() };
+    navI.ionNavDidChange = { emit() { return; } };
+    navI.ionNavWillChange = { emit() { return; } };
 
-function mockNavController(): Nav {
-  const nav = new Nav() as any;
-  nav.el = mockElement('ion-nav') as HTMLElement;
-  nav.ionNavDidChange = {emit: function() { return; } };
-  nav.ionNavWillChange = {emit: function() { return; } };
-
-  nav.animationCtrl = new AnimationControllerImpl() as any;
-  nav.config = createConfigController({animate: false}, []);
-  nav._viewInit = function (enteringView: ViewController) {
-    if (!enteringView.element) {
-      console.log(enteringView.component);
-      enteringView.element = (typeof enteringView.component === 'string')
-        ? mockElement(enteringView.component) as HTMLElement
-        : enteringView.element = enteringView.component as HTMLElement;
-    }
-    enteringView.state = ViewState.Attached;
-  };
-  return nav;
-}
+    navI.animationCtrl = new AnimationControllerImpl() as any;
+    navI.config = new Config({ animated: false });
+    navI._viewInit = (enteringView: ViewController) => {
+      if (!enteringView.element) {
+        console.log(enteringView.component);
+        enteringView.element = (typeof enteringView.component === 'string')
+          ? win.document.createElement(enteringView.component)
+          : enteringView.element = enteringView.component as HTMLElement;
+      }
+      enteringView.state = ViewState.Attached;
+    };
+    return navI;
+  }
+});

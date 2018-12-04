@@ -16,250 +16,152 @@ The loading indicator can be dismissed automatically after a specific amount of 
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Angular
+
+```typescript
+import { Component } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
+
+@Component({
+  selector: 'loading-example',
+  templateUrl: 'loading-example.html',
+  styleUrls: ['./loading-example.css']
+})
+export class LoadingExample {
+  constructor(public loadingController: LoadingController) {}
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Hellooo',
+      duration: 2000
+    });
+    return await loading.present();
+  }
+
+  async presentLoadingWithOptions() {
+    const loading = await this.loadingController.create({
+      spinner: null,
+      duration: 5000,
+      message: 'Please wait...',
+      translucent: true,
+      cssClass: 'custom-class custom-loading'
+    });
+    return await loading.present();
+  }
+}
+```
+
+
+### Javascript
+
+```javascript
+async function presentLoading() {
+  const loadingController = document.querySelector('ion-loading-controller');
+  await loadingController.componentOnReady();
+
+  const loading = await loadingController.create({
+    message: 'Hellooo',
+    duration: 2000
+  });
+  return await loading.present();
+}
+
+async function presentLoadingWithOptions() {
+  const loadingController = document.querySelector('ion-loading-controller');
+  await loadingController.componentOnReady();
+
+  const loading = await loadingController.create({
+    spinner: null,
+    duration: 5000,
+    message: 'Please wait...',
+    translucent: true,
+    cssClass: 'custom-class custom-loading'
+  });
+  return await loading.present();
+}
+```
+
+
+
 ## Properties
 
-#### content
-
-string
-
-Optional text content to display in the loading indicator.
-
-
-#### cssClass
-
-
-
-Additional classes to apply for custom CSS. If multiple classes are
-provided they should be separated by spaces.
-
-
-#### dismissOnPageChange
-
-boolean
-
-If true, the loading indicator will dismiss when the page changes. Defaults to `false`.
-
-
-#### duration
-
-number
-
-Number of milliseconds to wait before dismissing the loading indicator.
-
-
-#### enableBackdropDismiss
-
-boolean
-
-If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
-
-
-#### enterAnimation
-
-
-
-Animation to use when the loading indicator is presented.
-
-
-#### keyboardClose
-
-boolean
-
-
-#### leaveAnimation
-
-
-
-Animation to use when the loading indicator is dismissed.
-
-
-#### overlayId
-
-number
-
-
-#### showBackdrop
-
-boolean
-
-If true, a backdrop will be displayed behind the loading indicator. Defaults to `true`.
-
-
-#### spinner
-
-string
-
-The name of the spinner to display. Possible values are: `"lines"`, `"lines-small"`, `"dots"`,
-`"bubbles"`, `"circles"`, `"crescent"`.
-
-
-#### translucent
-
-boolean
-
-If true, the loading indicator will be translucent. Defaults to `false`.
-
-
-#### willAnimate
-
-boolean
-
-If true, the loading indicator will animate. Defaults to `true`.
-
-
-## Attributes
-
-#### content
-
-string
-
-Optional text content to display in the loading indicator.
-
-
-#### css-class
-
-
-
-Additional classes to apply for custom CSS. If multiple classes are
-provided they should be separated by spaces.
-
-
-#### dismiss-on-page-change
-
-boolean
-
-If true, the loading indicator will dismiss when the page changes. Defaults to `false`.
-
-
-#### duration
-
-number
-
-Number of milliseconds to wait before dismissing the loading indicator.
-
-
-#### enable-backdrop-dismiss
-
-boolean
-
-If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
-
-
-#### enter-animation
-
-
-
-Animation to use when the loading indicator is presented.
-
-
-#### keyboard-close
-
-boolean
-
-
-#### leave-animation
-
-
-
-Animation to use when the loading indicator is dismissed.
-
-
-#### overlay-id
-
-number
-
-
-#### show-backdrop
-
-boolean
-
-If true, a backdrop will be displayed behind the loading indicator. Defaults to `true`.
-
-
-#### spinner
-
-string
-
-The name of the spinner to display. Possible values are: `"lines"`, `"lines-small"`, `"dots"`,
-`"bubbles"`, `"circles"`, `"crescent"`.
-
-
-#### translucent
-
-boolean
-
-If true, the loading indicator will be translucent. Defaults to `false`.
-
-
-#### will-animate
-
-boolean
-
-If true, the loading indicator will animate. Defaults to `true`.
+| Property          | Attribute          | Description                                                                                                      | Type                                                                                              | Default     |
+| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ----------- |
+| `animated`        | `animated`         | If `true`, the loading indicator will animate.                                                                   | `boolean`                                                                                         | `true`      |
+| `backdropDismiss` | `backdrop-dismiss` | If `true`, the loading indicator will be dismissed when the backdrop is clicked.                                 | `boolean`                                                                                         | `false`     |
+| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string \| string[] \| undefined`                                                                 | `undefined` |
+| `duration`        | `duration`         | Number of milliseconds to wait before dismissing the loading indicator.                                          | `number`                                                                                          | `0`         |
+| `enterAnimation`  | --                 | Animation to use when the loading indicator is presented.                                                        | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined`            | `undefined` |
+| `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                                                                                         | `true`      |
+| `leaveAnimation`  | --                 | Animation to use when the loading indicator is dismissed.                                                        | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined`            | `undefined` |
+| `message`         | `message`          | Optional text content to display in the loading indicator.                                                       | `string \| undefined`                                                                             | `undefined` |
+| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                                                                                   | `undefined` |
+| `showBackdrop`    | `show-backdrop`    | If `true`, a backdrop will be displayed behind the loading indicator.                                            | `boolean`                                                                                         | `true`      |
+| `spinner`         | `spinner`          | The name of the spinner to display.                                                                              | `"bubbles" \| "circles" \| "crescent" \| "dots" \| "lines" \| "lines-small" \| null \| undefined` | `undefined` |
+| `translucent`     | `translucent`      | If `true`, the loading indicator will be translucent.                                                            | `boolean`                                                                                         | `false`     |
 
 
 ## Events
 
-#### ionLoadingDidDismiss
-
-Emitted after the loading has dismissed.
-
-
-#### ionLoadingDidLoad
-
-Emitted after the loading has loaded.
-
-
-#### ionLoadingDidPresent
-
-Emitted after the loading has presented.
-
-
-#### ionLoadingDidUnload
-
-Emitted after the loading has unloaded.
-
-
-#### ionLoadingWillDismiss
-
-Emitted before the loading has dismissed.
-
-
-#### ionLoadingWillPresent
-
-Emitted before the loading has presented.
+| Event                   | Description                               | Detail             |
+| ----------------------- | ----------------------------------------- | ------------------ |
+| `ionLoadingDidDismiss`  | Emitted after the loading has dismissed.  | OverlayEventDetail |
+| `ionLoadingDidLoad`     | Emitted after the loading has loaded.     | void               |
+| `ionLoadingDidPresent`  | Emitted after the loading has presented.  | void               |
+| `ionLoadingDidUnload`   | Emitted after the loading has unloaded.   | void               |
+| `ionLoadingWillDismiss` | Emitted before the loading has dismissed. | OverlayEventDetail |
+| `ionLoadingWillPresent` | Emitted before the loading has presented. | void               |
 
 
 ## Methods
 
-#### dismiss()
+### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
 
 Dismiss the loading overlay after it has been presented.
 
+#### Parameters
 
-#### onDidDismiss()
+| Name   | Type                  | Description |
+| ------ | --------------------- | ----------- |
+| `data` | `any`                 |             |
+| `role` | `string \| undefined` |             |
 
-Returns a promise that resolves when the loading did dismiss. It also accepts a callback
-that is called in the same circustances.
+#### Returns
 
-```
-const {data, role} = await loading.onDidDismiss();
-```
-
-
-#### onWillDismiss()
-
-Returns a promise that resolves when the loading will dismiss. It also accepts a callback
-that is called in the same circustances.
-
-```
-const {data, role} = await loading.onWillDismiss();
-```
+Type: `Promise<boolean>`
 
 
-#### present()
+
+### `onDidDismiss() => Promise<OverlayEventDetail<any>>`
+
+Returns a promise that resolves when the loading did dismiss.
+
+#### Returns
+
+Type: `Promise<OverlayEventDetail<any>>`
+
+
+
+### `onWillDismiss() => Promise<OverlayEventDetail<any>>`
+
+Returns a promise that resolves when the loading will dismiss.
+
+#### Returns
+
+Type: `Promise<OverlayEventDetail<any>>`
+
+
+
+### `present() => Promise<void>`
 
 Present the loading overlay after it has been created.
+
+#### Returns
+
+Type: `Promise<void>`
+
 
 
 

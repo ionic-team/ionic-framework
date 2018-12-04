@@ -4,36 +4,34 @@
 // iOS Back Button
 // --------------------------------------------------
 
-.back-button-ios .back-button-inner {
-  @include padding(0);
-  @include margin(2px, 0, 0, 0);
+:host {
+  --color: #{$back-button-ios-color};
+  --margin-top: 0;
+  --margin-end: 0;
+  --margin-bottom: 0;
+  --margin-start: 0;
+  --padding-top: 0;
+  --padding-end: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --min-height: 32px;
+  --min-width: auto;
+  --icon-padding-top: 0;
+  --icon-padding-end: 0;
+  --icon-padding-bottom: 0;
+  --icon-padding-start: 0;
+  --icon-margin-top: 0;
+  --icon-margin-end: -5px;
+  --icon-margin-bottom: 0;
+  --icon-margin-start: -4px;
+  --icon-font-size: 1.85em;
 
-  z-index: $back-button-ios-button-z-index;
-  overflow: visible;
-
-  min-height: 32px;
-
-  border: 0;
   font-size: 17px;
-  line-height: 1;
-
-  color: $back-button-ios-color;
-  background-color: transparent;
-
-  transform: translateZ(0);
-
-  &.activated {
-    opacity: .4;
-  }
 }
 
-.back-button-ios ion-icon {
-  @include padding(0);
-  @include margin(0, -5px, 0, -4px);
+.button-native {
+  transform: translateZ(0);
 
-  display: inherit;
-
-  font-size: 1.85em;
-
-  pointer-events: none;
+  overflow: visible;
+  z-index: $back-button-ios-button-z-index;
 }

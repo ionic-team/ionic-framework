@@ -4,7 +4,8 @@
 // iOS Reorder
 // --------------------------------------------------
 
-.reorder-ios .reorder-icon {
+.reorder-icon {
   font-size: $reorder-ios-icon-font-size;
-  opacity: $reorder-ios-icon-font-size;
+
+  opacity: $reorder-ios-icon-opacity;
 }

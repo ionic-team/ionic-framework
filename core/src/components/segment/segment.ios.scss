@@ -4,22 +4,69 @@
 // iOS Segment
 // --------------------------------------------------
 
-.segment-ios {
-  font-family: $segment-ios-font-family;
-}
-
-.segment-ios.segment-disabled {
+:host(.segment-disabled) {
   opacity: $segment-ios-opacity-disabled;
-
-  pointer-events: none;
 }
 
 
-// iOS Segment in Toolbar
+// Segment: Color
 // --------------------------------------------------
 
-.toolbar-ios .segment-ios {
-  @include position(0, 0, 0, 0);
+:host(.ion-color)::slotted(ion-segment-button) {
+  --border-color: #{current-color(base)};
+  --background-hover: #{current-color(base, .04)};
 
-  position: absolute;
+  color: #{current-color(base)};
+}
+
+:host(.ion-color)::slotted(.activated) {
+  background: #{current-color(base, .16)};
+  color: #{current-color(base)};
+}
+
+:host(.ion-color)::slotted(.segment-button-checked.activated),
+:host(.ion-color)::slotted(.segment-button-checked) {
+  background: #{current-color(base)};
+  color: #{current-color(contrast)};
+}
+
+:host(.ion-color)::slotted(.segment-button-disabled) {
+  color: #{current-color(base, $segment-ios-opacity-disabled)};
+}
+
+:host(.ion-color)::slotted(.segment-button-checked.segment-button-disabled) {
+  color: #{current-color(contrast, $segment-ios-opacity-disabled)};
+}
+
+
+// Segment: Default Toolbar
+// --------------------------------------------------
+
+:host-context(ion-toolbar)::slotted(ion-segment-button) {
+  max-width: $segment-button-ios-toolbar-button-max-width;
+
+  font-size: $segment-button-ios-toolbar-font-size;
+
+  line-height: $segment-button-ios-toolbar-line-height;
+}
+
+:host-context(ion-toolbar):not(.ion-color)::slotted(ion-segment-button) {
+  --background-checked: var(--color);
+  --border-color: var(--color);
+  --color: #{var(--ion-toolbar-color-unchecked, $segment-button-ios-text-color)};
+  --color-checked: #{var(--ion-toolbar-color-checked, $segment-button-ios-text-color-checked)};
+}
+
+// Segment: Color Toolbar
+// --------------------------------------------------
+
+:host-context(ion-toolbar.ion-color):not(.ion-color)::slotted(ion-segment-button) {
+  --color: #{current-color(contrast)};
+  --color-disabled: #{current-color(contrast, $segment-button-ios-opacity-disabled)};
+  --color-checked: #{current-color(base)};
+  --color-checked-disabled: #{current-color(contrast, $segment-button-ios-opacity-disabled)};
+  --background-hover: #{current-color(contrast, $segment-button-ios-opacity-hover)};
+  --background-activated: #{current-color(contrast, $segment-button-ios-opacity-activated)};
+  --background-checked: #{current-color(contrast)};
+  --border-color: #{current-color(contrast)};
 }

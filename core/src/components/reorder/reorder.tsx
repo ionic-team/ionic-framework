@@ -1,5 +1,6 @@
-import { Component, Element } from '@stencil/core';
+import { Component, ComponentInterface } from '@stencil/core';
 
+import { Mode } from '../../interface';
 
 @Component({
   tag: 'ion-reorder',
@@ -7,34 +8,18 @@ import { Component, Element } from '@stencil/core';
     ios: 'reorder.ios.scss',
     md: 'reorder.md.scss',
   },
-  host: {
-    theme: 'reorder'
-  }
+  shadow: true
 })
-export class Reorder {
+export class Reorder implements ComponentInterface {
 
-  private custom = true;
-
-  @Element() private el: HTMLElement;
-
-  componentWillLoad() {
-    this.custom = this.el.childElementCount > 0;
-  }
-
-  hostData() {
-    const hostClasses = {
-      'reorder-custom': this.custom
-    };
-
-    return {
-      class: hostClasses
-    };
-  }
+  mode!: Mode;
 
   render() {
-    return (this.custom)
-      ? <slot/>
-      : <ion-icon class='reorder-icon' name='reorder'/>;
+    return (
+      <slot>
+        <ion-icon name="reorder" lazy={false} class="reorder-icon" />
+      </slot>
+    );
   }
 
 }

@@ -5,35 +5,37 @@
   <meta charset="UTF-8">
   <title>Item - Reorder</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
   <ion-app>
 
-      <ion-header>
-        <ion-toolbar color="primary">
-          <ion-title>Item Reorder</ion-title>
-          <ion-buttons slot="primary">
-            <ion-button onclick="toggle()">Edit</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content id="content">
-        <ion-list>
-          <ion-reorder-group id="reorderGroup"></ion-reorder-group>
-        </ion-list>
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>Item Reorder</ion-title>
+        <ion-buttons slot="primary">
+          <ion-button onclick="toggle()">Edit</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content id="content">
+      <ion-list>
+        <ion-reorder-group id="reorderGroup"></ion-reorder-group>
+      </ion-list>
 
-        <ion-list>
-          <ion-list-header>start</ion-list-header>
-          <ion-reorder-group id="startGroup"></ion-reorder-group>
-        </ion-list>
+      <ion-list>
+        <ion-list-header>start</ion-list-header>
+        <ion-reorder-group id="startGroup"></ion-reorder-group>
+      </ion-list>
 
-        <ion-list>
-          <ion-list-header>end</ion-list-header>
-          <ion-reorder-group id="endGroup"></ion-reorder-group>
-        </ion-list>
-      </ion-content>
+      <ion-list>
+        <ion-list-header>end</ion-list-header>
+        <ion-reorder-group id="endGroup"></ion-reorder-group>
+      </ion-list>
+    </ion-content>
 
   </ion-app>
 
@@ -41,6 +43,7 @@
     .item {
       background-color: inherit;
     }
+
   </style>
 
   <script>
@@ -87,7 +90,7 @@
     function initGroup(group) {
       var groupEl = document.getElementById(group.id);
 
-      groupEl.addEventListener('ionItemReorder', function(ev) {
+      groupEl.addEventListener('ionItemReorder', function (ev) {
         reorder(groupEl, groupItems, indexes);
       });
 
@@ -110,7 +113,7 @@
       for (var i = 0; i < items.length; i++) {
         groupEl.innerHTML += `
           <ion-item onClick="clickedButton(${i})"
-            style="min-height: ${i * 2 + 35}px; background-color: rgb(${255 - i * 4}, ${255 - i * 4}, ${255 - i * 4})">
+            style="min-height: ${i * 2 + 35}px; --background: rgb(${255 - i * 4}, ${255 - i * 4}, ${255 - i * 4})">
             ${i}
             <ion-reorder slot="end"></ion-reorder>
           </ion-item>`;
@@ -140,4 +143,5 @@
       }
     }
   </script>
+
 </html>

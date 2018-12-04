@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "strict": true,
     "alwaysStrict": true,
     "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
@@ -12,7 +13,7 @@
       "dom",
       "es2017"
     ],
-    "module": "es2015",
+    "module": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": true,
     "noImplicitReturns": true,
@@ -21,12 +22,12 @@
     "outDir": ".tmp",
     "pretty": true,
     "removeComments": false,
-    "strictPropertyInitialization": false,
     "target": "es2017"
   },
   "include": [
     "src/**/*.ts",
-    "src/**/*.tsx"
+    "src/**/*.tsx",
+    "stencil.config.ts"
   ],
   "exclude": [
     "node_modules"

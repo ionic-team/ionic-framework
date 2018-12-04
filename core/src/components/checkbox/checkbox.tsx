@@ -1,8 +1,8 @@
-import { BlurEvent, CheckboxInput, CheckedInputChangeEvent, FocusEvent, StyleEvent } from '../../utils/input-interfaces';
-import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { CssClassMap } from '../../index';
-import { deferEvent } from '../../utils/helpers';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
+import { CheckedInputChangeEvent, Color, Mode, StyleEvent } from '../../interface';
+import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 @Component({
   tag: 'ion-checkbox',
@@ -10,159 +10,151 @@ import { deferEvent } from '../../utils/helpers';
     ios: 'checkbox.ios.scss',
     md: 'checkbox.md.scss'
   },
-  host: {
-    theme: 'checkbox'
-  }
+  shadow: true
 })
-export class Checkbox implements CheckboxInput {
-  private didLoad: boolean;
-  private inputId: string;
-  private nativeInput: HTMLInputElement;
+export class Checkbox implements ComponentInterface {
 
-  @State() keyFocus: boolean;
+  private inputId = `ion-cb-${checkboxIds++}`;
+
+  @Element() el!: HTMLElement;
+
+  @State() keyFocus = false;
 
   /**
-   * The color to use.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color: string;
+  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop({ mutable: true }) name: string;
+  @Prop() name: string = this.inputId;
 
   /**
-   * If true, the checkbox is selected. Defaults to `false`.
+   * If `true`, the checkbox is selected.
    */
   @Prop({ mutable: true }) checked = false;
 
   /**
-   * If true, the user cannot interact with the checkbox. Defaults to `false`.
+   * If `true`, the user cannot interact with the checkbox.
    */
   @Prop() disabled = false;
 
   /**
-   * the value of the checkbox.
+   * The value of the toggle does not mean if it's checked or not, use the `checked`
+   * property for that.
+   *
+   * The value of a toggle is analogous to the value of a `<input type="checkbox">`,
+   * it's only used when the toggle participates in a native `<form>`.
    */
   @Prop() value = 'on';
 
   /**
    * Emitted when the checked property has changed.
    */
-  @Event() ionChange: EventEmitter<CheckedInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<CheckedInputChangeEvent>;
 
   /**
    * Emitted when the toggle has focus.
    */
-  @Event() ionFocus: EventEmitter<FocusEvent>;
+  @Event() ionFocus!: EventEmitter<void>;
 
   /**
    * Emitted when the toggle loses focus.
    */
-  @Event() ionBlur: EventEmitter<BlurEvent>;
+  @Event() ionBlur!: EventEmitter<void>;
 
   /**
    * Emitted when the styles change.
+   * @internal
    */
-  @Event() ionStyle: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEvent>;
 
   componentWillLoad() {
-    this.inputId = `ion-cb-${checkboxIds++}`;
-    if (this.name === undefined) {
-      this.name = this.inputId;
-    }
     this.emitStyle();
-  }
-
-  componentDidLoad() {
-    this.ionStyle = deferEvent(this.ionStyle);
-    this.didLoad = true;
-
-    const parentItem = this.nativeInput.closest('ion-item');
-    if (parentItem) {
-      const itemLabel = parentItem.querySelector('ion-label');
-      if (itemLabel) {
-        itemLabel.id = this.inputId + '-lbl';
-        this.nativeInput.setAttribute('aria-labelledby', itemLabel.id);
-      }
-    }
   }
 
   @Watch('checked')
   checkedChanged(isChecked: boolean) {
-    if (this.didLoad) {
-      this.ionChange.emit({
-        checked: isChecked,
-        value: this.value
-      });
-    }
+    this.ionChange.emit({
+      checked: isChecked,
+      value: this.value
+    });
     this.emitStyle();
   }
 
   @Watch('disabled')
   emitStyle() {
     this.ionStyle.emit({
-      'checkbox-disabled': this.disabled,
       'checkbox-checked': this.checked,
+      'interactive-disabled': this.disabled,
     });
   }
 
-  onChange() {
+  private onClick = () => {
     this.checked = !this.checked;
   }
 
-  onKeyUp() {
+  private onKeyUp = () => {
     this.keyFocus = true;
   }
 
-  onFocus() {
+  private onFocus = () => {
     this.ionFocus.emit();
   }
 
-  onBlur() {
+  private onBlur = () => {
     this.keyFocus = false;
     this.ionBlur.emit();
   }
 
   hostData() {
+    const labelId = this.inputId + '-lbl';
+    const label = findItemLabel(this.el);
+    if (label) {
+      label.id = labelId;
+    }
     return {
+      'role': 'checkbox',
+      'aria-disabled': this.disabled ? 'true' : null,
+      'aria-checked': `${this.checked}`,
+      'aria-labelledby': labelId,
       class: {
+        ...createColorClasses(this.color),
+        'in-item': hostContext('ion-item', this.el),
         'checkbox-checked': this.checked,
         'checkbox-disabled': this.disabled,
-        'checkbox-key': this.keyFocus
+        'checkbox-key': this.keyFocus,
+        'interactive': true
       }
     };
   }
 
   render() {
-    const checkboxClasses: CssClassMap = {
-      'checkbox-icon': true,
-      'checkbox-checked': this.checked
-    };
+    renderHiddenInput(true, this.el, this.name, (this.checked ? this.value : ''), this.disabled);
 
     return [
-      <div class={checkboxClasses}>
-        <div class='checkbox-inner'></div>
-      </div>,
-      <input
-        type='checkbox'
-        onChange={this.onChange.bind(this)}
-        onFocus={this.onFocus.bind(this)}
-        onBlur={this.onBlur.bind(this)}
-        onKeyUp={this.onKeyUp.bind(this)}
-        checked={this.checked}
-        id={this.inputId}
-        name={this.name}
-        value={this.value}
-        disabled={this.disabled}
-        ref={r => this.nativeInput = (r as any)}/>
+      <svg class="checkbox-icon" viewBox="0 0 24 24">
+        { this.mode === 'md'
+          ? <path d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+          : <path d="M5.9,12.5l3.8,3.8l8.8-8.8"/>
+        }
+      </svg>,
+      <button
+        type="button"
+        onClick={this.onClick}
+        onKeyUp={this.onKeyUp}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+      >
+      </button>
     ];
   }
 }

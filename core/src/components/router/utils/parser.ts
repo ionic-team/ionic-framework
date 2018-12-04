@@ -1,6 +1,5 @@
-import { RouteChain, RouteNode, RouteRedirect, RouteTree } from './interfaces';
+import { RouteChain, RouteNode, RouteRedirect, RouteTree } from './interface';
 import { parsePath } from './path';
-
 
 export function readRedirects(root: Element): RouteRedirect[] {
   return (Array.from(root.children) as HTMLIonRouteRedirectElement[])
@@ -14,27 +13,35 @@ export function readRedirects(root: Element): RouteRedirect[] {
     });
 }
 
-export function readRoutes(root: Element, node = root): RouteTree {
+export function readRoutes(root: Element): RouteChain[] {
+  return flattenRouterTree(readRouteNodes(root));
+}
+
+export function readRouteNodes(root: Element, node = root): RouteTree {
   return (Array.from(node.children) as HTMLIonRouteElement[])
     .filter(el => el.tagName === 'ION-ROUTE' && el.component)
     .map(el => {
+      const component = readProp(el, 'component');
+      if (component == null) {
+        throw new Error('component missing in ion-route');
+      }
       return {
         path: parsePath(readProp(el, 'url')),
-        id: readProp(el, 'component').toLowerCase(),
+        id: component.toLowerCase(),
         params: el.componentProps,
-        children: readRoutes(root, el)
+        children: readRouteNodes(root, el)
       };
     });
 }
 
-export function readProp(el: HTMLElement, prop: string): string|undefined {
+export function readProp(el: HTMLElement, prop: string): string | null | undefined {
   if (prop in el) {
     return (el as any)[prop];
   }
   if (el.hasAttribute(prop)) {
     return el.getAttribute(prop);
   }
-  return undefined;
+  return null;
 }
 
 export function flattenRouterTree(nodes: RouteTree): RouteChain[] {

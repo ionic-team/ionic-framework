@@ -1,12 +1,10 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
-import { BaseInputComponent, GestureDetail } from '../../index';
-import { clamp, debounceEvent } from '../../utils/helpers';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-export interface Tick {
-  ratio: number | (() => number);
-  left: string;
-  active?: boolean;
-}
+import { Color, Gesture, GestureDetail, InputChangeEvent, Mode, RangeValue, StyleEvent } from '../../interface';
+import { clamp, debounceEvent } from '../../utils/helpers';
+import { createColorClasses, hostContext } from '../../utils/theme';
+
+import { Knob, RangeEventDetail } from './range-interface';
 
 @Component({
   tag: 'ion-range',
@@ -14,71 +12,39 @@ export interface Tick {
     ios: 'range.ios.scss',
     md: 'range.md.scss'
   },
-  host: {
-    theme: 'range'
-  }
+  shadow: true
 })
-export class Range implements BaseInputComponent {
+export class Range implements ComponentInterface {
 
-  private styleTmr: any;
+  private noUpdate = false;
+  private rect!: ClientRect;
+  private hasFocus = false;
+  private rangeSlider?: HTMLElement;
+  private gesture?: Gesture;
 
-  activated = false;
-  hasFocus = false;
-  startX: number;
+  @Element() el!: HTMLStencilElement;
 
-  @Element() private el: HTMLElement;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
 
-  @State() barL: string;
-  @State() barR: string;
-  @State() valA = 0;
-  @State() valB = 0;
-  @State() ratioA = 0;
-  @State() ratioB = 0;
-  @State() ticks: Tick[] = [];
-  @State() activeB: boolean;
-  @State() rect: ClientRect;
-
-  @State() pressed: boolean;
-  @State() pressedA: boolean;
-  @State() pressedB: boolean;
+  @State() private ratioA = 0;
+  @State() private ratioB = 0;
+  @State() private pressedKnob: Knob;
 
   /**
-   * Emitted when the value property has changed.
-   */
-  @Event() ionChange: EventEmitter;
-
-  /**
-   * Emitted when the styles change.
-   */
-  @Event() ionStyle: EventEmitter;
-
-  /**
-   * Emitted when the range has focus.
-   */
-  @Event() ionFocus: EventEmitter;
-
-  /**
-   * Emitted when the range loses focus.
-   */
-  @Event() ionBlur: EventEmitter;
-
-  /**
-   * The color to use from your Sass `$colors` map.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color: string;
+  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
   /**
    * How long, in milliseconds, to wait to trigger the
-   * `ionChange` event after each change in the range value. Default `0`.
+   * `ionChange` event after each change in the range value.
    */
   @Prop() debounce = 0;
 
@@ -87,79 +53,177 @@ export class Range implements BaseInputComponent {
     this.ionChange = debounceEvent(this.ionChange, this.debounce);
   }
 
-  /*
-   * If true, the user cannot interact with the range. Defaults to `false`.
+  /**
+   * The name of the control, which is submitted with the form data.
    */
-  @Prop() disabled = false;
+  @Prop() name = '';
 
   /**
-   * Show two knobs. Defaults to `false`.
+   * Show two knobs.
    */
   @Prop() dualKnobs = false;
 
   /**
-   * Maximum integer value of the range. Defaults to `100`.
-   */
-  @Prop() max = 100;
-
-  /**
-   * Minimum integer value of the range. Defaults to `0`.
+   * Minimum integer value of the range.
    */
   @Prop() min = 0;
+  @Watch('min')
+  protected minChanged() {
+    if (!this.noUpdate) {
+      this.updateRatio();
+    }
+  }
 
   /**
-   * If true, a pin with integer value is shown when the knob
-   * is pressed. Defaults to `false`.
+   * Maximum integer value of the range.
+   */
+  @Prop() max = 100;
+  @Watch('max')
+  protected maxChanged() {
+    if (!this.noUpdate) {
+      this.updateRatio();
+    }
+  }
+
+  /**
+   * If `true`, a pin with integer value is shown when the knob
+   * is pressed.
    */
   @Prop() pin = false;
 
   /**
-   * If true, the knob snaps to tick marks evenly spaced based
-   * on the step property value. Defaults to `false`.
+   * If `true`, the knob snaps to tick marks evenly spaced based
+   * on the step property value.
    */
   @Prop() snaps = false;
 
   /**
-   * Specifies the value granularity. Defaults to `1`.
+   * Specifies the value granularity.
    */
   @Prop() step = 1;
 
   /**
-   * the value of the range.
+   * If `true`, the user cannot interact with the range.
    */
-  @Prop({ mutable: true }) value: any;
-
-
+  @Prop() disabled = false;
   @Watch('disabled')
   protected disabledChanged() {
+    if (this.gesture) {
+      this.gesture.setDisabled(this.disabled);
+    }
     this.emitStyle();
   }
 
+  /**
+   * the value of the range.
+   */
+  @Prop({ mutable: true }) value: RangeValue = 0;
   @Watch('value')
-  protected valueChanged(val: boolean) {
-    this.ionChange.emit({value: val});
-    this.inputUpdated();
-    this.emitStyle();
+  protected valueChanged(value: RangeValue) {
+    if (!this.noUpdate) {
+      this.updateRatio();
+    }
+    this.ionChange.emit({ value });
   }
+
+  /**
+   * Emitted when the value property has changed.
+   */
+  @Event() ionChange!: EventEmitter<InputChangeEvent>;
+
+  /**
+   * Emitted when the styles change.
+   * @internal
+   */
+  @Event() ionStyle!: EventEmitter<StyleEvent>;
+
+  /**
+   * Emitted when the range has focus.
+   */
+  @Event() ionFocus!: EventEmitter<void>;
+
+  /**
+   * Emitted when the range loses focus.
+   */
+  @Event() ionBlur!: EventEmitter<void>;
 
   componentWillLoad() {
-    this.inputUpdated();
-    this.createTicks();
+    this.updateRatio();
     this.debounceChanged();
     this.emitStyle();
   }
 
-  private emitStyle() {
-    clearTimeout(this.styleTmr);
+  async componentDidLoad() {
+    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
+      el: this.rangeSlider!,
+      queue: this.queue,
+      gestureName: 'range',
+      gesturePriority: 100,
+      threshold: 0,
+      onStart: ev => this.onStart(ev),
+      onMove: ev => this.onMove(ev),
+      onEnd: ev => this.onEnd(ev),
+    });
+    this.gesture.setDisabled(this.disabled);
+  }
 
-    this.styleTmr = setTimeout(() => {
-      this.ionStyle.emit({
-        'range-disabled': this.disabled
-      });
+  @Listen('ionIncrease')
+  @Listen('ionDecrease')
+  keyChng(ev: CustomEvent<RangeEventDetail>) {
+    let step = this.step;
+    step = step > 0 ? step : 1;
+    step = step / (this.max - this.min);
+    if (!ev.detail.isIncrease) {
+      step *= -1;
+    }
+    if (ev.detail.knob === 'A') {
+      this.ratioA += step;
+    } else {
+      this.ratioB += step;
+    }
+    this.updateValue();
+  }
+
+  private handleKeyboard(knob: string, isIncrease: boolean) {
+    let step = this.step;
+    step = step > 0 ? step : 1;
+    step = step / (this.max - this.min);
+    if (!isIncrease) {
+      step *= -1;
+    }
+    if (knob === 'A') {
+      this.ratioA += step;
+    } else {
+      this.ratioB += step;
+    }
+    this.updateValue();
+  }
+
+  private getValue(): RangeValue {
+    const value = this.value || 0;
+    if (this.dualKnobs) {
+      if (typeof value === 'object') {
+        return value;
+      }
+      return {
+        lower: 0,
+        upper: value
+      };
+    } else {
+      if (typeof value === 'object') {
+        return value.upper;
+      }
+      return value;
+    }
+  }
+
+  private emitStyle() {
+    this.ionStyle.emit({
+      'interactive-disabled': this.disabled
     });
   }
 
-  fireBlur() {
+  private fireBlur() {
     if (this.hasFocus) {
       this.hasFocus = false;
       this.ionBlur.emit();
@@ -167,7 +231,7 @@ export class Range implements BaseInputComponent {
     }
   }
 
-  fireFocus() {
+  private fireFocus() {
     if (!this.hasFocus) {
       this.hasFocus = true;
       this.ionFocus.emit();
@@ -175,311 +239,250 @@ export class Range implements BaseInputComponent {
     }
   }
 
-  inputUpdated() {
-    const val = this.value;
-    if (this.dualKnobs) {
-      this.valA = val.lower;
-      this.valB = val.upper;
-      this.ratioA = this.valueToRatio(val.lower);
-      this.ratioB = this.valueToRatio(val.upper);
-    } else {
-      this.valA = val;
-      this.ratioA = this.valueToRatio(val);
-    }
-    this.updateBar();
+  private onStart(detail: GestureDetail) {
+    this.fireFocus();
+
+    const rect = this.rect = this.rangeSlider!.getBoundingClientRect() as any;
+    const currentX = detail.currentX;
+
+    // figure out which knob they started closer to
+    const ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
+    this.pressedKnob =
+      !this.dualKnobs ||
+      Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio)
+        ? 'A'
+        : 'B';
+
+    // update the active knob's position
+    this.update(currentX);
   }
 
-  updateBar() {
-    const ratioA = this.ratioA;
-    const ratioB = this.ratioB;
-
-    if (this.dualKnobs) {
-      this.barL = `${Math.min(ratioA, ratioB) * 100}%`;
-      this.barR = `${100 - Math.max(ratioA, ratioB) * 100}%`;
-    } else {
-      this.barL = '';
-      this.barR = `${100 - ratioA * 100}%`;
-    }
-
-    this.updateTicks();
+  private onMove(detail: GestureDetail) {
+    this.update(detail.currentX);
   }
 
-  createTicks() {
-    if (this.snaps) {
-      for (let value = this.min; value <= this.max; value += this.step) {
-        const ratio = this.valueToRatio(value);
-        this.ticks.push({
-          ratio,
-          left: `${ratio * 100}%`
-        });
-      }
-      this.updateTicks();
-    }
+  private onEnd(detail: GestureDetail) {
+    this.update(detail.currentX);
+    this.pressedKnob = undefined;
+    this.fireBlur();
   }
 
-  updateTicks() {
-    const ticks = this.ticks;
-    const ratio = this.ratio;
-    if (this.snaps && ticks) {
-      if (this.dualKnobs) {
-        const upperRatio = this.ratioUpper();
-
-        ticks.forEach(t => {
-          t.active = t.ratio >= ratio && t.ratio <= upperRatio;
-        });
-      } else {
-        ticks.forEach(t => {
-          t.active = t.ratio <= ratio;
-        });
-      }
-    }
-  }
-
-  valueToRatio(value: number) {
-    value = Math.round((value - this.min) / this.step) * this.step;
-    value = value / (this.max - this.min);
-    return clamp(0, value, 1);
-  }
-
-  ratioToValue(ratio: number) {
-    ratio = Math.round((this.max - this.min) * ratio);
-    ratio = Math.round(ratio / this.step) * this.step + this.min;
-    return clamp(this.min, ratio, this.max);
-  }
-
-  inputNormalize(val: any): any {
-    if (this.dualKnobs) {
-      return val;
-    } else {
-      val = parseFloat(val);
-      return isNaN(val) ? undefined : val;
-    }
-  }
-
-  update(current: { x?: number; y?: number }, rect: ClientRect, isPressed: boolean) {
+  private update(currentX: number) {
     // figure out where the pointer is currently at
     // update the knob being interacted with
-    let ratio = clamp(0, (current.x - rect.left) / rect.width, 1);
-    const val = this.ratioToValue(ratio);
-
+    const rect = this.rect;
+    let ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
     if (this.snaps) {
       // snaps the ratio to the current value
-      ratio = this.valueToRatio(val);
+      const value = ratioToValue(ratio, this.min, this.max, this.step);
+      ratio = valueToRatio(value, this.min, this.max);
     }
+
     // update which knob is pressed
-    this.pressed = isPressed;
-    let valChanged = false;
-    if (this.activeB) {
-      // when the pointer down started it was determined
-      // that knob B was the one they were interacting with
-      this.pressedB = isPressed;
-      this.pressedA = false;
-      this.ratioB = ratio;
-      valChanged = val === this.valB;
-      this.valB = val;
-    } else {
-      // interacting with knob A
-      this.pressedA = isPressed;
-      this.pressedB = false;
+    if (this.pressedKnob === 'A') {
       this.ratioA = ratio;
-      valChanged = val === this.valA;
-      this.valA = val;
-    }
-
-    this.updateBar();
-    if (valChanged) {
-      return false;
-    }
-
-    // value has been updated
-    let value;
-    if (this.dualKnobs) {
-      // dual knobs have an lower and upper value
-      value = {
-        lower: Math.min(this.valA, this.valB),
-        upper: Math.max(this.valA, this.valB)
-      };
-
     } else {
-      // single knob only has one value
-      value = this.valA;
+      this.ratioB = ratio;
     }
 
     // Update input value
-    this.value = value;
-
-    return true;
+    this.updateValue();
   }
 
-  /**
-   * Returns the ratio of the knob's is current location, which is a number
-   * between `0` and `1`. If two knobs are used, this property represents
-   * the lower value.
-   */
-  @Method()
-  ratio(): number {
+  private get valA() {
+    return ratioToValue(this.ratioA, this.min, this.max, this.step);
+  }
+
+  private get valB() {
+    return ratioToValue(this.ratioB, this.min, this.max, this.step);
+  }
+
+  private get ratioLower() {
     if (this.dualKnobs) {
       return Math.min(this.ratioA, this.ratioB);
+    }
+    return 0;
+  }
+
+  private get ratioUpper() {
+    if (this.dualKnobs) {
+      return Math.max(this.ratioA, this.ratioB);
     }
     return this.ratioA;
   }
 
-  /**
-   * Returns the ratio of the upper value's is current location, which is
-   * a number between `0` and `1`. If there is only one knob, then this
-   * will return `null`.
-   */
-  @Method()
-  ratioUpper() {
+  private updateRatio() {
+    const value = this.getValue() as any;
+    const { min, max } = this;
     if (this.dualKnobs) {
-      return Math.max(this.ratioA, this.ratioB);
-    }
-    return null;
-  }
-
-  @Listen('ionIncrease, ionDecrease')
-  keyChng(ev: RangeEvent) {
-    const step = this.step;
-    if (ev.detail.knob === 'knobB') {
-      if (ev.detail.isIncrease) {
-        this.valB += step;
-      } else {
-        this.valB -= step;
-      }
-      this.valB = clamp(this.min, this.valB, this.max);
-      this.ratioB = this.valueToRatio(this.valB);
+      this.ratioA = valueToRatio(value.lower, min, max);
+      this.ratioB = valueToRatio(value.upper, min, max);
     } else {
-      if (ev.detail.isIncrease) {
-        this.valA += step;
-      } else {
-        this.valA -= step;
-      }
-      this.valA = clamp(this.min, this.valA, this.max);
-      this.ratioA = this.valueToRatio(this.valA);
+      this.ratioA = valueToRatio(value, min, max);
     }
-    this.updateBar();
   }
 
-  onDragStart(detail: GestureDetail) {
-    if (this.disabled) return false;
-    this.fireFocus();
+  private updateValue() {
+    this.noUpdate = true;
 
-    const current = { x: detail.currentX, y: detail.currentY };
-    const el = this.el.querySelector('.range-slider');
-    this.rect = el.getBoundingClientRect();
-    const rect = this.rect;
+    const { valA, valB } = this;
+    this.value = !this.dualKnobs
+      ? valA
+      : {
+          lower: Math.min(valA, valB),
+          upper: Math.max(valA, valB)
+        };
 
-    // figure out which knob they started closer to
-    const ratio = clamp(0, (current.x - rect.left) / rect.width, 1);
-    this.activeB =
-      this.dualKnobs &&
-      Math.abs(ratio - this.ratioA) > Math.abs(ratio - this.ratioB);
-
-    // update the active knob's position
-    this.update(current, rect, true);
-
-    // return true so the pointer events
-    // know everything's still valid
-    return true;
-  }
-
-  onDragEnd(detail: GestureDetail) {
-    if (this.disabled) {
-      return;
-    }
-    // update the active knob's position
-    this.update({ x: detail.currentX, y: detail.currentY }, this.rect, false);
-    // trigger ionBlur event
-    this.fireBlur();
-  }
-
-  onDragMove(detail: GestureDetail) {
-    if (this.disabled) {
-      return;
-    }
-    const current = { x: detail.currentX, y: detail.currentY };
-    // update the active knob's position
-    this.update(current, this.rect, true);
+    this.noUpdate = false;
   }
 
   hostData() {
     return {
       class: {
+        ...createColorClasses(this.color),
+        'in-item': hostContext('ion-item', this.el),
         'range-disabled': this.disabled,
-        'range-pressed': this.pressed,
+        'range-pressed': this.pressedKnob !== undefined,
         'range-has-pin': this.pin
       }
     };
   }
 
   render() {
+    const { min, max, step, ratioLower, ratioUpper } = this;
+
+    const barL = `${ratioLower * 100}%`;
+    const barR = `${100 - ratioUpper * 100}%`;
+
+    const ticks = [];
+    if (this.snaps) {
+      for (let value = min; value <= max; value += step) {
+        const ratio = valueToRatio(value, min, max);
+        ticks.push({
+          ratio,
+          active: ratio >= ratioLower && ratio <= ratioUpper,
+          left: `${ratio * 100}%`
+        });
+      }
+    }
+
     return [
-      <slot name='start'></slot>,
-      <ion-gesture
-        {...{
-          disableScroll: true,
-          onStart: this.onDragStart.bind(this),
-          onMove: this.onDragMove.bind(this),
-          onEnd: this.onDragEnd.bind(this),
-          disabled: this.disabled,
-          gestureName: 'range',
-          gesturePriority: 30,
-          type: 'pan',
-          direction: 'x',
-          threshold: 0
-        }}
-      >
-        <div class='range-slider'>
-          {this.ticks.map(t =>
-            <div
-              style={{ left: t.left }}
-              role='presentation'
-              class={{ 'range-tick': true, 'range-tick-active': t.active }}
-            />
-          )}
-
-          <div class='range-bar' role='presentation' />
+      <slot name="start"></slot>,
+      <div class="range-slider" ref={el => this.rangeSlider = el}>
+        {ticks.map(t => (
           <div
-            class='range-bar range-bar-active'
-            style={{
-              left: this.barL,
-              right: this.barR
+            style={{ left: t.left }}
+            role="presentation"
+            class={{
+              'range-tick': true,
+              'range-tick-active': t.active
             }}
-            role='presentation'
           />
-          <ion-range-knob
-            class='range-knob-handle'
-            knob='knobA'
-            pressed={this.pressedA}
-            ratio={this.ratioA}
-            val={this.valA}
-            pin={this.pin}
-            min={this.min}
-            max={this.max}
-          />
+        ))}
 
-          {this.dualKnobs
-            ? <ion-range-knob
-                class='range-knob-handle'
-                knob='knobB'
-                pressed={this.pressedB}
-                ratio={this.ratioB}
-                val={this.valB}
-                pin={this.pin}
-                min={this.min}
-                max={this.max}
-              />
-            : null}
-        </div>
-      </ion-gesture>,
-      <slot name='end'></slot>
+        <div class="range-bar" role="presentation" />
+        <div
+          class="range-bar range-bar-active"
+          role="presentation"
+          style={{
+            left: barL,
+            right: barR
+          }}
+        />
+
+        { renderKnob({
+          knob: 'A',
+          pressed: this.pressedKnob === 'A',
+          value: this.valA,
+          ratio: this.ratioA,
+          pin: this.pin,
+          disabled: this.disabled,
+          handleKeyboard: this.handleKeyboard.bind(this),
+          min,
+          max
+        })}
+
+        { this.dualKnobs && renderKnob({
+          knob: 'B',
+          pressed: this.pressedKnob === 'B',
+          value: this.valB,
+          ratio: this.ratioB,
+          pin: this.pin,
+          disabled: this.disabled,
+          handleKeyboard: this.handleKeyboard.bind(this),
+          min,
+          max
+        })}
+      </div>,
+      <slot name="end"></slot>
     ];
   }
 }
 
-export interface RangeEvent extends Event {
-  detail: {
-    isIncrease: boolean,
-    knob: string
-  };
+interface RangeKnob {
+  knob: string;
+  value: number;
+  ratio: number;
+  min: number;
+  max: number;
+  disabled: boolean;
+  pressed: boolean;
+  pin: boolean;
+
+  handleKeyboard: (name: string, isIncrease: boolean) => void;
+}
+
+function renderKnob({ knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard }: RangeKnob) {
+  return (
+    <div
+      onKeyDown={(ev: KeyboardEvent) => {
+        const key = ev.key;
+        if (key === 'ArrowLeft' || key === 'ArrowDown') {
+          handleKeyboard(knob, false);
+          ev.preventDefault();
+          ev.stopPropagation();
+
+        } else if (key === 'ArrowRight' || key === 'ArrowUp') {
+          handleKeyboard(knob, true);
+          ev.preventDefault();
+          ev.stopPropagation();
+        }
+      }}
+      class={{
+        'range-knob-handle': true,
+        'range-knob-pressed': pressed,
+        'range-knob-min': value === min,
+        'range-knob-max': value === max
+      }}
+      style={{
+        'left': `${ratio * 100}%`
+      }}
+      role="slider"
+      tabindex={disabled ? -1 : 0}
+      aria-valuemin={min}
+      aria-valuemax={max}
+      aria-disabled={disabled ? 'true' : null}
+      aria-valuenow={value}
+    >
+      {pin && <div class="range-pin" role="presentation">{Math.round(value)}</div>}
+      <div class="range-knob" role="presentation" />
+    </div>
+  );
+}
+
+function ratioToValue(
+  ratio: number,
+  min: number,
+  max: number,
+  step: number
+): number {
+  let value = (max - min) * ratio;
+  if (step > 0) {
+    value = Math.round(value / step) * step + min;
+  }
+  return clamp(min, value, max);
+}
+
+function valueToRatio(value: number, min: number, max: number): number {
+  return clamp(0, (value - min) / (max - min), 1);
 }

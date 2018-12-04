@@ -4,113 +4,96 @@
 // iOS Item Divider
 // --------------------------------------------------
 
-.item-divider-ios {
-  @include padding-horizontal($item-ios-divider-padding-start, null);
-  @include safe-area-padding-horizontal($item-ios-divider-padding-start, null);
+:host {
+  --background: #{$item-ios-divider-background};
+  --color: #{$item-ios-divider-color};
+  --padding-start: #{$item-ios-divider-padding-start};
+
   @include border-radius(0);
 
   position: relative;
 
-  font-family: $item-ios-divider-font-family;
   font-size: $item-ios-divider-font-size;
-
-  color: $item-ios-divider-color;
-  background-color: $item-ios-divider-background;
 }
 
-.item-divider-ios .item-divider-inner {
+.item-divider-inner {
   @include padding-horizontal(null, $item-ios-divider-padding-end / 2);
-
-  @media screen and (orientation: landscape) {
-    @include safe-area-padding-horizontal(null, $item-ios-divider-padding-end / 2);
-  }
 }
 
 
 // iOS Item Divider Slots
 // --------------------------------------------------
 
-.item-divider-ios [slot="start"] {
+:host([slot="start"]) {
   @include margin($item-ios-slot-start-margin-top, $item-ios-slot-start-margin-end, $item-ios-slot-start-margin-bottom, $item-ios-slot-start-margin-start);
 }
 
-.item-divider-ios [slot="end"] {
+:host([slot="end"]) {
   @include margin($item-ios-slot-end-margin-top, $item-ios-slot-end-margin-end, $item-ios-slot-end-margin-bottom, $item-ios-slot-end-margin-start);
 }
 
-.item-divider-ios ion-icon[slot="start"],
-.item-divider-ios ion-icon[slot="end"] {
+::slotted(ion-icon[slot="start"]),
+::slotted(ion-icon[slot="end"]) {
   @include margin($item-ios-icon-slot-margin-top, $item-ios-icon-slot-margin-end, $item-ios-icon-slot-margin-bottom, $item-ios-icon-slot-margin-start);
+}
+
+
+// Material Design Slotted Label
+// --------------------------------------------------
+
+::slotted(ion-label) {
+  @include margin(10px, 8px, 10px, 0);
 }
 
 
 // iOS Item Divider Content
 // --------------------------------------------------
 
-.item-divider-ios h1 {
+::slotted(h1) {
   @include margin(0, 0, 2px);
 
   font-size: 24px;
   font-weight: normal;
 }
 
-.item-divider-ios h2 {
+::slotted(h2) {
   @include margin(0, 0, 2px);
 
   font-size: 17px;
   font-weight: normal;
 }
 
-.item-divider-ios h3,
-.item-divider-ios h4,
-.item-divider-ios h5,
-.item-divider-ios h6 {
+::slotted(h3),
+::slotted(h4),
+::slotted(h5),
+::slotted(h6) {
   @include margin(0, 0, 3px);
 
   font-size: 14px;
   font-weight: normal;
+
   line-height: normal;
 }
 
-.item-divider-ios p {
+::slotted(p) {
   @include margin($item-ios-paragraph-margin-top, $item-ios-paragraph-margin-end, $item-ios-paragraph-margin-bottom, $item-ios-paragraph-margin-start);
 
-  overflow: inherit;
+  color: $item-ios-paragraph-text-color;
 
   font-size: $item-ios-paragraph-font-size;
+
   line-height: normal;
+
   text-overflow: inherit;
-  color: $item-ios-paragraph-text-color;
+
+  overflow: inherit;
 }
 
-.item-divider-ios h2:last-child,
-.item-divider-ios h3:last-child,
-.item-divider-ios h4:last-child,
-.item-divider-ios h5:last-child,
-.item-divider-ios h6:last-child,
-.item-divider-ios p:last-child {
+::slotted(h2:last-child)
+::slotted(h3:last-child),
+::slotted(h4:last-child),
+::slotted(h5:last-child),
+::slotted(h6:last-child),
+::slotted(p:last-child) {
   @include margin(null, null, 0, null);
-}
-
-
-// Generate iOS Item Divider Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-ios {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-  $color-shade: ion-color($colors-ios, $color-name, tint, ios);
-
-  .item-divider-ios-#{$color-name} {
-    color: $color-contrast;
-    background-color: $color-base;
-
-    p {
-      color: $color-contrast;
-    }
-
-    &.activated {
-      background-color: $color-shade;
-    }
-  }
 }

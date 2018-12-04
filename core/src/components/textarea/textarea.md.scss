@@ -4,24 +4,11 @@
 // Material Design Textarea
 // --------------------------------------------------
 
-.native-textarea-md {
-  @include placeholder($textarea-md-placeholder-color);
-  @include margin($textarea-md-margin-top, $textarea-md-margin-end, $textarea-md-margin-bottom, $textarea-md-margin-start);
-  @include padding(0);
+:host {
+  --padding-top: #{$textarea-md-padding-top};
+  --padding-end: #{$textarea-md-padding-end};
+  --padding-bottom: #{$textarea-md-padding-bottom};
+  --padding-start: #{$textarea-md-padding-start};
 
-  width: calc(100% - #{$textarea-md-margin-end} - #{$textarea-md-margin-start});
-
-  font-family: $textarea-md-font-family;
   font-size: $textarea-md-font-size;
-}
-
-
-// Material Design Stacked & Floating Textarea
-// --------------------------------------------------
-
-.item-label-stacked .native-textarea-md,
-.item-label-floating .native-textarea-md {
-  @include margin(8px, null, 8px, 0);
-
-  width: calc(100% - #{$textarea-md-margin-end});
 }

@@ -1,5 +1,4 @@
-import { Component, Prop } from '@stencil/core';
-
+import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 @Component({
   tag: 'ion-skeleton-text',
@@ -7,14 +6,16 @@ import { Component, Prop } from '@stencil/core';
     ios: 'skeleton-text.ios.scss',
     md: 'skeleton-text.md.scss'
   },
-  host: {
-    theme: 'skeleton-text'
-  }
+  shadow: true
 })
-export class SkeletonText {
+export class SkeletonText implements ComponentInterface {
+
+  /**
+   * Width for the element to render at.
+   */
   @Prop() width = '100%';
 
-  render () {
-    return <span style={{width: this.width}}>&nbsp;</span>;
+  render() {
+    return <span style={{ width: this.width }}>&nbsp;</span>;
   }
 }

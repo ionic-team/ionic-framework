@@ -1,5 +1,7 @@
-import { Component, Element, Event, EventEmitter, Prop } from '@stencil/core';
-import { createThemedClasses, getElementClassMap } from '../../utils/theme';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
+
+import { Color, Mode, SegmentButtonLayout } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 let ids = 0;
 
@@ -8,98 +10,100 @@ let ids = 0;
   styleUrls: {
     ios: 'segment-button.ios.scss',
     md: 'segment-button.md.scss'
-  }
+  },
+  shadow: true
 })
-export class SegmentButton {
-  styleTmr: any;
+export class SegmentButton implements ComponentInterface {
 
-  @Element() private el: HTMLElement;
-
-  @Prop({ mutable: true }) activated = false;
+  @Element() el!: HTMLElement;
 
   /**
-   * The color to use for the text color.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color: string;
+  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
   /**
-   * If true, the segment button is selected. Defaults to `false`.
+   * If `true`, the segment button is selected.
    */
-  @Prop() checked = false;
+  @Prop({ mutable: true }) checked = false;
 
-  /*
-   * If true, the user cannot interact with the segment button. Default false.
+  /**
+   * If `true`, the user cannot interact with the segment button.
    */
   @Prop() disabled = false;
 
   /**
-   * Contains a URL or a URL fragment that the hyperlink points to.
-   * If this property is set, an anchor tag will be rendered.
+   * Set the layout of the text and icon in the segment.
    */
-  @Prop() href: string;
+  @Prop() layout?: SegmentButtonLayout = 'icon-top';
 
   /**
    * The value of the segment button.
    */
-  @Prop({ mutable: true }) value: string;
+  @Prop() value: string = 'ion-sb-' + (ids++);
 
   /**
    * Emitted when the segment button is clicked.
    */
-  @Event() ionClick: EventEmitter;
+  @Event() ionSelect!: EventEmitter<void>;
 
-  componentWillLoad() {
-    if (!this.value) {
-      this.value = `ion-sb-${ids++}`;
+  @Watch('checked')
+  checkedChanged(checked: boolean, prev: boolean) {
+    if (checked && !prev) {
+      this.ionSelect.emit();
     }
   }
 
-  /**
-   * Emit the click event to the parent segment
-   */
-  private segmentButtonClick() {
-    clearTimeout(this.styleTmr);
-
-    this.styleTmr = setTimeout(() => {
-      this.ionClick.emit();
-    });
+  private onClick = () => {
+    this.checked = true;
   }
 
+  private get hasLabel() {
+    return !!this.el.querySelector('ion-label');
+  }
+
+  private get hasIcon() {
+    return !!this.el.querySelector('ion-icon');
+  }
+
+  hostData() {
+    const { disabled, checked, color, layout, hasIcon, hasLabel } = this;
+    return {
+      'ion-activatable': 'instant',
+      'aria-disabled': disabled ? 'true' : null,
+      class: {
+        ...createColorClasses(color),
+        'segment-button-has-label': hasLabel,
+        'segment-button-has-icon': hasIcon,
+        'segment-button-has-label-only': hasLabel && !hasIcon,
+        'segment-button-has-icon-only': hasIcon && !hasLabel,
+        'segment-button-disabled': disabled,
+        'segment-button-checked': checked,
+        [`segment-button-layout-${layout}`]: true
+      }
+    };
+  }
 
   render() {
-    const themedClasses = createThemedClasses(this.mode, this.color, 'segment-button');
-    const hostClasses = getElementClassMap(this.el.classList);
-
-    const buttonClasses = {
-      'segment-button-disabled': this.disabled,
-      'segment-activated': this.activated,
-      ...themedClasses,
-      ...hostClasses,
-    };
-
-    const TagType = this.href ? 'a' : 'button';
-    const attrs = (TagType === 'button')
-      ? {type: 'button'}
-      : {};
-
     return [
-      <TagType
-       {...attrs}
-        aria-pressed={this.activated}
-        class={buttonClasses}
+      <button
+        type="button"
+        aria-pressed={this.checked ? 'true' : null}
+        class="button-native"
         disabled={this.disabled}
-        href={this.href}
-        onClick={this.segmentButtonClick.bind(this)}>
-          <slot></slot>
-          { this.mode === 'md' && <ion-ripple-effect useTapClick={true}/> }
-      </TagType>
+        onClick={this.onClick}
+      >
+        <slot></slot>
+        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+      </button>,
+      <div class="segment-button-indicator"></div>
     ];
   }
 }

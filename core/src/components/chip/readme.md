@@ -1,7 +1,13 @@
 # ion-chip
 
-Chips represent complex entities in small blocks, such as a contact. A chip can contain several different elements such as avatars, text, buttons, and icons.
+Chips represent complex entities in small blocks, such as a contact. A chip can contain several different elements such as avatars, text, and icons.
 
+<!-- Auto Generated Below -->
+
+
+## Usage
+
+### Angular / javascript
 
 ```html
 <ion-chip>
@@ -28,17 +34,13 @@ Chips represent complex entities in small blocks, such as a contact. A chip can 
 
 <ion-chip>
   <ion-label>Button Chip</ion-label>
-  <ion-chip-button fill="clear" color="light">
-    <ion-icon name="close-circle"></ion-icon>
-  </ion-chip-button>
+  <ion-icon name="close-circle"></ion-icon>
 </ion-chip>
 
 <ion-chip>
   <ion-icon name="pin" color="primary"></ion-icon>
   <ion-label>Icon Chip</ion-label>
-  <ion-chip-button>
-    <ion-icon name="close"></ion-icon>
-  </ion-chip-button>
+  <ion-icon name="close"></ion-icon>
 </ion-chip>
 
 <ion-chip>
@@ -46,51 +48,27 @@ Chips represent complex entities in small blocks, such as a contact. A chip can 
     <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
   </ion-avatar>
   <ion-label>Avatar Chip</ion-label>
-  <ion-chip-button fill="clear" color="dark">
-    <ion-icon name="close-circle"></ion-icon>
-  </ion-chip-button>
+  <ion-icon name="close-circle"></ion-icon>
 </ion-chip>
 ```
 
 
-<!-- Auto Generated Below -->
-
 
 ## Properties
 
-#### color
-
-string
-
-The color to use.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-
-
-#### mode
+| Property  | Attribute | Description                                                                                                                                                                                                                                                            | Type                  | Default     |
+| --------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
+| `color`   | `color`   | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` | `undefined` |
+| `mode`    | `mode`    | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined` |
+| `outline` | `outline` | Display an outline style button.                                                                                                                                                                                                                                       | `boolean`             | `false`     |
 
 
+## CSS Custom Properties
 
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
-
-## Attributes
-
-#### color
-
-string
-
-The color to use.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-
-
-#### mode
-
-
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
+| Name           | Description            |
+| -------------- | ---------------------- |
+| `--background` | Background of the chip |
+| `--color`      | Color of the chip      |
 
 
 ----------------------------------------------

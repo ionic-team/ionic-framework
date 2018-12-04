@@ -1,9 +1,9 @@
-import { Animation } from '../../../index';
+import { Animation } from '../../../interface';
 
 /**
  * Md Popover Enter Animation
  */
-export default function mdEnterAnimation(Animation: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> {
+export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> {
   let originY = 'top';
   let originX = 'left';
 
@@ -20,12 +20,12 @@ export default function mdEnterAnimation(Animation: Animation, baseEl: HTMLEleme
     ev && ev.target && (ev.target as HTMLElement).getBoundingClientRect();
 
   const targetTop =
-    targetDim && 'top' in targetDim
+    targetDim != null && 'top' in targetDim
       ? targetDim.top
       : bodyHeight / 2 - contentHeight / 2;
 
   const targetLeft =
-    targetDim && 'left' in targetDim
+    targetDim != null && 'left' in targetDim
       ? targetDim.left
       : bodyWidth / 2 - contentWidth / 2;
 
@@ -67,21 +67,21 @@ export default function mdEnterAnimation(Animation: Animation, baseEl: HTMLEleme
   contentEl.style.left = popoverCSS.left + 'px';
   contentEl.style.transformOrigin = originY + ' ' + originX;
 
-  const baseAnimation = new Animation();
+  const baseAnimation = new AnimationC();
 
-  const backdropAnimation = new Animation();
+  const backdropAnimation = new AnimationC();
   backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
-  backdropAnimation.fromTo('opacity', 0.01, 0.08);
+  backdropAnimation.fromTo('opacity', 0.01, 0.32);
 
-  const wrapperAnimation = new Animation();
+  const wrapperAnimation = new AnimationC();
   wrapperAnimation.addElement(baseEl.querySelector('.popover-wrapper'));
   wrapperAnimation.fromTo('opacity', 0.01, 1);
 
-  const contentAnimation = new Animation();
+  const contentAnimation = new AnimationC();
   contentAnimation.addElement(baseEl.querySelector('.popover-content'));
   contentAnimation.fromTo('scale', 0.001, 1);
 
-  const viewportAnimation = new Animation();
+  const viewportAnimation = new AnimationC();
   viewportAnimation.addElement(baseEl.querySelector('.popover-viewport'));
   viewportAnimation.fromTo('opacity', 0.01, 1);
 

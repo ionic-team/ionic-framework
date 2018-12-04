@@ -3,84 +3,99 @@
 // Textarea
 // --------------------------------------------------
 
-ion-textarea {
-  position: relative;
+:host {
+  /**
+   * @prop --background: Background of the textarea
+   * @prop --border-radius: Border radius of the textarea
+   * @prop --color: Color of the text
+   * @prop --placeholder-color: Color of the placeholder text
+   * @prop --placeholder-font-style: Style of the placeholder text
+   * @prop --placeholder-font-weight: Weight of the placeholder text
+   * @prop --placeholder-opacity: Opacity of the placeholder text
+   * @prop --padding-top: Top padding of the textarea
+   * @prop --padding-end: End padding of the textarea
+   * @prop --padding-bottom: Bottom padding of the textarea
+   * @prop --padding-start: Start padding of the textarea
+   */
+  --background: initial;
+  --color: initial;
+  --placeholder-color: initial;
+  --placeholder-font-style: initial;
+  --placeholder-font-weight: initial;
+  --placeholder-opacity: .5;
+  --padding-top: 0;
+  --padding-end: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --border-radius: 0;
+
   display: block;
+  position: relative;
 
   flex: 1;
 
   width: 100%;
+  box-sizing: border-box;
+
+  background: var(--background);
+  color: var(--color);
+
+  font-family: $font-family-base;
+
+  z-index: $z-index-item-input;
 }
 
-.item-input ion-textarea {
-  position: static;
+:host(.ion-color) {
+  background: initial;
+}
+
+:host(.ion-color) {
+  color: current-color(base);
 }
 
 // Textarea Within An Item
 // --------------------------------------------------
 
-.item.item-textarea {
-  align-items: stretch;
+:host(.in-item) {
+  position: static;
 }
+
 
 // Native Textarea
 // --------------------------------------------------
 
 .native-textarea {
-  @include appearance(none);
-  @include border-radius(0);
+  @include text-inherit();
+  @include border-radius(var(--border-radius));
+  @include margin(0);
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
   display: block;
 
-  flex: 1;
-
-  width: 92%;
-  width: calc(100% - 10px);
+  width: 100%;
+  height: 100%;
 
   border: 0;
 
-  font-size: inherit;
+  outline: none;
 
   background: transparent;
 
-  &:active,
-  &:focus {
-    outline: none;
+  box-sizing: border-box;
+  resize: none;
+  appearance: none;
+
+  &::placeholder {
+    color: var(--placeholder-color);
+
+    font-family: inherit;
+    font-style: var(--placeholder-font-style);
+    font-weight: var(--placeholder-font-weight);
+
+    opacity: var(--placeholder-opacity);
   }
 }
 
 .native-textarea[disabled] {
   opacity: .4;
-}
-
-.platform-mobile .native-textarea {
-  resize: none;
-}
-
-.item-input-has-focus a,
-.item-input-has-focus button,
-.item-input-has-focus textarea {
-  pointer-events: auto;
-}
-
-// Input Cover: Unfocused
-// --------------------------------------------------
-// The input cover is the div that actually receives the
-// tap/click event when scroll assist is configured to true.
-// This make it so the native input element is not clickable.
-// This will only show when the scroll assist is configured
-// otherwise the .input-cover will not be rendered at all
-// The input cover is not clickable when the input is disabled
-
-.textarea-cover {
-  @include position(0, null, null, 0);
-
-  position: absolute;
-
-  width: 100%;
-  height: 100%;
-}
-
-.textarea[disabled] .textarea-cover {
-  pointer-events: none;
 }

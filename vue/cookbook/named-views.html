@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Ionic v4 + Vue.js - Routing with named views</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <script src="https://unpkg.com/vue"></script>
+        <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+        <script src="https://unpkg.com/vue-class-component@latest/dist/vue-class-component.js"></script>
+        <script src="https://unpkg.com/vue-property-decorator@latest/lib/vue-property-decorator.umd.js"></script>
+        <script src="https://unpkg.com/@modus/ionic-vue@latest/dist/ionic-vue.js"></script>
+        <script src="https://unpkg.com/@ionic/core@latest/dist/ionic.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/@ionic/core@latest/css/ionic.bundle.css"/>
+    </head>
+
+    <body>
+        <ion-app>
+            <ion-vue-router></ion-vue-router>
+            <ion-vue-router name="extra" style="pointer-events:none !important;"></ion-vue-router>
+        </ion-app>
+
+        <script>
+            const Toolbar = Vue.component('Toolbar', {
+                name: 'Toolbar',
+                props: { title: String, backURL: String },
+                template: `<ion-header>
+                    <ion-toolbar>
+                        <ion-buttons slot="start">
+                            <ion-back-button :default-href="backURL"/>
+                        </ion-buttons>
+                        <ion-title>{{ title }}</ion-title>
+                    </ion-toolbar>
+                </ion-header>`
+            })
+
+            const Home = {
+                template: `<ion-page class="ion-page">
+                    <toolbar title="Home"/>
+                    <ion-content class="ion-content" padding>
+                        <router-link to="/page">Go to page</router-link>
+                    </ion-content>
+                </ion-page>`
+            }
+
+            const Page = {
+                template: `<ion-page class="ion-page">
+                    <toolbar title="Page" backURL="/"/>
+                    <ion-content class="ion-content" padding>
+                        <ion-button @click="goHome">Go home</ion-button>
+                    </ion-content>
+                </ion-page>`,
+                methods: {
+                    goHome() {
+                        this.$router.back()
+                    }
+                }
+            }
+
+            const Extra = {
+                template: '<h1 style="z-index:999;margin:150px 0 0 16px">Some extra conent</h1>'
+            }
+
+            Vue.config.ignoredElements.push(/^ion-/)
+
+            new Vue({
+                router: new IonicVue.IonicVueRouter({
+                    routes: [
+                        { path: '/', component: Home },
+                        { path: '/page', components: {default: Page, extra: Extra} },
+                    ],
+                }),
+            }).$mount('ion-app')
+        </script>
+    </body>
+</html>

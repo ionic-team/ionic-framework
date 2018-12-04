@@ -4,26 +4,6 @@
 // iOS Badge
 // --------------------------------------------------
 
-.badge-ios {
+:host {
   @include border-radius($badge-ios-border-radius);
-
-  font-family: $badge-ios-font-family;
-
-  color: $badge-ios-text-color;
-  background-color: $badge-ios-background-color;
-}
-
-
-// Generate iOS Badge Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-ios {
-  $base-color: ion-color($colors-ios, $color-name, base, ios);
-  $contrast-color: ion-color($colors-ios, $color-name, contrast, ios);
-
-  .badge-ios-#{$color-name} {
-    color: $contrast-color;
-    background-color: $base-color;
-  }
-
 }

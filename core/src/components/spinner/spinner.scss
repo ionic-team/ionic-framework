@@ -3,15 +3,27 @@
 // Spinners
 // --------------------------------------------------
 
-ion-spinner {
-  position: relative;
+:host {
+  /**
+   * @prop --color: Color of the spinner
+   */
+
   display: inline-block;
+  position: relative;
 
   width: 28px;
   height: 28px;
+
+  color: var(--color);
+
+  user-select: none;
 }
 
-ion-spinner svg {
+:host(.ion-color) {
+  color: current-color(base);
+}
+
+svg {
   @include position(0, null, null, 0);
 
   position: absolute;
@@ -22,22 +34,19 @@ ion-spinner svg {
   transform: translateZ(0);
 }
 
-ion-spinner.spinner-paused svg {
-  animation-play-state: paused;
-}
-
 
 // Spinner: lines / lines-small
 // --------------------------------------------------
 
-.spinner-lines line,
-.spinner-lines-small line {
+:host(.spinner-lines) line,
+:host(.spinner-lines-small) line {
   stroke-width: 4px;
   stroke-linecap: round;
+  stroke: currentColor;
 }
 
-.spinner-lines svg,
-.spinner-lines-small svg {
+:host(.spinner-lines) svg,
+:host(.spinner-lines-small) svg {
   animation: spinner-fade-out 1s linear infinite;
 }
 
@@ -45,30 +54,33 @@ ion-spinner.spinner-paused svg {
 // Spinner: bubbles
 // --------------------------------------------------
 
-.spinner-bubbles svg {
+:host(.spinner-bubbles) svg {
   animation: spinner-scale-out 1s linear infinite;
+  fill: currentColor;
 }
 
 
 // Spinner: circles
 // --------------------------------------------------
 
-.spinner-circles svg {
+:host(.spinner-circles) svg {
   animation: spinner-fade-out 1s linear infinite;
+  fill: currentColor;
 }
 
 
 // Spinner: crescent
 // --------------------------------------------------
 
-.spinner-crescent circle {
+:host(.spinner-crescent) circle {
   fill: transparent;
   stroke-width: 4px;
   stroke-dasharray: 128px;
   stroke-dashoffset: 82px;
+  stroke: currentColor;
 }
 
-.spinner-crescent svg {
+:host(.spinner-crescent) svg {
   animation: spinner-rotate 1s linear infinite;
 }
 
@@ -76,14 +88,23 @@ ion-spinner.spinner-paused svg {
 // Spinner: dots
 // --------------------------------------------------
 
-.spinner-dots circle {
+:host(.spinner-dots) circle {
   stroke-width: 0;
+  fill: currentColor;
 }
 
-.spinner-dots svg {
+:host(.spinner-dots) svg {
   @include transform-origin(center);
 
   animation: spinner-dots 1s linear infinite;
+}
+
+
+// Spinner: paused
+// --------------------------------------------------
+
+:host(.spinner-paused) svg {
+  animation-play-state: paused;
 }
 
 
@@ -91,22 +112,54 @@ ion-spinner.spinner-paused svg {
 // --------------------------------------------------
 
 @keyframes spinner-fade-out {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+
 }
 
 @keyframes spinner-scale-out {
-  0% { transform: scale(1, 1); }
-  100% { transform: scale(0, 0); }
+  0% {
+    transform: scale(1, 1);
+  }
+
+  100% {
+    transform: scale(0, 0);
+  }
+
 }
 
 @keyframes spinner-rotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+
 }
 
 @keyframes spinner-dots {
-  0% { opacity: .9; transform: scale(1, 1); }
-  50% { opacity: .3; transform: scale(.4, .4); }
-  100% { opacity: .9; transform: scale(1, 1); }
+  0% {
+    transform: scale(1, 1);
+
+    opacity: .9;
+  }
+
+  50% {
+    transform: scale(.4, .4);
+
+    opacity: .3;
+  }
+
+  100% {
+    transform: scale(1, 1);
+
+    opacity: .9;
+  }
 }

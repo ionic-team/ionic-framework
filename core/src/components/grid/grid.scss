@@ -3,26 +3,44 @@
 // Grid
 // --------------------------------------------------
 
-ion-grid {
-  @include make-grid();
+:host {
+  /**
+   * @prop --ion-grid-padding: Padding for the Grid
+   * @prop --ion-grid-padding-xs: Padding for the Grid on xs screens
+   * @prop --ion-grid-padding-sm: Padding for the Grid on sm screens
+   * @prop --ion-grid-padding-md: Padding for the Grid on md screens
+   * @prop --ion-grid-padding-lg: Padding for the Grid on lg screens
+   * @prop --ion-grid-padding-xl: Padding for the Grid on xl screens
+   *
+   * @prop --ion-grid-width: Width of the fixed Grid
+   * @prop --ion-grid-width-xs: Width of the fixed Grid on xs screens
+   * @prop --ion-grid-width-sm: Width of the fixed Grid on sm screens
+   * @prop --ion-grid-width-md: Width of the fixed Grid on md screens
+   * @prop --ion-grid-width-lg: Width of the fixed Grid on lg screens
+   * @prop --ion-grid-width-xl: Width of the fixed Grid on xl screens
+   */
 
-  &[fixed] {
-    @include make-grid-max-widths();
-  }
+  @include make-breakpoint-padding($grid-paddings);
+  @include margin-horizontal(auto);
+
+  display: block;
 }
 
-// Row
+// Fixed Grid
 // --------------------------------------------------
 
-ion-row {
-  @include make-row();
+:host(.grid-fixed) {
+  @include make-grid-widths();
 }
 
-// Columns
+// Grid Padding
 // --------------------------------------------------
 
-ion-col {
-  @include make-column-base();
+// Remove the padding from grid and all immediate children columns
+:host([no-padding]) {
+  @include padding(0);
 }
 
-@include make-grid-columns();
+:host([no-padding]) ::slotted(ion-col) {
+  @include padding(0);
+}

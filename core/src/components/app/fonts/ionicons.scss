@@ -22,17 +22,6 @@ $ionicons-font-path: $font-path !default;
 ion-icon {
   @include font-smoothing();
 
-  display: inline-block;
-
-  font-family: "Ionicons";
-  font-style: normal;
-  font-variant: normal;
-  font-weight: normal;
-  line-height: 1;
-  text-rendering: auto;
-  text-transform: none;
-  speak: none;
-
   @include rtl() {
     &[aria-label^="arrow"]::before,
     &[flip-rtl]::before {
@@ -43,6 +32,20 @@ ion-icon {
       transform: scaleX(1);
     }
   }
+
+  display: inline-block;
+
+  font-family: "Ionicons";
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+
+  line-height: 1;
+
+  text-rendering: auto;
+  text-transform: none;
+
+  speak: none;
 
   &::before {
     display: inline-block;

@@ -5,11 +5,7 @@
 // Material Design Item Group
 // --------------------------------------------------
 
-.item-group-md ion-item:first-child .item-inner {
-  border-top-width: 0;
-}
-
-.item-group-md ion-item:last-child .item-inner,
-.item-group-md ion-item-sliding:last-child .item .item-inner {
-  border: 0;
+.item-group-md ion-item:last-child,
+.item-group-md ion-item-sliding:last-child ion-item {
+  --border-width: 0;
 }

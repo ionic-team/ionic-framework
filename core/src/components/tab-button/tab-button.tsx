@@ -1,94 +1,129 @@
-import {Component, Element, Event, EventEmitter, Listen, Prop, State} from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State } from '@stencil/core';
 
+import { Color, Config, Mode, TabBarChangedDetail, TabButtonClickDetail, TabButtonLayout } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-tab-button',
   styleUrls: {
     ios: 'tab-button.ios.scss',
     md: 'tab-button.md.scss'
-  }
+  },
+  shadow: true
 })
-export class TabButton {
+export class TabButton implements ComponentInterface {
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  mode: string;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
+  @Prop({ context: 'document' }) doc!: Document;
+  @Prop({ context: 'config' }) config!: Config;
 
-  @State() keyFocus = false;
+  /**
+   * The selected tab component
+   */
+  @State() selected = false;
 
-  @Prop() selected = false;
-  @Prop() tab: HTMLIonTabElement;
+  /**
+   * The mode determines which platform styles to use.
+   */
+  @Prop() mode!: Mode;
 
-  @Event() ionTabbarClick: EventEmitter<HTMLIonTabElement>;
-  @Event() ionTabButtonDidLoad: EventEmitter<void>;
-  @Event() ionTabButtonDidUnload: EventEmitter<void>;
+  /**
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
+   */
+  @Prop() color?: Color;
 
-  componentDidLoad() {
-    this.ionTabButtonDidLoad.emit();
-  }
+  /**
+   * Set the layout of the text and icon in the tab bar.
+   * It defaults to `'icon-top'`.
+   */
+  @Prop({ mutable: true }) layout?: TabButtonLayout;
 
-  componentDidUnload() {
-    this.ionTabButtonDidUnload.emit();
+  /**
+   * The URL which will be used as the `href` within this tab's button anchor.
+   */
+  @Prop() href?: string;
+
+  /**
+   * A tab id must be provided for each `ion-tab`. It's used internally to reference
+   * the selected tab or by the router to switch between them.
+   */
+  @Prop() tab!: string;
+
+  /**
+   * The selected tab component
+   */
+  @Prop() disabled = false;
+
+  /**
+   * Emitted when the tab bar is clicked
+   * @internal
+   */
+  @Event() ionTabButtonClick!: EventEmitter<TabButtonClickDetail>;
+
+  @Listen('parent:ionTabBarChanged')
+  onTabBarChanged(ev: CustomEvent<TabBarChangedDetail>) {
+    this.selected = this.tab === ev.detail.tab;
   }
 
   @Listen('click')
-  protected onClick(ev: UIEvent) {
-    if (!this.tab.disabled) {
-      this.ionTabbarClick.emit(this.tab);
+  onClick(ev: Event) {
+    if (!this.disabled) {
+      this.ionTabButtonClick.emit({
+        tab: this.tab,
+        href: this.href,
+        selected: this.selected
+      });
     }
-    ev.stopPropagation();
     ev.preventDefault();
   }
 
-  private onKeyUp() {
-    this.keyFocus = true;
+  componentWillLoad() {
+    if (this.layout === undefined) {
+      this.layout = this.config.get('tabButtonLayout', 'icon-top');
+    }
   }
 
-  private onBlur() {
-    this.keyFocus = false;
+  private get hasLabel() {
+    return !!this.el.querySelector('ion-label');
+  }
+
+  private get hasIcon() {
+    return !!this.el.querySelector('ion-icon');
   }
 
   hostData() {
-    const selected = this.selected;
-    const tab = this.tab;
-    const hasTitle = !!tab.label;
-    const hasIcon = !!tab.icon;
-    const hasTitleOnly = (hasTitle && !hasIcon);
-    const hasIconOnly = (hasIcon && !hasTitle);
-    const hasBadge = !!tab.badge;
+    const { color, tab, selected, layout, disabled, hasLabel, hasIcon } = this;
     return {
       'role': 'tab',
-      'id': tab.btnId,
-      'aria-selected': selected,
-      'hidden': !tab.show,
+      'ion-activatable': true,
+      'aria-selected': selected ? 'true' : null,
+      'id': `tab-button-${tab}`,
+      'aria-controls': `tab-view-${tab}`,
       class: {
+        ...createColorClasses(color),
+
         'tab-selected': selected,
-        'has-title': hasTitle,
-        'has-icon': hasIcon,
-        'has-title-only': hasTitleOnly,
-        'has-icon-only': hasIconOnly,
-        'has-badge': hasBadge,
-        'tab-btn-disabled': tab.disabled,
-        'focused': this.keyFocus
+        'tab-disabled': disabled,
+        'tab-has-label': hasLabel,
+        'tab-has-icon': hasIcon,
+        'tab-has-label-only': hasLabel && !hasIcon,
+        'tab-has-icon-only': hasIcon && !hasLabel,
+        [`tab-layout-${layout}`]: true,
       }
     };
   }
 
   render() {
-    const tab = this.tab;
-    const href = tab.href || '#';
-
-    return [
-      <a
-        href={href}
-        class='tab-cover'
-        onKeyUp={this.onKeyUp.bind(this)}
-        onBlur={this.onBlur.bind(this)}>
-        { tab.icon && <ion-icon class='tab-button-icon' name={tab.icon}></ion-icon> }
-        { tab.label && <span class='tab-button-text'>{tab.label}</span> }
-        { tab.badge && <ion-badge class='tab-badge' color={tab.badgeStyle}>{tab.badge}</ion-badge> }
-        { this.mode === 'md' && <ion-ripple-effect useTapClick={true}/> }
+    const { mode, href } = this;
+    return (
+      <a href={href || '#'}>
+        <slot></slot>
+        {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
       </a>
-    ];
+    );
   }
 }

@@ -1,10 +1,11 @@
-import { Component } from '@stencil/core';
-
+import { Component, ComponentInterface } from '@stencil/core';
 
 @Component({
   tag: 'ion-buttons',
-  host: {
-    theme: 'bar-buttons'
-  }
+  styleUrls: {
+    ios: 'buttons.ios.scss',
+    md: 'buttons.md.scss'
+  },
+  scoped: true,
 })
-export class Buttons {}
+export class Buttons implements ComponentInterface {}

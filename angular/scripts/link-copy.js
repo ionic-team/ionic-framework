@@ -7,25 +7,34 @@ if (!prjDir) {
   throw new Error('local path required as last argument to "npm run build.link" command');
 }
 prjDir = path.join(__dirname, '../../../', prjDir);
-const prjIonicAngular = path.join(prjDir, 'node_modules/@ionic/angular');
 
-const ionicAngularDir = path.join(__dirname, '..');
-const ionicAngularDist = path.join(ionicAngularDir, 'dist');
-const ionicAngularPkgJsonPath = path.join(ionicAngularDir, 'package.json');
-const ionicAngularPkgJson = require(ionicAngularPkgJsonPath);
+copyPackage(prjDir, 'angular');
+copyPackage(prjDir, 'core');
 
-// make sure this local project exists
-fs.emptyDirSync(prjIonicAngular);
 
-ionicAngularPkgJson.files.push('package.json');
+function copyPackage(prjDir, pkgName) {
+  const prjDest = path.join(prjDir, 'node_modules', '@ionic', pkgName);
 
-ionicAngularPkgJson.files.forEach(f => {
-  const src = path.join(ionicAngularDir, f);
-  const dest = path.join(prjIonicAngular, f);
+  const pkgSrcDir = path.join(__dirname, '..', '..', pkgName);
+  const pkgSrcDist = path.join(pkgSrcDir, 'dist');
+  const pkgJsonPath = path.join(pkgSrcDir, 'package.json');
+  const pkgJson = require(pkgJsonPath);
 
-  console.log('copying:', src, 'to', dest);
-  fs.copySync(src, dest);
-});
+  // make sure this local project exists
+  fs.emptyDirSync(prjDest);
 
-const prjReadme = path.join(prjIonicAngular, 'README.md');
-fs.writeFileSync(prjReadme, '@ionic/angular copied from ' + ionicAngularDir);
+  pkgJson.files.push('package.json');
+
+  pkgJson.files.forEach(f => {
+    const src = path.join(pkgSrcDir, f);
+    const dest = path.join(prjDest, f);
+
+    console.log('copying:', src, 'to', dest);
+    fs.copySync(src, dest);
+  });
+
+  const prjReadme = path.join(prjDest, 'README.md');
+  console.log('readme:', prjReadme);
+
+  fs.writeFileSync(prjReadme, '@ionic/' + pkgName + ' copied from ' + pkgSrcDir + ', ' + new Date());
+}

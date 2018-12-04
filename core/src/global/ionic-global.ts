@@ -1,39 +1,45 @@
 import 'ionicons';
-import { createConfigController } from './config-controller';
-import { createDomControllerClient } from './dom-controller';
-import { PLATFORM_CONFIGS, detectPlatforms, readQueryParam } from './platform-configs';
 
+import { isPlatform, setupPlatforms } from '../utils/platform';
 
-const Ionic = (window as any).Ionic = (window as any).Ionic || {};
+import { Config, configFromSession, configFromURL, saveConfig } from './config';
 
+const win = window;
+const Ionic = (win as any)['Ionic'] = (win as any)['Ionic'] || {};
 declare const Context: any;
 
-// add dom controller, used to coordinate DOM reads and write in order to avoid
-// layout thrashing
-if (!Context.dom) {
-  const now = () => window.performance.now();
-  Context.dom = createDomControllerClient(window, now);
-}
+// queue used to coordinate DOM reads and
+// write in order to avoid layout thrashing
+Object.defineProperty(Ionic, 'queue', {
+  get: () => Context['queue']
+});
 
-if (!Context.platforms) {
-  Context.platforms = detectPlatforms(window.location.href, window.navigator.userAgent, PLATFORM_CONFIGS, 'core');
-}
-
-if (!Context.readQueryParam) {
-  Context.readQueryParam = readQueryParam;
-}
+// Setup platforms
+setupPlatforms(win);
+Context.isPlatform = isPlatform;
 
 // create the Ionic.config from raw config object (if it exists)
 // and convert Ionic.config into a ConfigApi that has a get() fn
-Ionic.config = Context.config = createConfigController(
-  Ionic.config,
-  Context.platforms
-);
+const configObj = {
+  ...configFromSession(),
+  persistConfig: false,
+  ...Ionic['config'],
+  ...configFromURL()
+};
+const config = Ionic['config'] = Context['config'] = new Config(configObj);
+if (config.getBoolean('persistConfig')) {
+  saveConfig(configObj);
+}
 
 // first see if the mode was set as an attribute on <html>
 // which could have been set by the user, or by prerendering
 // otherwise get the mode via config settings, and fallback to md
-Ionic.mode = Context.mode = document.documentElement.getAttribute('mode') || Context.config.get('mode', 'md');
-
-// ensure we've got the mode attribute set on <html>
-document.documentElement.setAttribute('mode', Ionic.mode);
+const documentElement = document.documentElement!;
+const mode = config.get('mode', documentElement.getAttribute('mode') || (isPlatform(win, 'ios') ? 'ios' : 'md'));
+Ionic.mode = Context.mode = mode;
+config.set('mode', mode);
+documentElement.setAttribute('mode', mode);
+documentElement.classList.add(mode);
+if (config.getBoolean('_testing')) {
+  config.set('animated', false);
+}

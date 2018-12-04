@@ -1,63 +1,33 @@
-import { CssClassMap } from '../index';
+import { Color, CssClassMap, Mode, RouterDirection } from '../interface';
+
+export function hostContext(selector: string, el: HTMLElement): boolean {
+  return el.closest(selector) !== null;
+}
 
 /**
  * Create the mode and color classes for the component based on the classes passed in
  */
-export function createThemedClasses(mode: string, color: string, classes: string): CssClassMap {
-  const classObj: CssClassMap = {};
-
-  classes.split(' ').forEach(classString => {
-    classObj[classString] = true;
-
-    if (mode) {
-      classObj[`${classString}-${mode}`] = true;
-
-      if (color) {
-        classObj[`${classString}-${color}`] = true;
-        classObj[`${classString}-${mode}-${color}`] = true;
-      }
-    }
-
-    return classObj;
-  });
-  return classObj;
+export function createColorClasses(color: Color | undefined | null): CssClassMap | undefined {
+  return (typeof color === 'string' && color.length > 0) ? {
+    'ion-color': true,
+    [`ion-color-${color}`]: true
+  } : undefined;
 }
 
-/**
- * Get the classes from a class list and return them as an object
- */
-export function getElementClassMap(classList: DOMTokenList | string[]): CssClassMap {
-  const classObj: CssClassMap = {};
-
-  for (let i = 0; i < classList.length; i++) {
-    classObj[classList[i]] = true;
-  }
-
-  return classObj;
-}
-
-/**
- * Get the classes based on the button type
- * e.g. alert-button, action-sheet-button
- */
-export function getButtonClassMap(buttonType: string, mode: string): CssClassMap {
-  if (!buttonType) {
-    return {};
-  }
+export function createThemedClasses(mode: Mode | undefined, name: string): CssClassMap {
   return {
-    [buttonType]: true,
-    [`${buttonType}-${mode}`]: true
+    [name]: true,
+    [`${name}-${mode}`]: mode !== undefined
   };
 }
 
-export function getClassList(classes: string | string[] | undefined): string[] {
-  if (classes) {
-    if (Array.isArray(classes)) {
-      return classes;
-    }
-    return classes
-      .split(' ')
-      .filter(c => c.trim() !== '');
+export function getClassList(classes: string | (string | null | undefined)[] | undefined): string[] {
+  if (classes !== undefined) {
+    const array = Array.isArray(classes) ? classes : classes.split(' ');
+    return array
+      .filter(c => c != null)
+      .map(c => (c as string).trim())
+      .filter(c => c !== '');
   }
   return [];
 }
@@ -68,13 +38,18 @@ export function getClassMap(classes: string | string[] | undefined): CssClassMap
   return map;
 }
 
-export function openURL(url: string, ev: Event, goBack = false) {
-  if (url && url[0] !== '#' && url.indexOf('://') === -1) {
-    const router = document.querySelector('ion-router');
+const SCHEME = /^[a-z][a-z0-9+\-.]*:/;
+
+export async function openURL(win: Window, url: string | undefined | null, ev: Event | undefined | null, direction: RouterDirection): Promise<boolean> {
+  if (url != null && url[0] !== '#' && !SCHEME.test(url)) {
+    const router = win.document.querySelector('ion-router');
     if (router) {
-      ev && ev.preventDefault();
-      return router.componentOnReady().then(() => router.push(url, goBack ? -1 : 1));
+      if (ev != null) {
+        ev.preventDefault();
+      }
+      await router.componentOnReady();
+      return router.push(url, direction);
     }
   }
-  return Promise.resolve();
+  return false;
 }

@@ -4,7 +4,17 @@
 // Card Title
 // --------------------------------------------------
 
-ion-card-title {
-  position: relative;
+:host {
+  /**
+   * @prop --color: Color of the card title
+   */
+
   display: block;
+  position: relative;
+
+  color: var(--color);
+}
+
+:host(.ion-color) {
+  color: #{current-color(base)};
 }

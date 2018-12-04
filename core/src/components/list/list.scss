@@ -11,12 +11,11 @@ ion-list {
   display: block;
 
   contain: content;
-
   list-style-type: none;
 }
 
-ion-list[inset] {
-  overflow: hidden;
-
+ion-list.list-inset {
   transform: translateZ(0);
+
+  overflow: hidden;
 }

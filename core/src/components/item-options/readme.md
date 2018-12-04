@@ -1,21 +1,15 @@
 # ion-item-options
 
-The option buttons for an `ion-item-sliding`. These buttons can be placed either on the left or right side.
-You can combine the `(ionSwipe)` event plus the `expandable` directive to create a full swipe action for the item.
+The option buttons for an `ion-item-sliding`. These buttons can be placed either on the [start or end side](#side-description).
+You can combine the `ionSwipe` event plus the `expandable` directive to create a full swipe action for the item.
 
 
-```html
-<ion-item-sliding>
-  <ion-item>
-    Item 1
-  </ion-item>
-  <ion-item-options side="right" (ionSwipe)="saveItem(item)">
-    <ion-item-option expandable (click)="saveItem(item)">
-      <ion-icon name="star"></ion-icon>
-    </ion-item-option>
-  </ion-item-options>
-</ion-item-sliding>
-```
+### Side description
+
+| Side    | Position                                                        | Swipe direction                                                   |
+|---------|-----------------------------------------------------------------|-------------------------------------------------------------------|
+| `start` | To the `left` of the content in LTR, and to the `right` in RTL. | From `left` to `right` in LTR, and from `right` to `left` in RTL. |
+| `end`   | To the `right` of the content in LTR, and to the `left` in RTL. | From `right` to `left` in LTR, and from `left` to `right` in RTL. |
 
 
 <!-- Auto Generated Below -->
@@ -23,41 +17,16 @@ You can combine the `(ionSwipe)` event plus the `expandable` directive to create
 
 ## Properties
 
-#### side
-
-
-
-The side the option button should be on. Defaults to `"right"`.
-If you have multiple `ion-item-options`, a side must be provided for each.
-
-
-## Attributes
-
-#### side
-
-
-
-The side the option button should be on. Defaults to `"right"`.
-If you have multiple `ion-item-options`, a side must be provided for each.
+| Property | Attribute | Description                                                                                                                                                 | Type               | Default |
+| -------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ | ------- |
+| `side`   | `side`    | The side the option button should be on. Possible values: `"start"` and `"end"`. If you have multiple `ion-item-options`, a side must be provided for each. | `"end" \| "start"` | `'end'` |
 
 
 ## Events
 
-#### ionSwipe
-
-Emitted when the item has been fully swiped.
-
-
-## Methods
-
-#### fireSwipeEvent()
-
-
-#### isRightSide()
-
-
-#### width()
-
+| Event      | Description                                  | Detail |
+| ---------- | -------------------------------------------- | ------ |
+| `ionSwipe` | Emitted when the item has been fully swiped. | any    |
 
 
 ----------------------------------------------

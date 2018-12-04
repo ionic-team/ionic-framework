@@ -1,4 +1,5 @@
 @import "../../themes/ionic.globals.ios";
+@import "../item/item.ios.vars";
 
 // iOS List
 // --------------------------------------------------
@@ -14,6 +15,9 @@ $list-ios-margin-bottom:              32px !default;
 
 /// @prop - Margin start of the list
 $list-ios-margin-start:               0 !default;
+
+/// @prop - Border bottom of the item in a list
+$list-ios-item-border-bottom-width:   $item-ios-border-bottom-width !default;
 
 /// @prop - Margin top of the inset list
 $list-inset-ios-margin-top:           16px !default;

@@ -1,38 +1,37 @@
-import { Component, Element, EventListenerEnable, Listen, Method, Prop, Watch } from '@stencil/core';
-import { DomController } from '../../index';
-import { Cell, DomRenderFn, HeaderFn, ItemHeightFn,
-  ItemRenderFn, NodeHeightFn, Range, Viewport,
-  VirtualNode, calcCells, calcHeightIndex, doRender,
-  findCellIndex, getRange, getShouldUpdate, getViewport,
-  inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
+import { Component, ComponentInterface, Element, EventListenerEnable, FunctionalComponent, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
+import { Cell, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
+
+import { CellType } from './virtual-scroll-interface';
+import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, getShouldUpdate, getViewport, inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
 
 @Component({
   tag: 'ion-virtual-scroll',
   styleUrl: 'virtual-scroll.scss'
 })
-export class VirtualScroll {
+export class VirtualScroll implements ComponentInterface {
 
-  private scrollEl: HTMLIonScrollElement | null;
-  private range: Range = {offset: 0, length: 0};
+  private contentEl?: HTMLElement;
+  private scrollEl?: HTMLElement;
+  private range: Range = { offset: 0, length: 0 };
   private timerUpdate: any;
-  private heightIndex: Uint32Array;
-  private viewportHeight: number;
+  private heightIndex?: Uint32Array;
+  private viewportHeight = 0;
   private cells: Cell[] = [];
   private virtualDom: VirtualNode[] = [];
   private isEnabled = false;
   private viewportOffset = 0;
   private currentScrollTop = 0;
   private indexDirty = 0;
-  private totalHeight = 0;
-  private heightChanged = false;
   private lastItemLen = 0;
 
-  @Element() el: HTMLStencilElement;
+  @Element() el!: HTMLStencilElement;
 
-  @Prop({context: 'dom'}) dom: DomController;
-  @Prop({context: 'enableListener'}) enableListener: EventListenerEnable;
+  @State() totalHeight = 0;
 
+  @Prop({ context: 'queue' }) queue!: QueueApi;
+  @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
+  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * It is important to provide this
@@ -43,8 +42,7 @@ export class VirtualScroll {
    * the scrollable area. This height value can only use `px` units.
    * Note that the actual rendered size of each cell comes from the
    * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions before the item has been rendered. Default is
-   * `45`.
+   * initial dimensions before the item has been rendered.
    */
   @Prop() approxItemHeight = 45;
 
@@ -55,7 +53,7 @@ export class VirtualScroll {
    * the scrollable area. This height value can only use `px` units.
    * Note that the actual rendered size of each cell comes from the
    * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions before the item has been rendered. Default is `40px`.
+   * initial dimensions before the item has been rendered.
    */
   @Prop() approxHeaderHeight = 40;
 
@@ -66,7 +64,7 @@ export class VirtualScroll {
    * the scrollable area. This value can use either `px` or `%` units.
    * Note that the actual rendered size of each cell comes from the
    * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions before the item has been rendered. Default is `100%`.
+   * initial dimensions before the item has been rendered.
    */
   @Prop() approxFooterHeight = 40;
 
@@ -80,7 +78,7 @@ export class VirtualScroll {
    * and what data to give to the header template. The function must return
    * `null` if a header cell shouldn't be created.
    */
-  @Prop() headerFn: HeaderFn;
+  @Prop() headerFn?: HeaderFn;
 
   /**
    * Section footers and the data used within its given
@@ -89,39 +87,74 @@ export class VirtualScroll {
    * should be used, and what data to give to the footer template. The function
    * must return `null` if a footer cell shouldn't be created.
    */
-  @Prop() footerFn: HeaderFn;
+  @Prop() footerFn?: HeaderFn;
 
   /**
    * The data that builds the templates within the virtual scroll.
-   * This is the same data that you'd pass to `*ngFor`. It's important to note
-   * that when this data has changed, then the entire virtual scroll is reset,
-   * which is an expensive operation and should be avoided if possible.
+   * It's important to note that when this data has changed, then the
+   * entire virtual scroll is reset, which is an expensive operation and
+   * should be avoided if possible.
    */
-  @Prop() items: any[];
+  @Prop() items?: any[];
 
-  @Prop() renderer: (item: any) => JSX.Element;
-  @Prop() nodeHeight: NodeHeightFn;
-  @Prop() itemHeight: ItemHeightFn;
-  @Prop() itemRender: ItemRenderFn;
-  @Prop() domRender: DomRenderFn;
+  /**
+   * An optional function that maps each item within their height.
+   * When this function is provides, heavy optimizations and fast path can be taked by
+   * `ion-virtual-scroll` leading to massive performance improvements.
+   *
+   * This function allows to skip all DOM reads, which can be Doing so leads
+   * to massive performance
+   */
+  @Prop() itemHeight?: ItemHeightFn;
+
+  /**
+   * NOTE: only JSX API for stencil.
+   *
+   * Provide a render function for the items to be rendered. Returns a JSX virtual-dom.
+   */
+  @Prop() renderItem?: (item: any, index: number) => any;
+
+  /**
+   * NOTE: only JSX API for stencil.
+   *
+   * Provide a render function for the header to be rendered. Returns a JSX virtual-dom.
+   */
+  @Prop() renderHeader?: (item: any, index: number) => any;
+
+  /**
+   * NOTE: only JSX API for stencil.
+   *
+   * Provide a render function for the footer to be rendered. Returns a JSX virtual-dom.
+   */
+  @Prop() renderFooter?: (item: any, index: number) => any;
+
+  /**
+   * NOTE: only Vanilla JS API.
+   */
+  @Prop() nodeRender?: ItemRenderFn;
+
+  /** @internal */
+  @Prop() domRender?: DomRenderFn;
 
   @Watch('itemHeight')
   @Watch('items')
   itemsChanged() {
     this.calcCells();
+    this.updateVirtualScroll();
   }
 
-  componentDidLoad() {
-    this.scrollEl = this.el.closest('ion-scroll');
-    if (!this.scrollEl) {
-      console.error('virtual-scroll must be used inside ion-scroll/ion-content');
+  async componentDidLoad() {
+    const contentEl = this.el.closest('ion-content');
+    if (!contentEl) {
+      console.error('virtual-scroll must be used inside ion-content');
       return;
     }
-    this.scrollEl.componentOnReady().then(() => {
-      this.calcDimensions();
-      this.calcCells();
-      this.updateState();
-    });
+    await contentEl.componentOnReady();
+
+    this.contentEl = contentEl;
+    this.scrollEl = await contentEl.getScrollElement();
+    this.calcCells();
+    this.updateState();
   }
 
   componentDidUpdate() {
@@ -129,27 +162,33 @@ export class VirtualScroll {
   }
 
   componentDidUnload() {
-    this.scrollEl = null;
+    this.scrollEl = undefined;
   }
 
-  @Listen('scroll', {enabled: false, passive: false})
+  @Listen('scroll', { enabled: false, passive: false })
   onScroll() {
     this.updateVirtualScroll();
   }
 
   @Listen('window:resize')
   onResize() {
-    this.indexDirty = 0;
-    this.calcDimensions();
-    this.calcCells();
     this.updateVirtualScroll();
   }
 
+  /**
+   * Returns the position of the virtual item at the given index.
+   */
   @Method()
-  positionForItem(index: number): number {
-    return positionForIndex(index, this.cells, this.heightIndex);
+  positionForItem(index: number): Promise<number> {
+    return Promise.resolve(positionForIndex(index, this.cells, this.getHeightIndex()));
   }
 
+  /**
+   * This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as
+   * dirty any time the content or their style changes.
+   *
+   * The subset of items to be updated can are specifing by an offset and a length.
+   */
   @Method()
   markDirty(offset: number, len = -1) {
     // TODO: kind of hacky how we do in-place updated of the cells
@@ -157,9 +196,10 @@ export class VirtualScroll {
     if (!this.items) {
       return;
     }
-    if (len === -1) {
-      len = this.items.length - offset;
-    }
+    const length = (len === -1)
+      ? this.items.length - offset
+      : len;
+
     const max = this.lastItemLen;
     let j = 0;
     if (offset > 0 && offset < max) {
@@ -180,7 +220,7 @@ export class VirtualScroll {
       this.approxHeaderHeight,
       this.approxFooterHeight,
       this.approxItemHeight,
-      j, offset, len
+      j, offset, length
     );
     console.debug('[virtual] cells recalculated', cells.length);
     this.cells = inplaceUpdate(this.cells, cells, offset);
@@ -190,36 +230,52 @@ export class VirtualScroll {
     this.scheduleUpdate();
   }
 
+  /**
+   * This method marks the tail the items array as dirty, so they can be re-rendered.
+   *
+   * It's equivalent to calling:
+   *
+   * ```
+   * virtualScroll.markDirty(lastItemLen, items.length - lastItemLen);
+   * ```
+   */
   @Method()
   markDirtyTail() {
-    const offset = this.lastItemLen;
-    this.markDirty(offset, this.items.length - offset);
+    if (this.items) {
+      const offset = this.lastItemLen;
+      this.markDirty(offset, this.items.length - offset);
+    }
   }
 
   private updateVirtualScroll() {
-    // do nothing if there is a scheduled update
+    // do nothing if virtual-scroll is disabled
     if (!this.isEnabled || !this.scrollEl) {
       return;
     }
+
+    // unschedule future updates
     if (this.timerUpdate) {
       clearTimeout(this.timerUpdate);
-      this.timerUpdate = null;
+      this.timerUpdate = undefined;
     }
 
-    this.dom.read(this.readVS.bind(this));
-    this.dom.read(this.writeVS.bind(this));
+    // schedule DOM operations into the stencil queue
+    this.queue.read(this.readVS.bind(this));
+    this.queue.write(this.writeVS.bind(this));
   }
 
   private readVS() {
+    const { contentEl, scrollEl, el } = this;
     let topOffset = 0;
-    let node: HTMLElement | null = this.el;
-    while (node && node !== this.scrollEl) {
+    let node: HTMLElement | null = el;
+    while (node && node !== contentEl) {
       topOffset += node.offsetTop;
       node = node.parentElement;
     }
     this.viewportOffset = topOffset;
-    if (this.scrollEl) {
-      this.currentScrollTop = this.scrollEl.scrollTop;
+    if (scrollEl) {
+      this.viewportHeight = scrollEl.offsetHeight;
+      this.currentScrollTop = scrollEl.scrollTop;
     }
   }
 
@@ -231,7 +287,7 @@ export class VirtualScroll {
     const viewport = getViewport(scrollTop, this.viewportHeight, 100);
 
     // compute lazily the height index
-    const heightIndex = this.getHeightIndex(viewport);
+    const heightIndex = this.getHeightIndex();
 
     // get array bounds of visible cells base in the viewport
     const range = getRange(heightIndex, viewport, 2);
@@ -251,30 +307,27 @@ export class VirtualScroll {
       range
     );
 
-    // write DOM
-    if (this.itemRender) {
-      doRender(this.el, this.itemRender, this.virtualDom, this.updateCellHeight.bind(this));
+    // Write DOM
+    // Different code paths taken depending of the render API used
+    if (this.nodeRender) {
+      doRender(this.el, this.nodeRender, this.virtualDom, this.updateCellHeight.bind(this));
     } else if (this.domRender) {
       this.domRender(this.virtualDom);
-    } else if (this.renderer) {
+    } else if (this.renderItem) {
       this.el.forceUpdate();
-    }
-    if (this.heightChanged) {
-      this.el.style.height = this.totalHeight + 'px';
-      this.heightChanged = false;
     }
   }
 
-  private updateCellHeight(cell: Cell, node: HTMLStencilElement | HTMLElement) {
+  private updateCellHeight(cell: Cell, node: any) {
     const update = () => {
       if ((node as any)['$ionCell'] === cell) {
-        const style = window.getComputedStyle(node);
+        const style = this.win.getComputedStyle(node);
         const height = node.offsetHeight + parseFloat(style.getPropertyValue('margin-bottom'));
         this.setCellHeight(cell, height);
       }
     };
-    if ('componentOnReady' in node) {
-      node.componentOnReady(update);
+    if (node && node.componentOnReady) {
+      node.componentOnReady().then(update);
     } else {
       update();
     }
@@ -303,8 +356,7 @@ export class VirtualScroll {
   private updateState() {
     const shouldEnable = !!(
       this.scrollEl &&
-      this.cells &&
-      this.viewportHeight > 1
+      this.cells
     );
     if (shouldEnable !== this.isEnabled) {
       this.enableScrollEvents(shouldEnable);
@@ -313,7 +365,6 @@ export class VirtualScroll {
       }
     }
   }
-
 
   private calcCells() {
     if (!this.items) {
@@ -334,30 +385,20 @@ export class VirtualScroll {
     this.indexDirty = 0;
   }
 
-  private getHeightIndex(_: Viewport): Uint32Array {
+  private getHeightIndex(): Uint32Array {
     if (this.indexDirty !== Infinity) {
       this.calcHeightIndex(this.indexDirty);
     }
-    return this.heightIndex;
+    return this.heightIndex!;
   }
 
   private calcHeightIndex(index = 0) {
     // TODO: optimize, we don't need to calculate all the cells
     this.heightIndex = resizeBuffer(this.heightIndex, this.cells.length);
-    const totalHeight = calcHeightIndex(this.heightIndex, this.cells, index);
-    if (totalHeight !== this.totalHeight) {
-      console.debug(`[virtual] total height changed: ${this.totalHeight}px -> ${totalHeight}px`);
-      this.totalHeight = totalHeight;
-      this.heightChanged = true;
-    }
+    this.totalHeight = calcHeightIndex(this.heightIndex, this.cells, index);
+
     console.debug('[virtual] height index recalculated', this.heightIndex.length - index);
     this.indexDirty = Infinity;
-  }
-
-  private calcDimensions() {
-    if (this.scrollEl) {
-      this.viewportHeight = this.scrollEl.offsetHeight;
-    }
   }
 
   private enableScrollEvents(shouldListen: boolean) {
@@ -367,27 +408,54 @@ export class VirtualScroll {
     }
   }
 
+  private renderVirtualNode(node: VirtualNode) {
+    const { type, value, index } = node.cell;
+    switch (type) {
+      case CellType.Item: return this.renderItem!(value, index);
+      case CellType.Header: return this.renderHeader!(value, index);
+      case CellType.Footer: return this.renderFooter!(value, index);
+    }
+  }
+
+  hostData() {
+    return {
+      style: {
+        height: `${this.totalHeight}px`
+      }
+    };
+  }
+
   render() {
-    const renderer = this.renderer;
-    if (renderer) {
-      return this.virtualDom.map((dom) => {
-        const item = renderer(dom.cell.value) as any;
-        const classes = ['virtual-item'];
-        if (!item.vattrs) {
-          item.vattrs = {};
-        }
-        item.vattrs.class += ' virtual-item';
-        if (!dom.visible) {
-          classes.push('virtual-loading');
-        }
-        item.vattrs.class += ' ' + classes.join(' ');
-        if (!item.vattrs.style) {
-          item.vattrs.style = {};
-        }
-        item.vattrs.style['transform'] = `translate3d(0,${dom.top}px,0)`;
-        return item;
-      });
+    if (this.renderItem) {
+      return (
+        <VirtualProxy dom={this.virtualDom}>
+          {this.virtualDom.map(node => this.renderVirtualNode(node))}
+        </VirtualProxy>
+      );
     }
     return undefined;
   }
 }
+
+const VirtualProxy: FunctionalComponent<{dom: VirtualNode[]}> = ({ dom }, children, utils) => {
+  return utils.map(children, (child, i) => {
+    const node = dom[i];
+    const vattrs = child.vattrs || {};
+    let classes = vattrs.class || '';
+    classes += 'virtual-item ';
+    if (!node.visible) {
+      classes += 'virtual-loading';
+    }
+    return {
+      ...child,
+      vattrs: {
+        ...vattrs,
+        class: classes,
+        style: {
+          ...vattrs.style,
+          transform: `translate3d(0,${node.top}px,0)`
+        }
+      }
+    };
+  });
+};

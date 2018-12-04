@@ -5,7 +5,12 @@
 // Material Design Skeleton Text
 // --------------------------------------------------
 
-.skeleton-text-md span {
-  background-color: $skeleton-text-md-bar-background-color;
+:host {
+  --background: #{$skeleton-text-md-bar-background-color};
+}
+
+span {
+  background: var(--background);
+
   opacity: $skeleton-text-md-bar-opacity;
 }

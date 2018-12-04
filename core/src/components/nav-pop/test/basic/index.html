@@ -1,28 +1,33 @@
 <!DOCTYPE html>
 <html dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <title>Nav Pop</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
+
 <body onload="loadFirstPage()">
   <ion-app>
     <ion-nav></ion-nav>
   </ion-app>
   <style>
-      f {
-        display: block;
-        margin: 15px auto;
-        max-width: 150px;
-        height: 150px;
-        background: blue;
-      }
+    f {
+      display: block;
+      margin: 15px auto;
+      max-width: 150px;
+      height: 150px;
+      background: blue;
+    }
 
-      f:last-of-type {
-        background: yellow;
-      }
-    </style>
+    f:last-of-type {
+      background: yellow;
+    }
+
+  </style>
 </body>
 
 <script>
@@ -74,7 +79,7 @@
     // okay cool, we're in the DOM now
     await nav.push(secondPage);
 
-    const nextButton = secondPage.querySelector('ion-button .next');
+    const nextButton = secondPage.querySelector('ion-button.next');
     nextButton.addEventListener('click', async () => {
       await goToPageThree(nav);
     });
@@ -101,4 +106,5 @@
     await nav.push(thirdPage);
   }
 </script>
+
 </html>

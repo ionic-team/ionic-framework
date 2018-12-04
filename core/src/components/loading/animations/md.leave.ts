@@ -1,18 +1,18 @@
-import { Animation } from '../../../index';
+import { Animation } from '../../../interface';
 
 /**
  * Md Loading Leave Animation
  */
-export default function mdLeaveAnimation(Animation: Animation, baseEl: HTMLElement): Promise<Animation> {
-  const baseAnimation = new Animation();
+export function mdLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+  const baseAnimation = new AnimationC();
 
-  const backdropAnimation = new Animation();
+  const backdropAnimation = new AnimationC();
   backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
 
-  const wrapperAnimation = new Animation();
+  const wrapperAnimation = new AnimationC();
   wrapperAnimation.addElement(baseEl.querySelector('.loading-wrapper'));
 
-  backdropAnimation.fromTo('opacity', 0.5, 0);
+  backdropAnimation.fromTo('opacity', 0.32, 0);
 
   wrapperAnimation.fromTo('opacity', 0.99, 0).fromTo('scale', 1, 0.9);
 

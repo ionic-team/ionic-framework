@@ -1,9 +1,19 @@
 # ion-back-button
 
-A back button is a component that allows you navigate back into app history. To
-add a back button to your view, all you need is:
+The back button navigates back in the app's history upon click. It is smart enough to know what to render based on the mode and when to show based on the navigation stack.
+
+To change what is displayed in the back button, use the `text` and `icon` properties.
+
+
+<!-- Auto Generated Below -->
+
+
+## Usage
+
+### Angular
 
 ```html
+<!-- Default back button -->
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -11,27 +21,29 @@ add a back button to your view, all you need is:
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-```
 
-The back button component is smart enough to know what to render and what content to show.
-
-If, however, you want more control over what is shown in the back button, you use the
-`text` and `icon` properties.
-
-```html
+<!-- Back button with a default href -->
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="Volver" icon="add"></ion-back-button>
+      <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-```
 
-Or no button text at all:
+<!-- Back button with custom text and icon -->
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+          [text]="buttonText"
+          [icon]="buttonIcon">
+      </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-
-```html
+<!-- Back button with no text and custom icon -->
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -39,69 +51,112 @@ Or no button text at all:
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
+<!-- Danger back button next to a menu button -->
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button color="danger"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 ```
 
 
-<!-- Auto Generated Below -->
+### Javascript
+
+```html
+<!-- Default back button -->
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Back button with a default href -->
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Back button with custom text and icon -->
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Volver" icon="close"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Back button with no text and custom icon -->
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="add"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Danger back button next to a menu button -->
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button color="danger"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+```
+
 
 
 ## Properties
 
-#### defaultHref
-
-string
-
-
-#### icon
-
-string
-
-
-#### mode
+| Property      | Attribute      | Description                                                                                                                                                                                                                                                            | Type                          | Default     |
+| ------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ----------- |
+| `color`       | `color`        | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`         | `undefined` |
+| `defaultHref` | `default-href` | The url to navigate back to by default when there is no history.                                                                                                                                                                                                       | `string \| undefined`         | `undefined` |
+| `icon`        | `icon`         | The icon name to use for the back button.                                                                                                                                                                                                                              | `null \| string \| undefined` | `undefined` |
+| `mode`        | `mode`         | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`               | `undefined` |
+| `text`        | `text`         | The text to display in the back button.                                                                                                                                                                                                                                | `null \| string \| undefined` | `undefined` |
 
 
+## CSS Custom Properties
 
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-
-
-#### text
-
-
-
-The text property is used to provide custom text for the back button while using the
-default look-and-feel.
-
-
-## Attributes
-
-#### default-href
-
-string
-
-
-#### icon
-
-string
-
-
-#### mode
-
-
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-
-
-#### text
-
-
-
-The text property is used to provide custom text for the back button while using the
-default look-and-feel.
-
+| Name                    | Description                       |
+| ----------------------- | --------------------------------- |
+| `--background`          | Background of the button          |
+| `--border-radius`       | Border radius of the button       |
+| `--color`               | Text color of the button          |
+| `--icon-font-size`      | Font size of the button icon      |
+| `--icon-font-weight`    | Font weight of the button icon    |
+| `--icon-margin-bottom`  | Margin bottom of the button icon  |
+| `--icon-margin-end`     | Margin end of the button icon     |
+| `--icon-margin-start`   | Margin start of the button icon   |
+| `--icon-margin-top`     | Margin top of the button icon     |
+| `--icon-padding-bottom` | Padding bottom of the button icon |
+| `--icon-padding-end`    | Padding end of the button icon    |
+| `--icon-padding-start`  | Padding start of the button icon  |
+| `--icon-padding-top`    | Padding top of the button icon    |
+| `--margin-bottom`       | Margin bottom of the button       |
+| `--margin-end`          | Margin end of the button          |
+| `--margin-start`        | Margin start of the button        |
+| `--margin-top`          | Margin top of the button          |
+| `--min-height`          | Minimum height of the button      |
+| `--min-width`           | Minimum width of the button       |
+| `--opacity`             | Opacity of the button             |
+| `--padding-bottom`      | Padding bottom of the button      |
+| `--padding-end`         | Padding end of the button         |
+| `--padding-start`       | Padding start of the button       |
+| `--padding-top`         | Padding top of the button         |
+| `--ripple-color`        | Color of the button ripple effect |
+| `--transition`          | Transition of the button          |
 
 
 ----------------------------------------------

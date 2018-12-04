@@ -4,8 +4,14 @@
 // iOS Toggle
 // -----------------------------------------
 
-.toggle-ios {
+:host {
+  --background: #{$toggle-ios-background-color-off};
+  --background-checked: #{ion-color(primary, base)};
+  --handle-background: #{$toggle-ios-handle-background-color};
+  --handle-background-checked: #{$toggle-ios-handle-background-color};
+
   box-sizing: content-box;
+
   position: relative;
 
   width: $toggle-ios-width;
@@ -14,23 +20,35 @@
   contain: strict;
 }
 
+:host(.ion-color.toggle-checked) .toggle-icon {
+  background: current-color(base);
+}
+
+:host(.ion-color.toggle-checked) .toggle-inner {
+  background: current-color(contrast);
+}
 
 // iOS Toggle Background Track: Unchecked
 // -----------------------------------------
 
-.toggle-ios .toggle-icon {
+.toggle-icon {
   @include border-radius($toggle-ios-border-radius);
 
-  position: relative;
   display: block;
-  overflow: hidden;
+  position: relative;
 
   width: 100%;
   height: 100%;
 
-  background-color: $toggle-ios-border-color-off;
+  // Needed to prevent visual glitch in safari/iOS
+  // See https://github.com/ionic-team/ionic/issues/14626
+  transform: translate3d(0,0,0);
+
   transition: background-color $toggle-ios-transition-duration;
 
+  background-color: $toggle-ios-border-color-off;
+
+  overflow: hidden;
   pointer-events: none;
 }
 
@@ -38,24 +56,26 @@
 // iOS Toggle Background Oval: Unchecked
 // -----------------------------------------
 
-.toggle-ios .toggle-icon::before {
+.toggle-icon::before {
   @include position($toggle-ios-border-width, $toggle-ios-border-width, $toggle-ios-border-width, $toggle-ios-border-width);
   @include border-radius($toggle-ios-border-radius);
 
   position: absolute;
 
-  background-color: $toggle-ios-background-color-off;
+  transform: scale3d(1, 1, 1);
+
+  transition: transform $toggle-ios-transition-duration;
+
+  background: var(--background);
 
   content: "";
-  transform: scale3d(1, 1, 1);
-  transition: transform $toggle-ios-transition-duration;
 }
 
 
 // iOS Toggle Inner Knob: Unchecked
 // -----------------------------------------
 
-.toggle-ios .toggle-inner {
+.toggle-inner {
   @include position($toggle-ios-border-width, null, null, $toggle-ios-border-width);
   @include border-radius($toggle-ios-handle-border-radius);
 
@@ -64,11 +84,11 @@
   width: $toggle-ios-handle-width;
   height: $toggle-ios-handle-height;
 
-  background-color: $toggle-ios-handle-background-color;
-  box-shadow: $toggle-ios-handle-box-shadow;
-
   transition: transform $toggle-ios-transition-duration, width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms, right 110ms ease-in-out 80ms;
 
+  background: var(--handle-background);
+
+  box-shadow: $toggle-ios-handle-box-shadow;
   will-change: transform;
   contain: strict;
 }
@@ -77,16 +97,16 @@
 // iOS Toggle Background Track: Checked
 // -----------------------------------------
 
-.toggle-ios.toggle-checked .toggle-icon {
-  background-color: $toggle-ios-background-color-on;
+:host(.toggle-checked) .toggle-icon {
+  background: var(--background-checked);
 }
 
 
 // iOS Toggle Background Oval: Activated or Checked
 // -----------------------------------------
 
-.toggle-ios.toggle-activated .toggle-icon::before,
-.toggle-ios.toggle-checked .toggle-icon::before {
+:host(.toggle-activated) .toggle-icon::before,
+:host(.toggle-checked) .toggle-icon::before {
   transform: scale3d(0, 0, 0);
 }
 
@@ -94,15 +114,17 @@
 // iOS Toggle Inner Knob: Checked
 // -----------------------------------------
 
-.toggle-ios.toggle-checked .toggle-inner {
+:host(.toggle-checked) .toggle-inner {
   @include transform(translate3d($toggle-ios-width - $toggle-ios-handle-width - ($toggle-ios-border-width * 2), 0, 0));
+
+  background: var(--handle-background-checked);
 }
 
 
 // iOS Toggle Background Oval: Activated and Checked
 // -----------------------------------------
 
-.toggle-ios.toggle-activated.toggle-checked .toggle-inner::before {
+:host(.toggle-activated.toggle-checked) .toggle-inner::before {
   transform: scale3d(0, 0, 0);
 }
 
@@ -110,7 +132,7 @@
 // iOS Toggle Inner Knob: Activated and Unchecked
 // -----------------------------------------
 
-.toggle-ios.toggle-activated .toggle-inner {
+:host(.toggle-activated) .toggle-inner {
   width: $toggle-ios-handle-width + 6;
 }
 
@@ -118,9 +140,10 @@
 // iOS Toggle Inner Knob: Activated and Checked
 // -----------------------------------------
 
-.toggle-ios.toggle-activated.toggle-checked .toggle-inner {
+:host(.toggle-activated.toggle-checked) .toggle-inner {
   // when pressing down on the toggle and IS checked
   // make the knob wider and move it left a bit
+
   @include position-horizontal($toggle-ios-border-width - 6, null);
 }
 
@@ -128,42 +151,21 @@
 // iOS Toggle: Disabled
 // -----------------------------------------
 
-.toggle-ios.toggle-disabled,
-.item-ios.item-toggle-disabled ion-label {
-  opacity: $toggle-ios-disabled-opacity;
+// .item-ios.item-toggle-disabled ion-label
 
-  pointer-events: none;
+:host(.toggle-disabled) {
+  opacity: $toggle-ios-disabled-opacity;
 }
 
 
 // iOS Toggle Within An Item
 // -----------------------------------------
 
-.item-ios .toggle-ios[slot] {
+:host(.in-item[slot]) {
   @include margin($toggle-ios-media-margin);
   @include padding($toggle-ios-item-end-padding-top, $toggle-ios-item-end-padding-end, $toggle-ios-item-end-padding-bottom, $toggle-ios-item-end-padding-start);
 }
 
-.item-ios .toggle-ios[slot="start"] {
+:host(.in-item[slot="start"]) {
   @include padding($toggle-ios-item-start-padding-top, $toggle-ios-item-start-padding-end, $toggle-ios-item-start-padding-bottom, $toggle-ios-item-start-padding-start);
-}
-
-
-// iOS Toggle Color Mixin
-// --------------------------------------------------
-
-@mixin ios-toggle-theme($color-name) {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-
-  .toggle-ios-#{$color-name}.toggle-checked .toggle-icon {
-    background-color: $color-base;
-  }
-}
-
-
-// Generate iOS Toggle Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-ios {
-  @include ios-toggle-theme($color-name);
 }

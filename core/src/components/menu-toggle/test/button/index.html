@@ -5,12 +5,14 @@
   <meta charset="UTF-8">
   <title>Menu - Button</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <script src="/dist/ionic.js"></script>
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
   <ion-app>
-    <ion-menu side="left" class="e2eLeftMenu">
+    <ion-menu side="start" class="e2eLeftMenu">
 
       <ion-header>
         <ion-toolbar color="secondary">
@@ -20,7 +22,7 @@
 
       <ion-content>
         <ion-list>
-          <ion-item>Open Right Menu</ion-item>
+          <ion-item>Open end Menu</ion-item>
           <ion-item>Close Menu</ion-item>
           <ion-item>Close Menu</ion-item>
           <ion-item>Close Menu</ion-item>
@@ -62,4 +64,5 @@
   </ion-app>
   <ion-menu-controller></ion-menu-controller>
 </body>
+
 </html>

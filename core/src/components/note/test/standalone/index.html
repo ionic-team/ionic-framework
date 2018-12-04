@@ -5,14 +5,20 @@
   <meta charset="UTF-8">
   <title>Note - Standalone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
-  <!-- Default -->
+  <h1>Default</h1>
   <ion-note>Default Note</ion-note>
 
-  <!-- Colors -->
+  <h1>Custom</h1>
+  <ion-note class="custom">Custom Note</ion-note>
+  <ion-note color="secondary" class="custom">Custom Secondary Note</ion-note>
+
+  <h1>Colors</h1>
   <ion-note color="primary">Primary Note</ion-note>
   <ion-note color="secondary">Secondary Note</ion-note>
   <ion-note color="tertiary">Tertiary Note</ion-note>
@@ -23,7 +29,7 @@
   <ion-note color="medium">Medium Note</ion-note>
   <ion-note color="dark">Dark Note</ion-note>
 
-  <!-- Notes in a List -->
+  <h1>Notes in a List</h1>
   <ion-list>
     <ion-item>
       <ion-label>Note (End)</ion-label>
@@ -35,5 +41,11 @@
       <ion-label>Note (Start)</ion-label>
     </ion-item>
   </ion-list>
+
+  <style>
+    .custom {
+      --color: hotpink;
+    }
+  </style>
 </body>
 </html>

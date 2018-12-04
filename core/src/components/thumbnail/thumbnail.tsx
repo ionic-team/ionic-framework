@@ -1,14 +1,12 @@
-import { Component } from '@stencil/core';
-
+import { Component, ComponentInterface } from '@stencil/core';
 
 @Component({
   tag: 'ion-thumbnail',
-  styleUrls: {
-    ios: 'thumbnail.ios.scss',
-    md: 'thumbnail.md.scss'
-  },
-  host: {
-    theme: 'thumbnail'
-  }
+  styleUrl: 'thumbnail.scss',
+  shadow: true
 })
-export class Thumbnail {}
+export class Thumbnail implements ComponentInterface {
+  render() {
+    return <slot></slot>;
+  }
+}

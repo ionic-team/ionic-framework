@@ -3,37 +3,56 @@
 // Toast
 // --------------------------------------------------
 
-ion-toast {
+:host {
+  /**
+   * @prop --background: Background of the toast
+   * @prop --button-color: Color of the button text
+   * @prop --color: Color of the toast text
+   */
+  --button-color: inherit;
+
   @include position(0, null, null, 0);
 
+  display: block;
   position: absolute;
 
-  z-index: $z-index-overlay;
+  width: 100%;
+  height: 100%;
 
-  display: block;
+  color: var(--color);
 
-  width: $toast-width;
-  height: $toast-width;
-
-  pointer-events: none;
+  font-family: $font-family-base;
 
   contain: strict;
+  z-index: $z-index-overlay;
+  pointer-events: none;
+}
+
+:host(.ion-color) {
+  --color: #{current-color(contrast)};
+  --background: #{current-color(base)};
+  --button-color: inherit;
+}
+
+.toast-wrapper {
+  background: var(--background);
 }
 
 .toast-container {
   display: flex;
 
   align-items: center;
-
   pointer-events: auto;
 
   contain: content;
 }
 
 .toast-button {
-  font-size: $toast-button-font-size;
+  color: var(--button-color);
 }
 
 .toast-message {
   flex: 1;
+
+  white-space: pre-wrap;
 }
