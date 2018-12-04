@@ -3847,10 +3847,6 @@ export namespace Components {
     */
     'checked': boolean;
     /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
-    /**
     * If `true`, the user cannot interact with the segment button.
     */
     'disabled': boolean;
@@ -3872,10 +3868,6 @@ export namespace Components {
     * If `true`, the segment button is selected.
     */
     'checked'?: boolean;
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
     /**
     * If `true`, the user cannot interact with the segment button.
     */
@@ -4431,10 +4423,6 @@ export namespace Components {
 
   interface IonTabButton {
     /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
-    /**
     * The selected tab component
     */
     'disabled': boolean;
@@ -4456,10 +4444,6 @@ export namespace Components {
     'tab': string;
   }
   interface IonTabButtonAttributes extends StencilHTMLAttributes {
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
     /**
     * The selected tab component
     */
