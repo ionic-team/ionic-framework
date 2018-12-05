@@ -4,6 +4,9 @@
 // --------------------------------------------------
 
 :host {
+  --indicator-color-checked: initial;
+  --ripple-color: initial;
+
   @include font-smoothing();
 
   display: flex;
