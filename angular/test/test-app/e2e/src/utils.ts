@@ -33,7 +33,7 @@ export interface LifeCycleCount {
 }
 
 export async function testLifeCycle(selector: string, expected: LifeCycleCount) {
-  const page = element(by.css(selector));
+  expect(await getText(`${selector} #ngOnInit`)).toEqual('1');
   expect(await getText(`${selector} #ionViewWillEnter`)).toEqual(expected.ionViewWillEnter.toString());
   expect(await getText(`${selector} #ionViewDidEnter`)).toEqual(expected.ionViewDidEnter.toString());
   expect(await getText(`${selector} #ionViewWillLeave`)).toEqual(expected.ionViewWillLeave.toString());
