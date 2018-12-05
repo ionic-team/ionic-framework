@@ -46,11 +46,11 @@
 
   height: auto;
 
-  background: var(--background);
-
   border-width: var(--border-width);
   border-style: var(--border-style);
   border-color: var(--border-color);
+
+  background: var(--background);
 
   color: var(--color);
 
@@ -58,9 +58,9 @@
   text-overflow: ellipsis;
 
   white-space: nowrap;
-  font-kerning: none;
 
   overflow: hidden;
+  font-kerning: none;
 }
 
 :host(:first-of-type) {
