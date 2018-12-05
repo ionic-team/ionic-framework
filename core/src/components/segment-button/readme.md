@@ -85,15 +85,15 @@ Segment buttons are groups of related buttons inside of a [Segment](../../segmen
 
 <!-- Icon top -->
 <ion-segment>
-  <ion-segment-button layout="icon-top">
+  <ion-segment-button>
     <ion-label>Item One</ion-label>
     <ion-icon name="call"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button checked layout="icon-top">
+  <ion-segment-button checked>
     <ion-label>Item Two</ion-label>
     <ion-icon name="heart"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button layout="icon-top">
+  <ion-segment-button>
     <ion-label>Item Three</ion-label>
     <ion-icon name="pin"></ion-icon>
   </ion-segment-button>
@@ -241,15 +241,15 @@ export class SegmentButtonExample {
 
 <!-- Icon top -->
 <ion-segment>
-  <ion-segment-button layout="icon-top">
+  <ion-segment-button>
     <ion-label>Item One</ion-label>
     <ion-icon name="call"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button checked layout="icon-top">
+  <ion-segment-button checked>
     <ion-label>Item Two</ion-label>
     <ion-icon name="heart"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button layout="icon-top">
+  <ion-segment-button>
     <ion-label>Item Three</ion-label>
     <ion-icon name="pin"></ion-icon>
   </ion-segment-button>
