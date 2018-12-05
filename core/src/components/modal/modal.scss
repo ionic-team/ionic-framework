@@ -4,10 +4,23 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --background: Background of the modal content
+   * @prop --border-color: Border color of the modal content
+   * @prop --border-radius: Border radius of the modal content
+   * @prop --border-width: Border width of the modal content
+   * @prop --border-style: Border style of the modal content
+   * @prop --height: Height of the modal content
+   * @prop --width: Width of the modal content
+   */
   --width: 100%;
   --height: 100%;
-  --border-radius: none;
   --overflow: hidden;
+  --border-radius: 0;
+  --border-width: 0;
+  --border-style: none;
+  --border-color: transparent;
+  --background: transparent;
 
   @include position(0, 0, 0, 0);
 
@@ -20,12 +33,17 @@
   contain: strict;
 }
 
-
 .modal-wrapper {
   @include border-radius(var(--border-radius));
 
   width: var(--width);
   height: var(--height);
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  background: var(--background);
 
   overflow: var(--overflow);
   z-index: 10;
