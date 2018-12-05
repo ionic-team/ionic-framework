@@ -26,6 +26,8 @@ ion-action-sheet,event,ionActionSheetDidPresent,void,true
 ion-action-sheet,event,ionActionSheetDidUnload,void,true
 ion-action-sheet,event,ionActionSheetWillDismiss,OverlayEventDetail,true
 ion-action-sheet,event,ionActionSheetWillPresent,void,true
+ion-action-sheet,css-prop,--max-width
+ion-action-sheet,css-prop,--width
 
 ion-alert-controller
 ion-alert-controller,method,create,create(opts: AlertOptions) => Promise<HTMLIonAlertElement>

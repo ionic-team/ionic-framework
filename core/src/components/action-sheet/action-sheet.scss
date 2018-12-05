@@ -4,6 +4,13 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --width: Width of the action sheet
+   * @prop --max-width: Maximum width of the action sheet
+   */
+  --width: #{$action-sheet-width};
+  --max-width: #{$action-sheet-max-width};
+
   @include font-smoothing();
   @include position(0, 0, 0, 0);
 
@@ -25,15 +32,15 @@
   display: block;
   position: absolute;
 
-  width: $action-sheet-width;
-  max-width: $action-sheet-max-width;
+  width: var(--width);
+  max-width: var(--max-width);
 
   z-index: $z-index-overlay-wrapper;
   pointer-events: none;
 }
 
 .action-sheet-button {
-  width: 100%;
+  width: var(--width);
 
   border: 0;
 
