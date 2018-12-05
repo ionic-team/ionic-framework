@@ -178,7 +178,7 @@ export function parseDate(val: string | undefined | null): DatetimeData | undefi
   // ISO 8601 format: 1994-12-15T13:47:20Z
   let parse: any[] | null = null;
 
-  if (val) {
+  if (val != null && val !== '') {
     // try parsing for just time first, HH:MM
     parse = TIME_REGEXP.exec(val);
     if (parse) {
