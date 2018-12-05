@@ -154,7 +154,17 @@ jobs:
           command: npx stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci --update-screenshot || true
           working_directory: /tmp/workspace/core
 
-  test-angular:
+  test-angular-lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm run lint
+          working_directory: /tmp/workspace/angular
+
+  test-angular-e2e:
     <<: *defaults
     steps:
       - checkout
@@ -174,10 +184,6 @@ workflows:
       - build
       - build-core:
           requires: [build]
-      - build-angular:
-          requires: [build-core]
-      - test-angular:
-          requires: [build-angular]
       - test-core-clean-build:
           requires: [build-core]
       - test-core-lint:
@@ -196,3 +202,10 @@ workflows:
           filters:
             branches:
               only: master
+
+      - build-angular:
+          requires: [build-core]
+      - test-angular-lint:
+          requires: [build-angular]
+      - test-angular-e2e:
+          requires: [build-angular]

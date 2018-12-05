@@ -1,11 +1,15 @@
 import { browser, element, by } from 'protractor';
-import { waitTime, testStack, testLifeCycle } from './utils';
+import { waitTime, testStack, testLifeCycle, handleErrorMessages } from './utils';
 
 describe('router-link', () => {
 
   beforeEach(async () => {
     await browser.get('/router-link');
   });
+  afterEach(() => {
+    handleErrorMessages();
+  });
+
 
   it('should have correct lifecycle counts', async () => {
     await testLifeCycle('app-router-link', {

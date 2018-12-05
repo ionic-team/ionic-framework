@@ -1,4 +1,4 @@
-import { browser, by, element, ElementFinder } from 'protractor';
+import { browser } from 'protractor';
 
 export function getProperty(selector: string, property: string) {
   return browser.executeScript(`
@@ -32,7 +32,25 @@ export interface LifeCycleCount {
   ionViewDidLeave: number;
 }
 
+export function handleErrorMessages() {
+  browser.manage().logs().get('browser').then(function(browserLog) {
+    let severWarnings = false;
+
+    for (let i; i <= browserLog.length - 1; i++) {
+        if (browserLog[i].level.name === 'SEVERE') {
+            console.log('\n' + browserLog[i].level.name);
+            console.log('(Possibly exception) \n' + browserLog[i].message);
+
+            severWarnings = true;
+        }
+    }
+
+    expect(severWarnings).toBe(false);
+  });
+}
+
 export async function testLifeCycle(selector: string, expected: LifeCycleCount) {
+  await waitTime(50);
   expect(await getText(`${selector} #ngOnInit`)).toEqual('1');
   expect(await getText(`${selector} #ionViewWillEnter`)).toEqual(expected.ionViewWillEnter.toString());
   expect(await getText(`${selector} #ionViewDidEnter`)).toEqual(expected.ionViewDidEnter.toString());
