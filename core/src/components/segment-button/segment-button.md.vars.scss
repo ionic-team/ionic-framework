@@ -12,6 +12,9 @@ $segment-button-md-text-color:                        rgba(var(--ion-text-color-
 /// @prop - Background of the segment button
 $segment-button-md-background:                        none !default;
 
+/// @prop - Background of the checked segment button
+$segment-button-md-background-checked:                $segment-button-md-background !default;
+
 /// @prop - Background of the hovered segment button
 $segment-button-md-background-hover:                  ion-color(primary, base, .04) !default;
 

@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { Color, Mode, TabBarChangedDetail, TabButtonLayout } from '../../interface';
+import { Color, Mode, TabBarChangedDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -31,11 +31,6 @@ export class TabBar implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * Set the layout of the text and icon in the tab bar.
-   */
-  @Prop() layout: TabButtonLayout = 'icon-top';
 
   /**
    * The selected tab component

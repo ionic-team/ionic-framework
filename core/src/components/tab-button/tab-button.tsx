@@ -1,7 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State } from '@stencil/core';
 
-import { Color, Config, Mode, TabBarChangedDetail, TabButtonClickDetail, TabButtonLayout } from '../../interface';
-import { createColorClasses } from '../../utils/theme';
+import { Config, Mode, TabBarChangedDetail, TabButtonClickDetail, TabButtonLayout } from '../../interface';
 
 @Component({
   tag: 'ion-tab-button',
@@ -28,13 +27,6 @@ export class TabButton implements ComponentInterface {
    * The mode determines which platform styles to use.
    */
   @Prop() mode!: Mode;
-
-  /**
-   * The color to use from your application's color palette.
-   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information on colors, see [theming](/docs/theming/basics).
-   */
-  @Prop() color?: Color;
 
   /**
    * Set the layout of the text and icon in the tab bar.
@@ -96,7 +88,7 @@ export class TabButton implements ComponentInterface {
   }
 
   hostData() {
-    const { color, tab, selected, layout, disabled, hasLabel, hasIcon } = this;
+    const { disabled, hasIcon, hasLabel, layout, selected, tab } = this;
     return {
       'role': 'tab',
       'ion-activatable': true,
@@ -104,8 +96,6 @@ export class TabButton implements ComponentInterface {
       'id': `tab-button-${tab}`,
       'aria-controls': `tab-view-${tab}`,
       class: {
-        ...createColorClasses(color),
-
         'tab-selected': selected,
         'tab-disabled': disabled,
         'tab-has-label': hasLabel,
