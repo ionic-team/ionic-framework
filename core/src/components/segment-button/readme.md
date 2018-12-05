@@ -347,6 +347,7 @@ for (let i = 0; i < segmentButtons.length; i++) {
 | `--border-style`            | Style of the segment button border                                  |
 | `--border-width`            | Width of the segment button border                                  |
 | `--color`                   | Color of the segment button                                         |
+| `--color-activated`         | Color of the activated segment button                               |
 | `--color-checked`           | Color of the checked segment button                                 |
 | `--color-checked-disabled`  | Color of the checked & disabled segment button                      |
 | `--color-disabled`          | Color of the disabled segment button                                |
