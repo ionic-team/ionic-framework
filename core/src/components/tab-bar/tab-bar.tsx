@@ -33,11 +33,6 @@ export class TabBar implements ComponentInterface {
   @Prop() color?: Color;
 
   /**
-   * Set the layout of the text and icon in the tab bar.
-   */
-  @Prop() layout: TabButtonLayout = 'icon-top';
-
-  /**
    * The selected tab component
    */
   @Prop() selectedTab?: string;
