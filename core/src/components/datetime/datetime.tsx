@@ -421,16 +421,16 @@ export class Datetime implements ComponentInterface {
     );
   }
 
-  private calcMinMax(now?: Date) {
-    const todaysYear = (now || new Date()).getFullYear();
+  private calcMinMax() {
+    const todaysYear = new Date().getFullYear();
 
     if (this.yearValues !== undefined) {
       const years = convertToArrayOfNumbers(this.yearValues, 'year');
       if (this.min === undefined) {
-        this.min = Math.min.apply(Math, years);
+        this.min = Math.min(...years).toString();
       }
       if (this.max === undefined) {
-        this.max = Math.max.apply(Math, years);
+        this.max = Math.max(...years).toString();
       }
     } else {
       if (this.min === undefined) {
