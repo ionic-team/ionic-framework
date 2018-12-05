@@ -19,11 +19,11 @@ export class StackController {
     private zone: NgZone,
   ) {}
 
-  createView(enteringRef: ComponentRef<any>, route: ActivatedRoute): RouteView {
+  createView(enteringRef: ComponentRef<any>, activatedRoute: ActivatedRoute): RouteView {
     return {
       ref: enteringRef,
       element: (enteringRef && enteringRef.location && enteringRef.location.nativeElement) as HTMLElement,
-      url: this.getUrl(route)
+      url: this.getUrl(activatedRoute)
     };
   }
 
@@ -134,6 +134,7 @@ export class StackController {
     }
     if (enteringView) {
       enteringView.ref.changeDetectorRef.reattach();
+      enteringView.ref.changeDetectorRef.markForCheck();
     }
     const enteringEl = enteringView ? enteringView.element : undefined;
     const leavingEl = leavingView ? leavingView.element : undefined;
