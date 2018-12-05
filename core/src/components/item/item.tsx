@@ -153,7 +153,7 @@ export class Item implements ComponentInterface {
       <TagType
         {...attrs}
         class="item-native"
-        onClick={ev => openURL(win, href, ev, routerDirection)}
+        onClick={(ev: Event) => openURL(win, href, ev, routerDirection)}
       >
         <slot name="start"></slot>
         <div class="item-inner">
