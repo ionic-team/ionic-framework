@@ -26,6 +26,23 @@
           </ion-segment-button>
         </ion-segment>
       </ion-toolbar>
+
+      <ion-toolbar>
+        <ion-segment class="custom-icon" value="instagram">
+          <ion-segment-button class="segment-facebook" value="facebook">
+            <ion-label>Facebook</ion-label>
+            <ion-icon name="logo-facebook"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button class="segment-instagram" value="instagram">
+            <ion-label>Instagram</ion-label>
+            <ion-icon name="logo-instagram"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button class="segment-slack" value="slack">
+            <ion-label>Slack</ion-label>
+            <ion-icon name="logo-slack"></ion-icon>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
     </ion-header>
 
     <ion-content>
@@ -43,17 +60,32 @@
       </ion-segment>
 
       <ion-segment class="custom-icon" value="instagram">
-        <ion-segment-button layout="icon-top" class="segment-facebook" value="facebook">
+        <ion-segment-button class="segment-facebook" value="facebook">
           <ion-label>Facebook</ion-label>
           <ion-icon name="logo-facebook"></ion-icon>
         </ion-segment-button>
-        <ion-segment-button layout="icon-top" class="segment-instagram" value="instagram">
+        <ion-segment-button class="segment-instagram" value="instagram">
           <ion-label>Instagram</ion-label>
           <ion-icon name="logo-instagram"></ion-icon>
         </ion-segment-button>
-        <ion-segment-button layout="icon-top" class="segment-slack" value="slack">
+        <ion-segment-button class="segment-slack" value="slack">
           <ion-label>Slack</ion-label>
           <ion-icon name="logo-slack"></ion-icon>
+        </ion-segment-button>
+      </ion-segment>
+
+      <ion-segment class="custom-color" color="danger" value="dining">
+        <ion-segment-button value="dining">
+          <ion-label>Dining</ion-label>
+          <ion-icon name="cafe"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="travel">
+          <ion-label>Travel</ion-label>
+          <ion-icon name="airplane"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="entertainment">
+          <ion-label>Entertainment</ion-label>
+          <ion-icon name="radio"></ion-icon>
         </ion-segment-button>
       </ion-segment>
     </ion-content>
@@ -120,37 +152,72 @@
   }
 
   .custom {
-    --background-checked: navy;
     --background: papayawhip;
+    --background-checked: navy;
+
+    --border-color: navy;
     --border-color-checked: navy;
     --border-color-disabled: navy;
-    --border-color: navy;
+
+    --color: navy;
     --color-checked: papayawhip;
     --color-disabled: rgba(0, 0, 0, 0.3);
-    --color: navy;
   }
 
-  .custom-icon {
+  /* Custom Icon Segment MD */
+  .md .custom-icon {
     --indicator-color: lightgray;
   }
 
-  .segment-facebook {
+  .md .segment-facebook {
     --background-hover: rgba(59, 89, 153, .04);
     --color-checked: #3b5999;
   }
 
-  .segment-instagram {
+  .md .segment-instagram {
     --background-hover: rgba(228, 64, 95, .04);
     --color-checked: #e4405f;
   }
 
-  .segment-slack {
+  .md .segment-slack {
     --background-hover: rgba(58, 175, 133, .04);
     --color-checked: #3aaf85;
   }
 
+  /* Custom Icon Segment iOS */
+  .ios .custom-icon ion-segment-button {
+    --border-width: 0;
+  }
+
+  .ios .segment-facebook {
+    --color: #3b5999;
+    --background-hover: rgba(59, 89, 153, .1);
+    --background-checked: #3b5999;
+    --color-checked: #ffffff;
+  }
+
+  .ios .segment-instagram {
+    --color: #e4405f;
+    --background-hover: rgba(228, 64, 95, .1);
+    --background-checked: #e4405f;
+    --color-checked: #ffffff;
+  }
+
+  .ios .segment-slack {
+    --color: #3aaf85;
+    --background-hover: rgba(58, 175, 133, .1);
+    --background-checked: #3aaf85;
+    --color-checked: #ffffff;
+  }
+
   .custom-icon ion-icon {
     font-size: 44px;
+  }
+
+  /* This CSS should not apply */
+  .custom-color {
+    --background: purple;
+    --color: blue;
   }
 
 </style>
