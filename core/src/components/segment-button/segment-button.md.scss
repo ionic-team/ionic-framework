@@ -10,16 +10,6 @@
   --padding-bottom: #{$segment-button-md-padding-bottom};
   --padding-start: #{$segment-button-md-padding-start};
   --transition: #{$segment-button-md-transition};
-  --background: #{$segment-button-md-background};
-  --background-hover: #{$segment-button-md-background-hover};
-  --background-activated: #{$segment-button-md-background-activated};
-  --color: #{$segment-button-md-text-color};
-  --color-activated: var(--color);
-  --color-checked: #{$segment-button-md-text-color-checked};
-  --color-checked-disabled: var(--color-checked);
-  --indicator-color: transparent;
-  --indicator-color-checked: var(--color-checked);
-  --ripple-color: var(--color-checked);
 
   min-width: $segment-button-md-min-width;
 

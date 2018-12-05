@@ -4381,10 +4381,6 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * Set the layout of the text and icon in the tab bar.
-    */
-    'layout': TabButtonLayout;
-    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -4402,10 +4398,6 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
-    /**
-    * Set the layout of the text and icon in the tab bar.
-    */
-    'layout'?: TabButtonLayout;
     /**
     * The mode determines which platform styles to use.
     */
