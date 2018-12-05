@@ -6,7 +6,7 @@
 
 :host {
   // Border
-  --border-radius: #{$checkbox-md-icon-size * .125};
+  --border-radius: calc(var(--size) * .125);
   --border-width: #{$checkbox-md-icon-border-width};
   --border-style: #{$checkbox-md-icon-border-style};
   --border-color: #{$checkbox-md-icon-border-color-off};
@@ -15,8 +15,11 @@
   --background: #{$checkbox-md-icon-background-color-off};
   --transition: #{background $checkbox-md-transition-duration $checkbox-md-transition-easing};
 
-  width: $checkbox-md-icon-size;
-  height: $checkbox-md-icon-size;
+  // Size
+  --size: #{$checkbox-md-icon-size};
+
+  height: var(--size);
+  width: var(--size);
 }
 
 

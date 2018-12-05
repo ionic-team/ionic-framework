@@ -152,10 +152,6 @@ ion-button,css-prop,--box-shadow
 ion-button,css-prop,--color
 ion-button,css-prop,--color-activated
 ion-button,css-prop,--color-focused
-ion-button,css-prop,--margin-bottom
-ion-button,css-prop,--margin-end
-ion-button,css-prop,--margin-start
-ion-button,css-prop,--margin-top
 ion-button,css-prop,--opacity
 ion-button,css-prop,--padding-bottom
 ion-button,css-prop,--padding-end
@@ -208,6 +204,7 @@ ion-checkbox,css-prop,--border-radius
 ion-checkbox,css-prop,--border-style
 ion-checkbox,css-prop,--border-width
 ion-checkbox,css-prop,--checkmark-color
+ion-checkbox,css-prop,--size
 ion-checkbox,css-prop,--transition
 
 ion-chip
