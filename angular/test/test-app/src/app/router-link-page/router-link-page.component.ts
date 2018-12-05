@@ -18,6 +18,9 @@ export class RouterLinkPageComponent implements OnInit {
   }
 
   ionViewWillEnter() {
+    if (this.onInit !== 1) {
+      throw new Error('ngOnInit was not called');
+    }
     NgZone.assertInAngularZone();
     this.willEnter++;
   }
