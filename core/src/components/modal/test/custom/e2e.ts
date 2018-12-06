@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-test('modal: basic', async () => {
+test('modal: custom', async () => {
   const page = await newE2EPage({
     url: '/src/components/modal/test/custom?ionic:_testing=true'
   });
