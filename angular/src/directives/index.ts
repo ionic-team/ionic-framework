@@ -5,12 +5,12 @@ export { RadioValueAccessor } from './control-value-accessors/radio-value-access
 export { SelectValueAccessor } from './control-value-accessors/select-value-accessor';
 export { TextValueAccessor } from './control-value-accessors/text-value-accessor';
 
-export { IonBackButton } from './navigation/ion-back-button';
+export { IonBackButtonDelegate } from './navigation/ion-back-button';
 export { NavDelegate } from './navigation/nav-delegate';
 export { TabDelegate } from './navigation/tab-delegate';
 export { TabsDelegate } from './navigation/tabs-delegate';
 export { IonRouterOutlet } from './navigation/ion-router-outlet';
-export { HrefDelegate } from './navigation/href-delegate';
+export { RouterLinkDelegate } from './navigation/router-link-delegate';
 export { NavParams } from './navigation/nav-params';
 
 export { VirtualScroll } from './virtual-scroll/virtual-scroll';
