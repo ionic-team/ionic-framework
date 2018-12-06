@@ -20,7 +20,7 @@
   --border-width: 0;
   --border-style: none;
   --border-color: transparent;
-  --background: transparent;
+  --background: #{$background-color};
 
   @include position(0, 0, 0, 0);
 
