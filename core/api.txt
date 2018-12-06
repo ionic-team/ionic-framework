@@ -636,6 +636,13 @@ ion-modal,event,ionModalDidPresent,void,true
 ion-modal,event,ionModalDidUnload,void,true
 ion-modal,event,ionModalWillDismiss,OverlayEventDetail,true
 ion-modal,event,ionModalWillPresent,void,true
+ion-modal,css-prop,--background
+ion-modal,css-prop,--border-color
+ion-modal,css-prop,--border-radius
+ion-modal,css-prop,--border-style
+ion-modal,css-prop,--border-width
+ion-modal,css-prop,--height
+ion-modal,css-prop,--width
 
 ion-nav-pop
 

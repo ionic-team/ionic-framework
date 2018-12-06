@@ -16,7 +16,8 @@ import { mdLeaveAnimation } from './animations/md.leave';
   styleUrls: {
     ios: 'modal.ios.scss',
     md: 'modal.md.scss'
-  }
+  },
+  scoped: true
 })
 export class Modal implements ComponentInterface, OverlayInterface {
 
@@ -29,6 +30,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
+
   /** @internal */
   @Prop() overlayIndex!: number;
 
