@@ -368,7 +368,6 @@ Type: `Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverE
 
 | Name                  | Description                          |
 | --------------------- | ------------------------------------ |
-| `--icon-color`        | Color of the select icon             |
 | `--padding-bottom`    | Bottom padding of the select         |
 | `--padding-end`       | End padding of the select            |
 | `--padding-start`     | Start padding of the select          |
