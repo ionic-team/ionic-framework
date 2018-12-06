@@ -60,12 +60,9 @@ jobs:
           working_directory: /tmp/workspace/core
       - save_cache: *save-cache-core
       - run:
-          command: npm run build # --max-workers 1 --debug
+          command: npm run build -- --max-workers 1
           working_directory: /tmp/workspace/core
       - save_cache: *save-cache-core-stencil
-      - run:
-          command: sudo npm link
-          working_directory: /tmp/workspace/core
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
@@ -80,6 +77,9 @@ jobs:
       - run:
           command: npm install
           working_directory: /tmp/workspace/angular
+      - run:
+          command: sudo npm link
+          working_directory: /tmp/workspace/core
       - run:
           command: sudo npm link @ionic/core
           working_directory: /tmp/workspace/angular

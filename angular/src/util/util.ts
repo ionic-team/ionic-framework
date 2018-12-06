@@ -1,4 +1,5 @@
-import { ElementRef, EventEmitter } from '@angular/core';
+import { ElementRef } from '@angular/core';
+import { Subject } from 'rxjs';
 
 export function inputs(instance: any, el: ElementRef, props: string[]) {
   props.forEach(propName => {
@@ -8,12 +9,11 @@ export function inputs(instance: any, el: ElementRef, props: string[]) {
   });
 }
 
-export function proxyEvent<T>(emitter: EventEmitter<T>, el: EventTarget, eventName: string) {
+export function proxyEvent<T>(emitter: Subject<T>, el: EventTarget, eventName: string) {
   el.addEventListener(eventName, (ev) => {
-    emitter.emit(ev ? (ev as any).detail as T : undefined);
+    emitter.next(ev ? (ev as any).detail as T : undefined);
   });
 }
-
 
 export function proxyMethod(ctrlName: string, methodName: string, ...args: any[]) {
   const controller = ensureElementInBody(ctrlName);
