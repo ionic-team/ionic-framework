@@ -53,7 +53,7 @@
     "stylelint-order": "~1.0.0",
     "swiper": "4.4.1",
     "tslint": "^5.10.0",
-    "tslint-ionic-rules": "0.0.20",
+    "tslint-ionic-rules": "0.0.21",
     "tslint-react": "^3.6.0",
     "typescript": "^2.9.2"
   },
