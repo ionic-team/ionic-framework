@@ -3,11 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Prop } fro
 @Component({
   tag: 'ion-select-option',
   shadow: true,
-  styles: `
-  :host {
-    display: none;
-  }
-  `
+  styleUrl: 'select-option.scss'
 })
 export class SelectOption implements ComponentInterface {
 
