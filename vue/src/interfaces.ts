@@ -1,13 +1,6 @@
 import Vue from 'vue';
-import IonicApi from './api';
 import VueRouter from 'vue-router';
 import { RouterOptions } from 'vue-router/types/router';
-
-declare module 'vue/types/vue' {
-  interface Vue {
-    $ionic: IonicApi;
-  }
-}
 
 declare module 'vue-router/types/router' {
   interface VueRouter {
@@ -36,11 +29,18 @@ export interface EsModule extends Object {
   [Symbol.toStringTag]: string;
 }
 
-export interface HTMLStencilElement extends HTMLElement {
-  componentOnReady(): Promise<this>;
-  componentOnReady(done: (el?: this) => void): void;
-  forceUpdate(): void;
+export interface IonicGlobal {
+  config?: any;
+  ael?: (elm: any, eventName: string, cb: (ev: Event) => void, opts: any) => void;
+  raf?: (ts: number) => void;
+  rel?: (elm: any, eventName: string, cb: (ev: Event) => void, opts: any) => void;
 }
+
+export interface IonicWindow extends Window {
+  Ionic: IonicGlobal;
+}
+
+
 
 export interface FrameworkDelegate {
   attachViewToDom(parentElement: HTMLElement, component: HTMLElement | WebpackFunction | object | Vue, opts?: object, classes?: string[]): Promise<HTMLElement>;

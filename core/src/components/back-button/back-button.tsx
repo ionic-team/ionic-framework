@@ -79,7 +79,7 @@ export class BackButton implements ComponentInterface {
       <button
         type="button"
         class="button-native"
-        onClick={ev => this.onClick(ev)}
+        onClick={(ev: Event) => this.onClick(ev)}
       >
         <span class="button-inner">
           {backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false}></ion-icon>}

@@ -18,12 +18,3 @@
 
   background-size: $input-ios-input-clear-icon-size;
 }
-
-// iOS Inset Input
-// --------------------------------------------------
-
-// TODO: where is it apply
-// :host(.inset-input) {
-//   @include padding($input-ios-inset-padding-top, $input-ios-inset-padding-end, $input-ios-inset-padding-bottom, $input-ios-inset-padding-start);
-//   @include margin($input-ios-inset-margin-top, $input-ios-inset-margin-end, $input-ios-inset-margin-bottom, $input-ios-inset-margin-start);
-// }
