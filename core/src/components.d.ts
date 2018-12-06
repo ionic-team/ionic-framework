@@ -2795,7 +2795,7 @@ export namespace Components {
     * Set the root for the current navigation stack.
     */
     'setRoot': <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-    'setRouteId': (id: string, params: { [key: string]: any; } | undefined, direction: number) => Promise<RouteWrite>;
+    'setRouteId': (id: string, params: { [key: string]: any; } | undefined, direction: RouterDirection) => Promise<RouteWrite>;
     /**
     * If the nav component should allow for swipe-to-go-back.
     */
@@ -3626,7 +3626,7 @@ export namespace Components {
     'delegate'?: FrameworkDelegate;
     'getRouteId': () => Promise<RouteID | undefined>;
     'mode': Mode;
-    'setRouteId': (id: string, params: { [key: string]: any; } | undefined, direction: number) => Promise<RouteWrite>;
+    'setRouteId': (id: string, params: { [key: string]: any; } | undefined, direction: RouterDirection) => Promise<RouteWrite>;
     'swipeHandler'?: SwipeGestureHandler;
   }
   interface IonRouterOutletAttributes extends StencilHTMLAttributes {
@@ -3651,7 +3651,7 @@ export namespace Components {
     * Go back to previous page in the window.history.
     */
     'goBack': () => Promise<void>;
-    'navChanged': (intent: number) => Promise<boolean>;
+    'navChanged': (direction: RouterDirection) => Promise<boolean>;
     'printDebug': () => void;
     /**
     * Navigate to the specified URL.
