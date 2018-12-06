@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, Watch } from '@stencil/core';
 
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Gesture, Mode, NavOutlet, RouteID, RouteWrite, RouterOutletOptions, SwipeGestureHandler } from '../../interface';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Gesture, Mode, NavOutlet, RouteID, RouteWrite, RouterDirection, RouterOutletOptions, SwipeGestureHandler } from '../../interface';
 import { transition } from '../../utils';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 
@@ -102,10 +102,10 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
 
   /** @internal */
   @Method()
-  async setRouteId(id: string, params: ComponentProps | undefined, direction: number): Promise<RouteWrite> {
+  async setRouteId(id: string, params: ComponentProps | undefined, direction: RouterDirection): Promise<RouteWrite> {
     const changed = await this.setRoot(id, params, {
-      duration: direction === 0 ? 0 : undefined,
-      direction: direction === -1 ? 'back' : 'forward',
+      duration: direction === 'root' ? 0 : undefined,
+      direction: direction === 'back' ? 'back' : 'forward',
     });
     return {
       changed,
