@@ -99,11 +99,11 @@ export function attachView(
 }
 
 const LIFECYCLES = [
-  ViewLifecycle.WillEnter,
-  ViewLifecycle.DidEnter,
-  ViewLifecycle.WillLeave,
-  ViewLifecycle.DidLeave,
-  ViewLifecycle.WillUnload
+  'ionViewWillEnter',
+  'ionViewDidEnter',
+  'ionViewWillLeave',
+  'ionViewDidLeave',
+  'ionViewWillUnload'
 ];
 
 export function bindLifecycleEvents(instance: any, element: HTMLElement) {
