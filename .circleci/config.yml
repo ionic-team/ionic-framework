@@ -60,7 +60,7 @@ jobs:
           working_directory: /tmp/workspace/core
       - save_cache: *save-cache-core
       - run:
-          command: npm run build # --max-workers 1 --debug
+          command: npm run build -- --max-workers 1
           working_directory: /tmp/workspace/core
       - save_cache: *save-cache-core-stencil
       - persist_to_workspace:
