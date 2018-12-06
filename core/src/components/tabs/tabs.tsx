@@ -187,7 +187,7 @@ export class Tabs implements NavOutlet {
     if (this.useRouter) {
       const router = this.doc.querySelector('ion-router');
       if (router) {
-        return router.navChanged(1);
+        return router.navChanged('forward');
       }
     }
     return Promise.resolve(false);

@@ -4,6 +4,17 @@
 // Material Design Segment
 // --------------------------------------------------
 
+:host {
+  --background: #{$segment-button-md-background};
+  --background-checked: #{$segment-button-md-background-checked};
+  --background-hover: #{$segment-button-md-background-hover};
+  --background-activated: #{$segment-button-md-background-activated};
+  --color: #{$segment-button-md-text-color};
+  --color-checked: #{$segment-button-md-text-color-checked};
+  --color-checked-disabled: var(--color-checked);
+  --indicator-color: transparent;
+}
+
 :host(.segment-disabled) {
   opacity: $segment-md-opacity-disabled;
 }
@@ -15,6 +26,9 @@
   --background-hover: #{current-color(base, .04)};
   --background-activated: #{current-color(base, .16)};
   --ripple-color: #{current-color(base)};
+
+  background: transparent;
+  color: $segment-button-md-text-color;
 }
 
 :host(.ion-color)::slotted(.segment-button-checked) {
@@ -31,8 +45,11 @@
 // --------------------------------------------------
 
 :host-context(ion-toolbar):not(.ion-color)::slotted(ion-segment-button) {
-  --color: #{var(--ion-toolbar-color-unchecked, $segment-button-md-text-color)};
-  --color-checked: #{var(--ion-toolbar-color-checked, $segment-button-md-text-color-checked)};
+  color: #{var(--ion-toolbar-color-unchecked, var(--color))};
+}
+
+:host-context(ion-toolbar):not(.ion-color)::slotted(.segment-button-checked) {
+  color: #{var(--ion-toolbar-color-checked, var(--color-checked))};
 }
 
 

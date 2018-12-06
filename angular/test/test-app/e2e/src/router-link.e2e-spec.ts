@@ -1,11 +1,15 @@
 import { browser, element, by } from 'protractor';
-import { waitTime, testStack, testLifeCycle } from './utils';
+import { waitTime, testStack, testLifeCycle, handleErrorMessages } from './utils';
 
 describe('router-link', () => {
 
   beforeEach(async () => {
     await browser.get('/router-link');
   });
+  afterEach(() => {
+    handleErrorMessages();
+  });
+
 
   it('should have correct lifecycle counts', async () => {
     await testLifeCycle('app-router-link', {
@@ -17,10 +21,6 @@ describe('router-link', () => {
   });
 
   describe('forward', () => {
-    it('should go forward with ion-button[href]', async () => {
-      await element(by.css('#href')).click();
-      await testForward();
-    });
 
     it('should go forward with ion-button[routerLink]', async () => {
       await element(by.css('#routerLink')).click();
@@ -44,10 +44,6 @@ describe('router-link', () => {
   });
 
   describe('root', () => {
-    it('should go root with ion-button[href][routerDirection=root]', async () => {
-      await element(by.css('#href-root')).click();
-      await testRoot();
-    });
 
     it('should go root with ion-button[routerLink][routerDirection=root]', async () => {
       await element(by.css('#routerLink-root')).click();
@@ -66,10 +62,6 @@ describe('router-link', () => {
   });
 
   describe('back', () => {
-    it('should go back with ion-button[href][routerDirection=back]', async () => {
-      await element(by.css('#href-back')).click();
-      await testBack();
-    });
 
     it('should go back with ion-button[routerLink][routerDirection=back]', async () => {
       await element(by.css('#routerLink-back')).click();

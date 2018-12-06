@@ -2,15 +2,13 @@ import { ComponentProps, FrameworkDelegate } from '../../interface';
 import { attachComponent } from '../../utils/framework-delegate';
 import { assert } from '../../utils/helpers';
 
-export const enum ViewState {
-  New = 1,
-  Attached,
-  Destroyed
-}
+export const VIEW_STATE_NEW = 1;
+export const VIEW_STATE_ATTACHED = 2;
+export const VIEW_STATE_DESTROYED = 3;
 
 export class ViewController {
 
-  state: ViewState = ViewState.New;
+  state = VIEW_STATE_NEW;
   nav?: any;
   element?: HTMLElement;
   delegate?: FrameworkDelegate;
@@ -21,7 +19,7 @@ export class ViewController {
   ) {}
 
   async init(container: HTMLElement) {
-    this.state = ViewState.Attached;
+    this.state = VIEW_STATE_ATTACHED;
 
     if (!this.element) {
       const component = this.component;
@@ -33,7 +31,7 @@ export class ViewController {
    * DOM WRITE
    */
   _destroy() {
-    assert(this.state !== ViewState.Destroyed, 'view state must be ATTACHED');
+    assert(this.state !== VIEW_STATE_DESTROYED, 'view state must be ATTACHED');
 
     const element = this.element;
     if (element) {
@@ -44,7 +42,7 @@ export class ViewController {
       }
     }
     this.nav = undefined;
-    this.state = ViewState.Destroyed;
+    this.state = VIEW_STATE_DESTROYED;
   }
 }
 
