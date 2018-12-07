@@ -6,6 +6,14 @@ about: Suggest an idea for this project
 
 <!-- Please make sure you are posting an feature request pertaining to the Ionic Framework. -->
 
+<!-- Before submitting an issue, please consult our docs (https://beta.ionicframework.com/docs/) and API reference (https://beta.ionicframework.com/docs/api/) -->
+
+<!-- Please make sure you are posting an issue pertaining to the Ionic Framework. If you are having an issue with the Ionic Pro services (Ionic View, Ionic Deploy, etc.) please consult the Ionic Pro support portal (http://support.ionicjs.com) -->
+
+<!-- Please do not submit support requests or "How to" questions here. Instead, please use one of these channels: https://forum.ionicframework.com/ or http://ionicworldwide.herokuapp.com/ -->
+
+<!-- ISSUES MISSING IMPORTANT INFORMATION MAY BE CLOSED WITHOUT INVESTIGATION. -->
+
 # Feature Request
 
 **Ionic version:**
