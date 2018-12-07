@@ -1,3 +1,8 @@
-export { default as Ionic } from './ionic';
-export { default as IonicAPI } from './api';
-export { default as IonicVueRouter } from './router';
+import { install } from './ionic';
+
+export default {
+  install,
+  version: '__VERSION__'
+};
+
+export { Controllers } from './ionic';
