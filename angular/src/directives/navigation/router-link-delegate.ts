@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 @Directive({
   selector: '[routerLink]',
 })
-export class HrefDelegate {
+export class RouterLinkDelegate {
 
   private subscription?: Subscription;
 

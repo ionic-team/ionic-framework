@@ -785,6 +785,7 @@ ion-range,event,ionChange,InputChangeEvent,true
 ion-range,event,ionFocus,void,true
 ion-range,css-prop,--bar-background
 ion-range,css-prop,--bar-background-active
+ion-range,css-prop,--bar-border-radius
 ion-range,css-prop,--bar-height
 ion-range,css-prop,--height
 ion-range,css-prop,--knob-background

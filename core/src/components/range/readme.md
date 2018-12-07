@@ -117,6 +117,7 @@ left or right of the range.
 | ------------------------- | ---------------------------------- |
 | `--bar-background`        | Background of the range bar        |
 | `--bar-background-active` | Background of the active range bar |
+| `--bar-border-radius`     | Border radius of the range bar     |
 | `--bar-height`            | Height of the range bar            |
 | `--height`                | Height of the range                |
 | `--knob-background`       | Background of the range knob       |
