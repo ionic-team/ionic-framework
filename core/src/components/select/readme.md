@@ -372,7 +372,6 @@ Type: `Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverE
 | `--padding-end`       | End padding of the select            |
 | `--padding-start`     | Start padding of the select          |
 | `--padding-top`       | Top padding of the select            |
-| `--placeholder-color` | Color of the select placeholder text |
 
 
 ----------------------------------------------
