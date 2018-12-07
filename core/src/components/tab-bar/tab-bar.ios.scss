@@ -1,5 +1,6 @@
 @import "./tab-bar";
 @import "../../themes/ionic.globals.ios";
+@import "../tab-button/tab-button.ios.vars";
 
 // iOS Tabs
 // --------------------------------------------------
@@ -8,6 +9,10 @@
   // default color / background
   --background: #{$tabbar-ios-background};
   --border: #{$hairlines-width solid $tabbar-ios-border-color};
+  --color: #{$tab-button-ios-text-color};
+  --color-selected: #{$tabbar-ios-color-activated};
+  --background: transparent;
+  --background-focused: #{$tabbar-ios-background-focused};
 
   height: 50px;
 }
@@ -15,7 +20,7 @@
 // iOS Translucent Tab bar
 // --------------------------------------------------
 
-:host(.tabbar-translucent) {
+:host(.tab-bar-translucent) {
   background-color: #{current-color(base, .8)};
   backdrop-filter: saturate(210%) blur(20px);
 }

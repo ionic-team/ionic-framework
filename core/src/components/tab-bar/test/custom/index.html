@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Tab Bar - Custom</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <script src="../../../../../dist/ionic.js"></script>
+  <link rel="stylesheet" href="../../../../../css/ionic.bundle.css">
+  <link rel="stylesheet" href="../../../../../scripts/testing/styles.css">
+</head>
+
+<body>
+  <ion-app>
+    <!-- Default -->
+    <ion-tab-bar selected-tab="1">
+      <ion-tab-button tab="1">
+        <ion-icon name="clock"></ion-icon>
+        <ion-label>Recents</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="2">
+        <ion-icon name="star"></ion-icon>
+        <ion-label>Favorites</ion-label>
+        <ion-badge>6</ion-badge>
+      </ion-tab-button>
+
+      <ion-tab-button tab="3">
+        <ion-icon name="cog"></ion-icon>
+        <ion-label>Settings</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+
+    <!-- Custom Class -->
+    <ion-tab-bar selected-tab="11" class="custom-tab-bar-color">
+      <ion-tab-button tab="11">
+        <ion-icon name="clock"></ion-icon>
+        <ion-label>Recents</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="22">
+        <ion-icon name="star"></ion-icon>
+        <ion-label>Favorites</ion-label>
+        <ion-badge>6</ion-badge>
+      </ion-tab-button>
+
+      <ion-tab-button tab="33">
+        <ion-icon name="cog"></ion-icon>
+        <ion-label>Settings</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+
+    <!-- Color & Custom Class -->
+    <ion-tab-bar selected-tab="111" color="danger" class="custom-tab-bar-color">
+      <ion-tab-button tab="111">
+        <ion-icon name="clock"></ion-icon>
+        <ion-label>Recents</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="222">
+        <ion-icon name="star"></ion-icon>
+        <ion-label>Favorites</ion-label>
+        <ion-badge>6</ion-badge>
+      </ion-tab-button>
+
+      <ion-tab-button tab="333">
+        <ion-icon name="cog"></ion-icon>
+        <ion-label>Settings</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-app>
+
+  <style>
+    .custom-tab-bar-color {
+      --background: #7044ff;
+      --color: rgba(255, 255, 255, .6);
+      --color-selected: #ffffff;
+    }
+
+    .custom-tab-bar-color ion-badge {
+      background: rgba(255, 255, 255, 0.8);
+      color: rgba(0, 0, 0, .5);
+    }
+
+  </style>
+</body>
+
+</html>
