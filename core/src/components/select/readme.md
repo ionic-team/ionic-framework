@@ -366,12 +366,12 @@ Type: `Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverE
 
 ## CSS Custom Properties
 
-| Name                  | Description                          |
-| --------------------- | ------------------------------------ |
-| `--padding-bottom`    | Bottom padding of the select         |
-| `--padding-end`       | End padding of the select            |
-| `--padding-start`     | Start padding of the select          |
-| `--padding-top`       | Top padding of the select            |
+| Name               | Description                  |
+| ------------------ | ---------------------------- |
+| `--padding-bottom` | Bottom padding of the select |
+| `--padding-end`    | End padding of the select    |
+| `--padding-start`  | Start padding of the select  |
+| `--padding-top`    | Top padding of the select    |
 
 
 ----------------------------------------------
