@@ -950,12 +950,10 @@ ion-select,event,ionBlur,void,true
 ion-select,event,ionCancel,void,true
 ion-select,event,ionChange,SelectInputChangeEvent,true
 ion-select,event,ionFocus,void,true
-ion-select,css-prop,--icon-color
 ion-select,css-prop,--padding-bottom
 ion-select,css-prop,--padding-end
 ion-select,css-prop,--padding-start
 ion-select,css-prop,--padding-top
-ion-select,css-prop,--placeholder-color
 
 ion-skeleton-text
 ion-skeleton-text,prop,width,string,'100%',false

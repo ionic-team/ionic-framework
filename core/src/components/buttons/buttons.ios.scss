@@ -94,25 +94,3 @@
 //   }
 // }
 
-// iOS Toolbar Button Placement
-// --------------------------------------------------
-
-:host([slot="start"]) {
-  order: map-get($toolbar-order-ios, buttons-start);
-}
-
-:host([slot="secondary"]) {
-  order: map-get($toolbar-order-ios, buttons-secondary);
-}
-
-:host([slot="primary"]) {
-  order: map-get($toolbar-order-ios, buttons-primary);
-
-  text-align: end;
-}
-
-:host([slot="end"]) {
-  order: map-get($toolbar-order-ios, buttons-end);
-
-  text-align: end;
-}
