@@ -1,6 +1,6 @@
 import { QueueApi } from '@stencil/core';
 
-import { ViewLifecycle } from '..';
+import { LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '../components/nav/constants';
 import { Animation, AnimationBuilder, NavDirection, NavOptions } from '../interface';
 
 const iosTransitionAnimation = () => import('./animations/ios.transition');
@@ -148,22 +148,22 @@ function playTransition(trans: Animation, opts: TransitionOptions): Promise<Anim
 }
 
 function fireWillEvents(enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined) {
-  lifecycle(leavingEl, ViewLifecycle.WillLeave);
-  lifecycle(enteringEl, ViewLifecycle.WillEnter);
+  lifecycle(leavingEl, LIFECYCLE_WILL_LEAVE);
+  lifecycle(enteringEl, LIFECYCLE_WILL_ENTER);
 }
 
 function fireDidEvents(enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined) {
-  lifecycle(enteringEl, ViewLifecycle.DidEnter);
-  lifecycle(leavingEl, ViewLifecycle.DidLeave);
+  lifecycle(enteringEl, LIFECYCLE_DID_ENTER);
+  lifecycle(leavingEl, LIFECYCLE_DID_LEAVE);
 }
 
-export function lifecycle(el: HTMLElement | undefined, eventName: ViewLifecycle) {
+export function lifecycle(el: HTMLElement | undefined, eventName: string) {
   if (el) {
-    const event = new CustomEvent(eventName, {
+    const ev = new CustomEvent(eventName, {
       bubbles: false,
       cancelable: false,
     });
-    el.dispatchEvent(event);
+    el.dispatchEvent(ev);
   }
 }
 

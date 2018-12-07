@@ -1,4 +1,6 @@
-import { Animation, AnimationBuilder, ComponentRef, FrameworkDelegate, Mode, ViewController } from '../../interface';
+import { Animation, AnimationBuilder, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
+
+import { ViewController } from './view-controller';
 
 export type NavDirection = 'back' | 'forward';
 
@@ -62,3 +64,5 @@ export interface TransitionInstruction {
   leavingRequiresTransition?: boolean;
   enteringRequiresTransition?: boolean;
 }
+
+export { ViewController };

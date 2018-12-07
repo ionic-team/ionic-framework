@@ -11,7 +11,7 @@
    * @prop --background-checked: Background of the checked segment button
    *
    * @prop --color: Color of the segment button
-   * @prop --color-activated: Color of the activated (pressed) segment button
+   * @prop --color-activated: Color of the activated segment button
    * @prop --color-checked: Color of the checked segment button
    * @prop --color-disabled: Color of the disabled segment button
    * @prop --color-checked-disabled: Color of the checked & disabled segment button
@@ -41,7 +41,6 @@
   --padding-end: 0;
   --padding-top: 0;
   --padding-bottom: 0;
-  --indicator-color: transparent;
 
   flex: 1 0 auto;
   flex-direction: column;
@@ -52,15 +51,17 @@
   border-style: var(--border-style);
   border-color: var(--border-color);
 
+  background: var(--background);
+
   color: var(--color);
 
   text-decoration: none;
   text-overflow: ellipsis;
 
   white-space: nowrap;
-  font-kerning: none;
 
   overflow: hidden;
+  font-kerning: none;
 }
 
 :host(:first-of-type) {
@@ -103,45 +104,10 @@
 
   outline: none;
 
-  background: var(--background);
+  background: transparent;
 
   contain: content;
   cursor: pointer;
-}
-
-
-// Segment Button: Checked
-// --------------------------------------------------
-
-:host(.segment-button-checked) {
-  background: var(--background-checked);
-  color: var(--color-checked);
-}
-
-:host(.segment-button-checked) .segment-button-indicator {
-  background-color: var(--indicator-color-checked);
-}
-
-// Segment Button: Activated
-// --------------------------------------------------
-
-:host(.activated) {
-  color: var(--color-activated);
-}
-
-
-// Segment Button: Disabled
-// --------------------------------------------------
-
-:host(.segment-button-disabled) {
-  color: var(--color-disabled);
-}
-
-// Segment Button: Checked & Disabled
-// --------------------------------------------------
-
-:host(.segment-button-disabled.segment-button-checked) {
-  color: var(--color-checked-disabled);
 }
 
 
@@ -158,6 +124,41 @@
   background-color: var(--indicator-color);
 
   opacity: 1;
+}
+
+
+// Segment Button: Checked
+// --------------------------------------------------
+
+:host(.segment-button-checked) {
+  background: var(--background-checked);
+  color: var(--color-checked);
+}
+
+:host(.segment-button-checked) .segment-button-indicator {
+  background-color: var(--indicator-color-checked, var(--color-checked));
+}
+
+// Segment Button: Activated
+// --------------------------------------------------
+
+:host(.activated) {
+  color: var(--color-activated, var(--color));
+}
+
+
+// Segment Button: Disabled
+// --------------------------------------------------
+
+:host(.segment-button-disabled) {
+  color: var(--color-disabled);
+}
+
+// Segment Button: Checked & Disabled
+// --------------------------------------------------
+
+:host(.segment-button-disabled.segment-button-checked) {
+  color: var(--color-checked-disabled);
 }
 
 
@@ -219,5 +220,5 @@
 // --------------------------------------------------
 
 ion-ripple-effect {
-  color: var(--ripple-color);
+  color: var(--ripple-color, var(--color-checked));
 }

@@ -1,7 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 
-import { Color, Mode, SegmentButtonLayout } from '../../interface';
-import { createColorClasses } from '../../utils/theme';
+import { Mode, SegmentButtonLayout } from '../../interface';
 
 let ids = 0;
 
@@ -16,13 +15,6 @@ let ids = 0;
 export class SegmentButton implements ComponentInterface {
 
   @Element() el!: HTMLElement;
-
-  /**
-   * The color to use from your application's color palette.
-   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information on colors, see [theming](/docs/theming/basics).
-   */
-  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
@@ -74,12 +66,11 @@ export class SegmentButton implements ComponentInterface {
   }
 
   hostData() {
-    const { disabled, checked, color, layout, hasIcon, hasLabel } = this;
+    const { checked, disabled, hasIcon, hasLabel, layout } = this;
     return {
       'ion-activatable': 'instant',
       'aria-disabled': disabled ? 'true' : null,
       class: {
-        ...createColorClasses(color),
         'segment-button-has-label': hasLabel,
         'segment-button-has-icon': hasIcon,
         'segment-button-has-label-only': hasLabel && !hasIcon,

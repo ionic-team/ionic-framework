@@ -6,7 +6,7 @@
     "start": "ng serve",
     "sync:build": "sh scripts/build-ionic.sh",
     "sync": "sh scripts/sync.sh",
-    "build": "ng build --prod",
+    "build": "ng build --prod --no-progress",
     "test": "ng e2e --prod",
     "lint": "ng lint",
     "postinstall": "npm run sync"
