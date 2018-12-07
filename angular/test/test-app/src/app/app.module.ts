@@ -12,6 +12,9 @@ import { RouterLinkComponent } from './router-link/router-link.component';
 import { RouterLinkPageComponent } from './router-link-page/router-link-page.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { TabsComponent } from './tabs/tabs.component';
+import { TabsTab1Component } from './tabs-tab1/tabs-tab1.component';
+import { TabsTab2Component } from './tabs-tab2/tabs-tab2.component';
+import { TabsTab1NestedComponent } from './tabs-tab1-nested/tabs-tab1-nested.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { TabsComponent } from './tabs/tabs.component';
     RouterLinkComponent,
     RouterLinkPageComponent,
     HomePageComponent,
-    TabsComponent
+    TabsComponent,
+    TabsTab1Component,
+    TabsTab2Component,
+    TabsTab1NestedComponent
   ],
   imports: [
     BrowserModule,

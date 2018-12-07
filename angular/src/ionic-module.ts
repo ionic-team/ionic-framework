@@ -87,6 +87,8 @@ const DECLARATIONS = [
   d.IonToolbar,
   d.IonTitle,
 
+  c.IonTabsOutletComponent,
+
   // ngModel accessors
   c.BooleanValueAccessor,
   c.NumericValueAccessor,
