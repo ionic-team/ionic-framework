@@ -1,6 +1,4 @@
 
-export const enum RouterIntent {
-  None = 0,
-  Forward = 1,
-  Back = -1,
-}
+export const ROUTER_INTENT_NONE = 'root';
+export const ROUTER_INTENT_FORWARD = 'forward';
+export const ROUTER_INTENT_BACK = 'back';
