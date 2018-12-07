@@ -13,10 +13,6 @@ about: Suggest an idea for this project
 <!-- (For Ionic 2.x & 3.x issues, please use https://github.com/ionic-team/ionic-v3) -->
 [x] **4.x**
 
-**I'm submitting a ...**
-[ ] bug report
-[x] feature request
-
 **Describe the Feature Request**
 <!-- A clear and concise description of what the feature request is. Please include if your feature request is related to a problem. -->
 
