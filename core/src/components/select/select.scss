@@ -9,7 +9,6 @@
    * @prop --padding-end: End padding of the select
    * @prop --padding-bottom: Bottom padding of the select
    * @prop --padding-start: Start padding of the select
-   * @prop --placeholder-color: Color of the select placeholder text
    */
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
@@ -38,7 +37,9 @@
 }
 
 .select-placeholder {
-  color: var(--placeholder-color);
+  color: currentColor;
+
+  opacity: .33;
 }
 
 button {
