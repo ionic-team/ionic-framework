@@ -12,6 +12,7 @@
   --bar-height: #{$range-ios-bar-height};
   --bar-background: #{$range-ios-bar-background-color};
   --bar-background-active: #{ion-color(primary, base)};
+  --bar-border-radius: 0;
   --height: #{$range-ios-slider-height};
 
   @include padding($range-ios-padding-vertical, $range-ios-padding-horizontal);
