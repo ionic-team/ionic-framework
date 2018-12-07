@@ -85,15 +85,15 @@ Segment buttons are groups of related buttons inside of a [Segment](../../segmen
 
 <!-- Icon top -->
 <ion-segment>
-  <ion-segment-button layout="icon-top">
+  <ion-segment-button>
     <ion-label>Item One</ion-label>
     <ion-icon name="call"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button checked layout="icon-top">
+  <ion-segment-button checked>
     <ion-label>Item Two</ion-label>
     <ion-icon name="heart"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button layout="icon-top">
+  <ion-segment-button>
     <ion-label>Item Three</ion-label>
     <ion-icon name="pin"></ion-icon>
   </ion-segment-button>
@@ -241,15 +241,15 @@ export class SegmentButtonExample {
 
 <!-- Icon top -->
 <ion-segment>
-  <ion-segment-button layout="icon-top">
+  <ion-segment-button>
     <ion-label>Item One</ion-label>
     <ion-icon name="call"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button checked layout="icon-top">
+  <ion-segment-button checked>
     <ion-label>Item Two</ion-label>
     <ion-icon name="heart"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button layout="icon-top">
+  <ion-segment-button>
     <ion-label>Item Three</ion-label>
     <ion-icon name="pin"></ion-icon>
   </ion-segment-button>
@@ -318,14 +318,13 @@ for (let i = 0; i < segmentButtons.length; i++) {
 
 ## Properties
 
-| Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                                                                                                    | Default               |
-| ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | --------------------- |
-| `checked`  | `checked`  | If `true`, the segment button is selected.                                                                                                                                                                                                                             | `boolean`                                                                                               | `false`               |
-| `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`                                                                                   | `undefined`           |
-| `disabled` | `disabled` | If `true`, the user cannot interact with the segment button.                                                                                                                                                                                                           | `boolean`                                                                                               | `false`               |
-| `layout`   | `layout`   | Set the layout of the text and icon in the segment.                                                                                                                                                                                                                    | `"icon-bottom" \| "icon-end" \| "icon-hide" \| "icon-start" \| "icon-top" \| "label-hide" \| undefined` | `'icon-top'`          |
-| `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                                                                                         | `undefined`           |
-| `value`    | `value`    | The value of the segment button.                                                                                                                                                                                                                                       | `string`                                                                                                | `'ion-sb-' + (ids++)` |
+| Property   | Attribute  | Description                                                  | Type                                                                                                    | Default               |
+| ---------- | ---------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- | --------------------- |
+| `checked`  | `checked`  | If `true`, the segment button is selected.                   | `boolean`                                                                                               | `false`               |
+| `disabled` | `disabled` | If `true`, the user cannot interact with the segment button. | `boolean`                                                                                               | `false`               |
+| `layout`   | `layout`   | Set the layout of the text and icon in the segment.          | `"icon-bottom" \| "icon-end" \| "icon-hide" \| "icon-start" \| "icon-top" \| "label-hide" \| undefined` | `'icon-top'`          |
+| `mode`     | `mode`     | The mode determines which platform styles to use.            | `"ios" \| "md"`                                                                                         | `undefined`           |
+| `value`    | `value`    | The value of the segment button.                             | `string`                                                                                                | `'ion-sb-' + (ids++)` |
 
 
 ## Events
@@ -348,7 +347,7 @@ for (let i = 0; i < segmentButtons.length; i++) {
 | `--border-style`            | Style of the segment button border                                  |
 | `--border-width`            | Width of the segment button border                                  |
 | `--color`                   | Color of the segment button                                         |
-| `--color-activated`         | Color of the activated (pressed) segment button                     |
+| `--color-activated`         | Color of the activated segment button                               |
 | `--color-checked`           | Color of the checked segment button                                 |
 | `--color-checked-disabled`  | Color of the checked & disabled segment button                      |
 | `--color-disabled`          | Color of the disabled segment button                                |
