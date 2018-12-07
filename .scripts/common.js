@@ -9,7 +9,8 @@ const rootDir = path.join(__dirname, '../');
 
 const packages = [
   'core',
-  'angular'
+  'docs',
+  'angular',
 ];
 
 function readPkg(project) {
@@ -86,39 +87,38 @@ function preparePackage(tasks, package, version) {
     });
   }
 
-  if (package !== 'core') {
-    projectTasks.push({
-      title: `${pkg.name}: npm link @ionic/core`,
-      task: () => execa('npm', ['link', '@ionic/core'], { cwd: projectRoot })
-    });
+  if (package !== 'docs') {
+    if (package !== 'core') {
+      projectTasks.push({
+        title: `${pkg.name}: npm link @ionic/core`,
+        task: () => execa('npm', ['link', '@ionic/core'], { cwd: projectRoot })
+      });
+      if (version) {
+        projectTasks.push({
+          title: `${pkg.name}: update ionic/core dep to ${version}`,
+          task: () => {
+            updateDependency(pkg, "@ionic/core", version);
+            writePkg(package, pkg);
+          }
+        });
+      }
+    }
+
     if (version) {
       projectTasks.push({
-        title: `${pkg.name}: update ionic/core dep to ${version}`,
-        task: () => {
-          updateDependency(pkg, "@ionic/core", version);
-          writePkg(package, pkg);
-        }
+        title: `${pkg.name}: lint`,
+        task: () => execa('npm', ['run', 'lint'], { cwd: projectRoot })
+      });
+      projectTasks.push({
+        title: `${pkg.name}: test`,
+        task: () => execa('npm', ['test'], { cwd: projectRoot })
       });
     }
-  }
 
-  if (version) {
     projectTasks.push({
-      title: `${pkg.name}: lint`,
-      task: () => execa('npm', ['run', 'lint'], { cwd: projectRoot })
+      title: `${pkg.name}: build`,
+      task: () => execa('npm', ['run', 'build'], { cwd: projectRoot })
     });
-    projectTasks.push({
-      title: `${pkg.name}: test`,
-      task: () => execa('npm', ['test'], { cwd: projectRoot })
-    });
-  }
-
-  projectTasks.push({
-    title: `${pkg.name}: build`,
-    task: () => execa('npm', ['run', 'build'], { cwd: projectRoot })
-  });
-
-  if (package === 'core') {
     projectTasks.push({
       title: `${pkg.name}: npm link`,
       task: () => execa('npm', ['link'], { cwd: projectRoot })
