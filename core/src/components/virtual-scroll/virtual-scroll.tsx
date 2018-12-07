@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, EventListenerEnable, Functional
 
 import { Cell, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 
-import { CellType } from './virtual-scroll-interface';
+import { CELL_TYPE_FOOTER, CELL_TYPE_HEADER, CELL_TYPE_ITEM } from './constants';
 import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, getShouldUpdate, getViewport, inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
 
 @Component({
@@ -411,9 +411,9 @@ export class VirtualScroll implements ComponentInterface {
   private renderVirtualNode(node: VirtualNode) {
     const { type, value, index } = node.cell;
     switch (type) {
-      case CellType.Item: return this.renderItem!(value, index);
-      case CellType.Header: return this.renderHeader!(value, index);
-      case CellType.Footer: return this.renderFooter!(value, index);
+      case CELL_TYPE_ITEM: return this.renderItem!(value, index);
+      case CELL_TYPE_HEADER: return this.renderHeader!(value, index);
+      case CELL_TYPE_FOOTER: return this.renderFooter!(value, index);
     }
   }
 

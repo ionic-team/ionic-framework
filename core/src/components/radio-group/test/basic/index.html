@@ -12,8 +12,6 @@
 
 <body>
   <ion-app>
-
-
     <ion-header>
       <ion-toolbar>
         <ion-title>Radio Group - Basic</ion-title>
@@ -57,6 +55,12 @@
       <ion-button onClick="toggleDisabled()">Toggle Disabled</ion-button>
     </ion-content>
 
+    <style>
+      .outer-content {
+        --background: #f2f2f2;
+      }
+    </style>
+
     <script>
       var dynamicDisabled = document.getElementById('dynamicDisabled');
 
@@ -64,7 +68,6 @@
         dynamicDisabled.disabled = !dynamicDisabled.disabled;
       }
     </script>
-
   </ion-app>
 </body>
 

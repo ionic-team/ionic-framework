@@ -5,16 +5,15 @@
 // Material Design Modals
 // --------------------------------------------------
 
-.modal-wrapper-md {
+@media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
+  :host {
+    --border-radius: 2px;
+    --box-shadow: #{$modal-inset-box-shadow};
+  }
+}
+
+.modal-wrapper {
   @include transform(translate3d(0, 40px, 0));
 
-  @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
-    @include border-radius(2px);
-
-    box-shadow: $modal-inset-box-shadow;
-    overflow: hidden;
-  }
-
   opacity: .01;
-
 }

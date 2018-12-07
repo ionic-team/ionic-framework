@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -6,8 +6,9 @@ import { Router } from '@angular/router';
   selector: 'app-router-link',
   templateUrl: './router-link.component.html',
 })
-export class RouterLinkComponent {
+export class RouterLinkComponent implements OnInit {
 
+  onInit = 0;
   willEnter = 0;
   didEnter = 0;
   willLeave = 0;
@@ -34,7 +35,15 @@ export class RouterLinkComponent {
     this.navCtrl.navigateRoot('/router-link-page');
   }
 
+  ngOnInit() {
+    NgZone.assertInAngularZone();
+    this.onInit++;
+  }
+
   ionViewWillEnter() {
+    if (this.onInit !== 1) {
+      throw new Error('ngOnInit was not called');
+    }
     NgZone.assertInAngularZone();
     this.willEnter++;
   }

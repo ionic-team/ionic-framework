@@ -81,7 +81,3 @@ button {
   color: var(--icon-color);
   pointer-events: none;
 }
-
-::slotted(ion-select-option) {
-  display: none;
-}

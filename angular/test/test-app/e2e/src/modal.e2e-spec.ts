@@ -1,10 +1,13 @@
 import { browser, element, by } from 'protractor';
-import { waitTime, getText } from './utils';
+import { waitTime, getText, handleErrorMessages } from './utils';
 
 describe('modals', () => {
 
   beforeEach(async () => {
     await browser.get('/modals');
+  });
+  afterEach(() => {
+    handleErrorMessages();
   });
 
   it('should open and close', async () => {

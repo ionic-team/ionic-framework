@@ -28,7 +28,7 @@
     "build.ng": "./node_modules/.bin/ngc",
     "clean": "node scripts/clean.js",
     "clean-generated": "node ./scripts/clean-generated.js",
-    "lint": "echo TODO",
+    "lint": "npm run lint.ts",
     "lint.ts": "tslint --project .",
     "lint.fix": "tslint --project . --fix",
     "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",

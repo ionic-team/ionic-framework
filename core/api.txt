@@ -636,6 +636,13 @@ ion-modal,event,ionModalDidPresent,void,true
 ion-modal,event,ionModalDidUnload,void,true
 ion-modal,event,ionModalWillDismiss,OverlayEventDetail,true
 ion-modal,event,ionModalWillPresent,void,true
+ion-modal,css-prop,--background
+ion-modal,css-prop,--border-color
+ion-modal,css-prop,--border-radius
+ion-modal,css-prop,--border-style
+ion-modal,css-prop,--border-width
+ion-modal,css-prop,--height
+ion-modal,css-prop,--width
 
 ion-nav-pop
 
@@ -875,9 +882,8 @@ ion-searchbar,css-prop,--placeholder-opacity
 
 ion-segment-button
 ion-segment-button,prop,checked,boolean,false,false
-ion-segment-button,prop,color,string | undefined,undefined,false
 ion-segment-button,prop,disabled,boolean,false,false
-ion-segment-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide" | undefined,undefined,false
+ion-segment-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide" | undefined,'icon-top',false
 ion-segment-button,prop,mode,"ios" | "md",undefined,false
 ion-segment-button,prop,value,string,'ion-sb-' + (ids++),false
 ion-segment-button,event,ionSelect,void,true
@@ -1010,7 +1016,6 @@ ion-split-pane,css-prop,--border
 
 ion-tab-bar
 ion-tab-bar,prop,color,string | undefined,undefined,false
-ion-tab-bar,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide",'icon-top',false
 ion-tab-bar,prop,mode,"ios" | "md",undefined,false
 ion-tab-bar,prop,selectedTab,string | undefined,undefined,false
 ion-tab-bar,prop,translucent,boolean,false,false
@@ -1019,7 +1024,6 @@ ion-tab-bar,css-prop,--border
 ion-tab-bar,css-prop,--color
 
 ion-tab-button
-ion-tab-button,prop,color,string | undefined,undefined,false
 ion-tab-button,prop,disabled,boolean,false,false
 ion-tab-button,prop,href,string | undefined,undefined,false
 ion-tab-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide" | undefined,undefined,false
