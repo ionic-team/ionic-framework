@@ -100,8 +100,6 @@ const DECLARATIONS = [
   c.IonRouterOutlet,
   c.IonBackButtonDelegate,
   c.NavDelegate,
-  c.TabDelegate,
-  c.TabsDelegate,
   c.RouterLinkDelegate,
 
   // virtual scroll

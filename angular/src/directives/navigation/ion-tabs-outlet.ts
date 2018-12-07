@@ -1,9 +1,9 @@
 import { Component, ContentChild, HostListener, ViewChild } from '@angular/core';
 import { TabButtonClickDetail } from '@ionic/core';
-import { IonRouterOutlet } from '../ion-router-outlet';
-import { NavController } from '../../../providers';
-import { IonTabBar } from '../../proxies';
-import { RouteView } from '../stack-utils';
+import { IonRouterOutlet } from './ion-router-outlet';
+import { NavController } from '../../providers';
+import { IonTabBar } from '../proxies';
+import { RouteView } from './stack-utils';
 
 @Component({
   selector: 'ion-tabs-outlet',
