@@ -2,6 +2,8 @@ import { ComponentRef, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { NavController, NavDirection } from '../../providers/nav-controller';
+import { RouterDirection } from '@ionic/core';
+import { RouteView, computeStackId, destroyView, getUrl, insertView, isTabSwitch, toSegments } from './stack-utils';
 
 
 export class StackController {
@@ -15,7 +17,6 @@ export class StackController {
   private nextId = 0;
 
   constructor(
-    private stack: boolean,
     tabsPrefix: string | undefined,
     private containerEl: HTMLIonRouterOutletElement,
     private router: Router,
@@ -23,9 +24,6 @@ export class StackController {
     private zone: NgZone,
   ) {
     this.tabsPrefix = tabsPrefix ? toSegments(tabsPrefix) : undefined;
-    if (this.tabsPrefix) {
-      this.stack = true;
-    }
   }
 
   createView(enteringRef: ComponentRef<any>, activatedRoute: ActivatedRoute): RouteView {
@@ -46,14 +44,14 @@ export class StackController {
 
   async setActive(enteringView: RouteView) {
     let { direction, animated } = this.navCtrl.consumeTransition();
-    const leavingView = this.getActive();
+    const leavingView = this.activeView;
     if (isTabSwitch(enteringView, leavingView)) {
-      direction = 'forward';
+      direction = 'back';
       animated = false;
     }
     this.insertView(enteringView, direction);
     await this.transition(enteringView, leavingView, direction, animated, this.canGoBack(1), false);
-    this.cleanup(enteringView);
+    this.cleanup();
   }
 
   canGoBack(deep: number, stackId = this.getActiveStackId()): boolean {
@@ -66,10 +64,6 @@ export class StackController {
       const view = views[views.length - deep - 1];
       this.navCtrl.navigateBack(view.url);
     });
-  }
-
-  getStack(stackId: string | undefined) {
-    return this.views.filter(v => v.stackId === stackId);
   }
 
   startBackTransition(stackId?: string) {
@@ -91,49 +85,26 @@ export class StackController {
     }
   }
 
-  getActiveStackId(): string | undefined {
-    return this.activeView ? this.activeView.stackId : undefined;
-  }
-
-  getActive(): RouteView | undefined {
-    return this.activeView;
-  }
-
   getLastUrl(stackId?: string) {
     const views = this.getStack(stackId);
     return views.length > 0 ? views[views.length - 1] : undefined;
   }
 
-  private insertView(enteringView: RouteView, direction: NavDirection) {
-    // no stack
-    this.activeView = enteringView;
-    if (!this.stack) {
-      this.views = [enteringView];
-      return;
-    }
-
-    // stack setRoot
-    if (direction === 'root') {
-      this.views = this.views.filter(v => v.stackId !== enteringView.stackId);
-      this.views.push(enteringView);
-      return;
-    }
-
-    // stack
-    const index = this.views.indexOf(enteringView);
-    if (index >= 0) {
-      this.views = this.views.filter(v => v.stackId !== enteringView.stackId || v.id <= enteringView.id);
-    } else {
-      if (direction === 'forward') {
-        this.views.push(enteringView);
-      } else {
-        this.views = this.views.filter(v => v.stackId !== enteringView.stackId);
-        this.views.push(enteringView);
-      }
-    }
+  private getActiveStackId(): string | undefined {
+    return this.activeView ? this.activeView.stackId : undefined;
   }
 
-  private cleanup(activeRoute: RouteView) {
+  private getStack(stackId: string | undefined) {
+    return this.views.filter(v => v.stackId === stackId);
+  }
+
+  private insertView(enteringView: RouteView, direction: RouterDirection) {
+    this.activeView = enteringView;
+    this.views = insertView(this.views, enteringView, direction);
+  }
+
+  private cleanup() {
+    const activeRoute = this.activeView;
     const views = this.views;
     this.viewsSnapshot
       .filter(view => !views.includes(view))
@@ -190,55 +161,4 @@ export class StackController {
       await this.runningTransition;
     }
   }
-}
-
-export function getUrl(router: Router, activatedRoute: ActivatedRoute) {
-  const urlTree = router.createUrlTree(['.'], { relativeTo: activatedRoute });
-  return router.serializeUrl(urlTree);
-}
-
-function isTabSwitch(enteringView: RouteView, leavingView: RouteView | undefined) {
-  if (!leavingView) {
-    return false;
-  }
-  return enteringView.stackId !== leavingView.stackId;
-}
-
-function destroyView(view: RouteView) {
-  if (view) {
-    // TODO lifecycle event
-    view.ref.destroy();
-  }
-}
-
-function computeStackId(prefixUrl: string[] | undefined, url: string) {
-  if (!prefixUrl) {
-    return undefined;
-  }
-  const segments = toSegments(url);
-  for (let i = 0; i < segments.length; i++) {
-    if (i >= prefixUrl.length) {
-      return segments[i];
-    }
-    if (segments[i] !== prefixUrl[i]) {
-      return undefined;
-    }
-  }
-  return undefined;
-}
-
-function toSegments(path: string): string[] {
-  return path
-    .split('/')
-    .map(s => s.trim())
-    .filter(s => s !== '');
-}
-
-export interface RouteView {
-  id: number;
-  url: string;
-  stackId: string | undefined;
-  element: HTMLElement;
-  ref: ComponentRef<any>;
-  savedData?: any;
 }

@@ -1,8 +1,9 @@
 import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, Input, NgZone, OnDestroy, OnInit, Optional, Output, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ChildrenOutletContexts, OutletContext, PRIMARY_OUTLET, Router } from '@angular/router';
-import { RouteView, StackController, getUrl } from './stack-controller';
+import { StackController } from './stack-controller';
 import { NavController } from '../../providers/nav-controller';
 import { bindLifecycleEvents } from '../../providers/angular-delegate';
+import { RouteView, getUrl } from './stack-utils';
 
 @Directive({
   selector: 'ion-router-outlet',
@@ -46,9 +47,8 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     private resolver: ComponentFactoryResolver,
     @Attribute('name') name: string,
     @Optional() @Attribute('tabs') tabs: string,
-    @Optional() @Attribute('stack') stack: any,
     private changeDetector: ChangeDetectorRef,
-    private navCtrl: NavController,
+    navCtrl: NavController,
     elementRef: ElementRef,
     router: Router,
     zone: NgZone,
@@ -56,9 +56,8 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   ) {
     this.nativeEl = elementRef.nativeElement;
     this.name = name || PRIMARY_OUTLET;
-    this.hasStack = stack !== 'false' && stack !== false;
     this.tabsPrefix = tabs === 'true' ? getUrl(router, activatedRoute) : undefined;
-    this.stackCtrl = new StackController(this.hasStack, this.tabsPrefix, this.nativeEl, router, this.navCtrl, zone);
+    this.stackCtrl = new StackController(this.tabsPrefix, this.nativeEl, router, navCtrl, zone);
 
     parentContexts.onChildOutletCreated(this.name, this as any);
   }
