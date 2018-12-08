@@ -19,9 +19,9 @@ export class ProgressBar implements ComponentInterface {
 
   /**
    * Sets the indicator style of the progress bar
-   * Options are determinate (no animation), indeterminate (animate from left to right) and query (animate from right to left)
+   * Options are determinate (no animation), reversed (to determinate), indeterminate (animate from left to right) and query (animate from right to left)
    */
-  @Prop() indicator: 'determinate' | 'indeterminate' | 'query' | 'buffer' = 'determinate';
+  @Prop() indicator: 'reversed' | 'determinate' | 'indeterminate' | 'query' | 'buffer' = 'determinate';
 
   /**
    * The width of the progress bar in percent - 0 ... 100
@@ -49,23 +49,30 @@ export class ProgressBar implements ComponentInterface {
     };
   }
 
+  // tslint:disable:linebreak-style
   render() {
-    const bufferBar = (
-      <div class="progress-buffer">
-        <div class="buffer-circles"></div>
-        <div class="buffer-bar" style={{ width: `${this.buffer}%` }}></div>
-        <div class="buffer-background" style={{ width: `${this.buffer}%` }}></div>
-      </div>
-    );
+    const content = [];
+    if (this.indicator === 'indeterminate' || this.indicator === 'query') {
+      content.push(
+        <div class="progress">
+          <div class="primary-bar"><span class="bar-inner"></span></div>
+          <div class="secondary-bar"><span class="bar-inner"></span></div>
+        </div>,
+      );
+    } else {
+      content.push(
+        <div class="progress" style={{ transform: `scaleX(${this.value})` }}></div>
+      );
+    }
 
-    return (
-      <div class="progress-bar">
-        <div class="progress" style={{ width: `${this.value}%` }}></div>
-        {this.indicator === 'buffer'
-          ? bufferBar
-          : ''
-        }
-      </div>
-    );
+    if (this.indicator === 'buffer') {
+      const buffer = this.buffer;
+      content.push(
+        <div class="buffer-circles"></div>,
+        <div class="buffer-bar" style={{ transform: `scaleX(${buffer})` }}></div>,
+        <div class="buffer-background" style={{ transform: `scaleX(${buffer})` }}></div>
+      );
+    }
+    return content;
   }
 }

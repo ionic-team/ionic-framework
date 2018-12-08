@@ -10,19 +10,11 @@
     <script src="../../../../../dist/ionic.js"></script>
     <style>
         .custom-bar-background {
-            --bar-background: red;
+            background: red;
         }
 
         .no-bar-background {
-            --bar-background: none;
-        }
-
-        .bar-slow-speed {
-            --bar-speed: 6s;
-        }
-
-        .bar-high-speed {
-            --bar-speed: 1s;
+            background: none;
         }
 
         ion-progress-bar {
@@ -49,18 +41,6 @@
                 <ion-progress-bar indicator="indeterminate"></ion-progress-bar>
                 <ion-list-header>
                     <ion-label>
-                        Indeterminate (slow speed)
-                    </ion-label>
-                </ion-list-header>
-                <ion-progress-bar class="bar-slow-speed" indicator="indeterminate"></ion-progress-bar>
-                <ion-list-header>
-                    <ion-label>
-                        Indeterminate (high speed)
-                    </ion-label>
-                </ion-list-header>
-                <ion-progress-bar class="bar-high-speed" indicator="indeterminate"></ion-progress-bar>
-                <ion-list-header>
-                    <ion-label>
                         Indeterminate with Primary color
                     </ion-label>
                 </ion-list-header>
@@ -76,28 +56,35 @@
                         Determinate
                     </ion-label>
                 </ion-list-header>
-                <ion-progress-bar value="50"></ion-progress-bar>
+                <ion-progress-bar value="0.5"></ion-progress-bar>
+
+                <ion-list-header>
+                    <ion-label>
+                        Determinate (reversed)
+                    </ion-label>
+                </ion-list-header>
+                <ion-progress-bar indicator="reversed" value="0.5"></ion-progress-bar>
 
                 <ion-list-header>
                     <ion-label>
                         Determinate (Primary color)
                     </ion-label>
                 </ion-list-header>
-                <ion-progress-bar color="primary" value="50"></ion-progress-bar>
+                <ion-progress-bar color="primary" value="0.5"></ion-progress-bar>
 
                 <ion-list-header>
                     <ion-label>
                         Determinate (with no bar background)
                     </ion-label>
                 </ion-list-header>
-                <ion-progress-bar class="no-bar-background" indicator="determinate" value="75"></ion-progress-bar>
+                <ion-progress-bar class="no-bar-background" indicator="determinate" value="0.75"></ion-progress-bar>
 
                 <ion-list-header>
                     <ion-label>
                         Determinate (with a custom background)
                     </ion-label>
                 </ion-list-header>
-                <ion-progress-bar class="custom-bar-background" indicator="determinate" value="75"></ion-progress-bar>
+                <ion-progress-bar class="custom-bar-background" indicator="determinate" value="0.75"></ion-progress-bar>
 
                 <ion-list-header>
                     <ion-label>
@@ -118,7 +105,7 @@
                         Buffer
                     </ion-label>
                 </ion-list-header>
-                <ion-progress-bar color="secondary" indicator="buffer" value="20" buffer="40"></ion-progress-bar>
+                <ion-progress-bar color="secondary" indicator="buffer" value="0.2" buffer="0.4"></ion-progress-bar>
                 <ion-progress-bar color="tertiary" indicator="buffer" ></ion-progress-bar>
 
             </ion-list>
@@ -132,7 +119,7 @@
         const progressBar = document.getElementById('progressBar');
 
         progressValue.addEventListener('ionChange', function (ev) {
-            progressBar.value = ev.detail.value;
+            progressBar.value = ev.detail.value / 100;
         });
     </script>
 </body>
