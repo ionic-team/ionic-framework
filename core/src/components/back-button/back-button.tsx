@@ -84,9 +84,8 @@ export class BackButton implements ComponentInterface {
         <span class="button-inner">
           {backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false}></ion-icon>}
           {backButtonText && <span class="button-text">{backButtonText}</span>}
-          {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </span>
-        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+        {this.mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
       </button>
     );
   }
