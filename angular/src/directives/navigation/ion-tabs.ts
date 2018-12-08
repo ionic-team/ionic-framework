@@ -58,7 +58,7 @@ export class IonTabs {
   onTabButtonClick(detail: TabButtonClickDetail) {
     const { tab, selected } = detail;
     if (tab) {
-      const href = `/${this.outlet.tabsPrefix}/${tab}`;
+      const href = `${this.outlet.tabsPrefix}/${tab}`;
       const url = selected
         ? href
         : this.outlet.getLastUrl(tab) || href;

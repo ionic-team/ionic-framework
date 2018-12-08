@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'modals', component: ModalComponent },
   { path: 'router-link', component: RouterLinkComponent },
   { path: 'router-link-page', component: RouterLinkPageComponent },
+  { path: 'tabs', redirectTo: '/tabs/account', pathMatch: 'full' },
   {
     path: 'tabs',
     component: TabsComponent,
