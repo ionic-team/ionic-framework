@@ -50,12 +50,21 @@ export class ProgressBar implements ComponentInterface {
   }
 
   render() {
+    const bufferBar = (
+      <div class="progress-buffer">
+        <div class="buffer-circles"></div>
+        <div class="buffer-bar" style={{ width: `${this.buffer}%` }}></div>
+        <div class="buffer-background" style={{ width: `${this.buffer}%` }}></div>
+      </div>
+    );
+
     return (
       <div class="progress-bar">
         <div class="progress" style={{ width: `${this.value}%` }}></div>
-        <div class="buffer-circles"></div>
-        <div class="buffer-bar" style={{ width: `${this.buffer}%` }}></div>
-        <div class="buffer" style={{ width: `${this.buffer}%` }}></div>
+        {this.indicator === 'buffer'
+          ? bufferBar
+          : ''
+        }
       </div>
     );
   }

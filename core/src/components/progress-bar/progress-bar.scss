@@ -22,7 +22,6 @@
     --buffer-speed: 0.5s;
 
     overflow: hidden;
-    box-sizing: border-box;
     display: block;
 }
 
@@ -33,19 +32,15 @@
     --buffer-color: #{current-color(base)};
 }
 
-/** 
- * Source: https://github.com/Dogfalo/materialize/blob/v1-dev/sass/components/_global.scss
- * MIT LIcense
- **/
-
-.progress-bar {
+.progress-bar,
+.progress-buffer {
     contain: strict;
-    overflow: hidden;
-    box-sizing: border-box;
-    display: block;
-    position: relative;
+
     height: var(--height);
     width: 100%;
+}
+
+.progress-bar {
     background: var(--bar-background);
 }
 
@@ -54,18 +49,13 @@
     background-color: var(--color);
 }
 
-.buffer-circles,
-.buffer,
-.buffer-bar {
-    display: none;
-}
-
 :host(.determinate),
 :host(.buffer) {
     .progress {
         position: absolute;
         top: 0;
         bottom: 0;
+        z-index: 1;
         transition: width .3s linear;
     }
     @include rtl() {
@@ -106,9 +96,8 @@
 }
 
 :host(.buffer) {
-    .buffer {
+    .buffer-background {
         position: absolute;
-        display: block;
         top: 0;
         z-index: -1;
         width: 100%;
@@ -117,7 +106,6 @@
     }
     .buffer-bar {
         position: absolute;
-        display: block;
         top: 0;
         z-index: -1;
         width: 100%;
@@ -127,9 +115,8 @@
     .buffer-circles {
         position: absolute;
         top: 0;
-        right:-10px;
+        right: -10px; // needed so it looks like the points come from right
         z-index: -1;
-        display: block;
         width: 100%;
         height: var(--height);
         background: radial-gradient(ellipse at center, var(--buffer-color) 0%, var(--buffer-color) 30%, transparent 30%);
