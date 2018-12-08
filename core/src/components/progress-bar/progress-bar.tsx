@@ -19,17 +19,17 @@ export class ProgressBar implements ComponentInterface {
 
   /**
    * Sets the indicator style of the progress bar
-   * Options are determinate (no animation), reversed (to determinate), indeterminate (animate from left to right) and query (animate from right to left)
+   * Options are determinate (no animation), reversed (reversed determinate), indeterminate (animate from left to right) and query (animate from right to left)
    */
   @Prop() indicator: 'reversed' | 'determinate' | 'indeterminate' | 'query' | 'buffer' = 'determinate';
 
   /**
-   * The width of the progress bar in percent - 0 ... 100
+   * The width of the progress bar - 0 ... 1
    */
   @Prop() value = 0;
 
   /**
-   * The width of the buffer in percent - 0 ... 100
+   * The width of the buffer in percent - 0 ... 1
    */
   @Prop() buffer = 0;
 
