@@ -81,7 +81,7 @@
 :host(.indeterminate) {
     .progress {
         &:before {
-            animation: indeterminate var(--bar-speed) cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+            animation: indeterminate var(--bar-speed) infinite;
         }
     }
 }
@@ -89,7 +89,7 @@
 :host(.query) {
     .progress {
         &:before {
-            animation: query var(--bar-speed) cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+            animation: query var(--bar-speed) infinite;
         }
     }
 }
@@ -141,32 +141,28 @@
 // Animation Keyframes
 // --------------------------------------------------
 @keyframes indeterminate {
-    0% {
-        right: 100%;
-        left: -35%;
+    from {
+        left: -10%;
+
+        width: 15%;
     }
-    60% {
-        right: -90%;
-        left: 100%;
-    }
-    100% {
-        right: -90%;
-        left: 100%;
+    to {
+        left: 120%;
+
+        width: 100%;
     }
 }
 
 @keyframes query {
-    0% {
-        right: -35%;
-        left: 100%;
+    from {
+        left: 130%;
+
+        width: 15%;
     }
-    60% {
-        right: 100%;
+    to {
         left: -90%;
-    }
-    100% {
-        right: 100%;
-        left: -90%;
+
+        width: 80%;
     }
 }
 
