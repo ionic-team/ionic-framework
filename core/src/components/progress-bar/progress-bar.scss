@@ -131,7 +131,7 @@
     .buffer-circles {
         position: absolute;
 
-        width: 110%; // So it looks like it coming from the right
+        width: 100%;
         height: 100%;
 
         background: radial-gradient(ellipse at center, var(--buffer-color) 0%, var(--buffer-color) 30%, transparent 30%) repeat-x 5px center;

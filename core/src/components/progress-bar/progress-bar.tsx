@@ -24,12 +24,12 @@ export class ProgressBar implements ComponentInterface {
   @Prop() indicator: 'reversed' | 'determinate' | 'indeterminate' | 'query' | 'buffer' = 'determinate';
 
   /**
-   * The width of the progress bar - 0 ... 1
+   * The width of the progress bar in percent - 0 ... 100
    */
   @Prop() value = 0;
 
   /**
-   * The width of the buffer in percent - 0 ... 1
+   * The width of the buffer in percent - 0 ... 100
    */
   @Prop() buffer = 0;
 
@@ -59,13 +59,14 @@ export class ProgressBar implements ComponentInterface {
         </div>,
       );
     } else {
+      const percent = this.value / 100;
       content.push(
-        <div class="progress" style={{ transform: `scaleX(${this.value})` }}></div>
+        <div class="progress" style={{ transform: `scaleX(${percent})` }}></div>
       );
     }
 
     if (this.indicator === 'buffer') {
-      const buffer = this.buffer;
+      const buffer = this.buffer / 100;
       content.push(
         <div class="buffer-circles"></div>,
         <div class="buffer-bar" style={{ transform: `scaleX(${buffer})` }}></div>,

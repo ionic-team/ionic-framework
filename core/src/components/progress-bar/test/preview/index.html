@@ -3,26 +3,18 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Progress Bar</title>
+    <title>Progress Bar - Preview</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
     <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
     <script src="../../../../../dist/ionic.js"></script>
     <style>
         .custom-bar-background {
-            --bar-background: red;
+            background: red;
         }
 
         .no-bar-background {
-            --bar-background: none;
-        }
-
-        .bar-slow-speed {
-            --bar-speed: 6s;
-        }
-
-        .bar-high-speed {
-            --bar-speed: 1s;
+            background: none;
         }
 
         ion-progress-bar {
@@ -35,7 +27,7 @@
     <ion-app>
         <ion-header>
             <ion-toolbar>
-                <ion-title>Progress Bar - Basic</ion-title>
+                <ion-title>Progress Bar</ion-title>
             </ion-toolbar>
         </ion-header>
 
@@ -47,18 +39,6 @@
                     </ion-label>
                 </ion-list-header>
                 <ion-progress-bar indicator="indeterminate"></ion-progress-bar>
-                <ion-list-header>
-                    <ion-label>
-                        Indeterminate (slow speed)
-                    </ion-label>
-                </ion-list-header>
-                <ion-progress-bar class="bar-slow-speed" indicator="indeterminate"></ion-progress-bar>
-                <ion-list-header>
-                    <ion-label>
-                        Indeterminate (high speed)
-                    </ion-label>
-                </ion-list-header>
-                <ion-progress-bar class="bar-high-speed" indicator="indeterminate"></ion-progress-bar>
                 <ion-list-header>
                     <ion-label>
                         Indeterminate with Primary color
@@ -77,6 +57,13 @@
                     </ion-label>
                 </ion-list-header>
                 <ion-progress-bar value="50"></ion-progress-bar>
+
+                <ion-list-header>
+                    <ion-label>
+                        Determinate (reversed)
+                    </ion-label>
+                </ion-list-header>
+                <ion-progress-bar indicator="reversed" value="50"></ion-progress-bar>
 
                 <ion-list-header>
                     <ion-label>
