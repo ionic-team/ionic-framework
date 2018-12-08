@@ -4,7 +4,6 @@
 :host {
     /**
      * @prop --height: Height of the progress bar
-     * @prop --border-radius: Border Radius of the progress bar
      * @prop --bar-background: Background of the progress bar
      * @prop --bar-speed: Speed of the progress bar
      * @prop --buffer-background: Background of the buffer bar
@@ -12,17 +11,15 @@
      * @prop --buffer-speed: Speed of the buffer circles
      */
     --height: 4px;
-    --border-radius: 0;
-
     --bar-background: rgba(0, 0, 0, .12);
     --bar-speed: 2.1s;
-
     --buffer-background: rgba(0, 0, 0, .30);
     --buffer-size: 10px;
     --buffer-speed: 0.5s;
 
-    overflow: hidden;
     display: block;
+
+    overflow: hidden;
 }
 
 :host(.ion-color) {
@@ -34,10 +31,11 @@
 
 .progress-bar,
 .progress-buffer {
-    contain: strict;
+    width: 100%;
 
     height: var(--height);
-    width: 100%;
+
+    contain: strict;
 }
 
 .progress-bar {
@@ -45,21 +43,22 @@
 }
 
 .progress {
-    border-radius: var(--border-radius);
-    background-color: var(--color);
+    background: var(--color);
 }
 
 :host(.determinate),
 :host(.buffer) {
+    @include rtl() {
+        transform: rotate(180deg);
+    }
     .progress {
         position: absolute;
         top: 0;
         bottom: 0;
-        z-index: 1;
+
         transition: width .3s linear;
-    }
-    @include rtl() {
-        transform: rotate(180deg);
+
+        z-index: 1;
     }
 }
 
@@ -67,12 +66,14 @@
 :host(.query) {
     .progress {
         &:before {
-            content: '';
             position: absolute;
-            background-color: inherit;
+
             top: 0;
-            left: 0;
             bottom: 0;
+
+            background-color: inherit;
+
+            content: "";
         }
     }
 }
@@ -80,7 +81,6 @@
 :host(.indeterminate) {
     .progress {
         &:before {
-            will-change: left, right;
             animation: indeterminate var(--bar-speed) cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
         }
     }
@@ -89,7 +89,6 @@
 :host(.query) {
     .progress {
         &:before {
-            will-change: left, right;
             animation: query var(--bar-speed) cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
         }
     }
@@ -99,34 +98,40 @@
     .buffer-background {
         position: absolute;
         top: 0;
-        z-index: -1;
+
         width: 100%;
         height: 100%;
+
         background-color: var(--buffer-background);
+
+        z-index: -1;
     }
     .buffer-bar {
         position: absolute;
         top: 0;
-        z-index: -1;
+
         width: 100%;
         height: 100%;
+
         background-color: var(--ion-background-color, #fff);
+
+        z-index: -1;
     }
     .buffer-circles {
-        position: absolute;
-        top: 0;
-        right: -10px; // needed so it looks like the points come from right
-        z-index: -1;
-        width: 100%;
-        height: var(--height);
-        background: radial-gradient(ellipse at center, var(--buffer-color) 0%, var(--buffer-color) 30%, transparent 30%);
-        background-size: var(--buffer-size) var(--buffer-size);
-        background-repeat: repeat-x;
-        background-position: 5px center;
-        animation: buffering var(--buffer-speed) infinite linear;
         @include rtl() {
             animation-direction: reverse;
         }
+        position: absolute;
+        top: 0;
+
+        width: 100%;
+        height: var(--height);
+
+        background: radial-gradient(ellipse at center, var(--buffer-color) 0%, var(--buffer-color) 30%, transparent 30%) repeat-x 5px center;
+        background-size: var(--buffer-size) var(--buffer-size);
+
+        z-index: -1;
+        animation: buffering var(--buffer-speed) infinite linear;
     }
     .progress {
         display: block;
@@ -135,43 +140,37 @@
 
 // Animation Keyframes
 // --------------------------------------------------
-@mixin keyframes($animation-name) {
-    @keyframes #{$animation-name} {
-        @content;
-    }
-}
-
-@include keyframes(indeterminate) {
+@keyframes indeterminate {
     0% {
+        right: 100%;
         left: -35%;
-        right: 100%;
     }
     60% {
-        left: 100%;
         right: -90%;
+        left: 100%;
     }
     100% {
-        left: 100%;
         right: -90%;
+        left: 100%;
     }
 }
 
-@include keyframes(query) {
+@keyframes query {
     0% {
-        left: 100%;
         right: -35%;
+        left: 100%;
     }
     60% {
-        left: -90%;
         right: 100%;
+        left: -90%;
     }
     100% {
-        left: -90%;
         right: 100%;
+        left: -90%;
     }
 }
 
-@include keyframes(buffering) {
+@keyframes buffering {
     to {
         transform: translateX(-10px);
     }
