@@ -636,6 +636,13 @@ ion-modal,event,ionModalDidPresent,void,true
 ion-modal,event,ionModalDidUnload,void,true
 ion-modal,event,ionModalWillDismiss,OverlayEventDetail,true
 ion-modal,event,ionModalWillPresent,void,true
+ion-modal,css-prop,--background
+ion-modal,css-prop,--border-color
+ion-modal,css-prop,--border-radius
+ion-modal,css-prop,--border-style
+ion-modal,css-prop,--border-width
+ion-modal,css-prop,--height
+ion-modal,css-prop,--width
 
 ion-nav-pop
 
@@ -792,6 +799,7 @@ ion-range,event,ionChange,InputChangeEvent,true
 ion-range,event,ionFocus,void,true
 ion-range,css-prop,--bar-background
 ion-range,css-prop,--bar-background-active
+ion-range,css-prop,--bar-border-radius
 ion-range,css-prop,--bar-height
 ion-range,css-prop,--height
 ion-range,css-prop,--knob-background
@@ -956,12 +964,10 @@ ion-select,event,ionBlur,void,true
 ion-select,event,ionCancel,void,true
 ion-select,event,ionChange,SelectInputChangeEvent,true
 ion-select,event,ionFocus,void,true
-ion-select,css-prop,--icon-color
 ion-select,css-prop,--padding-bottom
 ion-select,css-prop,--padding-end
 ion-select,css-prop,--padding-start
 ion-select,css-prop,--padding-top
-ion-select,css-prop,--placeholder-color
 
 ion-skeleton-text
 ion-skeleton-text,prop,width,string,'100%',false

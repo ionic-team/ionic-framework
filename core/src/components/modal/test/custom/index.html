@@ -10,11 +10,13 @@
   <script src="../../../../../dist/ionic.js"></script>
 
   <style>
-  :root {
-    --ion-safe-area-top: 20px;
-    --ion-safe-area-bottom: 20px;
-    --ion-safe-area-right: 20px;
-    --ion-safe-area-left: 20px;
+  .custom-modal {
+    --height: 70%;
+    --border-style: solid;
+    --border-width: 7px 0 0 0;
+    --border-color: #0d51aa;
+    --border-radius: 20px 20px 0 0;
+    align-items: flex-end;
   }
   </style>
 </head>
@@ -32,20 +34,12 @@
       <p>
         <ion-button id="presentModal" class="e2ePresentModal" onclick="presentModal()">Present modal</ion-button>
       </p>
-      <p>
-        <ion-button id="presentModal" class="e2ePresentModal" onclick="presentCloseModal()">Present and close modal</ion-button>
-      </p>
-      <p>
-        <ion-button id="presentModal" class="e2ePresentModal" onclick="presentCloseModal2()">Present and close modal (crash)</ion-button>
-      </p>
     </ion-content>
     <ion-modal-controller></ion-modal-controller>
 
   </ion-app>
 
   <script>
-    window.addEventListener("ionModalDidDismiss", function (e) { console.log('DidDismiss', e) })
-    window.addEventListener("ionModalWillDismiss", function (e) { console.log('WillDismiss', e) })
 
     async function createModal() {
       // initialize controller
@@ -75,7 +69,8 @@
 
       // present the modal
       const modalElement = await modalController.create({
-        component: element
+        component: element,
+        cssClass: 'custom-modal',
       });
       return modalElement;
     }

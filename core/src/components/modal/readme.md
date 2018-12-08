@@ -156,6 +156,19 @@ Type: `Promise<void>`
 
 
 
+## CSS Custom Properties
+
+| Name              | Description                        |
+| ----------------- | ---------------------------------- |
+| `--background`    | Background of the modal content    |
+| `--border-color`  | Border color of the modal content  |
+| `--border-radius` | Border radius of the modal content |
+| `--border-style`  | Border style of the modal content  |
+| `--border-width`  | Border width of the modal content  |
+| `--height`        | Height of the modal content        |
+| `--width`         | Width of the modal content         |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
