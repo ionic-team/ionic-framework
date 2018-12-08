@@ -3191,9 +3191,9 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * Sets the indicator style of the progress bar Options are determinate (no animation), indeterminate (animate from left to right) and query (animate from right to left)
+    * Sets the indicator style of the progress bar Options are determinate (no animation), reversed (to determinate), indeterminate (animate from left to right) and query (animate from right to left)
     */
-    'indicator': 'determinate' | 'indeterminate' | 'query' | 'buffer';
+    'indicator': 'reversed' | 'determinate' | 'indeterminate' | 'query' | 'buffer';
     /**
     * The mode determines which platform styles to use.
     */
@@ -3213,9 +3213,9 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * Sets the indicator style of the progress bar Options are determinate (no animation), indeterminate (animate from left to right) and query (animate from right to left)
+    * Sets the indicator style of the progress bar Options are determinate (no animation), reversed (to determinate), indeterminate (animate from left to right) and query (animate from right to left)
     */
-    'indicator'?: 'determinate' | 'indeterminate' | 'query' | 'buffer';
+    'indicator'?: 'reversed' | 'determinate' | 'indeterminate' | 'query' | 'buffer';
     /**
     * The mode determines which platform styles to use.
     */

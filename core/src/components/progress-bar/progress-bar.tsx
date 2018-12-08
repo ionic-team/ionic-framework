@@ -49,7 +49,6 @@ export class ProgressBar implements ComponentInterface {
     };
   }
 
-  // tslint:disable:linebreak-style
   render() {
     const content = [];
     if (this.indicator === 'indeterminate' || this.indicator === 'query') {
