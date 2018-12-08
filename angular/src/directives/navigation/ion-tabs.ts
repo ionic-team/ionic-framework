@@ -6,7 +6,7 @@ import { IonTabBar } from '../proxies';
 import { RouteView } from './stack-utils';
 
 @Component({
-  selector: 'ion-tabs-outlet',
+  selector: 'ion-tabs',
   template: `
     <div class="tabs-inner">
       <ion-router-outlet #outlet tabs="true"></ion-router-outlet>
@@ -38,7 +38,7 @@ import { RouteView } from './stack-utils';
     }`
   ]
 })
-export class IonTabsOutletComponent {
+export class IonTabs {
 
   @ViewChild('outlet', { read: IonRouterOutlet }) outlet: IonRouterOutlet;
   @ContentChild(IonTabBar) tabBar: IonTabBar | undefined;

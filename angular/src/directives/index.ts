@@ -5,7 +5,7 @@ export { RadioValueAccessor } from './control-value-accessors/radio-value-access
 export { SelectValueAccessor } from './control-value-accessors/select-value-accessor';
 export { TextValueAccessor } from './control-value-accessors/text-value-accessor';
 
-export { IonTabsOutletComponent } from './navigation/ion-tabs-outlet';
+export { IonTabs } from './navigation/ion-tabs';
 export { IonBackButtonDelegate } from './navigation/ion-back-button';
 export { NavDelegate } from './navigation/nav-delegate';
 export { IonRouterOutlet } from './navigation/ion-router-outlet';

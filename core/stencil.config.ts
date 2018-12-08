@@ -112,6 +112,10 @@ export const config: Config = {
         'ion-router-outlet',
         'ion-anchor',
 
+        // tabs
+        'ion-tabs',
+        'ion-tab',
+
         // auxiliar
         'ion-picker-column',
         'ion-virtual-scroll'

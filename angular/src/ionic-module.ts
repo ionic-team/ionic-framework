@@ -76,10 +76,8 @@ const DECLARATIONS = [
   d.IonSlides,
   d.IonSpinner,
   d.IonSplitPane,
-  d.IonTab,
   d.IonTabBar,
   d.IonTabButton,
-  d.IonTabs,
   d.IonText,
   d.IonTextarea,
   d.IonThumbnail,
@@ -87,7 +85,7 @@ const DECLARATIONS = [
   d.IonToolbar,
   d.IonTitle,
 
-  c.IonTabsOutletComponent,
+  c.IonTabs,
 
   // ngModel accessors
   c.BooleanValueAccessor,
