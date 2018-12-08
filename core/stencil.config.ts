@@ -44,7 +44,8 @@ export const config: Config = {
     { components: ['ion-slides', 'ion-slide'] },
     { components: ['ion-spinner'] },
     { components: ['ion-split-pane'] },
-    { components: ['ion-tabs', 'ion-tab', 'ion-tab-bar', 'ion-tab-button'] },
+    { components: ['ion-tabs', 'ion-tab'] },
+    { components: ['ion-tab-bar', 'ion-tab-button'] },
     { components: ['ion-text'] },
     { components: ['ion-toast', 'ion-toast-controller'] },
     { components: ['ion-toggle'] },
@@ -110,6 +111,10 @@ export const config: Config = {
         'ion-route-redirect',
         'ion-router-outlet',
         'ion-anchor',
+
+        // tabs
+        'ion-tabs',
+        'ion-tab',
 
         // auxiliar
         'ion-picker-column',

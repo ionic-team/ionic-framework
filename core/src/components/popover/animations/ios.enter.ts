@@ -72,9 +72,6 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev
   // make it pop up if there's room above
   if (targetTop + targetHeight + contentHeight > bodyHeight && targetTop - contentHeight > 0) {
     arrowCSS.top = targetTop - (arrowHeight + 1);
-    console.log(arrowCSS);
-    console.log(targetTop);
-    console.log(contentHeight);
     popoverCSS.top = targetTop - contentHeight - (arrowHeight - 1);
 
     baseEl.className = baseEl.className + ' popover-bottom';

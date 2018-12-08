@@ -1,8 +1,9 @@
 import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, Input, NgZone, OnDestroy, OnInit, Optional, Output, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ChildrenOutletContexts, OutletContext, PRIMARY_OUTLET, Router } from '@angular/router';
-import { RouteView, StackController } from './stack-controller';
+import { StackController } from './stack-controller';
 import { NavController } from '../../providers/nav-controller';
 import { bindLifecycleEvents } from '../../providers/angular-delegate';
+import { RouteView, getUrl } from './stack-utils';
 
 @Directive({
   selector: 'ion-router-outlet',
@@ -19,6 +20,8 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   private stackCtrl: StackController;
   private nativeEl: HTMLIonRouterOutletElement;
   private hasStack = false;
+
+  tabsPrefix: string | undefined;
 
   @Output('activate') activateEvents = new EventEmitter<any>();
   @Output('deactivate') deactivateEvents = new EventEmitter<any>();
@@ -43,18 +46,20 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     private location: ViewContainerRef,
     private resolver: ComponentFactoryResolver,
     @Attribute('name') name: string,
-    @Optional() @Attribute('stack') stack: any,
+    @Optional() @Attribute('tabs') tabs: string,
     private changeDetector: ChangeDetectorRef,
-    private navCtrl: NavController,
+    navCtrl: NavController,
     elementRef: ElementRef,
     router: Router,
-    zone: NgZone
+    zone: NgZone,
+    activatedRoute: ActivatedRoute
   ) {
     this.nativeEl = elementRef.nativeElement;
     this.name = name || PRIMARY_OUTLET;
+    this.tabsPrefix = tabs === 'true' ? getUrl(router, activatedRoute) : undefined;
+    this.stackCtrl = new StackController(this.tabsPrefix, this.nativeEl, router, navCtrl, zone);
+
     parentContexts.onChildOutletCreated(this.name, this as any);
-    this.hasStack = stack !== 'false' && stack !== false;
-    this.stackCtrl = new StackController(this.hasStack, this.nativeEl, router, this.navCtrl, zone);
   }
 
   ngOnDestroy(): void {
@@ -169,32 +174,32 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       enteringView = this.stackCtrl.createView(this.activated, activatedRoute);
     }
 
-    const { direction, animated } = this.navCtrl.consumeTransition();
     this.activatedView = enteringView;
-    this.stackCtrl.setActive(enteringView, direction, animated).then(() => {
+    this.stackCtrl.setActive(enteringView).then(() => {
       this.activateEvents.emit(cmpRef.instance);
-      emitEvent(this.nativeEl);
+      emitEvent(this.nativeEl, enteringView!);
     });
   }
 
-  canGoBack(deep = 1) {
-    return this.stackCtrl.canGoBack(deep);
+  canGoBack(deep = 1, stackId?: string) {
+    return this.stackCtrl.canGoBack(deep, stackId);
   }
 
-  pop(deep = 1) {
-    return this.stackCtrl.pop(deep);
+  pop(deep = 1, stackId?: string) {
+    return this.stackCtrl.pop(deep, stackId);
   }
 
-  getLastUrl() {
-    const active = this.stackCtrl.getActive();
+  getLastUrl(stackId?: string) {
+    const active = this.stackCtrl.getLastUrl(stackId);
     return active ? active.url : undefined;
   }
 }
 
-function emitEvent(el: HTMLElement) {
+function emitEvent(el: HTMLElement, view: RouteView) {
   const ev = new CustomEvent('ionRouterOutletActivated', {
     bubbles: true,
     cancelable: true,
+    detail: { view }
   });
   el.dispatchEvent(ev);
 }
