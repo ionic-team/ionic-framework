@@ -4,15 +4,15 @@
 :host {
     /**
      * @prop --height: Height of the progress bar
-     * @prop --bar-background: Background of the progress bar
-     * @prop --bar-speed: Speed of the progress bar
+     * @prop --background: Background of the progress bar
+     * @prop --speed: Speed of the progress bar
      * @prop --buffer-background: Background of the buffer bar
      * @prop --buffer-size: Size of the buffer circles
      * @prop --buffer-speed: Speed of the buffer circles
      */
     --height: 4px;
-    --bar-background: rgba(0, 0, 0, .12);
-    --bar-speed: 2.1s;
+    --background: rgba(0, 0, 0, .12);
+    --speed: 2.1s;
     --buffer-background: rgba(0, 0, 0, .30);
     --buffer-size: 10px;
     --buffer-speed: 0.5s;
@@ -24,7 +24,7 @@
 
 :host(.ion-color) {
     --color: #{current-color(base)};
-    --bar-background: rgba(#{current-color(base-rgb)}, .12);
+    --background: rgba(#{current-color(base-rgb)}, .12);
     --buffer-background: rgba(#{current-color(base-rgb)}, .30);
     --buffer-color: #{current-color(base)};
 }
@@ -39,7 +39,7 @@
 }
 
 .progress-bar {
-    background: var(--bar-background);
+    background: var(--background);
 }
 
 .progress {
@@ -81,7 +81,7 @@
 :host(.indeterminate) {
     .progress {
         &:before {
-            animation: indeterminate var(--bar-speed) infinite;
+            animation: indeterminate var(--speed) infinite;
         }
     }
 }
@@ -89,7 +89,7 @@
 :host(.query) {
     .progress {
         &:before {
-            animation: query var(--bar-speed) infinite;
+            animation: query var(--speed) infinite;
         }
     }
 }
