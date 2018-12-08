@@ -42,15 +42,14 @@ A progress bar visualize the progression of an operation.
 
 ## CSS Custom Properties
 
-| Name                  | Description                       |
-| --------------------- | --------------------------------- |
-| `--bar-background`    | Background of the progress bar    |
-| `--bar-speed`         | Speed of the progress bar         |
-| `--border-radius`     | Border Radius of the progress bar |
-| `--buffer-background` | Background of the buffer bar      |
-| `--buffer-size`       | Size of the buffer circles        |
-| `--buffer-speed`      | Speed of the buffer circles       |
-| `--height`            | Height of the progress bar        |
+| Name                  | Description                    |
+| --------------------- | ------------------------------ |
+| `--background`        | Background of the progress bar |
+| `--buffer-background` | Background of the buffer bar   |
+| `--buffer-size`       | Size of the buffer circles     |
+| `--buffer-speed`      | Speed of the buffer circles    |
+| `--height`            | Height of the progress bar     |
+| `--speed`             | Speed of the progress bar      |
 
 
 ----------------------------------------------
