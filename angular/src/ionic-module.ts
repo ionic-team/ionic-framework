@@ -77,16 +77,16 @@ const DECLARATIONS = [
   d.IonSlides,
   d.IonSpinner,
   d.IonSplitPane,
-  d.IonTab,
   d.IonTabBar,
   d.IonTabButton,
-  d.IonTabs,
   d.IonText,
   d.IonTextarea,
   d.IonThumbnail,
   d.IonToggle,
   d.IonToolbar,
   d.IonTitle,
+
+  c.IonTabs,
 
   // ngModel accessors
   c.BooleanValueAccessor,
@@ -99,8 +99,6 @@ const DECLARATIONS = [
   c.IonRouterOutlet,
   c.IonBackButtonDelegate,
   c.NavDelegate,
-  c.TabDelegate,
-  c.TabsDelegate,
   c.RouterLinkDelegate,
 
   // virtual scroll

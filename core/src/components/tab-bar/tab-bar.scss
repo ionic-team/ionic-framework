@@ -16,6 +16,10 @@
 
   width: auto;
 
+  padding-bottom: var(--ion-safe-area-bottom, 0);
+
+  border-top: var(--border);
+
   background: var(--background);
   color: var(--color);
 
@@ -41,13 +45,10 @@
 }
 
 :host([slot="top"]) {
+  padding-bottom: 0;
+
+  border-top: 0;
   border-bottom: var(--border);
-}
-
-:host([slot="bottom"]) {
-  padding-bottom: var(--ion-safe-area-bottom, 0);
-
-  border-top: var(--border);
 }
 
 :host(.tabbar-hidden) {

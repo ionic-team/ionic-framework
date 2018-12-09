@@ -39,7 +39,6 @@ export class RouterLinkDelegate {
   private updateTargetUrlAndHref() {
     if (this.routerLink) {
       const href = this.locationStrategy.prepareExternalUrl(this.router.serializeUrl(this.routerLink.urlTree));
-      console.log(href);
       this.elementRef.nativeElement.href = href;
     }
   }

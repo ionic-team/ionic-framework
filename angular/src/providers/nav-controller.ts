@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { NavigationExtras, NavigationStart, Router, UrlTree } from '@angular/router';
 import { Platform } from './platform';
+import { RouterDirection } from '@ionic/core';
 
 export type NavDirection = 'forward' | 'back' | 'root' | 'auto';
 
@@ -10,7 +11,7 @@ export class NavController {
 
   private direction: NavDirection = DEFAULT_DIRECTION;
   private animated = DEFAULT_ANIMATED;
-  private guessDirection: NavDirection = 'forward';
+  private guessDirection: RouterDirection = 'forward';
   private guessAnimation = false;
   private lastNavId = -1;
 
@@ -74,7 +75,7 @@ export class NavController {
   }
 
   consumeTransition() {
-    let direction: NavDirection = 'root';
+    let direction: RouterDirection = 'root';
     let animated = false;
 
     if (this.direction === 'auto') {

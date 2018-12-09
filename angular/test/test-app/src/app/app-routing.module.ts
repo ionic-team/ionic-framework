@@ -6,6 +6,9 @@ import { RouterLinkComponent } from './router-link/router-link.component';
 import { RouterLinkPageComponent } from './router-link-page/router-link-page.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { TabsComponent } from './tabs/tabs.component';
+import { TabsTab1Component } from './tabs-tab1/tabs-tab1.component';
+import { TabsTab1NestedComponent } from './tabs-tab1-nested/tabs-tab1-nested.component';
+import { TabsTab2Component } from './tabs-tab2/tabs-tab2.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -13,7 +16,40 @@ const routes: Routes = [
   { path: 'modals', component: ModalComponent },
   { path: 'router-link', component: RouterLinkComponent },
   { path: 'router-link-page', component: RouterLinkPageComponent },
-  { path: 'tabs', component: TabsComponent }
+  { path: 'tabs', redirectTo: '/tabs/account', pathMatch: 'full' },
+  {
+    path: 'tabs',
+    component: TabsComponent,
+    children: [
+      {
+        path: 'account',
+        children: [
+          {
+            path: 'nested/:id',
+            component: TabsTab1NestedComponent
+          },
+          {
+            path: '',
+            component: TabsTab1Component
+          }
+        ]
+      },
+      {
+        path: 'contact',
+        children: [
+          {
+            path: 'one',
+            component: TabsTab2Component
+          },
+          {
+            path: '',
+            redirectTo: 'one',
+            pathMatch: 'full'
+          }
+        ]
+      }
+    ]
+  }
 ];
 
 @NgModule({
