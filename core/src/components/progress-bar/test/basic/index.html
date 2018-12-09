@@ -38,19 +38,22 @@
                         Indeterminate
                     </ion-label>
                 </ion-list-header>
-                <ion-progress-bar indicator="indeterminate"></ion-progress-bar>
+                <ion-progress-bar type="indeterminate"></ion-progress-bar>
+
                 <ion-list-header>
                     <ion-label>
                         Indeterminate with Primary color
                     </ion-label>
                 </ion-list-header>
-                <ion-progress-bar color="primary" indicator="indeterminate"></ion-progress-bar>
+                <ion-progress-bar color="primary" type="indeterminate"></ion-progress-bar>
+
                 <ion-list-header>
                     <ion-label>
-                        Query
+                        Indeterminate (reversed)
                     </ion-label>
                 </ion-list-header>
-                <ion-progress-bar indicator="query"></ion-progress-bar>
+                <ion-progress-bar type="indeterminate" reversed="true"></ion-progress-bar>
+
                 <ion-list-header>
                     <ion-label>
                         Determinate
@@ -63,7 +66,7 @@
                         Determinate (reversed)
                     </ion-label>
                 </ion-list-header>
-                <ion-progress-bar indicator="reversed" value="50"></ion-progress-bar>
+                <ion-progress-bar type="determinate" reversed="true" value="50"></ion-progress-bar>
 
                 <ion-list-header>
                     <ion-label>
@@ -77,14 +80,14 @@
                         Determinate (with no bar background)
                     </ion-label>
                 </ion-list-header>
-                <ion-progress-bar class="no-bar-background" indicator="determinate" value="75"></ion-progress-bar>
+                <ion-progress-bar class="no-bar-background" type="determinate" value="75"></ion-progress-bar>
 
                 <ion-list-header>
                     <ion-label>
                         Determinate (with a custom background)
                     </ion-label>
                 </ion-list-header>
-                <ion-progress-bar class="custom-bar-background" indicator="determinate" value="75"></ion-progress-bar>
+                <ion-progress-bar class="custom-bar-background" type="determinate" value="75"></ion-progress-bar>
 
                 <ion-list-header>
                     <ion-label>
@@ -105,8 +108,21 @@
                         Buffer
                     </ion-label>
                 </ion-list-header>
-                <ion-progress-bar color="secondary" indicator="buffer" value="20" buffer="40"></ion-progress-bar>
-                <ion-progress-bar color="tertiary" indicator="buffer" ></ion-progress-bar>
+                <ion-progress-bar color="secondary" type="buffer" value="20" buffer="40"></ion-progress-bar>
+
+                <ion-list-header>
+                    <ion-label>
+                        Buffer (reversed)
+                    </ion-label>
+                </ion-list-header>
+                <ion-progress-bar color="secondary" type="buffer" reversed="true" value="20" buffer="40"></ion-progress-bar>
+
+                <ion-list-header>
+                    <ion-label>
+                        Buffer (without value)
+                    </ion-label>
+                </ion-list-header>
+                <ion-progress-bar color="tertiary" type="buffer"></ion-progress-bar>
 
             </ion-list>
 
