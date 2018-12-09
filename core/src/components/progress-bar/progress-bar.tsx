@@ -36,7 +36,7 @@ export class ProgressBar implements ComponentInterface {
   @Prop() value = 0;
 
   /**
-   * shows circle points if buffer is smaller 1 - Value of the buffer from [0, ..., 1] 
+   * shows circle points if buffer and value are smaller than 1 - Value of the buffer from [0, ..., 1]
    */
   @Prop() buffer = 1;
 
@@ -50,7 +50,7 @@ export class ProgressBar implements ComponentInterface {
   hostData() {
     const { color, type, reversed, value } = this;
     return {
-      'role': "progressbar",
+      'role': 'progressbar',
       'aria-valuenow': type === 'determinate' ? value : null,
       'aria-valuemin': 0,
       'aria-valuemax': 1,
