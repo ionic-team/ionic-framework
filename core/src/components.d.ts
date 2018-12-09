@@ -3183,7 +3183,7 @@ export namespace Components {
 
   interface IonProgressBar {
     /**
-    * Only on type `"buffer"`: The width of the buffer in percent - 0 ... 100
+    * Only on type `"buffer"`: Value of the buffer from [0, ..., 1]
     */
     'buffer': number;
     /**
@@ -3203,13 +3203,13 @@ export namespace Components {
     */
     'type': 'determinate' | 'indeterminate' | 'buffer';
     /**
-    * Only on type `"determinate"` and  `"buffer"`: The width of the progress bar in percent - 0 ... 100
+    * Only on type `"determinate"` and  `"buffer"`: Value of the progress bar from [0, ..., 1]
     */
     'value': number;
   }
   interface IonProgressBarAttributes extends StencilHTMLAttributes {
     /**
-    * Only on type `"buffer"`: The width of the buffer in percent - 0 ... 100
+    * Only on type `"buffer"`: Value of the buffer from [0, ..., 1]
     */
     'buffer'?: number;
     /**
@@ -3229,7 +3229,7 @@ export namespace Components {
     */
     'type'?: 'determinate' | 'indeterminate' | 'buffer';
     /**
-    * Only on type `"determinate"` and  `"buffer"`: The width of the progress bar in percent - 0 ... 100
+    * Only on type `"determinate"` and  `"buffer"`: Value of the progress bar from [0, ..., 1]
     */
     'value'?: number;
   }

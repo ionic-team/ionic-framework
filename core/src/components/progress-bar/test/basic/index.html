@@ -59,35 +59,35 @@
             Determinate
           </ion-label>
         </ion-list-header>
-        <ion-progress-bar value="50"></ion-progress-bar>
+        <ion-progress-bar value="0.50"></ion-progress-bar>
 
         <ion-list-header>
           <ion-label>
             Determinate (reversed)
           </ion-label>
         </ion-list-header>
-        <ion-progress-bar type="determinate" reversed="true" value="50"></ion-progress-bar>
+        <ion-progress-bar type="determinate" reversed="true" value="0.50"></ion-progress-bar>
 
         <ion-list-header>
           <ion-label>
             Determinate (Primary color)
           </ion-label>
         </ion-list-header>
-        <ion-progress-bar color="primary" value="50"></ion-progress-bar>
+        <ion-progress-bar color="primary" value="0.50"></ion-progress-bar>
 
         <ion-list-header>
           <ion-label>
             Determinate (with no bar background)
           </ion-label>
         </ion-list-header>
-        <ion-progress-bar class="no-bar-background" type="determinate" value="75"></ion-progress-bar>
+        <ion-progress-bar class="no-bar-background" type="determinate" value="0.75"></ion-progress-bar>
 
         <ion-list-header>
           <ion-label>
             Determinate (with a custom background)
           </ion-label>
         </ion-list-header>
-        <ion-progress-bar class="custom-bar-background" type="determinate" value="75"></ion-progress-bar>
+        <ion-progress-bar class="custom-bar-background" type="determinate" value="0.75"></ion-progress-bar>
 
         <ion-list-header>
           <ion-label>
@@ -108,14 +108,14 @@
             Buffer
           </ion-label>
         </ion-list-header>
-        <ion-progress-bar color="secondary" type="buffer" value="20" buffer="40"></ion-progress-bar>
+        <ion-progress-bar color="secondary" type="buffer" value="0.20" buffer="40"></ion-progress-bar>
 
         <ion-list-header>
           <ion-label>
             Buffer (reversed)
           </ion-label>
         </ion-list-header>
-        <ion-progress-bar color="secondary" type="buffer" reversed="true" value="20" buffer="40"></ion-progress-bar>
+        <ion-progress-bar color="secondary" type="buffer" reversed="true" value="0.20" buffer="40"></ion-progress-bar>
 
         <ion-list-header>
           <ion-label>
@@ -135,7 +135,7 @@
     const progressBar = document.getElementById('progressBar');
 
     progressValue.addEventListener('ionChange', function (ev) {
-      progressBar.value = ev.detail.value;
+      progressBar.value = ev.detail.value / 100;
     });
 
   </script>

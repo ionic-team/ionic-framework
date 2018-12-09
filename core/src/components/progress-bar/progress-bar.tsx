@@ -32,12 +32,12 @@ export class ProgressBar implements ComponentInterface {
   @Prop() reversed = false;
 
   /**
-   * Only on type `"determinate"` and  `"buffer"`: The width of the progress bar in percent - [0, ..., 100]
+   * Only on type `"determinate"` and  `"buffer"`: Value of the progress bar from [0, ..., 1]
    */
   @Prop() value = 0;
 
   /**
-   * Only on type `"buffer"`: The width of the buffer in percent - [0, ..., 100]
+   * Only on type `"buffer"`: Value of the buffer from [0, ..., 1]
    */
   @Prop() buffer = 0;
 
@@ -67,14 +67,14 @@ export class ProgressBar implements ComponentInterface {
         <div class="indeterminate-bar-secondary"><span class="progress-indeterminate"></span></div>
       );
     } else {
-      const percent = clamp(0, this.value, 100) / 100;
+      const value = clamp(0, this.value, 1);
       content.push(
-        <div class="progress" style={{ transform: `scaleX(${percent})` }}></div>
+        <div class="progress" style={{ transform: `scaleX(${value})` }}></div>
       );
     }
 
     if (this.type === 'buffer') {
-      const buffer = clamp(0, this.buffer, 100) / 100;
+      const buffer = clamp(0, this.buffer, 1);
       content.push(
         <div class="buffer-circles"></div>,
         <div class="buffer-bar" style={{ transform: `scaleX(${buffer})` }}></div>,

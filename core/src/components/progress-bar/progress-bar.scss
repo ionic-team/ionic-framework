@@ -24,9 +24,9 @@
 }
 
 :host(.ion-color) {
-  --buffer-background: rgba(#{current-color(base-rgb)}, .30);
+  --buffer-background: #{current-color(base, .30)};
   --buffer-color: #{current-color(base)};
-  background: rgba(#{current-color(base-rgb)}, .12);
+  background: #{current-color(base, .12)};
   color: #{current-color(base)};
 }
 
