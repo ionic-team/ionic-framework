@@ -3,12 +3,19 @@
 // Progress bar
 // --------------------------------------------------
 :host {
+  // TODO: Check name of CSS variables
+  // --progress-color and --progress-background can also be shortened to --color and --background
+  // Both variables aren't needed, but good for the documentation
   /**
+  * @prop --progress-color: Color of the progress bar
+  * @prop --progress-background: Background of the progress bar
   * @prop --buffer-background: Background of the buffer bar
   * @prop --buffer-color: Color of the buffer circles
   * @prop --buffer-size: Size of the buffer circles
   * @prop --buffer-animation-duration: Speed of the buffer circles
   */
+  --progress-color: currentColor;
+  --progress-background: rgba(0, 0, 0, .12);
   --buffer-background: rgba(0, 0, 0, .30);
   --buffer-color: currentColor;
   --buffer-size: 10px;
@@ -16,8 +23,9 @@
   display: block;
 
   width: 100%;
+  background: var(--progress-background);
 
-  background: rgba(0, 0, 0, .12);
+  color: var(--progress-color);
 
   contain: strict;
   overflow: hidden;
@@ -87,6 +95,9 @@
 }
 
 .buffer-bar {
+  // TODO: This should be made better
+  // It's currently there because buffer-background has an alpha
+  // Otherwise the buffer circles would be seen through
   background: var(--ion-background-color, #fff);
 
   z-index: -1;
