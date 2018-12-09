@@ -7,12 +7,12 @@
   * @prop --buffer-background: Background of the buffer bar
   * @prop --buffer-color: Color of the buffer circles
   * @prop --buffer-size: Size of the buffer circles
-  * @prop --buffer-speed: Speed of the buffer circles
+  * @prop --buffer-animation-duration: Speed of the buffer circles
   */
   --buffer-background: rgba(0, 0, 0, .30);
   --buffer-color: currentColor;
   --buffer-size: 10px;
-  --buffer-speed: 450ms;
+  --buffer-animation-duration: 450ms;
   display: block;
 
   width: 100%;
@@ -103,7 +103,7 @@
   background-size: var(--buffer-size) var(--buffer-size);
 
   z-index: -1;
-  animation: buffering var(--buffer-speed) infinite linear;
+  animation: buffering var(--buffer-animation-duration) infinite linear;
 }
 
 // If reversed is set to true, the animation will be reversed
