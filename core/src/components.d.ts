@@ -3183,7 +3183,7 @@ export namespace Components {
 
   interface IonProgressBar {
     /**
-    * The width of the buffer in percent - 0 ... 100
+    * Only on type `"buffer"`: The width of the buffer in percent - 0 ... 100
     */
     'buffer': number;
     /**
@@ -3191,21 +3191,25 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * Sets the indicator style of the progress bar Options are determinate (no animation), reversed (reversed determinate), indeterminate (animate from left to right) and query (animate from right to left)
-    */
-    'indicator': 'reversed' | 'determinate' | 'indeterminate' | 'query' | 'buffer';
-    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
-    * The width of the progress bar in percent - 0 ... 100
+    * Reverse the progress bar
+    */
+    'reversed': boolean;
+    /**
+    * Style of the progress bar Options are `"determinate"` (no animation), `"indeterminate"` (animate from left to right), and `"buffer"` (shows circle points)
+    */
+    'type': 'determinate' | 'indeterminate' | 'buffer';
+    /**
+    * Only on type `"determinate"` and  `"buffer"`: The width of the progress bar in percent - 0 ... 100
     */
     'value': number;
   }
   interface IonProgressBarAttributes extends StencilHTMLAttributes {
     /**
-    * The width of the buffer in percent - 0 ... 100
+    * Only on type `"buffer"`: The width of the buffer in percent - 0 ... 100
     */
     'buffer'?: number;
     /**
@@ -3213,15 +3217,19 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * Sets the indicator style of the progress bar Options are determinate (no animation), reversed (reversed determinate), indeterminate (animate from left to right) and query (animate from right to left)
-    */
-    'indicator'?: 'reversed' | 'determinate' | 'indeterminate' | 'query' | 'buffer';
-    /**
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
-    * The width of the progress bar in percent - 0 ... 100
+    * Reverse the progress bar
+    */
+    'reversed'?: boolean;
+    /**
+    * Style of the progress bar Options are `"determinate"` (no animation), `"indeterminate"` (animate from left to right), and `"buffer"` (shows circle points)
+    */
+    'type'?: 'determinate' | 'indeterminate' | 'buffer';
+    /**
+    * Only on type `"determinate"` and  `"buffer"`: The width of the progress bar in percent - 0 ... 100
     */
     'value'?: number;
   }

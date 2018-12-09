@@ -745,10 +745,12 @@ ion-popover,event,ionPopoverWillPresent,void,true
 ion-progress-bar
 ion-progress-bar,prop,buffer,number,0,false
 ion-progress-bar,prop,color,string | undefined,undefined,false
-ion-progress-bar,prop,indicator,"buffer" | "determinate" | "indeterminate" | "query" | "reversed",'determinate',false
 ion-progress-bar,prop,mode,"ios" | "md",undefined,false
+ion-progress-bar,prop,reversed,boolean,false,false
+ion-progress-bar,prop,type,"buffer" | "determinate" | "indeterminate",'determinate',false
 ion-progress-bar,prop,value,number,0,false
 ion-progress-bar,css-prop,--buffer-background
+ion-progress-bar,css-prop,--buffer-color
 ion-progress-bar,css-prop,--buffer-size
 ion-progress-bar,css-prop,--buffer-speed
 

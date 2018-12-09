@@ -21,24 +21,25 @@ A progress bar visualize the progression of an operation.
 <ion-progress-bar color="primary" value="50"></ion-progress-bar>
 <ion-progress-bar color="secondary" value="50"></ion-progress-bar>
 
-<!-- Other indicators -->
-<ion-progress-bar indicator="reversed"></ion-progress-bar>
-<ion-progress-bar indicator="indeterminate"></ion-progress-bar>
-<ion-progress-bar indicator="query"></ion-progress-bar>
-<ion-progress-bar indicator="buffer" ></ion-progress-bar>
+<!-- Other types -->
+<ion-progress-bar type="reversed"></ion-progress-bar>
+<ion-progress-bar type="indeterminate"></ion-progress-bar>
+<ion-progress-bar type="query"></ion-progress-bar>
+<ion-progress-bar type="buffer" ></ion-progress-bar>
 ```
 
 
 
 ## Properties
 
-| Property    | Attribute   | Description                                                                                                                                                                                                                                                            | Type                                                                    | Default         |
-| ----------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | --------------- |
-| `buffer`    | `buffer`    | The width of the buffer in percent - 0 ... 100                                                                                                                                                                                                                         | `number`                                                                | `0`             |
-| `color`     | `color`     | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`                                                   | `undefined`     |
-| `indicator` | `indicator` | Sets the indicator style of the progress bar Options are determinate (no animation), reversed (reversed determinate), indeterminate (animate from left to right) and query (animate from right to left)                                                                | `"buffer" \| "determinate" \| "indeterminate" \| "query" \| "reversed"` | `'determinate'` |
-| `mode`      | `mode`      | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                                                         | `undefined`     |
-| `value`     | `value`     | The width of the progress bar in percent - 0 ... 100                                                                                                                                                                                                                   | `number`                                                                | `0`             |
+| Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                                           | Default         |
+| ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- | --------------- |
+| `buffer`   | `buffer`   | Only on type `"buffer"`: The width of the buffer in percent - 0 ... 100                                                                                                                                                                                                | `number`                                       | `0`             |
+| `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`                          | `undefined`     |
+| `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                                | `undefined`     |
+| `reversed` | `reversed` | Reverse the progress bar                                                                                                                                                                                                                                               | `boolean`                                      | `false`         |
+| `type`     | `type`     | Style of the progress bar Options are `"determinate"` (no animation), `"indeterminate"` (animate from left to right), and `"buffer"` (shows circle points)                                                                                                             | `"buffer" \| "determinate" \| "indeterminate"` | `'determinate'` |
+| `value`    | `value`    | Only on type `"determinate"` and  `"buffer"`: The width of the progress bar in percent - 0 ... 100                                                                                                                                                                     | `number`                                       | `0`             |
 
 
 ## CSS Custom Properties
@@ -46,6 +47,7 @@ A progress bar visualize the progression of an operation.
 | Name                  | Description                  |
 | --------------------- | ---------------------------- |
 | `--buffer-background` | Background of the buffer bar |
+| `--buffer-color`      | Color of the buffer circles  |
 | `--buffer-size`       | Size of the buffer circles   |
 | `--buffer-speed`      | Speed of the buffer circles  |
 
