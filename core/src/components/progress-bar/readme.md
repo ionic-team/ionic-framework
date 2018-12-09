@@ -1,22 +1,20 @@
 # ion-progress-bar
 
-ion-progress-bar is a horizontal progress bar to visualize the progression of an operation and activity. You can choose between three types: ``determinate``, ``indeterminate`` and ``buffer``.
+ion-progress-bar is a horizontal progress bar to visualize the progression of an operation and activity. You can choose between two types: ``determinate`` and ``indeterminate``.
 
 ## Progress modes
 
-### determinate
+### determinate (default)
 
 If the percentage of an operation is known, you should use the determinate type. This is the default type and the progress is represented by the `value` property.
+
+A buffer shows circles as animation to indicate some activity. If the `buffer` property is smaller than 1 you can show the addditional buffering progress. 
 
 ### indeterminate
 
 If an operation is in progress and it's not necessary to indicate how long it will take.
 
 If you add `reversed="true"`, you receive a query which is used to indicate pre-loading.
-
-### buffer
-
-A buffer shows circles as animation to indicate some activity. Use the `value` property to show the completed progress and the `buffer` property to show the addditional buffering progress. 
 
 <!-- Auto Generated Below -->
 
@@ -37,9 +35,9 @@ A buffer shows circles as animation to indicate some activity. Use the `value` p
 <ion-progress-bar color="secondary" value="0.5"></ion-progress-bar>
 
 <!-- Other types -->
+<ion-progress-bar value="0.25" buffer="0.5"></ion-progress-bar>
 <ion-progress-bar type="indeterminate"></ion-progress-bar>
 <ion-progress-bar type="indeterminate" reversed="true"></ion-progress-bar>
-<ion-progress-bar type="buffer" ></ion-progress-bar>
 ```
 
 

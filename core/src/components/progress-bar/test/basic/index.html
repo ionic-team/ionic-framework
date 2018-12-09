@@ -10,11 +10,11 @@
   <script src="../../../../../dist/ionic.js"></script>
   <style>
     .custom-bar-background {
-      background: red;
+      --background: red;
     }
 
     .no-bar-background {
-      background: none;
+      --background: none;
     }
 
     ion-progress-bar {
@@ -122,7 +122,7 @@
             Buffer (without value)
           </ion-label>
         </ion-list-header>
-        <ion-progress-bar color="tertiary" type="buffer"></ion-progress-bar>
+        <ion-progress-bar color="tertiary" type="buffer" buffer="0"></ion-progress-bar>
 
       </ion-list>
 

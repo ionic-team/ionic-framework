@@ -22,9 +22,8 @@ export class ProgressBar implements ComponentInterface {
   /**
    * Style of the progress bar
    * Options are `"determinate"` (no animation), `"indeterminate"` (animate from left to right),
-   * and `"buffer"` (shows circle points)
    */
-  @Prop() type: 'determinate' | 'indeterminate' | 'buffer' = 'determinate';
+  @Prop() type: 'determinate' | 'indeterminate' = 'determinate';
 
   /**
    * Reverse the progress bar
@@ -32,14 +31,14 @@ export class ProgressBar implements ComponentInterface {
   @Prop() reversed = false;
 
   /**
-   * Only on type `"determinate"` and  `"buffer"`: Value of the progress bar from [0, ..., 1]
+   * Only on type `"determinate"`: Value of the progress bar from [0, ..., 1]
    */
   @Prop() value = 0;
 
   /**
-   * Only on type `"buffer"`: Value of the buffer from [0, ..., 1]
+   * shows circle points if buffer is smaller 1 - Value of the buffer from [0, ..., 1] 
    */
-  @Prop() buffer = 0;
+  @Prop() buffer = 1;
 
   /**
    * The color to use from your application's color palette.
@@ -60,26 +59,20 @@ export class ProgressBar implements ComponentInterface {
   }
 
   render() {
-    const content = [];
     if (this.type === 'indeterminate') {
-      content.push(
+      return [
         <div class="indeterminate-bar-primary"><span class="progress-indeterminate"></span></div>,
         <div class="indeterminate-bar-secondary"><span class="progress-indeterminate"></span></div>
-      );
-    } else {
-      const value = clamp(0, this.value, 1);
-      content.push(
-        <div class="progress" style={{ transform: `scaleX(${value})` }}></div>
-      );
+      ];
     }
 
-    if (this.type === 'buffer') {
-      const buffer = clamp(0, this.buffer, 1);
-      content.push(
-        <div class="buffer-circles"></div>,
-        <div class="buffer-bar" style={{ transform: `scaleX(${buffer})` }}></div>,
-      );
-    }
-    return content;
+    const value = clamp(0, this.value, 1);
+    const buffer = clamp(0, this.buffer, 1);
+
+    return [
+      <div class="progress" style={{ transform: `scaleX(${value})` }}></div>,
+      buffer !== 1 && <div class="buffer-circles"></div>,
+      <div class="progress-background-bar" style={{ transform: `scaleX(${buffer})` }}></div>,
+    ];
   }
 }

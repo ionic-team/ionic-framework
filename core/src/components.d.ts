@@ -3183,7 +3183,7 @@ export namespace Components {
 
   interface IonProgressBar {
     /**
-    * Only on type `"buffer"`: Value of the buffer from [0, ..., 1]
+    * shows circle points if buffer is smaller 1 - Value of the buffer from [0, ..., 1]
     */
     'buffer': number;
     /**
@@ -3199,17 +3199,17 @@ export namespace Components {
     */
     'reversed': boolean;
     /**
-    * Style of the progress bar Options are `"determinate"` (no animation), `"indeterminate"` (animate from left to right), and `"buffer"` (shows circle points)
+    * Style of the progress bar Options are `"determinate"` (no animation), `"indeterminate"` (animate from left to right),
     */
-    'type': 'determinate' | 'indeterminate' | 'buffer';
+    'type': 'determinate' | 'indeterminate';
     /**
-    * Only on type `"determinate"` and  `"buffer"`: Value of the progress bar from [0, ..., 1]
+    * Only on type `"determinate"`: Value of the progress bar from [0, ..., 1]
     */
     'value': number;
   }
   interface IonProgressBarAttributes extends StencilHTMLAttributes {
     /**
-    * Only on type `"buffer"`: Value of the buffer from [0, ..., 1]
+    * shows circle points if buffer is smaller 1 - Value of the buffer from [0, ..., 1]
     */
     'buffer'?: number;
     /**
@@ -3225,11 +3225,11 @@ export namespace Components {
     */
     'reversed'?: boolean;
     /**
-    * Style of the progress bar Options are `"determinate"` (no animation), `"indeterminate"` (animate from left to right), and `"buffer"` (shows circle points)
+    * Style of the progress bar Options are `"determinate"` (no animation), `"indeterminate"` (animate from left to right),
     */
-    'type'?: 'determinate' | 'indeterminate' | 'buffer';
+    'type'?: 'determinate' | 'indeterminate';
     /**
-    * Only on type `"determinate"` and  `"buffer"`: Value of the progress bar from [0, ..., 1]
+    * Only on type `"determinate"`: Value of the progress bar from [0, ..., 1]
     */
     'value'?: number;
   }
