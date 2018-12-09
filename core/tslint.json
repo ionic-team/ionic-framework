@@ -18,7 +18,6 @@
     "no-floating-promises": false,
     "no-invalid-template-strings": true,
     "ban-export-const-enum": true,
-    "linebreak-style": false,
 
     "jsx-key": false,
     "jsx-self-close": false,
