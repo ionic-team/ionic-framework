@@ -1,7 +1,22 @@
 # ion-progress-bar
 
-A progress bar visualize the progression of an operation.
+ion-progress-bar is a horizontal progress bar to visualize the progression of an operation and activity. You can choose between three types: ``determinate``, ``indeterminate`` and ``buffer``.
 
+## Progress modes
+
+### determinate
+
+If the percentage of an operation is known, you should use the determinate type. This is the default type and the progress is represented by the `value` property.
+
+### indeterminate
+
+If an operation is in progress and it's not necessary to indicate how long it will take.
+
+If you add `reversed="true"`, you receive a query which is used to indicate pre-loading.
+
+### buffer
+
+A buffer shows circles as animation to indicate some activity. Use the `value` property to show the completed progress and the `buffer` property to show the addditional buffering progress. 
 
 <!-- Auto Generated Below -->
 
@@ -15,16 +30,15 @@ A progress bar visualize the progression of an operation.
 <ion-progress-bar></ion-progress-bar>
 
 <!-- Default Progressbar with 50 percent -->
-<ion-progress-bar value="50"></ion-progress-bar>
+<ion-progress-bar value="0.5"></ion-progress-bar>
 
 <!-- Colorize Progressbar -->
-<ion-progress-bar color="primary" value="50"></ion-progress-bar>
-<ion-progress-bar color="secondary" value="50"></ion-progress-bar>
+<ion-progress-bar color="primary" value="0.5"></ion-progress-bar>
+<ion-progress-bar color="secondary" value="0.5"></ion-progress-bar>
 
 <!-- Other types -->
-<ion-progress-bar type="reversed"></ion-progress-bar>
 <ion-progress-bar type="indeterminate"></ion-progress-bar>
-<ion-progress-bar type="query"></ion-progress-bar>
+<ion-progress-bar type="indeterminate" reversed="true"></ion-progress-bar>
 <ion-progress-bar type="buffer" ></ion-progress-bar>
 ```
 
@@ -34,22 +48,24 @@ A progress bar visualize the progression of an operation.
 
 | Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                                           | Default         |
 | ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- | --------------- |
-| `buffer`   | `buffer`   | Only on type `"buffer"`: The width of the buffer in percent - 0 ... 100                                                                                                                                                                                                | `number`                                       | `0`             |
+| `buffer`   | `buffer`   | Only on type `"buffer"`: Value of the buffer from [0, ..., 1]                                                                                                                                                                                                          | `number`                                       | `0`             |
 | `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`                          | `undefined`     |
 | `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                                | `undefined`     |
 | `reversed` | `reversed` | Reverse the progress bar                                                                                                                                                                                                                                               | `boolean`                                      | `false`         |
 | `type`     | `type`     | Style of the progress bar Options are `"determinate"` (no animation), `"indeterminate"` (animate from left to right), and `"buffer"` (shows circle points)                                                                                                             | `"buffer" \| "determinate" \| "indeterminate"` | `'determinate'` |
-| `value`    | `value`    | Only on type `"determinate"` and  `"buffer"`: The width of the progress bar in percent - 0 ... 100                                                                                                                                                                     | `number`                                       | `0`             |
+| `value`    | `value`    | Only on type `"determinate"` and  `"buffer"`: Value of the progress bar from [0, ..., 1]                                                                                                                                                                               | `number`                                       | `0`             |
 
 
 ## CSS Custom Properties
 
-| Name                  | Description                  |
-| --------------------- | ---------------------------- |
-| `--buffer-background` | Background of the buffer bar |
-| `--buffer-color`      | Color of the buffer circles  |
-| `--buffer-size`       | Size of the buffer circles   |
-| `--buffer-speed`      | Speed of the buffer circles  |
+| Name                          | Description                    |
+| ----------------------------- | ------------------------------ |
+| `--buffer-animation-duration` | Speed of the buffer circles    |
+| `--buffer-background`         | Background of the buffer bar   |
+| `--buffer-color`              | Color of the buffer circles    |
+| `--buffer-size`               | Size of the buffer circles     |
+| `--progress-background`       | Background of the progress bar |
+| `--progress-color`            | Color of the progress bar      |
 
 
 ----------------------------------------------
