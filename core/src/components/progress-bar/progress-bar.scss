@@ -4,42 +4,35 @@
 // --------------------------------------------------
 // Host has no background by default - this will be added to the progress-background-bar
 :host {
-  // TODO: Check name of CSS variables
-  // --progress-bar-color can also be shortened to --color (like --background) 
-  // or vice versa: --background to --progress-bar-backkground
   /**
-  * @prop --background: Background of the progress bar
-  * @prop --progress-bar-color: Color of the progress bar
-  * @prop --buffer-color: Color of the buffer circles
-  * @prop --buffer-size: Size of the buffer circles
-  * @prop --buffer-animation-duration: Speed of the buffer circles
+  * @prop --progress-bar-background: Progress bar background
+  * @prop --buffer-bar-background: Buffer Bar Background
+  * @prop --buffer-circle-color: Color of the buffer circles
   */
-  --background: rgba(0, 0, 0, .2);
-  --progress-bar-color: currentColor;
-  --buffer-color: currentColor;
-  --buffer-size: 10px;
-  --buffer-animation-duration: 450ms;
+  --progress-bar-background: #{ion-color(primary, base)};
+  --buffer-bar-background: #{ion-color(primary, base, 0.2)};
+  --buffer-circle-color: var(--progress-bar-background);
   display: block;
 
   position: relative;
 
   width: 100%;
 
-  color: var(--progress-bar-color);
+  color: var(--progress-bar-background);
 
   contain: strict;
   overflow: hidden;
 }
 
 :host(.ion-color) {
-  --buffer-color: #{current-color(base)};
-  --background: #{current-color(base, .2)};
-  color: #{current-color(base)};
+  --progress-bar-background: #{current-color(base)};
+  --buffer-circle-color: #{current-color(base)};
+  --buffer-bar-background: #{current-color(base, 0.2)};
 }
 
 // indeterminate has no progress-background-bar, so it will be added to the host
 :host(.progress-bar-indeterminate) {
-  background: var(--background);
+  background: var(--buffer-bar-background);
 }
 
 // Set the bars to full width and height
@@ -70,19 +63,19 @@
 // --------------------------------------------------
 .progress,
 .progress-indeterminate {
-  background: var(--progress-bar-color);
+  background: var(--progress-bar-background);
 }
 
 .progress-background-bar {
 
-  // It's currently here because --background has an alpha
+  // It's currently here because --buffer-bar-background has an alpha
   // Otherwise the buffer circles would be seen through
   background: #fff;
 
   z-index: -1; // Make it behind the progress
 
   &:before {
-    background: var(--background);
+    background: var(--buffer-bar-background);
 
     content: "";
   }
@@ -111,11 +104,11 @@
 // Buffer style
 // --------------------------------------------------
 .buffer-circles {
-  background: radial-gradient(ellipse at center, var(--buffer-color) 0%, var(--buffer-color) 30%, transparent 30%) repeat-x 5px center;
-  background-size: var(--buffer-size) var(--buffer-size);
+  background: radial-gradient(ellipse at center, var(--buffer-circle-color) 0%, var(--buffer-circle-color) 30%, transparent 30%) repeat-x 5px center;
+  background-size: 10px 10px;
 
   z-index: -1;
-  animation: buffering var(--buffer-animation-duration) infinite linear;
+  animation: buffering 450ms infinite linear;
 }
 
 // If reversed is set to true, the animation will be reversed
