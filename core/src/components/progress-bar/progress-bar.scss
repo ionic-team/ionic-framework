@@ -13,7 +13,6 @@
     display: block;
 
     width: 100%;
-    height: 4px;
 
     background: rgba(0, 0, 0, .12);
 
@@ -28,117 +27,92 @@
     color: #{current-color(base)};
 }
 
-// Default progress bar
-.progress {
-    @include transform-origin(start, top);
+// Set the bars to full width and height
+// QUESTION: Can this be simplified?
+.progress,
+.progress-indeterminate,
+.indeterminate-bar-primary,
+.indeterminate-bar-secondary,
+.buffer-circles,
+.buffer-bar,
+.buffer-bar:before {
     position: absolute;
 
     width: 100%;
     height: 100%;
+}
 
+// Determinate progress bar
+// --------------------------------------------------
+.progress,
+.buffer-bar {
+    @include transform-origin(start, top);
     transition: transform 150ms linear;
 }
 
 // Progress bar background
-:host(.buffer),
-:host(.reversed),
-:host(.determinate) {
-    .progress {
-        background: currentColor;
+// --------------------------------------------------
+.progress,
+.progress-indeterminate {
+    background: currentColor;
+}
+
+// MD based animation on indeterminate type
+// --------------------------------------------------
+.indeterminate-bar-primary {
+    @include position(0, 0, 0, -145.166611%);
+    animation: primary-indeterminate-translate 2s infinite linear;
+    .progress-indeterminate {
+        animation: primary-indeterminate-scale 2s infinite linear;
     }
 }
 
-// On reversed the bar starts on the right
-:host(.reversed) {
-    .progress {
+.indeterminate-bar-secondary {
+    @include position(0, 0, 0, -54.888891%);
+    animation: secondary-indeterminate-translate 2s infinite linear;
+    .progress-indeterminate {
+        animation: secondary-indeterminate-scale 2s infinite linear;
+    }
+}
+
+// Buffer style
+// --------------------------------------------------
+:host(.progress-bar-buffer) {
+    background: none;
+}
+
+.buffer-bar {
+    background: var(--ion-background-color, #fff);
+
+    z-index: -1;
+    &:before {
+        background: var(--buffer-background);
+
+        content: "";
+    }
+}
+
+.buffer-circles {
+    background: radial-gradient(ellipse at center, var(--buffer-color) 0%, var(--buffer-color) 30%, transparent 30%) repeat-x 5px center;
+    background-size: var(--buffer-size) var(--buffer-size);
+
+    z-index: -1;
+    animation: buffering var(--buffer-speed) infinite linear;
+}
+
+// If reversed is set to true, the animation will be reversed
+// and the bars starting at the top right
+// --------------------------------------------------
+:host(.progress-bar-reversed) {
+    .progress,
+    .buffer-bar {
         @include transform-origin(end, top);
     }
-}
-
-// For indeterminate and query seperate bars will be needed
-// to add the MD based animation
-:host(.indeterminate),
-:host(.query) {
-    .primary-bar,
-    .secondary-bar {
-        position: absolute;
-
-        width: 100%;
-        height: 100%;
-    }
-    .bar-inner {
-        display: inline-block;
-        position: absolute;
-
-        width: 100%;
-        height: 100%;
-
-        background: currentColor;
-    }
-    .primary-bar {
-        @include position(0, 0, 0, -145.166611%);
-
-        transform: scaleX(0);
-        animation: primary-indeterminate-translate 2s infinite linear;
-        >.bar-inner {
-            animation: primary-indeterminate-scale 2s infinite linear;
-        }
-    }
-    .secondary-bar {
-        @include position(0, 0, 0, -54.888891%);
-
-        animation: secondary-indeterminate-translate 2s infinite linear;
-
-        visibility: visible;
-        >.bar-inner {
-            animation: secondary-indeterminate-scale 2s infinite linear;
-        }
-    }
-}
-
-:host(.query) {
-    .secondary-bar,
-    .primary-bar {
+    .buffer-circles,
+    .indeterminate-bar-primary,
+    .indeterminate-bar-secondary,
+    .progress-indeterminate {
         animation-direction: reverse;
-        >.bar-inner {
-            animation-direction: reverse;
-        }
-    }
-}
-
-:host(.buffer) {
-    background: none;
-    .buffer-background {
-        @include transform-origin(start, top);
-        position: absolute;
-
-        width: 100%;
-        height: 100%;
-
-        background-color: var(--buffer-background);
-    }
-    .buffer-bar {
-        @include transform-origin(start, top);
-        position: absolute;
-
-        width: 100%;
-        height: 100%;
-
-        background-color: var(--ion-background-color, #fff);
-
-        z-index: -1;
-    }
-    .buffer-circles {
-        position: absolute;
-
-        width: 100%;
-        height: 100%;
-
-        background: radial-gradient(ellipse at center, var(--buffer-color) 0%, var(--buffer-color) 30%, transparent 30%) repeat-x 5px center;
-        background-size: var(--buffer-size) var(--buffer-size);
-
-        z-index: -1;
-        animation: buffering var(--buffer-speed) infinite linear;
     }
 }
 
