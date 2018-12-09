@@ -51,6 +51,7 @@
 .progress-background-bar,
 .progress-background-bar:before,
 .buffer-circles {
+  @include position(0, 0, 0, 0);
   position: absolute;
 
   width: 100%;
