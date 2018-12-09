@@ -1,16 +1,17 @@
-import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-progress-bar',
-  styleUrl: 'progress-bar.scss',
+  styleUrls: {
+    ios: 'progress-bar.ios.scss',
+    md: 'progress-bar.md.scss'
+  },
   shadow: true
 })
 export class ProgressBar implements ComponentInterface {
-
-  @Element() el!: HTMLElement;
 
   /**
    * The mode determines which platform styles to use.
@@ -18,18 +19,24 @@ export class ProgressBar implements ComponentInterface {
   @Prop() mode!: Mode;
 
   /**
-   * Sets the indicator style of the progress bar
-   * Options are determinate (no animation), reversed (reversed determinate), indeterminate (animate from left to right) and query (animate from right to left)
+   * Style of the progress bar
+   * Options are `"determinate"` (no animation), `"indeterminate"` (animate from left to right),
+   * and `"buffer"` (shows circle points)
    */
-  @Prop() indicator: 'reversed' | 'determinate' | 'indeterminate' | 'query' | 'buffer' = 'determinate';
+  @Prop() type: 'determinate' | 'indeterminate' | 'buffer' = 'determinate';
 
   /**
-   * The width of the progress bar in percent - 0 ... 100
+   * Reverse the progress bar
+   */
+  @Prop() reversed = false;
+
+  /**
+   * Only on type `"determinate"` and  `"buffer"`: The width of the progress bar in percent - 0 ... 100
    */
   @Prop() value = 0;
 
   /**
-   * The width of the buffer in percent - 0 ... 100
+   * Only on type `"buffer"`: The width of the buffer in percent - 0 ... 100
    */
   @Prop() buffer = 0;
 
@@ -41,22 +48,22 @@ export class ProgressBar implements ComponentInterface {
   @Prop() color?: Color;
 
   hostData() {
+    const { color, type, reversed } = this;
     return {
       class: {
-        ...createColorClasses(this.color),
-        [this.indicator]: true,
+        ...createColorClasses(color),
+        [`progress-bar-${type}`]: true,
+        'progress-bar-reversed': reversed,
       }
     };
   }
 
   render() {
     const content = [];
-    if (this.indicator === 'indeterminate' || this.indicator === 'query') {
+    if (this.type === 'indeterminate') {
       content.push(
-        <div class="progress">
-          <div class="primary-bar"><span class="bar-inner"></span></div>
-          <div class="secondary-bar"><span class="bar-inner"></span></div>
-        </div>,
+        <div class="indeterminate-bar-primary"><span class="progress-indeterminate"></span></div>,
+        <div class="indeterminate-bar-secondary"><span class="progress-indeterminate"></span></div>
       );
     } else {
       const percent = this.value / 100;
@@ -65,12 +72,11 @@ export class ProgressBar implements ComponentInterface {
       );
     }
 
-    if (this.indicator === 'buffer') {
+    if (this.type === 'buffer') {
       const buffer = this.buffer / 100;
       content.push(
         <div class="buffer-circles"></div>,
         <div class="buffer-bar" style={{ transform: `scaleX(${buffer})` }}></div>,
-        <div class="buffer-background" style={{ transform: `scaleX(${buffer})` }}></div>
       );
     }
     return content;
