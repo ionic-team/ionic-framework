@@ -21,6 +21,8 @@
   --buffer-animation-duration: 450ms;
   display: block;
 
+  position: relative;
+
   width: 100%;
 
   color: var(--progress-bar-color);
@@ -75,6 +77,7 @@
   // It's currently here because --background has an alpha
   // Otherwise the buffer circles would be seen through
   background: #fff;
+
   z-index: -1; // Make it behind the progress
 
   &:before {
