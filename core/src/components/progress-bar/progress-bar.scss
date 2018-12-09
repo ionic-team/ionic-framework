@@ -4,10 +4,12 @@
 :host {
     /**
      * @prop --buffer-background: Background of the buffer bar
+     * @prop --buffer-color: Color of the buffer circles
      * @prop --buffer-size: Size of the buffer circles
      * @prop --buffer-speed: Speed of the buffer circles
      */
     --buffer-background: rgba(0, 0, 0, .30);
+    --buffer-color: currentColor;
     --buffer-size: 10px;
     --buffer-speed: 450ms;
     display: block;
