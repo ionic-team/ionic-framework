@@ -48,10 +48,10 @@ export class ProgressBar implements ComponentInterface {
   @Prop() color?: Color;
 
   hostData() {
-    const { color, type, reversed } = this;
+    const { color, type, reversed, value } = this;
     return {
       'role': "progressbar",
-      'aria-valuenow': this.type === 'determinate' ? this.value : null,
+      'aria-valuenow': type === 'determinate' ? value : null,
       'aria-valuemin': 0,
       'aria-valuemax': 1,
       class: {
