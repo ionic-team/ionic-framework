@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
+import { clamp } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -31,12 +32,12 @@ export class ProgressBar implements ComponentInterface {
   @Prop() reversed = false;
 
   /**
-   * Only on type `"determinate"` and  `"buffer"`: The width of the progress bar in percent - 0 ... 100
+   * Only on type `"determinate"` and  `"buffer"`: The width of the progress bar in percent - [0, ..., 100]
    */
   @Prop() value = 0;
 
   /**
-   * Only on type `"buffer"`: The width of the buffer in percent - 0 ... 100
+   * Only on type `"buffer"`: The width of the buffer in percent - [0, ..., 100]
    */
   @Prop() buffer = 0;
 
@@ -66,14 +67,14 @@ export class ProgressBar implements ComponentInterface {
         <div class="indeterminate-bar-secondary"><span class="progress-indeterminate"></span></div>
       );
     } else {
-      const percent = this.value / 100;
+      const percent = clamp(0, this.value, 100) / 100;
       content.push(
         <div class="progress" style={{ transform: `scaleX(${percent})` }}></div>
       );
     }
 
     if (this.type === 'buffer') {
-      const buffer = this.buffer / 100;
+      const buffer = clamp(0, this.buffer, 100) / 100;
       content.push(
         <div class="buffer-circles"></div>,
         <div class="buffer-bar" style={{ transform: `scaleX(${buffer})` }}></div>,
