@@ -106,7 +106,7 @@
   background: radial-gradient(ellipse at center, var(--buffer-background) 0%, var(--buffer-background) 30%, transparent 30%) repeat-x 5px center;
   background-size: 10px 10px;
 
-  z-index: -1;
+  z-index: 0;
   animation: buffering 450ms infinite linear;
 }
 
