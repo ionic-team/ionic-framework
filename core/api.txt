@@ -1018,6 +1018,7 @@ ion-spinner,prop,paused,boolean,false,false
 ion-spinner,css-prop,--color
 
 ion-split-pane
+ion-split-pane,prop,contentId,string | undefined,undefined,false
 ion-split-pane,prop,disabled,boolean,false,false
 ion-split-pane,prop,when,boolean | string,QUERY['lg'],false
 ion-split-pane,event,ionChange,{visible: boolean},false

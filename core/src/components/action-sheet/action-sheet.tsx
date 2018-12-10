@@ -249,7 +249,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
           {cancelButton &&
             <div class="action-sheet-group action-sheet-group-cancel">
               <button
-                ion-activatable
                 type="button"
                 class={buttonClass(cancelButton)}
                 onClick={() => this.buttonClick(cancelButton)}
@@ -275,6 +274,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 function buttonClass(button: ActionSheetButton): CssClassMap {
   return {
     'action-sheet-button': true,
+    'ion-activatable': true,
     [`action-sheet-${button.role}`]: button.role !== undefined,
     ...getClassMap(button.cssClass),
   };
