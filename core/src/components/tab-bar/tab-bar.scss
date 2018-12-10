@@ -33,7 +33,8 @@
   box-sizing: content-box !important;
 }
 
-:host(.ion-color) {
+:host(.ion-color),
+:host(.ion-color) ::slotted(ion-tab-button) {
   background: #{current-color(base)};
   color: #{current-color(contrast, .7)};
 }
