@@ -32,6 +32,7 @@ export const config: Config = {
     { components: ['ion-nav', 'ion-nav-pop', 'ion-nav-push', 'ion-nav-set-root'] },
     { components: ['ion-img'] },
     { components: ['ion-popover', 'ion-popover-controller'] },
+    { components: ['ion-progress-bar'] },
     { components: ['ion-radio', 'ion-radio-group'] },
     { components: ['ion-range'] },
     { components: ['ion-refresher', 'ion-refresher-content'] },
