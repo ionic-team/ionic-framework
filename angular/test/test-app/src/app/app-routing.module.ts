@@ -47,6 +47,10 @@ const routes: Routes = [
             pathMatch: 'full'
           }
         ]
+      },
+      {
+        path: 'lazy',
+        loadChildren: './tabs-lazy/tabs-lazy.module#TabsLazyModule'
       }
     ]
   }
