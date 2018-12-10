@@ -15,10 +15,10 @@ export class RouterLinkDelegate {
   @Input() routerDirection: NavDirection = 'forward';
 
   constructor(
-    private router: Router,
     private locationStrategy: LocationStrategy,
     private navCtrl: NavController,
     private elementRef: ElementRef,
+    private router: Router,
     @Optional() private routerLink?: RouterLink,
   ) { }
 
