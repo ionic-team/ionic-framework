@@ -45,7 +45,10 @@
   --margin-bottom: calc((#{$fab-size} - var(--height)) / 2);
   --transition: background-color, opacity 100ms linear;
   --ripple-color: currentColor;
-
+  --border-radius: #{$fab-border-radius};
+  --border-width: 0;
+  --border-style: none;
+  --border-color: initial;
   display: block;
 
   font-size: 14px;
@@ -76,7 +79,7 @@
 }
 
 .button-native {
-  @include border-radius(50%);
+  @include border-radius(var(--border-radius));
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
   @include text-inherit();
@@ -91,7 +94,9 @@
 
   transition: var(--transition);
 
-  border: 0;
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
 
   outline: none;
 
