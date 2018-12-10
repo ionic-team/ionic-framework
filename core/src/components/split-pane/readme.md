@@ -45,9 +45,9 @@ SplitPane also provides some predefined media queries that can be used.
 ### Angular
 
 ```html
-<ion-split-pane>
+<ion-split-pane contentId="menu-content">
   <!--  our side menu  -->
-  <ion-menu>
+  <ion-menu contentId="menu-content">
     <ion-header>
       <ion-toolbar>
         <ion-title>Menu</ion-title>
@@ -56,7 +56,7 @@ SplitPane also provides some predefined media queries that can be used.
   </ion-menu>
 
   <!-- the main content -->
-  <ion-router-outlet main></ion-router-outlet>
+  <ion-router-outlet id="menu-content"></ion-router-outlet>
 </ion-split-pane>
 ```
 
@@ -64,9 +64,9 @@ SplitPane also provides some predefined media queries that can be used.
 ### Javascript
 
 ```html
-<ion-split-pane>
+<ion-split-pane content-id="menu-content">
   <!--  our side menu  -->
-  <ion-menu>
+  <ion-menu content-id="menu-content">
     <ion-header>
       <ion-toolbar>
         <ion-title>Menu</ion-title>
@@ -75,7 +75,7 @@ SplitPane also provides some predefined media queries that can be used.
   </ion-menu>
 
   <!-- the main content -->
-  <ion-content main>
+  <ion-content id="menu-content">
     <h1>Hello</h1>
   </ion-content>
 </ion-split-pane>
