@@ -150,7 +150,7 @@ export class SplitPane implements ComponentInterface {
     let foundMain = false;
     for (let i = 0; i < nu; i++) {
       const child = children[i] as HTMLElement;
-      const isMain = contentId ? child.id === contentId : child.hasAttribute('main');
+      const isMain = contentId !== undefined ? child.id === contentId : child.hasAttribute('main');
       if (isMain) {
         if (foundMain) {
           console.warn('split pane can not have more than one main node');
