@@ -36,7 +36,7 @@ export class ProgressBar implements ComponentInterface {
   @Prop() value = 0;
 
   /**
-   * shows circle points if buffer and value are smaller than 1 - Value of the buffer from [0, ..., 1]
+   * Shows circle points if buffer and value are smaller than 1 - Value of the buffer from [0, ..., 1]
    */
   @Prop() buffer = 1;
 
