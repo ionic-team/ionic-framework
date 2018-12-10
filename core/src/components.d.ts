@@ -3183,7 +3183,7 @@ export namespace Components {
 
   interface IonProgressBar {
     /**
-    * Shows circle points if buffer and value are smaller than 1 - Value of the buffer from [0, ..., 1]
+    * If the buffer and value are smaller than 1, the buffer circles will show. The buffer should be between [0, 1].
     */
     'buffer': number;
     /**
@@ -3195,21 +3195,21 @@ export namespace Components {
     */
     'mode': Mode;
     /**
-    * Reverse the progress bar
+    * If true, reverse the progress bar direction.
     */
     'reversed': boolean;
     /**
-    * Style of the progress bar Options are `"determinate"` (no animation), `"indeterminate"` (animate from left to right),
+    * The state of the progress bar, based on if the time the process takes is known or not. Default options are: `"determinate"` (no animation), `"indeterminate"` (animate from left to right).
     */
     'type': 'determinate' | 'indeterminate';
     /**
-    * Only on type `"determinate"`: Value of the progress bar from [0, ..., 1]
+    * The value determines how much of the active bar should display when the `type` is `"determinate"`. The value should be between [0, 1].
     */
     'value': number;
   }
   interface IonProgressBarAttributes extends StencilHTMLAttributes {
     /**
-    * Shows circle points if buffer and value are smaller than 1 - Value of the buffer from [0, ..., 1]
+    * If the buffer and value are smaller than 1, the buffer circles will show. The buffer should be between [0, 1].
     */
     'buffer'?: number;
     /**
@@ -3221,15 +3221,15 @@ export namespace Components {
     */
     'mode'?: Mode;
     /**
-    * Reverse the progress bar
+    * If true, reverse the progress bar direction.
     */
     'reversed'?: boolean;
     /**
-    * Style of the progress bar Options are `"determinate"` (no animation), `"indeterminate"` (animate from left to right),
+    * The state of the progress bar, based on if the time the process takes is known or not. Default options are: `"determinate"` (no animation), `"indeterminate"` (animate from left to right).
     */
     'type'?: 'determinate' | 'indeterminate';
     /**
-    * Only on type `"determinate"`: Value of the progress bar from [0, ..., 1]
+    * The value determines how much of the active bar should display when the `type` is `"determinate"`. The value should be between [0, 1].
     */
     'value'?: number;
   }

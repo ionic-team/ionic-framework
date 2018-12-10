@@ -20,23 +20,26 @@ export class ProgressBar implements ComponentInterface {
   @Prop() mode!: Mode;
 
   /**
-   * Style of the progress bar
-   * Options are `"determinate"` (no animation), `"indeterminate"` (animate from left to right),
+   * The state of the progress bar, based on if the time the process takes is known or not.
+   * Default options are: `"determinate"` (no animation), `"indeterminate"` (animate from left to right).
    */
   @Prop() type: 'determinate' | 'indeterminate' = 'determinate';
 
   /**
-   * Reverse the progress bar
+   * If true, reverse the progress bar direction.
    */
   @Prop() reversed = false;
 
   /**
-   * Only on type `"determinate"`: Value of the progress bar from [0, ..., 1]
+   * The value determines how much of the active bar should display when the
+   * `type` is `"determinate"`.
+   * The value should be between [0, 1].
    */
   @Prop() value = 0;
 
   /**
-   * Shows circle points if buffer and value are smaller than 1 - Value of the buffer from [0, ..., 1]
+   * If the buffer and value are smaller than 1, the buffer circles will show.
+   * The buffer should be between [0, 1].
    */
   @Prop() buffer = 1;
 
