@@ -103,7 +103,7 @@
 // Buffer style
 // --------------------------------------------------
 .buffer-circles {
-  background: radial-gradient(ellipse at center, currentColor 0%, currentColor 30%, transparent 30%) repeat-x 5px center;
+  background: radial-gradient(ellipse at center, var(--buffer-background) 0%, var(--buffer-background) 30%, transparent 30%) repeat-x 5px center;
   background-size: 10px 10px;
 
   z-index: -1;
