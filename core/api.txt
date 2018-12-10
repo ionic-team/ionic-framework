@@ -1040,7 +1040,7 @@ ion-tab-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-star
 ion-tab-button,prop,mode,"ios" | "md",undefined,false
 ion-tab-button,prop,tab,string,undefined,false
 ion-tab-button,css-prop,--background
-ion-tab-button,css-prop,--background-selected
+ion-tab-button,css-prop,--background-focused
 ion-tab-button,css-prop,--color
 ion-tab-button,css-prop,--color-selected
 ion-tab-button,css-prop,--padding-bottom

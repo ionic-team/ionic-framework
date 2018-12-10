@@ -71,17 +71,17 @@ See the [tabs documentation](../tabs) for more details on configuring tabs.
 
 ## CSS Custom Properties
 
-| Name                    | Description                           |
-| ----------------------- | ------------------------------------- |
-| `--background`          | Background of the tab button          |
-| `--background-selected` | Background of the selected tab button |
-| `--color`               | Color of the tab button               |
-| `--color-selected`      | Color of the selected tab button      |
-| `--padding-bottom`      | Bottom padding of the tab button      |
-| `--padding-end`         | End padding of the tab button         |
-| `--padding-start`       | Start padding of the tab button       |
-| `--padding-top`         | Top padding of the tab button         |
-| `--ripple-color`        | Color of the button ripple effect     |
+| Name                   | Description                          |
+| ---------------------- | ------------------------------------ |
+| `--background`         | Background of the tab button         |
+| `--background-focused` | Background of the focused tab button |
+| `--color`              | Color of the tab button              |
+| `--color-selected`     | Color of the selected tab button     |
+| `--padding-bottom`     | Bottom padding of the tab button     |
+| `--padding-end`        | End padding of the tab button        |
+| `--padding-start`      | Start padding of the tab button      |
+| `--padding-top`        | Top padding of the tab button        |
+| `--ripple-color`       | Color of the button ripple effect    |
 
 
 ----------------------------------------------
