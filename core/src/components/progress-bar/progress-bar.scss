@@ -61,6 +61,8 @@
 .progress,
 .progress-indeterminate {
   background: var(--progress-background);
+  
+  z-index: 2;
 }
 
 .progress-buffer-bar {
