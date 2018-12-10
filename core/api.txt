@@ -742,6 +742,17 @@ ion-popover,event,ionPopoverDidUnload,void,true
 ion-popover,event,ionPopoverWillDismiss,OverlayEventDetail,true
 ion-popover,event,ionPopoverWillPresent,void,true
 
+ion-progress-bar
+ion-progress-bar,prop,buffer,number,1,false
+ion-progress-bar,prop,color,string | undefined,undefined,false
+ion-progress-bar,prop,mode,"ios" | "md",undefined,false
+ion-progress-bar,prop,reversed,boolean,false,false
+ion-progress-bar,prop,type,"determinate" | "indeterminate",'determinate',false
+ion-progress-bar,prop,value,number,0,false
+ion-progress-bar,css-prop,--background
+ion-progress-bar,css-prop,--buffer-background
+ion-progress-bar,css-prop,--progress-background
+
 ion-radio-group
 ion-radio-group,prop,allowEmptySelection,boolean,false,false
 ion-radio-group,prop,name,string,this.inputId,false
