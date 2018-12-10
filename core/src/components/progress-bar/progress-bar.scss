@@ -9,7 +9,6 @@
   * @prop --progress-background: Color of the progress bar
   * @prop --buffer-background: Color of the buffer bar
   */
-
   --background: #{ion-color(primary, base, 0.2)};
   --progress-background: #{ion-color(primary, base)};
   --buffer-background: var(--background);
