@@ -56,6 +56,7 @@ const DECLARATIONS = [
   d.IonNavPush,
   d.IonNavSetRoot,
   d.IonNote,
+  d.IonProgressBar,
   d.IonRadio,
   d.IonRadioGroup,
   d.IonRange,
