@@ -175,8 +175,6 @@ export class Refresher implements ComponentInterface {
   }
 
   private onStart() {
-    console.log('start');
-
     this.progress = 0;
     this.state = RefresherState.Inactive;
   }

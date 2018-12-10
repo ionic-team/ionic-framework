@@ -29,7 +29,7 @@ function buildSchematics(){
       path.join(__dirname, '..', 'tsconfig.schematics.json'),
     ];
 
-    const p = spawn(cmd, args, { cwd: typescriptPath, stdio: 'inherit' });
+    const p = spawn(cmd, args, { cwd: typescriptPath, stdio: 'inherit', shell: true });
     p.on('close', (code) => {
       if (code > 0) {
         console.log(`ng-add build exited with ${code}`);

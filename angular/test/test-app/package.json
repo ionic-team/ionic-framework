@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "npm run sync && ng serve",
     "sync:build": "sh scripts/build-ionic.sh",
     "sync": "sh scripts/sync.sh",
     "build": "ng build --prod --no-progress",

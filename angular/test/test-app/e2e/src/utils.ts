@@ -59,7 +59,7 @@ export async function testLifeCycle(selector: string, expected: LifeCycleCount) 
 }
 
 export async function testStack(selector: string, expected: string[]) {
-  const children = browser.executeScript(`
+  const children = await browser.executeScript(`
     return Array.from(
       document.querySelector('${selector}').children
     ).map(el => el.tagName.toLowerCase());

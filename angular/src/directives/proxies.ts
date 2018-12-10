@@ -834,18 +834,6 @@ export class IonSplitPane {
   }
 }
 
-export declare interface IonTab extends StencilComponents<'IonTab'> {}
-@Component({ selector: 'ion-tab', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['active', 'delegate', 'tab', 'component'] })
-export class IonTab {
-
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
-    c.detach();
-    const el = r.nativeElement;
-    proxyMethods(this, el, ['setActive']);
-    proxyInputs(this, el, ['active', 'delegate', 'tab', 'component']);
-  }
-}
-
 export declare interface IonTabBar extends StencilComponents<'IonTabBar'> {}
 @Component({ selector: 'ion-tab-bar', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'selectedTab', 'translucent'] })
 export class IonTabBar {
@@ -869,23 +857,6 @@ export class IonTabButton {
     const el = r.nativeElement;
     proxyInputs(this, el, ['mode', 'layout', 'href', 'tab', 'disabled']);
     proxyOutputs(this, el, ['ionTabButtonClick']);
-  }
-}
-
-export declare interface IonTabs extends StencilComponents<'IonTabs'> {}
-@Component({ selector: 'ion-tabs', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['useRouter'] })
-export class IonTabs {
-  ionChange!: EventEmitter<CustomEvent>;
-  ionNavWillLoad!: EventEmitter<CustomEvent>;
-  ionNavWillChange!: EventEmitter<CustomEvent>;
-  ionNavDidChange!: EventEmitter<CustomEvent>;
-
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
-    c.detach();
-    const el = r.nativeElement;
-    proxyMethods(this, el, ['select', 'setRouteId', 'getRouteId', 'getTab', 'getSelected']);
-    proxyInputs(this, el, ['useRouter']);
-    proxyOutputs(this, el, ['ionChange', 'ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange']);
   }
 }
 
