@@ -76,7 +76,7 @@ export class ProgressBar implements ComponentInterface {
     return [
       <div class="progress" style={{ transform: `scaleX(${value})` }}></div>,
       buffer !== 1 && <div class="buffer-circles"></div>,
-      <div class="progress-background-bar" style={{ transform: `scaleX(${buffer})` }}></div>,
+      <div class="progress-buffer-bar" style={{ transform: `scaleX(${buffer})` }}></div>,
     ];
   }
 }
