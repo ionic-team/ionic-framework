@@ -61,6 +61,8 @@
 .progress,
 .progress-indeterminate {
   background: var(--progress-background);
+  
+  z-index: 2;
 }
 
 .progress-buffer-bar {
@@ -69,7 +71,7 @@
   // Otherwise the buffer circles would be seen through
   background: #fff;
 
-  z-index: -1; // Make it behind the progress
+  z-index: 1; // Make it behind the progress
 
   &:before {
     background: var(--buffer-background);
@@ -104,7 +106,7 @@
   background: radial-gradient(ellipse at center, var(--buffer-background) 0%, var(--buffer-background) 30%, transparent 30%) repeat-x 5px center;
   background-size: 10px 10px;
 
-  z-index: -1;
+  z-index: 0;
   animation: buffering 450ms infinite linear;
 }
 
