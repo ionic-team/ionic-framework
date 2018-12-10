@@ -46,7 +46,7 @@ If you add `reversed="true"`, you receive a query which is used to indicate pre-
 
 | Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                               | Default         |
 | ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- | --------------- |
-| `buffer`   | `buffer`   | shows circle points if buffer and value are smaller than 1 - Value of the buffer from [0, ..., 1]                                                                                                                                                                      | `number`                           | `1`             |
+| `buffer`   | `buffer`   | Shows circle points if buffer and value are smaller than 1 - Value of the buffer from [0, ..., 1]                                                                                                                                                                      | `number`                           | `1`             |
 | `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`              | `undefined`     |
 | `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                    | `undefined`     |
 | `reversed` | `reversed` | Reverse the progress bar                                                                                                                                                                                                                                               | `boolean`                          | `false`         |
@@ -56,13 +56,11 @@ If you add `reversed="true"`, you receive a query which is used to indicate pre-
 
 ## CSS Custom Properties
 
-| Name                          | Description                    |
-| ----------------------------- | ------------------------------ |
-| `--background`                | Background of the progress bar |
-| `--buffer-animation-duration` | Speed of the buffer circles    |
-| `--buffer-color`              | Color of the buffer circles    |
-| `--buffer-size`               | Size of the buffer circles     |
-| `--progress-bar-color`        | Color of the progress bar      |
+| Name                    | Description                                                                                                                           |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `--background`          | Same as --buffer-background when using a determinate progress bar, otherwise it styles the background of the ion-progress-bar itself. |
+| `--buffer-background`   | Color of the buffer bar                                                                                                               |
+| `--progress-background` | Color of the progress bar                                                                                                             |
 
 
 ----------------------------------------------

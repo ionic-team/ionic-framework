@@ -3183,7 +3183,7 @@ export namespace Components {
 
   interface IonProgressBar {
     /**
-    * shows circle points if buffer and value are smaller than 1 - Value of the buffer from [0, ..., 1]
+    * Shows circle points if buffer and value are smaller than 1 - Value of the buffer from [0, ..., 1]
     */
     'buffer': number;
     /**
@@ -3209,7 +3209,7 @@ export namespace Components {
   }
   interface IonProgressBarAttributes extends StencilHTMLAttributes {
     /**
-    * shows circle points if buffer and value are smaller than 1 - Value of the buffer from [0, ..., 1]
+    * Shows circle points if buffer and value are smaller than 1 - Value of the buffer from [0, ..., 1]
     */
     'buffer'?: number;
     /**
