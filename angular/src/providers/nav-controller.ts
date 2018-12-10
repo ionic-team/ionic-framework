@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 import { Location } from '@angular/common';
 import { NavigationExtras, NavigationStart, Router, UrlTree } from '@angular/router';
 import { Platform } from './platform';
@@ -16,19 +16,21 @@ export class NavController {
   private lastNavId = -1;
 
   constructor(
+    platform: Platform,
     private location: Location,
-    private router: Router,
-    platform: Platform
+    @Optional() private router?: Router,
   ) {
     // Subscribe to router events to detect direction
-    router.events.subscribe(ev => {
-      if (ev instanceof NavigationStart) {
-        const id = (ev.restoredState) ? ev.restoredState.navigationId : ev.id;
-        this.guessAnimation = !ev.restoredState;
-        this.guessDirection = id < this.lastNavId ? 'back' : 'forward';
-        this.lastNavId = this.guessDirection === 'forward' ? ev.id : id;
-      }
-    });
+    if (router) {
+      router.events.subscribe(ev => {
+        if (ev instanceof NavigationStart) {
+          const id = (ev.restoredState) ? ev.restoredState.navigationId : ev.id;
+          this.guessAnimation = !ev.restoredState;
+          this.guessDirection = id < this.lastNavId ? 'back' : 'forward';
+          this.lastNavId = this.guessDirection === 'forward' ? ev.id : id;
+        }
+      });
+    }
 
     // Subscribe to backButton events
     platform.backButton.subscribeWithPriority(0, () => this.goBack());
@@ -37,9 +39,9 @@ export class NavController {
   navigateForward(url: string | UrlTree | any[], animated?: boolean, extras?: NavigationExtras) {
     this.setDirection('forward', animated);
     if (Array.isArray(url)) {
-      return this.router.navigate(url, extras);
+      return this.router!.navigate(url, extras);
     } else {
-      return this.router.navigateByUrl(url, extras);
+      return this.router!.navigateByUrl(url, extras);
     }
   }
 
@@ -47,18 +49,18 @@ export class NavController {
     this.setDirection('back', animated);
     // extras = { replaceUrl: true, ...extras };
     if (Array.isArray(url)) {
-      return this.router.navigate(url, extras);
+      return this.router!.navigate(url, extras);
     } else {
-      return this.router.navigateByUrl(url, extras);
+      return this.router!.navigateByUrl(url, extras);
     }
   }
 
   navigateRoot(url: string | UrlTree | any[], animated?: boolean, extras?: NavigationExtras) {
     this.setDirection('root', animated);
     if (Array.isArray(url)) {
-      return this.router.navigate(url, extras);
+      return this.router!.navigate(url, extras);
     } else {
-      return this.router.navigateByUrl(url, extras);
+      return this.router!.navigateByUrl(url, extras);
     }
   }
 

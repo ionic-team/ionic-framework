@@ -68,6 +68,10 @@ describe('tabs', () => {
     await testStack('ion-tabs ion-router-outlet', ['app-tabs-tab2', 'app-tabs-tab1-nested']);
   });
 
+  it('should load lazy loaded tab', async () => {
+    await element(by.css('#tab-button-lazy')).click();
+    await testTabTitle('Tab 3 - Page 1');
+  });
 });
 
 async function testTabTitle(title: string) {

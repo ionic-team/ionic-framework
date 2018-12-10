@@ -44,24 +44,35 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "4.0.0-beta.17"
+    "@ionic/core": "4.0.0-beta.17",
+    "tslib": "^1.9.3"
   },
   "peerDependencies": {
-    "@angular-devkit/core": "^7.0.3",
-    "@angular-devkit/schematics": "^7.0.3"
+    "@angular-devkit/core": "^7.1.2",
+    "@angular-devkit/schematics": "^7.1.2",
+    "@angular/core": "^7.1.2",
+    "@angular/common": "^7.1.2",
+    "@angular/forms": "^7.1.2",
+    "@angular/router": "~7.1.2",
+    "@angular/compiler": "^7.1.2",
+    "@angular/compiler-cli": "^7.1.2",
+    "@angular/platform-browser": "^7.1.2",
+    "@angular/platform-browser-dynamic": "^7.1.2",
+    "rxjs": ">=6.2.0",
+    "zone.js": "^0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/core": "^7.0.3",
-    "@angular-devkit/schematics": "^7.0.3",
+    "@angular-devkit/core": "^7.1.2",
+    "@angular-devkit/schematics": "^7.1.2",
+    "@angular/core": "^7.1.2",
+    "@angular/common": "^7.1.2",
+    "@angular/forms": "^7.1.2",
+    "@angular/router": "^7.1.2",
+    "@angular/compiler": "^7.1.2",
+    "@angular/compiler-cli": "^7.1.2",
+    "@angular/platform-browser": "^7.1.2",
+    "@angular/platform-browser-dynamic": "^7.1.2",
     "@types/node": "~10.12.0",
-    "@angular/common": "^7.0.3",
-    "@angular/compiler": "^7.0.3",
-    "@angular/compiler-cli": "^7.0.3",
-    "@angular/core": "^7.0.3",
-    "@angular/forms": "^7.0.3",
-    "@angular/platform-browser": "^7.0.3",
-    "@angular/platform-browser-dynamic": "^7.0.3",
-    "@angular/router": "^7.0.3",
     "fs-extra": "^7.0.0",
     "glob": "^7.1.2",
     "rxjs": "^6.2.0",
