@@ -46,7 +46,9 @@
   --transition: background-color, opacity 100ms linear;
   --ripple-color: currentColor;
   --border-radius: #{$fab-border-radius};
-
+  --border-width: 0;
+  --border-style: none;
+  --border-color: initial;
   display: block;
 
   font-size: 14px;
