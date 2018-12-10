@@ -69,7 +69,7 @@
   // Otherwise the buffer circles would be seen through
   background: #fff;
 
-  z-index: -1; // Make it behind the progress
+  z-index: 1; // Make it behind the progress
 
   &:before {
     background: var(--buffer-background);
