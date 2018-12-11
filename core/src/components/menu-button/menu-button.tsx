@@ -38,10 +38,9 @@ export class MenuButton implements ComponentInterface {
 
   hostData() {
     return {
-      'ion-activatable': true,
       class: {
-        // ion-buttons target .button
-        'button': true
+        'button': true,  // ion-buttons target .button
+        'ion-activatable': true,
       }
     };
   }

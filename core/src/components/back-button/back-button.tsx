@@ -59,12 +59,11 @@ export class BackButton implements ComponentInterface {
     const showBackButton = this.defaultHref !== undefined;
 
     return {
-      'ion-activatable': true,
       class: {
         ...createColorClasses(this.color),
 
-        // ion-buttons target .button
-        'button': true,
+        'button': true, // ion-buttons target .button
+        'ion-activatable': true,
         'show-back-button': showBackButton
       }
     };

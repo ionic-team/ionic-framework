@@ -33,8 +33,10 @@ export class Anchor implements ComponentInterface {
 
   hostData() {
     return {
-      class: createColorClasses(this.color),
-      'ion-activatable': true
+      class: {
+        ...createColorClasses(this.color),
+        'ion-activatable': true
+      }
     };
   }
 

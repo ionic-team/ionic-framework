@@ -832,7 +832,7 @@ export class IonSpinner {
 }
 
 export declare interface IonSplitPane extends StencilComponents<'IonSplitPane'> {}
-@Component({ selector: 'ion-split-pane', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['disabled', 'when'] })
+@Component({ selector: 'ion-split-pane', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['contentId', 'disabled', 'when'] })
 export class IonSplitPane {
   ionChange!: EventEmitter<CustomEvent>;
   ionSplitPaneVisible!: EventEmitter<CustomEvent>;
@@ -840,7 +840,7 @@ export class IonSplitPane {
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
     const el = r.nativeElement;
-    proxyInputs(this, el, ['disabled', 'when']);
+    proxyInputs(this, el, ['contentId', 'disabled', 'when']);
     proxyOutputs(this, el, ['ionChange', 'ionSplitPaneVisible']);
   }
 }

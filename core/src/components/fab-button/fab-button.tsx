@@ -93,7 +93,6 @@ export class FabButton implements ComponentInterface {
   hostData() {
     const inList = hostContext('ion-fab-list', this.el);
     return {
-      'ion-activatable': true,
       'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...createColorClasses(this.color),
@@ -103,7 +102,8 @@ export class FabButton implements ComponentInterface {
         'fab-button-show': this.show,
         'fab-button-disabled': this.disabled,
         'fab-button-translucent': this.translucent,
-        'focused': this.keyFocus
+        'ion-activatable': true,
+        'focused': this.keyFocus,
       }
     };
   }

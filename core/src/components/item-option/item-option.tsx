@@ -50,10 +50,10 @@ export class ItemOption implements ComponentInterface {
 
   hostData() {
     return {
-      'ion-activatable': true,
       class: {
         ...createColorClasses(this.color),
         'item-option-expandable': this.expandable,
+        'ion-activatable': true,
       }
     };
   }

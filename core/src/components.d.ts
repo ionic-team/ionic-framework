@@ -4401,6 +4401,10 @@ export namespace Components {
 
   interface IonSplitPane {
     /**
+    * The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane.  ```html    * <ion-split-pane content-id="my-content">    *   <ion-menu></ion-menu>    *   <div id="my-content">    * </ion-split-pane>    * ```
+    */
+    'contentId'?: string;
+    /**
     * If `true`, the split pane will be hidden.
     */
     'disabled': boolean;
@@ -4410,6 +4414,10 @@ export namespace Components {
     'when': string | boolean;
   }
   interface IonSplitPaneAttributes extends StencilHTMLAttributes {
+    /**
+    * The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane.  ```html    * <ion-split-pane content-id="my-content">    *   <ion-menu></ion-menu>    *   <div id="my-content">    * </ion-split-pane>    * ```
+    */
+    'contentId'?: string;
     /**
     * If `true`, the split pane will be hidden.
     */
