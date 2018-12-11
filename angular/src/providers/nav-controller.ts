@@ -83,7 +83,6 @@ export class NavController {
     if (this.direction === 'auto') {
       direction = this.guessDirection;
       animated = this.guessAnimation;
-      console.debug('[nav-controller] guessed nav direction', direction, 'animated', animated);
     } else {
       animated = this.animated;
       direction = this.direction;
