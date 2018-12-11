@@ -1142,6 +1142,11 @@ ion-toast,event,ionToastDidUnload,void,true
 ion-toast,event,ionToastWillDismiss,OverlayEventDetail,true
 ion-toast,event,ionToastWillPresent,void,true
 ion-toast,css-prop,--background
+ion-toast,css-prop,--border-color
+ion-toast,css-prop,--border-radius
+ion-toast,css-prop,--border-style
+ion-toast,css-prop,--border-width
+ion-toast,css-prop,--box-shadow
 ion-toast,css-prop,--button-color
 ion-toast,css-prop,--color
 
