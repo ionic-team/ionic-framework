@@ -68,7 +68,6 @@ export class SegmentButton implements ComponentInterface {
   hostData() {
     const { checked, disabled, hasIcon, hasLabel, layout } = this;
     return {
-      'ion-activatable': 'instant',
       'aria-disabled': disabled ? 'true' : null,
       class: {
         'segment-button-has-label': hasLabel,
@@ -77,7 +76,9 @@ export class SegmentButton implements ComponentInterface {
         'segment-button-has-icon-only': hasIcon && !hasLabel,
         'segment-button-disabled': disabled,
         'segment-button-checked': checked,
-        [`segment-button-layout-${layout}`]: true
+        [`segment-button-layout-${layout}`]: true,
+        'ion-activatable': true,
+        'ion-activatable-instant': true,
       }
     };
   }

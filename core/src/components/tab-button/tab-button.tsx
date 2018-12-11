@@ -91,7 +91,6 @@ export class TabButton implements ComponentInterface {
     const { disabled, hasIcon, hasLabel, layout, selected, tab } = this;
     return {
       'role': 'tab',
-      'ion-activatable': true,
       'aria-selected': selected ? 'true' : null,
       'id': `tab-button-${tab}`,
       'aria-controls': `tab-view-${tab}`,
@@ -103,6 +102,7 @@ export class TabButton implements ComponentInterface {
         'tab-has-label-only': hasLabel && !hasIcon,
         'tab-has-icon-only': hasIcon && !hasLabel,
         [`tab-layout-${layout}`]: true,
+        'ion-activatable': true,
       }
     };
   }
