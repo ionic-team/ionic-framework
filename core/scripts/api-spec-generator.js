@@ -20,7 +20,7 @@ function generateComponent(component, content) {
   content.push(component.tag);
 
   component.props.forEach(prop => {
-    content.push(`${component.tag},prop,${prop.name},${prop.type},${prop.default},${prop.required}`);
+    content.push(`${component.tag},prop,${prop.name},${prop.type},${prop.default},${prop.required},${prop.reflectToAttr}`);
   });
   component.methods.forEach(prop => {
     content.push(`${component.tag},method,${prop.name},${prop.signature}`);
