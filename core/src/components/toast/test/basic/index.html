@@ -8,6 +8,15 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../dist/ionic.js"></script>
+
+  <style>
+    ion-toast.toast-border {
+      --border-radius: 20px;
+      --border-width: 5px;
+      --border-style: double;
+      --border-color: yellow;
+    }
+  </style>
 </head>
 
 <body>
@@ -28,6 +37,7 @@
         <ion-button expand="block" onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, closeButtonText: 'closing time'})">Show Toast with Custom Close Button Text</ion-button>
         <ion-button expand="block" onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, translucent: true})">Show Translucent Toast</ion-button>
         <ion-button expand="block" onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, color: 'danger'})">Show Color Toast</ion-button>
+        <ion-button expand="block" onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, cssClass: 'toast-border'})">Show Toast with border</ion-button>
 
         <ion-toast-controller></ion-toast-controller>
 
