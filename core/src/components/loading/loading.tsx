@@ -201,7 +201,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   render() {
     return [
-      <ion-backdrop visible={this.showBackdrop} tappable={false} />,
+      <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss} />,
       <div class="loading-wrapper" role="dialog">
         {this.spinner && (
           <div class="loading-spinner">

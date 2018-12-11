@@ -73,7 +73,7 @@
 // Material Design Multi-line Item
 // --------------------------------------------------
 
-// TODO this works if manually adding the class / work with prop?
+// TODO this works if manually adding the class / should it work with prop?
 // Multi-line items should align the slotted content at the top
 :host(.item-multi-line) ::slotted([slot="start"]),
 :host(.item-multi-line) ::slotted([slot="end"]) {
@@ -207,7 +207,7 @@
 // Material Design Item Button
 // --------------------------------------------------
 
-::slotted(.button-small-md) {
+::slotted(.button-small) {
   --padding-top: 0;
   --padding-bottom: 0;
   --padding-start: .6em;
@@ -215,12 +215,6 @@
   --height: 25px;
 
   font-size: 12px;
-}
-
-
-// TODO, review
-::slotted(.button-small-md) ion-icon[slot="icon-only"] {
-  @include padding(0);
 }
 
 

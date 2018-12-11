@@ -2795,7 +2795,7 @@ export namespace Components {
     * Set the root for the current navigation stack.
     */
     'setRoot': <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-    'setRouteId': (id: string, params: { [key: string]: any; } | undefined, direction: number) => Promise<RouteWrite>;
+    'setRouteId': (id: string, params: { [key: string]: any; } | undefined, direction: RouterDirection) => Promise<RouteWrite>;
     /**
     * If the nav component should allow for swipe-to-go-back.
     */
@@ -3179,6 +3179,59 @@ export namespace Components {
     * If `true`, the popover will be translucent.
     */
     'translucent'?: boolean;
+  }
+
+  interface IonProgressBar {
+    /**
+    * If the buffer and value are smaller than 1, the buffer circles will show. The buffer should be between [0, 1].
+    */
+    'buffer': number;
+    /**
+    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+    */
+    'color'?: Color;
+    /**
+    * The mode determines which platform styles to use.
+    */
+    'mode': Mode;
+    /**
+    * If true, reverse the progress bar direction.
+    */
+    'reversed': boolean;
+    /**
+    * The state of the progress bar, based on if the time the process takes is known or not. Default options are: `"determinate"` (no animation), `"indeterminate"` (animate from left to right).
+    */
+    'type': 'determinate' | 'indeterminate';
+    /**
+    * The value determines how much of the active bar should display when the `type` is `"determinate"`. The value should be between [0, 1].
+    */
+    'value': number;
+  }
+  interface IonProgressBarAttributes extends StencilHTMLAttributes {
+    /**
+    * If the buffer and value are smaller than 1, the buffer circles will show. The buffer should be between [0, 1].
+    */
+    'buffer'?: number;
+    /**
+    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+    */
+    'color'?: Color;
+    /**
+    * The mode determines which platform styles to use.
+    */
+    'mode'?: Mode;
+    /**
+    * If true, reverse the progress bar direction.
+    */
+    'reversed'?: boolean;
+    /**
+    * The state of the progress bar, based on if the time the process takes is known or not. Default options are: `"determinate"` (no animation), `"indeterminate"` (animate from left to right).
+    */
+    'type'?: 'determinate' | 'indeterminate';
+    /**
+    * The value determines how much of the active bar should display when the `type` is `"determinate"`. The value should be between [0, 1].
+    */
+    'value'?: number;
   }
 
   interface IonRadioGroup {
@@ -3626,7 +3679,7 @@ export namespace Components {
     'delegate'?: FrameworkDelegate;
     'getRouteId': () => Promise<RouteID | undefined>;
     'mode': Mode;
-    'setRouteId': (id: string, params: { [key: string]: any; } | undefined, direction: number) => Promise<RouteWrite>;
+    'setRouteId': (id: string, params: { [key: string]: any; } | undefined, direction: RouterDirection) => Promise<RouteWrite>;
     'swipeHandler'?: SwipeGestureHandler;
   }
   interface IonRouterOutletAttributes extends StencilHTMLAttributes {
@@ -3651,7 +3704,7 @@ export namespace Components {
     * Go back to previous page in the window.history.
     */
     'goBack': () => Promise<void>;
-    'navChanged': (intent: number) => Promise<boolean>;
+    'navChanged': (direction: RouterDirection) => Promise<boolean>;
     'printDebug': () => void;
     /**
     * Navigate to the specified URL.
@@ -3847,10 +3900,6 @@ export namespace Components {
     */
     'checked': boolean;
     /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
-    /**
     * If `true`, the user cannot interact with the segment button.
     */
     'disabled': boolean;
@@ -3872,10 +3921,6 @@ export namespace Components {
     * If `true`, the segment button is selected.
     */
     'checked'?: boolean;
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
     /**
     * If `true`, the user cannot interact with the segment button.
     */
@@ -4356,6 +4401,10 @@ export namespace Components {
 
   interface IonSplitPane {
     /**
+    * The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane.  ```html    * <ion-split-pane content-id="my-content">    *   <ion-menu></ion-menu>    *   <div id="my-content">    * </ion-split-pane>    * ```
+    */
+    'contentId'?: string;
+    /**
     * If `true`, the split pane will be hidden.
     */
     'disabled': boolean;
@@ -4365,6 +4414,10 @@ export namespace Components {
     'when': string | boolean;
   }
   interface IonSplitPaneAttributes extends StencilHTMLAttributes {
+    /**
+    * The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane.  ```html    * <ion-split-pane content-id="my-content">    *   <ion-menu></ion-menu>    *   <div id="my-content">    * </ion-split-pane>    * ```
+    */
+    'contentId'?: string;
     /**
     * If `true`, the split pane will be hidden.
     */
@@ -4389,10 +4442,6 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * Set the layout of the text and icon in the tab bar.
-    */
-    'layout': TabButtonLayout;
-    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -4411,10 +4460,6 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * Set the layout of the text and icon in the tab bar.
-    */
-    'layout'?: TabButtonLayout;
-    /**
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
@@ -4430,10 +4475,6 @@ export namespace Components {
   }
 
   interface IonTabButton {
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
     /**
     * The selected tab component
     */
@@ -4456,10 +4497,6 @@ export namespace Components {
     'tab': string;
   }
   interface IonTabButtonAttributes extends StencilHTMLAttributes {
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
     /**
     * The selected tab component
     */
@@ -5189,6 +5226,7 @@ declare global {
     'IonPicker': Components.IonPicker;
     'IonPopoverController': Components.IonPopoverController;
     'IonPopover': Components.IonPopover;
+    'IonProgressBar': Components.IonProgressBar;
     'IonRadioGroup': Components.IonRadioGroup;
     'IonRadio': Components.IonRadio;
     'IonRange': Components.IonRange;
@@ -5289,6 +5327,7 @@ declare global {
     'ion-picker': Components.IonPickerAttributes;
     'ion-popover-controller': Components.IonPopoverControllerAttributes;
     'ion-popover': Components.IonPopoverAttributes;
+    'ion-progress-bar': Components.IonProgressBarAttributes;
     'ion-radio-group': Components.IonRadioGroupAttributes;
     'ion-radio': Components.IonRadioAttributes;
     'ion-range': Components.IonRangeAttributes;
@@ -5689,6 +5728,12 @@ declare global {
     new (): HTMLIonPopoverElement;
   };
 
+  interface HTMLIonProgressBarElement extends Components.IonProgressBar, HTMLStencilElement {}
+  var HTMLIonProgressBarElement: {
+    prototype: HTMLIonProgressBarElement;
+    new (): HTMLIonProgressBarElement;
+  };
+
   interface HTMLIonRadioGroupElement extends Components.IonRadioGroup, HTMLStencilElement {}
   var HTMLIonRadioGroupElement: {
     prototype: HTMLIonRadioGroupElement;
@@ -5972,6 +6017,7 @@ declare global {
     'ion-picker': HTMLIonPickerElement
     'ion-popover-controller': HTMLIonPopoverControllerElement
     'ion-popover': HTMLIonPopoverElement
+    'ion-progress-bar': HTMLIonProgressBarElement
     'ion-radio-group': HTMLIonRadioGroupElement
     'ion-radio': HTMLIonRadioElement
     'ion-range': HTMLIonRangeElement
@@ -6072,6 +6118,7 @@ declare global {
     'ion-picker': HTMLIonPickerElement;
     'ion-popover-controller': HTMLIonPopoverControllerElement;
     'ion-popover': HTMLIonPopoverElement;
+    'ion-progress-bar': HTMLIonProgressBarElement;
     'ion-radio-group': HTMLIonRadioGroupElement;
     'ion-radio': HTMLIonRadioElement;
     'ion-range': HTMLIonRangeElement;

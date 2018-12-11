@@ -31,9 +31,9 @@ export function appInitialize(config: Config) {
           elm.removeEventListener(eventName, cb, opts);
         }
       };
-
-      // define all of Ionic's custom elements
-      defineCustomElements(win);
+      defineCustomElements(win, {
+        exclude: ['ion-tabs', 'ion-tab']
+      });
     }
   };
 }

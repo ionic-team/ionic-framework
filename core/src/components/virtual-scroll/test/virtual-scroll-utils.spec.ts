@@ -1,6 +1,6 @@
 import { HeaderFn, ItemHeightFn, VirtualNode } from '../../../interface';
-import { CellType } from '../virtual-scroll-interface';
 import { Range, calcCells, calcHeightIndex, getRange, getShouldUpdate, getViewport, positionForIndex, resizeBuffer, updateVDom } from '../virtual-scroll-utils';
+import { CELL_TYPE_ITEM, CELL_TYPE_HEADER, CELL_TYPE_FOOTER } from '../constants';
 
 describe('getViewport', () => {
   it('should return viewport without margin', () => {
@@ -149,7 +149,7 @@ describe('calcCells', () => {
     const cells = calcCells(items, undefined, undefined, undefined, 10, 20, 30, 0, 0, items.length);
     expect(cells).toEqual([
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: '0',
         i: 0,
         index: 0,
@@ -158,7 +158,7 @@ describe('calcCells', () => {
         visible: false,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: 2,
         i: 1,
         index: 1,
@@ -167,7 +167,7 @@ describe('calcCells', () => {
         visible: false,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: 'hola',
         i: 2,
         index: 2,
@@ -176,7 +176,7 @@ describe('calcCells', () => {
         visible: false,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: { data: 'hello' },
         i: 3,
         index: 3,
@@ -200,7 +200,7 @@ describe('calcCells', () => {
     expect(called).toEqual(3);
     expect(cells).toEqual([
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: 10,
         i: 0,
         index: 0,
@@ -209,7 +209,7 @@ describe('calcCells', () => {
         visible: true,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: 9,
         i: 1,
         index: 1,
@@ -218,7 +218,7 @@ describe('calcCells', () => {
         visible: true,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: 8,
         i: 2,
         index: 2,
@@ -258,7 +258,7 @@ describe('calcCells', () => {
     expect(footerCalled).toEqual(3);
     expect(cells).toEqual([
       {
-        type: CellType.Header,
+        type: CELL_TYPE_HEADER,
         value: 'my header',
         i: 0,
         index: 0,
@@ -267,7 +267,7 @@ describe('calcCells', () => {
         visible: false,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: '10',
         i: 1,
         index: 0,
@@ -276,7 +276,7 @@ describe('calcCells', () => {
         visible: true,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: '9',
         i: 2,
         index: 1,
@@ -285,7 +285,7 @@ describe('calcCells', () => {
         visible: true,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: '8',
         i: 3,
         index: 2,
@@ -294,7 +294,7 @@ describe('calcCells', () => {
         visible: true,
       },
       {
-        type: CellType.Footer,
+        type: CELL_TYPE_FOOTER,
         value: 'my footer',
         i: 4,
         index: 2,

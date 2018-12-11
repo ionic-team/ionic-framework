@@ -99,7 +99,7 @@ export class PickerColumnCmp implements ComponentInterface {
     let translateZ = 0;
     const { col, rotateFactor } = this;
     const selectedIndex = col.selectedIndex = this.indexForY(-y);
-    const durationStr = (duration === 0) ? null : duration + 'ms';
+    const durationStr = (duration === 0) ? '' : duration + 'ms';
     const scaleStr = `scale(${this.scaleFactor})`;
 
     const children = this.optsEl.children;

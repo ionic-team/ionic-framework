@@ -6,16 +6,12 @@
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
+  <p>ngOnInit: <span id="ngOnInit">{{onInit}}</span></p>
   <p>ionViewWillEnter: <span id="ionViewWillEnter">{{willEnter}}</span></p>
   <p>ionViewDidEnter: <span id="ionViewDidEnter">{{didEnter}}</span></p>
   <p>ionViewWillLeave: <span id="ionViewWillLeave">{{willLeave}}</span></p>
   <p>ionViewDidLeave: <span id="ionViewDidLeave">{{didLeave}}</span></p>
 
-  <p>
-    <ion-button href="/router-link-page" expand="block" id="href">ion-button[href]</ion-button>
-    <ion-button href="/router-link-page" routerDirection="root" expand="block" id="href-root">ion-button[href] (direction:root)</ion-button>
-    <ion-button href="/router-link-page" routerDirection="back" expand="block" id="href-back">ion-button[href] (direction:back)</ion-button>
-  </p>
   <p>
     <ion-button routerLink="/router-link-page" expand="block" color="dark" id="routerLink">ion-button[routerLink]</ion-button>
     <ion-button routerLink="/router-link-page" routerDirection="root" expand="block" color="dark" id="routerLink-root">ion-button[routerLink] (direction:root)</ion-button>

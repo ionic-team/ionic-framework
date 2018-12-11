@@ -41,7 +41,6 @@
   outline: none;
 }
 
-:host(:hover),
 :host(:focus) {
   --background: rgba(0, 0, 0, .16);
 }
@@ -58,7 +57,6 @@
   color: current-color(shade);
 }
 
-:host(.ion-color:hover),
 :host(.ion-color:focus) {
   background: current-color(base, .12);
 }
@@ -85,7 +83,6 @@
   border-color: current-color(base, .32);
 }
 
-:host(.chip-outline:not(.ion-color):hover),
 :host(.chip-outline:not(.ion-color):focus) {
   background: rgba(0, 0, 0, .04);
 }
@@ -127,4 +124,21 @@
 
 ::slotted(ion-avatar:last-child) {
   @include margin(-4px, -8px, -4px, 8px);
+}
+
+
+// Hover
+
+@media (any-hover: hover) {
+  :host(:hover) {
+    --background: rgba(0, 0, 0, .16);
+  }
+
+  :host(.ion-color:hover) {
+    background: current-color(base, .12);
+  }
+
+  :host(.chip-outline:not(.ion-color):hover) {
+    background: rgba(0, 0, 0, .04);
+  }
 }

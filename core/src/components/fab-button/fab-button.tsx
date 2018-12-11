@@ -93,7 +93,6 @@ export class FabButton implements ComponentInterface {
   hostData() {
     const inList = hostContext('ion-fab-list', this.el);
     return {
-      'ion-activatable': true,
       'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...createColorClasses(this.color),
@@ -103,7 +102,8 @@ export class FabButton implements ComponentInterface {
         'fab-button-show': this.show,
         'fab-button-disabled': this.disabled,
         'fab-button-translucent': this.translucent,
-        'focused': this.keyFocus
+        'ion-activatable': true,
+        'focused': this.keyFocus,
       }
     };
   }
@@ -122,7 +122,7 @@ export class FabButton implements ComponentInterface {
         onFocus={this.onFocus}
         onKeyUp={this.onKeyUp}
         onBlur={this.onBlur}
-        onClick={ev => openURL(this.win, this.href, ev, this.routerDirection)}
+        onClick={(ev: Event) => openURL(this.win, this.href, ev, this.routerDirection)}
       >
         <span class="close-icon">
           <ion-icon name="close" lazy={false}></ion-icon>
