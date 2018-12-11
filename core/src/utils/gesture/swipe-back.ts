@@ -12,7 +12,7 @@ export function createSwipeBackGesture(
 ): Gesture {
   const win = el.ownerDocument!.defaultView!;
   function canStart(detail: GestureDetail) {
-    return detail.startX <= 5000 && canStartHandler();
+    return detail.startX <= 50 && canStartHandler();
   }
 
   function onMove(detail: GestureDetail) {
