@@ -374,13 +374,13 @@ export class IonItem {
 }
 
 export declare interface IonItemDivider extends StencilComponents<'IonItemDivider'> {}
-@Component({ selector: 'ion-item-divider', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode'] })
+@Component({ selector: 'ion-item-divider', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'sticky'] })
 export class IonItemDivider {
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
     const el = r.nativeElement;
-    proxyInputs(this, el, ['color', 'mode']);
+    proxyInputs(this, el, ['color', 'mode', 'sticky']);
   }
 }
 

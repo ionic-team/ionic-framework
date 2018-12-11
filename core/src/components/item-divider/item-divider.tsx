@@ -27,6 +27,15 @@ export class ItemDivider implements ComponentInterface {
    */
   @Prop() mode!: Mode;
 
+  /**
+   * When it's set to `true`, the item-divider will stay visible when it reaches the top
+   * of the viewport until the next `ion-item-divider` replaces it.
+   *
+   * This feature relies in `position:sticky`:
+   * https://caniuse.com/#feat=css-sticky
+   */
+  @Prop() sticky = false;
+
   componentDidLoad() {
     // Change the button size to small for each ion-button in the item
     // unless the size is explicitly set
@@ -41,6 +50,7 @@ export class ItemDivider implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
+        'item-divider-sticky': this.sticky,
         'item': true,
       }
     };
