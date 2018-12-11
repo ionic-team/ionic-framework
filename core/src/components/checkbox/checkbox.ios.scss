@@ -16,9 +16,9 @@
 
   // Size
   --size: #{$checkbox-ios-icon-size};
+  width: var(--size);
 
   height: var(--size);
-  width: var(--size);
 }
 
 

@@ -41,14 +41,14 @@
 .radio-inner {
   @include border-radius(50%);
 
+  width: calc(50% + var(--border-width));
+  height: calc(50% + var(--border-width));
+
   transform: scale3d(0, 0, 0);
 
   transition: transform $radio-md-transition-duration $radio-md-transition-easing;
 
   background: var(--color-checked);
-
-  width: calc(50% + var(--border-width));
-  height: calc(50% + var(--border-width));
 }
 
 

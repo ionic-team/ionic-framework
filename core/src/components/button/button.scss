@@ -38,22 +38,22 @@
 
   display: inline-block;
 
+  width: auto;
+
   color: var(--color);
 
   font-family: $font-family-base;
-  pointer-events: auto;
 
   text-align: center;
   text-decoration: none;
   text-overflow: ellipsis;
-
-  width: auto;
 
   white-space: nowrap;
 
   user-select: none;
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
+  pointer-events: auto;
 
   font-kerning: none;
 }

@@ -17,9 +17,9 @@
 
   // Size
   --size: #{$checkbox-md-icon-size};
+  width: var(--size);
 
   height: var(--size);
-  width: var(--size);
 }
 
 
