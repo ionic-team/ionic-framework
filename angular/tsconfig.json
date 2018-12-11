@@ -23,6 +23,7 @@
     "outDir": "dist",
     "pretty": true,
     "removeComments": false,
+    "importHelpers": true,
     "rootDir": "src",
     "strictPropertyInitialization": false,
     "target": "es5"
