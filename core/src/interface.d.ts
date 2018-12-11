@@ -58,9 +58,6 @@ declare global {
   interface StencilGlobalHTMLAttributes {
     // for ion-menu and ion-split-pane
     main?: boolean;
-    tappable?: boolean;
-    'ion-activatable'?: boolean;
-
     padding?: boolean;
     ['padding-top']?: boolean;
     ['padding-bottom']?: boolean;

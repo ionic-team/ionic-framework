@@ -1001,6 +1001,7 @@ ion-spinner,prop,paused,boolean,false,false
 ion-spinner,css-prop,--color
 
 ion-split-pane
+ion-split-pane,prop,contentId,string | undefined,undefined,false
 ion-split-pane,prop,disabled,boolean,false,false
 ion-split-pane,prop,when,boolean | string,QUERY['lg'],false
 ion-split-pane,event,ionChange,{visible: boolean},false
@@ -1124,6 +1125,11 @@ ion-toast,event,ionToastDidUnload,void,true
 ion-toast,event,ionToastWillDismiss,OverlayEventDetail,true
 ion-toast,event,ionToastWillPresent,void,true
 ion-toast,css-prop,--background
+ion-toast,css-prop,--border-color
+ion-toast,css-prop,--border-radius
+ion-toast,css-prop,--border-style
+ion-toast,css-prop,--border-width
+ion-toast,css-prop,--box-shadow
 ion-toast,css-prop,--button-color
 ion-toast,css-prop,--color
 
