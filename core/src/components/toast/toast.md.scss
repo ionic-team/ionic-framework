@@ -8,6 +8,7 @@
   --button-color: #{ion-color(primary, base)};
   --background: #{$toast-md-background};
   --color: #{$toast-md-color};
+  --border-radius: $toast-md-border-radius;
 
   font-size: $toast-md-font-size;
 }
@@ -27,7 +28,7 @@
 }
 
 .toast-container {
-  @include border-radius(var(--border-radius, $toast-md-border-radius));
+  @include border-radius(var(--border-radius));
 
   box-shadow: $toast-md-box-shadow;
 }
