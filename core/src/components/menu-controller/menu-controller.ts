@@ -8,7 +8,10 @@ import { menuRevealAnimation } from './animations/reveal';
 
 @Component({
   tag: 'ion-menu-controller',
-  styleUrl: 'menu-controller.scss'
+  styleUrls: {
+    ios: 'menu-controller.ios.scss',
+    md: 'menu-controller.md.scss'
+  },
 })
 export class MenuController implements MenuControllerI {
 

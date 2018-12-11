@@ -1,0 +1,10 @@
+@import "../menu/menu.md.vars";
+@import "./menu-controller";
+
+.menu-content-reveal {
+  box-shadow: $menu-md-box-shadow;
+}
+
+.menu-content-push {
+  box-shadow: $menu-md-box-shadow;
+}

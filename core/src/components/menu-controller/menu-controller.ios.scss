@@ -1,0 +1,10 @@
+@import "../menu/menu.ios.vars";
+@import "./menu-controller";
+
+.menu-content-reveal {
+  box-shadow: $menu-ios-box-shadow-reveal;
+}
+
+.menu-content-push {
+  box-shadow: $menu-ios-box-shadow-push;
+}
