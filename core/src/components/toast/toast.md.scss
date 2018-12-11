@@ -13,7 +13,6 @@
 }
 
 .toast-wrapper {
-  @include border-radius(4px);
   @include position-horizontal(8px, 8px);
   @include margin(auto);
 
@@ -22,11 +21,15 @@
 
   max-width: $toast-max-width;
 
-  box-shadow: $toast-md-box-shadow;
-
   opacity: .01;
 
   z-index: $z-index-overlay-wrapper;
+}
+
+.toast-container {
+  @include border-radius(var(--border-radius, $toast-md-border-radius));
+
+  box-shadow: $toast-md-box-shadow;
 }
 
 .toast-message {

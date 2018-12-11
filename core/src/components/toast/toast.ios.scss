@@ -15,7 +15,6 @@
 .toast-wrapper {
   @include position-horizontal(10px, 10px);
   @include margin(auto);
-  @include border-radius($toast-ios-border-radius);
 
   display: block;
   position: absolute;
@@ -25,7 +24,11 @@
   z-index: $z-index-overlay-wrapper;
 }
 
-:host(.toast-translucent) .toast-wrapper {
+.toast-container {
+  @include border-radius(var(--border-radius, $toast-ios-border-radius));
+}
+
+:host(.toast-translucent) .toast-container {
   background: $toast-ios-translucent-background-color;
   backdrop-filter: $toast-ios-translucent-filter;
 }

@@ -6,6 +6,10 @@
 :host {
   /**
    * @prop --background: Background of the toast
+   * @prop --border-color: Border color of the toast
+   * @prop --border-radius: Border radius of the toast
+   * @prop --border-width: Border width of the toast
+   * @prop --border-style: Border style of the toast
    * @prop --button-color: Color of the button text
    * @prop --color: Color of the toast text
    */
@@ -34,17 +38,19 @@
   --button-color: inherit;
 }
 
-.toast-wrapper {
-  background: var(--background);
-}
-
 .toast-container {
   display: flex;
 
   align-items: center;
-  pointer-events: auto;
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  background: var(--background);
 
   contain: content;
+  pointer-events: auto;
 }
 
 .toast-button {
