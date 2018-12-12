@@ -62,7 +62,7 @@ export class Refresher implements ComponentInterface {
   /**
    * Increase or decrease the pixels who are moved by cursor on pull down
    * Defaults to `100`, the pulled down pixels are equal to the cursor
-   * 
+   *
    * Example: If you increase this value to `120`, instead of 10 Pixel it will be 12 pixel pulled down (increase of 20 percent)
    * If you decrease to `80`, the pull down will be less than the moved pixels of the cursor
    */
