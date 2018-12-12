@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('toast: standalone', async () => {
   const page = await newE2EPage({
-    url: '/src/components/toast/test/standalone'
+    url: '/src/components/toast/test/standalone?ionic:_testing=true'
   });
 
   const button = await page.find('#basic');

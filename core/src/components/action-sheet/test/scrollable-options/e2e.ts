@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('action-sheet: scrollableOptions', async () => {
   const page = await newE2EPage({
-    url: `/src/components/action-sheet/test/scrollable-options`
+    url: `/src/components/action-sheet/test/scrollable-options?ionic:_testing=true`
   });
 
   const presentBtn = await page.find('#scrollableOptions');

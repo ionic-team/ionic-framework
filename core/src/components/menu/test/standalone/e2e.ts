@@ -3,7 +3,7 @@ import { newE2EPage } from '@stencil/core/testing';
 test('menu: standalone', async () => {
 
   const page = await newE2EPage({
-    url: '/src/components/menu/test/standalone'
+    url: '/src/components/menu/test/standalone?ionic:_testing=true'
   });
 
   const start = await page.find('ion-menu[side="start"]');

@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('searchbar: basic', async () => {
   const page = await newE2EPage({
-    url: '/src/components/searchbar/test/basic'
+    url: '/src/components/searchbar/test/basic?ionic:_testing=true'
   });
 
   await page.waitFor(250);

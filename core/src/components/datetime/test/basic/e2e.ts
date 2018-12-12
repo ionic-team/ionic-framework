@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('datetime: basic', async () => {
   const page = await newE2EPage({
-    url: '/src/components/datetime/test/basic'
+    url: '/src/components/datetime/test/basic?ionic:_testing=true'
   });
 
   let compare = await page.compareScreenshot();

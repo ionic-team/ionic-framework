@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('alert: basic', async () => {
   const page = await newE2EPage({
-    url: '/src/components/alert/test/basic'
+    url: '/src/components/alert/test/basic?ionic:_testing=true'
   });
 
   const alerts = [

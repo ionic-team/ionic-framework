@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('action-sheet: basic', async () => {
   const page = await newE2EPage({
-    url: `/src/components/action-sheet/test/basic`
+    url: `/src/components/action-sheet/test/basic?ionic:_testing=true`
   });
 
   const presentBtn = await page.find('#basic');
