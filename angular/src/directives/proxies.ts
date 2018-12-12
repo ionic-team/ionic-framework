@@ -617,7 +617,7 @@ export class IonRange {
 }
 
 export declare interface IonRefresher extends StencilComponents<'IonRefresher'> {}
-@Component({ selector: 'ion-refresher', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['pullMin', 'pullMax', 'closeDuration', 'snapbackDuration', 'disabled'] })
+@Component({ selector: 'ion-refresher', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['pullMin', 'pullMax', 'closeDuration', 'snapbackDuration', 'pullDownFactor', 'disabled'] })
 export class IonRefresher {
   ionRefresh!: EventEmitter<CustomEvent>;
   ionPull!: EventEmitter<CustomEvent>;
@@ -627,7 +627,7 @@ export class IonRefresher {
     c.detach();
     const el = r.nativeElement;
     proxyMethods(this, el, ['complete', 'cancel', 'getProgress']);
-    proxyInputs(this, el, ['pullMin', 'pullMax', 'closeDuration', 'snapbackDuration', 'disabled']);
+    proxyInputs(this, el, ['pullMin', 'pullMax', 'closeDuration', 'snapbackDuration', 'pullDownFactor', 'disabled']);
     proxyOutputs(this, el, ['ionRefresh', 'ionPull', 'ionStart']);
   }
 }

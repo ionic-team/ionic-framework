@@ -49,7 +49,6 @@ export class Refresher implements ComponentInterface {
    */
   @Prop() pullMax: number = this.pullMin + 60;
 
-  // TODO: NEVER USED
   /**
    * Time it takes to close the refresher.
    */
@@ -59,6 +58,15 @@ export class Refresher implements ComponentInterface {
    * Time it takes the refresher to to snap back to the `refreshing` state.
    */
   @Prop() snapbackDuration = '280ms';
+
+  /**
+   * Increase or decrease the pixels who are moved by cursor on pull down
+   * Defaults to `100`, the pulled down pixels are equal to the cursor
+   * 
+   * Example: If you increase this value to `120`, instead of 10 Pixel it will be 12 pixel pulled down (increase of 20 percent)
+   * If you decrease to `80`, the pull down will be less than the moved pixels of the cursor
+   */
+  @Prop() pullDownFactor = 100;
 
   /**
    * If `true`, the refresher will be hidden.
@@ -199,7 +207,7 @@ export class Refresher implements ComponentInterface {
       return;
     }
 
-    const deltaY = detail.deltaY;
+    const deltaY = detail.deltaY * (this.pullDownFactor / 100);
     // don't bother if they're scrolling up
     // and have not already started dragging
     if (deltaY <= 0) {
@@ -323,7 +331,7 @@ export class Refresher implements ComponentInterface {
     // reset set the styles on the scroll element
     // set that the refresh is actively cancelling/completing
     this.state = state;
-    this.setCss(0, '', true, delay);
+    this.setCss(0, this.closeDuration, true, delay);
 
     // TODO: stop gesture
   }

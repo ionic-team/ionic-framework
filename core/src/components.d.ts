@@ -3528,6 +3528,10 @@ export namespace Components {
     */
     'getProgress': () => Promise<number>;
     /**
+    * Increase or decrease the pixels who are moved by cursor on pull down Defaults to `100`, the pulled down pixels are equal to the cursor  Example: If you increase this value to `120`, instead of 10 Pixel it will be 12 pixel pulled down (increase of 20 percent) If you decrease to `80`, the pull down will be less than the moved pixels of the cursor
+    */
+    'pullDownFactor': number;
+    /**
     * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`.
     */
     'pullMax': number;
@@ -3561,6 +3565,10 @@ export namespace Components {
     * Emitted when the user begins to start pulling down.
     */
     'onIonStart'?: (event: CustomEvent<void>) => void;
+    /**
+    * Increase or decrease the pixels who are moved by cursor on pull down Defaults to `100`, the pulled down pixels are equal to the cursor  Example: If you increase this value to `120`, instead of 10 Pixel it will be 12 pixel pulled down (increase of 20 percent) If you decrease to `80`, the pull down will be less than the moved pixels of the cursor
+    */
+    'pullDownFactor'?: number;
     /**
     * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`.
     */
