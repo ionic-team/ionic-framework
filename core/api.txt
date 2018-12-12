@@ -642,6 +642,10 @@ ion-modal,css-prop,--border-radius
 ion-modal,css-prop,--border-style
 ion-modal,css-prop,--border-width
 ion-modal,css-prop,--height
+ion-modal,css-prop,--max-height
+ion-modal,css-prop,--max-width
+ion-modal,css-prop,--min-height
+ion-modal,css-prop,--min-width
 ion-modal,css-prop,--width
 
 ion-nav-pop
