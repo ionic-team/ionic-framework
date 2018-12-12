@@ -607,8 +607,12 @@ ion-menu,event,ionDidOpen,void,true
 ion-menu,event,ionWillClose,void,true
 ion-menu,event,ionWillOpen,void,true
 ion-menu,css-prop,--background
+ion-menu,css-prop,--height
+ion-menu,css-prop,--max-height
+ion-menu,css-prop,--max-width
+ion-menu,css-prop,--min-height
+ion-menu,css-prop,--min-width
 ion-menu,css-prop,--width
-ion-menu,css-prop,--width-small
 
 ion-modal-controller
 ion-modal-controller,method,create,create<T extends ComponentRef>(opts: ModalOptions<T>) => Promise<HTMLIonModalElement>
