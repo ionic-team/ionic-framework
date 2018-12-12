@@ -553,6 +553,14 @@ ion-loading,event,ionLoadingDidPresent,void,true
 ion-loading,event,ionLoadingDidUnload,void,true
 ion-loading,event,ionLoadingWillDismiss,OverlayEventDetail,true
 ion-loading,event,ionLoadingWillPresent,void,true
+ion-loading,css-prop,--background
+ion-loading,css-prop,--height
+ion-loading,css-prop,--max-height
+ion-loading,css-prop,--max-width
+ion-loading,css-prop,--min-height
+ion-loading,css-prop,--min-width
+ion-loading,css-prop,--spinner-color
+ion-loading,css-prop,--width
 
 ion-menu-button
 ion-menu-button,prop,autoHide,boolean,true,false
