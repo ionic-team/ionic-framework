@@ -1,8 +1,10 @@
 import { Component, ContentChild, HostListener, ViewChild } from '@angular/core';
 import { TabButtonClickDetail } from '@ionic/core';
-import { IonRouterOutlet } from './ion-router-outlet';
+
 import { NavController } from '../../providers';
 import { IonTabBar } from '../proxies';
+
+import { IonRouterOutlet } from './ion-router-outlet';
 import { RouteView } from './stack-utils';
 
 @Component({
