@@ -1623,6 +1623,9 @@ To use the css in production, we recommend importing it into a global file, such
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+/* Optional CSS utils for apps supporting RTL */
+@import "~@ionic/angular/css/directionality.css";
 ```
 
 

@@ -1,0 +1,92 @@
+@import "../themes/ionic.globals";
+@import "../themes/ionic.mixins";
+
+
+// Element Space
+// --------------------------------------------------
+// Creates padding and margin attributes to be used on
+// any element
+
+$padding: var(--ion-padding, 16px);
+$margin: var(--ion-margin, 16px);
+
+// Padding
+// --------------------------------------------------
+
+// Resets the rulesets from padding.scss
+[dir] {
+  .ion-padding-start,
+  [padding-start] {
+    @include padding-horizontal(0, null);
+  }
+
+  .ion-padding-end,
+  [padding-end] {
+    @include padding-horizontal(null, 0);
+  }
+}
+
+[dir="ltr"] {
+  .ion-padding-start,
+  [padding-start] {
+    @include padding-horizontal($padding, null);
+  }
+
+  .ion-padding-end,
+  [padding-end] {
+    @include padding-horizontal(null, $padding);
+  }
+}
+
+[dir="rtl"] {
+  .ion-padding-start,
+  [padding-start] {
+    @include padding-horizontal(null, $padding);
+  }
+
+  .ion-padding-end,
+  [padding-end] {
+    @include padding-horizontal($padding, null);
+  }
+}
+
+
+// Margin
+// --------------------------------------------------
+
+// Resets the rulesets from padding.scss
+[dir] {
+  .ion-margin-start,
+  [margin-start] {
+    @include margin-horizontal(0, null);
+  }
+
+  .ion-margin-end,
+  [margin-end] {
+    @include margin-horizontal(null, 0);
+  }
+}
+
+[dir="ltr"] {
+  .ion-margin-start,
+  [margin-start] {
+    @include margin-horizontal($margin, null);
+  }
+
+  .ion-margin-end,
+  [margin-end] {
+    @include margin-horizontal(null, $margin);
+  }
+}
+
+[dir="rtl"] {
+  .ion-margin-start,
+  [margin-start] {
+    @include margin-horizontal(null, $margin);
+  }
+
+  .ion-margin-end,
+  [margin-end] {
+    @include margin-horizontal($margin, null);
+  }
+}

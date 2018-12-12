@@ -59,6 +59,7 @@ function addIonicStyles(): Rule {
       'node_modules/@ionic/angular/css/text-alignment.css',
       'node_modules/@ionic/angular/css/text-transformation.css',
       'node_modules/@ionic/angular/css/flex-utils.css',
+      'node_modules/@ionic/angular/css/directionality.css',
       'src/theme/variables.css'
     ].forEach(entry => {
       addStyle(host, entry);
