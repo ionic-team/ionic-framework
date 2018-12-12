@@ -1,10 +1,5 @@
 ```html
 <ion-tabs>
-  <!-- Tab views -->
-  <ion-tab tab="account"></ion-tab>
-  <ion-tab tab="contact"></ion-tab>
-  <ion-tab tab="settings"></ion-tab>
-
   <!-- Tab bar -->
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="account">

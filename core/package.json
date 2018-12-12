@@ -19,6 +19,7 @@
   "module": "dist/esm/es5/index.js",
   "types": "dist/types/interface.d.ts",
   "collection": "dist/collection/collection-manifest.json",
+  "webComponents": "dist/web-components.json",
   "unpkg": "dist/ionic.js",
   "files": [
     "dist/",

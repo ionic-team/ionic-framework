@@ -51,14 +51,14 @@ export class TabBar implements ComponentInterface {
   /** @internal */
   @Event() ionTabBarChanged!: EventEmitter<TabBarChangedDetail>;
 
-  @Listen('body:keyboardWillHide')
+  @Listen('window:keyboardWillHide')
   protected onKeyboardWillHide() {
     setTimeout(() => this.keyboardVisible = false, 50);
   }
 
-  @Listen('body:keyboardWillShow')
+  @Listen('window:keyboardWillShow')
   protected onKeyboardWillShow() {
-    if (this.el.getAttribute('slot') === 'bottom') {
+    if (this.el.getAttribute('slot') !== 'top') {
       this.keyboardVisible = true;
     }
   }
