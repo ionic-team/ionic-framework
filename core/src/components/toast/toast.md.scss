@@ -8,12 +8,14 @@
   --button-color: #{ion-color(primary, base)};
   --background: #{$toast-md-background};
   --color: #{$toast-md-color};
+  --border-radius: #{$toast-md-border-radius};
+  --box-shadow: #{$toast-md-box-shadow};
 
-  font-size: $toast-md-font-size;
+  font-size: #{$toast-md-font-size};
 }
 
 .toast-wrapper {
-  @include border-radius(4px);
+  @include border-radius(var(--border-radius));
   @include position-horizontal(8px, 8px);
   @include margin(auto);
 
@@ -21,8 +23,6 @@
   position: absolute;
 
   max-width: $toast-max-width;
-
-  box-shadow: $toast-md-box-shadow;
 
   opacity: .01;
 

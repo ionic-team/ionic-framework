@@ -65,6 +65,10 @@
   <ion-fab-button class="fab-button-in-list custom-white activated"><ion-icon name="heart"></ion-icon></ion-fab-button>
   <ion-fab-button class="fab-button-in-list custom-blue"><ion-icon name="star"></ion-icon></ion-fab-button>
   <ion-fab-button class="fab-button-in-list custom-blue activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+  <ion-fab-button class="fab-button-in-list custom-border">Border</ion-fab-button>
+  <ion-fab-button class="fab-button-in-list custom-border activated">Border</ion-fab-button>
+  <ion-fab-button class="fab-button-in-list custom-border"><ion-icon name="star"></ion-icon></ion-fab-button>
+  <ion-fab-button class="fab-button-in-list custom-border activated"><ion-icon name="star"></ion-icon></ion-fab-button>
 
   <style>
     ion-fab-button {
@@ -91,6 +95,13 @@
     .custom-blue {
       --background: #add8e6;
       --background-activated: #7cb2c4;
+    }
+
+    .custom-border {
+      --border-radius: 10px;
+      --border-width: 2px;
+      --border-style: dashed;
+      --border-color: red;
     }
   </style>
 </body>

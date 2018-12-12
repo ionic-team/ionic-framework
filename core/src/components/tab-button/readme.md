@@ -10,6 +10,37 @@ See the [tabs documentation](../tabs) for more details on configuring tabs.
 
 ## Usage
 
+### Angular
+
+```html
+<ion-tabs>
+
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="schedule">
+      <ion-icon name="calendar"></ion-icon>
+      <ion-label>Schedule</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="speakers">
+      <ion-icon name="contacts"></ion-icon>
+      <ion-label>Speakers</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="map">
+      <ion-icon name="map"></ion-icon>
+      <ion-label>Map</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="about">
+      <ion-icon name="information-circle"></ion-icon>
+      <ion-label>About</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+
+</ion-tabs>
+```
+
+
 ### Javascript
 
 ```html
@@ -71,17 +102,17 @@ See the [tabs documentation](../tabs) for more details on configuring tabs.
 
 ## CSS Custom Properties
 
-| Name                    | Description                           |
-| ----------------------- | ------------------------------------- |
-| `--background`          | Background of the tab button          |
-| `--background-selected` | Background of the selected tab button |
-| `--color`               | Color of the tab button               |
-| `--color-selected`      | Color of the selected tab button      |
-| `--padding-bottom`      | Bottom padding of the tab button      |
-| `--padding-end`         | End padding of the tab button         |
-| `--padding-start`       | Start padding of the tab button       |
-| `--padding-top`         | Top padding of the tab button         |
-| `--ripple-color`        | Color of the button ripple effect     |
+| Name                   | Description                          |
+| ---------------------- | ------------------------------------ |
+| `--background`         | Background of the tab button         |
+| `--background-focused` | Background of the focused tab button |
+| `--color`              | Color of the tab button              |
+| `--color-selected`     | Color of the selected tab button     |
+| `--padding-bottom`     | Bottom padding of the tab button     |
+| `--padding-end`        | End padding of the tab button        |
+| `--padding-start`      | Start padding of the tab button      |
+| `--padding-top`        | Top padding of the tab button        |
+| `--ripple-color`       | Color of the button ripple effect    |
 
 
 ----------------------------------------------

@@ -59,12 +59,11 @@ export class BackButton implements ComponentInterface {
     const showBackButton = this.defaultHref !== undefined;
 
     return {
-      'ion-activatable': true,
       class: {
         ...createColorClasses(this.color),
 
-        // ion-buttons target .button
-        'button': true,
+        'button': true, // ion-buttons target .button
+        'ion-activatable': true,
         'show-back-button': showBackButton
       }
     };
@@ -84,9 +83,8 @@ export class BackButton implements ComponentInterface {
         <span class="button-inner">
           {backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false}></ion-icon>}
           {backButtonText && <span class="button-text">{backButtonText}</span>}
-          {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </span>
-        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+        {this.mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
       </button>
     );
   }

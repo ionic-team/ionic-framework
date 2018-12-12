@@ -3,13 +3,16 @@
 :host {
   /**
    * @prop --background: Background of the tab button
-   * @prop --background-selected: Background of the selected tab button
+   * @prop --background-focused: Background of the focused tab button
+   *
    * @prop --color: Color of the tab button
    * @prop --color-selected: Color of the selected tab button
+   *
    * @prop --padding-top: Top padding of the tab button
    * @prop --padding-end: End padding of the tab button
    * @prop --padding-bottom: Bottom padding of the tab button
    * @prop --padding-start: Start padding of the tab button
+   *
    * @prop --ripple-color: Color of the button ripple effect
    */
   --ripple-color: var(--color-selected);
@@ -22,6 +25,7 @@
 
   height: 100%;
 
+  background: var(--background);
   color: var(--color);
 }
 
@@ -47,7 +51,7 @@ a {
 
   outline: none;
 
-  background: var(--background);
+  background: transparent;
 
   text-decoration: none;
 

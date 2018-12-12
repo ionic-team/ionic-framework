@@ -374,13 +374,13 @@ export class IonItem {
 }
 
 export declare interface IonItemDivider extends StencilComponents<'IonItemDivider'> {}
-@Component({ selector: 'ion-item-divider', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode'] })
+@Component({ selector: 'ion-item-divider', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'sticky'] })
 export class IonItemDivider {
 
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
     const el = r.nativeElement;
-    proxyInputs(this, el, ['color', 'mode']);
+    proxyInputs(this, el, ['color', 'mode', 'sticky']);
   }
 }
 
@@ -555,6 +555,17 @@ export class IonNote {
     c.detach();
     const el = r.nativeElement;
     proxyInputs(this, el, ['color', 'mode']);
+  }
+}
+
+export declare interface IonProgressBar extends StencilComponents<'IonProgressBar'> {}
+@Component({ selector: 'ion-progress-bar', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'type', 'reversed', 'value', 'buffer', 'color'] })
+export class IonProgressBar {
+
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    const el = r.nativeElement;
+    proxyInputs(this, el, ['mode', 'type', 'reversed', 'value', 'buffer', 'color']);
   }
 }
 
@@ -821,7 +832,7 @@ export class IonSpinner {
 }
 
 export declare interface IonSplitPane extends StencilComponents<'IonSplitPane'> {}
-@Component({ selector: 'ion-split-pane', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['disabled', 'when'] })
+@Component({ selector: 'ion-split-pane', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['contentId', 'disabled', 'when'] })
 export class IonSplitPane {
   ionChange!: EventEmitter<CustomEvent>;
   ionSplitPaneVisible!: EventEmitter<CustomEvent>;
@@ -829,20 +840,8 @@ export class IonSplitPane {
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
     const el = r.nativeElement;
-    proxyInputs(this, el, ['disabled', 'when']);
+    proxyInputs(this, el, ['contentId', 'disabled', 'when']);
     proxyOutputs(this, el, ['ionChange', 'ionSplitPaneVisible']);
-  }
-}
-
-export declare interface IonTab extends StencilComponents<'IonTab'> {}
-@Component({ selector: 'ion-tab', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['active', 'delegate', 'tab', 'component'] })
-export class IonTab {
-
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
-    c.detach();
-    const el = r.nativeElement;
-    proxyMethods(this, el, ['setActive']);
-    proxyInputs(this, el, ['active', 'delegate', 'tab', 'component']);
   }
 }
 
@@ -869,23 +868,6 @@ export class IonTabButton {
     const el = r.nativeElement;
     proxyInputs(this, el, ['mode', 'layout', 'href', 'tab', 'disabled']);
     proxyOutputs(this, el, ['ionTabButtonClick']);
-  }
-}
-
-export declare interface IonTabs extends StencilComponents<'IonTabs'> {}
-@Component({ selector: 'ion-tabs', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['useRouter'] })
-export class IonTabs {
-  ionChange!: EventEmitter<CustomEvent>;
-  ionNavWillLoad!: EventEmitter<CustomEvent>;
-  ionNavWillChange!: EventEmitter<CustomEvent>;
-  ionNavDidChange!: EventEmitter<CustomEvent>;
-
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
-    c.detach();
-    const el = r.nativeElement;
-    proxyMethods(this, el, ['select', 'setRouteId', 'getRouteId', 'getTab', 'getSelected']);
-    proxyInputs(this, el, ['useRouter']);
-    proxyOutputs(this, el, ['ionChange', 'ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange']);
   }
 }
 

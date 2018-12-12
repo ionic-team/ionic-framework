@@ -447,6 +447,7 @@ ion-input,css-prop,--placeholder-opacity
 ion-item-divider
 ion-item-divider,prop,color,string | undefined,undefined,false
 ion-item-divider,prop,mode,"ios" | "md",undefined,false
+ion-item-divider,prop,sticky,boolean,false,false
 ion-item-divider,css-prop,--background
 ion-item-divider,css-prop,--color
 ion-item-divider,css-prop,--padding-bottom
@@ -742,6 +743,17 @@ ion-popover,event,ionPopoverDidUnload,void,true
 ion-popover,event,ionPopoverWillDismiss,OverlayEventDetail,true
 ion-popover,event,ionPopoverWillPresent,void,true
 
+ion-progress-bar
+ion-progress-bar,prop,buffer,number,1,false
+ion-progress-bar,prop,color,string | undefined,undefined,false
+ion-progress-bar,prop,mode,"ios" | "md",undefined,false
+ion-progress-bar,prop,reversed,boolean,false,false
+ion-progress-bar,prop,type,"determinate" | "indeterminate",'determinate',false
+ion-progress-bar,prop,value,number,0,false
+ion-progress-bar,css-prop,--background
+ion-progress-bar,css-prop,--buffer-background
+ion-progress-bar,css-prop,--progress-background
+
 ion-radio-group
 ion-radio-group,prop,allowEmptySelection,boolean,false,false
 ion-radio-group,prop,name,string,this.inputId,false
@@ -785,6 +797,7 @@ ion-range,event,ionChange,InputChangeEvent,true
 ion-range,event,ionFocus,void,true
 ion-range,css-prop,--bar-background
 ion-range,css-prop,--bar-background-active
+ion-range,css-prop,--bar-border-radius
 ion-range,css-prop,--bar-height
 ion-range,css-prop,--height
 ion-range,css-prop,--knob-background
@@ -949,12 +962,10 @@ ion-select,event,ionBlur,void,true
 ion-select,event,ionCancel,void,true
 ion-select,event,ionChange,SelectInputChangeEvent,true
 ion-select,event,ionFocus,void,true
-ion-select,css-prop,--icon-color
 ion-select,css-prop,--padding-bottom
 ion-select,css-prop,--padding-end
 ion-select,css-prop,--padding-start
 ion-select,css-prop,--padding-top
-ion-select,css-prop,--placeholder-color
 
 ion-skeleton-text
 ion-skeleton-text,prop,width,string,'100%',false
@@ -1008,6 +1019,7 @@ ion-spinner,prop,paused,boolean,false,false
 ion-spinner,css-prop,--color
 
 ion-split-pane
+ion-split-pane,prop,contentId,string | undefined,undefined,false
 ion-split-pane,prop,disabled,boolean,false,false
 ion-split-pane,prop,when,boolean | string,QUERY['lg'],false
 ion-split-pane,event,ionChange,{visible: boolean},false
@@ -1030,7 +1042,7 @@ ion-tab-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-star
 ion-tab-button,prop,mode,"ios" | "md",undefined,false
 ion-tab-button,prop,tab,string,undefined,false
 ion-tab-button,css-prop,--background
-ion-tab-button,css-prop,--background-selected
+ion-tab-button,css-prop,--background-focused
 ion-tab-button,css-prop,--color
 ion-tab-button,css-prop,--color-selected
 ion-tab-button,css-prop,--padding-bottom
@@ -1131,6 +1143,11 @@ ion-toast,event,ionToastDidUnload,void,true
 ion-toast,event,ionToastWillDismiss,OverlayEventDetail,true
 ion-toast,event,ionToastWillPresent,void,true
 ion-toast,css-prop,--background
+ion-toast,css-prop,--border-color
+ion-toast,css-prop,--border-radius
+ion-toast,css-prop,--border-style
+ion-toast,css-prop,--border-width
+ion-toast,css-prop,--box-shadow
 ion-toast,css-prop,--button-color
 ion-toast,css-prop,--color
 

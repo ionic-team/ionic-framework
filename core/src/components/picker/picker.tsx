@@ -256,7 +256,6 @@ export class Picker implements ComponentInterface, OverlayInterface {
             <div class={buttonWrapperClass(b)}>
               <button
                 type="button"
-                ion-activatable
                 onClick={() => this.buttonClick(b)}
                 class={buttonClass(b)}
               >
@@ -286,6 +285,7 @@ function buttonWrapperClass(button: PickerButton): CssClassMap {
 function buttonClass(button: PickerButton): CssClassMap {
   return {
     'picker-button': true,
+    'ion-activatable': true,
     ...getClassMap(button.cssClass)
   };
 }

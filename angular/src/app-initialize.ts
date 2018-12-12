@@ -8,7 +8,7 @@ import { IonicWindow } from './types/interfaces';
 import '@ionic/core/dist/ionic/svg';
 
 export function appInitialize(config: Config) {
-  return () => {
+  return (): any => {
     const win: IonicWindow = window as any;
     if (typeof win !== 'undefined') {
       const Ionic = win.Ionic = win.Ionic || {};
@@ -31,9 +31,9 @@ export function appInitialize(config: Config) {
           elm.removeEventListener(eventName, cb, opts);
         }
       };
-
-      // define all of Ionic's custom elements
-      defineCustomElements(win);
+      return defineCustomElements(win, {
+        exclude: ['ion-tabs', 'ion-tab']
+      });
     }
   };
 }
