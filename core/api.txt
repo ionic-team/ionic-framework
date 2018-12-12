@@ -741,6 +741,14 @@ ion-popover,event,ionPopoverDidPresent,void,true
 ion-popover,event,ionPopoverDidUnload,void,true
 ion-popover,event,ionPopoverWillDismiss,OverlayEventDetail,true
 ion-popover,event,ionPopoverWillPresent,void,true
+ion-popover,css-prop,--background
+ion-popover,css-prop,--box-shadow
+ion-popover,css-prop,--height
+ion-popover,css-prop,--max-height
+ion-popover,css-prop,--max-width
+ion-popover,css-prop,--min-height
+ion-popover,css-prop,--min-width
+ion-popover,css-prop,--width
 
 ion-progress-bar
 ion-progress-bar,prop,buffer,number,1,false
