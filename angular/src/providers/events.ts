@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-
 export type EventHandler = (...args: any[]) => any;
 @Injectable()
 export class Events {
@@ -74,7 +73,6 @@ export class Events {
   }
 }
 
-
 export function setupEvents() {
   const events = new Events();
 
@@ -86,7 +84,6 @@ export function setupEvents() {
 
   return events;
 }
-
 
 export function setupProvideEvents() {
   return () => {

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BackButtonDetail, Platforms, getPlatforms, isPlatform } from '@ionic/core';
-import { proxyEvent } from '../util/util';
 import { Subject, Subscription } from 'rxjs';
 
+import { proxyEvent } from '../util/util';
 
 export interface BackButtonEmitter extends Subject<BackButtonDetail> {
   subscribeWithPriority(priority: number, callback: () => Promise<any> | void): Subscription;

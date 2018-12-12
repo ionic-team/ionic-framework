@@ -1440,11 +1440,11 @@ The `ios` and `ios-small` spinner's have been renamed to `lines` and `lines-smal
 
 ## Tabs
 
-### Attributes Renamed
+### Breaking changes
 
 #### `ion-tabs`
 
-The attributes to position the tabs, change the tab layout, enable the tab highlight and hide the tabs have been removed
+The attributes to position the tabs, change the tab layout, enable the tab highlight and hide the tabs have been removed. Instead use [ion-tab-button](#ion-tab-button)
 
 **Old Usage Example:**
 
@@ -1465,7 +1465,13 @@ The attributes to position the tabs, change the tab layout, enable the tab highl
 
 #### `ion-tab`
 
-The attributes for the tab title, icon, and badge customization have been removed. Instead you can add `<ion-label>` and `<ion-icon>` inside. `ion-tab` is to be wrapped by a `<ion-tab-bar>`.
+`ion-tab` was removed. Instead you have to use [ion-tab-button](#ion-tab-button).
+
+#### `ion-tab-button`
+
+You can add `<ion-label>` and `<ion-icon>` inside `ion-tab-button`. `ion-tab-button` has to be wrapped by `<ion-tab-bar>`.
+
+The tab attribute defines the route (which should be shown on switching to this tab).
 
 **Old Usage Example:**
 
@@ -1481,10 +1487,17 @@ The attributes for the tab title, icon, and badge customization have been remove
 ```html
 <ion-tabs>
   <ion-tab-bar>
+    <!-- A route to <current-route>/map must exist -->
     <ion-tab-button tab="map" disabled="true">
       <ion-icon name="map"></ion-icon>
       <ion-label>Map</ion-label>
       <ion-badge color="danger">2</ion-badge>
+    </ion-tab-button>
+
+    <!-- No ion-tab, just a button that looks like a tab -->
+    <ion-tab-button (click)="schedule()">
+      <ion-icon name="add"></ion-icon>
+      <ion-label>Schedule</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
