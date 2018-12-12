@@ -22,7 +22,6 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   private name: string;
   private stackCtrl: StackController;
   private nativeEl: HTMLIonRouterOutletElement;
-  private hasStack = false;
 
   tabsPrefix: string | undefined;
 
@@ -38,7 +37,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   set swipeGesture(swipe: boolean) {
     this._swipeGesture = swipe;
 
-    this.nativeEl.swipeHandler = (swipe && this.hasStack) ? {
+    this.nativeEl.swipeHandler = swipe ? {
       canStart: () => this.stackCtrl.canGoBack(1),
       onStart: () => this.stackCtrl.startBackTransition(),
       onEnd: shouldContinue => this.stackCtrl.endBackTransition(shouldContinue)
@@ -87,7 +86,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     }
     this.nativeEl.componentOnReady().then(() => {
       if (this._swipeGesture === undefined) {
-        this.swipeGesture = this.config.get('swipeBackEnabled', this.nativeEl.mode === 'ios');
+        this.swipeGesture = this.config.getBoolean('swipeBackEnabled', this.nativeEl.mode === 'ios');
       }
     });
   }

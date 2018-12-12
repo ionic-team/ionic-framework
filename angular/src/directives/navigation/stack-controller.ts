@@ -66,7 +66,7 @@ export class StackController {
     });
   }
 
-  startBackTransition(stackId?: string) {
+  startBackTransition(stackId = this.getActiveStackId()) {
     const views = this.getStack(stackId);
     this.transition(
       views[views.length - 2], // entering view
