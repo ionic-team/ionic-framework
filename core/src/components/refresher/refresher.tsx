@@ -49,7 +49,6 @@ export class Refresher implements ComponentInterface {
    */
   @Prop() pullMax: number = this.pullMin + 60;
 
-  // TODO: NEVER USED
   /**
    * Time it takes to close the refresher.
    */
@@ -323,7 +322,7 @@ export class Refresher implements ComponentInterface {
     // reset set the styles on the scroll element
     // set that the refresh is actively cancelling/completing
     this.state = state;
-    this.setCss(0, '', true, delay);
+    this.setCss(0, this.closeDuration, true, delay);
 
     // TODO: stop gesture
   }
