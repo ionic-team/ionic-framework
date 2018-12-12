@@ -1,4 +1,5 @@
 import { Directive, TemplateRef } from '@angular/core';
+
 import { VirtualContext } from './virtual-utils';
 
 /**

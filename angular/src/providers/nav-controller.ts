@@ -1,8 +1,9 @@
-import { Injectable, Optional } from '@angular/core';
 import { Location } from '@angular/common';
+import { Injectable, Optional } from '@angular/core';
 import { NavigationExtras, NavigationStart, Router, UrlTree } from '@angular/router';
-import { Platform } from './platform';
 import { RouterDirection } from '@ionic/core';
+
+import { Platform } from './platform';
 
 export type NavDirection = 'forward' | 'back' | 'root' | 'auto';
 

@@ -1,9 +1,9 @@
-import { Directive, ElementRef, HostListener, Input, Optional } from '@angular/core';
-import { NavController, NavDirection } from '../../providers/nav-controller';
-import { Router, RouterLink } from '@angular/router';
 import { LocationStrategy } from '@angular/common';
+import { Directive, ElementRef, HostListener, Input, Optional } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 
+import { NavController, NavDirection } from '../../providers/nav-controller';
 
 @Directive({
   selector: '[routerLink]',
@@ -45,10 +45,7 @@ export class RouterLinkDelegate {
 
   @HostListener('click', ['$event'])
   onClick(ev: UIEvent) {
-    if (this.routerDirection) {
-      this.navCtrl.setDirection(this.routerDirection);
-    }
+    this.navCtrl.setDirection(this.routerDirection);
     ev.preventDefault();
   }
 }
-

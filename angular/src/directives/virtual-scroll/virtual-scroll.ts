@@ -1,10 +1,11 @@
 import { ChangeDetectorRef, ContentChild, Directive, ElementRef, EmbeddedViewRef } from '@angular/core';
-import { proxyInputs } from '../proxies';
-import { VirtualItem } from './virtual-item';
-import { VirtualHeader } from './virtual-header';
-import { VirtualFooter } from './virtual-footer';
-import { VirtualContext } from './virtual-utils';
 
+import { proxyInputs } from '../proxies';
+
+import { VirtualFooter } from './virtual-footer';
+import { VirtualHeader } from './virtual-header';
+import { VirtualItem } from './virtual-item';
+import { VirtualContext } from './virtual-utils';
 
 @Directive({
   selector: 'ion-virtual-scroll',
