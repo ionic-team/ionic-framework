@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('alert: standalone', async () => {
   const page = await newE2EPage({
-    url: '/src/components/alert/test/standalone?ionic:_testing=true'
+    url: '/src/components/alert/test/standalone'
   });
 
   const alerts = [

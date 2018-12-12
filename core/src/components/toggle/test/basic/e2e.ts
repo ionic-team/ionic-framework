@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('toggle: basic', async () => {
   const page = await newE2EPage({
-    url: '/src/components/toggle/test/basic?ionic:_testing=true'
+    url: '/src/components/toggle/test/basic'
   });
 
   await page.waitFor(250);

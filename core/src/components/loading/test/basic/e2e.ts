@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('loading: basic', async () => {
   const page = await newE2EPage({
-    url: '/src/components/loading/test/basic?ionic:_testing=true'
+    url: '/src/components/loading/test/basic'
   });
 
   await page.click('#basic');

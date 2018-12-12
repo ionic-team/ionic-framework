@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('action-sheet: cssClass', async () => {
   const page = await newE2EPage({
-    url: `/src/components/action-sheet/test/custom-css?ionic:_testing=true`
+    url: `/src/components/action-sheet/test/custom-css`
   });
 
   const presentBtn = await page.find('#cssClass');

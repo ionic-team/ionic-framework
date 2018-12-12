@@ -20,7 +20,9 @@ Context.isPlatform = isPlatform;
 
 // create the Ionic.config from raw config object (if it exists)
 // and convert Ionic.config into a ConfigApi that has a get() fn
+const isTesting = isPlatform(win, '_testing');
 const configObj = {
+  _isTesting: isTesting,
   ...configFromSession(),
   persistConfig: false,
   ...Ionic['config'],

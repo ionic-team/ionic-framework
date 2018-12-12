@@ -12,7 +12,8 @@ export const PLATFORMS_MAP = {
   'pwa': isPWA,
   'mobile': isMobile,
   'desktop': isDesktop,
-  'hybrid': isHybrid
+  'hybrid': isHybrid,
+  '_testing': isTesting
 };
 
 export type Platforms = keyof typeof PLATFORMS_MAP;
@@ -105,6 +106,10 @@ function isElectron(win: Window): boolean {
 
 function isPWA(win: Window): boolean {
   return win.matchMedia('(display-mode: standalone)').matches;
+}
+
+function isTesting(win: Window): boolean {
+  return testUserAgent(win, /ionic:_testing/);
 }
 
 function testUserAgent(win: Window, expr: RegExp) {

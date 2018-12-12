@@ -128,7 +128,7 @@ export const config: Config = {
     pixelmatchThreshold: 0.05,
     emulate: [
       {
-        userAgent: 'iPhone',
+        userAgent: 'iPhone ionic:_testing',
         viewport: {
           width: 400,
           height: 800,
@@ -139,7 +139,7 @@ export const config: Config = {
         }
       },
       {
-        userAgent: 'Android',
+        userAgent: 'Android ionic:_testing',
         viewport: {
           width: 400,
           height: 800,

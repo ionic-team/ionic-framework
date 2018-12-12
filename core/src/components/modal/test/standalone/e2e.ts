@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('modal: standalone', async () => {
   const page = await newE2EPage({
-    url: '/src/components/modal/test/standalone?ionic:_testing=true'
+    url: '/src/components/modal/test/standalone'
   });
 
   await page.click('#basic');

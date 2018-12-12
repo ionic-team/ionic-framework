@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('action-sheet: alertFromActionSheet', async () => {
   const page = await newE2EPage({
-    url: `/src/components/action-sheet/test/alert-from-action-sheet?ionic:_testing=true`
+    url: `/src/components/action-sheet/test/alert-from-action-sheet`
   });
 
   const presentBtn = await page.find('#alertFromActionSheet');

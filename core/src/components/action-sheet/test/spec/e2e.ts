@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('action-sheet: spec', async () => {
   const page = await newE2EPage({
-    url: `/src/components/action-sheet/test/spec?ionic:_testing=true`
+    url: `/src/components/action-sheet/test/spec`
   });
 
   const presentBtn = await page.find('#spec');

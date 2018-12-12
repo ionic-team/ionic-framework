@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('popover: standalone', async () => {
   const page = await newE2EPage({
-    url: '/src/components/popover/test/standalone?ionic:_testing=true'
+    url: '/src/components/popover/test/standalone'
   });
 
   await page.click('#basic');
