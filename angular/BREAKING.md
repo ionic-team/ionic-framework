@@ -1444,14 +1444,7 @@ The `ios` and `ios-small` spinner's have been renamed to `lines` and `lines-smal
 
 #### `ion-tabs`
 
-The attributes to position the tabs, change the tab layout, enable the tab highlight and hide the tabs have been renamed.
-
-| Old Property        | New Property         | Notes                                           |
-|---------------------|----------------------|-------------------------------------------------|
-| `tabsHighlight`     | `tabbarHighlight`    |                                                 |
-| `tabsLayout`        | `tabbarLayout`       | Value `title-hide` was renamed to `label-hide`  |
-| `tabsPlacement`     | `tabbarPlacement`    |                                                 |
-| `hidden`            | `tabbarHidden`       |                                                 |
+The attributes to position the tabs, change the tab layout, enable the tab highlight and hide the tabs have been removed
 
 **Old Usage Example:**
 
@@ -1464,7 +1457,7 @@ The attributes to position the tabs, change the tab layout, enable the tab highl
 **New Usage Example:**
 
 ```html
-<ion-tabs tabbarLayout="icon-top" tabbarPlacement="bottom" tabbarHighlight="true" tabbarHidden>
+<ion-tabs>
   ...
 </ion-tabs>
 ```
@@ -1472,16 +1465,7 @@ The attributes to position the tabs, change the tab layout, enable the tab highl
 
 #### `ion-tab`
 
-The attributes for the tab title, icon, and badge customization have been renamed.
-
-| Old Property        | New Property         |
-|---------------------|----------------------|
-| `tabTitle`          | `label`              |
-| `tabIcon`           | `icon`               |
-| `tabBadge`          | `badge`              |
-| `tabBadgeStyle`     | `badgeColor`         |
-| `enabled`           | `disabled`           |
-| `tabUrlPath`        | `href`               |
+The attributes for the tab title, icon, and badge customization have been removed. Instead you can add `<ion-label>` and `<ion-icon>` inside. `ion-tab` is to be wrapped by a `<ion-tab-bar>`.
 
 **Old Usage Example:**
 
@@ -1496,8 +1480,13 @@ The attributes for the tab title, icon, and badge customization have been rename
 
 ```html
 <ion-tabs>
-  <ion-tab label="Schedule" icon="add"></ion-tab>
-  <ion-tab label="Map" icon="map" badge="2" badgeColor="danger" disabled="true"></ion-tab>
+  <ion-tab-bar>
+    <ion-tab-button tab="map" disabled="true">
+      <ion-icon name="map"></ion-icon>
+      <ion-label>Map</ion-label>
+      <ion-badge color="danger">2</ion-badge>
+    </ion-tab-button>
+  </ion-tab-bar>
 </ion-tabs>
 ```
 
