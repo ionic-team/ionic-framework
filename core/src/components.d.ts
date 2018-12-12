@@ -1876,6 +1876,10 @@ export namespace Components {
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
+    /**
+    * When it's set to `true`, the item-divider will stay visible when it reaches the top of the viewport until the next `ion-item-divider` replaces it.  This feature relies in `position:sticky`: https://caniuse.com/#feat=css-sticky
+    */
+    'sticky': boolean;
   }
   interface IonItemDividerAttributes extends StencilHTMLAttributes {
     /**
@@ -1886,6 +1890,10 @@ export namespace Components {
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
+    /**
+    * When it's set to `true`, the item-divider will stay visible when it reaches the top of the viewport until the next `ion-item-divider` replaces it.  This feature relies in `position:sticky`: https://caniuse.com/#feat=css-sticky
+    */
+    'sticky'?: boolean;
   }
 
   interface IonItemGroup {}
@@ -4401,6 +4409,10 @@ export namespace Components {
 
   interface IonSplitPane {
     /**
+    * The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane.  ```html    * <ion-split-pane content-id="my-content">    *   <ion-menu></ion-menu>    *   <div id="my-content">    * </ion-split-pane>    * ```
+    */
+    'contentId'?: string;
+    /**
     * If `true`, the split pane will be hidden.
     */
     'disabled': boolean;
@@ -4410,6 +4422,10 @@ export namespace Components {
     'when': string | boolean;
   }
   interface IonSplitPaneAttributes extends StencilHTMLAttributes {
+    /**
+    * The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane.  ```html    * <ion-split-pane content-id="my-content">    *   <ion-menu></ion-menu>    *   <div id="my-content">    * </ion-split-pane>    * ```
+    */
+    'contentId'?: string;
     /**
     * If `true`, the split pane will be hidden.
     */

@@ -167,17 +167,17 @@ function getActivatableTarget(ev: any): any {
     const path = ev.composedPath() as HTMLElement[];
     for (let i = 0; i < path.length - 2; i++) {
       const el = path[i];
-      if (el.hasAttribute && el.hasAttribute('ion-activatable')) {
+      if (el.classList && el.classList.contains('ion-activatable')) {
         return el;
       }
     }
   } else {
-    return ev.target.closest('[ion-activatable]');
+    return ev.target.closest('.ion-activatable');
   }
 }
 
 function isInstant(el: HTMLElement) {
-  return el.getAttribute('ion-activatable') === 'instant';
+  return el.classList.contains('ion-activatable-instant');
 }
 
 function getRippleEffect(el: HTMLElement) {

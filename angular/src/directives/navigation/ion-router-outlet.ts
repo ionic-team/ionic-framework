@@ -4,6 +4,7 @@ import { StackController } from './stack-controller';
 import { NavController } from '../../providers/nav-controller';
 import { bindLifecycleEvents } from '../../providers/angular-delegate';
 import { RouteView, getUrl } from './stack-utils';
+import { Config } from '../../providers';
 
 @Directive({
   selector: 'ion-router-outlet',
@@ -34,6 +35,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   @Input()
   set swipeGesture(swipe: boolean) {
     this._swipeGesture = swipe;
+
     this.nativeEl.swipeHandler = (swipe && this.hasStack) ? {
       canStart: () => this.stackCtrl.canGoBack(1),
       onStart: () => this.stackCtrl.startBackTransition(),
@@ -48,6 +50,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     @Attribute('name') name: string,
     @Optional() @Attribute('tabs') tabs: string,
     private changeDetector: ChangeDetectorRef,
+    private config: Config,
     navCtrl: NavController,
     elementRef: ElementRef,
     router: Router,
@@ -82,7 +85,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     }
     this.nativeEl.componentOnReady().then(() => {
       if (this._swipeGesture === undefined) {
-        this.swipeGesture = this.nativeEl.mode === 'ios';
+        this.swipeGesture = this.config.get('swipeBackEnabled', this.nativeEl.mode === 'ios');
       }
     });
   }

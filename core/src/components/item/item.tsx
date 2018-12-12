@@ -127,7 +127,6 @@ export class Item implements ComponentInterface {
     });
 
     return {
-      'ion-activatable': this.isClickable(),
       'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...childStyles,
@@ -136,7 +135,8 @@ export class Item implements ComponentInterface {
         'item-disabled': this.disabled,
         'in-list': hostContext('ion-list', this.el),
         'item': true,
-        'item-multiple-inputs': this.multipleInputs
+        'item-multiple-inputs': this.multipleInputs,
+        'ion-activatable': this.isClickable(),
       }
     };
   }
