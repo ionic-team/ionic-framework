@@ -1,10 +1,10 @@
 import { ComponentRef, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RouterDirection } from '@ionic/core';
 
 import { NavController, NavDirection } from '../../providers/nav-controller';
-import { RouterDirection } from '@ionic/core';
-import { RouteView, computeStackId, destroyView, getUrl, insertView, isTabSwitch, toSegments } from './stack-utils';
 
+import { RouteView, computeStackId, destroyView, getUrl, insertView, isTabSwitch, toSegments } from './stack-utils';
 
 export class StackController {
 
@@ -23,7 +23,7 @@ export class StackController {
     private navCtrl: NavController,
     private zone: NgZone,
   ) {
-    this.tabsPrefix = tabsPrefix ? toSegments(tabsPrefix) : undefined;
+    this.tabsPrefix = tabsPrefix !== undefined ? toSegments(tabsPrefix) : undefined;
   }
 
   createView(enteringRef: ComponentRef<any>, activatedRoute: ActivatedRoute): RouteView {
@@ -128,7 +128,7 @@ export class StackController {
     showGoBack: boolean,
     progressAnimation: boolean
   ) {
-    if (this.runningTransition) {
+    if (this.runningTransition !== undefined) {
       await this.runningTransition;
       this.runningTransition = undefined;
     }

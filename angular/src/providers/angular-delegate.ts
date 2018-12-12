@@ -1,7 +1,7 @@
 import { ApplicationRef, ComponentFactoryResolver, Injectable, InjectionToken, Injector, NgZone, ViewContainerRef } from '@angular/core';
 import { FrameworkDelegate } from '@ionic/core';
-import { NavParams } from '../directives/navigation/nav-params';
 
+import { NavParams } from '../directives/navigation/nav-params';
 
 @Injectable()
 export class AngularDelegate {
@@ -19,7 +19,6 @@ export class AngularDelegate {
     return new AngularFrameworkDelegate(resolver, injector, location, this.appRef, this.zone);
   }
 }
-
 
 export class AngularFrameworkDelegate implements FrameworkDelegate {
 
@@ -132,7 +131,6 @@ export function bindLifecycleEvents(instance: any, element: HTMLElement) {
 }
 
 const NavParamsToken = new InjectionToken<any>('NavParamsToken');
-
 
 function getProviders(params: {[key: string]: any}) {
   return [
