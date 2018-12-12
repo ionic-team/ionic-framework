@@ -285,6 +285,16 @@ export class Slides implements ComponentInterface {
     swiper.allowTouchMove = !shouldLockSwipes;
   }
 
+  /**
+   * Force swiper to update its height (when autoHeight enabled) for the duration equal to 'speed' parameter
+   */
+  @Method()
+  async updateAutoHeight(speed?: number) {
+    const swiper = await this.getSwiper();
+    // Casting to `any` since @types/swiper is out of date
+    (swiper as any).updateAutoHeight(speed);
+  }
+
   private async initSwiper() {
     const finalOptions = this.normalizeOptions();
 
