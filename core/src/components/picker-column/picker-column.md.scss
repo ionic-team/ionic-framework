@@ -1,0 +1,51 @@
+@import "./picker-column";
+@import "../picker/picker.md.vars";
+
+// Material Design Picker Column
+// --------------------------------------------------
+
+.picker-col {
+  @include padding($picker-md-column-padding-top, $picker-md-column-padding-end, $picker-md-column-padding-bottom, $picker-md-column-padding-start);
+
+  transform-style: preserve-3d;
+}
+
+.picker-prefix,
+.picker-suffix,
+.picker-opts {
+  top: $picker-md-option-offset-y;
+
+  transform-style: preserve-3d;
+
+  color: inherit;
+
+  font-size: $picker-md-option-font-size;
+
+  line-height: $picker-md-option-height;
+  pointer-events: none;
+}
+
+
+.picker-opt {
+  @include margin(0);
+  @include padding($picker-md-option-padding-top, $picker-md-option-padding-end, $picker-md-option-padding-bottom, $picker-md-option-padding-start);
+
+  height: 43px;
+
+  transition-timing-function: ease-out;
+
+  background: transparent;
+  color: inherit;
+
+  font-size: $picker-md-option-font-size;
+
+  line-height: $picker-md-option-height;
+  backface-visibility: hidden;
+  pointer-events: auto;
+}
+
+.picker-prefix,
+.picker-suffix,
+.picker-opt.picker-opt-selected {
+  color: $picker-md-option-selected-color;
+}
