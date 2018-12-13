@@ -27,10 +27,10 @@
     "loader/"
   ],
   "dependencies": {
-    "ionicons": "4.4.8"
+    "ionicons": "4.5.0"
   },
   "devDependencies": {
-    "@stencil/core": "0.16.1-6",
+    "@stencil/core": "0.16.1",
     "@stencil/sass": "0.1.1",
     "@stencil/utils": "latest",
     "@types/jest": "^23.3.1",
