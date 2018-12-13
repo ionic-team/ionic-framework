@@ -77,6 +77,9 @@ export class TabButton implements ComponentInterface {
     if (this.layout === undefined) {
       this.layout = this.config.get('tabButtonLayout', 'icon-top');
     }
+    if (isNotDefined(this.tab)) {
+      console.error('Missing "tab" property in <ion-tab-button>');
+    }
   }
 
   private get hasLabel() {
@@ -116,4 +119,8 @@ export class TabButton implements ComponentInterface {
       </a>
     );
   }
+}
+
+function isNotDefined(a: any) {
+  return a == null;
 }
