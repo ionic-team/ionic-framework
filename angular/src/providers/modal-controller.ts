@@ -1,6 +1,8 @@
 import { ComponentFactoryResolver, Injectable, Injector } from '@angular/core';
 import { ModalOptions } from '@ionic/core';
+
 import { OverlayBaseController } from '../util/overlay';
+
 import { AngularDelegate } from './angular-delegate';
 
 @Injectable()

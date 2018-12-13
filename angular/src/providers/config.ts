@@ -1,7 +1,7 @@
-import { Config as CoreConfig, IonicConfig } from '@ionic/core';
 import { InjectionToken } from '@angular/core';
-import { IonicWindow } from '../types/interfaces';
+import { Config as CoreConfig, IonicConfig } from '@ionic/core';
 
+import { IonicWindow } from '../types/interfaces';
 
 export class Config {
 
@@ -40,7 +40,7 @@ export class Config {
 export const ConfigToken = new InjectionToken<any>('USERCONFIG');
 
 function getConfig(): CoreConfig | null {
-  const win: IonicWindow = window as any;
+  const win: IonicWindow | undefined = window as any;
   if (typeof win !== 'undefined') {
     const Ionic = win.Ionic;
     if (Ionic && Ionic.config) {

@@ -66,21 +66,17 @@ Would match the following tab:
 
 ### Angular Router integration
 
-Using tabs with Angular's router is fairly straight forward. The only additional requirement is that an href is supplied to update the browser URL. In this way, the correct `ion-tab` is selected, and the URl is updated.
+Using tabs with Angular's router is fairly straight forward. Here you only need to define tab which is the reference to the route.
 
 ```html
 
 <ion-tabs>
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="schedule" href="/app/tabs/(schedule:schedule)">
+    <ion-tab-button tab="schedule">
       <ion-icon name="calendar"></ion-icon>
       <ion-label>Schedule</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
-
-  <ion-tab tab="schedule">
-    <ion-router-outlet name="schedule"></ion-router-outlet>
-  </ion-tab>
 </ion-tabs>
 ```
 
@@ -93,46 +89,28 @@ Using tabs with Angular's router is fairly straight forward. The only additional
 
 ```html
 <ion-tabs>
-
-  <ion-tab tab="schedule">
-    <ion-router-outlet name="schedule"></ion-router-outlet>
-  </ion-tab>
-
-  <ion-tab tab="speakers">
-    <ion-router-outlet name="speakers"></ion-router-outlet>
-  </ion-tab>
-
-  <ion-tab tab="map">
-    <ion-router-outlet name="map"></ion-router-outlet>
-  </ion-tab>
-
-  <ion-tab tab="about">
-    <ion-router-outlet name="about"></ion-router-outlet>
-  </ion-tab>
-
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="schedule" href="/app/tabs/(schedule:schedule)">
+    <ion-tab-button tab="schedule">
       <ion-icon name="calendar"></ion-icon>
       <ion-label>Schedule</ion-label>
       <ion-badge>6</ion-badge>
     </ion-tab-button>
 
-    <ion-tab-button tab="speakers" href="/app/tabs/(speakers:speakers)">
+    <ion-tab-button tab="speakers">
       <ion-icon name="contacts"></ion-icon>
       <ion-label>Speakers</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="map" href="/app/tabs/(map:map)">
+    <ion-tab-button tab="map">
       <ion-icon name="map"></ion-icon>
       <ion-label>Map</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="about" href="/app/tabs/(about:about)">
+    <ion-tab-button tab="about">
       <ion-icon name="information-circle"></ion-icon>
       <ion-label>About</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
-
 </ion-tabs>
 ```
 
