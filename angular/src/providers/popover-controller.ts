@@ -1,6 +1,8 @@
 import { ComponentFactoryResolver, Injectable, Injector } from '@angular/core';
 import { PopoverOptions } from '@ionic/core';
+
 import { OverlayBaseController } from '../util/overlay';
+
 import { AngularDelegate } from './angular-delegate';
 
 @Injectable()

@@ -37,7 +37,6 @@ function setBack(views: RouteView[], view: RouteView) {
   }
 }
 
-
 export function getUrl(router: Router, activatedRoute: ActivatedRoute) {
   const urlTree = router.createUrlTree(['.'], { relativeTo: activatedRoute });
   return router.serializeUrl(urlTree);
@@ -73,7 +72,7 @@ export function toSegments(path: string): string[] {
     .filter(s => s !== '');
 }
 
-export function destroyView(view: RouteView) {
+export function destroyView(view: RouteView | undefined) {
   if (view) {
     // TODO lifecycle event
     view.ref.destroy();
