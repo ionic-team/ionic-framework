@@ -10,6 +10,7 @@ import { RouteView } from './stack-utils';
 @Component({
   selector: 'ion-tabs',
   template: `
+    <ng-content select="[slot=top]"></ng-content>
     <div class="tabs-inner">
       <ion-router-outlet #outlet tabs="true"></ion-router-outlet>
     </div>
