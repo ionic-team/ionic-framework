@@ -59,13 +59,11 @@ export class IonTabs {
   @HostListener('ionTabButtonClick', ['$event.detail'])
   onTabButtonClick(detail: TabButtonClickDetail) {
     const { tab, selected } = detail;
-    if (tab) {
-      const href = `${this.outlet.tabsPrefix}/${tab}`;
-      const url = selected
-        ? href
-        : this.outlet.getLastUrl(tab) || href;
+    const href = `${this.outlet.tabsPrefix}/${tab}`;
+    const url = selected
+      ? href
+      : this.outlet.getLastUrl(tab) || href;
 
-      this.navCtrl.navigateBack(url, true);
-    }
+    this.navCtrl.navigateBack(url, true);
   }
 }

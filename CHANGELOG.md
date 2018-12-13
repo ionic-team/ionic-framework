@@ -1,3 +1,199 @@
+# [4.0.0-beta.18](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.17...v4.0.0-beta.18) (2018-12-13)
+
+
+### Bug Fixes
+
+* **all:** type issues with TS 3.2 ([aa9d0d4](https://github.com/ionic-team/ionic/commit/aa9d0d4))
+* **angular:** disable change detection detach ([68e2619](https://github.com/ionic-team/ionic/commit/68e2619))
+* **angular:** lint issue ([a961dca](https://github.com/ionic-team/ionic/commit/a961dca))
+* **angular:** only routerLink works with angular router ([63cbc92](https://github.com/ionic-team/ionic/commit/63cbc92))
+* **angular:** remove rogue console debug message ([#16530](https://github.com/ionic-team/ionic/issues/16530)) ([9a47fc4](https://github.com/ionic-team/ionic/commit/9a47fc4)), closes [#16529](https://github.com/ionic-team/ionic/issues/16529)
+* **angular:** routerLink updates href ([c8d9685](https://github.com/ionic-team/ionic/commit/c8d9685))
+* **angular:** swipe to go backs in tabs ([#16710](https://github.com/ionic-team/ionic/issues/16710)) ([2553820](https://github.com/ionic-team/ionic/commit/2553820))
+* **angular:** swipeBackEnabled global config ([#16668](https://github.com/ionic-team/ionic/issues/16668)) ([d69427e](https://github.com/ionic-team/ionic/commit/d69427e)), closes [#16624](https://github.com/ionic-team/ionic/issues/16624)
+* **angular:** wait for core defined in angular initializer ([#16693](https://github.com/ionic-team/ionic/issues/16693)) ([060794e](https://github.com/ionic-team/ionic/commit/060794e))
+* **button:** reduce iOS border radius ([#16575](https://github.com/ionic-team/ionic/issues/16575)) ([b1e56bb](https://github.com/ionic-team/ionic/commit/b1e56bb))
+* **button:** relax css containment to "content" ([#16553](https://github.com/ionic-team/ionic/issues/16553)) ([802a3d1](https://github.com/ionic-team/ionic/commit/802a3d1))
+* **button/chip:** move hover styles into media query ([#16664](https://github.com/ionic-team/ionic/issues/16664)) ([a2c7b95](https://github.com/ionic-team/ionic/commit/a2c7b95)), closes [#16108](https://github.com/ionic-team/ionic/issues/16108)
+* **content:** do not scroll on pan-x ([#16721](https://github.com/ionic-team/ionic/issues/16721)) ([b6aea08](https://github.com/ionic-team/ionic/commit/b6aea08))
+* **img:** fire didLoad in safari ([#16571](https://github.com/ionic-team/ionic/issues/16571)) ([2ce986f](https://github.com/ionic-team/ionic/commit/2ce986f)), closes [#16557](https://github.com/ionic-team/ionic/issues/16557)
+* **item-divider:** use prop for sticky ([#16691](https://github.com/ionic-team/ionic/issues/16691)) ([a6a1723](https://github.com/ionic-team/ionic/commit/a6a1723))
+* **loading:** add backdropDismiss closes [#16527](https://github.com/ionic-team/ionic/issues/16527) ([#16570](https://github.com/ionic-team/ionic/issues/16570)) ([a251b50](https://github.com/ionic-team/ionic/commit/a251b50))
+* **react:** add class based APIs ([#16665](https://github.com/ionic-team/ionic/issues/16665)) ([2933f61](https://github.com/ionic-team/ionic/commit/2933f61)), closes [#16583](https://github.com/ionic-team/ionic/issues/16583)
+* **refresher:** close animation and hidden on pull down ([#16700](https://github.com/ionic-team/ionic/issues/16700)) ([6b0fc49](https://github.com/ionic-team/ionic/commit/6b0fc49)), closes [#16254](https://github.com/ionic-team/ionic/issues/16254)
+* **segment:** set colors in the parent segment and remove the unused color property ([#16590](https://github.com/ionic-team/ionic/issues/16590)) ([8029df3](https://github.com/ionic-team/ionic/commit/8029df3)), closes [#14853](https://github.com/ionic-team/ionic/issues/14853)
+* **segment-button:** make layout default to icon-top ([#16573](https://github.com/ionic-team/ionic/issues/16573)) ([841375e](https://github.com/ionic-team/ionic/commit/841375e))
+* **select:** selection-option is hidden in edge ([#16607](https://github.com/ionic-team/ionic/issues/16607)) ([6776e65](https://github.com/ionic-team/ionic/commit/6776e65)), closes [#16580](https://github.com/ionic-team/ionic/issues/16580)
+* **select-option:** using external style ([8050247](https://github.com/ionic-team/ionic/commit/8050247))
+* **tab-bar:** hide on keyboard events ([#16688](https://github.com/ionic-team/ionic/issues/16688)) ([1473805](https://github.com/ionic-team/ionic/commit/1473805)), closes [#16419](https://github.com/ionic-team/ionic/issues/16419)
+* **tab-bar:** update tab-bar to set the color/background of tab-button ([#16641](https://github.com/ionic-team/ionic/issues/16641)) ([2f63049](https://github.com/ionic-team/ionic/commit/2f63049)), closes [#14853](https://github.com/ionic-team/ionic/issues/14853)
+* **theming:** update ios design for button and card ([#16586](https://github.com/ionic-team/ionic/issues/16586)) ([9c8c650](https://github.com/ionic-team/ionic/commit/9c8c650))
+* **toolbar:** style all slotted content in order not only buttons ([#16617](https://github.com/ionic-team/ionic/issues/16617)) ([86fc9a5](https://github.com/ionic-team/ionic/commit/86fc9a5))
+
+
+### Features
+
+* **all:** vscode HTML autocompletion support ([#16687](https://github.com/ionic-team/ionic/issues/16687)) ([9b83bef](https://github.com/ionic-team/ionic/commit/9b83bef))
+* **fab-button:** add css border properties ([#16656](https://github.com/ionic-team/ionic/issues/16656)) ([64557a7](https://github.com/ionic-team/ionic/commit/64557a7)), closes [#16652](https://github.com/ionic-team/ionic/issues/16652)
+* **modal:** add css vars ([#16605](https://github.com/ionic-team/ionic/issues/16605)) ([235c685](https://github.com/ionic-team/ionic/commit/235c685))
+* **progress-bar:** add progress bar component ([#16559](https://github.com/ionic-team/ionic/issues/16559)) ([9167fb4](https://github.com/ionic-team/ionic/commit/9167fb4)), closes [#16558](https://github.com/ionic-team/ionic/issues/16558)
+* **range:** add support for range bar border radius ([#16519](https://github.com/ionic-team/ionic/issues/16519)) ([c036cb0](https://github.com/ionic-team/ionic/commit/c036cb0))
+* **theme:** default colors based in step colors ([95c0b1b](https://github.com/ionic-team/ionic/commit/95c0b1b))
+* **toast:** add CSS variables for box-shadow and border ([#16679](https://github.com/ionic-team/ionic/issues/16679)) ([1a299b0](https://github.com/ionic-team/ionic/commit/1a299b0))
+
+
+### BREAKING CHANGES
+
+#### [ANGULAR] Tabs
+
+Tabs got the last bit of changes needed in order to support lazy loading of components. To support this, some changes are required for the router config. Using the tabs starter as an example, here's a diff of the changes:
+
+<detail>
+
+```diff
+ import { RouterModule, Routes } from '@angular/router';
+
+ import { TabsPage } from './tabs.page';
+-import { Tab1Page } from '../tab1/tab1.page';
+-import { Tab2Page } from '../tab2/tab2.page';
+-import { Tab3Page } from '../tab3/tab3.page';
+
+ const routes: Routes = [
+   {
+     path: 'tabs',
+     component: TabsPage,
+     children: [
+-      {
+-        path: '',
+-        redirectTo: '/tabs/(tab1:tab1)',
+-        pathMatch: 'full',
+-      },
+       {
+         path: 'tab1',
+-        outlet: 'tab1',
+-        component: Tab1Page
++        children: [
++          {
++            path: '',
++            loadChildren: '../tab1/tab1.module#Tab1PageModule'
++          }
++        ]
+       },
+       {
+         path: 'tab2',
+-        outlet: 'tab2',
+-        component: Tab2Page
++        children: [
++          {
++            path: '',
++            loadChildren: '../tab2/tab2.module#Tab2PageModule'
++          }
++        ]
+       },
+       {
+         path: 'tab3',
+-        outlet: 'tab3',
+-        component: Tab3Page
++        children: [
++          {
++            path: '',
++            loadChildren: '../tab3/tab3.module#Tab3PageModule'
++          }
++        ]
++      },
++      {
++        path: '',
++        redirectTo: '/tabs/tab1',
++        pathMatch: 'full'
+       }
+     ]
+   },
+   {
+     path: '',
+-    redirectTo: '/tabs/(tab1:tab1)',
++    redirectTo: '/tabs/tab1',
+     pathMatch: 'full'
+   }
+ ];
+ ```
+
+</detail>
+
+And for the tabs markup, we have something close to pre-beta 16 tabs, but still provides a custom tab-bar.
+
+
+<detail>
+
+```diff
+ <ion-tabs>
+
+-  <ion-tab tab="tab1">
+-    <ion-router-outlet name="tab1"></ion-router-outlet>
+-  </ion-tab>
+-  <ion-tab tab="tab2">
+-    <ion-router-outlet name="tab2"></ion-router-outlet>
+-  </ion-tab>
+-  <ion-tab tab="tab3">
+-    <ion-router-outlet name="tab3"></ion-router-outlet>
+-  </ion-tab>
+-
+   <ion-tab-bar slot="bottom">
+-
+-    <ion-tab-button tab="tab1" href="/tabs/(tab1:tab1)">
++    <ion-tab-button tab="tab1">
+       <ion-icon name="flash"></ion-icon>
+       <ion-label>Tab One</ion-label>
+     </ion-tab-button>
+
+-    <ion-tab-button tab="tab2" href="/tabs/(tab2:tab2)">
++    <ion-tab-button tab="tab2">
+       <ion-icon name="apps"></ion-icon>
+       <ion-label>Tab Two</ion-label>
+     </ion-tab-button>
+
+-    <ion-tab-button tab="tab3" href="/tabs/(tab3:tab3)">
++    <ion-tab-button tab="tab3">
+       <ion-icon name="send"></ion-icon>
+       <ion-label>Tab Three</ion-label>
+     </ion-tab-button>
+-
+   </ion-tab-bar>
+
+ </ion-tabs>
+```
+
+</detail>
+
+
+
+### [ANGULAR] href does not cause Angular Router to navigate
+
+For consistency sake, the `href` attribute of `ion-button`, `ion-item` and `ion-anchor` no longer
+trigger navigation using the Angular’s Router,instead use angular’s `[routerLink]`:
+
+```diff
+- <ion-button href="/path/to/page">
++ <ion-button routerLink="/path/to/page">
+```
+
+This change will not affect SEO since ionic will still use `href` under the hood.
+
+
+### [ANGULAR] Prefixed Ion- components
+
+For consistency with other frameworks and the rest of APIs and tooling, the exported
+ionic components are prefixed with `Ion`.
+
+```diff
+- import { Input } from '@ionic/angular';
++ import { IonInput } from '@ionic/angular';
+```
+
+This change might also help to improve autocompletion, and prevent collisions with other libraries.
+
+[More info](https://github.com/ionic-team/ionic/issues/16550)
+
+
 <a name="4.0.0-beta.17"></a>
 # [4.0.0-beta.17](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.16...v4.0.0-beta.17) (2018-11-29)
 
