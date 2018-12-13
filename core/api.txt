@@ -721,6 +721,7 @@ ion-picker,event,ionPickerDidUnload,void,true
 ion-picker,event,ionPickerWillDismiss,OverlayEventDetail,true
 ion-picker,event,ionPickerWillPresent,void,true
 ion-picker,css-prop,--background
+ion-picker,css-prop,--background-rgb
 ion-picker,css-prop,--border-color
 ion-picker,css-prop,--border-radius
 ion-picker,css-prop,--border-style
