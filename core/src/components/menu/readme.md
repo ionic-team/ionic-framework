@@ -16,14 +16,93 @@ These can be controlled from the templates, or programmatically using the MenuCo
 ### Angular
 
 ```html
-<ion-menu>
+<ion-menu side="start" menuId="first">
   <ion-header>
-    <ion-toolbar>
-      <ion-title>Menu</ion-title>
+    <ion-toolbar color="primary">
+      <ion-title>Start Menu</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+    </ion-list>
+  </ion-content>
 </ion-menu>
+
+<ion-menu side="start" menuId="custom" class="my-custom-menu">
+  <ion-header>
+    <ion-toolbar color="tertiary">
+      <ion-title>Custom Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-menu side="end" type="push">
+  <ion-header>
+    <ion-toolbar color="danger">
+      <ion-title>End Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
 <ion-router-outlet main></ion-router-outlet>
+```
+
+```typescript
+import { Component } from '@angular/core';
+import { MenuController } from '@ionic/angular';
+
+@Component({
+  selector: 'menu-example',
+  templateUrl: 'menu-example.html',
+  styleUrls: ['./menu-example.css'],
+})
+export class MenuExample {
+
+constructor(private menu: MenuController) { }
+
+  openFirst() {
+    this.menu.enable(true, 'first');
+    this.menu.open('first');
+  }
+
+  openEnd() {
+    this.menu.open('end');
+  }
+
+  openCustom() {
+    this.menu.enable(true, 'custom');
+    this.menu.open('custom');
+  }
+}
+```
+
+```css
+.my-custom-menu {
+  --width: 500px;
+}
 ```
 
 
@@ -31,36 +110,96 @@ These can be controlled from the templates, or programmatically using the MenuCo
 
 ```html
 <ion-app>
-  <ion-menu side="start" content-id="menu-content">
+  <ion-menu side="start" menu-id="first">
     <ion-header>
-      <ion-toolbar color="secondary">
-        <ion-title>Left Menu</ion-title>
+      <ion-toolbar color="primary">
+        <ion-title>Start Menu</ion-title>
       </ion-toolbar>
     </ion-header>
-  </ion-menu>
-
-  <ion-menu side="end" content-id="menu-content">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Hola</ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content padding>
-      hola macho
+    <ion-content>
+      <ion-list>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+      </ion-list>
     </ion-content>
   </ion-menu>
 
-  <div class="ion-page" id="menu-content">
+  <ion-menu side="start" menu-id="custom" class="my-custom-menu">
+    <ion-header>
+      <ion-toolbar color="tertiary">
+        <ion-title>Custom Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-menu side="end" type="push">
+    <ion-header>
+      <ion-toolbar color="danger">
+        <ion-title>End Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <div class="ion-page" main>
     <ion-header>
       <ion-toolbar>
         <ion-title>Menu - Basic</ion-title>
       </ion-toolbar>
     </ion-header>
+    <ion-content padding>
+      <ion-button expand="block" onclick="openFirst()">Open Start Menu</ion-button>
+      <ion-button expand="block" onclick="openEnd()">Open End Menu</ion-button>
+      <ion-button expand="block" onclick="openCustom()">Open Custom Menu</ion-button>
+    </ion-content>
   </div>
 
 </ion-app>
 <ion-menu-controller></ion-menu-controller>
+```
+
+```javascript
+const menuCtrl = document.querySelector('ion-menu-controller');
+
+function openFirst() {
+  menuCtrl.enable(true, 'first');
+  menuCtrl.open('first');
+}
+
+function openEnd() {
+  menuCtrl.open('end');
+}
+
+function openCustom() {
+  menuCtrl.enable(true, 'custom');
+  menuCtrl.open('custom');
+}
+```
+
+```css
+.my-custom-menu {
+  --width: 500px;
+}
 ```
 
 
@@ -185,11 +324,15 @@ Type: `Promise<boolean>`
 
 ## CSS Custom Properties
 
-| Name            | Description             |
-| --------------- | ----------------------- |
-| `--background`  | Background of the menu  |
-| `--width`       | Width of the menu       |
-| `--width-small` | Width of the small menu |
+| Name           | Description                |
+| -------------- | -------------------------- |
+| `--background` | Background of the menu     |
+| `--height`     | Height of the menu         |
+| `--max-height` | Maximum height of the menu |
+| `--max-width`  | Maximum width of the menu  |
+| `--min-height` | Minimum height of the menu |
+| `--min-width`  | Minimum width of the menu  |
+| `--width`      | Width of the menu          |
 
 
 ----------------------------------------------

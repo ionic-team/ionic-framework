@@ -26,7 +26,15 @@ ion-action-sheet,event,ionActionSheetDidPresent,void,true
 ion-action-sheet,event,ionActionSheetDidUnload,void,true
 ion-action-sheet,event,ionActionSheetWillDismiss,OverlayEventDetail,true
 ion-action-sheet,event,ionActionSheetWillPresent,void,true
+ion-action-sheet,css-prop,--background
+ion-action-sheet,css-prop,--background-activated
+ion-action-sheet,css-prop,--background-selected
+ion-action-sheet,css-prop,--color
+ion-action-sheet,css-prop,--height
+ion-action-sheet,css-prop,--max-height
 ion-action-sheet,css-prop,--max-width
+ion-action-sheet,css-prop,--min-height
+ion-action-sheet,css-prop,--min-width
 ion-action-sheet,css-prop,--width
 
 ion-alert-controller
@@ -59,8 +67,12 @@ ion-alert,event,ionAlertDidUnload,void,true
 ion-alert,event,ionAlertWillDismiss,OverlayEventDetail,true
 ion-alert,event,ionAlertWillPresent,void,true
 ion-alert,css-prop,--background
+ion-alert,css-prop,--height
 ion-alert,css-prop,--max-height
+ion-alert,css-prop,--max-width
+ion-alert,css-prop,--min-height
 ion-alert,css-prop,--min-width
+ion-alert,css-prop,--width
 
 ion-anchor
 ion-anchor,prop,color,string | undefined,undefined,false
@@ -152,11 +164,6 @@ ion-button,css-prop,--box-shadow
 ion-button,css-prop,--color
 ion-button,css-prop,--color-activated
 ion-button,css-prop,--color-focused
-ion-button,css-prop,--height
-ion-button,css-prop,--margin-bottom
-ion-button,css-prop,--margin-end
-ion-button,css-prop,--margin-start
-ion-button,css-prop,--margin-top
 ion-button,css-prop,--opacity
 ion-button,css-prop,--padding-bottom
 ion-button,css-prop,--padding-end
@@ -164,7 +171,6 @@ ion-button,css-prop,--padding-start
 ion-button,css-prop,--padding-top
 ion-button,css-prop,--ripple-color
 ion-button,css-prop,--transition
-ion-button,css-prop,--width
 
 ion-buttons
 
@@ -210,9 +216,8 @@ ion-checkbox,css-prop,--border-radius
 ion-checkbox,css-prop,--border-style
 ion-checkbox,css-prop,--border-width
 ion-checkbox,css-prop,--checkmark-color
-ion-checkbox,css-prop,--height
+ion-checkbox,css-prop,--size
 ion-checkbox,css-prop,--transition
-ion-checkbox,css-prop,--width
 
 ion-chip
 ion-chip,prop,color,string | undefined,undefined,false
@@ -335,18 +340,12 @@ ion-fab-button,css-prop,--box-shadow
 ion-fab-button,css-prop,--color
 ion-fab-button,css-prop,--color-activated
 ion-fab-button,css-prop,--color-focused
-ion-fab-button,css-prop,--height
-ion-fab-button,css-prop,--margin-bottom
-ion-fab-button,css-prop,--margin-end
-ion-fab-button,css-prop,--margin-start
-ion-fab-button,css-prop,--margin-top
 ion-fab-button,css-prop,--padding-bottom
 ion-fab-button,css-prop,--padding-end
 ion-fab-button,css-prop,--padding-start
 ion-fab-button,css-prop,--padding-top
 ion-fab-button,css-prop,--ripple-color
 ion-fab-button,css-prop,--transition
-ion-fab-button,css-prop,--width
 
 ion-fab-list
 ion-fab-list,prop,activated,boolean,false,false
@@ -563,6 +562,14 @@ ion-loading,event,ionLoadingDidPresent,void,true
 ion-loading,event,ionLoadingDidUnload,void,true
 ion-loading,event,ionLoadingWillDismiss,OverlayEventDetail,true
 ion-loading,event,ionLoadingWillPresent,void,true
+ion-loading,css-prop,--background
+ion-loading,css-prop,--height
+ion-loading,css-prop,--max-height
+ion-loading,css-prop,--max-width
+ion-loading,css-prop,--min-height
+ion-loading,css-prop,--min-width
+ion-loading,css-prop,--spinner-color
+ion-loading,css-prop,--width
 
 ion-menu-button
 ion-menu-button,prop,autoHide,boolean,true,false
@@ -608,8 +615,12 @@ ion-menu,event,ionDidOpen,void,true
 ion-menu,event,ionWillClose,void,true
 ion-menu,event,ionWillOpen,void,true
 ion-menu,css-prop,--background
+ion-menu,css-prop,--height
+ion-menu,css-prop,--max-height
+ion-menu,css-prop,--max-width
+ion-menu,css-prop,--min-height
+ion-menu,css-prop,--min-width
 ion-menu,css-prop,--width
-ion-menu,css-prop,--width-small
 
 ion-modal-controller
 ion-modal-controller,method,create,create<T extends ComponentRef>(opts: ModalOptions<T>) => Promise<HTMLIonModalElement>
@@ -643,6 +654,10 @@ ion-modal,css-prop,--border-radius
 ion-modal,css-prop,--border-style
 ion-modal,css-prop,--border-width
 ion-modal,css-prop,--height
+ion-modal,css-prop,--max-height
+ion-modal,css-prop,--max-width
+ion-modal,css-prop,--min-height
+ion-modal,css-prop,--min-width
 ion-modal,css-prop,--width
 
 ion-nav-pop
@@ -713,6 +728,18 @@ ion-picker,event,ionPickerDidPresent,void,true
 ion-picker,event,ionPickerDidUnload,void,true
 ion-picker,event,ionPickerWillDismiss,OverlayEventDetail,true
 ion-picker,event,ionPickerWillPresent,void,true
+ion-picker,css-prop,--background
+ion-picker,css-prop,--background-rgb
+ion-picker,css-prop,--border-color
+ion-picker,css-prop,--border-radius
+ion-picker,css-prop,--border-style
+ion-picker,css-prop,--border-width
+ion-picker,css-prop,--height
+ion-picker,css-prop,--max-height
+ion-picker,css-prop,--max-width
+ion-picker,css-prop,--min-height
+ion-picker,css-prop,--min-width
+ion-picker,css-prop,--width
 
 ion-popover-controller
 ion-popover-controller,method,create,create<T extends ComponentRef>(opts: PopoverOptions<T>) => Promise<HTMLIonPopoverElement>
@@ -742,6 +769,14 @@ ion-popover,event,ionPopoverDidPresent,void,true
 ion-popover,event,ionPopoverDidUnload,void,true
 ion-popover,event,ionPopoverWillDismiss,OverlayEventDetail,true
 ion-popover,event,ionPopoverWillPresent,void,true
+ion-popover,css-prop,--background
+ion-popover,css-prop,--box-shadow
+ion-popover,css-prop,--height
+ion-popover,css-prop,--max-height
+ion-popover,css-prop,--max-width
+ion-popover,css-prop,--min-height
+ion-popover,css-prop,--min-width
+ion-popover,css-prop,--width
 
 ion-progress-bar
 ion-progress-bar,prop,buffer,number,1,false
@@ -774,10 +809,6 @@ ion-radio,event,ionRadioDidUnload,void,true
 ion-radio,event,ionSelect,CheckedInputChangeEvent,true
 ion-radio,css-prop,--color
 ion-radio,css-prop,--color-checked
-ion-radio,css-prop,--height
-ion-radio,css-prop,--inner-height
-ion-radio,css-prop,--inner-width
-ion-radio,css-prop,--width
 
 ion-range
 ion-range,prop,color,string | undefined,undefined,false
@@ -1150,6 +1181,12 @@ ion-toast,css-prop,--border-width
 ion-toast,css-prop,--box-shadow
 ion-toast,css-prop,--button-color
 ion-toast,css-prop,--color
+ion-toast,css-prop,--height
+ion-toast,css-prop,--max-height
+ion-toast,css-prop,--max-width
+ion-toast,css-prop,--min-height
+ion-toast,css-prop,--min-width
+ion-toast,css-prop,--width
 
 ion-toggle
 ion-toggle,prop,checked,boolean,false,false
