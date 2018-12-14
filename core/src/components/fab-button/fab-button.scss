@@ -4,12 +4,6 @@
 // --------------------------------------------------
 
 :host {
-  --transition: background-color, opacity 100ms linear;
-  --ripple-color: currentColor;
-  --border-radius: #{$fab-border-radius};
-  --border-width: 0;
-  --border-style: none;
-  --border-color: initial;
   /**
    * @prop --background: Background of the button
    * @prop --background-activated: Background of the button when activated
@@ -35,6 +29,13 @@
    * @prop --padding-bottom: Padding bottom of the button
    * @prop --padding-start: Padding start of the button
    */
+   --transition: background-color, opacity 100ms linear;
+   --ripple-color: currentColor;
+   --border-radius: #{$fab-border-radius};
+   --border-width: 0;
+   --border-style: none;
+   --border-color: initial;
+
   @include margin(0);
   display: block;
 
