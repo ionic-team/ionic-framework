@@ -22,7 +22,7 @@
 }
 
 ::slotted(.fab-button-in-list) {
-  --width: #{$fab-mini-size};
+  --width: #{$fab-small-size};
 
   transform: scale(0);
 

@@ -68,7 +68,7 @@ export class FabButton implements ComponentInterface {
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   /**
-   * The FAB size.
+   * The size of the button. Set this to `small` in order to have a mini fab.
    */
   @Prop() size?: 'small';
 

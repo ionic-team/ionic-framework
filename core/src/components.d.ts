@@ -1359,7 +1359,7 @@ export namespace Components {
     */
     'show': boolean;
     /**
-    * The FAB size.
+    * The size of the button. Set this to `small` in order to have a mini fab.
     */
     'size'?: 'small';
     /**
@@ -1409,7 +1409,7 @@ export namespace Components {
     */
     'show'?: boolean;
     /**
-    * The FAB size.
+    * The size of the button. Set this to `small` in order to have a mini fab.
     */
     'size'?: 'small';
     /**
