@@ -18,6 +18,7 @@
    * @prop --height: height of the action sheet
    * @prop --max-height: Maximum height of the action sheet
    */
+  --color: initial;
   --min-width: auto;
   --width: #{$action-sheet-width};
   --max-width: #{$action-sheet-max-width};
