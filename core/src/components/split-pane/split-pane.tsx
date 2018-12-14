@@ -34,6 +34,21 @@ export class SplitPane implements ComponentInterface {
   @Prop({ context: 'window' }) win!: Window;
 
   /**
+   * The content `id` of the split-pane's main content.
+   * This property can be used instead of the `[main]` attribute to select the `main`
+   * content of the split-pane.
+   *
+   * ```html
+   * <ion-split-pane content-id="my-content">
+   *   <ion-menu></ion-menu>
+   *   <div id="my-content">
+   * </ion-split-pane>
+   * ```
+   *
+   */
+  @Prop() contentId?: string;
+
+  /**
    * If `true`, the split pane will be hidden.
    */
   @Prop() disabled = false;
@@ -129,12 +144,13 @@ export class SplitPane implements ComponentInterface {
     if (this.isServer) {
       return;
     }
+    const contentId = this.contentId;
     const children = this.el.children;
     const nu = this.el.childElementCount;
     let foundMain = false;
     for (let i = 0; i < nu; i++) {
       const child = children[i] as HTMLElement;
-      const isMain = child.hasAttribute('main');
+      const isMain = contentId !== undefined ? child.id === contentId : child.hasAttribute('main');
       if (isMain) {
         if (foundMain) {
           console.warn('split pane can not have more than one main node');

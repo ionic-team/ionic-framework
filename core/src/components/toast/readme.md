@@ -18,6 +18,75 @@ The toast can be dismissed automatically after a specific amount of time by pass
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Angular
+
+```typescript
+import { Component } from '@angular/core';
+import { ToastController } from '@ionic/angular';
+
+@Component({
+  selector: 'toast-example',
+  templateUrl: 'toast-example.html',
+  styleUrls: ['./toast-example.css'],
+})
+export class ToastExample {
+
+  constructor(public toastController: ToastController) {}
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Your settings have been saved.',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  async presentToastWithOptions() {
+    const toast = await this.toastController.create({
+      message: 'Click to Close',
+      showCloseButton: true,
+      position: 'top',
+      closeButtonText: 'Done'
+    });
+    toast.present();
+  }
+
+}
+```
+
+
+### Javascript
+
+```javascript
+async function presentToast() {
+  const toastController = document.querySelector('ion-toast-controller');
+  await toastController.componentOnReady();
+
+  const toast = await toastController.create({
+    message: 'Your settings have been saved.',
+    duration: 2000
+  });
+  return await toast.present();
+}
+
+async function presentToastWithOptions() {
+  const toastController = document.querySelector('ion-toast-controller');
+  await toastController.componentOnReady();
+
+  const toast = await toastController.create({
+    message: 'Click to Close',
+    showCloseButton: true,
+    position: 'top',
+    closeButtonText: 'Done'
+  });
+  return await toast.present();
+}
+```
+
+
+
 ## Properties
 
 | Property          | Attribute           | Description                                                                                                                                                                                                                                                            | Type                                                                                   | Default     |
@@ -101,11 +170,22 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name             | Description              |
-| ---------------- | ------------------------ |
-| `--background`   | Background of the toast  |
-| `--button-color` | Color of the button text |
-| `--color`        | Color of the toast text  |
+| Name              | Description                 |
+| ----------------- | --------------------------- |
+| `--background`    | Background of the toast     |
+| `--border-color`  | Border color of the toast   |
+| `--border-radius` | Border radius of the toast  |
+| `--border-style`  | Border style of the toast   |
+| `--border-width`  | Border width of the toast   |
+| `--box-shadow`    | Box shadow of the toast     |
+| `--button-color`  | Color of the button text    |
+| `--color`         | Color of the toast text     |
+| `--height`        | Height of the toast         |
+| `--max-height`    | Maximum height of the toast |
+| `--max-width`     | Maximum width of the toast  |
+| `--min-height`    | Minimum height of the toast |
+| `--min-width`     | Minimum width of the toast  |
+| `--width`         | Width of the toast          |
 
 
 ----------------------------------------------

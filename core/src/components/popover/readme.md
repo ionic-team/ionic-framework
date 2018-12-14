@@ -14,6 +14,53 @@ To present a popover, call the `present` method on a popover instance. In order 
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Angular
+
+```typescript
+import { Component } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
+import { PopoverComponent } from '../../component/popover/popover.component';
+
+@Component({
+  selector: 'popover-example',
+  templateUrl: 'popover-example.html',
+  styleUrls: ['./popover-example.css']
+})
+export class PopoverExample {
+  constructor(public popoverController: PopoverController) {}
+
+  async presentPopover(ev: any) {
+    const popover = await this.popoverController.create({
+      component: PopoverComponent,
+      event: ev,
+      translucent: true
+    });
+    return await popover.present();
+  }
+}
+```
+
+
+### Javascript
+
+```javascript
+async function presentPopover(ev) {
+  const popoverController = document.querySelector('ion-popover-controller');
+  await popoverController.componentOnReady();
+
+  const popover = await popoverController.create({
+    component: 'popover-example-page',
+    translucent: true
+    event: ev,
+  });
+  return await popover.present();
+}
+```
+
+
+
 ## Properties
 
 | Property          | Attribute          | Description                                                                                                      | Type                                                                                   | Default     |
@@ -92,6 +139,20 @@ Present the popover overlay after it has been created.
 Type: `Promise<void>`
 
 
+
+
+## CSS Custom Properties
+
+| Name           | Description                   |
+| -------------- | ----------------------------- |
+| `--background` | Background of the popover     |
+| `--box-shadow` | Box shadow of the popover     |
+| `--height`     | Height of the popover         |
+| `--max-height` | Maximum height of the popover |
+| `--max-width`  | Maximum width of the popover  |
+| `--min-height` | Minimum height of the popover |
+| `--min-width`  | Minimum width of the popover  |
+| `--width`      | Width of the popover          |
 
 
 ----------------------------------------------

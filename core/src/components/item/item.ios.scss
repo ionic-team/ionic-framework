@@ -96,15 +96,11 @@
   --padding-bottom: 0px;
   --padding-start: .5em;
   --padding-end: .5em;
-  --height: 24px;
+
+  height: 24px;
 
   font-size: 13px;
 }
-
-// TODO
-// .item-ios .button-small-ios ion-icon[slot="icon-only"] {
-//   @include padding(0, 1px);
-// }
 
 
 // iOS Item Avatar & Thumbnail

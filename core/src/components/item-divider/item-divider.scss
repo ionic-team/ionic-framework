@@ -44,7 +44,7 @@
   color: current-color(contrast);
 }
 
-:host([sticky]) {
+:host(.item-divider-sticky) {
   position: sticky;
   top: 0;
 }

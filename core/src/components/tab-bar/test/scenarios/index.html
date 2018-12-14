@@ -73,7 +73,7 @@
       <ion-icon name="call"></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button tab="2" layout="icon-top">
+    <ion-tab-button tab="2">
       <ion-badge>6</ion-badge>
       <ion-label>hi</ion-label>
       <ion-icon name="heart"></ion-icon>
@@ -193,7 +193,7 @@
     </ion-tab-button>
 
     <ion-tab-button tab="2" class="main-tab">
-      <ion-icon src="/src/components/tab-bar/test/scenarios/camera.svg"></ion-icon>
+      <ion-icon class="main-tab-icon" src="/src/components/tab-bar/test/scenarios/camera.svg"></ion-icon>
     </ion-tab-button>
 
     <ion-tab-button tab="3">
@@ -235,7 +235,10 @@
       height: 80px;
       background: #3880ff;
       color: white;
-      font-size: 16px;
+    }
+
+    .main-tab-icon {
+      font-size: 36px;
     }
 
     .custom-tabbar-color {

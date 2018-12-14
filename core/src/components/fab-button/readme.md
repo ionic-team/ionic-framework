@@ -7,6 +7,36 @@ If the FAB button is not wrapped with `<ion-fab>`, it will scroll with the conte
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Angular / javascript
+
+```html
+<ion-content>
+
+  <!-- Fixed Floating Action Button that does not scroll with the content -->
+  <ion-fab>
+    <ion-fab-button>Button</ion-fab-button>
+  </ion-fab>
+
+  <!-- Default Floating Action Button that scrolls with the content.-->
+  <ion-fab-button>Default</ion-fab-button>
+
+  <!-- Mini -->
+  <ion-fab-button mini>Mini</ion-fab-button>
+
+  <!-- Colors -->
+  <ion-fab-button color="primary">Primary</ion-fab-button>
+  <ion-fab-button color="secondary">Secondary</ion-fab-button>
+  <ion-fab-button color="danger">Danger</ion-fab-button>
+  <ion-fab-button color="light">Light</ion-fab-button>
+  <ion-fab-button color="dark">Dark</ion-fab-button>
+
+</ion-content>
+```
+
+
+
 ## Properties
 
 | Property          | Attribute          | Description                                                                                                                                                                                                                                                            | Type                              | Default     |
@@ -45,18 +75,12 @@ If the FAB button is not wrapped with `<ion-fab>`, it will scroll with the conte
 | `--color`                | Text color of the button                |
 | `--color-activated`      | Text color of the button when activated |
 | `--color-focused`        | Text color of the button when focused   |
-| `--height`               | Height of the button                    |
-| `--margin-bottom`        | Margin bottom of the button             |
-| `--margin-end`           | Margin end of the button                |
-| `--margin-start`         | Margin start of the button              |
-| `--margin-top`           | Margin top of the button                |
 | `--padding-bottom`       | Padding bottom of the button            |
 | `--padding-end`          | Padding end of the button               |
 | `--padding-start`        | Padding start of the button             |
 | `--padding-top`          | Padding top of the button               |
 | `--ripple-color`         | Color of the button ripple effect       |
 | `--transition`           | Transition of the button                |
-| `--width`                | Width of the button                     |
 
 
 ----------------------------------------------

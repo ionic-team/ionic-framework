@@ -26,7 +26,15 @@ ion-action-sheet,event,ionActionSheetDidPresent,void,true
 ion-action-sheet,event,ionActionSheetDidUnload,void,true
 ion-action-sheet,event,ionActionSheetWillDismiss,OverlayEventDetail,true
 ion-action-sheet,event,ionActionSheetWillPresent,void,true
+ion-action-sheet,css-prop,--background
+ion-action-sheet,css-prop,--background-activated
+ion-action-sheet,css-prop,--background-selected
+ion-action-sheet,css-prop,--color
+ion-action-sheet,css-prop,--height
+ion-action-sheet,css-prop,--max-height
 ion-action-sheet,css-prop,--max-width
+ion-action-sheet,css-prop,--min-height
+ion-action-sheet,css-prop,--min-width
 ion-action-sheet,css-prop,--width
 
 ion-alert-controller
@@ -59,8 +67,12 @@ ion-alert,event,ionAlertDidUnload,void,true
 ion-alert,event,ionAlertWillDismiss,OverlayEventDetail,true
 ion-alert,event,ionAlertWillPresent,void,true
 ion-alert,css-prop,--background
+ion-alert,css-prop,--height
 ion-alert,css-prop,--max-height
+ion-alert,css-prop,--max-width
+ion-alert,css-prop,--min-height
 ion-alert,css-prop,--min-width
+ion-alert,css-prop,--width
 
 ion-anchor
 ion-anchor,prop,color,string | undefined,undefined,false
@@ -152,11 +164,6 @@ ion-button,css-prop,--box-shadow
 ion-button,css-prop,--color
 ion-button,css-prop,--color-activated
 ion-button,css-prop,--color-focused
-ion-button,css-prop,--height
-ion-button,css-prop,--margin-bottom
-ion-button,css-prop,--margin-end
-ion-button,css-prop,--margin-start
-ion-button,css-prop,--margin-top
 ion-button,css-prop,--opacity
 ion-button,css-prop,--padding-bottom
 ion-button,css-prop,--padding-end
@@ -164,7 +171,6 @@ ion-button,css-prop,--padding-start
 ion-button,css-prop,--padding-top
 ion-button,css-prop,--ripple-color
 ion-button,css-prop,--transition
-ion-button,css-prop,--width
 
 ion-buttons
 
@@ -210,9 +216,8 @@ ion-checkbox,css-prop,--border-radius
 ion-checkbox,css-prop,--border-style
 ion-checkbox,css-prop,--border-width
 ion-checkbox,css-prop,--checkmark-color
-ion-checkbox,css-prop,--height
+ion-checkbox,css-prop,--size
 ion-checkbox,css-prop,--transition
-ion-checkbox,css-prop,--width
 
 ion-chip
 ion-chip,prop,color,string | undefined,undefined,false
@@ -335,18 +340,12 @@ ion-fab-button,css-prop,--box-shadow
 ion-fab-button,css-prop,--color
 ion-fab-button,css-prop,--color-activated
 ion-fab-button,css-prop,--color-focused
-ion-fab-button,css-prop,--height
-ion-fab-button,css-prop,--margin-bottom
-ion-fab-button,css-prop,--margin-end
-ion-fab-button,css-prop,--margin-start
-ion-fab-button,css-prop,--margin-top
 ion-fab-button,css-prop,--padding-bottom
 ion-fab-button,css-prop,--padding-end
 ion-fab-button,css-prop,--padding-start
 ion-fab-button,css-prop,--padding-top
 ion-fab-button,css-prop,--ripple-color
 ion-fab-button,css-prop,--transition
-ion-fab-button,css-prop,--width
 
 ion-fab-list
 ion-fab-list,prop,activated,boolean,false,false
@@ -447,6 +446,7 @@ ion-input,css-prop,--placeholder-opacity
 ion-item-divider
 ion-item-divider,prop,color,string | undefined,undefined,false
 ion-item-divider,prop,mode,"ios" | "md",undefined,false
+ion-item-divider,prop,sticky,boolean,false,false
 ion-item-divider,css-prop,--background
 ion-item-divider,css-prop,--color
 ion-item-divider,css-prop,--padding-bottom
@@ -562,6 +562,14 @@ ion-loading,event,ionLoadingDidPresent,void,true
 ion-loading,event,ionLoadingDidUnload,void,true
 ion-loading,event,ionLoadingWillDismiss,OverlayEventDetail,true
 ion-loading,event,ionLoadingWillPresent,void,true
+ion-loading,css-prop,--background
+ion-loading,css-prop,--height
+ion-loading,css-prop,--max-height
+ion-loading,css-prop,--max-width
+ion-loading,css-prop,--min-height
+ion-loading,css-prop,--min-width
+ion-loading,css-prop,--spinner-color
+ion-loading,css-prop,--width
 
 ion-menu-button
 ion-menu-button,prop,autoHide,boolean,true,false
@@ -607,8 +615,12 @@ ion-menu,event,ionDidOpen,void,true
 ion-menu,event,ionWillClose,void,true
 ion-menu,event,ionWillOpen,void,true
 ion-menu,css-prop,--background
+ion-menu,css-prop,--height
+ion-menu,css-prop,--max-height
+ion-menu,css-prop,--max-width
+ion-menu,css-prop,--min-height
+ion-menu,css-prop,--min-width
 ion-menu,css-prop,--width
-ion-menu,css-prop,--width-small
 
 ion-modal-controller
 ion-modal-controller,method,create,create<T extends ComponentRef>(opts: ModalOptions<T>) => Promise<HTMLIonModalElement>
@@ -636,6 +648,17 @@ ion-modal,event,ionModalDidPresent,void,true
 ion-modal,event,ionModalDidUnload,void,true
 ion-modal,event,ionModalWillDismiss,OverlayEventDetail,true
 ion-modal,event,ionModalWillPresent,void,true
+ion-modal,css-prop,--background
+ion-modal,css-prop,--border-color
+ion-modal,css-prop,--border-radius
+ion-modal,css-prop,--border-style
+ion-modal,css-prop,--border-width
+ion-modal,css-prop,--height
+ion-modal,css-prop,--max-height
+ion-modal,css-prop,--max-width
+ion-modal,css-prop,--min-height
+ion-modal,css-prop,--min-width
+ion-modal,css-prop,--width
 
 ion-nav-pop
 
@@ -705,6 +728,18 @@ ion-picker,event,ionPickerDidPresent,void,true
 ion-picker,event,ionPickerDidUnload,void,true
 ion-picker,event,ionPickerWillDismiss,OverlayEventDetail,true
 ion-picker,event,ionPickerWillPresent,void,true
+ion-picker,css-prop,--background
+ion-picker,css-prop,--background-rgb
+ion-picker,css-prop,--border-color
+ion-picker,css-prop,--border-radius
+ion-picker,css-prop,--border-style
+ion-picker,css-prop,--border-width
+ion-picker,css-prop,--height
+ion-picker,css-prop,--max-height
+ion-picker,css-prop,--max-width
+ion-picker,css-prop,--min-height
+ion-picker,css-prop,--min-width
+ion-picker,css-prop,--width
 
 ion-popover-controller
 ion-popover-controller,method,create,create<T extends ComponentRef>(opts: PopoverOptions<T>) => Promise<HTMLIonPopoverElement>
@@ -734,6 +769,25 @@ ion-popover,event,ionPopoverDidPresent,void,true
 ion-popover,event,ionPopoverDidUnload,void,true
 ion-popover,event,ionPopoverWillDismiss,OverlayEventDetail,true
 ion-popover,event,ionPopoverWillPresent,void,true
+ion-popover,css-prop,--background
+ion-popover,css-prop,--box-shadow
+ion-popover,css-prop,--height
+ion-popover,css-prop,--max-height
+ion-popover,css-prop,--max-width
+ion-popover,css-prop,--min-height
+ion-popover,css-prop,--min-width
+ion-popover,css-prop,--width
+
+ion-progress-bar
+ion-progress-bar,prop,buffer,number,1,false
+ion-progress-bar,prop,color,string | undefined,undefined,false
+ion-progress-bar,prop,mode,"ios" | "md",undefined,false
+ion-progress-bar,prop,reversed,boolean,false,false
+ion-progress-bar,prop,type,"determinate" | "indeterminate",'determinate',false
+ion-progress-bar,prop,value,number,0,false
+ion-progress-bar,css-prop,--background
+ion-progress-bar,css-prop,--buffer-background
+ion-progress-bar,css-prop,--progress-background
 
 ion-radio-group
 ion-radio-group,prop,allowEmptySelection,boolean,false,false
@@ -774,6 +828,7 @@ ion-range,event,ionChange,InputChangeEvent,true
 ion-range,event,ionFocus,void,true
 ion-range,css-prop,--bar-background
 ion-range,css-prop,--bar-background-active
+ion-range,css-prop,--bar-border-radius
 ion-range,css-prop,--bar-height
 ion-range,css-prop,--height
 ion-range,css-prop,--knob-background
@@ -871,9 +926,8 @@ ion-searchbar,css-prop,--placeholder-opacity
 
 ion-segment-button
 ion-segment-button,prop,checked,boolean,false,false
-ion-segment-button,prop,color,string | undefined,undefined,false
 ion-segment-button,prop,disabled,boolean,false,false
-ion-segment-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide" | undefined,undefined,false
+ion-segment-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide" | undefined,'icon-top',false
 ion-segment-button,prop,mode,"ios" | "md",undefined,false
 ion-segment-button,prop,value,string,'ion-sb-' + (ids++),false
 ion-segment-button,event,ionSelect,void,true
@@ -939,13 +993,10 @@ ion-select,event,ionBlur,void,true
 ion-select,event,ionCancel,void,true
 ion-select,event,ionChange,SelectInputChangeEvent,true
 ion-select,event,ionFocus,void,true
-ion-select,css-prop,--color
-ion-select,css-prop,--icon-color
 ion-select,css-prop,--padding-bottom
 ion-select,css-prop,--padding-end
 ion-select,css-prop,--padding-start
 ion-select,css-prop,--padding-top
-ion-select,css-prop,--placeholder-color
 
 ion-skeleton-text
 ion-skeleton-text,prop,width,string,'100%',false
@@ -999,6 +1050,7 @@ ion-spinner,prop,paused,boolean,false,false
 ion-spinner,css-prop,--color
 
 ion-split-pane
+ion-split-pane,prop,contentId,string | undefined,undefined,false
 ion-split-pane,prop,disabled,boolean,false,false
 ion-split-pane,prop,when,boolean | string,QUERY['lg'],false
 ion-split-pane,event,ionChange,{visible: boolean},false
@@ -1007,7 +1059,6 @@ ion-split-pane,css-prop,--border
 
 ion-tab-bar
 ion-tab-bar,prop,color,string | undefined,undefined,false
-ion-tab-bar,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide",'icon-top',false
 ion-tab-bar,prop,mode,"ios" | "md",undefined,false
 ion-tab-bar,prop,selectedTab,string | undefined,undefined,false
 ion-tab-bar,prop,translucent,boolean,false,false
@@ -1016,14 +1067,13 @@ ion-tab-bar,css-prop,--border
 ion-tab-bar,css-prop,--color
 
 ion-tab-button
-ion-tab-button,prop,color,string | undefined,undefined,false
 ion-tab-button,prop,disabled,boolean,false,false
 ion-tab-button,prop,href,string | undefined,undefined,false
 ion-tab-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide" | undefined,undefined,false
 ion-tab-button,prop,mode,"ios" | "md",undefined,false
 ion-tab-button,prop,tab,string,undefined,false
 ion-tab-button,css-prop,--background
-ion-tab-button,css-prop,--background-selected
+ion-tab-button,css-prop,--background-focused
 ion-tab-button,css-prop,--color
 ion-tab-button,css-prop,--color-selected
 ion-tab-button,css-prop,--padding-bottom
@@ -1124,8 +1174,19 @@ ion-toast,event,ionToastDidUnload,void,true
 ion-toast,event,ionToastWillDismiss,OverlayEventDetail,true
 ion-toast,event,ionToastWillPresent,void,true
 ion-toast,css-prop,--background
+ion-toast,css-prop,--border-color
+ion-toast,css-prop,--border-radius
+ion-toast,css-prop,--border-style
+ion-toast,css-prop,--border-width
+ion-toast,css-prop,--box-shadow
 ion-toast,css-prop,--button-color
 ion-toast,css-prop,--color
+ion-toast,css-prop,--height
+ion-toast,css-prop,--max-height
+ion-toast,css-prop,--max-width
+ion-toast,css-prop,--min-height
+ion-toast,css-prop,--min-width
+ion-toast,css-prop,--width
 
 ion-toggle
 ion-toggle,prop,checked,boolean,false,false

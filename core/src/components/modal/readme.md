@@ -12,6 +12,72 @@ Modals can be created using a [Modal Controller](../../modal-controller/ModalCon
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Angular
+
+```typescript
+import { Component } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { ModalPage } from '../modal/modal.page';
+@Component({
+  selector: 'modal-example',
+  templateUrl: 'modal-example.html',
+  styleUrls: ['./modal-example.css']
+})
+export class ModalExample {
+  constructor(public modalController: ModalController) {}
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: ModalPage,
+      componentProps: { value: 123 }
+    });
+    return await modal.present();
+  }
+}
+```
+
+
+### Javascript
+
+```javascript
+async function presentModal() {
+  // initialize controller
+  const modalController = document.querySelector('ion-modal-controller');
+  await modalController.componentOnReady();
+
+  // create component to open
+  const element = document.createElement('div');
+  element.innerHTML = `
+  &lt;ion-header&gt;
+    &lt;ion-toolbar&gt;
+      &lt;ion-title&gt;Super Modal&lt;/ion-title&gt;
+    &lt;/ion-toolbar&gt;
+  &lt;/ion-header&gt;
+  &lt;ion-content&gt;
+    &lt;h1&gt;Content of doom&lt;/h1&gt;
+    &lt;div&gt;Here's some more content&lt;/div&gt;
+    &lt;ion-button class="dismiss"&gt;Dismiss Modal&lt;/ion-button&gt;
+  &lt;/ion-content&gt;
+  `;
+
+  // listen for close event
+  const button = element.querySelector('ion-button');
+  button.addEventListener('click', () => {
+    modalController.dismiss();
+  });
+
+  // present the modal
+  const modalElement = await modalController.create({
+    component: element
+  });
+  modalElement.present();
+}
+```
+
+
+
 ## Properties
 
 | Property          | Attribute          | Description                                                                                                      | Type                                                                                   | Default     |
@@ -88,6 +154,23 @@ Present the modal overlay after it has been created.
 Type: `Promise<void>`
 
 
+
+
+## CSS Custom Properties
+
+| Name              | Description                        |
+| ----------------- | ---------------------------------- |
+| `--background`    | Background of the modal content    |
+| `--border-color`  | Border color of the modal content  |
+| `--border-radius` | Border radius of the modal content |
+| `--border-style`  | Border style of the modal content  |
+| `--border-width`  | Border width of the modal content  |
+| `--height`        | Height of the modal                |
+| `--max-height`    | Maximum height of the modal        |
+| `--max-width`     | Maximum width of the modal         |
+| `--min-height`    | Minimum height of the modal        |
+| `--min-width`     | Minimum width of the modal         |
+| `--width`         | Width of the modal                 |
 
 
 ----------------------------------------------

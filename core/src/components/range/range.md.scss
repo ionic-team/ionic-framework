@@ -12,6 +12,7 @@
   --bar-height: #{$range-md-bar-height};
   --bar-background: #{ion-color(primary, base, 0.26)};
   --bar-background-active: #{ion-color(primary, base)};
+  --bar-border-radius: 0;
   --height: #{$range-md-slider-height};
   --pin-background: #{ion-color(primary, base)};
   --pin-color: #{ion-color(primary, contrast)};

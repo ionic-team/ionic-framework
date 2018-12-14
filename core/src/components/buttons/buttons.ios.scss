@@ -10,7 +10,8 @@
   --padding-bottom: 0;
   --padding-start: 5px;
   --padding-end: 5px;
-  --height: 32px;
+
+  height: 32px;
 
   font-size: #{$toolbar-ios-button-font-size};
   font-weight: 400;
@@ -77,11 +78,6 @@
 
 //   min-width: 36px;
 
-//   --margin-top: 0;
-//   --margin-bottom: 0;
-//   --margin-start: 6px;
-//   --margin-end: 6px;
-
 //   --padding-top: 0;
 //   --padding-bottom: 0;
 //   --padding-start: 0;
@@ -94,25 +90,3 @@
 //   }
 // }
 
-// iOS Toolbar Button Placement
-// --------------------------------------------------
-
-:host([slot="start"]) {
-  order: map-get($toolbar-order-ios, buttons-start);
-}
-
-:host([slot="secondary"]) {
-  order: map-get($toolbar-order-ios, buttons-secondary);
-}
-
-:host([slot="primary"]) {
-  order: map-get($toolbar-order-ios, buttons-primary);
-
-  text-align: end;
-}
-
-:host([slot="end"]) {
-  order: map-get($toolbar-order-ios, buttons-end);
-
-  text-align: end;
-}

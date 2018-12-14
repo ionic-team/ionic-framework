@@ -29,15 +29,10 @@
   align-items: center;
   justify-content: center;
 
-  width: var(--width);
-  height: var(--height);
+  width: 100%;
+  height: 100%;
 
   contain: layout size style;
-}
-
-.radio-inner {
-  width: var(--inner-width);
-  height: var(--inner-height);
 }
 
 button {

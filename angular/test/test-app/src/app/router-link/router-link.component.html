@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Router Link Test
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <p>ngOnInit: <span id="ngOnInit">{{onInit}}</span></p>
+  <p>ionViewWillEnter: <span id="ionViewWillEnter">{{willEnter}}</span></p>
+  <p>ionViewDidEnter: <span id="ionViewDidEnter">{{didEnter}}</span></p>
+  <p>ionViewWillLeave: <span id="ionViewWillLeave">{{willLeave}}</span></p>
+  <p>ionViewDidLeave: <span id="ionViewDidLeave">{{didLeave}}</span></p>
+
+  <p>
+    <ion-button routerLink="/router-link-page" expand="block" color="dark" id="routerLink">ion-button[routerLink]</ion-button>
+    <ion-button routerLink="/router-link-page" routerDirection="root" expand="block" color="dark" id="routerLink-root">ion-button[routerLink] (direction:root)</ion-button>
+    <ion-button routerLink="/router-link-page" routerDirection="back" expand="block" color="dark" id="routerLink-back">ion-button[routerLink] (direction:back)</ion-button>
+  </p>
+
+  <p><a routerLink="/router-link-page" id="a">a[routerLink]</a></p>
+  <p><a routerLink="/router-link-page" routerDirection="root" id="a-root">a[routerLink] (direction:root)</a></p>
+  <p><a routerLink="/router-link-page" routerDirection="back" id="a-back">a[routerLink] (direction:back)</a></p>
+
+  <p><button (click)="navigate()" id="button">navigate</button></p>
+  <p><button (click)="navigateForward()" id="button-forward">navigateForward</button></p>
+  <p><button (click)="navigateRoot()" id="button-root">navigateForward</button></p>
+  <p><button (click)="navigateBack()" id="button-back">navigateBack</button></p>
+
+</ion-content>

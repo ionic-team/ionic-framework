@@ -4,6 +4,19 @@
 // iOS Segment
 // --------------------------------------------------
 
+:host {
+  --background: #{$segment-button-ios-background-color};
+  --background-hover: #{$segment-button-ios-background-color-hover};
+  --background-activated: #{$segment-button-ios-background-color-activated};
+  --background-checked: #{$segment-button-ios-background-color-checked};
+  --color: #{$segment-button-ios-text-color};
+  --color-checked: #{$segment-button-ios-text-color-checked};
+  --color-disabled: #{ion-color(primary, base, $segment-button-ios-opacity-disabled)};
+  --color-checked-disabled: #{ion-color(primary, contrast, $segment-button-ios-opacity-disabled)};
+  --border-color: #{$segment-button-ios-border-color};
+  --indicator-color: transparent;
+}
+
 :host(.segment-disabled) {
   opacity: $segment-ios-opacity-disabled;
 }
@@ -16,6 +29,7 @@
   --border-color: #{current-color(base)};
   --background-hover: #{current-color(base, .04)};
 
+  background: transparent;
   color: #{current-color(base)};
 }
 
@@ -51,10 +65,11 @@
 }
 
 :host-context(ion-toolbar):not(.ion-color)::slotted(ion-segment-button) {
-  --background-checked: var(--color);
-  --border-color: var(--color);
-  --color: #{var(--ion-toolbar-color-unchecked, $segment-button-ios-text-color)};
-  --color-checked: #{var(--ion-toolbar-color-checked, $segment-button-ios-text-color-checked)};
+  color: #{var(--ion-toolbar-color-unchecked, var(--color))};
+}
+
+:host-context(ion-toolbar):not(.ion-color)::slotted(.segment-button-checked) {
+  color: #{var(--ion-toolbar-color-checked, var(--color-checked))};
 }
 
 // Segment: Color Toolbar

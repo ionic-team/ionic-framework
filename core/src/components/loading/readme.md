@@ -16,6 +16,75 @@ The loading indicator can be dismissed automatically after a specific amount of 
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Angular
+
+```typescript
+import { Component } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
+
+@Component({
+  selector: 'loading-example',
+  templateUrl: 'loading-example.html',
+  styleUrls: ['./loading-example.css']
+})
+export class LoadingExample {
+  constructor(public loadingController: LoadingController) {}
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Hellooo',
+      duration: 2000
+    });
+    return await loading.present();
+  }
+
+  async presentLoadingWithOptions() {
+    const loading = await this.loadingController.create({
+      spinner: null,
+      duration: 5000,
+      message: 'Please wait...',
+      translucent: true,
+      cssClass: 'custom-class custom-loading'
+    });
+    return await loading.present();
+  }
+}
+```
+
+
+### Javascript
+
+```javascript
+async function presentLoading() {
+  const loadingController = document.querySelector('ion-loading-controller');
+  await loadingController.componentOnReady();
+
+  const loading = await loadingController.create({
+    message: 'Hellooo',
+    duration: 2000
+  });
+  return await loading.present();
+}
+
+async function presentLoadingWithOptions() {
+  const loadingController = document.querySelector('ion-loading-controller');
+  await loadingController.componentOnReady();
+
+  const loading = await loadingController.create({
+    spinner: null,
+    duration: 5000,
+    message: 'Please wait...',
+    translucent: true,
+    cssClass: 'custom-class custom-loading'
+  });
+  return await loading.present();
+}
+```
+
+
+
 ## Properties
 
 | Property          | Attribute          | Description                                                                                                      | Type                                                                                              | Default     |
@@ -94,6 +163,20 @@ Present the loading overlay after it has been created.
 Type: `Promise<void>`
 
 
+
+
+## CSS Custom Properties
+
+| Name              | Description                          |
+| ----------------- | ------------------------------------ |
+| `--background`    | Background of the loading dialog     |
+| `--height`        | Height of the loading dialog         |
+| `--max-height`    | Maximum height of the loading dialog |
+| `--max-width`     | Maximum width of the loading dialog  |
+| `--min-height`    | Minimum height of the loading dialog |
+| `--min-width`     | Minimum width of the loading dialog  |
+| `--spinner-color` | Color of the loading spinner         |
+| `--width`         | Width of the loading dialog          |
 
 
 ----------------------------------------------

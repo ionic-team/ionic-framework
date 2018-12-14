@@ -15,6 +15,9 @@ $toast-md-font-size:                               14px !default;
 /// @prop - Color of the toast
 $toast-md-color:                                   $background-color-step-50 !default;
 
+/// @prop - Border radius of the toast wrapper
+$toast-md-border-radius:                           4px !default;
+
 /// @prop - Font size of the toast message
 $toast-md-message-line-height:                     20px !default;
 

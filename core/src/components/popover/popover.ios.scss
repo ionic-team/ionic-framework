@@ -4,16 +4,14 @@
 // iOS Popover
 // --------------------------------------------------
 
+:host {
+  --width: #{$popover-ios-width};
+  --max-height: #{$popover-ios-max-height};
+  --box-shadow: none;
+}
+
 .popover-content {
   @include border-radius($popover-ios-border-radius);
-
-  width: $popover-ios-width;
-  min-width: $popover-ios-min-width;
-  min-height: $popover-ios-min-height;
-  max-height: $popover-ios-max-height;
-
-  background-color: $popover-ios-background-color;
-  color: $popover-ios-text-color;
 }
 
 
@@ -41,7 +39,7 @@
 
   transform: rotate(45deg);
 
-  background-color: $popover-ios-arrow-background-color;
+  background: var(--background);
 
   content: "";
   z-index: $z-index-overlay-wrapper;

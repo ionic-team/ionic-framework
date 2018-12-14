@@ -6,6 +6,23 @@ Img is a tag that will lazily load an image when ever the tag is in the viewport
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Angular
+
+```html
+<ion-list>
+  <ion-item *ngFor="let item of items">
+    <ion-thumbnail slot="start">
+      <ion-img [src]="item.src"></ion-img>
+    </ion-thumbnail>
+    <ion-label>{{item.text}}</ion-label>
+  </ion-item>
+</ion-list>
+```
+
+
+
 ## Properties
 
 | Property | Attribute | Description                                                                                                                                                                                                              | Type                  | Default     |

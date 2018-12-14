@@ -952,7 +952,7 @@ describe('NavController', () => {
           ? win.document.createElement(enteringView.component)
           : enteringView.element = enteringView.component as HTMLElement;
       }
-      enteringView.state = ViewState.Attached;
+      enteringView.state = VIEW_STATE_ATTACHED;
     };
     return navI;
   }
