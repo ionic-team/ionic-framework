@@ -190,7 +190,7 @@ export class VirtualScroll implements ComponentInterface {
    * The subset of items to be updated can are specifing by an offset and a length.
    */
   @Method()
-  markDirty(offset: number, len = -1) {
+  checkRange(offset: number, len = -1) {
     // TODO: kind of hacky how we do in-place updated of the cells
     // array. this part needs a complete refactor
     if (!this.items) {
@@ -209,7 +209,7 @@ export class VirtualScroll implements ComponentInterface {
     } else if (offset === max) {
       j = this.cells.length;
     } else {
-      console.warn('bad values for markDirty');
+      console.warn('bad values for checkRange');
       return;
     }
     const cells = calcCells(
@@ -235,15 +235,15 @@ export class VirtualScroll implements ComponentInterface {
    *
    * It's equivalent to calling:
    *
-   * ```
-   * virtualScroll.markDirty(lastItemLen, items.length - lastItemLen);
+   * ```js
+   * virtualScroll.checkRange(lastItemLen, items.length - lastItemLen);
    * ```
    */
   @Method()
-  markDirtyTail() {
+  checkEnd() {
     if (this.items) {
       const offset = this.lastItemLen;
-      this.markDirty(offset, this.items.length - offset);
+      this.checkRange(offset, this.items.length - offset);
     }
   }
 

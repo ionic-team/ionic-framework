@@ -1193,6 +1193,6 @@ ion-virtual-scroll,prop,nodeRender,((el: HTMLElement | null, cell: Cell, domInde
 ion-virtual-scroll,prop,renderFooter,((item: any, index: number) => any) | undefined,undefined,false
 ion-virtual-scroll,prop,renderHeader,((item: any, index: number) => any) | undefined,undefined,false
 ion-virtual-scroll,prop,renderItem,((item: any, index: number) => any) | undefined,undefined,false
-ion-virtual-scroll,method,markDirty,markDirty(offset: number, len?: number) => void
-ion-virtual-scroll,method,markDirtyTail,markDirtyTail() => void
+ion-virtual-scroll,method,checkEnd,checkEnd() => void
+ion-virtual-scroll,method,checkRange,checkRange(offset: number, len?: number) => void
 ion-virtual-scroll,method,positionForItem,positionForItem(index: number) => Promise<number>

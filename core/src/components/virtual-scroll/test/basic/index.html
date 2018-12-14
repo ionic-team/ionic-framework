@@ -75,7 +75,7 @@
         append = Array.from({ length: 10 }, (x, i) => "append" + i);
       }
       items.push(...append);
-      virtual.markDirtyTail(append.length)
+      virtual.checkEnd(append.length)
     }
 
     function getAsyncData() {

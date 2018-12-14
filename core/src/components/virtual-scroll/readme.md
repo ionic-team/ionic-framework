@@ -271,7 +271,23 @@ let rotateImg = 0;
 
 ## Methods
 
-### `markDirty(offset: number, len?: number) => void`
+### `checkEnd() => void`
+
+This method marks the tail the items array as dirty, so they can be re-rendered.
+
+It's equivalent to calling:
+
+```js
+   * virtualScroll.checkRange(lastItemLen, items.length - lastItemLen);
+   * ```
+
+#### Returns
+
+Type: `void`
+
+
+
+### `checkRange(offset: number, len?: number) => void`
 
 This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as
 dirty any time the content or their style changes.
@@ -284,22 +300,6 @@ The subset of items to be updated can are specifing by an offset and a length.
 | -------- | -------- | ----------- |
 | `offset` | `number` |             |
 | `len`    | `number` |             |
-
-#### Returns
-
-Type: `void`
-
-
-
-### `markDirtyTail() => void`
-
-This method marks the tail the items array as dirty, so they can be re-rendered.
-
-It's equivalent to calling:
-
-```
-   * virtualScroll.markDirty(lastItemLen, items.length - lastItemLen);
-   * ```
 
 #### Returns
 

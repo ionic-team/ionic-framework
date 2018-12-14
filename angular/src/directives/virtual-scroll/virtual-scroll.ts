@@ -1,4 +1,4 @@
-import { ContentChild, Directive, ElementRef, EmbeddedViewRef, NgZone } from '@angular/core';
+import { ContentChild, Directive, ElementRef, EmbeddedViewRef, NgZone, Input, TrackByFunction, IterableDiffers, SimpleChanges, IterableDiffer } from '@angular/core';
 import { Cell, CellType } from '@ionic/core';
 
 import { proxyInputs } from '../proxies';
@@ -20,50 +20,89 @@ import { VirtualContext } from './virtual-utils';
     'itemHeight'
   ]
 })
-export class VirtualScroll {
+export class IonVirtualScrollDelegate {
 
+  private differ: IterableDiffer<any>;
+  private nativeEl: HTMLIonVirtualScrollElement;
   private refMap = new WeakMap<HTMLElement, EmbeddedViewRef<VirtualContext>> ();
 
   @ContentChild(VirtualItem) itmTmp!: VirtualItem;
   @ContentChild(VirtualHeader) hdrTmp!: VirtualHeader;
   @ContentChild(VirtualFooter) ftrTmp!: VirtualFooter;
 
-  constructor(
-    private el: ElementRef,
-    private zone: NgZone,
-  ) {
-    const nativeEl = el.nativeElement as HTMLIonVirtualScrollElement;
-    nativeEl.nodeRender = this.nodeRender.bind(this);
+  /**
+   * Same as `ngForTrackBy` which can be used on `ngFor`.
+   */
+  @Input() virtualTrackBy: TrackByFunction<any>;
+  @Input() items: any;
 
-    proxyInputs(this, this.el.nativeElement, [
-      'approxItemHeight',
-      'approxHeaderHeight',
-      'approxFooterHeight',
-      'headerFn',
-      'footerFn',
-      'items',
-      'itemHeight'
-    ]);
+  constructor(
+    private zone: NgZone,
+    private iterableDiffers: IterableDiffers,
+    el: ElementRef,
+  ) {
+    this.nativeEl = el.nativeElement as HTMLIonVirtualScrollElement;
+    this.nativeEl.nodeRender = this.nodeRender.bind(this);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if ('virtualScroll' in changes) {
+      // React on virtualScroll changes only once all inputs have been initialized
+      const value = changes['virtualScroll'].currentValue;
+      if (this.differ == null && value != null) {
+        try {
+          this.differ = this.iterableDiffers.find(value).create(this.virtualTrackBy);
+        } catch (e) {
+          throw new Error(
+            `Cannot find a differ supporting object '${value}'. VirtualScroll only supports binding to Iterables such as Arrays.`);
+        }
+      }
+    }
+  }
+
+  ngDoCheck() {
+    // and if there actually are changes
+    const changes = this.differ != null ? this.differ.diff(this.items) : null;
+    if (changes == null) {
+      return;
+    }
+
+    let start = 0;
+    let end = 0;
+
+    changes.
+    changes.forEachOperation((_, pindex, cindex) => {
+      // add new record after current position
+      if (pindex === null && (cindex < lastRecord)) {
+        console.debug('virtual-scroll', 'adding record before current position, slow path');
+        needClean = true;
+        return;
+      }
+      // remove record after current position
+      if (pindex < lastRecord && cindex === null) {
+        console.debug('virtual-scroll', 'removing record before current position, slow path');
+        needClean = true;
+        return;
+      }
+    });
   }
 
   private nodeRender(el: HTMLElement | null, cell: Cell, index: number): HTMLElement {
-    return this.zone.run(() => {
-      if (!el) {
-        const view = this.itmTmp.viewContainer.createEmbeddedView(
-          this.getComponent(cell.type),
-          { $implicit: null, index },
-          index
-        );
-        el = getElement(view);
-        this.refMap.set(el, view);
-      }
-      const node = this.refMap.get(el)!;
-      const ctx = node.context as VirtualContext;
-      ctx.$implicit = cell.value;
-      ctx.index = cell.index;
-      node.markForCheck();
-      return el;
-    });
+    if (!el) {
+      const view = this.itmTmp.viewContainer.createEmbeddedView(
+        this.getComponent(cell.type),
+        { $implicit: null, index },
+        index
+      );
+      el = getElement(view);
+      this.refMap.set(el, view);
+    }
+    const node = this.refMap.get(el)!;
+    const ctx = node.context as VirtualContext;
+    ctx.$implicit = cell.value;
+    ctx.index = cell.index;
+    this.zone.run(() => node.markForCheck());
+    return el;
   }
 
   private getComponent(type: CellType) {
