@@ -26,7 +26,15 @@ ion-action-sheet,event,ionActionSheetDidPresent,void,true
 ion-action-sheet,event,ionActionSheetDidUnload,void,true
 ion-action-sheet,event,ionActionSheetWillDismiss,OverlayEventDetail,true
 ion-action-sheet,event,ionActionSheetWillPresent,void,true
+ion-action-sheet,css-prop,--background
+ion-action-sheet,css-prop,--background-activated
+ion-action-sheet,css-prop,--background-selected
+ion-action-sheet,css-prop,--color
+ion-action-sheet,css-prop,--height
+ion-action-sheet,css-prop,--max-height
 ion-action-sheet,css-prop,--max-width
+ion-action-sheet,css-prop,--min-height
+ion-action-sheet,css-prop,--min-width
 ion-action-sheet,css-prop,--width
 
 ion-alert-controller
