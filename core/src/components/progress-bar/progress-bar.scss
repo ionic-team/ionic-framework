@@ -3,6 +3,7 @@
 // Progress bar
 // --------------------------------------------------
 // Host has no background by default - this will be added to the progress-buffer-bar
+
 :host {
   /**
   * @prop --background:  Same as --buffer-background when using a determinate progress bar, otherwise it styles the background of the ion-progress-bar itself.
@@ -32,8 +33,6 @@
   background: var(--buffer-background);
 }
 
-// Set the bars to full width and height
-// QUESTION: Can this be simplified?
 .progress,
 .progress-indeterminate,
 .indeterminate-bar-primary,
@@ -50,6 +49,7 @@
 
 // Determinate progress bar
 // --------------------------------------------------
+
 .progress,
 .progress-buffer-bar {
   @include transform-origin(start, top);
@@ -58,15 +58,15 @@
 
 // Progress and background bar
 // --------------------------------------------------
+
 .progress,
 .progress-indeterminate {
   background: var(--progress-background);
-  
+
   z-index: 2;
 }
 
 .progress-buffer-bar {
-
   // It's currently here because --buffer-background has an alpha
   // Otherwise the buffer circles would be seen through
   background: #fff;
@@ -82,12 +82,14 @@
 
 // MD based animation on indeterminate type
 // --------------------------------------------------
+
 .indeterminate-bar-primary {
   @include position(0, 0, 0, -145.166611%);
   animation: primary-indeterminate-translate 2s infinite linear;
 
   .progress-indeterminate {
     animation: primary-indeterminate-scale 2s infinite linear;
+    animation-play-state: inherit;
   }
 }
 
@@ -97,11 +99,13 @@
 
   .progress-indeterminate {
     animation: secondary-indeterminate-scale 2s infinite linear;
+    animation-play-state: inherit;
   }
 }
 
 // Buffer style
 // --------------------------------------------------
+
 .buffer-circles {
   background: radial-gradient(ellipse at center, var(--buffer-background) 0%, var(--buffer-background) 30%, transparent 30%) repeat-x 5px center;
   background-size: 10px 10px;
@@ -113,6 +117,7 @@
 // If reversed is set to true, the animation will be reversed
 // and the bars starting at the top right
 // --------------------------------------------------
+
 :host(.progress-bar-reversed) {
   .progress,
   .progress-buffer-bar {
@@ -127,9 +132,21 @@
   }
 }
 
+// Progress paused
+// --------------------------------------------------
+
+:host(.progress-paused) {
+  .indeterminate-bar-secondary,
+  .indeterminate-bar-primary,
+  .buffer-circles {
+    animation-play-state: paused;
+  }
+}
+
 // Animation Keyframes
 // --------------------------------------------------
 // Source: https://github.com/material-components/material-components-web/blob/master/packages/mdc-linear-progress/_keyframes.scss
+
 @keyframes primary-indeterminate-translate {
   0% {
     transform: translateX(0);

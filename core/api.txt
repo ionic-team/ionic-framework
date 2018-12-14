@@ -447,6 +447,7 @@ ion-input,css-prop,--placeholder-opacity
 ion-item-divider
 ion-item-divider,prop,color,string | undefined,undefined,false
 ion-item-divider,prop,mode,"ios" | "md",undefined,false
+ion-item-divider,prop,sticky,boolean,false,false
 ion-item-divider,css-prop,--background
 ion-item-divider,css-prop,--color
 ion-item-divider,css-prop,--padding-bottom

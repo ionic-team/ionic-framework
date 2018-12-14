@@ -10,7 +10,7 @@ import {
   template,
   url
 } from '@angular-devkit/schematics';
-import { Path, join, normalize } from '@angular-devkit/core';
+import { Path, join } from '@angular-devkit/core';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { addPackageToPackageJson } from './../utils/package';
 import { addModuleImportToRootModule } from './../utils/ast';

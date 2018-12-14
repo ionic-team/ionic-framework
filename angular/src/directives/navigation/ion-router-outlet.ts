@@ -1,10 +1,12 @@
 import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, Input, NgZone, OnDestroy, OnInit, Optional, Output, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ChildrenOutletContexts, OutletContext, PRIMARY_OUTLET, Router } from '@angular/router';
-import { StackController } from './stack-controller';
-import { NavController } from '../../providers/nav-controller';
-import { bindLifecycleEvents } from '../../providers/angular-delegate';
-import { RouteView, getUrl } from './stack-utils';
+
 import { Config } from '../../providers';
+import { bindLifecycleEvents } from '../../providers/angular-delegate';
+import { NavController } from '../../providers/nav-controller';
+
+import { StackController } from './stack-controller';
+import { RouteView, getUrl } from './stack-utils';
 
 @Directive({
   selector: 'ion-router-outlet',
@@ -20,7 +22,6 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   private name: string;
   private stackCtrl: StackController;
   private nativeEl: HTMLIonRouterOutletElement;
-  private hasStack = false;
 
   tabsPrefix: string | undefined;
 
@@ -36,7 +37,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   set swipeGesture(swipe: boolean) {
     this._swipeGesture = swipe;
 
-    this.nativeEl.swipeHandler = (swipe && this.hasStack) ? {
+    this.nativeEl.swipeHandler = swipe ? {
       canStart: () => this.stackCtrl.canGoBack(1),
       onStart: () => this.stackCtrl.startBackTransition(),
       onEnd: shouldContinue => this.stackCtrl.endBackTransition(shouldContinue)
@@ -85,7 +86,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     }
     this.nativeEl.componentOnReady().then(() => {
       if (this._swipeGesture === undefined) {
-        this.swipeGesture = this.config.get('swipeBackEnabled', this.nativeEl.mode === 'ios');
+        this.swipeGesture = this.config.getBoolean('swipeBackEnabled', this.nativeEl.mode === 'ios');
       }
     });
   }

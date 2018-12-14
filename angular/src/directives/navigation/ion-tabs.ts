@@ -1,13 +1,16 @@
 import { Component, ContentChild, HostListener, ViewChild } from '@angular/core';
 import { TabButtonClickDetail } from '@ionic/core';
-import { IonRouterOutlet } from './ion-router-outlet';
+
 import { NavController } from '../../providers';
 import { IonTabBar } from '../proxies';
+
+import { IonRouterOutlet } from './ion-router-outlet';
 import { RouteView } from './stack-utils';
 
 @Component({
   selector: 'ion-tabs',
   template: `
+    <ng-content select="[slot=top]"></ng-content>
     <div class="tabs-inner">
       <ion-router-outlet #outlet tabs="true"></ion-router-outlet>
     </div>
@@ -57,13 +60,11 @@ export class IonTabs {
   @HostListener('ionTabButtonClick', ['$event.detail'])
   onTabButtonClick(detail: TabButtonClickDetail) {
     const { tab, selected } = detail;
-    if (tab) {
-      const href = `${this.outlet.tabsPrefix}/${tab}`;
-      const url = selected
-        ? href
-        : this.outlet.getLastUrl(tab) || href;
+    const href = `${this.outlet.tabsPrefix}/${tab}`;
+    const url = selected
+      ? href
+      : this.outlet.getLastUrl(tab) || href;
 
-      this.navCtrl.navigateBack(url, true);
-    }
+    this.navCtrl.navigateBack(url, true);
   }
 }
