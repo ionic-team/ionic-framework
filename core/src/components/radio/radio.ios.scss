@@ -6,10 +6,9 @@
 
 :host {
   --color-checked: #{ion-color(primary, base)};
-  --width: #{$radio-ios-icon-width};
-  --height: #{$radio-ios-icon-height};
-  --inner-width: 5px;
-  --inner-height: 12px;
+
+  width: $radio-ios-icon-width;
+  height: $radio-ios-icon-height;
 }
 
 :host(.ion-color.radio-checked) .radio-inner {
@@ -24,6 +23,11 @@
 // iOS Radio Checkmark: Checked
 // -----------------------------------------
 
+.radio-inner {
+  width: 33%;
+  height: 50%;
+}
+
 :host(.radio-checked) .radio-inner {
   transform: rotate(45deg);
 
@@ -33,6 +37,7 @@
   border-style: $radio-ios-icon-border-style;
   border-color: var(--color-checked);
 }
+
 
 // iOS Radio: Disabled
 // -----------------------------------------
