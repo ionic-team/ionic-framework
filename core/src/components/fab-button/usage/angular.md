@@ -10,7 +10,7 @@
   <ion-fab-button>Default</ion-fab-button>
 
   <!-- Mini -->
-  <ion-fab-button mini>Mini</ion-fab-button>
+  <ion-fab-button size="small">Mini</ion-fab-button>
 
   <!-- Colors -->
   <ion-fab-button color="primary">Primary</ion-fab-button>
