@@ -274,6 +274,7 @@ export class Datetime implements ComponentInterface {
   private generatePickerOptions(): PickerOptions {
     const pickerOptions: PickerOptions = {
       ...this.pickerOptions,
+      mode: this.mode,
       columns: this.generateColumns()
     };
 
