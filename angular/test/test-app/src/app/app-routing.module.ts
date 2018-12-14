@@ -9,6 +9,8 @@ import { TabsComponent } from './tabs/tabs.component';
 import { TabsTab1Component } from './tabs-tab1/tabs-tab1.component';
 import { TabsTab1NestedComponent } from './tabs-tab1-nested/tabs-tab1-nested.component';
 import { TabsTab2Component } from './tabs-tab2/tabs-tab2.component';
+import { VirtualScrollComponent } from './virtual-scroll/virtual-scroll.component';
+import { VirtualScrollDetailComponent } from './virtual-scroll-detail/virtual-scroll-detail.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -16,6 +18,9 @@ const routes: Routes = [
   { path: 'modals', component: ModalComponent },
   { path: 'router-link', component: RouterLinkComponent },
   { path: 'router-link-page', component: RouterLinkPageComponent },
+  { path: 'virtual-scroll', component: VirtualScrollComponent },
+  { path: 'virtual-scroll-detail/:itemId', component: VirtualScrollDetailComponent },
+
   { path: 'tabs', redirectTo: '/tabs/account', pathMatch: 'full' },
   {
     path: 'tabs',

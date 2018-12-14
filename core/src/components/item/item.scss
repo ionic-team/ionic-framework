@@ -62,13 +62,14 @@
 
   position: relative;
 
+  outline: none;
+
   color: var(--color);
 
   font-family: $font-family-base;
 
   text-align: initial;
   text-decoration: none;
-
   box-sizing: border-box;
 }
 
