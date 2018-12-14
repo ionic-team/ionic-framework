@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ToastOptions } from '@ionic/core';
+
 import { OverlayBaseController } from '../util/overlay';
 
 @Injectable()

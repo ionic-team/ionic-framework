@@ -52,6 +52,7 @@
   contain: size layout style;
 
   cursor: grab;
+  touch-action: pan-y;
 }
 
 :host(.range-pressed) .range-slider {

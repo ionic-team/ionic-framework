@@ -56,7 +56,7 @@ export function setIonicClasses(element: ElementRef) {
 
     for (let i = 0; i < classList.length; i++) {
       const item = classList.item(i);
-      if (item && startsWith(item, 'ng-')) {
+      if (item !== null && startsWith(item, 'ng-')) {
         classList.add(`ion-${item.substr(3)}`);
       }
     }

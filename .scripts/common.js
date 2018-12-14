@@ -93,21 +93,19 @@ function preparePackage(tasks, package, version) {
         title: `${pkg.name}: npm link @ionic/core`,
         task: () => execa('npm', ['link', '@ionic/core'], { cwd: projectRoot })
       });
-      if (version) {
-        projectTasks.push({
-          title: `${pkg.name}: update ionic/core dep to ${version}`,
-          task: () => {
-            updateDependency(pkg, "@ionic/core", version);
-            writePkg(package, pkg);
-          }
-        });
-      }
     }
 
     if (version) {
       projectTasks.push({
         title: `${pkg.name}: lint`,
         task: () => execa('npm', ['run', 'lint'], { cwd: projectRoot })
+      });
+      projectTasks.push({
+        title: `${pkg.name}: update ionic/core dep to ${version}`,
+        task: () => {
+          updateDependency(pkg, "@ionic/core", version);
+          writePkg(package, pkg);
+        }
       });
       projectTasks.push({
         title: `${pkg.name}: test`,
@@ -119,10 +117,12 @@ function preparePackage(tasks, package, version) {
       title: `${pkg.name}: build`,
       task: () => execa('npm', ['run', 'build'], { cwd: projectRoot })
     });
-    projectTasks.push({
-      title: `${pkg.name}: npm link`,
-      task: () => execa('npm', ['link'], { cwd: projectRoot })
-    });
+    if (package === 'core') {
+      projectTasks.push({
+        title: `${pkg.name}: npm link`,
+        task: () => execa('npm', ['link'], { cwd: projectRoot })
+      });
+    }
   }
 
   // Add project tasks

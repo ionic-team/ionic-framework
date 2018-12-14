@@ -1,13 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
 import { IonicConfig } from '@ionic/core';
-import { CommonModule } from '@angular/common';
 
 import { appInitialize } from './app-initialize';
-import { ConfigToken } from './providers/config';
 import * as c from './directives';
 import * as d from './directives/proxies';
 import * as p from './providers';
-
+import { ConfigToken } from './providers/config';
 
 const DECLARATIONS = [
   // proxies
@@ -121,7 +120,6 @@ const PROVIDERS = [
   p.Events,
   p.DomController
 ];
-
 
 @NgModule({
   declarations: DECLARATIONS,
