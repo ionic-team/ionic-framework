@@ -23,7 +23,7 @@ If the FAB button is not wrapped with `<ion-fab>`, it will scroll with the conte
   <ion-fab-button>Default</ion-fab-button>
 
   <!-- Mini -->
-  <ion-fab-button mini>Mini</ion-fab-button>
+  <ion-fab-button size="small">Mini</ion-fab-button>
 
   <!-- Colors -->
   <ion-fab-button color="primary">Primary</ion-fab-button>
@@ -48,6 +48,7 @@ If the FAB button is not wrapped with `<ion-fab>`, it will scroll with the conte
 | `mode`            | `mode`             | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                   | `undefined` |
 | `routerDirection` | `router-direction` | When using a router, it specifies the transition direction when navigating to another page using `href`.                                                                                                                                                               | `"back" \| "forward" \| "root"`   | `'forward'` |
 | `show`            | `show`             | If `true`, the fab button will show when in a fab-list.                                                                                                                                                                                                                | `boolean`                         | `false`     |
+| `size`            | `size`             | The size of the button. Set this to `small` in order to have a mini fab.                                                                                                                                                                                               | `"small" \| undefined`            | `undefined` |
 | `translucent`     | `translucent`      | If `true`, the fab button will be translucent.                                                                                                                                                                                                                         | `boolean`                         | `false`     |
 | `type`            | `type`             | The type of the button.                                                                                                                                                                                                                                                | `"button" \| "reset" \| "submit"` | `'button'`  |
 
