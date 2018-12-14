@@ -206,6 +206,7 @@ export class Select implements ComponentInterface {
     const popoverOpts: PopoverOptions = {
       ...interfaceOptions,
 
+      mode: this.mode,
       component: 'ion-select-popover',
       cssClass: ['select-popover', interfaceOptions.cssClass],
       event: ev,
@@ -255,6 +256,7 @@ export class Select implements ComponentInterface {
     const actionSheetOpts: ActionSheetOptions = {
       ...interfaceOptions,
 
+      mode: this.mode,
       buttons: actionSheetButtons,
       cssClass: ['select-action-sheet', interfaceOptions.cssClass]
     };
@@ -262,7 +264,6 @@ export class Select implements ComponentInterface {
   }
 
   private async openAlert() {
-
     const label = this.getLabel();
     const labelText = (label) ? label.textContent : null;
 
@@ -272,6 +273,7 @@ export class Select implements ComponentInterface {
     const alertOpts: AlertOptions = {
       ...interfaceOptions,
 
+      mode: this.mode,
       header: interfaceOptions.header ? interfaceOptions.header : labelText,
       inputs: this.childOpts.map(o => {
         return {
