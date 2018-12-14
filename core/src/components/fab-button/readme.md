@@ -75,18 +75,12 @@ If the FAB button is not wrapped with `<ion-fab>`, it will scroll with the conte
 | `--color`                | Text color of the button                |
 | `--color-activated`      | Text color of the button when activated |
 | `--color-focused`        | Text color of the button when focused   |
-| `--height`               | Height of the button                    |
-| `--margin-bottom`        | Margin bottom of the button             |
-| `--margin-end`           | Margin end of the button                |
-| `--margin-start`         | Margin start of the button              |
-| `--margin-top`           | Margin top of the button                |
 | `--padding-bottom`       | Padding bottom of the button            |
 | `--padding-end`          | Padding end of the button               |
 | `--padding-start`        | Padding start of the button             |
 | `--padding-top`          | Padding top of the button               |
 | `--ripple-color`         | Color of the button ripple effect       |
 | `--transition`           | Transition of the button                |
-| `--width`                | Width of the button                     |
 
 
 ----------------------------------------------

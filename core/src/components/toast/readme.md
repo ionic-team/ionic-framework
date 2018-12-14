@@ -170,16 +170,22 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name              | Description                |
-| ----------------- | -------------------------- |
-| `--background`    | Background of the toast    |
-| `--border-color`  | Border color of the toast  |
-| `--border-radius` | Border radius of the toast |
-| `--border-style`  | Border style of the toast  |
-| `--border-width`  | Border width of the toast  |
-| `--box-shadow`    | Box shadow of the toast    |
-| `--button-color`  | Color of the button text   |
-| `--color`         | Color of the toast text    |
+| Name              | Description                 |
+| ----------------- | --------------------------- |
+| `--background`    | Background of the toast     |
+| `--border-color`  | Border color of the toast   |
+| `--border-radius` | Border radius of the toast  |
+| `--border-style`  | Border style of the toast   |
+| `--border-width`  | Border width of the toast   |
+| `--box-shadow`    | Box shadow of the toast     |
+| `--button-color`  | Color of the button text    |
+| `--color`         | Color of the toast text     |
+| `--height`        | Height of the toast         |
+| `--max-height`    | Maximum height of the toast |
+| `--max-width`     | Maximum width of the toast  |
+| `--min-height`    | Minimum height of the toast |
+| `--min-width`     | Minimum width of the toast  |
+| `--width`         | Width of the toast          |
 
 
 ----------------------------------------------
