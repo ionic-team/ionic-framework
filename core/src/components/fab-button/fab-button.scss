@@ -164,14 +164,14 @@
 }
 
 
-// FAB Mini
+// FAB small (mini
 // --------------------------------------------------
 
-:host([mini]) {
-  @include margin(($fab-size - $fab-mini-size) / 2);
+:host(.fab-button-small) {
+  @include margin(($fab-size - $fab-small-size) / 2);
 
-  width: #{$fab-mini-size};
-  height: #{$fab-mini-size};
+  width: #{$fab-small-size};
+  height: #{$fab-small-size};
 }
 
 // FAB Close Icon

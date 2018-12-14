@@ -68,6 +68,11 @@ export class FabButton implements ComponentInterface {
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   /**
+   * The size of the button. Set this to `small` in order to have a mini fab.
+   */
+  @Prop() size?: 'small';
+
+  /**
    * Emitted when the button has focus.
    */
   @Event() ionFocus!: EventEmitter<void>;
@@ -91,19 +96,21 @@ export class FabButton implements ComponentInterface {
   }
 
   hostData() {
-    const inList = hostContext('ion-fab-list', this.el);
+    const { el, disabled, color, activated, show, translucent, size, keyFocus } = this;
+    const inList = hostContext('ion-fab-list', el);
     return {
-      'aria-disabled': this.disabled ? 'true' : null,
+      'aria-disabled': disabled ? 'true' : null,
       class: {
-        ...createColorClasses(this.color),
+        ...createColorClasses(color),
         'fab-button-in-list': inList,
-        'fab-button-translucent-in-list': inList && this.translucent,
-        'fab-button-close-active': this.activated,
-        'fab-button-show': this.show,
-        'fab-button-disabled': this.disabled,
-        'fab-button-translucent': this.translucent,
+        'fab-button-translucent-in-list': inList && translucent,
+        'fab-button-close-active': activated,
+        'fab-button-show': show,
+        'fab-button-disabled': disabled,
+        'fab-button-translucent': translucent,
         'ion-activatable': true,
-        'focused': this.keyFocus,
+        'focused': keyFocus,
+        [`fab-button-${size}`]: size !== undefined,
       }
     };
   }
