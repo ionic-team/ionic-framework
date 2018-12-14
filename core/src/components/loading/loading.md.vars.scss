@@ -41,18 +41,3 @@ $loading-md-box-shadow:                0 16px 20px $loading-md-box-shadow-color 
 
 /// @prop - Color of the loading spinner
 $loading-md-spinner-color:             ion-color(primary, base) !default;
-
-/// @prop - Color of the lines loading spinner
-$loading-md-spinner-lines-color:       $loading-md-spinner-color !default;
-
-/// @prop - Color of the bubbles loading spinner
-$loading-md-spinner-bubbles-color:     $loading-md-spinner-color !default;
-
-/// @prop - Color of the circles loading spinner
-$loading-md-spinner-circles-color:     $loading-md-spinner-color !default;
-
-/// @prop - Color of the crescent loading spinner
-$loading-md-spinner-crescent-color:    $loading-md-spinner-color !default;
-
-/// @prop - Color of the dots loading spinner
-$loading-md-spinner-dots-color:        $loading-md-spinner-color !default;
