@@ -291,8 +291,7 @@ export class Slides implements ComponentInterface {
   @Method()
   async updateAutoHeight(speed?: number) {
     const swiper = await this.getSwiper();
-    // Casting to `any` since @types/swiper is out of date
-    (swiper as any).updateAutoHeight(speed);
+    swiper.updateAutoHeight(speed);
   }
 
   private async initSwiper() {
