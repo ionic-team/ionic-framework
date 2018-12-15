@@ -2,7 +2,7 @@ import { Components as IoniconsComponents } from 'ionicons';
 import { Components } from '@ionic/core';
 import { createReactComponent } from './createComponent';
 
-export { default as AlertModal } from './AlertModal';
+export { default as IonAlert } from './IonAlert';
 
 export const IonIcon = createReactComponent<IoniconsComponents.IonIconAttributes>('ion-icon');
 export const IonApp = createReactComponent<Components.IonAppAttributes>('ion-app');
