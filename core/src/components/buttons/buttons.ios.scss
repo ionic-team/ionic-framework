@@ -10,7 +10,8 @@
   --padding-bottom: 0;
   --padding-start: 5px;
   --padding-end: 5px;
-  --height: 32px;
+
+  height: 32px;
 
   font-size: #{$toolbar-ios-button-font-size};
   font-weight: 400;
@@ -76,11 +77,6 @@
 //   order: map-get($toolbar-order-ios, menu-toggle-start);
 
 //   min-width: 36px;
-
-//   --margin-top: 0;
-//   --margin-bottom: 0;
-//   --margin-start: 6px;
-//   --margin-end: 6px;
 
 //   --padding-top: 0;
 //   --padding-bottom: 0;

@@ -1,3 +1,93 @@
+# [4.0.0-beta.19](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.18...v4.0.0-beta.19) (2018-12-14)
+
+
+### Bug Fixes
+
+* **angular:** tab-bar slot=top ([#16727](https://github.com/ionic-team/ionic/issues/16727)) ([d4e4b52](https://github.com/ionic-team/ionic/commit/d4e4b52)), closes [#16722](https://github.com/ionic-team/ionic/issues/16722)
+* **angular:** virtual-scroll ([#16729](https://github.com/ionic-team/ionic/issues/16729)) ([f05c7d6](https://github.com/ionic-team/ionic/commit/f05c7d6)), closes [#16725](https://github.com/ionic-team/ionic/issues/16725) [#16432](https://github.com/ionic-team/ionic/issues/16432) [#16023](https://github.com/ionic-team/ionic/issues/16023) [#14591](https://github.com/ionic-team/ionic/issues/14591) [#16050](https://github.com/ionic-team/ionic/issues/16050) [#15587](https://github.com/ionic-team/ionic/issues/15587)
+* **datetime:** picker inherits mode ([#16731](https://github.com/ionic-team/ionic/issues/16731)) ([f93e4fd](https://github.com/ionic-team/ionic/commit/f93e4fd)), closes [#16717](https://github.com/ionic-team/ionic/issues/16717)
+* **fab-button:** adding size prop instead of [mini] ([#16692](https://github.com/ionic-team/ionic/issues/16692)) ([e8cec60](https://github.com/ionic-team/ionic/commit/e8cec60)), closes [#16680](https://github.com/ionic-team/ionic/issues/16680)
+* **fab-button:** get translucent working including with color ([#16750](https://github.com/ionic-team/ionic/issues/16750)) ([c2ada84](https://github.com/ionic-team/ionic/commit/c2ada84)), closes [#16450](https://github.com/ionic-team/ionic/issues/16450)
+
+
+### Features
+
+* **react:** add initial react code. ([#16748](https://github.com/ionic-team/ionic/issues/16748)) ([33e0ae4](https://github.com/ionic-team/ionic/commit/33e0ae4))
+
+### BREAKING CHANGES
+
+#### Core Components
+
+Removes the `--width` and `--height` variables from the following components, in favor of CSS:
+
+- Button
+- FAB Button
+- Checkbox
+- Removes the `--width`/`--height` and adds a `--size` variable that is set on the width and height, allowing width and height to still be set and border-radius to still use it as a variable
+- Radio
+- Removes the `--width`/`--height` and `--inner-width`/`--inner-height` variables. Calculates inner values based on parent element size.
+
+#### Overlay Components
+
+The following components have all be converted to shadow (or scoped) and have CSS variables for width/height:
+
+- Action Sheet _(scoped)_
+- Alert _(scoped)_
+- Loading _(scoped)_
+- Menu _(shadow)_
+- Modal _(scoped)_
+- Picker _(scoped)_
+- Popover _(scoped)_
+- Toast _(shadow)_
+
+The above components will now have the following CSS variables for consistency among overlays:
+
+| Name |
+| ----------------- |
+| `--height` |
+| `--max-height` |
+| `--max-width` |
+| `--min-height` |
+| `--min-width` |
+| `--width` |
+
+If the component does not set the value, it will default to `auto`.
+
+#### Removed CSS Variables
+
+The following CSS properties have been removed:
+
+| Component | Property | Reason |
+| ---------------| --------------------| --------------------------------|
+| **Button** | `--height` | Use CSS instead |
+| **Button** | `--margin-bottom` | Use CSS instead |
+| **Button** | `--margin-end` | Use CSS instead |
+| **Button** | `--margin-start` | Use CSS instead |
+| **Button** | `--margin-top` | Use CSS instead |
+| **Button** | `--width` | Use CSS instead |
+| **Checkbox** | `--height` | Use CSS or `--size` |
+| **Checkbox** | `--width` | Use CSS or `--size` |
+| **FAB Button** | `--width` | Use CSS instead |
+| **FAB Button** | `--height` | Use CSS instead |
+| **FAB Button** | `--margin-bottom` | Use CSS instead |
+| **FAB Button** | `--margin-end` | Use CSS instead |
+| **FAB Button** | `--margin-start` | Use CSS instead |
+| **FAB Button** | `--margin-top | Use CSS instead |
+| **Menu** | `--width-small` | Use a media query and `--width` |
+| **Radio** | `--width` | Use CSS instead |
+| **Radio** | `--height` | Use CSS instead |
+| **Radio** | `--inner-height` | Calculated based on parent |
+| **Radio** | `--inner-width` | Calculated based on parent |
+
+#### FAB Button mini
+
+Renamed `[mini]` attribute to `[size=small]` in `ion-fab-button`.
+
+```diff
+- <ion-fab-button mini></ion-fab-button>
++ <ion-fab-button size="small"></ion-fab-button>
+```
+
 # [4.0.0-beta.18](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.17...v4.0.0-beta.18) (2018-12-13)
 
 

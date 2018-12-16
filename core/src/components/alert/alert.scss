@@ -6,10 +6,19 @@
 :host {
   /**
    * @prop --background: Background of the alert
+   *
    * @prop --min-width: Minimum width of the alert
+   * @prop --width: Width of the alert
+   * @prop --max-width: Maximum width of the alert
+   *
+   * @prop --min-height: Minimum height of the alert
+   * @prop --height: Height of the alert
    * @prop --max-height: Maximum height of the alert
    */
   --min-width: #{$alert-min-width};
+  --width: auto;
+  --min-height: auto;
+  --height: auto;
   --max-height: #{$alert-max-height};
 
   @include font-smoothing();
@@ -40,9 +49,12 @@
 
   flex-direction: column;
 
+  width: var(--width);
   min-width: var(--min-width);
   max-width: var(--max-width);
 
+  height: var(--height);
+  min-height: var(--min-height);
   max-height: var(--max-height);
 
   background: var(--background);

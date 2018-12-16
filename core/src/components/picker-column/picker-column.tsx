@@ -5,7 +5,11 @@ import { hapticSelectionChanged } from '../../utils';
 import { clamp } from '../../utils/helpers';
 
 @Component({
-  tag: 'ion-picker-column'
+  tag: 'ion-picker-column',
+  styleUrls: {
+    ios: 'picker-column.ios.scss',
+    md: 'picker-column.md.scss'
+  }
 })
 export class PickerColumnCmp implements ComponentInterface {
   mode!: Mode;
