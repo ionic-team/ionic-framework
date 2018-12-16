@@ -1,4 +1,4 @@
-import { ContentChild, Directive, ElementRef, EmbeddedViewRef, NgZone, Input, TrackByFunction, IterableDiffers, SimpleChanges, IterableDiffer } from '@angular/core';
+import { Component, ContentChild, ElementRef, EmbeddedViewRef, Input, IterableDiffer, IterableDiffers, NgZone, SimpleChanges, TrackByFunction, ChangeDetectionStrategy } from '@angular/core';
 import { Cell, CellType } from '@ionic/core';
 
 import { proxyInputs } from '../proxies';
@@ -8,8 +8,10 @@ import { VirtualHeader } from './virtual-header';
 import { VirtualItem } from './virtual-item';
 import { VirtualContext } from './virtual-utils';
 
-@Directive({
+@Component({
   selector: 'ion-virtual-scroll',
+  template: '<ng-content></ng-content>',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   inputs: [
     'approxItemHeight',
     'approxHeaderHeight',
@@ -20,7 +22,7 @@ import { VirtualContext } from './virtual-utils';
     'itemHeight'
   ]
 })
-export class IonVirtualScrollDelegate {
+export class IonVirtualScroll {
 
   private differ: IterableDiffer<any>;
   private nativeEl: HTMLIonVirtualScrollElement;
@@ -43,12 +45,23 @@ export class IonVirtualScrollDelegate {
   ) {
     this.nativeEl = el.nativeElement as HTMLIonVirtualScrollElement;
     this.nativeEl.nodeRender = this.nodeRender.bind(this);
+
+    proxyInputs(this, this.nativeEl, [
+      'approxItemHeight',
+      'approxHeaderHeight',
+      'approxFooterHeight',
+      'headerFn',
+      'footerFn',
+      'items',
+      'itemHeight'
+    ]);
+    // proxyMethods(this, this.nativeEl)
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if ('virtualScroll' in changes) {
+    if ('items' in changes) {
       // React on virtualScroll changes only once all inputs have been initialized
-      const value = changes['virtualScroll'].currentValue;
+      const value = changes['items'].currentValue;
       if (this.differ == null && value != null) {
         try {
           this.differ = this.iterableDiffers.find(value).create(this.virtualTrackBy);
@@ -67,42 +80,41 @@ export class IonVirtualScrollDelegate {
       return;
     }
 
-    let start = 0;
-    let end = 0;
-
-    changes.
-    changes.forEachOperation((_, pindex, cindex) => {
-      // add new record after current position
-      if (pindex === null && (cindex < lastRecord)) {
-        console.debug('virtual-scroll', 'adding record before current position, slow path');
-        needClean = true;
-        return;
-      }
-      // remove record after current position
-      if (pindex < lastRecord && cindex === null) {
-        console.debug('virtual-scroll', 'removing record before current position, slow path');
-        needClean = true;
-        return;
-      }
-    });
+    debugger;
+    // changes.forEachOperation((_, pindex, cindex) => {
+    //   // add new record after current position
+    //   if (pindex === null && (cindex < lastRecord)) {
+    //     console.debug('virtual-scroll', 'adding record before current position, slow path');
+    //     needClean = true;
+    //     return;
+    //   }
+    //   // remove record after current position
+    //   if (pindex < lastRecord && cindex === null) {
+    //     console.debug('virtual-scroll', 'removing record before current position, slow path');
+    //     needClean = true;
+    //     return;
+    //   }
+    // });
   }
 
   private nodeRender(el: HTMLElement | null, cell: Cell, index: number): HTMLElement {
-    if (!el) {
-      const view = this.itmTmp.viewContainer.createEmbeddedView(
-        this.getComponent(cell.type),
-        { $implicit: null, index },
-        index
-      );
-      el = getElement(view);
-      this.refMap.set(el, view);
-    }
-    const node = this.refMap.get(el)!;
-    const ctx = node.context as VirtualContext;
-    ctx.$implicit = cell.value;
-    ctx.index = cell.index;
-    this.zone.run(() => node.markForCheck());
-    return el;
+    return this.zone.run(() => {
+      if (!el) {
+        const view = this.itmTmp.viewContainer.createEmbeddedView(
+          this.getComponent(cell.type),
+          { $implicit: null, index },
+          index
+        );
+        el = getElement(view);
+        this.refMap.set(el, view);
+      }
+      const node = this.refMap.get(el)!;
+      const ctx = node.context as VirtualContext;
+      ctx.$implicit = cell.value;
+      ctx.index = cell.index;
+      this.zone.run(() => node.markForCheck());
+      return el;
+    });
   }
 
   private getComponent(type: CellType) {
