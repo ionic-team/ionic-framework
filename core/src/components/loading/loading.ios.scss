@@ -4,26 +4,27 @@
 // iOS Loading Indicator
 // --------------------------------------------------
 
-.loading-ios {
+:host {
+  --background: #{$loading-ios-background-color};
+  --max-width: #{$loading-ios-max-width};
+  --max-height: #{$loading-ios-max-height};
+  --spinner-color: #{$loading-ios-spinner-color};
+
+  color: $loading-ios-text-color;
+
   font-size: $loading-ios-font-size;
 }
 
-.loading-ios .loading-wrapper {
+.loading-wrapper {
   @include border-radius($loading-ios-border-radius);
   @include padding($loading-ios-padding-top, $loading-ios-padding-end, $loading-ios-padding-bottom, $loading-ios-padding-start);
-
-  max-width: $loading-ios-max-width;
-  max-height: $loading-ios-max-height;
-
-  background-color: $loading-ios-background-color;
-  color: $loading-ios-text-color;
 }
 
 
 // iOS Translucent Loading
 // -----------------------------------------
 
-.loading-translucent-ios .loading-wrapper {
+:host(.loading-translucent) .loading-wrapper {
   background-color: $loading-ios-translucent-background-color;
   backdrop-filter: $loading-ios-translucent-filter;
 }
@@ -32,35 +33,10 @@
 // iOS Loading Content
 // -----------------------------------------
 
-.loading-ios .loading-content {
+.loading-content {
   font-weight: $loading-ios-content-font-weight;
 }
 
-.loading-ios .loading-spinner + .loading-content {
+.loading-spinner + .loading-content {
   @include margin-horizontal(16px, null);
-}
-
-
-// iOS Loading Spinner fill colors
-// -----------------------------------------
-
-.loading-ios .spinner-lines-ios line,
-.loading-ios .spinner-lines-small-ios line {
-  stroke: $loading-ios-spinner-lines-color;
-}
-
-.loading-ios .spinner-bubbles circle {
-  fill: $loading-ios-spinner-bubbles-color;
-}
-
-.loading-ios .spinner-circles circle {
-  fill: $loading-ios-spinner-circles-color;
-}
-
-.loading-ios .spinner-crescent circle {
-  stroke: $loading-ios-spinner-crescent-color;
-}
-
-.loading-ios .spinner-dots circle {
-  fill: $loading-ios-spinner-dots-color;
 }

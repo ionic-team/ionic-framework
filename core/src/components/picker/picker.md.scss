@@ -4,26 +4,25 @@
 // Material Design Picker
 // --------------------------------------------------
 
-.picker-md .picker-wrapper {
-  height: $picker-md-height;
+:host {
+  --background: #{$picker-md-background-color};
+  --border-width: #{$hairlines-width 0 0};
+  --border-color: #{$picker-md-border-color};
+  --height: #{$picker-md-height};
 
-  border-top: $hairlines-width solid $picker-md-border-color;
-
-  background: $picker-md-background-color;
+  color: $picker-md-option-text-color;
 }
 
-.picker-md .picker-toolbar {
+.picker-toolbar {
   display: flex;
 
   justify-content: flex-end;
 
   height: $picker-md-toolbar-height;
-
-  background: $picker-md-toolbar-background-color;
 }
 
-.picker-md .picker-button,
-.picker-md .picker-button.activated {
+.picker-button,
+.picker-button.activated {
   @include margin(0);
   @include padding(0, 1.1em);
 
@@ -40,58 +39,12 @@
   box-shadow: none;
 }
 
-.picker-md .picker-columns {
+.picker-columns {
   height: $picker-md-height - $picker-md-toolbar-height;
   perspective: 1800px;
 }
 
-.picker-md .picker-col {
-  @include padding($picker-md-column-padding-top, $picker-md-column-padding-end, $picker-md-column-padding-bottom, $picker-md-column-padding-start);
-
-  transform-style: preserve-3d;
-}
-
-.picker-md .picker-prefix,
-.picker-md .picker-suffix,
-.picker-md .picker-opts {
-  top: $picker-md-option-offset-y;
-
-  transform-style: preserve-3d;
-
-  color: $picker-md-option-text-color;
-
-  font-size: $picker-md-option-font-size;
-
-  line-height: $picker-md-option-height;
-  pointer-events: none;
-}
-
-
-.picker-md .picker-opt {
-  @include margin(0);
-  @include padding($picker-md-option-padding-top, $picker-md-option-padding-end, $picker-md-option-padding-bottom, $picker-md-option-padding-start);
-
-  height: 43px;
-
-  transition-timing-function: ease-out;
-
-  background: transparent;
-  color: $picker-md-option-text-color;
-
-  font-size: $picker-md-option-font-size;
-
-  line-height: $picker-md-option-height;
-  backface-visibility: hidden;
-  pointer-events: auto;
-}
-
-.picker-md .picker-prefix,
-.picker-md .picker-suffix,
-.picker-md .picker-opt.picker-opt-selected {
-  color: $picker-md-option-selected-color;
-}
-
-.picker-md .picker-above-highlight {
+.picker-above-highlight {
   @include position(0, null, null, 0);
   @include transform(translate3d(0, 0, 90px));
 
@@ -102,14 +55,15 @@
 
   border-bottom: 1px solid $picker-md-border-color;
 
-  background: linear-gradient(to bottom,
-                            $picker-md-top-background-color 20%,
-                            $picker-md-bottom-background-color 100%);
+  background: linear-gradient(
+    to bottom,
+    $picker-md-top-background-color 20%,
+    $picker-md-bottom-background-color 100%);
 
   z-index: 10;
 }
 
-.picker-md .picker-below-highlight {
+.picker-below-highlight {
   @include position($picker-md-option-offset-y + $picker-md-option-height - 4, null, null, 0);
   @include transform(translate3d(0, 0, 90px));
 
@@ -120,9 +74,10 @@
 
   border-top: 1px solid $picker-md-border-color;
 
-  background: linear-gradient(to top,
-                           $picker-md-top-background-color 30%,
-                           $picker-md-bottom-background-color 100%);
+  background: linear-gradient(
+    to top,
+    $picker-md-top-background-color 30%,
+    $picker-md-bottom-background-color 100%);
 
   z-index: 11;
 }
