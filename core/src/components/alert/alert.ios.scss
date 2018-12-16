@@ -112,7 +112,7 @@
   max-height: $alert-ios-content-max-height;
 
   border-top: $alert-ios-list-border-top;
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
