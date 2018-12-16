@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, ContentChild, Directive, ElementRef, EmbeddedViewRef } from '@angular/core';
+import { ContentChild, Directive, ElementRef, EmbeddedViewRef, NgZone } from '@angular/core';
+import { Cell, CellType } from '@ionic/core';
 
 import { proxyInputs } from '../proxies';
 
@@ -21,15 +22,18 @@ import { VirtualContext } from './virtual-utils';
 })
 export class VirtualScroll {
 
+  private refMap = new WeakMap<HTMLElement, EmbeddedViewRef<VirtualContext>> ();
+
   @ContentChild(VirtualItem) itmTmp!: VirtualItem;
   @ContentChild(VirtualHeader) hdrTmp!: VirtualHeader;
   @ContentChild(VirtualFooter) ftrTmp!: VirtualFooter;
 
   constructor(
     private el: ElementRef,
-    public cd: ChangeDetectorRef,
+    private zone: NgZone,
   ) {
-    el.nativeElement.nodeRender = this.nodeRender.bind(this);
+    const nativeEl = el.nativeElement as HTMLIonVirtualScrollElement;
+    nativeEl.nodeRender = this.nodeRender.bind(this);
 
     proxyInputs(this, this.el.nativeElement, [
       'approxItemHeight',
@@ -42,40 +46,42 @@ export class VirtualScroll {
     ]);
   }
 
-  private nodeRender(el: HTMLElement | null, cell: any, index: number) {
-    if (!el) {
-      const view = this.itmTmp.viewContainer.createEmbeddedView(
-        this.getComponent(cell.type),
-        { $implicit: null, index },
-        index
-      );
-      el = getElement(view);
-      (el as any)['$ionView'] = view;
-    }
-    const node = (el as any)['$ionView'];
-    const ctx = node.context as VirtualContext;
-    ctx.$implicit = cell.value;
-    ctx.index = cell.index;
-    node.detectChanges();
-    return el;
+  private nodeRender(el: HTMLElement | null, cell: Cell, index: number): HTMLElement {
+    return this.zone.run(() => {
+      if (!el) {
+        const view = this.itmTmp.viewContainer.createEmbeddedView(
+          this.getComponent(cell.type),
+          { $implicit: null, index },
+          index
+        );
+        el = getElement(view);
+        this.refMap.set(el, view);
+      }
+      const node = this.refMap.get(el)!;
+      const ctx = node.context as VirtualContext;
+      ctx.$implicit = cell.value;
+      ctx.index = cell.index;
+      node.markForCheck();
+      return el;
+    });
   }
 
-  private getComponent(type: number) {
+  private getComponent(type: CellType) {
     switch (type) {
-      case 0: return this.itmTmp.templateRef;
-      case 1: return this.hdrTmp.templateRef;
-      case 2: return this.ftrTmp.templateRef;
+      case 'item': return this.itmTmp.templateRef;
+      case 'header': return this.hdrTmp.templateRef;
+      case 'footer': return this.ftrTmp.templateRef;
     }
     throw new Error('template for virtual item was not provided');
   }
 }
 
-function getElement(view: EmbeddedViewRef<VirtualContext>): HTMLElement | null {
+function getElement(view: EmbeddedViewRef<VirtualContext>): HTMLElement {
   const rootNodes = view.rootNodes;
   for (let i = 0; i < rootNodes.length; i++) {
     if (rootNodes[i].nodeType === 1) {
       return rootNodes[i];
     }
   }
-  return null;
+  throw new Error('virtual element was not created');
 }

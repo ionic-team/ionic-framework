@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Me
 
 import { Animation, AnimationBuilder, Config, Mode, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
-import { createThemedClasses, getClassMap } from '../../utils/theme';
+import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
@@ -14,7 +14,8 @@ import { mdLeaveAnimation } from './animations/md.leave';
   styleUrls: {
     ios: 'loading.ios.scss',
     md: 'loading.md.scss'
-  }
+  },
+  scoped: true
 })
 export class Loading implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
@@ -183,18 +184,13 @@ export class Loading implements ComponentInterface, OverlayInterface {
   }
 
   hostData() {
-    const themedClasses = this.translucent
-      ? createThemedClasses(this.mode, 'loading-translucent')
-      : {};
-
     return {
       style: {
         zIndex: 40000 + this.overlayIndex
       },
       class: {
-        ...createThemedClasses(this.mode, 'loading'),
-        ...themedClasses,
-        ...getClassMap(this.cssClass)
+        ...getClassMap(this.cssClass),
+        'loading-translucent': this.translucent
       }
     };
   }

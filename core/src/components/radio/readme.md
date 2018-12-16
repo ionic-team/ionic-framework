@@ -66,14 +66,10 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 
 ## CSS Custom Properties
 
-| Name              | Description                    |
-| ----------------- | ------------------------------ |
-| `--color`         | Color of the radio             |
-| `--color-checked` | Color of the checked radio     |
-| `--height`        | Height of the radio button     |
-| `--inner-height`  | Height of the dot or checkmark |
-| `--inner-width`   | Width of the dot or checkmark  |
-| `--width`         | Width of the radio button      |
+| Name              | Description                |
+| ----------------- | -------------------------- |
+| `--color`         | Color of the radio         |
+| `--color-checked` | Color of the checked radio |
 
 
 ----------------------------------------------

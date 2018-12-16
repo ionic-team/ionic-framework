@@ -9,7 +9,6 @@ test('menu: basic', async () => {
   const start = await page.find('ion-menu[side="start"]');
   expect(start).toHaveClasses([
     'menu-type-overlay',
-    'menu-enabled',
     'menu-side-start'
   ]);
 
