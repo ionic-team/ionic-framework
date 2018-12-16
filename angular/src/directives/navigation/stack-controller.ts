@@ -90,7 +90,7 @@ export class StackController {
     return views.length > 0 ? views[views.length - 1] : undefined;
   }
 
-  private getActiveStackId(): string | undefined {
+  getActiveStackId(): string | undefined {
     return this.activeView ? this.activeView.stackId : undefined;
   }
 
