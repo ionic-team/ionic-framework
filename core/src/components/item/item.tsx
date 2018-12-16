@@ -145,7 +145,7 @@ export class Item implements ComponentInterface {
     const { href, detail, mode, win, detailIcon, routerDirection, type } = this;
 
     const clickable = this.isClickable();
-    const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div';
+    const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
     const attrs = TagType === 'button' ? { type } : { href };
     const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
 
