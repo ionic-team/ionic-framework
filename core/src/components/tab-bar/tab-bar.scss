@@ -41,6 +41,7 @@
 
 :host(.ion-color) ::slotted(ion-tab-button) {
   --background-focused: #{current-color(shade)};
+  --color-selected: #{current-color(contrast)};
 }
 
 :host(.ion-color) ::slotted(.tab-selected) {
