@@ -62,13 +62,11 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     this.name = name || PRIMARY_OUTLET;
     this.tabsPrefix = tabs === 'true' ? getUrl(router, activatedRoute) : undefined;
     this.stackCtrl = new StackController(this.tabsPrefix, this.nativeEl, router, navCtrl, zone);
-
     parentContexts.onChildOutletCreated(this.name, this as any);
   }
 
   ngOnDestroy(): void {
-    console.log('router-outlet destroyed');
-    this.parentContexts.onChildOutletDestroyed(this.name);
+    this.stackCtrl.destroy();
   }
 
   getContext(): OutletContext | null {
