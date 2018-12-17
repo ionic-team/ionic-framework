@@ -105,3 +105,9 @@
 :host(.toolbar-segment) {
   --min-height: auto;
 }
+
+::slotted(ion-progress-bar) {
+  @include position(null, 0, 0, 0);
+
+  position: absolute;
+}

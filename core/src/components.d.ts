@@ -1359,6 +1359,10 @@ export namespace Components {
     */
     'show': boolean;
     /**
+    * The size of the button. Set this to `small` in order to have a mini fab.
+    */
+    'size'?: 'small';
+    /**
     * If `true`, the fab button will be translucent.
     */
     'translucent': boolean;
@@ -1404,6 +1408,10 @@ export namespace Components {
     * If `true`, the fab button will show when in a fab-list.
     */
     'show'?: boolean;
+    /**
+    * The size of the button. Set this to `small` in order to have a mini fab.
+    */
+    'size'?: 'small';
     /**
     * If `true`, the fab button will be translucent.
     */

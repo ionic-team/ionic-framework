@@ -7,10 +7,6 @@
   /**
    * @prop --color: Color of the radio
    * @prop --color-checked: Color of the checked radio
-   * @prop --width: Width of the radio button 
-   * @prop --height: Height of the radio button 
-   * @prop --inner-width: Width of the dot or checkmark
-   * @prop --inner-height: Height of the dot or checkmark
    */
 
   display: inline-block;
@@ -33,15 +29,10 @@
   align-items: center;
   justify-content: center;
 
-  width: var(--width);
-  height: var(--height);
+  width: 100%;
+  height: 100%;
 
   contain: layout size style;
-}
-
-.radio-inner {
-  width: var(--inner-width);
-  height: var(--inner-height);
 }
 
 button {

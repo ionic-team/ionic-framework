@@ -1,5 +1,6 @@
-import '@ionic/core/dist/ionic/svg';
 import { defineCustomElements } from '@ionic/core/loader';
+import { addIcons } from 'ionicons';
+import { ICON_PATHS } from 'ionicons/icons';
 
 import { Config } from './providers/config';
 import { IonicWindow } from './types/interfaces';
@@ -9,6 +10,7 @@ export function appInitialize(config: Config) {
     const win: IonicWindow | undefined = window as any;
     if (typeof win !== 'undefined') {
       const Ionic = win.Ionic = win.Ionic || {};
+      addIcons(ICON_PATHS);
 
       Ionic.config = config;
       Ionic.asyncQueue = false;
@@ -28,6 +30,7 @@ export function appInitialize(config: Config) {
           elm.removeEventListener(eventName, cb, opts);
         }
       };
+
       return defineCustomElements(win, {
         exclude: ['ion-tabs', 'ion-tab']
       });
