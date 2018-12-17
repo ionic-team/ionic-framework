@@ -72,7 +72,7 @@ The following CSS properties have been removed:
 | **FAB Button** | `--margin-bottom` | Use CSS instead |
 | **FAB Button** | `--margin-end` | Use CSS instead |
 | **FAB Button** | `--margin-start` | Use CSS instead |
-| **FAB Button** | `--margin-top | Use CSS instead |
+| **FAB Button** | `--margin-top` | Use CSS instead |
 | **Menu** | `--width-small` | Use a media query and `--width` |
 | **Radio** | `--width` | Use CSS instead |
 | **Radio** | `--height` | Use CSS instead |

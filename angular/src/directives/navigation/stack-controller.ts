@@ -90,8 +90,15 @@ export class StackController {
     return views.length > 0 ? views[views.length - 1] : undefined;
   }
 
-  private getActiveStackId(): string | undefined {
+  getActiveStackId(): string | undefined {
     return this.activeView ? this.activeView.stackId : undefined;
+  }
+
+  destroy() {
+    this.containerEl = undefined!;
+    this.views.forEach(destroyView);
+    this.activeView = undefined;
+    this.views = [];
   }
 
   private getStack(stackId: string | undefined) {
