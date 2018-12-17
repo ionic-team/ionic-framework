@@ -1,17 +1,18 @@
-import { Component, Prop } from '@stencil/core';
-import { Config } from '../../interface';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
+
+import { Config, SpinnerTypes } from '../../interface';
 
 @Component({
   tag: 'ion-refresher-content'
 })
-export class RefresherContent {
+export class RefresherContent implements ComponentInterface {
 
   @Prop({ context: 'config' }) config!: Config;
 
   /**
    * A static icon to display when you begin to pull down
    */
-  @Prop({ mutable: true }) pullingIcon?: string;
+  @Prop({ mutable: true }) pullingIcon?: string | null;
 
   /**
    * The text you want to display when you begin to pull down
@@ -21,29 +22,28 @@ export class RefresherContent {
   /**
    * An animated SVG spinner that shows when refreshing begins
    */
-  @Prop({ mutable: true }) refreshingSpinner?: string;
+  @Prop({ mutable: true }) refreshingSpinner?: SpinnerTypes | null;
 
   /**
    * The text you want to display when performing a refresh
    */
   @Prop() refreshingText?: string;
 
-
-  protected componentDidLoad() {
-    if (!this.pullingIcon) {
-      this.pullingIcon = this.config.get('ionPullIcon', 'arrow-down');
+  componentWillLoad() {
+    if (this.pullingIcon === undefined) {
+      this.pullingIcon = this.config.get('refreshingIcon', 'arrow-down');
     }
-    if (!this.refreshingSpinner) {
-      this.refreshingSpinner = this.config.get('ionRefreshingSpinner', this.config.get('spinner', 'lines'));
+    if (this.refreshingSpinner === undefined) {
+      this.refreshingSpinner = this.config.get('refreshingSpinner', this.config.get('spinner', 'lines'));
     }
   }
 
-  protected render() {
+  render() {
     return [
       <div class="refresher-pulling">
         {this.pullingIcon &&
           <div class="refresher-pulling-icon">
-            <ion-icon icon={this.pullingIcon}></ion-icon>
+            <ion-icon icon={this.pullingIcon} lazy={false}></ion-icon>
           </div>
         }
         {this.pullingText &&

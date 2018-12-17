@@ -5,21 +5,20 @@
   <meta charset="UTF-8">
   <title>Infinite Scroll</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
   <ion-app>
-
-
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Infinite Scroll</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content id="content" padding>
+    <ion-content id="content" padding fullscreen>
 
       <ion-button onclick="toggleInfiniteScroll()" block>
         Toggle InfiniteScroll
@@ -34,8 +33,6 @@
         </ion-infinite-scroll-content>
       </ion-infinite-scroll>
     </ion-content>
-
-
 
   </ion-app>
 

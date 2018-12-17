@@ -61,7 +61,7 @@ Please see our [Contributor Code of Conduct](https://github.com/ionic-team/ionic
 1. Run the gulp e2e task to build all tests: `gulp e2e`
 2. Run the gulp e2e.watch task to watch your specific test (replace `button` with the component you are modifying and `basic` with the test folder): `gulp e2e.watch --f=button/basic`
 3. A browser should open at `http://localhost:8080/dist/e2e`. From here, navigate to the component you are changing.
-4. If your changes look good, you're ready to [commit](#committing)!
+4. If your changes look good, you're ready to [commit](#commit-message-format)!
 
 
 #### Adding Documentation

@@ -7,41 +7,34 @@
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Javascript
+
+```html
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+```
+
+
+
 ## Properties
 
-#### color
-
-string
-
-The color to use for the title.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+| Property | Attribute | Description                                                                                                                                                                                                                                                            | Type                  | Default     |
+| -------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
+| `color`  | `color`   | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` | `undefined` |
 
 
-#### mode
+## CSS Custom Properties
 
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
-
-## Attributes
-
-#### color
-
-string
-
-The color to use for the title.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
+| Name      | Description             |
+| --------- | ----------------------- |
+| `--color` | Text color of the title |
 
 
 ----------------------------------------------

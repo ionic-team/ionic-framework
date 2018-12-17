@@ -1,4 +1,5 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
+
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
@@ -10,28 +11,29 @@ import { createColorClasses } from '../../utils/theme';
   },
   shadow: true
 })
-export class ItemOption {
+export class ItemOption implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
   /**
-   * The color to use for the option
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
-   * If true, the user cannot interact with the item option. Defaults to `false`.
+   * If `true`, the user cannot interact with the item option.
    */
   @Prop() disabled = false;
 
   /**
-   * If true, the option will expand to take up the available width and cover any other options. Defaults to `false`.
+   * If `true`, the option will expand to take up the available width and cover any other options.
    */
   @Prop() expandable = false;
 
@@ -50,23 +52,24 @@ export class ItemOption {
     return {
       class: {
         ...createColorClasses(this.color),
-        'item-option-expandable': this.expandable
+        'item-option-expandable': this.expandable,
+        'ion-activatable': true,
       }
     };
   }
 
   render() {
-    const TagType = this.href ? 'a' : 'button';
+    const TagType = this.href === undefined ? 'button' : 'a' as any;
 
     return (
       <TagType
         type="button"
-        class="item-option-native"
+        class="button-native"
         disabled={this.disabled}
         href={this.href}
         onClick={this.clickedOptionButton.bind(this)}
       >
-        <span class="item-option-button-inner">
+        <span class="button-inner">
           <slot name="start"></slot>
           <slot name="top" />
           <slot name="icon-only" />
@@ -74,6 +77,7 @@ export class ItemOption {
           <slot name="bottom" />
           <slot name="end"></slot>
         </span>
+        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </TagType>
     );
   }

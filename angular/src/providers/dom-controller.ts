@@ -24,4 +24,4 @@ function getQueue() {
   };
 }
 
-export type RafCallback = { (timeStamp?: number): void };
+export type RafCallback = (timeStamp?: number) => void;

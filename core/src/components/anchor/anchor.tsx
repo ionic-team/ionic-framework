@@ -1,19 +1,21 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
+
 import { Color, RouterDirection } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
-
 
 @Component({
   tag: 'ion-anchor',
   styleUrl: 'anchor.scss',
   shadow: true
 })
-export class Anchor {
+export class Anchor implements ComponentInterface {
 
   @Prop({ context: 'window' }) win!: Window;
 
   /**
-   * The color to use for the anchor.
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
@@ -27,11 +29,14 @@ export class Anchor {
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
-  @Prop() routerDirection?: RouterDirection;
+  @Prop() routerDirection: RouterDirection = 'forward';
 
   hostData() {
     return {
-      class: createColorClasses(this.color)
+      class: {
+        ...createColorClasses(this.color),
+        'ion-activatable': true
+      }
     };
   }
 
@@ -39,8 +44,9 @@ export class Anchor {
     return (
       <a
         href={this.href}
-        onClick={(ev) => openURL(this.win, this.href, ev, this.routerDirection)}>
-          <slot></slot>
+        onClick={(ev: Event) => openURL(this.win, this.href, ev, this.routerDirection)}
+      >
+        <slot></slot>
       </a>
     );
   }

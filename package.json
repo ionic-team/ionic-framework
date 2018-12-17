@@ -11,13 +11,13 @@
   },
   "devDependencies": {
     "@octokit/rest": "^15.2.6",
-    "chalk": "^2.3.2",
-    "conventional-changelog-cli": "^1.3.16",
+    "conventional-changelog-cli": "^2.0.1",
     "execa": "^0.10.0",
-    "fs-extra": "^5.0.0",
-    "inquirer": "^5.1.0",
+    "fs-extra": "^7.0.0",
+    "inquirer": "^6.0.0",
     "listr": "^0.14.0",
-    "semver": "^5.5.0"
+    "semver": "^5.5.0",
+    "turbocolor": "^2.4.1"
   },
   "dependencies": {
     "node-sass": "^4.9.0"

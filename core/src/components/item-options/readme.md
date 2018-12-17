@@ -17,39 +17,16 @@ You can combine the `ionSwipe` event plus the `expandable` directive to create a
 
 ## Properties
 
-#### side
-
-string
-
-The side the option button should be on. Possible values: `"start"` and `"end"`. Defaults to `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
-
-
-## Attributes
-
-#### side
-
-string
-
-The side the option button should be on. Possible values: `"start"` and `"end"`. Defaults to `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
+| Property | Attribute | Description                                                                                                                                                 | Type               | Default |
+| -------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ | ------- |
+| `side`   | `side`    | The side the option button should be on. Possible values: `"start"` and `"end"`. If you have multiple `ion-item-options`, a side must be provided for each. | `"end" \| "start"` | `'end'` |
 
 
 ## Events
 
-#### ionSwipe
-
-Emitted when the item has been fully swiped.
-
-
-## Methods
-
-#### fireSwipeEvent()
-
-
-#### isEndSide()
-
-
-#### width()
-
+| Event      | Description                                  | Detail |
+| ---------- | -------------------------------------------- | ------ |
+| `ionSwipe` | Emitted when the item has been fully swiped. | any    |
 
 
 ----------------------------------------------

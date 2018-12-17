@@ -1,8 +1,10 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
-import { BaseInput, Color, GestureDetail, Mode, RangeInputChangeEvent, StyleEvent } from '../../interface';
-import { clamp, debounceEvent, deferEvent } from '../../utils/helpers';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
+
+import { Color, Gesture, GestureDetail, InputChangeEvent, Mode, RangeValue, StyleEvent } from '../../interface';
+import { clamp, debounceEvent } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
-import { Knob, RangeEventDetail, RangeValue } from './range-interface';
+
+import { Knob, RangeEventDetail } from './range-interface';
 
 @Component({
   tag: 'ion-range',
@@ -12,34 +14,37 @@ import { Knob, RangeEventDetail, RangeValue } from './range-interface';
   },
   shadow: true
 })
-export class Range implements BaseInput {
+export class Range implements ComponentInterface {
 
   private noUpdate = false;
   private rect!: ClientRect;
   private hasFocus = false;
   private rangeSlider?: HTMLElement;
+  private gesture?: Gesture;
 
   @Element() el!: HTMLStencilElement;
+
+  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   @State() private ratioA = 0;
   @State() private ratioB = 0;
   @State() private pressedKnob: Knob;
 
   /**
-   * The color to use from your Sass `$colors` map.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
    * How long, in milliseconds, to wait to trigger the
-   * `ionChange` event after each change in the range value. Default `0`.
+   * `ionChange` event after each change in the range value.
    */
   @Prop() debounce = 0;
 
@@ -54,51 +59,65 @@ export class Range implements BaseInput {
   @Prop() name = '';
 
   /**
-   * Show two knobs. Defaults to `false`.
+   * Show two knobs.
    */
   @Prop() dualKnobs = false;
 
   /**
-   * Minimum integer value of the range. Defaults to `0`.
+   * Minimum integer value of the range.
    */
   @Prop() min = 0;
+  @Watch('min')
+  protected minChanged() {
+    if (!this.noUpdate) {
+      this.updateRatio();
+    }
+  }
 
   /**
-   * Maximum integer value of the range. Defaults to `100`.
+   * Maximum integer value of the range.
    */
   @Prop() max = 100;
+  @Watch('max')
+  protected maxChanged() {
+    if (!this.noUpdate) {
+      this.updateRatio();
+    }
+  }
 
   /**
-   * If true, a pin with integer value is shown when the knob
-   * is pressed. Defaults to `false`.
+   * If `true`, a pin with integer value is shown when the knob
+   * is pressed.
    */
   @Prop() pin = false;
 
   /**
-   * If true, the knob snaps to tick marks evenly spaced based
-   * on the step property value. Defaults to `false`.
+   * If `true`, the knob snaps to tick marks evenly spaced based
+   * on the step property value.
    */
   @Prop() snaps = false;
 
   /**
-   * Specifies the value granularity. Defaults to `1`.
+   * Specifies the value granularity.
    */
   @Prop() step = 1;
 
-  /*
-   * If true, the user cannot interact with the range. Defaults to `false`.
+  /**
+   * If `true`, the user cannot interact with the range.
    */
   @Prop() disabled = false;
   @Watch('disabled')
   protected disabledChanged() {
+    if (this.gesture) {
+      this.gesture.setDisabled(this.disabled);
+    }
     this.emitStyle();
   }
 
   /**
    * the value of the range.
    */
-  @Prop({ mutable: true })
-  value: any = 0;
+  @Prop({ mutable: true }) value: RangeValue = 0;
   @Watch('value')
   protected valueChanged(value: RangeValue) {
     if (!this.noUpdate) {
@@ -110,10 +129,11 @@ export class Range implements BaseInput {
   /**
    * Emitted when the value property has changed.
    */
-  @Event() ionChange!: EventEmitter<RangeInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<InputChangeEvent>;
 
   /**
    * Emitted when the styles change.
+   * @internal
    */
   @Event() ionStyle!: EventEmitter<StyleEvent>;
 
@@ -128,11 +148,23 @@ export class Range implements BaseInput {
   @Event() ionBlur!: EventEmitter<void>;
 
   componentWillLoad() {
-    this.ionStyle = deferEvent(this.ionStyle);
-
     this.updateRatio();
     this.debounceChanged();
     this.emitStyle();
+  }
+
+  async componentDidLoad() {
+    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
+      el: this.rangeSlider!,
+      queue: this.queue,
+      gestureName: 'range',
+      gesturePriority: 100,
+      threshold: 0,
+      onStart: ev => this.onStart(ev),
+      onMove: ev => this.onMove(ev),
+      onEnd: ev => this.onEnd(ev),
+    });
+    this.gesture.setDisabled(this.disabled);
   }
 
   @Listen('ionIncrease')
@@ -149,6 +181,22 @@ export class Range implements BaseInput {
     } else {
       this.ratioB += step;
     }
+    this.updateValue();
+  }
+
+  private handleKeyboard(knob: string, isIncrease: boolean) {
+    let step = this.step;
+    step = step > 0 ? step : 1;
+    step = step / (this.max - this.min);
+    if (!isIncrease) {
+      step *= -1;
+    }
+    if (knob === 'A') {
+      this.ratioA += step;
+    } else {
+      this.ratioB += step;
+    }
+    this.updateValue();
   }
 
   private getValue(): RangeValue {
@@ -191,7 +239,7 @@ export class Range implements BaseInput {
     }
   }
 
-  private onDragStart(detail: GestureDetail) {
+  private onStart(detail: GestureDetail) {
     this.fireFocus();
 
     const rect = this.rect = this.rangeSlider!.getBoundingClientRect() as any;
@@ -209,11 +257,11 @@ export class Range implements BaseInput {
     this.update(currentX);
   }
 
-  private onDragMove(detail: GestureDetail) {
+  private onMove(detail: GestureDetail) {
     this.update(detail.currentX);
   }
 
-  private onDragEnd(detail: GestureDetail) {
+  private onEnd(detail: GestureDetail) {
     this.update(detail.currentX);
     this.pressedKnob = undefined;
     this.fireBlur();
@@ -292,7 +340,7 @@ export class Range implements BaseInput {
     return {
       class: {
         ...createColorClasses(this.color),
-        'in-item': hostContext('.item', this.el),
+        'in-item': hostContext('ion-item', this.el),
         'range-disabled': this.disabled,
         'range-pressed': this.pressedKnob !== undefined,
         'range-has-pin': this.pin
@@ -320,67 +368,109 @@ export class Range implements BaseInput {
 
     return [
       <slot name="start"></slot>,
-      <ion-gesture
-        disableScroll={true}
-        onStart={this.onDragStart.bind(this)}
-        onMove={this.onDragMove.bind(this)}
-        onEnd={this.onDragEnd.bind(this)}
-        disabled={this.disabled}
-        gestureName="range"
-        gesturePriority={30}
-        direction="x"
-        threshold={0}
-      >
-        <div class="range-slider" ref={(el) => this.rangeSlider = el}>
-          {ticks.map(t => (
-            <div
-              style={{ left: t.left }}
-              role="presentation"
-              class={{
-                'range-tick': true,
-                'range-tick-active': t.active
-              }}
-            />
-          ))}
-
-          <div class="range-bar" role="presentation" />
+      <div class="range-slider" ref={el => this.rangeSlider = el}>
+        {ticks.map(t => (
           <div
-            class="range-bar range-bar-active"
+            style={{ left: t.left }}
             role="presentation"
-            style={{
-              left: barL,
-              right: barR
+            class={{
+              'range-tick': true,
+              'range-tick-active': t.active
             }}
           />
-          <ion-range-knob
-            knob="A"
-            pressed={this.pressedKnob === 'A'}
-            value={this.valA}
-            ratio={this.ratioA}
-            pin={this.pin}
-            min={min}
-            max={max}
-          />
+        ))}
 
-          {this.dualKnobs && (
-            <ion-range-knob
-              knob="B"
-              pressed={this.pressedKnob === 'B'}
-              value={this.valB}
-              ratio={this.ratioB}
-              pin={this.pin}
-              min={min}
-              max={max}
-            />
-          )}
-        </div>
-      </ion-gesture>,
+        <div class="range-bar" role="presentation" />
+        <div
+          class="range-bar range-bar-active"
+          role="presentation"
+          style={{
+            left: barL,
+            right: barR
+          }}
+        />
+
+        { renderKnob({
+          knob: 'A',
+          pressed: this.pressedKnob === 'A',
+          value: this.valA,
+          ratio: this.ratioA,
+          pin: this.pin,
+          disabled: this.disabled,
+          handleKeyboard: this.handleKeyboard.bind(this),
+          min,
+          max
+        })}
+
+        { this.dualKnobs && renderKnob({
+          knob: 'B',
+          pressed: this.pressedKnob === 'B',
+          value: this.valB,
+          ratio: this.ratioB,
+          pin: this.pin,
+          disabled: this.disabled,
+          handleKeyboard: this.handleKeyboard.bind(this),
+          min,
+          max
+        })}
+      </div>,
       <slot name="end"></slot>
     ];
   }
 }
 
-export function ratioToValue(
+interface RangeKnob {
+  knob: string;
+  value: number;
+  ratio: number;
+  min: number;
+  max: number;
+  disabled: boolean;
+  pressed: boolean;
+  pin: boolean;
+
+  handleKeyboard: (name: string, isIncrease: boolean) => void;
+}
+
+function renderKnob({ knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard }: RangeKnob) {
+  return (
+    <div
+      onKeyDown={(ev: KeyboardEvent) => {
+        const key = ev.key;
+        if (key === 'ArrowLeft' || key === 'ArrowDown') {
+          handleKeyboard(knob, false);
+          ev.preventDefault();
+          ev.stopPropagation();
+
+        } else if (key === 'ArrowRight' || key === 'ArrowUp') {
+          handleKeyboard(knob, true);
+          ev.preventDefault();
+          ev.stopPropagation();
+        }
+      }}
+      class={{
+        'range-knob-handle': true,
+        'range-knob-pressed': pressed,
+        'range-knob-min': value === min,
+        'range-knob-max': value === max
+      }}
+      style={{
+        'left': `${ratio * 100}%`
+      }}
+      role="slider"
+      tabindex={disabled ? -1 : 0}
+      aria-valuemin={min}
+      aria-valuemax={max}
+      aria-disabled={disabled ? 'true' : null}
+      aria-valuenow={value}
+    >
+      {pin && <div class="range-pin" role="presentation">{Math.round(value)}</div>}
+      <div class="range-knob" role="presentation" />
+    </div>
+  );
+}
+
+function ratioToValue(
   ratio: number,
   min: number,
   max: number,
@@ -393,6 +483,6 @@ export function ratioToValue(
   return clamp(min, value, max);
 }
 
-export function valueToRatio(value: number, min: number, max: number): number {
+function valueToRatio(value: number, min: number, max: number): number {
   return clamp(0, (value - min) / (max - min), 1);
 }

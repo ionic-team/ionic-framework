@@ -5,8 +5,9 @@
   <meta charset="UTF-8">
   <title>Item - Reorder</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
@@ -112,7 +113,7 @@
       for (var i = 0; i < items.length; i++) {
         groupEl.innerHTML += `
           <ion-item onClick="clickedButton(${i})"
-            style="min-height: ${i * 2 + 35}px; background-color: rgb(${255 - i * 4}, ${255 - i * 4}, ${255 - i * 4})">
+            style="min-height: ${i * 2 + 35}px; --background: rgb(${255 - i * 4}, ${255 - i * 4}, ${255 - i * 4})">
             ${i}
             <ion-reorder slot="end"></ion-reorder>
           </ion-item>`;

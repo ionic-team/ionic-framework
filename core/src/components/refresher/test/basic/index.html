@@ -5,14 +5,13 @@
   <meta charset="UTF-8">
   <title>Refresher - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
   <ion-app>
-
-
     <ion-header>
       <ion-toolbar>
         <ion-title>Pull To Refresh</ion-title>
@@ -20,21 +19,18 @@
     </ion-header>
 
     <ion-content>
-      <ion-refresher id="refresher" disabled="false" slot="fixed">
+      <ion-refresher id="refresher" slot="fixed">
         <ion-refresher-content pulling-text="Pull to refresh..." refreshing-spinner="bubbles" refreshing-text="Refreshing...">
         </ion-refresher-content>
       </ion-refresher>
 
       <ion-list id="list"></ion-list>
-
     </ion-content>
-
-
-
   </ion-app>
   <ion-menu-controller></ion-menu-controller>
 
   <script>
+
     let items = [];
     for (var i = 0; i < 30; i++) {
       items.push(i + 1);

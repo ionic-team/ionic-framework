@@ -1,5 +1,6 @@
-import { Component, Prop } from '@stencil/core';
-import { Config, Mode } from '../../interface';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
+
+import { Config, Mode, SpinnerTypes } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
 @Component({
@@ -9,7 +10,7 @@ import { createThemedClasses } from '../../utils/theme';
     md: 'infinite-scroll-content.md.scss'
   }
 })
-export class InfiniteScrollContent {
+export class InfiniteScrollContent implements ComponentInterface {
 
   mode!: Mode;
 
@@ -18,7 +19,7 @@ export class InfiniteScrollContent {
   /**
    * An animated SVG spinner that shows while loading.
    */
-  @Prop({ mutable: true }) loadingSpinner?: string;
+  @Prop({ mutable: true }) loadingSpinner?: SpinnerTypes | null;
 
   /**
    * Optional text to display while loading.
@@ -26,7 +27,7 @@ export class InfiniteScrollContent {
   @Prop() loadingText?: string;
 
   componentDidLoad() {
-    if (!this.loadingSpinner) {
+    if (this.loadingSpinner === undefined) {
       this.loadingSpinner = this.config.get(
         'infiniteLoadingSpinner',
         this.config.get('spinner', 'lines')

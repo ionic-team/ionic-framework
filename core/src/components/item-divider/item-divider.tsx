@@ -1,4 +1,5 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
+
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
@@ -10,35 +11,48 @@ import { createColorClasses } from '../../utils/theme';
   },
   shadow: true
 })
-export class ItemDivider {
+export class ItemDivider implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
   /**
-   * The color to use for the item-divider
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
+
+  /**
+   * When it's set to `true`, the item-divider will stay visible when it reaches the top
+   * of the viewport until the next `ion-item-divider` replaces it.
+   *
+   * This feature relies in `position:sticky`:
+   * https://caniuse.com/#feat=css-sticky
+   */
+  @Prop() sticky = false;
 
   componentDidLoad() {
     // Change the button size to small for each ion-button in the item
     // unless the size is explicitly set
-    const buttons = this.el.querySelectorAll('ion-button');
-    for (let i = 0; i < buttons.length; i++) {
-      if (!buttons[i].size) {
-        buttons[i].size = 'small';
+    Array.from(this.el.querySelectorAll('ion-button')).forEach(button => {
+      if (button.size === undefined) {
+        button.size = 'small';
       }
-    }
+    });
   }
 
   hostData() {
     return {
-      class: createColorClasses(this.color)
+      class: {
+        ...createColorClasses(this.color),
+        'item-divider-sticky': this.sticky,
+        'item': true,
+      }
     };
   }
 

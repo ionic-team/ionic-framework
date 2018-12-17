@@ -1,6 +1,6 @@
 /**
  * Check to see if the Haptic Plugin is available
- * @return Returns true or false if the plugin is available
+ * @return Returns `true` or false if the plugin is available
  */
 export function hapticAvailable(): boolean {
   const engine = (window as any).TapticEngine;
@@ -13,7 +13,9 @@ export function hapticAvailable(): boolean {
  */
 export function hapticSelection() {
   const engine = (window as any).TapticEngine;
-  engine && engine.selection();
+  if (engine) {
+    engine.selection();
+  }
 }
 
 /**
@@ -21,7 +23,9 @@ export function hapticSelection() {
  */
 export function hapticSelectionStart() {
   const engine = (window as any).TapticEngine;
-  engine && engine.gestureSelectionStart();
+  if (engine) {
+    engine.gestureSelectionStart();
+  }
 }
 
 /**
@@ -29,7 +33,9 @@ export function hapticSelectionStart() {
  */
 export function hapticSelectionChanged() {
   const engine = (window as any).TapticEngine;
-  engine && engine.gestureSelectionChanged();
+  if (engine) {
+    engine.gestureSelectionChanged();
+  }
 }
 
 /**
@@ -38,23 +44,29 @@ export function hapticSelectionChanged() {
  */
 export function hapticSelectionEnd() {
   const engine = (window as any).TapticEngine;
-  engine && engine.gestureSelectionEnd();
+  if (engine) {
+    engine.gestureSelectionEnd();
+  }
 }
 
 /**
  * Use this to indicate success/failure/warning to the user.
  * options should be of the type `{ type: 'success' }` (or `warning`/`error`)
  */
-export function hapticNotification(options: { type: string }) {
+export function hapticNotification(options: { type: 'success' | 'warning' | 'error' }) {
   const engine = (window as any).TapticEngine;
-  engine && engine.notification(options);
+  if (engine) {
+    engine.notification(options);
+  }
 }
 
 /**
  * Use this to indicate success/failure/warning to the user.
  * options should be of the type `{ style: 'light' }` (or `medium`/`heavy`)
  */
-export function hapticImpact(options: { style: string }) {
+export function hapticImpact(options: { style: 'light' | 'medium' | 'heavy' }) {
   const engine = (window as any).TapticEngine;
-  engine && engine.impact(options);
+  if (engine) {
+    engine.impact(options);
+  }
 }

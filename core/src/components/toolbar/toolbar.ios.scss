@@ -5,19 +5,17 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{$toolbar-ios-background-color};
-  --ion-color-contrast: #{$toolbar-ios-text-color};
+  --background: #{$toolbar-ios-background};
+  --color: #{$toolbar-ios-color};
   --border-color: #{$toolbar-ios-border-color};
-  --translucent-filter: #{$toolbar-ios-translucent-filter};
-
-  @include padding($toolbar-ios-padding);
-
-  min-height: $toolbar-ios-height;
-
-  font-family: $toolbar-ios-font-family;
+  --padding-top: 4px;
+  --padding-bottom: 4px;
+  --padding-start: 4px;
+  --padding-end: 4px;
+  --min-height: 44px;
 }
 
-// iOS Toolbar Content
+// Toolbar: Content
 // --------------------------------------------------
 
 .toolbar-content {
@@ -27,23 +25,25 @@
   min-width: 0;
 }
 
-::slotted(ion-title) {
-  @include position(0, null, null, 0);
-  @include padding(0, 90px, 0);
+// iOS Toolbar Slot Placement
+// --------------------------------------------------
 
-  position: absolute;
+::slotted([slot="start"]) {
+  order: map-get($toolbar-order-ios, slot-start);
+}
 
-  width: 100%;
-  height: 100%;
+::slotted([slot="secondary"]) {
+  order: map-get($toolbar-order-ios, slot-secondary);
+}
 
-  transform: translateZ(0);
+::slotted([slot="primary"]) {
+  order: map-get($toolbar-order-ios, slot-primary);
 
-  font-size: $toolbar-ios-title-font-size;
-  font-weight: $toolbar-ios-title-font-weight;
+  text-align: end;
+}
 
-  letter-spacing: -.03em;
+::slotted([slot="end"]) {
+  order: map-get($toolbar-order-ios, slot-end);
 
-  text-align: $toolbar-ios-title-text-align;
-  box-sizing: border-box;
-  pointer-events: none;
+  text-align: end;
 }

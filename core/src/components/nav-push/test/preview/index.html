@@ -5,14 +5,16 @@
   <meta charset="UTF-8">
   <title>Nav Push</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body onload="loadFirstPage()">
   <ion-app>
     <ion-nav></ion-nav>
   </ion-app>
+
   <style>
     f {
       display: block;
@@ -35,12 +37,12 @@
     async connectedCallback() {
       this.innerHTML = `
 
-        <ion-header>
+        <ion-header translucent>
           <ion-toolbar>
             <ion-title>Page One</ion-title>
           </ion-toolbar>
         </ion-header>
-        <ion-content padding>
+        <ion-content padding fullscreen>
           <h1>Page One</h1>
           <ion-nav-push component="page-two">
             <ion-button class="next">Go to Page Two</ion-button>
@@ -54,12 +56,12 @@
     async connectedCallback() {
       this.innerHTML = `
 
-        <ion-header>
+        <ion-header translucent>
           <ion-toolbar>
             <ion-title>Page Two</ion-title>
           </ion-toolbar>
         </ion-header>
-        <ion-content padding>
+        <ion-content padding fullscreen>
           <h1>Page Two</h1>
           <ion-nav-push component="page-three">
             <ion-button class="next">Go to Page Three</ion-button>
@@ -76,12 +78,12 @@
     async connectedCallback() {
       this.innerHTML = `
 
-        <ion-header>
+        <ion-header translucent>
           <ion-toolbar>
             <ion-title>Page Three</ion-title>
           </ion-toolbar>
         </ion-header>
-        <ion-content padding>
+        <ion-content padding fullscreen>
           <h1>Page Three</h1>
           <ion-nav-pop>
             <ion-button class="back">Go Back</ion-button>

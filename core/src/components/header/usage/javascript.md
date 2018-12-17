@@ -1,8 +1,11 @@
 ```html
 <ion-header>
-  <ion-navbar>
-    <ion-title>Page1</ion-title>
-  </ion-navbar>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Navigation Bar</ion-title>
+  </ion-toolbar>
 
   <ion-toolbar>
     <ion-title>Subheader</ion-title>

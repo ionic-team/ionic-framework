@@ -5,14 +5,15 @@
   <meta charset="UTF-8">
   <title>Content</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
   <ion-app>
 
-    <ion-header id="header">
+    <ion-header translucent id="header">
       <ion-toolbar style="display: none" id="toolbar2">
         <ion-title>Hidden Toolbar</ion-title>
       </ion-toolbar>
@@ -22,7 +23,7 @@
     </ion-header>
 
     <div style="display: flex; flex: 1">
-      <ion-content padding style="text-align: center; flex: 2" id="content">
+      <ion-content padding fullscreen text-center style="flex: 2" id="content">
         <f></f>
         <ion-button onclick="toggleFullscreen()">Toggle content.fullscreen</ion-button>
         <p>
@@ -97,6 +98,7 @@
         footer.classList.add('animation');
       }
     </script>
+
     <style>
       ion-header.animation,
       ion-footer.animation,

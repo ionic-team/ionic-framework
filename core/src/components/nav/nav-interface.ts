@@ -1,6 +1,6 @@
-import { Animation, AnimationBuilder, ComponentRef, FrameworkDelegate, Mode, ViewController } from '../../interface';
+import { Animation, AnimationBuilder, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
 
-export { Nav } from './nav';
+import { ViewController } from './view-controller';
 
 export type NavDirection = 'back' | 'forward';
 
@@ -14,6 +14,12 @@ export interface NavResult {
   direction?: NavDirection;
 }
 
+export interface SwipeGestureHandler {
+  canStart(): boolean;
+  onStart(): void;
+  onEnd(shouldComplete: boolean): void;
+}
+
 export interface RouterOutletOptions {
   animated?: boolean;
   animationBuilder?: AnimationBuilder;
@@ -24,6 +30,8 @@ export interface RouterOutletOptions {
   deepWait?: boolean;
   mode?: Mode;
   keyboardClose?: boolean;
+  skipIfBusy?: boolean;
+  progressAnimation?: boolean;
 }
 
 export interface NavOptions extends RouterOutletOptions {
@@ -37,20 +45,14 @@ export interface Page extends Function {
   new (...args: any[]): any;
 }
 
-export interface TransitionResolveFn {
-  (hasCompleted: boolean, requiresTransition: boolean, enteringName?: string, leavingName?: string, direction?: string): void;
-}
+export type TransitionResolveFn = (hasCompleted: boolean, requiresTransition: boolean, enteringName?: string, leavingName?: string, direction?: string) => void;
 
-export interface TransitionRejectFn {
-  (rejectReason: any, transition?: Animation): void;
-}
+export type TransitionRejectFn = (rejectReason: any, transition?: Animation) => void;
 
-export interface TransitionDoneFn {
-  (hasCompleted: boolean, requiresTransition: boolean, enteringView?: ViewController, leavingView?: ViewController, direction?: string): void;
-}
+export type TransitionDoneFn = (hasCompleted: boolean, requiresTransition: boolean, enteringView?: ViewController, leavingView?: ViewController, direction?: string) => void;
 
 export interface TransitionInstruction {
-  opts: NavOptions|undefined|null;
+  opts: NavOptions | undefined | null;
   insertStart?: number;
   insertViews?: any[];
   removeView?: ViewController;
@@ -62,3 +64,5 @@ export interface TransitionInstruction {
   leavingRequiresTransition?: boolean;
   enteringRequiresTransition?: boolean;
 }
+
+export { ViewController };

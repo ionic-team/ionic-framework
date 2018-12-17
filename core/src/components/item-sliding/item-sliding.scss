@@ -1,4 +1,4 @@
-@import "../../themes/ionic.theme.default";
+@import "../../themes/ionic.globals";
 
 // Item Sliding
 // --------------------------------------------------
@@ -10,14 +10,18 @@ ion-item-sliding {
   width: 100%;
 
   overflow: hidden;
+
+  user-select: none;
+}
+
+ion-item-sliding .item {
+  user-select: none;
 }
 
 .item-sliding-active-slide .item {
   position: relative;
 
   transition: transform 500ms cubic-bezier(.36, .66, .04, 1);
-
-  background: $item-background-color;
 
   opacity: 1;
   z-index: $z-index-item-options + 1;

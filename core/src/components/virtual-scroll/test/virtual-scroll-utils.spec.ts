@@ -1,7 +1,6 @@
-import { HeaderFn, ItemHeightFn, VirtualNode  } from '../../../interface';
-import { CellType } from '../virtual-scroll-interface';
+import { HeaderFn, ItemHeightFn, VirtualNode } from '../../../interface';
 import { Range, calcCells, calcHeightIndex, getRange, getShouldUpdate, getViewport, positionForIndex, resizeBuffer, updateVDom } from '../virtual-scroll-utils';
-
+import { CELL_TYPE_ITEM, CELL_TYPE_HEADER, CELL_TYPE_FOOTER } from '../constants';
 
 describe('getViewport', () => {
   it('should return viewport without margin', () => {
@@ -18,7 +17,6 @@ describe('getViewport', () => {
     });
   });
 
-
   it('should return viewport with margin and scrollTop', () => {
     expect(getViewport(150, 100, 150)).toEqual({
       top: 0,
@@ -34,11 +32,10 @@ describe('getViewport', () => {
   });
 });
 
-
 describe('getRange', () => {
   it('should return initial bounds without buffer', () => {
     const heightBuffer = mockHeightBuffer(20, () => 10);
-    const bounds = getRange(heightBuffer, {top: 0, bottom: 100}, 0);
+    const bounds = getRange(heightBuffer, { top: 0, bottom: 100 }, 0);
 
     expect(bounds).toEqual({
       offset: 0,
@@ -48,7 +45,7 @@ describe('getRange', () => {
 
   it('should return initial bounds with buffer', () => {
     const heightBuffer = mockHeightBuffer(20, () => 10);
-    const bounds = getRange(heightBuffer, {top: 0, bottom: 100}, 4);
+    const bounds = getRange(heightBuffer, { top: 0, bottom: 100 }, 4);
 
     expect(bounds).toEqual({
       offset: 0,
@@ -58,7 +55,7 @@ describe('getRange', () => {
 
   it('should return initial bounds truncked', () => {
     const heightBuffer = mockHeightBuffer(5, () => 10);
-    const bounds = getRange(heightBuffer, {top: 0, bottom: 100}, 4);
+    const bounds = getRange(heightBuffer, { top: 0, bottom: 100 }, 4);
 
     expect(bounds).toEqual({
       offset: 0,
@@ -68,17 +65,17 @@ describe('getRange', () => {
 
   it('should return just first component', () => {
     const heightBuffer = mockHeightBuffer(5, () => 100);
-    expect(getRange(heightBuffer, {top: 0, bottom: 100}, 0)).toEqual({
+    expect(getRange(heightBuffer, { top: 0, bottom: 100 }, 0)).toEqual({
       offset: 0,
       length: 1,
     });
 
-    expect(getRange(heightBuffer, {top: 50, bottom: 100}, 0)).toEqual({
+    expect(getRange(heightBuffer, { top: 50, bottom: 100 }, 0)).toEqual({
       offset: 0,
       length: 1,
     });
 
-    expect(getRange(heightBuffer, {top: 100, bottom: 200}, 0)).toEqual({
+    expect(getRange(heightBuffer, { top: 100, bottom: 200 }, 0)).toEqual({
       offset: 1,
       length: 1,
     });
@@ -86,17 +83,17 @@ describe('getRange', () => {
 
   it('should return just two components', () => {
     const heightBuffer = mockHeightBuffer(5, () => 100);
-    expect(getRange(heightBuffer, {top: 1, bottom: 101}, 0)).toEqual({
+    expect(getRange(heightBuffer, { top: 1, bottom: 101 }, 0)).toEqual({
       offset: 0,
       length: 2,
     });
 
-    expect(getRange(heightBuffer, {top: 99, bottom: 200}, 0)).toEqual({
+    expect(getRange(heightBuffer, { top: 99, bottom: 200 }, 0)).toEqual({
       offset: 0,
       length: 2,
     });
 
-    expect(getRange(heightBuffer, {top: 100, bottom: 201}, 0)).toEqual({
+    expect(getRange(heightBuffer, { top: 100, bottom: 201 }, 0)).toEqual({
       offset: 1,
       length: 2,
     });
@@ -104,7 +101,7 @@ describe('getRange', () => {
 
   it('should return three components', () => {
     const heightBuffer = mockHeightBuffer(5, () => 100);
-    expect(getRange(heightBuffer, {top: 99, bottom: 201}, 0)).toEqual({
+    expect(getRange(heightBuffer, { top: 99, bottom: 201 }, 0)).toEqual({
       offset: 0,
       length: 3,
     });
@@ -146,14 +143,13 @@ describe('resizeBuffer', () => {
   });
 });
 
-
 describe('calcCells', () => {
   it('should calculate cells without headers and itemHeight', () => {
-    const items = ['0', 2, 'hola', {data: 'hello'}];
+    const items = ['0', 2, 'hola', { data: 'hello' }];
     const cells = calcCells(items, undefined, undefined, undefined, 10, 20, 30, 0, 0, items.length);
     expect(cells).toEqual([
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: '0',
         i: 0,
         index: 0,
@@ -162,7 +158,7 @@ describe('calcCells', () => {
         visible: false,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: 2,
         i: 1,
         index: 1,
@@ -171,7 +167,7 @@ describe('calcCells', () => {
         visible: false,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: 'hola',
         i: 2,
         index: 2,
@@ -180,8 +176,8 @@ describe('calcCells', () => {
         visible: false,
       },
       {
-        type: CellType.Item,
-        value: {data: 'hello'},
+        type: CELL_TYPE_ITEM,
+        value: { data: 'hello' },
         i: 3,
         index: 3,
         height: 30,
@@ -204,7 +200,7 @@ describe('calcCells', () => {
     expect(called).toEqual(3);
     expect(cells).toEqual([
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: 10,
         i: 0,
         index: 0,
@@ -213,7 +209,7 @@ describe('calcCells', () => {
         visible: true,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: 9,
         i: 1,
         index: 1,
@@ -222,7 +218,7 @@ describe('calcCells', () => {
         visible: true,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: 8,
         i: 2,
         index: 2,
@@ -262,7 +258,7 @@ describe('calcCells', () => {
     expect(footerCalled).toEqual(3);
     expect(cells).toEqual([
       {
-        type: CellType.Header,
+        type: CELL_TYPE_HEADER,
         value: 'my header',
         i: 0,
         index: 0,
@@ -271,7 +267,7 @@ describe('calcCells', () => {
         visible: false,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: '10',
         i: 1,
         index: 0,
@@ -280,7 +276,7 @@ describe('calcCells', () => {
         visible: true,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: '9',
         i: 2,
         index: 1,
@@ -289,7 +285,7 @@ describe('calcCells', () => {
         visible: true,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: '8',
         i: 3,
         index: 2,
@@ -298,7 +294,7 @@ describe('calcCells', () => {
         visible: true,
       },
       {
-        type: CellType.Footer,
+        type: CELL_TYPE_FOOTER,
         value: 'my footer',
         i: 4,
         index: 2,
@@ -336,27 +332,27 @@ describe('calcHeightIndex', () => {
 
 describe('getShouldUpdate', () => {
   it('should return true if the range does not match', () => {
-    expect(getShouldUpdate(Infinity, {offset: 1, length: 2}, {offset: 1, length: 3})).toBeTruthy();
-    expect(getShouldUpdate(Infinity, {offset: 1, length: 2}, {offset: 0, length: 2})).toBeTruthy();
+    expect(getShouldUpdate(Infinity, { offset: 1, length: 2 }, { offset: 1, length: 3 })).toBeTruthy();
+    expect(getShouldUpdate(Infinity, { offset: 1, length: 2 }, { offset: 0, length: 2 })).toBeTruthy();
   });
 
   it('should return true if the dirty index <= bottom', () => {
-    expect(getShouldUpdate(9, {offset: 1, length: 8}, {offset: 1, length: 8})).toBeTruthy();
+    expect(getShouldUpdate(9, { offset: 1, length: 8 }, { offset: 1, length: 8 })).toBeTruthy();
   });
 
   it('should return false if the dirty index > bottom', () => {
-    expect(getShouldUpdate(10, {offset: 1, length: 8}, {offset: 1, length: 8})).toBeFalsy();
+    expect(getShouldUpdate(10, { offset: 1, length: 8 }, { offset: 1, length: 8 })).toBeFalsy();
   });
 
   it('should return false if the range matches', () => {
-    expect(getShouldUpdate(Infinity, {offset: 1, length: 2}, {offset: 1, length: 2})).toBeFalsy();
+    expect(getShouldUpdate(Infinity, { offset: 1, length: 2 }, { offset: 1, length: 2 })).toBeFalsy();
   });
 });
 
 describe('positionForIndex', () => {
   it('should return the correct position', () => {
     const items = [1, 2, 3, 4];
-    const {cells, heightIndex} = mockVirtualScroll(items,
+    const { cells, heightIndex } = mockVirtualScroll(items,
       () => 40,
       (_, i) => i === 1 ? 'hola' : null,
       (_, i) => i === 2 ? 'hola' : null
@@ -372,8 +368,8 @@ describe('updateVDom', () => {
   it('should initialize empty VDOM', () => {
     const vdom: VirtualNode[] = [];
     const items = [1, 2, 3, 4, 5];
-    const {heightIndex, cells} = mockVirtualScroll(items, () => 20);
-    const range: Range = {offset: 1, length: 4};
+    const { heightIndex, cells } = mockVirtualScroll(items, () => 20);
+    const range: Range = { offset: 1, length: 4 };
 
     updateVDom(vdom, heightIndex, cells, range);
     expect(vdom).toEqual([
@@ -386,10 +382,10 @@ describe('updateVDom', () => {
 
   it('should simulate real scrolling', () => {
     const vdom: VirtualNode[] = [];
-    const items = Array.from({length: 100}, (_, i) => i + '');
-    const {heightIndex, cells} = mockVirtualScroll(items, () => 20);
-    updateVDom(vdom, heightIndex, cells, {offset: 0, length: 4});
-    updateVDom(vdom, heightIndex, cells, {offset: 0, length: 4});
+    const items = Array.from({ length: 100 }, (_, i) => i + '');
+    const { heightIndex, cells } = mockVirtualScroll(items, () => 20);
+    updateVDom(vdom, heightIndex, cells, { offset: 0, length: 4 });
+    updateVDom(vdom, heightIndex, cells, { offset: 0, length: 4 });
     expect(vdom).toEqual([
       { cell: cells[0], change: 0, d: false, top: 0, visible: true },
       { cell: cells[1], change: 0, d: false, top: 20, visible: true },
@@ -397,7 +393,7 @@ describe('updateVDom', () => {
       { cell: cells[3], change: 0, d: false, top: 60, visible: true }
     ]);
 
-    updateVDom(vdom, heightIndex, cells, {offset: 0, length: 5});
+    updateVDom(vdom, heightIndex, cells, { offset: 0, length: 5 });
     expect(vdom).toEqual([
       { cell: cells[0], change: 0, d: false, top: 0, visible: true },
       { cell: cells[1], change: 0, d: false, top: 20, visible: true },
@@ -406,7 +402,7 @@ describe('updateVDom', () => {
       { cell: cells[4], change: 2, d: false, top: 80, visible: true }
     ]);
 
-    updateVDom(vdom, heightIndex, cells, {offset: 1, length: 4});
+    updateVDom(vdom, heightIndex, cells, { offset: 1, length: 4 });
     expect(vdom).toEqual([
       { cell: cells[0], change: 1, d: true, top: -9999, visible: true },
       { cell: cells[1], change: 0, d: false, top: 20, visible: true },
@@ -415,7 +411,7 @@ describe('updateVDom', () => {
       { cell: cells[4], change: 0, d: false, top: 80, visible: true }
     ]);
 
-    updateVDom(vdom, heightIndex, cells, {offset: 1, length: 5});
+    updateVDom(vdom, heightIndex, cells, { offset: 1, length: 5 });
     expect(vdom).toEqual([
       { cell: cells[5], change: 2, d: false, top: 100, visible: true },
       { cell: cells[1], change: 0, d: false, top: 20, visible: true },
@@ -424,7 +420,7 @@ describe('updateVDom', () => {
       { cell: cells[4], change: 0, d: false, top: 80, visible: true }
     ]);
 
-    updateVDom(vdom, heightIndex, cells, {offset: 2, length: 5});
+    updateVDom(vdom, heightIndex, cells, { offset: 2, length: 5 });
     expect(vdom).toEqual([
       { cell: cells[5], change: 0, d: false, top: 100, visible: true },
       { cell: cells[6], change: 2, d: false, top: 120, visible: true },
@@ -433,7 +429,7 @@ describe('updateVDom', () => {
       { cell: cells[4], change: 0, d: false, top: 80, visible: true }
     ]);
 
-    updateVDom(vdom, heightIndex, cells, {offset: 10, length: 6});
+    updateVDom(vdom, heightIndex, cells, { offset: 10, length: 6 });
     expect(vdom).toEqual([
       { cell: cells[10], change: 2, d: false, top: 200, visible: true },
       { cell: cells[11], change: 2, d: false, top: 220, visible: true },
@@ -443,7 +439,7 @@ describe('updateVDom', () => {
       { cell: cells[15], change: 2, d: false, top: 300, visible: true }
     ]);
 
-    updateVDom(vdom, heightIndex, cells, {offset: 13, length: 10});
+    updateVDom(vdom, heightIndex, cells, { offset: 13, length: 10 });
     expect(vdom).toEqual([
       { cell: cells[16], change: 2, d: false, top: 320, visible: true },
       { cell: cells[17], change: 2, d: false, top: 340, visible: true },
@@ -457,7 +453,7 @@ describe('updateVDom', () => {
       { cell: cells[22], change: 2, d: false, top: 440, visible: true },
     ]);
 
-    updateVDom(vdom, heightIndex, cells, {offset: 13, length: 1});
+    updateVDom(vdom, heightIndex, cells, { offset: 13, length: 1 });
     expect(vdom).toEqual([
       { cell: cells[16], change: 1, d: true, top: -9999, visible: true },
       { cell: cells[17], change: 1, d: true, top: -9999, visible: true },
@@ -471,7 +467,7 @@ describe('updateVDom', () => {
       { cell: cells[22], change: 1, d: true, top: -9999, visible: true },
     ]);
 
-    updateVDom(vdom, heightIndex, cells, {offset: 13, length: 1});
+    updateVDom(vdom, heightIndex, cells, { offset: 13, length: 1 });
     expect(vdom).toEqual([
       { cell: cells[16], change: 0, d: true, top: -9999, visible: true },
       { cell: cells[17], change: 0, d: true, top: -9999, visible: true },
@@ -485,7 +481,7 @@ describe('updateVDom', () => {
       { cell: cells[22], change: 0, d: true, top: -9999, visible: true },
     ]);
 
-    updateVDom(vdom, heightIndex, cells, {offset: 0, length: 1});
+    updateVDom(vdom, heightIndex, cells, { offset: 0, length: 1 });
     expect(vdom).toEqual([
       { cell: cells[0], change: 2, d: false, top: 0, visible: true },
       { cell: cells[17], change: 0, d: true, top: -9999, visible: true },
@@ -501,7 +497,6 @@ describe('updateVDom', () => {
   });
 });
 
-
 function mockVirtualScroll(
   items: any[],
   itemHeight?: ItemHeightFn,
@@ -514,7 +509,7 @@ function mockVirtualScroll(
   return { items, heightIndex, cells };
 }
 
-function mockHeightBuffer(size: number, step: Function) {
+function mockHeightBuffer(size: number, step: (index: number) => number) {
   const buf = new Uint32Array(size);
   let acum = 0;
   for (let i = 0; i < size; i++) {

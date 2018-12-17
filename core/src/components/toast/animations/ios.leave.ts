@@ -3,23 +3,18 @@ import { Animation } from '../../../interface';
 /**
  * iOS Toast Leave Animation
  */
-export function iosLeaveAnimation(Animation: Animation, baseEl: HTMLElement, position: string): Promise<Animation> {
-  const baseAnimation = new Animation();
+export function iosLeaveAnimation(AnimationC: Animation, baseEl: ShadowRoot, position: string): Promise<Animation> {
+  const baseAnimation = new AnimationC();
 
-  const wrapperAnimation = new Animation();
-  const wrapperEle = baseEl.querySelector('.toast-wrapper') as HTMLElement;
-  wrapperAnimation.addElement(wrapperEle);
+  const wrapperAnimation = new AnimationC();
 
-  let variable;
+  const hostEl = baseEl.host || baseEl;
+  const wrapperEl = baseEl.querySelector('.toast-wrapper') as HTMLElement;
 
-  if (CSS.supports('bottom', 'env(safe-area-inset-bottom)')) {
-    variable = 'env';
-  } else if (CSS.supports('bottom', 'constant(safe-area-inset-bottom)')) {
-    variable = 'constant';
-  }
+  wrapperAnimation.addElement(wrapperEl);
 
-  const bottom = variable ? 'calc(-10px - ' + variable + '(safe-area-inset-bottom))' : '-10px';
-  const top = variable ? 'calc(' + variable + '(safe-area-inset-top) + 10px)' : '10px';
+  const bottom = `calc(-10px - var(--ion-safe-area-bottom, 0px))`;
+  const top = `calc(10px + var(--ion-safe-area-top, 0px))`;
 
   switch (position) {
     case 'top':
@@ -33,7 +28,7 @@ export function iosLeaveAnimation(Animation: Animation, baseEl: HTMLElement, pos
       break;
   }
   return Promise.resolve(baseAnimation
-    .addElement(baseEl)
+    .addElement(hostEl)
     .easing('cubic-bezier(.36,.66,.04,1)')
     .duration(300)
     .add(wrapperAnimation));

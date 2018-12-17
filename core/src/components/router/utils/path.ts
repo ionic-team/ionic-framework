@@ -1,5 +1,6 @@
-import { RouteChain } from '../../../interface';
-import { RouterIntent } from './constants';
+import { RouteChain, RouterDirection } from '../../../interface';
+
+import { ROUTER_INTENT_FORWARD } from './constants';
 
 export function generatePath(segments: string[]): string {
   const path = segments
@@ -27,7 +28,7 @@ export function chainToPath(chain: RouteChain): string[] | null {
   return path;
 }
 
-export function writePath(history: History, root: string, useHash: boolean, path: string[], intent: RouterIntent, state: number) {
+export function writePath(history: History, root: string, useHash: boolean, path: string[], direction: RouterDirection, state: number) {
   let url = generatePath([
     ...parsePath(root),
     ...path
@@ -35,7 +36,7 @@ export function writePath(history: History, root: string, useHash: boolean, path
   if (useHash) {
     url = '#' + url;
   }
-  if (intent === RouterIntent.Forward) {
+  if (direction === ROUTER_INTENT_FORWARD) {
     history.pushState(state, '', url);
   } else {
     history.replaceState(state, '', url);
@@ -74,7 +75,7 @@ export function readPath(loc: Location, root: string, useHash: boolean): string[
   return removePrefix(prefix, path);
 }
 
-export function parsePath(path: string|undefined|null): string[] {
+export function parsePath(path: string | undefined | null): string[] {
   if (path == null) {
     return [''];
   }
@@ -88,4 +89,3 @@ export function parsePath(path: string|undefined|null): string[] {
     return segments;
   }
 }
-

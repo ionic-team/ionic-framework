@@ -6,9 +6,6 @@
 <!-- Anchor -->
 <ion-button href="#">Anchor</ion-button>
 
-<!-- Anchor with backwards transition -->
-<ion-button href="/" go-back>Backwards Anchor</ion-button>
-
 <!-- Colors -->
 <ion-button color="primary">Primary</ion-button>
 <ion-button color="secondary">Secondary</ion-button>
@@ -25,12 +22,12 @@
 <ion-button expand="block">Block Button</ion-button>
 
 <!-- Round -->
-<ion-button round>Round Button</ion-button>
+<ion-button shape="round">Round Button</ion-button>
 
 <!-- Fill -->
 <ion-button expand="full" fill="outline">Outline + Full</ion-button>
 <ion-button expand="block" fill="outline">Outline + Block</ion-button>
-<ion-button round fill="outline">Outline + Round</ion-button>
+<ion-button shape="round" fill="outline">Outline + Round</ion-button>
 
 <!-- Icons -->
 <ion-button>

@@ -1,4 +1,5 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
+
 import { Color, Config, Mode } from '../../interface';
 
 @Component({
@@ -9,23 +10,24 @@ import { Color, Config, Mode } from '../../interface';
   },
   shadow: true
 })
-export class MenuButton {
+export class MenuButton implements ComponentInterface {
 
   @Prop({ context: 'config' }) config!: Config;
 
   /**
-   * The color to use for the background of the item.
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
-   * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
+   * Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle
    */
   @Prop() menu?: string;
 
@@ -37,7 +39,8 @@ export class MenuButton {
   hostData() {
     return {
       class: {
-        'button': true
+        'button': true,  // ion-buttons target .button
+        'ion-activatable': true,
       }
     };
   }
@@ -46,10 +49,11 @@ export class MenuButton {
     const menuIcon = this.config.get('menuIcon', 'menu');
     return (
       <ion-menu-toggle menu={this.menu} autoHide={this.autoHide}>
-        <button>
+        <button type="button">
           <slot>
             <ion-icon icon={menuIcon} mode={this.mode} color={this.color} lazy={false} />
           </slot>
+          {this.mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
         </button>
       </ion-menu-toggle>
     );

@@ -30,7 +30,6 @@ There are several attributes that can be added to a row to customize this behavi
 <!-- Auto Generated Below -->
 
 
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

@@ -1,0 +1,75 @@
+@import "./segment-button";
+@import "./segment-button.ios.vars";
+
+// iOS Segment Button
+// --------------------------------------------------
+
+:host {
+  --border-radius: #{$segment-button-ios-border-radius};
+  --border-width: #{$segment-button-ios-border-width};
+  --border-style: solid;
+  --transition: #{$segment-button-ios-transition};
+
+  min-height: #{$segment-button-ios-height};
+
+  font-size: #{$segment-button-ios-font-size};
+
+  line-height: #{$segment-button-ios-line-height};
+}
+
+
+// Segment Button: Indicator
+// --------------------------------------------------
+
+.segment-button-indicator {
+  display: none;
+}
+
+
+// Segment Button: Icon
+// --------------------------------------------------
+
+::slotted(ion-icon) {
+  font-size: $segment-button-ios-icon-size;
+}
+
+
+// Segment Button: Layout
+// --------------------------------------------------
+
+// Layout: icon start
+:host(.segment-button-layout-icon-start) ::slotted(ion-label) {
+  @include margin-horizontal(2px, 0);
+}
+
+// Layout: icon end
+:host(.segment-button-layout-icon-end) ::slotted(ion-label) {
+  @include margin-horizontal(0, 2px);
+}
+
+
+// Segment Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:hover:not(.segment-button-checked)) {
+    background: var(--background-hover);
+  }
+}
+
+
+// Segment Button: Activated
+// --------------------------------------------------
+
+:host(.activated) {
+  background: var(--background-activated);
+}
+
+
+// Segment: Checked & Activated
+// --------------------------------------------------
+
+:host(.segment-button-checked.activated) {
+  background: var(--background-checked);
+  color: var(--color-checked);
+}

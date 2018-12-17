@@ -6,11 +6,15 @@ build top quality native and progressive web apps with web technologies.
 Ionic is based on [Web Components](https://www.webcomponents.org/introduction) and comes with many significant performance, usability, and feature improvements over the past versions.
 
 
-# Packages
+### Packages
 
-- [Core](core/README.md)
-- [Ionic Angular](angular/README.md)
+| Project | Package | Version | Links |
+| ------- | ------- | ------- |:-----:|
+| **Core** | [`@ionic/core`](https://www.npmjs.com/package/@ionic/core) | [![version](https://img.shields.io/npm/v/@ionic/core/latest.svg)](https://www.npmjs.com/package/@ionic/core) | [`README.md`](core/README.md)
+| **Angular** | [`@ionic/angular`](https://www.npmjs.com/package/@ionic/angular) | [![version](https://img.shields.io/npm/v/@ionic/angular/latest.svg)](https://www.npmjs.com/package/@ionic/angular) | [`README.md`](angular/README.md)
+| **Vue** | `@ionic/vue` | | [`README.md`](vue/README.md)
 
+Looking for the `ionic-angular` package? Ionic 3 has been moved to the [`ionic-v3`](https://github.com/ionic-team/ionic-v3) repo. See [Earlier Versions](#earlier-versions).
 
 ### Getting Started
 
@@ -37,17 +41,9 @@ It is the perfect starting point for learning and building your own app.
 
 As Ionic components migrate to the web component standard, a goal of ours is to have Ionic components easily work within all of the popular frameworks.
 
-[![npm version](https://badge.fury.io/js/ionic-angular.svg)](https://badge.fury.io/js/ionic-angular)
-[![Circle CI](https://circleci.com/gh/ionic-team/ionic.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/ionic-team/ionic)
-[![Open Source Helpers](https://www.codetriage.com/ionic-team/ionic/badges/users.svg)](https://www.codetriage.com/ionic-team/ionic)
+### Earlier Versions
 
+The source code for earlier versions of the Ionic Framework may exist in other repositories. Please open issues and pull requests in their respective repositories.
 
-### Ionic V1
-
-The source code for Ionic V1 has been moved to [ionic-team/ionic-v1](https://github.com/ionic-team/ionic-v1).
-Please open any issues and pull requests related to Ionic V1 on that repository.
-
-
-### Ionic V3
-
-The source code for Ionic V3 has been moved to the [v3 branch](https://github.com/ionic-team/ionic/tree/v3).
+* **Ionic 2/3**: Moved to [`ionic-team/ionic-v3`](https://github.com/ionic-team/ionic-v3)
+* **Ionic 1**: Moved to [`ionic-team/ionic-v1`](https://github.com/ionic-team/ionic-v1)

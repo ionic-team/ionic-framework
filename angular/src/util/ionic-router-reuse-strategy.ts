@@ -1,16 +1,17 @@
 import { ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy } from '@angular/router';
-import { deepEqual, objectValues } from './util';
 
 export class IonicRouteStrategy implements RouteReuseStrategy {
+
   shouldDetach(_route: ActivatedRouteSnapshot): boolean {
     return false;
   }
 
-  // tslint:disable-next-line
-  store(_route: ActivatedRouteSnapshot, _detachedTree: DetachedRouteHandle): void {}
-
   shouldAttach(_route: ActivatedRouteSnapshot): boolean {
     return false;
+  }
+
+  store(_route: ActivatedRouteSnapshot, _detachedTree: DetachedRouteHandle): void {
+    return;
   }
 
   retrieve(_route: ActivatedRouteSnapshot): DetachedRouteHandle | null {
@@ -21,23 +22,29 @@ export class IonicRouteStrategy implements RouteReuseStrategy {
     future: ActivatedRouteSnapshot,
     curr: ActivatedRouteSnapshot
   ): boolean {
-    // checking router params
-    const futureParams = objectValues(future.params);
-    const currParams = objectValues(curr.params);
-
-    if (
-      futureParams &&
-      !!futureParams.length &&
-      currParams &&
-      currParams.length > 0
-    ) {
-      // If the router params do not match, render the new component
-      return (
-        deepEqual(future.params, curr.params) &&
-        future.routeConfig === curr.routeConfig
-      );
-    } else {
-      return future.routeConfig === curr.routeConfig;
+    if (future.routeConfig !== curr.routeConfig) {
+      return false;
     }
+    if (future.component !== curr.component) {
+      return false;
+    }
+
+    // checking router params
+    const futureParams = future.params;
+    const currentParams = curr.params;
+    const keysA = Object.keys(futureParams);
+    const keysB = Object.keys(currentParams);
+
+    if (keysA.length !== keysB.length) {
+      return false;
+    }
+
+    // Test for A's keys different from B.
+    for (const key of keysA) {
+      if (currentParams[key] !== futureParams[key]) {
+        return false;
+      }
+    }
+    return true;
   }
 }

@@ -5,19 +5,18 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{$toolbar-md-background-color};
-  --ion-color-contrast: #{$toolbar-md-text-color};
+  --background: #{$toolbar-md-background};
+  --color: #{$toolbar-md-color};
   --border-color: #{$toolbar-md-border-color};
-
-  @include padding($toolbar-md-padding);
-
-  min-height: #{$toolbar-md-height};
-
-  font-family: #{$toolbar-md-font-family};
+  --padding-top: 4px;
+  --padding-bottom: 4px;
+  --padding-start: 4px;
+  --padding-end: 4px;
+  --min-height: 56px;
 }
 
 
-// Material Design Toolbar Content
+// Toolbar: Content
 // --------------------------------------------------
 
 .toolbar-content {
@@ -28,9 +27,35 @@
   max-width: 100%;
 }
 
-::slotted(ion-title) {
-  @include padding(0, 12px);
+// Toolbar: Segment
+// --------------------------------------------------
 
-  font-size: $toolbar-md-title-font-size;
-  font-weight: 500;
+:host(.toolbar-segment) {
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+// Material Design Toolbar Slot Placement
+// --------------------------------------------------
+
+::slotted([slot="start"]) {
+  order: map-get($toolbar-order-md, slot-start);
+}
+
+::slotted([slot="secondary"]) {
+  order: map-get($toolbar-order-md, slot-secondary);
+}
+
+::slotted([slot="primary"]) {
+  order: map-get($toolbar-order-md, slot-primary);
+
+  text-align: end;
+}
+
+::slotted([slot="end"]) {
+  order: map-get($toolbar-order-md, slot-end);
+
+  text-align: end;
 }

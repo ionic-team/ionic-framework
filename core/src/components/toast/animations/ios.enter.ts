@@ -3,23 +3,18 @@ import { Animation } from '../../../interface';
 /**
  * iOS Toast Enter Animation
  */
-export function iosEnterAnimation(Animation: Animation, baseEl: HTMLElement, position: string): Promise<Animation> {
-  const baseAnimation = new Animation();
+export function iosEnterAnimation(AnimationC: Animation, baseEl: ShadowRoot, position: string): Promise<Animation> {
+  const baseAnimation = new AnimationC();
 
-  const wrapperAnimation = new Animation();
-  const wrapperEle = baseEl.querySelector('.toast-wrapper') as HTMLElement;
-  wrapperAnimation.addElement(wrapperEle);
+  const wrapperAnimation = new AnimationC();
 
-  let variable;
+  const hostEl = baseEl.host || baseEl;
+  const wrapperEl = baseEl.querySelector('.toast-wrapper') as HTMLElement;
 
-  if (CSS.supports('bottom', 'env(safe-area-inset-bottom)')) {
-    variable = 'env';
-  } else if (CSS.supports('bottom', 'constant(safe-area-inset-bottom)')) {
-    variable = 'constant';
-  }
+  wrapperAnimation.addElement(wrapperEl);
 
-  const bottom = variable ? 'calc(-10px - ' + variable + '(safe-area-inset-bottom))' : '-10px';
-  const top = variable ? 'calc(' + variable + '(safe-area-inset-top) + 10px)' : '10px';
+  const bottom = `calc(-10px - var(--ion-safe-area-bottom, 0px))`;
+  const top = `calc(10px + var(--ion-safe-area-top, 0px))`;
 
   switch (position) {
     case 'top':
@@ -27,9 +22,9 @@ export function iosEnterAnimation(Animation: Animation, baseEl: HTMLElement, pos
       break;
     case 'middle':
       const topPosition = Math.floor(
-        baseEl.clientHeight / 2 - wrapperEle.clientHeight / 2
+        hostEl.clientHeight / 2 - wrapperEl.clientHeight / 2
       );
-      wrapperEle.style.top = `${topPosition}px`;
+      wrapperEl.style.top = `${topPosition}px`;
       wrapperAnimation.fromTo('opacity', 0.01, 1);
       break;
     default:
@@ -37,7 +32,7 @@ export function iosEnterAnimation(Animation: Animation, baseEl: HTMLElement, pos
       break;
   }
   return Promise.resolve(baseAnimation
-    .addElement(baseEl)
+    .addElement(hostEl)
     .easing('cubic-bezier(.155,1.105,.295,1.12)')
     .duration(400)
     .add(wrapperAnimation));

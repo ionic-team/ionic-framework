@@ -4,35 +4,33 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{ion-color(primary, base)};
-  --ion-color-base-rgb: #{ion-color(primary, base, null, true)};
+  /**
+   * @prop --background: Background of the toggle
+   * @prop --background-checked: Background of the toggle when checked
+   * @prop --handle-background: Background of the toggle handle
+   * @prop --handle-background-checked: Background of the toggle handle when checked
+   */
 
-  // TODO can we remove important here
   /* stylelint-disable-next-line declaration-no-important */
   box-sizing: content-box !important;
 
   display: inline-block;
 
+  outline: none;
+
   contain: content;
+  cursor: pointer;
   touch-action: none;
   user-select: none;
+  z-index: $z-index-item-input;
 }
 
 :host(.toggle-key) input {
   border: 2px solid #5e9ed6;
 }
 
-:host(:focus) {
-  outline: none;
-}
-
-ion-gesture {
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  visibility: inherit;
+:host(.toggle-disabled) {
+  pointer-events: none;
 }
 
 input {

@@ -5,8 +5,9 @@
   <meta charset="UTF-8">
   <title>Range - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
@@ -40,6 +41,12 @@
           <ion-range pin="true" color="danger" value="54">
             <ion-icon small name="ios-thermometer" slot="start"></ion-icon>
             <ion-icon name="ios-thermometer" slot="end"></ion-icon>
+          </ion-range>
+        </ion-item>
+        <ion-item>
+          <ion-range value="40">
+            <ion-label slot="start">Start</ion-label>
+            <ion-label slot="end">End</ion-label>
           </ion-range>
         </ion-item>
       </ion-list>
@@ -85,10 +92,10 @@
           <ion-range pin="true"></ion-range>
         </ion-item>
         <ion-item>
-          <ion-range min="-200" max="200" steps="10" snaps="true" pin="true"></ion-range>
+          <ion-range min="-200" max="200" step="10" snaps="true" pin="true"></ion-range>
         </ion-item>
         <ion-item>
-          <ion-range min="1000" max="2000" steps="100" snaps="true" id="range"></ion-range>
+          <ion-range min="1000" max="2000" step="100" snaps="true" id="range"></ion-range>
         </ion-item>
         <ion-item>
           <ion-range dual-knobs="true" id="multiKnob"></ion-range>
@@ -99,6 +106,21 @@
       </ion-list>
 
       <ion-button onclick="elTest()">Test</ion-button>
+
+      <ion-list>
+        <ion-list-header>
+          Coupled sliders
+        </ion-list-header>
+        <ion-item>
+          <ion-range min="0" value="0" max="50" id="minRange"></ion-range>
+        </ion-item>
+        <ion-item>
+          <ion-range min="50" value="100" max="100" id="maxRange"></ion-range>
+        </ion-item>
+        <ion-item>
+          <ion-range min="0" value="50" max="100" id="targetRange"></ion-range>
+        </ion-item>
+      </ion-list>
     </ion-content>
 
   </ion-app>
@@ -168,6 +190,18 @@
       var range = document.getElementById('range');
       range.disabled = !range.disabled;
     }
+
+    const minRange = document.getElementById('minRange');
+    const maxRange = document.getElementById('maxRange');
+    const targetRange = document.getElementById('targetRange');
+
+    minRange.addEventListener('ionChange', function(ev) {
+      targetRange.min = ev.detail.value;
+    })
+
+    maxRange.addEventListener('ionChange', function(ev) {
+      targetRange.max = ev.detail.value;
+    })
   </script>
 </body>
 

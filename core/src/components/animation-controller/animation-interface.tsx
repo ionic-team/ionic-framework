@@ -5,9 +5,9 @@ export interface AnimationController {
 
 export interface Animation {
   new (): any;
-  parent: Animation|undefined;
+  parent: Animation | undefined;
   hasChildren: boolean;
-  addElement(el: Node|Node[]|NodeList): Animation;
+  addElement(el: Node | Node[] | NodeList): Animation;
   add(childAnimation: Animation): Animation;
   duration(milliseconds: number): Animation;
   easing(name: string): Animation;
@@ -21,9 +21,8 @@ export interface Animation {
   beforeRemoveClass(className: string): Animation;
   beforeStyles(styles: { [property: string]: any; }): Animation;
   beforeClearStyles(propertyNames: string[]): Animation;
-  beforeAddRead(domReadFn: Function): Animation;
-  beforeAddWrite(domWriteFn: Function): Animation;
-  duringAddClass(className: string): Animation;
+  beforeAddRead(domReadFn: () => void): Animation;
+  beforeAddWrite(domWriteFn: () => void): Animation;
   afterAddClass(className: string): Animation;
   afterRemoveClass(className: string): Animation;
   afterStyles(styles: { [property: string]: any; }): Animation;
@@ -36,22 +35,18 @@ export interface Animation {
   progressStart(): void;
   progressStep(stepValue: number): void;
   progressEnd(shouldComplete: boolean, currentStepValue: number, dur: number): void;
-  onFinish(callback: (animation?: Animation) => void, opts?: {oneTimeCallback?: boolean, clearExistingCallacks?: boolean}): Animation;
+  onFinish(callback: (animation?: Animation) => void, opts?: {oneTimeCallback?: boolean, clearExistingCallbacks?: boolean}): Animation;
   destroy(): void;
   isRoot(): boolean;
   hasCompleted: boolean;
 }
 
-
-export interface AnimationBuilder {
-  (Animation: Animation, baseEl: HTMLElement, opts?: any): Promise<Animation>;
-}
+export type AnimationBuilder = (Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>;
 
 export interface PlayOptions {
   duration?: number;
   promise?: boolean;
 }
-
 
 export interface EffectProperty {
   effectName: string;
@@ -61,7 +56,6 @@ export interface EffectProperty {
   from?: EffectState;
   [state: string]: any;
 }
-
 
 export interface EffectState {
   val: any;

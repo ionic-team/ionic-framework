@@ -13,3 +13,7 @@ ion-footer {
 
   z-index: $z-index-toolbar;
 }
+
+ion-footer ion-toolbar:last-child {
+  padding-bottom: var(--ion-safe-area-bottom, 0);
+}

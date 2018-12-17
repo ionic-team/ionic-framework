@@ -7,6 +7,8 @@ ion-virtual-scroll {
   width: 100%;
 
   contain: strict;
+
+  user-select: none;
 }
 
 .virtual-loading {

@@ -1,7 +1,6 @@
 import { RouteChain, RouteNode, RouteRedirect, RouteTree } from './interface';
 import { parsePath } from './path';
 
-
 export function readRedirects(root: Element): RouteRedirect[] {
   return (Array.from(root.children) as HTMLIonRouteRedirectElement[])
     .filter(el => el.tagName === 'ION-ROUTE-REDIRECT')
@@ -23,7 +22,7 @@ export function readRouteNodes(root: Element, node = root): RouteTree {
     .filter(el => el.tagName === 'ION-ROUTE' && el.component)
     .map(el => {
       const component = readProp(el, 'component');
-      if (!component) {
+      if (component == null) {
         throw new Error('component missing in ion-route');
       }
       return {
@@ -35,7 +34,7 @@ export function readRouteNodes(root: Element, node = root): RouteTree {
     });
 }
 
-export function readProp(el: HTMLElement, prop: string): string|null {
+export function readProp(el: HTMLElement, prop: string): string | null | undefined {
   if (prop in el) {
     return (el as any)[prop];
   }

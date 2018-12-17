@@ -1,19 +1,19 @@
+import { IonicConfig } from '../interface';
 
 export class Config {
 
-  private m: Map<string, any>;
+  private m: Map<keyof IonicConfig, any>;
 
-  constructor(configObj: {[key: string]: any}) {
-    this.m = new Map<string, any>(Object.entries(configObj));
-
+  constructor(configObj: IonicConfig) {
+    this.m = new Map<keyof IonicConfig, any>(Object.entries(configObj) as any);
   }
 
-  get(key: string, fallback?: any): any {
+  get(key: keyof IonicConfig, fallback?: any): any {
     const value = this.m.get(key);
     return (value !== undefined) ? value : fallback;
   }
 
-  getBoolean(key: string, fallback = false): boolean {
+  getBoolean(key: keyof IonicConfig, fallback = false): boolean {
     const val = this.m.get(key);
     if (val === undefined) {
       return fallback;
@@ -24,12 +24,52 @@ export class Config {
     return !!val;
   }
 
-  getNumber(key: string, fallback?: number): number {
+  getNumber(key: keyof IonicConfig, fallback?: number): number {
     const val = parseFloat(this.m.get(key));
     return isNaN(val) ? (fallback !== undefined ? fallback : NaN) : val;
   }
 
-  set(key: string, value: any) {
+  set(key: keyof IonicConfig, value: any) {
     this.m.set(key, value);
   }
 }
+
+export function configFromSession(): any {
+  try {
+    const configStr = window.sessionStorage.getItem(IONIC_SESSION_KEY);
+    return configStr !== null ? JSON.parse(configStr) : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+export function saveConfig(config: any) {
+  try {
+    window.sessionStorage.setItem(IONIC_SESSION_KEY, JSON.stringify(config));
+  } catch (e) {
+    return;
+  }
+}
+
+export function configFromURL() {
+  const config: any = {};
+  const win = window;
+  win.location.search.slice(1)
+    .split('&')
+    .map(entry => entry.split('='))
+    .map(([key, value]) => [decodeURIComponent(key), decodeURIComponent(value)])
+    .filter(([key]) => startsWith(key, IONIC_PREFIX))
+    .map(([key, value]) => [key.slice(IONIC_PREFIX.length), value])
+    .forEach(([key, value]) => {
+      config[key] = value;
+    });
+
+  return config;
+}
+
+function startsWith(input: string, search: string): boolean {
+  return input.substr(0, search.length) === search;
+}
+
+const IONIC_PREFIX = 'ionic:';
+const IONIC_SESSION_KEY = 'ionic-persist-config';

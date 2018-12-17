@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * iOS Popover Enter Animation
  */
-export function iosEnterAnimation(Animation: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> {
+export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> {
   let originY = 'top';
   let originX = 'left';
 
@@ -16,15 +16,10 @@ export function iosEnterAnimation(Animation: Animation, baseEl: HTMLElement, ev?
   const bodyHeight = window.innerHeight;
 
   // If ev was passed, use that for target element
-  const targetDim =
-    ev && ev.target && (ev.target as HTMLElement).getBoundingClientRect();
+  const targetDim = ev && ev.target && (ev.target as HTMLElement).getBoundingClientRect();
 
-  const targetTop =
-    targetDim && 'top' in targetDim
-      ? targetDim.top
-      : bodyHeight / 2 - contentHeight / 2;
-  const targetLeft =
-    targetDim && 'left' in targetDim ? targetDim.left : bodyWidth / 2;
+  const targetTop = targetDim != null && 'top' in targetDim ? targetDim.top : bodyHeight / 2 - contentHeight / 2;
+  const targetLeft = targetDim != null && 'left' in targetDim ? targetDim.left : bodyWidth / 2;
   const targetWidth = (targetDim && targetDim.width) || 0;
   const targetHeight = (targetDim && targetDim.height) || 0;
 
@@ -34,7 +29,7 @@ export function iosEnterAnimation(Animation: Animation, baseEl: HTMLElement, ev?
   const arrowWidth = arrowDim.width;
   const arrowHeight = arrowDim.height;
 
-  if (!targetDim) {
+  if (targetDim == null) {
     arrowEl.style.display = 'none';
   }
 
@@ -64,8 +59,7 @@ export function iosEnterAnimation(Animation: Animation, baseEl: HTMLElement, ev?
     checkSafeAreaLeft = true;
     popoverCSS.left = POPOVER_IOS_BODY_PADDING;
   } else if (
-    contentWidth + POPOVER_IOS_BODY_PADDING + popoverCSS.left + 25 >
-    bodyWidth
+    contentWidth + POPOVER_IOS_BODY_PADDING + popoverCSS.left + 25 > bodyWidth
   ) {
     // Ok, so we're on the right side of the screen,
     // but now we need to make sure we're still a bit further right
@@ -76,14 +70,8 @@ export function iosEnterAnimation(Animation: Animation, baseEl: HTMLElement, ev?
   }
 
   // make it pop up if there's room above
-  if (
-    (targetTop + targetHeight + contentHeight) > bodyHeight &&
-    (targetTop - contentHeight) > 0
-  ) {
+  if (targetTop + targetHeight + contentHeight > bodyHeight && targetTop - contentHeight > 0) {
     arrowCSS.top = targetTop - (arrowHeight + 1);
-    console.log(arrowCSS);
-    console.log(targetTop);
-    console.log(contentHeight);
     popoverCSS.top = targetTop - contentHeight - (arrowHeight - 1);
 
     baseEl.className = baseEl.className + ' popover-bottom';
@@ -100,30 +88,22 @@ export function iosEnterAnimation(Animation: Animation, baseEl: HTMLElement, ev?
   contentEl.style.left = popoverCSS.left + 'px';
 
   if (checkSafeAreaLeft) {
-    if (CSS.supports('left', 'constant(safe-area-inset-left)')) {
-      contentEl.style.left = `calc(${popoverCSS.left}px + constant(safe-area-inset-left)`;
-    } else if (CSS.supports('left', 'env(safe-area-inset-left)')) {
-      contentEl.style.left = `calc(${popoverCSS.left}px + env(safe-area-inset-left)`;
-    }
+    contentEl.style.left = `calc(${popoverCSS.left}px + var(--ion-safe-area-left, 0px))`;
   }
 
   if (checkSafeAreaRight) {
-    if (CSS.supports('right', 'constant(safe-area-inset-right)')) {
-      contentEl.style.left = `calc(${popoverCSS.left}px - constant(safe-area-inset-right)`;
-    } else if (CSS.supports('right', 'env(safe-area-inset-right)')) {
-      contentEl.style.left = `calc(${popoverCSS.left}px - env(safe-area-inset-right)`;
-    }
+    contentEl.style.left = `calc(${popoverCSS.left}px - var(--ion-safe-area-right, 0px))`;
   }
 
   contentEl.style.transformOrigin = originY + ' ' + originX;
 
-  const baseAnimation = new Animation();
+  const baseAnimation = new AnimationC();
 
-  const backdropAnimation = new Animation();
+  const backdropAnimation = new AnimationC();
   backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
   backdropAnimation.fromTo('opacity', 0.01, 0.08);
 
-  const wrapperAnimation = new Animation();
+  const wrapperAnimation = new AnimationC();
   wrapperAnimation.addElement(baseEl.querySelector('.popover-wrapper'));
   wrapperAnimation.fromTo('opacity', 0.01, 1);
 

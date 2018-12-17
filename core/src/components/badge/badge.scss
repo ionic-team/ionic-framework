@@ -4,19 +4,33 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{ion-color(primary, base)};
-  --ion-color-contrast: #{ion-color(primary, contrast)};
+  /**
+   * @prop --background: Background of the badge
+   * @prop --color: Text color of the badge
+   *
+   * @prop --padding-top: Padding top of the badge
+   * @prop --padding-end: Padding end of the badge
+   * @prop --padding-bottom: Padding bottom of the badge
+   * @prop --padding-start: Padding start of the badge
+   */
+  --background: #{ion-color(primary, base)};
+  --color: #{ion-color(primary, contrast)};
+  --padding-top: #{$badge-padding-top};
+  --padding-end: #{$badge-padding-end};
+  --padding-bottom: #{$badge-padding-bottom};
+  --padding-start: #{$badge-padding-start};
 
   @include font-smoothing();
-  @include padding($badge-padding-top, $badge-padding-end, $badge-padding-bottom, $badge-padding-start);
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
   display: inline-block;
 
   min-width: $badge-min-width;
 
-  background-color: #{current-color(base)};
-  color: #{current-color(contrast)};
+  background: var(--background);
+  color: var(--color);
 
+  font-family: $font-family-base;
   font-size: $badge-font-size;
   font-weight: $badge-font-weight;
 
@@ -28,6 +42,11 @@
 
   contain: content;
   vertical-align: baseline;
+}
+
+:host(.ion-color) {
+  background: #{current-color(base)};
+  color: #{current-color(contrast)};
 }
 
 :host(:empty) {

@@ -26,9 +26,17 @@
   align-self: baseline !important;
 }
 
+[align-self-auto] {
+  align-self: auto !important;
+}
+
 
 // Flex Wrap
 // --------------------------------------------------
+
+[wrap] {
+  flex-wrap: wrap !important;
+}
 
 [nowrap] {
   flex-wrap: nowrap !important;
@@ -60,6 +68,10 @@
 
 [justify-content-between] {
   justify-content: space-between !important;
+}
+
+[justify-content-evenly] {
+  justify-content: space-evenly !important;
 }
 
 

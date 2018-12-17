@@ -5,7 +5,7 @@ async function presentPopover() {
 
   const popoverElement = await popoverController.create({
     component: 'profile-page',
-    ev: event
+    event: event
   });
   return await popoverElement.present();
 }

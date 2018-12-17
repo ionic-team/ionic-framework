@@ -5,20 +5,21 @@
   <meta charset="UTF-8">
   <title>Select</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Select</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content class="outer-content test-content">
+    <ion-content class="outer-content test-content" fullscreen>
       <ion-list>
         <ion-list-header>Single Selection</ion-list-header>
 
@@ -115,6 +116,12 @@
       </ion-list>
 
     </ion-content>
+
+    <style>
+      .outer-content {
+        --background: #f2f2f2;
+      }
+    </style>
 
     <script>
       var customAlertSelect = document.getElementById('customAlertSelect');

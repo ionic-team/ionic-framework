@@ -1,14 +1,14 @@
-import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 @Component({
   tag: 'ion-infinite-scroll',
   styleUrl: 'infinite-scroll.scss'
 })
-export class InfiniteScroll {
+export class InfiniteScroll implements ComponentInterface {
 
   private thrPx = 0;
   private thrPc = 0;
-  private scrollEl?: HTMLIonScrollElement;
+  private scrollEl?: HTMLElement;
   private didFire = false;
   private isBusy = false;
 
@@ -26,7 +26,6 @@ export class InfiniteScroll {
    * output event to get called when the user has scrolled 10%
    * from the bottom of the page. Use the value `100px` when the
    * scroll is within 100 pixels from the bottom of the page.
-   * Defaults to `15%`.
    */
   @Prop() threshold = '15%';
 
@@ -42,13 +41,12 @@ export class InfiniteScroll {
     }
   }
 
-
   /**
-   * If true, the infinite scroll will be hidden and scroll event listeners
+   * If `true`, the infinite scroll will be hidden and scroll event listeners
    * will be removed.
    *
-   * Call `enable(false)` to disable the infinite scroll from actively
-   * trying to receive new data while scrolling. This method is useful
+   * Set this to true to disable the infinite scroll from actively
+   * trying to receive new data while scrolling. This is useful
    * when it is known that there is no more data that can be added, and
    * the infinite scroll is no longer needed.
    */
@@ -56,13 +54,16 @@ export class InfiniteScroll {
 
   @Watch('disabled')
   protected disabledChanged(val: boolean) {
+    if (this.disabled) {
+      this.isLoading = false;
+      this.isBusy = false;
+    }
     this.enableScrollEvents(!val);
   }
 
   /**
    * The position of the infinite scroll element.
    * The value can be either `top` or `bottom`.
-   * Defaults to `bottom`.
    */
   @Prop() position: 'top' | 'bottom' = 'bottom';
 
@@ -74,17 +75,20 @@ export class InfiniteScroll {
    */
   @Event() ionInfinite!: EventEmitter<void>;
 
-
   async componentDidLoad() {
     const contentEl = this.el.closest('ion-content');
     if (contentEl) {
       await contentEl.componentOnReady();
-      this.scrollEl = contentEl.getScrollElement();
+      this.scrollEl = await contentEl.getScrollElement();
     }
     this.thresholdChanged(this.threshold);
     this.enableScrollEvents(!this.disabled);
     if (this.position === 'top') {
-      this.queue.write(() => this.scrollEl && this.scrollEl.scrollToBottom(0));
+      this.queue.write(() => {
+        if (this.scrollEl) {
+          this.scrollEl.scrollTop = this.scrollEl.scrollHeight - this.scrollEl.clientHeight;
+        }
+      });
     }
   }
 
@@ -92,7 +96,7 @@ export class InfiniteScroll {
     this.scrollEl = undefined;
   }
 
-  @Listen('scroll', {enabled: false})
+  @Listen('scroll', { enabled: false })
   protected onScroll() {
     const scrollEl = this.scrollEl;
     if (!scrollEl || !this.canStart()) {
@@ -100,14 +104,14 @@ export class InfiniteScroll {
     }
 
     const infiniteHeight = this.el.offsetHeight;
-    if (!infiniteHeight) {
+    if (infiniteHeight === 0) {
       // if there is no height of this element then do nothing
       return 2;
     }
     const scrollTop = scrollEl.scrollTop;
     const scrollHeight = scrollEl.scrollHeight;
     const height = scrollEl.offsetHeight;
-    const threshold = this.thrPc ? (height * this.thrPc) : this.thrPx;
+    const threshold = this.thrPc !== 0 ? (height * this.thrPc) : this.thrPx;
 
     const distanceFromInfinite = (this.position === 'bottom')
       ? scrollHeight - infiniteHeight - scrollTop - threshold - height
@@ -128,7 +132,7 @@ export class InfiniteScroll {
   }
 
   /**
-   * Call `complete()` within the `infinite` output event handler when
+   * Call `complete()` within the `ionInfinite` output event handler when
    * your async operation has completed. For example, the `loading`
    * state is while the app is performing an asynchronous operation,
    * such as receiving more data from an AJAX request to add more items
@@ -171,29 +175,23 @@ export class InfiniteScroll {
       const prev = scrollEl.scrollHeight - scrollEl.scrollTop;
 
       // ******** DOM READ ****************
-      this.queue.read(() => {
-        // UI has updated, save the new content dimensions
-        const scrollHeight = scrollEl.scrollHeight;
-        // New content was added on top, so the scroll position should be changed immediately to prevent it from jumping around
-        const newScrollTop = scrollHeight - prev;
+      requestAnimationFrame(() => {
+        this.queue.read(() => {
+          // UI has updated, save the new content dimensions
+          const scrollHeight = scrollEl.scrollHeight;
+          // New content was added on top, so the scroll position should be changed immediately to prevent it from jumping around
+          const newScrollTop = scrollHeight - prev;
 
-        // ******** DOM WRITE ****************
-        this.queue.write(() => {
-          scrollEl.scrollTop = newScrollTop;
-          this.isBusy = false;
+          // ******** DOM WRITE ****************
+          requestAnimationFrame(() => {
+            this.queue.write(() => {
+              scrollEl.scrollTop = newScrollTop;
+              this.isBusy = false;
+            });
+          });
         });
       });
     }
-  }
-
-  /**
-   * Pass a promise inside `waitFor()` within the `infinite` output event handler in order to
-   * change state of infiniteScroll to "complete"
-   */
-  @Method()
-  waitFor(action: Promise<any>) {
-    const enable = this.complete.bind(this);
-    action.then(enable, enable);
   }
 
   private canStart(): boolean {
@@ -201,7 +199,8 @@ export class InfiniteScroll {
       !this.disabled &&
       !this.isBusy &&
       !!this.scrollEl &&
-      !this.isLoading);
+      !this.isLoading
+    );
   }
 
   private enableScrollEvents(shouldListen: boolean) {

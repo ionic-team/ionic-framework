@@ -5,12 +5,16 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --color: Color of the card title
+   */
+
   display: block;
   position: relative;
+
+  color: var(--color);
 }
 
 :host(.ion-color) {
-  // TODO can we remove important here
-  /* stylelint-disable-next-line declaration-no-important */
-  color: #{current-color(base)} !important;
+  color: #{current-color(base)};
 }

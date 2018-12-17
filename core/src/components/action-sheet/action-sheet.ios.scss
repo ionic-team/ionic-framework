@@ -5,14 +5,15 @@
 // --------------------------------------------------
 
 :host {
-  font-family: $action-sheet-ios-font-family;
+  --background: #{$action-sheet-ios-background-color};
+  --background-selected: #{var(--background, $action-sheet-ios-button-background-selected)};
+  --background-activated: #{$action-sheet-ios-button-background-activated};
 
   text-align: $action-sheet-ios-text-align;
 }
 
 .action-sheet-wrapper {
-  @include margin(constant(safe-area-inset-top), auto, constant(safe-area-inset-bottom), auto);
-  @include margin(env(safe-area-inset-top), auto, env(safe-area-inset-bottom), auto);
+  @include margin(var(--ion-safe-area-top, 0), auto, var(--ion-safe-area-bottom, 0), auto);
 }
 
 
@@ -30,8 +31,6 @@
 .action-sheet-group {
   @include border-radius($action-sheet-ios-border-radius);
   @include margin(null, null, $action-sheet-ios-group-margin-bottom - 2, null);
-
-  background: $action-sheet-ios-background-color;
 }
 
 .action-sheet-group:first-child {
@@ -60,7 +59,7 @@
 
   border-bottom: $action-sheet-ios-title-border-width $action-sheet-ios-title-border-style $action-sheet-ios-title-border-color;
 
-  color: $action-sheet-ios-title-color;
+  color: var(--color, $action-sheet-ios-title-color);
 
   font-size: $action-sheet-ios-title-font-size;
   font-weight: $action-sheet-ios-title-font-weight;
@@ -86,8 +85,8 @@
 
   border-bottom: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-button-border-color;
 
-  background: $action-sheet-ios-button-background;
-  color: $action-sheet-ios-button-text-color;
+  background: transparent;
+  color: var(--color, $action-sheet-ios-button-text-color);
 
   font-size: $action-sheet-ios-button-font-size;
 
@@ -107,15 +106,11 @@
 .action-sheet-button.activated {
   @include margin(-$action-sheet-ios-button-border-width, null, null, null);
 
-  border-top: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-button-background-activated;
-  border-bottom-color: $action-sheet-ios-button-background-activated;
-
-  background: $action-sheet-ios-button-background-activated;
+  border-top: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style var(--background-activated);
+  border-bottom-color: var(--background-activated);
 }
 
 .action-sheet-selected {
-  background: $action-sheet-ios-button-background-selected;
-
   font-weight: bold;
 }
 
@@ -124,7 +119,7 @@
 }
 
 .action-sheet-cancel {
-  background: $action-sheet-ios-button-cancel-background;
+  background: var(--background-selected);
 
   font-weight: $action-sheet-ios-button-cancel-font-weight;
 }

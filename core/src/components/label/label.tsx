@@ -1,4 +1,5 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+
 import { Color, Mode, StyleEvent } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
@@ -10,46 +11,57 @@ import { createColorClasses } from '../../utils/theme';
   },
   scoped: true
 })
-export class Label {
+export class Label implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   /**
-   * The color to use for the label's text
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
    * The position determines where and how the label behaves inside an item.
-   * Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
    */
   @Prop() position?: 'fixed' | 'stacked' | 'floating';
 
   /**
    * Emitted when the styles change.
+   * @internal
    */
   @Event() ionStyle!: EventEmitter<StyleEvent>;
 
-  @Method()
-  getText(): string {
-    return this.el.textContent || '';
+  @State() noAnimate = false;
+
+  componentWillLoad() {
+    this.noAnimate = (this.position === 'floating');
+    this.emitStyle();
   }
 
   componentDidLoad() {
-    this.positionChanged();
+    if (this.noAnimate) {
+      setTimeout(() => {
+        this.noAnimate = false;
+      }, 1000);
+    }
   }
 
   @Watch('position')
   positionChanged() {
+    this.emitStyle();
+  }
+
+  private emitStyle() {
     const position = this.position;
     this.ionStyle.emit({
       'label': true,
-      [`label-${position}`]: !!position
+      [`label-${position}`]: position !== undefined
     });
   }
 
@@ -58,7 +70,8 @@ export class Label {
     return {
       class: {
         ...createColorClasses(this.color),
-        [`label-${position}`]: !!position,
+        [`label-${position}`]: position !== undefined,
+        [`label-no-animate`]: (this.noAnimate)
       }
     };
   }

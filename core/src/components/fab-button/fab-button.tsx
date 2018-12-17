@@ -1,6 +1,7 @@
-import { Component, Element, Prop } from '@stencil/core';
-import { Color, CssClassMap, Mode } from '../../interface';
-import { createColorClasses } from '../../utils/theme';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
+
+import { Color, Mode, RouterDirection } from '../../interface';
+import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 @Component({
   tag: 'ion-fab-button',
@@ -10,29 +11,32 @@ import { createColorClasses } from '../../utils/theme';
   },
   shadow: true
 })
-export class FabButton {
-  private inList = false;
-
+export class FabButton implements ComponentInterface {
   @Element() el!: HTMLElement;
 
-  /**
-   * The color to use for the button.
-   */
-  @Prop() color?: Color;
+  @State() keyFocus = false;
+
+  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
-   * If true, the fab button will be show a close icon. Defaults to `false`.
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
+   */
+  @Prop() color?: Color;
+
+  /**
+   * If `true`, the fab button will be show a close icon.
    */
   @Prop() activated = false;
 
   /**
-   * If true, the user cannot interact with the fab button. Defaults to `false`.
+   * If `true`, the user cannot interact with the fab button.
    */
   @Prop() disabled = false;
 
@@ -43,61 +47,97 @@ export class FabButton {
   @Prop() href?: string;
 
   /**
-   * If true, the fab button will be translucent. Defaults to `false`.
+   * When using a router, it specifies the transition direction when navigating to
+   * another page using `href`.
+   */
+  @Prop() routerDirection: RouterDirection = 'forward';
+
+  /**
+   * If `true`, the fab button will show when in a fab-list.
+   */
+  @Prop() show = false;
+
+  /**
+   * If `true`, the fab button will be translucent.
    */
   @Prop() translucent = false;
 
   /**
-   * If true, the fab button will show when in a fab-list.
+   * The type of the button.
    */
-  @Prop() show = false;
-
-  componentWillLoad() {
-    const parentNode = this.el.parentNode;
-    const parentTag = parentNode ? parentNode.nodeName : null;
-
-    this.inList = parentTag === 'ION-FAB-LIST';
-  }
+  @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   /**
-   * Get the classes for fab buttons in lists
+   * The size of the button. Set this to `small` in order to have a mini fab.
    */
-  private getFabClassMap(): CssClassMap {
-    return {
-      'fab-button-in-list': this.inList,
-      'fab-button-translucent-in-list': this.inList && this.translucent,
-      'fab-button-close-active': this.activated,
-      'fab-button-show': this.show
-    };
+  @Prop() size?: 'small';
+
+  /**
+   * Emitted when the button has focus.
+   */
+  @Event() ionFocus!: EventEmitter<void>;
+
+  /**
+   * Emitted when the button loses focus.
+   */
+  @Event() ionBlur!: EventEmitter<void>;
+
+  private onFocus = () => {
+    this.ionFocus.emit();
+  }
+
+  private onKeyUp = () => {
+    this.keyFocus = true;
+  }
+
+  private onBlur = () => {
+    this.keyFocus = false;
+    this.ionBlur.emit();
   }
 
   hostData() {
-
+    const { el, disabled, color, activated, show, translucent, size, keyFocus } = this;
+    const inList = hostContext('ion-fab-list', el);
     return {
-      'tappable': true,
+      'aria-disabled': disabled ? 'true' : null,
       class: {
-        ...createColorClasses(this.color),
-        ...this.getFabClassMap(),
-        'fab-button-translucent': this.translucent
+        ...createColorClasses(color),
+        'fab-button-in-list': inList,
+        'fab-button-translucent-in-list': inList && translucent,
+        'fab-button-close-active': activated,
+        'fab-button-show': show,
+        'fab-button-disabled': disabled,
+        'fab-button-translucent': translucent,
+        'ion-activatable': true,
+        'focused': keyFocus,
+        [`fab-button-${size}`]: size !== undefined,
       }
     };
   }
 
   render() {
-    const TagType = this.href ? 'a' : 'button';
+    const TagType = this.href === undefined ? 'button' : 'a' as any;
+    const attrs = (TagType === 'button')
+      ? { type: this.type }
+      : { href: this.href };
 
     return (
       <TagType
-        class="fab-button-native"
+        {...attrs}
+        class="button-native"
         disabled={this.disabled}
-        href={this.href}>
-        <span class="fab-button-close-icon">
-          <ion-icon name="close"></ion-icon>
+        onFocus={this.onFocus}
+        onKeyUp={this.onKeyUp}
+        onBlur={this.onBlur}
+        onClick={(ev: Event) => openURL(this.win, this.href, ev, this.routerDirection)}
+      >
+        <span class="close-icon">
+          <ion-icon name="close" lazy={false}></ion-icon>
         </span>
-        <span class="fab-button-inner">
+        <span class="button-inner">
           <slot></slot>
         </span>
-        { this.mode === 'md' && <ion-ripple-effect tapClick={true} parent={this.el}/> }
+        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </TagType>
     );
   }

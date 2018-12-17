@@ -12,6 +12,8 @@ ion-infinite-scroll-content {
   min-height: $infinite-scroll-content-min-height;
 
   text-align: center;
+
+  user-select: none;
 }
 
 .infinite-loading {

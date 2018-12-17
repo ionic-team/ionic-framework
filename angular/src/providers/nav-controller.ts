@@ -1,85 +1,102 @@
+import { Location } from '@angular/common';
 import { Injectable, Optional } from '@angular/core';
-import { NavigationExtras, Router, UrlTree } from '@angular/router';
+import { NavigationExtras, NavigationStart, Router, UrlTree } from '@angular/router';
+import { RouterDirection } from '@ionic/core';
 
-export const enum NavIntent {
-  Auto,
-  Forward,
-  Back,
-  Root
-}
+import { Platform } from './platform';
+
+export type NavDirection = 'forward' | 'back' | 'root' | 'auto';
 
 @Injectable()
 export class NavController {
 
-  private intent: NavIntent = NavIntent.Auto;
-  private animated = true;
-  private stack: string[] = [];
+  private direction: NavDirection = DEFAULT_DIRECTION;
+  private animated = DEFAULT_ANIMATED;
+  private guessDirection: RouterDirection = 'forward';
+  private guessAnimation = false;
+  private lastNavId = -1;
 
   constructor(
-    @Optional() private router?: Router
-  ) {}
+    platform: Platform,
+    private location: Location,
+    @Optional() private router?: Router,
+  ) {
+    // Subscribe to router events to detect direction
+    if (router) {
+      router.events.subscribe(ev => {
+        if (ev instanceof NavigationStart) {
+          const id = (ev.restoredState) ? ev.restoredState.navigationId : ev.id;
+          this.guessAnimation = !ev.restoredState;
+          this.guessDirection = id < this.lastNavId ? 'back' : 'forward';
+          this.lastNavId = this.guessDirection === 'forward' ? ev.id : id;
+        }
+      });
+    }
 
-  goForward(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
-    this.setIntent(NavIntent.Forward, animated);
-    return this.router.navigateByUrl(url, extras);
+    // Subscribe to backButton events
+    platform.backButton.subscribeWithPriority(0, () => this.goBack());
   }
 
-  goBack(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
-    this.setIntent(NavIntent.Back, animated);
-    return this.router.navigateByUrl(url, extras);
+  navigateForward(url: string | UrlTree | any[], animated?: boolean, extras?: NavigationExtras) {
+    this.setDirection('forward', animated);
+    if (Array.isArray(url)) {
+      return this.router!.navigate(url, extras);
+    } else {
+      return this.router!.navigateByUrl(url, extras);
+    }
   }
 
-  goRoot(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
-    this.setIntent(NavIntent.Root, animated);
-    return this.router.navigateByUrl(url, extras);
+  navigateBack(url: string | UrlTree | any[], animated?: boolean, extras?: NavigationExtras) {
+    this.setDirection('back', animated);
+    // extras = { replaceUrl: true, ...extras };
+    if (Array.isArray(url)) {
+      return this.router!.navigate(url, extras);
+    } else {
+      return this.router!.navigateByUrl(url, extras);
+    }
   }
 
-  setIntent(intent: NavIntent, animated?: boolean) {
-    this.intent = intent;
+  navigateRoot(url: string | UrlTree | any[], animated?: boolean, extras?: NavigationExtras) {
+    this.setDirection('root', animated);
+    if (Array.isArray(url)) {
+      return this.router!.navigate(url, extras);
+    } else {
+      return this.router!.navigateByUrl(url, extras);
+    }
+  }
+
+  goBack(animated?: boolean) {
+     this.setDirection('back', animated);
+     return this.location.back();
+   }
+
+  setDirection(direction: NavDirection, animated?: boolean) {
+    this.direction = direction;
     this.animated = (animated === undefined)
-      ? intent !== NavIntent.Root
+      ? direction !== 'root'
       : animated;
   }
 
   consumeTransition() {
-    const guessDirection = this.guessDirection();
-
-    let direction = 0;
+    let direction: RouterDirection = 'root';
     let animated = false;
 
-    if (this.intent === NavIntent.Auto) {
-      direction = guessDirection;
-      animated = direction !== 0;
+    if (this.direction === 'auto') {
+      direction = this.guessDirection;
+      animated = this.guessAnimation;
     } else {
       animated = this.animated;
-      direction = intentToDirection(this.intent);
+      direction = this.direction;
     }
-    this.intent = NavIntent.Auto;
-    this.animated = true;
+    this.direction = DEFAULT_DIRECTION;
+    this.animated = DEFAULT_ANIMATED;
 
     return {
       direction,
       animated
     };
   }
-
-  private guessDirection() {
-    const index = this.stack.indexOf(document.location.href);
-    if (index === -1) {
-      this.stack.push(document.location.href);
-      return 1;
-    } else if (index < this.stack.length - 1) {
-      this.stack = this.stack.slice(0, index + 1);
-      return -1;
-    }
-    return 0;
-  }
 }
 
-function intentToDirection(intent: NavIntent): number {
-  switch (intent) {
-    case NavIntent.Forward: return 1;
-    case NavIntent.Back: return -1;
-    default: return 0;
-  }
-}
+const DEFAULT_DIRECTION = 'auto';
+const DEFAULT_ANIMATED = false;

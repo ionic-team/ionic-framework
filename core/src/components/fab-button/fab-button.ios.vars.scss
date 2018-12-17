@@ -21,6 +21,9 @@ $fab-ios-transition-activated:                                .2s transform ease
 /// @prop - Background color of the button
 $fab-ios-background-color:                                    ion-color(primary, base) !default;
 
+/// @prop - Background color of the activated button
+$fab-ios-background-color-activated:                          ion-color(primary, shade) !default;
+
 /// @prop - Background color alpha of the button in translucent mode
 $fab-ios-translucent-background-color-alpha:                  .9 !default;
 
@@ -36,35 +39,23 @@ $fab-ios-icon-fill-color:                                     $fab-ios-text-colo
 /// @prop - Font size of the button icon
 $fab-ios-icon-font-size:                                      28px !default;
 
-/// @prop - Background color of the activated button
-$fab-ios-background-color-activated:                          ion-color(primary, tint) !default;
-
 /// @prop - Background color of the button in a list
 $fab-ios-list-button-background-color:                        ion-color(light, base) !default;
+
+/// @prop - Background color of the activated button in a list
+$fab-ios-list-button-background-color-activated:              ion-color(light, shade) !default;
+
+/// @prop - Text color of the button in a list
+$fab-ios-list-button-text-color:                              ion-color(light, contrast) !default;
+
+/// @prop - Font size of the button icon in a list
+$fab-ios-list-button-icon-font-size:                          18px !default;
 
 /// @prop - Background color of the button in a list
 $fab-ios-list-button-translucent-background-color-alpha:      .8 !default;
 
 /// @prop - Background color of the button in a list
 $fab-ios-list-button-translucent-background-color:            rgba(var(--ion-background-color-rgb, $background-color-rgb), $fab-ios-list-button-translucent-background-color-alpha) !default;
-
-/// @prop - Text color of the button in a list
-$fab-ios-list-button-text-color:                              ion-color(light, contrast) !default;
-
-/// @prop - Color of the button icon in a list
-$fab-ios-list-button-icon-fill-color:                         $fab-ios-list-button-text-color !default;
-
-/// @prop - Background color of the activated button in a list
-$fab-ios-list-button-background-color-activated:              ion-color(primary, tint) !default;
-
-/// @prop - Transition duration of the transform and opacity of the button in a list
-$fab-ios-list-button-transition-duration:                     200ms !default;
-
-/// @prop - Speed curve of the transition of the transform and opacity of the button in a list
-$fab-ios-list-button-transition-timing-function:              ease !default;
-
-/// @prop - Transition delay of the transform and opacity of the button in a list
-$fab-ios-list-button-transition-delay:                        10ms !default;
 
 /// @prop - Filter of the translucent fab
 $fab-ios-translucent-filter:                                  saturate(180%) blur(20px) !default;

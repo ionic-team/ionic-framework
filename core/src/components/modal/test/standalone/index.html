@@ -5,8 +5,9 @@
   <meta charset="UTF-8">
   <title>Modal - Standalone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
@@ -29,6 +30,11 @@
   </style>
 
   <script>
+    customElements.define('page-one', class extends HTMLElement {
+      connectedCallback() {
+        this.textContent = 'this is a modal';
+      }
+    });
     async function presentModal() {
       const modalController = document.querySelector('ion-modal-controller');
       await modalController.componentOnReady();

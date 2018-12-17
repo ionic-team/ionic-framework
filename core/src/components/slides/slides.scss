@@ -4,12 +4,14 @@
 // Slides
 // --------------------------------------------------
 
-:host {
+.slides {
+  /**
+   * @prop --bullet-background: Background of the pagination bullets
+   * @prop --bullet-background-active: Background of the active pagination bullet
+   */
   display: block;
-}
 
-.swiper-container {
-  height: 100%;
+  user-select: none;
 }
 
 

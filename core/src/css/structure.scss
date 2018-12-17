@@ -21,6 +21,10 @@ html {
   text-size-adjust: 100%;
 }
 
+html.plt-pwa {
+  height: 100vh;
+}
+
 body {
   @include font-smoothing();
   @include margin(0);
@@ -38,7 +42,6 @@ body {
   overflow: hidden;
 
   touch-action: manipulation;
-  user-select: none;
 
   -webkit-user-drag: none;
 
@@ -46,7 +49,7 @@ body {
 
   word-wrap: break-word;
 
-  overscroll-behavior-y: contain;
+  overscroll-behavior-y: none;
 
   text-size-adjust: none;
 }

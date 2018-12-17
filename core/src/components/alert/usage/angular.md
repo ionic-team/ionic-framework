@@ -48,7 +48,7 @@ export class AlertExample {
         }, {
           text: 'Okay',
           handler: () => {
-            console.log('Confirm Okay')
+            console.log('Confirm Okay');
           }
         }
       ]
@@ -75,7 +75,6 @@ export class AlertExample {
         },
         {
           name: 'name3',
-          type: 'text',
           value: 'http://ionicframework.com',
           type: 'url',
           placeholder: 'Favorite site ever'
@@ -109,12 +108,12 @@ export class AlertExample {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            console.log('Confirm Cancel')
+            console.log('Confirm Cancel');
           }
         }, {
           text: 'Ok',
           handler: () => {
-            console.log('Confirm Ok')
+            console.log('Confirm Ok');
           }
         }
       ]
@@ -171,12 +170,12 @@ export class AlertExample {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            console.log('Confirm Cancel')
+            console.log('Confirm Cancel');
           }
         }, {
           text: 'Ok',
           handler: () => {
-            console.log('Confirm Ok')
+            console.log('Confirm Ok');
           }
         }
       ]
@@ -238,12 +237,12 @@ export class AlertExample {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            console.log('Confirm Cancel')
+            console.log('Confirm Cancel');
           }
         }, {
           text: 'Ok',
           handler: () => {
-            console.log('Confirm Ok')
+            console.log('Confirm Ok');
           }
         }
       ]

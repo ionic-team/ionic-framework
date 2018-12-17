@@ -9,16 +9,7 @@ export interface ScrollData {
 }
 
 export function getScrollData(componentEl: HTMLElement, contentEl: HTMLElement, keyboardHeight: number): ScrollData {
-  if (!contentEl) {
-    return {
-      scrollAmount: 0,
-      scrollPadding: 0,
-      scrollDuration: 0,
-      inputSafeY: 0,
-    };
-  }
-
-  const itemEl = <HTMLElement>componentEl.closest('ion-item,[ion-item]') || componentEl;
+  const itemEl = componentEl.closest('ion-item,[ion-item]') as HTMLElement || componentEl;
   return calcScrollData(
     itemEl.getBoundingClientRect(),
     contentEl.getBoundingClientRect(),
@@ -27,12 +18,11 @@ export function getScrollData(componentEl: HTMLElement, contentEl: HTMLElement, 
   );
 }
 
-
 function calcScrollData(
   inputRect: ClientRect,
   contentRect: ClientRect,
   keyboardHeight: number,
-  plaformHeight: number
+  platformHeight: number
 ): ScrollData {
   // compute input's Y values relative to the body
   const inputTop = inputRect.top;
@@ -40,13 +30,13 @@ function calcScrollData(
 
   // compute visible area
   const visibleAreaTop = contentRect.top;
-  const visibleAreaBottom = Math.min(contentRect.bottom, plaformHeight - keyboardHeight);
+  const visibleAreaBottom = Math.min(contentRect.bottom, platformHeight - keyboardHeight);
 
   // compute safe area
-  const safeAreaTop = visibleAreaTop + 10;
-  const safeAreaBottom = visibleAreaBottom / 2.0;
+  const safeAreaTop = visibleAreaTop + 15;
+  const safeAreaBottom = visibleAreaBottom * 0.5;
 
-  // figure out if each edge of teh input is within the safe area
+  // figure out if each edge of the input is within the safe area
   const distanceToBottom = safeAreaBottom - inputBottom;
   const distanceToTop = safeAreaTop - inputTop;
 
@@ -61,7 +51,7 @@ function calcScrollData(
   const duration = distance / SCROLL_ASSIST_SPEED;
   const scrollDuration = Math.min(400, Math.max(150, duration));
 
-  return  {
+  return {
     scrollAmount,
     scrollDuration,
     scrollPadding: keyboardHeight,

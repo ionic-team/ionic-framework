@@ -5,20 +5,21 @@
   <meta charset="UTF-8">
   <title>Alert</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Alert</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content padding>
+    <ion-content padding fullscreen>
       <ion-alert-controller></ion-alert-controller>
 
       <ion-button id="basic" expand="block" onclick="presentAlert()">Alert</ion-button>
@@ -31,7 +32,6 @@
       <ion-button id="checkbox" expand="block" onclick="presentAlertCheckbox()">Checkbox</ion-button>
       <ion-button expand="block" onclick="presentWithCssClass()">CssClass</ion-button>
     </ion-content>
-
   </ion-app>
 
   <script>
