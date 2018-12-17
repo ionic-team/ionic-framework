@@ -94,6 +94,13 @@ export class StackController {
     return this.activeView ? this.activeView.stackId : undefined;
   }
 
+  destroy() {
+    this.containerEl = undefined!;
+    this.views.forEach(destroyView);
+    this.activeView = undefined;
+    this.views = [];
+  }
+
   private getStack(stackId: string | undefined) {
     return this.views.filter(v => v.stackId === stackId);
   }
