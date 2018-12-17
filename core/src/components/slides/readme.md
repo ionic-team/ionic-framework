@@ -19,12 +19,72 @@ Licensed under MIT
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Angular
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'slides-example',
+  template: `
+    <ion-slides pager="true" [options]="slideOpts">
+      <ion-slide>
+        <h1>Slide 1</h1>
+      </ion-slide>
+      <ion-slide>
+        <h1>Slide 2</h1>
+      </ion-slide>
+      <ion-slide>
+        <h1>Slide 3</h1>
+      </ion-slide>
+    </ion-slides>
+  `
+})
+export class SlideExample {
+  slideOpts = {
+    effect: 'flip'
+  };
+  constructor() {}
+}
+```
+
+
+### Javascript
+
+```html
+  <ion-slides pager="true">
+
+    <ion-slide>
+      <h1>Slide 1</h1>
+    </ion-slide>
+
+    <ion-slide>
+      <h1>Slide 2</h1>
+    </ion-slide>
+
+    <ion-slide>
+      <h1>Slide 3</h1>
+    </ion-slide>
+  </ion-slides>
+```
+
+```javascript
+var slides = document.querySelector('ion-slides');
+slides.options = {
+  effect: 'flip'
+}
+```
+
+
+
 ## Properties
 
 | Property    | Attribute   | Description                                                                                  | Type            | Default     |
 | ----------- | ----------- | -------------------------------------------------------------------------------------------- | --------------- | ----------- |
 | `mode`      | `mode`      | The mode determines which platform styles to use.                                            | `"ios" \| "md"` | `undefined` |
-| `options`   | --          | Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options | `any`           | `{}`        |
+| `options`   | `options`   | Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options | `any`           | `{}`        |
 | `pager`     | `pager`     | If `true`, show the pagination.                                                              | `boolean`       | `false`     |
 | `scrollbar` | `scrollbar` | If `true`, show the scrollbar.                                                               | `boolean`       | `false`     |
 
@@ -42,13 +102,13 @@ Licensed under MIT
 | `ionSlidePrevStart`       | Emitted when the previous slide has started.                | void   |
 | `ionSlideReachEnd`        | Emitted when the slider is at the last slide.               | void   |
 | `ionSlideReachStart`      | Emitted when the slider is at its initial position.         | void   |
+| `ionSlidesDidLoad`        | Emitted after Swiper initialization                         | void   |
 | `ionSlideTap`             | Emitted when the user taps/clicks on the slide's container. | void   |
 | `ionSlideTouchEnd`        | Emitted when the user releases the touch.                   | void   |
 | `ionSlideTouchStart`      | Emitted when the user first touches the slider.             | void   |
 | `ionSlideTransitionEnd`   | Emitted when the slide transition has ended.                | void   |
 | `ionSlideTransitionStart` | Emitted when the slide transition has started.              | void   |
 | `ionSlideWillChange`      | Emitted before the active slide has changed.                | void   |
-| `ionSlidesDidLoad`        | Emitted after Swiper initialization                         | void   |
 
 
 ## Methods

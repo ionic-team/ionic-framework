@@ -1,17 +1,11 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BackButtonDetail, Platforms, getPlatforms, isPlatform } from '@ionic/core';
+import { Subject, Subscription } from 'rxjs';
+
 import { proxyEvent } from '../util/util';
 
-
-export class BackButtonEmitter extends EventEmitter<BackButtonDetail> {
-  constructor() {
-    super();
-  }
-  subscribeWithPriority(priority: number, callback: () => Promise<any> | void) {
-    return this.subscribe((ev: BackButtonDetail) => {
-      ev.register(priority, callback);
-    });
-  }
+export interface BackButtonEmitter extends Subject<BackButtonDetail> {
+  subscribeWithPriority(priority: number, callback: () => Promise<any> | void): Subscription;
 }
 
 @Injectable()
@@ -22,7 +16,7 @@ export class Platform {
   /**
    * @hidden
    */
-  backButton = new BackButtonEmitter();
+  backButton: BackButtonEmitter = new Subject<BackButtonDetail>() as any;
 
   /**
    * The pause event emits when the native platform puts the application
@@ -30,23 +24,29 @@ export class Platform {
    * application. This event would emit when a Cordova app is put into
    * the background, however, it would not fire on a standard web browser.
    */
-  pause = new EventEmitter<void>();
+  pause = new Subject<void>();
 
   /**
    * The resume event emits when the native platform pulls the application
    * out from the background. This event would emit when a Cordova app comes
    * out from the background, however, it would not fire on a standard web browser.
    */
-  resume = new EventEmitter<void>();
+  resume = new Subject<void>();
 
   /**
    * The resize event emits when the browser window has changed dimensions. This
    * could be from a browser window being physically resized, or from a device
    * changing orientation.
    */
-  resize = new EventEmitter<void>();
+  resize = new Subject<void>();
 
   constructor() {
+    this.backButton.subscribeWithPriority = function(priority, callback) {
+      return this.subscribe(ev => {
+        ev.register(priority, callback);
+      });
+    };
+
     proxyEvent(this.pause, document, 'pause');
     proxyEvent(this.resume, document, 'resume');
     proxyEvent(this.backButton, document, 'ionBackButton');

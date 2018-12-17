@@ -15,6 +15,75 @@ left or right of the range.
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Angular
+
+```html
+<ion-list>
+  <ion-item>
+    <ion-range color="danger" pin="true"></ion-range>
+  </ion-item>
+
+  <ion-item>
+    <ion-range min="-200" max="200" color="secondary">
+      <ion-label slot="start">-200</ion-label>
+      <ion-label slot="end">200</ion-label>
+    </ion-range>
+  </ion-item>
+
+ <ion-item>
+   <ion-range min="20" max="80" step="2">
+     <ion-icon size="small" slot="start" name="sunny"></ion-icon>
+     <ion-icon slot="end" name="sunny"></ion-icon>
+   </ion-range>
+ </ion-item>
+
+  <ion-item>
+    <ion-range min="1000" max="2000" step="100" snaps="true" color="secondary"></ion-range>
+  </ion-item>
+
+  <ion-item>
+    <ion-range dualKnobs="true" min="21" max="72" step="3" snaps="true"></ion-range>
+  </ion-item>
+</ion-list>
+```
+
+
+### Javascript
+
+```html
+<ion-list>
+  <ion-item>
+    <ion-range color="danger" pin="true"></ion-range>
+  </ion-item>
+
+  <ion-item>
+    <ion-range min="-200" max="200" color="secondary">
+      <ion-label slot="start">-200</ion-label>
+      <ion-label slot="end">200</ion-label>
+    </ion-range>
+  </ion-item>
+
+ <ion-item>
+   <ion-range min="20" max="80" step="2">
+     <ion-icon size="small" slot="start" name="sunny"></ion-icon>
+     <ion-icon slot="end" name="sunny"></ion-icon>
+   </ion-range>
+ </ion-item>
+
+  <ion-item>
+    <ion-range min="1000" max="2000" step="100" snaps="true" color="secondary"></ion-range>
+  </ion-item>
+
+  <ion-item>
+    <ion-range dual-knobs="true" min="21" max="72" step="3" snaps="true"></ion-range>
+  </ion-item>
+</ion-list>
+```
+
+
+
 ## Properties
 
 | Property    | Attribute    | Description                                                                                                                                                                                                                                                            | Type                                          | Default     |
@@ -40,7 +109,6 @@ left or right of the range.
 | `ionBlur`   | Emitted when the range loses focus.          | void             |
 | `ionChange` | Emitted when the value property has changed. | InputChangeEvent |
 | `ionFocus`  | Emitted when the range has focus.            | void             |
-| `ionStyle`  | Emitted when the styles change.              | StyleEvent       |
 
 
 ## CSS Custom Properties
@@ -49,6 +117,7 @@ left or right of the range.
 | ------------------------- | ---------------------------------- |
 | `--bar-background`        | Background of the range bar        |
 | `--bar-background-active` | Background of the active range bar |
+| `--bar-border-radius`     | Border radius of the range bar     |
 | `--bar-height`            | Height of the range bar            |
 | `--height`                | Height of the range                |
 | `--knob-background`       | Background of the range knob       |

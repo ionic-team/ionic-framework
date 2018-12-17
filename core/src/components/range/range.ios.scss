@@ -12,6 +12,7 @@
   --bar-height: #{$range-ios-bar-height};
   --bar-background: #{$range-ios-bar-background-color};
   --bar-background-active: #{ion-color(primary, base)};
+  --bar-border-radius: 0;
   --height: #{$range-ios-slider-height};
 
   @include padding($range-ios-padding-vertical, $range-ios-padding-horizontal);
@@ -20,6 +21,14 @@
 :host(.ion-color) .range-bar-active,
 :host(.ion-color) .range-tick-active {
   background: current-color(base);
+}
+
+::slotted([slot="start"]) {
+  @include margin(0, 16px, 0, 0);
+}
+
+::slotted([slot="end"]) {
+  @include margin(0, 0, 0, 16px);
 }
 
 :host(.range-has-pin) {

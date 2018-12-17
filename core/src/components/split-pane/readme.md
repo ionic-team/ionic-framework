@@ -12,7 +12,7 @@ store to phones and tablets.
 
 ### Setting breakpoints
 
-By default, SplitPane will expand when the screen is larger than 768px.
+By default, SplitPane will expand when the screen is larger than 992px.
 If you want to customize this, use the `when` input. The `when` input can
 accept any valid media query, as it uses `matchMedia()` underneath.
 
@@ -21,7 +21,7 @@ SplitPane also provides some predefined media queries that can be used.
 
 ```html
 <!-- could be "xs", "sm", "md", "lg", or "xl" -->
-<ion-split-pane when="lg"></ion-split-pane>
+<ion-split-pane when="md"></ion-split-pane>
 ```
 
 
@@ -29,8 +29,8 @@ SplitPane also provides some predefined media queries that can be used.
  |------|-----------------------|-----------------------------------------------------------------------|
  | `xs` | `(min-width: 0px)`    | Show the split-pane when the min-width is 0px (meaning, always)       |
  | `sm` | `(min-width: 576px)`  | Show the split-pane when the min-width is 576px                       |
- | `md` | `(min-width: 768px)`  | Show the split-pane when the min-width is 768px (default break point) |
- | `lg` | `(min-width: 992px)`  | Show the split-pane when the min-width is 992px                       |
+ | `md` | `(min-width: 768px)`  | Show the split-pane when the min-width is 768px                       |
+ | `lg` | `(min-width: 992px)`  | Show the split-pane when the min-width is 992px (default break point) |
  | `xl` | `(min-width: 1200px)` | Show the split-pane when the min-width is 1200px                      |
 
  You can also pass in boolean values that will trigger SplitPane when the value
@@ -40,12 +40,56 @@ SplitPane also provides some predefined media queries that can be used.
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Angular
+
+```html
+<ion-split-pane contentId="menu-content">
+  <!--  our side menu  -->
+  <ion-menu contentId="menu-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+  </ion-menu>
+
+  <!-- the main content -->
+  <ion-router-outlet id="menu-content"></ion-router-outlet>
+</ion-split-pane>
+```
+
+
+### Javascript
+
+```html
+<ion-split-pane content-id="menu-content">
+  <!--  our side menu  -->
+  <ion-menu content-id="menu-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+  </ion-menu>
+
+  <!-- the main content -->
+  <ion-content id="menu-content">
+    <h1>Hello</h1>
+  </ion-content>
+</ion-split-pane>
+```
+
+
+
 ## Properties
 
-| Property   | Attribute  | Description                                                                                                                           | Type                | Default       |
-| ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | ------------- |
-| `disabled` | `disabled` | If `true`, the split pane will be hidden.                                                                                             | `boolean`           | `false`       |
-| `when`     | --         | When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression. | `boolean \| string` | `QUERY['lg']` |
+| Property    | Attribute    | Description                                                                                                                                                                                                                                                                                                     | Type                  | Default       |
+| ----------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ------------- |
+| `contentId` | `content-id` | The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane.  ```html    * <ion-split-pane content-id="my-content">    *   <ion-menu></ion-menu>    *   <div id="my-content">    * </ion-split-pane>    * ``` | `string \| undefined` | `undefined`   |
+| `disabled`  | `disabled`   | If `true`, the split pane will be hidden.                                                                                                                                                                                                                                                                       | `boolean`             | `false`       |
+| `when`      | `when`       | When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.                                                                                                                                                                           | `boolean \| string`   | `QUERY['lg']` |
 
 
 ## Events

@@ -6,10 +6,6 @@
   --padding-end: #{$tab-button-ios-padding-end};
   --padding-bottom: #{$tab-button-ios-padding-bottom};
   --padding-start: #{$tab-button-ios-padding-start};
-  --color: #{$tab-button-ios-text-color};
-  --color-selected: #{$tabbar-ios-color-activated};
-  --background: transparent;
-  --background-focused: #{$tabbar-ios-background-focused};
 
   max-width: $tab-button-ios-max-width;
 
@@ -25,11 +21,24 @@
   line-height: 1.1;
 }
 
-::slotted(ion-label) {
-  @include margin(0, null, 1px, null);
 
-  min-height: $tab-button-ios-font-size + 1;
+// iOS Tab Button: Badge
+// --------------------------------------------------
+
+::slotted(ion-badge) {
+  @include padding(1px, 6px);
+  @include position(4px, null, null, calc(50% + 6px));
+
+  height: auto;
+
+  font-size: 12px;
+
+  line-height: 16px;
 }
+
+
+// iOS Tab Button: Icon
+// --------------------------------------------------
 
 ::slotted(ion-icon) {
   @include margin(4px, null, null, null);
@@ -42,7 +51,17 @@
 }
 
 
-// iOS TabButton Layout
+// iOS Tab Button: Label
+// --------------------------------------------------
+
+::slotted(ion-label) {
+  @include margin(0, null, 1px, null);
+
+  min-height: $tab-button-ios-font-size + 1;
+}
+
+
+// iOS Tab Button Layout
 // --------------------------------------------------
 
 :host(.tab-layout-icon-end) ::slotted(ion-label),
@@ -65,6 +84,54 @@
   margin-bottom: 1px;
 
   font-size: 24px;
+}
+
+
+// iOS Tab Button: Icon Bottom Layout
+// --------------------------------------------------
+
+// Badge
+:host(.tab-layout-icon-bottom) ::slotted(ion-badge) {
+  @include position(null, null, null, calc(50% + 12px));
+}
+
+// Icon
+:host(.tab-layout-icon-bottom) ::slotted(ion-icon) {
+  @include margin(0, null, 1px, null);
+}
+
+// Label
+:host(.tab-layout-icon-bottom) ::slotted(ion-label) {
+  @include margin(4px, null, null, null);
+}
+
+
+// iOS Tab Button: Icon Start / End Layout
+// --------------------------------------------------
+
+:host(.tab-layout-icon-start) ::slotted(ion-badge),
+:host(.tab-layout-icon-end) ::slotted(ion-badge) {
+  @include position(10px, null, null, calc(50% + 35px));
+}
+
+
+// iOS Tab Button: Icon Hide / Label Only Layout
+// --------------------------------------------------------------
+
+// Badge
+:host(.tab-layout-icon-hide) ::slotted(ion-badge),
+:host(.tab-has-label-only) ::slotted(ion-badge) {
+  @include position(10px, null, null, calc(50% + 30px));
+}
+
+
+// iOS Tab Button: Icon Only / Label Hide Layout
+// --------------------------------------------------------------
+
+// Badge
+:host(.tab-layout-label-hide) ::slotted(ion-badge),
+:host(.tab-has-icon-only) ::slotted(ion-badge) {
+  @include position(10px, null, null, null);
 }
 
 :host(.tab-layout-label-hide) ::slotted(ion-icon) {

@@ -137,7 +137,6 @@ export class Menu implements ComponentInterface, MenuI {
 
   /**
    * Emitted when the menu state is changed.
-   *
    * @internal
    */
   @Event() protected ionMenuChange!: EventEmitter<MenuChangeEventDetail>;
@@ -161,9 +160,7 @@ export class Menu implements ComponentInterface, MenuI {
 
     if (!content || !content.tagName) {
       // requires content element
-      console.error(
-        'Menu: must have a "content" element to listen for drag events on.'
-      );
+      console.error('Menu: must have a "content" element to listen for drag events on.');
       return;
     }
     this.contentEl = content as HTMLElement;

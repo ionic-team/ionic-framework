@@ -1,7 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State } from '@stencil/core';
 
-import { Color, Config, Mode, TabBarChangedDetail, TabButtonClickDetail, TabButtonLayout } from '../../interface';
-import { createColorClasses } from '../../utils/theme';
+import { Config, Mode, TabBarChangedDetail, TabButtonClickDetail, TabButtonLayout } from '../../interface';
 
 @Component({
   tag: 'ion-tab-button',
@@ -30,17 +29,10 @@ export class TabButton implements ComponentInterface {
   @Prop() mode!: Mode;
 
   /**
-   * The color to use from your application's color palette.
-   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information on colors, see [theming](/docs/theming/basics).
-   */
-  @Prop() color?: Color;
-
-  /**
    * Set the layout of the text and icon in the tab bar.
    * It defaults to `'icon-top'`.
    */
-  @Prop() layout?: TabButtonLayout;
+  @Prop({ mutable: true }) layout?: TabButtonLayout;
 
   /**
    * The URL which will be used as the `href` within this tab's button anchor.
@@ -74,7 +66,8 @@ export class TabButton implements ComponentInterface {
     if (!this.disabled) {
       this.ionTabButtonClick.emit({
         tab: this.tab,
-        href: this.href
+        href: this.href,
+        selected: this.selected
       });
     }
     ev.preventDefault();
@@ -83,6 +76,9 @@ export class TabButton implements ComponentInterface {
   componentWillLoad() {
     if (this.layout === undefined) {
       this.layout = this.config.get('tabButtonLayout', 'icon-top');
+    }
+    if (isNotDefined(this.tab)) {
+      console.error('Missing "tab" property in <ion-tab-button>');
     }
   }
 
@@ -95,16 +91,13 @@ export class TabButton implements ComponentInterface {
   }
 
   hostData() {
-    const { color, tab, selected, layout, disabled, hasLabel, hasIcon } = this;
+    const { disabled, hasIcon, hasLabel, layout, selected, tab } = this;
     return {
       'role': 'tab',
-      'ion-activatable': true,
       'aria-selected': selected ? 'true' : null,
       'id': `tab-button-${tab}`,
       'aria-controls': `tab-view-${tab}`,
       class: {
-        ...createColorClasses(color),
-
         'tab-selected': selected,
         'tab-disabled': disabled,
         'tab-has-label': hasLabel,
@@ -112,6 +105,7 @@ export class TabButton implements ComponentInterface {
         'tab-has-label-only': hasLabel && !hasIcon,
         'tab-has-icon-only': hasIcon && !hasLabel,
         [`tab-layout-${layout}`]: true,
+        'ion-activatable': true,
       }
     };
   }
@@ -121,8 +115,12 @@ export class TabButton implements ComponentInterface {
     return (
       <a href={href || '#'}>
         <slot></slot>
-        {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+        {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
       </a>
     );
   }
+}
+
+function isNotDefined(a: any) {
+  return a == null;
 }

@@ -4,22 +4,17 @@
 // Material Design Popover
 // --------------------------------------------------
 
+:host {
+  --width: #{$popover-md-width};
+  --max-height: #{$popover-md-max-height};
+  --box-shadow: #{$popover-md-box-shadow};
+}
+
 .popover-content {
   @include border-radius($popover-md-border-radius);
   @include transform-origin(start, top);
-
-  width: $popover-md-width;
-  min-width: $popover-md-min-width;
-  min-height: $popover-md-min-height;
-  max-height: $popover-md-max-height;
-
-  background: $popover-md-background;
-  color: $popover-md-text-color;
-
-  box-shadow: $popover-md-box-shadow;
 }
 
 .popover-viewport {
-  // opacity: 0;
   transition-delay: 100ms;
 }

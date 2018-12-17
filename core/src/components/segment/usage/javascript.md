@@ -29,6 +29,31 @@
   </ion-segment-button>
 </ion-segment>
 
+<!-- Scrollable Segment -->
+<ion-segment scrollable>
+  <ion-segment-button>
+    <ion-icon name="home"></ion-icon>
+  </ion-segment-button>
+  <ion-segment-button checked>
+    <ion-icon name="heart"></ion-icon>
+  </ion-segment-button>
+  <ion-segment-button>
+    <ion-icon name="pin"></ion-icon>
+  </ion-segment-button>
+  <ion-segment-button>
+    <ion-icon name="star"></ion-icon>
+  </ion-segment-button>
+  <ion-segment-button>
+    <ion-icon name="call"></ion-icon>
+  </ion-segment-button>
+  <ion-segment-button>
+    <ion-icon name="globe"></ion-icon>
+  </ion-segment-button>
+  <ion-segment-button>
+    <ion-icon name="basket"></ion-icon>
+  </ion-segment-button>
+</ion-segment>
+
 <!-- Segment with secondary color -->
 <ion-segment color="secondary">
   <ion-segment-button value="standard">

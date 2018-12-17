@@ -20,6 +20,7 @@
     </ion-header>
 
     <ion-content padding-vertical>
+      <form onsubmit="return onSubmit(event)">
       <ion-list>
         <ion-item>
           <ion-label>Simple item</ion-label>
@@ -31,12 +32,12 @@
 
         <ion-item>
           <ion-label>DateTime</ion-label>
-          <ion-datetime id="datetime" min="1994-03-14" max="2017-12-09" display-format="MM/DD/YYYY"></ion-datetime>
+          <ion-datetime name="date" id="datetime" min="1994-03-14" max="2017-12-09" display-format="MM/DD/YYYY"></ion-datetime>
         </ion-item>
 
         <ion-item>
           <ion-label>Select</ion-label>
-          <ion-select id="select">
+          <ion-select name="select" id="select">
             <ion-select-option value="">No Game Console</ion-select-option>
             <ion-select-option value="nes">NES</ion-select-option>
             <ion-select-option value="n64" selected>Nintendo64</ion-select-option>
@@ -49,29 +50,33 @@
 
         <ion-item>
           <ion-label>Toggle</ion-label>
-          <ion-toggle id="toggle" name="Actually" slot="end"></ion-toggle>
+          <ion-toggle name="toggle" id="toggle" name="Actually" slot="end"></ion-toggle>
         </ion-item>
 
         <ion-item>
           <ion-label>Input (text)</ion-label>
-          <ion-input id="text"></ion-input>
+          <ion-input name="input" id="text"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label>Input (placeholder)</ion-label>
-          <ion-input id="placeholder" placeholder="Placeholder"></ion-input>
+          <ion-input name="input2" id="placeholder" placeholder="Placeholder"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label>Checkbox</ion-label>
-          <ion-checkbox id="checkbox" slot="start"></ion-checkbox>
+          <ion-checkbox name="checkbox" id="checkbox" slot="start"></ion-checkbox>
         </ion-item>
 
         <ion-item>
           <ion-label>Range</ion-label>
-          <ion-range id="range" value="10"></ion-range>
+          <ion-range name="range" id="range" value="10"></ion-range>
         </ion-item>
       </ion-list>
+
+      <ion-button id="submit" type="submit">Submit</ion-button>
+      <p id="form-result"></p>
+    </form>
 
       <ion-list>
         <ion-list-header>Controls</ion-list-header>
@@ -179,6 +184,16 @@
 
     function testClick(ev) {
       console.log('CLICK!', ev.target.tagName, ev.target.textContent.trim());
+    }
+
+    function onSubmit(ev) {
+      const data = new FormData(ev.target);
+      const json = {};
+      data.forEach((value, key) => {
+        json[key] = value;
+      })
+      document.getElementById('form-result').textContent = JSON.stringify(json);
+      return false;
     }
 
   </script>

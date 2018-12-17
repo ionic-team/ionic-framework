@@ -4,48 +4,47 @@
 // iOS Picker
 // --------------------------------------------------
 
-.picker-ios .picker-wrapper {
-  height: $picker-ios-height;
+:host {
+  --background: #{$picker-ios-background-color};
+  --border-width: #{1px 0 0};
+  --border-color: #{$picker-ios-border-color};
+  --height: #{$picker-ios-height};
 
-  border-top: 1px solid $picker-ios-border-color;
-
-  background: $picker-ios-background-color;
+  color: $picker-ios-option-text-color;
 }
 
-.picker-ios .picker-toolbar {
+.picker-toolbar {
   display: flex;
 
   height: $picker-ios-toolbar-height;
 
-  border-bottom: $hairlines-width solid $picker-ios-border-color;
-
-  background: $picker-ios-toolbar-background-color;
+  border-bottom: $hairlines-width solid var(--border-color);
 }
 
-.picker-ios .picker-toolbar-button {
+.picker-toolbar-button {
   flex: 1;
 
   text-align: end;
 }
 
-.picker-ios .picker-toolbar-button:last-child .picker-button {
+.picker-toolbar-button:last-child .picker-button {
   font-weight: $picker-ios-button-strong-font-weight;
 }
 
-.picker-ios .picker-toolbar-button:first-child {
+.picker-toolbar-button:first-child {
   font-weight: normal;
 
   text-align: start;
 }
 
-.picker-ios .picker-button,
-.picker-ios .picker-button.activated {
+.picker-button,
+.picker-button.activated {
   @include margin(0);
   @include padding($picker-ios-button-padding-top, $picker-ios-button-padding-end, $picker-ios-button-padding-bottom, $picker-ios-button-padding-start);
 
   height: $picker-ios-button-height;
 
-  background: $picker-ios-button-background-color;
+  background: transparent;
   color: $picker-ios-button-text-color;
 
   font-size: $picker-ios-button-font-size;
@@ -56,49 +55,7 @@
   perspective: $picker-ios-column-perspective;
 }
 
-.picker-ios .picker-col {
-  @include padding($picker-ios-column-padding-top, $picker-ios-column-padding-end, $picker-ios-column-padding-bottom, $picker-ios-column-padding-start);
-
-  transform-style: preserve-3d;
-}
-
-.picker-ios .picker-prefix,
-.picker-ios .picker-suffix,
-.picker-ios .picker-opts {
-  top: $picker-ios-option-offset-y;
-
-  transform-style: preserve-3d;
-
-  color: $picker-ios-option-text-color;
-
-  font-size: $picker-ios-option-font-size;
-
-  line-height: $picker-ios-option-height;
-  pointer-events: none;
-}
-
-.picker-ios .picker-opt {
-  @include padding($picker-ios-option-padding-top, $picker-ios-option-padding-end, $picker-ios-option-padding-bottom, $picker-ios-option-padding-start);
-  @include margin(0);
-  @include transform-origin(center, center);
-
-  height: 46px;
-
-  transform-style: preserve-3d;
-
-  transition-timing-function: ease-out;
-
-  background: transparent;
-  color: $picker-ios-option-text-color;
-
-  font-size: $picker-ios-option-font-size;
-
-  line-height: $picker-ios-option-height;
-  backface-visibility: hidden;
-  pointer-events: auto;
-}
-
-.picker-ios .picker-above-highlight {
+.picker-above-highlight {
   @include position(0, null, null, 0);
   @include transform(translate3d(0, 0, 90px));
 
@@ -108,16 +65,17 @@
   width: 100%;
   height: $picker-ios-option-offset-y + 4px;
 
-  border-bottom: 1px solid $picker-ios-border-color;
+  border-bottom: 1px solid var(--border-color);
 
-  background: linear-gradient(to bottom,
-                            $picker-ios-top-background-color 20%,
-                            $picker-ios-bottom-background-color 100%);
+  background: linear-gradient(
+    to bottom,
+    $picker-ios-top-background-color 20%,
+    $picker-ios-bottom-background-color 100%);
 
   z-index: 10;
 }
 
-.picker-ios .picker-below-highlight {
+.picker-below-highlight {
   @include position($picker-ios-option-offset-y + $picker-ios-option-height - 4, null, null, 0);
   @include transform(translate3d(0, 0, 90px));
 
@@ -127,11 +85,12 @@
   width: 100%;
   height: $picker-ios-option-offset-y + $picker-ios-option-height;
 
-  border-top: 1px solid $picker-ios-border-color;
+  border-top: 1px solid var(--border-color);
 
-  background: linear-gradient(to top,
-                           $picker-ios-top-background-color 30%,
-                           $picker-ios-bottom-background-color 100%);
+  background: linear-gradient(
+    to top,
+    $picker-ios-top-background-color 30%,
+    $picker-ios-bottom-background-color 100%);
 
   z-index: 11;
 }

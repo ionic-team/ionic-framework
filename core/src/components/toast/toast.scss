@@ -4,20 +4,44 @@
 // --------------------------------------------------
 
 :host {
-  --button-color: inherit;
-
   /**
    * @prop --background: Background of the toast
-   * @prop --button-color: Color of the button text
    * @prop --color: Color of the toast text
+   *
+   * @prop --border-color: Border color of the toast
+   * @prop --border-radius: Border radius of the toast
+   * @prop --border-width: Border width of the toast
+   * @prop --border-style: Border style of the toast
+   *
+   * @prop --box-shadow: Box shadow of the toast
+   *
+   * @prop --min-width: Minimum width of the toast
+   * @prop --width: Width of the toast
+   * @prop --max-width: Maximum width of the toast
+   *
+   * @prop --min-height: Minimum height of the toast
+   * @prop --height: Height of the toast
+   * @prop --max-height: Maximum height of the toast
+   *
+   * @prop --button-color: Color of the button text
    */
+  --border-width: 0;
+  --border-style: none;
+  --border-color: initial;
+  --box-shadow: none;
+  --min-width: auto;
+  --width: auto;
+  --min-height: auto;
+  --height: auto;
+  --max-height: auto;
+
   @include position(0, null, null, 0);
 
   display: block;
   position: absolute;
 
-  width: $toast-width;
-  height: $toast-width;
+  width: 100%;
+  height: 100%;
 
   color: var(--color);
 
@@ -29,25 +53,33 @@
 }
 
 :host(.ion-color) {
-  --color: #{current-color(contrast)};
-  --background: #{current-color(base)};
   --button-color: inherit;
+
+  color: #{current-color(contrast)};
+}
+
+:host(.ion-color) .toast-wrapper {
+  background: #{current-color(base)};
 }
 
 .toast-wrapper {
+  @include border-radius(var(--border-radius));
+
+  width: var(--width);
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+
+  height: var(--height);
+  min-height: var(--min-height);
+  max-height: var(--max-height);
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
   background: var(--background);
-}
 
-.toast-wrapper.toast-top {
-  @include transform(translate3d(0, -100%, 0));
-
-  top: 0;
-}
-
-.toast-wrapper.toast-bottom {
-  @include transform(translate3d(0, 100%, 0));
-
-  bottom: 0;
+  box-shadow: var(--box-shadow);
 }
 
 .toast-container {
@@ -61,10 +93,10 @@
 
 .toast-button {
   color: var(--button-color);
-
-  font-size: $toast-button-font-size;
 }
 
 .toast-message {
   flex: 1;
+
+  white-space: pre-wrap;
 }

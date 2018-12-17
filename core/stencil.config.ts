@@ -1,6 +1,9 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
 
+// @ts-ignore
+import { apiSpecGenerator } from './scripts/api-spec-generator';
+
 export const config: Config = {
   namespace: 'Ionic',
   bundles: [
@@ -29,6 +32,7 @@ export const config: Config = {
     { components: ['ion-nav', 'ion-nav-pop', 'ion-nav-push', 'ion-nav-set-root'] },
     { components: ['ion-img'] },
     { components: ['ion-popover', 'ion-popover-controller'] },
+    { components: ['ion-progress-bar'] },
     { components: ['ion-radio', 'ion-radio-group'] },
     { components: ['ion-range'] },
     { components: ['ion-refresher', 'ion-refresher-content'] },
@@ -41,7 +45,8 @@ export const config: Config = {
     { components: ['ion-slides', 'ion-slide'] },
     { components: ['ion-spinner'] },
     { components: ['ion-split-pane'] },
-    { components: ['ion-tabs', 'ion-tab', 'ion-tab-bar', 'ion-tab-button'] },
+    { components: ['ion-tabs', 'ion-tab'] },
+    { components: ['ion-tab-bar', 'ion-tab-button'] },
     { components: ['ion-text'] },
     { components: ['ion-toast', 'ion-toast-controller'] },
     { components: ['ion-toggle'] },
@@ -60,8 +65,18 @@ export const config: Config = {
       strict: true
     },
     {
+      type: 'docs-json',
+      file: '../docs/core.json'
+    },
+    {
       type: 'stats',
       file: 'stats.json'
+    },
+    {
+      type: 'docs-custom',
+      generator: apiSpecGenerator({
+        file: 'api.txt'
+      })
     },
     {
       type: 'angular',
@@ -98,16 +113,19 @@ export const config: Config = {
         'ion-router-outlet',
         'ion-anchor',
 
+        // tabs
+        'ion-tabs',
+        'ion-tab',
+
         // auxiliar
         'ion-picker-column',
-        'ion-anchor',
         'ion-virtual-scroll'
       ]
     }
   ],
   testing: {
     allowableMismatchedPixels: 200,
-    pixelmatchThreshold: 0.1,
+    pixelmatchThreshold: 0.05,
     emulate: [
       {
         userAgent: 'iPhone',

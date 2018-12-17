@@ -16,7 +16,7 @@
 }
 
 
-// Material Design Toolbar Content
+// Toolbar: Content
 // --------------------------------------------------
 
 .toolbar-content {
@@ -25,4 +25,37 @@
 
   min-width: 0;
   max-width: 100%;
+}
+
+// Toolbar: Segment
+// --------------------------------------------------
+
+:host(.toolbar-segment) {
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+// Material Design Toolbar Slot Placement
+// --------------------------------------------------
+
+::slotted([slot="start"]) {
+  order: map-get($toolbar-order-md, slot-start);
+}
+
+::slotted([slot="secondary"]) {
+  order: map-get($toolbar-order-md, slot-secondary);
+}
+
+::slotted([slot="primary"]) {
+  order: map-get($toolbar-order-md, slot-primary);
+
+  text-align: end;
+}
+
+::slotted([slot="end"]) {
+  order: map-get($toolbar-order-md, slot-end);
+
+  text-align: end;
 }

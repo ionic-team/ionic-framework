@@ -62,13 +62,14 @@
 
   position: relative;
 
+  outline: none;
+
   color: var(--color);
 
   font-family: $font-family-base;
 
   text-align: initial;
   text-decoration: none;
-
   box-sizing: border-box;
 }
 
@@ -169,8 +170,6 @@ button, a {
 
   display: flex;
 
-  position: relative;
-
   flex: 1;
   flex-direction: inherit;
   align-items: inherit;
@@ -213,6 +212,10 @@ button, a {
   --margin-end: 0;
 
   z-index: 1;
+}
+
+::slotted(ion-label) {
+  flex: 1;
 }
 
 

@@ -9,8 +9,9 @@
   --padding-bottom: 0;
   --padding-start: 8px;
   --padding-end: 8px;
-  --height: 32px;
   --box-shadow: none;
+
+  height: 32px;
 
   font-size: #{$toolbar-md-button-font-size};
   font-weight: 500;
@@ -27,6 +28,8 @@
 :host-context(.ion-color)::slotted(*) .button {
   --color: initial;
   --color-activated: initial;
+  --color-focused: initial;
+  --background-focused: #{ion-color(primary, contrast, 0.1)};
 }
 
 
@@ -84,28 +87,4 @@
   @include margin(0);
 
   font-size: 1.8em;
-}
-
-
-// Material Design Toolbar Button Placement
-// --------------------------------------------------
-
-:host([slot="start"]) {
-  order: map-get($toolbar-order-md, buttons-start);
-}
-
-:host([slot="secondary"]) {
-  order: map-get($toolbar-order-md, buttons-secondary);
-}
-
-:host([slot="primary"]) {
-  order: map-get($toolbar-order-md, buttons-primary);
-
-  text-align: end;
-}
-
-:host([slot="end"]) {
-  order: map-get($toolbar-order-md, buttons-end);
-
-  text-align: end;
 }

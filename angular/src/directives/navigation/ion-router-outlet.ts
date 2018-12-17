@@ -1,8 +1,12 @@
-import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, Input, OnDestroy, OnInit, Optional, Output, ViewContainerRef } from '@angular/core';
+import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, Input, NgZone, OnDestroy, OnInit, Optional, Output, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ChildrenOutletContexts, OutletContext, PRIMARY_OUTLET, Router } from '@angular/router';
-import { RouteView, StackController } from './router-controller';
-import { NavController } from '../../providers/nav-controller';
+
+import { Config } from '../../providers';
 import { bindLifecycleEvents } from '../../providers/angular-delegate';
+import { NavController } from '../../providers/nav-controller';
+
+import { StackController } from './stack-controller';
+import { RouteView, getUrl } from './stack-utils';
 
 @Directive({
   selector: 'ion-router-outlet',
@@ -14,37 +18,55 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   private activatedView: RouteView | null = null;
 
   private _activatedRoute: ActivatedRoute | null = null;
+  private _swipeGesture?: boolean;
   private name: string;
   private stackCtrl: StackController;
+  private nativeEl: HTMLIonRouterOutletElement;
+
+  tabsPrefix: string | undefined;
 
   @Output('activate') activateEvents = new EventEmitter<any>();
   @Output('deactivate') deactivateEvents = new EventEmitter<any>();
 
   @Input()
   set animated(animated: boolean) {
-    (this.elementRef.nativeElement as HTMLIonRouterOutletElement).animated = animated;
+    this.nativeEl.animated = animated;
+  }
+
+  @Input()
+  set swipeGesture(swipe: boolean) {
+    this._swipeGesture = swipe;
+
+    this.nativeEl.swipeHandler = swipe ? {
+      canStart: () => this.stackCtrl.canGoBack(1),
+      onStart: () => this.stackCtrl.startBackTransition(),
+      onEnd: shouldContinue => this.stackCtrl.endBackTransition(shouldContinue)
+    } : undefined;
   }
 
   constructor(
     private parentContexts: ChildrenOutletContexts,
     private location: ViewContainerRef,
     private resolver: ComponentFactoryResolver,
-    private elementRef: ElementRef,
     @Attribute('name') name: string,
-    @Optional() @Attribute('stack') stack: any,
+    @Optional() @Attribute('tabs') tabs: string,
     private changeDetector: ChangeDetectorRef,
-    private navCtrl: NavController,
-    router: Router
+    private config: Config,
+    navCtrl: NavController,
+    elementRef: ElementRef,
+    router: Router,
+    zone: NgZone,
+    activatedRoute: ActivatedRoute
   ) {
+    this.nativeEl = elementRef.nativeElement;
     this.name = name || PRIMARY_OUTLET;
+    this.tabsPrefix = tabs === 'true' ? getUrl(router, activatedRoute) : undefined;
+    this.stackCtrl = new StackController(this.tabsPrefix, this.nativeEl, router, navCtrl, zone);
     parentContexts.onChildOutletCreated(this.name, this as any);
-    const hasStack = stack !== 'false' && stack !== false;
-    this.stackCtrl = new StackController(hasStack, elementRef.nativeElement, router, this.navCtrl);
   }
 
   ngOnDestroy(): void {
-    console.log('router-outlet destroyed');
-    this.parentContexts.onChildOutletDestroyed(this.name);
+    this.stackCtrl.destroy();
   }
 
   getContext(): OutletContext | null {
@@ -60,9 +82,16 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
         this.activateWith(context.route, context.resolver || null);
       }
     }
+    this.nativeEl.componentOnReady().then(() => {
+      if (this._swipeGesture === undefined) {
+        this.swipeGesture = this.config.getBoolean('swipeBackEnabled', this.nativeEl.mode === 'ios');
+      }
+    });
   }
 
-  get isActivated(): boolean { return !!this.activated; }
+  get isActivated(): boolean {
+    return !!this.activated;
+  }
 
   get component(): object {
     if (!this.activated) {
@@ -147,28 +176,36 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       enteringView = this.stackCtrl.createView(this.activated, activatedRoute);
     }
 
-    const { direction, animated } = this.navCtrl.consumeTransition();
     this.activatedView = enteringView;
-    this.stackCtrl.setActive(enteringView, direction, animated).then(() => {
+    this.stackCtrl.setActive(enteringView).then(() => {
       this.activateEvents.emit(cmpRef.instance);
-      emitEvent(this.elementRef.nativeElement);
+      emitEvent(this.nativeEl, enteringView!);
     });
-
   }
 
-  canGoBack(deep = 1) {
-    return this.stackCtrl.canGoBack(deep);
+  canGoBack(deep = 1, stackId?: string) {
+    return this.stackCtrl.canGoBack(deep, stackId);
   }
 
-  pop(deep = 1) {
-    return this.stackCtrl.pop(deep);
+  pop(deep = 1, stackId?: string) {
+    return this.stackCtrl.pop(deep, stackId);
+  }
+
+  getLastUrl(stackId?: string) {
+    const active = this.stackCtrl.getLastUrl(stackId);
+    return active ? active.url : undefined;
+  }
+
+  getActiveStackId() {
+    return this.stackCtrl.getActiveStackId();
   }
 }
 
-function emitEvent(el: HTMLElement) {
+function emitEvent(el: HTMLElement, view: RouteView) {
   const ev = new CustomEvent('ionRouterOutletActivated', {
     bubbles: true,
     cancelable: true,
+    detail: { view }
   });
   el.dispatchEvent(ev);
 }

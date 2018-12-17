@@ -40,9 +40,10 @@
 
 :host(.datetime-disabled) {
   opacity: .3;
+  pointer-events: none;
 }
 
-.datetime-cover {
+button {
   @include input-cover();
 }
 

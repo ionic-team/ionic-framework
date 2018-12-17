@@ -241,6 +241,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                   {b.icon && <ion-icon icon={b.icon} lazy={false} class="action-sheet-icon" />}
                   {b.text}
                 </span>
+                {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
               </button>
             )}
           </div>
@@ -248,7 +249,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
           {cancelButton &&
             <div class="action-sheet-group action-sheet-group-cancel">
               <button
-                ion-activatable
                 type="button"
                 class={buttonClass(cancelButton)}
                 onClick={() => this.buttonClick(cancelButton)}
@@ -274,6 +274,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 function buttonClass(button: ActionSheetButton): CssClassMap {
   return {
     'action-sheet-button': true,
+    'ion-activatable': true,
     [`action-sheet-${button.role}`]: button.role !== undefined,
     ...getClassMap(button.cssClass),
   };

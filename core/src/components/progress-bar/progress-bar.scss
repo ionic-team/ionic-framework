@@ -1,0 +1,246 @@
+@import "../../themes/ionic.globals";
+
+// Progress bar
+// --------------------------------------------------
+// Host has no background by default - this will be added to the progress-buffer-bar
+
+:host {
+  /**
+  * @prop --background:  Same as --buffer-background when using a determinate progress bar, otherwise it styles the background of the ion-progress-bar itself.
+  * @prop --progress-background: Color of the progress bar
+  * @prop --buffer-background: Color of the buffer bar
+  */
+  --background: #{ion-color(primary, base, 0.2)};
+  --progress-background: #{ion-color(primary, base)};
+  --buffer-background: var(--background);
+  display: block;
+
+  position: relative;
+
+  width: 100%;
+
+  contain: strict;
+  overflow: hidden;
+}
+
+:host(.ion-color) {
+  --progress-background: #{current-color(base)};
+  --buffer-background: #{current-color(base, 0.2)};
+}
+
+// indeterminate has no progress-buffer-bar, so it will be added to the host
+:host(.progress-bar-indeterminate) {
+  background: var(--buffer-background);
+}
+
+.progress,
+.progress-indeterminate,
+.indeterminate-bar-primary,
+.indeterminate-bar-secondary,
+.progress-buffer-bar,
+.progress-buffer-bar:before,
+.buffer-circles {
+  @include position(0, 0, 0, 0);
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+}
+
+// Determinate progress bar
+// --------------------------------------------------
+
+.progress,
+.progress-buffer-bar {
+  @include transform-origin(start, top);
+  transition: transform 150ms linear;
+}
+
+// Progress and background bar
+// --------------------------------------------------
+
+.progress,
+.progress-indeterminate {
+  background: var(--progress-background);
+
+  z-index: 2;
+}
+
+.progress-buffer-bar {
+  // It's currently here because --buffer-background has an alpha
+  // Otherwise the buffer circles would be seen through
+  background: #fff;
+
+  z-index: 1; // Make it behind the progress
+
+  &:before {
+    background: var(--buffer-background);
+
+    content: "";
+  }
+}
+
+// MD based animation on indeterminate type
+// --------------------------------------------------
+
+.indeterminate-bar-primary {
+  @include position(0, 0, 0, -145.166611%);
+  animation: primary-indeterminate-translate 2s infinite linear;
+
+  .progress-indeterminate {
+    animation: primary-indeterminate-scale 2s infinite linear;
+    animation-play-state: inherit;
+  }
+}
+
+.indeterminate-bar-secondary {
+  @include position(0, 0, 0, -54.888891%);
+  animation: secondary-indeterminate-translate 2s infinite linear;
+
+  .progress-indeterminate {
+    animation: secondary-indeterminate-scale 2s infinite linear;
+    animation-play-state: inherit;
+  }
+}
+
+// Buffer style
+// --------------------------------------------------
+
+.buffer-circles {
+  background: radial-gradient(ellipse at center, var(--buffer-background) 0%, var(--buffer-background) 30%, transparent 30%) repeat-x 5px center;
+  background-size: 10px 10px;
+
+  z-index: 0;
+  animation: buffering 450ms infinite linear;
+}
+
+// If reversed is set to true, the animation will be reversed
+// and the bars starting at the top right
+// --------------------------------------------------
+
+:host(.progress-bar-reversed) {
+  .progress,
+  .progress-buffer-bar {
+    @include transform-origin(end, top);
+  }
+
+  .buffer-circles,
+  .indeterminate-bar-primary,
+  .indeterminate-bar-secondary,
+  .progress-indeterminate {
+    animation-direction: reverse;
+  }
+}
+
+// Progress paused
+// --------------------------------------------------
+
+:host(.progress-paused) {
+  .indeterminate-bar-secondary,
+  .indeterminate-bar-primary,
+  .buffer-circles {
+    animation-play-state: paused;
+  }
+}
+
+// Animation Keyframes
+// --------------------------------------------------
+// Source: https://github.com/material-components/material-components-web/blob/master/packages/mdc-linear-progress/_keyframes.scss
+
+@keyframes primary-indeterminate-translate {
+  0% {
+    transform: translateX(0);
+  }
+
+  20% {
+    animation-timing-function: cubic-bezier(.5, 0, .701732, .495819);
+
+    transform: translateX(0);
+  }
+
+  59.15% {
+    animation-timing-function: cubic-bezier(.302435, .381352, .55, .956352);
+
+    transform: translateX(83.67142%);
+  }
+
+  100% {
+    transform: translateX(200.611057%);
+  }
+}
+
+@keyframes primary-indeterminate-scale {
+  0% {
+    transform: scaleX(.08);
+  }
+
+  36.65% {
+    animation-timing-function: cubic-bezier(.334731, .12482, .785844, 1);
+
+    transform: scaleX(.08);
+  }
+
+  69.15% {
+    animation-timing-function: cubic-bezier(.06, .11, .6, 1);
+
+    transform: scaleX(.661479);
+  }
+
+  100% {
+    transform: scaleX(.08);
+  }
+}
+
+@keyframes secondary-indeterminate-translate {
+  0% {
+    animation-timing-function: cubic-bezier(.15, 0, .515058, .409685);
+
+    transform: translateX(0);
+  }
+
+  25% {
+    animation-timing-function: cubic-bezier(.31033, .284058, .8, .733712);
+
+    transform: translateX(37.651913%);
+  }
+
+  48.35% {
+    animation-timing-function: cubic-bezier(.4, .627035, .6, .902026);
+
+    transform: translateX(84.386165%);
+  }
+
+  100% {
+    transform: translateX(160.277782%);
+  }
+}
+
+@keyframes secondary-indeterminate-scale {
+  0% {
+    animation-timing-function: cubic-bezier(.205028, .057051, .57661, .453971);
+
+    transform: scaleX(.08);
+  }
+
+  19.15% {
+    animation-timing-function: cubic-bezier(.152313, .196432, .648374, 1.004315);
+
+    transform: scaleX(.457104);
+  }
+
+  44.15% {
+    animation-timing-function: cubic-bezier(.257759, -.003163, .211762, 1.38179);
+
+    transform: scaleX(.72796);
+  }
+
+  100% {
+    transform: scaleX(.08);
+  }
+}
+
+@keyframes buffering {
+  to {
+    transform: translateX(-10px);
+  }
+}

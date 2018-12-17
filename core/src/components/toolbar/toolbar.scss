@@ -76,7 +76,7 @@
   box-sizing: border-box;
 }
 
-// Transparent Toolbar
+// Toolbar: Transparent
 // --------------------------------------------------
 
 .toolbar-background {
@@ -96,4 +96,18 @@
   opacity: var(--opacity);
   z-index: $z-index-toolbar-background;
   pointer-events: none;
+}
+
+
+// Toolbar: Segment
+// --------------------------------------------------
+
+:host(.toolbar-segment) {
+  --min-height: auto;
+}
+
+::slotted(ion-progress-bar) {
+  @include position(null, 0, 0, 0);
+
+  position: absolute;
 }

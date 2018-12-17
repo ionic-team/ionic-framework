@@ -1,11 +1,30 @@
 # ion-router-outlet
 
-RouterOutlet is a component used in routing within an Angular app. RouterOutlet behaves the same way as Angular's built-in RouterOutlet component, but contains the logic needed for animating views in and out.
+Router Outlet is a component used in routing within an Angular app.
+Router Outlet behaves in a similar way as Angular's built-in Router Outlet component, but contains the logic for providing a stacked navigation, and animating views in and out.
 
 
 > Note: this is only meant for Angular projects. For vanilla JavaScript, use `ion-router` and `ion-route` instead.
 
-While RouterOutlet has methods for navigating around, it's recommended to use the navigation methods in Angular's router.
+While Router Outlet has methods for navigating around, it's recommended to use the navigation methods in Angular's router.
+
+
+### Life Cycle Hooks
+
+Routes rendered in a Router Outlet have access to specific Ionic events that are wired up to animations
+
+
+| Event Name         | Trigger                                                          |
+|--------------------|------------------------------------------------------------------|
+| `ionViewWillEnter` | Fired when the component being routed to is about to animate in. |
+| `ionViewDidEnter`  | Fired when the component being routed to has animated in.        |
+| `ionViewWillLeave` | Fired when the component being routed from is about to animate.  |
+| `ionViewDidLeave`  | Fired when the component being routed from has animated.         |
+
+
+These event tie into Ionic's animation system and can be used to coordinate parts of your app when a Components is done with it's animation. These events are not a replacement for Angular's own event system, but an addition.
+
+For handling Router Guards, the older `ionViewCanEnter` and `ionViewCanLeave` have been replaced with their framework specific equivalent. For Angular, there are [Router Guards](https://angular.io/guide/router#milestone-5-route-guards).
 
 
 <!-- Auto Generated Below -->
@@ -13,78 +32,10 @@ While RouterOutlet has methods for navigating around, it's recommended to use th
 
 ## Properties
 
-| Property    | Attribute  | Description                                                                                                                                                                                    | Type                             | Default     |
-| ----------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | ----------- |
-| `animated`  | `animated` | If `true`, the router-outlet should animate the transition of components.                                                                                                                      | `boolean`                        | `true`      |
-| `animation` | --         | By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions. | `AnimationBuilder \| undefined`  | `undefined` |
-| `delegate`  | --         |                                                                                                                                                                                                | `FrameworkDelegate \| undefined` | `undefined` |
-
-
-## Methods
-
-### `commit(enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions | undefi...`
-
-
-
-#### Parameters
-
-| Name         | Type                               | Description |
-| ------------ | ---------------------------------- | ----------- |
-| `enteringEl` | `HTMLElement`                      |             |
-| `leavingEl`  | `HTMLElement \| undefined`         |             |
-| `opts`       | `RouterOutletOptions \| undefined` |             |
-
-#### Returns
-
-Type: `Promise<boolean>`
-
-
-
-### `getRouteId() => Promise<RouteID | undefined>`
-
-
-
-#### Returns
-
-Type: `Promise<RouteID | undefined>`
-
-
-
-### `setRoot(component: ComponentRef, params?: { [key: string]: any; } | undefined, opts?: RouterOutletOption...`
-
-Set the root component for the given navigation stack
-
-#### Parameters
-
-| Name        | Type                                        | Description |
-| ----------- | ------------------------------------------- | ----------- |
-| `component` | `Function \| HTMLElement \| null \| string` |             |
-| `params`    | `undefined \| { [key: string]: any; }`      |             |
-| `opts`      | `RouterOutletOptions \| undefined`          |             |
-
-#### Returns
-
-Type: `Promise<boolean>`
-
-
-
-### `setRouteId(id: string, params: { [key: string]: any; } | undefined, direction: number) => Promise<RouteWrite>`
-
-
-
-#### Parameters
-
-| Name        | Type                                   | Description |
-| ----------- | -------------------------------------- | ----------- |
-| `id`        | `string`                               |             |
-| `params`    | `undefined \| { [key: string]: any; }` |             |
-| `direction` | `number`                               |             |
-
-#### Returns
-
-Type: `Promise<RouteWrite>`
-
-
+| Property    | Attribute  | Description                                                                                                                                                                                    | Type                                                                                   | Default     |
+| ----------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ----------- |
+| `animated`  | `animated` | If `true`, the router-outlet should animate the transition of components.                                                                                                                      | `boolean`                                                                              | `true`      |
+| `animation` | --         | By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions. | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
 
 
 ----------------------------------------------

@@ -23,11 +23,13 @@
 
     .right-container {
       display: flex;
-      position: absolute;
-      top: 0;
-      right: 16px;
       height: 100%;
       align-items: center;
+    }
+
+    .right-container ion-select {
+      padding-top: 0;
+      padding-bottom: 0;
     }
 
     ion-fab-button {
@@ -48,17 +50,33 @@
 <body>
   <ion-app>
     <ion-tabs>
-      <ion-tab label="Lists" icon="list">
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="list">
+          <ion-label>Lists</ion-label>
+          <ion-icon name="list"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button tab="colors">
+          <ion-label>Colors</ion-label>
+          <ion-icon name="brush"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button tab="other">
+          <ion-label>Other</ion-label>
+          <ion-icon name="more"></ion-icon>
+        </ion-tab-button>
+      </ion-tab-bar>
+
+      <ion-tab tab="list">
         <ion-header>
-          <ion-toolbar>
+          <ion-toolbar color="primary">
             <ion-title>Lists</ion-title>
 
-            <div class="right-container">
+            <div slot="end" class="right-container">
               <ion-label>Select a Theme:</ion-label>
               <ion-select interface="popover" class="theme-picker">
                 <ion-select-option value="default" selected>Default</ion-select-option>
                 <ion-select-option value="oceanic">Oceanic</ion-select-option>
                 <ion-select-option value="vibrant">Vibrant</ion-select-option>
+                <ion-select-option value="dark">Dark</ion-select-option>
               </ion-select>
             </div>
           </ion-toolbar>
@@ -114,13 +132,34 @@
 
             <section>
               <ion-list>
-                <ion-item><ion-label>Pokémon Yellow</ion-label></ion-item>
-                <ion-item><ion-label>Super Metroid</ion-label></ion-item>
-                <ion-item><ion-label>Mega Man X</ion-label></ion-item>
-                <ion-item><ion-label>The Legend of Zelda</ion-label></ion-item>
-                <ion-item><ion-label>Pac-Man</ion-label></ion-item>
-                <ion-item><ion-label>Super Mario World</ion-label></ion-item>
-                <ion-item><ion-label>Street Fighter II</ion-label></ion-item>
+                <ion-item>
+                  <ion-label>Pokémon Yellow</ion-label>
+                  <ion-note slot="end">Note</ion-note>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Super Metroid</ion-label>
+                  <ion-note slot="end">Note</ion-note>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Mega Man X</ion-label>
+                  <ion-note slot="end">Note</ion-note>
+                </ion-item>
+                <ion-item>
+                  <ion-label>The Legend of Zelda</ion-label>
+                  <ion-note slot="end">Note</ion-note>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Pac-Man</ion-label>
+                  <ion-note slot="end">Note</ion-note>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Super Mario World</ion-label>
+                  <ion-note slot="end">Note</ion-note>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Street Fighter II</ion-label>
+                  <ion-note slot="end">Note</ion-note>
+                </ion-item>
                 <ion-item-divider>Sliding Items</ion-item-divider>
                 <ion-item-sliding>
                   <ion-item><ion-label>Half Life</ion-label></ion-item>
@@ -280,16 +319,17 @@
         </ion-content>
       </ion-tab>
 
-      <ion-tab label="Colors" icon="brush">
+      <ion-tab tab="colors">
         <ion-header>
           <ion-toolbar>
             <ion-title>Colors</ion-title>
-            <div class="right-container">
+            <div slot="end" class="right-container">
               <ion-label>Select a Theme:</ion-label>
               <ion-select interface="popover" class="theme-picker">
                 <ion-select-option value="default" selected>Default</ion-select-option>
                 <ion-select-option value="oceanic">Oceanic</ion-select-option>
                 <ion-select-option value="vibrant">Vibrant</ion-select-option>
+                <ion-select-option value="dark">Dark</ion-select-option>
               </ion-select>
             </div>
           </ion-toolbar>
@@ -354,7 +394,7 @@
                 <ion-fab-button>
                   <ion-icon name="logo-facebook"></ion-icon>
                 </ion-fab-button>
-                <ion-fab-button mini>
+                <ion-fab-button size="small">
                   <ion-icon name="logo-twitter"></ion-icon>
                 </ion-fab-button>
                 <ion-fab-button color="secondary">
@@ -636,16 +676,17 @@
         </ion-content>
       </ion-tab>
 
-      <ion-tab label="Other" icon="more">
+      <ion-tab tab="other">
         <ion-header>
           <ion-toolbar>
             <ion-title>Other</ion-title>
-            <div class="right-container">
+            <div slot="end" class="right-container">
               <ion-label>Select a Theme:</ion-label>
               <ion-select interface="popover" class="theme-picker">
                 <ion-select-option value="default" selected>Default</ion-select-option>
                 <ion-select-option value="oceanic">Oceanic</ion-select-option>
                 <ion-select-option value="vibrant">Vibrant</ion-select-option>
+                <ion-select-option value="dark">Dark</ion-select-option>
               </ion-select>
             </div>
           </ion-toolbar>
@@ -656,12 +697,7 @@
           </div>
         </ion-content>
       </ion-tab>
-
-      <ion-tabbar></ion-tabbar>
     </ion-tabs>
-
-
-
   </ion-app>
 
   <script>

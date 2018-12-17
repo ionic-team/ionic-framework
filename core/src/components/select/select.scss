@@ -5,21 +5,15 @@
 
 :host {
   /**
-   * @prop --color: Color of the select text
-   * @prop --icon-color: Color of the select icon
    * @prop --padding-top: Top padding of the select
    * @prop --padding-end: End padding of the select
    * @prop --padding-bottom: Bottom padding of the select
    * @prop --padding-start: Start padding of the select
-   * @prop --placeholder-color: Color of the select placeholder text
    */
-
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
   display: flex;
   position: relative;
-
-  color: var(--color);
 
   font-family: $font-family-base;
 
@@ -43,10 +37,12 @@
 }
 
 .select-placeholder {
-  color: var(--placeholder-color);
+  color: currentColor;
+
+  opacity: .33;
 }
 
-.select-cover {
+button {
   @include input-cover();
 }
 
@@ -81,14 +77,9 @@
   border-right: 5px solid transparent;
   border-left: 5px solid transparent;
 
-  color: var(--icon-color);
+  color: currentColor;
+
+  opacity: .33;
+
   pointer-events: none;
-}
-
-::slotted(ion-select-option) {
-  display: none;
-}
-
-button:focus {
-  outline: none;
 }

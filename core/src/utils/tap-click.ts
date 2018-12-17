@@ -1,15 +1,18 @@
+import { Config } from '../interface';
 
 import { now, pointerCoord } from './helpers';
 
-export function startTapClick(doc: Document) {
+export function startTapClick(doc: Document, config: Config) {
   let lastTouch = -MOUSE_WAIT * 10;
   let lastActivated = 0;
   let cancelled = false;
   let scrolling = false;
 
   let activatableEle: HTMLElement | undefined;
+  let activeRipple: Promise<() => void> | undefined;
   let activeDefer: any;
 
+  const useRippleEffect = config.getBoolean('animated', true) && config.getBoolean('rippleEffect', true);
   const clearDefers = new WeakMap<HTMLElement, any>();
 
   function onBodyClick(ev: Event) {
@@ -101,11 +104,12 @@ export function startTapClick(doc: Document) {
         clearDefers.delete(el);
       }
 
+      const delay = isInstant(el) ? 0 : ADD_ACTIVATED_DEFERS;
       el.classList.remove(ACTIVATED);
       activeDefer = setTimeout(() => {
         addActivated(el, x, y);
         activeDefer = undefined;
-      }, ADD_ACTIVATED_DEFERS);
+      }, delay);
     }
     activatableEle = el;
   }
@@ -114,19 +118,22 @@ export function startTapClick(doc: Document) {
     lastActivated = Date.now();
     el.classList.add(ACTIVATED);
 
-    const rippleEffect = getRippleEffect(el);
+    const rippleEffect = useRippleEffect && getRippleEffect(el);
     if (rippleEffect && rippleEffect.addRipple) {
-      rippleEffect.addRipple(x, y);
+      activeRipple = rippleEffect.addRipple(x, y);
     }
   }
 
   function removeActivated(smooth: boolean) {
+    if (activeRipple !== undefined) {
+      activeRipple.then(remove => remove());
+    }
     const active = activatableEle;
     if (!active) {
       return;
     }
     const time = CLEAR_STATE_DEFERS - Date.now() + lastActivated;
-    if (smooth && time > 0) {
+    if (smooth && time > 0 && !isInstant(active)) {
       const deferId = setTimeout(() => {
         active.classList.remove(ACTIVATED);
         clearDefers.delete(active);
@@ -137,15 +144,15 @@ export function startTapClick(doc: Document) {
     }
   }
 
-  doc.body.addEventListener('click', onBodyClick, true);
-  doc.body.addEventListener('ionScrollStart', () => {
+  doc.addEventListener('click', onBodyClick, true);
+  doc.addEventListener('ionScrollStart', () => {
     scrolling = true;
     cancelActive();
   });
-  doc.body.addEventListener('ionScrollEnd', () => {
+  doc.addEventListener('ionScrollEnd', () => {
     scrolling = false;
   });
-  doc.body.addEventListener('ionGestureCaptured', cancelActive);
+  doc.addEventListener('ionGestureCaptured', cancelActive);
 
   doc.addEventListener('touchstart', onTouchStart, true);
   doc.addEventListener('touchcancel', onTouchEnd, true);
@@ -160,13 +167,17 @@ function getActivatableTarget(ev: any): any {
     const path = ev.composedPath() as HTMLElement[];
     for (let i = 0; i < path.length - 2; i++) {
       const el = path[i];
-      if (el.hasAttribute && el.hasAttribute('ion-activatable')) {
+      if (el.classList && el.classList.contains('ion-activatable')) {
         return el;
       }
     }
   } else {
-    return ev.target.closest('[ion-activatable]');
+    return ev.target.closest('.ion-activatable');
   }
+}
+
+function isInstant(el: HTMLElement) {
+  return el.classList.contains('ion-activatable-instant');
 }
 
 function getRippleEffect(el: HTMLElement) {

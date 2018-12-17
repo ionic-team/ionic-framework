@@ -204,6 +204,9 @@ export class MenuController implements MenuControllerI {
     this.menuAnimations.set(name, animation);
   }
 
+  /**
+   * @internal
+   */
   @Method()
   _getInstance(): Promise<MenuControllerI> {
     return Promise.resolve(this);

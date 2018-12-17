@@ -156,7 +156,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
       type: i.type || 'text',
       name: i.name || `${index}`,
       placeholder: i.placeholder || '',
-      value: i.value || '',
+      value: i.value,
       label: i.label,
       checked: !!i.checked,
       disabled: !!i.disabled,
@@ -323,7 +323,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
           <button
             type="button"
             onClick={() => this.cbClick(i)}
-            aria-checked={i.checked ? 'true' : null}
+            aria-checked={`${i.checked}`}
             id={i.id}
             disabled={i.disabled}
             tabIndex={0}
@@ -356,7 +356,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
           <button
             type="button"
             onClick={() => this.rbClick(i)}
-            aria-checked={i.checked ? 'true' : null}
+            aria-checked={`${i.checked}`}
             disabled={i.disabled}
             id={i.id}
             tabIndex={0}
@@ -369,7 +369,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
                 {i.label}
               </div>
             </div>
-            {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
           </button>
         ))}
       </div>
@@ -425,10 +424,11 @@ export class Alert implements ComponentInterface, OverlayInterface {
     return (
       <div class={alertButtonGroupClass}>
         {buttons.map(button =>
-          <button type="button" ion-activatable class={buttonClass(button)} tabIndex={0} onClick={() => this.buttonClick(button)}>
+          <button type="button" class={buttonClass(button)} tabIndex={0} onClick={() => this.buttonClick(button)}>
             <span class="alert-button-inner">
               {button.text}
             </span>
+            {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
           </button>
         )}
       </div>
@@ -470,6 +470,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 function buttonClass(button: AlertButton): CssClassMap {
   return {
     'alert-button': true,
+    'ion-activatable': true,
     ...getClassMap(button.cssClass)
   };
 }

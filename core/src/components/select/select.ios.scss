@@ -5,13 +5,10 @@
 // --------------------------------------------------
 
 :host {
-  --color: #{$select-ios-text-color};
-  --icon-color: #{$select-ios-icon-color};
   --padding-top: #{$select-ios-padding-top};
   --padding-end: #{$select-ios-padding-end};
   --padding-bottom: #{$select-ios-padding-bottom};
   --padding-start: #{$select-ios-padding-start};
-  --placeholder-color: #{$select-ios-placeholder-color};
 }
 
 .select-icon {

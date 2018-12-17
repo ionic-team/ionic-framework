@@ -12,7 +12,6 @@
 
 <body>
   <ion-app>
-
     <ion-header>
       <ion-toolbar>
         <ion-title>Radio - Basic</ion-title>
@@ -47,7 +46,7 @@
           </ion-item-divider>
           <ion-item>
             <ion-label>Pepperoni</ion-label>
-            <ion-radio slot="end" name="pepperoni" checked></ion-radio>
+            <ion-radio slot="end" name="pepperoni" checked id="pepperoni-radio"></ion-radio>
           </ion-item>
 
           <ion-item>
@@ -143,6 +142,12 @@
     </ion-content>
 
     <script>
+      const radio = document.getElementById('pepperoni-radio');
+      if (radio) {
+        radio.addEventListener('ionSelect', (ev) => {
+          console.log(ev.detail);
+        });
+      }
       var radioValues = ['fruitRadio', 'pizzaRadio', 'veggiesRadio'];
       printRadioValues();
 
@@ -181,6 +186,10 @@
     </script>
 
     <style>
+      .outer-content {
+        --background: #f2f2f2;
+      }
+
       .radio-test pre {
         background: #f6f6f6;
         border: 1px solid #ddd;

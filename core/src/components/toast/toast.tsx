@@ -28,9 +28,12 @@ export class Toast implements ComponentInterface, OverlayInterface {
   animation: Animation | undefined;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
+
   @Prop({ context: 'config' }) config!: Config;
 
-  /** @internal */
+  /**
+   * @internal
+   */
   @Prop() overlayIndex!: number;
 
   /**
@@ -209,7 +212,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
             <div class="toast-message">{this.message}</div>
           }
           {this.showCloseButton &&
-            <ion-button fill="clear" ion-activatable class="toast-button" onClick={() => this.dismiss(undefined, 'cancel')}>
+            <ion-button fill="clear" class="toast-button ion-activatable" onClick={() => this.dismiss(undefined, 'cancel')}>
               {this.closeButtonText || (Boolean(this.closeButtonIcon) ? '' : 'Close')}
               {this.closeButtonIcon && (
                 <ion-icon name={this.closeButtonIcon} slot={Boolean(this.closeButtonText) ? 'end' : 'icon-only'} />

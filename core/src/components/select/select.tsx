@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
 import { ActionSheetButton, ActionSheetOptions, AlertOptions, CssClassMap, Mode, OverlaySelect, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent } from '../../interface';
-import { renderHiddenInput } from '../../utils/helpers';
+import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
 @Component({
@@ -16,7 +16,6 @@ export class Select implements ComponentInterface {
 
   private childOpts: HTMLIonSelectOptionElement[] = [];
   private inputId = `ion-sel-${selectIds++}`;
-  private labelId?: string;
   private overlay?: OverlaySelect;
   private didInit = false;
 
@@ -110,6 +109,7 @@ export class Select implements ComponentInterface {
 
   /**
    * Emitted when the styles change.
+   * @internal
    */
   @Event() ionStyle!: EventEmitter<StyleEvent>;
 
@@ -141,11 +141,6 @@ export class Select implements ComponentInterface {
   async componentDidLoad() {
     await this.loadOptions();
 
-    const label = this.getLabel();
-    if (label) {
-      this.labelId = label.id = this.name + '-lbl';
-    }
-
     if (this.value === undefined) {
       if (this.multiple) {
         // there are no values set at this point
@@ -170,9 +165,22 @@ export class Select implements ComponentInterface {
    * based in `ion-select` settings.
    */
   @Method()
-  open(ev?: UIEvent): Promise<OverlaySelect> {
-    let selectInterface = this.interface;
+  async open(ev?: UIEvent): Promise<OverlaySelect | undefined> {
+    if (this.disabled || this.isExpanded) {
+      return undefined;
+    }
+    const overlay = this.overlay = await this.createOverlay(ev);
+    this.isExpanded = true;
+    overlay.onDidDismiss().then(() => {
+      this.overlay = undefined;
+      this.isExpanded = false;
+    });
+    await overlay.present();
+    return overlay;
+  }
 
+  private createOverlay(ev?: UIEvent): Promise<OverlaySelect> {
+    let selectInterface = this.interface;
     if ((selectInterface === 'action-sheet' || selectInterface === 'popover') && this.multiple) {
       console.warn(`Select interface cannot be "${selectInterface}" with a multi-value select. Using the "alert" interface instead.`);
       selectInterface = 'alert';
@@ -186,11 +194,9 @@ export class Select implements ComponentInterface {
     if (selectInterface === 'popover') {
       return this.openPopover(ev!);
     }
-
     if (selectInterface === 'action-sheet') {
       return this.openActionSheet();
     }
-
     return this.openAlert();
   }
 
@@ -200,6 +206,7 @@ export class Select implements ComponentInterface {
     const popoverOpts: PopoverOptions = {
       ...interfaceOptions,
 
+      mode: this.mode,
       component: 'ion-select-popover',
       cssClass: ['select-popover', interfaceOptions.cssClass],
       event: ev,
@@ -222,11 +229,7 @@ export class Select implements ComponentInterface {
         })
       }
     };
-
-    const popover = this.overlay = await this.popoverCtrl.create(popoverOpts);
-    await popover.present();
-    this.isExpanded = true;
-    return popover;
+    return this.popoverCtrl.create(popoverOpts);
   }
 
   private async openActionSheet() {
@@ -253,19 +256,14 @@ export class Select implements ComponentInterface {
     const actionSheetOpts: ActionSheetOptions = {
       ...interfaceOptions,
 
+      mode: this.mode,
       buttons: actionSheetButtons,
       cssClass: ['select-action-sheet', interfaceOptions.cssClass]
     };
-
-    const actionSheet = this.overlay = await this.actionSheetCtrl.create(actionSheetOpts);
-    await actionSheet.present();
-
-    this.isExpanded = true;
-    return actionSheet;
+    return this.actionSheetCtrl.create(actionSheetOpts);
   }
 
   private async openAlert() {
-
     const label = this.getLabel();
     const labelText = (label) ? label.textContent : null;
 
@@ -275,6 +273,7 @@ export class Select implements ComponentInterface {
     const alertOpts: AlertOptions = {
       ...interfaceOptions,
 
+      mode: this.mode,
       header: interfaceOptions.header ? interfaceOptions.header : labelText,
       inputs: this.childOpts.map(o => {
         return {
@@ -303,12 +302,7 @@ export class Select implements ComponentInterface {
       cssClass: ['select-alert', interfaceOptions.cssClass,
                  (this.multiple ? 'multiple-select-alert' : 'single-select-alert')]
     };
-
-    const alert = this.overlay = await this.alertCtrl.create(alertOpts);
-    await alert.present();
-
-    this.isExpanded = true;
-    return alert;
+    return this.alertCtrl.create(alertOpts);
   }
 
   /**
@@ -319,12 +313,7 @@ export class Select implements ComponentInterface {
     if (!this.overlay) {
       return Promise.resolve(false);
     }
-
-    const overlay = this.overlay;
-    this.overlay = undefined;
-    this.isExpanded = false;
-
-    return overlay.dismiss();
+    return this.overlay.dismiss();
   }
 
   private async loadOptions() {
@@ -349,11 +338,7 @@ export class Select implements ComponentInterface {
   }
 
   private getLabel() {
-    const item = this.el.closest('ion-item');
-    if (item) {
-      return item.querySelector('ion-label');
-    }
-    return null;
+    return findItemLabel(this.el);
   }
 
   private hasValue(): boolean {
@@ -379,6 +364,10 @@ export class Select implements ComponentInterface {
     });
   }
 
+  private onClick = (ev: UIEvent) => {
+    this.open(ev);
+  }
+
   private onKeyUp = () => {
     this.keyFocus = true;
   }
@@ -393,7 +382,18 @@ export class Select implements ComponentInterface {
   }
 
   hostData() {
+    const labelId = this.inputId + '-lbl';
+    const label = findItemLabel(this.el);
+    if (label) {
+      label.id = labelId;
+    }
+
     return {
+      'role': 'combobox',
+      'aria-disabled': this.disabled ? 'true' : null,
+      'aria-expanded': `${this.isExpanded}`,
+      'aria-haspopup': 'dialog',
+      'aria-labelledby': labelId,
       class: {
         'in-item': hostContext('ion-item', this.el),
         'select-disabled': this.disabled,
@@ -403,7 +403,13 @@ export class Select implements ComponentInterface {
   }
 
   render() {
-    renderHiddenInput(this.el, this.name, parseValue(this.value), this.disabled);
+    renderHiddenInput(true, this.el, this.name, parseValue(this.value), this.disabled);
+
+    const labelId = this.inputId + '-lbl';
+    const label = findItemLabel(this.el);
+    if (label) {
+      label.id = labelId;
+    }
 
     let addPlaceholderClass = false;
     let selectText = this.getText();
@@ -418,11 +424,7 @@ export class Select implements ComponentInterface {
     };
 
     return [
-      <div
-        role="textbox"
-        aria-multiline="false"
-        class={selectTextClasses}
-      >
+      <div class={selectTextClasses}>
         {selectText}
       </div>,
       <div class="select-icon" role="presentation">
@@ -430,19 +432,11 @@ export class Select implements ComponentInterface {
       </div>,
       <button
         type="button"
-        role="combobox"
-        aria-haspopup="dialog"
-        aria-labelledby={this.labelId}
-        aria-expanded={this.isExpanded ? 'true' : null}
-        aria-disabled={this.disabled ? 'true' : null}
-        onClick={this.open.bind(this)}
+        onClick={this.onClick}
         onKeyUp={this.onKeyUp}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
-        class="select-cover"
       >
-        <slot></slot>
-        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </button>
     ];
   }

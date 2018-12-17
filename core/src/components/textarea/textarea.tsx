@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 import { Color, Mode, StyleEvent, TextInputChangeEvent } from '../../interface';
-import { debounceEvent, renderHiddenInput } from '../../utils/helpers';
+import { debounceEvent, findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -131,8 +131,8 @@ export class Textarea implements ComponentInterface {
   protected valueChanged() {
     const nativeInput = this.nativeInput;
     const value = this.getValue();
-    if (nativeInput!.value !== value) {
-      nativeInput!.value = value;
+    if (nativeInput && nativeInput.value !== value) {
+      nativeInput.value = value;
     }
     this.ionChange.emit({ value });
   }
@@ -149,6 +149,7 @@ export class Textarea implements ComponentInterface {
 
   /**
    * Emitted when the styles change.
+   * @internal
    */
   @Event() ionStyle!: EventEmitter<StyleEvent>;
 
@@ -193,30 +194,6 @@ export class Textarea implements ComponentInterface {
     });
   }
 
-  private onInput = (ev: Event) => {
-    this.value = this.nativeInput!.value;
-    this.emitStyle();
-    this.ionInput.emit(ev as KeyboardEvent);
-  }
-
-  private onFocus = () => {
-    this.hasFocus = true;
-    this.focusChange();
-
-    this.ionFocus.emit();
-  }
-
-  private onBlur = () => {
-    this.hasFocus = false;
-    this.focusChange();
-
-    this.ionBlur.emit();
-  }
-
-  private onKeyDown = () => {
-    this.checkClearOnEdit();
-  }
-
   /**
    * Check if we need to clear the text input if clearOnEdit is enabled
    */
@@ -251,22 +228,53 @@ export class Textarea implements ComponentInterface {
     return this.value || '';
   }
 
+  private onInput = (ev: Event) => {
+    if (this.nativeInput) {
+      this.value = this.nativeInput.value;
+    }
+    this.emitStyle();
+    this.ionInput.emit(ev as KeyboardEvent);
+  }
+
+  private onFocus = () => {
+    this.hasFocus = true;
+    this.focusChange();
+
+    this.ionFocus.emit();
+  }
+
+  private onBlur = () => {
+    this.hasFocus = false;
+    this.focusChange();
+
+    this.ionBlur.emit();
+  }
+
+  private onKeyDown = () => {
+    this.checkClearOnEdit();
+  }
+
   hostData() {
     return {
-      class: {
-        ...createColorClasses(this.color)
-      }
+      'aria-disabled': this.disabled ? 'true' : null,
+      class: createColorClasses(this.color)
     };
   }
 
   render() {
     const value = this.getValue();
-    renderHiddenInput(this.el, this.name, value, this.disabled);
+    renderHiddenInput(false, this.el, this.name, value, this.disabled);
+
+    const labelId = this.inputId + '-lbl';
+    const label = findItemLabel(this.el);
+    if (label) {
+      label.id = labelId;
+    }
 
     return (
       <textarea
         class="native-textarea"
-        ref={el => this.nativeInput = el as HTMLTextAreaElement}
+        ref={el => this.nativeInput = el}
         autoCapitalize={this.autocapitalize}
         autoFocus={this.autofocus}
         disabled={this.disabled}

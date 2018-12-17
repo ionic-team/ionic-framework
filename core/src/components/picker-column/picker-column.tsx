@@ -5,7 +5,11 @@ import { hapticSelectionChanged } from '../../utils';
 import { clamp } from '../../utils/helpers';
 
 @Component({
-  tag: 'ion-picker-column'
+  tag: 'ion-picker-column',
+  styleUrls: {
+    ios: 'picker-column.ios.scss',
+    md: 'picker-column.md.scss'
+  }
 })
 export class PickerColumnCmp implements ComponentInterface {
   mode!: Mode;
@@ -99,7 +103,7 @@ export class PickerColumnCmp implements ComponentInterface {
     let translateZ = 0;
     const { col, rotateFactor } = this;
     const selectedIndex = col.selectedIndex = this.indexForY(-y);
-    const durationStr = (duration === 0) ? null : duration + 'ms';
+    const durationStr = (duration === 0) ? '' : duration + 'ms';
     const scaleStr = `scale(${this.scaleFactor})`;
 
     const children = this.optsEl.children;

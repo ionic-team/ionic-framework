@@ -8,12 +8,109 @@ It is meant for text `type` inputs only, such as `"text"`, `"password"`, `"email
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Angular
+
+```html
+<!-- Default Input -->
+<ion-input></ion-input>
+
+<!-- Input with value -->
+<ion-input value="custom"></ion-input>
+
+<!-- Input with placeholder -->
+<ion-input placeholder="Enter Input"></ion-input>
+
+<!-- Input with clear button when there is a value -->
+<ion-input clearInput value="clear me"></ion-input>
+
+<!-- Number type input -->
+<ion-input type="number" value="333"></ion-input>
+
+<!-- Disabled input -->
+<ion-input value="Disabled" disabled></ion-input>
+
+<!-- Readonly input -->
+<ion-input value="Readonly" readonly></ion-input>
+
+<!-- Inputs with labels -->
+<ion-item>
+  <ion-label>Default Label</ion-label>
+  <ion-input></ion-input>
+</ion-item>
+
+<ion-item>
+  <ion-label position="floating">Floating Label</ion-label>
+  <ion-input></ion-input>
+</ion-item>
+
+<ion-item>
+  <ion-label position="fixed">Fixed Label</ion-label>
+  <ion-input></ion-input>
+</ion-item>
+
+<ion-item>
+  <ion-label position="stacked">Stacked Label</ion-label>
+  <ion-input></ion-input>
+</ion-item>
+```
+
+
+### Javascript
+
+```html
+<!-- Default Input -->
+<ion-input></ion-input>
+
+<!-- Input with value -->
+<ion-input value="custom"></ion-input>
+
+<!-- Input with placeholder -->
+<ion-input placeholder="Enter Input"></ion-input>
+
+<!-- Input with clear button when there is a value -->
+<ion-input clear-input value="clear me"></ion-input>
+
+<!-- Number type input -->
+<ion-input type="number" value="333"></ion-input>
+
+<!-- Disabled input -->
+<ion-input value="Disabled" disabled></ion-input>
+
+<!-- Readonly input -->
+<ion-input value="Readonly" readonly></ion-input>
+
+<!-- Inputs with labels -->
+<ion-item>
+  <ion-label>Default Label</ion-label>
+  <ion-input></ion-input>
+</ion-item>
+
+<ion-item>
+  <ion-label position="floating">Floating Label</ion-label>
+  <ion-input></ion-input>
+</ion-item>
+
+<ion-item>
+  <ion-label position="fixed">Fixed Label</ion-label>
+  <ion-input></ion-input>
+</ion-item>
+
+<ion-item>
+  <ion-label position="stacked">Stacked Label</ion-label>
+  <ion-input></ion-input>
+</ion-item>
+```
+
+
+
 ## Properties
 
 | Property         | Attribute        | Description                                                                                                                                                                                                                                                                                                                                          | Type                                                                                            | Default        |
 | ---------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | -------------- |
 | `accept`         | `accept`         | If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.                                                                                                              | `string \| undefined`                                                                           | `undefined`    |
-| `autocapitalize` | `autocapitalize` | Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.                                                                                                                                                                                                                                    | `"characters" \| "off" \| "on" \| "words"`                                                      | `'off'`        |
+| `autocapitalize` | `autocapitalize` | Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.                                                                                                                                                                                                                                    | `string`                                                                                        | `'off'`        |
 | `autocomplete`   | `autocomplete`   | Indicates whether the value of the control can be automatically completed by the browser.                                                                                                                                                                                                                                                            | `"off" \| "on"`                                                                                 | `'off'`        |
 | `autocorrect`    | `autocorrect`    | Whether auto correction should be enabled when the user is entering/editing the text value.                                                                                                                                                                                                                                                          | `"off" \| "on"`                                                                                 | `'off'`        |
 | `autofocus`      | `autofocus`      | This Boolean attribute lets you specify that a form control should have input focus when the page loads.                                                                                                                                                                                                                                             | `boolean`                                                                                       | `false`        |
@@ -34,7 +131,6 @@ It is meant for text `type` inputs only, such as `"text"`, `"password"`, `"email
 | `placeholder`    | `placeholder`    | Instructional text that shows before the input has a value.                                                                                                                                                                                                                                                                                          | `null \| string \| undefined`                                                                   | `undefined`    |
 | `readonly`       | `readonly`       | If `true`, the user cannot modify the value.                                                                                                                                                                                                                                                                                                         | `boolean`                                                                                       | `false`        |
 | `required`       | `required`       | If `true`, the user must fill in a value before submitting a form.                                                                                                                                                                                                                                                                                   | `boolean`                                                                                       | `false`        |
-| `results`        | `results`        | This is a nonstandard attribute supported by Safari that only applies when the type is `"search"`. Its value should be a nonnegative decimal integer.                                                                                                                                                                                                | `number \| undefined`                                                                           | `undefined`    |
 | `size`           | `size`           | The initial size of the control. This value is in pixels unless the value of the type attribute is `"text"` or `"password"`, in which case it is an integer number of characters. This attribute applies only when the `type` attribute is set to `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.       | `number \| undefined`                                                                           | `undefined`    |
 | `spellcheck`     | `spellcheck`     | If `true`, the element will have its spelling and grammar checked.                                                                                                                                                                                                                                                                                   | `boolean`                                                                                       | `false`        |
 | `step`           | `step`           | Works with the min and max attributes to limit the increments at which a value can be set. Possible values are: `"any"` or a positive floating point number.                                                                                                                                                                                         | `string \| undefined`                                                                           | `undefined`    |
@@ -52,7 +148,6 @@ It is meant for text `type` inputs only, such as `"text"`, `"password"`, `"email
 | `ionInput`          | Emitted when a keyboard input ocurred.   | KeyboardEvent        |
 | `ionInputDidLoad`   | Emitted when the input has been created. | void                 |
 | `ionInputDidUnload` | Emitted when the input has been removed. | void                 |
-| `ionStyle`          | Emitted when the styles change.          | StyleEvent           |
 
 
 ## Methods

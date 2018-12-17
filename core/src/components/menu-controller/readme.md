@@ -1,6 +1,6 @@
 # ion-menu-controller
 
-The MenuController makes it easy to control a Menu. Its methods can be used to display the menu, enable the menu, toggle the menu, and more. The controller will grab a reference to the menu by the side, id, or, if neither of these are passed to it, it will grab the first menu it finds.
+The Menu Controller makes it easy to control a Menu. The methods provided can be used to display the menu, enable the menu, toggle the menu, and more. The controller will grab a reference to the menu by the side, or id. if neither of these are passed to it, it will grab the first menu it finds.
 
 
 <!-- Auto Generated Below -->
@@ -25,7 +25,7 @@ Type: `Promise<boolean>`
 
 
 
-### `enable(shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undef...`
+### `enable(shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>`
 
 Used to enable or disable a menu. For example, there could be multiple
 left menus, but only one of them should be able to be opened at the same
@@ -154,10 +154,10 @@ Registers a new animation that can be used in any `ion-menu`.
 
 #### Parameters
 
-| Name        | Type               | Description |
-| ----------- | ------------------ | ----------- |
-| `name`      | `string`           |             |
-| `animation` | `AnimationBuilder` |             |
+| Name        | Type                                                                    | Description |
+| ----------- | ----------------------------------------------------------------------- | ----------- |
+| `name`      | `string`                                                                |             |
+| `animation` | `(Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>` |             |
 
 #### Returns
 
@@ -165,7 +165,7 @@ Type: `void`
 
 
 
-### `swipeGesture(shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undef...`
+### `swipeGesture(shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>`
 
 Used to enable or disable the ability to swipe open the menu.
 

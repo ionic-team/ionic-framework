@@ -7,11 +7,11 @@
 $toolbar-order-ios: (
   back-button: 0,
   menu-toggle-start: 1,
-  buttons-start: 2,
-  buttons-secondary: 3,
+  slot-start: 2,
+  slot-secondary: 3,
   content: 4,
-  buttons-primary: 5,
-  buttons-end: 6,
+  slot-primary: 5,
+  slot-end: 6,
   menu-toggle-end: 7,
 );
 
@@ -26,6 +26,9 @@ $toolbar-ios-button-background-color:               $toolbar-ios-background !def
 
 /// @prop - Background color of the toolbar button when activated
 $toolbar-ios-button-background-color-activated:     $toolbar-ios-color-activated !default;
+
+/// @prop - Border radius of the toolbar button
+$toolbar-ios-button-border-radius:                  4px !default;
 
 /// @prop - Font weight of the strong toolbar button
 $toolbar-ios-button-strong-font-weight:             600 !default;

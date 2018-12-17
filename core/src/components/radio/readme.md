@@ -10,6 +10,37 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Angular / javascript
+
+```html
+<ion-list>
+  <ion-radio-group>
+    <ion-list-header>
+      <ion-label>Name</ion-label>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>Biff</ion-label>
+      <ion-radio slot="start" value="biff" checked></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Griff</ion-label>
+      <ion-radio slot="start" value="griff"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Buford</ion-label>
+      <ion-radio slot="start" value="buford"></ion-radio>
+    </ion-item>
+  </ion-radio-group>
+</ion-list>
+```
+
+
+
 ## Properties
 
 | Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                  | Default        |
@@ -19,7 +50,7 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 | `disabled` | `disabled` | If `true`, the user cannot interact with the radio.                                                                                                                                                                                                                    | `boolean`             | `false`        |
 | `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined`    |
 | `name`     | `name`     | The name of the control, which is submitted with the form data.                                                                                                                                                                                                        | `string`              | `this.inputId` |
-| `value`    | --         | the value of the radio.                                                                                                                                                                                                                                                | `any`                 | `undefined`    |
+| `value`    | `value`    | the value of the radio.                                                                                                                                                                                                                                                | `any`                 | `undefined`    |
 
 
 ## Events
@@ -31,7 +62,6 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 | `ionRadioDidLoad`   | Emitted when the radio loads.              | void                    |
 | `ionRadioDidUnload` | Emitted when the radio unloads.            | void                    |
 | `ionSelect`         | Emitted when the radio button is selected. | CheckedInputChangeEvent |
-| `ionStyle`          | Emitted when the styles change.            | StyleEvent              |
 
 
 ## CSS Custom Properties

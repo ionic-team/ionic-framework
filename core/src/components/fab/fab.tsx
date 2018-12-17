@@ -68,8 +68,8 @@ export class Fab implements ComponentInterface {
   hostData() {
     return {
       class: {
-        [`fab-horizontal-${this.horizontal}`]: !!this.horizontal,
-        [`fab-vertical-${this.vertical}`]: !!this.vertical,
+        [`fab-horizontal-${this.horizontal}`]: this.horizontal !== undefined,
+        [`fab-vertical-${this.vertical}`]: this.vertical !== undefined,
         'fab-edge': this.edge
       }
     };

@@ -6,36 +6,33 @@
 
 :host {
   --background: #{$toast-md-background};
-  --color: #{$toast-md-title-color};
+  --border-radius: #{$toast-md-border-radius};
+  --box-shadow: #{$toast-md-box-shadow};
+  --button-color: #{ion-color(primary, base)};
+  --color: #{$toast-md-color};
+  --max-width: #{$toast-max-width};
 
-  font-size: $toast-md-title-font-size;
+  font-size: #{$toast-md-font-size};
 }
 
 .toast-wrapper {
-  @include position-horizontal(0, 0);
+  @include position-horizontal(8px, 8px);
   @include margin(auto);
 
   display: block;
   position: absolute;
 
-  width: $toast-width;
-  max-width: $toast-max-width;
+  opacity: .01;
 
   z-index: $z-index-overlay-wrapper;
 }
 
-.toast-wrapper.toast-top {
-  padding-top: var(--ion-safe-area-top, 0);
-}
-
-.toast-wrapper.toast-bottom {
-  padding-bottom: var(--ion-safe-area-bottom, 0);
-}
-
-.toast-wrapper.toast-middle {
-  opacity: .01;
-}
-
 .toast-message {
-  @include padding($toast-md-title-padding-top, $toast-md-title-padding-end, $toast-md-title-padding-bottom, $toast-md-title-padding-start);
+  @include padding($toast-md-message-padding-top, $toast-md-message-padding-end, $toast-md-message-padding-bottom, $toast-md-message-padding-start);
+
+  line-height: $toast-md-message-line-height;
+}
+
+.toast-button {
+  --margin-end: 0;
 }

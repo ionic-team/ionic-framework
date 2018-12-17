@@ -6,8 +6,10 @@
 
 :host {
   --background: #{$toast-ios-background-color};
+  --border-radius: #{$toast-ios-border-radius};
   --button-color: #{$toast-ios-button-color};
   --color: #{$toast-ios-title-color};
+  --max-width: #{$toast-max-width};
 
   font-size: $toast-ios-title-font-size;
 }
@@ -15,12 +17,9 @@
 .toast-wrapper {
   @include position-horizontal(10px, 10px);
   @include margin(auto);
-  @include border-radius($toast-ios-border-radius);
 
   display: block;
   position: absolute;
-
-  max-width: $toast-max-width;
 
   z-index: $z-index-overlay-wrapper;
 }
@@ -30,10 +29,26 @@
   backdrop-filter: $toast-ios-translucent-filter;
 }
 
+.toast-wrapper.toast-top {
+  @include transform(translate3d(0, -100%, 0));
+
+  top: 0;
+}
+
 .toast-wrapper.toast-middle {
   opacity: .01;
 }
 
+.toast-wrapper.toast-bottom {
+  @include transform(translate3d(0, 100%, 0));
+
+  bottom: 0;
+}
+
 .toast-message {
   @include padding($toast-ios-title-padding-top, $toast-ios-title-padding-end, $toast-ios-title-padding-bottom, $toast-ios-title-padding-start);
+}
+
+.toast-button {
+  font-size: $toast-button-font-size;
 }

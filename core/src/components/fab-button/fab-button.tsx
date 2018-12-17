@@ -50,7 +50,7 @@ export class FabButton implements ComponentInterface {
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
-  @Prop() routerDirection?: RouterDirection;
+  @Prop() routerDirection: RouterDirection = 'forward';
 
   /**
    * If `true`, the fab button will show when in a fab-list.
@@ -66,6 +66,11 @@ export class FabButton implements ComponentInterface {
    * The type of the button.
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
+
+  /**
+   * The size of the button. Set this to `small` in order to have a mini fab.
+   */
+  @Prop() size?: 'small';
 
   /**
    * Emitted when the button has focus.
@@ -91,24 +96,27 @@ export class FabButton implements ComponentInterface {
   }
 
   hostData() {
-    const inList = hostContext('ion-fab-list', this.el);
+    const { el, disabled, color, activated, show, translucent, size, keyFocus } = this;
+    const inList = hostContext('ion-fab-list', el);
     return {
-      'ion-activatable': true,
+      'aria-disabled': disabled ? 'true' : null,
       class: {
-        ...createColorClasses(this.color),
+        ...createColorClasses(color),
         'fab-button-in-list': inList,
-        'fab-button-translucent-in-list': inList && this.translucent,
-        'fab-button-close-active': this.activated,
-        'fab-button-show': this.show,
-        'fab-button-disabled': this.disabled,
-        'fab-button-translucent': this.translucent,
-        'focused': this.keyFocus
+        'fab-button-translucent-in-list': inList && translucent,
+        'fab-button-close-active': activated,
+        'fab-button-show': show,
+        'fab-button-disabled': disabled,
+        'fab-button-translucent': translucent,
+        'ion-activatable': true,
+        'focused': keyFocus,
+        [`fab-button-${size}`]: size !== undefined,
       }
     };
   }
 
   render() {
-    const TagType = this.href === undefined ? 'button' : 'a';
+    const TagType = this.href === undefined ? 'button' : 'a' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
       : { href: this.href };
@@ -121,7 +129,7 @@ export class FabButton implements ComponentInterface {
         onFocus={this.onFocus}
         onKeyUp={this.onKeyUp}
         onBlur={this.onBlur}
-        onClick={ev => openURL(this.win, this.href, ev, this.routerDirection)}
+        onClick={(ev: Event) => openURL(this.win, this.href, ev, this.routerDirection)}
       >
         <span class="close-icon">
           <ion-icon name="close" lazy={false}></ion-icon>

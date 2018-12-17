@@ -31,10 +31,10 @@ export class Chip implements ComponentInterface {
 
   hostData() {
     return {
-      'ion-activatable': true,
       class: {
         ...createColorClasses(this.color),
-        'chip-outline': this.outline
+        'chip-outline': this.outline,
+        'ion-activatable': true,
       }
     };
   }
