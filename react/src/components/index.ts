@@ -2,7 +2,12 @@ import { Components as IoniconsComponents } from 'ionicons';
 import { Components } from '@ionic/core';
 import { createReactComponent } from './createComponent';
 
+export { default as IonActionSheet } from './IonActionSheet';
 export { default as IonAlert } from './IonAlert';
+export { default as IonLoading } from './IonLoading';
+export { default as IonModal } from './IonModal';
+export { default as IonPopover } from './IonPopover';
+export { default as IonToast } from './IonToast';
 
 export const IonIcon = createReactComponent<IoniconsComponents.IonIconAttributes, HTMLIonIconElement>('ion-icon');
 export const IonApp = createReactComponent<Components.IonAppAttributes, HTMLIonAppElement>('ion-app');
@@ -52,3 +57,4 @@ export const IonSlides = createReactComponent<Components.IonSlidesAttributes, HT
 export const IonSlide = createReactComponent<Components.IonSlideAttributes, HTMLIonSlideElement>('ion-slide');
 export const IonSplitPane = createReactComponent<Components.IonSplitPaneAttributes, HTMLIonSplitPaneElement>('ion-split-pane');
 export const IonMenuToggle = createReactComponent<Components.IonMenuToggleAttributes, HTMLIonMenuToggleElement>('ion-menu-toggle');
+export const IonToggle = createReactComponent<Components.IonToggleAttributes, HTMLIonToggleElement>('ion-toggle');
