@@ -1152,6 +1152,7 @@ ion-toast-controller,method,getTop,getTop() => Promise<HTMLIonToastElement | und
 
 ion-toast
 ion-toast,prop,animated,boolean,true,false,false
+ion-toast,prop,closeButtonIcon,string | undefined,undefined,false,false
 ion-toast,prop,closeButtonText,string | undefined,undefined,false,false
 ion-toast,prop,color,string | undefined,undefined,false,false
 ion-toast,prop,cssClass,string | string[] | undefined,undefined,false,false
