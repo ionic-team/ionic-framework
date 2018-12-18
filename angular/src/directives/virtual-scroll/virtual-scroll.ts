@@ -30,7 +30,7 @@ export declare interface IonVirtualScroll {
 })
 export class IonVirtualScroll {
 
-  private differ: IterableDiffer<any>;
+  private differ?: IterableDiffer<any>;
   private nativeEl: HTMLIonVirtualScrollElement;
   private refMap = new WeakMap<HTMLElement, EmbeddedViewRef<VirtualContext>> ();
 
@@ -145,7 +145,7 @@ export class IonVirtualScroll {
     if (this.trackBy && 'items' in changes) {
       // React on virtualScroll changes only once all inputs have been initialized
       const value = changes['items'].currentValue;
-      if (this.differ == null && value != null) {
+      if (this.differ === undefined && value != null) {
         try {
           this.differ = this.iterableDiffers.find(value).create(this.trackBy);
         } catch (e) {
@@ -158,7 +158,7 @@ export class IonVirtualScroll {
 
   ngDoCheck() {
     // and if there actually are changes
-    const changes = this.differ != null && this.items ? this.differ.diff(this.items) : null;
+    const changes = this.differ !== undefined && this.items ? this.differ.diff(this.items) : null;
     if (changes === null) {
       return;
     }
