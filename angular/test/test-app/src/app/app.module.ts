@@ -21,6 +21,7 @@ import { VirtualScrollInnerComponent } from './virtual-scroll-inner/virtual-scro
 import { NestedOutletComponent } from './nested-outlet/nested-outlet.component';
 import { NestedOutletPageComponent } from './nested-outlet-page/nested-outlet-page.component';
 import { NestedOutletPage2Component } from './nested-outlet-page2/nested-outlet-page2.component';
+import { NavComponent } from './nav/nav.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { NestedOutletPage2Component } from './nested-outlet-page2/nested-outlet-
     VirtualScrollInnerComponent,
     NestedOutletComponent,
     NestedOutletPageComponent,
-    NestedOutletPage2Component
+    NestedOutletPage2Component,
+    NavComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +51,8 @@ import { NestedOutletPage2Component } from './nested-outlet-page2/nested-outlet-
     IonicModule.forRoot(),
   ],
   entryComponents: [
-    ModalExampleComponent
+    ModalExampleComponent,
+    NavComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,7 +2,7 @@ import { ComponentRef, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterDirection } from '@ionic/core';
 
-import { NavController, NavDirection } from '../../providers/nav-controller';
+import { NavController } from '../../providers/nav-controller';
 
 import { RouteView, computeStackId, destroyView, getUrl, insertView, isTabSwitch, toSegments } from './stack-utils';
 
@@ -43,14 +43,14 @@ export class StackController {
   }
 
   async setActive(enteringView: RouteView) {
-    let { direction, animated } = this.navCtrl.consumeTransition();
+    let { direction, animation } = this.navCtrl.consumeTransition();
     const leavingView = this.activeView;
     if (isTabSwitch(enteringView, leavingView)) {
       direction = 'back';
-      animated = false;
+      animation = undefined;
     }
     this.insertView(enteringView, direction);
-    await this.transition(enteringView, leavingView, direction, animated, this.canGoBack(1), false);
+    await this.transition(enteringView, leavingView, animation, this.canGoBack(1), false);
     this.cleanup();
   }
 
@@ -72,7 +72,6 @@ export class StackController {
       views[views.length - 2], // entering view
       views[views.length - 1], // leaving view
       'back',
-      true,
       true,
       true
     );
@@ -130,8 +129,7 @@ export class StackController {
   private async transition(
     enteringView: RouteView | undefined,
     leavingView: RouteView | undefined,
-    direction: NavDirection,
-    animated: boolean,
+    direction: 'forward' | 'back' | undefined,
     showGoBack: boolean,
     progressAnimation: boolean
   ) {
@@ -159,9 +157,9 @@ export class StackController {
 
       await containerEl.componentOnReady();
       this.runningTransition = containerEl.commit(enteringEl, leavingEl, {
-        duration: !animated ? 0 : undefined,
-        direction: direction === 'forward' ? 'forward' : 'back', // TODO: refactor
         deepWait: true,
+        duration: direction === undefined ? 0 : undefined,
+        direction,
         showGoBack,
         progressAnimation
       });
