@@ -8,6 +8,51 @@ A Modal is a dialog that appears on top of the app's content, and must be dismis
 Modals can be created using a [Modal Controller](../../modal-controller/ModalController). They can be customized by passing modal options in the modal controller's create method.
 
 
+### Passing paramaters
+
+When a modal is created, paramaters might be passed to the newly created modal:
+
+```ts
+// Create a modal using MyModalComponent with some initial data
+const modal = await modalController.create({
+  component: MyModalComponent,
+  componentProps: {
+    'prop1': value,
+    'prop2': value2
+  }
+});
+```
+
+Under the hood, the controller creates a new `ion-modal` and attaches the specified component to it.
+It also assigns the specified `componentProps` to the component's instance:
+
+```js
+// pseudo-code
+const instance = create(MyModalComponent);
+instance.prop1 = value;
+instance.prop2 = value2;
+```
+
+This way, your component can access the passed params, check the "Usage" section for further code example for each frameworks.
+
+
+### Retuning data
+
+Modals can also return data back to the controller when they are dismissed.
+
+```js
+const modal = await modalController.create({...});
+const { data } = await modal.onDidDismiss();
+console.log(data);
+```
+
+```js
+// Dismiss the top modal returning some data object
+modalController.dismiss({
+  'result': value
+})
+```
+
 
 <!-- Auto Generated Below -->
 
@@ -38,41 +83,59 @@ export class ModalExample {
 }
 ```
 
+```typescript
+import { Component } from '@angular/core';
+import { NavParams } from '@ionic/angular';
+
+@Component({
+  selector: 'modal-page',
+})
+export class ModalExample {
+
+  // "value" passed in componentProps
+  @Input() value: number;
+
+  constructor(navParams: NavParams) {
+    // componentProps can also be accessed at construction time using NavParams
+  }
+
+}
+```
+
 
 ### Javascript
 
+```html
+<body>
+  <ion-modal-controller></ion-modal-controller>
+</body>
+```
+
 ```javascript
+customElements.define('modal-page', class extends HTMLElement {
+  connectedCallback() {
+    this.innerHTML = `
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Super Modal</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  Content
+</ion-content>`;
+  }
+});
+
 async function presentModal() {
   // initialize controller
   const modalController = document.querySelector('ion-modal-controller');
   await modalController.componentOnReady();
 
-  // create component to open
-  const element = document.createElement('div');
-  element.innerHTML = `
-  &lt;ion-header&gt;
-    &lt;ion-toolbar&gt;
-      &lt;ion-title&gt;Super Modal&lt;/ion-title&gt;
-    &lt;/ion-toolbar&gt;
-  &lt;/ion-header&gt;
-  &lt;ion-content&gt;
-    &lt;h1&gt;Content of doom&lt;/h1&gt;
-    &lt;div&gt;Here's some more content&lt;/div&gt;
-    &lt;ion-button class="dismiss"&gt;Dismiss Modal&lt;/ion-button&gt;
-  &lt;/ion-content&gt;
-  `;
-
-  // listen for close event
-  const button = element.querySelector('ion-button');
-  button.addEventListener('click', () => {
-    modalController.dismiss();
-  });
-
   // present the modal
   const modalElement = await modalController.create({
-    component: element
+    component: 'modal-page'
   });
-  modalElement.present();
+  await modalElement.present();
 }
 ```
 
