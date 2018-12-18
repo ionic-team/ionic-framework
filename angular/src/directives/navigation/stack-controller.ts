@@ -39,14 +39,7 @@ export class StackController {
 
   getExistingView(activatedRoute: ActivatedRoute): RouteView | undefined {
     const activatedUrlKey = getUrl(this.router, activatedRoute);
-    const views = this.views;
-    for (let i = views.length - 1; i >= 0; i--) {
-      const view = views[i];
-      if (view.url === activatedUrlKey) {
-        return view;
-      }
-    }
-    return undefined;
+    return this.views.find(vw => vw.url === activatedUrlKey);
   }
 
   async setActive(enteringView: RouteView) {

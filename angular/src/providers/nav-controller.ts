@@ -5,10 +5,12 @@ import { NavDirection, RouterDirection } from '@ionic/core';
 
 import { Platform } from './platform';
 
-export interface NavigationOptions extends NavigationExtras {
+export interface AnimationOptions {
   animated?: boolean;
   animationDirection?: 'forward' | 'back';
 }
+
+export interface NavigationOptions extends NavigationExtras, AnimationOptions {}
 
 @Injectable()
 export class NavController {
@@ -68,8 +70,8 @@ export class NavController {
     }
   }
 
-  goBack(animated?: boolean) {
-    this.setDirection('back', animated);
+  goBack(options: AnimationOptions = { animated: true, animationDirection: 'back' }) {
+    this.setDirection('back', options.animated, options.animationDirection);
     return this.location.back();
    }
 
