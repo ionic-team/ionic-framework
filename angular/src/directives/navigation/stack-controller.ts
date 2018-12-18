@@ -2,6 +2,7 @@ import { ComponentRef, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterDirection } from '@ionic/core';
 
+import { bindLifecycleEvents } from '../../providers/angular-delegate';
 import { NavController } from '../../providers/nav-controller';
 
 import { RouteView, computeStackId, destroyView, getUrl, insertView, isTabSwitch, toSegments } from './stack-utils';
@@ -26,13 +27,16 @@ export class StackController {
     this.tabsPrefix = tabsPrefix !== undefined ? toSegments(tabsPrefix) : undefined;
   }
 
-  createView(enteringRef: ComponentRef<any>, activatedRoute: ActivatedRoute): RouteView {
+  createView(ref: ComponentRef<any>, activatedRoute: ActivatedRoute): RouteView {
     const url = getUrl(this.router, activatedRoute);
+    const element = (ref && ref.location && ref.location.nativeElement) as HTMLElement;
+    const unlistenEvents = bindLifecycleEvents(ref.instance, element);
     return {
       id: this.nextId++,
-      ref: enteringRef,
-      element: (enteringRef && enteringRef.location && enteringRef.location.nativeElement) as HTMLElement,
       stackId: computeStackId(this.tabsPrefix, url),
+      unlistenEvents,
+      element,
+      ref,
       url,
     };
   }
