@@ -1,4 +1,4 @@
-import React, { SFC } from 'react';
+import React from 'react';
 import { ModalOptions } from '@ionic/core';
 
 type Props = ModalOptions & {

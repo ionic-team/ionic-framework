@@ -1,7 +1,7 @@
-import React, { SFC } from 'react';
-import { ActionSheetOptions, ActionSheetButton } from '@ionic/core';
+import React from 'react';
+import { ActionSheetOptions } from '@ionic/core';
+import { Omit } from './types';
 
-type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 type Props = Omit<ActionSheetOptions, "buttons"> & {
   show: boolean

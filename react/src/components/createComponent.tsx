@@ -1,4 +1,4 @@
-import React, { RefObject } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 
 const dashToPascalCase = (str: string) => str.toLowerCase().split('-').map(segment => segment.charAt(0).toUpperCase() + segment.slice(1)).join('');
@@ -22,17 +22,26 @@ function syncEvent(node: Element, eventName: string, newEventHandler: (e: Event)
   }
 }
 
-export interface IonicReactBaseProps {
-  ref?: RefObject<any>
-}
 
-export function createReactComponent<T>(tagName: string) {
+export function createReactComponent<T, E>(tagName: string) {
   const displayName = dashToPascalCase(tagName);
 
+  type IonicReactInternalProps = {
+    forwardedRef?: React.RefObject<E>;
+    children?: React.ReactNode;
+  }
 
-  return class ReactComponent extends React.Component<T & IonicReactBaseProps> {
-    constructor(props: T & IonicReactBaseProps) {
+  type IonicReactExternalProps = {
+    ref?: React.RefObject<E>;
+    children?: React.ReactNode;
+  }
+
+  class ReactComponent extends React.Component<T & IonicReactInternalProps> {
+    componentRef: React.RefObject<E>;
+
+    constructor(props: T & IonicReactInternalProps) {
       super(props);
+      this.componentRef = React.createRef();
     }
 
     static get displayName() {
@@ -61,10 +70,19 @@ export function createReactComponent<T>(tagName: string) {
         }
       });
     }
+
     render() {
-      const { children, className, ...cProps } = this.props as any;
-      cProps.class = className || cProps.class;
+      const { children, forwardedRef, ...cProps } = this.props as any;
+      cProps.ref = forwardedRef;
+
       return React.createElement(tagName, cProps, children);
     }
   }
+
+  function forwardRef(props: T & IonicReactInternalProps, ref: React.RefObject<E>) {
+    return <ReactComponent {...props} forwardedRef={ref} />;
+  }
+  forwardRef.displayName = displayName;
+
+  return React.forwardRef<E, T & IonicReactExternalProps>(forwardRef);
 }
