@@ -15,15 +15,15 @@
   <ion-virtual-scroll [items]="items" [headerFn]="myHeaderFn" [footerFn]="myFooterFn">
     <ion-item-divider *virtualHeader="let header">{{ header }}</ion-item-divider>
     <ion-item-divider *virtualFooter="let footer">-- {{ footer }}</ion-item-divider>
-    <ion-item *virtualItem="let item" itemHeight="itemHeight">
+    <!-- <ion-item *virtualItem="let item" itemHeight="itemHeight">
       {{item.name}}
-    </ion-item>
-    <!-- <ion-item *virtualItem="let item" [routerLink]="['/', 'virtual-scroll-detail', item]">
+    </ion-item> -->
+    <ion-item *virtualItem="let item" [routerLink]="['/', 'virtual-scroll-detail', item]">
       <ion-label>
         <app-virtual-scroll-inner [value]="item.name"></app-virtual-scroll-inner>
       </ion-label>
       <ion-icon *ngIf="(item.name % 2) === 0" name="airplane" slot="start"></ion-icon>
       <ion-toggle slot="end" [(ngModel)]="item.checked"></ion-toggle>
-    </ion-item> -->
+    </ion-item>
   </ion-virtual-scroll>
 </ion-content>
