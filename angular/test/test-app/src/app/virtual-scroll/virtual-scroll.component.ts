@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HeaderFn } from '@ionic/core';
+import { IonVirtualScroll } from '@ionic/angular';
 
 @Component({
   selector: 'app-virtual-scroll',
@@ -7,7 +8,9 @@ import { HeaderFn } from '@ionic/core';
 })
 export class VirtualScrollComponent {
 
-  items = Array.from({length: 100}, (_, i) => `${i}`);
+  @ViewChild(IonVirtualScroll) virtualScroll: IonVirtualScroll;
+
+  items = Array.from({length: 100}, (_, i) => ({ name: `${i}`, checked: true}));
 
   itemHeight = () => 44;
 
@@ -24,13 +27,10 @@ export class VirtualScrollComponent {
   }
 
   addItems() {
+    console.log('adding items');
     this.items.push(
-      'New Item 0',
-      'New Item 1',
-      'New Item 2',
-      'New Item 3',
-      'New Item 4',
-      'New Item 5',
+      { name: `New Item`, checked: true}
     );
+    this.virtualScroll.checkEnd();
   }
 }

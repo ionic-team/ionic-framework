@@ -55,18 +55,18 @@ export class VirtualScroll implements ComponentInterface {
    * app's CSS, whereas this approximation is used to help calculate
    * initial dimensions before the item has been rendered.
    */
-  @Prop() approxHeaderHeight = 40;
+  @Prop() approxHeaderHeight = 30;
 
   /**
    * The approximate width of each footer template's cell.
    * This dimension is used to help determine how many cells should
    * be created when initialized, and to help calculate the height of
-   * the scrollable area. This value can use either `px` or `%` units.
+   * the scrollable area. This height value can only use `px` units.
    * Note that the actual rendered size of each cell comes from the
    * app's CSS, whereas this approximation is used to help calculate
    * initial dimensions before the item has been rendered.
    */
-  @Prop() approxFooterHeight = 40;
+  @Prop() approxFooterHeight = 30;
 
   /**
    * Section headers and the data used within its given
@@ -200,18 +200,7 @@ export class VirtualScroll implements ComponentInterface {
       ? this.items.length - offset
       : len;
 
-    const max = this.lastItemLen;
-    let j = 0;
-    if (offset > 0 && offset < max) {
-      j = findCellIndex(this.cells, offset);
-    } else if (offset === 0) {
-      j = 0;
-    } else if (offset === max) {
-      j = this.cells.length;
-    } else {
-      console.warn('bad values for checkRange');
-      return;
-    }
+    const cellIndex = findCellIndex(this.cells, offset);
     const cells = calcCells(
       this.items,
       this.itemHeight,
@@ -220,10 +209,10 @@ export class VirtualScroll implements ComponentInterface {
       this.approxHeaderHeight,
       this.approxFooterHeight,
       this.approxItemHeight,
-      j, offset, length
+      cellIndex, offset, length
     );
     console.debug('[virtual] cells recalculated', cells.length);
-    this.cells = inplaceUpdate(this.cells, cells, offset);
+    this.cells = inplaceUpdate(this.cells, cells, cellIndex);
     this.lastItemLen = this.items.length;
     this.indexDirty = Math.max(offset - 1, 0);
 
@@ -236,14 +225,13 @@ export class VirtualScroll implements ComponentInterface {
    * It's equivalent to calling:
    *
    * ```js
-   * virtualScroll.checkRange(lastItemLen, items.length - lastItemLen);
+   * virtualScroll.checkRange(lastItemLen);
    * ```
    */
   @Method()
   checkEnd() {
     if (this.items) {
-      const offset = this.lastItemLen;
-      this.checkRange(offset, this.items.length - offset);
+      this.checkRange(this.lastItemLen);
     }
   }
 
