@@ -64,6 +64,6 @@ export class IonTabs {
       ? href
       : this.outlet.getLastUrl(tab) || href;
 
-    return this.navCtrl.navigateBack(url, true);
+    return this.navCtrl.navigateBack(url);
   }
 }
