@@ -133,6 +133,7 @@ This attribute specifies the size of the button. Setting this attribute will cha
 | `--color`                | Text color of the button                |
 | `--color-activated`      | Text color of the button when activated |
 | `--color-focused`        | Text color of the button when focused   |
+| `--min-height`           | Minimum height of the button            |
 | `--opacity`              | Opacity of the button                   |
 | `--padding-bottom`       | Padding bottom of the button            |
 | `--padding-end`          | Padding end of the button               |

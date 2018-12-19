@@ -164,6 +164,7 @@ ion-button,css-prop,--box-shadow
 ion-button,css-prop,--color
 ion-button,css-prop,--color-activated
 ion-button,css-prop,--color-focused
+ion-button,css-prop,--min-height
 ion-button,css-prop,--opacity
 ion-button,css-prop,--padding-bottom
 ion-button,css-prop,--padding-end
