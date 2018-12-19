@@ -43,7 +43,11 @@ export class StackController {
 
   getExistingView(activatedRoute: ActivatedRoute): RouteView | undefined {
     const activatedUrlKey = getUrl(this.router, activatedRoute);
-    return this.views.find(vw => vw.url === activatedUrlKey);
+    const view = this.views.find(vw => vw.url === activatedUrlKey);
+    if (view) {
+      view.ref.changeDetectorRef.reattach();
+    }
+    return view;
   }
 
   async setActive(enteringView: RouteView) {
@@ -55,7 +59,7 @@ export class StackController {
     }
     this.insertView(enteringView, direction);
     await this.transition(enteringView, leavingView, animation, this.canGoBack(1), false);
-    this.cleanup();
+    requestAnimationFrame(() => this.cleanup());
   }
 
   canGoBack(deep: number, stackId = this.getActiveStackId()): boolean {
@@ -63,22 +67,27 @@ export class StackController {
   }
 
   pop(deep: number, stackId = this.getActiveStackId()) {
-    this.zone.run(() => {
+    return this.zone.run(() => {
       const views = this.getStack(stackId);
       const view = views[views.length - deep - 1];
-      this.navCtrl.navigateBack(view.url);
+      return this.navCtrl.navigateBack(view.url);
     });
   }
 
-  startBackTransition(stackId = this.getActiveStackId()) {
-    const views = this.getStack(stackId);
-    this.transition(
-      views[views.length - 2], // entering view
-      views[views.length - 1], // leaving view
-      'back',
-      true,
-      true
-    );
+  startBackTransition() {
+    const leavingView = this.activeView;
+    if (leavingView) {
+      const views = this.getStack(leavingView.stackId);
+      const enteringView = views[views.length - 2];
+      enteringView.ref.changeDetectorRef.reattach();
+      this.transition(
+        enteringView, // entering view
+        leavingView, // leaving view
+        'back',
+        true,
+        true
+      );
+    }
   }
 
   endBackTransition(shouldComplete: boolean) {
@@ -125,6 +134,7 @@ export class StackController {
         const element = view.element;
         element.setAttribute('aria-hidden', 'true');
         element.classList.add('ion-page-hidden');
+        view.ref.changeDetectorRef.detach();
       }
     });
     this.viewsSnapshot = views.slice();
@@ -145,11 +155,6 @@ export class StackController {
       this.skipTransition = false;
       return;
     }
-    // TODO
-    // if (enteringView) {
-    //   enteringView.ref.changeDetectorRef.reattach();
-    //   enteringView.ref.changeDetectorRef.markForCheck();
-    // }
     const enteringEl = enteringView ? enteringView.element : undefined;
     const leavingEl = leavingView ? leavingView.element : undefined;
     const containerEl = this.containerEl;
