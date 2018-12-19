@@ -1,8 +1,8 @@
-import { ModalOptions } from '@ionic/core';
+import { Components } from '@ionic/core';
 import { createControllerComponent } from './createControllerComponent';
 import { Omit } from './types';
 
-type ModifiedModalOptions = Omit<ModalOptions, 'component' | 'componentProps'>;
+export type ModalOptions = Omit<Components.IonModalAttributes, 'delegate' | 'overlayIndex' | 'component' | 'componentProps'>;
 
-const IonModal = createControllerComponent<ModifiedModalOptions, HTMLIonModalElement, HTMLIonModalControllerElement>('ion-modal', 'ion-modal-controller')
+const IonModal = createControllerComponent<ModalOptions, HTMLIonModalElement, HTMLIonModalControllerElement>('ion-modal', 'ion-modal-controller')
 export default IonModal;
