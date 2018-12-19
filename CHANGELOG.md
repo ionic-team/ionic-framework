@@ -27,7 +27,7 @@
 
 ### Performance Improvements
 
-* **angular:** detach fromn change detection ([f613b3b](https://github.com/ionic-team/ionic/commit/f613b3b))
+* **angular:** detach from change detection ([f613b3b](https://github.com/ionic-team/ionic/commit/f613b3b))
 
 
 

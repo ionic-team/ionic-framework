@@ -49,6 +49,8 @@
 }
 
 :host-context(ion-toolbar):not(.ion-color)::slotted(.segment-button-checked) {
+  --indicator-color-checked: #{var(--ion-toolbar-color-checked, var(--color-checked))};
+
   color: #{var(--ion-toolbar-color-checked, var(--color-checked))};
 }
 
