@@ -24,8 +24,8 @@
 ::slotted(.fab-button-in-list) {
   @include margin(8px, 0);
 
-  width: #{$fab-mini-size};
-  height: #{$fab-mini-size};
+  width: #{$fab-small-size};
+  height: #{$fab-small-size};
 
   transform: scale(0);
 

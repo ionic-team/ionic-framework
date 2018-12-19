@@ -1,6 +1,7 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ModalExampleComponent } from '../modal-example/modal-example.component';
+import { NavComponent } from '../nav/nav.component';
 
 @Component({
   selector: 'app-modal',
@@ -16,10 +17,19 @@ export class ModalComponent {
   ) { }
 
   async openModal() {
+    return this.open(ModalExampleComponent);
+  }
+
+  async openNav() {
+    return this.open(NavComponent);
+  }
+
+  async open(TheModalComponent: any) {
     const modal = await this.modalCtrl.create({
-      component: ModalExampleComponent,
+      component: TheModalComponent,
       componentProps: {
-        value: '123'
+        value: '123',
+        prop: '321'
       }
     });
     await modal.present();
