@@ -1,3 +1,36 @@
+# [4.0.0-rc.0](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.19...v4.0.0-rc.0) (2018-12-19)
+
+
+### Bug Fixes
+
+* **action-sheet:** set 100% height to fix scrollable options ([#16789](https://github.com/ionic-team/ionic/issues/16789)) ([e3d7282](https://github.com/ionic-team/ionic/commit/e3d7282))
+* **all:** ts 3.2 issues ([f393a82](https://github.com/ionic-team/ionic/commit/f393a82))
+* **angular:** Fix cordova browser error when resumed ([#16810](https://github.com/ionic-team/ionic/issues/16810)) ([e735d2c](https://github.com/ionic-team/ionic/commit/e735d2c))
+* **angular:** fix sibling router-outlets ([#16774](https://github.com/ionic-team/ionic/issues/16774)) ([35e3848](https://github.com/ionic-team/ionic/commit/35e3848)), closes [#16411](https://github.com/ionic-team/ionic/issues/16411)
+* **angular:** router-outlet memory leak ([2c41823](https://github.com/ionic-team/ionic/commit/2c41823)), closes [#16285](https://github.com/ionic-team/ionic/issues/16285)
+* **body:** body background matches ion-content ([0699884](https://github.com/ionic-team/ionic/commit/0699884))
+* **core:** export ionic lifecycle names ([77640c9](https://github.com/ionic-team/ionic/commit/77640c9)), closes [#16760](https://github.com/ionic-team/ionic/issues/16760)
+* **core:** ts lint issue ([#16814](https://github.com/ionic-team/ionic/issues/16814)) ([fb38002](https://github.com/ionic-team/ionic/commit/fb38002))
+* **list:** adjust label margin to align with spec for md ([#16751](https://github.com/ionic-team/ionic/issues/16751)) ([60ef98d](https://github.com/ionic-team/ionic/commit/60ef98d)), closes [#16643](https://github.com/ionic-team/ionic/issues/16643)
+* **modal:** --box-shadow ([e2ee0b6](https://github.com/ionic-team/ionic/commit/e2ee0b6)), closes [#16798](https://github.com/ionic-team/ionic/issues/16798)
+* **progress-bar:** looking nice inside toolbar ([b5efede](https://github.com/ionic-team/ionic/commit/b5efede))
+* **pwa:** use 100% of the viewport ([4c4bdf2](https://github.com/ionic-team/ionic/commit/4c4bdf2))
+* **tab-bar:** adds selected color if tab bar is using a color ([#16766](https://github.com/ionic-team/ionic/issues/16766)) ([54e5a24](https://github.com/ionic-team/ionic/commit/54e5a24)), closes [#16761](https://github.com/ionic-team/ionic/issues/16761)
+* **virtual-scroll:** fixes dynamic changes ([d1cecf1](https://github.com/ionic-team/ionic/commit/d1cecf1))
+
+
+### Features
+
+* **angular:** expose animationDirection ([#16802](https://github.com/ionic-team/ionic/issues/16802)) ([320eb03](https://github.com/ionic-team/ionic/commit/320eb03))
+* **angular:** tabs.select() ([56dd8ae](https://github.com/ionic-team/ionic/commit/56dd8ae)), closes [#16753](https://github.com/ionic-team/ionic/issues/16753)
+
+
+### Performance Improvements
+
+* **angular:** detach fromn change detection ([f613b3b](https://github.com/ionic-team/ionic/commit/f613b3b))
+
+
+
 # [4.0.0-beta.19](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.18...v4.0.0-beta.19) (2018-12-14)
 
 
