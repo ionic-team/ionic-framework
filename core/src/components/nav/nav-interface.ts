@@ -41,9 +41,7 @@ export interface NavOptions extends RouterOutletOptions {
   viewIsReady?: (enteringEl: HTMLElement) => Promise<any>;
 }
 
-export interface Page extends Function {
-  new (...args: any[]): any;
-}
+export type Page = new (...args: any[]) => any;
 
 export type TransitionResolveFn = (hasCompleted: boolean, requiresTransition: boolean, enteringName?: string, leavingName?: string, direction?: string) => void;
 
