@@ -11,7 +11,7 @@ export function inputs(instance: any, el: ElementRef, props: string[]) {
 
 export function proxyEvent<T>(emitter: Subject<T>, el: EventTarget, eventName: string) {
   el.addEventListener(eventName, ev => {
-    emitter.next((ev as any).detail as T);
+    emitter.next(ev ? (ev as any).detail as T : null);
   });
 }
 
