@@ -5,11 +5,8 @@
 // --------------------------------------------------
 
 :host {
-  --height: #{$checkbox-md-icon-size};
-  --width: #{$checkbox-md-icon-size};
-
   // Border
-  --border-radius: calc(var(--height) * .125);
+  --border-radius: calc(var(--size) * .125);
   --border-width: #{$checkbox-md-icon-border-width};
   --border-style: #{$checkbox-md-icon-border-style};
   --border-color: #{$checkbox-md-icon-border-color-off};
@@ -17,6 +14,12 @@
   // Background
   --background: #{$checkbox-md-icon-background-color-off};
   --transition: #{background $checkbox-md-transition-duration $checkbox-md-transition-easing};
+
+  // Size
+  --size: #{$checkbox-md-icon-size};
+  width: var(--size);
+
+  height: var(--size);
 }
 
 
@@ -36,9 +39,7 @@
 // Material Design Checkbox: Disabled
 // -----------------------------------------
 
-// TODO
-// .item-md.item-checkbox-disabled ion-label {
-
+// TODO .item-md.item-checkbox-disabled ion-label
 :host(.checkbox-disabled) {
   opacity: $checkbox-md-disabled-opacity;
 }

@@ -10,11 +10,7 @@
    */
   --color: initial;
 
-  @include margin(0);
-
   display: block;
-
-  flex: 1;
 
   color: var(--color);
 

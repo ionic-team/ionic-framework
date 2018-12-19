@@ -106,7 +106,7 @@ export class Item implements ComponentInterface {
     // Change the button size to small for each ion-button in the item
     // unless the size is explicitly set
     Array.from(this.el.querySelectorAll('ion-button')).forEach(button => {
-      if (!button.size) {
+      if (button.size === undefined) {
         button.size = 'small';
       }
     });
@@ -127,16 +127,16 @@ export class Item implements ComponentInterface {
     });
 
     return {
-      'ion-activatable': this.isClickable(),
       'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...childStyles,
         ...createColorClasses(this.color),
-        [`item-lines-${this.lines}`]: !!this.lines,
+        [`item-lines-${this.lines}`]: this.lines !== undefined,
         'item-disabled': this.disabled,
         'in-list': hostContext('ion-list', this.el),
         'item': true,
-        'item-multiple-inputs': this.multipleInputs
+        'item-multiple-inputs': this.multipleInputs,
+        'ion-activatable': this.isClickable(),
       }
     };
   }
@@ -145,7 +145,7 @@ export class Item implements ComponentInterface {
     const { href, detail, mode, win, detailIcon, routerDirection, type } = this;
 
     const clickable = this.isClickable();
-    const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div';
+    const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
     const attrs = TagType === 'button' ? { type } : { href };
     const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
 
@@ -153,7 +153,7 @@ export class Item implements ComponentInterface {
       <TagType
         {...attrs}
         class="item-native"
-        onClick={ev => openURL(win, href, ev, routerDirection)}
+        onClick={(ev: Event) => openURL(win, href, ev, routerDirection)}
       >
         <slot name="start"></slot>
         <div class="item-inner">

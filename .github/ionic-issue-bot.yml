@@ -13,10 +13,10 @@ closeAndLock:
 
 
         Thank you for using Ionic!
-    - label: "ionitron: ionic pro"
+    - label: "ionitron: appflow"
       message: >
-        Thanks for the issue! This issue appears to be related to Ionic Pro. We use this issue tracker exclusively for
-        bug reports and feature requests. Please use the [Ionic Pro Support Forum](https://ionic.zendesk.com/hc/en-us/requests/new)
+        Thanks for the issue! This issue appears to be related to Ionic Appflow. We use this issue tracker exclusively for
+        bug reports and feature requests. Please use the [Ionic Appflow Support Forum](https://ionic.zendesk.com/hc/en-us/requests/new)
         to report this issue.
 
 
@@ -65,7 +65,7 @@ stale:
 noReply:
   days: 30
   maxIssuesPerRun: 100
-  label: needs reply
+  label: "needs: reply"
   responseLabel: triage
   exemptProjects: true
   exemptMilestones: true
@@ -82,12 +82,18 @@ noReply:
 
 labelPullRequest:
   labels:
-    - label: angular
+    - label: "package: angular"
       branch: master
       path: ^angular
-    - label: core
+    - label: "package: core"
       branch: master
       path: ^core
+    - label: "package: react"
+      branch: master
+      path: ^react
+    - label: "package: vue"
+      branch: master
+      path: ^vue
   dryRun: false
 
 wrongRepo:

@@ -146,25 +146,25 @@ export class Button implements ComponentInterface {
       fill = this.inToolbar ? 'clear' : 'solid';
     }
     return {
-      'ion-activatable': true,
       'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...createColorClasses(color),
         [buttonType]: true,
-        [`${buttonType}-${expand}`]: !!expand,
-        [`${buttonType}-${size}`]: !!size,
-        [`${buttonType}-${shape}`]: !!shape,
-        [`${buttonType}-${fill}`]: !!fill,
+        [`${buttonType}-${expand}`]: expand !== undefined,
+        [`${buttonType}-${size}`]: size !== undefined,
+        [`${buttonType}-${shape}`]: shape !== undefined,
+        [`${buttonType}-${fill}`]: true,
         [`${buttonType}-strong`]: strong,
 
         'focused': keyFocus,
-        'button-disabled': disabled
+        'button-disabled': disabled,
+        'ion-activatable': true,
       }
     };
   }
 
   render() {
-    const TagType = this.href === undefined ? 'button' : 'a';
+    const TagType = this.href === undefined ? 'button' : 'a' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
       : { href: this.href };

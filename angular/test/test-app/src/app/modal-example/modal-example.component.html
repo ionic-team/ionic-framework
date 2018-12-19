@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()" id="close-modal">
+        Close
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <h1>Value</h1>
+  <h2>{{value}}</h2>
+  <h3>{{valueFromParams}}</h3>
+  <p>ngOnInit: <span id="ngOnInit">{{onInit}}</span></p>
+  <p>ionViewWillEnter: <span id="ionViewWillEnter">{{willEnter}}</span></p>
+  <p>ionViewDidEnter: <span id="ionViewDidEnter">{{didEnter}}</span></p>
+  <p>ionViewWillLeave: <span id="ionViewWillLeave">{{willLeave}}</span></p>
+  <p>ionViewDidLeave: <span id="ionViewDidLeave">{{didLeave}}</span></p>
+  <p *ngIf="!!nav">
+    <ion-button (click)="push()" class="push-page">Push page</ion-button>
+    <ion-button (click)="pop()" class="pop-page">Pop page</ion-button>
+  </p>
+</ion-content>

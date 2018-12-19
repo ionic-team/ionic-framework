@@ -4,16 +4,16 @@
 // --------------------------------------------------
 
 /// @prop - Margin top of the card
-$card-ios-margin-top:                  30px !default;
+$card-ios-margin-top:                  24px !default;
 
 /// @prop - Margin end of the card
-$card-ios-margin-end:                  20px !default;
+$card-ios-margin-end:                  16px !default;
 
 /// @prop - Margin bottom of the card
-$card-ios-margin-bottom:               30px !default;
+$card-ios-margin-bottom:               $card-ios-margin-top !default;
 
 /// @prop - Margin start of the card
-$card-ios-margin-start:                20px !default;
+$card-ios-margin-start:                16px !default;
 
 /// @prop - Background color of the card
 $card-ios-background-color:            $item-ios-background !default;

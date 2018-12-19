@@ -1,16 +1,4 @@
 
-export const enum CellType {
-  Item,
-  Header,
-  Footer
-}
-
-export const enum NodeChange {
-  NoChange,
-  Position,
-  Cell,
-}
-
 export interface Cell {
   i: number;
   index: number;
@@ -29,6 +17,8 @@ export interface VirtualNode {
   visible: boolean;
 }
 
+export type CellType = 'item' | 'header' | 'footer';
+export type NodeChange = number;
 export type HeaderFn = (item: any, index: number, items: any[]) => string | null | undefined;
 export type ItemHeightFn = (item: any, index: number) => number;
 export type ItemRenderFn = (el: HTMLElement | null, cell: Cell, domIndex: number) => HTMLElement;

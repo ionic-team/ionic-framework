@@ -7,10 +7,7 @@
    * @prop --color: Color of the tab bar
    */
 
-  @include padding-horizontal(
-    var(--ion-safe-area-left),
-    var(--ion-safe-area-right)
-  );
+  @include padding-horizontal(var(--ion-safe-area-left), var(--ion-safe-area-right));
 
   display: flex;
 
@@ -18,6 +15,10 @@
   justify-content: center;
 
   width: auto;
+
+  padding-bottom: var(--ion-safe-area-bottom, 0);
+
+  border-top: var(--border);
 
   background: var(--background);
   color: var(--color);
@@ -32,27 +33,29 @@
   box-sizing: content-box !important;
 }
 
-:host(.ion-color) {
-  --background: #{current-color(base)};
+:host(.ion-color),
+:host(.ion-color) ::slotted(ion-tab-button) {
+  background: #{current-color(base)};
+  color: #{current-color(contrast, .7)};
 }
 
 :host(.ion-color) ::slotted(ion-tab-button) {
-  --color: #{current-color(contrast, .7)};
-  --color-selected: #{current-color(contrast)};
   --background-focused: #{current-color(shade)};
+  --color-selected: #{current-color(contrast)};
+}
+
+:host(.ion-color) ::slotted(.tab-selected) {
+  color: #{current-color(contrast)};;
 }
 
 :host([slot="top"]) {
+  padding-bottom: 0;
+
+  border-top: 0;
   border-bottom: var(--border);
 }
 
-:host([slot="bottom"]) {
-  padding-bottom: var(--ion-safe-area-bottom, 0);
-
-  border-top: var(--border);
-}
-
-:host(.tabbar-hidden) {
+:host(.tab-bar-hidden) {
   /* stylelint-disable-next-line declaration-no-important */
   display: none !important;
 }

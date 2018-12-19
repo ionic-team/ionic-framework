@@ -17,9 +17,10 @@ function apiSpecGenerator(opts) {
 
 function generateComponent(component, content) {
   content.push('');
+  content.push(component.tag);
 
   component.props.forEach(prop => {
-    content.push(`${component.tag},prop,${prop.name},${prop.type},${prop.default},${prop.required}`);
+    content.push(`${component.tag},prop,${prop.name},${prop.type},${prop.default},${prop.required},${prop.reflectToAttr}`);
   });
   component.methods.forEach(prop => {
     content.push(`${component.tag},method,${prop.name},${prop.signature}`);
@@ -28,7 +29,7 @@ function generateComponent(component, content) {
     content.push(`${component.tag},event,${prop.event},${prop.detail},${prop.bubbles}`);
   });
   component.styles.forEach(prop => {
-    content.push(`${component.tag},style,${prop.name}`);
+    content.push(`${component.tag},css-prop,${prop.name}`);
   });
 }
 

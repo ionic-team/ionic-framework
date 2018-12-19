@@ -8,6 +8,7 @@
    * @prop --bar-background: Background of the range bar
    * @prop --bar-background-active: Background of the active range bar
    * @prop --bar-height: Height of the range bar
+   * @prop --bar-border-radius: Border radius of the range bar
    * @prop --height: Height of the range
    * @prop --knob-background: Background of the range knob
    * @prop --knob-border-radius: Border radius of the range knob
@@ -51,6 +52,7 @@
   contain: size layout style;
 
   cursor: grab;
+  touch-action: pan-y;
 }
 
 :host(.range-pressed) .range-slider {
@@ -91,6 +93,7 @@
 }
 
 .range-bar {
+  @include border-radius(var(--bar-border-radius));
   @include position(calc((var(--height) - var(--bar-height)) / 2), null, null, 0);
   position: absolute;
 

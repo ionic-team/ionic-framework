@@ -61,6 +61,22 @@ $item-md-input-highlight-color-valid:       ion-color(success, base) !default;
 $item-md-input-highlight-color-invalid:     ion-color(danger, base) !default;
 
 
+// Item Label
+// --------------------------------------------------
+
+/// @prop - Margin top of the label
+$item-md-label-margin-top:                  11px !default;
+
+/// @prop - Margin end of the label
+$item-md-label-margin-end:                  0 !default;
+
+/// @prop - Margin bottom of the label
+$item-md-label-margin-bottom:               10px !default;
+
+/// @prop - Margin start of the label
+$item-md-label-margin-start:                0 !default;
+
+
 // Item Slots
 // --------------------------------------------------
 

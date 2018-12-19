@@ -48,9 +48,9 @@ export class List implements ComponentInterface {
     return {
       class: {
         ...createThemedClasses(this.mode, 'list'),
-        [`list-lines-${this.lines}`]: !!this.lines,
+        [`list-lines-${this.lines}`]: this.lines !== undefined,
         'list-inset': this.inset,
-        [`list-${this.mode}-lines-${this.lines}`]: !!this.lines
+        [`list-${this.mode}-lines-${this.lines}`]: this.lines !== undefined
       }
     };
   }

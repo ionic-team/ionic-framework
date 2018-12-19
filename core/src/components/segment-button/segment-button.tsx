@@ -1,7 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 
-import { Color, Mode, SegmentButtonLayout } from '../../interface';
-import { createColorClasses } from '../../utils/theme';
+import { Mode, SegmentButtonLayout } from '../../interface';
 
 let ids = 0;
 
@@ -16,13 +15,6 @@ let ids = 0;
 export class SegmentButton implements ComponentInterface {
 
   @Element() el!: HTMLElement;
-
-  /**
-   * The color to use from your application's color palette.
-   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information on colors, see [theming](/docs/theming/basics).
-   */
-  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
@@ -42,7 +34,7 @@ export class SegmentButton implements ComponentInterface {
   /**
    * Set the layout of the text and icon in the segment.
    */
-  @Prop() layout?: SegmentButtonLayout;
+  @Prop() layout?: SegmentButtonLayout = 'icon-top';
 
   /**
    * The value of the segment button.
@@ -65,17 +57,28 @@ export class SegmentButton implements ComponentInterface {
     this.checked = true;
   }
 
-  hostData() {
-    const { disabled, checked, color } = this;
-    return {
-      'ion-activatable': 'instant',
-      'aria-disabled': this.disabled ? 'true' : null,
+  private get hasLabel() {
+    return !!this.el.querySelector('ion-label');
+  }
 
+  private get hasIcon() {
+    return !!this.el.querySelector('ion-icon');
+  }
+
+  hostData() {
+    const { checked, disabled, hasIcon, hasLabel, layout } = this;
+    return {
+      'aria-disabled': disabled ? 'true' : null,
       class: {
-        ...createColorClasses(color),
+        'segment-button-has-label': hasLabel,
+        'segment-button-has-icon': hasIcon,
+        'segment-button-has-label-only': hasLabel && !hasIcon,
+        'segment-button-has-icon-only': hasIcon && !hasLabel,
         'segment-button-disabled': disabled,
         'segment-button-checked': checked,
-        [`segment-button-layout-${this.layout}`]: !!this.layout
+        [`segment-button-layout-${layout}`]: true,
+        'ion-activatable': true,
+        'ion-activatable-instant': true,
       }
     };
   }

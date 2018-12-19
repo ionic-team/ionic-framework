@@ -156,7 +156,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
       type: i.type || 'text',
       name: i.name || `${index}`,
       placeholder: i.placeholder || '',
-      value: i.value || '',
+      value: i.value,
       label: i.label,
       checked: !!i.checked,
       disabled: !!i.disabled,
@@ -424,7 +424,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
     return (
       <div class={alertButtonGroupClass}>
         {buttons.map(button =>
-          <button type="button" ion-activatable class={buttonClass(button)} tabIndex={0} onClick={() => this.buttonClick(button)}>
+          <button type="button" class={buttonClass(button)} tabIndex={0} onClick={() => this.buttonClick(button)}>
             <span class="alert-button-inner">
               {button.text}
             </span>
@@ -470,6 +470,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 function buttonClass(button: AlertButton): CssClassMap {
   return {
     'alert-button': true,
+    'ion-activatable': true,
     ...getClassMap(button.cssClass)
   };
 }

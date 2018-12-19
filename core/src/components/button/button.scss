@@ -13,9 +13,6 @@
    * @prop --color-activated: Text color of the button when activated
    * @prop --color-focused: Text color of the button when focused
    *
-   * @prop --width: Width of the button
-   * @prop --height: Height of the button
-   *
    * @prop --transition: Transition of the button
    *
    * @prop --border-radius: Border radius of the button
@@ -28,26 +25,25 @@
    * @prop --box-shadow: Box shadow of the button
    * @prop --opacity: Opacity of the button
    *
-   * @prop --margin-top: Margin top of the button
-   * @prop --margin-end: Margin end of the button
-   * @prop --margin-bottom: Margin bottom of the button
-   * @prop --margin-start: Margin start of the button
-   *
    * @prop --padding-top: Padding top of the button
    * @prop --padding-end: Padding end of the button
    * @prop --padding-bottom: Padding bottom of the button
    * @prop --padding-start: Padding start of the button
    */
-  --width: auto;
   --overflow: hidden;
   --ripple-color: currentColor;
+  --border-width: initial;
+  --border-color: initial;
+  --border-style: initial;
+  --box-shadow: none;
 
   display: inline-block;
+
+  width: auto;
 
   color: var(--color);
 
   font-family: $font-family-base;
-  pointer-events: auto;
 
   text-align: center;
   text-decoration: none;
@@ -58,6 +54,7 @@
   user-select: none;
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
+  pointer-events: auto;
 
   font-kerning: none;
 }
@@ -160,7 +157,7 @@
 
   clear: both;
 
-  contain: strict;
+  contain: content;
 }
 
 :host(.button-block) .button-native::after {
@@ -182,7 +179,7 @@
 
   width: 100%;
 
-  contain: strict;
+  contain: content;
 }
 
 :host(.button-full:not(.button-round)) .button-native {
@@ -195,15 +192,15 @@
 .button-native {
   @include border-radius(var(--border-radius));
   @include font-smoothing();
-  @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
+  @include margin(0);
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include text-inherit();
 
   display: block;
   position: relative;
 
-  width: var(--width);
-  height: var(--height);
+  width: 100%;
+  height: 100%;
 
   transition: var(--transition);
 

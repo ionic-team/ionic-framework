@@ -7,7 +7,7 @@
 
 :host {
   --min-height: #{$item-md-min-height};
-  --background: var(--ion-item-background, transparent);
+  --background: #{$item-md-background};
   --background-activated: var(--background);
   --border-color: #{$item-md-border-bottom-color};
   --color: #{$item-md-color};
@@ -73,7 +73,7 @@
 // Material Design Multi-line Item
 // --------------------------------------------------
 
-// TODO this works if manually adding the class / work with prop?
+// TODO this works if manually adding the class / should it work with prop?
 // Multi-line items should align the slotted content at the top
 :host(.item-multi-line) ::slotted([slot="start"]),
 :host(.item-multi-line) ::slotted([slot="end"]) {
@@ -177,6 +177,15 @@
 }
 
 
+// Material Design Slotted Label
+// --------------------------------------------------
+
+::slotted(ion-label) {
+  @include margin($item-md-label-margin-top, $item-md-label-margin-end, $item-md-label-margin-bottom, $item-md-label-margin-start);
+}
+
+
+
 // Material Design Floating/Stacked Label
 // --------------------------------------------------
 
@@ -198,20 +207,15 @@
 // Material Design Item Button
 // --------------------------------------------------
 
-::slotted(.button-small-md) {
+::slotted(.button-small) {
   --padding-top: 0;
   --padding-bottom: 0;
   --padding-start: .6em;
   --padding-end: .6em;
-  --height: 25px;
+
+  height: 25px;
 
   font-size: 12px;
-}
-
-
-// TODO, review
-::slotted(.button-small-md) ion-icon[slot="icon-only"] {
-  @include padding(0);
 }
 
 

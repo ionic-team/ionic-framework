@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "4.0.0-beta.16",
+  "version": "4.0.0-beta.19",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -19,6 +19,7 @@
   "module": "dist/esm/es5/index.js",
   "types": "dist/types/interface.d.ts",
   "collection": "dist/collection/collection-manifest.json",
+  "webComponents": "dist/web-components.json",
   "unpkg": "dist/ionic.js",
   "files": [
     "dist/",
@@ -26,16 +27,16 @@
     "loader/"
   ],
   "dependencies": {
-    "@types/node": "10.11.0",
-    "ionicons": "4.4.7"
+    "ionicons": "4.5.1"
   },
   "devDependencies": {
-    "@stencil/core": "0.16.0-4",
+    "@stencil/core": "0.16.1",
     "@stencil/sass": "0.1.1",
     "@stencil/utils": "latest",
     "@types/jest": "^23.3.1",
     "@types/puppeteer": "1.6.4",
-    "@types/swiper": "4.2.1",
+    "@types/swiper": "4.2.4",
+    "@types/node": "10.11.0",
     "agadoo": "^1.0.0",
     "autoprefixer": "^9.0.2",
     "aws-sdk": "^2.320.0",
@@ -47,13 +48,13 @@
     "np": "^3.0.4",
     "pixelmatch": "4.0.2",
     "puppeteer": "1.8.0",
-    "rollup": "^0.66.4",
-    "rollup-plugin-node-resolve": "^3.4.0",
-    "stylelint": "~9.6.0",
-    "stylelint-order": "~1.0.0",
-    "swiper": "4.4.1",
+    "rollup": "^0.67.4",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "stylelint": "~9.9.0",
+    "stylelint-order": "~2.0.0",
+    "swiper": "4.4.2",
     "tslint": "^5.10.0",
-    "tslint-ionic-rules": "0.0.19",
+    "tslint-ionic-rules": "0.0.21",
     "tslint-react": "^3.6.0",
     "typescript": "^2.9.2"
   },
@@ -67,7 +68,6 @@
     "clean": "node scripts/clean.js",
     "css.minify": "cleancss -O2 -o ./css/ionic.bundle.css ./css/ionic.bundle.css",
     "css.sass": "node-sass --output ./css src/css --output-style compressed",
-    "dev": "npm run build.css && stencil build --dev --watch --serve",
     "lint": "npm run lint.ts && npm run lint.sass",
     "lint.fix": "npm run lint.ts.fix && npm run lint.sass.fix",
     "lint.sass": "stylelint 'src/**/*.scss'",
@@ -75,16 +75,13 @@
     "lint.ts": "tslint --project .",
     "lint.ts.fix": "tslint --project . --fix",
     "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
+    "start": "npm run build.css && stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
     "test.spec": "stencil test --spec",
     "test.e2e": "stencil test --e2e",
     "test.screenshot": "stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/dev.js",
     "test.screenshot.ci": "stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci",
     "test.watch": "jest --watch --no-cache",
-    "theme-app-build": "stencil build --dev --config scripts/theme-builder/stencil.config.js",
-    "theme-builder": "sd concurrent \"npm run theme-app-build\" \"stencil build --dev --watch\" \"stencil-dev-server\" \"npm run theme-server\" ",
-    "theme-builder:dev": "sd concurrent \"npm run theme-app-build -- --watch\" \"stencil build --dev --watch\" \"stencil-dev-server\" \"npm run theme-server\" ",
-    "theme-server": "node scripts/theme-builder/server.js",
     "tsc": "./node_modules/.bin/tsc -p .",
     "test.treeshake": "agadoo dist/collection/index.js",
     "validate": "npm run lint && npm run test && npm run build && npm run test.treeshake"

@@ -6,11 +6,21 @@
 :host {
   /**
    * @prop --background: Background of the menu
+   *
+   * @prop --min-width: Minimum width of the menu
    * @prop --width: Width of the menu
-   * @prop --width-small: Width of the small menu
+   * @prop --max-width: Maximum width of the menu
+   *
+   * @prop --min-height: Minimum height of the menu
+   * @prop --height: Height of the menu
+   * @prop --max-height: Maximum height of the menu
    */
   --width: #{$menu-width};
-  --width-small: #{$menu-small-width};
+  --min-width: auto;
+  --max-width: auto;
+  --height: 100%;
+  --min-height: auto;
+  --max-height: auto;
   --background: #{$background-color};
 
   @include position(0, 0, 0, 0);
@@ -37,7 +47,12 @@
   justify-content: space-between;
 
   width: var(--width);
-  height: 100%;
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+
+  height: var(--height);
+  min-height: var(--min-height);
+  max-height: var(--max-height);
 
   background: var(--background);
 
@@ -72,11 +87,9 @@ ion-backdrop {
 }
 
 @media (max-width: 340px) {
-
   .menu-inner {
-    width: var(--width-small);
+    --width: #{$menu-small-width};
   }
-
 }
 
 

@@ -4,6 +4,12 @@
 // --------------------------------------------------
 
 :host {
+  --transition: background-color, opacity 100ms linear;
+  --ripple-color: currentColor;
+  --border-radius: #{$fab-border-radius};
+  --border-width: 0;
+  --border-style: none;
+  --border-color: initial;
   /**
    * @prop --background: Background of the button
    * @prop --background-activated: Background of the button when activated
@@ -12,9 +18,6 @@
    * @prop --color: Text color of the button
    * @prop --color-activated: Text color of the button when activated
    * @prop --color-focused: Text color of the button when focused
-   *
-   * @prop --width: Width of the button
-   * @prop --height: Height of the button
    *
    * @prop --transition: Transition of the button
    *
@@ -27,26 +30,16 @@
    *
    * @prop --box-shadow: Box shadow of the button
    *
-   * @prop --margin-top: Margin top of the button
-   * @prop --margin-end: Margin end of the button
-   * @prop --margin-bottom: Margin bottom of the button
-   * @prop --margin-start: Margin start of the button
-   *
    * @prop --padding-top: Padding top of the button
    * @prop --padding-end: Padding end of the button
    * @prop --padding-bottom: Padding bottom of the button
    * @prop --padding-start: Padding start of the button
    */
-  --width: #{$fab-size};
-  --height: var(--width);
-  --margin-start: calc((#{$fab-size} - var(--width)) / 2);
-  --margin-end: calc((#{$fab-size} - var(--width)) / 2);
-  --margin-top: calc((#{$fab-size} - var(--height)) / 2);
-  --margin-bottom: calc((#{$fab-size} - var(--height)) / 2);
-  --transition: background-color, opacity 100ms linear;
-  --ripple-color: currentColor;
-
+  @include margin(0);
   display: block;
+
+  width: #{$fab-size};
+  height: #{$fab-size};
 
   font-size: 14px;
 
@@ -76,22 +69,23 @@
 }
 
 .button-native {
-  @include border-radius(50%);
+  @include border-radius(var(--border-radius));
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-  @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
   @include text-inherit();
 
   display: block;
   position: relative;
 
-  width: var(--width);
-  height: var(--height);
+  width: 100%;
+  height: 100%;
 
   transform: var(--transform);
 
   transition: var(--transition);
 
-  border: 0;
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
 
   outline: none;
 
@@ -99,8 +93,6 @@
 
   background-clip: padding-box;
   color: var(--color);
-
-  line-height: var(--height);
 
   box-shadow: var(--box-shadow);
   contain: strict;
@@ -172,11 +164,14 @@
 }
 
 
-// FAB Mini
+// FAB small (mini
 // --------------------------------------------------
 
-:host([mini]) {
-  --width: #{$fab-mini-size};
+:host(.fab-button-small) {
+  @include margin(($fab-size - $fab-small-size) / 2);
+
+  width: #{$fab-small-size};
+  height: #{$fab-small-size};
 }
 
 // FAB Close Icon

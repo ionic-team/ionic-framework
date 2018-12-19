@@ -181,26 +181,113 @@ dataset, so please make sure they're performant.
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Angular
+
+```html
+<ion-content>
+  <ion-virtual-scroll [items]="items" approxItemHeight="320px">
+    <ion-card *virtualItem="let item; let itemBounds = bounds;">
+      <div>
+        <img [src]="item.imgSrc" [height]="item.imgHeight" [alt]="item.name">
+      </div>
+    <ion-card-header>
+      <ion-card-title>{{ item.name }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>{{ item.content }}</ion-card-content>
+    </ion-card>
+  </ion-virtual-scroll>
+</ion-content>
+```
+
+```typescript
+export class VirtualScrollPageComponent {
+  items: any[] = [];
+
+  constructor() {
+    for (let i = 0; i < 1000; i++) {
+      this.items.push({
+        name: i + ' - ' + images[rotateImg],
+        imgSrc: getImgSrc(),
+        avatarSrc: getImgSrc(),
+        imgHeight: Math.floor(Math.random() * 50 + 150),
+        content: lorem.substring(0, Math.random() * (lorem.length - 100) + 100)
+      });
+
+      rotateImg++;
+      if (rotateImg === images.length) {
+        rotateImg = 0;
+      }
+    }
+  }
+}
+
+const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, seddo eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+
+const images = [
+  'bandit',
+  'batmobile',
+  'blues-brothers',
+  'bueller',
+  'delorean',
+  'eleanor',
+  'general-lee',
+  'ghostbusters',
+  'knight-rider',
+  'mirth-mobile'
+];
+
+function getImgSrc() {
+  const src = 'https://dummyimage.com/600x400/${Math.round( Math.random() * 99999)}/fff.png';
+  rotateImg++;
+  if (rotateImg === images.length) {
+    rotateImg = 0;
+  }
+  return src;
+}
+
+let rotateImg = 0;
+```
+
+
+
 ## Properties
 
-| Property             | Attribute              | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Type                                             | Default     |
-| -------------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------ | ----------- |
-| `approxFooterHeight` | `approx-footer-height` | The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This value can use either `px` or `%` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.                                                                                                           | `number`                                         | `40`        |
-| `approxHeaderHeight` | `approx-header-height` | The approximate height of each header template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.                                                                                                            | `number`                                         | `40`        |
-| `approxItemHeight`   | `approx-item-height`   | It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered. | `number`                                         | `45`        |
-| `footerFn`           | --                     | Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.                                                                                                                                                                                                                | `HeaderFn \| undefined`                          | `undefined` |
-| `headerFn`           | --                     | Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.             | `HeaderFn \| undefined`                          | `undefined` |
-| `itemHeight`         | --                     | An optional function that maps each item within their height. When this function is provides, heavy optimizations and fast path can be taked by `ion-virtual-scroll` leading to massive performance improvements.  This function allows to skip all DOM reads, which can be Doing so leads to massive performance                                                                                                                                                                                                                                      | `ItemHeightFn \| undefined`                      | `undefined` |
-| `items`              | --                     | The data that builds the templates within the virtual scroll. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.                                                                                                                                                                                                                                                                                                                      | `any[] \| undefined`                             | `undefined` |
-| `nodeRender`         | --                     | NOTE: only Vanilla JS API.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | `ItemRenderFn \| undefined`                      | `undefined` |
-| `renderFooter`       | --                     | NOTE: only JSX API for stencil.  Provide a render function for the footer to be rendered. Returns a JSX virtual-dom.                                                                                                                                                                                                                                                                                                                                                                                                                                   | `(item: any, index: number) => any \| undefined` | `undefined` |
-| `renderHeader`       | --                     | NOTE: only JSX API for stencil.  Provide a render function for the header to be rendered. Returns a JSX virtual-dom.                                                                                                                                                                                                                                                                                                                                                                                                                                   | `(item: any, index: number) => any \| undefined` | `undefined` |
-| `renderItem`         | --                     | NOTE: only JSX API for stencil.  Provide a render function for the items to be rendered. Returns a JSX virtual-dom.                                                                                                                                                                                                                                                                                                                                                                                                                                    | `(item: any, index: number) => any \| undefined` | `undefined` |
+| Property             | Attribute              | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Type                                                                                     | Default     |
+| -------------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- | ----------- |
+| `approxFooterHeight` | `approx-footer-height` | The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.                                                                                                             | `number`                                                                                 | `30`        |
+| `approxHeaderHeight` | `approx-header-height` | The approximate height of each header template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.                                                                                                            | `number`                                                                                 | `30`        |
+| `approxItemHeight`   | `approx-item-height`   | It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered. | `number`                                                                                 | `45`        |
+| `footerFn`           | --                     | Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.                                                                                                                                                                                                                | `((item: any, index: number, items: any[]) => string \| null \| undefined) \| undefined` | `undefined` |
+| `headerFn`           | --                     | Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.             | `((item: any, index: number, items: any[]) => string \| null \| undefined) \| undefined` | `undefined` |
+| `itemHeight`         | --                     | An optional function that maps each item within their height. When this function is provides, heavy optimizations and fast path can be taked by `ion-virtual-scroll` leading to massive performance improvements.  This function allows to skip all DOM reads, which can be Doing so leads to massive performance                                                                                                                                                                                                                                      | `((item: any, index: number) => number) \| undefined`                                    | `undefined` |
+| `items`              | --                     | The data that builds the templates within the virtual scroll. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.                                                                                                                                                                                                                                                                                                                      | `any[] \| undefined`                                                                     | `undefined` |
+| `nodeRender`         | --                     | NOTE: only Vanilla JS API.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | `((el: HTMLElement \| null, cell: Cell, domIndex: number) => HTMLElement) \| undefined`  | `undefined` |
+| `renderFooter`       | --                     | NOTE: only JSX API for stencil.  Provide a render function for the footer to be rendered. Returns a JSX virtual-dom.                                                                                                                                                                                                                                                                                                                                                                                                                                   | `((item: any, index: number) => any) \| undefined`                                       | `undefined` |
+| `renderHeader`       | --                     | NOTE: only JSX API for stencil.  Provide a render function for the header to be rendered. Returns a JSX virtual-dom.                                                                                                                                                                                                                                                                                                                                                                                                                                   | `((item: any, index: number) => any) \| undefined`                                       | `undefined` |
+| `renderItem`         | --                     | NOTE: only JSX API for stencil.  Provide a render function for the items to be rendered. Returns a JSX virtual-dom.                                                                                                                                                                                                                                                                                                                                                                                                                                    | `((item: any, index: number) => any) \| undefined`                                       | `undefined` |
 
 
 ## Methods
 
-### `markDirty(offset: number, len?: number) => void`
+### `checkEnd() => void`
+
+This method marks the tail the items array as dirty, so they can be re-rendered.
+
+It's equivalent to calling:
+
+```js
+   * virtualScroll.checkRange(lastItemLen);
+   * ```
+
+#### Returns
+
+Type: `void`
+
+
+
+### `checkRange(offset: number, len?: number) => void`
 
 This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as
 dirty any time the content or their style changes.
@@ -213,22 +300,6 @@ The subset of items to be updated can are specifing by an offset and a length.
 | -------- | -------- | ----------- |
 | `offset` | `number` |             |
 | `len`    | `number` |             |
-
-#### Returns
-
-Type: `void`
-
-
-
-### `markDirtyTail() => void`
-
-This method marks the tail the items array as dirty, so they can be re-rendered.
-
-It's equivalent to calling:
-
-```
-   * virtualScroll.markDirty(lastItemLen, items.length - lastItemLen);
-   * ```
 
 #### Returns
 

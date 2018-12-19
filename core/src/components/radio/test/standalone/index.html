@@ -47,6 +47,7 @@
   <ion-radio class="custom"></ion-radio>
   <ion-radio class="custom" checked></ion-radio>
   <ion-radio class="custom" checked color="tertiary"></ion-radio>
+  <ion-radio class="custom-size" checked color="danger"></ion-radio>
 
   <style>
     /* to be able to see the radio buttons */
@@ -58,6 +59,18 @@
     .custom {
       --color: orange;
       --color-checked: hotpink;
+    }
+
+    .ios .custom-size {
+      width: 60px;
+      height: 96px;
+    }
+
+    .md .custom-size {
+      --border-width: 8px;
+
+      width: 80px;
+      height: 80px;
     }
   </style>
 </body>
