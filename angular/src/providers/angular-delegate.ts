@@ -110,6 +110,7 @@ const LIFECYCLES = [
   LIFECYCLE_DID_ENTER,
   LIFECYCLE_WILL_LEAVE,
   LIFECYCLE_DID_LEAVE,
+  LIFECYCLE_WILL_UNLOAD
 ];
 
 export function bindLifecycleEvents(instance: any, element: HTMLElement) {
