@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { dashToPascalCase, syncEvent } from './utils';
+import { dashToPascalCase, attachEventProps } from './utils';
 
 export function createReactComponent<T, E>(tagName: string) {
   const displayName = dashToPascalCase(tagName);
@@ -32,23 +32,13 @@ export function createReactComponent<T, E>(tagName: string) {
     }
 
     componentWillReceiveProps(props: any) {
-      const node = ReactDOM.findDOMNode(this) as Element | null
+      const node = ReactDOM.findDOMNode(this);
 
-      if (node == null) {
+      if (!(node instanceof HTMLElement)) {
         return;
       }
 
-      Object.keys(props).forEach(name => {
-        if (name === 'children' || name === 'style' || name === 'ref') {
-          return;
-        }
-
-        if (name.indexOf('on') === 0 && name[2] === name[2].toUpperCase()) {
-          syncEvent(node, name.substring(2), props[name]);
-        } else {
-          (node as any)[name] = props[name];
-        }
-      });
+      attachEventProps(node, props);
     }
 
     render() {

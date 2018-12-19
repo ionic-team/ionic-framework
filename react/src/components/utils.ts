@@ -1,5 +1,5 @@
 
-export function syncEvent(node: Element, eventName: string, newEventHandler: (e: Event) => any) {
+function syncEvent(node: Element, eventName: string, newEventHandler: (e: Event) => any) {
   const eventNameLc = eventName[0].toLowerCase() + eventName.substring(1);
   const eventStore = (node as any).__events || ((node as any).__events = {});
   const oldEventHandler = eventStore[eventNameLc];
@@ -26,4 +26,18 @@ export function ensureElementInBody<E extends HTMLElement>(elementName: string):
     document.body.appendChild(element);
   }
   return element;
+}
+
+export function attachEventProps<E extends HTMLElement>(node: E, props: any) {
+  Object.keys(props).forEach(name => {
+    if (name === 'children' || name === 'style' || name === 'ref') {
+      return;
+    }
+
+    if (name.indexOf('on') === 0 && name[2] === name[2].toUpperCase()) {
+      syncEvent(node, name.substring(2), props[name]);
+    } else {
+      (node as any)[name] = props[name];
+    }
+  });
 }
