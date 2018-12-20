@@ -1,6 +1,6 @@
 import { Build, Component, Method, Prop } from '@stencil/core';
 
-import { Animation, AnimationBuilder, MenuControllerI, MenuI, Config } from '../../interface';
+import { Animation, AnimationBuilder, Config, MenuControllerI, MenuI } from '../../interface';
 
 import { menuOverlayAnimation } from './animations/overlay';
 import { menuPushAnimation } from './animations/push';
