@@ -262,6 +262,7 @@ export class MenuController implements MenuControllerI {
     if (!this.config.getBoolean('animated', true)) {
       animation.duration(0);
     }
+    return animation;
   }
 
   getOpenSync(): HTMLIonMenuElement | undefined {
