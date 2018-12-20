@@ -1,8 +1,10 @@
 import { Components } from '@ionic/core';
-import { createControllerComponent } from './createControllerComponent';
+import { createOverlayComponent } from './createOverlayComponent';
 import { Omit } from './types';
 
-export type PopoverOptions = Omit<Components.IonPopoverAttributes, 'delegate' | 'overlayIndex' | 'component' | 'componentProps'>;
+export type PopoverOptions = Omit<Components.IonPopoverAttributes, 'delegate' | 'overlayIndex' | 'component' | 'componentProps'> & {
+  children: React.ReactNode;
+};
 
-const IonPopover = createControllerComponent<PopoverOptions, HTMLIonPopoverElement, HTMLIonPopoverControllerElement>('ion-popover', 'ion-popover-controller')
+const IonPopover = createOverlayComponent<PopoverOptions, HTMLIonPopoverElement, HTMLIonPopoverControllerElement>('ion-popover', 'ion-popover-controller')
 export default IonPopover;
