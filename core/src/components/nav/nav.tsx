@@ -783,7 +783,7 @@ export class Nav implements NavOutlet {
       baseEl: this.el,
       animationBuilder: this.animation || opts.animationBuilder || this.config.get('navAnimation'),
       progressCallback,
-      animated: this.animated,
+      animated: this.animated && this.config.getBoolean('animated', true),
 
       enteringEl,
       leavingEl,
