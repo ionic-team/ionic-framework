@@ -51,10 +51,9 @@
   <script>
     const items = Array.from({ length: 100 }, (x, i) => i);
     const virtual = document.getElementById('virtual');
-    virtual.itemHeight = () => 44;
     virtual.items = items;
     virtual.nodeRender = (el, cell) => {
-      if (cell.type === 0) {
+      if (cell.type === 'item') {
         renderItem(el, cell.value);
       }
     };
@@ -75,7 +74,7 @@
         append = Array.from({ length: 10 }, (x, i) => "append" + i);
       }
       items.push(...append);
-      virtual.markDirtyTail(append.length)
+      virtual.checkEnd(append.length);
     }
 
     function getAsyncData() {
