@@ -29,7 +29,6 @@ export class Nav implements NavOutlet {
   @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'window' }) win!: Window;
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
 
   /** @internal */
   @Prop() delegate?: FrameworkDelegate;
@@ -779,7 +778,6 @@ export class Nav implements NavOutlet {
     const animationOpts: TransitionOptions = {
       mode: this.mode,
       showGoBack: this.canGoBackSync(enteringView),
-      animationCtrl: this.animationCtrl,
       queue: this.queue,
       window: this.win,
       baseEl: this.el,

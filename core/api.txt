@@ -81,9 +81,6 @@ ion-anchor,prop,routerDirection,"back" | "forward" | "root",'forward',false,fals
 ion-anchor,css-prop,--background
 ion-anchor,css-prop,--color
 
-ion-animation-controller
-ion-animation-controller,method,create,create(animationBuilder?: AnimationBuilder | undefined, baseEl?: any, opts?: any) => Promise<Animation>
-
 ion-app
 
 ion-avatar

@@ -15,7 +15,6 @@ export class MenuController implements MenuControllerI {
   private menus: MenuI[] = [];
   private menuAnimations = new Map<string, AnimationBuilder>();
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'document' }) doc!: Document;
 
   constructor() {
@@ -257,7 +256,8 @@ export class MenuController implements MenuControllerI {
     if (!animationBuilder) {
       return Promise.reject('animation not registered');
     }
-    return this.animationCtrl.create(animationBuilder, null, menuCmp);
+    return import('../../utils/animation')
+      .then(mod => mod.createAnimation(animationBuilder, null, menuCmp));
   }
 
   getOpenSync(): HTMLIonMenuElement | undefined {
