@@ -257,7 +257,7 @@ export class MenuController implements MenuControllerI {
       return Promise.reject('animation not registered');
     }
     return import('../../utils/animation')
-      .then(mod => mod.createAnimation(animationBuilder, null, menuCmp));
+      .then(mod => mod.create(animationBuilder, null, menuCmp));
   }
 
   getOpenSync(): HTMLIonMenuElement | undefined {

@@ -2,7 +2,7 @@ import { Animation, AnimationBuilder } from '../../interface';
 
 import { Animator } from './animator';
 
-export function createAnimation(animationBuilder?: AnimationBuilder, baseEl?: any, opts?: any): Promise<Animation> {
+export function create(animationBuilder?: AnimationBuilder, baseEl?: any, opts?: any): Promise<Animation> {
   if (animationBuilder) {
     return animationBuilder(Animator as any, baseEl, opts);
   }
