@@ -76,6 +76,7 @@ export function destroyView(view: RouteView | undefined) {
   if (view) {
     // TODO lifecycle event
     view.ref.destroy();
+    view.unlistenEvents();
   }
 }
 
@@ -86,4 +87,5 @@ export interface RouteView {
   element: HTMLElement;
   ref: ComponentRef<any>;
   savedData?: any;
+  unlistenEvents: () => void;
 }
