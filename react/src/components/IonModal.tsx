@@ -1,8 +1,10 @@
 import { Components } from '@ionic/core';
-import { createControllerComponent } from './createControllerComponent';
+import { createOverlayComponent } from './createOverlayComponent';
 import { Omit } from './types';
 
-export type ModalOptions = Omit<Components.IonModalAttributes, 'delegate' | 'overlayIndex' | 'component' | 'componentProps'>;
+export type ModalOptions = Omit<Components.IonModalAttributes, 'delegate' | 'overlayIndex' | 'component' | 'componentProps'> & {
+  children: React.ReactNode;
+};
 
-const IonModal = createControllerComponent<ModalOptions, HTMLIonModalElement, HTMLIonModalControllerElement>('ion-modal', 'ion-modal-controller')
+const IonModal = createOverlayComponent<ModalOptions, HTMLIonModalElement, HTMLIonModalControllerElement>('ion-modal', 'ion-modal-controller')
 export default IonModal;
