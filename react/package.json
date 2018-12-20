@@ -43,6 +43,6 @@
   },
   "dependencies": {
     "ionicons": "^4.5.0",
-    "@ionic/core": "4.0.0-beta.18"
+    "@ionic/core": "4.0.0-rc.0"
   }
 }
