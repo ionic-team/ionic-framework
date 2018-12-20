@@ -328,7 +328,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
             disabled={i.disabled}
             tabIndex={0}
             role="checkbox"
-            class="alert-tappable alert-checkbox alert-checkbox-button"
+            class="alert-tappable alert-checkbox alert-checkbox-button ion-focusable"
           >
             <div class="alert-button-inner">
               <div class="alert-checkbox-icon">
@@ -360,7 +360,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
             disabled={i.disabled}
             id={i.id}
             tabIndex={0}
-            class="alert-radio-button alert-tappable alert-radio"
+            class="alert-radio-button alert-tappable alert-radio ion-focusable"
             role="radio"
           >
             <div class="alert-button-inner">
@@ -404,7 +404,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   hostData() {
     return {
-      role: 'alertdialog',
+      'role': 'dialog',
+      'aria-modal': 'true',
       style: {
         zIndex: 20000 + this.overlayIndex,
       },
@@ -470,6 +471,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 function buttonClass(button: AlertButton): CssClassMap {
   return {
     'alert-button': true,
+    'ion-focusable': true,
     'ion-activatable': true,
     ...getClassMap(button.cssClass)
   };

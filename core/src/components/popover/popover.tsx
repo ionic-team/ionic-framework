@@ -216,12 +216,12 @@ export class Popover implements ComponentInterface, OverlayInterface {
   }
 
   hostData() {
-
     return {
+      'aria-modal': 'true',
+      'no-router': true,
       style: {
         zIndex: 20000 + this.overlayIndex,
       },
-      'no-router': true,
       class: {
         ...getClassMap(this.cssClass),
         'popover-translucent': this.translucent

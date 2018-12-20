@@ -137,6 +137,7 @@ export class Item implements ComponentInterface {
         'item': true,
         'item-multiple-inputs': this.multipleInputs,
         'ion-activatable': this.isClickable(),
+        'ion-focusable': true,
       }
     };
   }
@@ -153,6 +154,7 @@ export class Item implements ComponentInterface {
       <TagType
         {...attrs}
         class="item-native"
+        disabled={this.disabled}
         onClick={(ev: Event) => openURL(win, href, ev, routerDirection)}
       >
         <slot name="start"></slot>

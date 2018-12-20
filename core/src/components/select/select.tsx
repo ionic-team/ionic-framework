@@ -26,7 +26,6 @@ export class Select implements ComponentInterface {
   @Prop({ connect: 'ion-popover-controller' }) popoverCtrl!: HTMLIonPopoverControllerElement;
 
   @State() isExpanded = false;
-  @State() keyFocus = false;
 
   /**
    * The mode determines which platform styles to use.
@@ -368,16 +367,11 @@ export class Select implements ComponentInterface {
     this.open(ev);
   }
 
-  private onKeyUp = () => {
-    this.keyFocus = true;
-  }
-
   private onFocus = () => {
     this.ionFocus.emit();
   }
 
   private onBlur = () => {
-    this.keyFocus = false;
     this.ionBlur.emit();
   }
 
@@ -397,7 +391,6 @@ export class Select implements ComponentInterface {
       class: {
         'in-item': hostContext('ion-item', this.el),
         'select-disabled': this.disabled,
-        'select-key': this.keyFocus
       }
     };
   }
@@ -433,9 +426,9 @@ export class Select implements ComponentInterface {
       <button
         type="button"
         onClick={this.onClick}
-        onKeyUp={this.onKeyUp}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
+        disabled={this.disabled}
       >
       </button>
     ];

@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { CheckedInputChangeEvent, Color, Gesture, GestureDetail, Mode, StyleEvent } from '../../interface';
 import { hapticSelection } from '../../utils/haptic';
@@ -24,7 +24,6 @@ export class Toggle implements ComponentInterface {
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
   @State() activated = false;
-  @State() keyFocus = false;
 
   /**
    * The mode determines which platform styles to use.
@@ -99,27 +98,6 @@ export class Toggle implements ComponentInterface {
     }
   }
 
-  @Listen('click')
-  onClick() {
-    this.checked = !this.checked;
-  }
-
-  @Listen('keyup')
-  onKeyUp() {
-    this.keyFocus = true;
-  }
-
-  @Listen('focus')
-  onFocus() {
-    this.ionFocus.emit();
-  }
-
-  @Listen('blur')
-  onBlur() {
-    this.keyFocus = false;
-    this.ionBlur.emit();
-  }
-
   componentWillLoad() {
     this.emitStyle();
   }
@@ -176,27 +154,38 @@ export class Toggle implements ComponentInterface {
     return this.value || '';
   }
 
+  private onClick = () => {
+    this.checked = !this.checked;
+  }
+
+  private onFocus = () => {
+    this.ionFocus.emit();
+  }
+
+  private onBlur = () => {
+    this.ionBlur.emit();
+  }
+
   hostData() {
-    const labelId = this.inputId + '-lbl';
-    const label = findItemLabel(this.el);
+    const { inputId, disabled, checked, activated, color, el } = this;
+    const labelId = inputId + '-lbl';
+    const label = findItemLabel(el);
     if (label) {
       label.id = labelId;
     }
 
     return {
       'role': 'checkbox',
-      'tabindex': '0',
-      'aria-disabled': this.disabled ? 'true' : null,
-      'aria-checked': `${this.checked}`,
+      'aria-disabled': disabled ? 'true' : null,
+      'aria-checked': `${checked}`,
       'aria-labelledby': labelId,
 
       class: {
-        ...createColorClasses(this.color),
-        'in-item': hostContext('ion-item', this.el),
-        'toggle-activated': this.activated,
-        'toggle-checked': this.checked,
-        'toggle-disabled': this.disabled,
-        'toggle-key': this.keyFocus,
+        ...createColorClasses(color),
+        'in-item': hostContext('ion-item', el),
+        'toggle-activated': activated,
+        'toggle-checked': checked,
+        'toggle-disabled': disabled,
         'interactive': true
       }
     };
@@ -206,11 +195,19 @@ export class Toggle implements ComponentInterface {
     const value = this.getValue();
     renderHiddenInput(true, this.el, this.name, (this.checked ? value : ''), this.disabled);
 
-    return (
+    return [
       <div class="toggle-icon">
         <div class="toggle-inner"/>
-      </div>
-    );
+      </div>,
+      <button
+        type="button"
+        onClick={this.onClick}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+        disabled={this.disabled}
+      >
+      </button>
+    ];
   }
 }
 

@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 
 import { CheckedInputChangeEvent, Color, Mode, StyleEvent } from '../../interface';
 import { findItemLabel } from '../../utils/helpers';
@@ -15,8 +15,6 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 export class Radio implements ComponentInterface {
 
   private inputId = `ion-rb-${radioButtonIds++}`;
-
-  @State() keyFocus = false;
 
   @Element() el!: HTMLElement;
 
@@ -130,37 +128,32 @@ export class Radio implements ComponentInterface {
     this.checked = true;
   }
 
-  private onKeyUp = () => {
-    this.keyFocus = true;
-  }
-
   private onFocus = () => {
     this.ionFocus.emit();
   }
 
   private onBlur = () => {
-    this.keyFocus = false;
     this.ionBlur.emit();
   }
 
   hostData() {
-    const labelId = this.inputId + '-lbl';
-    const label = findItemLabel(this.el);
+    const { inputId, disabled, checked, color, el } = this;
+    const labelId = inputId + '-lbl';
+    const label = findItemLabel(el);
     if (label) {
       label.id = labelId;
     }
     return {
       'role': 'radio',
-      'aria-disabled': this.disabled ? 'true' : null,
-      'aria-checked': `${this.checked}`,
+      'aria-disabled': disabled ? 'true' : null,
+      'aria-checked': `${checked}`,
       'aria-labelledby': labelId,
       class: {
-        ...createColorClasses(this.color),
-        'in-item': hostContext('ion-item', this.el),
+        ...createColorClasses(color),
+        'in-item': hostContext('ion-item', el),
         'interactive': true,
-        'radio-checked': this.checked,
-        'radio-disabled': this.disabled,
-        'radio-key': this.keyFocus
+        'radio-checked': checked,
+        'radio-disabled': disabled,
       }
     };
   }
@@ -173,9 +166,9 @@ export class Radio implements ComponentInterface {
       <button
         type="button"
         onClick={this.onClick}
-        onKeyUp={this.onKeyUp}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
+        disabled={this.disabled}
       >
       </button>,
     ];

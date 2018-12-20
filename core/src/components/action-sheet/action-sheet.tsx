@@ -209,6 +209,8 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   hostData() {
     return {
+      'role': 'dialog',
+      'aria-modal': 'true',
       style: {
         zIndex: 20000 + this.overlayIndex,
       },

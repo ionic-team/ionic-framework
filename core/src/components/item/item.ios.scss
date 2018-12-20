@@ -12,6 +12,7 @@
   --inner-border-width: #{0px 0px $item-ios-border-bottom-width 0px};
   --background: #{$item-ios-background};
   --background-activated: #{$item-ios-background-activated};
+  --background-focused: #{$item-ios-background-activated};
   --border-color: #{$item-ios-border-bottom-color};
   --color: #{$item-ios-color};
   --highlight-height: 0;

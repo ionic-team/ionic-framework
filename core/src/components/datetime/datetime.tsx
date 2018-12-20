@@ -24,7 +24,6 @@ export class Datetime implements ComponentInterface {
   @Element() el!: HTMLIonDatetimeElement;
 
   @State() isExpanded = false;
-  @State() keyFocus = false;
 
   @Prop({ connect: 'ion-picker-controller' }) pickerCtrl!: HTMLIonPickerControllerElement;
 
@@ -526,39 +525,36 @@ export class Datetime implements ComponentInterface {
     this.open();
   }
 
-  private onKeyUp = () => {
-    this.keyFocus = true;
-  }
-
   private onFocus = () => {
     this.ionFocus.emit();
   }
 
   private onBlur = () => {
-    this.keyFocus = false;
     this.ionBlur.emit();
   }
 
   hostData() {
-    const addPlaceholderClass =
-      (this.getText() === undefined && this.placeholder != null) ? true : false;
+    const { inputId, disabled, isExpanded, el, placeholder } = this;
 
-    const labelId = this.inputId + '-lbl';
-    const label = findItemLabel(this.el);
+    const addPlaceholderClass =
+      (this.getText() === undefined && placeholder != null) ? true : false;
+
+    const labelId = inputId + '-lbl';
+    const label = findItemLabel(el);
     if (label) {
       label.id = labelId;
     }
 
     return {
       'role': 'combobox',
-      'aria-disabled': this.disabled ? 'true' : null,
-      'aria-expanded': `${this.isExpanded}`,
+      'aria-disabled': disabled ? 'true' : null,
+      'aria-expanded': `${isExpanded}`,
       'aria-haspopup': 'true',
       'aria-labelledby': labelId,
       class: {
-        'datetime-disabled': this.disabled,
+        'datetime-disabled': disabled,
         'datetime-placeholder': addPlaceholderClass,
-        'in-item': hostContext('ion-item', this.el)
+        'in-item': hostContext('ion-item', el)
       }
     };
   }
@@ -577,9 +573,9 @@ export class Datetime implements ComponentInterface {
       <button
         type="button"
         onClick={this.onClick}
-        onKeyUp={this.onKeyUp}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
+        disabled={this.disabled}
       >
       </button>
     ];
