@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "4.0.0-beta.18",
+  "version": "4.0.0-rc.0",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -27,7 +27,7 @@
     "loader/"
   ],
   "dependencies": {
-    "ionicons": "4.5.0"
+    "ionicons": "4.5.1"
   },
   "devDependencies": {
     "@stencil/core": "0.16.1",

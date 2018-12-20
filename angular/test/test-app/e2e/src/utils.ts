@@ -1,5 +1,9 @@
 import { browser } from 'protractor';
 
+export function goBack() {
+  return browser.executeScript(`return window.history.back()`);
+}
+
 export function getProperty(selector: string, property: string) {
   return browser.executeScript(`
     return document.querySelector('${selector}')['${property}'];

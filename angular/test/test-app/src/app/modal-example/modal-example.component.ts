@@ -1,5 +1,5 @@
-import { Component, Input, NgZone, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, Input, NgZone, OnInit, Optional } from '@angular/core';
+import { ModalController, NavParams, IonNav } from '@ionic/angular';
 
 @Component({
   selector: 'app-modal-example',
@@ -9,6 +9,7 @@ export class ModalExampleComponent implements OnInit {
 
   @Input() value: string;
 
+  valueFromParams: string;
   onInit = 0;
   willEnter = 0;
   didEnter = 0;
@@ -16,8 +17,12 @@ export class ModalExampleComponent implements OnInit {
   didLeave = 0;
 
   constructor(
-    private modalCtrl: ModalController
-  ) {}
+    private modalCtrl: ModalController,
+    @Optional() public nav: IonNav,
+    navParams: NavParams
+  ) {
+    this.valueFromParams = navParams.get('prop');
+  }
 
   ngOnInit() {
     NgZone.assertInAngularZone();
@@ -43,8 +48,16 @@ export class ModalExampleComponent implements OnInit {
     NgZone.assertInAngularZone();
     this.didLeave++;
   }
-
   closeModal() {
     this.modalCtrl.dismiss();
+  }
+
+  push() {
+    this.nav.push(ModalExampleComponent, {
+      'value': 'pushed!'
+    });
+  }
+  pop() {
+    this.nav.pop();
   }
 }

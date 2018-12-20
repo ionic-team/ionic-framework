@@ -19,3 +19,22 @@ export class ModalExample {
   }
 }
 ```
+
+```typescript
+import { Component } from '@angular/core';
+import { NavParams } from '@ionic/angular';
+
+@Component({
+  selector: 'modal-page',
+})
+export class ModalExample {
+
+  // "value" passed in componentProps
+  @Input() value: number;
+
+  constructor(navParams: NavParams) {
+    // componentProps can also be accessed at construction time using NavParams
+  }
+
+}
+```

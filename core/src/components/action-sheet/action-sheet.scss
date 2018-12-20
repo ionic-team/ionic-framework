@@ -5,11 +5,26 @@
 
 :host {
   /**
+   * @prop --background: Background of the action sheet group
+   * @prop --background-activated: Background of the activated action sheet button
+   * @prop --background-selected: Background of the selected action sheet button
+   * @prop --color: Color of the action sheet text
+   *
+   * @prop --min-width: Minimum width of the action sheet
    * @prop --width: Width of the action sheet
    * @prop --max-width: Maximum width of the action sheet
+   *
+   * @prop --min-height: Minimum height of the action sheet
+   * @prop --height: height of the action sheet
+   * @prop --max-height: Maximum height of the action sheet
    */
+  --color: initial;
+  --min-width: auto;
   --width: #{$action-sheet-width};
   --max-width: #{$action-sheet-max-width};
+  --min-height: auto;
+  --height: 100%;
+  --max-height: 100%;
 
   @include font-smoothing();
   @include position(0, 0, 0, 0);
@@ -25,7 +40,7 @@
 }
 
 .action-sheet-wrapper {
-  @include position(0, 0, 0, 0);
+  @include position(null, 0, 0, 0);
   @include margin(auto);
   @include transform(translate3d(0, 100%, 0));
 
@@ -33,20 +48,29 @@
   position: absolute;
 
   width: var(--width);
+  min-width: var(--min-width);
   max-width: var(--max-width);
+
+  height: var(--height);
+  min-height: var(--min-height);
+  max-height: var(--max-height);
 
   z-index: $z-index-overlay-wrapper;
   pointer-events: none;
 }
 
 .action-sheet-button {
-  width: var(--width);
+  width: 100%;
 
   border: 0;
 
   outline: none;
 
   font-family: inherit;
+}
+
+.action-sheet-button.activated {
+  background: var(--background-activated);
 }
 
 .action-sheet-button-inner {
@@ -77,6 +101,8 @@
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   pointer-events: all;
+
+  background: var(--background);
 }
 
 .action-sheet-group::-webkit-scrollbar {
@@ -87,4 +113,8 @@
   flex-shrink: 0;
 
   overflow: hidden;
+}
+
+.action-sheet-selected {
+  background: var(--background-selected);
 }
