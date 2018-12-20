@@ -104,7 +104,7 @@ const DECLARATIONS = [
   c.VirtualFooter,
   c.VirtualHeader,
   c.VirtualItem,
-  c.VirtualScroll
+  c.IonVirtualScroll
 ];
 
 const PROVIDERS = [

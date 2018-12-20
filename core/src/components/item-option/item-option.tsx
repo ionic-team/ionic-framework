@@ -59,7 +59,7 @@ export class ItemOption implements ComponentInterface {
   }
 
   render() {
-    const TagType = this.href === undefined ? 'button' : 'a';
+    const TagType = this.href === undefined ? 'button' : 'a' as any;
 
     return (
       <TagType
