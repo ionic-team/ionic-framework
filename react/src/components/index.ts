@@ -2,6 +2,8 @@ import { Components as IoniconsComponents } from 'ionicons';
 import { Components } from '@ionic/core';
 import { createReactComponent } from './createComponent';
 
+export { AlertButton } from '@ionic/core';
+
 export { default as IonActionSheet } from './IonActionSheet';
 export { default as IonAlert } from './IonAlert';
 export { default as IonLoading } from './IonLoading';
