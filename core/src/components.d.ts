@@ -14,7 +14,6 @@ import {
   AlertButton,
   AlertInput,
   AlertOptions,
-  Animation,
   AnimationBuilder,
   CheckedInputChangeEvent,
   Color,
@@ -421,14 +420,6 @@ export namespace Components {
     */
     'routerDirection'?: RouterDirection;
   }
-
-  interface IonAnimationController {
-    /**
-    * Creates an animation instance
-    */
-    'create': (animationBuilder?: AnimationBuilder | undefined, baseEl?: any, opts?: any) => Promise<Animation>;
-  }
-  interface IonAnimationControllerAttributes extends StencilHTMLAttributes {}
 
   interface IonApp {}
   interface IonAppAttributes extends StencilHTMLAttributes {}
@@ -5187,7 +5178,6 @@ declare global {
     'IonAlertController': Components.IonAlertController;
     'IonAlert': Components.IonAlert;
     'IonAnchor': Components.IonAnchor;
-    'IonAnimationController': Components.IonAnimationController;
     'IonApp': Components.IonApp;
     'IonAvatar': Components.IonAvatar;
     'IonBackButton': Components.IonBackButton;
@@ -5288,7 +5278,6 @@ declare global {
     'ion-alert-controller': Components.IonAlertControllerAttributes;
     'ion-alert': Components.IonAlertAttributes;
     'ion-anchor': Components.IonAnchorAttributes;
-    'ion-animation-controller': Components.IonAnimationControllerAttributes;
     'ion-app': Components.IonAppAttributes;
     'ion-avatar': Components.IonAvatarAttributes;
     'ion-back-button': Components.IonBackButtonAttributes;
@@ -5412,12 +5401,6 @@ declare global {
   var HTMLIonAnchorElement: {
     prototype: HTMLIonAnchorElement;
     new (): HTMLIonAnchorElement;
-  };
-
-  interface HTMLIonAnimationControllerElement extends Components.IonAnimationController, HTMLStencilElement {}
-  var HTMLIonAnimationControllerElement: {
-    prototype: HTMLIonAnimationControllerElement;
-    new (): HTMLIonAnimationControllerElement;
   };
 
   interface HTMLIonAppElement extends Components.IonApp, HTMLStencilElement {}
@@ -5978,7 +5961,6 @@ declare global {
     'ion-alert-controller': HTMLIonAlertControllerElement
     'ion-alert': HTMLIonAlertElement
     'ion-anchor': HTMLIonAnchorElement
-    'ion-animation-controller': HTMLIonAnimationControllerElement
     'ion-app': HTMLIonAppElement
     'ion-avatar': HTMLIonAvatarElement
     'ion-back-button': HTMLIonBackButtonElement
@@ -6079,7 +6061,6 @@ declare global {
     'ion-alert-controller': HTMLIonAlertControllerElement;
     'ion-alert': HTMLIonAlertElement;
     'ion-anchor': HTMLIonAnchorElement;
-    'ion-animation-controller': HTMLIonAnimationControllerElement;
     'ion-app': HTMLIonAppElement;
     'ion-avatar': HTMLIonAvatarElement;
     'ion-back-button': HTMLIonBackButtonElement;
