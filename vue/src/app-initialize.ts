@@ -8,8 +8,8 @@ import { IonicConfig } from '@ionic/core';
 import '@ionic/core/dist/ionic/svg';
 
 
-// import '@ionic/core/css/ionic.bundle.css';
-// import 'ionicons/dist/collection/icon/icon.css';
+import '@ionic/core/css/ionic.bundle.css';
+import 'ionicons/dist/collection/icon/icon.css';
 
 import { defineCustomElements } from '@ionic/core/loader';
 import { IonicWindow } from './interfaces';
