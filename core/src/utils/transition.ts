@@ -76,7 +76,7 @@ async function getAnimationBuilder(opts: TransitionOptions): Promise<AnimationBu
 async function animation(animationBuilder: AnimationBuilder, opts: TransitionOptions): Promise<TransitionResult> {
   await waitForReady(opts, true);
 
-  const trans = await opts.animationCtrl.create(animationBuilder, opts.baseEl, opts);
+  const trans = await import('./animation').then(mod => mod.create(animationBuilder, opts.baseEl, opts));
   fireWillEvents(opts.enteringEl, opts.leavingEl);
   await playTransition(trans, opts);
   if (opts.progressCallback) {
@@ -214,7 +214,6 @@ function setZIndex(
 }
 
 export interface TransitionOptions extends NavOptions {
-  animationCtrl: HTMLIonAnimationControllerElement;
   queue: QueueApi;
   progressCallback?: ((ani: Animation | undefined) => void);
   window: Window;
