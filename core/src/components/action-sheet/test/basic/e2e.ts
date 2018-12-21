@@ -5,23 +5,51 @@ test('action-sheet: basic', async () => {
     url: `/src/components/action-sheet/test/basic?ionic:_testing=true`
   });
 
-  const presentBtn = await page.find('#basic');
-  await presentBtn.click();
+  const actionSheets = [
+    ['#basic', ''],
+    ['#alertFromActionSheet', 'alert from action sheet'],
+    ['#cancelOnly', 'cancel only'],
+    ['#custom', 'custom'],
+    ['#icons', 'icons'],
+    ['#noBackdropDismiss', 'no backdrop dismiss'],
+    ['#scrollableOptions', 'scrollable options'],
+    ['#scrollWithoutCancel', 'scroll without cancel'],
+  ];
 
-  let actionSheet = await page.find('ion-action-sheet');
-  await actionSheet.waitForVisible();
+  for (const [selector, message] of actionSheets) {
+    await page.click(selector);
 
-  let compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
+    let actionSheet = await page.find('ion-action-sheet');
+    expect(actionSheet).not.toBe(null);
+    await actionSheet.waitForVisible();
 
-  await actionSheet.callMethod('dismiss');
+    let compare = await page.compareScreenshot(message);
+    expect(compare).toMatchScreenshot();
 
-  await actionSheet.waitForNotVisible();
+    if (selector === '#alertFromActionSheet') {
+      const openAlertBtn = await page.find({ text: 'Open Alert' });
+      await openAlertBtn.click();
 
-  compare = await page.compareScreenshot(`dismissed`);
-  expect(compare).toMatchScreenshot();
+      const alert = await page.find('ion-alert');
+      await alert.waitForVisible();
+      await page.waitFor(250);
 
-  actionSheet = await page.find('ion-action-sheet');
+      compare = await page.compareScreenshot(`alert open`);
+      expect(compare).toMatchScreenshot();
 
-  expect(actionSheet).toBe(null);
+      const alertOkayBtn = await page.find({ contains: 'Okay' });
+      await alertOkayBtn.click();
+    }
+
+    // TODO no backdrop dismiss
+
+    await actionSheet.callMethod('dismiss');
+    await actionSheet.waitForNotVisible();
+
+    compare = await page.compareScreenshot(`dismissed`);
+    expect(compare).toMatchScreenshot();
+
+    actionSheet = await page.find('ion-action-sheet');
+    expect(actionSheet).toBe(null);
+  }
 });
