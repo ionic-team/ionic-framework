@@ -39,11 +39,11 @@ export class VueDelegate implements FrameworkDelegate {
       componentInstance.$mount();
 
       // Add any classes to the Vue component's root element
-      addClasses(componentInstance.$el, classes);
+      addClasses((componentInstance.$el as HTMLElement), classes);
 
       // Append the Vue component to DOM
       parentElement.appendChild(componentInstance.$el);
-      return componentInstance.$el;
+      return (componentInstance.$el as HTMLElement);
     });
   }
 
