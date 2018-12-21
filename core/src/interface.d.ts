@@ -34,7 +34,7 @@ export * from './global/config';
 export * from './utils/overlays-interface';
 
 // Global types
-export type TextFieldTypes = 'date' | 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' | 'time';
+export type TextFieldTypes = 'date' | 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' | 'time' | 'textarea';
 export type Side = 'start' | 'end';
 export type PredefinedColors = 'primary' | 'secondary' | 'tertiary' | 'success' | 'warning' | 'danger' | 'light' | 'medium' | 'dark';
 export type Color = PredefinedColors | string;
@@ -42,7 +42,7 @@ export type Mode = 'ios' | 'md';
 export type ComponentTags = keyof StencilIntrinsicElements;
 export type ComponentRef = Function | HTMLElement | string | null;
 export type ComponentProps<T = null> = T extends ComponentTags ? StencilIntrinsicElements[T] : {[key: string]: any};
-export type CssClassMap = { [className: string]: boolean };
+export interface CssClassMap { [className: string]: boolean }
 export interface BackButtonDetail {
   register(priority: number, handler: () => Promise<any> | void): void;
 }
