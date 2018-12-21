@@ -256,8 +256,8 @@ let rotateImg = 0;
 
 | Property             | Attribute              | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Type                                                                                     | Default     |
 | -------------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- | ----------- |
-| `approxFooterHeight` | `approx-footer-height` | The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This value can use either `px` or `%` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.                                                                                                           | `number`                                                                                 | `40`        |
-| `approxHeaderHeight` | `approx-header-height` | The approximate height of each header template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.                                                                                                            | `number`                                                                                 | `40`        |
+| `approxFooterHeight` | `approx-footer-height` | The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.                                                                                                             | `number`                                                                                 | `30`        |
+| `approxHeaderHeight` | `approx-header-height` | The approximate height of each header template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.                                                                                                            | `number`                                                                                 | `30`        |
 | `approxItemHeight`   | `approx-item-height`   | It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered. | `number`                                                                                 | `45`        |
 | `footerFn`           | --                     | Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.                                                                                                                                                                                                                | `((item: any, index: number, items: any[]) => string \| null \| undefined) \| undefined` | `undefined` |
 | `headerFn`           | --                     | Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.             | `((item: any, index: number, items: any[]) => string \| null \| undefined) \| undefined` | `undefined` |
@@ -271,7 +271,23 @@ let rotateImg = 0;
 
 ## Methods
 
-### `markDirty(offset: number, len?: number) => void`
+### `checkEnd() => void`
+
+This method marks the tail the items array as dirty, so they can be re-rendered.
+
+It's equivalent to calling:
+
+```js
+   * virtualScroll.checkRange(lastItemLen);
+   * ```
+
+#### Returns
+
+Type: `void`
+
+
+
+### `checkRange(offset: number, len?: number) => void`
 
 This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as
 dirty any time the content or their style changes.
@@ -284,22 +300,6 @@ The subset of items to be updated can are specifing by an offset and a length.
 | -------- | -------- | ----------- |
 | `offset` | `number` |             |
 | `len`    | `number` |             |
-
-#### Returns
-
-Type: `void`
-
-
-
-### `markDirtyTail() => void`
-
-This method marks the tail the items array as dirty, so they can be re-rendered.
-
-It's equivalent to calling:
-
-```
-   * virtualScroll.markDirty(lastItemLen, items.length - lastItemLen);
-   * ```
 
 #### Returns
 
