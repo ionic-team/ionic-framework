@@ -6,7 +6,7 @@
 
 :host {
   --background: #{$action-sheet-ios-background-color};
-  --background-selected: #{var(--background, $action-sheet-ios-button-background-selected)};
+  --background-selected: #{$action-sheet-ios-button-background-selected)};
   --background-activated: #{$action-sheet-ios-button-background-activated};
 
   text-align: $action-sheet-ios-text-align;
@@ -31,6 +31,8 @@
 .action-sheet-group {
   @include border-radius($action-sheet-ios-border-radius);
   @include margin(null, null, $action-sheet-ios-group-margin-bottom - 2, null);
+
+  overflow: hidden;
 }
 
 .action-sheet-group:first-child {
@@ -78,14 +80,16 @@
 // -----------------------------------------
 
 .action-sheet-button {
-  @include margin(0);
   @include padding($action-sheet-ios-button-padding);
 
   height: $action-sheet-ios-button-height;
 
-  border-bottom: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-button-border-color;
+  background-color: transparent;
+  background-image: linear-gradient(0deg, $action-sheet-ios-button-border-color, $action-sheet-ios-button-border-color 50%, transparent 50%);
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: 100% 1px;
 
-  background: transparent;
   color: var(--color, $action-sheet-ios-button-text-color);
 
   font-size: $action-sheet-ios-button-font-size;
@@ -100,17 +104,12 @@
 }
 
 .action-sheet-button:last-child {
-  border-bottom-color: transparent;
-}
-
-.action-sheet-button.activated {
-  @include margin(-$action-sheet-ios-button-border-width, null, null, null);
-
-  border-top: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style var(--background-activated);
-  border-bottom-color: var(--background-activated);
+  background-image: none;
 }
 
 .action-sheet-selected {
+  background: var(--background-selected);
+
   font-weight: bold;
 }
 
