@@ -1,7 +1,6 @@
 // Components interfaces
 export * from './components';
 export * from './index';
-export * from './components/animation-controller/animation-interface';
 export * from './components/alert/alert-interface';
 export * from './components/action-sheet/action-sheet-interface';
 export * from './components/content/content-interface';
@@ -30,8 +29,9 @@ export * from './components/virtual-scroll/virtual-scroll-interface';
 export { Gesture, GestureDetail } from './utils/gesture/gesture';
 
 export * from './utils/input-interface';
-export * from './global/config';
+export * from './utils/animation/animation-interface';
 export * from './utils/overlays-interface';
+export * from './global/config';
 
 // Global types
 export type TextFieldTypes = 'date' | 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' | 'time';
