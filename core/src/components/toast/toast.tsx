@@ -27,8 +27,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
   animation: Animation | undefined;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
-
   @Prop({ context: 'config' }) config!: Config;
 
   /**
