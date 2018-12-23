@@ -21,6 +21,10 @@ html {
   text-size-adjust: 100%;
 }
 
+html.plt-pwa {
+  height: 100vh;
+}
+
 body {
   @include font-smoothing();
   @include margin(0);

@@ -10,8 +10,9 @@ export function inputs(instance: any, el: ElementRef, props: string[]) {
 }
 
 export function proxyEvent<T>(emitter: Subject<T>, el: EventTarget, eventName: string) {
-  el.addEventListener(eventName, ev => {
-    emitter.next((ev as any).detail as T);
+  el.addEventListener(eventName, (ev: Event | undefined | null) => {
+    // ?? cordova might emit "null" events
+    emitter.next(ev != null ? (ev as any).detail as T : undefined);
   });
 }
 

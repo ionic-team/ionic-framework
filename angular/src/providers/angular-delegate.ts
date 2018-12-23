@@ -1,5 +1,5 @@
 import { ApplicationRef, ComponentFactoryResolver, Injectable, InjectionToken, Injector, NgZone, ViewContainerRef } from '@angular/core';
-import { FrameworkDelegate } from '@ionic/core';
+import { FrameworkDelegate, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE, LIFECYCLE_WILL_UNLOAD } from '@ionic/core';
 
 import { NavParams } from '../directives/navigation/nav-params';
 
@@ -106,11 +106,11 @@ export function attachView(
 }
 
 const LIFECYCLES = [
-  'ionViewWillEnter',
-  'ionViewDidEnter',
-  'ionViewWillLeave',
-  'ionViewDidLeave',
-  'ionViewWillUnload'
+  LIFECYCLE_WILL_ENTER,
+  LIFECYCLE_DID_ENTER,
+  LIFECYCLE_WILL_LEAVE,
+  LIFECYCLE_DID_LEAVE,
+  LIFECYCLE_WILL_UNLOAD
 ];
 
 export function bindLifecycleEvents(instance: any, element: HTMLElement) {

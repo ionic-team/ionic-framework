@@ -43,6 +43,23 @@
           </ion-segment-button>
         </ion-segment>
       </ion-toolbar>
+
+      <ion-toolbar class="themed">
+        <ion-segment value="delete">
+          <ion-segment-button value="create">
+            <ion-label>Create</ion-label>
+            <ion-icon name="create"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button value="delete">
+            <ion-label>Delete</ion-label>
+            <ion-icon name="trash"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button value="upload">
+            <ion-label>Upload</ion-label>
+            <ion-icon name="cloud-upload"></ion-icon>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
     </ion-header>
 
     <ion-content>
@@ -178,6 +195,14 @@
     word-wrap: normal;
     white-space: pre;
     color: #314361;
+  }
+
+  .themed {
+    --ion-toolbar-background: #3880ff;
+    --ion-toolbar-color: #fff;
+    --ion-toolbar-color-activated: #fff;
+    --ion-toolbar-color-unchecked: rgba(255, 255, 255, .6);
+    --ion-toolbar-color-checked: #fff;
   }
 
   .custom {

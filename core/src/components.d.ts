@@ -14,7 +14,6 @@ import {
   AlertButton,
   AlertInput,
   AlertOptions,
-  Animation,
   AnimationBuilder,
   CheckedInputChangeEvent,
   Color,
@@ -421,14 +420,6 @@ export namespace Components {
     */
     'routerDirection'?: RouterDirection;
   }
-
-  interface IonAnimationController {
-    /**
-    * Creates an animation instance
-    */
-    'create': (animationBuilder?: AnimationBuilder | undefined, baseEl?: any, opts?: any) => Promise<Animation>;
-  }
-  interface IonAnimationControllerAttributes extends StencilHTMLAttributes {}
 
   interface IonApp {}
   interface IonAppAttributes extends StencilHTMLAttributes {}
@@ -5074,7 +5065,7 @@ export namespace Components {
 
   interface IonVirtualScroll {
     /**
-    * The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This value can use either `px` or `%` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
+    * The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
     */
     'approxFooterHeight': number;
     /**
@@ -5085,6 +5076,14 @@ export namespace Components {
     * It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
     */
     'approxItemHeight': number;
+    /**
+    * This method marks the tail the items array as dirty, so they can be re-rendered.  It's equivalent to calling:  ```js    * virtualScroll.checkRange(lastItemLen);    * ```
+    */
+    'checkEnd': () => void;
+    /**
+    * This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as dirty any time the content or their style changes.  The subset of items to be updated can are specifing by an offset and a length.
+    */
+    'checkRange': (offset: number, len?: number) => void;
     'domRender'?: DomRenderFn;
     /**
     * Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.
@@ -5102,14 +5101,6 @@ export namespace Components {
     * The data that builds the templates within the virtual scroll. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
     */
     'items'?: any[];
-    /**
-    * This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as dirty any time the content or their style changes.  The subset of items to be updated can are specifing by an offset and a length.
-    */
-    'markDirty': (offset: number, len?: number) => void;
-    /**
-    * This method marks the tail the items array as dirty, so they can be re-rendered.  It's equivalent to calling:  ```    * virtualScroll.markDirty(lastItemLen, items.length - lastItemLen);    * ```
-    */
-    'markDirtyTail': () => void;
     /**
     * NOTE: only Vanilla JS API.
     */
@@ -5133,7 +5124,7 @@ export namespace Components {
   }
   interface IonVirtualScrollAttributes extends StencilHTMLAttributes {
     /**
-    * The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This value can use either `px` or `%` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
+    * The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
     */
     'approxFooterHeight'?: number;
     /**
@@ -5187,7 +5178,6 @@ declare global {
     'IonAlertController': Components.IonAlertController;
     'IonAlert': Components.IonAlert;
     'IonAnchor': Components.IonAnchor;
-    'IonAnimationController': Components.IonAnimationController;
     'IonApp': Components.IonApp;
     'IonAvatar': Components.IonAvatar;
     'IonBackButton': Components.IonBackButton;
@@ -5288,7 +5278,6 @@ declare global {
     'ion-alert-controller': Components.IonAlertControllerAttributes;
     'ion-alert': Components.IonAlertAttributes;
     'ion-anchor': Components.IonAnchorAttributes;
-    'ion-animation-controller': Components.IonAnimationControllerAttributes;
     'ion-app': Components.IonAppAttributes;
     'ion-avatar': Components.IonAvatarAttributes;
     'ion-back-button': Components.IonBackButtonAttributes;
@@ -5412,12 +5401,6 @@ declare global {
   var HTMLIonAnchorElement: {
     prototype: HTMLIonAnchorElement;
     new (): HTMLIonAnchorElement;
-  };
-
-  interface HTMLIonAnimationControllerElement extends Components.IonAnimationController, HTMLStencilElement {}
-  var HTMLIonAnimationControllerElement: {
-    prototype: HTMLIonAnimationControllerElement;
-    new (): HTMLIonAnimationControllerElement;
   };
 
   interface HTMLIonAppElement extends Components.IonApp, HTMLStencilElement {}
@@ -5978,7 +5961,6 @@ declare global {
     'ion-alert-controller': HTMLIonAlertControllerElement
     'ion-alert': HTMLIonAlertElement
     'ion-anchor': HTMLIonAnchorElement
-    'ion-animation-controller': HTMLIonAnimationControllerElement
     'ion-app': HTMLIonAppElement
     'ion-avatar': HTMLIonAvatarElement
     'ion-back-button': HTMLIonBackButtonElement
@@ -6079,7 +6061,6 @@ declare global {
     'ion-alert-controller': HTMLIonAlertControllerElement;
     'ion-alert': HTMLIonAlertElement;
     'ion-anchor': HTMLIonAnchorElement;
-    'ion-animation-controller': HTMLIonAnimationControllerElement;
     'ion-app': HTMLIonAppElement;
     'ion-avatar': HTMLIonAvatarElement;
     'ion-back-button': HTMLIonBackButtonElement;
