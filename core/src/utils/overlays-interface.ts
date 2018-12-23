@@ -16,7 +16,6 @@ export interface OverlayInterface {
   overlayIndex: number;
   presented: boolean;
   animation?: Animation;
-  animationCtrl: HTMLIonAnimationControllerElement;
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;

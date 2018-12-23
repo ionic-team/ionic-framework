@@ -18,7 +18,6 @@ Below is a list of components and their current status.  Please know that these 
 | `ion-action-sheet` | :white_check_mark:  | :black_square_button: |
 | `ion-alert` | :white_check_mark: | :black_square_button: |
 | `ion-anchor` | :white_check_mark: | :black_square_button: |
-| `ion-animation` | :black_square_button: | :black_square_button: |
 | `ion-app` | :white_check_mark: | :black_square_button: |
 | `ion-avatar` | :white_check_mark: | :black_square_button: |
 | `ion-back-button` | :black_square_button: | :black_square_button: |
