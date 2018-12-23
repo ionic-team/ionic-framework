@@ -29,7 +29,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   @Element() el!: HTMLStencilElement;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
 
   /** @internal */
