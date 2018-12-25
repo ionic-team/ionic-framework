@@ -73,6 +73,17 @@ export class RadioGroup implements ComponentInterface {
     }
   }
 
+  @Listen('ionDeselect')
+  onRadioDeselect(ev: Event) {
+    if (this.allowEmptySelection) {
+      const selectedRadio = ev.target as HTMLIonRadioElement | null;
+      if (selectedRadio) {
+        selectedRadio.checked = false;
+        this.value = undefined;
+      }
+    }
+  }
+
   componentDidLoad() {
     // Get the list header if it exists and set the id
     // this is used to set aria-labelledby

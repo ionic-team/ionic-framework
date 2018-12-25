@@ -74,6 +74,11 @@ export class Radio implements ComponentInterface {
   @Event() ionSelect!: EventEmitter<CheckedInputChangeEvent>;
 
   /**
+   * Emitted when checked radio button is selected.
+   */
+  @Event() ionDeselect!: EventEmitter<CheckedInputChangeEvent>;
+
+  /**
    * Emitted when the radio button has focus.
    */
   @Event() ionFocus!: EventEmitter<void>;
@@ -127,7 +132,11 @@ export class Radio implements ComponentInterface {
   }
 
   private onClick = () => {
-    this.checked = true;
+    if (this.checked === true) {
+      this.ionDeselect.emit();
+    } else {
+      this.checked = true;
+    }
   }
 
   private onKeyUp = () => {
