@@ -14,6 +14,10 @@ html {
   --ion-font-family: var(--ion-default-font);
 }
 
+body {
+  background: var(--ion-background-color);
+}
+
 body.backdrop-no-scroll {
   overflow: hidden;
 }
@@ -73,7 +77,6 @@ ion-route,
 ion-route-redirect,
 ion-router,
 ion-select-option,
-ion-animation-controller,
 ion-nav-controller,
 ion-menu-controller,
 ion-action-sheet-controller,

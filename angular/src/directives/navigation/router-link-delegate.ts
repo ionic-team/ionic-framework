@@ -1,9 +1,10 @@
-import { Directive, ElementRef, HostListener, Input, Optional } from '@angular/core';
-import { NavController, NavDirection } from '../../providers/nav-controller';
-import { Router, RouterLink } from '@angular/router';
 import { LocationStrategy } from '@angular/common';
+import { Directive, ElementRef, HostListener, Input, Optional } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { RouterDirection } from '@ionic/core';
 import { Subscription } from 'rxjs';
 
+import { NavController } from '../../providers/nav-controller';
 
 @Directive({
   selector: '[routerLink]',
@@ -12,7 +13,7 @@ export class RouterLinkDelegate {
 
   private subscription?: Subscription;
 
-  @Input() routerDirection: NavDirection = 'forward';
+  @Input() routerDirection: RouterDirection = 'forward';
 
   constructor(
     private locationStrategy: LocationStrategy,
@@ -45,10 +46,7 @@ export class RouterLinkDelegate {
 
   @HostListener('click', ['$event'])
   onClick(ev: UIEvent) {
-    if (this.routerDirection) {
-      this.navCtrl.setDirection(this.routerDirection);
-    }
+    this.navCtrl.setDirection(this.routerDirection);
     ev.preventDefault();
   }
 }
-

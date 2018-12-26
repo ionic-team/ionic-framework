@@ -1,7 +1,7 @@
 import { ApplicationRef, ComponentFactoryResolver, Injectable, InjectionToken, Injector, NgZone, ViewContainerRef } from '@angular/core';
-import { FrameworkDelegate } from '@ionic/core';
-import { NavParams } from '../directives/navigation/nav-params';
+import { FrameworkDelegate, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE, LIFECYCLE_WILL_UNLOAD } from '@ionic/core';
 
+import { NavParams } from '../directives/navigation/nav-params';
 
 @Injectable()
 export class AngularDelegate {
@@ -19,7 +19,6 @@ export class AngularDelegate {
     return new AngularFrameworkDelegate(resolver, injector, location, this.appRef, this.zone);
   }
 }
-
 
 export class AngularFrameworkDelegate implements FrameworkDelegate {
 
@@ -107,11 +106,11 @@ export function attachView(
 }
 
 const LIFECYCLES = [
-  'ionViewWillEnter',
-  'ionViewDidEnter',
-  'ionViewWillLeave',
-  'ionViewDidLeave',
-  'ionViewWillUnload'
+  LIFECYCLE_WILL_ENTER,
+  LIFECYCLE_DID_ENTER,
+  LIFECYCLE_WILL_LEAVE,
+  LIFECYCLE_DID_LEAVE,
+  LIFECYCLE_WILL_UNLOAD
 ];
 
 export function bindLifecycleEvents(instance: any, element: HTMLElement) {
@@ -132,7 +131,6 @@ export function bindLifecycleEvents(instance: any, element: HTMLElement) {
 }
 
 const NavParamsToken = new InjectionToken<any>('NavParamsToken');
-
 
 function getProviders(params: {[key: string]: any}) {
   return [

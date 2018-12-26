@@ -28,7 +28,6 @@ export class Popover implements ComponentInterface, OverlayInterface {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
 
   /** @internal */
@@ -223,9 +222,8 @@ export class Popover implements ComponentInterface, OverlayInterface {
       },
       'no-router': true,
       class: {
-        'popover-translucent': this.translucent,
-
         ...getClassMap(this.cssClass),
+        'popover-translucent': this.translucent
       }
     };
   }

@@ -204,6 +204,7 @@ export class Select implements ComponentInterface {
     const interfaceOptions = this.interfaceOptions;
 
     const popoverOpts: PopoverOptions = {
+      mode: this.mode,
       ...interfaceOptions,
 
       component: 'ion-select-popover',
@@ -253,6 +254,7 @@ export class Select implements ComponentInterface {
 
     const interfaceOptions = this.interfaceOptions;
     const actionSheetOpts: ActionSheetOptions = {
+      mode: this.mode,
       ...interfaceOptions,
 
       buttons: actionSheetButtons,
@@ -262,7 +264,6 @@ export class Select implements ComponentInterface {
   }
 
   private async openAlert() {
-
     const label = this.getLabel();
     const labelText = (label) ? label.textContent : null;
 
@@ -270,6 +271,7 @@ export class Select implements ComponentInterface {
     const inputType = (this.multiple ? 'checkbox' : 'radio');
 
     const alertOpts: AlertOptions = {
+      mode: this.mode,
       ...interfaceOptions,
 
       header: interfaceOptions.header ? interfaceOptions.header : labelText,

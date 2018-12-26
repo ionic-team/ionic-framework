@@ -12,7 +12,8 @@ import { iosLeaveAnimation } from './animations/ios.leave';
   styleUrls: {
     ios: 'picker.ios.scss',
     md: 'picker.md.scss'
-  }
+  },
+  scoped: true
 })
 export class Picker implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
@@ -22,7 +23,6 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
 
   /** @internal */
@@ -137,13 +137,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    await present(
-      this,
-      'pickerEnter',
-      iosEnterAnimation,
-      iosEnterAnimation,
-      undefined
-    );
+    await present(this, 'pickerEnter', iosEnterAnimation, iosEnterAnimation, undefined);
 
     if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
@@ -158,14 +152,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
-    return dismiss(
-      this,
-      data,
-      role,
-      'pickerLeave',
-      iosLeaveAnimation,
-      iosLeaveAnimation
-    );
+    return dismiss(this, data, role, 'pickerLeave', iosLeaveAnimation, iosLeaveAnimation);
   }
 
   /**
@@ -249,7 +236,6 @@ export class Picker implements ComponentInterface, OverlayInterface {
         tappable={this.backdropDismiss}
       >
       </ion-backdrop>,
-
       <div class="picker-wrapper" role="dialog">
         <div class="picker-toolbar">
           {this.buttons.map(b => (
@@ -266,9 +252,11 @@ export class Picker implements ComponentInterface, OverlayInterface {
         </div>
 
         <div class="picker-columns">
-          <div class="picker-above-highlight" />
-            {this.columns.map(c => <ion-picker-column col={c} />)}
-          <div class="picker-below-highlight" />
+          <div class="picker-above-highlight"></div>
+            {this.columns.map(c =>
+              <ion-picker-column col={c}></ion-picker-column>
+            )}
+          <div class="picker-below-highlight"></div>
         </div>
       </div>
     ];
