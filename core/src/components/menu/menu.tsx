@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { Animation, Config, Gesture, GestureDetail, MenuChangeEventDetail, MenuControllerI, MenuI, Mode, Side } from '../../interface';
-import { GESTURE_CONTROLLER } from '../../utils/gesture/gesture-controller';
+import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { assert, isEndSide as isEnd } from '../../utils/helpers';
 
 @Component({
@@ -174,7 +174,7 @@ export class Menu implements ComponentInterface, MenuI {
     // register this menu with the app's menu controller
     menuCtrl!._register(this);
 
-    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
+    this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.doc,
       queue: this.queue,
       gestureName: 'menu-swipe',
