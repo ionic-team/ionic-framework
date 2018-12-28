@@ -178,7 +178,7 @@ export class Menu implements ComponentInterface, MenuI {
       el: this.doc,
       queue: this.queue,
       gestureName: 'menu-swipe',
-      gesturePriority: 40,
+      gesturePriority: 30,
       threshold: 10,
       canStart: ev => this.canStart(ev),
       onWillStart: () => this.onWillStart(),
