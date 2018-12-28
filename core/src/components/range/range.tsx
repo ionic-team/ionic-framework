@@ -1,10 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { Color, Gesture, GestureDetail, InputChangeEvent, Mode, RangeValue, StyleEvent } from '../../interface';
+import { Color, Gesture, GestureDetail, KnobName, Mode, RangeChangeEventDetail, RangeValue, StyleEventDetail } from '../../interface';
 import { clamp, debounceEvent } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
-
-import { Knob, RangeEventDetail } from './range-interface';
 
 @Component({
   tag: 'ion-range',
@@ -28,7 +26,7 @@ export class Range implements ComponentInterface {
 
   @State() private ratioA = 0;
   @State() private ratioB = 0;
-  @State() private pressedKnob: Knob;
+  @State() private pressedKnob: KnobName;
 
   /**
    * The color to use from your application's color palette.
@@ -129,13 +127,13 @@ export class Range implements ComponentInterface {
   /**
    * Emitted when the value property has changed.
    */
-  @Event() ionChange!: EventEmitter<InputChangeEvent>;
+  @Event() ionChange!: EventEmitter<RangeChangeEventDetail>;
 
   /**
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   /**
    * Emitted when the range has focus.
@@ -165,23 +163,6 @@ export class Range implements ComponentInterface {
       onEnd: ev => this.onEnd(ev),
     });
     this.gesture.setDisabled(this.disabled);
-  }
-
-  @Listen('ionIncrease')
-  @Listen('ionDecrease')
-  keyChng(ev: CustomEvent<RangeEventDetail>) {
-    let step = this.step;
-    step = step > 0 ? step : 1;
-    step = step / (this.max - this.min);
-    if (!ev.detail.isIncrease) {
-      step *= -1;
-    }
-    if (ev.detail.knob === 'A') {
-      this.ratioA += step;
-    } else {
-      this.ratioB += step;
-    }
-    this.updateValue();
   }
 
   private handleKeyboard(knob: string, isIncrease: boolean) {

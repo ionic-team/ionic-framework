@@ -219,12 +219,12 @@ function openCustom() {
 
 ## Events
 
-| Event          | Description                                  | Detail |
-| -------------- | -------------------------------------------- | ------ |
-| `ionDidClose`  | Emitted when the menu is closed.             | void   |
-| `ionDidOpen`   | Emitted when the menu is open.               | void   |
-| `ionWillClose` | Emitted when the menu is about to be closed. | void   |
-| `ionWillOpen`  | Emitted when the menu is about to be opened. | void   |
+| Event          | Description                                  | Type                |
+| -------------- | -------------------------------------------- | ------------------- |
+| `ionDidClose`  | Emitted when the menu is closed.             | `CustomEvent<void>` |
+| `ionDidOpen`   | Emitted when the menu is open.               | `CustomEvent<void>` |
+| `ionWillClose` | Emitted when the menu is about to be closed. | `CustomEvent<void>` |
+| `ionWillOpen`  | Emitted when the menu is about to be opened. | `CustomEvent<void>` |
 
 
 ## Methods

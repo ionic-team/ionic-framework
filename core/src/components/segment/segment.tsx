@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
 
-import { Color, Mode, StyleEvent, TextInputChangeEvent } from '../../interface';
+import { Color, Mode, SegmentChangeEventDetail, StyleEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -51,12 +51,12 @@ export class Segment implements ComponentInterface {
   /**
    * Emitted when the value property has changed.
    */
-  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<SegmentChangeEventDetail>;
 
   /**
    * Emitted when the styles change.
    */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   @Listen('ionSelect')
   segmentClick(ev: CustomEvent) {

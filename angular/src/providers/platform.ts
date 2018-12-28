@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BackButtonDetail, Platforms, getPlatforms, isPlatform } from '@ionic/core';
+import { BackButtonEventDetail, Platforms, getPlatforms, isPlatform } from '@ionic/core';
 import { Subject, Subscription } from 'rxjs';
 
-export interface BackButtonEmitter extends Subject<BackButtonDetail> {
+export interface BackButtonEmitter extends Subject<BackButtonEventDetail> {
   subscribeWithPriority(priority: number, callback: () => Promise<any> | void): Subscription;
 }
 
@@ -14,7 +14,7 @@ export class Platform {
   /**
    * @hidden
    */
-  backButton: BackButtonEmitter = new Subject<BackButtonDetail>() as any;
+  backButton: BackButtonEmitter = new Subject<BackButtonEventDetail>() as any;
 
   /**
    * The pause event emits when the native platform puts the application
