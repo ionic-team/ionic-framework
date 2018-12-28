@@ -202,17 +202,9 @@ export namespace Components {
     */
     'onIonActionSheetDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
     /**
-    * Emitted after the alert has loaded.
-    */
-    'onIonActionSheetDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
     * Emitted after the alert has presented.
     */
     'onIonActionSheetDidPresent'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted after the alert has unloaded.
-    */
-    'onIonActionSheetDidUnload'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted before the alert has dismissed.
     */
@@ -371,15 +363,7 @@ export namespace Components {
     /**
     * Emitted after the alert has presented.
     */
-    'onIonAlertDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted after the alert has presented.
-    */
     'onIonAlertDidPresent'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted before the alert has presented.
-    */
-    'onIonAlertDidUnload'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted before the alert has dismissed.
     */
@@ -2298,17 +2282,9 @@ export namespace Components {
     */
     'onIonLoadingDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
     /**
-    * Emitted after the loading has loaded.
-    */
-    'onIonLoadingDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
     * Emitted after the loading has presented.
     */
     'onIonLoadingDidPresent'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted after the loading has unloaded.
-    */
-    'onIonLoadingDidUnload'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted before the loading has dismissed.
     */
@@ -2667,17 +2643,9 @@ export namespace Components {
     */
     'onIonModalDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
     /**
-    * Emitted after the modal has loaded.
-    */
-    'onIonModalDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
     * Emitted after the modal has presented.
     */
     'onIonModalDidPresent'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted after the modal has unloaded.
-    */
-    'onIonModalDidUnload'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted before the modal has dismissed.
     */
@@ -3008,17 +2976,9 @@ export namespace Components {
     */
     'onIonPickerDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
     /**
-    * Emitted after the picker has loaded.
-    */
-    'onIonPickerDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
     * Emitted after the picker has presented.
     */
     'onIonPickerDidPresent'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted after the picker has unloaded.
-    */
-    'onIonPickerDidUnload'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted before the picker has dismissed.
     */
@@ -3165,17 +3125,9 @@ export namespace Components {
     */
     'onIonPopoverDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
     /**
-    * Emitted after the popover has loaded.
-    */
-    'onIonPopoverDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
     * Emitted after the popover has presented.
     */
     'onIonPopoverDidPresent'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted after the popover has unloaded.
-    */
-    'onIonPopoverDidUnload'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted before the popover has dismissed.
     */
@@ -4946,17 +4898,9 @@ export namespace Components {
     */
     'onIonToastDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
     /**
-    * Emitted after the toast has loaded.
-    */
-    'onIonToastDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
     * Emitted after the toast has presented.
     */
     'onIonToastDidPresent'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted after the toast has unloaded.
-    */
-    'onIonToastDidUnload'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted before the toast has dismissed.
     */

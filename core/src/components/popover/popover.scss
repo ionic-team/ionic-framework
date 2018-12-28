@@ -35,6 +35,10 @@
   z-index: $z-index-overlay;
 }
 
+:host(.overlay-hidden) {
+  display: none;
+}
+
 .popover-wrapper {
   opacity: 0;
   z-index: $z-index-overlay-wrapper;
