@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
-import { CheckedInputChangeEvent, Color, Mode, StyleEvent } from '../../interface';
+import { Color, Mode, RadioChangeEventDetail, StyleEventDetail } from '../../interface';
 import { findItemLabel } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -54,11 +54,13 @@ export class Radio implements ComponentInterface {
 
   /**
    * Emitted when the radio loads.
+   * @internal
    */
   @Event() ionRadioDidLoad!: EventEmitter<void>;
 
   /**
    * Emitted when the radio unloads.
+   * @internal
    */
   @Event() ionRadioDidUnload!: EventEmitter<void>;
 
@@ -66,12 +68,12 @@ export class Radio implements ComponentInterface {
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   /**
    * Emitted when the radio button is selected.
    */
-  @Event() ionSelect!: EventEmitter<CheckedInputChangeEvent>;
+  @Event() ionSelect!: EventEmitter<RadioChangeEventDetail>;
 
   /**
    * Emitted when the radio button has focus.

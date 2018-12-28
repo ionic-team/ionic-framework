@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { CheckedInputChangeEvent, Color, Gesture, GestureDetail, Mode, StyleEvent } from '../../interface';
+import { Color, Gesture, GestureDetail, Mode, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
 import { hapticSelection } from '../../utils/haptic';
 import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
@@ -65,7 +65,7 @@ export class Toggle implements ComponentInterface {
   /**
    * Emitted when the value property has changed.
    */
-  @Event() ionChange!: EventEmitter<CheckedInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<ToggleChangeEventDetail>;
 
   /**
    * Emitted when the toggle has focus.
@@ -81,7 +81,7 @@ export class Toggle implements ComponentInterface {
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   @Watch('checked')
   checkedChanged(isChecked: boolean) {
