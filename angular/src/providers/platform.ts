@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { BackButtonDetail, Platforms, getPlatforms, isPlatform } from '@ionic/core';
 import { Subject, Subscription } from 'rxjs';
 
-import { proxyEvent } from '../util/util';
-
 export interface BackButtonEmitter extends Subject<BackButtonDetail> {
   subscribeWithPriority(priority: number, callback: () => Promise<any> | void): Subscription;
 }
@@ -176,4 +174,11 @@ function readQueryParam(url: string, key: string) {
   const regex = new RegExp('[\\?&]' + key + '=([^&#]*)');
   const results = regex.exec(url);
   return results ? decodeURIComponent(results[1].replace(/\+/g, ' ')) : null;
+}
+
+function proxyEvent<T>(emitter: Subject<T>, el: EventTarget, eventName: string) {
+  el.addEventListener(eventName, (ev: Event | undefined | null) => {
+    // ?? cordova might emit "null" events
+    emitter.next(ev != null ? (ev as any).detail as T : undefined);
+  });
 }
