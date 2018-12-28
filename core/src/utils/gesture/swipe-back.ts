@@ -1,6 +1,6 @@
 import { QueueApi } from '@stencil/core';
 
-import { Gesture, GestureDetail, createGesture } from './gesture';
+import { Gesture, GestureDetail, createGesture } from './index';
 
 export function createSwipeBackGesture(
   el: HTMLElement,

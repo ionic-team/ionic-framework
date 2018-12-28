@@ -26,7 +26,7 @@ export * from './components/virtual-scroll/virtual-scroll-interface';
 // TODO: review how this types are exported
 // Other types
 
-export { Gesture, GestureDetail } from './utils/gesture/gesture';
+export { Gesture, GestureDetail } from './utils/gesture';
 
 export * from './utils/input-interface';
 export * from './utils/animation/animation-interface';

@@ -154,7 +154,7 @@ export class Range implements ComponentInterface {
   }
 
   async componentDidLoad() {
-    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
+    this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.rangeSlider!,
       queue: this.queue,
       gestureName: 'range',

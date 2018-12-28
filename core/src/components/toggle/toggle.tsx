@@ -125,7 +125,7 @@ export class Toggle implements ComponentInterface {
   }
 
   async componentDidLoad() {
-    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
+    this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
       queue: this.queue,
       gestureName: 'toggle',
