@@ -203,7 +203,7 @@ ion-checkbox,prop,mode,"ios" | "md",undefined,false,false
 ion-checkbox,prop,name,string,this.inputId,false,false
 ion-checkbox,prop,value,string,'on',false,false
 ion-checkbox,event,ionBlur,void,true
-ion-checkbox,event,ionChange,CheckedInputChangeEvent,true
+ion-checkbox,event,ionChange,CheckboxChangeEventDetail,true
 ion-checkbox,event,ionFocus,void,true
 ion-checkbox,css-prop,--background
 ion-checkbox,css-prop,--background-checked
@@ -306,7 +306,7 @@ ion-datetime,prop,yearValues,number | number[] | string | undefined,undefined,fa
 ion-datetime,method,open,open() => Promise<void>
 ion-datetime,event,ionBlur,void,true
 ion-datetime,event,ionCancel,void,true
-ion-datetime,event,ionChange,InputChangeEvent,true
+ion-datetime,event,ionChange,DatetimeChangeEventDetail,true
 ion-datetime,event,ionFocus,void,true
 ion-datetime,css-prop,--padding-bottom
 ion-datetime,css-prop,--padding-end
@@ -425,11 +425,9 @@ ion-input,prop,type,"date" | "email" | "number" | "password" | "search" | "tel" 
 ion-input,prop,value,null | string | undefined,'',false,false
 ion-input,method,setFocus,setFocus() => void
 ion-input,event,ionBlur,void,true
-ion-input,event,ionChange,TextInputChangeEvent,true
+ion-input,event,ionChange,InputChangeEventDetail,true
 ion-input,event,ionFocus,void,true
 ion-input,event,ionInput,KeyboardEvent,true
-ion-input,event,ionInputDidLoad,void,true
-ion-input,event,ionInputDidUnload,void,true
 ion-input,css-prop,--background
 ion-input,css-prop,--color
 ion-input,css-prop,--padding-bottom
@@ -791,7 +789,7 @@ ion-radio-group
 ion-radio-group,prop,allowEmptySelection,boolean,false,false,false
 ion-radio-group,prop,name,string,this.inputId,false,false
 ion-radio-group,prop,value,any,undefined,false,false
-ion-radio-group,event,ionChange,InputChangeEvent,true
+ion-radio-group,event,ionChange,RadioGroupChangeEventDetail,true
 
 ion-radio
 ion-radio,prop,checked,boolean,false,false,false
@@ -802,9 +800,7 @@ ion-radio,prop,name,string,this.inputId,false,false
 ion-radio,prop,value,any,undefined,false,false
 ion-radio,event,ionBlur,void,true
 ion-radio,event,ionFocus,void,true
-ion-radio,event,ionRadioDidLoad,void,true
-ion-radio,event,ionRadioDidUnload,void,true
-ion-radio,event,ionSelect,CheckedInputChangeEvent,true
+ion-radio,event,ionSelect,RadioChangeEventDetail,true
 ion-radio,css-prop,--color
 ion-radio,css-prop,--color-checked
 
@@ -822,7 +818,7 @@ ion-range,prop,snaps,boolean,false,false,false
 ion-range,prop,step,number,1,false,false
 ion-range,prop,value,number | { lower: number; upper: number; },0,false,false
 ion-range,event,ionBlur,void,true
-ion-range,event,ionChange,InputChangeEvent,true
+ion-range,event,ionChange,RangeChangeEventDetail,true
 ion-range,event,ionFocus,void,true
 ion-range,css-prop,--bar-background
 ion-range,css-prop,--bar-background-active
@@ -856,7 +852,7 @@ ion-refresher,event,ionStart,void,true
 ion-reorder-group
 ion-reorder-group,prop,disabled,boolean,true,false,false
 ion-reorder-group,method,complete,complete(listOrReorder?: boolean | any[] | undefined) => Promise<any>
-ion-reorder-group,event,ionItemReorder,ItemReorderDetail,true
+ion-reorder-group,event,ionItemReorder,ItemReorderEventDetail,true
 
 ion-reorder
 
@@ -908,7 +904,7 @@ ion-searchbar,prop,value,null | string | undefined,'',false,false
 ion-searchbar,method,setFocus,setFocus() => void
 ion-searchbar,event,ionBlur,void,true
 ion-searchbar,event,ionCancel,void,true
-ion-searchbar,event,ionChange,TextInputChangeEvent,true
+ion-searchbar,event,ionChange,SearchbarChangeEventDetail,true
 ion-searchbar,event,ionClear,void,true
 ion-searchbar,event,ionFocus,void,true
 ion-searchbar,event,ionInput,KeyboardEvent,true
@@ -960,8 +956,8 @@ ion-segment,prop,disabled,boolean,false,false,false
 ion-segment,prop,mode,"ios" | "md",undefined,false,false
 ion-segment,prop,scrollable,boolean,false,false,false
 ion-segment,prop,value,null | string | undefined,undefined,false,false
-ion-segment,event,ionChange,TextInputChangeEvent,true
-ion-segment,event,ionStyle,StyleEvent,true
+ion-segment,event,ionChange,SegmentChangeEventDetail,true
+ion-segment,event,ionStyle,StyleEventDetail,true
 
 ion-select-option
 ion-select-option,prop,disabled,boolean,false,false,false
@@ -989,7 +985,7 @@ ion-select,prop,value,any,undefined,false,false
 ion-select,method,open,open(ev?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>
 ion-select,event,ionBlur,void,true
 ion-select,event,ionCancel,void,true
-ion-select,event,ionChange,SelectInputChangeEvent,true
+ion-select,event,ionChange,SelectChangeEventDetail,true
 ion-select,event,ionFocus,void,true
 ion-select,css-prop,--padding-bottom
 ion-select,css-prop,--padding-end
@@ -1119,7 +1115,7 @@ ion-textarea,prop,value,null | string | undefined,'',false,false
 ion-textarea,prop,wrap,"hard" | "off" | "soft" | undefined,undefined,false,false
 ion-textarea,method,setFocus,setFocus() => void
 ion-textarea,event,ionBlur,void,true
-ion-textarea,event,ionChange,TextInputChangeEvent,true
+ion-textarea,event,ionChange,TextareaChangeEventDetail,true
 ion-textarea,event,ionFocus,void,true
 ion-textarea,event,ionInput,KeyboardEvent,true
 ion-textarea,css-prop,--background
@@ -1194,7 +1190,7 @@ ion-toggle,prop,mode,"ios" | "md",undefined,false,false
 ion-toggle,prop,name,string,this.inputId,false,false
 ion-toggle,prop,value,null | string | undefined,'on',false,false
 ion-toggle,event,ionBlur,void,true
-ion-toggle,event,ionChange,CheckedInputChangeEvent,true
+ion-toggle,event,ionChange,ToggleChangeEventDetail,true
 ion-toggle,event,ionFocus,void,true
 ion-toggle,css-prop,--background
 ion-toggle,css-prop,--background-checked

@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
-import { Color, Mode, StyleEvent } from '../../interface';
+import { Color, Mode, StyleEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -35,7 +35,7 @@ export class Label implements ComponentInterface {
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   @State() noAnimate = false;
 

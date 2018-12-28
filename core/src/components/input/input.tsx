@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
-import { Color, Mode, StyleEvent, TextFieldTypes, TextInputChangeEvent } from '../../interface';
+import { Color, InputChangeEventDetail, Mode, StyleEventDetail, TextFieldTypes } from '../../interface';
 import { debounceEvent, findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -188,7 +188,7 @@ export class Input implements ComponentInterface {
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<InputChangeEventDetail>;
 
   /**
    * Emitted when the input loses focus.
@@ -202,11 +202,13 @@ export class Input implements ComponentInterface {
 
   /**
    * Emitted when the input has been created.
+   * @internal
    */
   @Event() ionInputDidLoad!: EventEmitter<void>;
 
   /**
    * Emitted when the input has been removed.
+   * @internal
    */
   @Event() ionInputDidUnload!: EventEmitter<void>;
 
@@ -214,7 +216,7 @@ export class Input implements ComponentInterface {
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   componentWillLoad() {
     // By default, password inputs clear after focus when they have content
