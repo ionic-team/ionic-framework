@@ -108,9 +108,7 @@ async function presentLoadingWithOptions() {
 | Event                   | Description                               | Type                              |
 | ----------------------- | ----------------------------------------- | --------------------------------- |
 | `ionLoadingDidDismiss`  | Emitted after the loading has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionLoadingDidLoad`     | Emitted after the loading has loaded.     | `CustomEvent<void>`               |
 | `ionLoadingDidPresent`  | Emitted after the loading has presented.  | `CustomEvent<void>`               |
-| `ionLoadingDidUnload`   | Emitted after the loading has unloaded.   | `CustomEvent<void>`               |
 | `ionLoadingWillDismiss` | Emitted before the loading has dismissed. | `CustomEvent<OverlayEventDetail>` |
 | `ionLoadingWillPresent` | Emitted before the loading has presented. | `CustomEvent<void>`               |
 
