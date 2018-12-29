@@ -21,9 +21,7 @@ ion-action-sheet,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetai
 ion-action-sheet,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<any>>
 ion-action-sheet,method,present,present() => Promise<void>
 ion-action-sheet,event,ionActionSheetDidDismiss,OverlayEventDetail,true
-ion-action-sheet,event,ionActionSheetDidLoad,void,true
 ion-action-sheet,event,ionActionSheetDidPresent,void,true
-ion-action-sheet,event,ionActionSheetDidUnload,void,true
 ion-action-sheet,event,ionActionSheetWillDismiss,OverlayEventDetail,true
 ion-action-sheet,event,ionActionSheetWillPresent,void,true
 ion-action-sheet,css-prop,--background
@@ -61,9 +59,7 @@ ion-alert,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>>
 ion-alert,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<any>>
 ion-alert,method,present,present() => Promise<void>
 ion-alert,event,ionAlertDidDismiss,OverlayEventDetail,true
-ion-alert,event,ionAlertDidLoad,void,true
 ion-alert,event,ionAlertDidPresent,void,true
-ion-alert,event,ionAlertDidUnload,void,true
 ion-alert,event,ionAlertWillDismiss,OverlayEventDetail,true
 ion-alert,event,ionAlertWillPresent,void,true
 ion-alert,css-prop,--background
@@ -553,9 +549,7 @@ ion-loading,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any
 ion-loading,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<any>>
 ion-loading,method,present,present() => Promise<void>
 ion-loading,event,ionLoadingDidDismiss,OverlayEventDetail,true
-ion-loading,event,ionLoadingDidLoad,void,true
 ion-loading,event,ionLoadingDidPresent,void,true
-ion-loading,event,ionLoadingDidUnload,void,true
 ion-loading,event,ionLoadingWillDismiss,OverlayEventDetail,true
 ion-loading,event,ionLoadingWillPresent,void,true
 ion-loading,css-prop,--background
@@ -639,9 +633,7 @@ ion-modal,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>>
 ion-modal,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<any>>
 ion-modal,method,present,present() => Promise<void>
 ion-modal,event,ionModalDidDismiss,OverlayEventDetail,true
-ion-modal,event,ionModalDidLoad,void,true
 ion-modal,event,ionModalDidPresent,void,true
-ion-modal,event,ionModalDidUnload,void,true
 ion-modal,event,ionModalWillDismiss,OverlayEventDetail,true
 ion-modal,event,ionModalWillPresent,void,true
 ion-modal,css-prop,--background
@@ -719,9 +711,7 @@ ion-picker,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>
 ion-picker,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<any>>
 ion-picker,method,present,present() => Promise<void>
 ion-picker,event,ionPickerDidDismiss,OverlayEventDetail,true
-ion-picker,event,ionPickerDidLoad,void,true
 ion-picker,event,ionPickerDidPresent,void,true
-ion-picker,event,ionPickerDidUnload,void,true
 ion-picker,event,ionPickerWillDismiss,OverlayEventDetail,true
 ion-picker,event,ionPickerWillPresent,void,true
 ion-picker,css-prop,--background
@@ -760,9 +750,7 @@ ion-popover,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any
 ion-popover,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<any>>
 ion-popover,method,present,present() => Promise<void>
 ion-popover,event,ionPopoverDidDismiss,OverlayEventDetail,true
-ion-popover,event,ionPopoverDidLoad,void,true
 ion-popover,event,ionPopoverDidPresent,void,true
-ion-popover,event,ionPopoverDidUnload,void,true
 ion-popover,event,ionPopoverWillDismiss,OverlayEventDetail,true
 ion-popover,event,ionPopoverWillPresent,void,true
 ion-popover,css-prop,--background
@@ -1162,9 +1150,7 @@ ion-toast,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>>
 ion-toast,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<any>>
 ion-toast,method,present,present() => Promise<void>
 ion-toast,event,ionToastDidDismiss,OverlayEventDetail,true
-ion-toast,event,ionToastDidLoad,void,true
 ion-toast,event,ionToastDidPresent,void,true
-ion-toast,event,ionToastDidUnload,void,true
 ion-toast,event,ionToastWillDismiss,OverlayEventDetail,true
 ion-toast,event,ionToastWillPresent,void,true
 ion-toast,css-prop,--background
