@@ -46,6 +46,10 @@
   contain: strict;
 }
 
+:host(.overlay-hidden) {
+  display: none;
+}
+
 .modal-wrapper {
   @include border-radius(var(--border-radius));
 
