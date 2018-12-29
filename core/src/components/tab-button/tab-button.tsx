@@ -63,7 +63,7 @@ export class TabButton implements ComponentInterface {
 
   @Listen('click')
   onClick(ev: Event) {
-    if (this.tab) {
+    if (this.tab !== undefined) {
       if (!this.disabled) {
         this.ionTabButtonClick.emit({
           tab: this.tab,
