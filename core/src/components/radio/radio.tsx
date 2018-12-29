@@ -75,6 +75,7 @@ export class Radio implements ComponentInterface {
 
   /**
    * Emitted when checked radio button is selected.
+   * @internal
    */
   @Event() ionDeselect!: EventEmitter<CheckedInputChangeEvent>;
 
@@ -132,7 +133,7 @@ export class Radio implements ComponentInterface {
   }
 
   private onClick = () => {
-    if (this.checked === true) {
+    if (this.checked) {
       this.ionDeselect.emit();
     } else {
       this.checked = true;
