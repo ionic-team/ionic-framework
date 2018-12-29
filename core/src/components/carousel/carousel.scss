@@ -1,0 +1,72 @@
+@import "../../themes/ionic.globals";
+
+// Slides
+// --------------------------------------------------
+
+:host {
+  --bullet-background: #{$text-color-step-800};
+  --bullet-background-active: #{ion-color(primary, base)};
+  --progress-bar-background: #{ion-color(primary, base)};
+  --snap-align: center;
+
+  width: 100%;
+  height: 100%;
+}
+
+.inner-scroll {
+  display: flex;
+
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+
+  touch-action: pan-x;
+}
+
+.inner-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+::slotted(*) {
+  display: block;
+
+  flex-shrink: 0;
+
+  width: 100%;
+  height: 100%;
+
+  scroll-snap-align: var(--snap-align);
+}
+
+.bullets-bar {
+  @include position(null, 0, 10px, 0);
+  position: fixed;
+
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.bullet {
+  background: var(--bullet-background);
+  width: 8px;
+  height: 8px;
+  display: block;
+  margin: 0 3px;
+  border-radius: 100%;
+}
+
+.bullet.active {
+  background: var(--bullet-background-active);
+}
+
+ion-progress-bar {
+  @include position(0, 0, null, 0);
+  position: fixed;
+
+  z-index: 1000;
+}

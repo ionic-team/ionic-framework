@@ -734,6 +734,14 @@ export namespace Components {
     'mode'?: Mode;
   }
 
+  interface IonCarousel {
+    'indicator'?: 'progress' | 'bullets';
+  }
+  interface IonCarouselAttributes extends StencilHTMLAttributes {
+    'indicator'?: 'progress' | 'bullets';
+    'onIonCarouselDrag'?: (event: CustomEvent) => void;
+  }
+
   interface IonCheckbox {
     /**
     * If `true`, the checkbox is selected.
@@ -5141,6 +5149,7 @@ declare global {
     'IonCardSubtitle': Components.IonCardSubtitle;
     'IonCardTitle': Components.IonCardTitle;
     'IonCard': Components.IonCard;
+    'IonCarousel': Components.IonCarousel;
     'IonCheckbox': Components.IonCheckbox;
     'IonChip': Components.IonChip;
     'IonCol': Components.IonCol;
@@ -5241,6 +5250,7 @@ declare global {
     'ion-card-subtitle': Components.IonCardSubtitleAttributes;
     'ion-card-title': Components.IonCardTitleAttributes;
     'ion-card': Components.IonCardAttributes;
+    'ion-carousel': Components.IonCarouselAttributes;
     'ion-checkbox': Components.IonCheckboxAttributes;
     'ion-chip': Components.IonChipAttributes;
     'ion-col': Components.IonColAttributes;
@@ -5424,6 +5434,12 @@ declare global {
   var HTMLIonCardElement: {
     prototype: HTMLIonCardElement;
     new (): HTMLIonCardElement;
+  };
+
+  interface HTMLIonCarouselElement extends Components.IonCarousel, HTMLStencilElement {}
+  var HTMLIonCarouselElement: {
+    prototype: HTMLIonCarouselElement;
+    new (): HTMLIonCarouselElement;
   };
 
   interface HTMLIonCheckboxElement extends Components.IonCheckbox, HTMLStencilElement {}
@@ -5924,6 +5940,7 @@ declare global {
     'ion-card-subtitle': HTMLIonCardSubtitleElement
     'ion-card-title': HTMLIonCardTitleElement
     'ion-card': HTMLIonCardElement
+    'ion-carousel': HTMLIonCarouselElement
     'ion-checkbox': HTMLIonCheckboxElement
     'ion-chip': HTMLIonChipElement
     'ion-col': HTMLIonColElement
@@ -6024,6 +6041,7 @@ declare global {
     'ion-card-subtitle': HTMLIonCardSubtitleElement;
     'ion-card-title': HTMLIonCardTitleElement;
     'ion-card': HTMLIonCardElement;
+    'ion-carousel': HTMLIonCarouselElement;
     'ion-checkbox': HTMLIonCheckboxElement;
     'ion-chip': HTMLIonChipElement;
     'ion-col': HTMLIonColElement;
