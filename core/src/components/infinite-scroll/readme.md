@@ -106,7 +106,7 @@ infiniteScroll.addEventListener('ionInfinite', function(event) {
 });
 
 function toggleInfiniteScroll() {
-  infiniteScroll.disabled = !infiniteScroll.disabled;
+  this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
 }
 ```
 
