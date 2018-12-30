@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State } from '@stencil/core';
 
-import { Config, Mode, TabBarChangedDetail, TabButtonClickDetail, TabButtonLayout } from '../../interface';
+import { Config, Mode, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
 
 @Component({
   tag: 'ion-tab-button',
@@ -54,10 +54,10 @@ export class TabButton implements ComponentInterface {
    * Emitted when the tab bar is clicked
    * @internal
    */
-  @Event() ionTabButtonClick!: EventEmitter<TabButtonClickDetail>;
+  @Event() ionTabButtonClick!: EventEmitter<TabButtonClickEventDetail>;
 
   @Listen('parent:ionTabBarChanged')
-  onTabBarChanged(ev: CustomEvent<TabBarChangedDetail>) {
+  onTabBarChanged(ev: CustomEvent<TabBarChangedEventDetail>) {
     this.selected = this.tab === ev.detail.tab;
   }
 

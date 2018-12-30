@@ -69,7 +69,7 @@ export class ItemSliding implements ComponentInterface {
 
     await this.updateOptions();
 
-    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
+    this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
       queue: this.queue,
       gestureName: 'item-swipe',

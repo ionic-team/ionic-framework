@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Listen, Prop, State } from '@stencil/core';
 
-import { Color, CssClassMap, Mode, RouterDirection, StyleEvent } from '../../interface';
+import { Color, CssClassMap, Mode, RouterDirection, StyleEventDetail } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 @Component({
@@ -76,7 +76,7 @@ export class Item implements ComponentInterface {
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   @Listen('ionStyle')
-  itemStyle(ev: CustomEvent<StyleEvent>) {
+  itemStyle(ev: CustomEvent<StyleEventDetail>) {
     ev.stopPropagation();
 
     const tagName = (ev.target as HTMLElement).tagName;

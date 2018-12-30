@@ -55,13 +55,11 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 
 ## Events
 
-| Event               | Description                                | Detail                  |
-| ------------------- | ------------------------------------------ | ----------------------- |
-| `ionBlur`           | Emitted when the radio button loses focus. | void                    |
-| `ionFocus`          | Emitted when the radio button has focus.   | void                    |
-| `ionRadioDidLoad`   | Emitted when the radio loads.              | void                    |
-| `ionRadioDidUnload` | Emitted when the radio unloads.            | void                    |
-| `ionSelect`         | Emitted when the radio button is selected. | CheckedInputChangeEvent |
+| Event       | Description                                | Type                                  |
+| ----------- | ------------------------------------------ | ------------------------------------- |
+| `ionBlur`   | Emitted when the radio button loses focus. | `CustomEvent<void>`                   |
+| `ionFocus`  | Emitted when the radio button has focus.   | `CustomEvent<void>`                   |
+| `ionSelect` | Emitted when the radio button is selected. | `CustomEvent<RadioChangeEventDetail>` |
 
 
 ## CSS Custom Properties

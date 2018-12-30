@@ -159,14 +159,12 @@ async function presentModal() {
 
 ## Events
 
-| Event                 | Description                             | Detail             |
-| --------------------- | --------------------------------------- | ------------------ |
-| `ionModalDidDismiss`  | Emitted after the modal has dismissed.  | OverlayEventDetail |
-| `ionModalDidLoad`     | Emitted after the modal has loaded.     | void               |
-| `ionModalDidPresent`  | Emitted after the modal has presented.  | void               |
-| `ionModalDidUnload`   | Emitted after the modal has unloaded.   | void               |
-| `ionModalWillDismiss` | Emitted before the modal has dismissed. | OverlayEventDetail |
-| `ionModalWillPresent` | Emitted before the modal has presented. | void               |
+| Event                 | Description                             | Type                              |
+| --------------------- | --------------------------------------- | --------------------------------- |
+| `ionModalDidDismiss`  | Emitted after the modal has dismissed.  | `CustomEvent<OverlayEventDetail>` |
+| `ionModalDidPresent`  | Emitted after the modal has presented.  | `CustomEvent<void>`               |
+| `ionModalWillDismiss` | Emitted before the modal has dismissed. | `CustomEvent<OverlayEventDetail>` |
+| `ionModalWillPresent` | Emitted before the modal has presented. | `CustomEvent<void>`               |
 
 
 ## Methods
