@@ -102,11 +102,11 @@ Toggles change the state of a single option. Toggles can be switched on or off b
 
 ## Events
 
-| Event       | Description                                  | Type                                   |
-| ----------- | -------------------------------------------- | -------------------------------------- |
-| `ionBlur`   | Emitted when the toggle loses focus.         | `CustomEvent<void>`                    |
-| `ionChange` | Emitted when the value property has changed. | `CustomEvent<ToggleChangeEventDetail>` |
-| `ionFocus`  | Emitted when the toggle has focus.           | `CustomEvent<void>`                    |
+| Event       | Description                                  | Detail                  |
+| ----------- | -------------------------------------------- | ----------------------- |
+| `ionBlur`   | Emitted when the toggle loses focus.         | void                    |
+| `ionChange` | Emitted when the value property has changed. | ToggleChangeEventDetail |
+| `ionFocus`  | Emitted when the toggle has focus.           | void                    |
 
 
 ## CSS Custom Properties

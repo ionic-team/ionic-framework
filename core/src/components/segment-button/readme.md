@@ -329,9 +329,9 @@ for (let i = 0; i < segmentButtons.length; i++) {
 
 ## Events
 
-| Event       | Description                                 | Type                |
-| ----------- | ------------------------------------------- | ------------------- |
-| `ionSelect` | Emitted when the segment button is clicked. | `CustomEvent<void>` |
+| Event       | Description                                 | Detail |
+| ----------- | ------------------------------------------- | ------ |
+| `ionSelect` | Emitted when the segment button is clicked. | void   |
 
 
 ## CSS Custom Properties

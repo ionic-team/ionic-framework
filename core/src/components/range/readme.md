@@ -104,11 +104,11 @@ left or right of the range.
 
 ## Events
 
-| Event       | Description                                  | Type                                  |
-| ----------- | -------------------------------------------- | ------------------------------------- |
-| `ionBlur`   | Emitted when the range loses focus.          | `CustomEvent<void>`                   |
-| `ionChange` | Emitted when the value property has changed. | `CustomEvent<RangeChangeEventDetail>` |
-| `ionFocus`  | Emitted when the range has focus.            | `CustomEvent<void>`                   |
+| Event       | Description                                  | Detail                 |
+| ----------- | -------------------------------------------- | ---------------------- |
+| `ionBlur`   | Emitted when the range loses focus.          | void                   |
+| `ionChange` | Emitted when the value property has changed. | RangeChangeEventDetail |
+| `ionFocus`  | Emitted when the range has focus.            | void                   |
 
 
 ## CSS Custom Properties

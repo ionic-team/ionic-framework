@@ -219,10 +219,10 @@ for (let i = 0; i < segments.length; i++) {
 
 ## Events
 
-| Event       | Description                                  | Type                                    |
-| ----------- | -------------------------------------------- | --------------------------------------- |
-| `ionChange` | Emitted when the value property has changed. | `CustomEvent<SegmentChangeEventDetail>` |
-| `ionStyle`  | Emitted when the styles change.              | `CustomEvent<StyleEventDetail>`         |
+| Event       | Description                                  | Detail                   |
+| ----------- | -------------------------------------------- | ------------------------ |
+| `ionChange` | Emitted when the value property has changed. | SegmentChangeEventDetail |
+| `ionStyle`  | Emitted when the styles change.              | StyleEventDetail         |
 
 
 ----------------------------------------------

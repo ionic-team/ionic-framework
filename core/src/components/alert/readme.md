@@ -548,12 +548,12 @@ async function presentAlertCheckbox() {
 
 ## Events
 
-| Event                 | Description                             | Type                              |
-| --------------------- | --------------------------------------- | --------------------------------- |
-| `ionAlertDidDismiss`  | Emitted after the alert has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionAlertDidPresent`  | Emitted after the alert has presented.  | `CustomEvent<void>`               |
-| `ionAlertWillDismiss` | Emitted before the alert has dismissed. | `CustomEvent<OverlayEventDetail>` |
-| `ionAlertWillPresent` | Emitted before the alert has presented. | `CustomEvent<void>`               |
+| Event                 | Description                             | Detail             |
+| --------------------- | --------------------------------------- | ------------------ |
+| `ionAlertDidDismiss`  | Emitted after the alert has dismissed.  | OverlayEventDetail |
+| `ionAlertDidPresent`  | Emitted after the alert has presented.  | void               |
+| `ionAlertWillDismiss` | Emitted before the alert has dismissed. | OverlayEventDetail |
+| `ionAlertWillPresent` | Emitted before the alert has presented. | void               |
 
 
 ## Methods

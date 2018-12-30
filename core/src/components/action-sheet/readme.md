@@ -143,12 +143,12 @@ async function presentActionSheet() {
 
 ## Events
 
-| Event                       | Description                             | Type                              |
-| --------------------------- | --------------------------------------- | --------------------------------- |
-| `ionActionSheetDidDismiss`  | Emitted after the alert has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionActionSheetDidPresent`  | Emitted after the alert has presented.  | `CustomEvent<void>`               |
-| `ionActionSheetWillDismiss` | Emitted before the alert has dismissed. | `CustomEvent<OverlayEventDetail>` |
-| `ionActionSheetWillPresent` | Emitted before the alert has presented. | `CustomEvent<void>`               |
+| Event                       | Description                             | Detail             |
+| --------------------------- | --------------------------------------- | ------------------ |
+| `ionActionSheetDidDismiss`  | Emitted after the alert has dismissed.  | OverlayEventDetail |
+| `ionActionSheetDidPresent`  | Emitted after the alert has presented.  | void               |
+| `ionActionSheetWillDismiss` | Emitted before the alert has dismissed. | OverlayEventDetail |
+| `ionActionSheetWillPresent` | Emitted before the alert has presented. | void               |
 
 
 ## Methods

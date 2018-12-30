@@ -79,7 +79,7 @@ export class Radio implements ComponentInterface {
    * Emitted when checked radio button is selected.
    * @internal
    */
-  @Event() ionDeselect!: EventEmitter<CheckedInputChangeEvent>;
+  @Event() ionDeselect!: EventEmitter<RadioChangeEventDetail>;
 
   /**
    * Emitted when the radio button has focus.

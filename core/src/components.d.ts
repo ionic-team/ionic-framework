@@ -3287,7 +3287,7 @@ export namespace Components {
     /**
     * Emitted when checked radio button is selected.
     */
-    'onIonDeselect'?: (event: CustomEvent<CheckedInputChangeEvent>) => void;
+    'onIonDeselect'?: (event: CustomEvent<RadioChangeEventDetail>) => void;
     /**
     * Emitted when the radio button has focus.
     */

@@ -110,11 +110,11 @@ export class HomePage {
 
 ## Events
 
-| Event       | Description                                    | Type                                     |
-| ----------- | ---------------------------------------------- | ---------------------------------------- |
-| `ionBlur`   | Emitted when the toggle loses focus.           | `CustomEvent<void>`                      |
-| `ionChange` | Emitted when the checked property has changed. | `CustomEvent<CheckboxChangeEventDetail>` |
-| `ionFocus`  | Emitted when the toggle has focus.             | `CustomEvent<void>`                      |
+| Event       | Description                                    | Detail                    |
+| ----------- | ---------------------------------------------- | ------------------------- |
+| `ionBlur`   | Emitted when the toggle loses focus.           | void                      |
+| `ionChange` | Emitted when the checked property has changed. | CheckboxChangeEventDetail |
+| `ionFocus`  | Emitted when the toggle has focus.             | void                      |
 
 
 ## CSS Custom Properties

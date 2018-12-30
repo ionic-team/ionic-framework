@@ -81,12 +81,12 @@ async function presentPopover(ev) {
 
 ## Events
 
-| Event                   | Description                               | Type                              |
-| ----------------------- | ----------------------------------------- | --------------------------------- |
-| `ionPopoverDidDismiss`  | Emitted after the popover has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionPopoverDidPresent`  | Emitted after the popover has presented.  | `CustomEvent<void>`               |
-| `ionPopoverWillDismiss` | Emitted before the popover has dismissed. | `CustomEvent<OverlayEventDetail>` |
-| `ionPopoverWillPresent` | Emitted before the popover has presented. | `CustomEvent<void>`               |
+| Event                   | Description                               | Detail             |
+| ----------------------- | ----------------------------------------- | ------------------ |
+| `ionPopoverDidDismiss`  | Emitted after the popover has dismissed.  | OverlayEventDetail |
+| `ionPopoverDidPresent`  | Emitted after the popover has presented.  | void               |
+| `ionPopoverWillDismiss` | Emitted before the popover has dismissed. | OverlayEventDetail |
+| `ionPopoverWillPresent` | Emitted before the popover has presented. | void               |
 
 
 ## Methods
