@@ -31,7 +31,7 @@ export declare interface IonVirtualScroll {
 export class IonVirtualScroll {
 
   private differ?: IterableDiffer<any>;
-  private nativeEl: HTMLIonVirtualScrollElement;
+  private el: HTMLIonVirtualScrollElement;
   private refMap = new WeakMap<HTMLElement, EmbeddedViewRef<VirtualContext>> ();
 
   @ContentChild(VirtualItem) itmTmp!: VirtualItem;
@@ -122,23 +122,8 @@ export class IonVirtualScroll {
     private iterableDiffers: IterableDiffers,
     elementRef: ElementRef,
   ) {
-    this.nativeEl = elementRef.nativeElement as HTMLIonVirtualScrollElement;
-    this.nativeEl.nodeRender = this.nodeRender.bind(this);
-
-    proxyInputs(this, this.nativeEl, [
-      'approxItemHeight',
-      'approxHeaderHeight',
-      'approxFooterHeight',
-      'headerFn',
-      'footerFn',
-      'items',
-      'itemHeight'
-    ]);
-    proxyMethods(this, this.nativeEl, [
-      'checkEnd',
-      'checkRange',
-      'positionForItem'
-    ]);
+    this.el = elementRef.nativeElement as HTMLIonVirtualScrollElement;
+    this.el.nodeRender = this.nodeRender.bind(this);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -208,3 +193,19 @@ function getElement(view: EmbeddedViewRef<VirtualContext>): HTMLElement {
   }
   throw new Error('virtual element was not created');
 }
+
+proxyInputs(IonVirtualScroll, [
+  'approxItemHeight',
+  'approxHeaderHeight',
+  'approxFooterHeight',
+  'headerFn',
+  'footerFn',
+  'items',
+  'itemHeight'
+]);
+
+proxyMethods(IonVirtualScroll, [
+  'checkEnd',
+  'checkRange',
+  'positionForItem'
+]);

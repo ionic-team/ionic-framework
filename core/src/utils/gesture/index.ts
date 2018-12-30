@@ -309,3 +309,5 @@ export interface GestureConfig {
   onEnd?: GestureCallback;
   notCaptured?: GestureCallback;
 }
+
+export { GESTURE_CONTROLLER };

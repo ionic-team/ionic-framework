@@ -98,16 +98,6 @@ export class Popover implements ComponentInterface, OverlayInterface {
   @Prop() animated = true;
 
   /**
-   * Emitted after the popover has loaded.
-   */
-  @Event() ionPopoverDidLoad!: EventEmitter<void>;
-
-  /**
-   * Emitted after the popover has unloaded.
-   */
-  @Event() ionPopoverDidUnload!: EventEmitter<void>;
-
-  /**
    * Emitted after the popover has presented.
    */
   @Event({ eventName: 'ionPopoverDidPresent' }) didPresent!: EventEmitter<void>;
@@ -126,14 +116,6 @@ export class Popover implements ComponentInterface, OverlayInterface {
    * Emitted after the popover has dismissed.
    */
   @Event({ eventName: 'ionPopoverDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
-
-  componentDidLoad() {
-    this.ionPopoverDidLoad.emit();
-  }
-
-  componentDidUnload() {
-    this.ionPopoverDidUnload.emit();
-  }
 
   @Listen('ionDismiss')
   protected onDismiss(ev: UIEvent) {
@@ -215,7 +197,6 @@ export class Popover implements ComponentInterface, OverlayInterface {
   }
 
   hostData() {
-
     return {
       style: {
         zIndex: 20000 + this.overlayIndex,

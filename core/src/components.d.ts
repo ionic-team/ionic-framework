@@ -15,18 +15,19 @@ import {
   AlertInput,
   AlertOptions,
   AnimationBuilder,
-  CheckedInputChangeEvent,
+  CheckboxChangeEventDetail,
   Color,
   ComponentProps,
   ComponentRef,
+  DatetimeChangeEventDetail,
   DatetimeOptions,
   DomRenderFn,
   FrameworkDelegate,
   HeaderFn,
-  InputChangeEvent,
+  InputChangeEventDetail,
   ItemHeightFn,
   ItemRenderFn,
-  ItemReorderDetail,
+  ItemReorderEventDetail,
   LoadingOptions,
   MenuChangeEventDetail,
   MenuControllerI,
@@ -40,6 +41,9 @@ import {
   PickerColumn,
   PickerOptions,
   PopoverOptions,
+  RadioChangeEventDetail,
+  RadioGroupChangeEventDetail,
+  RangeChangeEventDetail,
   RangeValue,
   RefresherEventDetail,
   RouteID,
@@ -49,20 +53,23 @@ import {
   RouteWrite,
   ScrollBaseDetail,
   ScrollDetail,
+  SearchbarChangeEventDetail,
   SegmentButtonLayout,
-  SelectInputChangeEvent,
+  SegmentChangeEventDetail,
+  SelectChangeEventDetail,
   SelectInterface,
   SelectPopoverOption,
   Side,
   SpinnerTypes,
-  StyleEvent,
+  StyleEventDetail,
   SwipeGestureHandler,
-  TabBarChangedDetail,
-  TabButtonClickDetail,
+  TabBarChangedEventDetail,
+  TabButtonClickEventDetail,
   TabButtonLayout,
+  TextareaChangeEventDetail,
   TextFieldTypes,
-  TextInputChangeEvent,
   ToastOptions,
+  ToggleChangeEventDetail,
   TransitionDoneFn,
   TransitionInstruction,
   ViewController,
@@ -195,17 +202,9 @@ export namespace Components {
     */
     'onIonActionSheetDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
     /**
-    * Emitted after the alert has loaded.
-    */
-    'onIonActionSheetDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
     * Emitted after the alert has presented.
     */
     'onIonActionSheetDidPresent'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted after the alert has unloaded.
-    */
-    'onIonActionSheetDidUnload'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted before the alert has dismissed.
     */
@@ -364,15 +363,7 @@ export namespace Components {
     /**
     * Emitted after the alert has presented.
     */
-    'onIonAlertDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted after the alert has presented.
-    */
     'onIonAlertDidPresent'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted before the alert has presented.
-    */
-    'onIonAlertDidUnload'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted before the alert has dismissed.
     */
@@ -797,7 +788,7 @@ export namespace Components {
     /**
     * Emitted when the checked property has changed.
     */
-    'onIonChange'?: (event: CustomEvent<CheckedInputChangeEvent>) => void;
+    'onIonChange'?: (event: CustomEvent<CheckboxChangeEventDetail>) => void;
     /**
     * Emitted when the toggle has focus.
     */
@@ -805,7 +796,7 @@ export namespace Components {
     /**
     * Emitted when the styles change.
     */
-    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
+    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
     /**
     * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
     */
@@ -1289,7 +1280,7 @@ export namespace Components {
     /**
     * Emitted when the value (selected date) has changed.
     */
-    'onIonChange'?: (event: CustomEvent<InputChangeEvent>) => void;
+    'onIonChange'?: (event: CustomEvent<DatetimeChangeEventDetail>) => void;
     /**
     * Emitted when the datetime has focus.
     */
@@ -1297,7 +1288,7 @@ export namespace Components {
     /**
     * Emitted when the styles change.
     */
-    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
+    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
     /**
     * The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.
     */
@@ -1807,7 +1798,7 @@ export namespace Components {
     /**
     * Emitted when the value has changed.
     */
-    'onIonChange'?: (event: CustomEvent<TextInputChangeEvent>) => void;
+    'onIonChange'?: (event: CustomEvent<InputChangeEventDetail>) => void;
     /**
     * Emitted when the input has focus.
     */
@@ -1827,7 +1818,7 @@ export namespace Components {
     /**
     * Emitted when the styles change.
     */
-    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
+    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
     /**
     * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
     */
@@ -2105,7 +2096,7 @@ export namespace Components {
     /**
     * Emitted when the styles change.
     */
-    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
+    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
     /**
     * The position determines where and how the label behaves inside an item.
     */
@@ -2291,17 +2282,9 @@ export namespace Components {
     */
     'onIonLoadingDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
     /**
-    * Emitted after the loading has loaded.
-    */
-    'onIonLoadingDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
     * Emitted after the loading has presented.
     */
     'onIonLoadingDidPresent'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted after the loading has unloaded.
-    */
-    'onIonLoadingDidUnload'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted before the loading has dismissed.
     */
@@ -2660,17 +2643,9 @@ export namespace Components {
     */
     'onIonModalDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
     /**
-    * Emitted after the modal has loaded.
-    */
-    'onIonModalDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
     * Emitted after the modal has presented.
     */
     'onIonModalDidPresent'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted after the modal has unloaded.
-    */
-    'onIonModalDidUnload'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted before the modal has dismissed.
     */
@@ -3001,17 +2976,9 @@ export namespace Components {
     */
     'onIonPickerDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
     /**
-    * Emitted after the picker has loaded.
-    */
-    'onIonPickerDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
     * Emitted after the picker has presented.
     */
     'onIonPickerDidPresent'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted after the picker has unloaded.
-    */
-    'onIonPickerDidUnload'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted before the picker has dismissed.
     */
@@ -3158,17 +3125,9 @@ export namespace Components {
     */
     'onIonPopoverDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
     /**
-    * Emitted after the popover has loaded.
-    */
-    'onIonPopoverDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
     * Emitted after the popover has presented.
     */
     'onIonPopoverDidPresent'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted after the popover has unloaded.
-    */
-    'onIonPopoverDidUnload'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted before the popover has dismissed.
     */
@@ -3267,7 +3226,7 @@ export namespace Components {
     /**
     * Emitted when the value has changed.
     */
-    'onIonChange'?: (event: CustomEvent<InputChangeEvent>) => void;
+    'onIonChange'?: (event: CustomEvent<RadioGroupChangeEventDetail>) => void;
     /**
     * the value of the radio group.
     */
@@ -3340,11 +3299,11 @@ export namespace Components {
     /**
     * Emitted when the radio button is selected.
     */
-    'onIonSelect'?: (event: CustomEvent<CheckedInputChangeEvent>) => void;
+    'onIonSelect'?: (event: CustomEvent<RadioChangeEventDetail>) => void;
     /**
     * Emitted when the styles change.
     */
-    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
+    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
     /**
     * the value of the radio.
     */
@@ -3441,7 +3400,7 @@ export namespace Components {
     /**
     * Emitted when the value property has changed.
     */
-    'onIonChange'?: (event: CustomEvent<InputChangeEvent>) => void;
+    'onIonChange'?: (event: CustomEvent<RangeChangeEventDetail>) => void;
     /**
     * Emitted when the range has focus.
     */
@@ -3449,7 +3408,7 @@ export namespace Components {
     /**
     * Emitted when the styles change.
     */
-    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
+    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
     /**
     * If `true`, a pin with integer value is shown when the knob is pressed.
     */
@@ -3592,7 +3551,7 @@ export namespace Components {
     /**
     * Event that needs to be listen to in order to respond to reorder action. `ion-reorder-group` uses this event to delegate to the user the reordering of data array.   The complete() method exposed as
     */
-    'onIonItemReorder'?: (event: CustomEvent<ItemReorderDetail>) => void;
+    'onIonItemReorder'?: (event: CustomEvent<ItemReorderEventDetail>) => void;
   }
 
   interface IonReorder {}
@@ -3862,7 +3821,7 @@ export namespace Components {
     /**
     * Emitted when the value has changed.
     */
-    'onIonChange'?: (event: CustomEvent<TextInputChangeEvent>) => void;
+    'onIonChange'?: (event: CustomEvent<SearchbarChangeEventDetail>) => void;
     /**
     * Emitted when the clear input button is clicked.
     */
@@ -3988,11 +3947,11 @@ export namespace Components {
     /**
     * Emitted when the value property has changed.
     */
-    'onIonChange'?: (event: CustomEvent<TextInputChangeEvent>) => void;
+    'onIonChange'?: (event: CustomEvent<SegmentChangeEventDetail>) => void;
     /**
     * Emitted when the styles change.
     */
-    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
+    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
     /**
     * If `true`, the segment buttons will overflow and the user can swipe to see them.
     */
@@ -4171,7 +4130,7 @@ export namespace Components {
     /**
     * Emitted when the value has changed.
     */
-    'onIonChange'?: (event: CustomEvent<SelectInputChangeEvent>) => void;
+    'onIonChange'?: (event: CustomEvent<SelectChangeEventDetail>) => void;
     /**
     * Emitted when the select has focus.
     */
@@ -4179,7 +4138,7 @@ export namespace Components {
     /**
     * Emitted when the styles change.
     */
-    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
+    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
     /**
     * The text to display when the select is empty.
     */
@@ -4470,7 +4429,7 @@ export namespace Components {
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
-    'onIonTabBarChanged'?: (event: CustomEvent<TabBarChangedDetail>) => void;
+    'onIonTabBarChanged'?: (event: CustomEvent<TabBarChangedEventDetail>) => void;
     /**
     * The selected tab component
     */
@@ -4523,7 +4482,7 @@ export namespace Components {
     /**
     * Emitted when the tab bar is clicked
     */
-    'onIonTabButtonClick'?: (event: CustomEvent<TabButtonClickDetail>) => void;
+    'onIonTabButtonClick'?: (event: CustomEvent<TabButtonClickEventDetail>) => void;
     /**
     * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
     */
@@ -4747,7 +4706,7 @@ export namespace Components {
     /**
     * Emitted when the input value has changed.
     */
-    'onIonChange'?: (event: CustomEvent<TextInputChangeEvent>) => void;
+    'onIonChange'?: (event: CustomEvent<TextareaChangeEventDetail>) => void;
     /**
     * Emitted when the input has focus.
     */
@@ -4759,7 +4718,7 @@ export namespace Components {
     /**
     * Emitted when the styles change.
     */
-    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
+    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
     /**
     * Instructional text that shows before the input has a value.
     */
@@ -4939,17 +4898,9 @@ export namespace Components {
     */
     'onIonToastDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
     /**
-    * Emitted after the toast has loaded.
-    */
-    'onIonToastDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
     * Emitted after the toast has presented.
     */
     'onIonToastDidPresent'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted after the toast has unloaded.
-    */
-    'onIonToastDidUnload'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted before the toast has dismissed.
     */
@@ -5027,7 +4978,7 @@ export namespace Components {
     /**
     * Emitted when the value property has changed.
     */
-    'onIonChange'?: (event: CustomEvent<CheckedInputChangeEvent>) => void;
+    'onIonChange'?: (event: CustomEvent<ToggleChangeEventDetail>) => void;
     /**
     * Emitted when the toggle has focus.
     */
@@ -5035,7 +4986,7 @@ export namespace Components {
     /**
     * Emitted when the styles change.
     */
-    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
+    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
     /**
     * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
     */
