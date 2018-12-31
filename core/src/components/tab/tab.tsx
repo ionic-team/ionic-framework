@@ -63,7 +63,6 @@ export class Tab implements ComponentInterface {
       'role': 'tabpanel',
       'aria-hidden': !active ? 'true' : null,
       'aria-labelledby': `tab-button-${tab}`,
-      'id': `tab-view-${tab}`,
       'class': {
         'ion-page': component === undefined,
         'tab-hidden': !active
