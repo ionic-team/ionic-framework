@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi } from '@stencil/core';
 
 import { Config, Mode, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
 
@@ -21,7 +21,7 @@ export class TabButton implements ComponentInterface {
   /**
    * The selected tab component
    */
-  @State() selected = false;
+  @Prop({ mutable: true }) selected = false;
 
   /**
    * The mode determines which platform styles to use.
@@ -43,7 +43,7 @@ export class TabButton implements ComponentInterface {
    * A tab id must be provided for each `ion-tab`. It's used internally to reference
    * the selected tab or by the router to switch between them.
    */
-  @Prop() tab!: string;
+  @Prop() tab?: string;
 
   /**
    * The selected tab component
@@ -63,22 +63,21 @@ export class TabButton implements ComponentInterface {
 
   @Listen('click')
   onClick(ev: Event) {
-    if (!this.disabled) {
-      this.ionTabButtonClick.emit({
-        tab: this.tab,
-        href: this.href,
-        selected: this.selected
-      });
+    if (this.tab !== undefined) {
+      if (!this.disabled) {
+        this.ionTabButtonClick.emit({
+          tab: this.tab,
+          href: this.href,
+          selected: this.selected
+        });
+      }
+      ev.preventDefault();
     }
-    ev.preventDefault();
   }
 
   componentWillLoad() {
     if (this.layout === undefined) {
       this.layout = this.config.get('tabButtonLayout', 'icon-top');
-    }
-    if (isNotDefined(this.tab)) {
-      console.error('Missing "tab" property in <ion-tab-button>');
     }
   }
 
@@ -95,8 +94,7 @@ export class TabButton implements ComponentInterface {
     return {
       'role': 'tab',
       'aria-selected': selected ? 'true' : null,
-      'id': `tab-button-${tab}`,
-      'aria-controls': `tab-view-${tab}`,
+      'id': tab !== undefined ? `tab-button-${tab}` : null,
       class: {
         'tab-selected': selected,
         'tab-disabled': disabled,
@@ -113,14 +111,10 @@ export class TabButton implements ComponentInterface {
   render() {
     const { mode, href } = this;
     return (
-      <a href={href || '#'}>
+      <a href={href}>
         <slot></slot>
         {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
       </a>
     );
   }
-}
-
-function isNotDefined(a: any) {
-  return a == null;
 }
