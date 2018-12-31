@@ -4390,9 +4390,13 @@ export namespace Components {
     */
     'mode': Mode;
     /**
+    * The selected tab component
+    */
+    'selected': boolean;
+    /**
     * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
     */
-    'tab': string;
+    'tab'?: string;
   }
   interface IonTabButtonAttributes extends StencilHTMLAttributes {
     /**
@@ -4412,9 +4416,13 @@ export namespace Components {
     */
     'mode'?: Mode;
     /**
+    * The selected tab component
+    */
+    'selected'?: boolean;
+    /**
     * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
     */
-    'tab': string;
+    'tab'?: string;
   }
 
   interface IonTab {
