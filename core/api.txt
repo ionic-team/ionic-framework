@@ -7,7 +7,7 @@ ion-action-sheet-controller,method,getTop,getTop() => Promise<HTMLIonActionSheet
 ion-action-sheet
 ion-action-sheet,prop,animated,boolean,true,false,false
 ion-action-sheet,prop,backdropDismiss,boolean,true,false,false
-ion-action-sheet,prop,buttons,(string | ActionSheetButton)[],undefined,false,false
+ion-action-sheet,prop,buttons,(string | ActionSheetButton)[],undefined,true,false
 ion-action-sheet,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-action-sheet,prop,enterAnimation,((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) | undefined,undefined,false,false
 ion-action-sheet,prop,header,string | undefined,undefined,false,false
@@ -620,7 +620,7 @@ ion-modal-controller,method,getTop,getTop() => Promise<HTMLIonModalElement | und
 ion-modal
 ion-modal,prop,animated,boolean,true,false,false
 ion-modal,prop,backdropDismiss,boolean,true,false,false
-ion-modal,prop,component,Function | HTMLElement | null | string,undefined,false,false
+ion-modal,prop,component,Function | HTMLElement | null | string,undefined,true,false
 ion-modal,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
 ion-modal,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-modal,prop,enterAnimation,((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) | undefined,undefined,false,false
@@ -686,8 +686,6 @@ ion-note,prop,color,string | undefined,undefined,false,false
 ion-note,prop,mode,"ios" | "md",undefined,false,false
 ion-note,css-prop,--color
 
-ion-picker-column
-
 ion-picker-controller
 ion-picker-controller,method,create,create(opts: PickerOptions) => Promise<HTMLIonPickerElement>
 ion-picker-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
@@ -735,7 +733,7 @@ ion-popover-controller,method,getTop,getTop() => Promise<HTMLIonPopoverElement |
 ion-popover
 ion-popover,prop,animated,boolean,true,false,false
 ion-popover,prop,backdropDismiss,boolean,true,false,false
-ion-popover,prop,component,Function | HTMLElement | null | string,undefined,false,false
+ion-popover,prop,component,Function | HTMLElement | null | string,undefined,true,false
 ion-popover,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
 ion-popover,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-popover,prop,enterAnimation,((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) | undefined,undefined,false,false
@@ -849,12 +847,12 @@ ion-ripple-effect,prop,type,"bounded" | "unbounded",'bounded',false,false
 ion-ripple-effect,method,addRipple,addRipple(pageX: number, pageY: number) => Promise<() => void>
 
 ion-route-redirect
-ion-route-redirect,prop,from,string,undefined,false,false
-ion-route-redirect,prop,to,null | string | undefined,undefined,false,false
+ion-route-redirect,prop,from,string,undefined,true,false
+ion-route-redirect,prop,to,null | string | undefined,undefined,true,false
 ion-route-redirect,event,ionRouteRedirectChanged,void,true
 
 ion-route
-ion-route,prop,component,string,undefined,false,false
+ion-route,prop,component,string,undefined,true,false
 ion-route,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
 ion-route,prop,url,string,'',false,false
 ion-route,event,ionRouteDataChanged,any,true
@@ -951,12 +949,6 @@ ion-select-option
 ion-select-option,prop,disabled,boolean,false,false,false
 ion-select-option,prop,selected,boolean,false,false,false
 ion-select-option,prop,value,any,undefined,false,false
-
-ion-select-popover
-ion-select-popover,prop,header,string | undefined,undefined,false,false
-ion-select-popover,prop,message,string | undefined,undefined,false,false
-ion-select-popover,prop,options,SelectPopoverOption[],[],false,false
-ion-select-popover,prop,subHeader,string | undefined,undefined,false,false
 
 ion-select
 ion-select,prop,cancelText,string,'Cancel',false,false
@@ -1067,7 +1059,7 @@ ion-tab-button,css-prop,--ripple-color
 
 ion-tab
 ion-tab,prop,component,Function | HTMLElement | null | string | undefined,undefined,false,false
-ion-tab,prop,tab,string,undefined,false,false
+ion-tab,prop,tab,string,undefined,true,false
 ion-tab,method,setActive,setActive() => Promise<void>
 
 ion-tabs
