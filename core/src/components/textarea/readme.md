@@ -122,12 +122,12 @@ The textarea component accepts the [native textarea attributes](https://develope
 
 ## Events
 
-| Event       | Description                               | Detail               |
-| ----------- | ----------------------------------------- | -------------------- |
-| `ionBlur`   | Emitted when the input loses focus.       | void                 |
-| `ionChange` | Emitted when the input value has changed. | TextInputChangeEvent |
-| `ionFocus`  | Emitted when the input has focus.         | void                 |
-| `ionInput`  | Emitted when a keyboard input ocurred.    | KeyboardEvent        |
+| Event       | Description                               | Type                                     |
+| ----------- | ----------------------------------------- | ---------------------------------------- |
+| `ionBlur`   | Emitted when the input loses focus.       | `CustomEvent<void>`                      |
+| `ionChange` | Emitted when the input value has changed. | `CustomEvent<TextareaChangeEventDetail>` |
+| `ionFocus`  | Emitted when the input has focus.         | `CustomEvent<void>`                      |
+| `ionInput`  | Emitted when a keyboard input ocurred.    | `CustomEvent<KeyboardEvent>`             |
 
 
 ## Methods

@@ -112,10 +112,10 @@ This attribute specifies the size of the button. Setting this attribute will cha
 
 ## Events
 
-| Event      | Description                          | Detail |
-| ---------- | ------------------------------------ | ------ |
-| `ionBlur`  | Emitted when the button loses focus. | void   |
-| `ionFocus` | Emitted when the button has focus.   | void   |
+| Event      | Description                          | Type                |
+| ---------- | ------------------------------------ | ------------------- |
+| `ionBlur`  | Emitted when the button loses focus. | `CustomEvent<void>` |
+| `ionFocus` | Emitted when the button has focus.   | `CustomEvent<void>` |
 
 
 ## CSS Custom Properties
