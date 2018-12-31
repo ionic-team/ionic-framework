@@ -213,7 +213,6 @@ export namespace Components {
     * Emitted before the alert has presented.
     */
     'onIonActionSheetWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
     /**
     * Subtitle for the action sheet.
     */
@@ -372,7 +371,6 @@ export namespace Components {
     * Emitted before the alert has presented.
     */
     'onIonAlertWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
     /**
     * The subtitle in the heading of the alert. Displayed under the title.
     */
@@ -793,10 +791,6 @@ export namespace Components {
     * Emitted when the toggle has focus.
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the styles change.
-    */
-    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
     /**
     * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
     */
@@ -1285,10 +1279,6 @@ export namespace Components {
     * Emitted when the datetime has focus.
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the styles change.
-    */
-    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
     /**
     * The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.
     */
@@ -1808,18 +1798,6 @@ export namespace Components {
     */
     'onIonInput'?: (event: CustomEvent<KeyboardEvent>) => void;
     /**
-    * Emitted when the input has been created.
-    */
-    'onIonInputDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the input has been removed.
-    */
-    'onIonInputDidUnload'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the styles change.
-    */
-    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
-    /**
     * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
     */
     'pattern'?: string;
@@ -2094,10 +2072,6 @@ export namespace Components {
     */
     'mode'?: Mode;
     /**
-    * Emitted when the styles change.
-    */
-    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
-    /**
     * The position determines where and how the label behaves inside an item.
     */
     'position'?: 'fixed' | 'stacked' | 'floating';
@@ -2293,7 +2267,6 @@ export namespace Components {
     * Emitted before the loading has presented.
     */
     'onIonLoadingWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
     /**
     * If `true`, a backdrop will be displayed behind the loading indicator.
     */
@@ -2499,10 +2472,6 @@ export namespace Components {
     */
     'onIonDidOpen'?: (event: CustomEvent<void>) => void;
     /**
-    * Emitted when the menu state is changed.
-    */
-    'onIonMenuChange'?: (event: CustomEvent<MenuChangeEventDetail>) => void;
-    /**
     * Emitted when the menu is about to be closed.
     */
     'onIonWillClose'?: (event: CustomEvent<void>) => void;
@@ -2621,7 +2590,6 @@ export namespace Components {
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
     'cssClass'?: string | string[];
-    'delegate'?: FrameworkDelegate;
     /**
     * Animation to use when the modal is presented.
     */
@@ -2654,7 +2622,6 @@ export namespace Components {
     * Emitted before the modal has presented.
     */
     'onIonModalWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
     /**
     * If `true`, a backdrop will be displayed behind the modal.
     */
@@ -2792,7 +2759,6 @@ export namespace Components {
     * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions.
     */
     'animation'?: AnimationBuilder;
-    'delegate'?: FrameworkDelegate;
     /**
     * Event fired when the nav has changed components
     */
@@ -2841,9 +2807,15 @@ export namespace Components {
   }
 
   interface IonPickerColumn {
+    /**
+    * Picker column data
+    */
     'col': PickerColumn;
   }
   interface IonPickerColumnAttributes extends StencilHTMLAttributes {
+    /**
+    * Picker column data
+    */
     'col': PickerColumn;
   }
 
@@ -2987,7 +2959,6 @@ export namespace Components {
     * Emitted before the picker has presented.
     */
     'onIonPickerWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
     /**
     * If `true`, a backdrop will be displayed behind the picker.
     */
@@ -3099,7 +3070,6 @@ export namespace Components {
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
     'cssClass'?: string | string[];
-    'delegate'?: FrameworkDelegate;
     /**
     * Animation to use when the popover is presented.
     */
@@ -3136,7 +3106,6 @@ export namespace Components {
     * Emitted before the popover has presented.
     */
     'onIonPopoverWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
     /**
     * If `true`, a backdrop will be displayed behind the popover.
     */
@@ -3285,29 +3254,13 @@ export namespace Components {
     */
     'onIonBlur'?: (event: CustomEvent<void>) => void;
     /**
-    * Emitted when checked radio button is selected.
-    */
-    'onIonDeselect'?: (event: CustomEvent<RadioChangeEventDetail>) => void;
-    /**
     * Emitted when the radio button has focus.
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
     /**
-    * Emitted when the radio loads.
-    */
-    'onIonRadioDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the radio unloads.
-    */
-    'onIonRadioDidUnload'?: (event: CustomEvent<void>) => void;
-    /**
     * Emitted when the radio button is selected.
     */
     'onIonSelect'?: (event: CustomEvent<RadioChangeEventDetail>) => void;
-    /**
-    * Emitted when the styles change.
-    */
-    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
     /**
     * the value of the radio.
     */
@@ -3409,10 +3362,6 @@ export namespace Components {
     * Emitted when the range has focus.
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the styles change.
-    */
-    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
     /**
     * If `true`, a pin with integer value is shown when the knob is pressed.
     */
@@ -3661,12 +3610,6 @@ export namespace Components {
     * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions.
     */
     'animation'?: AnimationBuilder;
-    'delegate'?: FrameworkDelegate;
-    'mode'?: Mode;
-    'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
-    'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
-    'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
-    'swipeHandler'?: SwipeGestureHandler;
   }
 
   interface IonRouter {
@@ -3986,14 +3929,6 @@ export namespace Components {
     */
     'disabled'?: boolean;
     /**
-    * Emitted when the select option loads.
-    */
-    'onIonSelectOptionDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the select option unloads.
-    */
-    'onIonSelectOptionDidUnload'?: (event: CustomEvent<void>) => void;
-    /**
     * If `true`, the element is selected.
     */
     'selected'?: boolean;
@@ -4140,10 +4075,6 @@ export namespace Components {
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
     /**
-    * Emitted when the styles change.
-    */
-    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
-    /**
     * The text to display when the select is empty.
     */
     'placeholder'?: string | null;
@@ -4171,9 +4102,7 @@ export namespace Components {
   }
 
   interface IonSlide {}
-  interface IonSlideAttributes extends StencilHTMLAttributes {
-    'onIonSlideChanged'?: (event: CustomEvent<void>) => void;
-  }
+  interface IonSlideAttributes extends StencilHTMLAttributes {}
 
   interface IonSlides {
     /**
@@ -4433,7 +4362,6 @@ export namespace Components {
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
-    'onIonTabBarChanged'?: (event: CustomEvent<TabBarChangedEventDetail>) => void;
     /**
     * The selected tab component
     */
@@ -4488,10 +4416,6 @@ export namespace Components {
     */
     'mode'?: Mode;
     /**
-    * Emitted when the tab bar is clicked
-    */
-    'onIonTabButtonClick'?: (event: CustomEvent<TabButtonClickEventDetail>) => void;
-    /**
     * The selected tab component
     */
     'selected'?: boolean;
@@ -4518,12 +4442,10 @@ export namespace Components {
     'tab': string;
   }
   interface IonTabAttributes extends StencilHTMLAttributes {
-    'active'?: boolean;
     /**
     * The component to display inside of the tab.
     */
     'component'?: ComponentRef;
-    'delegate'?: FrameworkDelegate;
     /**
     * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
     */
@@ -4564,7 +4486,6 @@ export namespace Components {
     * Emitted when the navigation will load a component.
     */
     'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
-    'useRouter'?: boolean;
   }
 
   interface IonText {
@@ -4727,10 +4648,6 @@ export namespace Components {
     * Emitted when a keyboard input ocurred.
     */
     'onIonInput'?: (event: CustomEvent<KeyboardEvent>) => void;
-    /**
-    * Emitted when the styles change.
-    */
-    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
     /**
     * Instructional text that shows before the input has a value.
     */
@@ -4921,7 +4838,6 @@ export namespace Components {
     * Emitted before the toast has presented.
     */
     'onIonToastWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
     /**
     * The position of the toast on the screen.
     */
@@ -4995,10 +4911,6 @@ export namespace Components {
     * Emitted when the toggle has focus.
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the styles change.
-    */
-    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
     /**
     * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
     */
@@ -5098,7 +5010,6 @@ export namespace Components {
     * It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
     */
     'approxItemHeight'?: number;
-    'domRender'?: DomRenderFn;
     /**
     * Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.
     */
