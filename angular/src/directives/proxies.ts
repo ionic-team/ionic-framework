@@ -600,13 +600,14 @@ export class IonRadio {
   ionRadioDidUnload!: EventEmitter<CustomEvent>;
   ionStyle!: EventEmitter<CustomEvent>;
   ionSelect!: EventEmitter<CustomEvent>;
+  ionDeselect!: EventEmitter<CustomEvent>;
   ionFocus!: EventEmitter<CustomEvent>;
   ionBlur!: EventEmitter<CustomEvent>;
   el: HTMLElement
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionRadioDidLoad', 'ionRadioDidUnload', 'ionStyle', 'ionSelect', 'ionFocus', 'ionBlur']);
+    proxyOutputs(this, this.el, ['ionRadioDidLoad', 'ionRadioDidUnload', 'ionStyle', 'ionSelect', 'ionDeselect', 'ionFocus', 'ionBlur']);
   }
 }
 proxyInputs(IonRadio, ['color', 'mode', 'name', 'disabled', 'checked', 'value']);
