@@ -38,7 +38,7 @@ Separating the `ion-infinite-scroll` and `ion-infinite-scroll-content` component
 
 ```typescript
 import { Component, ViewChild } from '@angular/core';
-import { InfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll } from '@ionic/angular';
 
 @Component({
   selector: 'infinite-scroll-example',
@@ -46,7 +46,7 @@ import { InfiniteScroll } from '@ionic/angular';
   styleUrls: ['./infinite-scroll-example.css']
 })
 export class InfiniteScrollExample {
-  @ViewChild(InfiniteScroll) infiniteScroll: InfiniteScroll;
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   constructor() {}
 
@@ -64,7 +64,7 @@ export class InfiniteScrollExample {
   }
 
   toggleInfiniteScroll() {
-    infiniteScroll.disabled = !infiniteScroll.disabled;
+    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
 }
 ```
