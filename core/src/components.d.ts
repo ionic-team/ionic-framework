@@ -3285,6 +3285,10 @@ export namespace Components {
     */
     'onIonBlur'?: (event: CustomEvent<void>) => void;
     /**
+    * Emitted when checked radio button is selected.
+    */
+    'onIonDeselect'?: (event: CustomEvent<RadioChangeEventDetail>) => void;
+    /**
     * Emitted when the radio button has focus.
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
