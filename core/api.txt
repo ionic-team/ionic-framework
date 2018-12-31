@@ -1053,7 +1053,8 @@ ion-tab-button,prop,disabled,boolean,false,false,false
 ion-tab-button,prop,href,string | undefined,undefined,false,false
 ion-tab-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide" | undefined,undefined,false,false
 ion-tab-button,prop,mode,"ios" | "md",undefined,false,false
-ion-tab-button,prop,tab,string,undefined,false,false
+ion-tab-button,prop,selected,boolean,false,false,false
+ion-tab-button,prop,tab,string | undefined,undefined,false,false
 ion-tab-button,css-prop,--background
 ion-tab-button,css-prop,--background-focused
 ion-tab-button,css-prop,--color

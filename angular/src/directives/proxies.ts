@@ -893,7 +893,7 @@ export class IonTabBar {
 proxyInputs(IonTabBar, ['mode', 'color', 'selectedTab', 'translucent']);
 
 export declare interface IonTabButton extends StencilComponents<'IonTabButton'> {}
-@Component({ selector: 'ion-tab-button', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['mode', 'layout', 'href', 'tab', 'disabled'] })
+@Component({ selector: 'ion-tab-button', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['selected', 'mode', 'layout', 'href', 'tab', 'disabled'] })
 export class IonTabButton {
   ionTabButtonClick!: EventEmitter<CustomEvent>;
   el: HTMLElement
@@ -903,7 +903,7 @@ export class IonTabButton {
     proxyOutputs(this, this.el, ['ionTabButtonClick']);
   }
 }
-proxyInputs(IonTabButton, ['mode', 'layout', 'href', 'tab', 'disabled']);
+proxyInputs(IonTabButton, ['selected', 'mode', 'layout', 'href', 'tab', 'disabled']);
 
 export declare interface IonText extends StencilComponents<'IonText'> {}
 @Component({ selector: 'ion-text', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode'] })
