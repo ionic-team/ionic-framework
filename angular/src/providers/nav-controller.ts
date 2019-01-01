@@ -44,25 +44,20 @@ export class NavController {
 
   navigateForward(url: string | UrlTree | any[], options: NavigationOptions = {}) {
     this.setDirection('forward', options.animated, options.animationDirection);
-    if (Array.isArray(url)) {
-      return this.router!.navigate(url, options);
-    } else {
-      return this.router!.navigateByUrl(url, options);
-    }
+    this.navigate(url, options);
   }
 
   navigateBack(url: string | UrlTree | any[], options: NavigationOptions = {}) {
     this.setDirection('back', options.animated, options.animationDirection);
-    // extras = { replaceUrl: true, ...extras };
-    if (Array.isArray(url)) {
-      return this.router!.navigate(url, options);
-    } else {
-      return this.router!.navigateByUrl(url, options);
-    }
+    this.navigate(url, options);
   }
 
   navigateRoot(url: string | UrlTree | any[], options: NavigationOptions = {}) {
     this.setDirection('root', options.animated, options.animationDirection);
+    this.navigate(url, options);
+  }
+
+  navigate(url: string | UrlTree | any[], options: NavigationOptions) {
     if (Array.isArray(url)) {
       return this.router!.navigate(url, options);
     } else {
