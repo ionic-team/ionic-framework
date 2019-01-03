@@ -1,6 +1,6 @@
 import { Build, Component, Method, Prop } from '@stencil/core';
 
-import { Animation, AnimationBuilder, MenuControllerI, MenuI } from '../../interface';
+import { Animation, AnimationBuilder, Config, MenuControllerI, MenuI } from '../../interface';
 
 import { menuOverlayAnimation } from './animations/overlay';
 import { menuPushAnimation } from './animations/push';
@@ -15,8 +15,8 @@ export class MenuController implements MenuControllerI {
   private menus: MenuI[] = [];
   private menuAnimations = new Map<string, AnimationBuilder>();
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'document' }) doc!: Document;
+  @Prop({ context: 'config' }) config!: Config;
 
   constructor() {
     this.registerAnimation('reveal', menuRevealAnimation);
@@ -252,12 +252,17 @@ export class MenuController implements MenuControllerI {
     return menu._setOpen(shouldOpen, animated);
   }
 
-  _createAnimation(type: string, menuCmp: MenuI): Promise<Animation> {
+  async _createAnimation(type: string, menuCmp: MenuI): Promise<Animation> {
     const animationBuilder = this.menuAnimations.get(type);
     if (!animationBuilder) {
-      return Promise.reject('animation not registered');
+      throw new Error('animation not registered');
     }
-    return this.animationCtrl.create(animationBuilder, null, menuCmp);
+    const animation = await import('../../utils/animation')
+      .then(mod => mod.create(animationBuilder, null, menuCmp));
+    if (!this.config.getBoolean('animated', true)) {
+      animation.duration(0);
+    }
+    return animation;
   }
 
   getOpenSync(): HTMLIonMenuElement | undefined {

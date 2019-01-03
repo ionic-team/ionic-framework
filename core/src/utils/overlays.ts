@@ -9,7 +9,7 @@ export function createOverlay<T extends HTMLIonOverlayElement>(element: T, opts:
   // convert the passed in overlay options into props
   // that get passed down into the new overlay
   Object.assign(element, opts);
-  element.classList.add('ion-page-invisible');
+  element.classList.add('overlay-hidden');
   const overlayIndex = lastId++;
   element.overlayIndex = overlayIndex;
   if (!element.hasAttribute('id')) {
@@ -139,31 +139,29 @@ async function overlayAnimation(
     overlay.animation.destroy();
     overlay.animation = undefined;
     return false;
-
-  } else {
-    // Make overlay visible in case it's hidden
-    baseEl.classList.remove('ion-page-invisible');
-
-    const aniRoot = baseEl.shadowRoot || overlay.el;
-    const animation = overlay.animation = await overlay.animationCtrl.create(animationBuilder, aniRoot, opts);
-    overlay.animation = animation;
-    if (!overlay.animated) {
-      animation.duration(0);
-    }
-    if (overlay.keyboardClose) {
-      animation.beforeAddWrite(() => {
-        const activeElement = baseEl.ownerDocument!.activeElement as HTMLElement;
-        if (activeElement && activeElement.matches('input, ion-input, ion-textarea')) {
-          activeElement.blur();
-        }
-      });
-    }
-    await animation.playAsync();
-    const hasCompleted = animation.hasCompleted;
-    animation.destroy();
-    overlay.animation = undefined;
-    return hasCompleted;
   }
+  // Make overlay visible in case it's hidden
+  baseEl.classList.remove('overlay-hidden');
+
+  const aniRoot = baseEl.shadowRoot || overlay.el;
+  const animation = overlay.animation = await import('./animation').then(mod => mod.create(animationBuilder, aniRoot, opts));
+  overlay.animation = animation;
+  if (!overlay.animated || !overlay.config.getBoolean('animated', true)) {
+    animation.duration(0);
+  }
+  if (overlay.keyboardClose) {
+    animation.beforeAddWrite(() => {
+      const activeElement = baseEl.ownerDocument!.activeElement as HTMLElement;
+      if (activeElement && activeElement.matches('input, ion-input, ion-textarea')) {
+        activeElement.blur();
+      }
+    });
+  }
+  await animation.playAsync();
+  const hasCompleted = animation.hasCompleted;
+  animation.destroy();
+  overlay.animation = undefined;
+  return hasCompleted;
 }
 
 export function autoFocus(containerEl: HTMLElement): HTMLElement | undefined {

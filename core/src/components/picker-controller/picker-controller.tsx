@@ -3,7 +3,6 @@ import { Component, ComponentInterface, Method, Prop } from '@stencil/core';
 import { OverlayController, PickerOptions } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
-/** @internal */
 @Component({
   tag: 'ion-picker-controller'
 })
