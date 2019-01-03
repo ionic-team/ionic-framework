@@ -1,9 +1,12 @@
 import { Component, ComponentInterface, Element, Prop, QueueApi } from '@stencil/core';
 
 import { Gesture, GestureDetail, Mode, PickerColumn } from '../../interface';
-import { hapticSelectionChanged } from '../../utils';
+import { hapticSelectionChanged } from '../../utils/haptic';
 import { clamp } from '../../utils/helpers';
 
+/**
+ * @internal
+ */
 @Component({
   tag: 'ion-picker-column',
   styleUrls: {
@@ -33,7 +36,7 @@ export class PickerColumnCmp implements ComponentInterface {
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
-  /** @internal */
+  /** Picker column data */
   @Prop() col!: PickerColumn;
 
   componentWillLoad() {
@@ -58,7 +61,7 @@ export class PickerColumnCmp implements ComponentInterface {
 
     this.refresh();
 
-    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
+    this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
       queue: this.queue,
       gestureName: 'picker-swipe',

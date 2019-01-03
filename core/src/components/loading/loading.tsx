@@ -92,16 +92,6 @@ export class Loading implements ComponentInterface, OverlayInterface {
   @Prop() animated = true;
 
   /**
-   * Emitted after the loading has unloaded.
-   */
-  @Event() ionLoadingDidUnload!: EventEmitter<void>;
-
-  /**
-   * Emitted after the loading has loaded.
-   */
-  @Event() ionLoadingDidLoad!: EventEmitter<void>;
-
-  /**
    * Emitted after the loading has presented.
    */
   @Event({ eventName: 'ionLoadingDidPresent' }) didPresent!: EventEmitter<void>;
@@ -125,14 +115,6 @@ export class Loading implements ComponentInterface, OverlayInterface {
     if (this.spinner === undefined) {
       this.spinner = this.config.get('loadingSpinner', this.mode === 'ios' ? 'lines' : 'crescent');
     }
-  }
-
-  componentDidLoad() {
-    this.ionLoadingDidLoad.emit();
-  }
-
-  componentDidUnload() {
-    this.ionLoadingDidUnload.emit();
   }
 
   @Listen('ionBackdropTap')

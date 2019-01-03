@@ -26,14 +26,12 @@ A Picker is a dialog that displays a row of buttons and columns underneath. It a
 
 ## Events
 
-| Event                  | Description                              | Detail             |
-| ---------------------- | ---------------------------------------- | ------------------ |
-| `ionPickerDidDismiss`  | Emitted after the picker has dismissed.  | OverlayEventDetail |
-| `ionPickerDidLoad`     | Emitted after the picker has loaded.     | void               |
-| `ionPickerDidPresent`  | Emitted after the picker has presented.  | void               |
-| `ionPickerDidUnload`   | Emitted after the picker has unloaded.   | void               |
-| `ionPickerWillDismiss` | Emitted before the picker has dismissed. | OverlayEventDetail |
-| `ionPickerWillPresent` | Emitted before the picker has presented. | void               |
+| Event                  | Description                              | Type                              |
+| ---------------------- | ---------------------------------------- | --------------------------------- |
+| `ionPickerDidDismiss`  | Emitted after the picker has dismissed.  | `CustomEvent<OverlayEventDetail>` |
+| `ionPickerDidPresent`  | Emitted after the picker has presented.  | `CustomEvent<void>`               |
+| `ionPickerWillDismiss` | Emitted before the picker has dismissed. | `CustomEvent<OverlayEventDetail>` |
+| `ionPickerWillPresent` | Emitted before the picker has presented. | `CustomEvent<void>`               |
 
 
 ## Methods

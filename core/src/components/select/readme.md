@@ -336,12 +336,12 @@ customActionSheetSelect.interfaceOptions = customActionSheetOptions;
 
 ## Events
 
-| Event       | Description                              | Detail                 |
-| ----------- | ---------------------------------------- | ---------------------- |
-| `ionBlur`   | Emitted when the select loses focus.     | void                   |
-| `ionCancel` | Emitted when the selection is cancelled. | void                   |
-| `ionChange` | Emitted when the value has changed.      | SelectInputChangeEvent |
-| `ionFocus`  | Emitted when the select has focus.       | void                   |
+| Event       | Description                              | Type                                   |
+| ----------- | ---------------------------------------- | -------------------------------------- |
+| `ionBlur`   | Emitted when the select loses focus.     | `CustomEvent<void>`                    |
+| `ionCancel` | Emitted when the selection is cancelled. | `CustomEvent<void>`                    |
+| `ionChange` | Emitted when the value has changed.      | `CustomEvent<SelectChangeEventDetail>` |
+| `ionFocus`  | Emitted when the select has focus.       | `CustomEvent<void>`                    |
 
 
 ## Methods

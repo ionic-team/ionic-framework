@@ -70,7 +70,6 @@ const DECLARATIONS = [
   d.IonSegmentButton,
   d.IonSelect,
   d.IonSelectOption,
-  d.IonSelectPopover,
   d.IonSkeletonText,
   d.IonSlide,
   d.IonSlides,
