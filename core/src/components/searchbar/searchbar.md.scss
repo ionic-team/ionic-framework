@@ -32,12 +32,13 @@
 // -----------------------------------------
 
 .searchbar-cancel-button {
-  @include position(0, null, null, 5px);
+  @include position(8px, null, null, 13px);
   @include margin(0);
 
   display: none;
 
-  height: 100%;
+  /* stylelint-disable-next-line property-blacklist */
+  padding: 0;
 
   border: 0;
 
