@@ -459,12 +459,12 @@ customPickerOptions.pickerOptions = customPickerButtons;
 
 ## Events
 
-| Event       | Description                                         | Detail           |
-| ----------- | --------------------------------------------------- | ---------------- |
-| `ionBlur`   | Emitted when the datetime loses focus.              | void             |
-| `ionCancel` | Emitted when the datetime selection was cancelled.  | void             |
-| `ionChange` | Emitted when the value (selected date) has changed. | InputChangeEvent |
-| `ionFocus`  | Emitted when the datetime has focus.                | void             |
+| Event       | Description                                         | Type                                     |
+| ----------- | --------------------------------------------------- | ---------------------------------------- |
+| `ionBlur`   | Emitted when the datetime loses focus.              | `CustomEvent<void>`                      |
+| `ionCancel` | Emitted when the datetime selection was cancelled.  | `CustomEvent<void>`                      |
+| `ionChange` | Emitted when the value (selected date) has changed. | `CustomEvent<DatetimeChangeEventDetail>` |
+| `ionFocus`  | Emitted when the datetime has focus.                | `CustomEvent<void>`                      |
 
 
 ## Methods

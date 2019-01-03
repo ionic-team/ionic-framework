@@ -20,11 +20,11 @@ Unlike RouterOutlet, Nav is not tied to a particular router. Meaning that if we 
 
 ## Events
 
-| Event              | Description                                     | Detail |
-| ------------------ | ----------------------------------------------- | ------ |
-| `ionNavDidChange`  | Event fired when the nav has changed components | void   |
-| `ionNavWillChange` | Event fired when the nav will components        | void   |
-| `ionNavWillLoad`   | Event fired when Nav will load a component      | void   |
+| Event              | Description                                     | Type                |
+| ------------------ | ----------------------------------------------- | ------------------- |
+| `ionNavDidChange`  | Event fired when the nav has changed components | `CustomEvent<void>` |
+| `ionNavWillChange` | Event fired when the nav will components        | `CustomEvent<void>` |
+| `ionNavWillLoad`   | Event fired when Nav will load a component      | `CustomEvent<void>` |
 
 
 ## Methods

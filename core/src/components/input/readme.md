@@ -140,14 +140,12 @@ It is meant for text `type` inputs only, such as `"text"`, `"password"`, `"email
 
 ## Events
 
-| Event               | Description                              | Detail               |
-| ------------------- | ---------------------------------------- | -------------------- |
-| `ionBlur`           | Emitted when the input loses focus.      | void                 |
-| `ionChange`         | Emitted when the value has changed.      | TextInputChangeEvent |
-| `ionFocus`          | Emitted when the input has focus.        | void                 |
-| `ionInput`          | Emitted when a keyboard input ocurred.   | KeyboardEvent        |
-| `ionInputDidLoad`   | Emitted when the input has been created. | void                 |
-| `ionInputDidUnload` | Emitted when the input has been removed. | void                 |
+| Event       | Description                            | Type                                  |
+| ----------- | -------------------------------------- | ------------------------------------- |
+| `ionBlur`   | Emitted when the input loses focus.    | `CustomEvent<void>`                   |
+| `ionChange` | Emitted when the value has changed.    | `CustomEvent<InputChangeEventDetail>` |
+| `ionFocus`  | Emitted when the input has focus.      | `CustomEvent<void>`                   |
+| `ionInput`  | Emitted when a keyboard input ocurred. | `CustomEvent<KeyboardEvent>`          |
 
 
 ## Methods

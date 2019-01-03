@@ -63,9 +63,9 @@ radio button within the same group.
 
 ## Events
 
-| Event       | Description                         | Detail           |
-| ----------- | ----------------------------------- | ---------------- |
-| `ionChange` | Emitted when the value has changed. | InputChangeEvent |
+| Event       | Description                         | Type                                       |
+| ----------- | ----------------------------------- | ------------------------------------------ |
+| `ionChange` | Emitted when the value has changed. | `CustomEvent<RadioGroupChangeEventDetail>` |
 
 
 ----------------------------------------------
