@@ -1,10 +1,10 @@
 import { QueueApi } from '@stencil/core';
 
-import { LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '../components/nav/constants';
-import { Animation, AnimationBuilder, NavDirection, NavOptions } from '../interface';
+import { LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '../../components/nav/constants';
+import { Animation, AnimationBuilder, NavDirection, NavOptions } from '../../interface';
 
-const iosTransitionAnimation = () => import('./animations/ios.transition');
-const mdTransitionAnimation = () => import('./animations/md.transition');
+const iosTransitionAnimation = () => import('./ios.transition');
+const mdTransitionAnimation = () => import('./md.transition');
 
 export function transition(opts: TransitionOptions): Promise<TransitionResult> {
   return new Promise((resolve, reject) => {
@@ -76,7 +76,7 @@ async function getAnimationBuilder(opts: TransitionOptions): Promise<AnimationBu
 async function animation(animationBuilder: AnimationBuilder, opts: TransitionOptions): Promise<TransitionResult> {
   await waitForReady(opts, true);
 
-  const trans = await import('./animation').then(mod => mod.create(animationBuilder, opts.baseEl, opts));
+  const trans = await import('../animation').then(mod => mod.create(animationBuilder, opts.baseEl, opts));
   fireWillEvents(opts.enteringEl, opts.leavingEl);
   await playTransition(trans, opts);
   if (opts.progressCallback) {
