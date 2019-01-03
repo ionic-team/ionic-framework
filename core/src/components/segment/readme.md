@@ -16,30 +16,30 @@ Their functionality is similar to tabs, where selecting one will deselect all ot
 <!-- Default Segment -->
 <ion-segment (ionChange)="segmentChanged($event)">
   <ion-segment-button value="friends">
-    <ion-label>Friends</ion-label>
+    Friends
   </ion-segment-button>
   <ion-segment-button value="enemies">
-    <ion-label>Enemies</ion-label>
+    Enemies
   </ion-segment-button>
 </ion-segment>
 
 <!-- Disabled Segment -->
 <ion-segment (ionChange)="segmentChanged($event)" disabled>
   <ion-segment-button value="sunny" checked>
-    <ion-label>Sunny</ion-label>
+    Sunny
   </ion-segment-button>
   <ion-segment-button value="rainy">
-    <ion-label>Rainy</ion-label>
+    Rainy
   </ion-segment-button>
 </ion-segment>
 
 <!-- Segment with anchors -->
 <ion-segment (ionChange)="segmentChanged($event)">
   <ion-segment-button href="#dogs" value="dogs">
-    <ion-label>Dogs</ion-label>
+    Dogs
   </ion-segment-button>
   <ion-segment-button href="#cats" value="cats">
-    <ion-label>Cats</ion-label>
+    Cats
   </ion-segment-button>
 </ion-segment>
 
@@ -71,13 +71,13 @@ Their functionality is similar to tabs, where selecting one will deselect all ot
 <!-- Segment with secondary color -->
 <ion-segment (ionChange)="segmentChanged($event)" color="secondary">
   <ion-segment-button value="standard">
-    <ion-label>Standard</ion-label>
+    Standard
   </ion-segment-button>
   <ion-segment-button value="hybrid">
-    <ion-label>Hybrid</ion-label>
+    Hybrid
   </ion-segment-button>
   <ion-segment-button value="sat">
-    <ion-label>Satellite</ion-label>
+    Satellite
   </ion-segment-button>
 </ion-segment>
 
@@ -116,30 +116,30 @@ export class SegmentExample {
 <!-- Default Segment -->
 <ion-segment>
   <ion-segment-button value="friends">
-    <ion-label>Friends</ion-label>
+    Friends
   </ion-segment-button>
   <ion-segment-button value="enemies">
-    <ion-label>Enemies</ion-label>
+    Enemies
   </ion-segment-button>
 </ion-segment>
 
 <!-- Disabled Segment -->
 <ion-segment disabled>
   <ion-segment-button value="sunny" checked>
-    <ion-label>Sunny</ion-label>
+    Sunny
   </ion-segment-button>
   <ion-segment-button value="rainy">
-    <ion-label>Rainy</ion-label>
+    Rainy
   </ion-segment-button>
 </ion-segment>
 
 <!-- Segment with anchors -->
 <ion-segment>
   <ion-segment-button href="#dogs" value="dogs">
-    <ion-label>Dogs</ion-label>
+    Dogs
   </ion-segment-button>
   <ion-segment-button href="#cats" value="cats">
-    <ion-label>Cats</ion-label>
+    Cats
   </ion-segment-button>
 </ion-segment>
 
@@ -171,13 +171,13 @@ export class SegmentExample {
 <!-- Segment with secondary color -->
 <ion-segment color="secondary">
   <ion-segment-button value="standard">
-    <ion-label>Standard</ion-label>
+    Standard
   </ion-segment-button>
   <ion-segment-button value="hybrid">
-    <ion-label>Hybrid</ion-label>
+    Hybrid
   </ion-segment-button>
   <ion-segment-button value="sat">
-    <ion-label>Satellite</ion-label>
+    Satellite
   </ion-segment-button>
 </ion-segment>
 
