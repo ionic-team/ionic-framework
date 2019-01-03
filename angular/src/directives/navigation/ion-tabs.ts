@@ -64,6 +64,9 @@ export class IonTabs {
       ? href
       : this.outlet.getLastUrl(tab) || href;
 
-    return this.navCtrl.navigateBack(url, true);
+    return this.navCtrl.navigateRoot(url, {
+      animated: true,
+      animationDirection: 'back'
+    });
   }
 }

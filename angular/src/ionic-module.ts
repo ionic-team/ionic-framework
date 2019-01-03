@@ -70,7 +70,6 @@ const DECLARATIONS = [
   d.IonSegmentButton,
   d.IonSelect,
   d.IonSelectOption,
-  d.IonSelectPopover,
   d.IonSkeletonText,
   d.IonSlide,
   d.IonSlides,
@@ -104,7 +103,7 @@ const DECLARATIONS = [
   c.VirtualFooter,
   c.VirtualHeader,
   c.VirtualItem,
-  c.VirtualScroll
+  c.IonVirtualScroll
 ];
 
 const PROVIDERS = [

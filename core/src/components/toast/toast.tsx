@@ -27,8 +27,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
   animation: Animation | undefined;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
-
   @Prop({ context: 'config' }) config!: Config;
 
   /**
@@ -111,11 +109,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() animated = true;
 
   /**
-   * Emitted after the toast has loaded.
-   */
-  @Event() ionToastDidLoad!: EventEmitter<void>;
-
-  /**
    * Emitted after the toast has presented.
    */
   @Event({ eventName: 'ionToastDidPresent' }) didPresent!: EventEmitter<void>;
@@ -134,19 +127,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * Emitted after the toast has dismissed.
    */
   @Event({ eventName: 'ionToastDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
-
-  /**
-   * Emitted after the toast has unloaded.
-   */
-  @Event() ionToastDidUnload!: EventEmitter<void>;
-
-  componentDidLoad() {
-    this.ionToastDidLoad.emit();
-  }
-
-  componentDidUnload() {
-    this.ionToastDidUnload.emit();
-  }
 
   /**
    * Present the toast overlay after it has been created.
