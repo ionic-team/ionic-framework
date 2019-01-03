@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
-import { Color, Mode, StyleEvent, TextInputChangeEvent } from '../../interface';
+import { Color, Mode, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
 import { debounceEvent, findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
@@ -140,7 +140,7 @@ export class Textarea implements ComponentInterface {
   /**
    * Emitted when the input value has changed.
    */
-  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<TextareaChangeEventDetail>;
 
   /**
    * Emitted when a keyboard input ocurred.
@@ -151,7 +151,7 @@ export class Textarea implements ComponentInterface {
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   /**
    * Emitted when the input loses focus.
