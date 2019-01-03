@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
 
-import { Color, Config, CssClassMap, Mode, StyleEvent } from '../../interface';
+import { Color, Config, CssClassMap, Mode, StyleEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -31,7 +31,7 @@ export class Toolbar implements ComponentInterface {
   @Prop() mode!: Mode;
 
   @Listen('ionStyle')
-  childrenStyle(ev: CustomEvent<StyleEvent>) {
+  childrenStyle(ev: CustomEvent<StyleEventDetail>) {
     ev.stopPropagation();
 
     const tagName = (ev.target as HTMLElement).tagName;

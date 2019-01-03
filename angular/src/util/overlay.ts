@@ -1,4 +1,4 @@
-import { proxyMethod } from '../util/util';
+import { proxyMethod } from './util';
 
 export class OverlayBaseController<Opts, Overlay> {
   constructor(private ctrl: string) {}

@@ -178,9 +178,9 @@ reorderGroup.addEventListener('ionItemReorder', ({detail}) => {
 
 ## Events
 
-| Event            | Description                                                                                                                                                                                          | Detail            |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
-| `ionItemReorder` | Event that needs to be listen to in order to respond to reorder action. `ion-reorder-group` uses this event to delegate to the user the reordering of data array.   The complete() method exposed as | ItemReorderDetail |
+| Event            | Description                                                                                                                                                                                          | Type                                  |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| `ionItemReorder` | Event that needs to be listen to in order to respond to reorder action. `ion-reorder-group` uses this event to delegate to the user the reordering of data array.   The complete() method exposed as | `CustomEvent<ItemReorderEventDetail>` |
 
 
 ## Methods

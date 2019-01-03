@@ -1,22 +1,4 @@
 
-let _sPassive: boolean | undefined;
-
-function supportsPassive(node: Node) {
-  if (_sPassive === undefined) {
-    try {
-      const opts = Object.defineProperty({}, 'passive', {
-        get: () => {
-          _sPassive = true;
-        }
-      });
-      node.addEventListener('optsTest', () => { return; }, opts);
-    } catch (e) {
-      _sPassive = false;
-    }
-  }
-  return !!_sPassive;
-}
-
 export function addEventListener(
   el: any,
   eventName: string,
@@ -47,4 +29,22 @@ export function addEventListener(
   return () => {
     el[remove](eventName, callback, listenerOpts);
   };
+}
+
+let _sPassive: boolean | undefined;
+
+function supportsPassive(node: Node) {
+  if (_sPassive === undefined) {
+    try {
+      const opts = Object.defineProperty({}, 'passive', {
+        get: () => {
+          _sPassive = true;
+        }
+      });
+      node.addEventListener('optsTest', () => { return; }, opts);
+    } catch (e) {
+      _sPassive = false;
+    }
+  }
+  return !!_sPassive;
 }

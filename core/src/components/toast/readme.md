@@ -108,14 +108,12 @@ async function presentToastWithOptions() {
 
 ## Events
 
-| Event                 | Description                             | Detail             |
-| --------------------- | --------------------------------------- | ------------------ |
-| `ionToastDidDismiss`  | Emitted after the toast has dismissed.  | OverlayEventDetail |
-| `ionToastDidLoad`     | Emitted after the toast has loaded.     | void               |
-| `ionToastDidPresent`  | Emitted after the toast has presented.  | void               |
-| `ionToastDidUnload`   | Emitted after the toast has unloaded.   | void               |
-| `ionToastWillDismiss` | Emitted before the toast has dismissed. | OverlayEventDetail |
-| `ionToastWillPresent` | Emitted before the toast has presented. | void               |
+| Event                 | Description                             | Type                              |
+| --------------------- | --------------------------------------- | --------------------------------- |
+| `ionToastDidDismiss`  | Emitted after the toast has dismissed.  | `CustomEvent<OverlayEventDetail>` |
+| `ionToastDidPresent`  | Emitted after the toast has presented.  | `CustomEvent<void>`               |
+| `ionToastWillDismiss` | Emitted before the toast has dismissed. | `CustomEvent<OverlayEventDetail>` |
+| `ionToastWillPresent` | Emitted before the toast has presented. | `CustomEvent<void>`               |
 
 
 ## Methods
