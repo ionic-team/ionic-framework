@@ -16,11 +16,19 @@
 
   // Size
   --size: #{$checkbox-ios-icon-size};
-  width: var(--size);
 
+  width: var(--size);
   height: var(--size);
 }
 
+// iOS Checkbox: Indeterminate
+// -----------------------------------------
+
+:host::after {
+  border-width: 0.5px;
+  margin-top: 0px;
+  margin-left: -6.5px;
+}
 
 // iOS Checkbox: Disabled
 // -----------------------------------------
@@ -59,7 +67,6 @@
   @include margin($checkbox-ios-item-end-margin-top, $checkbox-ios-item-end-margin-end, $checkbox-ios-item-end-margin-bottom, $checkbox-ios-item-end-margin-start);
 
   display: block;
-  position: static;
 }
 
 :host(.in-item[slot="start"]) {

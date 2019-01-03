@@ -13,15 +13,16 @@
 
   // Background
   --background: #{$checkbox-md-icon-background-color-off};
-  --transition: #{background $checkbox-md-transition-duration $checkbox-md-transition-easing};
+
+  // Transition
+  --transition: #{$checkbox-md-transition-duration $checkbox-md-transition-easing};
 
   // Size
   --size: #{$checkbox-md-icon-size};
-  width: var(--size);
 
+  width: var(--size);
   height: var(--size);
 }
-
 
 .checkbox-icon path {
   stroke-dasharray: 30;
@@ -33,6 +34,15 @@
   stroke-dashoffset: 0;
 
   transition: stroke-dashoffset 90ms linear 90ms;
+}
+
+// iOS Checkbox: Indeterminate
+// -----------------------------------------
+
+:host::after {
+  border-width: 1px;
+  margin-top: -1px;
+  margin-left: -7px;
 }
 
 
@@ -73,7 +83,6 @@
   @include margin($checkbox-md-item-end-margin-top, $checkbox-md-item-end-margin-end, $checkbox-md-item-end-margin-bottom, $checkbox-md-item-end-margin-start);
 
   display: block;
-  position: static;
 }
 
 :host(.in-item[slot="start"]) {

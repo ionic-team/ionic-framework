@@ -43,6 +43,11 @@ export class Checkbox implements ComponentInterface {
   @Prop({ mutable: true }) checked = false;
 
   /**
+   * If `true`, the checkbox will visually appear as indeterminate.
+   */
+  @Prop({ mutable: true }) indeterminate = false;
+
+  /**
    * If `true`, the user cannot interact with the checkbox.
    */
   @Prop() disabled = false;
@@ -100,6 +105,7 @@ export class Checkbox implements ComponentInterface {
 
   private onClick = () => {
     this.checked = !this.checked;
+    this.indeterminate = false;
   }
 
   private onKeyUp = () => {
@@ -132,6 +138,7 @@ export class Checkbox implements ComponentInterface {
         'checkbox-checked': this.checked,
         'checkbox-disabled': this.disabled,
         'checkbox-key': this.keyFocus,
+        'checkbox-indeterminate': this.indeterminate,
         'interactive': true
       }
     };
@@ -143,8 +150,8 @@ export class Checkbox implements ComponentInterface {
     return [
       <svg class="checkbox-icon" viewBox="0 0 24 24">
         { this.mode === 'md'
-          ? <path d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
-          : <path d="M5.9,12.5l3.8,3.8l8.8-8.8"/>
+          ? <path d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+          : <path d="M5.9,12.5l3.8,3.8l8.8-8.8" />
         }
       </svg>,
       <button
