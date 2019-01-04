@@ -47,12 +47,13 @@ button {
   width: 100%;
   height: 100%;
 
+  transition: background var(--transition);
+
   border-width: var(--border-width);
   border-style: var(--border-style);
   border-color: var(--border-color);
 
   background: var(--background);
-  transition: background var(--transition);
 
   contain: strict;
   box-sizing: border-box;
@@ -97,30 +98,37 @@ button {
 
   &::before {
     transform: none;
+
     opacity: 1;
   }
 }
 
 // Bar for the indeterminate state as pseudo element
 :host::after {
-  content: '';
-  position: absolute;
   display: block;
+
+  position: absolute;
+
+  top: 50%;
+  offset-inline-start: 50%;
+
+  width: 12px;
+  height: 0px;
+
+  transform: rotate(-45deg);
+
+  transition: transform var(--transition), opacity var(--transition);
 
   border-style: solid;
   border-color: var(--checkmark-color);
-  width: 12px;
-  height: 0px;
-  top: 50%;
-  left: 50%;
 
-  transform: rotate(-45deg);
+  content: "";
+
   opacity: 0;
-
-  transition: transform var(--transition), opacity var(--transition);
 }
 
 :host(.checkbox-indeterminate)::after {
   transform: none;
+
   opacity: 1;
 }

@@ -25,9 +25,10 @@
 // -----------------------------------------
 
 :host::after {
-  border-width: 0.5px;
   margin-top: 0px;
-  margin-left: -6.5px;
+  margin-inline-start: -6.5px;
+
+  border-width: 0.5px;
 }
 
 // iOS Checkbox: Disabled

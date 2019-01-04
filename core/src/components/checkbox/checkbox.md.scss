@@ -40,9 +40,10 @@
 // -----------------------------------------
 
 :host::after {
-  border-width: 1px;
   margin-top: -1px;
-  margin-left: -7px;
+  margin-inline-start: -7px;
+
+  border-width: 1px;
 }
 
 
