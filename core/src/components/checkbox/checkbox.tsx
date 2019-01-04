@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
-import { CheckedInputChangeEvent, Color, Mode, StyleEvent } from '../../interface';
+import { CheckboxChangeEventDetail, Color, Mode, StyleEventDetail } from '../../interface';
 import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -59,7 +59,7 @@ export class Checkbox implements ComponentInterface {
   /**
    * Emitted when the checked property has changed.
    */
-  @Event() ionChange!: EventEmitter<CheckedInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<CheckboxChangeEventDetail>;
 
   /**
    * Emitted when the toggle has focus.
@@ -75,7 +75,7 @@ export class Checkbox implements ComponentInterface {
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   componentWillLoad() {
     this.emitStyle();

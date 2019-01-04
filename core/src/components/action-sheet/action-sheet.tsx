@@ -85,16 +85,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   @Prop() animated = true;
 
   /**
-   * Emitted after the alert has loaded.
-   */
-  @Event() ionActionSheetDidLoad!: EventEmitter<void>;
-
-  /**
-   * Emitted after the alert has unloaded.
-   */
-  @Event() ionActionSheetDidUnload!: EventEmitter<void>;
-
-  /**
    * Emitted after the alert has presented.
    */
   @Event({ eventName: 'ionActionSheetDidPresent' }) didPresent!: EventEmitter<void>;
@@ -113,14 +103,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
    * Emitted after the alert has dismissed.
    */
   @Event({ eventName: 'ionActionSheetDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
-
-  componentDidLoad() {
-    this.ionActionSheetDidLoad.emit();
-  }
-
-  componentDidUnload() {
-    this.ionActionSheetDidUnload.emit();
-  }
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {

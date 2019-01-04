@@ -2,13 +2,6 @@ import { EventEmitter } from '@stencil/core';
 
 import { Side } from '../interface';
 
-export function reorderArray(array: any[], indexes: {from: number, to: number}): any[] {
-  const element = array[indexes.from];
-  array.splice(indexes.from, 1);
-  array.splice(indexes.to, 0, element);
-  return array;
-}
-
 export function rIC(callback: () => void) {
   if ('requestIdleCallback' in window) {
     (window as any).requestIdleCallback(callback);
