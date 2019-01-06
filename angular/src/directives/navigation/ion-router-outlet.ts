@@ -1,7 +1,7 @@
 import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, NgZone, OnDestroy, OnInit, Optional, Output, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ChildrenOutletContexts, OutletContext, PRIMARY_OUTLET, Router } from '@angular/router';
 
-import { Config } from '../../providers';
+import { Config } from '../../providers/config';
 import { NavController } from '../../providers/nav-controller';
 
 import { StackController } from './stack-controller';

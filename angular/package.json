@@ -20,11 +20,11 @@
     "url": "https://github.com/ionic-team/ionic.git"
   },
   "scripts": {
-    "build": "npm run clean && npm run build.core && npm run build.ng && npm run clean-generated",
+    "build": "npm run clean && npm run build.core && npm run build.ng && npm run build.fesm && npm run clean-generated",
     "build.dev": "npm run clean && npm run build.core.dev && npm run build.ng && npm run clean-generated",
     "build.core": "node scripts/build-core.js",
     "build.core.dev": "node scripts/build-core.js --dev",
-    "build.optimize": "rollup --config ./scripts/rollup.config.js",
+    "build.fesm": "rollup --config ./scripts/rollup.config.js",
     "build.link": "npm run build && node scripts/link-copy.js",
     "build.ng": "./node_modules/.bin/ngc",
     "clean": "node scripts/clean.js",
@@ -40,6 +40,7 @@
   "module": "dist/fesm5.js",
   "main": "dist/fesm5.js",
   "types": "dist/index.d.ts",
+  "sideEffects": false,
   "files": [
     "dist/",
     "css/"
@@ -78,7 +79,6 @@
     "glob": "^7.1.3",
     "rollup": "^1.0.2",
     "rollup-plugin-node-resolve": "^4.0.0",
-    "rollup-plugin-terser": "^4.0.1",
     "rxjs": "^6.2.0",
     "tslint": "^5.10.0",
     "tslint-ionic-rules": "0.0.21",

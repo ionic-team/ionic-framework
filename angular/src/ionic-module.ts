@@ -3,8 +3,7 @@ import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
 import { IonicConfig } from '@ionic/core';
 
 import { appInitialize } from './app-initialize';
-import * as c from './directives';
-import * as d from './directives/proxies';
+import * as d from './directives';
 import * as p from './providers';
 import { ConfigToken } from './providers/config';
 
@@ -84,40 +83,26 @@ const DECLARATIONS = [
   d.IonToolbar,
   d.IonTitle,
 
-  c.IonTabs,
+  d.IonTabs,
 
   // ngModel accessors
-  c.BooleanValueAccessor,
-  c.NumericValueAccessor,
-  c.RadioValueAccessor,
-  c.SelectValueAccessor,
-  c.TextValueAccessor,
+  d.BooleanValueAccessor,
+  d.NumericValueAccessor,
+  d.RadioValueAccessor,
+  d.SelectValueAccessor,
+  d.TextValueAccessor,
 
   // navigation
-  c.IonRouterOutlet,
-  c.IonBackButtonDelegate,
-  c.NavDelegate,
-  c.RouterLinkDelegate,
+  d.IonRouterOutlet,
+  d.IonBackButtonDelegate,
+  d.NavDelegate,
+  d.RouterLinkDelegate,
 
   // virtual scroll
-  c.VirtualFooter,
-  c.VirtualHeader,
-  c.VirtualItem,
-  c.IonVirtualScroll
-];
-
-const PROVIDERS = [
-  p.ActionSheetController,
-  p.AlertController,
-  p.Config,
-  p.LoadingController,
-  p.PickerController,
-  p.ToastController,
-  p.MenuController,
-  p.NavController,
-  p.Platform,
-  p.Events,
-  p.DomController
+  d.VirtualFooter,
+  d.VirtualHeader,
+  d.VirtualItem,
+  d.IonVirtualScroll
 ];
 
 @NgModule({
@@ -142,8 +127,7 @@ export class IonicModule {
           deps: [
             ConfigToken
           ]
-        },
-        ...PROVIDERS
+        }
       ]
     };
   }

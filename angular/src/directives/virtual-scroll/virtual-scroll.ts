@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EmbeddedViewRef, IterableDiffer, IterableDiffers, NgZone, SimpleChanges, TrackByFunction } from '@angular/core';
 import { Cell, CellType, HeaderFn, ItemHeightFn } from '@ionic/core';
 
-import { proxyInputs, proxyMethods } from '../proxies';
+import { proxyInputs, proxyMethods } from '../proxies-utils';
 
 import { VirtualFooter } from './virtual-footer';
 import { VirtualHeader } from './virtual-header';

@@ -18,17 +18,6 @@ export default {
   plugins: [
     resolve({
       module: true,
-    }),
-    terser({
-      compress: {
-        hoist_funs: true,
-        passes: 3,
-        pure_getters: true,
-        toplevel: true
-      },
-      output: {
-        comments: /@license|@class|@preserve|^!/,
-      }
-    }),
+    })
   ]
 };
