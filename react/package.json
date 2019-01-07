@@ -37,8 +37,10 @@
     "@types/node": "10.12.9",
     "@types/react": "16.7.6",
     "@types/react-dom": "16.0.9",
+    "@types/react-router": "^4.4.3",
     "react": "latest",
     "react-dom": "latest",
+    "react-router": "^4.3.1",
     "typescript": "^3.2.2"
   },
   "dependencies": {
