@@ -1,15 +1,15 @@
-import { Directive, ElementRef, HostListener, Input, Optional } from '@angular/core';
+import { Directive, ElementRef, HostListener, Optional } from '@angular/core';
 
 import { NavController } from '../../providers/nav-controller';
 
 import { IonRouterOutlet } from './ion-router-outlet';
 
 @Directive({
-  selector: 'ion-back-button'
+  selector: 'ion-back-button',
+  inputs: ['defaultHref']
 })
 export class IonBackButtonDelegate {
 
-  @Input()
   set defaultHref(value: string | undefined | null) {
     this.elementRef.nativeElement.defaultHref = value;
   }

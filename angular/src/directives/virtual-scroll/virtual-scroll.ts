@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EmbeddedViewRef, Input, IterableDiffer, IterableDiffers, NgZone, SimpleChanges, TrackByFunction } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EmbeddedViewRef, IterableDiffer, IterableDiffers, NgZone, SimpleChanges, TrackByFunction } from '@angular/core';
 import { Cell, CellType, HeaderFn, ItemHeightFn } from '@ionic/core';
 
-import { proxyInputs, proxyMethods } from '../proxies';
+import { proxyInputs, proxyMethods } from '../proxies-utils';
 
 import { VirtualFooter } from './virtual-footer';
 import { VirtualHeader } from './virtual-header';
@@ -9,6 +9,85 @@ import { VirtualItem } from './virtual-item';
 import { VirtualContext } from './virtual-utils';
 
 export declare interface IonVirtualScroll {
+  /**
+   * It is important to provide this
+   * if virtual item height will be significantly larger than the default
+   * The approximate height of each virtual item template's cell.
+   * This dimension is used to help determine how many cells should
+   * be created when initialized, and to help calculate the height of
+   * the scrollable area. This height value can only use `px` units.
+   * Note that the actual rendered size of each cell comes from the
+   * app's CSS, whereas this approximation is used to help calculate
+   * initial dimensions before the item has been rendered.
+   */
+  approxItemHeight: number;
+
+  /**
+   * The approximate height of each header template's cell.
+   * This dimension is used to help determine how many cells should
+   * be created when initialized, and to help calculate the height of
+   * the scrollable area. This height value can only use `px` units.
+   * Note that the actual rendered size of each cell comes from the
+   * app's CSS, whereas this approximation is used to help calculate
+   * initial dimensions before the item has been rendered.
+   */
+  approxHeaderHeight: number;
+
+  /**
+   * The approximate width of each footer template's cell.
+   * This dimension is used to help determine how many cells should
+   * be created when initialized, and to help calculate the height of
+   * the scrollable area. This height value can only use `px` units.
+   * Note that the actual rendered size of each cell comes from the
+   * app's CSS, whereas this approximation is used to help calculate
+   * initial dimensions before the item has been rendered.
+   */
+  approxFooterHeight: number;
+
+  /**
+   * Section headers and the data used within its given
+   * template can be dynamically created by passing a function to `headerFn`.
+   * For example, a large list of contacts usually has dividers between each
+   * letter in the alphabet. App's can provide their own custom `headerFn`
+   * which is called with each record within the dataset. The logic within
+   * the header function can decide if the header template should be used,
+   * and what data to give to the header template. The function must return
+   * `null` if a header cell shouldn't be created.
+   */
+  headerFn?: HeaderFn;
+
+  /**
+   * Section footers and the data used within its given
+   * template can be dynamically created by passing a function to `footerFn`.
+   * The logic within the footer function can decide if the footer template
+   * should be used, and what data to give to the footer template. The function
+   * must return `null` if a footer cell shouldn't be created.
+   */
+  footerFn?: HeaderFn;
+
+  /**
+   * The data that builds the templates within the virtual scroll.
+   * It's important to note that when this data has changed, then the
+   * entire virtual scroll is reset, which is an expensive operation and
+   * should be avoided if possible.
+   */
+  items?: any[];
+
+  /**
+   * An optional function that maps each item within their height.
+   * When this function is provides, heavy optimizations and fast path can be taked by
+   * `ion-virtual-scroll` leading to massive performance improvements.
+   *
+   * This function allows to skip all DOM reads, which can be Doing so leads
+   * to massive performance
+   */
+  itemHeight?: ItemHeightFn;
+
+  /**
+   * Same as `ngForTrackBy` which can be used on `ngFor`.
+   */
+  trackBy: TrackByFunction<any>;
+
   /**
    * This method marks the tail the items array as dirty, so they can be re-rendered.  It's equivalent to calling:  ```js    * virtualScroll.checkRange(lastItemLen, items.length - lastItemLen);    * ```
    */
@@ -27,6 +106,16 @@ export declare interface IonVirtualScroll {
   selector: 'ion-virtual-scroll',
   template: '<ng-content></ng-content>',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  inputs: [
+    'approxItemHeight',
+    'approxHeaderHeight',
+    'approxFooterHeight',
+    'headerFn',
+    'footerFn',
+    'items',
+    'itemHeight',
+    'trackBy'
+  ]
 })
 export class IonVirtualScroll {
 
@@ -37,85 +126,6 @@ export class IonVirtualScroll {
   @ContentChild(VirtualItem) itmTmp!: VirtualItem;
   @ContentChild(VirtualHeader) hdrTmp!: VirtualHeader;
   @ContentChild(VirtualFooter) ftrTmp!: VirtualFooter;
-
-  /**
-   * It is important to provide this
-   * if virtual item height will be significantly larger than the default
-   * The approximate height of each virtual item template's cell.
-   * This dimension is used to help determine how many cells should
-   * be created when initialized, and to help calculate the height of
-   * the scrollable area. This height value can only use `px` units.
-   * Note that the actual rendered size of each cell comes from the
-   * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions before the item has been rendered.
-   */
-  @Input() approxItemHeight: number;
-
-  /**
-   * The approximate height of each header template's cell.
-   * This dimension is used to help determine how many cells should
-   * be created when initialized, and to help calculate the height of
-   * the scrollable area. This height value can only use `px` units.
-   * Note that the actual rendered size of each cell comes from the
-   * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions before the item has been rendered.
-   */
-  @Input() approxHeaderHeight: number;
-
-  /**
-   * The approximate width of each footer template's cell.
-   * This dimension is used to help determine how many cells should
-   * be created when initialized, and to help calculate the height of
-   * the scrollable area. This height value can only use `px` units.
-   * Note that the actual rendered size of each cell comes from the
-   * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions before the item has been rendered.
-   */
-  @Input() approxFooterHeight: number;
-
-  /**
-   * Section headers and the data used within its given
-   * template can be dynamically created by passing a function to `headerFn`.
-   * For example, a large list of contacts usually has dividers between each
-   * letter in the alphabet. App's can provide their own custom `headerFn`
-   * which is called with each record within the dataset. The logic within
-   * the header function can decide if the header template should be used,
-   * and what data to give to the header template. The function must return
-   * `null` if a header cell shouldn't be created.
-   */
-  @Input() headerFn?: HeaderFn;
-
-  /**
-   * Section footers and the data used within its given
-   * template can be dynamically created by passing a function to `footerFn`.
-   * The logic within the footer function can decide if the footer template
-   * should be used, and what data to give to the footer template. The function
-   * must return `null` if a footer cell shouldn't be created.
-   */
-  @Input() footerFn?: HeaderFn;
-
-  /**
-   * The data that builds the templates within the virtual scroll.
-   * It's important to note that when this data has changed, then the
-   * entire virtual scroll is reset, which is an expensive operation and
-   * should be avoided if possible.
-   */
-  @Input() items?: any[];
-
-  /**
-   * An optional function that maps each item within their height.
-   * When this function is provides, heavy optimizations and fast path can be taked by
-   * `ion-virtual-scroll` leading to massive performance improvements.
-   *
-   * This function allows to skip all DOM reads, which can be Doing so leads
-   * to massive performance
-   */
-  @Input() itemHeight?: ItemHeightFn;
-
-  /**
-   * Same as `ngForTrackBy` which can be used on `ngFor`.
-   */
-  @Input() trackBy: TrackByFunction<any>;
 
   constructor(
     private zone: NgZone,
