@@ -153,11 +153,20 @@
 @mixin rtl() {
   @if $app-direction == multi or $app-direction == null {
     $root: #{&};
-    @at-root [dir="rtl"] {
-      #{$root} {
+
+    @if str-contains($root, ":host") {
+      @at-root #{add-host-selector($root, "[dir=rtl]")} {
         @content;
       }
+
+    } @else {
+      @at-root [dir="rtl"] {
+        #{$root} {
+          @content;
+        }
+      }
     }
+
   } @else if $app-direction == rtl {
     @content;
   }

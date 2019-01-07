@@ -71,6 +71,7 @@
   @return false;
 }
 
+
 // URL Encode Function
 // --------------------------------------------------
 
@@ -78,4 +79,25 @@
   $spaces: str-replace($val, " ", "%20");
   $encoded: str-replace($spaces, "#", "%23");
   @return $encoded;
+}
+
+
+// Add Selector
+// --------------------------------------------------
+// Used to cleanly add selectors to :host and :host()
+
+@function add-host-selector($root, $addHostSelector) {
+  @if $root == ":host" {
+    @return ":host(#{$addHostSelector})";
+  }
+  $root-selectors: str-split($root, ",");
+
+  $list: ();
+  @each $root-selector in $root-selectors {
+    // @debug $root-selector;
+    $updated-selector: str-replace($root-selector, ":host(", ":host(#{$addHostSelector}");
+    $list: append($list, $updated-selector, comma);
+  }
+
+  @return $list;
 }
