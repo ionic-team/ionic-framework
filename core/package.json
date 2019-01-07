@@ -16,11 +16,15 @@
     "pwa"
   ],
   "main": "dist/index.js",
-  "module": "dist/esm/es5/index.js",
+  "unpkg": "dist/ionic.js",
+  "module": "dist/esm/index.js",
+  "es2015": "dist/esm/es2017/index.js",
+  "es2017": "dist/esm/es2017/index.js",
+  "jsnext:main": "dist/esm/es2017/index.js",
+  "sideEffects": false,
   "types": "dist/types/interface.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "webComponents": "dist/web-components.json",
-  "unpkg": "dist/ionic.js",
   "files": [
     "dist/",
     "css/",
@@ -30,7 +34,7 @@
     "ionicons": "4.5.1"
   },
   "devDependencies": {
-    "@stencil/core": "0.16.2-2",
+    "@stencil/core": "0.16.2",
     "@stencil/sass": "0.1.1",
     "@stencil/utils": "latest",
     "@types/jest": "^23.3.1",
