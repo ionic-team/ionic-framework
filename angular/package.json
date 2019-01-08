@@ -20,13 +20,13 @@
     "url": "https://github.com/ionic-team/ionic.git"
   },
   "scripts": {
-    "build": "npm run clean && npm run build.core && npm run build.ng && npm run build.fesm && npm run clean-generated",
-    "build.dev": "npm run clean && npm run build.core.dev && npm run build.ng && npm run clean-generated",
+    "build": "npm run clean && npm run build.core && npm run build.ng && npm run clean-generated",
     "build.core": "node scripts/build-core.js",
-    "build.core.dev": "node scripts/build-core.js --dev",
     "build.fesm": "rollup --config ./scripts/rollup.config.js",
     "build.link": "npm run build && node scripts/link-copy.js",
-    "build.ng": "./node_modules/.bin/ngc",
+    "build.ng": "npm run build.es2015 && npm run build.es5",
+    "build.es2015": "ngc -p tsconfig.json && rollup --config ./scripts/rollup.config.js",
+    "build.es5": "ngc -p tsconfig.legacy.json && rollup --config ./scripts/rollup.config.legacy.js",
     "clean": "node scripts/clean.js",
     "clean-generated": "node ./scripts/clean-generated.js",
     "lint": "npm run lint.ts",
@@ -38,9 +38,7 @@
     "validate": "npm i && npm run lint && npm run test && npm run build"
   },
   "module": "dist/fesm5.js",
-  "main": "dist/fesm5.js",
-  "types": "dist/index.d.ts",
-  "sideEffects": false,
+  "types": "dist/core.d.ts",
   "files": [
     "dist/",
     "css/"
@@ -80,6 +78,7 @@
     "rollup": "^1.0.2",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rxjs": "^6.2.0",
+    "tsickle": "^0.34.0",
     "tslint": "^5.10.0",
     "tslint-ionic-rules": "0.0.21",
     "typescript": "3.1.6",
