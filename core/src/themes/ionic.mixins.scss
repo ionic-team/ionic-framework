@@ -210,7 +210,7 @@
 // @param {string} $end
 // ----------------------------------------------------------
 @mixin property-horizontal($prop, $start, $end: $start) {
-  -webkit-padding-start: $start;
+  -webkit-#{$prop}-start: $start;
   padding-inline-start: $start;
   -webkit-padding-end: $end;
   padding-inline-end: $end;
