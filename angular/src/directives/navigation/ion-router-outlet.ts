@@ -1,7 +1,7 @@
-import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, Input, NgZone, OnDestroy, OnInit, Optional, Output, ViewContainerRef } from '@angular/core';
+import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, NgZone, OnDestroy, OnInit, Optional, Output, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ChildrenOutletContexts, OutletContext, PRIMARY_OUTLET, Router } from '@angular/router';
 
-import { Config } from '../../providers';
+import { Config } from '../../providers/config';
 import { NavController } from '../../providers/nav-controller';
 
 import { StackController } from './stack-controller';
@@ -9,7 +9,8 @@ import { RouteView, getUrl } from './stack-utils';
 
 @Directive({
   selector: 'ion-router-outlet',
-  exportAs: 'outlet'
+  exportAs: 'outlet',
+  inputs: ['animated', 'swipeGesture']
 })
 export class IonRouterOutlet implements OnDestroy, OnInit {
 
@@ -27,12 +28,10 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   @Output('activate') activateEvents = new EventEmitter<any>();
   @Output('deactivate') deactivateEvents = new EventEmitter<any>();
 
-  @Input()
   set animated(animated: boolean) {
     this.nativeEl.animated = animated;
   }
 
-  @Input()
   set swipeGesture(swipe: boolean) {
     this._swipeGesture = swipe;
 
