@@ -1,9 +1,9 @@
 import resolve from 'rollup-plugin-node-resolve';
 
 export default {
-  input: 'dist/index.js',
+  input: 'build/es2015/core.js',
   output: {
-    file: 'dist/fesm5.js',
+    file: 'dist/fesm2015.js',
     format: 'es'
   },
   external: (id) => {
