@@ -213,7 +213,7 @@
   -webkit-#{$prop}-start: $start;
   #{$prop}-inline-start: $start;
   -webkit-padding-end: $end;
-  padding-inline-end: $end;
+  #{$prop}-inline-end: $end;
 }
 
 // Add property for all directions
