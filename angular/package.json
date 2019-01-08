@@ -55,7 +55,7 @@
     "@angular/core": "^7.1.4",
     "@angular/common": "^7.1.4",
     "@angular/forms": "^7.1.4",
-    "@angular/router": "~7.1.4",
+    "@angular/router": "^7.1.4",
     "@angular/compiler": "^7.1.4",
     "@angular/compiler-cli": "^7.1.4",
     "@angular/platform-browser": "^7.1.4",
