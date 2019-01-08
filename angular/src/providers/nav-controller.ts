@@ -12,7 +12,9 @@ export interface AnimationOptions {
 
 export interface NavigationOptions extends NavigationExtras, AnimationOptions {}
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class NavController {
 
   private direction: 'forward' | 'back' | 'root' | 'auto' = DEFAULT_DIRECTION;
