@@ -39,7 +39,6 @@
   },
   "module": "dist/fesm5.js",
   "types": "dist/core.d.ts",
-  "sideEffects": false,
   "files": [
     "dist/",
     "css/"
