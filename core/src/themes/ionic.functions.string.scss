@@ -86,17 +86,22 @@
 // --------------------------------------------------
 // Used to cleanly add selectors to :host and :host()
 
-@function add-host-selector($root, $addHostSelector) {
-  @if $root == ":host" {
-    @return ":host(#{$addHostSelector})";
-  }
+@function add-root-selector($root, $addHostSelector) {
   $root-selectors: str-split($root, ",");
 
   $list: ();
+
   @each $root-selector in $root-selectors {
-    // @debug $root-selector;
-    $updated-selector: str-replace($root-selector, ":host(", ":host(#{$addHostSelector}");
-    $list: append($list, $updated-selector, comma);
+    @if $root-selector == ":host" {
+      $list: append($list, ":host(#{$addHostSelector})", comma);
+
+    } @else if str-contains($root-selector, ":host(") {
+      $updated-host: str-replace($root-selector, ":host(", ":host(#{$addHostSelector}");
+      $list: append($list, $updated-host, comma);
+
+    } @else {
+      $list: append($list, "#{$addHostSelector} #{$root-selector}", comma);
+    }
   }
 
   @return $list;

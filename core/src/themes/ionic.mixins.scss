@@ -154,17 +154,8 @@
   @if $app-direction == multi or $app-direction == null {
     $root: #{&};
 
-    @if str-contains($root, ":host") {
-      @at-root #{add-host-selector($root, "[dir=rtl]")} {
-        @content;
-      }
-
-    } @else {
-      @at-root [dir="rtl"] {
-        #{$root} {
-          @content;
-        }
-      }
+    @at-root #{add-root-selector($root, "[dir=rtl]")} {
+      @content;
     }
 
   } @else if $app-direction == rtl {
