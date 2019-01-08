@@ -210,21 +210,10 @@
 // @param {string} $end
 // ----------------------------------------------------------
 @mixin property-horizontal($prop, $start, $end: $start) {
-  @if $start == $end {
-    @include multi-dir() {
-      #{$prop}-left: $start;
-      #{$prop}-right: $end;
-    }
-  } @else {
-    @include ltr() {
-      #{$prop}-left: $start;
-      #{$prop}-right: $end;
-    }
-    @include rtl() {
-      #{$prop}-left: $end;
-      #{$prop}-right: $start;
-    }
-  }
+  -webkit-padding-start: $start;
+  padding-inline-start: $start;
+  -webkit-padding-end: $end;
+  padding-inline-end: $end;
 }
 
 // Add property for all directions
@@ -236,32 +225,9 @@
 // @param {boolean} $content include content or use default
 // ----------------------------------------------------------
 @mixin property($prop, $top, $end: $top, $bottom: $top, $start: $end) {
-  @if $top == $end and $top == $bottom and $top == $start {
-    @include multi-dir() {
-      #{$prop}: $top;
-    }
-  } @else if $top == $bottom and $end == $start and $top != null and $end != null {
-    @include multi-dir() {
-      #{$prop}: $top $end;
-    }
-  } @else if $end == $start and $top != null and $end != null and $bottom != null {
-    @include multi-dir() {
-      #{$prop}: $top $end $bottom;
-    }
-  } @else if $top != null and $end != null and $bottom != null and $start != null {
-    @include ltr() {
-      #{$prop}: $top $end $bottom $start;
-    }
-    @include rtl() {
-      #{$prop}: $top $start $bottom $end;
-    }
-  } @else {
-    @include property-horizontal($prop, $start, $end);
-    @include multi-dir() {
-      #{$prop}-top: $top;
-      #{$prop}-bottom: $bottom;
-    }
-  }
+  @include property-horizontal($prop, $start, $end);
+  #{$prop}-top: $top;
+  #{$prop}-bottom: $bottom;
 }
 
 // Add padding horizontal
