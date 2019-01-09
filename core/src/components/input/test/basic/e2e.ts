@@ -5,8 +5,14 @@ test('input: basic', async () => {
     url: '/src/components/input/test/basic?ionic:_testing=true'
   });
 
-  let compare = await page.compareScreenshot();
+  const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
+});
+
+test('input: full input', async () => {
+  const page = await newE2EPage({
+    url: '/src/components/input/test/basic?ionic:_testing=true'
+  });
 
   const fullInput = await page.find('#fullInput');
   await fullInput.click();
@@ -14,8 +20,14 @@ test('input: basic', async () => {
   const fullItem = await page.find('#fullItem');
   expect(fullItem).toHaveClass('item-has-focus');
 
-  compare = await page.compareScreenshot('full input focused');
+  const compare = await page.compareScreenshot('focused');
   expect(compare).toMatchScreenshot();
+});
+
+test('input: inset input', async () => {
+  const page = await newE2EPage({
+    url: '/src/components/input/test/basic?ionic:_testing=true'
+  });
 
   const insetInput = await page.find('#insetInput');
   await insetInput.click();
@@ -23,8 +35,14 @@ test('input: basic', async () => {
   const insetItem = await page.find('#insetItem');
   expect(insetItem).toHaveClass('item-has-focus');
 
-  compare = await page.compareScreenshot('inset input focused');
+  const compare = await page.compareScreenshot('focused');
   expect(compare).toMatchScreenshot();
+});
+
+test('input: no lines input', async () => {
+  const page = await newE2EPage({
+    url: '/src/components/input/test/basic?ionic:_testing=true'
+  });
 
   const noneInput = await page.find('#noneInput');
   await noneInput.click();
@@ -32,6 +50,6 @@ test('input: basic', async () => {
   const noneItem = await page.find('#noneItem');
   expect(noneItem).toHaveClass('item-has-focus');
 
-  compare = await page.compareScreenshot('no lines input focused');
+  const compare = await page.compareScreenshot('focused');
   expect(compare).toMatchScreenshot();
 });
