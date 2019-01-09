@@ -16,3 +16,4 @@ export { IonVirtualScroll } from './virtual-scroll/virtual-scroll';
 export { VirtualItem } from './virtual-scroll/virtual-item';
 export { VirtualHeader } from './virtual-scroll/virtual-header';
 export { VirtualFooter } from './virtual-scroll/virtual-footer';
+export * from './proxies';
