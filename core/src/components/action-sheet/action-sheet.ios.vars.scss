@@ -158,7 +158,7 @@ $action-sheet-ios-translucent-background-color-alpha:             .8 !default;
 $action-sheet-ios-translucent-background-color:                   rgba($background-color-rgb, $action-sheet-ios-translucent-background-color-alpha) !default;
 
 /// @prop - Border color alpha of the action sheet when translucent
-$action-sheet-ios-translucent-border-color-alpha:                 .2 !default;
+$action-sheet-ios-translucent-border-color-alpha:                 .4 !default;
 
 /// @prop - Border color of the action sheet when translucent
 $action-sheet-ios-translucent-border-color:                       rgba($background-color-rgb, $action-sheet-ios-translucent-border-color-alpha) !default;

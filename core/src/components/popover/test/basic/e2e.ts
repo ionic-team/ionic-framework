@@ -13,3 +13,17 @@ test('popover: basic', async () => {
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
 });
+
+test('popover: basic-rtl', async () => {
+  const page = await newE2EPage({
+    url: '/src/components/popover/test/basic?ionic:_testing=true&rtl=true'
+  });
+
+  await page.click('.e2eShowPopover');
+  const popover = await page.find('ion-popover');
+  await popover.waitForVisible();
+  await page.waitFor(250);
+
+  const compare = await page.compareScreenshot();
+  expect(compare).toMatchScreenshot();
+});
