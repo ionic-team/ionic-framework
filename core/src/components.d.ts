@@ -156,7 +156,7 @@ export namespace Components {
     */
     'subHeader'?: string;
     /**
-    * If `true`, the action sheet will be translucent.
+    * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports backdrop-filter.
     */
     'translucent': boolean;
   }
@@ -218,7 +218,7 @@ export namespace Components {
     */
     'subHeader'?: string;
     /**
-    * If `true`, the action sheet will be translucent.
+    * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports backdrop-filter.
     */
     'translucent'?: boolean;
   }

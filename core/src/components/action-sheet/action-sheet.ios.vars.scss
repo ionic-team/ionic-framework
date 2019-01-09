@@ -10,7 +10,7 @@ $action-sheet-ios-text-align:                                     center !defaul
 $action-sheet-ios-padding-top:                                    0 !default;
 
 /// @prop - Padding end of the action sheet
-$action-sheet-ios-padding-end:                                    10px !default;
+$action-sheet-ios-padding-end:                                    8px !default;
 
 /// @prop - Padding bottom of the action sheet
 $action-sheet-ios-padding-bottom:                                 $action-sheet-ios-padding-top !default;
@@ -38,7 +38,7 @@ $action-sheet-ios-border-radius:                                  13px !default;
 $action-sheet-ios-title-padding-top:                              14px !default;
 
 /// @prop - Padding end of the action sheet title
-$action-sheet-ios-title-padding-end:                              $action-sheet-ios-title-padding-top !default;
+$action-sheet-ios-title-padding-end:                              10px !default;
 
 /// @prop - Padding bottom of the action sheet title
 $action-sheet-ios-title-padding-bottom:                           13px !default;
@@ -155,16 +155,22 @@ $action-sheet-ios-button-cancel-font-weight:                      600 !default;
 $action-sheet-ios-translucent-background-color-alpha:             .8 !default;
 
 /// @prop - Background color of the action sheet when translucent
-$action-sheet-ios-translucent-background-color:                   rgba(var(--ion-background-color-rgb, $background-color-rgb), $action-sheet-ios-translucent-background-color-alpha) !default;
+$action-sheet-ios-translucent-background-color:                   rgba($background-color-rgb, $action-sheet-ios-translucent-background-color-alpha) !default;
+
+/// @prop - Border color alpha of the action sheet when translucent
+$action-sheet-ios-translucent-border-color-alpha:                 .2 !default;
+
+/// @prop - Border color of the action sheet when translucent
+$action-sheet-ios-translucent-border-color:                       rgba($background-color-rgb, $action-sheet-ios-translucent-border-color-alpha) !default;
 
 /// @prop - Background color alpha of the activated action sheet when translucent
-$action-sheet-ios-translucent-background-color-activated-alpha:   .6 !default;
+$action-sheet-ios-translucent-background-color-activated-alpha:   .7 !default;
 
 /// @prop - Background color of the activated action sheet when translucent
-$action-sheet-ios-translucent-background-color-activated:         rgba(var(--ion-background-color-rgb, $background-color-rgb), $action-sheet-ios-translucent-background-color-activated-alpha) !default;
+$action-sheet-ios-translucent-background-color-activated:         rgba($background-color-rgb, $action-sheet-ios-translucent-background-color-activated-alpha) !default;
 
 /// @prop - Filter of the translucent action-sheet group
-$action-sheet-ios-group-translucent-filter:                       blur(20px) !default;
+$action-sheet-ios-group-translucent-filter:                       saturate(280%) blur(20px) !default;
 
 /// @prop - Filter of the translucent action-sheet button
-$action-sheet-ios-button-translucent-filter:                      saturate(180%) blur(20px) !default;
+$action-sheet-ios-button-translucent-filter:                      saturate(120%) !default;

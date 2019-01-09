@@ -20,7 +20,7 @@ $alert-ios-background-color:                            $overlay-ios-background-
 $alert-ios-translucent-background-color-alpha:          .9 !default;
 
 /// @prop - Background color of the alert when translucent
-$alert-ios-translucent-background-color:                rgba(var(--ion-background-color-rgb, $background-color-rgb), $alert-ios-translucent-background-color-alpha) !default;
+$alert-ios-translucent-background-color:                rgba($background-color-rgb, $alert-ios-translucent-background-color-alpha) !default;
 
 /// @prop - Box shadow of the alert
 $alert-ios-box-shadow:                                  none !default;

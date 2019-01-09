@@ -47,33 +47,33 @@
 // iOS Translucent Action Sheet
 // ---------------------------------------------------
 
-:host(.action-sheet-translucent) .action-sheet-group {
-  background-color: transparent;
-  backdrop-filter: $action-sheet-ios-group-translucent-filter;
-}
+@supports (backdrop-filter: blur(20px)) {
+  :host(.action-sheet-translucent) .action-sheet-group {
+    background-color: transparent;
+    backdrop-filter: $action-sheet-ios-group-translucent-filter;
+  }
 
-:host(.action-sheet-translucent) .action-sheet-title,
-:host(.action-sheet-translucent) .action-sheet-button {
-  background-color: transparent;
-  background-image:
-    linear-gradient(0deg, $action-sheet-ios-translucent-background-color, $action-sheet-ios-translucent-background-color 100%),
-    linear-gradient(0deg, transparent, transparent 50%, $action-sheet-ios-translucent-background-color 50%);
-  background-repeat: no-repeat;
-  background-position: top, bottom;
-  background-size: 100% calc(100% - 1px), 100% 1px;
-  backdrop-filter: $action-sheet-ios-button-translucent-filter;
-}
+  :host(.action-sheet-translucent) .action-sheet-title,
+  :host(.action-sheet-translucent) .action-sheet-button {
+    background-color: transparent;
+    background-image:
+      linear-gradient(0deg, $action-sheet-ios-translucent-background-color, $action-sheet-ios-translucent-background-color 100%),
+      linear-gradient(0deg, $action-sheet-ios-translucent-border-color, $action-sheet-ios-translucent-border-color 50%, $action-sheet-ios-translucent-background-color 50%);
+    background-repeat: no-repeat;
+    background-position: top, bottom;
+    background-size: 100% calc(100% - 1px), 100% 1px;
+    backdrop-filter: $action-sheet-ios-button-translucent-filter;
+  }
 
-:host(.action-sheet-translucent) .action-sheet-button.activated {
-  background-image:
-    linear-gradient(0deg, $action-sheet-ios-translucent-background-color-activated, $action-sheet-ios-translucent-background-color-activated 100%),
-    linear-gradient(0deg, $action-sheet-ios-translucent-background-color-activated, $action-sheet-ios-translucent-background-color-activated 100%);
-}
+  :host(.action-sheet-translucent) .action-sheet-button.activated {
+    background-color: $action-sheet-ios-translucent-background-color-activated;
+    background-image: none;
+  }
 
-:host(.action-sheet-translucent) .action-sheet-cancel {
-  background: var(--background-selected);
+  :host(.action-sheet-translucent) .action-sheet-cancel {
+    background: var(--background-selected);
+  }
 }
-
 
 // iOS Action Sheet Border
 // ---------------------------------------------------
