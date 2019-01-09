@@ -97,7 +97,6 @@
       $list: append($list, $updated-host, comma);
 
     } @else if str-contains($selector, ":host") {
-      @debug $selector;
       $list: append($list, ":host(#{$addHostSelector}) + b", comma);
 
     } @else if $shadowDom == true {

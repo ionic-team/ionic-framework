@@ -210,10 +210,21 @@
 // @param {string} $end
 // ----------------------------------------------------------
 @mixin property-horizontal($prop, $start, $end: $start) {
-  -webkit-#{$prop}-start: $start;
-  #{$prop}-inline-start: $start;
-  -webkit-#{$prop}-end: $end;
-  #{$prop}-inline-end: $end;
+  #{$prop}-left: $start;
+  #{$prop}-right: $end;
+
+  @at-root @supports((margin-inline-start: 0) or (-webkit-margin-start: 0)) {
+    @if $start != null {
+      #{$prop}-left: unset;
+    }
+    @if $end != null {
+      #{$prop}-right: unset;
+    }
+    -webkit-#{$prop}-start: $start;
+    #{$prop}-inline-start: $start;
+    -webkit-#{$prop}-end: $end;
+    #{$prop}-inline-end: $end;
+  }
 }
 
 // Add property for all directions
