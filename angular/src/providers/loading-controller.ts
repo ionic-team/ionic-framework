@@ -3,7 +3,9 @@ import { LoadingOptions } from '@ionic/core';
 
 import { OverlayBaseController } from '../util/overlay';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class LoadingController extends OverlayBaseController<LoadingOptions, HTMLIonLoadingElement> {
   constructor() {
     super('ion-loading-controller');
