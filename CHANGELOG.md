@@ -1,3 +1,67 @@
+# [4.0.0-rc.1](https://github.com/ionic-team/ionic/compare/v4.0.0-rc.0...v4.0.0-rc.1) (2019-01-09)
+
+
+### Bug Fixes
+
+* **angular:** update [@angular](https://github.com/angular)/router dependency ([#16998](https://github.com/ionic-team/ionic/issues/16998)) ([76e9e02](https://github.com/ionic-team/ionic/commit/76e9e02))
+* **col:** handle RTL offset-*, pull-*, and push-* ([#16702](https://github.com/ionic-team/ionic/issues/16702)) ([6d6472b](https://github.com/ionic-team/ionic/commit/6d6472b))
+* **fab:** fab size when href provided ([b3316d4](https://github.com/ionic-team/ionic/commit/b3316d4)), closes [#16833](https://github.com/ionic-team/ionic/issues/16833)
+* **menu:** swipe-back has higher priority ([f05c599](https://github.com/ionic-team/ionic/commit/f05c599)), closes [#16864](https://github.com/ionic-team/ionic/issues/16864)
+* **overlays:** make them hidden until presented ([#16903](https://github.com/ionic-team/ionic/issues/16903)) ([302be53](https://github.com/ionic-team/ionic/commit/302be53)), closes [#16685](https://github.com/ionic-team/ionic/issues/16685)
+* **popover:** position properly in RTL / MD modes ([#16745](https://github.com/ionic-team/ionic/issues/16745)) ([7846019](https://github.com/ionic-team/ionic/commit/7846019))
+* **ripple-effect:** never capture click ([#16955](https://github.com/ionic-team/ionic/issues/16955)) ([7ee8aa6](https://github.com/ionic-team/ionic/commit/7ee8aa6)), closes [#16939](https://github.com/ionic-team/ionic/issues/16939)
+* **segment:** update indicator and border based on theme ([#16821](https://github.com/ionic-team/ionic/issues/16821)) ([74587db](https://github.com/ionic-team/ionic/commit/74587db)), closes [#16820](https://github.com/ionic-team/ionic/issues/16820)
+* **select:** interfaceOptions can customize mode ([#16826](https://github.com/ionic-team/ionic/issues/16826)) ([1227d57](https://github.com/ionic-team/ionic/commit/1227d57)), closes [#16825](https://github.com/ionic-team/ionic/issues/16825)
+* **tab-button:** allow standalone tab-button ([#16905](https://github.com/ionic-team/ionic/issues/16905)) ([6ca7645](https://github.com/ionic-team/ionic/commit/6ca7645)), closes [#16845](https://github.com/ionic-team/ionic/issues/16845)
+* **tabs:** fix goto root ([#16926](https://github.com/ionic-team/ionic/issues/16926)) ([8ee9205](https://github.com/ionic-team/ionic/commit/8ee9205)), closes [#16917](https://github.com/ionic-team/ionic/issues/16917)
+
+
+### Features
+
+* **radio-group:** add missing implementation for property allowEmptySelection ([#16880](https://github.com/ionic-team/ionic/issues/16880)) ([09726b0](https://github.com/ionic-team/ionic/commit/09726b0)), closes [#16841](https://github.com/ionic-team/ionic/issues/16841)
+* **react:** add missing simple components to react. ([#16836](https://github.com/ionic-team/ionic/issues/16836)) ([696f62c](https://github.com/ionic-team/ionic/commit/696f62c))
+* **react:** create initial portal implementation for overlay ctrls ([#16830](https://github.com/ionic-team/ionic/issues/16830)) ([99bdd1f](https://github.com/ionic-team/ionic/commit/99bdd1f))
+* **react:** Initial implementations of controller required elements. ([#16817](https://github.com/ionic-team/ionic/issues/16817)) ([e30c5f1](https://github.com/ionic-team/ionic/commit/e30c5f1))
+
+
+### Performance Improvements
+
+* **angular:** bundle size improvements for angular ([#16966](https://github.com/ionic-team/ionic/issues/16966)) ([44fb45e](https://github.com/ionic-team/ionic/commit/44fb45e))
+* **angular:** flat ng modules ([#17007](https://github.com/ionic-team/ionic/issues/17007)) ([0b84e27](https://github.com/ionic-team/ionic/commit/0b84e27)), closes [#17001](https://github.com/ionic-team/ionic/issues/17001)
+* **angular:** proxy fast properties ([#16888](https://github.com/ionic-team/ionic/issues/16888)) ([ca9ec3e](https://github.com/ionic-team/ionic/commit/ca9ec3e))
+
+
+### BREAKING CHANGES
+
+In order to speed up the build and reduce the main bundle size,
+we have moved the ionicons outside the webpack build pipeline.
+
+Instead, a new copy task needs to be added to the `angular.json`, specifically to the
+the `"assets"` option of the `"build"`.
+
+#### angular.json
+
+```diff
+{
+  "projects": {
+    "app": {
+      "architect": {
+        "build": {
+          "options": {
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "assets"
+              },
++             {
++               "glob": "**/*.svg",
++               "input": "node_modules/ionicons/dist/ionicons/svg",
++               "output": "./svg"
++             }
+```
+
+
 # [4.0.0-rc.0](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.19...v4.0.0-rc.0) (2018-12-19)
 
 
