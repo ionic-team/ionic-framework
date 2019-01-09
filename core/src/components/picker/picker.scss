@@ -108,11 +108,6 @@
 // --------------------------------------------------
 
 .picker-columns {
-  @include rtl() {
-    // Date is the same format in both directions
-    flex-direction: row-reverse;
-  }
-
   display: flex;
   position: relative;
 
@@ -121,6 +116,7 @@
   margin-bottom: var(--ion-safe-area-bottom, 0);
 
   contain: strict;
+  direction: ltr;
   overflow: hidden;
 }
 
