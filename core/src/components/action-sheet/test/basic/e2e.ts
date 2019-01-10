@@ -1,60 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-async function openActionSheet(selector: string) {
-  const page = await newE2EPage({
-    url: `/src/components/action-sheet/test/basic?ionic:_testing=true`
-  });
-
-  await page.click(selector);
-
-  let actionSheet = await page.find('ion-action-sheet');
-  expect(actionSheet).not.toBe(null);
-  await actionSheet.waitForVisible();
-
-  let compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
-
-  if (selector === '#alertFromActionSheet') {
-    const openAlertBtn = await page.find({ text: 'Open Alert' });
-    await openAlertBtn.click();
-
-    const alert = await page.find('ion-alert');
-    await alert.waitForVisible();
-    await page.waitFor(250);
-
-    compare = await page.compareScreenshot(`alert open`);
-    expect(compare).toMatchScreenshot();
-
-    const alertOkayBtn = await page.find({ contains: 'Okay' });
-    await alertOkayBtn.click();
-  }
-
-  if (selector === '#noBackdropDismiss') {
-    const backdrop = await page.find('ion-backdrop');
-    await backdrop.click();
-
-    compare = await page.compareScreenshot(`dismissed`);
-    expect(compare).toMatchScreenshot();
-
-    const isVisible = await actionSheet.isVisible();
-    expect(isVisible).toBe(true);
-
-    const cancel = await page.find('.action-sheet-cancel');
-    await cancel.click();
-
-    await actionSheet.waitForNotVisible();
-  } else {
-    await actionSheet.callMethod('dismiss');
-    await actionSheet.waitForNotVisible();
-
-    compare = await page.compareScreenshot(`dismissed`);
-    expect(compare).toMatchScreenshot();
-  }
-
-  actionSheet = await page.find('ion-action-sheet');
-  expect(actionSheet).toBe(null);
-}
-
 test('action-sheet: basic', async () => {
   await openActionSheet('#basic');
 });
@@ -86,3 +31,61 @@ test('action-sheet: basic, scrollable options', async () => {
 test('action-sheet: basic, scroll without cancel', async () => {
   await openActionSheet('#scrollWithoutCancel');
 });
+
+// Opens an action sheet on button click
+async function openActionSheet(selector: string) {
+  const page = await newE2EPage({
+    url: `/src/components/action-sheet/test/basic?ionic:_testing=true`
+  });
+
+  const compares = [];
+
+  await page.click(selector);
+
+  let actionSheet = await page.find('ion-action-sheet');
+  expect(actionSheet).not.toBe(null);
+  await actionSheet.waitForVisible();
+
+  compares.push(await page.compareScreenshot());
+
+  if (selector === '#alertFromActionSheet') {
+    const openAlertBtn = await page.find({ text: 'Open Alert' });
+    await openAlertBtn.click();
+
+    const alert = await page.find('ion-alert');
+    await alert.waitForVisible();
+    await page.waitFor(250);
+
+    compares.push(await page.compareScreenshot(`alert open`));
+
+    const alertOkayBtn = await page.find({ contains: 'Okay' });
+    await alertOkayBtn.click();
+  }
+
+  if (selector === '#noBackdropDismiss') {
+    const backdrop = await page.find('ion-backdrop');
+    await backdrop.click();
+
+    compares.push(await page.compareScreenshot(`dismissed`));
+
+    const isVisible = await actionSheet.isVisible();
+    expect(isVisible).toBe(true);
+
+    const cancel = await page.find('.action-sheet-cancel');
+    await cancel.click();
+
+    await actionSheet.waitForNotVisible();
+  } else {
+    await actionSheet.callMethod('dismiss');
+    await actionSheet.waitForNotVisible();
+
+    compares.push(await page.compareScreenshot(`dismissed`));
+  }
+
+  actionSheet = await page.find('ion-action-sheet');
+  expect(actionSheet).toBe(null);
+
+  for (const compare of compares) {
+    expect(compare).toMatchScreenshot();
+  }
+}
