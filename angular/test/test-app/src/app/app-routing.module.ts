@@ -15,12 +15,14 @@ import { NestedOutletComponent } from './nested-outlet/nested-outlet.component';
 import { NestedOutletPageComponent } from './nested-outlet-page/nested-outlet-page.component';
 import { NestedOutletPage2Component } from './nested-outlet-page2/nested-outlet-page2.component';
 import { ViewChildComponent } from './view-child/view-child.component';
+import { ProvidersComponent } from './providers/providers.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'inputs', component: InputsComponent },
   { path: 'modals', component: ModalComponent },
   { path: 'view-child', component: ViewChildComponent },
+  { path: 'providers', component: ProvidersComponent },
   { path: 'router-link', component: RouterLinkComponent },
   { path: 'router-link-page', component: RouterLinkPageComponent },
   { path: 'virtual-scroll', component: VirtualScrollComponent },
