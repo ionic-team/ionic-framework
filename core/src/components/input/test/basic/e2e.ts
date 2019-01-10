@@ -5,14 +5,9 @@ test('input: basic', async () => {
     url: '/src/components/input/test/basic?ionic:_testing=true'
   });
 
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
-});
+  const compares = [];
 
-test('input: full input', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/input/test/basic?ionic:_testing=true'
-  });
+  compares.push(await page.compareScreenshot());
 
   const fullInput = await page.find('#fullInput');
   await fullInput.click();
@@ -20,14 +15,7 @@ test('input: full input', async () => {
   const fullItem = await page.find('#fullItem');
   expect(fullItem).toHaveClass('item-has-focus');
 
-  const compare = await page.compareScreenshot('focused');
-  expect(compare).toMatchScreenshot();
-});
-
-test('input: inset input', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/input/test/basic?ionic:_testing=true'
-  });
+  compares.push(await page.compareScreenshot('full input focused'));
 
   const insetInput = await page.find('#insetInput');
   await insetInput.click();
@@ -35,14 +23,7 @@ test('input: inset input', async () => {
   const insetItem = await page.find('#insetItem');
   expect(insetItem).toHaveClass('item-has-focus');
 
-  const compare = await page.compareScreenshot('focused');
-  expect(compare).toMatchScreenshot();
-});
-
-test('input: no lines input', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/input/test/basic?ionic:_testing=true'
-  });
+  compares.push(await page.compareScreenshot('inset input focused'));
 
   const noneInput = await page.find('#noneInput');
   await noneInput.click();
@@ -50,6 +31,9 @@ test('input: no lines input', async () => {
   const noneItem = await page.find('#noneItem');
   expect(noneItem).toHaveClass('item-has-focus');
 
-  const compare = await page.compareScreenshot('focused');
-  expect(compare).toMatchScreenshot();
+  compares.push(await page.compareScreenshot('no lines input focused'));
+
+  for (const compare of compares) {
+    expect(compare).toMatchScreenshot();
+  }
 });
