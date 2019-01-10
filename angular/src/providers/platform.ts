@@ -6,7 +6,9 @@ export interface BackButtonEmitter extends Subject<BackButtonEventDetail> {
   subscribeWithPriority(priority: number, callback: () => Promise<any> | void): Subscription;
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class Platform {
 
   private _readyPromise: Promise<string>;
