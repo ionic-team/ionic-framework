@@ -100,6 +100,8 @@
   overflow: hidden;
   z-index: 0;
   appearance: none;
+
+  box-sizing: border-box;
 }
 
 .button-native[disabled] {
@@ -147,12 +149,6 @@
 
 // Disabled Button
 :host(.fab-button-disabled) {
-  pointer-events: none;
-}
-
-.button-native[disabled] {
-  cursor: default;
-  opacity: .5;
   pointer-events: none;
 }
 

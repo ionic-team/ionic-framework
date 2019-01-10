@@ -24,9 +24,12 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev?
       ? targetDim.top
       : bodyHeight / 2 - contentHeight / 2;
 
+  const isRTL = document.dir === 'rtl';
   const targetLeft =
     targetDim != null && 'left' in targetDim
-      ? targetDim.left
+      ? isRTL
+        ? targetDim.left - contentWidth + targetDim.width
+        : targetDim.left
       : bodyWidth / 2 - contentWidth / 2;
 
   const targetHeight = (targetDim && targetDim.height) || 0;

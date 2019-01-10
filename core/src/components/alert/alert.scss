@@ -38,6 +38,10 @@
   z-index: $z-index-overlay;
 }
 
+:host(.overlay-hidden) {
+  display: none;
+}
+
 :host(.alert-top) {
   @include padding(50px, null, null, null);
 

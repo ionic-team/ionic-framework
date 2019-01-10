@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
-import { DatetimeOptions, InputChangeEvent, Mode, PickerColumn, PickerColumnOption, PickerOptions, StyleEvent } from '../../interface';
+import { DatetimeChangeEventDetail, DatetimeOptions, Mode, PickerColumn, PickerColumnOption, PickerOptions, StyleEventDetail } from '../../interface';
 import { clamp, findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
@@ -203,7 +203,7 @@ export class Datetime implements ComponentInterface {
   /**
    * Emitted when the value (selected date) has changed.
    */
-  @Event() ionChange!: EventEmitter<InputChangeEvent>;
+  @Event() ionChange!: EventEmitter<DatetimeChangeEventDetail>;
 
   /**
    * Emitted when the datetime has focus.
@@ -219,7 +219,7 @@ export class Datetime implements ComponentInterface {
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   componentWillLoad() {
     // first see if locale names were provided in the inputs
@@ -272,8 +272,8 @@ export class Datetime implements ComponentInterface {
 
   private generatePickerOptions(): PickerOptions {
     const pickerOptions: PickerOptions = {
-      ...this.pickerOptions,
       mode: this.mode,
+      ...this.pickerOptions,
       columns: this.generateColumns()
     };
 
