@@ -1,5 +1,5 @@
 import { browser, element, by } from 'protractor';
-import { getProperty, setProperty, handleErrorMessages } from './utils';
+import { handleErrorMessages } from './utils';
 
 describe('view-child', () => {
 
