@@ -11,17 +11,18 @@ test('action-sheet: spec', async () => {
   let actionSheet = await page.find('ion-action-sheet');
   await actionSheet.waitForVisible();
 
-  let compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
+  const compares = [];
+  compares.push(await page.compareScreenshot());
 
   await actionSheet.callMethod('dismiss');
-
   await actionSheet.waitForNotVisible();
 
-  compare = await page.compareScreenshot(`dismissed`);
-  expect(compare).toMatchScreenshot();
+  compares.push(await page.compareScreenshot(`dismissed`));
 
   actionSheet = await page.find('ion-action-sheet');
-
   expect(actionSheet).toBe(null);
+
+  for (const compare of compares) {
+    expect(compare).toMatchScreenshot();
+  }
 });
