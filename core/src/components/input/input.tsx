@@ -16,7 +16,6 @@ export class Input implements ComponentInterface {
 
   private nativeInput?: HTMLInputElement;
   private inputId = `ion-input-${inputIds++}`;
-  private didBlurAfterEdit = false;
 
   @State() hasFocus = false;
 
@@ -272,43 +271,27 @@ export class Input implements ComponentInterface {
 
   private onBlur = () => {
     this.hasFocus = false;
-    this.focusChanged();
     this.emitStyle();
 
     this.ionBlur.emit();
   }
 
   private onFocus = () => {
+    if (this.clearOnEdit && !this.hasFocus && this.hasValue()) {
+      this.clearTextInput();
+    }
+
     this.hasFocus = true;
-    this.focusChanged();
     this.emitStyle();
 
     this.ionFocus.emit();
-  }
-
-  private onKeydown = () => {
-    if (this.clearOnEdit) {
-      // Did the input value change after it was blurred and edited?
-      if (this.didBlurAfterEdit && this.hasValue()) {
-        // Clear the input
-        this.clearTextInput();
-      }
-
-      // Reset the flag
-      this.didBlurAfterEdit = false;
-    }
   }
 
   private clearTextInput = () => {
     this.value = '';
   }
 
-  private focusChanged() {
-    // If clearOnEdit is enabled and the input blurred but has a value, set a flag
-    if (this.clearOnEdit && !this.hasFocus && this.hasValue()) {
-      this.didBlurAfterEdit = true;
-    }
-  }
+
 
   private hasValue(): boolean {
     return this.getValue().length > 0;
@@ -366,7 +349,6 @@ export class Input implements ComponentInterface {
         onInput={this.onInput}
         onBlur={this.onBlur}
         onFocus={this.onFocus}
-        onKeyDown={this.onKeydown}
       />,
       (this.clearInput && !this.readonly && !this.disabled) && <button
         type="button"
