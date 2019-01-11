@@ -85,11 +85,11 @@
 // Material Design Item Slots
 // --------------------------------------------------
 
-::slotted(:not(.interactive)[slot="start"]) {
+::slotted([slot="start"]) {
   @include margin-horizontal($item-md-start-slot-margin-start, $item-md-start-slot-margin-end);
 }
 
-::slotted(:not(.interactive)[slot="end"]) {
+::slotted([slot="end"]) {
   @include margin-horizontal($item-md-end-slot-margin-start, $item-md-end-slot-margin-end);
 }
 
@@ -98,7 +98,6 @@
 // --------------------------------------------------
 
 ::slotted(ion-icon) {
-
   color: $item-md-icon-slot-color;
 
   font-size: $item-md-icon-slot-font-size;
