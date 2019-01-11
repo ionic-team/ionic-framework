@@ -1702,7 +1702,7 @@ export namespace Components {
     /**
     * The type of control to display. The default type is text.
     */
-    'type': TextFieldTypes;
+    'type': TextFieldTypes | 'file';
     /**
     * The value of the input.
     */
@@ -1828,7 +1828,7 @@ export namespace Components {
     /**
     * The type of control to display. The default type is text.
     */
-    'type'?: TextFieldTypes;
+    'type'?: TextFieldTypes | 'file';
     /**
     * The value of the input.
     */
