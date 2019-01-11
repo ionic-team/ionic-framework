@@ -548,14 +548,12 @@ async function presentAlertCheckbox() {
 
 ## Events
 
-| Event                 | Description                             | Detail             |
-| --------------------- | --------------------------------------- | ------------------ |
-| `ionAlertDidDismiss`  | Emitted after the alert has dismissed.  | OverlayEventDetail |
-| `ionAlertDidLoad`     | Emitted after the alert has presented.  | void               |
-| `ionAlertDidPresent`  | Emitted after the alert has presented.  | void               |
-| `ionAlertDidUnload`   | Emitted before the alert has presented. | void               |
-| `ionAlertWillDismiss` | Emitted before the alert has dismissed. | OverlayEventDetail |
-| `ionAlertWillPresent` | Emitted before the alert has presented. | void               |
+| Event                 | Description                             | Type                              |
+| --------------------- | --------------------------------------- | --------------------------------- |
+| `ionAlertDidDismiss`  | Emitted after the alert has dismissed.  | `CustomEvent<OverlayEventDetail>` |
+| `ionAlertDidPresent`  | Emitted after the alert has presented.  | `CustomEvent<void>`               |
+| `ionAlertWillDismiss` | Emitted before the alert has dismissed. | `CustomEvent<OverlayEventDetail>` |
+| `ionAlertWillPresent` | Emitted before the alert has presented. | `CustomEvent<void>`               |
 
 
 ## Methods
@@ -613,8 +611,12 @@ Type: `Promise<void>`
 | Name           | Description                 |
 | -------------- | --------------------------- |
 | `--background` | Background of the alert     |
+| `--height`     | Height of the alert         |
 | `--max-height` | Maximum height of the alert |
+| `--max-width`  | Maximum width of the alert  |
+| `--min-height` | Minimum height of the alert |
 | `--min-width`  | Minimum width of the alert  |
+| `--width`      | Width of the alert          |
 
 
 ----------------------------------------------

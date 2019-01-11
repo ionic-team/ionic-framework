@@ -1,32 +1,55 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-test('alert: basic', async () => {
+async function openAlert(selector: string) {
   const page = await newE2EPage({
     url: '/src/components/alert/test/basic?ionic:_testing=true'
   });
 
-  const alerts = [
-    ['#basic'],
-    ['#longMessage', 'long message'],
-    ['#multipleButtons', 'multiple buttons'],
-    ['#noMessage', 'no message'],
-    ['#confirm', 'confirm'],
-    ['#prompt', 'prompt'],
-    ['#radio', 'radio'],
-    ['#checkbox', 'checkbox']
-  ];
+  await page.click(selector);
 
-  for (const [buttonSelector, message] of alerts) {
-    await page.click(buttonSelector);
+  let alert = await page.find('ion-alert');
+  expect(alert).not.toBe(null);
+  await alert.waitForVisible();
+  await page.waitFor(250);
 
-    const alert = await page.find('ion-alert');
-    expect(alert).not.toBe(null);
-    await alert.waitForVisible();
-    await page.waitFor(250);
+  const compare = await page.compareScreenshot();
+  expect(compare).toMatchScreenshot();
 
-    const compare = await page.compareScreenshot(message);
-    expect(compare).toMatchScreenshot();
-    await alert.callMethod('dismiss');
-  }
+  await alert.callMethod('dismiss');
+  await alert.waitForNotVisible();
 
+  alert = await page.find('ion-alert');
+  expect(alert).toBe(null);
+}
+
+test(`alert: basic`, async () => {
+  await openAlert('#basic');
+});
+
+test(`alert: basic, long message`, async () => {
+  await openAlert('#longMessage');
+});
+
+test(`alert: basic, multiple buttons`, async () => {
+  await openAlert('#multipleButtons');
+});
+
+test(`alert: basic, no message`, async () => {
+  await openAlert('#noMessage');
+});
+
+test(`alert: basic, confirm`, async () => {
+  await openAlert('#confirm');
+});
+
+test(`alert: basic, prompt`, async () => {
+  await openAlert('#prompt');
+});
+
+test(`alert: basic, radio`, async () => {
+  await openAlert('#radio');
+});
+
+test(`alert: basic, checkbox`, async () => {
+  await openAlert('#checkbox');
 });

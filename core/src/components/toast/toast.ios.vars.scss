@@ -10,7 +10,7 @@ $toast-ios-background-color:                      $background-color-step-50 !def
 $toast-ios-translucent-background-color-alpha:    .8 !default;
 
 /// @prop - Background Color of the toast wrapper when translucent
-$toast-ios-translucent-background-color:          rgba(var(--ion-background-color-rgb, $background-color-rgb), $toast-ios-translucent-background-color-alpha) !default;
+$toast-ios-translucent-background-color:          rgba($background-color-rgb, $toast-ios-translucent-background-color-alpha) !default;
 
 /// @prop - Border radius of the toast wrapper
 $toast-ios-border-radius:                         14px !default;

@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
 
 import { Animation, AnimationBuilder, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
 import { dismiss, eventMethod, present } from '../../utils/overlays';
@@ -12,18 +12,19 @@ import { iosLeaveAnimation } from './animations/ios.leave';
   styleUrls: {
     ios: 'picker.ios.scss',
     md: 'picker.md.scss'
-  }
+  },
+  scoped: true
 })
 export class Picker implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
 
-  presented = false;
   animation?: Animation;
 
   @Element() el!: HTMLElement;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
+
+  @State() presented = false;
 
   /** @internal */
   @Prop() overlayIndex!: number;
@@ -85,11 +86,6 @@ export class Picker implements ComponentInterface, OverlayInterface {
   @Prop() animated = true;
 
   /**
-   * Emitted after the picker has loaded.
-   */
-  @Event() ionPickerDidLoad!: EventEmitter<void>;
-
-  /**
    * Emitted after the picker has presented.
    */
   @Event({ eventName: 'ionPickerDidPresent' }) didPresent!: EventEmitter<void>;
@@ -109,19 +105,6 @@ export class Picker implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'ionPickerDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
-  /**
-   * Emitted after the picker has unloaded.
-   */
-  @Event() ionPickerDidUnload!: EventEmitter<void>;
-
-  componentDidLoad() {
-    this.ionPickerDidLoad.emit();
-  }
-
-  componentDidUnload() {
-    this.ionPickerDidUnload.emit();
-  }
-
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
     const cancelBtn = this.buttons.find(b => b.role === 'cancel');
@@ -137,13 +120,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    await present(
-      this,
-      'pickerEnter',
-      iosEnterAnimation,
-      iosEnterAnimation,
-      undefined
-    );
+    await present(this, 'pickerEnter', iosEnterAnimation, iosEnterAnimation, undefined);
 
     if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
@@ -158,14 +135,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
-    return dismiss(
-      this,
-      data,
-      role,
-      'pickerLeave',
-      iosLeaveAnimation,
-      iosLeaveAnimation
-    );
+    return dismiss(this, data, role, 'pickerLeave', iosLeaveAnimation, iosLeaveAnimation);
   }
 
   /**
@@ -249,7 +219,6 @@ export class Picker implements ComponentInterface, OverlayInterface {
         tappable={this.backdropDismiss}
       >
       </ion-backdrop>,
-
       <div class="picker-wrapper" role="dialog">
         <div class="picker-toolbar">
           {this.buttons.map(b => (
@@ -266,9 +235,11 @@ export class Picker implements ComponentInterface, OverlayInterface {
         </div>
 
         <div class="picker-columns">
-          <div class="picker-above-highlight" />
-            {this.columns.map(c => <ion-picker-column col={c} />)}
-          <div class="picker-below-highlight" />
+          <div class="picker-above-highlight"></div>
+            {this.presented && this.columns.map(c =>
+              <ion-picker-column col={c}></ion-picker-column>
+            )}
+          <div class="picker-below-highlight"></div>
         </div>
       </div>
     ];

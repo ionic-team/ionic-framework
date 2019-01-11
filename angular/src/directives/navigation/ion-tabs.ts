@@ -1,7 +1,6 @@
 import { Component, ContentChild, HostListener, ViewChild } from '@angular/core';
-import { TabButtonClickDetail } from '@ionic/core';
 
-import { NavController } from '../../providers';
+import { NavController } from '../../providers/nav-controller';
 import { IonTabBar } from '../proxies';
 
 import { IonRouterOutlet } from './ion-router-outlet';
@@ -57,14 +56,17 @@ export class IonTabs {
     }
   }
 
-  @HostListener('ionTabButtonClick', ['$event.detail'])
-  onTabButtonClick(detail: TabButtonClickDetail) {
-    const { tab, selected } = detail;
+  @HostListener('ionTabButtonClick', ['$event.detail.tab'])
+  select(tab: string) {
+    const selected = this.outlet.getActiveStackId() === tab;
     const href = `${this.outlet.tabsPrefix}/${tab}`;
     const url = selected
       ? href
       : this.outlet.getLastUrl(tab) || href;
 
-    this.navCtrl.navigateBack(url, true);
+    return this.navCtrl.navigateRoot(url, {
+      animated: true,
+      animationDirection: 'back'
+    });
   }
 }

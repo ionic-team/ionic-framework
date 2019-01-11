@@ -105,14 +105,12 @@ async function presentLoadingWithOptions() {
 
 ## Events
 
-| Event                   | Description                               | Detail             |
-| ----------------------- | ----------------------------------------- | ------------------ |
-| `ionLoadingDidDismiss`  | Emitted after the loading has dismissed.  | OverlayEventDetail |
-| `ionLoadingDidLoad`     | Emitted after the loading has loaded.     | void               |
-| `ionLoadingDidPresent`  | Emitted after the loading has presented.  | void               |
-| `ionLoadingDidUnload`   | Emitted after the loading has unloaded.   | void               |
-| `ionLoadingWillDismiss` | Emitted before the loading has dismissed. | OverlayEventDetail |
-| `ionLoadingWillPresent` | Emitted before the loading has presented. | void               |
+| Event                   | Description                               | Type                              |
+| ----------------------- | ----------------------------------------- | --------------------------------- |
+| `ionLoadingDidDismiss`  | Emitted after the loading has dismissed.  | `CustomEvent<OverlayEventDetail>` |
+| `ionLoadingDidPresent`  | Emitted after the loading has presented.  | `CustomEvent<void>`               |
+| `ionLoadingWillDismiss` | Emitted before the loading has dismissed. | `CustomEvent<OverlayEventDetail>` |
+| `ionLoadingWillPresent` | Emitted before the loading has presented. | `CustomEvent<void>`               |
 
 
 ## Methods
@@ -163,6 +161,20 @@ Present the loading overlay after it has been created.
 Type: `Promise<void>`
 
 
+
+
+## CSS Custom Properties
+
+| Name              | Description                          |
+| ----------------- | ------------------------------------ |
+| `--background`    | Background of the loading dialog     |
+| `--height`        | Height of the loading dialog         |
+| `--max-height`    | Maximum height of the loading dialog |
+| `--max-width`     | Maximum width of the loading dialog  |
+| `--min-height`    | Minimum height of the loading dialog |
+| `--min-width`     | Minimum width of the loading dialog  |
+| `--spinner-color` | Color of the loading spinner         |
+| `--width`         | Width of the loading dialog          |
 
 
 ----------------------------------------------

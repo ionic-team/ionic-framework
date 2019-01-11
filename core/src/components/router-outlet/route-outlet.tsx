@@ -1,8 +1,8 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, Watch } from '@stencil/core';
 
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Gesture, Mode, NavOutlet, RouteID, RouteWrite, RouterDirection, RouterOutletOptions, SwipeGestureHandler } from '../../interface';
-import { transition } from '../../utils';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
+import { transition } from '../../utils/transition';
 
 @Component({
   tag: 'ion-router-outlet',
@@ -20,7 +20,6 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'config' }) config!: Config;
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'window' }) win!: Window;
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
@@ -150,7 +149,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     // emit nav will change event
     this.ionNavWillChange.emit();
 
-    const { mode, queue, animationCtrl, win, el } = this;
+    const { mode, queue, win, el } = this;
     const animated = this.animated && this.config.getBoolean('animated', true);
     const animationBuilder = this.animation || opts.animationBuilder || this.config.get('navAnimation');
 
@@ -158,7 +157,6 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
       mode,
       queue,
       animated,
-      animationCtrl,
       animationBuilder,
       window: win,
       enteringEl,

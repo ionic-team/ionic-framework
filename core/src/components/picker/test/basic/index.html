@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Picker - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Picker - Basic</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content padding>
+      <ion-button id="basic" expand="block" onclick="presentPicker()">Show Picker</ion-button>
+      <ion-button id="custom" expand="block" onclick="presentPicker('my-custom-class')">Show Custom Picker</ion-button>
+    </ion-content>
+
+  </ion-app>
+  <ion-picker-controller></ion-picker-controller>
+
+  <style>
+    .my-custom-class {
+      --width: 200px;
+      --height: 50%;
+
+      --background: #272727;
+      --background-rgb: 39, 39, 39;
+      --border-width: 2px;
+      --border-color: #000000;
+      --border-radius: 16px 16px 0 0;
+
+      color: #d6d6d6;
+    }
+  </style>
+
+  <script>
+    async function presentPicker(customClass) {
+      const pickerController = document.querySelector('ion-picker-controller');
+      await pickerController.componentOnReady();
+      const pickerElement = await pickerController.create({
+        buttons: [{
+          text: 'Save',
+          handler: () => console.log('Clicked Save!')
+        }, {
+          text: 'Log',
+          handler: (val) => {
+            console.log('Clicked Log. Do not Dismiss.', val);
+            return false;
+          }
+        }],
+        columns: [{
+          name: 'hours',
+          prefix: 'total',
+          suffix: 'hours',
+          options: [{
+            text: '1',
+            value: '01'
+          },
+          {
+            text: '2',
+            value: '02'
+          },
+          {
+            text: '3',
+            value: '03'
+          },
+          {
+            text: '4',
+            value: '04'
+          },
+          {
+            text: '5',
+            value: '05'
+          },
+          {
+            text: '6',
+            value: '06'
+          },
+          {
+            text: '7',
+            value: '07'
+          },
+          {
+            text: '8',
+            value: '08'
+          },
+          {
+            text: '9',
+            value: '09'
+          },
+          {
+            text: '10',
+            value: '10'
+          },
+          {
+            text: '11',
+            value: '11'
+          },
+          {
+            text: '12',
+            value: '12'
+          }]
+        }],
+        cssClass: customClass
+      });
+      return await pickerElement.present();
+    }
+  </script>
+</body>
+
+</html>

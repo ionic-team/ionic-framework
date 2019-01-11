@@ -18,6 +18,12 @@ import { TabsTab1NestedComponent } from './tabs-tab1-nested/tabs-tab1-nested.com
 import { VirtualScrollComponent } from './virtual-scroll/virtual-scroll.component';
 import { VirtualScrollDetailComponent } from './virtual-scroll-detail/virtual-scroll-detail.component';
 import { VirtualScrollInnerComponent } from './virtual-scroll-inner/virtual-scroll-inner.component';
+import { NestedOutletComponent } from './nested-outlet/nested-outlet.component';
+import { NestedOutletPageComponent } from './nested-outlet-page/nested-outlet-page.component';
+import { NestedOutletPage2Component } from './nested-outlet-page2/nested-outlet-page2.component';
+import { NavComponent } from './nav/nav.component';
+import { ViewChildComponent } from './view-child/view-child.component';
+import { ProvidersComponent } from './providers/providers.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +40,13 @@ import { VirtualScrollInnerComponent } from './virtual-scroll-inner/virtual-scro
     TabsTab1NestedComponent,
     VirtualScrollComponent,
     VirtualScrollDetailComponent,
-    VirtualScrollInnerComponent
+    VirtualScrollInnerComponent,
+    NestedOutletComponent,
+    NestedOutletPageComponent,
+    NestedOutletPage2Component,
+    NavComponent,
+    ViewChildComponent,
+    ProvidersComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +55,8 @@ import { VirtualScrollInnerComponent } from './virtual-scroll-inner/virtual-scro
     IonicModule.forRoot(),
   ],
   entryComponents: [
-    ModalExampleComponent
+    ModalExampleComponent,
+    NavComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
