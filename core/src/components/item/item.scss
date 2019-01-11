@@ -152,6 +152,10 @@
   box-sizing: border-box;
 }
 
+.item-native::-moz-focus-inner {
+  border: 0;
+}
+
 button, a {
   cursor: pointer;
   user-select: none;
