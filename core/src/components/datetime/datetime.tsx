@@ -15,11 +15,13 @@ import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convert
   shadow: true
 })
 export class Datetime implements ComponentInterface {
+
   private inputId = `ion-dt-${datetimeIds++}`;
   private locale: LocaleData = {};
   private datetimeMin: DatetimeData = {};
   private datetimeMax: DatetimeData = {};
   private datetimeValue: DatetimeData = {};
+  private buttonEl?: HTMLButtonElement;
 
   @Element() el!: HTMLIonDatetimeElement;
 
@@ -251,6 +253,7 @@ export class Datetime implements ComponentInterface {
     this.isExpanded = true;
     picker.onDidDismiss().then(() => {
       this.isExpanded = false;
+      this.setFocus();
     });
     await this.validate(picker);
     await picker.present();
@@ -521,6 +524,12 @@ export class Datetime implements ComponentInterface {
     return Object.keys(val).length > 0;
   }
 
+  private setFocus() {
+    if (this.buttonEl) {
+      this.buttonEl.focus();
+    }
+  }
+
   private onClick = () => {
     this.open();
   }
@@ -576,6 +585,7 @@ export class Datetime implements ComponentInterface {
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         disabled={this.disabled}
+        ref={el => this.buttonEl = el}
       >
       </button>
     ];

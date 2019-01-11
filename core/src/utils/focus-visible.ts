@@ -9,12 +9,8 @@ export function startFocusVisible(doc: Document) {
   let keyboardMode = true;
 
   function setFocus(elements: Element[]) {
-    if (currentFocus) {
-      currentFocus.forEach(el => el.classList.remove(ION_FOCUSED));
-    }
-    if (elements) {
-      elements.forEach(el => el.classList.add(ION_FOCUSED));
-    }
+    currentFocus.forEach(el => el.classList.remove(ION_FOCUSED));
+    elements.forEach(el => el.classList.add(ION_FOCUSED));
     currentFocus = elements;
   }
 

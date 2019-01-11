@@ -18,6 +18,7 @@ export class Select implements ComponentInterface {
   private inputId = `ion-sel-${selectIds++}`;
   private overlay?: OverlaySelect;
   private didInit = false;
+  private buttonEl?: HTMLButtonElement;
 
   @Element() el!: HTMLIonSelectElement;
 
@@ -173,6 +174,7 @@ export class Select implements ComponentInterface {
     overlay.onDidDismiss().then(() => {
       this.overlay = undefined;
       this.isExpanded = false;
+      this.setFocus();
     });
     await overlay.present();
     return overlay;
@@ -352,6 +354,12 @@ export class Select implements ComponentInterface {
     return generateText(this.childOpts, this.value);
   }
 
+  private setFocus() {
+    if (this.buttonEl) {
+      this.buttonEl.focus();
+    }
+  }
+
   private emitStyle() {
     this.ionStyle.emit({
       'interactive': true,
@@ -429,6 +437,7 @@ export class Select implements ComponentInterface {
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         disabled={this.disabled}
+        ref={(el => this.buttonEl = el)}
       >
       </button>
     ];

@@ -25,16 +25,18 @@ export function createOverlay<T extends HTMLIonOverlayElement>(element: T, opts:
 export function connectListeners(doc: Document) {
   if (lastId === 0) {
     lastId = 1;
-    // trap focus
+    // trap focus inside overlays
     doc.addEventListener('focusin', ev => {
       const lastOverlay = getOverlay(doc);
       if (lastOverlay && lastOverlay.backdropDismiss && !isDescendant(lastOverlay, ev.target as HTMLElement)) {
-        const firstInput = lastOverlay.querySelector('input,button') as HTMLElement;
+        const firstInput = lastOverlay.querySelector('input,button') as HTMLElement | null;
         if (firstInput) {
           firstInput.focus();
         }
       }
     });
+
+    // handle back-button click
     doc.addEventListener('ionBackButton', ev => {
       const lastOverlay = getOverlay(doc);
       if (lastOverlay && lastOverlay.backdropDismiss) {
@@ -44,6 +46,7 @@ export function connectListeners(doc: Document) {
       }
     });
 
+    // handle ESC to close overlay
     doc.addEventListener('keyup', ev => {
       if (ev.key === 'Escape') {
         const lastOverlay = getOverlay(doc);
@@ -205,8 +208,6 @@ export function isCancel(role: string | undefined): boolean {
   return role === 'cancel' || role === BACKDROP;
 }
 
-export const BACKDROP = 'backdrop';
-
 function isDescendant(parent: HTMLElement, child: HTMLElement | null) {
   while (child) {
     if (child === parent) {
@@ -216,3 +217,5 @@ function isDescendant(parent: HTMLElement, child: HTMLElement | null) {
   }
   return false;
 }
+
+export const BACKDROP = 'backdrop';
