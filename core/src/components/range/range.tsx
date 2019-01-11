@@ -165,7 +165,7 @@ export class Range implements ComponentInterface {
     this.gesture.setDisabled(this.disabled);
   }
 
-  private handleKeyboard(knob: string, isIncrease: boolean) {
+  private handleKeyboard = (knob: string, isIncrease: boolean) => {
     let step = this.step;
     step = step > 0 ? step : 1;
     step = step / (this.max - this.min);
@@ -173,9 +173,9 @@ export class Range implements ComponentInterface {
       step *= -1;
     }
     if (knob === 'A') {
-      this.ratioA += step;
+      this.ratioA = clamp(0, this.ratioA + step, 1);
     } else {
-      this.ratioB += step;
+      this.ratioB = clamp(0, this.ratioB + step, 1);
     }
     this.updateValue();
   }
@@ -378,7 +378,7 @@ export class Range implements ComponentInterface {
           ratio: this.ratioA,
           pin: this.pin,
           disabled: this.disabled,
-          handleKeyboard: this.handleKeyboard.bind(this),
+          handleKeyboard: this.handleKeyboard,
           min,
           max
         })}
@@ -390,7 +390,7 @@ export class Range implements ComponentInterface {
           ratio: this.ratioB,
           pin: this.pin,
           disabled: this.disabled,
-          handleKeyboard: this.handleKeyboard.bind(this),
+          handleKeyboard: this.handleKeyboard,
           min,
           max
         })}

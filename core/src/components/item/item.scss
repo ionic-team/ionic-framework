@@ -91,6 +91,10 @@
 // Activated Item
 // --------------------------------------------------
 
+:host(.ion-focused) .item-native {
+  background: var(--background-focused);
+}
+
 :host(.activated) .item-native {
   background: var(--background-activated);
 }

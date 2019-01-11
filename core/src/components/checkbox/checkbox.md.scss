@@ -44,27 +44,6 @@
   opacity: $checkbox-md-disabled-opacity;
 }
 
-
-// Material Design Checkbox Keyboard Focus
-// -----------------------------------------
-
-:host(.checkbox-key) .checkbox-icon::after {
-  @include border-radius(50%);
-  @include position(-12px, null, null, -12px);
-
-  display: block;
-  position: absolute;
-
-  width: 36px;
-  height: 36px;
-
-  background: $checkbox-md-background-color-focused;
-
-  content: "";
-  opacity: .2;
-}
-
-
 // Material Design Checkbox Within An Item
 // -----------------------------------------
 

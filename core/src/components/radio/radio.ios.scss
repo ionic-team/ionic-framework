@@ -49,7 +49,7 @@
 // iOS Radio: Keyboard Focus
 // -----------------------------------------
 
-:host(.radio-key) .radio-icon::after {
+:host(.ion-focused) .radio-icon::after {
   @include border-radius(50%);
   @include position(-8px, null, null, -9px);
 
