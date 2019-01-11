@@ -164,7 +164,7 @@ export class Input implements ComponentInterface {
   /**
    * The type of control to display. The default type is text.
    */
-  @Prop() type: TextFieldTypes = 'text';
+  @Prop() type: TextFieldTypes | 'file' = 'text';
 
   /**
    * The value of the input.
