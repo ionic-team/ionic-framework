@@ -33,7 +33,7 @@ export class Anchor implements ComponentInterface {
 
   @Listen('click')
   onClick(ev: Event) {
-    openURL(this.win, this.href, ev, this.routerDirection)
+    openURL(this.win, this.href, ev, this.routerDirection);
   }
 
   hostData() {
