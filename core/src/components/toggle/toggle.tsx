@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { Color, Gesture, GestureDetail, Mode, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
 import { hapticSelection } from '../../utils/haptic';
@@ -116,6 +116,11 @@ export class Toggle implements ComponentInterface {
     this.disabledChanged();
   }
 
+  @Listen('click')
+  onClick() {
+    this.checked = !this.checked;
+  }
+
   private emitStyle() {
     this.ionStyle.emit({
       'interactive-disabled': this.disabled,
@@ -152,10 +157,6 @@ export class Toggle implements ComponentInterface {
 
   private getValue() {
     return this.value || '';
-  }
-
-  private onClick = () => {
-    this.checked = !this.checked;
   }
 
   private onFocus = () => {
@@ -201,7 +202,6 @@ export class Toggle implements ComponentInterface {
       </div>,
       <button
         type="button"
-        onClick={this.onClick}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         disabled={this.disabled}

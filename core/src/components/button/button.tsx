@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
 
 import { Color, Mode, RouterDirection } from '../../interface';
 import { hasShadowDom } from '../../utils/helpers';
@@ -101,15 +101,8 @@ export class Button implements ComponentInterface {
     this.inToolbar = !!this.el.closest('ion-buttons');
   }
 
-  private onFocus = () => {
-    this.ionFocus.emit();
-  }
-
-  private onBlur = () => {
-    this.ionBlur.emit();
-  }
-
-  private onClick = (ev: Event) => {
+  @Listen('click')
+  onClick(ev: Event) {
     if (this.type === 'button') {
       return openURL(this.win, this.href, ev, this.routerDirection);
 
@@ -130,6 +123,14 @@ export class Button implements ComponentInterface {
       }
     }
     return Promise.resolve(false);
+  }
+
+  private onFocus = () => {
+    this.ionFocus.emit();
+  }
+
+  private onBlur = () => {
+    this.ionBlur.emit();
   }
 
   hostData() {
@@ -169,7 +170,6 @@ export class Button implements ComponentInterface {
         disabled={this.disabled}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
-        onClick={this.onClick}
       >
         <span class="button-inner">
           <slot name="icon-only"></slot>

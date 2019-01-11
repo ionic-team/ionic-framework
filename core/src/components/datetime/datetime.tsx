@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
 import { DatetimeChangeEventDetail, DatetimeOptions, Mode, PickerColumn, PickerColumnOption, PickerOptions, StyleEventDetail } from '../../interface';
 import { clamp, findItemLabel, renderHiddenInput } from '../../utils/helpers';
@@ -237,6 +237,11 @@ export class Datetime implements ComponentInterface {
 
     this.updateDatetimeValue(this.value);
     this.emitStyle();
+  }
+
+  @Listen('click')
+  onClick() {
+    this.open();
   }
 
   /**
@@ -530,10 +535,6 @@ export class Datetime implements ComponentInterface {
     }
   }
 
-  private onClick = () => {
-    this.open();
-  }
-
   private onFocus = () => {
     this.ionFocus.emit();
   }
@@ -581,7 +582,6 @@ export class Datetime implements ComponentInterface {
       <div class="datetime-text">{datetimeText}</div>,
       <button
         type="button"
-        onClick={this.onClick}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         disabled={this.disabled}

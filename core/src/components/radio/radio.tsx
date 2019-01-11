@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
 
 import { Color, Mode, RadioChangeEventDetail, StyleEventDetail } from '../../interface';
 import { findItemLabel } from '../../utils/helpers';
@@ -125,19 +125,20 @@ export class Radio implements ComponentInterface {
     this.ionRadioDidUnload.emit();
   }
 
-  private emitStyle() {
-    this.ionStyle.emit({
-      'radio-checked': this.checked,
-      'interactive-disabled': this.disabled,
-    });
-  }
-
-  private onClick = () => {
+  @Listen('click')
+  onClick() {
     if (this.checked) {
       this.ionDeselect.emit();
     } else {
       this.checked = true;
     }
+  }
+
+  private emitStyle() {
+    this.ionStyle.emit({
+      'radio-checked': this.checked,
+      'interactive-disabled': this.disabled,
+    });
   }
 
   private onFocus = () => {
@@ -177,7 +178,6 @@ export class Radio implements ComponentInterface {
       </div>,
       <button
         type="button"
-        onClick={this.onClick}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         disabled={this.disabled}

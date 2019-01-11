@@ -138,6 +138,11 @@ export class Select implements ComponentInterface {
     }
   }
 
+  @Listen('click')
+  onClick() {
+    this.open();
+  }
+
   async componentDidLoad() {
     await this.loadOptions();
 
@@ -371,10 +376,6 @@ export class Select implements ComponentInterface {
     });
   }
 
-  private onClick = (ev: UIEvent) => {
-    this.open(ev);
-  }
-
   private onFocus = () => {
     this.ionFocus.emit();
   }
@@ -433,7 +434,6 @@ export class Select implements ComponentInterface {
       </div>,
       <button
         type="button"
-        onClick={this.onClick}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         disabled={this.disabled}
