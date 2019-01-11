@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { Color, Mode, TabBarChangedDetail, TabButtonLayout } from '../../interface';
+import { Color, Mode, TabBarChangedEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -33,11 +33,6 @@ export class TabBar implements ComponentInterface {
   @Prop() color?: Color;
 
   /**
-   * Set the layout of the text and icon in the tab bar.
-   */
-  @Prop() layout: TabButtonLayout = 'icon-top';
-
-  /**
    * The selected tab component
    */
   @Prop() selectedTab?: string;
@@ -54,16 +49,16 @@ export class TabBar implements ComponentInterface {
   @Prop() translucent = false;
 
   /** @internal */
-  @Event() ionTabBarChanged!: EventEmitter<TabBarChangedDetail>;
+  @Event() ionTabBarChanged!: EventEmitter<TabBarChangedEventDetail>;
 
-  @Listen('body:keyboardWillHide')
+  @Listen('window:keyboardWillHide')
   protected onKeyboardWillHide() {
     setTimeout(() => this.keyboardVisible = false, 50);
   }
 
-  @Listen('body:keyboardWillShow')
+  @Listen('window:keyboardWillShow')
   protected onKeyboardWillShow() {
-    if (this.el.getAttribute('slot') === 'bottom') {
+    if (this.el.getAttribute('slot') !== 'top') {
       this.keyboardVisible = true;
     }
   }
@@ -79,8 +74,8 @@ export class TabBar implements ComponentInterface {
       'aria-hidden': keyboardVisible ? 'true' : null,
       class: {
         ...createColorClasses(color),
-        'tabbar-translucent': translucent,
-        'tabbar-hidden': keyboardVisible,
+        'tab-bar-translucent': translucent,
+        'tab-bar-hidden': keyboardVisible,
       }
     };
   }

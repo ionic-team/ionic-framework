@@ -35,17 +35,19 @@
 
   width: 100%;
 
-  /* stylelint-disable */
-  /* TODO: find a better solution in padding.css, that does not require !important, */
+  /* stylelint-disable-next-line all */
   padding: 0 !important;
 
   background: var(--background);
   color: var(--color);
-  /* stylelint-enable */
 
   font-family: $font-family-base;
 
   z-index: $z-index-item-input;
+}
+
+:host-context(ion-item:not(.item-label)) {
+  --padding-start: 0;
 }
 
 :host(.ion-color) {
@@ -65,6 +67,7 @@
   flex: 1;
 
   width: 100%;
+  height: 100%;
 
   border: 0;
 

@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/core.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
   <script src="../../../../../dist/ionic.js"></script>
 </head>
 
@@ -53,7 +54,7 @@
 
   <ion-segment color="secondary" value="active">
     <ion-segment-button value="active">
-     <ion-label>Active</ion-label>
+      <ion-label>Active</ion-label>
     </ion-segment-button>
     <ion-segment-button value="disabled" disabled="true">
       <ion-label>Disabled</ion-label>
@@ -76,20 +77,19 @@
   </ion-segment>
 
   <ion-segment class="custom-icon" value="instagram">
-    <ion-segment-button layout="icon-top" class="segment-facebook" value="facebook">
+    <ion-segment-button class="segment-facebook" value="facebook">
       <ion-label>Facebook</ion-label>
       <ion-icon name="logo-facebook"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button layout="icon-top" class="segment-instagram" value="instagram">
+    <ion-segment-button class="segment-instagram" value="instagram">
       <ion-label>Instagram</ion-label>
       <ion-icon name="logo-instagram"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button layout="icon-top" class="segment-slack" value="slack">
+    <ion-segment-button class="segment-slack" value="slack">
       <ion-label>Slack</ion-label>
       <ion-icon name="logo-slack"></ion-icon>
     </ion-segment-button>
   </ion-segment>
-
 </body>
 
 <script>
@@ -98,7 +98,7 @@
 
   checkUrl();
 
-  segment.addEventListener('ionChange', function() {
+  segment.addEventListener('ionChange', function () {
     checkUrl();
   });
 
@@ -157,8 +157,12 @@
     --border-color-disabled: navy;
     --border-color: navy;
     --color-checked: papayawhip;
-    --color-disabled: rgba(0,0,0,0.3);
+    --color-disabled: rgba(0, 0, 0, 0.3);
     --color: navy;
+  }
+
+  .custom-icon {
+    --indicator-color: lightgray;
   }
 
   .segment-facebook {
@@ -179,5 +183,7 @@
   .custom-icon ion-icon {
     font-size: 44px;
   }
+
 </style>
+
 </html>

@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Listen, Prop, State } from '@stencil/core';
 
-import { Color, CssClassMap, Mode, RouterDirection, StyleEvent } from '../../interface';
+import { Color, CssClassMap, Mode, RouterDirection, StyleEventDetail } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 @Component({
@@ -76,7 +76,7 @@ export class Item implements ComponentInterface {
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   @Listen('ionStyle')
-  itemStyle(ev: CustomEvent<StyleEvent>) {
+  itemStyle(ev: CustomEvent<StyleEventDetail>) {
     ev.stopPropagation();
 
     const tagName = (ev.target as HTMLElement).tagName;
@@ -127,7 +127,6 @@ export class Item implements ComponentInterface {
     });
 
     return {
-      'ion-activatable': this.isClickable(),
       'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...childStyles,
@@ -136,24 +135,30 @@ export class Item implements ComponentInterface {
         'item-disabled': this.disabled,
         'in-list': hostContext('ion-list', this.el),
         'item': true,
-        'item-multiple-inputs': this.multipleInputs
+        'item-multiple-inputs': this.multipleInputs,
+        'ion-activatable': this.isClickable(),
       }
     };
   }
 
   render() {
-    const { href, detail, mode, win, detailIcon, routerDirection, type } = this;
+    const { href, detail, mode, win, routerDirection, type } = this;
+    let detailIcon = this.detailIcon;
 
     const clickable = this.isClickable();
-    const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div';
+    const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
     const attrs = TagType === 'button' ? { type } : { href };
     const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
+
+    if (showDetail && detailIcon === 'ios-arrow-forward' && document.dir === 'rtl') {
+      detailIcon = 'ios-arrow-back';
+    }
 
     return [
       <TagType
         {...attrs}
         class="item-native"
-        onClick={ev => openURL(win, href, ev, routerDirection)}
+        onClick={(ev: Event) => openURL(win, href, ev, routerDirection)}
       >
         <slot name="start"></slot>
         <div class="item-inner">

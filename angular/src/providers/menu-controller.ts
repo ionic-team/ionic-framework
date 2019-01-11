@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
+
 import { proxyMethod } from '../util/util';
 
 const CTRL = 'ion-menu-controller';
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class MenuController {
 
   /**
@@ -13,7 +16,6 @@ export class MenuController {
   open(menuId?: string): Promise<boolean> {
     return proxyMethod(CTRL, 'open', menuId);
   }
-
 
   /**
    * Programmatically close the Menu. If no `menuId` is given as the first

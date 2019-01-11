@@ -4,6 +4,10 @@
 // --------------------------------------------------
 
 :host {
+  --indicator-color-checked: initial;
+  --ripple-color: initial;
+  --color-activated: initial;
+
   @include font-smoothing();
 
   display: flex;

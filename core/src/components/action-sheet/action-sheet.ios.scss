@@ -2,9 +2,13 @@
 @import "./action-sheet.ios.vars";
 
 // iOS Action Sheet
-// --------------------------------------------------
+// ---------------------------------------------------
 
 :host {
+  --background: #{$action-sheet-ios-background-color};
+  --background-selected: #{$action-sheet-ios-button-background-selected)};
+  --background-activated: #{$action-sheet-ios-button-background-activated};
+
   text-align: $action-sheet-ios-text-align;
 }
 
@@ -14,7 +18,7 @@
 
 
 // iOS Action Sheet Container
-// -----------------------------------------
+// ---------------------------------------------------
 
 .action-sheet-container {
   @include padding($action-sheet-ios-padding-top, $action-sheet-ios-padding-end, $action-sheet-ios-padding-bottom, $action-sheet-ios-padding-start);
@@ -22,13 +26,13 @@
 
 
 // iOS Action Sheet Group
-// -----------------------------------------
+// ---------------------------------------------------
 
 .action-sheet-group {
   @include border-radius($action-sheet-ios-border-radius);
   @include margin(null, null, $action-sheet-ios-group-margin-bottom - 2, null);
 
-  background: $action-sheet-ios-background-color;
+  overflow: hidden;
 }
 
 .action-sheet-group:first-child {
@@ -41,23 +45,64 @@
 
 
 // iOS Translucent Action Sheet
-// -----------------------------------------
+// ---------------------------------------------------
 
-:host(.action-sheet-translucent) .action-sheet-group {
-  background: $action-sheet-ios-translucent-background-color;
-  backdrop-filter: $action-sheet-ios-translucent-filter;
+@supports (backdrop-filter: blur(0)) {
+  :host(.action-sheet-translucent) .action-sheet-group {
+    background-color: transparent;
+    backdrop-filter: $action-sheet-ios-group-translucent-filter;
+  }
+
+  :host(.action-sheet-translucent) .action-sheet-title,
+  :host(.action-sheet-translucent) .action-sheet-button {
+    background-color: transparent;
+    background-image:
+      linear-gradient(0deg, $action-sheet-ios-translucent-background-color, $action-sheet-ios-translucent-background-color 100%),
+      linear-gradient(0deg, $action-sheet-ios-translucent-border-color, $action-sheet-ios-translucent-border-color 50%, $action-sheet-ios-translucent-background-color 50%);
+    background-repeat: no-repeat;
+
+    /* stylelint-disable-next-line all */
+    background-position: top, bottom;
+
+    background-size: 100% calc(100% - 1px), 100% 1px;
+    backdrop-filter: $action-sheet-ios-button-translucent-filter;
+  }
+
+  :host(.action-sheet-translucent) .action-sheet-button.activated {
+    background-color: $action-sheet-ios-translucent-background-color-activated;
+    background-image: none;
+  }
+
+  :host(.action-sheet-translucent) .action-sheet-cancel {
+    background: var(--background-selected);
+  }
+}
+
+// iOS Action Sheet Border
+// ---------------------------------------------------
+// Border is made with a linear gradient in order
+// to get the proper color and iOS blur effect
+
+.action-sheet-title,
+.action-sheet-button {
+  background-color: transparent;
+  background-image: linear-gradient(0deg, $action-sheet-ios-button-border-color, $action-sheet-ios-button-border-color 50%, transparent 50%);
+  background-repeat: no-repeat;
+
+  /* stylelint-disable-next-line all */
+  background-position: bottom;
+
+  background-size: 100% 1px;
 }
 
 
 // iOS Action Sheet Title
-// -----------------------------------------
+// ---------------------------------------------------
 
 .action-sheet-title {
   @include padding($action-sheet-ios-title-padding-top, $action-sheet-ios-title-padding-end, $action-sheet-ios-title-padding-bottom, $action-sheet-ios-title-padding-start);
 
-  border-bottom: $action-sheet-ios-title-border-width $action-sheet-ios-title-border-style $action-sheet-ios-title-border-color;
-
-  color: $action-sheet-ios-title-color;
+  color: var(--color, $action-sheet-ios-title-color);
 
   font-size: $action-sheet-ios-title-font-size;
   font-weight: $action-sheet-ios-title-font-weight;
@@ -73,18 +118,14 @@
 
 
 // iOS Action Sheet Buttons
-// -----------------------------------------
+// ---------------------------------------------------
 
 .action-sheet-button {
-  @include margin(0);
   @include padding($action-sheet-ios-button-padding);
 
   height: $action-sheet-ios-button-height;
 
-  border-bottom: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-button-border-color;
-
-  background: $action-sheet-ios-button-background;
-  color: $action-sheet-ios-button-text-color;
+  color: var(--color, $action-sheet-ios-button-text-color);
 
   font-size: $action-sheet-ios-button-font-size;
 
@@ -98,20 +139,11 @@
 }
 
 .action-sheet-button:last-child {
-  border-bottom-color: transparent;
-}
-
-.action-sheet-button.activated {
-  @include margin(-$action-sheet-ios-button-border-width, null, null, null);
-
-  border-top: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-button-background-activated;
-  border-bottom-color: $action-sheet-ios-button-background-activated;
-
-  background: $action-sheet-ios-button-background-activated;
+  background-image: none;
 }
 
 .action-sheet-selected {
-  background: $action-sheet-ios-button-background-selected;
+  background: var(--background-selected);
 
   font-weight: bold;
 }
@@ -121,7 +153,7 @@
 }
 
 .action-sheet-cancel {
-  background: $action-sheet-ios-button-cancel-background;
+  background: var(--background-selected);
 
   font-weight: $action-sheet-ios-button-cancel-font-weight;
 }

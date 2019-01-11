@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
-import { ActionSheetButton, ActionSheetOptions, AlertOptions, CssClassMap, Mode, OverlaySelect, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent } from '../../interface';
+import { ActionSheetButton, ActionSheetOptions, AlertOptions, CssClassMap, Mode, OverlaySelect, PopoverOptions, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, StyleEventDetail } from '../../interface';
 import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
@@ -90,7 +90,7 @@ export class Select implements ComponentInterface {
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange!: EventEmitter<SelectInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<SelectChangeEventDetail>;
 
   /**
    * Emitted when the selection is cancelled.
@@ -111,7 +111,7 @@ export class Select implements ComponentInterface {
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   @Watch('disabled')
   disabledChanged() {
@@ -204,6 +204,7 @@ export class Select implements ComponentInterface {
     const interfaceOptions = this.interfaceOptions;
 
     const popoverOpts: PopoverOptions = {
+      mode: this.mode,
       ...interfaceOptions,
 
       component: 'ion-select-popover',
@@ -253,6 +254,7 @@ export class Select implements ComponentInterface {
 
     const interfaceOptions = this.interfaceOptions;
     const actionSheetOpts: ActionSheetOptions = {
+      mode: this.mode,
       ...interfaceOptions,
 
       buttons: actionSheetButtons,
@@ -262,7 +264,6 @@ export class Select implements ComponentInterface {
   }
 
   private async openAlert() {
-
     const label = this.getLabel();
     const labelText = (label) ? label.textContent : null;
 
@@ -270,6 +271,7 @@ export class Select implements ComponentInterface {
     const inputType = (this.multiple ? 'checkbox' : 'radio');
 
     const alertOpts: AlertOptions = {
+      mode: this.mode,
       ...interfaceOptions,
 
       header: interfaceOptions.header ? interfaceOptions.header : labelText,

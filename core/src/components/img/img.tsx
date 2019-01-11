@@ -47,17 +47,21 @@ export class Img implements ComponentInterface {
         // of the element we are observing
         // we can just use data[0]
         if (data[0].isIntersecting) {
-          this.loadSrc = this.src;
+          this.load();
           this.removeIO();
-          this.ionImgDidLoad.emit();
         }
       });
 
       this.io.observe(this.el);
     } else {
       // fall back to setTimeout for Safari and IE
-      setTimeout(() => this.loadSrc = this.src, 200);
+      setTimeout(() => this.load(), 200);
     }
+  }
+
+  private load() {
+    this.loadSrc = this.src;
+    this.ionImgDidLoad.emit();
   }
 
   private removeIO() {

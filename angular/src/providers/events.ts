@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 
-
 export type EventHandler = (...args: any[]) => any;
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class Events {
   private c = new Map<string, EventHandler[]>();
 
@@ -72,24 +73,4 @@ export class Events {
       }
     });
   }
-}
-
-
-export function setupEvents() {
-  const events = new Events();
-
-  window.addEventListener('online', ev => events.publish('app:online', ev));
-
-  window.addEventListener('offline', ev => events.publish('app:offline', ev));
-
-  window.addEventListener('orientationchange', ev => events.publish('app:rotated', ev));
-
-  return events;
-}
-
-
-export function setupProvideEvents() {
-  return () => {
-    return setupEvents();
-  };
 }

@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
   <script src="../../../../../dist/ionic.js"></script>
 
   <style>
@@ -56,35 +57,35 @@
       <p>
         <ion-button size="large" fill="clear">Large</ion-button>
       </p>
-      <div class="my-block" ion-activatable>
+      <div class="my-block ion-activatable">
         <ion-ripple-effect></ion-ripple-effect>
         This is just a div + effect behind
         <ion-button onclick="buttonClicked()">Nested button</ion-button>
       </div>
-      <div class="my-block" ion-activatable>
+      <div class="my-block ion-activatable">
         This is just a div + effect on top
         <ion-button onclick="buttonClicked()">Nested button</ion-button>
         <ion-ripple-effect></ion-ripple-effect>
       </div>
 
-      <div class="my-block" ion-activatable>
+      <div class="my-block ion-activatable">
         This is just a div + effect
         <ion-ripple-effect></ion-ripple-effect>
       </div>
 
-      <a class="my-block" ion-activatable>
+      <a class="my-block ion-activatable">
         This is just a a + effect on top
         <ion-button onclick="buttonClicked()">Nested button</ion-button>
         <ion-ripple-effect></ion-ripple-effect>
       </a>
 
-      <button class="my-block">
+      <button class="my-block ion-activatable">
         This is just a button + effect on top
         <ion-button onclick="buttonClicked()">Nested button</ion-button>
         <ion-ripple-effect></ion-ripple-effect>
       </button>
 
-      <a class="block" ion-activatable>
+      <a class="block ion-activatable">
         <ion-ripple-effect></ion-ripple-effect>
       </a>
     </ion-content>

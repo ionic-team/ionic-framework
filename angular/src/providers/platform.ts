@@ -1,13 +1,14 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { BackButtonDetail, Platforms, getPlatforms, isPlatform } from '@ionic/core';
-import { proxyEvent } from '../util/util';
+import { Injectable } from '@angular/core';
+import { BackButtonEventDetail, Platforms, getPlatforms, isPlatform } from '@ionic/core';
+import { Subject, Subscription } from 'rxjs';
 
-
-export interface BackButtonEmitter extends EventEmitter<BackButtonDetail> {
-  subscribeWithPriority(priority: number, callback: () => Promise<any> | void): void;
+export interface BackButtonEmitter extends Subject<BackButtonEventDetail> {
+  subscribeWithPriority(priority: number, callback: () => Promise<any> | void): Subscription;
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class Platform {
 
   private _readyPromise: Promise<string>;
@@ -15,7 +16,7 @@ export class Platform {
   /**
    * @hidden
    */
-  backButton: BackButtonEmitter = new EventEmitter<BackButtonDetail>() as any;
+  backButton: BackButtonEmitter = new Subject<BackButtonEventDetail>() as any;
 
   /**
    * The pause event emits when the native platform puts the application
@@ -23,25 +24,25 @@ export class Platform {
    * application. This event would emit when a Cordova app is put into
    * the background, however, it would not fire on a standard web browser.
    */
-  pause = new EventEmitter<void>();
+  pause = new Subject<void>();
 
   /**
    * The resume event emits when the native platform pulls the application
    * out from the background. This event would emit when a Cordova app comes
    * out from the background, however, it would not fire on a standard web browser.
    */
-  resume = new EventEmitter<void>();
+  resume = new Subject<void>();
 
   /**
    * The resize event emits when the browser window has changed dimensions. This
    * could be from a browser window being physically resized, or from a device
    * changing orientation.
    */
-  resize = new EventEmitter<void>();
+  resize = new Subject<void>();
 
   constructor() {
     this.backButton.subscribeWithPriority = function(priority, callback) {
-      return this.subscribe((ev: BackButtonDetail) => {
+      return this.subscribe(ev => {
         ev.register(priority, callback);
       });
     };
@@ -175,4 +176,11 @@ function readQueryParam(url: string, key: string) {
   const regex = new RegExp('[\\?&]' + key + '=([^&#]*)');
   const results = regex.exec(url);
   return results ? decodeURIComponent(results[1].replace(/\+/g, ' ')) : null;
+}
+
+function proxyEvent<T>(emitter: Subject<T>, el: EventTarget, eventName: string) {
+  el.addEventListener(eventName, (ev: Event | undefined | null) => {
+    // ?? cordova might emit "null" events
+    emitter.next(ev != null ? (ev as any).detail as T : undefined);
+  });
 }

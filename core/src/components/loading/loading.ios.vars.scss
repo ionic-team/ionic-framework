@@ -37,28 +37,13 @@ $loading-ios-background-color:                      $background-color-step-50 !d
 $loading-ios-translucent-background-color-alpha:    .8 !default;
 
 /// @prop - Background color of the translucent loading wrapper
-$loading-ios-translucent-background-color:          rgba(var(--ion-background-color-rgb, $background-color-rgb), $loading-ios-translucent-background-color-alpha) !default;
+$loading-ios-translucent-background-color:          rgba($background-color-rgb, $loading-ios-translucent-background-color-alpha) !default;
 
 /// @prop - Font weight of the loading content
 $loading-ios-content-font-weight:                   bold !default;
 
 /// @prop - Color of the loading spinner
 $loading-ios-spinner-color:                         $text-color-step-400 !default;
-
-/// @prop - Color of the ios loading spinner
-$loading-ios-spinner-lines-color:                   $loading-ios-spinner-color !default;
-
-/// @prop - Color of the bubbles loading spinner
-$loading-ios-spinner-bubbles-color:                 $loading-ios-spinner-color !default;
-
-/// @prop - Color of the circles loading spinner
-$loading-ios-spinner-circles-color:                 $loading-ios-spinner-color !default;
-
-/// @prop - Color of the crescent loading spinner
-$loading-ios-spinner-crescent-color:                $loading-ios-spinner-color !default;
-
-/// @prop - Color of the dots loading spinner
-$loading-ios-spinner-dots-color:                    $loading-ios-spinner-color !default;
 
 /// @prop - Filter of the translucent loading
 $loading-ios-translucent-filter:                    saturate(180%) blur(20px) !default;

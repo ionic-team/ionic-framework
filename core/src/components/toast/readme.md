@@ -108,14 +108,12 @@ async function presentToastWithOptions() {
 
 ## Events
 
-| Event                 | Description                             | Detail             |
-| --------------------- | --------------------------------------- | ------------------ |
-| `ionToastDidDismiss`  | Emitted after the toast has dismissed.  | OverlayEventDetail |
-| `ionToastDidLoad`     | Emitted after the toast has loaded.     | void               |
-| `ionToastDidPresent`  | Emitted after the toast has presented.  | void               |
-| `ionToastDidUnload`   | Emitted after the toast has unloaded.   | void               |
-| `ionToastWillDismiss` | Emitted before the toast has dismissed. | OverlayEventDetail |
-| `ionToastWillPresent` | Emitted before the toast has presented. | void               |
+| Event                 | Description                             | Type                              |
+| --------------------- | --------------------------------------- | --------------------------------- |
+| `ionToastDidDismiss`  | Emitted after the toast has dismissed.  | `CustomEvent<OverlayEventDetail>` |
+| `ionToastDidPresent`  | Emitted after the toast has presented.  | `CustomEvent<void>`               |
+| `ionToastWillDismiss` | Emitted before the toast has dismissed. | `CustomEvent<OverlayEventDetail>` |
+| `ionToastWillPresent` | Emitted before the toast has presented. | `CustomEvent<void>`               |
 
 
 ## Methods
@@ -170,11 +168,22 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name             | Description              |
-| ---------------- | ------------------------ |
-| `--background`   | Background of the toast  |
-| `--button-color` | Color of the button text |
-| `--color`        | Color of the toast text  |
+| Name              | Description                 |
+| ----------------- | --------------------------- |
+| `--background`    | Background of the toast     |
+| `--border-color`  | Border color of the toast   |
+| `--border-radius` | Border radius of the toast  |
+| `--border-style`  | Border style of the toast   |
+| `--border-width`  | Border width of the toast   |
+| `--box-shadow`    | Box shadow of the toast     |
+| `--button-color`  | Color of the button text    |
+| `--color`         | Color of the toast text     |
+| `--height`        | Height of the toast         |
+| `--max-height`    | Maximum height of the toast |
+| `--max-width`     | Maximum width of the toast  |
+| `--min-height`    | Minimum height of the toast |
+| `--min-width`     | Minimum width of the toast  |
+| `--width`         | Width of the toast          |
 
 
 ----------------------------------------------

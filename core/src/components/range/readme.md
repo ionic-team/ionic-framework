@@ -104,11 +104,11 @@ left or right of the range.
 
 ## Events
 
-| Event       | Description                                  | Detail           |
-| ----------- | -------------------------------------------- | ---------------- |
-| `ionBlur`   | Emitted when the range loses focus.          | void             |
-| `ionChange` | Emitted when the value property has changed. | InputChangeEvent |
-| `ionFocus`  | Emitted when the range has focus.            | void             |
+| Event       | Description                                  | Type                                  |
+| ----------- | -------------------------------------------- | ------------------------------------- |
+| `ionBlur`   | Emitted when the range loses focus.          | `CustomEvent<void>`                   |
+| `ionChange` | Emitted when the value property has changed. | `CustomEvent<RangeChangeEventDetail>` |
+| `ionFocus`  | Emitted when the range has focus.            | `CustomEvent<void>`                   |
 
 
 ## CSS Custom Properties
@@ -117,6 +117,7 @@ left or right of the range.
 | ------------------------- | ---------------------------------- |
 | `--bar-background`        | Background of the range bar        |
 | `--bar-background-active` | Background of the active range bar |
+| `--bar-border-radius`     | Border radius of the range bar     |
 | `--bar-height`            | Height of the range bar            |
 | `--height`                | Height of the range                |
 | `--knob-background`       | Background of the range knob       |

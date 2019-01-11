@@ -14,6 +14,10 @@ html {
   --ion-font-family: var(--ion-default-font);
 }
 
+body {
+  background: var(--ion-background-color);
+}
+
 body.backdrop-no-scroll {
   overflow: hidden;
 }
@@ -72,7 +76,7 @@ body.backdrop-no-scroll {
 ion-route,
 ion-route-redirect,
 ion-router,
-ion-animation-controller,
+ion-select-option,
 ion-nav-controller,
 ion-menu-controller,
 ion-action-sheet-controller,
@@ -105,7 +109,7 @@ html.plt-ios.plt-hybrid, html.plt-ios.plt-pwa {
   }
 }
 
-// TODO: remove once Safari 11.2 dies
+// TODO: remove once Safari 11.2 is no longer supported
 @supports (padding-top: constant(safe-area-inset-top)) {
   html {
     --ion-safe-area-top: constant(safe-area-inset-top);

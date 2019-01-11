@@ -1,4 +1,6 @@
-import { Animation, AnimationBuilder, ComponentRef, FrameworkDelegate, Mode, ViewController } from '../../interface';
+import { Animation, AnimationBuilder, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
+
+import { ViewController } from './view-controller';
 
 export type NavDirection = 'back' | 'forward';
 
@@ -39,9 +41,7 @@ export interface NavOptions extends RouterOutletOptions {
   viewIsReady?: (enteringEl: HTMLElement) => Promise<any>;
 }
 
-export interface Page extends Function {
-  new (...args: any[]): any;
-}
+export type Page = new (...args: any[]) => any;
 
 export type TransitionResolveFn = (hasCompleted: boolean, requiresTransition: boolean, enteringName?: string, leavingName?: string, direction?: string) => void;
 
@@ -62,3 +62,5 @@ export interface TransitionInstruction {
   leavingRequiresTransition?: boolean;
   enteringRequiresTransition?: boolean;
 }
+
+export { ViewController };

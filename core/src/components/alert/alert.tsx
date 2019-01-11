@@ -29,7 +29,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   @Element() el!: HTMLStencilElement;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
 
   /** @internal */
@@ -104,16 +103,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
   /**
    * Emitted after the alert has presented.
    */
-  @Event() ionAlertDidLoad!: EventEmitter<void>;
-
-  /**
-   * Emitted before the alert has presented.
-   */
-  @Event() ionAlertDidUnload!: EventEmitter<void>;
-
-  /**
-   * Emitted after the alert has presented.
-   */
   @Event({ eventName: 'ionAlertDidPresent' }) didPresent!: EventEmitter<void>;
 
   /**
@@ -170,14 +159,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
   componentWillLoad() {
     this.inputsChanged();
     this.buttonsChanged();
-  }
-
-  componentDidLoad() {
-    this.ionAlertDidLoad.emit();
-  }
-
-  componentDidUnload() {
-    this.ionAlertDidUnload.emit();
   }
 
   @Listen('ionBackdropTap')
@@ -424,7 +405,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
     return (
       <div class={alertButtonGroupClass}>
         {buttons.map(button =>
-          <button type="button" ion-activatable class={buttonClass(button)} tabIndex={0} onClick={() => this.buttonClick(button)}>
+          <button type="button" class={buttonClass(button)} tabIndex={0} onClick={() => this.buttonClick(button)}>
             <span class="alert-button-inner">
               {button.text}
             </span>
@@ -470,6 +451,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 function buttonClass(button: AlertButton): CssClassMap {
   return {
     'alert-button': true,
+    'ion-activatable': true,
     ...getClassMap(button.cssClass)
   };
 }

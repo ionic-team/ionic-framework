@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <title>Tab Bar - Scenarios</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
   <script src="../../../../../dist/ionic.js"></script>
   <link rel="stylesheet" href="../../../../../css/ionic.bundle.css">
   <link rel="stylesheet" href="../../../../../scripts/testing/styles.css">
@@ -73,7 +74,7 @@
       <ion-icon name="call"></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button tab="2" layout="icon-top">
+    <ion-tab-button tab="2">
       <ion-badge>6</ion-badge>
       <ion-label>hi</ion-label>
       <ion-icon name="heart"></ion-icon>
@@ -193,7 +194,7 @@
     </ion-tab-button>
 
     <ion-tab-button tab="2" class="main-tab">
-      <ion-icon src="/src/components/tab-bar/test/scenarios/camera.svg"></ion-icon>
+      <ion-icon class="main-tab-icon" src="/src/components/tab-bar/test/scenarios/camera.svg"></ion-icon>
     </ion-tab-button>
 
     <ion-tab-button tab="3">
@@ -233,9 +234,13 @@
       border-radius: 50%;
       max-width: 80px;
       height: 80px;
-      background: #3880ff;
-      color: white;
-      font-size: 16px;
+      --background: #3880ff;
+      --color: rgba(255, 255, 255, .7);
+      --color-selected: white;
+    }
+
+    .main-tab-icon {
+      font-size: 36px;
     }
 
     .custom-tabbar-color {

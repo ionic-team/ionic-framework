@@ -1,133 +1,130 @@
+import { CommonModule } from '@angular/common';
 import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
 import { IonicConfig } from '@ionic/core';
-import { CommonModule } from '@angular/common';
 
 import { appInitialize } from './app-initialize';
+import { BooleanValueAccessor } from './directives/control-value-accessors/boolean-value-accessor';
+import { NumericValueAccessor } from './directives/control-value-accessors/numeric-value-accesssor';
+import { RadioValueAccessor } from './directives/control-value-accessors/radio-value-accessor';
+import { SelectValueAccessor } from './directives/control-value-accessors/select-value-accessor';
+import { TextValueAccessor } from './directives/control-value-accessors/text-value-accessor';
+import { IonBackButtonDelegate } from './directives/navigation/ion-back-button';
+import { IonRouterOutlet } from './directives/navigation/ion-router-outlet';
+import { IonTabs } from './directives/navigation/ion-tabs';
+import { NavDelegate } from './directives/navigation/nav-delegate';
+import { RouterLinkDelegate } from './directives/navigation/router-link-delegate';
+import { IonApp, IonAvatar, IonBackButton, IonBackdrop, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCheckbox, IonChip, IonCol, IonContent, IonDatetime, IonFab, IonFabButton, IonFabList, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonInfiniteScrollContent, IonInput, IonItem, IonItemDivider, IonItemGroup, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonListHeader, IonMenu, IonMenuButton, IonMenuToggle, IonNav, IonNavPop, IonNavPush, IonNavSetRoot, IonNote, IonProgressBar, IonRadio, IonRadioGroup, IonRange, IonRefresher, IonRefresherContent, IonReorder, IonReorderGroup, IonRippleEffect, IonRow, IonSearchbar, IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonSkeletonText, IonSlide, IonSlides, IonSpinner, IonSplitPane, IonTabBar, IonTabButton, IonText, IonTextarea, IonThumbnail, IonTitle, IonToggle, IonToolbar } from './directives/proxies';
+import { VirtualFooter } from './directives/virtual-scroll/virtual-footer';
+import { VirtualHeader } from './directives/virtual-scroll/virtual-header';
+import { VirtualItem } from './directives/virtual-scroll/virtual-item';
+import { IonVirtualScroll } from './directives/virtual-scroll/virtual-scroll';
+import { AngularDelegate } from './providers/angular-delegate';
 import { ConfigToken } from './providers/config';
-import * as c from './directives';
-import * as d from './directives/proxies';
-import * as p from './providers';
-
+import { ModalController } from './providers/modal-controller';
+import { PopoverController } from './providers/popover-controller';
 
 const DECLARATIONS = [
   // proxies
-  d.App,
-  d.Avatar,
-  d.BackButton,
-  d.Backdrop,
-  d.Badge,
-  d.Button,
-  d.Buttons,
-  d.Card,
-  d.CardContent,
-  d.CardHeader,
-  d.CardSubtitle,
-  d.CardTitle,
-  d.Checkbox,
-  d.Chip,
-  d.Col,
-  d.Content,
-  d.Datetime,
-  d.Fab,
-  d.FabButton,
-  d.FabList,
-  d.Footer,
-  d.Grid,
-  d.Header,
-  d.Icon,
-  d.Img,
-  d.InfiniteScroll,
-  d.InfiniteScrollContent,
-  d.Input,
-  d.Item,
-  d.ItemDivider,
-  d.ItemGroup,
-  d.ItemOption,
-  d.ItemOptions,
-  d.ItemSliding,
-  d.Label,
-  d.List,
-  d.ListHeader,
-  d.Menu,
-  d.MenuButton,
-  d.MenuToggle,
-  d.Nav,
-  d.NavPop,
-  d.NavPush,
-  d.NavSetRoot,
-  d.Note,
-  d.Radio,
-  d.RadioGroup,
-  d.Range,
-  d.Refresher,
-  d.RefresherContent,
-  d.Reorder,
-  d.ReorderGroup,
-  d.RippleEffect,
-  d.Row,
-  d.Searchbar,
-  d.Segment,
-  d.SegmentButton,
-  d.Select,
-  d.SelectOption,
-  d.SelectPopover,
-  d.SkeletonText,
-  d.Slide,
-  d.Slides,
-  d.Spinner,
-  d.SplitPane,
-  d.Tab,
-  d.TabBar,
-  d.TabButton,
-  d.Tabs,
-  d.Text,
-  d.Textarea,
-  d.Thumbnail,
-  d.Toggle,
-  d.Toolbar,
-  d.ToolbarTitle,
+  IonApp,
+  IonAvatar,
+  IonBackButton,
+  IonBackdrop,
+  IonBadge,
+  IonButton,
+  IonButtons,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCardTitle,
+  IonCheckbox,
+  IonChip,
+  IonCol,
+  IonContent,
+  IonDatetime,
+  IonFab,
+  IonFabButton,
+  IonFabList,
+  IonFooter,
+  IonGrid,
+  IonHeader,
+  IonIcon,
+  IonImg,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
+  IonInput,
+  IonItem,
+  IonItemDivider,
+  IonItemGroup,
+  IonItemOption,
+  IonItemOptions,
+  IonItemSliding,
+  IonLabel,
+  IonList,
+  IonListHeader,
+  IonMenu,
+  IonMenuButton,
+  IonMenuToggle,
+  IonNav,
+  IonNavPop,
+  IonNavPush,
+  IonNavSetRoot,
+  IonNote,
+  IonProgressBar,
+  IonRadio,
+  IonRadioGroup,
+  IonRange,
+  IonRefresher,
+  IonRefresherContent,
+  IonReorder,
+  IonReorderGroup,
+  IonRippleEffect,
+  IonRow,
+  IonSearchbar,
+  IonSegment,
+  IonSegmentButton,
+  IonSelect,
+  IonSelectOption,
+  IonSkeletonText,
+  IonSlide,
+  IonSlides,
+  IonSpinner,
+  IonSplitPane,
+  IonTabBar,
+  IonTabButton,
+  IonText,
+  IonTextarea,
+  IonThumbnail,
+  IonToggle,
+  IonToolbar,
+  IonTitle,
+
+  IonTabs,
 
   // ngModel accessors
-  c.BooleanValueAccessor,
-  c.NumericValueAccessor,
-  c.RadioValueAccessor,
-  c.SelectValueAccessor,
-  c.TextValueAccessor,
+  BooleanValueAccessor,
+  NumericValueAccessor,
+  RadioValueAccessor,
+  SelectValueAccessor,
+  TextValueAccessor,
 
   // navigation
-  c.IonBackButton,
-  c.IonRouterOutlet,
-  c.NavDelegate,
-  c.TabDelegate,
-  c.TabsDelegate,
-  c.HrefDelegate,
+  IonRouterOutlet,
+  IonBackButtonDelegate,
+  NavDelegate,
+  RouterLinkDelegate,
 
   // virtual scroll
-  c.VirtualFooter,
-  c.VirtualHeader,
-  c.VirtualItem,
-  c.VirtualScroll
+  VirtualFooter,
+  VirtualHeader,
+  VirtualItem,
+  IonVirtualScroll
 ];
-
-const PROVIDERS = [
-  p.ActionSheetController,
-  p.AlertController,
-  p.Config,
-  p.LoadingController,
-  p.PickerController,
-  p.ToastController,
-  p.MenuController,
-  p.NavController,
-  p.Platform,
-  p.Events,
-  p.DomController
-];
-
 
 @NgModule({
   declarations: DECLARATIONS,
   exports: DECLARATIONS,
-  providers: [p.AngularDelegate, p.ModalController, p.PopoverController],
+  providers: [AngularDelegate, ModalController, PopoverController],
   imports: [CommonModule]
 })
 export class IonicModule {
@@ -146,8 +143,7 @@ export class IonicModule {
           deps: [
             ConfigToken
           ]
-        },
-        ...PROVIDERS
+        }
       ]
     };
   }

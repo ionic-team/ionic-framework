@@ -1,7 +1,6 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi } from '@stencil/core';
 
-import { Color, Config, Mode, TabBarChangedDetail, TabButtonClickDetail, TabButtonLayout } from '../../interface';
-import { createColorClasses } from '../../utils/theme';
+import { Config, Mode, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
 
 @Component({
   tag: 'ion-tab-button',
@@ -22,19 +21,12 @@ export class TabButton implements ComponentInterface {
   /**
    * The selected tab component
    */
-  @State() selected = false;
+  @Prop({ mutable: true }) selected = false;
 
   /**
    * The mode determines which platform styles to use.
    */
   @Prop() mode!: Mode;
-
-  /**
-   * The color to use from your application's color palette.
-   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information on colors, see [theming](/docs/theming/basics).
-   */
-  @Prop() color?: Color;
 
   /**
    * Set the layout of the text and icon in the tab bar.
@@ -51,7 +43,7 @@ export class TabButton implements ComponentInterface {
    * A tab id must be provided for each `ion-tab`. It's used internally to reference
    * the selected tab or by the router to switch between them.
    */
-  @Prop() tab!: string;
+  @Prop() tab?: string;
 
   /**
    * The selected tab component
@@ -62,23 +54,25 @@ export class TabButton implements ComponentInterface {
    * Emitted when the tab bar is clicked
    * @internal
    */
-  @Event() ionTabButtonClick!: EventEmitter<TabButtonClickDetail>;
+  @Event() ionTabButtonClick!: EventEmitter<TabButtonClickEventDetail>;
 
   @Listen('parent:ionTabBarChanged')
-  onTabBarChanged(ev: CustomEvent<TabBarChangedDetail>) {
+  onTabBarChanged(ev: CustomEvent<TabBarChangedEventDetail>) {
     this.selected = this.tab === ev.detail.tab;
   }
 
   @Listen('click')
   onClick(ev: Event) {
-    if (!this.disabled) {
-      this.ionTabButtonClick.emit({
-        tab: this.tab,
-        href: this.href,
-        selected: this.selected
-      });
+    if (this.tab !== undefined) {
+      if (!this.disabled) {
+        this.ionTabButtonClick.emit({
+          tab: this.tab,
+          href: this.href,
+          selected: this.selected
+        });
+      }
+      ev.preventDefault();
     }
-    ev.preventDefault();
   }
 
   componentWillLoad() {
@@ -96,16 +90,12 @@ export class TabButton implements ComponentInterface {
   }
 
   hostData() {
-    const { color, tab, selected, layout, disabled, hasLabel, hasIcon } = this;
+    const { disabled, hasIcon, hasLabel, layout, selected, tab } = this;
     return {
       'role': 'tab',
-      'ion-activatable': true,
       'aria-selected': selected ? 'true' : null,
-      'id': `tab-button-${tab}`,
-      'aria-controls': `tab-view-${tab}`,
+      'id': tab !== undefined ? `tab-button-${tab}` : null,
       class: {
-        ...createColorClasses(color),
-
         'tab-selected': selected,
         'tab-disabled': disabled,
         'tab-has-label': hasLabel,
@@ -113,6 +103,7 @@ export class TabButton implements ComponentInterface {
         'tab-has-label-only': hasLabel && !hasIcon,
         'tab-has-icon-only': hasIcon && !hasLabel,
         [`tab-layout-${layout}`]: true,
+        'ion-activatable': true,
       }
     };
   }
@@ -120,7 +111,7 @@ export class TabButton implements ComponentInterface {
   render() {
     const { mode, href } = this;
     return (
-      <a href={href || '#'}>
+      <a href={href}>
         <slot></slot>
         {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
       </a>

@@ -1,8 +1,11 @@
 import { ComponentRef, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RouterDirection } from '@ionic/core';
 
-import { NavController, NavDirection } from '../../providers/nav-controller';
+import { bindLifecycleEvents } from '../../providers/angular-delegate';
+import { NavController } from '../../providers/nav-controller';
 
+import { RouteView, computeStackId, destroyView, getUrl, insertView, isTabSwitch, toSegments } from './stack-utils';
 
 export class StackController {
 
@@ -10,55 +13,81 @@ export class StackController {
   private views: RouteView[] = [];
   private runningTransition?: Promise<boolean>;
   private skipTransition = false;
+  private tabsPrefix: string[] | undefined;
+  private activeView: RouteView | undefined;
+  private nextId = 0;
 
   constructor(
-    private stack: boolean,
+    tabsPrefix: string | undefined,
     private containerEl: HTMLIonRouterOutletElement,
     private router: Router,
     private navCtrl: NavController,
     private zone: NgZone,
-  ) {}
+  ) {
+    this.tabsPrefix = tabsPrefix !== undefined ? toSegments(tabsPrefix) : undefined;
+  }
 
-  createView(enteringRef: ComponentRef<any>, route: ActivatedRoute): RouteView {
+  createView(ref: ComponentRef<any>, activatedRoute: ActivatedRoute): RouteView {
+    const url = getUrl(this.router, activatedRoute);
+    const element = (ref && ref.location && ref.location.nativeElement) as HTMLElement;
+    const unlistenEvents = bindLifecycleEvents(ref.instance, element);
     return {
-      ref: enteringRef,
-      element: (enteringRef && enteringRef.location && enteringRef.location.nativeElement) as HTMLElement,
-      url: this.getUrl(route)
+      id: this.nextId++,
+      stackId: computeStackId(this.tabsPrefix, url),
+      unlistenEvents,
+      element,
+      ref,
+      url,
     };
   }
 
   getExistingView(activatedRoute: ActivatedRoute): RouteView | undefined {
-    const activatedUrlKey = this.getUrl(activatedRoute);
-    return this.views.find(vw => vw.url === activatedUrlKey);
+    const activatedUrlKey = getUrl(this.router, activatedRoute);
+    const view = this.views.find(vw => vw.url === activatedUrlKey);
+    if (view) {
+      view.ref.changeDetectorRef.reattach();
+    }
+    return view;
   }
 
-  async setActive(enteringView: RouteView, direction: NavDirection, animated: boolean) {
-    const leavingView = this.getActive();
+  async setActive(enteringView: RouteView) {
+    let { direction, animation } = this.navCtrl.consumeTransition();
+    const leavingView = this.activeView;
+    if (isTabSwitch(enteringView, leavingView)) {
+      direction = 'back';
+      animation = undefined;
+    }
     this.insertView(enteringView, direction);
-    await this.transition(enteringView, leavingView, direction, animated, this.canGoBack(1), false);
-    this.cleanup();
+    await this.transition(enteringView, leavingView, animation, this.canGoBack(1), false);
+    requestAnimationFrame(() => this.cleanup());
   }
 
-  canGoBack(deep: number): boolean {
-    return this.views.length > deep;
+  canGoBack(deep: number, stackId = this.getActiveStackId()): boolean {
+    return this.getStack(stackId).length > deep;
   }
 
-  pop(deep: number) {
-    this.zone.run(() => {
-      const view = this.views[this.views.length - deep - 1];
-      this.navCtrl.navigateBack(view.url);
+  pop(deep: number, stackId = this.getActiveStackId()) {
+    return this.zone.run(() => {
+      const views = this.getStack(stackId);
+      const view = views[views.length - deep - 1];
+      return this.navCtrl.navigateBack(view.url);
     });
   }
 
   startBackTransition() {
-    this.transition(
-      this.views[this.views.length - 2], // entering view
-      this.views[this.views.length - 1], // leaving view
-      'back',
-      true,
-      true,
-      true
-    );
+    const leavingView = this.activeView;
+    if (leavingView) {
+      const views = this.getStack(leavingView.stackId);
+      const enteringView = views[views.length - 2];
+      enteringView.ref.changeDetectorRef.reattach();
+      this.transition(
+        enteringView, // entering view
+        leavingView, // leaving view
+        'back',
+        true,
+        true
+      );
+    }
   }
 
   endBackTransition(shouldComplete: boolean) {
@@ -68,64 +97,57 @@ export class StackController {
     }
   }
 
+  getLastUrl(stackId?: string) {
+    const views = this.getStack(stackId);
+    return views.length > 0 ? views[views.length - 1] : undefined;
+  }
 
-  private insertView(enteringView: RouteView, direction: NavDirection) {
-    // no stack
-    if (!this.stack) {
-      this.views = [enteringView];
-      return;
-    }
+  getActiveStackId(): string | undefined {
+    return this.activeView ? this.activeView.stackId : undefined;
+  }
 
-    // stack setRoot
-    if (direction === 'root') {
-      this.views = [enteringView];
-      return;
-    }
+  destroy() {
+    this.containerEl = undefined!;
+    this.views.forEach(destroyView);
+    this.activeView = undefined;
+    this.views = [];
+  }
 
-    // stack
-    const index = this.views.indexOf(enteringView);
-    if (index >= 0) {
-      this.views = this.views.slice(0, index + 1);
-    } else {
-      if (direction === 'forward') {
-        this.views.push(enteringView);
-      } else {
-        this.views = [enteringView];
-      }
-    }
+  private getStack(stackId: string | undefined) {
+    return this.views.filter(v => v.stackId === stackId);
+  }
+
+  private insertView(enteringView: RouteView, direction: RouterDirection) {
+    this.activeView = enteringView;
+    this.views = insertView(this.views, enteringView, direction);
   }
 
   private cleanup() {
+    const activeRoute = this.activeView;
     const views = this.views;
     this.viewsSnapshot
       .filter(view => !views.includes(view))
       .forEach(view => destroyView(view));
 
-    for (let i = 0; i < views.length - 1; i++) {
-      const view = views[i];
-      const element = view.element;
-      element.setAttribute('aria-hidden', 'true');
-      element.classList.add('ion-page-hidden');
-      // view.ref.changeDetectorRef.detach();
-    }
-
+    views.forEach(view => {
+      if (view !== activeRoute) {
+        const element = view.element;
+        element.setAttribute('aria-hidden', 'true');
+        element.classList.add('ion-page-hidden');
+        view.ref.changeDetectorRef.detach();
+      }
+    });
     this.viewsSnapshot = views.slice();
-  }
-
-  getActive(): RouteView | undefined {
-    const views = this.views;
-    return views.length > 0 ? views[views.length - 1] : undefined;
   }
 
   private async transition(
     enteringView: RouteView | undefined,
     leavingView: RouteView | undefined,
-    direction: NavDirection,
-    animated: boolean,
+    direction: 'forward' | 'back' | undefined,
     showGoBack: boolean,
     progressAnimation: boolean
   ) {
-    if (this.runningTransition) {
+    if (this.runningTransition !== undefined) {
       await this.runningTransition;
       this.runningTransition = undefined;
     }
@@ -144,32 +166,13 @@ export class StackController {
 
       await containerEl.componentOnReady();
       this.runningTransition = containerEl.commit(enteringEl, leavingEl, {
-        duration: !animated ? 0 : undefined,
-        direction: direction === 'forward' ? 'forward' : 'back', // TODO: refactor
         deepWait: true,
+        duration: direction === undefined ? 0 : undefined,
+        direction,
         showGoBack,
         progressAnimation
       });
       await this.runningTransition;
     }
   }
-
-  private getUrl(activatedRoute: ActivatedRoute) {
-    const urlTree = this.router.createUrlTree(['.'], { relativeTo: activatedRoute });
-    return this.router.serializeUrl(urlTree);
-  }
-}
-
-function destroyView(view: RouteView) {
-  if (view) {
-    // TODO lifecycle event
-    view.ref.destroy();
-  }
-}
-
-export interface RouteView {
-  url: string;
-  element: HTMLElement;
-  ref: ComponentRef<any>;
-  savedData?: any;
 }

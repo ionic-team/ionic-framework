@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
 
-import { Config, NavOutlet, RouteID, RouteWrite, TabButtonClickDetail } from '../../interface';
+import { Config, NavOutlet, RouteID, RouteWrite, TabButtonClickEventDetail } from '../../interface';
 
 @Component({
   tag: 'ion-tabs',
@@ -70,7 +70,7 @@ export class Tabs implements NavOutlet {
   }
 
   @Listen('ionTabButtonClick')
-  protected onTabClicked(ev: CustomEvent<TabButtonClickDetail>) {
+  protected onTabClicked(ev: CustomEvent<TabButtonClickEventDetail>) {
     const { href, tab } = ev.detail;
     const selectedTab = this.tabs.find(t => t.tab === tab);
     if (this.useRouter && href !== undefined) {
@@ -187,7 +187,7 @@ export class Tabs implements NavOutlet {
     if (this.useRouter) {
       const router = this.doc.querySelector('ion-router');
       if (router) {
-        return router.navChanged(1);
+        return router.navChanged('forward');
       }
     }
     return Promise.resolve(false);

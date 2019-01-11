@@ -1,10 +1,11 @@
 {
   "name": "@ionic/react",
-  "version": "0.0.2-3",
+  "version": "0.0.2",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
     "framework",
+    "react",
     "mobile",
     "app",
     "hybrid",
@@ -32,11 +33,17 @@
     "dist/"
   ],
   "devDependencies": {
-    "@ionic/core": "next",
+    "@types/jest": "23.3.9",
+    "@types/node": "10.12.9",
+    "@types/react": "16.7.6",
+    "@types/react-dom": "16.0.9",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "typescript": "3.1.1"
   },
   "dependencies": {
-    "@stencil/core": "next"
+    "@ionic/core": "4.0.0-rc.0",
+    "ionicons": "^4.5.0",
+    "np": "^3.1.0"
   }
 }

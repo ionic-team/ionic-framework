@@ -14,6 +14,12 @@
   font-size: $input-md-font-size;
 }
 
+:host-context(.item-label-stacked),
+:host-context(.item-label-floating) {
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --padding-start: 0;
+}
 
 .input-clear-icon {
   @include svg-background-image($input-md-input-clear-icon-svg);
@@ -23,11 +29,3 @@
 
   background-size: $input-md-input-clear-icon-size;
 }
-
-// Material Design Inset Input
-// --------------------------------------------------
-
-// .inset-input {
-//   @include padding($input-md-inset-padding-top, $input-md-inset-padding-end, $input-md-inset-padding-bottom, $input-md-inset-padding-start);
-//   @include margin($input-md-inset-margin-top, $input-md-inset-margin-end, $input-md-inset-margin-bottom, $input-md-inset-margin-start);
-// }

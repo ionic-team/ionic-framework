@@ -110,11 +110,11 @@ export class HomePage {
 
 ## Events
 
-| Event       | Description                                    | Detail                  |
-| ----------- | ---------------------------------------------- | ----------------------- |
-| `ionBlur`   | Emitted when the toggle loses focus.           | void                    |
-| `ionChange` | Emitted when the checked property has changed. | CheckedInputChangeEvent |
-| `ionFocus`  | Emitted when the toggle has focus.             | void                    |
+| Event       | Description                                    | Type                                     |
+| ----------- | ---------------------------------------------- | ---------------------------------------- |
+| `ionBlur`   | Emitted when the toggle loses focus.           | `CustomEvent<void>`                      |
+| `ionChange` | Emitted when the checked property has changed. | `CustomEvent<CheckboxChangeEventDetail>` |
+| `ionFocus`  | Emitted when the toggle has focus.             | `CustomEvent<void>`                      |
 
 
 ## CSS Custom Properties
@@ -129,9 +129,8 @@ export class HomePage {
 | `--border-style`         | Border style of the checkbox icon              |
 | `--border-width`         | Border width of the checkbox icon              |
 | `--checkmark-color`      | Color of the checkbox checkmark when checked   |
-| `--height`               | Height of the checkbox icon                    |
+| `--size`                 | Size of the checkbox icon                      |
 | `--transition`           | Transition of the checkbox icon                |
-| `--width`                | Width of the checkbox icon                     |
 
 
 ----------------------------------------------

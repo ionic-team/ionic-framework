@@ -2,10 +2,9 @@ import { mockWindow } from '@stencil/core/mock-doc';
 
 import { Config } from '../../../global/config';
 import { ComponentProps } from '../../../interface';
-import { AnimationControllerImpl } from '../../animation-controller/animation-controller';
 import { Nav } from '../nav';
 import { NavOptions } from '../nav-interface';
-import { ViewController, ViewState } from '../view-controller';
+import { ViewController, VIEW_STATE_ATTACHED } from '../view-controller';
 
 describe('NavController', () => {
 
@@ -943,7 +942,6 @@ describe('NavController', () => {
     navI.ionNavDidChange = { emit() { return; } };
     navI.ionNavWillChange = { emit() { return; } };
 
-    navI.animationCtrl = new AnimationControllerImpl() as any;
     navI.config = new Config({ animated: false });
     navI._viewInit = (enteringView: ViewController) => {
       if (!enteringView.element) {
@@ -952,7 +950,7 @@ describe('NavController', () => {
           ? win.document.createElement(enteringView.component)
           : enteringView.element = enteringView.component as HTMLElement;
       }
-      enteringView.state = ViewState.Attached;
+      enteringView.state = VIEW_STATE_ATTACHED;
     };
     return navI;
   }

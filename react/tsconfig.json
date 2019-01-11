@@ -15,10 +15,12 @@
     "outDir": "dist",
     "removeComments": false,
     "sourceMap": true,
+    "jsx": "react",
     "target": "es2015"
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "src/**/*.tsx"
   ],
   "compileOnSave": false,
   "buildOnSave": false

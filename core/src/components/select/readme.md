@@ -336,12 +336,12 @@ customActionSheetSelect.interfaceOptions = customActionSheetOptions;
 
 ## Events
 
-| Event       | Description                              | Detail                 |
-| ----------- | ---------------------------------------- | ---------------------- |
-| `ionBlur`   | Emitted when the select loses focus.     | void                   |
-| `ionCancel` | Emitted when the selection is cancelled. | void                   |
-| `ionChange` | Emitted when the value has changed.      | SelectInputChangeEvent |
-| `ionFocus`  | Emitted when the select has focus.       | void                   |
+| Event       | Description                              | Type                                   |
+| ----------- | ---------------------------------------- | -------------------------------------- |
+| `ionBlur`   | Emitted when the select loses focus.     | `CustomEvent<void>`                    |
+| `ionCancel` | Emitted when the selection is cancelled. | `CustomEvent<void>`                    |
+| `ionChange` | Emitted when the value has changed.      | `CustomEvent<SelectChangeEventDetail>` |
+| `ionFocus`  | Emitted when the select has focus.       | `CustomEvent<void>`                    |
 
 
 ## Methods
@@ -366,14 +366,12 @@ Type: `Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverE
 
 ## CSS Custom Properties
 
-| Name                  | Description                          |
-| --------------------- | ------------------------------------ |
-| `--icon-color`        | Color of the select icon             |
-| `--padding-bottom`    | Bottom padding of the select         |
-| `--padding-end`       | End padding of the select            |
-| `--padding-start`     | Start padding of the select          |
-| `--padding-top`       | Top padding of the select            |
-| `--placeholder-color` | Color of the select placeholder text |
+| Name               | Description                  |
+| ------------------ | ---------------------------- |
+| `--padding-bottom` | Bottom padding of the select |
+| `--padding-end`    | End padding of the select    |
+| `--padding-start`  | Start padding of the select  |
+| `--padding-top`    | Top padding of the select    |
 
 
 ----------------------------------------------

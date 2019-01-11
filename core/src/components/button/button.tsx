@@ -146,7 +146,6 @@ export class Button implements ComponentInterface {
       fill = this.inToolbar ? 'clear' : 'solid';
     }
     return {
-      'ion-activatable': true,
       'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...createColorClasses(color),
@@ -158,13 +157,14 @@ export class Button implements ComponentInterface {
         [`${buttonType}-strong`]: strong,
 
         'focused': keyFocus,
-        'button-disabled': disabled
+        'button-disabled': disabled,
+        'ion-activatable': true,
       }
     };
   }
 
   render() {
-    const TagType = this.href === undefined ? 'button' : 'a';
+    const TagType = this.href === undefined ? 'button' : 'a' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
       : { href: this.href };

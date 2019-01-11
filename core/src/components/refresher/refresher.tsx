@@ -49,7 +49,6 @@ export class Refresher implements ComponentInterface {
    */
   @Prop() pullMax: number = this.pullMin + 60;
 
-  // TODO: NEVER USED
   /**
    * Time it takes to close the refresher.
    */
@@ -102,7 +101,7 @@ export class Refresher implements ComponentInterface {
       console.error('ion-refresher did not attach, make sure the parent is an ion-content.');
     }
 
-    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
+    this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el.closest('ion-content') as any,
       queue: this.queue,
       gestureName: 'refresher',
@@ -175,8 +174,6 @@ export class Refresher implements ComponentInterface {
   }
 
   private onStart() {
-    console.log('start');
-
     this.progress = 0;
     this.state = RefresherState.Inactive;
   }
@@ -325,7 +322,7 @@ export class Refresher implements ComponentInterface {
     // reset set the styles on the scroll element
     // set that the refresh is actively cancelling/completing
     this.state = state;
-    this.setCss(0, '', true, delay);
+    this.setCss(0, this.closeDuration, true, delay);
 
     // TODO: stop gesture
   }

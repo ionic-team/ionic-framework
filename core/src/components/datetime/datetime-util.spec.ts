@@ -1,4 +1,4 @@
-import { convertDataToISO } from './datetime-util';
+import { convertDataToISO, parseDate } from './datetime-util';
 
 describe('datetime-util', () => {
   describe('convertDataToISO', () => {
@@ -205,6 +205,72 @@ describe('datetime-util', () => {
           })
         ).toEqual('2018-12-25T14:42:00-00:00');
       });
+    });
+  });
+
+  describe('parseDate', () => {
+    it('should parse a single year', () => {
+      const date = parseDate('1000');
+      expect(date).toEqual({
+        "day": undefined,
+        "hour": undefined,
+        "millisecond": undefined,
+        "minute": undefined,
+        "month": undefined,
+        "second": undefined,
+        "tzOffset": 0,
+        "year": 1000,
+      });
+    });
+
+    it('should parse a time', () => {
+      const date = parseDate('12:20');
+      expect(date).toEqual({
+        "day": undefined,
+        "hour": 12,
+        "millisecond": undefined,
+        "minute": 20,
+        "month": undefined,
+        "second": undefined,
+        "tzOffset": 0,
+        "year": undefined,
+      });
+    });
+
+    it('should parse a full ISO date', () => {
+      const date = parseDate('1994-12-15T13:47:20Z');
+      expect(date).toEqual({
+        "day": 15,
+        "hour": 13,
+        "millisecond": undefined,
+        "minute": 47,
+        "month": 12,
+        "second": 20,
+        "tzOffset": 0,
+        "year": 1994,
+      });
+    });
+
+    it('should parse a partial ISO date', () => {
+      const date = parseDate('2018-01-02');
+      expect(date).toEqual({
+        "day": 2,
+        "hour": undefined,
+        "millisecond": undefined,
+        "minute": undefined,
+        "month": 1,
+        "second": undefined,
+        "tzOffset": 0,
+        "year": 2018,
+      });
+    });
+
+
+    it('should return undefined', () => {
+      expect(parseDate(null)).toBeUndefined();
+      expect(parseDate(undefined)).toBeUndefined();
+      expect(parseDate('')).toBeUndefined();
+      expect(parseDate('3432-12-12-234')).toBeUndefined();
     });
   });
 });
