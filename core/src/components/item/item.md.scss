@@ -235,21 +235,11 @@
   --min-height: 65px;
 }
 
-// TODO: refactor
-:host(.item-label-stacked) ::slotted(ion-input),
-:host(.item-label-floating) ::slotted(ion-input),
-:host(.item-label-stacked) ::slotted(ion-textarea),
-:host(.item-label-floating) ::slotted(ion-textarea),
+// TODO: refactor, ion-item and ion-textarea have the same CSS
 :host(.item-label-stacked) ::slotted(ion-select),
 :host(.item-label-floating) ::slotted(ion-select) {
   --padding-top: 8px;
   --padding-bottom: 8px;
-  --padding-start: 0;
-}
-
-
-:host(:not(.item-label)) ::slotted(ion-input),
-:host(:not(.item-label)) ::slotted(ion-textarea) {
   --padding-start: 0;
 }
 

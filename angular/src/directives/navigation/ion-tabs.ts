@@ -1,6 +1,6 @@
 import { Component, ContentChild, HostListener, ViewChild } from '@angular/core';
 
-import { NavController } from '../../providers';
+import { NavController } from '../../providers/nav-controller';
 import { IonTabBar } from '../proxies';
 
 import { IonRouterOutlet } from './ion-router-outlet';
@@ -64,6 +64,9 @@ export class IonTabs {
       ? href
       : this.outlet.getLastUrl(tab) || href;
 
-    return this.navCtrl.navigateBack(url);
+    return this.navCtrl.navigateRoot(url, {
+      animated: true,
+      animationDirection: 'back'
+    });
   }
 }

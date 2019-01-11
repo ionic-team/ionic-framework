@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { Color, Mode, TabBarChangedDetail } from '../../interface';
+import { Color, Mode, TabBarChangedEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -49,7 +49,7 @@ export class TabBar implements ComponentInterface {
   @Prop() translucent = false;
 
   /** @internal */
-  @Event() ionTabBarChanged!: EventEmitter<TabBarChangedDetail>;
+  @Event() ionTabBarChanged!: EventEmitter<TabBarChangedEventDetail>;
 
   @Listen('window:keyboardWillHide')
   protected onKeyboardWillHide() {
