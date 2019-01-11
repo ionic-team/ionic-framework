@@ -225,6 +225,10 @@
   appearance: none;
 }
 
+.button-native::-moz-focus-inner {
+  border: 0;
+}
+
 .button-native[disabled] {
   cursor: default;
   opacity: .5;
