@@ -15,6 +15,10 @@ $action-sheet-md-padding-top:                           0 !default;
 /// @prop - Padding bottom of the action sheet
 $action-sheet-md-padding-bottom:                        0 !default;
 
+
+// Action Sheet Title
+// --------------------------------------------------
+
 /// @prop - Height of the action sheet title
 $action-sheet-md-title-height:                          60px !default;
 
@@ -36,6 +40,10 @@ $action-sheet-md-title-padding-bottom:                  17px !default;
 /// @prop - Padding start of the action sheet title
 $action-sheet-md-title-padding-start:                   $action-sheet-md-title-padding-end !default;
 
+
+// Action Sheet Subtitle
+// --------------------------------------------------
+
 /// @prop - Font size of the action sheet sub title
 $action-sheet-md-sub-title-font-size:                   14px !default;
 
@@ -50,6 +58,10 @@ $action-sheet-md-sub-title-padding-bottom:              0 !default;
 
 /// @prop - Padding start of the action sheet sub title
 $action-sheet-md-sub-title-padding-start:               $action-sheet-md-sub-title-padding-end !default;
+
+
+// Action Sheet Button
+// --------------------------------------------------
 
 /// @prop - Minimum height of the action sheet button
 $action-sheet-md-button-height:                         52px !default;
@@ -80,6 +92,10 @@ $action-sheet-md-button-background-activated:           $background-color-step-5
 
 /// @prop - Background color of the selected action sheet button
 $action-sheet-md-button-background-selected:            null !default;
+
+
+// Action Sheet Icon
+// --------------------------------------------------
 
 /// @prop - Font size of the icon in the action sheet button
 $action-sheet-md-icon-font-size:                        24px !default;

@@ -86,8 +86,18 @@ Please see our [Contributor Code of Conduct](https://github.com/ionic-team/ionic
 
 1. Locate the test to modify inside the `test/` folder in the component's directory.
 2. If a test exists, modify the test by adding an example to reproduce the problem fixed or feature added.
-3. If a new test is needed, the easiest way is to copy the `basic/` directory from the component's `test/` directory, rename it, and edit the content in both the `index.html` and `e2e.ts` file (if it exists).
+3. If a new test is needed, the easiest way is to copy the `basic/` directory from the component's `test/` directory, rename it, and edit the content in both the `index.html` and `e2e.ts` file (see [Screenshot Tests](#screenshot-tests) for more information on this file).
 4. The `preview/` directory is used in the documentation as a demo. Only update this test if there is a bug in the test or if the API has a change that hasn't been updated in the test.
+
+##### Screenshot Tests
+
+1. If the test exists in screenshot, there will be a file named `e2e.ts` in the directory of the test.
+2. A screenshot test can be added by including this file and adding one or more `test()` calls that include a call to `page.compareScreenshot()`. See [Stencil end-to-end testing](https://stenciljs.com/docs/end-to-end-testing) and existing tests in `core/` for examples.
+3. **Important:** each `test()` should have only one screenshot (`page.compareScreenshot()`) call **or** it should check the expect at the end of each test. If there is a mismatch it will fail the test which will prevent the rest of the test from running, i.e. if the first screenshot fails the remaining screenshot calls would not be called _unless_ they are in a separate test or all of the expects are called at the end.
+4. To run screenshot locally, use the following command: `npm run test.screenshot`.
+    - To run screenshot for a specific test, pass the path to the test or a string to search for.
+    - For example, running all `alert` tests: `npm run test.screenshot alert`.
+    - Or, running the basic `alert` tests: `npm run test.screenshot src/components/alert/test/basic/e2e.ts`.
 
 
 #### Building Changes
