@@ -126,7 +126,7 @@ Removes the `--width` and `--height` variables from the following components, in
 
 #### Overlay Components
 
-The following components have all be converted to shadow (or scoped) and have CSS variables for width/height:
+The following components have all been converted to shadow (or scoped) and have CSS variables for width/height:
 
 - Action Sheet _(scoped)_
 - Alert _(scoped)_
