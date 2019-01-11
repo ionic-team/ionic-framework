@@ -291,8 +291,6 @@ export class Input implements ComponentInterface {
     this.value = '';
   }
 
-
-
   private hasValue(): boolean {
     return this.getValue().length > 0;
   }
