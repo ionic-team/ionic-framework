@@ -19,7 +19,6 @@ type State = {
 
 class IonTabBarNav extends Component<Props, State> {
 
-
   constructor(props: Props) {
     super(props);
 

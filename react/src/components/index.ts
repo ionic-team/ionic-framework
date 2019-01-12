@@ -12,8 +12,7 @@ export { default as IonPopover } from './IonPopover';
 export { default as IonToast } from './IonToast';
 export { default as IonTabs } from './navigation/IonTabs';
 export { default as IonTabBarNav } from './navigation/IonTabBarNav';
-export { default as IonRouterOutlet } from './navigation/IonRouterOutlet';
-export { default as IonBackButtonNav } from './navigation/IonBackButtonNav';
+export { default as IonRouterOutlet, IonBackButtonNav } from './navigation/IonRouterOutlet';
 
 export const IonTab = createReactComponent<Components.IonTabAttributes, HTMLIonTabElement>('ion-tab');
 export const IonTabBar = createReactComponent<Components.IonTabBarAttributes, HTMLIonTabBarElement>('ion-tab-bar');
