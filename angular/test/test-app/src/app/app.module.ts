@@ -22,6 +22,8 @@ import { NestedOutletComponent } from './nested-outlet/nested-outlet.component';
 import { NestedOutletPageComponent } from './nested-outlet-page/nested-outlet-page.component';
 import { NestedOutletPage2Component } from './nested-outlet-page2/nested-outlet-page2.component';
 import { NavComponent } from './nav/nav.component';
+import { ViewChildComponent } from './view-child/view-child.component';
+import { ProvidersComponent } from './providers/providers.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { NavComponent } from './nav/nav.component';
     NestedOutletComponent,
     NestedOutletPageComponent,
     NestedOutletPage2Component,
-    NavComponent
+    NavComponent,
+    ViewChildComponent,
+    ProvidersComponent
   ],
   imports: [
     BrowserModule,

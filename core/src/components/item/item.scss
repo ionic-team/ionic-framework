@@ -91,6 +91,10 @@
 // Activated Item
 // --------------------------------------------------
 
+:host(.ion-focused) .item-native {
+  background: var(--background-focused);
+}
+
 :host(.activated) .item-native {
   background: var(--background-activated);
 }
@@ -146,6 +150,10 @@
   box-shadow: var(--box-shadow);
   overflow: hidden;
   box-sizing: border-box;
+}
+
+.item-native::-moz-focus-inner {
+  border: 0;
 }
 
 button, a {

@@ -55,7 +55,7 @@ $fab-ios-list-button-icon-font-size:                          18px !default;
 $fab-ios-list-button-translucent-background-color-alpha:      .8 !default;
 
 /// @prop - Background color of the button in a list
-$fab-ios-list-button-translucent-background-color:            rgba(var(--ion-background-color-rgb, $background-color-rgb), $fab-ios-list-button-translucent-background-color-alpha) !default;
+$fab-ios-list-button-translucent-background-color:            rgba($background-color-rgb, $fab-ios-list-button-translucent-background-color-alpha) !default;
 
 /// @prop - Filter of the translucent fab
 $fab-ios-translucent-filter:                                  saturate(180%) blur(20px) !default;

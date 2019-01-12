@@ -239,6 +239,7 @@ rules:
       - contain
       - content
       - cursor
+      - direction
       - empty-cells
       - object-fit
       - opacity
@@ -254,7 +255,6 @@ rules:
 
   property-blacklist:
     - background-position
-    - direction
     - right
     - left
     - float
