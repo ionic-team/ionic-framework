@@ -98,7 +98,7 @@ Detail Arrows
   </ion-label>
 </ion-item>
 
-<ion-item (click)="buttonClick()">
+<ion-item (click)="buttonClick()" detail>
   <ion-label>
     Button Item with Detail Arrow
   </ion-label>
@@ -176,33 +176,37 @@ Item Lines
 <!-- List Full Lines -->
 <ion-list lines="full">
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>Full Lines Item 1</ion-label>
   </ion-item>
 
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>Full Lines Item 2</ion-label>
   </ion-item>
 </ion-list>
 
 <!-- List Inset Lines -->
 <ion-list lines="inset">
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>Inset Lines Item 1</ion-label>
   </ion-item>
 
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>Inset Lines Item 2</ion-label>
   </ion-item>
 </ion-list>
 
 <!-- List No Lines -->
 <ion-list lines="none">
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>No lines Item 1</ion-label>
   </ion-item>
 
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>No lines Item 2</ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>No lines Item 3</ion-label>
   </ion-item>
 </ion-list>
 ```
@@ -418,7 +422,7 @@ Detail Arrows
   </ion-label>
 </ion-item>
 
-<ion-item onclick="buttonClick()">
+<ion-item onclick="buttonClick()" detail>
   <ion-label>
     Button Item with Detail Arrow
   </ion-label>
@@ -496,33 +500,37 @@ Item Lines
 <!-- List Full Lines -->
 <ion-list lines="full">
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>Full Lines Item 1</ion-label>
   </ion-item>
 
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>Full Lines Item 2</ion-label>
   </ion-item>
 </ion-list>
 
 <!-- List Inset Lines -->
 <ion-list lines="inset">
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>Inset Lines Item 1</ion-label>
   </ion-item>
 
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>Inset Lines Item 2</ion-label>
   </ion-item>
 </ion-list>
 
 <!-- List No Lines -->
 <ion-list lines="none">
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>No lines Item 1</ion-label>
   </ion-item>
 
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>No lines Item 2</ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>No lines Item 3</ion-label>
   </ion-item>
 </ion-list>
 ```

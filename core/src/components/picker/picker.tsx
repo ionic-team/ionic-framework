@@ -202,6 +202,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
   hostData() {
     return {
+      'aria-modal': 'true',
       class: {
         ...createThemedClasses(this.mode, 'picker'),
         ...getClassMap(this.cssClass)
