@@ -116,7 +116,7 @@ export class Searchbar implements ComponentInterface {
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange!: EventEmitter<SearchbarChangeEventDetail>;
+  @Event({ bubbles: false }) ionChange!: EventEmitter<SearchbarChangeEventDetail>;
 
   /**
    * Emitted when the cancel button is clicked.

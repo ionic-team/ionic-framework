@@ -205,7 +205,7 @@ export class Datetime implements ComponentInterface {
   /**
    * Emitted when the value (selected date) has changed.
    */
-  @Event() ionChange!: EventEmitter<DatetimeChangeEventDetail>;
+  @Event({ bubbles: false }) ionChange!: EventEmitter<DatetimeChangeEventDetail>;
 
   /**
    * Emitted when the datetime has focus.

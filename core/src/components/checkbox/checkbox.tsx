@@ -57,7 +57,7 @@ export class Checkbox implements ComponentInterface {
   /**
    * Emitted when the checked property has changed.
    */
-  @Event() ionChange!: EventEmitter<CheckboxChangeEventDetail>;
+  @Event({ bubbles: false }) ionChange!: EventEmitter<CheckboxChangeEventDetail>;
 
   /**
    * Emitted when the toggle has focus.

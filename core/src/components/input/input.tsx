@@ -188,7 +188,7 @@ export class Input implements ComponentInterface {
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange!: EventEmitter<InputChangeEventDetail>;
+  @Event({ bubbles: false }) ionChange!: EventEmitter<InputChangeEventDetail>;
 
   /**
    * Emitted when the input loses focus.

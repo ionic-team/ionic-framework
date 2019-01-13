@@ -51,7 +51,7 @@ export class Segment implements ComponentInterface {
   /**
    * Emitted when the value property has changed.
    */
-  @Event() ionChange!: EventEmitter<SegmentChangeEventDetail>;
+  @Event({ bubbles: false }) ionChange!: EventEmitter<SegmentChangeEventDetail>;
 
   /**
    * Emitted when the styles change.

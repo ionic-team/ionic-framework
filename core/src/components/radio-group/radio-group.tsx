@@ -37,7 +37,7 @@ export class RadioGroup implements ComponentInterface {
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange!: EventEmitter<RadioGroupChangeEventDetail>;
+  @Event({ bubbles: false }) ionChange!: EventEmitter<RadioGroupChangeEventDetail>;
 
   @Listen('ionRadioDidLoad')
   onRadioDidLoad(ev: Event) {

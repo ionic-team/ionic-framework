@@ -26,7 +26,7 @@ export class Tabs implements NavOutlet {
   /**
    * Emitted when the tab changes.
    */
-  @Event() ionChange!: EventEmitter<{tab: HTMLIonTabElement}>;
+  @Event({ bubbles: false }) ionChange!: EventEmitter<{tab: HTMLIonTabElement}>;
 
   /**
    * Emitted when the navigation will load a component.

@@ -90,7 +90,7 @@ export class Select implements ComponentInterface {
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange!: EventEmitter<SelectChangeEventDetail>;
+  @Event({ bubbles: false }) ionChange!: EventEmitter<SelectChangeEventDetail>;
 
   /**
    * Emitted when the selection is cancelled.

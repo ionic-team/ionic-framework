@@ -140,7 +140,7 @@ export class Textarea implements ComponentInterface {
   /**
    * Emitted when the input value has changed.
    */
-  @Event() ionChange!: EventEmitter<TextareaChangeEventDetail>;
+  @Event({ bubbles: false }) ionChange!: EventEmitter<TextareaChangeEventDetail>;
 
   /**
    * Emitted when a keyboard input ocurred.

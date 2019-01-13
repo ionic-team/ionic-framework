@@ -64,7 +64,7 @@ export class Toggle implements ComponentInterface {
   /**
    * Emitted when the value property has changed.
    */
-  @Event() ionChange!: EventEmitter<ToggleChangeEventDetail>;
+  @Event({ bubbles: false }) ionChange!: EventEmitter<ToggleChangeEventDetail>;
 
   /**
    * Emitted when the toggle has focus.

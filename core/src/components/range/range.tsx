@@ -127,7 +127,7 @@ export class Range implements ComponentInterface {
   /**
    * Emitted when the value property has changed.
    */
-  @Event() ionChange!: EventEmitter<RangeChangeEventDetail>;
+  @Event({ bubbles: false }) ionChange!: EventEmitter<RangeChangeEventDetail>;
 
   /**
    * Emitted when the styles change.
