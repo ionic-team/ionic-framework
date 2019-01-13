@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Slides Test
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-slides pager="true" (ionSlideDidChange)="checkIndex()">
+
+    <ion-slide>
+      <h1>Slide 1</h1>
+    </ion-slide>
+
+    <ion-slide>
+      <h1>Slide 2</h1>
+    </ion-slide>
+
+    <ion-slide>
+      <h1>Slide 3</h1>
+    </ion-slide>
+  </ion-slides>
+
+  <p>
+    index: <span id="slide-index">{{slideIndex}}</span>
+  </p>
+
+  <ion-button id="btn-prev" (click)="prevSlide()">
+    Prev Slide
+  </ion-button>
+  <ion-button id="btn-next" (click)="nextSlide()">
+    Next Slide
+  </ion-button>
+</ion-content>
