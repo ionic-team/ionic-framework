@@ -99,6 +99,29 @@ export class Tabs implements NavOutlet {
     return true;
   }
 
+  /**
+   * Get the tab element given the tab name
+   */
+  @Method()
+  async getTab(tab: string | HTMLIonTabElement): Promise<HTMLIonTabElement | undefined> {
+    const tabEl = (typeof tab === 'string')
+      ? this.tabs.find(t => t.tab === tab)
+      : tab;
+
+    if (!tabEl) {
+      console.error(`tab with id: "${tabEl}" does not exist`);
+    }
+    return tabEl;
+  }
+
+  /**
+   * Get the currently selected tab
+   */
+  @Method()
+  getSelected(): Promise<string | undefined> {
+    return Promise.resolve(this.selectedTab ? this.selectedTab.tab : undefined);
+  }
+
   /** @internal */
   @Method()
   async setRouteId(id: string): Promise<RouteWrite> {
@@ -120,27 +143,6 @@ export class Tabs implements NavOutlet {
   async getRouteId(): Promise<RouteID | undefined> {
     const tabId = this.selectedTab && this.selectedTab.tab;
     return tabId !== undefined ? { id: tabId, element: this.selectedTab } : undefined;
-  }
-
-  /** Get the tab at the given index */
-  @Method()
-  async getTab(tab: string | HTMLIonTabElement): Promise<HTMLIonTabElement | undefined> {
-    const tabEl = (typeof tab === 'string')
-      ? this.tabs.find(t => t.tab === tab)
-      : tab;
-
-    if (!tabEl) {
-      console.error(`tab with id: "${tabEl}" does not exist`);
-    }
-    return tabEl;
-  }
-
-  /**
-   * Get the currently selected tab
-   */
-  @Method()
-  getSelected(): Promise<HTMLIonTabElement | undefined> {
-    return Promise.resolve(this.selectedTab);
   }
 
   private async initSelect(): Promise<void> {
