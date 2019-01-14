@@ -677,9 +677,8 @@ ion-nav,method,push,push<T extends NavComponent>(component: T, componentProps?: 
 ion-nav,method,removeIndex,removeIndex(startIndex: number, removeCount?: number, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
 ion-nav,method,setPages,setPages(views: any[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
 ion-nav,method,setRoot,setRoot<T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
-ion-nav,event,ionNavDidChange,void,true
-ion-nav,event,ionNavWillChange,void,true
-ion-nav,event,ionNavWillLoad,void,true
+ion-nav,event,ionNavDidChange,void,false
+ion-nav,event,ionNavWillChange,void,false
 
 ion-note,shadow
 ion-note,prop,color,string | undefined,undefined,false,false
@@ -1027,8 +1026,7 @@ ion-split-pane,none
 ion-split-pane,prop,contentId,string | undefined,undefined,false,false
 ion-split-pane,prop,disabled,boolean,false,false,false
 ion-split-pane,prop,when,boolean | string,QUERY['lg'],false,false
-ion-split-pane,event,ionChange,{visible: boolean},false
-ion-split-pane,event,ionSplitPaneVisible,void,true
+ion-split-pane,event,ionSplitPaneVisible,{visible: boolean},true
 ion-split-pane,css-prop,--border
 
 ion-tab-bar,shadow
@@ -1066,10 +1064,8 @@ ion-tabs,shadow
 ion-tabs,method,getSelected,getSelected() => Promise<string | undefined>
 ion-tabs,method,getTab,getTab(tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>
 ion-tabs,method,select,select(tab: string | HTMLIonTabElement) => Promise<boolean>
-ion-tabs,event,ionChange,{tab: HTMLIonTabElement},true
-ion-tabs,event,ionNavDidChange,void,true
-ion-tabs,event,ionNavWillChange,void,true
-ion-tabs,event,ionNavWillLoad,void,true
+ion-tabs,event,ionTabsDidChange,{tab: string},false
+ion-tabs,event,ionTabsWillChange,{tab: string},false
 
 ion-text,shadow
 ion-text,prop,color,string | undefined,undefined,false,false
