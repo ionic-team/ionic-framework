@@ -16,6 +16,7 @@ import { NestedOutletPageComponent } from './nested-outlet-page/nested-outlet-pa
 import { NestedOutletPage2Component } from './nested-outlet-page2/nested-outlet-page2.component';
 import { ViewChildComponent } from './view-child/view-child.component';
 import { ProvidersComponent } from './providers/providers.component';
+import { SlidesComponent } from './slides/slides.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'providers', component: ProvidersComponent },
   { path: 'router-link', component: RouterLinkComponent },
   { path: 'router-link-page', component: RouterLinkPageComponent },
+  { path: 'slides', component: SlidesComponent },
   { path: 'virtual-scroll', component: VirtualScrollComponent },
   { path: 'virtual-scroll-detail/:itemId', component: VirtualScrollDetailComponent },
   { path: 'tabs', redirectTo: '/tabs/account', pathMatch: 'full' },
