@@ -45,6 +45,9 @@ export class RouterLinkDelegate {
     }
   }
 
+  /**
+   * @internal
+   */
   @HostListener('click', ['$event'])
   onClick(ev: UIEvent) {
     this.navCtrl.setDirection(this.routerDirection);
