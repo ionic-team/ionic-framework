@@ -63,8 +63,7 @@
     "typescript": "^2.9.2"
   },
   "scripts": {
-    "build": "npm run clean && npm run build.css && npm run build.vendor && stencil build --docs",
-    "build.vendor": "rollup --config ./scripts/swiper.rollup.config.js",
+    "build": "npm run clean && npm run build.css && stencil build --docs",
     "build.css": "npm run css.sass && npm run css.minify",
     "build.debug": "npm run clean && stencil build --debug",
     "build.docs.json": "stencil build --docs-json dist/docs.json",

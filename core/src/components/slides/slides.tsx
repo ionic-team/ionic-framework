@@ -4,7 +4,7 @@ import { Mode } from '../../interface';
 import { rIC } from '../../utils/helpers.js';
 import { createThemedClasses } from '../../utils/theme.js';
 
-import { SwiperInterface, SwiperOptions } from './swiper/swiper-interface';
+import { Swiper, SwiperOptions } from 'swiper/dist/js/swiper.esm';
 
 @Component({
   tag: 'ion-slides',
@@ -12,7 +12,6 @@ import { SwiperInterface, SwiperOptions } from './swiper/swiper-interface';
     ios: 'slides.ios.scss',
     md: 'slides.md.scss'
   },
-  assetsDir: 'swiper',
 })
 export class Slides implements ComponentInterface {
 
@@ -20,8 +19,8 @@ export class Slides implements ComponentInterface {
   private paginationEl?: HTMLElement;
   private didInit = false;
 
-  private readySwiper!: (swiper: SwiperInterface) => void;
-  private swiper: Promise<SwiperInterface> = new Promise(resolve => { this.readySwiper = resolve; });
+  private readySwiper!: (swiper: Swiper) => void;
+  private swiper: Promise<Swiper> = new Promise(resolve => { this.readySwiper = resolve; });
 
   @Element() el!: HTMLStencilElement;
 
@@ -288,9 +287,6 @@ export class Slides implements ComponentInterface {
   private async initSwiper() {
     const finalOptions = this.normalizeOptions();
 
-    // init swiper core
-    // @ts-ignore
-    const { Swiper } = await import('./swiper/swiper.bundle.js');
     const swiper = new Swiper(this.el, finalOptions);
     this.didInit = true;
     this.readySwiper(swiper);
