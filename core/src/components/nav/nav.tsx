@@ -87,11 +87,11 @@ export class Nav implements NavOutlet {
   /**
    * Event fired when the nav will components
    */
-  @Event() ionNavWillChange!: EventEmitter<void>;
+  @Event({ bubbles: false }) ionNavWillChange!: EventEmitter<void>;
   /**
    * Event fired when the nav has changed components
    */
-  @Event() ionNavDidChange!: EventEmitter<void>;
+  @Event({ bubbles: false }) ionNavDidChange!: EventEmitter<void>;
 
   componentWillLoad() {
     this.useRouter =

@@ -166,11 +166,10 @@ Using tabs with Angular's router is fairly straight forward. Here you only need 
 
 ## Events
 
-| Event              | Description                                                                | Type                |
-| ------------------ | -------------------------------------------------------------------------- | ------------------- |
-| `ionNavDidChange`  | Emitted when the navigation has finished transitioning to a new component. | `CustomEvent<void>` |
-| `ionNavWillChange` | Emitted when the navigation is about to transition to a new component.     | `CustomEvent<void>` |
-| `ionNavWillLoad`   | Emitted when the navigation will load a component.                         | `CustomEvent<void>` |
+| Event               | Description                                                                | Type                         |
+| ------------------- | -------------------------------------------------------------------------- | ---------------------------- |
+| `ionTabsDidChange`  | Emitted when the navigation has finished transitioning to a new component. | `CustomEvent<{tab: string}>` |
+| `ionTabsWillChange` | Emitted when the navigation is about to transition to a new component.     | `CustomEvent<{tab: string}>` |
 
 
 ## Methods

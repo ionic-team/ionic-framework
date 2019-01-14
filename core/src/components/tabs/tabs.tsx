@@ -158,7 +158,7 @@ export class Tabs implements NavOutlet {
     this.transitioning = true;
     this.leavingTab = this.selectedTab;
     this.selectedTab = selectedTab;
-    this.ionTabsWillChange.emit();
+    this.ionTabsWillChange.emit({ tab: selectedTab.tab });
     return selectedTab.setActive();
   }
 
@@ -176,7 +176,7 @@ export class Tabs implements NavOutlet {
       if (leavingTab) {
         leavingTab.active = false;
       }
-      this.ionTabsDidChange.emit({});
+      this.ionTabsDidChange.emit({ tab: selectedTab.tab });
     }
   }
 
