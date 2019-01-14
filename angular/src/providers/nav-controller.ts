@@ -44,19 +44,19 @@ export class NavController {
     platform.backButton.subscribeWithPriority(0, () => this.goBack());
   }
 
-  navigateForward(url: string | UrlTree | any[], options: NavigationOptions = {}) {
+  navigateForward(url: string | UrlTree | any[], options: NavigationOptions = {}): Promise<boolean> {
     this.setDirection('forward', options.animated, options.animationDirection);
-    this.navigate(url, options);
+    return this.navigate(url, options);
   }
 
-  navigateBack(url: string | UrlTree | any[], options: NavigationOptions = {}) {
+  navigateBack(url: string | UrlTree | any[], options: NavigationOptions = {}): Promise<boolean> {
     this.setDirection('back', options.animated, options.animationDirection);
-    this.navigate(url, options);
+    return this.navigate(url, options);
   }
 
-  navigateRoot(url: string | UrlTree | any[], options: NavigationOptions = {}) {
+  navigateRoot(url: string | UrlTree | any[], options: NavigationOptions = {}): Promise<boolean> {
     this.setDirection('root', options.animated, options.animationDirection);
-    this.navigate(url, options);
+    return this.navigate(url, options);
   }
 
   navigate(url: string | UrlTree | any[], options: NavigationOptions) {
