@@ -812,13 +812,12 @@ proxyInputs(IonSpinner, ['color', 'duration', 'name', 'paused']);
 export declare interface IonSplitPane extends StencilComponents<'IonSplitPane'> {}
 @Component({ selector: 'ion-split-pane', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['contentId', 'disabled', 'when'] })
 export class IonSplitPane {
-  ionChange!: EventEmitter<CustomEvent>;
   ionSplitPaneVisible!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionSplitPaneVisible']);
+    proxyOutputs(this, this.el, ['ionSplitPaneVisible']);
   }
 }
 proxyInputs(IonSplitPane, ['contentId', 'disabled', 'when']);

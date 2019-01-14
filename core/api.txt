@@ -1027,7 +1027,6 @@ ion-split-pane,none
 ion-split-pane,prop,contentId,string | undefined,undefined,false,false
 ion-split-pane,prop,disabled,boolean,false,false,false
 ion-split-pane,prop,when,boolean | string,QUERY['lg'],false,false
-ion-split-pane,event,ionChange,{visible: boolean},false
 ion-split-pane,event,ionSplitPaneVisible,void,true
 ion-split-pane,css-prop,--border
 
@@ -1066,7 +1065,6 @@ ion-tabs,shadow
 ion-tabs,method,getSelected,getSelected() => Promise<HTMLIonTabElement | undefined>
 ion-tabs,method,getTab,getTab(tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>
 ion-tabs,method,select,select(tab: string | HTMLIonTabElement) => Promise<boolean>
-ion-tabs,event,ionChange,{tab: HTMLIonTabElement},true
 ion-tabs,event,ionNavDidChange,void,true
 ion-tabs,event,ionNavWillChange,void,true
 ion-tabs,event,ionNavWillLoad,void,true

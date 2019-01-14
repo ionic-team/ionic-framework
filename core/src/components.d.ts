@@ -4322,10 +4322,6 @@ export namespace Components {
     */
     'disabled'?: boolean;
     /**
-    * Emitted when the split pane is visible.
-    */
-    'onIonChange'?: (event: CustomEvent<{visible: boolean}>) => void;
-    /**
     * Expression to be called when the split-pane visibility has changed
     */
     'onIonSplitPaneVisible'?: (event: CustomEvent) => void;
@@ -4470,10 +4466,6 @@ export namespace Components {
     'useRouter': boolean;
   }
   interface IonTabsAttributes extends StencilHTMLAttributes {
-    /**
-    * Emitted when the tab changes.
-    */
-    'onIonChange'?: (event: CustomEvent<{tab: HTMLIonTabElement}>) => void;
     /**
     * Emitted when the navigation has finished transitioning to a new component.
     */
