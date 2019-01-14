@@ -20,6 +20,7 @@ test('item: inputs', async () => {
   // check form
   await page.click('#submit');
   await checkFormResult(page, '{}');
+  await page.waitFor(250);
 
   // screenshot
   compare = await page.compareScreenshot('should disable all');
@@ -28,11 +29,12 @@ test('item: inputs', async () => {
   // Reenable and set some value
   await page.click('#btnDisabled');
   await page.click('#btnSomeValue');
-  await page.waitFor(100);
+  await page.waitFor(250);
 
   // check form
   await page.click('#submit');
   await checkFormResult(page, '{"date":"2016-12-09","select":"nes","toggle":"on","input":"Some text","input2":"Some text","checkbox":"on"}');
+  await page.waitFor(250);
 
   compare = await page.compareScreenshot('should reenable and set value');
   expect(compare).toMatchScreenshot();
