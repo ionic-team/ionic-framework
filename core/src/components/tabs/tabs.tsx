@@ -24,11 +24,6 @@ export class Tabs implements NavOutlet {
   @Prop({ mutable: true }) useRouter = false;
 
   /**
-   * Emitted when the tab changes.
-   */
-  @Event() ionChange!: EventEmitter<{tab: HTMLIonTabElement}>;
-
-  /**
    * Emitted when the navigation will load a component.
    */
   @Event() ionNavWillLoad!: EventEmitter<void>;
@@ -178,7 +173,6 @@ export class Tabs implements NavOutlet {
       if (leavingTab) {
         leavingTab.active = false;
       }
-      this.ionChange.emit({ tab: selectedTab });
       this.ionNavDidChange.emit();
     }
   }

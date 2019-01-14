@@ -61,11 +61,6 @@ export class SplitPane implements ComponentInterface {
   @Prop() when: string | boolean = QUERY['lg'];
 
   /**
-   * Emitted when the split pane is visible.
-   */
-  @Event({ bubbles: false }) ionChange!: EventEmitter<{visible: boolean}>;
-
-  /**
    * Expression to be called when the split-pane visibility has changed
    */
   @Event() ionSplitPaneVisible!: EventEmitter;
@@ -73,7 +68,6 @@ export class SplitPane implements ComponentInterface {
   @Watch('visible')
   visibleChanged(visible: boolean) {
     const detail = { visible, isPane: this.isPane.bind(this) };
-    this.ionChange.emit(detail);
     this.ionSplitPaneVisible.emit(detail);
   }
 
