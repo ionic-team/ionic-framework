@@ -1063,7 +1063,7 @@ ion-tab,prop,tab,string,undefined,true,false
 ion-tab,method,setActive,setActive() => Promise<void>
 
 ion-tabs,shadow
-ion-tabs,method,getSelected,getSelected() => Promise<HTMLIonTabElement | undefined>
+ion-tabs,method,getSelected,getSelected() => Promise<string | undefined>
 ion-tabs,method,getTab,getTab(tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>
 ion-tabs,method,select,select(tab: string | HTMLIonTabElement) => Promise<boolean>
 ion-tabs,event,ionChange,{tab: HTMLIonTabElement},true

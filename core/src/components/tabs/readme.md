@@ -176,19 +176,19 @@ Using tabs with Angular's router is fairly straight forward. Here you only need 
 
 ## Methods
 
-### `getSelected() => Promise<HTMLIonTabElement | undefined>`
+### `getSelected() => Promise<string | undefined>`
 
 Get the currently selected tab
 
 #### Returns
 
-Type: `Promise<HTMLIonTabElement | undefined>`
+Type: `Promise<string | undefined>`
 
 
 
 ### `getTab(tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>`
 
-Get the tab at the given index
+Get the tab element given the tab name
 
 #### Parameters
 
