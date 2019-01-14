@@ -4457,9 +4457,9 @@ export namespace Components {
     /**
     * Get the currently selected tab
     */
-    'getSelected': () => Promise<HTMLIonTabElement | undefined>;
+    'getSelected': () => Promise<string | undefined>;
     /**
-    * Get the tab at the given index
+    * Get the tab element given the tab name
     */
     'getTab': (tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>;
     /**
