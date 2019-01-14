@@ -2768,10 +2768,6 @@ export namespace Components {
     */
     'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
     /**
-    * Event fired when Nav will load a component
-    */
-    'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
-    /**
     * Root NavComponent to load
     */
     'root'?: NavComponent;
@@ -4322,13 +4318,9 @@ export namespace Components {
     */
     'disabled'?: boolean;
     /**
-    * Emitted when the split pane is visible.
-    */
-    'onIonChange'?: (event: CustomEvent<{visible: boolean}>) => void;
-    /**
     * Expression to be called when the split-pane visibility has changed
     */
-    'onIonSplitPaneVisible'?: (event: CustomEvent) => void;
+    'onIonSplitPaneVisible'?: (event: CustomEvent<{visible: boolean}>) => void;
     /**
     * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
     */
@@ -4471,21 +4463,13 @@ export namespace Components {
   }
   interface IonTabsAttributes extends StencilHTMLAttributes {
     /**
-    * Emitted when the tab changes.
-    */
-    'onIonChange'?: (event: CustomEvent<{tab: HTMLIonTabElement}>) => void;
-    /**
     * Emitted when the navigation has finished transitioning to a new component.
     */
-    'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
+    'onIonTabsDidChange'?: (event: CustomEvent<{tab: string}>) => void;
     /**
     * Emitted when the navigation is about to transition to a new component.
     */
-    'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the navigation will load a component.
-    */
-    'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
+    'onIonTabsWillChange'?: (event: CustomEvent<{tab: string}>) => void;
   }
 
   interface IonText {
