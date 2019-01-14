@@ -9,6 +9,7 @@
   --min-height: #{$item-md-min-height};
   --background: #{$item-md-background};
   --background-activated: var(--background);
+  --background-focused: #{$item-md-background-activated};
   --border-color: #{$item-md-border-bottom-color};
   --color: #{$item-md-color};
   --transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
