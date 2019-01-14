@@ -63,7 +63,7 @@ export class SplitPane implements ComponentInterface {
   /**
    * Expression to be called when the split-pane visibility has changed
    */
-  @Event() ionSplitPaneVisible!: EventEmitter;
+  @Event() ionSplitPaneVisible!: EventEmitter<{visible: boolean}>;
 
   @Watch('visible')
   visibleChanged(visible: boolean) {

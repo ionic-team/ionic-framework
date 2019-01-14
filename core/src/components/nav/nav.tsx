@@ -81,6 +81,7 @@ export class Nav implements NavOutlet {
 
   /**
    * Event fired when Nav will load a component
+   * @internal
    */
   @Event() ionNavWillLoad!: EventEmitter<void>;
   /**
