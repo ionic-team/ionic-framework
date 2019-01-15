@@ -38,6 +38,7 @@
     "validate": "npm i && npm run lint && npm run test && npm run build"
   },
   "module": "dist/fesm5.js",
+  "main": "dist/fesm5.js",
   "types": "dist/core.d.ts",
   "files": [
     "dist/",

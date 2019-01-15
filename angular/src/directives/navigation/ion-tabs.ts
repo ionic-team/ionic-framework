@@ -49,6 +49,9 @@ export class IonTabs {
     private navCtrl: NavController,
   ) {}
 
+  /**
+   * @internal
+   */
   @HostListener('ionRouterOutletActivated', ['$event.detail'])
   onPageSelected(detail: {view: RouteView}) {
     if (this.tabBar) {
@@ -58,9 +61,9 @@ export class IonTabs {
 
   @HostListener('ionTabButtonClick', ['$event.detail.tab'])
   select(tab: string) {
-    const selected = this.outlet.getActiveStackId() === tab;
+    const alreadySelected = this.outlet.getActiveStackId() === tab;
     const href = `${this.outlet.tabsPrefix}/${tab}`;
-    const url = selected
+    const url = alreadySelected
       ? href
       : this.outlet.getLastUrl(tab) || href;
 
@@ -68,5 +71,9 @@ export class IonTabs {
       animated: true,
       animationDirection: 'back'
     });
+  }
+
+  getSelected(): string | undefined {
+    return this.outlet.getActiveStackId();
   }
 }

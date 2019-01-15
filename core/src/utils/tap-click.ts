@@ -19,6 +19,7 @@ export function startTapClick(doc: Document, config: Config) {
     if (cancelled || scrolling) {
       ev.preventDefault();
       ev.stopPropagation();
+      cancelled = false;
     }
   }
 
