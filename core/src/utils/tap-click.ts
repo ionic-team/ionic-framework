@@ -49,7 +49,6 @@ export function startTapClick(doc: Document, config: Config) {
   }
 
   function cancelActive() {
-    console.log('cancelActive()');
     clearTimeout(activeDefer);
     activeDefer = undefined;
     if (activatableEle) {

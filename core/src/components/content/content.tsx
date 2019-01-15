@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi } from '@stencil/core';
 
 import { Color, Config, Mode, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { isPlatform } from '../../utils/platform';
@@ -101,11 +101,6 @@ export class Content implements ComponentInterface {
    * Emitted when the scroll has ended.
    */
   @Event() ionScrollEnd!: EventEmitter<ScrollBaseDetail>;
-
-  @Listen('body:ionNavDidChange')
-  onNavChanged() {
-    this.resize();
-  }
 
   componentWillLoad() {
     if (this.forceOverscroll === undefined) {

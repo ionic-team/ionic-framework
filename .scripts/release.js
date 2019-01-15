@@ -24,7 +24,7 @@ async function main() {
     common.checkGit(tasks);
 
     // publish each package in NPM
-    publishPackages(tasks, common.packages, version);
+    common.publishPackages(tasks, common.packages, version);
 
     // push tag to git remote
     publishGit(tasks, version, changelog);
@@ -39,36 +39,6 @@ async function main() {
   }
 }
 
-
-async function publishPackages(tasks, packages, version) {
-  // first verify version
-  packages.forEach(package => {
-    if (package === 'core') {
-      return;
-    }
-
-    const pkg = common.readPkg(package);
-    tasks.push({
-      title: `${pkg.name}: check version (must match: ${version})`,
-      task: () => {
-        if (version !== pkg.version) {
-          throw new Error(`${pkg.name} version ${pkg.version} must match ${version}`);
-        }
-      }
-    });
-  });
-
-  // next publish
-  packages.forEach(package => {
-    const pkg = common.readPkg(package);
-    const projectRoot = common.projectPath(package);
-
-    tasks.push({
-      title: `${pkg.name}: publish ${pkg.version}`,
-      task: () => execa('npm', ['publish', '--tag', 'latest'], { cwd: projectRoot })
-    });
-  });
-}
 
 function publishGit(tasks, version, changelog) {
   const tag = `v${version}`;

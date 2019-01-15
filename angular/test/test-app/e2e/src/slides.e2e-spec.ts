@@ -11,18 +11,23 @@ describe('slides', () => {
   });
 
   it('should change index on slide change', async () => {
-    expect(await element(by.css('#slide-index')).getText()).toEqual('0');
-    await nextSlide();
+    await checkIndex('0');
 
-    expect(await element(by.css('#slide-index')).getText()).toEqual('1');
     await nextSlide();
+    await checkIndex('1');
 
-    expect(await element(by.css('#slide-index')).getText()).toEqual('2');
+    await nextSlide();
+    await checkIndex('2');
+
     await prevSlide();
-
-    expect(await element(by.css('#slide-index')).getText()).toEqual('1');
+    await checkIndex('1');
   });
 });
+
+async function checkIndex(index: string) {
+  expect(await element(by.css('#slide-index')).getText()).toEqual(index);
+  expect(await element(by.css('#slide-index-2')).getText()).toEqual(index);
+}
 
 async function nextSlide() {
   await element(by.css('#btn-next')).click();

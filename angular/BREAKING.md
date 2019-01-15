@@ -787,7 +787,7 @@ Previously an `ion-label` would automatically get added to an `ion-list-header` 
 
 ## Loading
 
-`dismissOnPageChange` was removed. Fortunatelly all the navigation API is promise based and there are global events  (`ionNavWillChange`) you can listen in order to detect when navigation occurs.
+`dismissOnPageChange` was removed. Fortunately all the navigation API is promise based and there are global events  (`ionNavWillChange`) you can listen in order to detect when navigation occurs.
 
 You should take advantage of these APIs in order to dismiss your loading overlay explicitally.
 
@@ -1155,7 +1155,7 @@ The `enabled` property (with a default value of `true`) has been renamed to `dis
 
 ## Scroll
 
-`ion-scroll` has been removed, fortunatelly `ion-content` can work as a drop-in replacement:
+`ion-scroll` has been removed, fortunately `ion-content` can work as a drop-in replacement:
 
 ```diff
 - <ion-scroll scrollX="true">
