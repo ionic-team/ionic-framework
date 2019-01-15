@@ -14,8 +14,12 @@ test('menu: standalone', async () => {
   ]);
 
   await start.callMethod('open');
+  await start.waitForVisible();
+  await page.waitFor(250);
   expect(await page.compareScreenshot('start menu')).toMatchScreenshot();
+
   await start.callMethod('close');
+  await page.waitFor(250);
 
   const end = await page.find('ion-menu[side="end"]');
   expect(end).toHaveClasses([
@@ -25,5 +29,7 @@ test('menu: standalone', async () => {
   ]);
 
   await end.callMethod('open');
+  await end.waitForVisible();
+  await page.waitFor(250);
   expect(await page.compareScreenshot('end menu')).toMatchScreenshot();
 });
