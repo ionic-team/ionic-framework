@@ -491,14 +491,13 @@ proxyInputs(IonMenuToggle, ['menu', 'autoHide']);
 export declare interface IonNav extends StencilComponents<'IonNav'> {}
 @Component({ selector: 'ion-nav', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['swipeGesture', 'animated', 'animation', 'rootParams', 'root'] })
 export class IonNav {
-  ionNavWillLoad!: EventEmitter<CustomEvent>;
   ionNavWillChange!: EventEmitter<CustomEvent>;
   ionNavDidChange!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange']);
+    proxyOutputs(this, this.el, ['ionNavWillChange', 'ionNavDidChange']);
   }
 }
 proxyMethods(IonNav, ['push', 'insert', 'insertPages', 'pop', 'popTo', 'popToRoot', 'removeIndex', 'setRoot', 'setPages', 'getActive', 'getByIndex', 'canGoBack', 'getPrevious']);
@@ -812,13 +811,12 @@ proxyInputs(IonSpinner, ['color', 'duration', 'name', 'paused']);
 export declare interface IonSplitPane extends StencilComponents<'IonSplitPane'> {}
 @Component({ selector: 'ion-split-pane', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['contentId', 'disabled', 'when'] })
 export class IonSplitPane {
-  ionChange!: EventEmitter<CustomEvent>;
   ionSplitPaneVisible!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionSplitPaneVisible']);
+    proxyOutputs(this, this.el, ['ionSplitPaneVisible']);
   }
 }
 proxyInputs(IonSplitPane, ['contentId', 'disabled', 'when']);

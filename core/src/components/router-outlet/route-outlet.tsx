@@ -53,10 +53,10 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   @Event() ionNavWillLoad!: EventEmitter<void>;
 
   /** @internal */
-  @Event() ionNavWillChange!: EventEmitter<void>;
+  @Event({ bubbles: false }) ionNavWillChange!: EventEmitter<void>;
 
   /** @internal */
-  @Event() ionNavDidChange!: EventEmitter<void>;
+  @Event({ bubbles: false }) ionNavDidChange!: EventEmitter<void>;
 
   componentWillLoad() {
     this.ionNavWillLoad.emit();

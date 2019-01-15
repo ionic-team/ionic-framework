@@ -61,9 +61,9 @@ export class IonTabs {
 
   @HostListener('ionTabButtonClick', ['$event.detail.tab'])
   select(tab: string) {
-    const selected = this.outlet.getActiveStackId() === tab;
+    const alreadySelected = this.outlet.getActiveStackId() === tab;
     const href = `${this.outlet.tabsPrefix}/${tab}`;
-    const url = selected
+    const url = alreadySelected
       ? href
       : this.outlet.getLastUrl(tab) || href;
 

@@ -24,24 +24,20 @@ export class Tabs implements NavOutlet {
   @Prop({ mutable: true }) useRouter = false;
 
   /**
-   * Emitted when the tab changes.
-   */
-  @Event() ionChange!: EventEmitter<{tab: HTMLIonTabElement}>;
-
-  /**
    * Emitted when the navigation will load a component.
+   * @internal
    */
   @Event() ionNavWillLoad!: EventEmitter<void>;
 
   /**
    * Emitted when the navigation is about to transition to a new component.
    */
-  @Event() ionNavWillChange!: EventEmitter<void>;
+  @Event({ bubbles: false }) ionTabsWillChange!: EventEmitter<{tab: string}>;
 
   /**
    * Emitted when the navigation has finished transitioning to a new component.
    */
-  @Event() ionNavDidChange!: EventEmitter<void>;
+  @Event({ bubbles: false }) ionTabsDidChange!: EventEmitter<{tab: string}>;
 
   async componentWillLoad() {
     if (!this.useRouter) {
@@ -162,7 +158,7 @@ export class Tabs implements NavOutlet {
     this.transitioning = true;
     this.leavingTab = this.selectedTab;
     this.selectedTab = selectedTab;
-    this.ionNavWillChange.emit();
+    this.ionTabsWillChange.emit({ tab: selectedTab.tab });
     return selectedTab.setActive();
   }
 
@@ -180,8 +176,7 @@ export class Tabs implements NavOutlet {
       if (leavingTab) {
         leavingTab.active = false;
       }
-      this.ionChange.emit({ tab: selectedTab });
-      this.ionNavDidChange.emit();
+      this.ionTabsDidChange.emit({ tab: selectedTab.tab });
     }
   }
 
