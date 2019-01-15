@@ -25,6 +25,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 
   tabsPrefix: string | undefined;
 
+  @Output() stackEvents = new EventEmitter<any>();
   @Output('activate') activateEvents = new EventEmitter<any>();
   @Output('deactivate') deactivateEvents = new EventEmitter<any>();
 
@@ -173,9 +174,9 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     }
 
     this.activatedView = enteringView;
-    this.stackCtrl.setActive(enteringView).then(() => {
+    this.stackCtrl.setActive(enteringView).then(data => {
       this.activateEvents.emit(cmpRef.instance);
-      emitEvent(this.nativeEl, enteringView!);
+      this.stackEvents.emit(data);
     });
   }
 
@@ -195,15 +196,6 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   getActiveStackId() {
     return this.stackCtrl.getActiveStackId();
   }
-}
-
-function emitEvent(el: HTMLElement, view: RouteView) {
-  const ev = new CustomEvent('ionRouterOutletActivated', {
-    bubbles: true,
-    cancelable: true,
-    detail: { view }
-  });
-  el.dispatchEvent(ev);
 }
 
 class OutletInjector implements Injector {
