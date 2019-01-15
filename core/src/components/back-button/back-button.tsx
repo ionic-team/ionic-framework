@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
 
 import { Color, Config, Mode } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
@@ -45,6 +45,7 @@ export class BackButton implements ComponentInterface {
    */
   @Prop() text?: string | null;
 
+  @Listen('click')
   async onClick(ev: Event) {
     const nav = this.el.closest('ion-nav');
     ev.preventDefault();
@@ -71,14 +72,17 @@ export class BackButton implements ComponentInterface {
 
   render() {
     const defaultBackButtonText = this.mode === 'ios' ? 'Back' : null;
-    const backButtonIcon = this.icon != null ? this.icon : this.config.get('backButtonIcon', 'arrow-back');
     const backButtonText = this.text != null ? this.text : this.config.get('backButtonText', defaultBackButtonText);
+
+    let backButtonIcon = this.icon != null ? this.icon : this.config.get('backButtonIcon', 'arrow-back');
+    if (backButtonIcon === 'arrow-back' && document.dir === 'rtl') {
+      backButtonIcon = 'arrow-forward';
+    }
 
     return (
       <button
         type="button"
         class="button-native"
-        onClick={(ev: Event) => this.onClick(ev)}
       >
         <span class="button-inner">
           {backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false}></ion-icon>}

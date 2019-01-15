@@ -166,29 +166,27 @@ Using tabs with Angular's router is fairly straight forward. Here you only need 
 
 ## Events
 
-| Event              | Description                                                                | Type                                    |
-| ------------------ | -------------------------------------------------------------------------- | --------------------------------------- |
-| `ionChange`        | Emitted when the tab changes.                                              | `CustomEvent<{tab: HTMLIonTabElement}>` |
-| `ionNavDidChange`  | Emitted when the navigation has finished transitioning to a new component. | `CustomEvent<void>`                     |
-| `ionNavWillChange` | Emitted when the navigation is about to transition to a new component.     | `CustomEvent<void>`                     |
-| `ionNavWillLoad`   | Emitted when the navigation will load a component.                         | `CustomEvent<void>`                     |
+| Event               | Description                                                                | Type                         |
+| ------------------- | -------------------------------------------------------------------------- | ---------------------------- |
+| `ionTabsDidChange`  | Emitted when the navigation has finished transitioning to a new component. | `CustomEvent<{tab: string}>` |
+| `ionTabsWillChange` | Emitted when the navigation is about to transition to a new component.     | `CustomEvent<{tab: string}>` |
 
 
 ## Methods
 
-### `getSelected() => Promise<HTMLIonTabElement | undefined>`
+### `getSelected() => Promise<string | undefined>`
 
 Get the currently selected tab
 
 #### Returns
 
-Type: `Promise<HTMLIonTabElement | undefined>`
+Type: `Promise<string | undefined>`
 
 
 
 ### `getTab(tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>`
 
-Get the tab at the given index
+Get the tab element given the tab name
 
 #### Parameters
 

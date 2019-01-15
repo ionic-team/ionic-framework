@@ -31,26 +31,6 @@
 }
 
 
-// iOS Checkbox Keyboard Focus
-// -----------------------------------------
-
-:host(.checkbox-key) .checkbox-icon::after {
-  @include border-radius(50%);
-  @include position(-9px, null, null, -9px);
-
-  display: block;
-  position: absolute;
-
-  width: 36px;
-  height: 36px;
-
-  background: $checkbox-ios-background-color-focused;
-
-  content: "";
-  opacity: .2;
-}
-
-
 // iOS Checkbox Within An Item
 // -----------------------------------------
 

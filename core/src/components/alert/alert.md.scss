@@ -110,12 +110,10 @@
 }
 
 .alert-tappable {
-  display: flex;
   position: relative;
 
   height: $alert-md-tappable-height;
 
-  contain: strict;
   overflow: hidden;
 }
 
