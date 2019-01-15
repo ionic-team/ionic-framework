@@ -11,16 +11,24 @@ import { TabsTab1NestedComponent } from './tabs-tab1-nested/tabs-tab1-nested.com
 import { TabsTab2Component } from './tabs-tab2/tabs-tab2.component';
 import { VirtualScrollComponent } from './virtual-scroll/virtual-scroll.component';
 import { VirtualScrollDetailComponent } from './virtual-scroll-detail/virtual-scroll-detail.component';
+import { NestedOutletComponent } from './nested-outlet/nested-outlet.component';
+import { NestedOutletPageComponent } from './nested-outlet-page/nested-outlet-page.component';
+import { NestedOutletPage2Component } from './nested-outlet-page2/nested-outlet-page2.component';
+import { ViewChildComponent } from './view-child/view-child.component';
+import { ProvidersComponent } from './providers/providers.component';
+import { SlidesComponent } from './slides/slides.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'inputs', component: InputsComponent },
   { path: 'modals', component: ModalComponent },
+  { path: 'view-child', component: ViewChildComponent },
+  { path: 'providers', component: ProvidersComponent },
   { path: 'router-link', component: RouterLinkComponent },
   { path: 'router-link-page', component: RouterLinkPageComponent },
+  { path: 'slides', component: SlidesComponent },
   { path: 'virtual-scroll', component: VirtualScrollComponent },
   { path: 'virtual-scroll-detail/:itemId', component: VirtualScrollDetailComponent },
-
   { path: 'tabs', redirectTo: '/tabs/account', pathMatch: 'full' },
   {
     path: 'tabs',
@@ -56,6 +64,20 @@ const routes: Routes = [
       {
         path: 'lazy',
         loadChildren: './tabs-lazy/tabs-lazy.module#TabsLazyModule'
+      }
+    ]
+  },
+  {
+    path: 'nested-outlet',
+    component: NestedOutletComponent,
+    children: [
+      {
+        path: 'page',
+        component: NestedOutletPageComponent
+      },
+      {
+        path: 'page2',
+        component: NestedOutletPage2Component
       }
     ]
   }

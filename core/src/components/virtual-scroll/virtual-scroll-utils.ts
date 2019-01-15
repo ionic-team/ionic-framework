@@ -181,10 +181,14 @@ export function getShouldUpdate(dirtyIndex: number, currentRange: Range, range: 
 }
 
 export function findCellIndex(cells: Cell[], index: number): number {
+  const max = cells[cells.length - 1].index || 0;
   if (index === 0) {
     return 0;
+  } else if (index === max + 1) {
+    return cells.length;
+  } else {
+    return cells.findIndex(c => c.index === index);
   }
-  return cells.findIndex(c => c.index === index);
 }
 
 export function inplaceUpdate(dst: Cell[], src: Cell[], offset: number) {

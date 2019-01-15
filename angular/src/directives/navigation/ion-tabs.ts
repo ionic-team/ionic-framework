@@ -1,7 +1,6 @@
 import { Component, ContentChild, HostListener, ViewChild } from '@angular/core';
-import { TabButtonClickDetail } from '@ionic/core';
 
-import { NavController } from '../../providers';
+import { NavController } from '../../providers/nav-controller';
 import { IonTabBar } from '../proxies';
 
 import { IonRouterOutlet } from './ion-router-outlet';
@@ -50,6 +49,9 @@ export class IonTabs {
     private navCtrl: NavController,
   ) {}
 
+  /**
+   * @internal
+   */
   @HostListener('ionRouterOutletActivated', ['$event.detail'])
   onPageSelected(detail: {view: RouteView}) {
     if (this.tabBar) {
@@ -57,14 +59,21 @@ export class IonTabs {
     }
   }
 
-  @HostListener('ionTabButtonClick', ['$event.detail'])
-  onTabButtonClick(detail: TabButtonClickDetail) {
-    const { tab, selected } = detail;
+  @HostListener('ionTabButtonClick', ['$event.detail.tab'])
+  select(tab: string) {
+    const alreadySelected = this.outlet.getActiveStackId() === tab;
     const href = `${this.outlet.tabsPrefix}/${tab}`;
-    const url = selected
+    const url = alreadySelected
       ? href
       : this.outlet.getLastUrl(tab) || href;
 
-    this.navCtrl.navigateBack(url, true);
+    return this.navCtrl.navigateRoot(url, {
+      animated: true,
+      animationDirection: 'back'
+    });
+  }
+
+  getSelected(): string | undefined {
+    return this.outlet.getActiveStackId();
   }
 }
