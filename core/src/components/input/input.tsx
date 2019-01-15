@@ -299,7 +299,6 @@ export class Input implements ComponentInterface {
       // Did the input value change after it was blurred and edited?
       if (this.didBlurAfterEdit && this.hasValue()) {
         // Clear the input
-        console.log('CLEAAARRR');
         this.clearTextInput();
       }
 
@@ -310,6 +309,15 @@ export class Input implements ComponentInterface {
 
   private clearTextInput = () => {
     this.value = '';
+
+    /**
+     * This is needed for clearOnEdit
+     * Otherwise the value will not be cleared
+     * if user is inside the input
+     */
+    if (this.nativeInput) {
+      this.nativeInput.value = '';
+    }
   }
 
   private focusChanged() {
