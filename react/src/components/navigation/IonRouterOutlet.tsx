@@ -22,7 +22,8 @@ interface StackItem {
 }
 
 interface State {
-  outletActiveId: string;
+  direction: 'forward' | 'back' | undefined,
+  outletActiveId: string | undefined;
   tabActiveIds: { [tab: string]: string };
   views: StackItem[];
 }
@@ -41,16 +42,17 @@ class IonRouterOutlet extends Component<Props, State> {
     super(props);
 
     this.state = {
-      outletActiveId: null,
+      direction: undefined,
+      outletActiveId: undefined,
       tabActiveIds: {},
       views: []
     };
   }
 
-  static getDerivedStateFromProps(props: Props, state: State) {
+  static getDerivedStateFromProps(props: Props, state: State): Partial<State> {
     const location = props.location;
-    let match: match<{ tab: string }> | null = null;
-    let element: React.ReactElement<ChildProps>;
+    let match: StackItem['match'] = null;
+    let element: StackItem['element'];
 
     /**
      * Get the current active view and if the path is the same then do nothing
@@ -58,7 +60,9 @@ class IonRouterOutlet extends Component<Props, State> {
     const activeOutletView = IonRouterOutlet.getViewById(state, state.outletActiveId);
 
     if (activeOutletView && location && activeOutletView.location.pathname === location.pathname) {
-      return null;
+      return {
+        direction: undefined
+      };
     }
 
     /**
@@ -76,7 +80,8 @@ class IonRouterOutlet extends Component<Props, State> {
      */
     if (!match) {
       return {
-        outletActiveId: null
+        direction: undefined,
+        outletActiveId: undefined
       };
     }
 
@@ -89,17 +94,19 @@ class IonRouterOutlet extends Component<Props, State> {
     const currentActiveTabView = IonRouterOutlet.getViewById(state, id);
     if (currentActiveTabView && currentActiveTabView.location.pathname === props.location.pathname) {
       return {
+        direction: undefined,
         outletActiveId: currentActiveTabView.id
       };
     }
 
     /**
-     * If the match tab is the same as the current active
+     * If the new active view is a previous view
      */
     if (activeOutletView) {
       const activeOutletPrevView = IonRouterOutlet.getViewById(state, activeOutletView.prevId);
       if (activeOutletPrevView && activeOutletView.match.params.tab === match.params.tab && activeOutletPrevView.match.url === match.url) {
         return {
+          direction: 'back',
           outletActiveId: activeOutletPrevView.id,
           tabActiveIds: {
             ...state.tabActiveIds,
@@ -113,6 +120,7 @@ class IonRouterOutlet extends Component<Props, State> {
     const viewId = generateUniqueId();
 
     return {
+      direction: (state.tabActiveIds[match.params.tab]) ? 'forward' : undefined,
       outletActiveId: viewId,
       tabActiveIds: {
         ...state.tabActiveIds,
