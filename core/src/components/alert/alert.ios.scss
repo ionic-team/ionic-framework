@@ -287,12 +287,13 @@
 }
 
 .alert-button:last-child {
-  font-weight: $alert-ios-button-main-font-weight;
-  border-right: 0;
-
   @include rtl() {
     border-right: $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color;
   }
+
+  border-right: 0;
+
+  font-weight: $alert-ios-button-main-font-weight;
 }
 
 .alert-button.activated {
