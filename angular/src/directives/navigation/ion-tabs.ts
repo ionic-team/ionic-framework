@@ -56,8 +56,8 @@ export class IonTabs {
    * @internal
    */
   onPageSelected(detail: StackEvent) {
-    const stackId = detail.enteringView.stackId!;
-    if (detail.tabSwitch && stackId) {
+    const stackId = detail.enteringView.stackId;
+    if (detail.tabSwitch && stackId !== undefined) {
       if (this.tabBar) {
         this.tabBar.selectedTab = stackId;
       }
