@@ -6,7 +6,6 @@ const tc = require('turbocolor');
 const execa = require('execa');
 const inquirer = require('inquirer');
 const Listr = require('listr');
-const fs = require('fs-extra');
 const semver = require('semver');
 const common = require('./common');
 const path = require('path');
@@ -108,7 +107,7 @@ async function preparePackages(packages, version) {
 
   // add update package.json of each project
   packages.forEach(package => {
-    updatePackageVersion(tasks, package, version);
+    common.updatePackageVersion(tasks, package, version);
   });
 
   // generate changelog
@@ -152,20 +151,6 @@ function validateGit(tasks, version) {
           }
         )
     },
-  );
-}
-
-function updatePackageVersion(tasks, package, version) {
-  const projectRoot = common.projectPath(package);
-  const pkg = common.readPkg(package);
-
-  tasks.push(
-    {
-      title: `${pkg.name}: update package.json ${tc.dim(`(${version})`)}`,
-      task: async () => {
-        await execa('npm', ['version', version], { cwd: projectRoot });
-      }
-    }
   );
 }
 
