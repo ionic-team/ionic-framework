@@ -59,7 +59,7 @@ export class NavController {
     return this.navigate(url, options);
   }
 
-  navigate(url: string | UrlTree | any[], options: NavigationOptions) {
+  private navigate(url: string | UrlTree | any[], options: NavigationOptions) {
     if (Array.isArray(url)) {
       return this.router!.navigate(url, options);
     } else {
