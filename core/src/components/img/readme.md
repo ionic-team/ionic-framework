@@ -33,9 +33,10 @@ Img is a tag that will lazily load an image when ever the tag is in the viewport
 
 ## Events
 
-| Event           | Description                        | Type                |
-| --------------- | ---------------------------------- | ------------------- |
-| `ionImgDidLoad` | Emitted when the img src is loaded | `CustomEvent<void>` |
+| Event           | Description                                         | Type                |
+| --------------- | --------------------------------------------------- | ------------------- |
+| `ionError`      | Emitted when img failed to load                     | `CustomEvent<void>` |
+| `ionImgDidLoad` | Emitted when the img src is loaded (error included) | `CustomEvent<void>` |
 
 
 ----------------------------------------------
