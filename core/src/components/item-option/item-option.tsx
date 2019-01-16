@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -43,9 +43,12 @@ export class ItemOption implements ComponentInterface {
    */
   @Prop() href?: string;
 
-  private clickedOptionButton(ev: Event): boolean {
+  @Listen('click')
+  onClick(ev: Event) {
     const el = (ev.target as HTMLElement).closest('ion-item-option');
-    return !!el;
+    if (el) {
+      ev.preventDefault();
+    }
   }
 
   hostData() {
@@ -67,7 +70,6 @@ export class ItemOption implements ComponentInterface {
         class="button-native"
         disabled={this.disabled}
         href={this.href}
-        onClick={this.clickedOptionButton.bind(this)}
       >
         <span class="button-inner">
           <slot name="start"></slot>

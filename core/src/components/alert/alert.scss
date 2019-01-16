@@ -87,6 +87,8 @@
   overscroll-behavior-y: contain;
 }
 
+.alert-checkbox-group::-webkit-scrollbar,
+.alert-radio-group::-webkit-scrollbar,
 .alert-message::-webkit-scrollbar {
   display: none;
 }
@@ -131,6 +133,11 @@
   z-index: 0;
 }
 
+.alert-button.ion-focused,
+.alert-tappable.ion-focused {
+  background: $background-color-step-100;
+}
+
 .alert-button-inner {
   display: flex;
 
@@ -147,6 +154,8 @@
   @include margin(0);
   @include padding(0);
 
+  display: flex;
+
   width: 100%;
 
   border: 0;
@@ -159,16 +168,15 @@
 
   text-align: start;
   appearance: none;
+
+  contain: strict;
 }
 
 .alert-button,
 .alert-checkbox,
 .alert-input,
 .alert-radio {
-  &:active,
-  &:focus {
-    outline: none;
-  }
+  outline: none;
 }
 
 .alert-radio-icon,

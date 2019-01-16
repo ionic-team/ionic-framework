@@ -156,7 +156,7 @@ export namespace Components {
     */
     'subHeader'?: string;
     /**
-    * If `true`, the action sheet will be translucent.
+    * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports backdrop-filter.
     */
     'translucent': boolean;
   }
@@ -218,7 +218,7 @@ export namespace Components {
     */
     'subHeader'?: string;
     /**
-    * If `true`, the action sheet will be translucent.
+    * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports backdrop-filter.
     */
     'translucent'?: boolean;
   }
@@ -836,75 +836,75 @@ export namespace Components {
 
   interface IonCol {
     /**
-    * The amount to offset the column, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column, in terms of how many columns it should shift to the end of the total available.
     */
     'offset'?: string;
     /**
-    * The amount to offset the column for lg screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column for lg screens, in terms of how many columns it should shift to the end of the total available.
     */
     'offsetLg'?: string;
     /**
-    * The amount to offset the column for md screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column for md screens, in terms of how many columns it should shift to the end of the total available.
     */
     'offsetMd'?: string;
     /**
-    * The amount to offset the column for sm screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column for sm screens, in terms of how many columns it should shift to the end of the total available.
     */
     'offsetSm'?: string;
     /**
-    * The amount to offset the column for xl screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column for xl screens, in terms of how many columns it should shift to the end of the total available.
     */
     'offsetXl'?: string;
     /**
-    * The amount to offset the column for xs screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column for xs screens, in terms of how many columns it should shift to the end of the total available.
     */
     'offsetXs'?: string;
     /**
-    * The amount to pull the column, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column, in terms of how many columns it should shift to the start of the total available.
     */
     'pull'?: string;
     /**
-    * The amount to pull the column for lg screens, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column for lg screens, in terms of how many columns it should shift to the start of the total available.
     */
     'pullLg'?: string;
     /**
-    * The amount to pull the column for md screens, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column for md screens, in terms of how many columns it should shift to the start of the total available.
     */
     'pullMd'?: string;
     /**
-    * The amount to pull the column for sm screens, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column for sm screens, in terms of how many columns it should shift to the start of the total available.
     */
     'pullSm'?: string;
     /**
-    * The amount to pull the column for xl screens, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column for xl screens, in terms of how many columns it should shift to the start of the total available.
     */
     'pullXl'?: string;
     /**
-    * The amount to pull the column for xs screens, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column for xs screens, in terms of how many columns it should shift to the start of the total available.
     */
     'pullXs'?: string;
     /**
-    * The amount to push the column, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column, in terms of how many columns it should shift to the end of the total available.
     */
     'push'?: string;
     /**
-    * The amount to push the column for lg screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column for lg screens, in terms of how many columns it should shift to the end of the total available.
     */
     'pushLg'?: string;
     /**
-    * The amount to push the column for md screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column for md screens, in terms of how many columns it should shift to the end of the total available.
     */
     'pushMd'?: string;
     /**
-    * The amount to push the column for sm screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column for sm screens, in terms of how many columns it should shift to the end of the total available.
     */
     'pushSm'?: string;
     /**
-    * The amount to push the column for xl screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column for xl screens, in terms of how many columns it should shift to the end of the total available.
     */
     'pushXl'?: string;
     /**
-    * The amount to push the column for xs screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column for xs screens, in terms of how many columns it should shift to the end of the total available.
     */
     'pushXs'?: string;
     /**
@@ -934,75 +934,75 @@ export namespace Components {
   }
   interface IonColAttributes extends StencilHTMLAttributes {
     /**
-    * The amount to offset the column, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column, in terms of how many columns it should shift to the end of the total available.
     */
     'offset'?: string;
     /**
-    * The amount to offset the column for lg screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column for lg screens, in terms of how many columns it should shift to the end of the total available.
     */
     'offsetLg'?: string;
     /**
-    * The amount to offset the column for md screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column for md screens, in terms of how many columns it should shift to the end of the total available.
     */
     'offsetMd'?: string;
     /**
-    * The amount to offset the column for sm screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column for sm screens, in terms of how many columns it should shift to the end of the total available.
     */
     'offsetSm'?: string;
     /**
-    * The amount to offset the column for xl screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column for xl screens, in terms of how many columns it should shift to the end of the total available.
     */
     'offsetXl'?: string;
     /**
-    * The amount to offset the column for xs screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column for xs screens, in terms of how many columns it should shift to the end of the total available.
     */
     'offsetXs'?: string;
     /**
-    * The amount to pull the column, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column, in terms of how many columns it should shift to the start of the total available.
     */
     'pull'?: string;
     /**
-    * The amount to pull the column for lg screens, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column for lg screens, in terms of how many columns it should shift to the start of the total available.
     */
     'pullLg'?: string;
     /**
-    * The amount to pull the column for md screens, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column for md screens, in terms of how many columns it should shift to the start of the total available.
     */
     'pullMd'?: string;
     /**
-    * The amount to pull the column for sm screens, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column for sm screens, in terms of how many columns it should shift to the start of the total available.
     */
     'pullSm'?: string;
     /**
-    * The amount to pull the column for xl screens, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column for xl screens, in terms of how many columns it should shift to the start of the total available.
     */
     'pullXl'?: string;
     /**
-    * The amount to pull the column for xs screens, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column for xs screens, in terms of how many columns it should shift to the start of the total available.
     */
     'pullXs'?: string;
     /**
-    * The amount to push the column, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column, in terms of how many columns it should shift to the end of the total available.
     */
     'push'?: string;
     /**
-    * The amount to push the column for lg screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column for lg screens, in terms of how many columns it should shift to the end of the total available.
     */
     'pushLg'?: string;
     /**
-    * The amount to push the column for md screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column for md screens, in terms of how many columns it should shift to the end of the total available.
     */
     'pushMd'?: string;
     /**
-    * The amount to push the column for sm screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column for sm screens, in terms of how many columns it should shift to the end of the total available.
     */
     'pushSm'?: string;
     /**
-    * The amount to push the column for xl screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column for xl screens, in terms of how many columns it should shift to the end of the total available.
     */
     'pushXl'?: string;
     /**
-    * The amount to push the column for xs screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column for xs screens, in terms of how many columns it should shift to the end of the total available.
     */
     'pushXs'?: string;
     /**
@@ -2776,10 +2776,6 @@ export namespace Components {
     */
     'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
     /**
-    * Event fired when Nav will load a component
-    */
-    'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
-    /**
     * Root NavComponent to load
     */
     'root'?: NavComponent;
@@ -4330,13 +4326,9 @@ export namespace Components {
     */
     'disabled'?: boolean;
     /**
-    * Emitted when the split pane is visible.
-    */
-    'onIonChange'?: (event: CustomEvent<{visible: boolean}>) => void;
-    /**
     * Expression to be called when the split-pane visibility has changed
     */
-    'onIonSplitPaneVisible'?: (event: CustomEvent) => void;
+    'onIonSplitPaneVisible'?: (event: CustomEvent<{visible: boolean}>) => void;
     /**
     * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
     */
@@ -4465,9 +4457,9 @@ export namespace Components {
     /**
     * Get the currently selected tab
     */
-    'getSelected': () => Promise<HTMLIonTabElement | undefined>;
+    'getSelected': () => Promise<string | undefined>;
     /**
-    * Get the tab at the given index
+    * Get the tab element given the tab name
     */
     'getTab': (tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>;
     /**
@@ -4479,21 +4471,13 @@ export namespace Components {
   }
   interface IonTabsAttributes extends StencilHTMLAttributes {
     /**
-    * Emitted when the tab changes.
-    */
-    'onIonChange'?: (event: CustomEvent<{tab: HTMLIonTabElement}>) => void;
-    /**
     * Emitted when the navigation has finished transitioning to a new component.
     */
-    'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
+    'onIonTabsDidChange'?: (event: CustomEvent<{tab: string}>) => void;
     /**
     * Emitted when the navigation is about to transition to a new component.
     */
-    'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the navigation will load a component.
-    */
-    'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
+    'onIonTabsWillChange'?: (event: CustomEvent<{tab: string}>) => void;
   }
 
   interface IonText {

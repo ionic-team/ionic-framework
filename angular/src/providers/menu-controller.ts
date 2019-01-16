@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { proxyMethod } from '../util/util';
 
 const CTRL = 'ion-menu-controller';
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class MenuController {
 
   /**

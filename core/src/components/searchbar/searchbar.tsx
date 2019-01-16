@@ -347,7 +347,6 @@ export class Searchbar implements ComponentInterface {
         'searchbar-animated': animated,
         'searchbar-no-animate': animated && this.noAnimate,
         'searchbar-has-value': (this.getValue() !== ''),
-        'searchbar-show-cancel': this.showCancelButton,
         'searchbar-left-aligned': this.shouldAlignLeft,
         'searchbar-has-focus': this.focused
       }
@@ -366,10 +365,12 @@ export class Searchbar implements ComponentInterface {
         onTouchStart={this.onCancelSearchbar}
         class="searchbar-cancel-button"
       >
-        { this.mode === 'md'
-          ? <ion-icon mode={this.mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
-          : this.cancelButtonText
-        }
+        <div>
+          { this.mode === 'md'
+            ? <ion-icon mode={this.mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
+            : this.cancelButtonText
+          }
+        </div>
       </button>
     );
 
