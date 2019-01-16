@@ -1,8 +1,11 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-async function openAlert(selector: string) {
+async function openAlert(selector: string, rtl = false) {
+  const pageUrl = rtl
+   ? '/src/components/alert/test/basic?ionic:_testing=true&rtl=true'
+   : '/src/components/alert/test/basic?ionic:_testing=true';
   const page = await newE2EPage({
-    url: '/src/components/alert/test/basic?ionic:_testing=true'
+    url: pageUrl
   });
 
   await page.click(selector);
@@ -12,7 +15,9 @@ async function openAlert(selector: string) {
   await alert.waitForVisible();
   await page.waitFor(250);
 
-  const compare = await page.compareScreenshot();
+  const compare = rtl
+    ? await page.compareScreenshot('rtl')
+    : await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
 
   await alert.callMethod('dismiss');
@@ -52,4 +57,39 @@ test(`alert: basic, radio`, async () => {
 
 test(`alert: basic, checkbox`, async () => {
   await openAlert('#checkbox');
+});
+
+// Right to Left tests
+// ------------------------------------------------------
+
+test(`alert: basic`, async () => {
+  await openAlert('#basic', true);
+});
+
+test(`alert: basic, long message`, async () => {
+  await openAlert('#longMessage', true);
+});
+
+test(`alert: basic, multiple buttons`, async () => {
+  await openAlert('#multipleButtons', true);
+});
+
+test(`alert: basic, no message`, async () => {
+  await openAlert('#noMessage', true);
+});
+
+test(`alert: basic, confirm`, async () => {
+  await openAlert('#confirm', true);
+});
+
+test(`alert: basic, prompt`, async () => {
+  await openAlert('#prompt', true);
+});
+
+test(`alert: basic, radio`, async () => {
+  await openAlert('#radio', true);
+});
+
+test(`alert: basic, checkbox`, async () => {
+  await openAlert('#checkbox', true);
 });

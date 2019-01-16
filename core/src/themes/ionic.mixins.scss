@@ -142,42 +142,30 @@
 // ----------------------------------------------------------
 
 @mixin multi-dir() {
-  @if $app-direction == multi {
-    $root: #{&};
-    @at-root [dir] {
-      #{$root} {
-        @content;
-      }
-    }
-  } @else {
-    @content;
-  }
+  @content;
+
+  // @if $app-direction == multi {
+  //   $root: #{&};
+  //   @at-root [dir] {
+  //     #{$root} {
+  //       @content;
+  //     }
+  //   }
+  // } @else {
+  //   @content;
+  // }
 }
 
 @mixin rtl() {
-  @if $app-direction == multi or $app-direction == null {
-    $root: #{&};
+  $root: #{&};
 
-    @at-root #{add-root-selector($root, "[dir=rtl]")} {
-      @content;
-    }
-
-  } @else if $app-direction == rtl {
+  @at-root #{add-root-selector($root, "[dir=rtl]")} {
     @content;
   }
 }
 
 @mixin ltr() {
-  @if $app-direction == multi {
-    $root: #{&};
-    @at-root [dir="ltr"] {
-      #{$root} {
-        @content;
-      }
-    }
-  } @else if $app-direction == ltr or $app-direction == null {
-    @content;
-  }
+  @content;
 }
 
 
