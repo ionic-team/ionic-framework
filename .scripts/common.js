@@ -64,7 +64,7 @@ function checkGit(tasks) {
 const isValidVersion = input => Boolean(semver.valid(input));
 
 
-function preparePackage(tasks, package, version) {
+function preparePackage(tasks, package, version, install) {
   const projectRoot = projectPath(package);
   const pkg = readPkg(package);
 
@@ -78,13 +78,15 @@ function preparePackage(tasks, package, version) {
         }
       }
     });
-    projectTasks.push({
-      title: `${pkg.name}: install npm dependencies`,
-      task: async () => {
-        await fs.remove(path.join(projectRoot, 'node_modules'))
-        await execa('npm', ['i'], { cwd: projectRoot });
-      }
-    });
+    if (install) {
+      projectTasks.push({
+        title: `${pkg.name}: install npm dependencies`,
+        task: async () => {
+          await fs.remove(path.join(projectRoot, 'node_modules'))
+          await execa('npm', ['i'], { cwd: projectRoot });
+        }
+      });
+    }
   }
 
   if (package !== 'docs') {

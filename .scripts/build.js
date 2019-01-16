@@ -5,7 +5,7 @@ const Listr = require('listr');
 async function main() {
   const tasks = [];
   common.packages.forEach(package => {
-    common.preparePackage(tasks, package);
+    common.preparePackage(tasks, package, false, false);
   });
 
   const listr = new Listr(tasks, { showSubtasks: true });
