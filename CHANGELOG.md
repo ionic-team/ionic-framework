@@ -1,3 +1,49 @@
+# [4.0.0-rc.2](https://github.com/ionic-team/ionic/compare/v4.0.0-rc.1...v4.0.0-rc.2) (2019-01-16)
+
+
+### Bug Fixes
+
+* **action-sheet:** remove the height shift on press and update iOS design ([#16862](https://github.com/ionic-team/ionic/issues/16862)) ([82457d8](https://github.com/ionic-team/ionic/commit/82457d8)), closes [#16715](https://github.com/ionic-team/ionic/issues/16715) [#16790](https://github.com/ionic-team/ionic/issues/16790)
+* **angular:** fix slides ([#17085](https://github.com/ionic-team/ionic/issues/17085)) ([8357e5c](https://github.com/ionic-team/ionic/commit/8357e5c))
+* **angular:** hide some internal methods ([#17121](https://github.com/ionic-team/ionic/issues/17121)) ([4d5dcd4](https://github.com/ionic-team/ionic/commit/4d5dcd4))
+* **angular:** NavController methods return a promise ([#17106](https://github.com/ionic-team/ionic/issues/17106)) ([3aaf87a](https://github.com/ionic-team/ionic/commit/3aaf87a)), closes [#17103](https://github.com/ionic-team/ionic/issues/17103)
+* **angular:** ViewChild() fix ([#17037](https://github.com/ionic-team/ionic/issues/17037)) ([27a4709](https://github.com/ionic-team/ionic/commit/27a4709)), closes [#17034](https://github.com/ionic-team/ionic/issues/17034)
+* **datetime:** do no change order of formatted dates w/ rtl ([#17024](https://github.com/ionic-team/ionic/issues/17024)) ([169da37](https://github.com/ionic-team/ionic/commit/169da37))
+* **fab-button:** add default padding for fab-button ([#17050](https://github.com/ionic-team/ionic/issues/17050)) ([418052f](https://github.com/ionic-team/ionic/commit/418052f))
+* **icon:** fix rtl detail icon for ios ([#17016](https://github.com/ionic-team/ionic/issues/17016)) ([b4f3405](https://github.com/ionic-team/ionic/commit/b4f3405)), closes [#14958](https://github.com/ionic-team/ionic/issues/14958)
+* **input:** disable shadow-dom for text inputs ([#17043](https://github.com/ionic-team/ionic/issues/17043)) ([63e0501](https://github.com/ionic-team/ionic/commit/63e0501)), closes [#17020](https://github.com/ionic-team/ionic/issues/17020)
+* **input:** fix display of ion-input in narrow ion-item in Firefox ([#16978](https://github.com/ionic-team/ionic/issues/16978)) ([1099dc3](https://github.com/ionic-team/ionic/commit/1099dc3))
+* **inputs:** fix styles in firefox ([#17066](https://github.com/ionic-team/ionic/issues/17066)) ([0120eee](https://github.com/ionic-team/ionic/commit/0120eee))
+* **inputs:** keyboard focus improvements ([#16838](https://github.com/ionic-team/ionic/issues/16838)) ([6364e4e](https://github.com/ionic-team/ionic/commit/6364e4e)), closes [#16815](https://github.com/ionic-team/ionic/issues/16815) [#16872](https://github.com/ionic-team/ionic/issues/16872) [#13978](https://github.com/ionic-team/ionic/issues/13978) [#16610](https://github.com/ionic-team/ionic/issues/16610)
+* **item:** no lines on item should take precedence over list lines ([#17049](https://github.com/ionic-team/ionic/issues/17049)) ([d2fa946](https://github.com/ionic-team/ionic/commit/d2fa946)), closes [#16900](https://github.com/ionic-team/ionic/issues/16900)
+* **picker:** do not change datetime/picker column order in RTL ([#17018](https://github.com/ionic-team/ionic/issues/17018)) ([1338d71](https://github.com/ionic-team/ionic/commit/1338d71)), closes [#16294](https://github.com/ionic-team/ionic/issues/16294)
+* **rtl:** fix rtl back button default ([#17109](https://github.com/ionic-team/ionic/issues/17109)) ([a9a23af](https://github.com/ionic-team/ionic/commit/a9a23af)), closes [#15357](https://github.com/ionic-team/ionic/issues/15357)
+* **utils:** remove console log ([#17116](https://github.com/ionic-team/ionic/issues/17116)) ([b0f51d4](https://github.com/ionic-team/ionic/commit/b0f51d4))
+
+
+### Features
+
+* **angular:** add tabs events ([#17125](https://github.com/ionic-team/ionic/issues/17125)) ([6929bb8](https://github.com/ionic-team/ionic/commit/6929bb8))
+* **angular:** expose getSelected() ([#17079](https://github.com/ionic-team/ionic/issues/17079)) ([3c801db](https://github.com/ionic-team/ionic/commit/3c801db)), closes [#17068](https://github.com/ionic-team/ionic/issues/17068)
+
+
+### Reverts
+
+* **test:** update avatar index.html ([9e80b73](https://github.com/ionic-team/ionic/commit/9e80b73))
+
+### BREAKING CHANGES
+
+#### ionChange removed from ion-tabs
+
+- `(ionChange)` becomes `(ionTabsDidChange)`
+
+#### ion-tabs getSelected() returns a string
+
+Previously the `getSelected()` method of `ion-tabs` returned a reference to the selected
+`ion-tab`, now it returns the name of tab as string.
+
+
+
 # [4.0.0-rc.1](https://github.com/ionic-team/ionic/compare/v4.0.0-rc.0...v4.0.0-rc.1) (2019-01-09)
 
 

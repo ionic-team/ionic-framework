@@ -18,9 +18,10 @@ async function main() {
     }
 
     const version = await askVersion();
+    const install = process.argv.indexOf('--no-install') < 0;
 
     // compile and verify packages
-    await preparePackages(common.packages, version);
+    await preparePackages(common.packages, version, install);
 
     console.log(`\nionic ${version} prepared 🤖\n`);
     console.log(`Next steps:`);
