@@ -165,11 +165,7 @@
 }
 
 @mixin ltr() {
-  $root: #{&};
-
-  @at-root #{add-root-selector($root, "[dir=ltr]")} {
-    @content;
-  }
+  @content;
 }
 
 
