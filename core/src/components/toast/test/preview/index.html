@@ -23,10 +23,16 @@
       <ion-button expand="block" id="showBottomToast" onclick="presentToast('bottom')">Show Toast Bottom</ion-button>
       <ion-button expand="block" onclick="presentToast('top')">Show Toast Top</ion-button>
       <ion-button expand="block" onclick="presentToast('middle')">Show Toast Middle</ion-button>
-      <ion-button expand="block" onclick="presentToastWithOptions({message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.', duration: 2000})">Show Toast with long message</ion-button>
-      <ion-button expand="block" onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true})">Show Toast with Close Button</ion-button>
-      <ion-button expand="block" onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, closeButtonText: 'closing time'})">Show Toast with Custom Close Button Text</ion-button>
-      <ion-button expand="block" onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, translucent: true})">Show Translucent Toast</ion-button>
+      <ion-button expand="block" onclick="presentToastWithOptions({message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.', duration: 2000})">Show
+        Toast with long message</ion-button>
+      <ion-button expand="block" onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true})">Show
+        Toast with Close Button</ion-button>
+      <ion-button expand="block" onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, closeButtonText: 'closing time'})">Show
+        Toast with Custom Close Button Text</ion-button>
+      <ion-button expand="block" onclick="presentToastWithButtonOptions()">Show
+        Toast with Custom Buttons</ion-button>
+      <ion-button expand="block" onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, translucent: true})">Show
+        Translucent Toast</ion-button>
 
       <ion-toast-controller></ion-toast-controller>
 
@@ -82,6 +88,34 @@
       const toastElement = await toastController.create(opts);
       return await toastElement.present();
     }
+
+    async function presentToastWithButtonOptions() {
+      const opts = {
+        message: 'click to close',
+        buttons: [
+          {
+            slot: 'start',
+            icon: 'star',
+            handler: () => {
+              console.log('favorite button clicked!')
+              return false;
+            }
+          },
+          {
+            text: 'Close',
+            slot: 'end',
+            role: 'cancel',
+            handler: () => {
+              console.log('close button clicked!');
+            }
+          }
+        ]
+      };
+      const toastController = document.querySelector('ion-toast-controller');
+      await toastController.componentOnReady();
+      const toastElement = await toastController.create(opts);
+      return await toastElement.present();
+    }
   </script>
 
   <style>
@@ -125,7 +159,6 @@
     .orange {
       background-color: #f69234;
     }
-
   </style>
 </body>
 
