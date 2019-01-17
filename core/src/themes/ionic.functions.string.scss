@@ -103,7 +103,8 @@
       $list: append($list, ":host(#{$addHostSelector}) #{$selector}", comma);
 
     } @else {
-      $list: append($list, "#{$addHostSelector} #{$selector}", comma);
+      // TODO host-context should be for scoped only
+      $list: append($list, ":host-context(#{$addHostSelector}) #{$selector}", comma);
     }
   }
 
