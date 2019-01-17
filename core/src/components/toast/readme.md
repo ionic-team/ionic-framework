@@ -45,10 +45,21 @@ export class ToastExample {
 
   async presentToastWithOptions() {
     const toast = await this.toastController.create({
+      header: 'Toast header',
       message: 'Click to Close',
       showCloseButton: true,
       position: 'top',
-      closeButtonText: 'Done'
+      closeButtonText: 'Done',
+      buttons: [
+        {
+          slot: 'start',
+          icon: 'star',
+          text: 'Fave',
+          handler: () => {
+            console.log('favorite clicked');
+          }
+        }
+      ]
     });
     toast.present();
   }
@@ -76,10 +87,21 @@ async function presentToastWithOptions() {
   await toastController.componentOnReady();
 
   const toast = await toastController.create({
+    header: 'Toast header',
     message: 'Click to Close',
     showCloseButton: true,
     position: 'top',
-    closeButtonText: 'Done'
+    closeButtonText: 'Done',
+    buttons: [
+        {
+          slot: 'start',
+          icon: 'star',
+          text: 'Fave',
+          handler: () => {
+            console.log('favorite clicked');
+          }
+        }
+      ]
   });
   return await toast.present();
 }
@@ -92,6 +114,7 @@ async function presentToastWithOptions() {
 | Property          | Attribute           | Description                                                                                                                                                                                                                                                            | Type                                                                                   | Default     |
 | ----------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ----------- |
 | `animated`        | `animated`          | If `true`, the toast will animate.                                                                                                                                                                                                                                     | `boolean`                                                                              | `true`      |
+| `buttons`         | --                  | Array of buttons to be added to the toast.                                                                       | `(string \| ToastButton)[]`                                                            | `[]`        |
 | `closeButtonText` | `close-button-text` | Text to display in the close button.                                                                                                                                                                                                                                   | `string \| undefined`                                                                  | `undefined` |
 | `color`           | `color`             | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`                                                                  | `undefined` |
 | `cssClass`        | `css-class`         | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.                                                                                                                                                       | `string \| string[] \| undefined`                                                      | `undefined` |

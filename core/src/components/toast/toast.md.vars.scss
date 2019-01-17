@@ -41,3 +41,33 @@ $toast-md-content-padding-bottom:                  $toast-md-content-padding-top
 
 /// @prop - Padding start of the toast content
 $toast-md-content-padding-start:                   $toast-md-content-padding-end !default;
+
+/// @prop - Padding top of the toast button
+$toast-md-button-padding-top:                      10px !default;
+
+/// @prop - Padding end of the toast button
+$toast-md-button-padding-end:                      15px !default;
+
+/// @prop - Padding bottom of the toast button
+$toast-md-button-padding-bottom:                   $toast-md-button-padding-top !default;
+
+/// @prop - Padding start of the toast button
+$toast-md-button-padding-start:                    15px !default;
+
+/// @prop - Font size of the toast button
+$toast-md-button-font-size:                        14px !default;
+
+/// @prop - Font weight of the toast button
+$toast-md-button-font-weight:                      500 !default;
+
+/// @prop - Letter spacing of the toast button
+$toast-md-button-letter-spacing:                   0.84px !default;
+
+/// @prop - Text color of the toast button
+$toast-md-button-text-color:                       ion-color(primary, base) !default;
+
+/// @prop - Background color of the toast button
+$toast-md-button-background-color:                 transparent !default;
+
+/// @prop - Text transform of the toast button
+$toast-md-button-text-transform:                   uppercase !default;

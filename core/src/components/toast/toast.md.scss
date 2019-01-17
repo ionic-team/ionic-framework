@@ -41,6 +41,25 @@
   line-height: $toast-md-message-line-height;
 }
 
+
+// Material Design Toast Button
+// --------------------------------------------------
+
 .toast-button {
-  --margin-end: 0;
+  @include padding($toast-md-button-padding-top, $toast-md-button-padding-end, $toast-md-button-padding-bottom, $toast-md-button-padding-start);
+
+  // necessary for ripple to work properly
+  position: relative;
+
+  background-color: $toast-md-button-background-color;
+  color: $toast-md-button-text-color;
+
+  font-family: var(--ion-font-family);
+  font-size: $toast-md-button-font-size;
+  font-weight: $toast-md-button-font-weight;
+  letter-spacing: $toast-md-button-letter-spacing;
+
+  text-transform: $toast-md-button-text-transform;
+
+  overflow: hidden;
 }

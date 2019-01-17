@@ -68,6 +68,7 @@ import {
   TabButtonLayout,
   TextareaChangeEventDetail,
   TextFieldTypes,
+  ToastButton,
   ToastOptions,
   ToggleChangeEventDetail,
   TransitionDoneFn,
@@ -4700,6 +4701,10 @@ export namespace Components {
     */
     'animated': boolean;
     /**
+    * An array of buttons for the toast.
+    */
+    'buttons': (ToastButton | string)[];
+    /**
     * Text to display in the close button.
     */
     'closeButtonText'?: string;
@@ -4774,6 +4779,10 @@ export namespace Components {
     * If `true`, the toast will animate.
     */
     'animated'?: boolean;
+    /**
+    * An array of buttons for the toast.
+    */
+    'buttons': (ToastButton | string)[];
     /**
     * Text to display in the close button.
     */

@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
 
-import { Animation, AnimationBuilder, Color, Config, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
-import { dismiss, eventMethod, present } from '../../utils/overlays';
+import { Animation, AnimationBuilder, Color, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface, ToastButton } from '../../interface';
+import { dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
 import { createColorClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -57,11 +57,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() leaveAnimation?: AnimationBuilder;
 
   /**
-   * Text to display in the close button.
-   */
-  @Prop() closeButtonText?: string;
-
-  /**
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
    */
@@ -97,6 +92,16 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * If `true`, the close button will be displayed.
    */
   @Prop() showCloseButton = false;
+
+  /**
+   * Text to display in the close button.
+   */
+  @Prop() closeButtonText?: string;
+
+  /**
+   * An array of buttons for the toast.
+   */
+  @Prop() buttons!: (ToastButton | string)[];
 
   /**
    * If `true`, the toast will be translucent.
@@ -167,6 +172,45 @@ export class Toast implements ComponentInterface, OverlayInterface {
     return eventMethod(this.el, 'ionToastWillDismiss');
   }
 
+  private getButtons(): ToastButton[] {
+    return this.buttons
+      ? this.buttons.map(b => {
+        return (typeof b === 'string')
+          ? { text: b }
+          : b;
+      })
+      : [];
+  }
+
+  private async buttonClick(button: ToastButton) {
+    const role = button.role;
+    if (isCancel(role)) {
+      return this.dismiss(undefined, role);
+    }
+    const shouldDismiss = await this.callButtonHandler(button);
+    if (shouldDismiss) {
+      return this.dismiss(undefined, button.role);
+    }
+    return Promise.resolve();
+  }
+
+  private async callButtonHandler(button: ToastButton | undefined) {
+    if (button && button.handler) {
+      // a handler has been provided, execute it
+      // pass the handler the values from the inputs
+      try {
+        const rtn = await button.handler();
+        if (rtn === false) {
+          // if the return value of the handler is false then do not dismiss
+          return false;
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    return true;
+  }
+
   hostData() {
     return {
       style: {
@@ -180,15 +224,55 @@ export class Toast implements ComponentInterface, OverlayInterface {
     };
   }
 
+  renderButtons(buttons: ToastButton[], slot: 'start' | 'end') {
+    if (!buttons.length) {
+      return;
+    }
+
+    const buttonGroupsClasses = {
+      'toast-button-group': true,
+      [`toast-button-group-${slot}`]: true
+    };
+    return (
+      <div class={buttonGroupsClasses}>
+        {buttons.map(b =>
+          <button type="button" class={buttonClass(b)} tabIndex={0} onClick={() => this.buttonClick(b)}>
+            <div class="toast-button-inner">
+              {b.icon &&
+                <ion-icon
+                  icon={b.icon}
+                  lazy={false}
+                  class="toast-icon"
+                />}
+              {b.text}
+            </div>
+            {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+          </button>
+        )}
+      </div>
+    );
+  }
+
   render() {
+    const allButtons = this.getButtons();
+    const startButtons = allButtons.filter(b => b.slot === 'start');
+    const endButtons = allButtons.filter(b => b.slot === 'end');
+
     const wrapperClass = {
       'toast-wrapper': true,
       [`toast-${this.position}`]: true
     };
+    const contentClass = {
+      'toast-content': true,
+      [`toast-content-no-padding-start`]: startButtons.length > 0,
+      [`toast-content-no-padding-end`]: endButtons.length > 0
+    };
     return (
       <div class={wrapperClass}>
         <div class="toast-container">
-          <div class="toast-content">
+          {this.renderButtons(startButtons, 'start')}
+
+          <div class={contentClass}>
             {this.header !== undefined &&
               <div class="toast-header">{this.header}</div>
             }
@@ -196,6 +280,9 @@ export class Toast implements ComponentInterface, OverlayInterface {
               <div class="toast-message">{this.message}</div>
             }
           </div>
+
+          {this.renderButtons(endButtons, 'end')}
+
           {this.showCloseButton &&
             <ion-button fill="clear" class="toast-button ion-activatable" onClick={() => this.dismiss(undefined, 'cancel')}>
               {this.closeButtonText || 'Close'}
@@ -205,4 +292,13 @@ export class Toast implements ComponentInterface, OverlayInterface {
       </div>
     );
   }
+}
+
+function buttonClass(button: ToastButton): CssClassMap {
+  return {
+    'toast-button': true,
+    'ion-focusable': true,
+    'ion-activatable': true,
+    ...getClassMap(button.cssClass)
+  };
 }
