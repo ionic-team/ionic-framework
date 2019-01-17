@@ -11,18 +11,19 @@ export { default as IonModal } from './IonModal';
 export { default as IonPopover } from './IonPopover';
 export { default as IonToast } from './IonToast';
 export { default as IonTabs } from './navigation/IonTabs';
-export { default as IonTabBarNav } from './navigation/IonTabBarNav';
-export { default as IonRouterOutlet, IonBackButtonNav } from './navigation/IonRouterOutlet';
+export { default as IonTabBar } from './navigation/IonTabBar';
+export { IonRouterOutlet, IonBackButton } from './navigation/IonRouterOutlet';
 
+export const IonTabBarInner = createReactComponent<Components.IonTabBarAttributes, HTMLIonTabBarElement>('ion-tab-bar');
+export const IonRouterOutletInner = createReactComponent<Components.IonRouterOutletAttributes, HTMLIonRouterOutletElement>('ion-router-outlet');
+export const IonBackButtonInner = createReactComponent<Components.IonBackButtonAttributes, HTMLIonBackButtonElement>('ion-back-button');
 export const IonTab = createReactComponent<Components.IonTabAttributes, HTMLIonTabElement>('ion-tab');
-export const IonTabBar = createReactComponent<Components.IonTabBarAttributes, HTMLIonTabBarElement>('ion-tab-bar');
 export const IonTabButton = createReactComponent<Components.IonTabButtonAttributes, HTMLIonTabButtonElement>('ion-tab-button');
 
 export const IonAnchor = createReactComponent<Components.IonAnchorAttributes, HTMLIonAnchorElement>('ion-anchor');
 export const IonApp = createReactComponent<Components.IonAppAttributes, HTMLIonAppElement>('ion-app');
 export const IonAvatar = createReactComponent<Components.IonAvatarAttributes, HTMLIonAvatarElement>('ion-avatar');
 export const IonBackdrop = createReactComponent<Components.IonBackdropAttributes, HTMLIonBackdropElement>('ion-backdrop');
-export const IonBackButton = createReactComponent<Components.IonBackButtonAttributes, HTMLIonBackButtonElement>('ion-back-button');
 export const IonBadge = createReactComponent<Components.IonBadgeAttributes, HTMLIonBadgeElement>('ion-badge');
 export const IonButton = createReactComponent<Components.IonButtonAttributes, HTMLIonButtonElement>('ion-button');
 export const IonButtons = createReactComponent<Components.IonButtonsAttributes, HTMLIonButtonsElement>('ion-buttons');

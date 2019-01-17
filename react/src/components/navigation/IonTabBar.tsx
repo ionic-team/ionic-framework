@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { IonTabBar, IonTabButton } from '../index';
+import { IonTabBarInner, IonTabButton } from '../index';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { Components } from '@ionic/core';
 
@@ -17,7 +17,7 @@ type State = {
   tabs: { [key: string]: Tab }
 }
 
-class IonTabBarNav extends Component<Props, State> {
+class IonTabBar extends Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
@@ -78,11 +78,11 @@ class IonTabBarNav extends Component<Props, State> {
 
   render() {
     return (
-      <IonTabBar {...this.props} selectedTab={this.state.activeTab}>
+      <IonTabBarInner {...this.props} selectedTab={this.state.activeTab}>
         { React.Children.map(this.props.children, this.renderChild(this.state.activeTab)) }
-      </IonTabBar>
+      </IonTabBarInner>
     );
   }
 }
 
-export default withRouter(IonTabBarNav);
+export default withRouter(IonTabBar);
