@@ -45,13 +45,18 @@
   bottom: 0;
 }
 
-.toast-content {
-  @include padding($toast-ios-content-padding-top, $toast-ios-content-padding-end, $toast-ios-content-padding-bottom, $toast-ios-content-padding-start);
+.toast-content.toast-content-no-padding-start {
+  @include padding($toast-ios-content-padding-top, $toast-ios-content-padding-end, $toast-ios-content-padding-bottom, 0);
+}
+
+.toast-content-no-padding-end {
+  @include padding($toast-ios-content-padding-top, 0, $toast-ios-content-padding-bottom, $toast-ios-content-padding-start);
 }
 
 .toast-header {
-  font-weight: $toast-ios-header-font-weight;
   margin-bottom: $toast-ios-header-margin-bottom;
+
+  font-weight: $toast-ios-header-font-weight;
 }
 
 // iOS Toast Button
@@ -59,10 +64,13 @@
 
 .toast-button {
   @include padding($toast-ios-button-padding-top, $toast-ios-button-padding-end, $toast-ios-button-padding-bottom, $toast-ios-button-padding-start);
-  transition: background-color, opacity 100ms linear;
+
   height: $toast-ios-button-min-height;
 
+  transition: background-color, opacity 100ms linear;
+
   border: 0;
+
   background-color: $toast-ios-button-background-color;
   color: $toast-ios-button-text-color;
 

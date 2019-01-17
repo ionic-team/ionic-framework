@@ -96,23 +96,17 @@
 }
 
 .toast-content {
-  flex: 1;
   display: flex;
+
+  flex: 1;
   flex-direction: column;
   justify-content: center;
-  
-  &.toast-content-no-padding-start {
-    padding-left: 0;
-  }
-  
-  &.toast-content-no-padding-end {
-    padding-right: 0;
-  }
 }
 
 
 .toast-message {
   flex: 1;
+
   white-space: pre-wrap;
 }
 
@@ -121,8 +115,10 @@
 }
 
 .toast-button {
-  color: var(--button-color);
   border: 0;
+
+  color: var(--button-color);
+
   z-index: 0;
 }
 
@@ -132,6 +128,7 @@
 
 .toast-button-inner {
   display: flex;
+
   align-items: center;
 }
 

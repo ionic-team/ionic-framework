@@ -225,7 +225,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   }
 
   renderButtons(buttons: ToastButton[], slot: 'start' | 'end') {
-    if (!buttons.length) {
+    if (buttons.length === 0) {
       return;
     }
 

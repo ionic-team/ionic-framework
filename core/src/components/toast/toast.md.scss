@@ -27,14 +27,20 @@
   z-index: $z-index-overlay-wrapper;
 }
 
-.toast-content {
-  @include padding($toast-md-content-padding-top, $toast-md-content-padding-end, $toast-md-content-padding-bottom, $toast-md-content-padding-start);
+.toast-content.toast-content-no-padding-start {
+  @include padding($toast-md-content-padding-top, $toast-md-content-padding-end, $toast-md-content-padding-bottom, 0);
+}
+
+.toast-content-no-padding-end {
+  @include padding($toast-md-content-padding-top, 0, $toast-md-content-padding-bottom, $toast-md-content-padding-start);
 }
 
 .toast-header {
-  line-height: $toast-md-header-line-height;
-  font-weight: $toast-md-header-font-weight;
   margin-bottom: $toast-md-header-margin-bottom;
+
+  font-weight: $toast-md-header-font-weight;
+
+  line-height: $toast-md-header-line-height;
 }
 
 .toast-message {
@@ -57,6 +63,7 @@
   font-family: var(--ion-font-family);
   font-size: $toast-md-button-font-size;
   font-weight: $toast-md-button-font-weight;
+
   letter-spacing: $toast-md-button-letter-spacing;
 
   text-transform: $toast-md-button-text-transform;
