@@ -21,10 +21,21 @@ export class ToastExample {
 
   async presentToastWithOptions() {
     const toast = await this.toastController.create({
+      header: 'Toast header',
       message: 'Click to Close',
       showCloseButton: true,
       position: 'top',
-      closeButtonText: 'Done'
+      closeButtonText: 'Done',
+      buttons: [
+        {
+          slot: 'start',
+          icon: 'star',
+          text: 'Fave',
+          handler: () => {
+            console.log('favorite clicked');
+          }
+        }
+      ]
     });
     toast.present();
   }

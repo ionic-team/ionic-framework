@@ -4703,7 +4703,7 @@ export namespace Components {
     /**
     * An array of buttons for the toast.
     */
-    'buttons': (ToastButton | string)[];
+    'buttons'?: (ToastButton | string)[];
     /**
     * Text to display in the close button.
     */
@@ -4782,7 +4782,7 @@ export namespace Components {
     /**
     * An array of buttons for the toast.
     */
-    'buttons': (ToastButton | string)[];
+    'buttons'?: (ToastButton | string)[];
     /**
     * Text to display in the close button.
     */

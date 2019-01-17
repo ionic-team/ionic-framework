@@ -101,7 +101,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   /**
    * An array of buttons for the toast.
    */
-  @Prop() buttons!: (ToastButton | string)[];
+  @Prop() buttons?: (ToastButton | string)[];
 
   /**
    * If `true`, the toast will be translucent.
