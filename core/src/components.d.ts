@@ -4724,6 +4724,10 @@ export namespace Components {
     */
     'enterAnimation'?: AnimationBuilder;
     /**
+    * Header to be shown in the toast.
+    */
+    'header'?: string;
+    /**
     * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
     */
     'keyboardClose': boolean;
@@ -4790,6 +4794,10 @@ export namespace Components {
     * Animation to use when the toast is presented.
     */
     'enterAnimation'?: AnimationBuilder;
+    /**
+    * Header to be shown in the toast.
+    */
+    'header'?: string;
     /**
     * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
     */

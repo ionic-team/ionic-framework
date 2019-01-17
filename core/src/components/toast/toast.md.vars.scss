@@ -19,16 +19,25 @@ $toast-md-color:                                   $background-color-step-50 !de
 $toast-md-border-radius:                           4px !default;
 
 /// @prop - Font size of the toast message
+$toast-md-header-line-height:                      20px !default;
+
+/// @prop - Font size of the toast message
+$toast-md-header-font-weight:                      500 !default;
+
+/// @prop - Spacing between the header and the message
+$toast-md-header-margin-bottom:                    2px !default;
+
+/// @prop - Font size of the toast message
 $toast-md-message-line-height:                     20px !default;
 
 /// @prop - Padding top of the toast message
-$toast-md-message-padding-top:                     14px !default;
+$toast-md-content-padding-top:                     14px !default;
 
-/// @prop - Padding end of the toast message
-$toast-md-message-padding-end:                     16px !default;
+/// @prop - Padding end of the toast content
+$toast-md-content-padding-end:                     16px !default;
 
-/// @prop - Padding bottom of the toast message
-$toast-md-message-padding-bottom:                  $toast-md-message-padding-top !default;
+/// @prop - Padding bottom of the toast content
+$toast-md-content-padding-bottom:                  $toast-md-content-padding-top !default;
 
-/// @prop - Padding start of the toast message
-$toast-md-message-padding-start:                   $toast-md-message-padding-end !default;
+/// @prop - Padding start of the toast content
+$toast-md-content-padding-start:                   $toast-md-content-padding-end !default;

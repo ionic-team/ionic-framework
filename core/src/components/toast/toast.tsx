@@ -74,6 +74,11 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() duration = 0;
 
   /**
+   * Header to be shown in the toast.
+   */
+  @Prop() header?: string;
+
+  /**
    * Message to be shown in the toast.
    */
   @Prop() message?: string;
@@ -183,9 +188,14 @@ export class Toast implements ComponentInterface, OverlayInterface {
     return (
       <div class={wrapperClass}>
         <div class="toast-container">
-          {this.message !== undefined &&
-            <div class="toast-message">{this.message}</div>
-          }
+          <div class="toast-content">
+            {this.header !== undefined &&
+              <div class="toast-header">{this.header}</div>
+            }
+            {this.message !== undefined &&
+              <div class="toast-message">{this.message}</div>
+            }
+          </div>
           {this.showCloseButton &&
             <ion-button fill="clear" class="toast-button ion-activatable" onClick={() => this.dismiss(undefined, 'cancel')}>
               {this.closeButtonText || 'Close'}
