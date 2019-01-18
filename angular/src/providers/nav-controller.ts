@@ -107,6 +107,8 @@ function getAnimation(direction: RouterDirection, animated: boolean | undefined,
   }
   if (direction === 'forward' || direction === 'back') {
     return direction;
+  } else if (direction === 'root' && animated === true) {
+    return 'forward';
   }
   return undefined;
 }
