@@ -59,6 +59,7 @@ export function startTapClick(doc: Document, config: Config) {
     if (activatableEle || isScrolling()) {
       return;
     }
+    scrollingEl = undefined;
     setActivatedElement(getActivatableTarget(ev), ev);
   }
 
