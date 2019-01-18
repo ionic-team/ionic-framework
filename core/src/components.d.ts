@@ -1191,6 +1191,10 @@ export namespace Components {
     */
     'placeholder'?: string | null;
     /**
+    * If `true`, the datetime appears normal but is not interactive.
+    */
+    'readonly': boolean;
+    /**
     * The value of the datetime as a valid ISO 8601 datetime string.
     */
     'value'?: string | null;
@@ -1292,6 +1296,10 @@ export namespace Components {
     * The text to display when there's no date selected yet. Using lowercase to match the input attribute
     */
     'placeholder'?: string | null;
+    /**
+    * If `true`, the datetime appears normal but is not interactive.
+    */
+    'readonly'?: boolean;
     /**
     * The value of the datetime as a valid ISO 8601 datetime string.
     */
