@@ -22,7 +22,9 @@
   @include position-horizontal(calc(#{$fab-content-margin} + var(--ion-safe-area-left, 0px)), null);
 
   @include rtl() {
+    /* stylelint-disable property-blacklist */
     left: unset;
+    /* stylelint-enable property-blacklist */
   }
 }
 
@@ -30,7 +32,9 @@
   @include position-horizontal(null, calc(#{$fab-content-margin} + var(--ion-safe-area-right, 0px)));
 
   @include rtl() {
+    /* stylelint-disable property-blacklist */
     right: unset;
+    /* stylelint-enable property-blacklist */
   }
 }
 
