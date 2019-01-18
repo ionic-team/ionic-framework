@@ -6,7 +6,7 @@ export function startTapClick(doc: Document, config: Config) {
   let lastTouch = -MOUSE_WAIT * 10;
   let lastActivated = 0;
   let cancelled = false;
-  let scrolling = false;
+  let scrollingEl: HTMLElement | undefined;
 
   let activatableEle: HTMLElement | undefined;
   let activeRipple: Promise<() => void> | undefined;
@@ -15,12 +15,8 @@ export function startTapClick(doc: Document, config: Config) {
   const useRippleEffect = config.getBoolean('animated', true) && config.getBoolean('rippleEffect', true);
   const clearDefers = new WeakMap<HTMLElement, any>();
 
-  function onBodyClick(ev: Event) {
-    if (cancelled || scrolling) {
-      ev.preventDefault();
-      ev.stopPropagation();
-      cancelled = false;
-    }
+  function isScrolling() {
+    return scrollingEl !== undefined && scrollingEl.parentElement !== null;
   }
 
   // Touch Events
@@ -59,15 +55,16 @@ export function startTapClick(doc: Document, config: Config) {
   }
 
   function pointerDown(ev: any) {
-    if (activatableEle || scrolling) {
+    cancelled = false;
+    if (activatableEle || isScrolling()) {
       return;
     }
-    cancelled = false;
+    scrollingEl = undefined;
     setActivatedElement(getActivatableTarget(ev), ev);
   }
 
   function pointerUp(ev: UIEvent) {
-    if (scrolling) {
+    if (isScrolling()) {
       return;
     }
     setActivatedElement(undefined, ev);
@@ -145,13 +142,12 @@ export function startTapClick(doc: Document, config: Config) {
     }
   }
 
-  doc.addEventListener('click', onBodyClick, true);
-  doc.addEventListener('ionScrollStart', () => {
-    scrolling = true;
+  doc.addEventListener('ionScrollStart', ev => {
+    scrollingEl = ev.target as HTMLElement;
     cancelActive();
   });
   doc.addEventListener('ionScrollEnd', () => {
-    scrolling = false;
+    scrollingEl = undefined;
   });
   doc.addEventListener('ionGestureCaptured', cancelActive);
 
