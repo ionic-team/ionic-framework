@@ -65,7 +65,7 @@ button {
 }
 
 .select-icon-inner {
-  @include position(50%, null, null, 5px);
+  @include position(50%, null, null, 5px, true);
   @include margin(-3px, null, null, null);
 
   position: absolute;
