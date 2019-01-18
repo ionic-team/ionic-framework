@@ -139,8 +139,8 @@ export class Select implements ComponentInterface {
   }
 
   @Listen('click')
-  onClick() {
-    this.open();
+  onClick(ev: UIEvent) {
+    this.open(ev);
   }
 
   async componentDidLoad() {
