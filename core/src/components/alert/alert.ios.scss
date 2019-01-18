@@ -164,7 +164,7 @@
 // -----------------------------------------
 
 [aria-checked=true] .alert-radio-inner {
-  @include position($alert-ios-radio-icon-top, null, null, $alert-ios-radio-icon-start);
+  @include position($alert-ios-radio-icon-top, null, null, $alert-ios-radio-icon-start, true);
 
   position: absolute;
 
@@ -234,7 +234,7 @@
 // -----------------------------------------
 
 [aria-checked=true] .alert-checkbox-inner {
-  @include position($alert-ios-checkbox-icon-top, null, null, $alert-ios-checkbox-icon-start);
+  @include position($alert-ios-checkbox-icon-top, null, null, $alert-ios-checkbox-icon-start, true);
 
   position: absolute;
 
@@ -281,13 +281,13 @@
 }
 
 .alert-button:first-child {
-  @include rtl() {
+  @include rtl(true) {
     border-right: 0;
   }
 }
 
 .alert-button:last-child {
-  @include rtl() {
+  @include rtl(true) {
     border-right: $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color;
   }
 

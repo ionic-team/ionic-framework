@@ -141,7 +141,7 @@
 // ---------------------------------------------------
 
 .alert-radio-icon {
-  @include position($alert-md-radio-top, null, null, $alert-md-radio-left);
+  @include position($alert-md-radio-top, null, null, $alert-md-radio-left, true);
   @include border-radius($alert-md-radio-border-radius);
 
   display: block;
@@ -159,7 +159,7 @@
 // ---------------------------------------------------
 
 .alert-radio-inner {
-  @include position($alert-md-radio-icon-top, null, null, $alert-md-radio-icon-start);
+  @include position($alert-md-radio-icon-top, null, null, $alert-md-radio-icon-start, true);
   @include border-radius($alert-md-radio-icon-border-radius);
 
   position: absolute;
@@ -215,7 +215,7 @@
 // --------------------------------------------------
 
 .alert-checkbox-icon {
-  @include position($alert-md-checkbox-top, null, null, $alert-md-checkbox-left);
+  @include position($alert-md-checkbox-top, null, null, $alert-md-checkbox-left, true);
   @include border-radius($alert-md-checkbox-border-radius);
 
   position: relative;
@@ -240,7 +240,7 @@
 }
 
 [aria-checked=true] .alert-checkbox-inner {
-  @include position($alert-md-checkbox-icon-top, null, null, $alert-md-checkbox-icon-start);
+  @include position($alert-md-checkbox-icon-top, null, null, $alert-md-checkbox-icon-start, true);
 
   position: absolute;
 
