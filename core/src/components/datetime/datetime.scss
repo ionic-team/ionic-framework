@@ -43,6 +43,10 @@
   pointer-events: none;
 }
 
+:host(.datetime-readonly) {
+  pointer-events: none;
+}
+
 button {
   @include input-cover();
 }
