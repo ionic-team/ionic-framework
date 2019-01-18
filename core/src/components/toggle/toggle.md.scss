@@ -53,7 +53,7 @@
 // -----------------------------------------
 
 .toggle-inner {
-  @include position(($toggle-md-handle-height - $toggle-md-track-height) / -2, null, null, 0);
+  @include position(($toggle-md-handle-height - $toggle-md-track-height) / -2, null, null, 0, true);
   @include border-radius($toggle-md-handle-border-radius);
 
   position: absolute;

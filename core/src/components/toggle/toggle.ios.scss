@@ -57,7 +57,7 @@
 // -----------------------------------------
 
 .toggle-icon::before {
-  @include position($toggle-ios-border-width, $toggle-ios-border-width, $toggle-ios-border-width, $toggle-ios-border-width);
+  @include position($toggle-ios-border-width, $toggle-ios-border-width, $toggle-ios-border-width, $toggle-ios-border-width, true);
   @include border-radius($toggle-ios-border-radius);
 
   position: absolute;
@@ -76,7 +76,7 @@
 // -----------------------------------------
 
 .toggle-inner {
-  @include position($toggle-ios-border-width, null, null, $toggle-ios-border-width);
+  @include position($toggle-ios-border-width, null, null, $toggle-ios-border-width, true);
   @include border-radius($toggle-ios-handle-border-radius);
 
   position: absolute;
