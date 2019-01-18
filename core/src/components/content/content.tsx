@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, Listen } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
 
 import { Color, Config, Mode, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { isPlatform } from '../../utils/platform';
