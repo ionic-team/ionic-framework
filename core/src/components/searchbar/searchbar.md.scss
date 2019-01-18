@@ -120,7 +120,7 @@
 // -----------------------------------------
 
 :host(.searchbar-has-focus) .searchbar-search-icon {
-  display: none;
+  display: block;
 }
 
 :host(.searchbar-has-focus) .searchbar-cancel-button {
