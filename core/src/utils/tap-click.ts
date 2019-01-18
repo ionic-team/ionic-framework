@@ -15,14 +15,6 @@ export function startTapClick(doc: Document, config: Config) {
   const useRippleEffect = config.getBoolean('animated', true) && config.getBoolean('rippleEffect', true);
   const clearDefers = new WeakMap<HTMLElement, any>();
 
-  function onBodyClick(ev: Event) {
-    if (cancelled || scrolling) {
-      ev.preventDefault();
-      ev.stopPropagation();
-      cancelled = false;
-    }
-  }
-
   // Touch Events
   function onTouchStart(ev: TouchEvent) {
     lastTouch = now(ev);
@@ -145,7 +137,6 @@ export function startTapClick(doc: Document, config: Config) {
     }
   }
 
-  doc.addEventListener('click', onBodyClick, true);
   doc.addEventListener('ionScrollStart', () => {
     scrolling = true;
     cancelActive();
