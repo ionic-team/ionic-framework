@@ -30,7 +30,13 @@
 
 .searchbar-search-icon {
   @include margin-horizontal(calc(50% - 60px), null);
-  @include position(0, null, null, 8px);
+  @include position(0, null, null, 8px, true);
+
+  @include rtl(true) {
+    /* stylelint-disable property-blacklist */
+    left: unset;
+    /* stylelint-enable property-blacklist */
+  }
 
   position: absolute;
 
@@ -61,8 +67,14 @@
 // -----------------------------------------
 
 .searchbar-clear-button {
-  @include position(0, 0, null, null);
+  @include position(0, 0, null, null, true);
   @include background-position(center);
+
+  @include rtl(true) {
+    /* stylelint-disable property-blacklist */
+    right: unset;
+    /* stylelint-enable property-blacklist */
+  }
 
   position: absolute;
 

@@ -382,7 +382,7 @@
   }
 }
 
-@mixin background-position($horizontal, $horizontal-amount: null, $vertical: null, $vertical-amount: null) {
+@mixin background-position($horizontal, $horizontal-amount: null, $vertical: null, $vertical-amount: null, $shadowDom: false) {
   @if $horizontal == start or $horizontal == end {
     $horizontal-ltr: null;
     $horizontal-rtl: null;
@@ -397,7 +397,7 @@
     @include ltr() {
       background-position: $horizontal-ltr $horizontal-amount $vertical $vertical-amount;
     }
-    @include rtl() {
+    @include rtl($shadowDom) {
       background-position: $horizontal-rtl $horizontal-amount $vertical $vertical-amount;
     }
   } @else {

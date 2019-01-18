@@ -21,7 +21,13 @@
 // -----------------------------------------
 
 .searchbar-search-icon {
-  @include position(11px, null, null, 16px);
+  @include position(11px, null, null, 16px, true);
+
+  @include rtl(true) {
+    /* stylelint-disable property-blacklist */
+    left: unset;
+    /* stylelint-enable property-blacklist */
+  }
 
   width: $searchbar-md-input-search-icon-size + 1;
   height: $searchbar-md-input-search-icon-size + 1;
@@ -32,7 +38,13 @@
 // -----------------------------------------
 
 .searchbar-cancel-button {
-  @include position(0, null, null, 5px);
+  @include position(0, null, null, 5px, true);
+
+  @include rtl(true) {
+    /* stylelint-disable property-blacklist */
+    left: unset;
+    /* stylelint-enable property-blacklist */
+  }
 
   background-color: $searchbar-md-cancel-button-background-color;
 
@@ -59,7 +71,7 @@
 .searchbar-input {
   @include padding(6px, 55px);
   @include border-radius($searchbar-md-input-border-radius);
-  @include background-position(start, 8px, center);
+  @include background-position(start, 8px, center, null, true);
 
   height: $searchbar-md-input-height;
 
@@ -76,8 +88,14 @@
 // -----------------------------------------
 
 .searchbar-clear-button {
-  @include position(0, 13px, null, null);
+  @include position(0, 13px, null, null, true);
   @include padding(0);
+
+  @include rtl(true) {
+    /* stylelint-disable property-blacklist */
+    right: unset;
+    /* stylelint-enable property-blacklist */
+  }
 
   position: absolute;
 
