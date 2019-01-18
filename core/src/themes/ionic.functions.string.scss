@@ -93,18 +93,14 @@
 
   @each $selector in $selectors {
     @if str-contains($selector, ":host(") {
-      $updated-host: str-replace($selector, ":host(", ":host(#{$addHostSelector}");
+      $updated-host: str-replace($selector, ":host", ":host-context(#{$addHostSelector}):host");
       $list: append($list, $updated-host, comma);
 
-    } @else if str-contains($selector, ":host") {
-      $list: append($list, ":host(#{$addHostSelector}) + b", comma);
-
     } @else if $shadowDom == true {
-      $list: append($list, ":host(#{$addHostSelector}) #{$selector}", comma);
+      $list: append($list, ":host-context(#{$addHostSelector}) #{$selector}", comma);
 
     } @else {
-      // TODO host-context should be for scoped only
-      $list: append($list, ":host-context(#{$addHostSelector}) #{$selector}", comma);
+      $list: append($list, "#{$addHostSelector} #{$selector}", comma);
     }
   }
 

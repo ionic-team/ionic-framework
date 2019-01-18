@@ -156,10 +156,10 @@
   // }
 }
 
-@mixin rtl() {
+@mixin rtl($shadowDom: false) {
   $root: #{&};
 
-  @at-root #{add-root-selector($root, "[dir=rtl]")} {
+  @at-root #{add-root-selector($root, "[dir=rtl]", $shadowDom)} {
     @content;
   }
 }
@@ -280,7 +280,7 @@
 // @param {string} $start - amount to position start
 // @param {string} $end - amount to left: 0; end
 // ----------------------------------------------------------
-@mixin position-horizontal($start: null, $end: null) {
+@mixin position-horizontal($start: null, $end: null, $shadowDom: false) {
   @if $start == $end {
     @include multi-dir() {
       left: $start;
@@ -291,7 +291,7 @@
       left: $start;
       right: $end;
     }
-    @include rtl() {
+    @include rtl($shadowDom) {
       left: $end;
       right: $start;
     }
@@ -304,8 +304,8 @@
 // @param {string} $bottom
 // @param {string} $start
 // ----------------------------------------------------------
-@mixin position($top: null, $end: null, $bottom: null, $start: null) {
-  @include position-horizontal($start, $end);
+@mixin position($top: null, $end: null, $bottom: null, $start: null, $shadowDom: false) {
+  @include position-horizontal($start, $end, $shadowDom);
   top: $top;
   bottom: $bottom;
 }
