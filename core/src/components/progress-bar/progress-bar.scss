@@ -40,7 +40,7 @@
 .progress-buffer-bar,
 .progress-buffer-bar:before,
 .buffer-circles {
-  @include position(0, 0, 0, 0);
+  @include position(0, 0, 0, 0, true);
   position: absolute;
 
   width: 100%;
@@ -52,7 +52,7 @@
 
 .progress,
 .progress-buffer-bar {
-  @include transform-origin(start, top);
+  @include transform-origin(start, top, true);
   transition: transform 150ms linear;
 }
 
@@ -84,7 +84,7 @@
 // --------------------------------------------------
 
 .indeterminate-bar-primary {
-  @include position(0, 0, 0, -145.166611%);
+  @include position(0, 0, 0, -145.166611%, true);
   animation: primary-indeterminate-translate 2s infinite linear;
 
   .progress-indeterminate {
@@ -94,7 +94,7 @@
 }
 
 .indeterminate-bar-secondary {
-  @include position(0, 0, 0, -54.888891%);
+  @include position(0, 0, 0, -54.888891%, true);
   animation: secondary-indeterminate-translate 2s infinite linear;
 
   .progress-indeterminate {
