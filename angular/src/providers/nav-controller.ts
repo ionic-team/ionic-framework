@@ -12,7 +12,9 @@ export interface AnimationOptions {
 
 export interface NavigationOptions extends NavigationExtras, AnimationOptions {}
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class NavController {
 
   private direction: 'forward' | 'back' | 'root' | 'auto' = DEFAULT_DIRECTION;
@@ -42,27 +44,22 @@ export class NavController {
     platform.backButton.subscribeWithPriority(0, () => this.goBack());
   }
 
-  navigateForward(url: string | UrlTree | any[], options: NavigationOptions = {}) {
+  navigateForward(url: string | UrlTree | any[], options: NavigationOptions = {}): Promise<boolean> {
     this.setDirection('forward', options.animated, options.animationDirection);
-    if (Array.isArray(url)) {
-      return this.router!.navigate(url, options);
-    } else {
-      return this.router!.navigateByUrl(url, options);
-    }
+    return this.navigate(url, options);
   }
 
-  navigateBack(url: string | UrlTree | any[], options: NavigationOptions = {}) {
+  navigateBack(url: string | UrlTree | any[], options: NavigationOptions = {}): Promise<boolean> {
     this.setDirection('back', options.animated, options.animationDirection);
-    // extras = { replaceUrl: true, ...extras };
-    if (Array.isArray(url)) {
-      return this.router!.navigate(url, options);
-    } else {
-      return this.router!.navigateByUrl(url, options);
-    }
+    return this.navigate(url, options);
   }
 
-  navigateRoot(url: string | UrlTree | any[], options: NavigationOptions = {}) {
+  navigateRoot(url: string | UrlTree | any[], options: NavigationOptions = {}): Promise<boolean> {
     this.setDirection('root', options.animated, options.animationDirection);
+    return this.navigate(url, options);
+  }
+
+  private navigate(url: string | UrlTree | any[], options: NavigationOptions) {
     if (Array.isArray(url)) {
       return this.router!.navigate(url, options);
     } else {
@@ -110,6 +107,8 @@ function getAnimation(direction: RouterDirection, animated: boolean | undefined,
   }
   if (direction === 'forward' || direction === 'back') {
     return direction;
+  } else if (direction === 'root' && animated === true) {
+    return 'forward';
   }
   return undefined;
 }

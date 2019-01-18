@@ -32,7 +32,7 @@
   pointer-events: none;
 }
 
-:host(.select-key) button {
+:host(.ion-focused) button {
   border: 2px solid #5e9ed6;
 }
 

@@ -49,12 +49,16 @@ export class Tab implements ComponentInterface {
     this.active = true;
   }
 
-  private prepareLazyLoaded(): Promise<HTMLElement | void> {
+  private async prepareLazyLoaded(): Promise<HTMLElement | undefined> {
     if (!this.loaded && this.component != null) {
       this.loaded = true;
-      return attachComponent(this.delegate, this.el, this.component, ['ion-page']);
+      try {
+        return attachComponent(this.delegate, this.el, this.component, ['ion-page']);
+      } catch (e) {
+        console.error(e);
+      }
     }
-    return Promise.resolve();
+    return undefined;
   }
 
   hostData() {
@@ -63,7 +67,6 @@ export class Tab implements ComponentInterface {
       'role': 'tabpanel',
       'aria-hidden': !active ? 'true' : null,
       'aria-labelledby': `tab-button-${tab}`,
-      'id': `tab-view-${tab}`,
       'class': {
         'ion-page': component === undefined,
         'tab-hidden': !active

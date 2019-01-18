@@ -1,3 +1,113 @@
+# [4.0.0-rc.2](https://github.com/ionic-team/ionic/compare/v4.0.0-rc.1...v4.0.0-rc.2) (2019-01-16)
+
+
+### Bug Fixes
+
+* **action-sheet:** remove the height shift on press and update iOS design ([#16862](https://github.com/ionic-team/ionic/issues/16862)) ([82457d8](https://github.com/ionic-team/ionic/commit/82457d8)), closes [#16715](https://github.com/ionic-team/ionic/issues/16715) [#16790](https://github.com/ionic-team/ionic/issues/16790)
+* **angular:** fix slides ([#17085](https://github.com/ionic-team/ionic/issues/17085)) ([8357e5c](https://github.com/ionic-team/ionic/commit/8357e5c))
+* **angular:** hide some internal methods ([#17121](https://github.com/ionic-team/ionic/issues/17121)) ([4d5dcd4](https://github.com/ionic-team/ionic/commit/4d5dcd4))
+* **angular:** NavController methods return a promise ([#17106](https://github.com/ionic-team/ionic/issues/17106)) ([3aaf87a](https://github.com/ionic-team/ionic/commit/3aaf87a)), closes [#17103](https://github.com/ionic-team/ionic/issues/17103)
+* **angular:** ViewChild() fix ([#17037](https://github.com/ionic-team/ionic/issues/17037)) ([27a4709](https://github.com/ionic-team/ionic/commit/27a4709)), closes [#17034](https://github.com/ionic-team/ionic/issues/17034)
+* **datetime:** do no change order of formatted dates w/ rtl ([#17024](https://github.com/ionic-team/ionic/issues/17024)) ([169da37](https://github.com/ionic-team/ionic/commit/169da37))
+* **fab-button:** add default padding for fab-button ([#17050](https://github.com/ionic-team/ionic/issues/17050)) ([418052f](https://github.com/ionic-team/ionic/commit/418052f))
+* **icon:** fix rtl detail icon for ios ([#17016](https://github.com/ionic-team/ionic/issues/17016)) ([b4f3405](https://github.com/ionic-team/ionic/commit/b4f3405)), closes [#14958](https://github.com/ionic-team/ionic/issues/14958)
+* **input:** disable shadow-dom for text inputs ([#17043](https://github.com/ionic-team/ionic/issues/17043)) ([63e0501](https://github.com/ionic-team/ionic/commit/63e0501)), closes [#17020](https://github.com/ionic-team/ionic/issues/17020)
+* **input:** fix display of ion-input in narrow ion-item in Firefox ([#16978](https://github.com/ionic-team/ionic/issues/16978)) ([1099dc3](https://github.com/ionic-team/ionic/commit/1099dc3))
+* **inputs:** fix styles in firefox ([#17066](https://github.com/ionic-team/ionic/issues/17066)) ([0120eee](https://github.com/ionic-team/ionic/commit/0120eee))
+* **inputs:** keyboard focus improvements ([#16838](https://github.com/ionic-team/ionic/issues/16838)) ([6364e4e](https://github.com/ionic-team/ionic/commit/6364e4e)), closes [#16815](https://github.com/ionic-team/ionic/issues/16815) [#16872](https://github.com/ionic-team/ionic/issues/16872) [#13978](https://github.com/ionic-team/ionic/issues/13978) [#16610](https://github.com/ionic-team/ionic/issues/16610)
+* **item:** no lines on item should take precedence over list lines ([#17049](https://github.com/ionic-team/ionic/issues/17049)) ([d2fa946](https://github.com/ionic-team/ionic/commit/d2fa946)), closes [#16900](https://github.com/ionic-team/ionic/issues/16900)
+* **picker:** do not change datetime/picker column order in RTL ([#17018](https://github.com/ionic-team/ionic/issues/17018)) ([1338d71](https://github.com/ionic-team/ionic/commit/1338d71)), closes [#16294](https://github.com/ionic-team/ionic/issues/16294)
+* **rtl:** fix rtl back button default ([#17109](https://github.com/ionic-team/ionic/issues/17109)) ([a9a23af](https://github.com/ionic-team/ionic/commit/a9a23af)), closes [#15357](https://github.com/ionic-team/ionic/issues/15357)
+* **utils:** remove console log ([#17116](https://github.com/ionic-team/ionic/issues/17116)) ([b0f51d4](https://github.com/ionic-team/ionic/commit/b0f51d4))
+
+
+### Features
+
+* **angular:** add tabs events ([#17125](https://github.com/ionic-team/ionic/issues/17125)) ([6929bb8](https://github.com/ionic-team/ionic/commit/6929bb8))
+* **angular:** expose getSelected() ([#17079](https://github.com/ionic-team/ionic/issues/17079)) ([3c801db](https://github.com/ionic-team/ionic/commit/3c801db)), closes [#17068](https://github.com/ionic-team/ionic/issues/17068)
+
+
+### Reverts
+
+* **test:** update avatar index.html ([9e80b73](https://github.com/ionic-team/ionic/commit/9e80b73))
+
+### BREAKING CHANGES
+
+#### ionChange removed from ion-tabs
+
+- `(ionChange)` becomes `(ionTabsDidChange)`
+
+#### ion-tabs getSelected() returns a string
+
+Previously the `getSelected()` method of `ion-tabs` returned a reference to the selected
+`ion-tab`, now it returns the name of tab as string.
+
+
+
+# [4.0.0-rc.1](https://github.com/ionic-team/ionic/compare/v4.0.0-rc.0...v4.0.0-rc.1) (2019-01-09)
+
+
+### Bug Fixes
+
+* **angular:** update [@angular](https://github.com/angular)/router dependency ([#16998](https://github.com/ionic-team/ionic/issues/16998)) ([76e9e02](https://github.com/ionic-team/ionic/commit/76e9e02))
+* **col:** handle RTL offset-*, pull-*, and push-* ([#16702](https://github.com/ionic-team/ionic/issues/16702)) ([6d6472b](https://github.com/ionic-team/ionic/commit/6d6472b))
+* **fab:** fab size when href provided ([b3316d4](https://github.com/ionic-team/ionic/commit/b3316d4)), closes [#16833](https://github.com/ionic-team/ionic/issues/16833)
+* **menu:** swipe-back has higher priority ([f05c599](https://github.com/ionic-team/ionic/commit/f05c599)), closes [#16864](https://github.com/ionic-team/ionic/issues/16864)
+* **overlays:** make them hidden until presented ([#16903](https://github.com/ionic-team/ionic/issues/16903)) ([302be53](https://github.com/ionic-team/ionic/commit/302be53)), closes [#16685](https://github.com/ionic-team/ionic/issues/16685)
+* **popover:** position properly in RTL / MD modes ([#16745](https://github.com/ionic-team/ionic/issues/16745)) ([7846019](https://github.com/ionic-team/ionic/commit/7846019))
+* **ripple-effect:** never capture click ([#16955](https://github.com/ionic-team/ionic/issues/16955)) ([7ee8aa6](https://github.com/ionic-team/ionic/commit/7ee8aa6)), closes [#16939](https://github.com/ionic-team/ionic/issues/16939)
+* **segment:** update indicator and border based on theme ([#16821](https://github.com/ionic-team/ionic/issues/16821)) ([74587db](https://github.com/ionic-team/ionic/commit/74587db)), closes [#16820](https://github.com/ionic-team/ionic/issues/16820)
+* **select:** interfaceOptions can customize mode ([#16826](https://github.com/ionic-team/ionic/issues/16826)) ([1227d57](https://github.com/ionic-team/ionic/commit/1227d57)), closes [#16825](https://github.com/ionic-team/ionic/issues/16825)
+* **tab-button:** allow standalone tab-button ([#16905](https://github.com/ionic-team/ionic/issues/16905)) ([6ca7645](https://github.com/ionic-team/ionic/commit/6ca7645)), closes [#16845](https://github.com/ionic-team/ionic/issues/16845)
+* **tabs:** fix goto root ([#16926](https://github.com/ionic-team/ionic/issues/16926)) ([8ee9205](https://github.com/ionic-team/ionic/commit/8ee9205)), closes [#16917](https://github.com/ionic-team/ionic/issues/16917)
+
+
+### Features
+
+* **radio-group:** add missing implementation for property allowEmptySelection ([#16880](https://github.com/ionic-team/ionic/issues/16880)) ([09726b0](https://github.com/ionic-team/ionic/commit/09726b0)), closes [#16841](https://github.com/ionic-team/ionic/issues/16841)
+* **react:** add missing simple components to react. ([#16836](https://github.com/ionic-team/ionic/issues/16836)) ([696f62c](https://github.com/ionic-team/ionic/commit/696f62c))
+* **react:** create initial portal implementation for overlay ctrls ([#16830](https://github.com/ionic-team/ionic/issues/16830)) ([99bdd1f](https://github.com/ionic-team/ionic/commit/99bdd1f))
+* **react:** Initial implementations of controller required elements. ([#16817](https://github.com/ionic-team/ionic/issues/16817)) ([e30c5f1](https://github.com/ionic-team/ionic/commit/e30c5f1))
+
+
+### Performance Improvements
+
+* **angular:** bundle size improvements for angular ([#16966](https://github.com/ionic-team/ionic/issues/16966)) ([44fb45e](https://github.com/ionic-team/ionic/commit/44fb45e))
+* **angular:** flat ng modules ([#17007](https://github.com/ionic-team/ionic/issues/17007)) ([0b84e27](https://github.com/ionic-team/ionic/commit/0b84e27)), closes [#17001](https://github.com/ionic-team/ionic/issues/17001)
+* **angular:** proxy fast properties ([#16888](https://github.com/ionic-team/ionic/issues/16888)) ([ca9ec3e](https://github.com/ionic-team/ionic/commit/ca9ec3e))
+
+
+### BREAKING CHANGES
+
+In order to speed up the build and reduce the main bundle size,
+we have moved the ionicons outside the webpack build pipeline.
+
+Instead, a new copy task needs to be added to the `angular.json`, specifically to the
+the `"assets"` option of the `"build"`.
+
+#### angular.json
+
+```diff
+{
+  "projects": {
+    "app": {
+      "architect": {
+        "build": {
+          "options": {
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "assets"
+              },
++             {
++               "glob": "**/*.svg",
++               "input": "node_modules/ionicons/dist/ionicons/svg",
++               "output": "./svg"
++             }
+```
+
+
 # [4.0.0-rc.0](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.19...v4.0.0-rc.0) (2018-12-19)
 
 
@@ -62,7 +172,7 @@ Removes the `--width` and `--height` variables from the following components, in
 
 #### Overlay Components
 
-The following components have all be converted to shadow (or scoped) and have CSS variables for width/height:
+The following components have all been converted to shadow (or scoped) and have CSS variables for width/height:
 
 - Action Sheet _(scoped)_
 - Alert _(scoped)_

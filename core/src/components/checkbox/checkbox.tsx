@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
 
-import { CheckedInputChangeEvent, Color, Mode, StyleEvent } from '../../interface';
+import { CheckboxChangeEventDetail, Color, Mode, StyleEventDetail } from '../../interface';
 import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -17,8 +17,6 @@ export class Checkbox implements ComponentInterface {
   private inputId = `ion-cb-${checkboxIds++}`;
 
   @Element() el!: HTMLElement;
-
-  @State() keyFocus = false;
 
   /**
    * The color to use from your application's color palette.
@@ -59,7 +57,7 @@ export class Checkbox implements ComponentInterface {
   /**
    * Emitted when the checked property has changed.
    */
-  @Event() ionChange!: EventEmitter<CheckedInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<CheckboxChangeEventDetail>;
 
   /**
    * Emitted when the toggle has focus.
@@ -75,7 +73,7 @@ export class Checkbox implements ComponentInterface {
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   componentWillLoad() {
     this.emitStyle();
@@ -98,12 +96,9 @@ export class Checkbox implements ComponentInterface {
     });
   }
 
-  private onClick = () => {
+  @Listen('click')
+  onClick() {
     this.checked = !this.checked;
-  }
-
-  private onKeyUp = () => {
-    this.keyFocus = true;
   }
 
   private onFocus = () => {
@@ -111,27 +106,26 @@ export class Checkbox implements ComponentInterface {
   }
 
   private onBlur = () => {
-    this.keyFocus = false;
     this.ionBlur.emit();
   }
 
   hostData() {
-    const labelId = this.inputId + '-lbl';
-    const label = findItemLabel(this.el);
+    const { inputId, disabled, checked, color, el } = this;
+    const labelId = inputId + '-lbl';
+    const label = findItemLabel(el);
     if (label) {
       label.id = labelId;
     }
     return {
       'role': 'checkbox',
-      'aria-disabled': this.disabled ? 'true' : null,
-      'aria-checked': `${this.checked}`,
+      'aria-disabled': disabled ? 'true' : null,
+      'aria-checked': `${checked}`,
       'aria-labelledby': labelId,
       class: {
-        ...createColorClasses(this.color),
-        'in-item': hostContext('ion-item', this.el),
-        'checkbox-checked': this.checked,
-        'checkbox-disabled': this.disabled,
-        'checkbox-key': this.keyFocus,
+        ...createColorClasses(color),
+        'in-item': hostContext('ion-item', el),
+        'checkbox-checked': checked,
+        'checkbox-disabled': disabled,
         'interactive': true
       }
     };
@@ -149,10 +143,9 @@ export class Checkbox implements ComponentInterface {
       </svg>,
       <button
         type="button"
-        onClick={this.onClick}
-        onKeyUp={this.onKeyUp}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
+        disabled={this.disabled}
       >
       </button>
     ];

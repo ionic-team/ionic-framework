@@ -9,8 +9,8 @@ instead a small subset of records (enough to fill the viewport) are rendered
 and reused as the user scrolls.
 
 ### The Basics
-The array of records should be passed to the `item` property on the `ion-virtual-scroll` element.
-The data given to the `item` property must be an array. An item
+The array of records should be passed to the `items` property on the `ion-virtual-scroll` element.
+The data given to the `items` property must be an array. An item
 template with the `*virtualItem` property is required in the `ion-virtual-scroll`.
 The `*virtualItem` property can be added to any element.
 

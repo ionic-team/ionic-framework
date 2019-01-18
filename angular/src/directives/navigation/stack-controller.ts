@@ -5,7 +5,7 @@ import { RouterDirection } from '@ionic/core';
 import { bindLifecycleEvents } from '../../providers/angular-delegate';
 import { NavController } from '../../providers/nav-controller';
 
-import { RouteView, computeStackId, destroyView, getUrl, insertView, isTabSwitch, toSegments } from './stack-utils';
+import { RouteView, StackEvent, computeStackId, destroyView, getUrl, insertView, isTabSwitch, toSegments } from './stack-utils';
 
 export class StackController {
 
@@ -50,16 +50,23 @@ export class StackController {
     return view;
   }
 
-  async setActive(enteringView: RouteView) {
+  async setActive(enteringView: RouteView): Promise<StackEvent> {
     let { direction, animation } = this.navCtrl.consumeTransition();
     const leavingView = this.activeView;
-    if (isTabSwitch(enteringView, leavingView)) {
+    const tabSwitch = isTabSwitch(enteringView, leavingView);
+    if (tabSwitch) {
       direction = 'back';
       animation = undefined;
     }
     this.insertView(enteringView, direction);
     await this.transition(enteringView, leavingView, animation, this.canGoBack(1), false);
-    requestAnimationFrame(() => this.cleanup());
+    await this.cleanupAsync();
+    return {
+      enteringView,
+      direction,
+      animation,
+      tabSwitch
+    };
   }
 
   canGoBack(deep: number, stackId = this.getActiveStackId()): boolean {
@@ -120,6 +127,15 @@ export class StackController {
   private insertView(enteringView: RouteView, direction: RouterDirection) {
     this.activeView = enteringView;
     this.views = insertView(this.views, enteringView, direction);
+  }
+
+  private cleanupAsync() {
+    return new Promise(resolve => {
+      requestAnimationFrame(() => {
+        this.cleanup();
+        resolve();
+      });
+    });
   }
 
   private cleanup() {

@@ -86,20 +86,11 @@
 .searchbar-cancel-button {
   @include padding(0, 0, 0, 8px);
 
-  display: none;
-
   flex-shrink: 0;
-
-  border: 0;
-
-  outline: none;
 
   background-color: $searchbar-ios-cancel-button-background-color;
 
   font-size: $searchbar-ios-cancel-button-font-size;
-
-  cursor: pointer;
-  appearance: none;
 }
 
 
@@ -118,8 +109,8 @@
 // Searchbar Has Focus & Animated
 // -----------------------------------------
 
-:host(.searchbar-show-cancel.searchbar-has-focus) .searchbar-cancel-button,
-:host(.searchbar-show-cancel.searchbar-animated) .searchbar-cancel-button {
+:host(.searchbar-has-focus) .searchbar-cancel-button,
+:host(.searchbar-animated) .searchbar-cancel-button {
   display: block;
 }
 

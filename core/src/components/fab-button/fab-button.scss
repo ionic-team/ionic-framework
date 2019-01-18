@@ -10,6 +10,11 @@
   --border-width: 0;
   --border-style: none;
   --border-color: initial;
+  --padding-top: 0;
+  --padding-end: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+
   /**
    * @prop --background: Background of the button
    * @prop --background-activated: Background of the button when activated
@@ -62,7 +67,7 @@
 }
 
 // Focused/Activated Button with Color
-:host(.ion-color.focused) .button-native,
+:host(.ion-color.ion-focused) .button-native,
 :host(.ion-color.activated) .button-native {
   background: #{current-color(shade)};
   color: #{current-color(contrast)};
@@ -100,6 +105,8 @@
   overflow: hidden;
   z-index: 0;
   appearance: none;
+
+  box-sizing: border-box;
 }
 
 .button-native[disabled] {
@@ -140,19 +147,13 @@
 }
 
 // Focused Button
-:host(.focused) .button-native {
+:host(.ion-focused) .button-native {
   background: var(--background-focused);
   color: var(--color-focused);
 }
 
 // Disabled Button
 :host(.fab-button-disabled) {
-  pointer-events: none;
-}
-
-.button-native[disabled] {
-  cursor: default;
-  opacity: .5;
   pointer-events: none;
 }
 
