@@ -12,7 +12,7 @@
 
 .popover-content {
   @include border-radius($popover-md-border-radius);
-  @include transform-origin(start, top);
+  @include transform-origin(start, top, true);
 }
 
 .popover-viewport {
