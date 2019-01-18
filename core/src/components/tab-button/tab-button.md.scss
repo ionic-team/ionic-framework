@@ -34,7 +34,7 @@
 
 ::slotted(ion-icon) {
   @include margin($tab-button-md-icon-margin-top, $tab-button-md-icon-margin-end, $tab-button-md-icon-margin-bottom, $tab-button-md-icon-margin-start);
-  @include transform-origin(center, center);
+  @include transform-origin(center, center, true);
 
   font-size: $tab-button-md-icon-size;
 }
@@ -45,7 +45,7 @@
 ::slotted(ion-badge) {
   @include border-radius($tab-button-md-badge-border-radius);
   @include padding($tab-button-md-badge-padding-top, $tab-button-md-badge-padding-end, $tab-button-md-badge-padding-bottom, $tab-button-md-badge-padding-start);
-  @include position(8px, null, null, calc(50% + 6px));
+  @include position(8px, null, null, calc(50% + 6px), true);
 
   min-width: $tab-button-md-badge-min-width;
 
@@ -82,7 +82,7 @@
 
 // Badge
 :host(.tab-layout-icon-bottom) ::slotted(ion-badge) {
-  @include position(8px, null, null, 70%);
+  @include position(8px, null, null, 70%, true);
 }
 
 // Icon
@@ -102,7 +102,7 @@
 // Badge
 :host(.tab-layout-icon-start) ::slotted(ion-badge),
 :host(.tab-layout-icon-end) ::slotted(ion-badge) {
-  @include position(16px, null, null, 80%);
+  @include position(16px, null, null, 80%, true);
 }
 
 // Icon
@@ -122,7 +122,7 @@
 // Badge
 :host(.tab-layout-icon-hide) ::slotted(ion-badge),
 :host(.tab-has-label-only) ::slotted(ion-badge) {
-  @include position(16px, null, null, 70%);
+  @include position(16px, null, null, 70%, true);
 }
 
 // Label
@@ -138,7 +138,7 @@
 // Badge
 :host(.tab-layout-label-hide) ::slotted(ion-badge),
 :host(.tab-has-icon-only) ::slotted(ion-badge) {
-  @include position(16px, null, null, null);
+  @include position(16px, null, null, null, true);
 }
 
 // Icon

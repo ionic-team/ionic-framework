@@ -27,7 +27,13 @@
 
 ::slotted(ion-badge) {
   @include padding(1px, 6px);
-  @include position(4px, null, null, calc(50% + 6px));
+  @include position(4px, null, null, calc(50% + 6px), true);
+
+  @include rtl(true) {
+    /* stylelint-disable property-blacklist */
+    left: unset;
+    /* stylelint-enable property-blacklist */
+  }
 
   height: auto;
 
@@ -92,7 +98,13 @@
 
 // Badge
 :host(.tab-layout-icon-bottom) ::slotted(ion-badge) {
-  @include position(null, null, null, calc(50% + 12px));
+  @include position(null, null, null, calc(50% + 12px), true);
+
+  @include rtl() {
+    /* stylelint-disable property-blacklist */
+    left: unset;
+    /* stylelint-enable property-blacklist */
+  }
 }
 
 // Icon
@@ -111,7 +123,13 @@
 
 :host(.tab-layout-icon-start) ::slotted(ion-badge),
 :host(.tab-layout-icon-end) ::slotted(ion-badge) {
-  @include position(10px, null, null, calc(50% + 35px));
+  @include position(10px, null, null, calc(50% + 35px), true);
+
+  @include rtl() {
+    /* stylelint-disable property-blacklist */
+    left: unset;
+    /* stylelint-enable property-blacklist */
+  }
 }
 
 
@@ -121,7 +139,13 @@
 // Badge
 :host(.tab-layout-icon-hide) ::slotted(ion-badge),
 :host(.tab-has-label-only) ::slotted(ion-badge) {
-  @include position(10px, null, null, calc(50% + 30px));
+  @include position(10px, null, null, calc(50% + 30px), true);
+
+  @include rtl() {
+    /* stylelint-disable property-blacklist */
+    left: unset;
+    /* stylelint-enable property-blacklist */
+  }
 }
 
 
@@ -131,7 +155,7 @@
 // Badge
 :host(.tab-layout-label-hide) ::slotted(ion-badge),
 :host(.tab-has-icon-only) ::slotted(ion-badge) {
-  @include position(10px, null, null, null);
+  @include position(10px, null, null, null, true);
 }
 
 :host(.tab-layout-label-hide) ::slotted(ion-icon) {
