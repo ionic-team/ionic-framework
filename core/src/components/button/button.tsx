@@ -104,7 +104,7 @@ export class Button implements ComponentInterface {
   @Listen('click')
   onClick(ev: Event) {
     if (this.type === 'button') {
-      return openURL(this.win, this.href, ev, this.routerDirection);
+      openURL(this.win, this.href, ev, this.routerDirection);
 
     } else if (hasShadowDom(this.el)) {
       // this button wants to specifically submit a form
@@ -122,7 +122,6 @@ export class Button implements ComponentInterface {
         fakeButton.remove();
       }
     }
-    return Promise.resolve(false);
   }
 
   private onFocus = () => {
