@@ -44,6 +44,11 @@ export class Datetime implements ComponentInterface {
    */
   @Prop() disabled = false;
 
+  /**
+   * If `true`, the datetime appears normal but is not interactive.
+   */
+  @Prop() readonly = false;
+
   @Watch('disabled')
   protected disabledChanged() {
     this.emitStyle();
@@ -544,7 +549,7 @@ export class Datetime implements ComponentInterface {
   }
 
   hostData() {
-    const { inputId, disabled, isExpanded, el, placeholder } = this;
+    const { inputId, disabled, readonly, isExpanded, el, placeholder } = this;
 
     const addPlaceholderClass =
       (this.getText() === undefined && placeholder != null) ? true : false;
@@ -563,6 +568,7 @@ export class Datetime implements ComponentInterface {
       'aria-labelledby': labelId,
       class: {
         'datetime-disabled': disabled,
+        'datetime-readonly': readonly,
         'datetime-placeholder': addPlaceholderClass,
         'in-item': hostContext('ion-item', el)
       }
