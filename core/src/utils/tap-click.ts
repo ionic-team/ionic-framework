@@ -5,7 +5,6 @@ import { now, pointerCoord } from './helpers';
 export function startTapClick(doc: Document, config: Config) {
   let lastTouch = -MOUSE_WAIT * 10;
   let lastActivated = 0;
-  let cancelled = false;
   let scrollingEl: HTMLElement | undefined;
 
   let activatableEle: HTMLElement | undefined;
@@ -51,11 +50,9 @@ export function startTapClick(doc: Document, config: Config) {
       removeActivated(false);
       activatableEle = undefined;
     }
-    cancelled = true;
   }
 
   function pointerDown(ev: any) {
-    cancelled = false;
     if (activatableEle || isScrolling()) {
       return;
     }
@@ -64,13 +61,7 @@ export function startTapClick(doc: Document, config: Config) {
   }
 
   function pointerUp(ev: UIEvent) {
-    if (isScrolling()) {
-      return;
-    }
     setActivatedElement(undefined, ev);
-    if (cancelled && ev.cancelable) {
-      ev.preventDefault();
-    }
   }
 
   function setActivatedElement(el: HTMLElement | undefined, ev: UIEvent) {

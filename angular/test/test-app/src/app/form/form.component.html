@@ -55,23 +55,22 @@
 
     </ion-list>
     <p>
-      Form Status: {{ profileForm.status }}
+      Form Status: <span id="status">{{ profileForm.status }}</span>
     </p>
     <p>
-        Form Status: {{ profileForm.value | json }}
-      </p>
+      Form Status: <span id="data">{{ profileForm.value | json }}</span>
+    </p>
     <ion-button type="submit" [disabled]="!profileForm.valid">Submit</ion-button>
 
-    <ion-list>
-      <ion-item>
-        <ion-label>Outside form</ion-label>
-        <ion-toggle [formControl]="outsideToggle"></ion-toggle>
-        <ion-note slot="end">{{outsideToggle.value}}</ion-note>
-      </ion-item>
-    </ion-list>
   </form>
+  <ion-list>
+    <ion-item>
+      <ion-label>Outside form</ion-label>
+      <ion-toggle [formControl]="outsideToggle"></ion-toggle>
+      <ion-note slot="end">{{outsideToggle.value}}</ion-note>
+    </ion-item>
+  </ion-list>
   <p>
     <ion-button (click)="setValues()" id="set-button">Set values</ion-button>
-    <ion-button (click)="resetValues()" id="reset-button">Reset values</ion-button>
   </p>
 </ion-content>
