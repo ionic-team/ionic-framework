@@ -42,6 +42,8 @@
 
   font-family: $font-family-base;
 
+  white-space: normal;
+
   z-index: $z-index-item-input;
 }
 
@@ -84,10 +86,11 @@
   outline: none;
 
   background: transparent;
-
   box-sizing: border-box;
   resize: none;
   appearance: none;
+
+  white-space: pre-wrap;
 
   &::placeholder {
     color: var(--placeholder-color);
