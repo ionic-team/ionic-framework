@@ -140,6 +140,7 @@ export class Select implements ComponentInterface {
 
   @Listen('click')
   onClick(ev: UIEvent) {
+    this.setFocus();
     this.open(ev);
   }
 
