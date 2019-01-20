@@ -43,24 +43,41 @@ export class ValueAccessor implements ControlValueAccessor {
 
 export function setIonicClasses(element: ElementRef) {
   requestAnimationFrame(() => {
-    const classList = (element.nativeElement as HTMLElement).classList;
+    const input = element.nativeElement as HTMLElement;
+    const classes = getClasses(input);
+    setClasses(input, classes);
 
-    classList.remove(
-      'ion-valid',
-      'ion-invalid',
-      'ion-touched',
-      'ion-untouched',
-      'ion-dirty',
-      'ion-pristine'
-    );
-
-    for (let i = 0; i < classList.length; i++) {
-      const item = classList.item(i);
-      if (item !== null && startsWith(item, 'ng-')) {
-        classList.add(`ion-${item.substr(3)}`);
-      }
+    const item = input.closest('ion-item');
+    if (item) {
+      setClasses(item, classes);
     }
   });
+}
+
+function getClasses(element: HTMLElement) {
+  const classList = element.classList;
+  const classes = [];
+  for (let i = 0; i < classList.length; i++) {
+    const item = classList.item(i);
+    if (item !== null && startsWith(item, 'ng-')) {
+      classes.push(`ion-${item.substr(3)}`);
+    }
+  }
+  return classes;
+}
+
+function setClasses(element: HTMLElement, classes: string[]) {
+  const classList = element.classList;
+
+  classList.remove(
+    'ion-valid',
+    'ion-invalid',
+    'ion-touched',
+    'ion-untouched',
+    'ion-dirty',
+    'ion-pristine'
+  );
+  classList.add(...classes);
 }
 
 function startsWith(input: string, search: string): boolean {

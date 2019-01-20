@@ -246,6 +246,7 @@ export class Datetime implements ComponentInterface {
 
   @Listen('click')
   onClick() {
+    this.setFocus();
     this.open();
   }
 
