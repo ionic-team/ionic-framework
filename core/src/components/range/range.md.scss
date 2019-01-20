@@ -101,9 +101,15 @@
   text-align: center;
 
   &::before {
-    @include position(3px, null, null, 50%);
+    @include position(3px, null, null, 50%, true);
     @include border-radius(50%, 50%, 50%, 0);
     @include margin-horizontal(-13px, null);
+
+    @include rtl(true) {
+      /* stylelint-disable property-blacklist */
+      left: unset;
+      /* stylelint-enable property-blacklist */
+    }
 
     position: absolute;
 

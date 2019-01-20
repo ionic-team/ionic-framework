@@ -72,12 +72,18 @@
 .range-knob-handle {
   @include position(
     calc((var(--height) - var(--knob-handle-size)) / 2),
-    null, null, 0
+    null, null, 0, true
   );
   @include margin-horizontal(
     calc(0px - var(--knob-handle-size) / 2),
     null
   );
+
+  @include rtl(true) {
+    /* stylelint-disable property-blacklist */
+    left: unset;
+    /* stylelint-enable property-blacklist */
+  }
 
   position: absolute;
 
@@ -94,7 +100,14 @@
 
 .range-bar {
   @include border-radius(var(--bar-border-radius));
-  @include position(calc((var(--height) - var(--bar-height)) / 2), null, null, 0);
+  @include position(calc((var(--height) - var(--bar-height)) / 2), null, null, 0, true);
+
+  @include rtl(true) {
+    /* stylelint-disable property-blacklist */
+    left: unset;
+    /* stylelint-enable property-blacklist */
+  }
+
   position: absolute;
 
   width: 100%;
@@ -110,8 +123,15 @@
   @include position(
     calc(50% - var(--knob-size) / 2),
     null, null,
-    calc(50% - var(--knob-size) / 2)
+    calc(50% - var(--knob-size) / 2),
+    true
   );
+
+  @include rtl(true) {
+    /* stylelint-disable property-blacklist */
+    left: unset;
+    /* stylelint-enable property-blacklist */
+  }
 
   position: absolute;
 
