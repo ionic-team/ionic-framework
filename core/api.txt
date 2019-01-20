@@ -420,6 +420,7 @@ ion-input,prop,spellcheck,boolean,false,false,false
 ion-input,prop,step,string | undefined,undefined,false,false
 ion-input,prop,type,"date" | "email" | "number" | "password" | "search" | "tel" | "text" | "time" | "url",'text',false,false
 ion-input,prop,value,null | string | undefined,'',false,false
+ion-input,method,getInputElement,getInputElement() => Promise<HTMLInputElement>
 ion-input,method,setFocus,setFocus() => void
 ion-input,event,ionBlur,void,true
 ion-input,event,ionChange,InputChangeEventDetail,true
@@ -887,6 +888,7 @@ ion-searchbar,prop,showCancelButton,boolean,false,false,false
 ion-searchbar,prop,spellcheck,boolean,false,false,false
 ion-searchbar,prop,type,"email" | "number" | "password" | "search" | "tel" | "text" | "url",'search',false,false
 ion-searchbar,prop,value,null | string | undefined,'',false,false
+ion-searchbar,method,getInputElement,getInputElement() => Promise<HTMLInputElement>
 ion-searchbar,method,setFocus,setFocus() => void
 ion-searchbar,event,ionBlur,void,true
 ion-searchbar,event,ionCancel,void,true
@@ -1091,6 +1093,7 @@ ion-textarea,prop,rows,number | undefined,undefined,false,false
 ion-textarea,prop,spellcheck,boolean,false,false,false
 ion-textarea,prop,value,null | string | undefined,'',false,false
 ion-textarea,prop,wrap,"hard" | "off" | "soft" | undefined,undefined,false,false
+ion-textarea,method,getInputElement,getInputElement() => Promise<HTMLTextAreaElement>
 ion-textarea,method,setFocus,setFocus() => void
 ion-textarea,event,ionBlur,void,true
 ion-textarea,event,ionChange,TextareaChangeEventDetail,true
