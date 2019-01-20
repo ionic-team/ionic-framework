@@ -92,7 +92,9 @@
   $list: ();
 
   @each $selector in $selectors {
-    @if str-contains($selector, ":host(") {
+    @if $shadowDom == null {
+      $list: append($list, "#{$addHostSelector} #{$selector}", comma);
+    } @else if str-contains($selector, ":host(") {
       $updated-host: str-replace($selector, ":host", ":host-context(#{$addHostSelector}):host");
       $list: append($list, $updated-host, comma);
 
