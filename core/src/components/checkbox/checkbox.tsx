@@ -15,6 +15,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 export class Checkbox implements ComponentInterface {
 
   private inputId = `ion-cb-${checkboxIds++}`;
+  private buttonEl?: HTMLElement;
 
   @Element() el!: HTMLElement;
 
@@ -98,7 +99,14 @@ export class Checkbox implements ComponentInterface {
 
   @Listen('click')
   onClick() {
+    this.setFocus();
     this.checked = !this.checked;
+  }
+
+  private setFocus() {
+    if (this.buttonEl) {
+      this.buttonEl.focus();
+    }
   }
 
   private onFocus = () => {
@@ -146,6 +154,7 @@ export class Checkbox implements ComponentInterface {
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         disabled={this.disabled}
+        ref={el => this.buttonEl = el}
       >
       </button>
     ];
