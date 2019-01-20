@@ -23,7 +23,7 @@
 :host(.label-floating) {
   @include margin(null, null, 0, null);
   @include transform(translate3d(0, 27px, 0));
-  @include transform-origin(start, top);
+  @include transform-origin(start, top, null);
 
   transition: transform 150ms ease-in-out;
 }
