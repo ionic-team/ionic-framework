@@ -86,11 +86,21 @@
 // Material Design Item Slots
 // --------------------------------------------------
 
-::slotted(:not(.interactive)[slot="start"]) {
+::slotted(ion-icon[slot="start"]) {
   @include margin-horizontal($item-md-start-slot-margin-start, $item-md-start-slot-margin-end);
 }
 
-::slotted(:not(.interactive)[slot="end"]) {
+::slotted(ion-icon[slot="end"]) {
+  @include margin-horizontal($item-md-end-slot-margin-start, $item-md-end-slot-margin-end);
+}
+
+::slotted(ion-avatar[slot="start"]),
+::slotted(ion-thumbnail[slot="start"]) {
+  @include margin-horizontal($item-md-start-slot-margin-start, $item-md-start-slot-margin-end);
+}
+
+::slotted(ion-avatar[slot="end"]),
+::slotted(ion-thumbnail[slot="end"]) {
   @include margin-horizontal($item-md-end-slot-margin-start, $item-md-end-slot-margin-end);
 }
 
