@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="profileForm">
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit($event)">
     <ion-list>
 
       <ion-item>
@@ -35,7 +35,7 @@
 
       <ion-item>
         <ion-label>Input (required)</ion-label>
-        <ion-input formControlName="input"></ion-input>
+        <ion-input formControlName="input" class="required"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -60,7 +60,10 @@
     <p>
       Form Status: <span id="data">{{ profileForm.value | json }}</span>
     </p>
-    <ion-button type="submit" [disabled]="!profileForm.valid">Submit</ion-button>
+    <p>
+      Form Submit: <span id="submit">{{submitted}}</span>
+    </p>
+    <ion-button id="submit-button" type="submit" [disabled]="!profileForm.valid">Submit</ion-button>
 
   </form>
   <ion-list>
@@ -71,6 +74,6 @@
     </ion-item>
   </ion-list>
   <p>
-    <ion-button (click)="setValues()" id="set-button">Set values</ion-button>
+    <ion-button (click)="setValues()" id="set-values">Set values</ion-button>
   </p>
 </ion-content>
