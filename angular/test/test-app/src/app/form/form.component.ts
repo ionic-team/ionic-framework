@@ -7,6 +7,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 })
 export class FormComponent {
 
+  submitted = 'false';
   profileForm: FormGroup;
   outsideToggle = new FormControl(true);
 
@@ -18,14 +19,18 @@ export class FormComponent {
       input: ['', Validators.required],
       input2: ['Default Value'],
       checkbox: [false],
-      range: [20, Validators.min(10)],
-    }, {updateOn: 'blur'});
+      range: [5, Validators.min(10)],
+    }, {updateOn: window.location.hash === '#blur' ? 'blur' : 'change'});
+  }
+
+  onSubmit(_ev) {
+    this.submitted = 'true';
   }
 
   setValues() {
     this.profileForm.patchValue({
       datetime: '2010-08-20',
-      setValue: 'nes',
+      select: 'nes',
       toggle: true,
       input: 'Some value',
       input2: 'Another values',
