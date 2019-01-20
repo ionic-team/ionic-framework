@@ -85,6 +85,11 @@
 
 .indeterminate-bar-primary {
   @include position(0, 0, 0, -145.166611%, true);
+
+  @include rtl(true) {
+    animation-name: primary-indeterminate-translate-reverse;
+  }
+
   animation: primary-indeterminate-translate 2s infinite linear;
 
   .progress-indeterminate {
@@ -95,6 +100,11 @@
 
 .indeterminate-bar-secondary {
   @include position(0, 0, 0, -54.888891%, true);
+
+  @include rtl(true) {
+    animation-name: secondary-indeterminate-translate-reverse;
+  }
+
   animation: secondary-indeterminate-translate 2s infinite linear;
 
   .progress-indeterminate {
@@ -107,6 +117,10 @@
 // --------------------------------------------------
 
 .buffer-circles {
+  @include rtl(true) {
+    animation-name: buffering-reverse;
+  }
+
   background: radial-gradient(ellipse at center, var(--buffer-background) 0%, var(--buffer-background) 30%, transparent 30%) repeat-x 5px center;
   background-size: 10px 10px;
 
@@ -242,5 +256,57 @@
 @keyframes buffering {
   to {
     transform: translateX(-10px);
+  }
+}
+
+@keyframes primary-indeterminate-translate-reverse {
+  0% {
+    transform: translateX(0);
+  }
+
+  20% {
+    animation-timing-function: cubic-bezier(.5, 0, .701732, .495819);
+
+    transform: translateX(0);
+  }
+
+  59.15% {
+    animation-timing-function: cubic-bezier(.302435, .381352, .55, .956352);
+
+    transform: translateX(-83.67142%);
+  }
+
+  100% {
+    transform: translateX(-200.611057%);
+  }
+}
+
+@keyframes secondary-indeterminate-translate-reverse {
+  0% {
+    animation-timing-function: cubic-bezier(.15, 0, .515058, .409685);
+
+    transform: translateX(0);
+  }
+
+  25% {
+    animation-timing-function: cubic-bezier(.31033, .284058, .8, .733712);
+
+    transform: translateX(-37.651913%);
+  }
+
+  48.35% {
+    animation-timing-function: cubic-bezier(.4, .627035, .6, .902026);
+
+    transform: translateX(-84.386165%);
+  }
+
+  100% {
+    transform: translateX(-160.277782%);
+  }
+}
+
+@keyframes buffering-reverse {
+  to {
+    transform: translateX(10px);
   }
 }
