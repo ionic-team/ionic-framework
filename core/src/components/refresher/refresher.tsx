@@ -120,6 +120,10 @@ export class Refresher implements ComponentInterface {
 
   componentDidUnload() {
     this.scrollEl = undefined;
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
   }
 
   /**
