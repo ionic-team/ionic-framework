@@ -864,7 +864,7 @@ ion-router-outlet,prop,animation,((Animation: Animation, baseEl: any, opts?: any
 ion-router,none
 ion-router,prop,root,string,'/',false,false
 ion-router,prop,useHash,boolean,true,false,false
-ion-router,method,goBack,goBack() => Promise<void>
+ion-router,method,back,back() => Promise<void>
 ion-router,method,push,push(url: string, direction?: RouterDirection) => Promise<boolean>
 ion-router,event,ionRouteDidChange,RouterEventDetail,true
 ion-router,event,ionRouteWillChange,RouterEventDetail,true

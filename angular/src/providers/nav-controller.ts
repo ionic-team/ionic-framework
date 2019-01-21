@@ -3,6 +3,8 @@ import { Injectable, Optional } from '@angular/core';
 import { NavigationExtras, NavigationStart, Router, UrlTree } from '@angular/router';
 import { NavDirection, RouterDirection } from '@ionic/core';
 
+import { IonRouterOutlet } from '../directives/navigation/ion-router-outlet';
+
 import { Platform } from './platform';
 
 export interface AnimationOptions {
@@ -17,6 +19,7 @@ export interface NavigationOptions extends NavigationExtras, AnimationOptions {}
 })
 export class NavController {
 
+  private topOutlet?: IonRouterOutlet;
   private direction: 'forward' | 'back' | 'root' | 'auto' = DEFAULT_DIRECTION;
   private animated?: NavDirection = DEFAULT_ANIMATED;
   private guessDirection: RouterDirection = 'forward';
@@ -41,7 +44,7 @@ export class NavController {
     }
 
     // Subscribe to backButton events
-    platform.backButton.subscribeWithPriority(0, () => this.goBack());
+    platform.backButton.subscribeWithPriority(0, () => this.pop());
   }
 
   navigateForward(url: string | UrlTree | any[], options: NavigationOptions = {}): Promise<boolean> {
@@ -67,14 +70,30 @@ export class NavController {
     }
   }
 
-  goBack(options: AnimationOptions = { animated: true, animationDirection: 'back' }) {
+  back(options: AnimationOptions = { animated: true, animationDirection: 'back' }) {
     this.setDirection('back', options.animated, options.animationDirection);
     return this.location.back();
+   }
+
+  async pop() {
+    let outlet = this.topOutlet;
+
+    while (outlet) {
+      if (await outlet.pop()) {
+        break;
+      } else {
+        outlet = outlet.parentOutlet;
+      }
+    }
    }
 
   setDirection(direction: RouterDirection, animated?: boolean, animationDirection?: 'forward' | 'back') {
     this.direction = direction;
     this.animated = getAnimation(direction, animated, animationDirection);
+  }
+
+  setTopOutlet(outlet: IonRouterOutlet) {
+    this.topOutlet = outlet;
   }
 
   consumeTransition() {
