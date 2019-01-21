@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Icon - Direction</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Icon - Direction</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content padding>
+      <h1>Do not Flip</h1>
+      <ion-icon name="call" color="primary"></ion-icon>
+      <ion-icon name="cut" color="secondary"></ion-icon>
+      <ion-icon name="journal" color="tertiary"></ion-icon>
+      <ion-icon name="alarm" color="success"></ion-icon>
+      <ion-icon name="checkbox" color="warning"></ion-icon>
+      <ion-icon name="brush" color="danger"></ion-icon>
+      <ion-icon name="bicycle" color="medium"></ion-icon>
+
+      <h1>Flip</h1>
+      <ion-icon name="call" color="primary" flip-rtl></ion-icon>
+      <ion-icon name="cut" color="secondary" flip-rtl></ion-icon>
+      <ion-icon name="journal" color="tertiary" flip-rtl></ion-icon>
+      <ion-icon name="alarm" color="success" flip-rtl></ion-icon>
+      <ion-icon name="checkbox" color="warning" flip-rtl></ion-icon>
+      <ion-icon name="brush" color="danger" flip-rtl></ion-icon>
+      <ion-icon name="bicycle" color="medium" flip-rtl></ion-icon>
+
+      <h1>Auto Flip</h1>
+      <ion-icon name="arrow-dropright"></ion-icon>
+      <ion-icon name="arrow-dropright-circle"></ion-icon>
+      <ion-icon name="arrow-forward"></ion-icon>
+      <ion-icon name="arrow-round-forward"></ion-icon>
+      <br>
+      <ion-icon name="arrow-dropleft"></ion-icon>
+      <ion-icon name="arrow-dropleft-circle"></ion-icon>
+      <ion-icon name="arrow-back"></ion-icon>
+      <ion-icon name="arrow-round-back"></ion-icon>
+      <h1>Un-flip</h1>
+      <ion-icon name="arrow-dropright" flip-rtl="false"></ion-icon>
+      <ion-icon name="arrow-dropright-circle" flip-rtl="false"></ion-icon>
+      <ion-icon name="arrow-forward" flip-rtl="false"></ion-icon>
+      <ion-icon name="arrow-round-forward" flip-rtl="false"></ion-icon>
+      <br>
+      <ion-icon name="arrow-dropleft" flip-rtl="false"></ion-icon>
+      <ion-icon name="arrow-dropleft-circle" flip-rtl="false"></ion-icon>
+      <ion-icon name="arrow-back" flip-rtl="false"></ion-icon>
+      <ion-icon name="arrow-round-back" flip-rtl="false"></ion-icon>
+    </ion-content>
+
+    <style>
+      ion-icon {
+        font-size: 40px;
+      }
+    </style>
+  </ion-app>
+</body>
+</html>

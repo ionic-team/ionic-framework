@@ -30,7 +30,7 @@
     "loader/"
   ],
   "dependencies": {
-    "ionicons": "4.5.1"
+    "ionicons": "4.5.2"
   },
   "devDependencies": {
     "@stencil/core": "0.16.3",
