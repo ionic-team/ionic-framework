@@ -3624,7 +3624,7 @@ export namespace Components {
     /**
     * Go back to previous page in the window.history.
     */
-    'goBack': () => Promise<void>;
+    'back': () => Promise<void>;
     'navChanged': (direction: RouterDirection) => Promise<boolean>;
     'printDebug': () => void;
     /**

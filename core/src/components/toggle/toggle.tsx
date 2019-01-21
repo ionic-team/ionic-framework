@@ -118,6 +118,13 @@ export class Toggle implements ComponentInterface {
     this.disabledChanged();
   }
 
+  componentDidUnload() {
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
+  }
+
   @Listen('click')
   onClick() {
     if (this.lastDrag + 300 < Date.now()) {
