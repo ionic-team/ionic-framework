@@ -84,6 +84,10 @@ export class ReorderGroup implements ComponentInterface {
 
   componentDidUnload() {
     this.onEnd();
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
   }
 
   /**
@@ -106,7 +110,6 @@ export class ReorderGroup implements ComponentInterface {
     }
     const item = findReorderItem(reorderEl, this.el);
     if (!item) {
-      console.error('reorder node not found');
       return false;
     }
     ev.data = item;
@@ -303,16 +306,14 @@ function indexForItem(element: any): number {
   return element['$ionIndex'];
 }
 
-function findReorderItem(node: HTMLElement, container: HTMLElement): HTMLElement | undefined {
-  let nested = 0;
-  let parent;
-  while (node && nested < 6) {
-    parent = node.parentNode as HTMLElement;
+function findReorderItem(node: HTMLElement | null, container: HTMLElement): HTMLElement | undefined {
+  let parent: HTMLElement | null;
+  while (node) {
+    parent = node.parentElement;
     if (parent === container) {
       return node;
     }
     node = parent;
-    nested++;
   }
   return undefined;
 }
