@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +26,7 @@ import { NavComponent } from './nav/nav.component';
 import { ViewChildComponent } from './view-child/view-child.component';
 import { ProvidersComponent } from './providers/providers.component';
 import { SlidesComponent } from './slides/slides.component';
+import { FormComponent } from './form/form.component';
 
 @NgModule({
   declarations: [
@@ -48,12 +50,14 @@ import { SlidesComponent } from './slides/slides.component';
     NavComponent,
     ViewChildComponent,
     ProvidersComponent,
-    SlidesComponent
+    SlidesComponent,
+    FormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule.forRoot(),
   ],
   entryComponents: [

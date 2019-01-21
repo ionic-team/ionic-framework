@@ -83,7 +83,7 @@ export class Router implements ComponentInterface {
 
   @Listen('document:ionBackButton')
   protected onBackButton(ev: BackButtonEvent) {
-    ev.detail.register(0, () => this.goBack());
+    ev.detail.register(0, () => this.back());
   }
 
   /**
@@ -105,7 +105,7 @@ export class Router implements ComponentInterface {
    * Go back to previous page in the window.history.
    */
   @Method()
-  goBack() {
+  back() {
     this.win.history.back();
     return Promise.resolve(this.waitPromise);
   }

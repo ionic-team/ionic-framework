@@ -76,8 +76,11 @@ export class StackController {
   pop(deep: number, stackId = this.getActiveStackId()) {
     return this.zone.run(() => {
       const views = this.getStack(stackId);
+      if (views.length <= deep) {
+        return Promise.resolve(false);
+      }
       const view = views[views.length - deep - 1];
-      return this.navCtrl.navigateBack(view.url);
+      return this.navCtrl.navigateBack(view.url).then(() => true);
     });
   }
 
