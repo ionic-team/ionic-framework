@@ -83,6 +83,10 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
 
   componentDidUnload() {
     this.activeEl = this.activeComponent = undefined;
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
   }
 
   /** @internal */

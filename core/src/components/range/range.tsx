@@ -183,6 +183,13 @@ export class Range implements ComponentInterface {
     this.gesture.setDisabled(this.disabled);
   }
 
+  componentDidUnload() {
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
+  }
+
   private handleKeyboard = (knob: KnobName, isIncrease: boolean) => {
     let step = this.step;
     step = step > 0 ? step : 1;
