@@ -1,4 +1,4 @@
-import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, NgZone, OnDestroy, OnInit, Optional, Output, ViewContainerRef } from '@angular/core';
+import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, NgZone, OnDestroy, OnInit, Optional, Output, SkipSelf, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ChildrenOutletContexts, OutletContext, PRIMARY_OUTLET, Router } from '@angular/router';
 
 import { Config } from '../../providers/config';
@@ -51,11 +51,12 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     @Optional() @Attribute('tabs') tabs: string,
     private changeDetector: ChangeDetectorRef,
     private config: Config,
-    navCtrl: NavController,
+    private navCtrl: NavController,
     elementRef: ElementRef,
     router: Router,
     zone: NgZone,
-    activatedRoute: ActivatedRoute
+    activatedRoute: ActivatedRoute,
+    @SkipSelf() @Optional() readonly parentOutlet?: IonRouterOutlet
   ) {
     this.nativeEl = elementRef.nativeElement;
     this.name = name || PRIMARY_OUTLET;
@@ -175,6 +176,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 
     this.activatedView = enteringView;
     this.stackCtrl.setActive(enteringView).then(data => {
+      this.navCtrl.setTopOutlet(this);
       this.activateEvents.emit(cmpRef.instance);
       this.stackEvents.emit(data);
     });
