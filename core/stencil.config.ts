@@ -79,7 +79,6 @@ export const config: Config = {
     },
     {
       type: 'angular',
-      useDirectives: false,
       componentCorePackage: '@ionic/core',
       directivesProxyFile: '../angular/src/directives/proxies.ts',
       directivesUtilsFile: '../angular/src/directives/proxies-utils.ts',
