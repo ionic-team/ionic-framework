@@ -27,6 +27,9 @@ import { ViewChildComponent } from './view-child/view-child.component';
 import { ProvidersComponent } from './providers/providers.component';
 import { SlidesComponent } from './slides/slides.component';
 import { FormComponent } from './form/form.component';
+import { NavigationPage1Component } from './navigation-page1/navigation-page1.component';
+import { NavigationPage2Component } from './navigation-page2/navigation-page2.component';
+import { NavigationPage3Component } from './navigation-page3/navigation-page3.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +54,10 @@ import { FormComponent } from './form/form.component';
     ViewChildComponent,
     ProvidersComponent,
     SlidesComponent,
-    FormComponent
+    FormComponent,
+    NavigationPage1Component,
+    NavigationPage2Component,
+    NavigationPage3Component
   ],
   imports: [
     BrowserModule,
