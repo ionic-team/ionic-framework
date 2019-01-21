@@ -182,6 +182,14 @@ export class Textarea implements ComponentInterface {
     }
   }
 
+  /**
+   * Returns the native `<textarea>` element used under the hood.
+   */
+  @Method()
+  getInputElement(): Promise<HTMLTextAreaElement> {
+    return Promise.resolve(this.nativeInput!);
+  }
+
   private emitStyle() {
     this.ionStyle.emit({
       'interactive': true,

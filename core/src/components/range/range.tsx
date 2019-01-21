@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { Color, Gesture, GestureDetail, KnobName, Mode, RangeChangeEventDetail, RangeValue, StyleEventDetail } from '../../interface';
 import { clamp, debounceEvent } from '../../utils/helpers';
@@ -145,6 +145,24 @@ export class Range implements ComponentInterface {
    */
   @Event() ionBlur!: EventEmitter<void>;
 
+  @Listen('focusout')
+  onBlur() {
+    if (this.hasFocus) {
+      this.hasFocus = false;
+      this.ionBlur.emit();
+      this.emitStyle();
+    }
+  }
+
+  @Listen('focusin')
+  onFocus() {
+    if (!this.hasFocus) {
+      this.hasFocus = true;
+      this.ionFocus.emit();
+      this.emitStyle();
+    }
+  }
+
   componentWillLoad() {
     this.updateRatio();
     this.debounceChanged();
@@ -165,7 +183,14 @@ export class Range implements ComponentInterface {
     this.gesture.setDisabled(this.disabled);
   }
 
-  private handleKeyboard = (knob: string, isIncrease: boolean) => {
+  componentDidUnload() {
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
+  }
+
+  private handleKeyboard = (knob: KnobName, isIncrease: boolean) => {
     let step = this.step;
     step = step > 0 ? step : 1;
     step = step / (this.max - this.min);
@@ -200,29 +225,12 @@ export class Range implements ComponentInterface {
 
   private emitStyle() {
     this.ionStyle.emit({
+      'interactive': true,
       'interactive-disabled': this.disabled
     });
   }
 
-  private fireBlur() {
-    if (this.hasFocus) {
-      this.hasFocus = false;
-      this.ionBlur.emit();
-      this.emitStyle();
-    }
-  }
-
-  private fireFocus() {
-    if (!this.hasFocus) {
-      this.hasFocus = true;
-      this.ionFocus.emit();
-      this.emitStyle();
-    }
-  }
-
   private onStart(detail: GestureDetail) {
-    this.fireFocus();
-
     const rect = this.rect = this.rangeSlider!.getBoundingClientRect() as any;
     const currentX = detail.currentX;
 
@@ -233,6 +241,8 @@ export class Range implements ComponentInterface {
       Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio)
         ? 'A'
         : 'B';
+
+    this.setFocus(this.pressedKnob);
 
     // update the active knob's position
     this.update(currentX);
@@ -245,7 +255,6 @@ export class Range implements ComponentInterface {
   private onEnd(detail: GestureDetail) {
     this.update(detail.currentX);
     this.pressedKnob = undefined;
-    this.fireBlur();
   }
 
   private update(currentX: number) {
@@ -255,8 +264,11 @@ export class Range implements ComponentInterface {
     let ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
     if (this.snaps) {
       // snaps the ratio to the current value
-      const value = ratioToValue(ratio, this.min, this.max, this.step);
-      ratio = valueToRatio(value, this.min, this.max);
+      ratio = valueToRatio(
+        ratioToValue(ratio, this.min, this.max, this.step),
+        this.min,
+        this.max
+      );
     }
 
     // update which knob is pressed
@@ -315,6 +327,15 @@ export class Range implements ComponentInterface {
         };
 
     this.noUpdate = false;
+  }
+
+  private setFocus(knob: KnobName) {
+    if (this.el.shadowRoot) {
+      const knobEl = this.el.shadowRoot.querySelector(knob === 'A' ? '.range-knob-a' : '.range-knob-b') as HTMLElement | undefined;
+      if (knobEl) {
+        knobEl.focus();
+      }
+    }
   }
 
   hostData() {
@@ -401,7 +422,7 @@ export class Range implements ComponentInterface {
 }
 
 interface RangeKnob {
-  knob: string;
+  knob: KnobName;
   value: number;
   ratio: number;
   min: number;
@@ -410,7 +431,7 @@ interface RangeKnob {
   pressed: boolean;
   pin: boolean;
 
-  handleKeyboard: (name: string, isIncrease: boolean) => void;
+  handleKeyboard: (name: KnobName, isIncrease: boolean) => void;
 }
 
 function renderKnob({ knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard }: RangeKnob) {
@@ -431,6 +452,8 @@ function renderKnob({ knob, value, ratio, min, max, disabled, pressed, pin, hand
       }}
       class={{
         'range-knob-handle': true,
+        'range-knob-a': knob === 'A',
+        'range-knob-b': knob === 'B',
         'range-knob-pressed': pressed,
         'range-knob-min': value === min,
         'range-knob-max': value === max

@@ -16,8 +16,9 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 export class Toggle implements ComponentInterface {
 
   private inputId = `ion-tg-${toggleIds++}`;
-  private pivotX = 0;
   private gesture?: Gesture;
+  private buttonEl?: HTMLElement;
+  private lastDrag = 0;
 
   @Element() el!: HTMLElement;
 
@@ -108,17 +109,27 @@ export class Toggle implements ComponentInterface {
       queue: this.queue,
       gestureName: 'toggle',
       gesturePriority: 100,
-      threshold: 0,
-      onStart: ev => this.onStart(ev),
+      threshold: 5,
+      passive: false,
+      onStart: () => this.onStart(),
       onMove: ev => this.onMove(ev),
       onEnd: ev => this.onEnd(ev),
     });
     this.disabledChanged();
   }
 
+  componentDidUnload() {
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
+  }
+
   @Listen('click')
   onClick() {
-    this.checked = !this.checked;
+    if (this.lastDrag + 300 < Date.now()) {
+      this.checked = !this.checked;
+    }
   }
 
   private emitStyle() {
@@ -127,36 +138,35 @@ export class Toggle implements ComponentInterface {
     });
   }
 
-  private onStart(detail: GestureDetail) {
-    this.pivotX = detail.currentX;
+  private onStart() {
     this.activated = true;
 
     // touch-action does not work in iOS
-    detail.event.preventDefault();
-    return true;
+    this.setFocus();
   }
 
   private onMove(detail: GestureDetail) {
-    const currentX = detail.currentX;
-    if (shouldToggle(this.checked, currentX - this.pivotX, -15)) {
+    if (shouldToggle(this.checked, detail.deltaX, -10)) {
       this.checked = !this.checked;
-      this.pivotX = currentX;
       hapticSelection();
     }
   }
 
-  private onEnd(detail: GestureDetail) {
-    const delta = detail.currentX - this.pivotX;
-    if (shouldToggle(this.checked, delta, 4)) {
-      this.checked = !this.checked;
-      hapticSelection();
-    }
-
+  private onEnd(ev: GestureDetail) {
     this.activated = false;
+    this.lastDrag = Date.now();
+    ev.event.preventDefault();
+    ev.event.stopImmediatePropagation();
   }
 
   private getValue() {
     return this.value || '';
+  }
+
+  private setFocus() {
+    if (this.buttonEl) {
+      this.buttonEl.focus();
+    }
   }
 
   private onFocus = () => {
@@ -205,6 +215,7 @@ export class Toggle implements ComponentInterface {
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         disabled={this.disabled}
+        ref={el => this.buttonEl = el}
       >
       </button>
     ];
