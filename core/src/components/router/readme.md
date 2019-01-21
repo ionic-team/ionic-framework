@@ -69,7 +69,7 @@ If you're using Angular, please see [ion-router-outlet](../router-outlet) instea
 
 ## Methods
 
-### `goBack() => Promise<void>`
+### `back() => Promise<void>`
 
 Go back to previous page in the window.history.
 
