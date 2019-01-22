@@ -2,7 +2,7 @@ import { Components } from '@ionic/core';
 import { createOverlayComponent } from './createOverlayComponent';
 import { Omit } from './types';
 
-export type PopoverOptions = Omit<Components.IonPopoverAttributes, 'delegate' | 'overlayIndex' | 'component' | 'componentProps'> & {
+export type PopoverOptions = Omit<Components.IonPopoverAttributes, 'component' | 'componentProps'> & {
   children: React.ReactNode;
 };
 
