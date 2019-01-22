@@ -90,11 +90,11 @@ async function getDevVersion(originalVersion) {
 
   const d = new Date();
 
-  let timestamp = (d.getUTCFullYear() + '');
-  timestamp += ('0' + (d.getUTCMonth() + 1)).slice(-2);
-  timestamp += ('0' + d.getUTCDate()).slice(-2);
-  timestamp += ('0' + d.getUTCHours()).slice(-2);
-  timestamp += ('0' + d.getUTCMinutes()).slice(-2);
+  let timestamp = d.getUTCFullYear().toString();
+  timestamp += (d.getUTCMonth() + 1).toString().padStart(2, '0');
+  timestamp += d.getUTCDate().toString().padStart(2, '0');
+  timestamp += d.getUTCHours().toString().padStart(2, '0');
+  timestamp += d.getUTCMinutes().toString().padStart(2, '0');
 
   return `${baseVersion}-${DIST_TAG}.${timestamp}.${shortSha}`;
 }

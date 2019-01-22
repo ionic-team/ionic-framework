@@ -86,6 +86,7 @@ export class ItemSliding implements ComponentInterface {
   componentDidUnload() {
     if (this.gesture) {
       this.gesture.destroy();
+      this.gesture = undefined;
     }
 
     this.item = null;
