@@ -143,17 +143,12 @@ export class Item implements ComponentInterface {
   }
 
   render() {
-    const { href, detail, mode, win, routerDirection, type } = this;
-    let detailIcon = this.detailIcon;
+    const { href, detail, mode, win, detailIcon, routerDirection, type } = this;
 
     const clickable = this.isClickable();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
     const attrs = TagType === 'button' ? { type } : { href };
     const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
-
-    if (showDetail && detailIcon === 'ios-arrow-forward' && document.dir === 'rtl') {
-      detailIcon = 'ios-arrow-back';
-    }
 
     return [
       <TagType
