@@ -294,6 +294,22 @@ Type: `Promise<void>`
 
 
 
+### `updateAutoHeight(speed?: number | undefined) => Promise<void>`
+
+Force swiper to update its height (when autoHeight enabled) for the duration equal to 'speed' parameter
+
+#### Parameters
+
+| Name    | Type                  | Description |
+| ------- | --------------------- | ----------- |
+| `speed` | `number \| undefined` |             |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 
 ## CSS Custom Properties
 
