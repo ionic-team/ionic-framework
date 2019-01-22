@@ -67,7 +67,7 @@ class IonTabBar extends Component<Props, State> {
     this.props.history.push(e.detail.href);
   }
 
-  renderChild = (activeTab: string) => (child: React.ReactElement<Components.IonTabButtonAttributes>) => {
+  renderChild = (activeTab: string) => (child: React.ReactElement<Components.IonTabButtonAttributes & { onIonTabButtonClick: (e: CustomEvent) => void }>) => {
     const href = (child.props.tab === activeTab) ? this.props.location.pathname : (this.state.tabs[child.props.tab].currentHref);
 
     return React.cloneElement(child, {
