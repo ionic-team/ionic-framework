@@ -10,7 +10,7 @@ export class NavigationPage3Component {
     private navController: NavController
   ) {}
 
-ionViewDidEnter() {
+  ionViewDidEnter() {
     this.navController.navigateRoot('/navigation/page2');
   }
 }
