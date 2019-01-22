@@ -88,6 +88,13 @@
 }
 
 
+// iOS Slotted Toggle
+// --------------------------------------------------
+
+::slotted(ion-toggle[slot="end"]) {
+  @include margin-horizontal(0);
+}
+
 // iOS Stacked / Floating Labels
 // --------------------------------------------------
 
