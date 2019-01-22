@@ -43,6 +43,7 @@ A list of the breaking changes introduced to each component in Ionic Angular v4.
 - [Navbar](#navbar)
 - [Option](#option)
 - [Overlays](#overlays)
+- [Popover](#popover)
 - [Radio](#radio)
 - [Range](#range)
 - [Refresher](#refresher)
@@ -54,6 +55,7 @@ A list of the breaking changes introduced to each component in Ionic Angular v4.
 - [Tabs](#tabs)
 - [Text / Typography](#text--typography)
 - [Theming](#theming)
+- [Toast](#toast)
 - [Toolbar](#toolbar)
 
 
@@ -86,7 +88,7 @@ await actionSheet.present();
 
 ## Alert
 
-The `title`, `subTitle` and `enableBackdropDismiss` properties has been renamed to `header`, `subHeader` and `backdropDismiss` respectivelly.
+The `title`, `subTitle` and `enableBackdropDismiss` properties has been renamed to `header`, `subHeader` and `backdropDismiss` respectively.
 
 **Old Usage Example:**
 
@@ -263,7 +265,7 @@ light:           #f4f4f4
 dark:            #222
 ```
 
-Some of their values have changed and we now include more colors by default:
+Some of their values have changed, and we now include more colors by default:
 
 ```
 primary:         #3880ff
@@ -282,11 +284,11 @@ The `secondary` color saw the largest change. If you were previously using our `
 
 ## Content
 
-Content is now a drop-in replacement for `ion-scroll`, that means `ion-content` is much more flexible today, they can be used anywhere, even in a nested fashion.
+Content is now a drop-in replacement for `ion-scroll`. This makes `ion-content` much more flexible. It can be used anywhere, even nested.
 
-### resize() was removed
+### Method Removed
 
-In Ionic 4, `ion-content` layout is based in flex, that means their size will automatically adjust without requiring to call resize() programmatically.
+The `resize` method has been removed from Content. In Ionic 4, the `ion-content` is based on a flex layout. This means the content size will automatically adjust without requiring a call to `resize()`.
 
 
 ### Attributes Renamed
@@ -381,8 +383,8 @@ The attributes to align the fab horizontally are now combined under the `horizon
 
 | Old Property | New Property         | Property Behavior                                                       |
 |--------------|----------------------|-------------------------------------------------------------------------|
-| left         | Removed              |                                                                         |
-| right        | Removed              |                                                                         |
+| left         | Removed, see `start` |                                                                         |
+| right        | Removed, see `end`   |                                                                         |
 | center       | `horizontal="center"`| Positions to the center of the viewport.                                |
 | start        | `horizontal="start"` | Positions to the left of the viewport in LTR, and to the right in RTL.  |
 | end          | `horizontal="end"`   | Positions to the right of the viewport in LTR, and to the left in RTL.  |
@@ -448,7 +450,7 @@ The `<ion-fab>` container was previously placed inside of the fixed content by d
 
 The Grid has been refactored in order to support css variables and a dynamic number of columns. The following column attributes have been changed.
 
-_In the following examples, `{breakpoint}` refers to the optional screen breakpoint (xs, sm, md, lg, xl) and `{value}` refers to the number of columns._
+_In the following examples, `{breakpoint}` refers to the optional screen breakpoint (xs, sm, md, lg, xl) and `{value}` refers to the number of columns (`auto` or a number between `1` and `12`)._
 
 - `col-{breakpoint}-{value}` attributes have been renamed to `size-{breakpoint}=“{value}”`
 - `offset-{breakpoint}-{value}` attributes have been renamed to `offset-{breakpoint}=“{value}”`
@@ -585,7 +587,7 @@ Item should now be written as an `<ion-item>` element. Ionic will determine when
 
 ### Label Required
 
-Previously an `ion-label` would automatically get added to an `ion-item` if one wasn't provided. Now an `ion-label` should always be added if the component is used to display text.
+Previously an `ion-label` would automatically get added to an `ion-item` if one wasn't provided. Now an `ion-label` should always be added in the item component.
 
 ```html
 <ion-item>
@@ -667,7 +669,7 @@ By default, items that render buttons or anchor tags will show the arrow in `ios
 
 ### Label Required
 
-Previously an `ion-label` would automatically get added to an `ion-item-divider` if one wasn't provided. Now an `ion-label` should always be added if the component is used to display text.
+Previously an `ion-label` would automatically get added to an `ion-item-divider` if one wasn't provided. Now an `ion-label` should always be added around the text.
 
 ```html
 <ion-item-divider>
@@ -695,7 +697,7 @@ These values have been renamed to `"start"` and `"end"` to better align with our
 
 ### Markup Changed
 
-The option component should not be written as a `button` with an `ion-button` directive anymore. It should be written as an `ion-item-option`. This will render a native button element inside of it.
+The option component should now be written as an `ion-item-option`. Previously it was written as a `button` with an `ion-button` directive. The `ion-item-option` element will render a native button element inside of it.
 
 **Old Usage Example:**
 
@@ -736,7 +738,7 @@ The `getSlidingPercent` method has been renamed to `getSlidingRatio` since the f
 
 ### Attributes Renamed
 
-The attributes to set label position for input are now combined under the `position` attribute:
+The attributes to set label position in an item are now combined under the `position` attribute:
 
 | Old Property | New Property         | Property Behavior                                                            |
 |--------------|----------------------|------------------------------------------------------------------------------|
@@ -777,7 +779,7 @@ The attributes to set label position for input are now combined under the `posit
 
 ### Label Required
 
-Previously an `ion-label` would automatically get added to an `ion-list-header` if one wasn't provided. Now an `ion-label` should always be added if the component is used to display text.
+Previously an `ion-label` would automatically get added to an `ion-list-header` if one wasn't provided. Now an `ion-label` should always be added around the text.
 
 ```html
 <ion-list-header>
@@ -787,37 +789,38 @@ Previously an `ion-label` would automatically get added to an `ion-list-header` 
 
 ## Loading
 
-`dismissOnPageChange` was removed. Fortunately all the navigation API is promise based and there are global events  (`ionNavWillChange`) you can listen in order to detect when navigation occurs.
-
-You should take advantage of these APIs in order to dismiss your loading overlay explicitally.
+See [Overlays](#overlays).
 
 
 ## Menu
 
-### Prop renamed
+### Properties Renamed
 
-The `swipeEnabled` prop has been renamed to `swipeGesture`.
-The `content` prop has been renamed to `contentId` and it points to the DOM id of the content:
+- The `swipeEnabled` property has been renamed to `swipeGesture`.
+- The `content` prop has been renamed to `contentId` and it points to the DOM id of the content.
 
 **Old Usage Example:**
 
 ```html
 <ion-menu swipeEnabled="false" content="nav"> </ion-menu>
+
 <ion-nav #nav></ion-nav>
 ```
-
-### Events renamed
-
-- `ionClose` was renamed to `ionDidClose`
-- `ionOpen` was renamed to `ionDidOpen`
-
 
 **New Usage Example:**
 
 ```html
 <ion-menu swipeGesture="false" contentId="nav"> </ion-menu>
+
 <ion-nav id="nav"></ion-nav>
 ```
+
+
+### Events Renamed
+
+- `ionClose` was renamed to `ionDidClose`
+- `ionOpen` was renamed to `ionDidOpen`
+
 
 ## Menu Toggle
 
@@ -897,19 +900,19 @@ export class MyPage {
 
 ## Nav
 
-### Method renamed
+### Method Renamed
 
-The `remove` method has been renamed to `removeIndex` to avoid conflicts with HTML and be more descriptive as to what it does.
-The `getActiveChildNavs` method has been renamed to `getChildNavs`.
+- The `remove` method has been renamed to `removeIndex` to avoid conflicts with HTML and be more descriptive as to what it does.
+- The `getActiveChildNavs` method has been renamed to `getChildNavs`.
 
-### Prop renamed
+### Prop Renamed
 
-The `swipeBackEnabled` prop has been renamed to `swipeGesture`.
+- The `swipeBackEnabled` prop has been renamed to `swipeGesture`.
 
 
 ## Navbar
 
-The `<ion-navbar>` component has been removed in favor of always using an `<ion-toolbar>` with an added back button:
+The `<ion-navbar>` component has been removed in favor of always using an `<ion-toolbar>` with an explicit back button:
 
 **Old Usage Example:**
 
@@ -931,6 +934,7 @@ The `<ion-navbar>` component has been removed in favor of always using an `<ion-
 ```
 
 See the [back button](#back-button) changes for more information.
+
 
 ## Option
 
@@ -958,19 +962,16 @@ Select's option element should now be written as `<ion-select-option>`. This mak
 </ion-select>
 ```
 
-### Class Changed
+### Class Renamed
 
 The class has been renamed from `Option` to `SelectOption` to keep it consistent with the element tag name.
+
 
 ## Overlays
 
 ### Markup Changed
 
-Action Sheet, Alert, Loading, Modal, Popover, and Toast:
- - Should now use `async`/`await`
- - `enableBackdropDismiss` has been renamed to `backdropDismiss`.
-
-
+All overlays should now use `async`/`await`. This includes Action Sheet, Alert, Loading, Modal, Popover, and Toast. In addition, the `enableBackdropDismiss` property has been renamed to `backdropDismiss`.
 
 **Old Usage Example:**
 
@@ -1001,12 +1002,42 @@ async presentPopover(ev: any) {
 ```
 
 
+### Property Removed
+
+The `dismissOnPageChange` property of the create was removed from Loading & Toast. All of the navigation API is promise based and there are global events (`ionNavWillChange`, `ionNavDidChange`) that you can listen to in order to detect when navigation occurs.
+
+**Old Usage Example:**
+
+```javascript
+openLoading() {
+  let loading = this.loadingCtrl.create({
+    content: 'Loading...',
+    dismissOnPageChange: true
+  });
+}
+```
+
+**New Usage Example:**
+
+```javascript
+openLoading() {
+  let loading = this.loadingCtrl.create({
+    content: 'Loading...'
+  });
+}
+```
+
+
+## Popover
+
+See [Overlays](#overlays).
+
 
 ## Radio
 
 ### Slot Required
 
-Previously radio was positioned inside of an item automatically or by using `item-left`/`item-right`. It is now required to have a `slot` to be positioned properly.
+Previously radio was positioned inside of an item automatically or by using `item-left`/`item-right`. It is now required to have a `slot` to be positioned properly in an item.
 
 **Old Usage Example:**
 
@@ -1155,7 +1186,7 @@ The `enabled` property (with a default value of `true`) has been renamed to `dis
 
 ## Scroll
 
-`ion-scroll` has been removed, fortunately `ion-content` can work as a drop-in replacement:
+`ion-scroll` has been removed in favor of using `ion-content`:
 
 ```diff
 - <ion-scroll scrollX="true">
@@ -1440,11 +1471,18 @@ The `ios` and `ios-small` spinner's have been renamed to `lines` and `lines-smal
 
 ## Tabs
 
-### Breaking changes
+Tabs has been completely refactored for Ionic 4. In Ionic 3 there was a lot of magic going on behind the scenes to style and generate the tab bar and buttons. While this made it easy to get up and running using tabs in Ionic, it made it more difficult to customize the tabs.
 
-#### `ion-tabs`
+We decided to rethink the tabs implementation to make it more flexible and easier to theme for your application. In order to accomplish this, there had to be some changes to the markup.
 
-The attributes to position the tabs, change the tab layout, enable the tab highlight and hide the tabs have been removed. Instead use [ion-tab-button](#ion-tab-button)
+
+### `ion-tabs`
+
+The general usage of the `ion-tabs` element hasn't changed too drastically. Its purpose is still mostly the same - it wraps the entire layout.
+
+#### Properties Removed
+
+The attributes to position the tabs, change the tab layout, enable the tab highlight and hide the tabs have been removed. Instead customize this content in the [ion-tab-button](#ion-tab-button).
 
 **Old Usage Example:**
 
@@ -1463,22 +1501,40 @@ The attributes to position the tabs, change the tab layout, enable the tab highl
 ```
 
 
-#### `ion-tab`
+### `ion-tab`
 
-`ion-tab` was removed. Instead you have to use [ion-tab-button](#ion-tab-button).
+The `ion-tab` has been repurposed as a container for the content the tab button should display.
 
-#### `ion-tab-button`
+It can contain inline content (`ion-content`), a navigation component (`ion-nav`) or a router outlet (`ion-router-outlet`). To connect the [ion-tab-button](#ion-tab-button) to the `ion-tab` the tab property must be added to both of these components. For example:
 
-You can add `<ion-label>` and `<ion-icon>` inside `ion-tab-button`. `ion-tab-button` has to be wrapped by `<ion-tab-bar>`.
+```html
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab=”home-view”></ion-tab-button>
+  </ion-tab-bar>
 
-The tab attribute defines the route (which should be shown on switching to this tab).
+  <ion-tab tab=”home-view”></ion-tab>
+</ion-tabs>
+```
+
+### `ion-tab-bar`
+
+A new element, `ion-tab-bar`, creates the tab bar that will contain the tab buttons and allow for full customization. It requires `slot` to be placed properly above or below the content.
+
+### `ion-tab-button`
+
+A new element, `ion-tab-button`, is used to create each button in the tab bar. These could be static links to different routes, buttons with click handlers on them, or link to whole tab views.
+
+You can add `<ion-label>` and `<ion-icon>` inside of an `<ion-tab-button>`. An `<ion-tab-button>` should be wrapped by an `<ion-tab-bar>`.
+
+The tab attribute defines the route to be shown upon clicking on this tab.
 
 **Old Usage Example:**
 
 ```html
 <ion-tabs>
-  <ion-tab tabTitle="Schedule" tabIcon="add"></ion-tab>
   <ion-tab tabTitle="Map" tabIcon="map" tabBadge="2" tabBadgeStyle="danger" enabled="false"></ion-tab>
+  <ion-tab tabTitle="Schedule" tabIcon="add"></ion-tab>
 </ion-tabs>
 ```
 
@@ -1502,6 +1558,8 @@ The tab attribute defines the route (which should be shown on switching to this 
   </ion-tab-bar>
 </ion-tabs>
 ```
+
+See more usage examples in the [Tabs](https://github.com/ionic-team/ionic/blob/master/core/src/components/tabs) documentation.
 
 
 ## Text / Typography
@@ -1673,6 +1731,11 @@ p {
 Sass variables should no longer be used to change Ionic components. We have built Ionic to be customizable using CSS variables, instead.
 
 For more information on theming, check out the [theming documentation](https://beta.ionicframework.com/docs/theming/basics).
+
+
+## Toast
+
+See [Overlays](#overlays).
 
 
 ## Toolbar
