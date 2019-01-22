@@ -34,6 +34,20 @@ import { ToastOptions } from './toast-options';
  * will dismiss the toast. To dismiss the toast after creation, call the `dismiss()`
  * method on the Toast instance. The `onDidDismiss` function can be called to perform an action after the toast
  * is dismissed.
+ * You can pass the data and the role of the `onDidDismiss` event by the following method:
+ * ```ts
+ * ...
+ * toast.onDidDismiss((data, role) => {
+ *   if (role == 'close') {
+ *     console.log('Close button clicked');
+ *   } else {
+ *     console.log('Toast has been dismissed');
+ *   }
+ * });
+ * ...
+ * ```
+ * On this example, we can check weather the toast has been dismissed by the duration property or if
+ * it has been dismissed by the user when clicked on the close button.
  *
  * @usage
  * ```ts
