@@ -30,16 +30,16 @@
     "loader/"
   ],
   "dependencies": {
-    "ionicons": "4.5.1"
+    "ionicons": "4.5.5"
   },
   "devDependencies": {
     "@stencil/core": "0.17.0",
     "@stencil/sass": "0.1.1",
     "@stencil/utils": "latest",
     "@types/jest": "^23.3.13",
+    "@types/node": "10.12.18",
     "@types/puppeteer": "1.6.4",
     "@types/swiper": "4.4.1",
-    "@types/node": "10.12.18",
     "agadoo": "^1.0.0",
     "autoprefixer": "9.4.6",
     "aws-sdk": "^2.320.0",
