@@ -21,6 +21,7 @@ A list of the breaking changes introduced to each component in Ionic Angular v4.
 - [Back Button](#back-button)
 - [Button](#button)
 - [Colors](#colors)
+- [Component Imports](#component-imports)
 - [Content](#content)
 - [Datetime](#datetime)
 - [Dynamic Mode](#dynamic-mode)
@@ -280,6 +281,17 @@ dark:            #222428
 ```
 
 The `secondary` color saw the largest change. If you were previously using our `secondary` color we recommend switching to `success` instead.
+
+
+## Component Imports
+
+For consistency with other frameworks and the rest of APIs and tooling, the exported
+Ionic components are now prefixed with `Ion`:
+
+```diff
+- import { Input, List, Slides } from 'ionic-angular';
++ import { IonInput, IonList, IonSlides } from '@ionic/angular';
+```
 
 
 ## Content
