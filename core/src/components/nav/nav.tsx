@@ -130,6 +130,7 @@ export class Nav implements NavOutlet {
 
     if (this.gesture) {
       this.gesture.destroy();
+      this.gesture = undefined;
     }
 
     // release swipe back gesture and transition

@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
 
 import { Color, Config, Mode, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { isPlatform } from '../../utils/platform';
@@ -113,8 +113,14 @@ export class Content implements ComponentInterface {
   }
 
   componentDidUnload() {
-    if (this.watchDog) {
-      clearInterval(this.watchDog);
+    this.onScrollEnd();
+  }
+
+  @Listen('click', { capture: true })
+  onClick(ev: Event) {
+    if (this.isScrolling) {
+      ev.preventDefault();
+      ev.stopPropagation();
     }
   }
 
@@ -269,13 +275,14 @@ export class Content implements ComponentInterface {
   }
 
   private onScrollEnd() {
-
     clearInterval(this.watchDog);
     this.watchDog = null;
-    this.isScrolling = false;
-    this.ionScrollEnd.emit({
-      isScrolling: false
-    });
+    if (this.isScrolling) {
+      this.isScrolling = false;
+      this.ionScrollEnd.emit({
+        isScrolling: false
+      });
+    }
   }
 
   hostData() {

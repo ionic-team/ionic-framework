@@ -297,6 +297,7 @@ ion-datetime,prop,name,string,this.inputId,false,false
 ion-datetime,prop,pickerFormat,string | undefined,undefined,false,false
 ion-datetime,prop,pickerOptions,undefined | { columns?: PickerColumn[] | undefined; buttons?: PickerButton[] | undefined; cssClass?: string | string[] | undefined; backdropDismiss?: boolean | undefined; animated?: boolean | undefined; mode?: "ios" | "md" | undefined; keyboardClose?: boolean | undefined; id?: string | undefined; enterAnimation?: AnimationBuilder | undefined; leaveAnimation?: AnimationBuilder | undefined; },undefined,false,false
 ion-datetime,prop,placeholder,null | string | undefined,undefined,false,false
+ion-datetime,prop,readonly,boolean,false,false,false
 ion-datetime,prop,value,null | string | undefined,undefined,false,false
 ion-datetime,prop,yearValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,method,open,open() => Promise<void>
@@ -419,6 +420,7 @@ ion-input,prop,spellcheck,boolean,false,false,false
 ion-input,prop,step,string | undefined,undefined,false,false
 ion-input,prop,type,"date" | "email" | "number" | "password" | "search" | "tel" | "text" | "time" | "url",'text',false,false
 ion-input,prop,value,null | string | undefined,'',false,false
+ion-input,method,getInputElement,getInputElement() => Promise<HTMLInputElement>
 ion-input,method,setFocus,setFocus() => void
 ion-input,event,ionBlur,void,true
 ion-input,event,ionChange,InputChangeEventDetail,true
@@ -863,7 +865,7 @@ ion-router-outlet,prop,animation,((Animation: Animation, baseEl: any, opts?: any
 ion-router,none
 ion-router,prop,root,string,'/',false,false
 ion-router,prop,useHash,boolean,true,false,false
-ion-router,method,goBack,goBack() => Promise<void>
+ion-router,method,back,back() => Promise<void>
 ion-router,method,push,push(url: string, direction?: RouterDirection) => Promise<boolean>
 ion-router,event,ionRouteDidChange,RouterEventDetail,true
 ion-router,event,ionRouteWillChange,RouterEventDetail,true
@@ -886,6 +888,7 @@ ion-searchbar,prop,showCancelButton,boolean,false,false,false
 ion-searchbar,prop,spellcheck,boolean,false,false,false
 ion-searchbar,prop,type,"email" | "number" | "password" | "search" | "tel" | "text" | "url",'search',false,false
 ion-searchbar,prop,value,null | string | undefined,'',false,false
+ion-searchbar,method,getInputElement,getInputElement() => Promise<HTMLInputElement>
 ion-searchbar,method,setFocus,setFocus() => void
 ion-searchbar,event,ionBlur,void,true
 ion-searchbar,event,ionCancel,void,true
@@ -996,6 +999,7 @@ ion-slides,method,slideTo,slideTo(index: number, speed?: number | undefined, run
 ion-slides,method,startAutoplay,startAutoplay() => Promise<void>
 ion-slides,method,stopAutoplay,stopAutoplay() => Promise<void>
 ion-slides,method,update,update() => Promise<void>
+ion-slides,method,updateAutoHeight,updateAutoHeight(speed?: number | undefined) => Promise<void>
 ion-slides,event,ionSlideDidChange,void,true
 ion-slides,event,ionSlideDoubleTap,void,true
 ion-slides,event,ionSlideDrag,void,true
@@ -1090,6 +1094,7 @@ ion-textarea,prop,rows,number | undefined,undefined,false,false
 ion-textarea,prop,spellcheck,boolean,false,false,false
 ion-textarea,prop,value,null | string | undefined,'',false,false
 ion-textarea,prop,wrap,"hard" | "off" | "soft" | undefined,undefined,false,false
+ion-textarea,method,getInputElement,getInputElement() => Promise<HTMLTextAreaElement>
 ion-textarea,method,setFocus,setFocus() => void
 ion-textarea,event,ionBlur,void,true
 ion-textarea,event,ionChange,TextareaChangeEventDetail,true
