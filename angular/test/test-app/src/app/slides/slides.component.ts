@@ -10,6 +10,7 @@ export class SlidesComponent implements AfterViewInit {
 
   slideIndex = 0;
   slideIndex2 = 0;
+  slidesData = [];
 
   constructor() { }
 
@@ -17,6 +18,11 @@ export class SlidesComponent implements AfterViewInit {
     this.slides.ionSlideDidChange.subscribe(async () => {
       this.slideIndex2 = await this.slides.getActiveIndex();
     });
+  }
+
+  addSlides() {
+    const start = this.slidesData.length + 1;
+    this.slidesData.push(`Slide ${start}`, `Slide ${start + 1}`, `Slide ${start + 2}`);
   }
 
   prevSlide() {

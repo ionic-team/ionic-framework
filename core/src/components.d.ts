@@ -1190,6 +1190,10 @@ export namespace Components {
     */
     'placeholder'?: string | null;
     /**
+    * If `true`, the datetime appears normal but is not interactive.
+    */
+    'readonly': boolean;
+    /**
     * The value of the datetime as a valid ISO 8601 datetime string.
     */
     'value'?: string | null;
@@ -1291,6 +1295,10 @@ export namespace Components {
     * The text to display when there's no date selected yet. Using lowercase to match the input attribute
     */
     'placeholder'?: string | null;
+    /**
+    * If `true`, the datetime appears normal but is not interactive.
+    */
+    'readonly'?: boolean;
     /**
     * The value of the datetime as a valid ISO 8601 datetime string.
     */
@@ -1635,6 +1643,10 @@ export namespace Components {
     * If `true`, the user cannot interact with the input.
     */
     'disabled': boolean;
+    /**
+    * Returns the native `<input>` element used under the hood.
+    */
+    'getInputElement': () => Promise<HTMLInputElement>;
     /**
     * A hint to the browser for which keyboard to display. This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
     */
@@ -3612,7 +3624,7 @@ export namespace Components {
     /**
     * Go back to previous page in the window.history.
     */
-    'goBack': () => Promise<void>;
+    'back': () => Promise<void>;
     'navChanged': (direction: RouterDirection) => Promise<boolean>;
     'printDebug': () => void;
     /**
@@ -3683,6 +3695,10 @@ export namespace Components {
     * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
     */
     'debounce': number;
+    /**
+    * Returns the native `<input>` element used under the hood.
+    */
+    'getInputElement': () => Promise<HTMLInputElement>;
     /**
     * The mode determines which platform styles to use.
     */
@@ -4173,6 +4189,10 @@ export namespace Components {
     * Update the underlying slider implementation. Call this if you've added or removed child slides.
     */
     'update': () => Promise<void>;
+    /**
+    * Force swiper to update its height (when autoHeight enabled) for the duration equal to 'speed' parameter
+    */
+    'updateAutoHeight': (speed?: number | undefined) => Promise<void>;
   }
   interface IonSlidesAttributes extends StencilHTMLAttributes {
     /**
@@ -4522,6 +4542,10 @@ export namespace Components {
     * If `true`, the user cannot interact with the textarea.
     */
     'disabled': boolean;
+    /**
+    * Returns the native `<textarea>` element used under the hood.
+    */
+    'getInputElement': () => Promise<HTMLTextAreaElement>;
     /**
     * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
     */

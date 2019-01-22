@@ -132,6 +132,16 @@ The textarea component accepts the [native textarea attributes](https://develope
 
 ## Methods
 
+### `getInputElement() => Promise<HTMLTextAreaElement>`
+
+Returns the native `<textarea>` element used under the hood.
+
+#### Returns
+
+Type: `Promise<HTMLTextAreaElement>`
+
+
+
 ### `setFocus() => void`
 
 Sets focus on the specified `ion-textarea`. Use this method instead of the global

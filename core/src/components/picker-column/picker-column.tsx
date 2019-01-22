@@ -82,6 +82,10 @@ export class PickerColumnCmp implements ComponentInterface {
   componentDidUnload() {
     cancelAnimationFrame(this.rafId);
     clearTimeout(this.tmrId);
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
   }
 
   private setSelected(selectedIndex: number, duration: number) {
