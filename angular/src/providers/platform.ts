@@ -131,10 +131,45 @@ export class Platform {
     return getPlatforms(window);
   }
 
+  /**
+   * Returns a promise when the platform is ready and native functionality
+   * can be called. If the app is running from within a web browser, then
+   * the promise will resolve when the DOM is ready. When the app is running
+   * from an application engine such as Cordova, then the promise will
+   * resolve when Cordova triggers the `deviceready` event.
+   *
+   * The resolved value is the `readySource`, which states which platform
+   * ready was used. For example, when Cordova is ready, the resolved ready
+   * source is `cordova`. The default ready source value will be `dom`. The
+   * `readySource` is useful if different logic should run depending on the
+   * platform the app is running from. For example, only Cordova can execute
+   * the status bar plugin, so the web should not run status bar plugin logic.
+   *
+   * ```
+   * import { Component } from '@angular/core';
+   * import { Platform } from 'ionic-angular';
+   *
+   * @Component({...})
+   * export MyApp {
+   *   constructor(public platform: Platform) {
+   *     this.platform.ready().then((readySource) => {
+   *       console.log('Platform ready from', readySource);
+   *       // Platform now ready, execute any required native code
+   *     });
+   *   }
+   * }
+   * ```
+   */
   ready(): Promise<string> {
     return this._readyPromise;
   }
 
+  /**
+   * Returns if this app is using right-to-left language direction or not.
+   * We recommend the app's `index.html` file already has the correct `dir`
+   * attribute value set, such as `<html dir="ltr">` or `<html dir="rtl">`.
+   * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
+   */
   get isRTL(): boolean {
     return document.dir === 'rtl';
   }
@@ -146,10 +181,16 @@ export class Platform {
     return readQueryParam(window.location.href, key);
   }
 
+  /**
+   * Returns `true` if the app is in landscape mode.
+   */
   isLandscape(): boolean {
     return !this.isPortrait();
   }
 
+  /**
+   * Returns `true` if the app is in portait mode.
+   */
   isPortrait(): boolean {
     return window.matchMedia('(orientation: portrait)').matches;
   }
@@ -158,14 +199,23 @@ export class Platform {
     return navigator.userAgent.indexOf(expression) >= 0;
   }
 
+  /**
+   * Get the current url.
+   */
   url() {
     return window.location.href;
   }
 
+  /**
+   * Gets the width of the platform's viewport using `window.innerWidth`.
+   */
   width() {
     return window.innerWidth;
   }
 
+  /**
+   * Gets the height of the platform's viewport using `window.innerHeight`.
+   */
   height(): number {
     return window.innerHeight;
   }
