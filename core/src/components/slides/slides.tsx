@@ -162,6 +162,15 @@ export class Slides implements ComponentInterface {
   }
 
   /**
+   * Force swiper to update its height (when autoHeight enabled) for the duration equal to 'speed' parameter
+   */
+  @Method()
+  async updateAutoHeight(speed?: number) {
+    const swiper = await this.getSwiper();
+    swiper.updateAutoHeight(speed);
+  }
+
+  /**
    * Transition to the specified slide.
    */
   @Method()
