@@ -13,57 +13,119 @@
 
 <body>
   <ion-app>
-
     <ion-header>
       <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button class="show-back-button"></ion-back-button>
+        </ion-buttons>
         <ion-title>Icon - Direction</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content padding>
-      <h1>Do not Flip</h1>
-      <ion-icon name="call" color="primary"></ion-icon>
-      <ion-icon name="cut" color="secondary"></ion-icon>
-      <ion-icon name="journal" color="tertiary"></ion-icon>
-      <ion-icon name="alarm" color="success"></ion-icon>
-      <ion-icon name="checkbox" color="warning"></ion-icon>
-      <ion-icon name="brush" color="danger"></ion-icon>
-      <ion-icon name="bicycle" color="medium"></ion-icon>
+    <ion-content>
+      <h1>Flip RTL</h1>
 
-      <h1>Flip</h1>
-      <ion-icon name="call" color="primary" flip-rtl></ion-icon>
-      <ion-icon name="cut" color="secondary" flip-rtl></ion-icon>
-      <ion-icon name="journal" color="tertiary" flip-rtl></ion-icon>
-      <ion-icon name="alarm" color="success" flip-rtl></ion-icon>
-      <ion-icon name="checkbox" color="warning" flip-rtl></ion-icon>
-      <ion-icon name="brush" color="danger" flip-rtl></ion-icon>
-      <ion-icon name="bicycle" color="medium" flip-rtl></ion-icon>
+      <ion-grid>
+        <ion-row align-items-center>
+          <ion-col size="auto"><code>null</code></ion-col>
+          <ion-col><ion-icon name="call" color="primary"></ion-icon></ion-col>
+          <ion-col><ion-icon name="cut" color="secondary"></ion-icon></ion-col>
+          <ion-col><ion-icon name="journal" color="tertiary"></ion-icon></ion-col>
+          <ion-col><ion-icon name="alarm" color="success"></ion-icon></ion-col>
+          <ion-col><ion-icon name="checkbox" color="warning"></ion-icon></ion-col>
+          <ion-col><ion-icon name="brush" color="danger"></ion-icon></ion-col>
+          <ion-col><ion-icon name="bicycle" color="medium"></ion-icon></ion-col>
+        </ion-row>
+        <ion-row align-items-center>
+          <ion-col size="auto"><code>true</code></ion-col>
+          <ion-col><ion-icon name="call" color="primary" flip-rtl></ion-icon></ion-col>
+          <ion-col><ion-icon name="cut" color="secondary" flip-rtl></ion-icon></ion-col>
+          <ion-col><ion-icon name="journal" color="tertiary" flip-rtl></ion-icon></ion-col>
+          <ion-col><ion-icon name="alarm" color="success" flip-rtl></ion-icon></ion-col>
+          <ion-col><ion-icon name="checkbox" color="warning" flip-rtl></ion-icon></ion-col>
+          <ion-col><ion-icon name="brush" color="danger" flip-rtl></ion-icon></ion-col>
+          <ion-col><ion-icon name="bicycle" color="medium" flip-rtl></ion-icon></ion-col>
+        </ion-row>
+      </ion-grid>
 
-      <h1>Auto Flip</h1>
-      <ion-icon name="arrow-dropright"></ion-icon>
-      <ion-icon name="arrow-dropright-circle"></ion-icon>
-      <ion-icon name="arrow-forward"></ion-icon>
-      <ion-icon name="arrow-round-forward"></ion-icon>
-      <br>
-      <ion-icon name="arrow-dropleft"></ion-icon>
-      <ion-icon name="arrow-dropleft-circle"></ion-icon>
-      <ion-icon name="arrow-back"></ion-icon>
-      <ion-icon name="arrow-round-back"></ion-icon>
-      <h1>Un-flip</h1>
-      <ion-icon name="arrow-dropright" flip-rtl="false"></ion-icon>
-      <ion-icon name="arrow-dropright-circle" flip-rtl="false"></ion-icon>
-      <ion-icon name="arrow-forward" flip-rtl="false"></ion-icon>
-      <ion-icon name="arrow-round-forward" flip-rtl="false"></ion-icon>
-      <br>
-      <ion-icon name="arrow-dropleft" flip-rtl="false"></ion-icon>
-      <ion-icon name="arrow-dropleft-circle" flip-rtl="false"></ion-icon>
-      <ion-icon name="arrow-back" flip-rtl="false"></ion-icon>
-      <ion-icon name="arrow-round-back" flip-rtl="false"></ion-icon>
+      <ion-grid>
+        <ion-row align-items-center>
+          <ion-col size="auto"><code>null</code></ion-col>
+          <ion-col><ion-icon name="arrow-dropright"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-dropright-circle"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-forward"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-round-forward"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-dropleft"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-dropleft-circle"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-back"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-round-back"></ion-icon></ion-col>
+        </ion-row>
+        <ion-row align-items-center>
+          <ion-col size="auto"><code>false</code></ion-col>
+          <ion-col><ion-icon name="arrow-dropright" flip-rtl="false"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-dropright-circle" flip-rtl="false"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-forward" flip-rtl="false"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-round-forward" flip-rtl="false"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-dropleft" flip-rtl="false"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-dropleft-circle" flip-rtl="false"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-back" flip-rtl="false"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-round-back" flip-rtl="false"></ion-icon></ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-list>
+        <ion-list-header>
+          <ion-label>Item Detail Icons</ion-label>
+        </ion-list-header>
+
+        <ion-item detail>
+          <ion-label>
+            ion-item [detail] attr
+          </ion-label>
+        </ion-item>
+
+        <ion-item href="#">
+          <ion-label>
+            a[ion-item] w/ push detail
+          </ion-label>
+        </ion-item>
+
+        <ion-item onclick="testClick(event)">
+          <ion-label>
+            button[ion-item] w/ push detail
+          </ion-label>
+        </ion-item>
+
+        <ion-item detail detail-icon="arrow-down">
+          <ion-label>Detail with icon arrow down</ion-label>
+        </ion-item>
+
+        <ion-item detail detail-icon="home">
+          <ion-label>Detail with icon home</ion-label>
+        </ion-item>
+
+        <ion-item detail detail-icon="/src/components/item/test/icons/heart-broken.svg">
+          <ion-label>Detail with custom icon svg</ion-label>
+        </ion-item>
+      </ion-list>
     </ion-content>
 
     <style>
+      h1 {
+        padding-left: 10px;
+        padding-inline-start: 10px;
+      }
+
       ion-icon {
-        font-size: 40px;
+        font-size: 26px;
+      }
+
+      code {
+        background: #e5e5e5;
+      }
+
+      ion-col[size=auto] {
+        width: 60px !important;
       }
     </style>
   </ion-app>
