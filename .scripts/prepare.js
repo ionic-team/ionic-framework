@@ -90,7 +90,7 @@ async function askVersion() {
 }
 
 
-async function preparePackages(packages, version) {
+async function preparePackages(packages, version, install) {
   // execution order matters
   const tasks = [];
 
@@ -103,7 +103,7 @@ async function preparePackages(packages, version) {
   // add all the prepare scripts
   // run all these tasks before updating package.json version
   packages.forEach(package => {
-    common.preparePackage(tasks, package, version);
+    common.preparePackage(tasks, package, version, install);
   });
 
   // add update package.json of each project
