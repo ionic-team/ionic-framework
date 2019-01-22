@@ -4189,6 +4189,10 @@ export namespace Components {
     * Update the underlying slider implementation. Call this if you've added or removed child slides.
     */
     'update': () => Promise<void>;
+    /**
+    * Force swiper to update its height (when autoHeight enabled) for the duration equal to 'speed' parameter
+    */
+    'updateAutoHeight': (speed?: number | undefined) => Promise<void>;
   }
   interface IonSlidesAttributes extends StencilHTMLAttributes {
     /**
