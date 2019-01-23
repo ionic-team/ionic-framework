@@ -45,7 +45,7 @@ describe('form', () => {
     });
 
     it('ion-toggle should change', async () => {
-      await element(by.css('ion-toggle')).click();
+      await element(by.css('form ion-toggle')).click();
       await testData({
         'datetime': '2010-08-20',
         'select': null,
@@ -84,7 +84,7 @@ describe('form', () => {
     });
 
     it('ion-toggle should change only after blur', async () => {
-      await element(by.css('ion-toggle')).click();
+      await element(by.css('form ion-toggle')).click();
       await testData({
         'datetime': '2010-08-20',
         'select': null,

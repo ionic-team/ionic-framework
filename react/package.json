@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -37,13 +37,21 @@
     "@types/node": "10.12.9",
     "@types/react": "16.7.6",
     "@types/react-dom": "16.0.9",
-    "react": "latest",
-    "react-dom": "latest",
-    "typescript": "3.1.1"
+    "@types/react-router": "^4.4.3",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "typescript": "^3.2.2",
+    "np": "^3.1.0"
   },
   "dependencies": {
-    "@ionic/core": "4.0.0-rc.0",
-    "ionicons": "^4.5.0",
-    "np": "^3.1.0"
+    "@ionic/core": "4.0.0-rc.2"
+  },
+  "peerDependencies": {
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1"
   }
 }

@@ -70,18 +70,34 @@
 // iOS Item Slots
 // --------------------------------------------------
 
-::slotted(:not(.interactive)[slot="start"]) {
+::slotted([slot="start"]) {
   @include margin($item-ios-slot-start-margin-top, $item-ios-slot-start-margin-end, $item-ios-slot-start-margin-bottom, $item-ios-slot-start-margin-start);
 }
 
-::slotted(:not(.interactive)[slot="end"]) {
+::slotted([slot="end"]) {
   @include margin($item-ios-slot-end-margin-top, $item-ios-slot-end-margin-end, $item-ios-slot-end-margin-bottom, $item-ios-slot-end-margin-start);
 }
+
+
+// iOS Slotted Icon
+// --------------------------------------------------
 
 ::slotted(ion-icon[slot="start"]),
 ::slotted(ion-icon[slot="end"]) {
   @include margin($item-ios-icon-slot-margin-top, $item-ios-icon-slot-margin-end, $item-ios-icon-slot-margin-bottom, $item-ios-icon-slot-margin-start);
 }
+
+
+// iOS Slotted Toggle
+// --------------------------------------------------
+
+::slotted(ion-toggle[slot="start"]),
+::slotted(ion-toggle[slot="end"]) {
+  @include margin(0);
+}
+
+// iOS Stacked / Floating Labels
+// --------------------------------------------------
 
 :host(.item-label-stacked) ::slotted([slot="end"]),
 :host(.item-label-floating) ::slotted([slot="end"]) {
@@ -122,6 +138,16 @@
   @include margin(($item-ios-padding-end / 2));
 }
 
+
+// iOS Radio / Toggle Item Label
+// -----------------------------------------
+
+:host(.item-radio) ::slotted(ion-label),
+:host(.item-toggle) ::slotted(ion-label) {
+  @include margin-horizontal(0px, null);
+}
+
+
 // TODO: MOVE FROM RADIO
 // iOS Radio Item Label: Checked
 // -----------------------------------------
@@ -129,12 +155,6 @@
 // :host(.item-radio-checked) ::slotted(ion-label) {
 //   color: $radio-ios-color-on;
 // }
-
-
-:host(.item-radio) ::slotted(ion-label),
-:host(.item-toggle) ::slotted(ion-label) {
-  @include margin-horizontal(0px, null);
-}
 
 
 // iOS Slotted Label
