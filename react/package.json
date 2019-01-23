@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -46,8 +46,7 @@
     "np": "^3.1.0"
   },
   "dependencies": {
-    "@ionic/core": "4.0.0-rc.2",
-    "ionicons": "^4.5.0"
+    "@ionic/core": "4.0.0-rc.2"
   },
   "peerDependencies": {
     "react": "^16.7.0",
