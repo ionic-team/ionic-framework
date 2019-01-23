@@ -5,5 +5,9 @@
 // --------------------------------------------------
 
 :host(.menu-type-overlay) .menu-inner {
+  @include rtl(true) {
+    box-shadow: $menu-md-box-shadow-rtl;
+  }
+
   box-shadow: $menu-md-box-shadow;
 }
