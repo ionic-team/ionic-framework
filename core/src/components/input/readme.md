@@ -150,6 +150,16 @@ It is meant for text `type` inputs only, such as `"text"`, `"password"`, `"email
 
 ## Methods
 
+### `getInputElement() => Promise<HTMLInputElement>`
+
+Returns the native `<input>` element used under the hood.
+
+#### Returns
+
+Type: `Promise<HTMLInputElement>`
+
+
+
 ### `setFocus() => void`
 
 Sets focus on the specified `ion-input`. Use this method instead of the global

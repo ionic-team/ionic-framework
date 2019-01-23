@@ -63,6 +63,11 @@
   pointer-events: none;
 }
 
+:host(.button-disabled) .button-native {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
+}
 
 // Solid Button
 // --------------------------------------------------
@@ -227,12 +232,6 @@
 
 .button-native::-moz-focus-inner {
   border: 0;
-}
-
-.button-native[disabled] {
-  cursor: default;
-  opacity: .5;
-  pointer-events: none;
 }
 
 :host(.ion-focused) .button-native {
