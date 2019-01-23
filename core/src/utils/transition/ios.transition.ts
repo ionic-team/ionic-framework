@@ -41,10 +41,11 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
   // setting up enter view
   const contentEl = enteringEl.querySelector(':scope > ion-content');
   const headerEls = enteringEl.querySelectorAll(':scope > ion-header > *:not(ion-toolbar), :scope > ion-footer > *');
-  const enteringToolBarEle = enteringEl.querySelector(':scope > ion-header > ion-toolbar');
+  const enteringToolBarEls = enteringEl.querySelectorAll(':scope > ion-header > ion-toolbar');
   const enteringContent = new AnimationC();
+  console.log(enteringToolBarEls);
 
-  if (!contentEl && !enteringToolBarEle && headerEls.length === 0) {
+  if (!contentEl && enteringToolBarEls.length === 0 && headerEls.length === 0) {
     enteringContent.addElement(enteringEl.querySelector(':scope > .ion-page, :scope > ion-nav, :scope > ion-tabs'));
   } else {
     enteringContent.addElement(contentEl);
@@ -65,7 +66,8 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
       .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
   }
 
-  if (enteringToolBarEle) {
+  for (let i = 0; i < enteringToolBarEls.length; i++) {
+    const enteringToolBarEle = enteringToolBarEls.item(i);
     const enteringToolBar = new AnimationC();
     enteringToolBar.addElement(enteringToolBarEle);
     rootTransition.add(enteringToolBar);
@@ -140,8 +142,9 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
         .fromTo(OPACITY, 1, OFF_OPACITY, true);
     }
 
-    const leavingToolBarEle = leavingEl.querySelector(':scope > ion-header > ion-toolbar');
-    if (leavingToolBarEle) {
+    const leavingToolBarEls = leavingEl.querySelectorAll(':scope > ion-header > ion-toolbar');
+    for (let i = 0; i < leavingToolBarEls.length; i++) {
+      const leavingToolBarEle = leavingToolBarEls.item(i);
       const leavingToolBar = new AnimationC();
       leavingToolBar.addElement(leavingToolBarEle);
 
