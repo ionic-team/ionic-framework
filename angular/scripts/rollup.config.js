@@ -12,7 +12,9 @@ export default {
       return false;
     }
     // anything else is external
-    return !(id.startsWith('.') || id.startsWith('/'));
+    // Windows: C:\xxxxxx\xxx
+    const colonPosition = 1;
+    return !(id.startsWith('.') || id.startsWith('/') || id.charAt(colonPosition) === ':');
   },
   plugins: [
     resolve({
