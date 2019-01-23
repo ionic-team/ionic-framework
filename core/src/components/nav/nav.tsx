@@ -85,7 +85,7 @@ export class Nav implements NavOutlet {
    */
   @Event() ionNavWillLoad!: EventEmitter<void>;
   /**
-   * Event fired when the nav will components
+   * Event fired when the nav will change components
    */
   @Event({ bubbles: false }) ionNavWillChange!: EventEmitter<void>;
   /**
