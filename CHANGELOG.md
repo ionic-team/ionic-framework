@@ -1,3 +1,7 @@
+# [4.0.0 Neutronium](https://github.com/ionic-team/ionic/compare/v4.0.0-rc.3...v4.0.0) (2019-01-23)
+
+Enjoy! 🎈
+
 # [4.0.0-rc.3](https://github.com/ionic-team/ionic/compare/v4.0.0-rc.2...v4.0.0-rc.3) (2019-01-22)
 
 
