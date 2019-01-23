@@ -333,6 +333,35 @@ import { Datetime } from '@ionic/angular';
 Components are no longer able to have their mode changed dynamically. You can change the mode before the first render, but after that it will not style properly because only the initial mode's styles are included.
 
 
+## Events
+
+Events now emit as a [CustomEvent](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent) interface that extends the [Event](https://developer.mozilla.org/en-US/docs/Web/API/Event) interface. This interface includes a `detail` property that holds any data passed when the event is triggered.
+
+This allows you to still get the details of the event. For example, to get the target where the event was dispatched, such as a button that was clicked, you can read in the value of `event.target`.
+
+**Old Usage Example:**
+
+```html
+<ion-select (ionChange)="onSelectChange($event)">
+```
+
+```typescript
+onSelectChange(event) {
+  const value = event.value;
+  console.log('Select value is', value);
+}
+```
+
+**New Usage Example:**
+
+```typescript
+onSelectChange(event: CustomEvent) {
+  const value = event.detail.value;
+  console.log('Select value is', value);
+}
+```
+
+
 ## FAB
 
 ### Markup Changed
@@ -1515,17 +1544,78 @@ The attributes to position the tabs, change the tab layout, enable the tab highl
 
 ### `ion-tab`
 
-The `ion-tab` has been repurposed as a container for the content the tab button should display.
+The `ion-tab` has been removed in the Angular version of Ionic 4. You should use the Angular router with an [ion-tab-button](#ion-tab-button) that has a `tab` property.
 
-It can contain inline content (`ion-content`), a navigation component (`ion-nav`) or a router outlet (`ion-router-outlet`). To connect the [ion-tab-button](#ion-tab-button) to the `ion-tab` the tab property must be added to both of these components. For example:
+```typescript
+import { RouterModule, Routes } from '@angular/router';
+
+import { TabsPage } from './tabs.page';
+
+const routes: Routes = [
+  {
+    path: 'tabs',
+    component: TabsPage,
+    children: [
+      {
+        path: 'tab1',
+        children: [
+          {
+            path: '',
+            loadChildren: '../tab1/tab1.module#Tab1PageModule'
+          }
+        ]
+      },
+      {
+        path: 'tab2',
+        children: [
+          {
+            path: '',
+            loadChildren: '../tab2/tab2.module#Tab2PageModule'
+          }
+        ]
+      },
+      {
+        path: 'tab3',
+        children: [
+          {
+            path: '',
+            loadChildren: '../tab3/tab3.module#Tab3PageModule'
+          }
+        ]
+      },
+      {
+        path: '',
+        redirectTo: '/tabs/tab1',
+        pathMatch: 'full'
+      }
+    ]
+  },
+  {
+    path: '',
+    redirectTo: '/tabs/tab1',
+    pathMatch: 'full'
+  }
+];
+```
 
 ```html
 <ion-tabs>
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab=”home-view”></ion-tab-button>
-  </ion-tab-bar>
+    <ion-tab-button tab="tab1">
+      <ion-icon name="flash"></ion-icon>
+      <ion-label>Tab One</ion-label>
+    </ion-tab-button>
 
-  <ion-tab tab=”home-view”></ion-tab>
+    <ion-tab-button tab="tab2">
+      <ion-icon name="apps"></ion-icon>
+      <ion-label>Tab Two</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab3">
+      <ion-icon name="send"></ion-icon>
+      <ion-label>Tab Three</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
 </ion-tabs>
 ```
 
@@ -1546,7 +1636,6 @@ The tab attribute defines the route to be shown upon clicking on this tab.
 ```html
 <ion-tabs>
   <ion-tab tabTitle="Map" tabIcon="map" tabBadge="2" tabBadgeStyle="danger" enabled="false"></ion-tab>
-  <ion-tab tabTitle="Schedule" tabIcon="add"></ion-tab>
 </ion-tabs>
 ```
 
@@ -1560,12 +1649,6 @@ The tab attribute defines the route to be shown upon clicking on this tab.
       <ion-icon name="map"></ion-icon>
       <ion-label>Map</ion-label>
       <ion-badge color="danger">2</ion-badge>
-    </ion-tab-button>
-
-    <!-- No ion-tab, just a button that looks like a tab -->
-    <ion-tab-button (click)="schedule()">
-      <ion-icon name="add"></ion-icon>
-      <ion-label>Schedule</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
