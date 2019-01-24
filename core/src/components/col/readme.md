@@ -1,6 +1,6 @@
 # ion-col
 
-Columns are cellular components of the [grid](../grid) system and go inside of a [row](../row).
+Columns are cellular components of the [grid](/docs/api/grid) system and go inside of a [row](/docs/api/row).
 They will expand to fill their row. All content within a grid should go inside of a column.
 
 See [Grid Layout](/docs/layout/grid) for more information.
