@@ -1,16 +1,16 @@
 # ion-item-sliding
 
-A sliding item contains an item that can be dragged to reveal buttons. It requires an [item](../item) component as a child. All options to reveal should be placed in the [item options](../item-options) element.
+A sliding item contains an item that can be dragged to reveal buttons. It requires an [item](/docs/api/item) component as a child. All options to reveal should be placed in the [item options](/docs/api/item-options) element.
 
 
 ### Swipe Direction
 
-By default, the buttons are placed on the `"end"` side. This means that options are revealed when the sliding item is swiped from end to start, i.e. from right to left in LTR, but from left to right in RTL. To place them on the opposite side, so that they are revealed when swiping in the opposite direction, set the `side` attribute to `"start"` on the [`ion-item-options`]((../item-options) element. Up to two `ion-item-options` can be used at the same time in order to reveal two different sets of options depending on the swiping direction.
+By default, the buttons are placed on the `"end"` side. This means that options are revealed when the sliding item is swiped from end to start, i.e. from right to left in LTR, but from left to right in RTL. To place them on the opposite side, so that they are revealed when swiping in the opposite direction, set the `side` attribute to `"start"` on the [`ion-item-options`]((/docs/api/item-options) element. Up to two `ion-item-options` can be used at the same time in order to reveal two different sets of options depending on the swiping direction.
 
 
 ### Options Layout
 
-By default if an icon is placed with text in the [item option](../item-option), it will display the icon on top of the text, but the icon slot can be changed to any of the following to position it in the option.
+By default if an icon is placed with text in the [item option](/docs/api/item-option), it will display the icon on top of the text, but the icon slot can be changed to any of the following to position it in the option.
 
 | Slot        | description                                                              |
 | ----------- | ------------------------------------------------------------------------ |
