@@ -1,6 +1,6 @@
 # ion-reorder-group
 
-The reorder group is a wrapper component for items with the `ion-reorder` component, Check [Reorder documentation](../reorder/) for further information about the anchor component that is used to drag items within the `ion-reorder-group` list.
+The reorder group is a wrapper component for items with the `ion-reorder` component, Check the [reorder documentation](/docs/api/reorder/) for further information about the anchor component that is used to drag items within the `ion-reorder-group` list.
 
 Once the user drags an item and drops it in a new position, the `ionItemReorder` event is dispatched. A handler for it must be implemented by the developer to commit changes.
 
