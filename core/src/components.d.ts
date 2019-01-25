@@ -4023,7 +4023,7 @@ export namespace Components {
     /**
     * Opens the select overlay, it could be an alert, action-sheet or popover, based in `ion-select` settings.
     */
-    'open': (ev?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>;
+    'open': (ev?: UIEvent | undefined) => Promise<HTMLIonPopoverElement | HTMLIonActionSheetElement | HTMLIonAlertElement | undefined>;
     /**
     * The text to display when the select is empty.
     */
