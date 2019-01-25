@@ -75,8 +75,11 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
     const enteringTitle = new AnimationC();
     enteringTitle.addElement(enteringToolBarEle.querySelector('ion-title'));
 
-    const enteringToolBarItems = new AnimationC();
-    enteringToolBarItems.addElement(enteringToolBarEle.querySelectorAll('ion-buttons,[menuToggle]'));
+    const enteringToolBarButtons = new AnimationC();
+    enteringToolBarButtons.addElement(enteringToolBarEle.querySelectorAll('ion-buttons,[menuToggle]'));
+
+    const enteringToolbarItems = new AnimationC();
+    enteringToolbarItems.addElement(enteringToolBarEle.querySelectorAll(':scope > *:not(ion-title):not(ion-buttons):not([menuToggle]'));
 
     const enteringToolBarBg = new AnimationC();
     enteringToolBarBg.addElement(shadow(enteringToolBarEle).querySelector('.toolbar-background'));
@@ -87,21 +90,25 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
 
     enteringToolBar
       .add(enteringTitle)
-      .add(enteringToolBarItems)
+      .add(enteringToolBarButtons)
+      .add(enteringToolbarItems)
       .add(enteringToolBarBg)
       .add(enteringBackButton);
 
     enteringTitle.fromTo(OPACITY, 0.01, 1, true);
-    enteringToolBarItems.fromTo(OPACITY, 0.01, 1, true);
+    enteringToolBarButtons.fromTo(OPACITY, 0.01, 1, true);
+    enteringToolbarItems.fromTo(OPACITY, 0.01, 1, true);
 
     if (backDirection) {
       enteringTitle.fromTo(TRANSLATEX, OFF_LEFT, CENTER, true);
+      enteringToolbarItems.fromTo(TRANSLATEX, OFF_LEFT, CENTER, true);
 
       // back direction, entering page has a back button
       enteringBackButton.fromTo(OPACITY, 0.01, 1, true);
     } else {
       // entering toolbar, forward direction
       enteringTitle.fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
+      enteringToolbarItems.fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
 
       enteringToolBarBg
         .beforeClearStyles([OPACITY])
@@ -151,8 +158,11 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
       const leavingTitle = new AnimationC();
       leavingTitle.addElement(leavingToolBarEle.querySelector('ion-title'));
 
-      const leavingToolBarItems = new AnimationC();
-      leavingToolBarItems.addElement(leavingToolBarEle.querySelectorAll('ion-buttons,[menuToggle]'));
+      const leavingToolBarButtons = new AnimationC();
+      leavingToolBarButtons.addElement(leavingToolBarEle.querySelectorAll('ion-buttons,[menuToggle]'));
+
+      const leavingToolbarItems = new AnimationC();
+      leavingToolbarItems.addElement(leavingToolBarEle.querySelectorAll(':scope > *:not(ion-title):not(ion-buttons):not([menuToggle]'));
 
       const leavingToolBarBg = new AnimationC();
       leavingToolBarBg.addElement(shadow(leavingToolBarEle).querySelector('.toolbar-background'));
@@ -163,7 +173,8 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
 
       leavingToolBar
         .add(leavingTitle)
-        .add(leavingToolBarItems)
+        .add(leavingToolBarButtons)
+        .add(leavingToolbarItems)
         .add(leavingBackButton)
         .add(leavingToolBarBg);
 
@@ -172,11 +183,13 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
       // fade out leaving toolbar items
       leavingBackButton.fromTo(OPACITY, 0.99, 0, true);
       leavingTitle.fromTo(OPACITY, 0.99, 0, true);
-      leavingToolBarItems.fromTo(OPACITY, 0.99, 0, true);
+      leavingToolBarButtons.fromTo(OPACITY, 0.99, 0, true);
+      leavingToolbarItems.fromTo(OPACITY, 0.99, 0, true);
 
       if (backDirection) {
         // leaving toolbar, back direction
         leavingTitle.fromTo(TRANSLATEX, CENTER, (isRTL ? '-100%' : '100%'));
+        leavingToolbarItems.fromTo(TRANSLATEX, CENTER, (isRTL ? '-100%' : '100%'));
 
         // leaving toolbar, back direction, and there's no entering toolbar
         // should just slide out, no fading out
@@ -196,10 +209,13 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
         leavingTitle
           .fromTo(TRANSLATEX, CENTER, OFF_LEFT)
           .afterClearStyles([TRANSFORM]);
+        leavingToolbarItems
+          .fromTo(TRANSLATEX, CENTER, OFF_LEFT)
+          .afterClearStyles([TRANSFORM, OPACITY]);
 
         leavingBackButton.afterClearStyles([OPACITY]);
         leavingTitle.afterClearStyles([OPACITY]);
-        leavingToolBarItems.afterClearStyles([OPACITY]);
+        leavingToolBarButtons.afterClearStyles([OPACITY]);
       }
     }
   }
