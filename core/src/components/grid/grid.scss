@@ -24,6 +24,8 @@
   @include margin-horizontal(auto);
 
   display: block;
+
+  flex: 1;
 }
 
 // Fixed Grid
