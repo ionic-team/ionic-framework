@@ -1029,6 +1029,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * If you want to customize scrolling bar, set this property to `true`.
+    */
+    'customScrollBar': boolean;
+    /**
     * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.
     */
     'forceOverscroll'?: boolean;
@@ -1074,6 +1078,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * If you want to customize scrolling bar, set this property to `true`.
+    */
+    'customScrollBar'?: boolean;
     /**
     * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.
     */

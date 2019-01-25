@@ -254,6 +254,7 @@ ion-col,css-prop,--ion-grid-columns
 
 ion-content,shadow
 ion-content,prop,color,string | undefined,undefined,false,false
+ion-content,prop,customScrollBar,boolean,false,false,false
 ion-content,prop,forceOverscroll,boolean | undefined,undefined,false,false
 ion-content,prop,fullscreen,boolean,false,false,false
 ion-content,prop,scrollEvents,boolean,false,false,false
@@ -276,6 +277,11 @@ ion-content,css-prop,--padding-bottom
 ion-content,css-prop,--padding-end
 ion-content,css-prop,--padding-start
 ion-content,css-prop,--padding-top
+ion-content,css-prop,--scrollBar-borderRadius
+ion-content,css-prop,--scrollBar-thumbColor
+ion-content,css-prop,--scrollBar-thumbHoverColor
+ion-content,css-prop,--scrollBar-trackColor
+ion-content,css-prop,--scrollBar-width
 
 ion-datetime,shadow
 ion-datetime,prop,cancelText,string,'Cancel',false,false

@@ -87,6 +87,11 @@ export class Content implements ComponentInterface {
   @Prop() scrollEvents = false;
 
   /**
+   * If you want to customize scrolling bar, set this property to `true`.
+   */
+  @Prop() customScrollBar = false;
+
+  /**
    * Emitted when the scroll has started.
    */
   @Event() ionScrollStart!: EventEmitter<ScrollBaseDetail>;
@@ -291,6 +296,7 @@ export class Content implements ComponentInterface {
         ...createColorClasses(this.color),
         'content-sizing': hostContext('ion-popover', this.el),
         'overscroll': !!this.forceOverscroll,
+        'custom-scroll-bar': this.customScrollBar
       },
       style: {
         '--offset-top': `${this.cTop}px`,

@@ -14,6 +14,11 @@
    * @prop --keyboard-offset: Keyboard offset of the Content
    * @prop --offset-top: Offset top of the Content
    * @prop --offset-bottom: Offset bottom of the Content
+   * @prop --scrollBar-width: Width bottom of the scroll bar
+   * @prop --scrollBar-borderRadius: Offset bottom of the scroll bar
+   * @prop --scrollBar-trackColor: Track (background) color of the scroll bar
+   * @prop --scrollBar-thumbColor: Color of the scroll bar thumb (pointer)
+   * @prop --scrollBar-thumbHoverColor: Hover color bottom of the scroll bar thumb (pointer)
    */
   --background: #{$background-color};
   --color: #{$text-color};
@@ -25,6 +30,11 @@
   --offset-top: 0px;
   --offset-bottom: 0px;
   --overflow: auto;
+  --scrollBar-width: 5px;
+  --scrollBar-borderRadius: 2px;
+  --scrollBar-trackColor: transparent;
+  --scrollBar-thumbColor: #BABABA;
+  --scrollBar-thumbHoverColor: #8E8E8E;
 
   display: block;
   position: relative;
@@ -113,4 +123,27 @@
 }
 :host(.content-sizing) .inner-scroll {
   position: relative;
+}
+
+
+:host(.custom-scroll-bar) {
+  ::-webkit-scrollbar {
+    width: var(--scrollBar-width);
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--scrollBar-trackColor);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    // TODO tslint with 'npm run validate' doesn't allow border-radius property but I consider it neccesary,
+    // uncomment or delete it
+    // border-radius: var(--scrollBar-borderRadius);
+    background: var(--scrollBar-thumbColor);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollBar-thumbHoverColor);
+  }
+
 }
