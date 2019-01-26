@@ -78,6 +78,16 @@
     </ion-segment-button>
   </ion-segment>
 </ion-toolbar>
+
+<!-- Segment with default selection -->
+<ion-segment value="javascript">
+  <ion-segment-button value="python">
+    <ion-label>Python</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="javascript">
+    <ion-label>Javascript</ion-label>
+  </ion-segment-button>
+</ion-segment>
 ```
 
 ```javascript
