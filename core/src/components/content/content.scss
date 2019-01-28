@@ -136,9 +136,7 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    // TODO tslint with 'npm run validate' doesn't allow border-radius property but I consider it neccesary,
-    // uncomment or delete it
-    // border-radius: var(--scrollBar-borderRadius);
+    @include border-radius(var(--scrollBar-borderRadius));
     background: var(--scrollBar-thumbColor);
   }
 
