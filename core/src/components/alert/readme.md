@@ -5,7 +5,7 @@ An Alert is a dialog that presents users with information or collects informatio
 
 ### Creating
 
-Alerts can be created using a [Alert Controller](../../alert-controller/AlertController). They can be customized by passing alert options in the alert controller's create method.
+Alerts can be created using an [Alert Controller](../alert-controller). They can be customized by passing alert options in the alert controller's create method.
 
 
 ### Buttons
