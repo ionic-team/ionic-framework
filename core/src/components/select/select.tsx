@@ -228,6 +228,7 @@ export class Select implements ComponentInterface {
             value: o.value,
             checked: o.selected,
             disabled: o.disabled,
+            cssClass: o.cssClass,
             handler: () => {
               this.value = o.value;
               this.close();

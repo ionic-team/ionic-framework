@@ -948,6 +948,7 @@ ion-segment,event,ionChange,SegmentChangeEventDetail,true
 ion-segment,event,ionStyle,StyleEventDetail,true
 
 ion-select-option,shadow
+ion-select-option,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-select-option,prop,disabled,boolean,false,false,false
 ion-select-option,prop,selected,boolean,false,false,false
 ion-select-option,prop,value,any,undefined,false,false

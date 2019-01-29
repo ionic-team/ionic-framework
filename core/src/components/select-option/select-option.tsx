@@ -27,6 +27,12 @@ export class SelectOption implements ComponentInterface {
   @Prop({ mutable: true }) value?: any | null;
 
   /**
+   * Additional classes to apply for custom CSS. If multiple classes are
+   * provided they should be separated by spaces.
+   */
+  @Prop() cssClass?: string | string[];
+
+  /**
    * Emitted when the select option loads.
    * @internal
    */

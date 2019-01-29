@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Listen, Prop } from '@stencil/core';
 
 import { Mode, SelectPopoverOption } from '../../interface';
+import { getClassMap } from '../../utils/theme';
 
 /**
  * @internal
@@ -49,7 +50,7 @@ export class SelectPopover implements ComponentInterface {
         <ion-radio-group>
           {this.options.map(option =>
             <ion-item>
-              <ion-label>
+              <ion-label class={getClassMap(option.cssClass)}>
                 {option.text}
               </ion-label>
               <ion-radio

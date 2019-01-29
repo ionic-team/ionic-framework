@@ -3923,6 +3923,10 @@ export namespace Components {
 
   interface IonSelectOption {
     /**
+    * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+    */
+    'cssClass'?: string | string[];
+    /**
     * If `true`, the user cannot interact with the select option.
     */
     'disabled': boolean;
@@ -3936,6 +3940,10 @@ export namespace Components {
     'value'?: any | null;
   }
   interface IonSelectOptionAttributes extends StencilHTMLAttributes {
+    /**
+    * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+    */
+    'cssClass'?: string | string[];
     /**
     * If `true`, the user cannot interact with the select option.
     */

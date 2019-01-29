@@ -737,7 +737,7 @@ proxyMethods(IonSelect, ['open']);
 proxyInputs(IonSelect, ['mode', 'disabled', 'cancelText', 'okText', 'placeholder', 'name', 'selectedText', 'multiple', 'interface', 'interfaceOptions', 'value']);
 
 export declare interface IonSelectOption extends StencilComponents<'IonSelectOption'> {}
-@Component({ selector: 'ion-select-option', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['disabled', 'selected', 'value'] })
+@Component({ selector: 'ion-select-option', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['disabled', 'selected', 'value', 'cssClass'] })
 export class IonSelectOption {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef) {
@@ -745,7 +745,7 @@ export class IonSelectOption {
     this.el = r.nativeElement;
   }
 }
-proxyInputs(IonSelectOption, ['disabled', 'selected', 'value']);
+proxyInputs(IonSelectOption, ['disabled', 'selected', 'value', 'cssClass']);
 
 export declare interface IonSkeletonText extends StencilComponents<'IonSkeletonText'> {}
 @Component({ selector: 'ion-skeleton-text', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['width'] })
