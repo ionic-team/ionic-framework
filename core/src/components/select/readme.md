@@ -9,7 +9,7 @@ If `value` is set on the `<ion-select>`, the selected option will be chosen base
 
 ## Interfaces
 
-By default, select uses the [AlertController API](../../alert/AlertController) to open up the overlay of options in an alert. The interface can be changed to use the [ActionSheetController API](../../action-sheet/ActionSheetController) or [PopoverController API](../../popover/PopoverController) by passing `action-sheet` or `popover`, respectively, to the `interface` property. Read on to the other sections for the limitations of the different interfaces.
+By default, select uses the [AlertController API](../alert-controller) to open up the overlay of options in an alert. The interface can be changed to use the [ActionSheetController API](../action-sheet-controller) or [PopoverController API](../popover-controller) by passing `action-sheet` or `popover`, respectively, to the `interface` property. Read on to the other sections for the limitations of the different interfaces.
 
 
 ## Single Selection
@@ -33,7 +33,7 @@ The `action-sheet` and `popover` interfaces do not have an `OK` button, clicking
 
 ## Interface Options
 
-Since select uses the alert, action sheet and popover interfaces, options can be passed to these components through the `interfaceOptions` property. This can be used to pass a custom header, subheader, css class, and more. See the [AlertController API docs](../../alert/AlertController/#create), [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create), and [PopoverController API docs](../../popover/PopoverController/#create) for the properties that each interface accepts.
+Since select uses the alert, action sheet and popover interfaces, options can be passed to these components through the `interfaceOptions` property. This can be used to pass a custom header, subheader, css class, and more. See the [AlertController API docs](../alert-controller), [ActionSheetController API docs](../action-sheet-controller), and [PopoverController API docs](../popover-controller) for the properties that each interface accepts.
 
 
 <!-- Auto Generated Below -->
