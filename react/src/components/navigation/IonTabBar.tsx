@@ -64,7 +64,11 @@ class IonTabBar extends Component<Props, State> {
 
 
   onTabButtonClick = (e: CustomEvent<{ href: string, selected: boolean, tab: string }>) => {
-    this.props.history.push(e.detail.href);
+    const targetUrl = (this.state.activeTab === e.detail.tab) ?
+      this.state.tabs[e.detail.tab].originalHref :
+      this.state.tabs[e.detail.tab].currentHref;
+
+    this.props.history.push(targetUrl);
   }
 
   renderChild = (activeTab: string) => (child: React.ReactElement<Components.IonTabButtonAttributes & { onIonTabButtonClick: (e: CustomEvent) => void }>) => {
