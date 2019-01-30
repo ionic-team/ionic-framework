@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-test('datetime: basic', async () => {
+test.skip('datetime: basic', async () => {
   const page = await newE2EPage({
     url: '/src/components/datetime/test/basic?ionic:_testing=true'
   });
@@ -19,7 +19,7 @@ test('datetime: basic', async () => {
   expect(compare).toMatchScreenshot();
 });
 
-test('datetime: basic-rtl', async () => {
+test.skip('datetime: basic-rtl', async () => {
   const page = await newE2EPage({
     url: '/src/components/datetime/test/basic?ionic:_testing=true&rtl=true'
   });
