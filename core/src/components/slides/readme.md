@@ -1,7 +1,7 @@
 # ion-slides
 
 The Slides component is a multi-section container. Each section can be swiped
-or dragged between. It contains any number of [Slide](../Slide) components.
+or dragged between. It contains any number of [Slide](../slide) components.
 
 
 Adopted from Swiper.js:
