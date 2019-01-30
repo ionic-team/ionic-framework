@@ -5,7 +5,7 @@ A Modal is a dialog that appears on top of the app's content, and must be dismis
 
 ### Creating
 
-Modals can be created using a [Modal Controller](../../modal-controller/ModalController). They can be customized by passing modal options in the modal controller's create method.
+Modals can be created using a [Modal Controller](../modal-controller). They can be customized by passing modal options in the modal controller's create method.
 
 
 ### Passing paramaters
