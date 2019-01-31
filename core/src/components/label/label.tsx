@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch, Listen } from '@stencil/core';
 
 import { Color, Mode, StyleEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -55,6 +55,14 @@ export class Label implements ComponentInterface {
   @Watch('position')
   positionChanged() {
     this.emitStyle();
+  }
+
+  @Listen('click')
+  onClick(ev: Event) {
+    const elementToFocus = document.getElementById(ev.htmlFor);
+    if (elementToFocus) {
+      elementToFocus.focus();
+    }
   }
 
   private emitStyle() {
