@@ -1032,6 +1032,8 @@ ion-split-pane,prop,disabled,boolean,false,false,false
 ion-split-pane,prop,when,boolean | string,QUERY['lg'],false,false
 ion-split-pane,event,ionSplitPaneVisible,{visible: boolean},true
 ion-split-pane,css-prop,--border
+ion-split-pane,css-prop,--side-max-width
+ion-split-pane,css-prop,--side-min-width
 
 ion-tab-bar,shadow
 ion-tab-bar,prop,color,string | undefined,undefined,false,false

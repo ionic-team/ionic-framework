@@ -101,9 +101,11 @@ SplitPane also provides some predefined media queries that can be used.
 
 ## CSS Custom Properties
 
-| Name       | Description          |
-| ---------- | -------------------- |
-| `--border` | Border between panes |
+| Name               | Description                     |
+| ------------------ | ------------------------------- |
+| `--border`         | Border between panes            |
+| `--side-max-width` | Maximum width of the side panel |
+| `--side-min-width` | Minimum width of the side panel |
 
 
 ----------------------------------------------

@@ -6,6 +6,8 @@
 .split-pane {
   /**
    * @prop --border: Border between panes
+   * @prop --side-min-width: Minimum width of the side panel
+   * @prop --side-max-width: Maximum width of the side panel
    */
 
   @include position(0, 0, 0, 0);
