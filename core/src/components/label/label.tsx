@@ -58,7 +58,7 @@ export class Label implements ComponentInterface {
   }
 
   @Listen('click')
-  onClick(ev: Event) {
+  onClick(ev: any) {
     const elementToFocus = document.getElementById(ev.htmlFor);
     if (elementToFocus) {
       elementToFocus.focus();
