@@ -5,6 +5,10 @@
 // --------------------------------------------------
 // Modifies visibility based on screen size
 
+[hidden] {
+  display: none !important
+}
+
 // Adds hidden attributes
 @each $breakpoint in map-keys($screen-breakpoints) {
   $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
