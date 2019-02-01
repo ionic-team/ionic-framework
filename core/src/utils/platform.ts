@@ -111,6 +111,6 @@ export function testUserAgent(win: Window, expr: RegExp) {
   return expr.test(win.navigator.userAgent);
 }
 
-export function matchMedia(win: Window, query: string): boolean {
+function matchMedia(win: Window, query: string): boolean {
   return win.matchMedia(query).matches;
 }
