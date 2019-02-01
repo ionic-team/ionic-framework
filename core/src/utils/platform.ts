@@ -104,7 +104,7 @@ function isElectron(win: Window): boolean {
 }
 
 function isPWA(win: Window): boolean {
-  return win.matchMedia('(display-mode: standalone)').matches;
+  return win.matchMedia('(display-mode: standalone)').matches || (win.navigator as any).standalone;
 }
 
 function testUserAgent(win: Window, expr: RegExp) {
