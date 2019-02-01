@@ -107,10 +107,10 @@ function isPWA(win: Window): boolean {
   return win.matchMedia('(display-mode: standalone)').matches;
 }
 
-function testUserAgent(win: Window, expr: RegExp) {
+export function testUserAgent(win: Window, expr: RegExp) {
   return expr.test(win.navigator.userAgent);
 }
 
-function matchMedia(win: Window, query: string): boolean {
+export function matchMedia(win: Window, query: string): boolean {
   return win.matchMedia(query).matches;
 }
