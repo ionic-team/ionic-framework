@@ -36,7 +36,7 @@ instance.prop2 = value2;
 This way, your component can access the passed params, check the "Usage" section for further code example for each frameworks.
 
 
-### Retuning data
+### Returning data
 
 Modals can also return data back to the controller when they are dismissed.
 
