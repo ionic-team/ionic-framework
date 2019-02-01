@@ -21,7 +21,7 @@ The loading indicator can be dismissed automatically after a specific amount of 
 ### Angular
 
 ```typescript
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 
 @Component({
@@ -50,6 +50,11 @@ export class LoadingExample {
     });
     return await loading.present();
   }
+  
+  @HostListener('document:ionLoadingDidDismiss', ['$event'])
+  onDidDismiss(event: CustomEvent) {
+    console.log('Loading dismissed!');
+  }
 }
 ```
 
@@ -65,6 +70,11 @@ async function presentLoading() {
     message: 'Hellooo',
     duration: 2000
   });
+  
+  loading.addEventListener('ionLoadingDidDismiss', (e) => {
+    console.log('Loading dismissed!');
+  });
+  
   return await loading.present();
 }
 
