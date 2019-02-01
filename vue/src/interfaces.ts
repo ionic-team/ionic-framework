@@ -80,7 +80,7 @@ export interface ProxyMenuControllerInterface {
   close(menuId?: string): Promise<boolean>;
   toggle(menuId?: string): Promise<boolean>;
   enable(shouldEnable: boolean, menuId?: string): Promise<HTMLElement>;
-  swipeEnable(shouldEnable: boolean, menuId?: string): Promise<HTMLElement>;
+  swipeGesture(shouldEnable: boolean, menuId?: string): Promise<HTMLElement>;
   isOpen(menuId?: string): Promise<boolean>;
   isEnabled(menuId?: string): Promise<boolean>;
   get(menuId?: string): Promise<HTMLElement>;
