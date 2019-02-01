@@ -114,8 +114,8 @@ describe('Platform Tests', () => {
   })
 });
 
-function configureBrowser(window: Window, config: PlatformConfiguration): void {
+function configureBrowser(win: Window, config: PlatformConfiguration): void {
   for (let attributeKey in config) {
-    window[attributeKey] = config[attributeKey];
+    win[attributeKey] = config[attributeKey];
   }
 }
