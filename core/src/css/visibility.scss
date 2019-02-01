@@ -1,0 +1,27 @@
+@import "../themes/ionic.globals";
+@import "../themes/ionic.mixins";
+
+// Visibility
+// --------------------------------------------------
+// Modifies visibility based on screen size
+
+// Adds hidden attributes
+@each $breakpoint in map-keys($screen-breakpoints) {
+  $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
+
+  @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+    // Provide `[hidden-{bp}-up]` attributes for hiding the element based
+    // on the breakpoint
+    [hidden#{$infix}-up] {
+      display: none !important;
+    }
+  }
+
+  @include media-breakpoint-down($breakpoint, $screen-breakpoints) {
+    // Provide `[hidden-{bp}-down]` attributes for hiding the element based
+    // on the breakpoint
+    [hidden#{$infix}-down] {
+      display: none !important;
+    }
+  }
+}
