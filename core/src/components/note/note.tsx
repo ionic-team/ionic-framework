@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -11,7 +11,7 @@ import { createColorClasses } from '../../utils/theme';
   },
   shadow: true
 })
-export class Note {
+export class Note implements ComponentInterface {
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -21,15 +21,12 @@ export class Note {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   hostData() {
     return {
-      class: {
-        ...createColorClasses(this.color)
-      }
+      class: createColorClasses(this.color)
     };
   }
 

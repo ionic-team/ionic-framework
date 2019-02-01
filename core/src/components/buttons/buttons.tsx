@@ -1,4 +1,4 @@
-import { Component } from '@stencil/core';
+import { Component, ComponentInterface } from '@stencil/core';
 
 @Component({
   tag: 'ion-buttons',
@@ -8,4 +8,4 @@ import { Component } from '@stencil/core';
   },
   scoped: true,
 })
-export class Buttons {}
+export class Buttons implements ComponentInterface {}

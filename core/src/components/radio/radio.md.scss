@@ -5,21 +5,33 @@
 // --------------------------------------------------
 
 :host {
-  --width: #{$radio-md-icon-width};
-  --height: #{$radio-md-icon-height};
+  --color: #{$radio-md-color-off};
+  --color-checked: #{ion-color(primary, base)};
+  --border-width: #{$radio-md-icon-border-width};
+  --border-style: #{$radio-md-icon-border-style};
+
+  width: $radio-md-icon-width;
+  height: $radio-md-icon-height;
+}
+
+:host(.ion-color) .radio-inner {
+  background: current-color(base);
+}
+
+:host(.ion-color.radio-checked) .radio-icon {
+  border-color: current-color(base);
 }
 
 // Material Design Radio Outer Circle: Unchecked
 // -----------------------------------------
 
 .radio-icon {
-  @include position(0, null, null, 0);
   @include margin(0);
   @include border-radius($radio-md-icon-border-radius);
 
-  border-width: $radio-md-icon-border-width;
-  border-style: $radio-md-icon-border-style;
-  border-color: $radio-md-color-off;
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--color);
 }
 
 
@@ -27,19 +39,16 @@
 // -----------------------------------------
 
 .radio-inner {
-  @include position($radio-md-icon-border-width, null, null, $radio-md-icon-border-width);
   @include border-radius(50%);
 
-  position: absolute;
-
-  width: $radio-md-icon-width - $radio-md-icon-border-width * 4;
-  height: $radio-md-icon-height - $radio-md-icon-border-width * 4;
+  width: calc(50% + var(--border-width));
+  height: calc(50% + var(--border-width));
 
   transform: scale3d(0, 0, 0);
 
   transition: transform $radio-md-transition-duration $radio-md-transition-easing;
 
-  background-color: $radio-md-color-on;
+  background: var(--color-checked);
 }
 
 
@@ -47,7 +56,7 @@
 // -----------------------------------------
 
 :host(.radio-checked) .radio-icon {
-  border-color: $radio-md-color-on;
+  border-color: var(--color-checked);
 }
 
 
@@ -71,7 +80,7 @@
 // Material Design Radio: Keyboard Focus
 // -----------------------------------------
 
-:host(.radio-key) .radio-icon::after {
+:host(.ion-focused) .radio-icon::after {
   @include border-radius(50%);
   @include position(-12px, null, null, -12px);
 

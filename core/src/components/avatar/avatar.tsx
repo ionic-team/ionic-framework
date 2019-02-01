@@ -1,4 +1,4 @@
-import { Component } from '@stencil/core';
+import { Component, ComponentInterface } from '@stencil/core';
 
 @Component({
   tag: 'ion-avatar',
@@ -8,7 +8,7 @@ import { Component } from '@stencil/core';
   },
   shadow: true
 })
-export class Avatar {
+export class Avatar implements ComponentInterface {
 
   render() {
     return <slot></slot>;

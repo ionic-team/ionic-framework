@@ -5,7 +5,10 @@
 // --------------------------------------------------
 
 :host {
-  @include border-radius($badge-md-border-radius);
+  --padding-top: 3px;
+  --padding-end: 4px;
+  --padding-bottom: 4px;
+  --padding-start: 4px;
 
-  font-family: $badge-md-font-family;
+  @include border-radius($badge-md-border-radius);
 }

@@ -1,6 +1,6 @@
 /**
  * Check to see if the Haptic Plugin is available
- * @return Returns true or false if the plugin is available
+ * @return Returns `true` or false if the plugin is available
  */
 export function hapticAvailable(): boolean {
   const engine = (window as any).TapticEngine;
@@ -53,7 +53,7 @@ export function hapticSelectionEnd() {
  * Use this to indicate success/failure/warning to the user.
  * options should be of the type `{ type: 'success' }` (or `warning`/`error`)
  */
-export function hapticNotification(options: { type: string }) {
+export function hapticNotification(options: { type: 'success' | 'warning' | 'error' }) {
   const engine = (window as any).TapticEngine;
   if (engine) {
     engine.notification(options);
@@ -64,7 +64,7 @@ export function hapticNotification(options: { type: string }) {
  * Use this to indicate success/failure/warning to the user.
  * options should be of the type `{ style: 'light' }` (or `medium`/`heavy`)
  */
-export function hapticImpact(options: { style: string }) {
+export function hapticImpact(options: { style: 'light' | 'medium' | 'heavy' }) {
   const engine = (window as any).TapticEngine;
   if (engine) {
     engine.impact(options);

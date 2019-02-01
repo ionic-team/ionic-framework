@@ -22,6 +22,10 @@
   --opacity: 1;
 
   @include font-smoothing();
+  @include padding-horizontal(
+    var(--ion-safe-area-left),
+    var(--ion-safe-area-right)
+  );
 
   display: block;
 
@@ -30,6 +34,8 @@
   width: 100%;
 
   color: var(--color);
+
+  font-family: $font-family-base;
 
   contain: content;
 
@@ -52,7 +58,6 @@
     var(--padding-bottom),
     var(--padding-start)
   );
-
   display: flex;
   position: relative;
 
@@ -71,7 +76,7 @@
   box-sizing: border-box;
 }
 
-// Transparent Toolbar
+// Toolbar: Transparent
 // --------------------------------------------------
 
 .toolbar-background {
@@ -91,4 +96,18 @@
   opacity: var(--opacity);
   z-index: $z-index-toolbar-background;
   pointer-events: none;
+}
+
+
+// Toolbar: Segment
+// --------------------------------------------------
+
+:host(.toolbar-segment) {
+  --min-height: auto;
+}
+
+::slotted(ion-progress-bar) {
+  @include position(null, 0, 0, 0);
+
+  position: absolute;
 }

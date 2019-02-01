@@ -63,6 +63,7 @@
 
   transition-duration: $toggle-md-transition-duration;
   transition-property: transform, background-color;
+  transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
 
   background: var(--handle-background);
 

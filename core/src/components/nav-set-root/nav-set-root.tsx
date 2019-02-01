@@ -1,11 +1,11 @@
-import { Component, Element, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
 
 import { ComponentProps, NavComponent } from '../../interface';
 
 @Component({
   tag: 'ion-nav-set-root'
 })
-export class NavSetRoot {
+export class NavSetRoot implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   /**
@@ -20,12 +20,11 @@ export class NavSetRoot {
   @Prop() componentProps?: ComponentProps;
 
   @Listen('child:click')
-  push(): Promise<any> {
+  push() {
     const nav = this.el.closest('ion-nav');
     const toPush = this.component;
-    if (nav && toPush) {
-      return nav.setRoot(toPush, this.componentProps);
+    if (nav && toPush !== undefined) {
+      nav.setRoot(toPush, this.componentProps, { skipIfBusy: true });
     }
-    return Promise.resolve(null);
   }
 }

@@ -24,11 +24,49 @@ async function presentAlert() {
 
 ## Methods
 
-| Method    | Description                                 |
-| --------- | ------------------------------------------- |
-| `create`  | Create an alert overlay with alert options  |
-| `dismiss` | Dismiss the open alert overlay.             |
-| `getTop`  | Get the most recently opened alert overlay. |
+### `create(opts: AlertOptions) => Promise<HTMLIonAlertElement>`
+
+Create an alert overlay with alert options
+
+#### Parameters
+
+| Name   | Type           | Description |
+| ------ | -------------- | ----------- |
+| `opts` | `AlertOptions` |             |
+
+#### Returns
+
+Type: `Promise<HTMLIonAlertElement>`
+
+
+
+### `dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>`
+
+Dismiss the open alert overlay.
+
+#### Parameters
+
+| Name   | Type                  | Description |
+| ------ | --------------------- | ----------- |
+| `data` | `any`                 |             |
+| `role` | `string \| undefined` |             |
+| `id`   | `string \| undefined` |             |
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `getTop() => Promise<HTMLIonAlertElement | undefined>`
+
+Get the most recently opened alert overlay.
+
+#### Returns
+
+Type: `Promise<HTMLIonAlertElement | undefined>`
+
+
 
 
 ----------------------------------------------

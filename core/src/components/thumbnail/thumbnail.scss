@@ -9,6 +9,8 @@
    * @prop --border-radius: Border radius of the thumbnail
    * @prop --size: Size of the thumbnail
    */
+  --size: 48px;
+  --border-radius: 0;
 
   @include border-radius(var(--border-radius));
 

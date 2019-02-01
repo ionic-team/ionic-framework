@@ -1,0 +1,97 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Tabs
+// --------------------------------------------------
+
+/// @prop - Padding top on the tab button
+$tab-button-md-padding-top:                     0 !default;
+
+/// @prop - Padding end on the tab button
+$tab-button-md-padding-end:                     12px !default;
+
+/// @prop - Padding bottom on the tab button
+$tab-button-md-padding-bottom:                  0 !default;
+
+/// @prop - Padding start on the tab button
+$tab-button-md-padding-start:                   12px !default;
+
+/// @prop - Font size of the inactive tab button text
+$tab-button-md-font-size:                       12px !default;
+
+/// @prop - Letter spacing of the tab button
+$tab-button-md-letter-spacing:                  .03em !default;
+
+/// @prop - Font weight of the tab button text
+$tab-button-md-font-weight:                     normal !default;
+
+/// @prop - Text color of the inactive tab button
+$tab-button-md-text-color:                      $tabbar-md-color !default;
+
+/// @prop - Text color of the active tab button
+$tab-button-md-text-color-active:               $tabbar-md-color-activated !default;
+
+/// @prop - Icon color of the inactive tab button
+$tab-button-md-icon-color:                      $tabbar-md-color !default;
+
+/// @prop - Icon color of the active tab button
+$tab-button-md-icon-color-active:               $tabbar-md-color-activated !default;
+
+/// @prop - Margin top on the tab button icon
+$tab-button-md-icon-margin-top:                 16px !default;
+
+/// @prop - Margin end on the tab button icon
+$tab-button-md-icon-margin-end:                 0 !default;
+
+/// @prop - Margin bottom on the tab button icon
+$tab-button-md-icon-margin-bottom:              $tab-button-md-icon-margin-top !default;
+
+/// @prop - Margin start on the tab button icon
+$tab-button-md-icon-margin-start:               $tab-button-md-icon-margin-end !default;
+
+/// @prop - Font size of the active tab button text
+$tab-button-md-font-size-active:                14px !default;
+
+/// @prop - Margin top on the tab button text
+$tab-button-md-text-margin-top:                 2px !default;
+
+/// @prop - Margin end on the tab button text
+$tab-button-md-text-margin-end:                 0 !default;
+
+/// @prop - Margin bottom on the tab button text
+$tab-button-md-text-margin-bottom:              $tab-button-md-text-margin-top !default;
+
+/// @prop - Margin start on the tab button text
+$tab-button-md-text-margin-start:               $tab-button-md-text-margin-end !default;
+
+/// @prop - Capitalization of the tab button text
+$tab-button-md-text-capitalization:             none !default;
+
+/// @prop - Size of the tab button icon
+$tab-button-md-icon-size:                       22px !default;
+
+/// @prop - Opacity of the inactive tab button
+$tab-button-md-opacity:                         .7 !default;
+
+/// @prop - Border radius on the tab button badge
+$tab-button-md-badge-border-radius:             8px !default;
+
+/// @prop - Padding top on the tab button badge
+$tab-button-md-badge-padding-top:               3px !default;
+
+/// @prop - Padding end on the tab button badge
+$tab-button-md-badge-padding-end:               2px !default;
+
+/// @prop - Padding bottom on the tab button badge
+$tab-button-md-badge-padding-bottom:            2px !default;
+
+/// @prop - Padding start on the tab button badge
+$tab-button-md-badge-padding-start:             2px !default;
+
+/// @prop - Minimum width of the tab button badge
+$tab-button-md-badge-min-width:                 12px !default;
+
+/// @prop - Font size of the tab button badge
+$tab-button-md-badge-font-size:                 8px !default;
+
+/// @prop - Size of the empty tab button badge
+$tab-button-md-badge-size-empty:                8px !default;

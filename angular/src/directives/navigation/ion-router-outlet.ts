@@ -1,12 +1,16 @@
-import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, Input, OnDestroy, OnInit, Optional, Output, ViewContainerRef } from '@angular/core';
+import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, NgZone, OnDestroy, OnInit, Optional, Output, SkipSelf, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ChildrenOutletContexts, OutletContext, PRIMARY_OUTLET, Router } from '@angular/router';
-import { StackController, RouteView } from './router-controller';
+
+import { Config } from '../../providers/config';
 import { NavController } from '../../providers/nav-controller';
-import { bindLifecycleEvents } from '../../providers/angular-delegate';
+
+import { StackController } from './stack-controller';
+import { RouteView, getUrl } from './stack-utils';
 
 @Directive({
   selector: 'ion-router-outlet',
-  exportAs: 'outlet'
+  exportAs: 'outlet',
+  inputs: ['animated', 'swipeGesture']
 })
 export class IonRouterOutlet implements OnDestroy, OnInit {
 
@@ -14,37 +18,55 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   private activatedView: RouteView | null = null;
 
   private _activatedRoute: ActivatedRoute | null = null;
+  private _swipeGesture?: boolean;
   private name: string;
   private stackCtrl: StackController;
+  private nativeEl: HTMLIonRouterOutletElement;
 
+  tabsPrefix: string | undefined;
+
+  @Output() stackEvents = new EventEmitter<any>();
   @Output('activate') activateEvents = new EventEmitter<any>();
   @Output('deactivate') deactivateEvents = new EventEmitter<any>();
 
-  @Input()
   set animated(animated: boolean) {
-    (this.elementRef.nativeElement as HTMLIonRouterOutletElement).animated = animated;
+    this.nativeEl.animated = animated;
+  }
+
+  set swipeGesture(swipe: boolean) {
+    this._swipeGesture = swipe;
+
+    this.nativeEl.swipeHandler = swipe ? {
+      canStart: () => this.stackCtrl.canGoBack(1),
+      onStart: () => this.stackCtrl.startBackTransition(),
+      onEnd: shouldContinue => this.stackCtrl.endBackTransition(shouldContinue)
+    } : undefined;
   }
 
   constructor(
     private parentContexts: ChildrenOutletContexts,
     private location: ViewContainerRef,
     private resolver: ComponentFactoryResolver,
-    private elementRef: ElementRef,
     @Attribute('name') name: string,
-    @Optional() @Attribute('stack') stack: any,
+    @Optional() @Attribute('tabs') tabs: string,
     private changeDetector: ChangeDetectorRef,
+    private config: Config,
     private navCtrl: NavController,
-    router: Router
+    elementRef: ElementRef,
+    router: Router,
+    zone: NgZone,
+    activatedRoute: ActivatedRoute,
+    @SkipSelf() @Optional() readonly parentOutlet?: IonRouterOutlet
   ) {
+    this.nativeEl = elementRef.nativeElement;
     this.name = name || PRIMARY_OUTLET;
+    this.tabsPrefix = tabs === 'true' ? getUrl(router, activatedRoute) : undefined;
+    this.stackCtrl = new StackController(this.tabsPrefix, this.nativeEl, router, navCtrl, zone);
     parentContexts.onChildOutletCreated(this.name, this as any);
-    const hasStack = stack !== 'false' && stack !== false;
-    this.stackCtrl = new StackController(hasStack, elementRef.nativeElement, router, this.navCtrl);
   }
 
   ngOnDestroy(): void {
-    console.log('router-outlet destroyed');
-    this.parentContexts.onChildOutletDestroyed(this.name);
+    this.stackCtrl.destroy();
   }
 
   getContext(): OutletContext | null {
@@ -60,9 +82,16 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
         this.activateWith(context.route, context.resolver || null);
       }
     }
+    this.nativeEl.componentOnReady().then(() => {
+      if (this._swipeGesture === undefined) {
+        this.swipeGesture = this.config.getBoolean('swipeBackEnabled', this.nativeEl.mode === 'ios');
+      }
+    });
   }
 
-  get isActivated(): boolean { return !!this.activated; }
+  get isActivated(): boolean {
+    return !!this.activated;
+  }
 
   get component(): object {
     if (!this.activated) {
@@ -139,38 +168,48 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       const injector = new OutletInjector(activatedRoute, childContexts, this.location.injector);
       cmpRef = this.activated = this.location.createComponent(factory, this.location.length, injector);
 
-      bindLifecycleEvents(cmpRef.instance, cmpRef.location.nativeElement);
-
       // Calling `markForCheck` to make sure we will run the change detection when the
       // `RouterOutlet` is inside a `ChangeDetectionStrategy.OnPush` component.
-      this.changeDetector.markForCheck();
       enteringView = this.stackCtrl.createView(this.activated, activatedRoute);
+      this.changeDetector.markForCheck();
     }
 
-    const { direction, animated } = this.navCtrl.consumeTransition();
     this.activatedView = enteringView;
-    this.stackCtrl.setActive(enteringView, direction, animated).then(() => {
+    this.stackCtrl.setActive(enteringView).then(data => {
+      this.navCtrl.setTopOutlet(this);
       this.activateEvents.emit(cmpRef.instance);
-      emitEvent(this.elementRef.nativeElement);
+      this.stackEvents.emit(data);
     });
-
   }
 
-  canGoBack(deep = 1) {
-    return this.stackCtrl.canGoBack(deep);
+  /**
+   * Returns `true` if there are pages in the stack to go back.
+   */
+  canGoBack(deep = 1, stackId?: string): boolean {
+    return this.stackCtrl.canGoBack(deep, stackId);
   }
 
-  pop(deep = 1) {
-    return this.stackCtrl.pop(deep);
+  /**
+   * Resolves to `true` if it the outlet was able to sucessfully pop the last N pages.
+   */
+  pop(deep = 1, stackId?: string): Promise<boolean> {
+    return this.stackCtrl.pop(deep, stackId);
   }
-}
 
-function emitEvent(el: HTMLElement) {
-  const ev = new CustomEvent('ionRouterOutletActivated', {
-    bubbles: true,
-    cancelable: true,
-  });
-  el.dispatchEvent(ev);
+  /**
+   * Returns the URL of the active page of each stack.
+   */
+  getLastUrl(stackId?: string): string | undefined {
+    const active = this.stackCtrl.getLastUrl(stackId);
+    return active ? active.url : undefined;
+  }
+
+  /**
+   * Returns the active stack ID. In the context of ion-tabs, it means the active tab.
+   */
+  getActiveStackId(): string | undefined {
+    return this.stackCtrl.getActiveStackId();
+  }
 }
 
 class OutletInjector implements Injector {

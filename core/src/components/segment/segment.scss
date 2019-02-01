@@ -4,56 +4,45 @@
 // --------------------------------------------------
 
 :host {
-  /**
-   * @prop --background: Background of segment
-   * @prop --background-checked: Background of checked segment
-   * @prop --border-color: Color of segment border
-   * @prop --border-color-checked: Color of checked segment border
-   * @prop --border-color-disabled: Color of disabled segment border
-   * @prop --color: Color of segment text
-   * @prop --color-checked: Color of checked segment text
-   * @prop --color-disabled: Color of disabled segment text
-   */
+  --indicator-color-checked: initial;
+  --ripple-color: initial;
+  --color-activated: initial;
 
   @include font-smoothing();
 
   display: flex;
 
-  flex: 1;
   align-items: center;
   justify-content: center;
 
   width: 100%;
 
+  font-family: $font-family-base;
+
   text-align: center;
 }
 
-:host(.segment-disabled) {
-  pointer-events: none;
-}
 
-::slotted(ion-segment-button) {
-  --color: inherit;
-  --background: inherit;
-  --border-color: inherit;
-}
+// Segment: Disabled
+// --------------------------------------------------
 
-:host(.ion-color) ::slotted(ion-segment-button) {
-  --color: #{current-color(base)};
-}
-
-::slotted(.segment-button-checked) {
-  --color: var(--color-checked);
-  --background: var(--background-checked);
-  --border-color: var(--border-color-checked);
-}
-
-:host(.ion-color) ::slotted(.segment-button-checked) {
-  --background: #{current-color(base)};
-  --border-color: #{current-color(base)};
-  --color: #{current-color(contrast)};
-}
-
+:host(.segment-disabled),
 ::slotted(.segment-button-disabled) {
   pointer-events: none;
+}
+
+
+// Segment: Scrollable
+// --------------------------------------------------
+
+:host(.segment-scrollable) {
+  justify-content: start;
+
+  width: auto;
+
+  overflow-x: scroll;
+}
+
+:host(.segment-scrollable::-webkit-scrollbar) {
+  display: none;
 }

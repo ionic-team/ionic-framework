@@ -1,11 +1,11 @@
-import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
 @Component({
   tag: 'ion-img',
   styleUrl: 'img.scss',
   shadow: true
 })
-export class Img {
+export class Img implements ComponentInterface {
 
   private io?: IntersectionObserver;
 
@@ -37,7 +37,7 @@ export class Img {
   }
 
   private addIO() {
-    if (!this.src) {
+    if (this.src === undefined) {
       return;
     }
     if ('IntersectionObserver' in window) {
@@ -47,17 +47,21 @@ export class Img {
         // of the element we are observing
         // we can just use data[0]
         if (data[0].isIntersecting) {
-          this.loadSrc = this.src;
+          this.load();
           this.removeIO();
-          this.ionImgDidLoad.emit();
         }
       });
 
       this.io.observe(this.el);
     } else {
       // fall back to setTimeout for Safari and IE
-      setTimeout(() => this.loadSrc = this.src, 200);
+      setTimeout(() => this.load(), 200);
     }
+  }
+
+  private load() {
+    this.loadSrc = this.src;
+    this.ionImgDidLoad.emit();
   }
 
   private removeIO() {
@@ -72,7 +76,8 @@ export class Img {
       <img
         src={this.loadSrc}
         alt={this.alt}
-        decoding="async"></img>
+        decoding="async"
+      />
     );
   }
 }

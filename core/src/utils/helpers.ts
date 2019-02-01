@@ -2,29 +2,38 @@ import { EventEmitter } from '@stencil/core';
 
 import { Side } from '../interface';
 
-export function reorderArray(array: any[], indexes: {from: number, to: number}): any[] {
-  const element = array[indexes.from];
-  array.splice(indexes.from, 1);
-  array.splice(indexes.to, 0, element);
-  return array;
+export function rIC(callback: () => void) {
+  if ('requestIdleCallback' in window) {
+    (window as any).requestIdleCallback(callback);
+  } else {
+    setTimeout(callback, 32);
+  }
 }
 
 export function hasShadowDom(el: HTMLElement) {
-  return !!el.shadowRoot && !!el.attachShadow;
+  return !!el.shadowRoot && !!(el as any).attachShadow;
 }
 
-export function renderHiddenInput(container: HTMLElement, name: string, value: string, disabled: boolean) {
-  if (hasShadowDom(container)) {
-    let input = container.querySelector('input.aux-input') as HTMLInputElement;
+export function findItemLabel(componentEl: HTMLElement) {
+  const itemEl = componentEl.closest('ion-item');
+  if (itemEl) {
+    return itemEl.querySelector('ion-label');
+  }
+  return null;
+}
+
+export function renderHiddenInput(always: boolean, container: HTMLElement, name: string, value: string | undefined | null, disabled: boolean) {
+  if (always || hasShadowDom(container)) {
+    let input = container.querySelector('input.aux-input') as HTMLInputElement | null;
     if (!input) {
-      input = container.ownerDocument.createElement('input');
+      input = container.ownerDocument!.createElement('input');
       input.type = 'hidden';
       input.classList.add('aux-input');
       container.appendChild(input);
     }
     input.disabled = disabled;
     input.name = name;
-    input.value = value;
+    input.value = value || '';
   }
 }
 
@@ -92,7 +101,7 @@ export function debounceEvent(event: EventEmitter, wait: number): EventEmitter {
 
 export function debounce(func: (...args: any[]) => void, wait = 0) {
   let timer: any;
-  return (...args: any[]): void => {
+  return (...args: any[]): any => {
     clearTimeout(timer);
     timer = setTimeout(func, wait, ...args);
   };

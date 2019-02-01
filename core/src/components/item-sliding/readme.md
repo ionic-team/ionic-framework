@@ -29,28 +29,110 @@ Options can be expanded to take up the full width of the item if you swipe past 
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Angular
+
+```html
+<ion-list>
+  <ion-item-sliding>
+    <ion-item>
+      <ion-label>Item</ion-label>
+    </ion-item>
+    <ion-item-options side="start">
+      <ion-item-option (click)="favorite(item)">Favorite</ion-item-option>
+      <ion-item-option color="danger" (click)="share(item)">Share</ion-item-option>
+    </ion-item-options>
+
+    <ion-item-options side="end">
+      <ion-item-option (click)="unread(item)">Unread</ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
+</ion-list>
+```
+
+
+### Javascript
+
+```html
+<ion-list>
+  <ion-item-sliding>
+    <ion-item>
+      <ion-label>Item</ion-label>
+    </ion-item>
+    <ion-item-options side="start">
+      <ion-item-option onClick="favorite(item)">Favorite</ion-item-option>
+      <ion-item-option color="danger" onClick="share(item)">Share</ion-item-option>
+    </ion-item-options>
+
+    <ion-item-options side="end">
+      <ion-item-option onClick="unread(item)">Unread</ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
+</ion-list>
+```
+
+
+
 ## Properties
 
-| Property   | Attribute  | Description                                                                   | Type      |
-| ---------- | ---------- | ----------------------------------------------------------------------------- | --------- |
-| `disabled` | `disabled` | If true, the user cannot interact with the sliding-item. Defaults to `false`. | `boolean` |
+| Property   | Attribute  | Description                                                | Type      | Default |
+| ---------- | ---------- | ---------------------------------------------------------- | --------- | ------- |
+| `disabled` | `disabled` | If `true`, the user cannot interact with the sliding-item. | `boolean` | `false` |
 
 
 ## Events
 
-| Event     | Description                                |
-| --------- | ------------------------------------------ |
-| `ionDrag` | Emitted when the sliding position changes. |
+| Event     | Description                                | Type                |
+| --------- | ------------------------------------------ | ------------------- |
+| `ionDrag` | Emitted when the sliding position changes. | `CustomEvent<void>` |
 
 
 ## Methods
 
-| Method            | Description                                                                                                                                                                                                                                                                                                                                                     |
-| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `close`           | Close the sliding item. Items can also be closed from the [List](../../list/List).                                                                                                                                                                                                                                                                              |
-| `closeOpened`     | Close all of the sliding items in the list. Items can also be closed from the [List](../../list/List).                                                                                                                                                                                                                                                          |
-| `getOpenAmount`   | Get the amount the item is open in pixels.                                                                                                                                                                                                                                                                                                                      |
-| `getSlidingRatio` | Get the ratio of the open amount of the item compared to the width of the options. If the number returned is positive, then the options on the right side are open. If the number returned is negative, then the options on the left side are open. If the absolute value of the number is greater than 1, the item is open more than the width of the options. |
+### `close() => Promise<void>`
+
+Close the sliding item. Items can also be closed from the [List](../../list/List).
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `closeOpened() => Promise<boolean>`
+
+Close all of the sliding items in the list. Items can also be closed from the [List](../../list/List).
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `getOpenAmount() => Promise<number>`
+
+Get the amount the item is open in pixels.
+
+#### Returns
+
+Type: `Promise<number>`
+
+
+
+### `getSlidingRatio() => Promise<number>`
+
+Get the ratio of the open amount of the item compared to the width of the options.
+If the number returned is positive, then the options on the right side are open.
+If the number returned is negative, then the options on the left side are open.
+If the absolute value of the number is greater than 1, the item is open more than
+the width of the options.
+
+#### Returns
+
+Type: `Promise<number>`
+
+
 
 
 ----------------------------------------------

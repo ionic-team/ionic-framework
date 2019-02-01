@@ -4,10 +4,6 @@
 // iOS Menu
 // --------------------------------------------------
 
-.menu-inner {
-  background: $menu-ios-background;
-}
-
 :host(.menu-type-overlay) .menu-inner {
   box-shadow: $menu-ios-box-shadow-overlay;
 }

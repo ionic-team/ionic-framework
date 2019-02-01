@@ -5,18 +5,15 @@
 // --------------------------------------------------
 
 :host {
-  --color-button-clear: #{$searchbar-ios-input-clear-icon-color};
-  --color-button-cancel: #{$searchbar-ios-cancel-button-color};
-  --color-icon: #{$searchbar-ios-input-search-icon-color};
+  --clear-button-color: #{$searchbar-ios-input-clear-icon-color};
+  --cancel-button-color: #{$searchbar-ios-cancel-button-color};
+  --color: #{$searchbar-ios-input-text-color};
+  --icon-color: #{$searchbar-ios-input-search-icon-color};
   --background: #{$searchbar-ios-input-background-color};
 
   @include padding($searchbar-ios-padding-top, $searchbar-ios-padding-end, $searchbar-ios-padding-bottom, $searchbar-ios-padding-start);
 
   height: $searchbar-ios-input-height + $searchbar-ios-padding-top + $searchbar-ios-padding-bottom;
-
-  color: $searchbar-ios-input-text-color;
-
-  font-family: $searchbar-ios-font-family;
 
   contain: strict;
 }
@@ -89,20 +86,11 @@
 .searchbar-cancel-button {
   @include padding(0, 0, 0, 8px);
 
-  display: none;
-
   flex-shrink: 0;
-
-  border: 0;
-
-  outline: none;
 
   background-color: $searchbar-ios-cancel-button-background-color;
 
   font-size: $searchbar-ios-cancel-button-font-size;
-
-  cursor: pointer;
-  appearance: none;
 }
 
 
@@ -121,8 +109,8 @@
 // Searchbar Has Focus & Animated
 // -----------------------------------------
 
-:host(.searchbar-show-cancel.searchbar-has-focus) .searchbar-cancel-button,
-:host(.searchbar-show-cancel.searchbar-animated) .searchbar-cancel-button {
+:host(.searchbar-has-focus) .searchbar-cancel-button,
+:host(.searchbar-animated) .searchbar-cancel-button {
   display: block;
 }
 
@@ -146,6 +134,11 @@
   pointer-events: none;
 }
 
+:host(.searchbar-no-animate) .searchbar-search-icon,
+:host(.searchbar-no-animate) .searchbar-input,
+:host(.searchbar-no-animate) .searchbar-cancel-button {
+  transition-duration: 0ms;
+}
 
 // Searchbar Color
 // -----------------------------------------
@@ -154,12 +147,18 @@
   color: #{current-color(base)};
 }
 
-:host(.ion-color) .searchbar-cancel-button:hover {
-  color: #{current-color(tint)};
+@media (any-hover: hover) {
+  :host(.ion-color) .searchbar-cancel-button:hover {
+    color: #{current-color(tint)};
+  }
 }
 
 // Searchbar in Toolbar Color
 // -----------------------------------------
+
+:host-context(ion-toolbar.ion-color) {
+  color: inherit;
+}
 
 :host-context(ion-toolbar.ion-color) .searchbar-cancel-button {
   color: currentColor;

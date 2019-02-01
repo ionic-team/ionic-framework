@@ -1,11 +1,11 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
 
-import { TextInputChangeEvent } from '../../interface';
+import { RadioGroupChangeEventDetail } from '../../interface';
 
 @Component({
   tag: 'ion-radio-group'
 })
-export class RadioGroup {
+export class RadioGroup implements ComponentInterface {
 
   private inputId = `ion-rg-${radioGroupIds++}`;
   private labelId = `${this.inputId}-lbl`;
@@ -13,8 +13,8 @@ export class RadioGroup {
 
   @Element() el!: HTMLElement;
 
-  /*
-   * If true, the radios can be deselected. Default false.
+  /**
+   * If `true`, the radios can be deselected.
    */
   @Prop() allowEmptySelection = false;
 
@@ -23,25 +23,13 @@ export class RadioGroup {
    */
   @Prop() name: string = this.inputId;
 
-  /*
-   * If true, the user cannot interact with the radio group. Default false.
-   */
-  @Prop() disabled = false;
-
-  @Watch('disabled')
-  disabledChanged() {
-    for (const radio of this.radios) {
-      radio.disabled = this.disabled;
-    }
-  }
-
   /**
    * the value of the radio group.
    */
-  @Prop({ mutable: true }) value?: string;
+  @Prop({ mutable: true }) value?: any | null;
 
   @Watch('value')
-  valueChanged(value: string | undefined) {
+  valueChanged(value: any | undefined) {
     this.updateRadios();
     this.ionChange.emit({ value });
   }
@@ -49,7 +37,7 @@ export class RadioGroup {
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<RadioGroupChangeEventDetail>;
 
   @Listen('ionRadioDidLoad')
   onRadioDidLoad(ev: Event) {
@@ -62,7 +50,7 @@ export class RadioGroup {
     // this radio-group does not have a value
     // but this radio is checked, so let's set the
     // radio-group's value from the checked radio
-    if (this.value === undefined && radio.checked) {
+    if (this.value == null && radio.checked) {
       this.value = radio.value;
     } else {
       this.updateRadios();
@@ -79,9 +67,20 @@ export class RadioGroup {
 
   @Listen('ionSelect')
   onRadioSelect(ev: Event) {
-    const selectedRadio = ev.target as HTMLIonRadioElement;
+    const selectedRadio = ev.target as HTMLIonRadioElement | null;
     if (selectedRadio) {
       this.value = selectedRadio.value;
+    }
+  }
+
+  @Listen('ionDeselect')
+  onRadioDeselect(ev: Event) {
+    if (this.allowEmptySelection) {
+      const selectedRadio = ev.target as HTMLIonRadioElement | null;
+      if (selectedRadio) {
+        selectedRadio.checked = false;
+        this.value = undefined;
+      }
     }
   }
 
@@ -99,7 +98,6 @@ export class RadioGroup {
       }
     }
 
-    this.disabledChanged();
     this.updateRadios();
   }
 
@@ -122,15 +120,11 @@ export class RadioGroup {
   }
 
   hostData() {
-    const hostAttrs: any = {
-      'role': 'radiogroup'
+    return {
+      'role': 'radiogroup',
+      'aria-labelledby': this.labelId
     };
-    if (this.labelId) {
-      hostAttrs['aria-labelledby'] = this.labelId;
-    }
-    return hostAttrs;
   }
-
 }
 
 let radioGroupIds = 0;

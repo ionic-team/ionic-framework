@@ -1,6 +1,7 @@
 import { Cell, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 
-import { CellType, NodeChange } from './virtual-scroll-interface';
+import { CELL_TYPE_FOOTER, CELL_TYPE_HEADER, CELL_TYPE_ITEM, NODE_CHANGE_CELL, NODE_CHANGE_NONE, NODE_CHANGE_POSITION } from './constants';
+import { CellType } from './virtual-scroll-interface';
 
 export interface Viewport {
   top: number;
@@ -17,7 +18,7 @@ const MIN_READS = 2;
 export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: Cell[], range: Range) {
   // reset dom
   for (const node of dom) {
-    node.change = NodeChange.NoChange;
+    node.change = NODE_CHANGE_NONE;
     node.d = true;
   }
 
@@ -32,7 +33,7 @@ export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: 
       const top = heightIndex[i];
       if (top !== node.top) {
         node.top = top;
-        node.change = NodeChange.Position;
+        node.change = NODE_CHANGE_POSITION;
       }
       node.d = false;
     } else {
@@ -48,7 +49,7 @@ export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: 
     const index = cell.index;
     if (node) {
       node.d = false;
-      node.change = NodeChange.Cell;
+      node.change = NODE_CHANGE_CELL;
       node.cell = cell;
       node.top = heightIndex[index];
     } else {
@@ -56,7 +57,7 @@ export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: 
         d: false,
         cell,
         visible: true,
-        change: NodeChange.Cell,
+        change: NODE_CHANGE_CELL,
         top: heightIndex[index],
       });
     }
@@ -64,7 +65,7 @@ export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: 
   dom
   .filter(n => n.d && n.top !== -9999)
   .forEach(n => {
-    n.change = NodeChange.Position;
+    n.change = NODE_CHANGE_POSITION;
     n.top = -9999;
   });
 }
@@ -75,7 +76,7 @@ export function doRender(
   dom: VirtualNode[],
   updateCellHeight: (cell: Cell, node: HTMLElement) => void
 ) {
-  const children = el.children;
+  const children = Array.from(el.children).filter(n => n.tagName !== 'TEMPLATE');
   const childrenNu = children.length;
   let child: HTMLElement;
   for (let i = 0; i < dom.length; i++) {
@@ -83,14 +84,15 @@ export function doRender(
     const cell = node.cell;
 
     // the cell change, the content must be updated
-    if (node.change === NodeChange.Cell) {
+    if (node.change === NODE_CHANGE_CELL) {
       if (i < childrenNu) {
         child = children[i] as HTMLElement;
         nodeRender(child, cell, i);
       } else {
-        child = nodeRender(null, cell, i);
+        const newChild = createNode(el, cell.type);
+        child = nodeRender(newChild, cell, i) || newChild;
         child.classList.add('virtual-item');
-        el.appendChild(child);
+        el.appendChild(child!);
       }
       (child as any)['$ionCell'] = cell;
     } else {
@@ -98,7 +100,7 @@ export function doRender(
     }
 
     // only update position when it changes
-    if (node.change !== NodeChange.NoChange) {
+    if (node.change !== NODE_CHANGE_NONE) {
       child.style.transform = `translate3d(0,${node.top}px,0)`;
     }
 
@@ -118,6 +120,22 @@ export function doRender(
       updateCellHeight(cell, child);
       cell.reads--;
     }
+  }
+}
+
+function createNode(el: HTMLElement, type: CellType): HTMLElement | null {
+  const template = getTemplate(el, type);
+  if (template && el.ownerDocument) {
+    return el.ownerDocument.importNode(template.content, true).children[0] as HTMLElement;
+  }
+  return null;
+}
+
+function getTemplate(el: HTMLElement, type: CellType): HTMLTemplateElement | null {
+  switch (type) {
+    case CELL_TYPE_ITEM: return el.querySelector('template:not([name])');
+    case CELL_TYPE_HEADER: return el.querySelector('template[name=header]');
+    case CELL_TYPE_FOOTER: return el.querySelector('template[name=footer]');
   }
 }
 
@@ -163,10 +181,14 @@ export function getShouldUpdate(dirtyIndex: number, currentRange: Range, range: 
 }
 
 export function findCellIndex(cells: Cell[], index: number): number {
+  const max = cells[cells.length - 1].index || 0;
   if (index === 0) {
     return 0;
+  } else if (index === max + 1) {
+    return cells.length;
+  } else {
+    return cells.findIndex(c => c.index === index);
   }
-  return cells.findIndex(c => c.index === index);
 }
 
 export function inplaceUpdate(dst: Cell[], src: Cell[], offset: number) {
@@ -203,7 +225,7 @@ export function calcCells(
       if (value != null) {
         cells.push({
           i: j++,
-          type: CellType.Header,
+          type: CELL_TYPE_HEADER,
           value,
           index: i,
           height: approxHeaderHeight,
@@ -215,7 +237,7 @@ export function calcCells(
 
     cells.push({
       i: j++,
-      type: CellType.Item,
+      type: CELL_TYPE_ITEM,
       value: item,
       index: i,
       height: itemHeight ? itemHeight(item, i) : approxItemHeight,
@@ -228,7 +250,7 @@ export function calcCells(
       if (value != null) {
         cells.push({
           i: j++,
-          type: CellType.Footer,
+          type: CELL_TYPE_FOOTER,
           value,
           index: i,
           height: approxFooterHeight,
@@ -243,9 +265,9 @@ export function calcCells(
 
 export function calcHeightIndex(buf: Uint32Array, cells: Cell[], index: number): number {
   let acum = buf[index];
-  for (; index < buf.length; index++) {
-    buf[index] = acum;
-    acum += cells[index].height;
+  for (let i = index; i < buf.length; i++) {
+    buf[i] = acum;
+    acum += cells[i].height;
   }
   return acum;
 }
@@ -266,7 +288,7 @@ export function resizeBuffer(buf: Uint32Array | undefined, len: number) {
 }
 
 export function positionForIndex(index: number, cells: Cell[], heightIndex: Uint32Array): number {
-  const cell = cells.find(c => c.type === CellType.Item && c.index === index);
+  const cell = cells.find(c => c.type === CELL_TYPE_ITEM && c.index === index);
   if (cell) {
     return heightIndex[cell.i];
   }

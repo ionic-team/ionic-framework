@@ -8,6 +8,8 @@
    * @prop --background: Background of the card
    * @prop --color: Color of the card
    */
+  --ion-safe-area-left: 0px;
+  --ion-safe-area-right: 0px;
 
   @include font-smoothing();
 
@@ -16,6 +18,8 @@
 
   background: var(--background);
   color: var(--color);
+
+  font-family: $font-family-base;
 
   overflow: hidden;
 }
@@ -28,9 +32,10 @@
   color: current-color(contrast);
 }
 
+:host(.ion-color)::slotted(*) ion-card-header,
 :host(.ion-color)::slotted(*) ion-card-title,
 :host(.ion-color)::slotted(*) ion-card-subtitle {
-  color: currentColor;
+  color: current-color(contrast);
 }
 
 // Slotted Content

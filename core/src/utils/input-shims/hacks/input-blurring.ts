@@ -21,7 +21,7 @@ export function enableInputBlurring(doc: Document) {
       didScroll = false;
       return;
     }
-    const active = doc.activeElement as HTMLElement;
+    const active = doc.activeElement as HTMLElement | null;
     if (!active) {
       return;
     }
@@ -37,11 +37,6 @@ export function enableInputBlurring(doc: Document) {
       return;
     }
     if (tapped.matches(SKIP_SELECTOR) || tapped.closest(SKIP_SELECTOR)) {
-      return;
-    }
-
-    // skip if div is a cover
-    if (tapped.classList.contains('input-cover')) {
       return;
     }
 

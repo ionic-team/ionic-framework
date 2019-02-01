@@ -4,12 +4,19 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --color: Text color of the title
+   */
+  --color: initial;
+
   display: flex;
 
   flex: 1;
   align-items: center;
 
   transform: translateZ(0);
+
+  color: var(--color);
 }
 
 :host(.title-ios) {

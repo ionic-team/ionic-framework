@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 
 import { ActionSheetButton, Animation, AnimationBuilder, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
@@ -17,25 +17,24 @@ import { mdLeaveAnimation } from './animations/md.leave';
   },
   scoped: true
 })
-export class ActionSheet implements OverlayInterface {
-
-  mode!: Mode;
+export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   presented = false;
   animation?: Animation;
 
   @Element() el!: HTMLElement;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
+  /** @internal */
+  @Prop() overlayIndex!: number;
 
   /**
-   * Unique ID to be used with the overlay. Internal only
+   * The mode determines which platform styles to use.
    */
-  @Prop() overlayId!: number;
+  @Prop() mode!: Mode;
 
   /**
-   * If the actionSheet should close the keyboard
+   * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
    */
   @Prop() keyboardClose = true;
 
@@ -52,7 +51,7 @@ export class ActionSheet implements OverlayInterface {
   /**
    * An array of buttons for the action sheet.
    */
-  @Prop() buttons!: ActionSheetButton[];
+  @Prop() buttons!: (ActionSheetButton | string)[];
 
   /**
    * Additional classes to apply for custom CSS. If multiple classes are
@@ -61,7 +60,7 @@ export class ActionSheet implements OverlayInterface {
   @Prop() cssClass?: string | string[];
 
   /**
-   * If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
+   * If `true`, the action sheet will be dismissed when the backdrop is clicked.
    */
   @Prop() backdropDismiss = true;
 
@@ -76,24 +75,14 @@ export class ActionSheet implements OverlayInterface {
   @Prop() subHeader?: string;
 
   /**
-   * If true, the action sheet will be translucent. Defaults to `false`.
+   * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports backdrop-filter.
    */
   @Prop() translucent = false;
 
   /**
-   * If true, the action sheet will animate. Defaults to `true`.
+   * If `true`, the action sheet will animate.
    */
-  @Prop() willAnimate = true;
-
-  /**
-   * Emitted after the alert has loaded.
-   */
-  @Event() ionActionSheetDidLoad!: EventEmitter<void>;
-
-  /**
-   * Emitted after the alert has unloaded.
-   */
-  @Event() ionActionSheetDidUnload!: EventEmitter<void>;
+  @Prop() animated = true;
 
   /**
    * Emitted after the alert has presented.
@@ -115,24 +104,16 @@ export class ActionSheet implements OverlayInterface {
    */
   @Event({ eventName: 'ionActionSheetDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
-  componentDidLoad() {
-    this.ionActionSheetDidLoad.emit();
-  }
-
-  componentDidUnload() {
-    this.ionActionSheetDidUnload.emit();
-  }
-
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    this.dismiss(null, BACKDROP);
+    this.dismiss(undefined, BACKDROP);
   }
 
   @Listen('ionActionSheetWillDismiss')
   protected dispatchCancelHandler(ev: CustomEvent) {
     const role = ev.detail.role;
     if (isCancel(role)) {
-      const cancelButton = this.buttons.find(b => b.role === 'cancel');
+      const cancelButton = this.getButtons().find(b => b.role === 'cancel');
       this.callButtonHandler(cancelButton);
     }
   }
@@ -149,48 +130,46 @@ export class ActionSheet implements OverlayInterface {
    * Dismiss the action sheet overlay after it has been presented.
    */
   @Method()
-  dismiss(data?: any, role?: string): Promise<void> {
+  dismiss(data?: any, role?: string): Promise<boolean> {
     return dismiss(this, data, role, 'actionSheetLeave', iosLeaveAnimation, mdLeaveAnimation);
   }
 
   /**
-   * Returns a promise that resolves when the action-sheet did dismiss. It also accepts a callback
-   * that is called in the same circustances.
-   *
+   * Returns a promise that resolves when the action-sheet did dismiss.
    */
   @Method()
-  onDidDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionActionSheetDidDismiss', callback);
+  onDidDismiss(): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionActionSheetDidDismiss');
   }
 
   /**
-   * Returns a promise that resolves when the action-sheet will dismiss. It also accepts a callback
-   * that is called in the same circustances.
+   * Returns a promise that resolves when the action-sheet will dismiss.
    *
    */
   @Method()
-  onWillDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionActionSheetWillDismiss', callback);
+  onWillDismiss(): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionActionSheetWillDismiss');
   }
 
-  private buttonClick(button: ActionSheetButton) {
+  private async buttonClick(button: ActionSheetButton) {
     const role = button.role;
     if (isCancel(role)) {
-      this.dismiss(undefined, role);
-      return;
+      return this.dismiss(undefined, role);
     }
-    const shouldDismiss = this.callButtonHandler(button);
+    const shouldDismiss = await this.callButtonHandler(button);
     if (shouldDismiss) {
-      this.dismiss(undefined, button.role);
+      return this.dismiss(undefined, button.role);
     }
+    return Promise.resolve();
   }
 
-  private callButtonHandler(button: ActionSheetButton | undefined): boolean {
+  private async callButtonHandler(button: ActionSheetButton | undefined) {
     if (button && button.handler) {
       // a handler has been provided, execute it
       // pass the handler the values from the inputs
       try {
-        if (button.handler() === false) {
+        const rtn = await button.handler();
+        if (rtn === false) {
           // if the return value of the handler is false then do not dismiss
           return false;
         }
@@ -201,10 +180,20 @@ export class ActionSheet implements OverlayInterface {
     return true;
   }
 
+  private getButtons(): ActionSheetButton[] {
+    return this.buttons.map(b => {
+      return (typeof b === 'string')
+        ? { text: b }
+        : b;
+    });
+  }
+
   hostData() {
     return {
+      'role': 'dialog',
+      'aria-modal': 'true',
       style: {
-        zIndex: 20000 + this.overlayId,
+        zIndex: 20000 + this.overlayIndex,
       },
       class: {
         ...getClassMap(this.cssClass),
@@ -214,12 +203,7 @@ export class ActionSheet implements OverlayInterface {
   }
 
   render() {
-    // TODO: move to processedButtons
-    const allButtons = this.buttons.map(b => {
-      return (typeof b === 'string')
-        ? { text: b }
-        : b;
-    });
+    const allButtons = this.getButtons();
     const cancelButton = allButtons.find(b => b.role === 'cancel');
     const buttons = allButtons.filter(b => b.role !== 'cancel');
 
@@ -228,18 +212,19 @@ export class ActionSheet implements OverlayInterface {
       <div class="action-sheet-wrapper" role="dialog">
         <div class="action-sheet-container">
           <div class="action-sheet-group">
-            {this.header &&
+            {this.header !== undefined &&
               <div class="action-sheet-title">
                 {this.header}
                 {this.subHeader && <div class="action-sheet-sub-title">{this.subHeader}</div>}
               </div>
             }
             {buttons.map(b =>
-              <button type="button" ion-activable class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
+              <button type="button" ion-activatable class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
                 <span class="action-sheet-button-inner">
                   {b.icon && <ion-icon icon={b.icon} lazy={false} class="action-sheet-icon" />}
                   {b.text}
                 </span>
+                {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
               </button>
             )}
           </div>
@@ -247,7 +232,6 @@ export class ActionSheet implements OverlayInterface {
           {cancelButton &&
             <div class="action-sheet-group action-sheet-group-cancel">
               <button
-                ion-activable
                 type="button"
                 class={buttonClass(cancelButton)}
                 onClick={() => this.buttonClick(cancelButton)}
@@ -273,7 +257,8 @@ export class ActionSheet implements OverlayInterface {
 function buttonClass(button: ActionSheetButton): CssClassMap {
   return {
     'action-sheet-button': true,
-    [`action-sheet-${button.role}`]: !!button.role,
+    'ion-activatable': true,
+    [`action-sheet-${button.role}`]: button.role !== undefined,
     ...getClassMap(button.cssClass),
   };
 }

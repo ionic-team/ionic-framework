@@ -1,13 +1,13 @@
-import { Component, Listen, Prop, State } from '@stencil/core';
+import { Component, ComponentInterface, Listen, Prop, State } from '@stencil/core';
 
 @Component({
   tag: 'ion-menu-toggle',
   styleUrl: 'menu-toggle.scss',
   shadow: true
 })
-export class MenuToggle {
-  @Prop({ context: 'document' })
-  doc!: Document;
+export class MenuToggle implements ComponentInterface {
+
+  @Prop({ context: 'document' }) doc!: Document;
 
   @State() visible = false;
 
@@ -30,19 +30,18 @@ export class MenuToggle {
   @Prop() autoHide = true;
 
   componentDidLoad() {
-    this.updateVisibility();
+    return this.updateVisibility();
   }
 
   @Listen('click')
   async onClick() {
     const menuCtrl = await getMenuController(this.doc);
     if (menuCtrl) {
-      const menu = menuCtrl.get(this.menu);
-      if (menu && menu.isActive()) {
-        return menuCtrl.toggle(this.menu);
+      const menu = await menuCtrl.get(this.menu);
+      if (menu) {
+        menuCtrl.toggle(this.menu);
       }
     }
-    return false;
   }
 
   @Listen('body:ionMenuChange')
@@ -50,8 +49,8 @@ export class MenuToggle {
   async updateVisibility() {
     const menuCtrl = await getMenuController(this.doc);
     if (menuCtrl) {
-      const menu = menuCtrl.get(this.menu);
-      if (menu && menu.isActive()) {
+      const menu = await menuCtrl.get(this.menu);
+      if (menu && await menu.isActive()) {
         this.visible = true;
         return;
       }

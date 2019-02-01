@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -11,7 +11,7 @@ import { createColorClasses } from '../../utils/theme';
   },
   scoped: true
 })
-export class Card {
+export class Card implements ComponentInterface {
 
   /**
    * The color to use from your application's color palette.
@@ -22,7 +22,6 @@ export class Card {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 

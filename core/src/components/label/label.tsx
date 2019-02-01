@@ -1,6 +1,6 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
-import { Color, Mode, StyleEvent } from '../../interface';
+import { Color, Mode, StyleEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -11,7 +11,7 @@ import { createColorClasses } from '../../utils/theme';
   },
   scoped: true
 })
-export class Label {
+export class Label implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   /**
@@ -23,36 +23,45 @@ export class Label {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
    * The position determines where and how the label behaves inside an item.
-   * Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
    */
   @Prop() position?: 'fixed' | 'stacked' | 'floating';
 
   /**
    * Emitted when the styles change.
+   * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
-  @Method()
-  getText(): string {
-    return this.el.textContent || '';
+  @State() noAnimate = false;
+
+  componentWillLoad() {
+    this.noAnimate = (this.position === 'floating');
+    this.emitStyle();
   }
 
   componentDidLoad() {
-    this.positionChanged();
+    if (this.noAnimate) {
+      setTimeout(() => {
+        this.noAnimate = false;
+      }, 1000);
+    }
   }
 
   @Watch('position')
   positionChanged() {
+    this.emitStyle();
+  }
+
+  private emitStyle() {
     const position = this.position;
     this.ionStyle.emit({
       'label': true,
-      [`label-${position}`]: !!position
+      [`label-${position}`]: position !== undefined
     });
   }
 
@@ -61,7 +70,8 @@ export class Label {
     return {
       class: {
         ...createColorClasses(this.color),
-        [`label-${position}`]: !!position,
+        [`label-${position}`]: position !== undefined,
+        [`label-no-animate`]: (this.noAnimate)
       }
     };
   }

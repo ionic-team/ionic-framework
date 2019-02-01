@@ -1,14 +1,20 @@
-import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate } from '../../interface';
+import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
 
-export interface PopoverOptions {
-  component: ComponentRef;
-  componentProps?: ComponentProps;
+export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
+  component: T;
+  componentProps?: ComponentProps<T>;
   showBackdrop?: boolean;
   backdropDismiss?: boolean;
   translucent?: boolean;
-  enterAnimation?: AnimationBuilder;
-  leaveAnimation?: AnimationBuilder;
   cssClass?: string | string[];
   event?: Event;
   delegate?: FrameworkDelegate;
+  animated?: boolean;
+
+  mode?: Mode;
+  keyboardClose?: boolean;
+  id?: string;
+
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
 }

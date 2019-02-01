@@ -1,757 +1,919 @@
-/* auto-generated angular directive proxies */
 /* tslint:disable */
-import { Directive, ElementRef, EventEmitter } from '@angular/core';
+/* auto-generated angular directive proxies */
+import { Component, ElementRef, ChangeDetectorRef, EventEmitter } from '@angular/core';
+import { proxyInputs, proxyMethods, proxyOutputs } from './proxies-utils';
 
-export function proxyInputs(instance: any, el: ElementRef, props: string[]) {
-  props.forEach(propName => {
-    Object.defineProperty(instance, propName, {
-      get: () => el.nativeElement[propName], set: (val: any) => el.nativeElement[propName] = val
-    });
-  });
-}
-
-export function proxyOutputs(instance: any, events: string[]) {
-  events.forEach(eventName => instance[eventName] = new EventEmitter());
-}
-
-export function proxyMethods(instance: any, ref: ElementRef, methods: string[]) {
-  const el = ref.nativeElement;
-  methods.forEach(methodName => {
-    Object.defineProperty(instance, methodName, {
-      get: function() {
-        return function() {
-          const args = arguments;
-          return el.componentOnReady().then((el: any) => el[methodName].apply(el, args));
-        };
-      }
-    });
-  });
-}
-
-
-export declare interface App extends StencilComponents.IonApp {}
-@Directive({ selector: 'ion-app' })
-export class App {
-}
-
-export declare interface Avatar extends StencilComponents.IonAvatar {}
-@Directive({ selector: 'ion-avatar' })
-export class Avatar {
-}
-
-export declare interface BackButton extends StencilComponents.IonBackButton {}
-@Directive({ selector: 'ion-back-button', inputs: ['color', 'mode', 'defaultHref', 'icon', 'text'] })
-export class BackButton {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'defaultHref', 'icon', 'text']);
-  }
-}
-
-export declare interface Backdrop extends StencilComponents.IonBackdrop {}
-@Directive({ selector: 'ion-backdrop', inputs: ['visible', 'tappable', 'stopPropagation'], outputs: ['ionBackdropTap'] })
-export class Backdrop {
-  ionBackdropTap: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['visible', 'tappable', 'stopPropagation']);
-    proxyOutputs(this, ['ionBackdropTap']);
-  }
-}
-
-export declare interface Badge extends StencilComponents.IonBadge {}
-@Directive({ selector: 'ion-badge', inputs: ['color', 'mode'] })
-export class Badge {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode']);
-  }
-}
-
-export declare interface Button extends StencilComponents.IonButton {}
-@Directive({ selector: 'ion-button', inputs: ['color', 'mode', 'buttonType', 'disabled', 'expand', 'fill', 'routerDirection', 'href', 'shape', 'size', 'strong', 'type'], outputs: ['ionFocus', 'ionBlur'] })
-export class Button {
-  ionFocus: EventEmitter<any>;
-  ionBlur: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'buttonType', 'disabled', 'expand', 'fill', 'routerDirection', 'href', 'shape', 'size', 'strong', 'type']);
-    proxyOutputs(this, ['ionFocus', 'ionBlur']);
-  }
-}
-
-export declare interface Buttons extends StencilComponents.IonButtons {}
-@Directive({ selector: 'ion-buttons' })
-export class Buttons {
-}
-
-export declare interface Card extends StencilComponents.IonCard {}
-@Directive({ selector: 'ion-card', inputs: ['color', 'mode'] })
-export class Card {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode']);
-  }
-}
-
-export declare interface CardContent extends StencilComponents.IonCardContent {}
-@Directive({ selector: 'ion-card-content', inputs: ['mode'] })
-export class CardContent {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['mode']);
-  }
-}
-
-export declare interface CardHeader extends StencilComponents.IonCardHeader {}
-@Directive({ selector: 'ion-card-header', inputs: ['color', 'mode', 'translucent'] })
-export class CardHeader {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'translucent']);
-  }
-}
-
-export declare interface CardSubtitle extends StencilComponents.IonCardSubtitle {}
-@Directive({ selector: 'ion-card-subtitle', inputs: ['color', 'mode'] })
-export class CardSubtitle {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode']);
-  }
-}
-
-export declare interface CardTitle extends StencilComponents.IonCardTitle {}
-@Directive({ selector: 'ion-card-title', inputs: ['color', 'mode'] })
-export class CardTitle {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode']);
-  }
-}
-
-export declare interface Checkbox extends StencilComponents.IonCheckbox {}
-@Directive({ selector: 'ion-checkbox', inputs: ['color', 'mode', 'name', 'checked', 'disabled', 'value'], outputs: ['ionChange', 'ionFocus', 'ionBlur', 'ionStyle'] })
-export class Checkbox {
-  ionChange: EventEmitter<any>;
-  ionFocus: EventEmitter<any>;
-  ionBlur: EventEmitter<any>;
-  ionStyle: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'name', 'checked', 'disabled', 'value']);
-    proxyOutputs(this, ['ionChange', 'ionFocus', 'ionBlur', 'ionStyle']);
-  }
-}
-
-export declare interface Chip extends StencilComponents.IonChip {}
-@Directive({ selector: 'ion-chip', inputs: ['color', 'mode'] })
-export class Chip {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode']);
-  }
-}
-
-export declare interface ChipButton extends StencilComponents.IonChipButton {}
-@Directive({ selector: 'ion-chip-button', inputs: ['color', 'mode', 'disabled', 'fill', 'href'] })
-export class ChipButton {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'disabled', 'fill', 'href']);
-  }
-}
-
-export declare interface ChipIcon extends StencilComponents.IonChipIcon {}
-@Directive({ selector: 'ion-chip-icon', inputs: ['color', 'mode', 'name', 'src'] })
-export class ChipIcon {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'name', 'src']);
-  }
-}
-
-export declare interface Col extends StencilComponents.IonCol {}
-@Directive({ selector: 'ion-col', inputs: ['offset', 'offsetXs', 'offsetSm', 'offsetMd', 'offsetLg', 'offsetXl', 'pull', 'pullXs', 'pullSm', 'pullMd', 'pullLg', 'pullXl', 'push', 'pushXs', 'pushSm', 'pushMd', 'pushLg', 'pushXl', 'size', 'sizeXs', 'sizeSm', 'sizeMd', 'sizeLg', 'sizeXl'] })
-export class Col {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['offset', 'offsetXs', 'offsetSm', 'offsetMd', 'offsetLg', 'offsetXl', 'pull', 'pullXs', 'pullSm', 'pullMd', 'pullLg', 'pullXl', 'push', 'pushXs', 'pushSm', 'pushMd', 'pushLg', 'pushXl', 'size', 'sizeXs', 'sizeSm', 'sizeMd', 'sizeLg', 'sizeXl']);
-  }
-}
-
-export declare interface Content extends StencilComponents.IonContent {}
-@Directive({ selector: 'ion-content', inputs: ['color', 'fullscreen', 'forceOverscroll', 'scrollX', 'scrollY', 'scrollEvents'], outputs: ['ionScrollStart', 'ionScroll', 'ionScrollEnd'] })
-export class Content {
-  ionScrollStart: EventEmitter<any>;
-  ionScroll: EventEmitter<any>;
-  ionScrollEnd: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyMethods(this, r, ['getScrollElement', 'scrollToTop', 'scrollToBottom', 'scrollByPoint', 'scrollToPoint']);
-    proxyInputs(this, r, ['color', 'fullscreen', 'forceOverscroll', 'scrollX', 'scrollY', 'scrollEvents']);
-    proxyOutputs(this, ['ionScrollStart', 'ionScroll', 'ionScrollEnd']);
-  }
-}
-
-export declare interface Datetime extends StencilComponents.IonDatetime {}
-@Directive({ selector: 'ion-datetime', inputs: ['disabled', 'min', 'max', 'displayFormat', 'pickerFormat', 'cancelText', 'doneText', 'yearValues', 'monthValues', 'dayValues', 'hourValues', 'minuteValues', 'monthNames', 'monthShortNames', 'dayNames', 'dayShortNames', 'pickerOptions', 'placeholder', 'value'], outputs: ['ionCancel', 'ionChange', 'ionStyle'] })
-export class Datetime {
-  ionCancel: EventEmitter<any>;
-  ionChange: EventEmitter<any>;
-  ionStyle: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyMethods(this, r, ['open']);
-    proxyInputs(this, r, ['disabled', 'min', 'max', 'displayFormat', 'pickerFormat', 'cancelText', 'doneText', 'yearValues', 'monthValues', 'dayValues', 'hourValues', 'minuteValues', 'monthNames', 'monthShortNames', 'dayNames', 'dayShortNames', 'pickerOptions', 'placeholder', 'value']);
-    proxyOutputs(this, ['ionCancel', 'ionChange', 'ionStyle']);
-  }
-}
-
-export declare interface Fab extends StencilComponents.IonFab {}
-@Directive({ selector: 'ion-fab', inputs: ['horizontal', 'vertical', 'edge', 'activated'] })
-export class Fab {
-  constructor(r: ElementRef) {
-    proxyMethods(this, r, ['close']);
-    proxyInputs(this, r, ['horizontal', 'vertical', 'edge', 'activated']);
-  }
-}
-
-export declare interface FabButton extends StencilComponents.IonFabButton {}
-@Directive({ selector: 'ion-fab-button', inputs: ['color', 'mode', 'activated', 'disabled', 'href', 'translucent', 'show'] })
-export class FabButton {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'activated', 'disabled', 'href', 'translucent', 'show']);
-  }
-}
-
-export declare interface FabList extends StencilComponents.IonFabList {}
-@Directive({ selector: 'ion-fab-list', inputs: ['activated', 'side'] })
-export class FabList {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['activated', 'side']);
-  }
-}
-
-export declare interface Footer extends StencilComponents.IonFooter {}
-@Directive({ selector: 'ion-footer', inputs: ['mode', 'translucent'] })
-export class Footer {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['mode', 'translucent']);
-  }
-}
-
-export declare interface Grid extends StencilComponents.IonGrid {}
-@Directive({ selector: 'ion-grid', inputs: ['fixed'] })
-export class Grid {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['fixed']);
-  }
-}
-
-export declare interface Header extends StencilComponents.IonHeader {}
-@Directive({ selector: 'ion-header', inputs: ['mode', 'translucent'] })
-export class Header {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['mode', 'translucent']);
-  }
-}
-
-export declare interface HideWhen extends StencilComponents.IonHideWhen {}
-@Directive({ selector: 'ion-hide-when', inputs: ['mode', 'orientation', 'mediaQuery', 'size', 'platform', 'or'] })
-export class HideWhen {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['mode', 'orientation', 'mediaQuery', 'size', 'platform', 'or']);
-  }
-}
-
-export declare interface Icon extends StencilComponents.IonIcon {}
-@Directive({ selector: 'ion-icon', inputs: ['ariaLabel', 'color', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'size', 'src'] })
-export class Icon {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['ariaLabel', 'color', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'size', 'src']);
-  }
-}
-
-export declare interface Img extends StencilComponents.IonImg {}
-@Directive({ selector: 'ion-img', inputs: ['alt', 'src'], outputs: ['ionImgDidLoad'] })
-export class Img {
-  ionImgDidLoad: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['alt', 'src']);
-    proxyOutputs(this, ['ionImgDidLoad']);
-  }
-}
-
-export declare interface InfiniteScroll extends StencilComponents.IonInfiniteScroll {}
-@Directive({ selector: 'ion-infinite-scroll', inputs: ['threshold', 'disabled', 'position'], outputs: ['ionInfinite'] })
-export class InfiniteScroll {
-  ionInfinite: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyMethods(this, r, ['complete', 'waitFor']);
-    proxyInputs(this, r, ['threshold', 'disabled', 'position']);
-    proxyOutputs(this, ['ionInfinite']);
-  }
-}
-
-export declare interface InfiniteScrollContent extends StencilComponents.IonInfiniteScrollContent {}
-@Directive({ selector: 'ion-infinite-scroll-content', inputs: ['loadingSpinner', 'loadingText'] })
-export class InfiniteScrollContent {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['loadingSpinner', 'loadingText']);
-  }
-}
-
-export declare interface Input extends StencilComponents.IonInput {}
-@Directive({ selector: 'ion-input', inputs: ['color', 'mode', 'accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'debounce', 'disabled', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'results', 'spellcheck', 'step', 'size', 'type', 'value'], outputs: ['ionInput', 'ionChange', 'ionStyle', 'ionBlur', 'ionFocus', 'ionInputDidLoad', 'ionInputDidUnload'] })
-export class Input {
-  ionInput: EventEmitter<any>;
-  ionChange: EventEmitter<any>;
-  ionStyle: EventEmitter<any>;
-  ionBlur: EventEmitter<any>;
-  ionFocus: EventEmitter<any>;
-  ionInputDidLoad: EventEmitter<any>;
-  ionInputDidUnload: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'debounce', 'disabled', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'results', 'spellcheck', 'step', 'size', 'type', 'value']);
-    proxyOutputs(this, ['ionInput', 'ionChange', 'ionStyle', 'ionBlur', 'ionFocus', 'ionInputDidLoad', 'ionInputDidUnload']);
-  }
-}
-
-export declare interface Item extends StencilComponents.IonItem {}
-@Directive({ selector: 'ion-item', inputs: ['color', 'mode', 'button', 'detail', 'detailIcon', 'disabled', 'href', 'lines', 'routerDirection', 'state', 'type'] })
-export class Item {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'button', 'detail', 'detailIcon', 'disabled', 'href', 'lines', 'routerDirection', 'state', 'type']);
-  }
-}
-
-export declare interface ItemDivider extends StencilComponents.IonItemDivider {}
-@Directive({ selector: 'ion-item-divider', inputs: ['color', 'mode'] })
-export class ItemDivider {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode']);
-  }
-}
-
-export declare interface ItemGroup extends StencilComponents.IonItemGroup {}
-@Directive({ selector: 'ion-item-group' })
-export class ItemGroup {
-}
-
-export declare interface ItemOption extends StencilComponents.IonItemOption {}
-@Directive({ selector: 'ion-item-option', inputs: ['color', 'mode', 'disabled', 'expandable', 'href'] })
-export class ItemOption {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'disabled', 'expandable', 'href']);
-  }
-}
-
-export declare interface ItemOptions extends StencilComponents.IonItemOptions {}
-@Directive({ selector: 'ion-item-options', inputs: ['side'], outputs: ['ionSwipe'] })
-export class ItemOptions {
-  ionSwipe: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyMethods(this, r, ['isEndSide', 'width', 'fireSwipeEvent']);
-    proxyInputs(this, r, ['side']);
-    proxyOutputs(this, ['ionSwipe']);
-  }
-}
-
-export declare interface ItemSliding extends StencilComponents.IonItemSliding {}
-@Directive({ selector: 'ion-item-sliding', inputs: ['disabled'], outputs: ['ionDrag'] })
-export class ItemSliding {
-  ionDrag: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyMethods(this, r, ['getOpenAmount', 'getSlidingRatio', 'close', 'closeOpened']);
-    proxyInputs(this, r, ['disabled']);
-    proxyOutputs(this, ['ionDrag']);
-  }
-}
-
-export declare interface Label extends StencilComponents.IonLabel {}
-@Directive({ selector: 'ion-label', inputs: ['color', 'mode', 'position'], outputs: ['ionStyle'] })
-export class Label {
-  ionStyle: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyMethods(this, r, ['getText']);
-    proxyInputs(this, r, ['color', 'mode', 'position']);
-    proxyOutputs(this, ['ionStyle']);
-  }
-}
-
-export declare interface List extends StencilComponents.IonList {}
-@Directive({ selector: 'ion-list', inputs: ['lines', 'inset'] })
-export class List {
-  constructor(r: ElementRef) {
-    proxyMethods(this, r, ['getOpenItem', 'setOpenItem', 'closeSlidingItems']);
-    proxyInputs(this, r, ['lines', 'inset']);
-  }
-}
-
-export declare interface ListHeader extends StencilComponents.IonListHeader {}
-@Directive({ selector: 'ion-list-header', inputs: ['color', 'mode'] })
-export class ListHeader {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode']);
-  }
-}
-
-export declare interface Menu extends StencilComponents.IonMenu {}
-@Directive({ selector: 'ion-menu', inputs: ['contentId', 'menuId', 'type', 'disabled', 'side', 'swipeGesture', 'maxEdgeStart'], outputs: ['ionOpen', 'ionClose', 'ionMenuChange'] })
-export class Menu {
-  ionOpen: EventEmitter<any>;
-  ionClose: EventEmitter<any>;
-  ionMenuChange: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyMethods(this, r, ['isOpen', 'open', 'close', 'toggle', 'setOpen', 'isActive', 'getWidth']);
-    proxyInputs(this, r, ['contentId', 'menuId', 'type', 'disabled', 'side', 'swipeGesture', 'maxEdgeStart']);
-    proxyOutputs(this, ['ionOpen', 'ionClose', 'ionMenuChange']);
-  }
-}
-
-export declare interface MenuButton extends StencilComponents.IonMenuButton {}
-@Directive({ selector: 'ion-menu-button', inputs: ['color', 'mode', 'menu', 'autoHide'] })
-export class MenuButton {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'menu', 'autoHide']);
-  }
-}
-
-export declare interface MenuToggle extends StencilComponents.IonMenuToggle {}
-@Directive({ selector: 'ion-menu-toggle', inputs: ['menu', 'autoHide'] })
-export class MenuToggle {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['menu', 'autoHide']);
-  }
-}
-
-export declare interface Nav extends StencilComponents.IonNav {}
-@Directive({ selector: 'ion-nav', inputs: ['swipeGesture', 'animated', 'delegate', 'rootParams', 'root'], outputs: ['ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange'] })
-export class Nav {
-  ionNavWillLoad: EventEmitter<any>;
-  ionNavWillChange: EventEmitter<any>;
-  ionNavDidChange: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyMethods(this, r, ['push', 'insert', 'insertPages', 'pop', 'popTo', 'popToRoot', 'removeIndex', 'setRoot', 'setPages', 'setRouteId', 'getRouteId', 'canGoBack', 'getActive', 'getByIndex', 'getPrevious', 'isAnimating', 'getLength']);
-    proxyInputs(this, r, ['swipeGesture', 'animated', 'delegate', 'rootParams', 'root']);
-    proxyOutputs(this, ['ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange']);
-  }
-}
-
-export declare interface NavPop extends StencilComponents.IonNavPop {}
-@Directive({ selector: 'ion-nav-pop' })
-export class NavPop {
-}
-
-export declare interface NavPush extends StencilComponents.IonNavPush {}
-@Directive({ selector: 'ion-nav-push', inputs: ['component', 'componentProps'] })
-export class NavPush {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['component', 'componentProps']);
-  }
-}
-
-export declare interface NavSetRoot extends StencilComponents.IonNavSetRoot {}
-@Directive({ selector: 'ion-nav-set-root', inputs: ['component', 'componentProps'] })
-export class NavSetRoot {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['component', 'componentProps']);
-  }
-}
-
-export declare interface Note extends StencilComponents.IonNote {}
-@Directive({ selector: 'ion-note', inputs: ['color', 'mode'] })
-export class Note {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode']);
-  }
-}
-
-export declare interface Radio extends StencilComponents.IonRadio {}
-@Directive({ selector: 'ion-radio', inputs: ['color', 'mode', 'name', 'disabled', 'checked', 'value'], outputs: ['ionRadioDidLoad', 'ionRadioDidUnload', 'ionStyle', 'ionSelect', 'ionFocus', 'ionBlur'] })
-export class Radio {
-  ionRadioDidLoad: EventEmitter<any>;
-  ionRadioDidUnload: EventEmitter<any>;
-  ionStyle: EventEmitter<any>;
-  ionSelect: EventEmitter<any>;
-  ionFocus: EventEmitter<any>;
-  ionBlur: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'name', 'disabled', 'checked', 'value']);
-    proxyOutputs(this, ['ionRadioDidLoad', 'ionRadioDidUnload', 'ionStyle', 'ionSelect', 'ionFocus', 'ionBlur']);
-  }
-}
-
-export declare interface RadioGroup extends StencilComponents.IonRadioGroup {}
-@Directive({ selector: 'ion-radio-group', inputs: ['allowEmptySelection', 'name', 'disabled', 'value'], outputs: ['ionChange'] })
-export class RadioGroup {
-  ionChange: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['allowEmptySelection', 'name', 'disabled', 'value']);
-    proxyOutputs(this, ['ionChange']);
-  }
-}
+type StencilComponents<T extends keyof StencilElementInterfaces> = StencilElementInterfaces[T];
 
-export declare interface Range extends StencilComponents.IonRange {}
-@Directive({ selector: 'ion-range', inputs: ['color', 'mode', 'debounce', 'name', 'dualKnobs', 'min', 'max', 'pin', 'snaps', 'step', 'disabled', 'value'], outputs: ['ionChange', 'ionStyle', 'ionFocus', 'ionBlur'] })
-export class Range {
-  ionChange: EventEmitter<any>;
-  ionStyle: EventEmitter<any>;
-  ionFocus: EventEmitter<any>;
-  ionBlur: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'debounce', 'name', 'dualKnobs', 'min', 'max', 'pin', 'snaps', 'step', 'disabled', 'value']);
-    proxyOutputs(this, ['ionChange', 'ionStyle', 'ionFocus', 'ionBlur']);
+export declare interface IonApp extends StencilComponents<'IonApp'> {}
+@Component({ selector: 'ion-app', changeDetection: 0, template: '<ng-content></ng-content>' })
+export class IonApp {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
   }
 }
 
-export declare interface Refresher extends StencilComponents.IonRefresher {}
-@Directive({ selector: 'ion-refresher', inputs: ['pullMin', 'pullMax', 'closeDuration', 'snapbackDuration', 'disabled'], outputs: ['ionRefresh', 'ionPull', 'ionStart'] })
-export class Refresher {
-  ionRefresh: EventEmitter<any>;
-  ionPull: EventEmitter<any>;
-  ionStart: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyMethods(this, r, ['complete', 'cancel', 'getProgress']);
-    proxyInputs(this, r, ['pullMin', 'pullMax', 'closeDuration', 'snapbackDuration', 'disabled']);
-    proxyOutputs(this, ['ionRefresh', 'ionPull', 'ionStart']);
+export declare interface IonAvatar extends StencilComponents<'IonAvatar'> {}
+@Component({ selector: 'ion-avatar', changeDetection: 0, template: '<ng-content></ng-content>' })
+export class IonAvatar {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
   }
 }
 
-export declare interface RefresherContent extends StencilComponents.IonRefresherContent {}
-@Directive({ selector: 'ion-refresher-content', inputs: ['pullingIcon', 'pullingText', 'refreshingSpinner', 'refreshingText'] })
-export class RefresherContent {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['pullingIcon', 'pullingText', 'refreshingSpinner', 'refreshingText']);
+export declare interface IonBackButton extends StencilComponents<'IonBackButton'> {}
+@Component({ selector: 'ion-back-button', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'defaultHref', 'icon', 'text'] })
+export class IonBackButton {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
   }
 }
+proxyInputs(IonBackButton, ['color', 'mode', 'defaultHref', 'icon', 'text']);
 
-export declare interface Reorder extends StencilComponents.IonReorder {}
-@Directive({ selector: 'ion-reorder' })
-export class Reorder {
-}
-
-export declare interface ReorderGroup extends StencilComponents.IonReorderGroup {}
-@Directive({ selector: 'ion-reorder-group', inputs: ['disabled'] })
-export class ReorderGroup {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['disabled']);
-  }
-}
-
-export declare interface RippleEffect extends StencilComponents.IonRippleEffect {}
-@Directive({ selector: 'ion-ripple-effect', inputs: ['parent', 'tapClick'] })
-export class RippleEffect {
-  constructor(r: ElementRef) {
-    proxyMethods(this, r, ['addRipple']);
-    proxyInputs(this, r, ['parent', 'tapClick']);
-  }
-}
-
-export declare interface Row extends StencilComponents.IonRow {}
-@Directive({ selector: 'ion-row' })
-export class Row {
-}
-
-export declare interface Searchbar extends StencilComponents.IonSearchbar {}
-@Directive({ selector: 'ion-searchbar', inputs: ['color', 'mode', 'animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'debounce', 'placeholder', 'searchIcon', 'showCancelButton', 'spellcheck', 'type', 'value'], outputs: ['ionInput', 'ionChange', 'ionCancel', 'ionClear', 'ionBlur', 'ionFocus'] })
-export class Searchbar {
-  ionInput: EventEmitter<any>;
-  ionChange: EventEmitter<any>;
-  ionCancel: EventEmitter<any>;
-  ionClear: EventEmitter<any>;
-  ionBlur: EventEmitter<any>;
-  ionFocus: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'debounce', 'placeholder', 'searchIcon', 'showCancelButton', 'spellcheck', 'type', 'value']);
-    proxyOutputs(this, ['ionInput', 'ionChange', 'ionCancel', 'ionClear', 'ionBlur', 'ionFocus']);
-  }
-}
-
-export declare interface Segment extends StencilComponents.IonSegment {}
-@Directive({ selector: 'ion-segment', inputs: ['color', 'mode', 'disabled', 'value'], outputs: ['ionChange'] })
-export class Segment {
-  ionChange: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'disabled', 'value']);
-    proxyOutputs(this, ['ionChange']);
-  }
-}
-
-export declare interface SegmentButton extends StencilComponents.IonSegmentButton {}
-@Directive({ selector: 'ion-segment-button', inputs: ['color', 'mode', 'checked', 'disabled', 'value'], outputs: ['ionSelect'] })
-export class SegmentButton {
-  ionSelect: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'checked', 'disabled', 'value']);
-    proxyOutputs(this, ['ionSelect']);
-  }
-}
-
-export declare interface Select extends StencilComponents.IonSelect {}
-@Directive({ selector: 'ion-select', inputs: ['disabled', 'cancelText', 'okText', 'placeholder', 'name', 'selectedText', 'multiple', 'interface', 'interfaceOptions', 'value'], outputs: ['ionChange', 'ionCancel', 'ionFocus', 'ionBlur', 'ionStyle'] })
-export class Select {
-  ionChange: EventEmitter<any>;
-  ionCancel: EventEmitter<any>;
-  ionFocus: EventEmitter<any>;
-  ionBlur: EventEmitter<any>;
-  ionStyle: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyMethods(this, r, ['open']);
-    proxyInputs(this, r, ['disabled', 'cancelText', 'okText', 'placeholder', 'name', 'selectedText', 'multiple', 'interface', 'interfaceOptions', 'value']);
-    proxyOutputs(this, ['ionChange', 'ionCancel', 'ionFocus', 'ionBlur', 'ionStyle']);
-  }
-}
-
-export declare interface SelectOption extends StencilComponents.IonSelectOption {}
-@Directive({ selector: 'ion-select-option', inputs: ['disabled', 'selected', 'value'], outputs: ['ionSelectOptionDidLoad', 'ionSelectOptionDidUnload'] })
-export class SelectOption {
-  ionSelectOptionDidLoad: EventEmitter<any>;
-  ionSelectOptionDidUnload: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['disabled', 'selected', 'value']);
-    proxyOutputs(this, ['ionSelectOptionDidLoad', 'ionSelectOptionDidUnload']);
-  }
-}
-
-export declare interface SelectPopover extends StencilComponents.IonSelectPopover {}
-@Directive({ selector: 'ion-select-popover', inputs: ['header', 'subHeader', 'message', 'options'] })
-export class SelectPopover {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['header', 'subHeader', 'message', 'options']);
+export declare interface IonBackdrop extends StencilComponents<'IonBackdrop'> {}
+@Component({ selector: 'ion-backdrop', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['visible', 'tappable', 'stopPropagation'] })
+export class IonBackdrop {
+  ionBackdropTap!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionBackdropTap']);
   }
 }
+proxyInputs(IonBackdrop, ['visible', 'tappable', 'stopPropagation']);
 
-export declare interface ShowWhen extends StencilComponents.IonShowWhen {}
-@Directive({ selector: 'ion-show-when', inputs: ['mode', 'orientation', 'mediaQuery', 'size', 'platform', 'or'] })
-export class ShowWhen {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['mode', 'orientation', 'mediaQuery', 'size', 'platform', 'or']);
+export declare interface IonBadge extends StencilComponents<'IonBadge'> {}
+@Component({ selector: 'ion-badge', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode'] })
+export class IonBadge {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
   }
 }
+proxyInputs(IonBadge, ['color', 'mode']);
 
-export declare interface SkeletonText extends StencilComponents.IonSkeletonText {}
-@Directive({ selector: 'ion-skeleton-text', inputs: ['width'] })
-export class SkeletonText {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['width']);
+export declare interface IonButton extends StencilComponents<'IonButton'> {}
+@Component({ selector: 'ion-button', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'buttonType', 'disabled', 'expand', 'fill', 'routerDirection', 'href', 'shape', 'size', 'strong', 'type'] })
+export class IonButton {
+  ionFocus!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
   }
 }
+proxyInputs(IonButton, ['color', 'mode', 'buttonType', 'disabled', 'expand', 'fill', 'routerDirection', 'href', 'shape', 'size', 'strong', 'type']);
 
-export declare interface Slide extends StencilComponents.IonSlide {}
-@Directive({ selector: 'ion-slide' })
-export class Slide {
-}
-
-export declare interface Slides extends StencilComponents.IonSlides {}
-@Directive({ selector: 'ion-slides', inputs: ['options', 'pager', 'scrollbar'], outputs: ['ionSlidesDidLoad', 'ionSlideTap', 'ionSlideDoubleTap', 'ionSlideWillChange', 'ionSlideDidChange', 'ionSlideNextStart', 'ionSlidePrevStart', 'ionSlideNextEnd', 'ionSlidePrevEnd', 'ionSlideTransitionStart', 'ionSlideTransitionEnd', 'ionSlideDrag', 'ionSlideReachStart', 'ionSlideReachEnd', 'ionSlideTouchStart', 'ionSlideTouchEnd'] })
-export class Slides {
-  ionSlidesDidLoad: EventEmitter<any>;
-  ionSlideTap: EventEmitter<any>;
-  ionSlideDoubleTap: EventEmitter<any>;
-  ionSlideWillChange: EventEmitter<any>;
-  ionSlideDidChange: EventEmitter<any>;
-  ionSlideNextStart: EventEmitter<any>;
-  ionSlidePrevStart: EventEmitter<any>;
-  ionSlideNextEnd: EventEmitter<any>;
-  ionSlidePrevEnd: EventEmitter<any>;
-  ionSlideTransitionStart: EventEmitter<any>;
-  ionSlideTransitionEnd: EventEmitter<any>;
-  ionSlideDrag: EventEmitter<any>;
-  ionSlideReachStart: EventEmitter<any>;
-  ionSlideReachEnd: EventEmitter<any>;
-  ionSlideTouchStart: EventEmitter<any>;
-  ionSlideTouchEnd: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyMethods(this, r, ['update', 'slideTo', 'slideNext', 'slidePrev', 'getActiveIndex', 'getPreviousIndex', 'length', 'isEnd', 'isBeginning', 'startAutoplay', 'stopAutoplay', 'lockSwipeToNext', 'lockSwipeToPrev', 'lockSwipes']);
-    proxyInputs(this, r, ['options', 'pager', 'scrollbar']);
-    proxyOutputs(this, ['ionSlidesDidLoad', 'ionSlideTap', 'ionSlideDoubleTap', 'ionSlideWillChange', 'ionSlideDidChange', 'ionSlideNextStart', 'ionSlidePrevStart', 'ionSlideNextEnd', 'ionSlidePrevEnd', 'ionSlideTransitionStart', 'ionSlideTransitionEnd', 'ionSlideDrag', 'ionSlideReachStart', 'ionSlideReachEnd', 'ionSlideTouchStart', 'ionSlideTouchEnd']);
-  }
-}
-
-export declare interface Spinner extends StencilComponents.IonSpinner {}
-@Directive({ selector: 'ion-spinner', inputs: ['color', 'mode', 'duration', 'name', 'paused'] })
-export class Spinner {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'duration', 'name', 'paused']);
-  }
-}
-
-export declare interface SplitPane extends StencilComponents.IonSplitPane {}
-@Directive({ selector: 'ion-split-pane', inputs: ['disabled', 'when'], outputs: ['ionChange', 'ionSplitPaneVisible'] })
-export class SplitPane {
-  ionChange: EventEmitter<any>;
-  ionSplitPaneVisible: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyMethods(this, r, ['isVisible', 'isPane']);
-    proxyInputs(this, r, ['disabled', 'when']);
-    proxyOutputs(this, ['ionChange', 'ionSplitPaneVisible']);
-  }
-}
-
-export declare interface Tab extends StencilComponents.IonTab {}
-@Directive({ selector: 'ion-tab', inputs: ['active', 'btnId', 'delegate', 'label', 'href', 'icon', 'badge', 'badgeColor', 'component', 'name', 'disabled', 'selected', 'show', 'tabsHideOnSubPages'], outputs: ['ionSelect', 'ionTabMutated'] })
-export class Tab {
-  ionSelect: EventEmitter<any>;
-  ionTabMutated: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyMethods(this, r, ['getTabId', 'setActive']);
-    proxyInputs(this, r, ['active', 'btnId', 'delegate', 'label', 'href', 'icon', 'badge', 'badgeColor', 'component', 'name', 'disabled', 'selected', 'show', 'tabsHideOnSubPages']);
-    proxyOutputs(this, ['ionSelect', 'ionTabMutated']);
-  }
-}
-
-export declare interface Tabs extends StencilComponents.IonTabs {}
-@Directive({ selector: 'ion-tabs', inputs: ['color', 'name', 'tabbarHidden', 'tabbarHighlight', 'tabbarLayout', 'tabbarPlacement', 'translucent', 'useRouter'], outputs: ['ionChange', 'ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange'] })
-export class Tabs {
-  ionChange: EventEmitter<any>;
-  ionNavWillLoad: EventEmitter<any>;
-  ionNavWillChange: EventEmitter<any>;
-  ionNavDidChange: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyMethods(this, r, ['select', 'setRouteId', 'getRouteId', 'getTab', 'getSelected']);
-    proxyInputs(this, r, ['color', 'name', 'tabbarHidden', 'tabbarHighlight', 'tabbarLayout', 'tabbarPlacement', 'translucent', 'useRouter']);
-    proxyOutputs(this, ['ionChange', 'ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange']);
-  }
-}
-
-export declare interface Text extends StencilComponents.IonText {}
-@Directive({ selector: 'ion-text', inputs: ['color', 'mode'] })
-export class Text {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode']);
-  }
-}
-
-export declare interface Textarea extends StencilComponents.IonTextarea {}
-@Directive({ selector: 'ion-textarea', inputs: ['color', 'mode', 'autocapitalize', 'autocomplete', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value'], outputs: ['ionChange', 'ionInput', 'ionStyle', 'ionBlur', 'ionFocus'] })
-export class Textarea {
-  ionChange: EventEmitter<any>;
-  ionInput: EventEmitter<any>;
-  ionStyle: EventEmitter<any>;
-  ionBlur: EventEmitter<any>;
-  ionFocus: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'autocapitalize', 'autocomplete', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value']);
-    proxyOutputs(this, ['ionChange', 'ionInput', 'ionStyle', 'ionBlur', 'ionFocus']);
+export declare interface IonButtons extends StencilComponents<'IonButtons'> {}
+@Component({ selector: 'ion-buttons', changeDetection: 0, template: '<ng-content></ng-content>' })
+export class IonButtons {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
   }
-}
-
-export declare interface Thumbnail extends StencilComponents.IonThumbnail {}
-@Directive({ selector: 'ion-thumbnail' })
-export class Thumbnail {
 }
 
-export declare interface Toggle extends StencilComponents.IonToggle {}
-@Directive({ selector: 'ion-toggle', inputs: ['color', 'mode', 'name', 'checked', 'disabled', 'value'], outputs: ['ionChange', 'ionFocus', 'ionBlur', 'ionStyle'] })
-export class Toggle {
-  ionChange: EventEmitter<any>;
-  ionFocus: EventEmitter<any>;
-  ionBlur: EventEmitter<any>;
-  ionStyle: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'name', 'checked', 'disabled', 'value']);
-    proxyOutputs(this, ['ionChange', 'ionFocus', 'ionBlur', 'ionStyle']);
+export declare interface IonCard extends StencilComponents<'IonCard'> {}
+@Component({ selector: 'ion-card', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode'] })
+export class IonCard {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
   }
 }
+proxyInputs(IonCard, ['color', 'mode']);
 
-export declare interface Toolbar extends StencilComponents.IonToolbar {}
-@Directive({ selector: 'ion-toolbar', inputs: ['color', 'mode'] })
-export class Toolbar {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode']);
-  }
-}
+export declare interface IonCardContent extends StencilComponents<'IonCardContent'> {}
+@Component({ selector: 'ion-card-content', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['mode'] })
+export class IonCardContent {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonCardContent, ['mode']);
+
+export declare interface IonCardHeader extends StencilComponents<'IonCardHeader'> {}
+@Component({ selector: 'ion-card-header', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'translucent'] })
+export class IonCardHeader {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonCardHeader, ['color', 'mode', 'translucent']);
+
+export declare interface IonCardSubtitle extends StencilComponents<'IonCardSubtitle'> {}
+@Component({ selector: 'ion-card-subtitle', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode'] })
+export class IonCardSubtitle {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonCardSubtitle, ['color', 'mode']);
+
+export declare interface IonCardTitle extends StencilComponents<'IonCardTitle'> {}
+@Component({ selector: 'ion-card-title', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode'] })
+export class IonCardTitle {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonCardTitle, ['color', 'mode']);
+
+export declare interface IonCheckbox extends StencilComponents<'IonCheckbox'> {}
+@Component({ selector: 'ion-checkbox', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'name', 'checked', 'disabled', 'value'] })
+export class IonCheckbox {
+  ionChange!: EventEmitter<CustomEvent>;
+  ionFocus!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
+  }
+}
+proxyInputs(IonCheckbox, ['color', 'mode', 'name', 'checked', 'disabled', 'value']);
+
+export declare interface IonChip extends StencilComponents<'IonChip'> {}
+@Component({ selector: 'ion-chip', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'outline'] })
+export class IonChip {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonChip, ['color', 'mode', 'outline']);
+
+export declare interface IonCol extends StencilComponents<'IonCol'> {}
+@Component({ selector: 'ion-col', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['offset', 'offsetXs', 'offsetSm', 'offsetMd', 'offsetLg', 'offsetXl', 'pull', 'pullXs', 'pullSm', 'pullMd', 'pullLg', 'pullXl', 'push', 'pushXs', 'pushSm', 'pushMd', 'pushLg', 'pushXl', 'size', 'sizeXs', 'sizeSm', 'sizeMd', 'sizeLg', 'sizeXl'] })
+export class IonCol {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonCol, ['offset', 'offsetXs', 'offsetSm', 'offsetMd', 'offsetLg', 'offsetXl', 'pull', 'pullXs', 'pullSm', 'pullMd', 'pullLg', 'pullXl', 'push', 'pushXs', 'pushSm', 'pushMd', 'pushLg', 'pushXl', 'size', 'sizeXs', 'sizeSm', 'sizeMd', 'sizeLg', 'sizeXl']);
+
+export declare interface IonContent extends StencilComponents<'IonContent'> {}
+@Component({ selector: 'ion-content', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'fullscreen', 'forceOverscroll', 'scrollX', 'scrollY', 'scrollEvents'] })
+export class IonContent {
+  ionScrollStart!: EventEmitter<CustomEvent>;
+  ionScroll!: EventEmitter<CustomEvent>;
+  ionScrollEnd!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionScrollStart', 'ionScroll', 'ionScrollEnd']);
+  }
+}
+proxyMethods(IonContent, ['getScrollElement', 'scrollToTop', 'scrollToBottom', 'scrollByPoint', 'scrollToPoint']);
+proxyInputs(IonContent, ['color', 'fullscreen', 'forceOverscroll', 'scrollX', 'scrollY', 'scrollEvents']);
 
-export declare interface ToolbarTitle extends StencilComponents.IonTitle {}
-@Directive({ selector: 'ion-title', inputs: ['mode', 'color'] })
-export class ToolbarTitle {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['mode', 'color']);
-  }
-}
+export declare interface IonDatetime extends StencilComponents<'IonDatetime'> {}
+@Component({ selector: 'ion-datetime', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['mode', 'name', 'disabled', 'readonly', 'min', 'max', 'displayFormat', 'pickerFormat', 'cancelText', 'doneText', 'yearValues', 'monthValues', 'dayValues', 'hourValues', 'minuteValues', 'monthNames', 'monthShortNames', 'dayNames', 'dayShortNames', 'pickerOptions', 'placeholder', 'value'] })
+export class IonDatetime {
+  ionCancel!: EventEmitter<CustomEvent>;
+  ionChange!: EventEmitter<CustomEvent>;
+  ionFocus!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionCancel', 'ionChange', 'ionFocus', 'ionBlur']);
+  }
+}
+proxyMethods(IonDatetime, ['open']);
+proxyInputs(IonDatetime, ['mode', 'name', 'disabled', 'readonly', 'min', 'max', 'displayFormat', 'pickerFormat', 'cancelText', 'doneText', 'yearValues', 'monthValues', 'dayValues', 'hourValues', 'minuteValues', 'monthNames', 'monthShortNames', 'dayNames', 'dayShortNames', 'pickerOptions', 'placeholder', 'value']);
+
+export declare interface IonFab extends StencilComponents<'IonFab'> {}
+@Component({ selector: 'ion-fab', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['horizontal', 'vertical', 'edge', 'activated'] })
+export class IonFab {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyMethods(IonFab, ['close']);
+proxyInputs(IonFab, ['horizontal', 'vertical', 'edge', 'activated']);
+
+export declare interface IonFabButton extends StencilComponents<'IonFabButton'> {}
+@Component({ selector: 'ion-fab-button', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'activated', 'disabled', 'href', 'routerDirection', 'show', 'translucent', 'type', 'size'] })
+export class IonFabButton {
+  ionFocus!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
+  }
+}
+proxyInputs(IonFabButton, ['mode', 'color', 'activated', 'disabled', 'href', 'routerDirection', 'show', 'translucent', 'type', 'size']);
+
+export declare interface IonFabList extends StencilComponents<'IonFabList'> {}
+@Component({ selector: 'ion-fab-list', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['activated', 'side'] })
+export class IonFabList {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonFabList, ['activated', 'side']);
+
+export declare interface IonFooter extends StencilComponents<'IonFooter'> {}
+@Component({ selector: 'ion-footer', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['mode', 'translucent'] })
+export class IonFooter {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonFooter, ['mode', 'translucent']);
+
+export declare interface IonGrid extends StencilComponents<'IonGrid'> {}
+@Component({ selector: 'ion-grid', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['fixed'] })
+export class IonGrid {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonGrid, ['fixed']);
+
+export declare interface IonHeader extends StencilComponents<'IonHeader'> {}
+@Component({ selector: 'ion-header', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['mode', 'translucent'] })
+export class IonHeader {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonHeader, ['mode', 'translucent']);
+
+export declare interface IonIcon extends StencilComponents<'IonIcon'> {}
+@Component({ selector: 'ion-icon', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['ariaLabel', 'color', 'flipRtl', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'size', 'src'] })
+export class IonIcon {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonIcon, ['ariaLabel', 'color', 'flipRtl', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'size', 'src']);
+
+export declare interface IonImg extends StencilComponents<'IonImg'> {}
+@Component({ selector: 'ion-img', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['alt', 'src'] })
+export class IonImg {
+  ionImgDidLoad!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionImgDidLoad']);
+  }
+}
+proxyInputs(IonImg, ['alt', 'src']);
+
+export declare interface IonInfiniteScroll extends StencilComponents<'IonInfiniteScroll'> {}
+@Component({ selector: 'ion-infinite-scroll', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['threshold', 'disabled', 'position'] })
+export class IonInfiniteScroll {
+  ionInfinite!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionInfinite']);
+  }
+}
+proxyMethods(IonInfiniteScroll, ['complete']);
+proxyInputs(IonInfiniteScroll, ['threshold', 'disabled', 'position']);
+
+export declare interface IonInfiniteScrollContent extends StencilComponents<'IonInfiniteScrollContent'> {}
+@Component({ selector: 'ion-infinite-scroll-content', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['loadingSpinner', 'loadingText'] })
+export class IonInfiniteScrollContent {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonInfiniteScrollContent, ['loadingSpinner', 'loadingText']);
+
+export declare interface IonInput extends StencilComponents<'IonInput'> {}
+@Component({ selector: 'ion-input', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'debounce', 'disabled', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'spellcheck', 'step', 'size', 'type', 'value'] })
+export class IonInput {
+  ionInput!: EventEmitter<CustomEvent>;
+  ionChange!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
+  ionFocus!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionInput', 'ionChange', 'ionBlur', 'ionFocus']);
+  }
+}
+proxyMethods(IonInput, ['setFocus', 'getInputElement']);
+proxyInputs(IonInput, ['color', 'mode', 'accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'debounce', 'disabled', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'spellcheck', 'step', 'size', 'type', 'value']);
+
+export declare interface IonItem extends StencilComponents<'IonItem'> {}
+@Component({ selector: 'ion-item', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'button', 'detail', 'detailIcon', 'disabled', 'href', 'lines', 'routerDirection', 'type'] })
+export class IonItem {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonItem, ['color', 'mode', 'button', 'detail', 'detailIcon', 'disabled', 'href', 'lines', 'routerDirection', 'type']);
+
+export declare interface IonItemDivider extends StencilComponents<'IonItemDivider'> {}
+@Component({ selector: 'ion-item-divider', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'sticky'] })
+export class IonItemDivider {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonItemDivider, ['color', 'mode', 'sticky']);
+
+export declare interface IonItemGroup extends StencilComponents<'IonItemGroup'> {}
+@Component({ selector: 'ion-item-group', changeDetection: 0, template: '<ng-content></ng-content>' })
+export class IonItemGroup {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+export declare interface IonItemOption extends StencilComponents<'IonItemOption'> {}
+@Component({ selector: 'ion-item-option', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'disabled', 'expandable', 'href'] })
+export class IonItemOption {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonItemOption, ['color', 'mode', 'disabled', 'expandable', 'href']);
+
+export declare interface IonItemOptions extends StencilComponents<'IonItemOptions'> {}
+@Component({ selector: 'ion-item-options', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['side'] })
+export class IonItemOptions {
+  ionSwipe!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionSwipe']);
+  }
+}
+proxyInputs(IonItemOptions, ['side']);
+
+export declare interface IonItemSliding extends StencilComponents<'IonItemSliding'> {}
+@Component({ selector: 'ion-item-sliding', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['disabled'] })
+export class IonItemSliding {
+  ionDrag!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionDrag']);
+  }
+}
+proxyMethods(IonItemSliding, ['getOpenAmount', 'getSlidingRatio', 'close', 'closeOpened']);
+proxyInputs(IonItemSliding, ['disabled']);
+
+export declare interface IonLabel extends StencilComponents<'IonLabel'> {}
+@Component({ selector: 'ion-label', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'position'] })
+export class IonLabel {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonLabel, ['color', 'mode', 'position']);
+
+export declare interface IonList extends StencilComponents<'IonList'> {}
+@Component({ selector: 'ion-list', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['mode', 'lines', 'inset'] })
+export class IonList {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyMethods(IonList, ['closeSlidingItems']);
+proxyInputs(IonList, ['mode', 'lines', 'inset']);
+
+export declare interface IonListHeader extends StencilComponents<'IonListHeader'> {}
+@Component({ selector: 'ion-list-header', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['mode', 'color'] })
+export class IonListHeader {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonListHeader, ['mode', 'color']);
+
+export declare interface IonMenu extends StencilComponents<'IonMenu'> {}
+@Component({ selector: 'ion-menu', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['contentId', 'menuId', 'type', 'disabled', 'side', 'swipeGesture', 'maxEdgeStart'] })
+export class IonMenu {
+  ionWillOpen!: EventEmitter<CustomEvent>;
+  ionWillClose!: EventEmitter<CustomEvent>;
+  ionDidOpen!: EventEmitter<CustomEvent>;
+  ionDidClose!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionWillOpen', 'ionWillClose', 'ionDidOpen', 'ionDidClose']);
+  }
+}
+proxyMethods(IonMenu, ['isOpen', 'isActive', 'open', 'close', 'toggle', 'setOpen']);
+proxyInputs(IonMenu, ['contentId', 'menuId', 'type', 'disabled', 'side', 'swipeGesture', 'maxEdgeStart']);
+
+export declare interface IonMenuButton extends StencilComponents<'IonMenuButton'> {}
+@Component({ selector: 'ion-menu-button', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'menu', 'autoHide'] })
+export class IonMenuButton {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonMenuButton, ['color', 'mode', 'menu', 'autoHide']);
+
+export declare interface IonMenuToggle extends StencilComponents<'IonMenuToggle'> {}
+@Component({ selector: 'ion-menu-toggle', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['menu', 'autoHide'] })
+export class IonMenuToggle {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonMenuToggle, ['menu', 'autoHide']);
+
+export declare interface IonNav extends StencilComponents<'IonNav'> {}
+@Component({ selector: 'ion-nav', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['swipeGesture', 'animated', 'animation', 'rootParams', 'root'] })
+export class IonNav {
+  ionNavWillChange!: EventEmitter<CustomEvent>;
+  ionNavDidChange!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionNavWillChange', 'ionNavDidChange']);
+  }
+}
+proxyMethods(IonNav, ['push', 'insert', 'insertPages', 'pop', 'popTo', 'popToRoot', 'removeIndex', 'setRoot', 'setPages', 'getActive', 'getByIndex', 'canGoBack', 'getPrevious']);
+proxyInputs(IonNav, ['swipeGesture', 'animated', 'animation', 'rootParams', 'root']);
+
+export declare interface IonNavPop extends StencilComponents<'IonNavPop'> {}
+@Component({ selector: 'ion-nav-pop', changeDetection: 0, template: '<ng-content></ng-content>' })
+export class IonNavPop {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+export declare interface IonNavPush extends StencilComponents<'IonNavPush'> {}
+@Component({ selector: 'ion-nav-push', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['component', 'componentProps'] })
+export class IonNavPush {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonNavPush, ['component', 'componentProps']);
+
+export declare interface IonNavSetRoot extends StencilComponents<'IonNavSetRoot'> {}
+@Component({ selector: 'ion-nav-set-root', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['component', 'componentProps'] })
+export class IonNavSetRoot {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonNavSetRoot, ['component', 'componentProps']);
+
+export declare interface IonNote extends StencilComponents<'IonNote'> {}
+@Component({ selector: 'ion-note', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode'] })
+export class IonNote {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonNote, ['color', 'mode']);
+
+export declare interface IonProgressBar extends StencilComponents<'IonProgressBar'> {}
+@Component({ selector: 'ion-progress-bar', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['mode', 'type', 'reversed', 'value', 'buffer', 'color'] })
+export class IonProgressBar {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonProgressBar, ['mode', 'type', 'reversed', 'value', 'buffer', 'color']);
+
+export declare interface IonRadio extends StencilComponents<'IonRadio'> {}
+@Component({ selector: 'ion-radio', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'name', 'disabled', 'checked', 'value'] })
+export class IonRadio {
+  ionSelect!: EventEmitter<CustomEvent>;
+  ionFocus!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionSelect', 'ionFocus', 'ionBlur']);
+  }
+}
+proxyInputs(IonRadio, ['color', 'mode', 'name', 'disabled', 'checked', 'value']);
+
+export declare interface IonRadioGroup extends StencilComponents<'IonRadioGroup'> {}
+@Component({ selector: 'ion-radio-group', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['allowEmptySelection', 'name', 'value'] })
+export class IonRadioGroup {
+  ionChange!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionChange']);
+  }
+}
+proxyInputs(IonRadioGroup, ['allowEmptySelection', 'name', 'value']);
+
+export declare interface IonRange extends StencilComponents<'IonRange'> {}
+@Component({ selector: 'ion-range', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'debounce', 'name', 'dualKnobs', 'min', 'max', 'pin', 'snaps', 'step', 'disabled', 'value'] })
+export class IonRange {
+  ionChange!: EventEmitter<CustomEvent>;
+  ionFocus!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
+  }
+}
+proxyInputs(IonRange, ['color', 'mode', 'debounce', 'name', 'dualKnobs', 'min', 'max', 'pin', 'snaps', 'step', 'disabled', 'value']);
+
+export declare interface IonRefresher extends StencilComponents<'IonRefresher'> {}
+@Component({ selector: 'ion-refresher', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['pullMin', 'pullMax', 'closeDuration', 'snapbackDuration', 'disabled'] })
+export class IonRefresher {
+  ionRefresh!: EventEmitter<CustomEvent>;
+  ionPull!: EventEmitter<CustomEvent>;
+  ionStart!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionRefresh', 'ionPull', 'ionStart']);
+  }
+}
+proxyMethods(IonRefresher, ['complete', 'cancel', 'getProgress']);
+proxyInputs(IonRefresher, ['pullMin', 'pullMax', 'closeDuration', 'snapbackDuration', 'disabled']);
+
+export declare interface IonRefresherContent extends StencilComponents<'IonRefresherContent'> {}
+@Component({ selector: 'ion-refresher-content', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['pullingIcon', 'pullingText', 'refreshingSpinner', 'refreshingText'] })
+export class IonRefresherContent {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonRefresherContent, ['pullingIcon', 'pullingText', 'refreshingSpinner', 'refreshingText']);
+
+export declare interface IonReorder extends StencilComponents<'IonReorder'> {}
+@Component({ selector: 'ion-reorder', changeDetection: 0, template: '<ng-content></ng-content>' })
+export class IonReorder {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+export declare interface IonReorderGroup extends StencilComponents<'IonReorderGroup'> {}
+@Component({ selector: 'ion-reorder-group', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['disabled'] })
+export class IonReorderGroup {
+  ionItemReorder!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionItemReorder']);
+  }
+}
+proxyMethods(IonReorderGroup, ['complete']);
+proxyInputs(IonReorderGroup, ['disabled']);
+
+export declare interface IonRippleEffect extends StencilComponents<'IonRippleEffect'> {}
+@Component({ selector: 'ion-ripple-effect', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['type'] })
+export class IonRippleEffect {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyMethods(IonRippleEffect, ['addRipple']);
+proxyInputs(IonRippleEffect, ['type']);
+
+export declare interface IonRow extends StencilComponents<'IonRow'> {}
+@Component({ selector: 'ion-row', changeDetection: 0, template: '<ng-content></ng-content>' })
+export class IonRow {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+export declare interface IonSearchbar extends StencilComponents<'IonSearchbar'> {}
+@Component({ selector: 'ion-searchbar', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'debounce', 'placeholder', 'searchIcon', 'showCancelButton', 'spellcheck', 'type', 'value'] })
+export class IonSearchbar {
+  ionInput!: EventEmitter<CustomEvent>;
+  ionChange!: EventEmitter<CustomEvent>;
+  ionCancel!: EventEmitter<CustomEvent>;
+  ionClear!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
+  ionFocus!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionInput', 'ionChange', 'ionCancel', 'ionClear', 'ionBlur', 'ionFocus']);
+  }
+}
+proxyMethods(IonSearchbar, ['setFocus', 'getInputElement']);
+proxyInputs(IonSearchbar, ['color', 'mode', 'animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'debounce', 'placeholder', 'searchIcon', 'showCancelButton', 'spellcheck', 'type', 'value']);
+
+export declare interface IonSegment extends StencilComponents<'IonSegment'> {}
+@Component({ selector: 'ion-segment', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'disabled', 'scrollable', 'value'] })
+export class IonSegment {
+  ionChange!: EventEmitter<CustomEvent>;
+  ionStyle!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionChange', 'ionStyle']);
+  }
+}
+proxyInputs(IonSegment, ['color', 'mode', 'disabled', 'scrollable', 'value']);
+
+export declare interface IonSegmentButton extends StencilComponents<'IonSegmentButton'> {}
+@Component({ selector: 'ion-segment-button', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['mode', 'checked', 'disabled', 'layout', 'value'] })
+export class IonSegmentButton {
+  ionSelect!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionSelect']);
+  }
+}
+proxyInputs(IonSegmentButton, ['mode', 'checked', 'disabled', 'layout', 'value']);
+
+export declare interface IonSelect extends StencilComponents<'IonSelect'> {}
+@Component({ selector: 'ion-select', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['mode', 'disabled', 'cancelText', 'okText', 'placeholder', 'name', 'selectedText', 'multiple', 'interface', 'interfaceOptions', 'value'] })
+export class IonSelect {
+  ionChange!: EventEmitter<CustomEvent>;
+  ionCancel!: EventEmitter<CustomEvent>;
+  ionFocus!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionChange', 'ionCancel', 'ionFocus', 'ionBlur']);
+  }
+}
+proxyMethods(IonSelect, ['open']);
+proxyInputs(IonSelect, ['mode', 'disabled', 'cancelText', 'okText', 'placeholder', 'name', 'selectedText', 'multiple', 'interface', 'interfaceOptions', 'value']);
+
+export declare interface IonSelectOption extends StencilComponents<'IonSelectOption'> {}
+@Component({ selector: 'ion-select-option', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['disabled', 'selected', 'value'] })
+export class IonSelectOption {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonSelectOption, ['disabled', 'selected', 'value']);
+
+export declare interface IonSkeletonText extends StencilComponents<'IonSkeletonText'> {}
+@Component({ selector: 'ion-skeleton-text', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['width'] })
+export class IonSkeletonText {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonSkeletonText, ['width']);
+
+export declare interface IonSlide extends StencilComponents<'IonSlide'> {}
+@Component({ selector: 'ion-slide', changeDetection: 0, template: '<ng-content></ng-content>' })
+export class IonSlide {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+export declare interface IonSlides extends StencilComponents<'IonSlides'> {}
+@Component({ selector: 'ion-slides', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['mode', 'options', 'pager', 'scrollbar'] })
+export class IonSlides {
+  ionSlidesDidLoad!: EventEmitter<CustomEvent>;
+  ionSlideTap!: EventEmitter<CustomEvent>;
+  ionSlideDoubleTap!: EventEmitter<CustomEvent>;
+  ionSlideWillChange!: EventEmitter<CustomEvent>;
+  ionSlideDidChange!: EventEmitter<CustomEvent>;
+  ionSlideNextStart!: EventEmitter<CustomEvent>;
+  ionSlidePrevStart!: EventEmitter<CustomEvent>;
+  ionSlideNextEnd!: EventEmitter<CustomEvent>;
+  ionSlidePrevEnd!: EventEmitter<CustomEvent>;
+  ionSlideTransitionStart!: EventEmitter<CustomEvent>;
+  ionSlideTransitionEnd!: EventEmitter<CustomEvent>;
+  ionSlideDrag!: EventEmitter<CustomEvent>;
+  ionSlideReachStart!: EventEmitter<CustomEvent>;
+  ionSlideReachEnd!: EventEmitter<CustomEvent>;
+  ionSlideTouchStart!: EventEmitter<CustomEvent>;
+  ionSlideTouchEnd!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionSlidesDidLoad', 'ionSlideTap', 'ionSlideDoubleTap', 'ionSlideWillChange', 'ionSlideDidChange', 'ionSlideNextStart', 'ionSlidePrevStart', 'ionSlideNextEnd', 'ionSlidePrevEnd', 'ionSlideTransitionStart', 'ionSlideTransitionEnd', 'ionSlideDrag', 'ionSlideReachStart', 'ionSlideReachEnd', 'ionSlideTouchStart', 'ionSlideTouchEnd']);
+  }
+}
+proxyMethods(IonSlides, ['update', 'updateAutoHeight', 'slideTo', 'slideNext', 'slidePrev', 'getActiveIndex', 'getPreviousIndex', 'length', 'isEnd', 'isBeginning', 'startAutoplay', 'stopAutoplay', 'lockSwipeToNext', 'lockSwipeToPrev', 'lockSwipes']);
+proxyInputs(IonSlides, ['mode', 'options', 'pager', 'scrollbar']);
+
+export declare interface IonSpinner extends StencilComponents<'IonSpinner'> {}
+@Component({ selector: 'ion-spinner', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'duration', 'name', 'paused'] })
+export class IonSpinner {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonSpinner, ['color', 'duration', 'name', 'paused']);
+
+export declare interface IonSplitPane extends StencilComponents<'IonSplitPane'> {}
+@Component({ selector: 'ion-split-pane', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['contentId', 'disabled', 'when'] })
+export class IonSplitPane {
+  ionSplitPaneVisible!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionSplitPaneVisible']);
+  }
+}
+proxyInputs(IonSplitPane, ['contentId', 'disabled', 'when']);
+
+export declare interface IonTabBar extends StencilComponents<'IonTabBar'> {}
+@Component({ selector: 'ion-tab-bar', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'selectedTab', 'translucent'] })
+export class IonTabBar {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonTabBar, ['mode', 'color', 'selectedTab', 'translucent']);
+
+export declare interface IonTabButton extends StencilComponents<'IonTabButton'> {}
+@Component({ selector: 'ion-tab-button', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['selected', 'mode', 'layout', 'href', 'tab', 'disabled'] })
+export class IonTabButton {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonTabButton, ['selected', 'mode', 'layout', 'href', 'tab', 'disabled']);
+
+export declare interface IonText extends StencilComponents<'IonText'> {}
+@Component({ selector: 'ion-text', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode'] })
+export class IonText {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonText, ['color', 'mode']);
+
+export declare interface IonTextarea extends StencilComponents<'IonTextarea'> {}
+@Component({ selector: 'ion-textarea', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'autocapitalize', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value'] })
+export class IonTextarea {
+  ionChange!: EventEmitter<CustomEvent>;
+  ionInput!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
+  ionFocus!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionChange', 'ionInput', 'ionBlur', 'ionFocus']);
+  }
+}
+proxyMethods(IonTextarea, ['setFocus', 'getInputElement']);
+proxyInputs(IonTextarea, ['mode', 'color', 'autocapitalize', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value']);
+
+export declare interface IonThumbnail extends StencilComponents<'IonThumbnail'> {}
+@Component({ selector: 'ion-thumbnail', changeDetection: 0, template: '<ng-content></ng-content>' })
+export class IonThumbnail {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+export declare interface IonTitle extends StencilComponents<'IonTitle'> {}
+@Component({ selector: 'ion-title', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color'] })
+export class IonTitle {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonTitle, ['color']);
+
+export declare interface IonToggle extends StencilComponents<'IonToggle'> {}
+@Component({ selector: 'ion-toggle', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'name', 'checked', 'disabled', 'value'] })
+export class IonToggle {
+  ionChange!: EventEmitter<CustomEvent>;
+  ionFocus!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
+  }
+}
+proxyInputs(IonToggle, ['mode', 'color', 'name', 'checked', 'disabled', 'value']);
+
+export declare interface IonToolbar extends StencilComponents<'IonToolbar'> {}
+@Component({ selector: 'ion-toolbar', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode'] })
+export class IonToolbar {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonToolbar, ['color', 'mode']);

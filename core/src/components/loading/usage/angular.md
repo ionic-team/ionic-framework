@@ -12,7 +12,7 @@ export class LoadingExample {
 
   async presentLoading() {
     const loading = await this.loadingController.create({
-      content: 'Hellooo',
+      message: 'Hellooo',
       duration: 2000
     });
     return await loading.present();
@@ -20,9 +20,9 @@ export class LoadingExample {
 
   async presentLoadingWithOptions() {
     const loading = await this.loadingController.create({
-      spinner: 'hide',
+      spinner: null,
       duration: 5000,
-      content: 'Please wait...',
+      message: 'Please wait...',
       translucent: true,
       cssClass: 'custom-class custom-loading'
     });

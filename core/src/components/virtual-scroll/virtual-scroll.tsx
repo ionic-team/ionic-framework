@@ -1,15 +1,15 @@
-import { Component, Element, EventListenerEnable, FunctionalComponent, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, EventListenerEnable, FunctionalComponent, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { Cell, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 
-import { CellType } from './virtual-scroll-interface';
+import { CELL_TYPE_FOOTER, CELL_TYPE_HEADER, CELL_TYPE_ITEM } from './constants';
 import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, getShouldUpdate, getViewport, inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
 
 @Component({
   tag: 'ion-virtual-scroll',
   styleUrl: 'virtual-scroll.scss'
 })
-export class VirtualScroll {
+export class VirtualScroll implements ComponentInterface {
 
   private contentEl?: HTMLElement;
   private scrollEl?: HTMLElement;
@@ -42,8 +42,7 @@ export class VirtualScroll {
    * the scrollable area. This height value can only use `px` units.
    * Note that the actual rendered size of each cell comes from the
    * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions before the item has been rendered. Default is
-   * `45`.
+   * initial dimensions before the item has been rendered.
    */
   @Prop() approxItemHeight = 45;
 
@@ -54,20 +53,20 @@ export class VirtualScroll {
    * the scrollable area. This height value can only use `px` units.
    * Note that the actual rendered size of each cell comes from the
    * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions before the item has been rendered. Default is `40px`.
+   * initial dimensions before the item has been rendered.
    */
-  @Prop() approxHeaderHeight = 40;
+  @Prop() approxHeaderHeight = 30;
 
   /**
    * The approximate width of each footer template's cell.
    * This dimension is used to help determine how many cells should
    * be created when initialized, and to help calculate the height of
-   * the scrollable area. This value can use either `px` or `%` units.
+   * the scrollable area. This height value can only use `px` units.
    * Note that the actual rendered size of each cell comes from the
    * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions before the item has been rendered. Default is `100%`.
+   * initial dimensions before the item has been rendered.
    */
-  @Prop() approxFooterHeight = 40;
+  @Prop() approxFooterHeight = 30;
 
   /**
    * Section headers and the data used within its given
@@ -97,15 +96,44 @@ export class VirtualScroll {
    * should be avoided if possible.
    */
   @Prop() items?: any[];
+
+  /**
+   * An optional function that maps each item within their height.
+   * When this function is provides, heavy optimizations and fast path can be taked by
+   * `ion-virtual-scroll` leading to massive performance improvements.
+   *
+   * This function allows to skip all DOM reads, which can be Doing so leads
+   * to massive performance
+   */
   @Prop() itemHeight?: ItemHeightFn;
 
-  // JSX API
-  @Prop() renderItem?: (item: any, index: number) => JSX.Element;
-  @Prop() renderHeader?: (item: any, index: number) => JSX.Element;
-  @Prop() renderFooter?: (item: any, index: number) => JSX.Element;
+  /**
+   * NOTE: only JSX API for stencil.
+   *
+   * Provide a render function for the items to be rendered. Returns a JSX virtual-dom.
+   */
+  @Prop() renderItem?: (item: any, index: number) => any;
 
-  // Low level API
+  /**
+   * NOTE: only JSX API for stencil.
+   *
+   * Provide a render function for the header to be rendered. Returns a JSX virtual-dom.
+   */
+  @Prop() renderHeader?: (item: any, index: number) => any;
+
+  /**
+   * NOTE: only JSX API for stencil.
+   *
+   * Provide a render function for the footer to be rendered. Returns a JSX virtual-dom.
+   */
+  @Prop() renderFooter?: (item: any, index: number) => any;
+
+  /**
+   * NOTE: only Vanilla JS API.
+   */
   @Prop() nodeRender?: ItemRenderFn;
+
+  /** @internal */
   @Prop() domRender?: DomRenderFn;
 
   @Watch('itemHeight')
@@ -124,7 +152,7 @@ export class VirtualScroll {
     await contentEl.componentOnReady();
 
     this.contentEl = contentEl;
-    this.scrollEl = contentEl.getScrollElement();
+    this.scrollEl = await contentEl.getScrollElement();
     this.calcCells();
     this.updateState();
   }
@@ -147,33 +175,32 @@ export class VirtualScroll {
     this.updateVirtualScroll();
   }
 
+  /**
+   * Returns the position of the virtual item at the given index.
+   */
   @Method()
-  positionForItem(index: number): number {
-    return positionForIndex(index, this.cells, this.getHeightIndex());
+  positionForItem(index: number): Promise<number> {
+    return Promise.resolve(positionForIndex(index, this.cells, this.getHeightIndex()));
   }
 
+  /**
+   * This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as
+   * dirty any time the content or their style changes.
+   *
+   * The subset of items to be updated can are specifing by an offset and a length.
+   */
   @Method()
-  markDirty(offset: number, len = -1) {
+  checkRange(offset: number, len = -1) {
     // TODO: kind of hacky how we do in-place updated of the cells
     // array. this part needs a complete refactor
     if (!this.items) {
       return;
     }
-    if (len === -1) {
-      len = this.items.length - offset;
-    }
-    const max = this.lastItemLen;
-    let j = 0;
-    if (offset > 0 && offset < max) {
-      j = findCellIndex(this.cells, offset);
-    } else if (offset === 0) {
-      j = 0;
-    } else if (offset === max) {
-      j = this.cells.length;
-    } else {
-      console.warn('bad values for markDirty');
-      return;
-    }
+    const length = (len === -1)
+      ? this.items.length - offset
+      : len;
+
+    const cellIndex = findCellIndex(this.cells, offset);
     const cells = calcCells(
       this.items,
       this.itemHeight,
@@ -182,21 +209,29 @@ export class VirtualScroll {
       this.approxHeaderHeight,
       this.approxFooterHeight,
       this.approxItemHeight,
-      j, offset, len
+      cellIndex, offset, length
     );
     console.debug('[virtual] cells recalculated', cells.length);
-    this.cells = inplaceUpdate(this.cells, cells, offset);
+    this.cells = inplaceUpdate(this.cells, cells, cellIndex);
     this.lastItemLen = this.items.length;
     this.indexDirty = Math.max(offset - 1, 0);
 
     this.scheduleUpdate();
   }
 
+  /**
+   * This method marks the tail the items array as dirty, so they can be re-rendered.
+   *
+   * It's equivalent to calling:
+   *
+   * ```js
+   * virtualScroll.checkRange(lastItemLen);
+   * ```
+   */
   @Method()
-  markDirtyTail() {
+  checkEnd() {
     if (this.items) {
-      const offset = this.lastItemLen;
-      this.markDirty(offset, this.items.length - offset);
+      this.checkRange(this.lastItemLen);
     }
   }
 
@@ -209,7 +244,7 @@ export class VirtualScroll {
     // unschedule future updates
     if (this.timerUpdate) {
       clearTimeout(this.timerUpdate);
-      this.timerUpdate = null;
+      this.timerUpdate = undefined;
     }
 
     // schedule DOM operations into the stencil queue
@@ -226,7 +261,6 @@ export class VirtualScroll {
       node = node.parentElement;
     }
     this.viewportOffset = topOffset;
-    console.log(this.viewportOffset);
     if (scrollEl) {
       this.viewportHeight = scrollEl.offsetHeight;
       this.currentScrollTop = scrollEl.scrollTop;
@@ -272,7 +306,7 @@ export class VirtualScroll {
     }
   }
 
-  private updateCellHeight(cell: Cell, node: HTMLElement) {
+  private updateCellHeight(cell: Cell, node: any) {
     const update = () => {
       if ((node as any)['$ionCell'] === cell) {
         const style = this.win.getComputedStyle(node);
@@ -365,9 +399,9 @@ export class VirtualScroll {
   private renderVirtualNode(node: VirtualNode) {
     const { type, value, index } = node.cell;
     switch (type) {
-      case CellType.Item: return this.renderItem!(value, index);
-      case CellType.Header: return this.renderHeader!(value, index);
-      case CellType.Footer: return this.renderFooter!(value, index);
+      case CELL_TYPE_ITEM: return this.renderItem!(value, index);
+      case CELL_TYPE_HEADER: return this.renderHeader!(value, index);
+      case CELL_TYPE_FOOTER: return this.renderFooter!(value, index);
     }
   }
 
@@ -383,7 +417,7 @@ export class VirtualScroll {
     if (this.renderItem) {
       return (
         <VirtualProxy dom={this.virtualDom}>
-          { this.virtualDom.map(node => this.renderVirtualNode(node)) }
+          {this.virtualDom.map(node => this.renderVirtualNode(node))}
         </VirtualProxy>
       );
     }

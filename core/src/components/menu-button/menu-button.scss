@@ -4,9 +4,11 @@
 // --------------------------------------------------
 
 :host {
-  pointer-events: all;
+  /**
+   * @prop --color: Color of the menu button
+   */
 
-  color: #{current-color(base)};
+  color: var(--color);
 
   text-align: center;
   text-decoration: none;
@@ -53,4 +55,11 @@ ion-icon {
   @include padding(0);
 
   pointer-events: none;
+}
+
+// Menu Button with Color
+// --------------------------------------------------
+
+:host(.ion-color) .button-native {
+  color: current-color(base);
 }

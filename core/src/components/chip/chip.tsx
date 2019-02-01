@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -9,9 +9,9 @@ import { createColorClasses } from '../../utils/theme';
     ios: 'chip.ios.scss',
     md: 'chip.md.scss'
   },
-  scoped: true
+  shadow: true
 })
-export class Chip {
+export class Chip implements ComponentInterface {
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -21,13 +21,28 @@ export class Chip {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
+  /**
+   * Display an outline style button.
+   */
+  @Prop() outline = false;
+
   hostData() {
     return {
-      class: createColorClasses(this.color),
+      class: {
+        ...createColorClasses(this.color),
+        'chip-outline': this.outline,
+        'ion-activatable': true,
+      }
     };
+  }
+
+  render() {
+    return [
+      <slot></slot>,
+      this.mode === 'md' ? <ion-ripple-effect></ion-ripple-effect> : null
+    ];
   }
 }

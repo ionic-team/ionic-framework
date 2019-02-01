@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Progress Bar - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+  <style>
+    .custom-bar-background {
+      --buffer-background: red;
+    }
+
+    .no-bar-background {
+      --buffer-background: none;
+    }
+
+    ion-content ion-progress-bar {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Progress Bar - Basic</ion-title>
+        <ion-progress-bar type="indeterminate"></ion-progress-bar>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="outer-content">
+      <ion-list>
+        <ion-list-header>
+          <ion-label>
+            Indeterminate
+          </ion-label>
+        </ion-list-header>
+        <ion-progress-bar type="indeterminate"></ion-progress-bar>
+
+        <ion-list-header>
+          <ion-label>
+            Indeterminate with secondary color
+          </ion-label>
+        </ion-list-header>
+        <ion-progress-bar color="secondary" type="indeterminate"></ion-progress-bar>
+
+        <ion-list-header>
+          <ion-label>
+            Indeterminate (reversed)
+          </ion-label>
+        </ion-list-header>
+        <ion-progress-bar type="indeterminate" reversed="true"></ion-progress-bar>
+
+        <ion-list-header>
+          <ion-label>
+            Determinate
+          </ion-label>
+        </ion-list-header>
+        <ion-progress-bar value="0.50"></ion-progress-bar>
+
+        <ion-list-header>
+          <ion-label>
+            Determinate (reversed)
+          </ion-label>
+        </ion-list-header>
+        <ion-progress-bar reversed="true" value="0.50"></ion-progress-bar>
+
+        <ion-list-header>
+          <ion-label>
+            Determinate (secondary color)
+          </ion-label>
+        </ion-list-header>
+        <ion-progress-bar color="secondary" value="0.50"></ion-progress-bar>
+
+        <ion-list-header>
+          <ion-label>
+            Determinate (with no bar background)
+          </ion-label>
+        </ion-list-header>
+        <ion-progress-bar class="no-bar-background" value="0.75"></ion-progress-bar>
+
+        <ion-list-header>
+          <ion-label>
+            Determinate (with a custom background)
+          </ion-label>
+        </ion-list-header>
+        <ion-progress-bar class="custom-bar-background" value="0.75"></ion-progress-bar>
+
+        <ion-list-header>
+          <ion-label>
+            Determinate (change progress with slider)
+          </ion-label>
+        </ion-list-header>
+        <ion-progress-bar id="progressBar"></ion-progress-bar>
+
+        <ion-item>
+          <ion-range pin="true" value="0" id="progressValue">
+            <ion-label slot="start">0</ion-label>
+            <ion-label slot="end">100</ion-label>
+          </ion-range>
+        </ion-item>
+
+        <ion-list-header>
+          <ion-label>
+            Buffer
+          </ion-label>
+        </ion-list-header>
+        <ion-progress-bar value="0.20" buffer="0.4"></ion-progress-bar>
+
+        <ion-list-header>
+          <ion-label>
+            Buffer (reversed)
+          </ion-label>
+        </ion-list-header>
+        <ion-progress-bar color="secondary" reversed="true" value="0.20" buffer="0.4"></ion-progress-bar>
+
+        <ion-list-header>
+          <ion-label>
+            Buffer (without value)
+          </ion-label>
+        </ion-list-header>
+        <ion-progress-bar color="tertiary" buffer="0"></ion-progress-bar>
+
+      </ion-list>
+
+    </ion-content>
+
+  </ion-app>
+
+  <script>
+    const progressValue = document.getElementById('progressValue');
+    const progressBar = document.getElementById('progressBar');
+
+    progressValue.addEventListener('ionChange', function (ev) {
+      progressBar.value = ev.detail.value / 100;
+    });
+
+  </script>
+</body>
+
+</html>

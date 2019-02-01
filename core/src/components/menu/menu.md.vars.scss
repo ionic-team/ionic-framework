@@ -6,8 +6,5 @@
 /// @prop - Background of the menu
 $menu-md-background:            $background-color !default;
 
-/// @prop - Box shadow color of the menu
-$menu-md-box-shadow-color:      rgba(0, 0, 0, .25) !default;
-
 /// @prop - Box shadow of the menu
-$menu-md-box-shadow:            0 0 10px $menu-md-box-shadow-color !default;
+$menu-md-box-shadow:            0 2px 22px 0 rgba(0, 0, 0, 0.09), 4px 0 16px 0 rgba(0, 0, 0, 0.18) !default;

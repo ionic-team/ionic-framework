@@ -5,7 +5,5 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{$note-ios-color};
-
-  font-family: $note-ios-font-family;
+  --color: #{$note-ios-color};
 }

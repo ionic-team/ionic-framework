@@ -1,4 +1,4 @@
-import { Component } from '@stencil/core';
+import { Component, ComponentInterface } from '@stencil/core';
 
 import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
@@ -10,13 +10,17 @@ import { createThemedClasses } from '../../utils/theme';
     md: 'item-group.md.scss'
   }
 })
-export class ItemGroup {
+export class ItemGroup implements ComponentInterface {
 
   mode!: Mode;
 
   hostData() {
     return {
-      class: createThemedClasses(this.mode, 'item-group')
+      'role': 'group',
+      class: {
+        ...createThemedClasses(this.mode, 'item-group'),
+        'item': true,
+      }
     };
   }
 }

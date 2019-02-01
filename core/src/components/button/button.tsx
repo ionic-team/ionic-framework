@@ -1,8 +1,8 @@
-import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
 
-import { Color, CssClassMap, Mode, RouterDirection } from '../../interface';
+import { Color, Mode, RouterDirection } from '../../interface';
 import { hasShadowDom } from '../../utils/helpers';
-import { openURL } from '../../utils/theme';
+import { createColorClasses, openURL } from '../../utils/theme';
 
 @Component({
   tag: 'ion-button',
@@ -12,12 +12,13 @@ import { openURL } from '../../utils/theme';
   },
   shadow: true,
 })
-export class Button {
+export class Button implements ComponentInterface {
+
+  private inToolbar = false;
+
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'window' }) win!: Window;
-
-  @State() keyFocus = false;
 
   /**
    * The color to use from your application's color palette.
@@ -28,18 +29,16 @@ export class Button {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
    * The type of button.
-   * Possible values are: `"button"`, `"bar-button"`.
    */
   @Prop({ mutable: true }) buttonType = 'button';
 
   /**
-   * If true, the user cannot interact with the button. Defaults to `false`.
+   * If `true`, the user cannot interact with the button.
    */
   @Prop({ reflectToAttr: true }) disabled = false;
 
@@ -60,7 +59,7 @@ export class Button {
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
-  @Prop() routerDirection?: RouterDirection;
+  @Prop() routerDirection: RouterDirection = 'forward';
 
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.
@@ -70,25 +69,21 @@ export class Button {
 
   /**
    * The button shape.
-   * Possible values are: `"round"`.
    */
   @Prop({ reflectToAttr: true }) shape?: 'round';
 
   /**
    * The button size.
-   * Possible values are: `"small"`, `"default"`, `"large"`.
    */
   @Prop({ reflectToAttr: true }) size?: 'small' | 'default' | 'large';
 
   /**
-   * If true, activates a button with a heavier font weight.
+   * If `true`, activates a button with a heavier font weight.
    */
   @Prop() strong = false;
 
   /**
    * The type of the button.
-   * Possible values are: `"submit"`, `"reset"` and `"button"`.
-   * Default value is: `"button"`
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
@@ -103,24 +98,10 @@ export class Button {
   @Event() ionBlur!: EventEmitter<void>;
 
   componentWillLoad() {
-    if (this.fill === undefined) {
-      this.fill = this.el.closest('ion-buttons') ? 'clear' : 'solid';
-    }
+    this.inToolbar = !!this.el.closest('ion-buttons');
   }
 
-  onFocus() {
-    this.ionFocus.emit();
-  }
-
-  onKeyUp() {
-    this.keyFocus = true;
-  }
-
-  onBlur() {
-    this.keyFocus = false;
-    this.ionBlur.emit();
-  }
-
+  @Listen('click')
   onClick(ev: Event) {
     if (this.type === 'button') {
       openURL(this.win, this.href, ev, this.routerDirection);
@@ -132,7 +113,6 @@ export class Button {
       const form = this.el.closest('form');
       if (form) {
         ev.preventDefault();
-        ev.stopPropagation();
 
         const fakeButton = document.createElement('button');
         fakeButton.type = this.type;
@@ -144,26 +124,40 @@ export class Button {
     }
   }
 
-  hostData() {
-    const { buttonType, color, expand, fill, mode, shape, size, strong } = this;
+  private onFocus = () => {
+    this.ionFocus.emit();
+  }
 
+  private onBlur = () => {
+    this.ionBlur.emit();
+  }
+
+  hostData() {
+    const { buttonType, disabled, color, expand, shape, size, strong } = this;
+    let fill = this.fill;
+    if (fill === undefined) {
+      fill = this.inToolbar ? 'clear' : 'solid';
+    }
     return {
+      'aria-disabled': disabled ? 'true' : null,
       class: {
-        ...getButtonClassMap(buttonType, mode),
-        ...getButtonTypeClassMap(buttonType, expand, mode),
-        ...getButtonTypeClassMap(buttonType, size, mode),
-        ...getButtonTypeClassMap(buttonType, shape, mode),
-        ...getButtonTypeClassMap(buttonType, strong ? 'strong' : undefined, mode),
-        ...getColorClassMap(buttonType, color, fill, mode),
-        'focused': this.keyFocus,
-      },
-      'ion-activable': true,
+        ...createColorClasses(color),
+        [buttonType]: true,
+        [`${buttonType}-${expand}`]: expand !== undefined,
+        [`${buttonType}-${size}`]: size !== undefined,
+        [`${buttonType}-${shape}`]: shape !== undefined,
+        [`${buttonType}-${fill}`]: true,
+        [`${buttonType}-strong`]: strong,
+
+        'button-disabled': disabled,
+        'ion-activatable': true,
+        'ion-focusable': true,
+      }
     };
   }
 
-  protected render() {
-
-    const TagType = this.href ? 'a' : 'button';
+  render() {
+    const TagType = this.href === undefined ? 'button' : 'a' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
       : { href: this.href };
@@ -173,64 +167,17 @@ export class Button {
         {...attrs}
         class="button-native"
         disabled={this.disabled}
-        onFocus={this.onFocus.bind(this)}
-        onKeyUp={this.onKeyUp.bind(this)}
-        onBlur={this.onBlur.bind(this)}
-        onClick={this.onClick.bind(this)}>
-          <span class="button-inner">
-            <slot name="icon-only"></slot>
-            <slot name="start"></slot>
-            <slot></slot>
-            <slot name="end"></slot>
-          </span>
-         { this.mode === 'md' && <ion-ripple-effect tapClick={true} parent={this.el} /> }
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+      >
+        <span class="button-inner">
+          <slot name="icon-only"></slot>
+          <slot name="start"></slot>
+          <slot></slot>
+          <slot name="end"></slot>
+        </span>
+        {this.mode === 'md' && <ion-ripple-effect type={this.inToolbar ? 'unbounded' : 'bounded'}></ion-ripple-effect>}
       </TagType>
     );
   }
-}
-
-/**
- * Get the classes based on the button type
- * e.g. alert-button, action-sheet-button
- */
-function getButtonClassMap(buttonType: string | undefined, mode: Mode): CssClassMap {
-  if (!buttonType) {
-    return {};
-  }
-  return {
-    [buttonType]: true,
-    [`${buttonType}-${mode}`]: true
-  };
-}
-
-/**
- * Get the classes based on the type
- * e.g. block, full, round, large
- */
-function getButtonTypeClassMap(buttonType: string, type: string | undefined, mode: Mode): CssClassMap {
-  if (!type) {
-    return {};
-  }
-  type = type.toLocaleLowerCase();
-  return {
-    [`${buttonType}-${type}`]: true,
-    [`${buttonType}-${type}-${mode}`]: true
-  };
-}
-
-function getColorClassMap(buttonType: string, color: string | undefined, fill: string | undefined, mode: Mode): CssClassMap {
-  let className = buttonType;
-
-  if (fill) {
-    className += `-${fill.toLowerCase()}`;
-  }
-
-  const map: CssClassMap = {
-    [className]: true,
-    [`${className}-${mode}`]: true,
-  };
-  if (color) {
-    map[`ion-color-${color}`] = true;
-  }
-  return map;
 }

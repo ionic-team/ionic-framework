@@ -1,0 +1,51 @@
+{
+  "name": "test-app",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "npm run sync && ng serve",
+    "sync:build": "sh scripts/build-ionic.sh",
+    "sync": "sh scripts/sync.sh",
+    "build": "ng build --prod --no-progress",
+    "test": "ng e2e --prod",
+    "lint": "ng lint",
+    "postinstall": "npm run sync"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~7.2.1",
+    "@angular/common": "~7.2.1",
+    "@angular/compiler": "~7.2.1",
+    "@angular/core": "~7.2.1",
+    "@angular/forms": "~7.2.1",
+    "@angular/platform-browser": "~7.2.1",
+    "@angular/platform-browser-dynamic": "~7.2.1",
+    "@angular/router": "~7.2.1",
+    "@ionic/angular": "^4.0.0-rc.1",
+    "core-js": "^2.6.2",
+    "rxjs": "~6.3.3",
+    "tslib": "^1.9.0",
+    "zone.js": "~0.8.26"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~0.12.2",
+    "@angular/cli": "~7.2.1",
+    "@angular/compiler-cli": "~7.2.1",
+    "@angular/language-service": "~7.2.1",
+    "@types/node": "~8.9.4",
+    "@types/jasmine": "~2.8.8",
+    "@types/jasminewd2": "~2.0.3",
+    "codelyzer": "~4.5.0",
+    "jasmine-core": "~2.99.1",
+    "jasmine-spec-reporter": "~4.2.1",
+    "karma": "~3.1.4",
+    "karma-chrome-launcher": "~2.2.0",
+    "karma-coverage-istanbul-reporter": "~2.0.1",
+    "karma-jasmine": "~1.1.2",
+    "karma-jasmine-html-reporter": "^0.2.2",
+    "protractor": "~5.4.2",
+    "ts-node": "~7.0.0",
+    "tslint": "~5.12.1",
+    "typescript": "~3.2.4"
+  }
+}

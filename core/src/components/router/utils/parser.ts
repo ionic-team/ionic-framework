@@ -22,7 +22,7 @@ export function readRouteNodes(root: Element, node = root): RouteTree {
     .filter(el => el.tagName === 'ION-ROUTE' && el.component)
     .map(el => {
       const component = readProp(el, 'component');
-      if (!component) {
+      if (component == null) {
         throw new Error('component missing in ion-route');
       }
       return {
@@ -34,7 +34,7 @@ export function readRouteNodes(root: Element, node = root): RouteTree {
     });
 }
 
-export function readProp(el: HTMLElement, prop: string): string | null {
+export function readProp(el: HTMLElement, prop: string): string | null | undefined {
   if (prop in el) {
     return (el as any)[prop];
   }

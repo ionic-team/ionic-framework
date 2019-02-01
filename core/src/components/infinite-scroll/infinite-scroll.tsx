@@ -1,10 +1,10 @@
-import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 @Component({
   tag: 'ion-infinite-scroll',
   styleUrl: 'infinite-scroll.scss'
 })
-export class InfiniteScroll {
+export class InfiniteScroll implements ComponentInterface {
 
   private thrPx = 0;
   private thrPc = 0;
@@ -26,7 +26,6 @@ export class InfiniteScroll {
    * output event to get called when the user has scrolled 10%
    * from the bottom of the page. Use the value `100px` when the
    * scroll is within 100 pixels from the bottom of the page.
-   * Defaults to `15%`.
    */
   @Prop() threshold = '15%';
 
@@ -43,7 +42,7 @@ export class InfiniteScroll {
   }
 
   /**
-   * If true, the infinite scroll will be hidden and scroll event listeners
+   * If `true`, the infinite scroll will be hidden and scroll event listeners
    * will be removed.
    *
    * Set this to true to disable the infinite scroll from actively
@@ -55,13 +54,16 @@ export class InfiniteScroll {
 
   @Watch('disabled')
   protected disabledChanged(val: boolean) {
+    if (this.disabled) {
+      this.isLoading = false;
+      this.isBusy = false;
+    }
     this.enableScrollEvents(!val);
   }
 
   /**
    * The position of the infinite scroll element.
    * The value can be either `top` or `bottom`.
-   * Defaults to `bottom`.
    */
   @Prop() position: 'top' | 'bottom' = 'bottom';
 
@@ -77,17 +79,17 @@ export class InfiniteScroll {
     const contentEl = this.el.closest('ion-content');
     if (contentEl) {
       await contentEl.componentOnReady();
-      this.scrollEl = contentEl.getScrollElement();
+      this.scrollEl = await contentEl.getScrollElement();
     }
     this.thresholdChanged(this.threshold);
     this.enableScrollEvents(!this.disabled);
-    // if (this.position === 'top') {
-    //   this.queue.write(() => {
-    //     if (this.scrollEl) {
-    //       this.scrollEl.scrollTop = this.scrollEl.scrollHeight - this.scrollEl.clientHeight;
-    //     }
-    //   });
-    // }
+    if (this.position === 'top') {
+      this.queue.write(() => {
+        if (this.scrollEl) {
+          this.scrollEl.scrollTop = this.scrollEl.scrollHeight - this.scrollEl.clientHeight;
+        }
+      });
+    }
   }
 
   componentDidUnload() {
@@ -102,14 +104,14 @@ export class InfiniteScroll {
     }
 
     const infiniteHeight = this.el.offsetHeight;
-    if (!infiniteHeight) {
+    if (infiniteHeight === 0) {
       // if there is no height of this element then do nothing
       return 2;
     }
     const scrollTop = scrollEl.scrollTop;
     const scrollHeight = scrollEl.scrollHeight;
     const height = scrollEl.offsetHeight;
-    const threshold = this.thrPc ? (height * this.thrPc) : this.thrPx;
+    const threshold = this.thrPc !== 0 ? (height * this.thrPc) : this.thrPx;
 
     const distanceFromInfinite = (this.position === 'bottom')
       ? scrollHeight - infiniteHeight - scrollTop - threshold - height
@@ -130,7 +132,7 @@ export class InfiniteScroll {
   }
 
   /**
-   * Call `complete()` within the `infinite` output event handler when
+   * Call `complete()` within the `ionInfinite` output event handler when
    * your async operation has completed. For example, the `loading`
    * state is while the app is performing an asynchronous operation,
    * such as receiving more data from an AJAX request to add more items
@@ -147,55 +149,49 @@ export class InfiniteScroll {
     }
     this.isLoading = false;
 
-    // if (this.position === 'top') {
-    //   /**
-    //    * New content is being added at the top, but the scrollTop position stays the same,
-    //    * which causes a scroll jump visually. This algorithm makes sure to prevent this.
-    //    * (Frame 1)
-    //    *    - complete() is called, but the UI hasn't had time to update yet.
-    //    *    - Save the current content dimensions.
-    //    *    - Wait for the next frame using _dom.read, so the UI will be updated.
-    //    * (Frame 2)
-    //    *    - Read the new content dimensions.
-    //    *    - Calculate the height difference and the new scroll position.
-    //    *    - Delay the scroll position change until other possible dom reads are done using _dom.write to be performant.
-    //    * (Still frame 2, if I'm correct)
-    //    *    - Change the scroll position (= visually maintain the scroll position).
-    //    *    - Change the state to re-enable the InfiniteScroll.
-    //    *    - This should be after changing the scroll position, or it could
-    //    *    cause the InfiniteScroll to be triggered again immediately.
-    //    * (Frame 3)
-    //    *    Done.
-    //    */
-    //   this.isBusy = true;
-    //   // ******** DOM READ ****************
-    //   // Save the current content dimensions before the UI updates
-    //   const prev = scrollEl.scrollHeight - scrollEl.scrollTop;
+    if (this.position === 'top') {
+      /**
+       * New content is being added at the top, but the scrollTop position stays the same,
+       * which causes a scroll jump visually. This algorithm makes sure to prevent this.
+       * (Frame 1)
+       *    - complete() is called, but the UI hasn't had time to update yet.
+       *    - Save the current content dimensions.
+       *    - Wait for the next frame using _dom.read, so the UI will be updated.
+       * (Frame 2)
+       *    - Read the new content dimensions.
+       *    - Calculate the height difference and the new scroll position.
+       *    - Delay the scroll position change until other possible dom reads are done using _dom.write to be performant.
+       * (Still frame 2, if I'm correct)
+       *    - Change the scroll position (= visually maintain the scroll position).
+       *    - Change the state to re-enable the InfiniteScroll.
+       *    - This should be after changing the scroll position, or it could
+       *    cause the InfiniteScroll to be triggered again immediately.
+       * (Frame 3)
+       *    Done.
+       */
+      this.isBusy = true;
+      // ******** DOM READ ****************
+      // Save the current content dimensions before the UI updates
+      const prev = scrollEl.scrollHeight - scrollEl.scrollTop;
 
-    //   // ******** DOM READ ****************
-    //   this.queue.read(() => {
-    //     // UI has updated, save the new content dimensions
-    //     const scrollHeight = scrollEl.scrollHeight;
-    //     // New content was added on top, so the scroll position should be changed immediately to prevent it from jumping around
-    //     const newScrollTop = scrollHeight - prev;
+      // ******** DOM READ ****************
+      requestAnimationFrame(() => {
+        this.queue.read(() => {
+          // UI has updated, save the new content dimensions
+          const scrollHeight = scrollEl.scrollHeight;
+          // New content was added on top, so the scroll position should be changed immediately to prevent it from jumping around
+          const newScrollTop = scrollHeight - prev;
 
-    //     // ******** DOM WRITE ****************
-    //     this.queue.write(() => {
-    //       scrollEl.scrollTop = newScrollTop;
-    //       this.isBusy = false;
-    //     });
-    //   });
-    // }
-  }
-
-  /**
-   * Pass a promise inside `waitFor()` within the `infinite` output event handler in order to
-   * change state of infiniteScroll to "complete"
-   */
-  @Method()
-  waitFor(action: Promise<any>) {
-    const enable = this.complete.bind(this);
-    action.then(enable, enable);
+          // ******** DOM WRITE ****************
+          requestAnimationFrame(() => {
+            this.queue.write(() => {
+              scrollEl.scrollTop = newScrollTop;
+              this.isBusy = false;
+            });
+          });
+        });
+      });
+    }
   }
 
   private canStart(): boolean {
@@ -203,7 +199,8 @@ export class InfiniteScroll {
       !this.disabled &&
       !this.isBusy &&
       !!this.scrollEl &&
-      !this.isLoading);
+      !this.isLoading
+    );
   }
 
   private enableScrollEvents(shouldListen: boolean) {

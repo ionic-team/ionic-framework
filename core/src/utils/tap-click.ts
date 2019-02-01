@@ -1,21 +1,21 @@
+import { Config } from '../interface';
 
 import { now, pointerCoord } from './helpers';
 
-export function startTapClick(doc: Document) {
+export function startTapClick(doc: Document, config: Config) {
   let lastTouch = -MOUSE_WAIT * 10;
   let lastActivated = 0;
-  let cancelled = false;
+  let scrollingEl: HTMLElement | undefined;
 
   let activatableEle: HTMLElement | undefined;
+  let activeRipple: Promise<() => void> | undefined;
   let activeDefer: any;
 
+  const useRippleEffect = config.getBoolean('animated', true) && config.getBoolean('rippleEffect', true);
   const clearDefers = new WeakMap<HTMLElement, any>();
 
-  function onBodyClick(ev: Event) {
-    if (cancelled) {
-      ev.preventDefault();
-      ev.stopPropagation();
-    }
+  function isScrolling() {
+    return scrollingEl !== undefined && scrollingEl.parentElement !== null;
   }
 
   // Touch Events
@@ -45,26 +45,23 @@ export function startTapClick(doc: Document) {
 
   function cancelActive() {
     clearTimeout(activeDefer);
+    activeDefer = undefined;
     if (activatableEle) {
       removeActivated(false);
       activatableEle = undefined;
     }
-    cancelled = true;
   }
 
   function pointerDown(ev: any) {
-    if (activatableEle) {
+    if (activatableEle || isScrolling()) {
       return;
     }
-    cancelled = false;
+    scrollingEl = undefined;
     setActivatedElement(getActivatableTarget(ev), ev);
   }
 
   function pointerUp(ev: UIEvent) {
     setActivatedElement(undefined, ev);
-    if (cancelled && ev.cancelable) {
-      ev.preventDefault();
-    }
   }
 
   function setActivatedElement(el: HTMLElement | undefined, ev: UIEvent) {
@@ -77,7 +74,7 @@ export function startTapClick(doc: Document) {
 
     const { x, y } = pointerCoord(ev);
 
-    // unactivate selected
+    // deactivate selected
     if (activatableEle) {
       if (clearDefers.has(activatableEle)) {
         throw new Error('internal error');
@@ -96,11 +93,12 @@ export function startTapClick(doc: Document) {
         clearDefers.delete(el);
       }
 
+      const delay = isInstant(el) ? 0 : ADD_ACTIVATED_DEFERS;
       el.classList.remove(ACTIVATED);
       activeDefer = setTimeout(() => {
         addActivated(el, x, y);
         activeDefer = undefined;
-      }, ADD_ACTIVATED_DEFERS);
+      }, delay);
     }
     activatableEle = el;
   }
@@ -109,20 +107,22 @@ export function startTapClick(doc: Document) {
     lastActivated = Date.now();
     el.classList.add(ACTIVATED);
 
-    const event = new CustomEvent('ionActivated', {
-      bubbles: false,
-      detail: { x, y }
-    });
-    el.dispatchEvent(event);
+    const rippleEffect = useRippleEffect && getRippleEffect(el);
+    if (rippleEffect && rippleEffect.addRipple) {
+      activeRipple = rippleEffect.addRipple(x, y);
+    }
   }
 
   function removeActivated(smooth: boolean) {
+    if (activeRipple !== undefined) {
+      activeRipple.then(remove => remove());
+    }
     const active = activatableEle;
     if (!active) {
       return;
     }
     const time = CLEAR_STATE_DEFERS - Date.now() + lastActivated;
-    if (smooth && time > 0) {
+    if (smooth && time > 0 && !isInstant(active)) {
       const deferId = setTimeout(() => {
         active.classList.remove(ACTIVATED);
         clearDefers.delete(active);
@@ -133,9 +133,14 @@ export function startTapClick(doc: Document) {
     }
   }
 
-  doc.body.addEventListener('click', onBodyClick, true);
-  doc.body.addEventListener('ionScrollStart', cancelActive);
-  doc.body.addEventListener('ionGestureCaptured', cancelActive);
+  doc.addEventListener('ionScrollStart', ev => {
+    scrollingEl = ev.target as HTMLElement;
+    cancelActive();
+  });
+  doc.addEventListener('ionScrollEnd', () => {
+    scrollingEl = undefined;
+  });
+  doc.addEventListener('ionGestureCaptured', cancelActive);
 
   doc.addEventListener('touchstart', onTouchStart, true);
   doc.addEventListener('touchcancel', onTouchEnd, true);
@@ -150,13 +155,27 @@ function getActivatableTarget(ev: any): any {
     const path = ev.composedPath() as HTMLElement[];
     for (let i = 0; i < path.length - 2; i++) {
       const el = path[i];
-      if (el.hasAttribute && el.hasAttribute('ion-activable')) {
+      if (el.classList && el.classList.contains('ion-activatable')) {
         return el;
       }
     }
   } else {
-    return ev.target.closest('[ion-activable]');
+    return ev.target.closest('.ion-activatable');
   }
+}
+
+function isInstant(el: HTMLElement) {
+  return el.classList.contains('ion-activatable-instant');
+}
+
+function getRippleEffect(el: HTMLElement) {
+  if (el.shadowRoot) {
+    const ripple = el.shadowRoot.querySelector('ion-ripple-effect');
+    if (ripple) {
+      return ripple;
+    }
+  }
+  return el.querySelector('ion-ripple-effect');
 }
 
 const ACTIVATED = 'activated';

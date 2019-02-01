@@ -1,0 +1,112 @@
+@import "./segment-button";
+@import "./segment-button.md.vars";
+
+// Material Design Segment Button
+// --------------------------------------------------
+
+:host {
+  --padding-top: #{$segment-button-md-padding-top};
+  --padding-end: #{$segment-button-md-padding-end};
+  --padding-bottom: #{$segment-button-md-padding-bottom};
+  --padding-start: #{$segment-button-md-padding-start};
+  --transition: #{$segment-button-md-transition};
+
+  min-width: $segment-button-md-min-width;
+
+  max-width: $segment-button-md-max-width;
+  min-height: $segment-button-md-min-height;
+
+  font-size: $segment-button-md-font-size;
+  font-weight: $segment-button-md-font-weight;
+
+  letter-spacing: $segment-button-md-letter-spacing;
+
+  line-height: $segment-button-md-line-height;
+
+  text-transform: uppercase;
+}
+
+// Segment Button: Checked
+// --------------------------------------------------
+
+:host(.activated),
+:host(.segment-button-checked) {
+  --border-color: #{$segment-button-md-border-bottom-color-activated};
+
+  opacity: $segment-button-md-opacity-activated;
+}
+
+// Segment Button: Disabled
+// --------------------------------------------------
+
+:host(.segment-button-disabled) {
+  opacity: $segment-button-md-opacity-disabled;
+}
+
+// Segment Button: Icon
+// --------------------------------------------------
+
+::slotted(ion-icon) {
+  @include margin(12px, null, 12px, null);
+
+  font-size: $segment-button-md-icon-size;
+}
+
+// Segment Button: Label
+// --------------------------------------------------
+
+::slotted(ion-label) {
+  @include margin(12px, null, 12px, null);
+}
+
+// Segment Button: Layout
+// --------------------------------------------------
+
+// Layout: icon top / icon bottom
+:host(.segment-button-layout-icon-top) ::slotted(ion-label),
+:host(.segment-button-layout-icon-bottom) ::slotted(ion-icon) {
+  @include margin(0, null, null, null);
+}
+
+:host(.segment-button-layout-icon-top) ::slotted(ion-icon),
+:host(.segment-button-layout-icon-bottom) ::slotted(ion-label) {
+  @include margin(null, null, 0, null);
+}
+
+// Layout: icon start
+:host(.segment-button-layout-icon-start) ::slotted(ion-label) {
+  @include margin-horizontal(8px, 0);
+}
+
+// Layout: icon end
+:host(.segment-button-layout-icon-end) ::slotted(ion-label) {
+  @include margin-horizontal(0, 8px);
+}
+
+// Layout: icon only
+:host(.segment-button-has-icon-only) ::slotted(ion-icon) {
+  @include margin(12px, null, 12px, null);
+}
+
+// Layout: label only
+:host(.segment-button-has-label-only) ::slotted(ion-label) {
+  @include margin(12px, null, 12px, null);
+}
+
+
+// Segment: Checked & Activated
+// --------------------------------------------------
+
+:host(.segment-button-checked.activated) {
+  color: var(--color-checked);
+}
+
+
+// Segment Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:hover) {
+    background: var(--background-hover);
+  }
+}

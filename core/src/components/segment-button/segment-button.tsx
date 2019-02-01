@@ -1,41 +1,40 @@
-import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
 
-import { Color, Mode } from '../../interface';
-import { createColorClasses } from '../../utils/theme';
+import { Mode, SegmentButtonLayout } from '../../interface';
 
 let ids = 0;
 
 @Component({
   tag: 'ion-segment-button',
-  styleUrl: 'segment-button.scss',
+  styleUrls: {
+    ios: 'segment-button.ios.scss',
+    md: 'segment-button.md.scss'
+  },
   shadow: true
 })
-export class SegmentButton {
+export class SegmentButton implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
   /**
-   * The color to use from your application's color palette.
-   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information on colors, see [theming](/docs/theming/basics).
-   */
-  @Prop() color?: Color;
-
-  /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
-   * If true, the segment button is selected. Defaults to `false`.
+   * If `true`, the segment button is selected.
    */
   @Prop({ mutable: true }) checked = false;
 
-  /*
-   * If true, the user cannot interact with the segment button. Default false.
+  /**
+   * If `true`, the user cannot interact with the segment button.
    */
   @Prop() disabled = false;
+
+  /**
+   * Set the layout of the text and icon in the segment.
+   */
+  @Prop() layout?: SegmentButtonLayout = 'icon-top';
 
   /**
    * The value of the segment button.
@@ -54,15 +53,34 @@ export class SegmentButton {
     }
   }
 
+  @Listen('click')
+  onClick() {
+    this.checked = true;
+  }
+
+  private get hasLabel() {
+    return !!this.el.querySelector('ion-label');
+  }
+
+  private get hasIcon() {
+    return !!this.el.querySelector('ion-icon');
+  }
+
   hostData() {
-    const { disabled, checked, color } = this;
+    const { checked, disabled, hasIcon, hasLabel, layout } = this;
     return {
+      'aria-disabled': disabled ? 'true' : null,
       class: {
-        ...createColorClasses(color),
+        'segment-button-has-label': hasLabel,
+        'segment-button-has-icon': hasIcon,
+        'segment-button-has-label-only': hasLabel && !hasIcon,
+        'segment-button-has-icon-only': hasIcon && !hasLabel,
         'segment-button-disabled': disabled,
         'segment-button-checked': checked,
-      },
-      'ion-activable': true,
+        [`segment-button-layout-${layout}`]: true,
+        'ion-activatable': true,
+        'ion-activatable-instant': true,
+      }
     };
   }
 
@@ -71,12 +89,13 @@ export class SegmentButton {
       <button
         type="button"
         aria-pressed={this.checked ? 'true' : null}
-        class="segment-button-native"
+        class="button-native"
         disabled={this.disabled}
-        onClick={() => this.checked = true }>
-          <slot></slot>
-          { this.mode === 'md' && <ion-ripple-effect tapClick={true} parent={this.el}/> }
-      </button>
+      >
+        <slot></slot>
+        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+      </button>,
+      <div class="segment-button-indicator"></div>
     ];
   }
 }

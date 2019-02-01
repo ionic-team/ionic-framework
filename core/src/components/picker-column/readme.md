@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type           |
-| -------- | --------- | ----------- | -------------- |
-| `col`    | --        |             | `PickerColumn` |
+| Property | Attribute | Description        | Type           | Default     |
+| -------- | --------- | ------------------ | -------------- | ----------- |
+| `col`    | --        | Picker column data | `PickerColumn` | `undefined` |
 
 
 ----------------------------------------------

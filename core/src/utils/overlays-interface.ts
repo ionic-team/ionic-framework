@@ -10,13 +10,12 @@ export interface OverlayEventDetail<T = any> {
 export interface OverlayInterface {
   mode: Mode;
   el: HTMLElement;
-  willAnimate: boolean;
+  animated: boolean;
   keyboardClose: boolean;
   config: Config;
-  overlayId: number;
+  overlayIndex: number;
   presented: boolean;
   animation?: Animation;
-  animationCtrl: HTMLIonAnimationControllerElement;
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
@@ -27,18 +26,20 @@ export interface OverlayInterface {
   didDismiss: EventEmitter<OverlayEventDetail>;
 
   present(): Promise<void>;
-  dismiss(data?: any, role?: string): Promise<void>;
+  dismiss(data?: any, role?: string): Promise<boolean>;
 }
 
 export interface OverlayController {
   create(opts?: any): Promise<HTMLElement>;
-  dismiss(data?: any, role?: string, alertId?: number): Promise<void>;
-  getTop(): HTMLElement;
+  dismiss(data?: any, role?: string, id?: string): Promise<boolean>;
+  getTop(): Promise<HTMLIonOverlayElement | undefined>;
 }
 
 export interface HTMLIonOverlayElement extends HTMLStencilElement {
-  overlayId: number;
-  dismiss(data?: any, role?: string): Promise<void>;
+  overlayIndex: number;
+  backdropDismiss?: boolean;
+
+  dismiss(data?: any, role?: string): Promise<boolean>;
 }
 
-export type OverlayMap = Map<number, HTMLIonOverlayElement>;
+export type OverlaySelect = HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement;

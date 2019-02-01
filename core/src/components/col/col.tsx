@@ -1,8 +1,9 @@
-import { Component, Element, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
 
-import { isMatch } from '../../utils/media';
+import { matchBreakpoint } from '../../utils/media';
 
-const SUPPORTS_VARS = !!(CSS && CSS.supports && CSS.supports('--a', '0'));
+const win = window as any;
+const SUPPORTS_VARS = !!(win.CSS && win.CSS.supports && win.CSS.supports('--a: 0'));
 const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 
 @Component({
@@ -10,112 +11,112 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
   styleUrl: 'col.scss',
   shadow: true
 })
-export class Col {
-  [key: string]: any;
+export class Col implements ComponentInterface {
+  @Prop({ context: 'window' }) win!: Window;
 
   @Element() el!: HTMLStencilElement;
 
   /**
-   * The amount to offset the column, in terms of how many columns it should shift to the right
+   * The amount to offset the column, in terms of how many columns it should shift to the end
    * of the total available.
    */
   @Prop() offset?: string;
 
   /**
    * The amount to offset the column for xs screens, in terms of how many columns it should shift
-   * to the right of the total available.
+   * to the end of the total available.
    */
   @Prop() offsetXs?: string;
 
   /**
    * The amount to offset the column for sm screens, in terms of how many columns it should shift
-   * to the right of the total available.
+   * to the end of the total available.
    */
   @Prop() offsetSm?: string;
 
   /**
    * The amount to offset the column for md screens, in terms of how many columns it should shift
-   * to the right of the total available.
+   * to the end of the total available.
    */
   @Prop() offsetMd?: string;
 
   /**
    * The amount to offset the column for lg screens, in terms of how many columns it should shift
-   * to the right of the total available.
+   * to the end of the total available.
    */
   @Prop() offsetLg?: string;
 
   /**
    * The amount to offset the column for xl screens, in terms of how many columns it should shift
-   * to the right of the total available.
+   * to the end of the total available.
    */
   @Prop() offsetXl?: string;
 
   /**
-   * The amount to pull the column, in terms of how many columns it should shift to the left of
+   * The amount to pull the column, in terms of how many columns it should shift to the start of
    * the total available.
    */
   @Prop() pull?: string;
 
   /**
    * The amount to pull the column for xs screens, in terms of how many columns it should shift
-   * to the left of the total available.
+   * to the start of the total available.
    */
   @Prop() pullXs?: string;
   /**
    * The amount to pull the column for sm screens, in terms of how many columns it should shift
-   * to the left of the total available.
+   * to the start of the total available.
    */
   @Prop() pullSm?: string;
   /**
    * The amount to pull the column for md screens, in terms of how many columns it should shift
-   * to the left of the total available.
+   * to the start of the total available.
    */
   @Prop() pullMd?: string;
   /**
    * The amount to pull the column for lg screens, in terms of how many columns it should shift
-   * to the left of the total available.
+   * to the start of the total available.
    */
   @Prop() pullLg?: string;
   /**
    * The amount to pull the column for xl screens, in terms of how many columns it should shift
-   * to the left of the total available.
+   * to the start of the total available.
    */
   @Prop() pullXl?: string;
 
   /**
-   * The amount to push the column, in terms of how many columns it should shift to the right
+   * The amount to push the column, in terms of how many columns it should shift to the end
    * of the total available.
    */
   @Prop() push?: string;
 
   /**
    * The amount to push the column for xs screens, in terms of how many columns it should shift
-   * to the right of the total available.
+   * to the end of the total available.
    */
   @Prop() pushXs?: string;
 
   /**
    * The amount to push the column for sm screens, in terms of how many columns it should shift
-   * to the right of the total available.
+   * to the end of the total available.
    */
   @Prop() pushSm?: string;
 
   /**
    * The amount to push the column for md screens, in terms of how many columns it should shift
-   * to the right of the total available.
+   * to the end of the total available.
    */
   @Prop() pushMd?: string;
 
   /**
    * The amount to push the column for lg screens, in terms of how many columns it should shift
-   * to the right of the total available.
+   * to the end of the total available.
    */
   @Prop() pushLg?: string;
 
   /**
    * The amount to push the column for xl screens, in terms of how many columns it should shift
-   * to the right of the total available.
+   * to the end of the total available.
    */
   @Prop() pushXl?: string;
 
@@ -166,11 +167,11 @@ export class Col {
     let matched;
 
     for (const breakpoint of BREAKPOINTS) {
-      const matches = isMatch(breakpoint);
+      const matches = matchBreakpoint(this.win, breakpoint);
 
       // Grab the value of the property, if it exists and our
       // media query matches we return the value
-      const columns = this[property + breakpoint.charAt(0).toUpperCase() + breakpoint.slice(1)];
+      const columns = (this as any)[property + breakpoint.charAt(0).toUpperCase() + breakpoint.slice(1)];
 
       if (matches && columns !== undefined) {
         matched = columns;
@@ -232,15 +233,21 @@ export class Col {
   }
 
   private calculateOffset() {
-    return this.calculatePosition('offset', 'margin-left');
+    const isRTL = document.dir === 'rtl';
+
+    return this.calculatePosition('offset', isRTL ? 'margin-right' : 'margin-left');
   }
 
   private calculatePull() {
-    return this.calculatePosition('pull', 'right');
+    const isRTL = document.dir === 'rtl';
+
+    return this.calculatePosition('pull', isRTL ? 'left' : 'right');
   }
 
   private calculatePush() {
-    return this.calculatePosition('push', 'left');
+    const isRTL = document.dir === 'rtl';
+
+    return this.calculatePosition('push', isRTL ? 'right' : 'left');
   }
 
   hostData() {

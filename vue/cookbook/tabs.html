@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Ionic v4 + Vue.js - Ionic tabs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <script src="https://unpkg.com/vue"></script>
+        <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+        <script src="https://unpkg.com/vue-class-component@latest/dist/vue-class-component.js"></script>
+        <script src="https://unpkg.com/vue-property-decorator@latest/lib/vue-property-decorator.umd.js"></script>
+        <script src="https://unpkg.com/@modus/ionic-vue@latest/dist/ionic-vue.js"></script>
+        <script src="https://unpkg.com/@ionic/core@latest/dist/ionic.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/@ionic/core@latest/css/ionic.bundle.css"/>
+    </head>
+
+    <body>
+        <ion-app>
+            <Home/>
+        </ion-app>
+
+        <script>
+            const Toolbar = Vue.component('Toolbar', {
+                name: 'Toolbar',
+                props: { title: String, backURL: String },
+                template: `<ion-header>
+                    <ion-toolbar>
+                        <ion-buttons slot="start">
+                            <ion-back-button :default-href="backURL"/>
+                        </ion-buttons>
+                        <ion-title>{{ title }}</ion-title>
+                    </ion-toolbar>
+                </ion-header>`
+            })
+
+            const Home = Vue.component('Home', {
+                template: `<ion-page class="ion-page">
+                    <toolbar title="Home"/>
+                    <ion-content class="ion-content" padding>
+                        <ion-tabs>
+                            <ion-tab href="schedule" label="schedule" icon="calendar" name="schedule">
+                                <ion-vue-router/>
+                            </ion-tab>
+                            <ion-tab href="speakers" label="speakers" icon="contacts" name="speakers">
+                                <ion-vue-router name="speakers"/>
+                            </ion-tab>
+                        </ion-tabs>
+                    </ion-content>
+                </ion-page>`
+            })
+
+            const Page = {
+                template: '<ion-button @click="goBack">Go back</ion-button>',
+                methods: {
+                    goBack() {
+                        this.$router.back()
+                    }
+                }
+            }
+
+            const Schedule = {
+                template: `<ion-button @click="$router.push('page')">To page</ion-button>`
+            }
+
+            const Speakers = {
+                template: '<h1>Speakers list</h1>'
+            }
+
+            Vue.config.ignoredElements.push(/^ion-/)
+
+            new Vue({
+                router: new IonicVue.IonicVueRouter({
+                    routes: [
+                        { path: '/', components: {default: Schedule, speakers: Speakers} },
+                        { path: '/page', component: Page }
+                    ],
+                }),
+            }).$mount('ion-app')
+        </script>
+    </body>
+</html>

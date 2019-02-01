@@ -1,30 +1,25 @@
-import { ComponentProps, FrameworkDelegate, Nav } from '../../interface';
+import { ComponentProps, FrameworkDelegate } from '../../interface';
 import { attachComponent } from '../../utils/framework-delegate';
 import { assert } from '../../utils/helpers';
 
-export const enum ViewState {
-  New = 1,
-  Attached,
-  Destroyed
-}
+export const VIEW_STATE_NEW = 1;
+export const VIEW_STATE_ATTACHED = 2;
+export const VIEW_STATE_DESTROYED = 3;
 
 export class ViewController {
 
-  state: ViewState = ViewState.New;
-  nav?: Nav;
+  state = VIEW_STATE_NEW;
+  nav?: any;
   element?: HTMLElement;
   delegate?: FrameworkDelegate;
 
   constructor(
     public component: any,
-    public params: any
+    public params: ComponentProps | undefined
   ) {}
 
-  /**
-   * @hidden
-   */
   async init(container: HTMLElement) {
-    this.state = ViewState.Attached;
+    this.state = VIEW_STATE_ATTACHED;
 
     if (!this.element) {
       const component = this.component;
@@ -33,11 +28,10 @@ export class ViewController {
   }
 
   /**
-   * @hidden
    * DOM WRITE
    */
   _destroy() {
-    assert(this.state !== ViewState.Destroyed, 'view state must be ATTACHED');
+    assert(this.state !== VIEW_STATE_DESTROYED, 'view state must be ATTACHED');
 
     const element = this.element;
     if (element) {
@@ -48,11 +42,11 @@ export class ViewController {
       }
     }
     this.nav = undefined;
-    this.state = ViewState.Destroyed;
+    this.state = VIEW_STATE_DESTROYED;
   }
 }
 
-export function matches(view: ViewController | undefined, id: string, params: ComponentProps): view is ViewController {
+export function matches(view: ViewController | undefined, id: string, params: ComponentProps | undefined): view is ViewController {
   if (!view) {
     return false;
   }
@@ -60,18 +54,15 @@ export function matches(view: ViewController | undefined, id: string, params: Co
     return false;
   }
   const currentParams = view.params;
-  const null1 = (currentParams == null);
-  const null2 = (params == null);
   if (currentParams === params) {
     return true;
   }
-  if (null1 !== null2) {
-    return false;
-  }
-  if (null1 && null2) {
+  if (!currentParams && !params) {
     return true;
   }
-
+  if (!currentParams || !params) {
+    return false;
+  }
   const keysA = Object.keys(currentParams);
   const keysB = Object.keys(params);
   if (keysA.length !== keysB.length) {
@@ -87,7 +78,7 @@ export function matches(view: ViewController | undefined, id: string, params: Co
   return true;
 }
 
-export function convertToView(page: any, params: any): ViewController | null {
+export function convertToView(page: any, params: ComponentProps | undefined): ViewController | null {
   if (!page) {
     return null;
   }

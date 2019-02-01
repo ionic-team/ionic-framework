@@ -1,10 +1,11 @@
 {
   "name": "@ionic/react",
-  "version": "0.0.2-3",
+  "version": "0.0.3",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
     "framework",
+    "react",
     "mobile",
     "app",
     "hybrid",
@@ -32,11 +33,25 @@
     "dist/"
   ],
   "devDependencies": {
-    "@ionic/core": "next",
-    "react": "latest",
-    "react-dom": "latest"
+    "@types/jest": "23.3.9",
+    "@types/node": "10.12.9",
+    "@types/react": "16.7.6",
+    "@types/react-dom": "16.0.9",
+    "@types/react-router": "^4.4.3",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "typescript": "^3.2.2",
+    "np": "^3.1.0"
   },
   "dependencies": {
-    "@stencil/core": "next"
+    "@ionic/core": "4.0.0-rc.2"
+  },
+  "peerDependencies": {
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1"
   }
 }

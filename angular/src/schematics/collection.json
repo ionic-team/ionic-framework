@@ -1,0 +1,10 @@
+{
+  "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+  "ng-add": {
+      "description": "Add Ionic to your project",
+      "factory": "./add",
+      "schema": "./add/schema.json"
+    }
+  }
+}

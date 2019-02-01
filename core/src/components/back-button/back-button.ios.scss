@@ -5,39 +5,33 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{$back-button-ios-color};
-}
-
-.back-button-native {
-  @include padding(0);
-  @include margin(0);
-
-  min-height: 32px;
-
-  transform: translateZ(0);
-
-  border: 0;
-
-  background-color: transparent;
+  --color: #{$back-button-ios-color};
+  --margin-top: 0;
+  --margin-end: 0;
+  --margin-bottom: 0;
+  --margin-start: 0;
+  --padding-top: 0;
+  --padding-end: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --min-height: 32px;
+  --min-width: auto;
+  --icon-padding-top: 0;
+  --icon-padding-end: 0;
+  --icon-padding-bottom: 0;
+  --icon-padding-start: 0;
+  --icon-margin-top: 0;
+  --icon-margin-end: -5px;
+  --icon-margin-bottom: 0;
+  --icon-margin-start: -4px;
+  --icon-font-size: 1.85em;
 
   font-size: 17px;
+}
 
-  line-height: 1;
+.button-native {
+  transform: translateZ(0);
 
   overflow: visible;
   z-index: $back-button-ios-button-z-index;
-
-  &.activated {
-    opacity: .4;
-  }
-}
-
-ion-icon {
-  @include padding(0);
-  @include margin(0, -5px, 0, -4px);
-
-  display: inherit;
-
-  font-size: 1.85em;
-  pointer-events: none;
 }

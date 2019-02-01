@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -8,7 +8,7 @@ import { createColorClasses } from '../../utils/theme';
   styleUrl: 'text.scss',
   shadow: true
 })
-export class Text {
+export class Text implements ComponentInterface {
 
   /**
    * The color to use from your application's color palette.
@@ -19,7 +19,6 @@ export class Text {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 

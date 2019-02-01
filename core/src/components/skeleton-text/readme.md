@@ -6,11 +6,26 @@ Skeleton Text is a component for rendering placeholder content. The element will
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Javascript
+
+
+
+
+
 ## Properties
 
-| Property | Attribute | Description                                         | Type     |
-| -------- | --------- | --------------------------------------------------- | -------- |
-| `width`  | `width`   | Width for the element to render at. Default is 100% | `string` |
+| Property | Attribute | Description                         | Type     | Default  |
+| -------- | --------- | ----------------------------------- | -------- | -------- |
+| `width`  | `width`   | Width for the element to render at. | `string` | `'100%'` |
+
+
+## CSS Custom Properties
+
+| Name           | Description                     |
+| -------------- | ------------------------------- |
+| `--background` | Background of the skeleton text |
 
 
 ----------------------------------------------

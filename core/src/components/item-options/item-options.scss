@@ -37,10 +37,6 @@ ion-item-options {
 
   user-select: none;
   z-index: $z-index-item-options;
-
-  &.hydrated {
-    visibility: hidden;
-  }
 }
 
 .item-options-start {
@@ -58,6 +54,16 @@ ion-item-options {
   @include rtl() {
     justify-content: flex-end;
   }
+}
+
+.item-options-start ion-item-option:first-child {
+  @include padding-horizontal(null, var(--ion-safe-area-left));
+
+}
+
+.item-options-end ion-item-option:last-child {
+  @include padding-horizontal(null, var(--ion-safe-area-right));
+
 }
 
 .item-sliding-active-slide {

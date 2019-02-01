@@ -1,14 +1,13 @@
-import { Animation, Menu } from '../../../interface';
+import { Animation, MenuI } from '../../../interface';
 
 import { baseAnimation } from './base';
 
 /**
- * @hidden
  * Menu Push Type
  * The content slides over to reveal the menu underneath.
  * The menu itself also slides over to reveal its bad self.
  */
-export function menuPushAnimation(AnimationC: Animation, _: HTMLElement, menu: Menu): Promise<Animation> {
+export function menuPushAnimation(AnimationC: Animation, _: HTMLElement, menu: MenuI): Promise<Animation> {
 
   let contentOpenedX: string;
   let menuClosedX: string;
@@ -22,21 +21,21 @@ export function menuPushAnimation(AnimationC: Animation, _: HTMLElement, menu: M
     contentOpenedX = width + 'px';
     menuClosedX = -width + 'px';
   }
-  const menuAni = new AnimationC()
+  const menuAnimation = new AnimationC()
     .addElement(menu.menuInnerEl)
     .fromTo('translateX', menuClosedX, '0px');
 
-  const contentAni = new AnimationC()
+  const contentAnimation = new AnimationC()
     .addElement(menu.contentEl)
     .fromTo('translateX', '0px', contentOpenedX);
 
-  const backdropAni = new AnimationC()
+  const backdropAnimation = new AnimationC()
     .addElement(menu.backdropEl)
-    .fromTo('opacity', 0.01, 0.2);
+    .fromTo('opacity', 0.01, 0.32);
 
   return baseAnimation(AnimationC).then(animation => {
-    return animation.add(menuAni)
-    .add(backdropAni)
-    .add(contentAni);
+    return animation.add(menuAnimation)
+    .add(backdropAnimation)
+    .add(contentAnimation);
   });
 }

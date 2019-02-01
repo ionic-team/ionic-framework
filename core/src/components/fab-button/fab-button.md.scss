@@ -5,10 +5,20 @@
 // --------------------------------------------------
 
 :host {
+  --background: #{$fab-md-background-color};
+  --background-activated: var(--background);
+  --background-focused: var(--background-activated);
+  --color: #{$fab-md-text-color};
+  --color-activated: #{$fab-md-text-color};
+  --color-focused: var(--color-activated);
   --box-shadow: #{$fab-md-box-shadow};
-  --transition: #{box-shadow $fab-button-md-transition-duration $fab-button-md-transition-timing-function,
-              background-color $fab-button-md-transition-duration $fab-button-md-transition-timing-function,
-              color $fab-button-md-transition-duration $fab-button-md-transition-timing-function};
+  --transition: #{
+    box-shadow 280ms cubic-bezier(.4, 0, .2, 1),
+    background-color 280ms cubic-bezier(.4, 0, .2, 1),
+    color 280ms cubic-bezier(.4, 0, .2, 1),
+    opacity 15ms linear 30ms,
+    transform 270ms cubic-bezier(0, 0, .2, 1) 0ms
+  };
 }
 
 :host(.activated) {
@@ -16,8 +26,8 @@
 }
 
 ::slotted(ion-icon),
-.fab-button-close-icon {
-  font-size: 24px;
+.close-icon {
+  font-size: $fab-md-icon-font-size;
 }
 
 
@@ -25,15 +35,14 @@
 // --------------------------------------------------
 
 :host(.fab-button-in-list) {
-  --ion-color-contrast: #{$fab-md-list-button-text-color};
-  --ion-color-base: #{$fab-md-list-button-background-color};
-  --transition: #{transform $fab-md-list-button-transition-duration $fab-md-list-button-transition-timing-function $fab-md-list-button-transition-delay,
-              opacity $fab-md-list-button-transition-duration $fab-md-list-button-transition-timing-function $fab-md-list-button-transition-delay,
-              box-shadow $fab-button-md-transition-duration $fab-button-md-transition-timing-function,
-              background-color $fab-button-md-transition-duration $fab-button-md-transition-timing-function,
-              color $fab-button-md-transition-duration $fab-button-md-transition-timing-function};
+  --color: #{$fab-md-list-button-text-color};
+  --color-activated: #{$fab-md-list-button-text-color};
+  --color-focused: var(--color-activated);
+  --background: #{$fab-md-list-button-background-color};
+  --background-activated: #{$fab-md-list-button-background-color-activated};
+  --background-focused: var(--background-activated);
 }
 
-:host(.fab-button-in-list.activated) {
-  --background: #{$fab-md-list-button-background-color-activated};
+:host(.fab-button-in-list) ::slotted(ion-icon) {
+  font-size: $fab-md-list-button-icon-font-size;
 }

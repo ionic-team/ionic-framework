@@ -1,4 +1,4 @@
-import { Component, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Method, Prop } from '@stencil/core';
 
 import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
@@ -10,48 +10,36 @@ import { createThemedClasses } from '../../utils/theme';
     md: 'list.md.scss'
   }
 })
-export class List {
-  private openItem?: HTMLIonItemSlidingElement;
+export class List implements ComponentInterface {
 
-  mode!: Mode;
+  @Element() el!: HTMLElement;
+
+  /**
+   * The mode determines which platform styles to use.
+   */
+  @Prop() mode!: Mode;
 
   /**
    * How the bottom border should be displayed on all items.
-   * Available options: `"full"`, `"inset"`, `"none"`.
    */
   @Prop() lines?: 'full' | 'inset' | 'none';
 
   /**
-   * If true, the list will have margin around it and rounded corners. Defaults to `false`.
+   * If `true`, the list will have margin around it and rounded corners.
    */
   @Prop() inset = false;
 
   /**
-   * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently open.
+   * If `ion-item-sliding` are used inside the list, this method closes
+   * any open sliding item.
+   *
+   * Returns `true` if an actual `ion-item-sliding` is closed.
    */
   @Method()
-  getOpenItem() {
-    return this.openItem;
-  }
-
-  /**
-   * Set an [Item Sliding](../../item-sliding/ItemSliding) as the open item.
-   */
-  @Method()
-  setOpenItem(itemSliding: HTMLIonItemSlidingElement | undefined) {
-    this.openItem = itemSliding;
-  }
-
-  /**
-   * Close the sliding items. Items can also be closed from the [Item Sliding](../../item-sliding/ItemSliding).
-   * Returns a boolean value of whether it closed an item or not.
-   */
-  @Method()
-  closeSlidingItems(): boolean {
-    if (this.openItem) {
-      this.openItem.close();
-      this.openItem = undefined;
-      return true;
+  async closeSlidingItems(): Promise<boolean> {
+    const item = this.el.querySelector('ion-item-sliding');
+    if (item && item.closeOpened) {
+      return item.closeOpened();
     }
     return false;
   }
@@ -60,9 +48,9 @@ export class List {
     return {
       class: {
         ...createThemedClasses(this.mode, 'list'),
-        [`list-lines-${this.lines}`]: !!this.lines,
+        [`list-lines-${this.lines}`]: this.lines !== undefined,
         'list-inset': this.inset,
-        [`list-${this.mode}-lines-${this.lines}`]: !!this.lines
+        [`list-${this.mode}-lines-${this.lines}`]: this.lines !== undefined
       }
     };
   }

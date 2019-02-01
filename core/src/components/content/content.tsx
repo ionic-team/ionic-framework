@@ -1,17 +1,15 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
 
 import { Color, Config, Mode, ScrollBaseDetail, ScrollDetail } from '../../interface';
-import { createColorClasses } from '../../utils/theme';
+import { isPlatform } from '../../utils/platform';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 @Component({
   tag: 'ion-content',
-  styleUrls: {
-    ios: 'content.ios.scss',
-    md: 'content.md.scss'
-  },
+  styleUrl: 'content.scss',
   shadow: true
 })
-export class Content {
+export class Content implements ComponentInterface {
 
   private watchDog: any;
   private isScrolling = false;
@@ -44,7 +42,6 @@ export class Content {
   };
 
   mode!: Mode;
-  @Prop() color?: Color;
 
   @Element() el!: HTMLStencilElement;
 
@@ -53,14 +50,21 @@ export class Content {
   @Prop({ context: 'window' }) win!: Window;
 
   /**
-   * If true, the content will scroll behind the headers
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
+   */
+  @Prop() color?: Color;
+
+  /**
+   * If `true`, the content will scroll behind the headers
    * and footers. This effect can easily be seen by setting the toolbar
    * to transparent.
    */
   @Prop() fullscreen = false;
 
   /**
-   * If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce.
+   * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce.
    * If the content exceeds the bounds of ionContent, nothing will change.
    * Note, the does not disable the system bounce on iOS. That is an OS level setting.
    */
@@ -98,14 +102,9 @@ export class Content {
    */
   @Event() ionScrollEnd!: EventEmitter<ScrollBaseDetail>;
 
-  @Listen('body:ionNavDidChange')
-  onNavChanged() {
-    this.resize();
-  }
-
   componentWillLoad() {
     if (this.forceOverscroll === undefined) {
-      this.forceOverscroll = this.mode === 'ios' && ('ontouchstart' in this.win);
+      this.forceOverscroll = this.mode === 'ios' && isPlatform(this.win, 'mobile');
     }
   }
 
@@ -114,8 +113,14 @@ export class Content {
   }
 
   componentDidUnload() {
-    if (this.watchDog) {
-      clearInterval(this.watchDog);
+    this.onScrollEnd();
+  }
+
+  @Listen('click', { capture: true })
+  onClick(ev: Event) {
+    if (this.isScrolling) {
+      ev.preventDefault();
+      ev.stopPropagation();
     }
   }
 
@@ -159,9 +164,17 @@ export class Content {
     }
   }
 
+  /**
+   * Returns the element where the actual scrolling takes places.
+   * This element is the one you could subscribe to `scroll` events or manually modify
+   * `scrollTop`, however, it's recommended to use the API provided by `ion-content`:
+   *
+   * Ie. Using `ionScroll`, `ionScrollStart`, `ionScrollEnd` for scrolling events
+   * and scrollToPoint() to scroll the content into a certain point.
+   */
   @Method()
-  getScrollElement(): HTMLElement {
-    return this.scrollEl;
+  getScrollElement(): Promise<HTMLElement> {
+    return Promise.resolve(this.scrollEl);
   }
 
   /**
@@ -185,7 +198,7 @@ export class Content {
    * Scroll by a specified X/Y distance in the component
    */
   @Method()
-  scrollByPoint(x: number, y: number, duration: number): Promise<any> {
+  scrollByPoint(x: number, y: number, duration: number): Promise<void> {
     return this.scrollToPoint(x + this.scrollEl.scrollLeft, y + this.scrollEl.scrollTop, duration);
   }
 
@@ -193,7 +206,7 @@ export class Content {
    * Scroll to a specified X/Y location in the component
    */
   @Method()
-  async scrollToPoint(x: number | undefined, y: number | undefined, duration = 0): Promise<void> {
+  async scrollToPoint(x: number | undefined | null, y: number | undefined | null, duration = 0): Promise<void> {
     const el = this.scrollEl;
     if (duration < 32) {
       if (y != null) {
@@ -206,7 +219,7 @@ export class Content {
     }
 
     let resolve!: () => void;
-    let startTime: number;
+    let startTime = 0;
     const promise = new Promise<void>(r => resolve = r);
     const fromY = el.scrollTop;
     const fromX = el.scrollLeft;
@@ -216,11 +229,11 @@ export class Content {
 
     // scroll loop
     const step = (timeStamp: number) => {
-      let linearTime = Math.min(1, ((timeStamp - startTime) / duration));
-      const easedT = (--linearTime) * linearTime * linearTime + 1;
+      const linearTime = Math.min(1, ((timeStamp - startTime) / duration)) - 1;
+      const easedT = Math.pow(linearTime, 3) + 1;
 
       if (deltaY !== 0) {
-        el.scrollTop = (easedT * deltaY) + fromY;
+        el.scrollTop = Math.floor((easedT * deltaY) + fromY);
       }
       if (deltaX !== 0) {
         el.scrollLeft = Math.floor((easedT * deltaX) + fromX);
@@ -233,14 +246,9 @@ export class Content {
         requestAnimationFrame(step);
 
       } else {
-        this.isScrolling = false;
         resolve();
       }
     };
-
-    // start scroll loop
-    this.isScrolling = true;
-
     // chill out for a frame first
     requestAnimationFrame(ts => {
       startTime = ts;
@@ -267,20 +275,22 @@ export class Content {
   }
 
   private onScrollEnd() {
-
     clearInterval(this.watchDog);
     this.watchDog = null;
-    this.isScrolling = false;
-    this.ionScrollEnd.emit({
-      isScrolling: false
-    });
+    if (this.isScrolling) {
+      this.isScrolling = false;
+      this.ionScrollEnd.emit({
+        isScrolling: false
+      });
+    }
   }
 
   hostData() {
     return {
       class: {
         ...createColorClasses(this.color),
-        'overscroll': this.forceOverscroll,
+        'content-sizing': hostContext('ion-popover', this.el),
+        'overscroll': !!this.forceOverscroll,
       },
       style: {
         '--offset-top': `${this.cTop}px`,
@@ -303,7 +313,8 @@ export class Content {
           'overscroll': (scrollX || scrollY) && !!forceOverscroll
         }}
         ref={el => this.scrollEl = el!}
-        onScroll={ev => this.onScroll(ev)}>
+        onScroll={ev => this.onScroll(ev)}
+      >
         <slot></slot>
       </div>,
       <slot name="fixed"></slot>
@@ -353,7 +364,6 @@ function updateScrollDetail(
     detail.startX = currentX;
     detail.startY = currentY;
     detail.velocityX = detail.velocityY = 0;
-    console.log('hhhhhh');
   }
   detail.timeStamp = timestamp;
   detail.currentX = detail.scrollLeft = currentX;

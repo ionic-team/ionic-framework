@@ -5,18 +5,15 @@
 // --------------------------------------------------
 
 :host {
-  --color-button-clear: currentColor;
-  --color-button-cancel: #{$searchbar-md-cancel-button-color};
-  --color-icon: #{$searchbar-md-input-search-icon-color};
+  --clear-button-color: initial;
+  --cancel-button-color: #{$searchbar-md-cancel-button-color};
+  --color: #{$searchbar-md-input-text-color};
+  --icon-color: #{$searchbar-md-input-search-icon-color};
   --background: #{$searchbar-md-input-background-color};
 
   @include padding($searchbar-md-padding-top, $searchbar-md-padding-end, $searchbar-md-padding-bottom, $searchbar-md-padding-start);
 
   background: $searchbar-md-background;
-
-  color: $searchbar-md-input-text-color;
-
-  font-family: $searchbar-md-font-family;
 }
 
 
@@ -35,14 +32,7 @@
 // -----------------------------------------
 
 .searchbar-cancel-button {
-  @include position(0, null, null, 10px);
-  @include margin(0);
-
-  display: none;
-
-  height: 100%;
-
-  border: 0;
+  @include position(0, null, null, 5px);
 
   background-color: $searchbar-md-cancel-button-background-color;
 
@@ -111,12 +101,16 @@
 // Searchbar Focused
 // -----------------------------------------
 
-:host(.searchbar-has-focus.searchbar-show-cancel) .searchbar-search-icon {
-  display: none;
+:host(.searchbar-has-focus) .searchbar-search-icon {
+  display: block;
 }
 
-:host(.searchbar-has-focus.searchbar-show-cancel) .searchbar-cancel-button {
-  display: inline-flex;
+:host(.searchbar-has-focus) .searchbar-cancel-button {
+  display: block;
+}
+
+:host(.searchbar-has-focus) .searchbar-cancel-button + .searchbar-search-icon {
+  display: none;
 }
 
 

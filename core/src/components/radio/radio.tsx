@@ -1,7 +1,7 @@
-import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
 
-import { CheckedInputChangeEvent, Color, Mode, StyleEvent } from '../../interface';
-import { deferEvent } from '../../utils/helpers';
+import { Color, Mode, RadioChangeEventDetail, StyleEventDetail } from '../../interface';
+import { findItemLabel } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 @Component({
@@ -12,12 +12,9 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   },
   shadow: true
 })
-export class Radio {
+export class Radio implements ComponentInterface {
 
   private inputId = `ion-rb-${radioButtonIds++}`;
-  private nativeInput!: HTMLInputElement;
-
-  @State() keyFocus = false;
 
   @Element() el!: HTMLElement;
 
@@ -30,7 +27,6 @@ export class Radio {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
@@ -39,40 +35,49 @@ export class Radio {
    */
   @Prop() name: string = this.inputId;
 
-  /*
-   * If true, the user cannot interact with the radio. Defaults to `false`.
+  /**
+   * If `true`, the user cannot interact with the radio.
    */
   @Prop() disabled = false;
 
   /**
-   * If true, the radio is selected. Defaults to `false`.
+   * If `true`, the radio is selected.
    */
   @Prop({ mutable: true }) checked = false;
 
   /**
    * the value of the radio.
    */
-  @Prop({ mutable: true }) value!: string;
+  @Prop({ mutable: true }) value?: any | null;
 
   /**
    * Emitted when the radio loads.
+   * @internal
    */
   @Event() ionRadioDidLoad!: EventEmitter<void>;
 
   /**
    * Emitted when the radio unloads.
+   * @internal
    */
   @Event() ionRadioDidUnload!: EventEmitter<void>;
 
   /**
    * Emitted when the styles change.
+   * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   /**
    * Emitted when the radio button is selected.
    */
-  @Event() ionSelect!: EventEmitter<CheckedInputChangeEvent>;
+  @Event() ionSelect!: EventEmitter<RadioChangeEventDetail>;
+
+  /**
+   * Emitted when checked radio button is selected.
+   * @internal
+   */
+  @Event() ionDeselect!: EventEmitter<RadioChangeEventDetail>;
 
   /**
    * Emitted when the radio button has focus.
@@ -84,34 +89,6 @@ export class Radio {
    */
   @Event() ionBlur!: EventEmitter<void>;
 
-  componentWillLoad() {
-    this.ionSelect = deferEvent(this.ionSelect);
-    this.ionStyle = deferEvent(this.ionStyle);
-
-    if (this.value === undefined) {
-      this.value = this.inputId;
-    }
-    this.emitStyle();
-  }
-
-  componentDidLoad() {
-    this.ionRadioDidLoad.emit();
-    this.nativeInput.checked = this.checked;
-
-    const parentItem = this.nativeInput.closest('ion-item');
-    if (parentItem) {
-      const itemLabel = parentItem.querySelector('ion-label');
-      if (itemLabel) {
-        itemLabel.id = this.inputId + '-lbl';
-        this.nativeInput.setAttribute('aria-labelledby', itemLabel.id);
-      }
-    }
-  }
-
-  componentDidUnload() {
-    this.ionRadioDidUnload.emit();
-  }
-
   @Watch('color')
   colorChanged() {
     this.emitStyle();
@@ -119,11 +96,6 @@ export class Radio {
 
   @Watch('checked')
   checkedChanged(isChecked: boolean) {
-    if (this.nativeInput.checked !== isChecked) {
-      // keep the checked value and native input `nync
-      this.nativeInput.checked = isChecked;
-    }
-
     if (isChecked) {
       this.ionSelect.emit({
         checked: true,
@@ -134,49 +106,67 @@ export class Radio {
   }
 
   @Watch('disabled')
-  disabledChanged(isDisabled: boolean) {
-    this.nativeInput.disabled = isDisabled;
+  disabledChanged() {
     this.emitStyle();
   }
 
-  emitStyle() {
+  componentWillLoad() {
+    if (this.value === undefined) {
+      this.value = this.inputId;
+    }
+    this.emitStyle();
+  }
+
+  componentDidLoad() {
+    this.ionRadioDidLoad.emit();
+  }
+
+  componentDidUnload() {
+    this.ionRadioDidUnload.emit();
+  }
+
+  @Listen('click')
+  onClick() {
+    if (this.checked) {
+      this.ionDeselect.emit();
+    } else {
+      this.checked = true;
+    }
+  }
+
+  private emitStyle() {
     this.ionStyle.emit({
       'radio-checked': this.checked,
       'interactive-disabled': this.disabled,
     });
   }
 
-  onClick() {
-    this.checkedChanged(true);
-  }
-
-  onChange() {
-    this.checked = true;
-    this.nativeInput.focus();
-  }
-
-  onKeyUp() {
-    this.keyFocus = true;
-  }
-
-  onFocus() {
+  private onFocus = () => {
     this.ionFocus.emit();
   }
 
-  onBlur() {
-    this.keyFocus = false;
+  private onBlur = () => {
     this.ionBlur.emit();
   }
 
   hostData() {
+    const { inputId, disabled, checked, color, el } = this;
+    const labelId = inputId + '-lbl';
+    const label = findItemLabel(el);
+    if (label) {
+      label.id = labelId;
+    }
     return {
+      'role': 'radio',
+      'aria-disabled': disabled ? 'true' : null,
+      'aria-checked': `${checked}`,
+      'aria-labelledby': labelId,
       class: {
-        ...createColorClasses(this.color),
-        'in-item': hostContext('.item', this.el),
+        ...createColorClasses(color),
+        'in-item': hostContext('ion-item', el),
         'interactive': true,
-        'radio-checked': this.checked,
-        'radio-disabled': this.disabled,
-        'radio-key': this.keyFocus
+        'radio-checked': checked,
+        'radio-disabled': disabled,
       }
     };
   }
@@ -186,18 +176,13 @@ export class Radio {
       <div class="radio-icon">
         <div class="radio-inner"/>
       </div>,
-      <input
-        type="radio"
-        onClick={this.onClick.bind(this)}
-        onChange={this.onChange.bind(this)}
-        onFocus={this.onFocus.bind(this)}
-        onBlur={this.onBlur.bind(this)}
-        onKeyUp={this.onKeyUp.bind(this)}
-        id={this.inputId}
-        name={this.name}
-        value={this.value}
+      <button
+        type="button"
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
         disabled={this.disabled}
-        ref={r => this.nativeInput = (r as any)}/>
+      >
+      </button>,
     ];
   }
 }

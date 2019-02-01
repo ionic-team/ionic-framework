@@ -5,8 +5,10 @@
   <meta charset="UTF-8">
   <title>Content - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
@@ -23,6 +25,7 @@
 
     <div style="display: flex; flex: 1">
       <ion-content padding style="text-align: center; flex: 2" id="content">
+        <ion-content>
         <f style="height: 50%"></f>
         <ion-button onclick="toggleFullscreen()">Toggle content.fullscreen</ion-button>
         <p>
@@ -45,6 +48,7 @@
         <f></f>
         <f></f>
         <f></f>
+      </ion-content>
       </ion-content>
       <ion-content padding style="display: none" id="content3">
         <f></f>
