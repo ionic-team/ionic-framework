@@ -314,7 +314,7 @@ export class Select implements ComponentInterface {
         }
       ],
       cssClass: ['select-alert', interfaceOptions.cssClass,
-        (this.multiple ? 'multiple-select-alert' : 'single-select-alert')]
+                 (this.multiple ? 'multiple-select-alert' : 'single-select-alert')]
     };
     return this.alertCtrl.create(alertOpts);
   }
