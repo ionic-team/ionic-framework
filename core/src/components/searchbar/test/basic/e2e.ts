@@ -7,25 +7,29 @@ test('searchbar: basic', async () => {
 
   await page.waitFor(250);
 
-  const compare = await page.compareScreenshot('searchbar: basic');
-  expect(compare).toMatchScreenshot();
+  const compares = [];
+  compares.push(await page.compareScreenshot());
 
-  const searchbar = await page.find('ion-searchbar');
+  let searchbar = await page.find('#basic');
   await searchbar.callMethod('setFocus');
-  expect(await page.compareScreenshot('searchbar: basic-focused')).toMatchScreenshot();
-});
-
-test('searchbar: basic-rtl', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/searchbar/test/basic?ionic:_testing=true&rtl=true'
-  });
 
   await page.waitFor(250);
+  searchbar = await page.find('#basic');
+  expect(searchbar).toHaveClass('searchbar-has-focus');
 
-  const compare = await page.compareScreenshot('searchbar: basic-rtl');
-  expect(compare).toMatchScreenshot();
+  compares.push(await page.compareScreenshot('focused'));
 
-  const searchbar = await page.find('ion-searchbar');
+  // No Cancel Button Searchbar
+  searchbar = await page.find('#noCancel');
   await searchbar.callMethod('setFocus');
-  expect(await page.compareScreenshot('searchbar: basic-rtl-focused')).toMatchScreenshot();
+
+  await page.waitFor(250);
+  searchbar = await page.find('#noCancel');
+  expect(searchbar).toHaveClass('searchbar-has-focus');
+
+  compares.push(await page.compareScreenshot('no cancel button, focused'));
+
+  for (const compare of compares) {
+    expect(compare).toMatchScreenshot();
+  }
 });
