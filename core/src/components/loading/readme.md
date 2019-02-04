@@ -10,7 +10,7 @@ Loading indicators can be created using a [Loading Controller](../loading-contro
 
 ### Dismissing
 
-The loading indicator can be dismissed automatically after a specific amount of time by passing the number of milliseconds to display it in the `duration` of the loading options. To dismiss the loading indicator after creation, call the `dismiss()` method on the loading instance. The `ionLoadingDidDismiss` event can be listened to in order to perform an action after the loading indicator is dismissed.
+The loading indicator can be dismissed automatically after a specific amount of time by passing the number of milliseconds to display it in the `duration` of the loading options. To dismiss the loading indicator after creation, call the `dismiss()` method on the loading instance. The `onDidDismiss` function can be called to perform an action after the loading indicator is dismissed.
 
 
 <!-- Auto Generated Below -->
@@ -21,7 +21,7 @@ The loading indicator can be dismissed automatically after a specific amount of 
 ### Angular
 
 ```typescript
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 
 @Component({
@@ -37,7 +37,11 @@ export class LoadingExample {
       message: 'Hellooo',
       duration: 2000
     });
-    return await loading.present();
+    await loading.present();
+    
+    const { role, data } = await loading.onDidDismiss();
+    
+    console.log('Loading dismissed!');
   }
 
   async presentLoadingWithOptions() {
@@ -49,11 +53,6 @@ export class LoadingExample {
       cssClass: 'custom-class custom-loading'
     });
     return await loading.present();
-  }
-  
-  @HostListener('document:ionLoadingDidDismiss', ['$event'])
-  onDidDismiss(event: CustomEvent) {
-    console.log('Loading dismissed!');
   }
 }
 ```
@@ -71,11 +70,11 @@ async function presentLoading() {
     duration: 2000
   });
   
-  loading.addEventListener('ionLoadingDidDismiss', (e) => {
-    console.log('Loading dismissed!');
-  });
+  await loading.present();
+    
+  const { role, data } = await loading.onDidDismiss();
   
-  return await loading.present();
+  console.log('Loading dismissed!');
 }
 
 async function presentLoadingWithOptions() {
