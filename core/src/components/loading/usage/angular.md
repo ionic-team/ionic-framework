@@ -1,5 +1,5 @@
 ```typescript
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 
 @Component({
@@ -27,6 +27,11 @@ export class LoadingExample {
       cssClass: 'custom-class custom-loading'
     });
     return await loading.present();
+  }
+  
+  @HostListener('document:ionLoadingDidDismiss', ['$event'])
+  onDidDismiss(event: CustomEvent) {
+    console.log('Loading dismissed!');
   }
 }
 ```
