@@ -8,11 +8,11 @@ async function presentLoading() {
     duration: 2000
   });
   
-  loading.addEventListener('ionLoadingDidDismiss', (e) => {
-    console.log('Loading dismissed!');
-  });
+  await loading.present();
+    
+  const { role, data } = await loading.onDidDismiss();
   
-  return await loading.present();
+  console.log('Loading dismissed!');
 }
 
 async function presentLoadingWithOptions() {
