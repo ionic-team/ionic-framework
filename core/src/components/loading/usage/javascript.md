@@ -7,6 +7,11 @@ async function presentLoading() {
     message: 'Hellooo',
     duration: 2000
   });
+  
+  loading.addEventListener('ionLoadingDidDismiss', (e) => {
+    console.log('Loading dismissed!');
+  });
+  
   return await loading.present();
 }
 

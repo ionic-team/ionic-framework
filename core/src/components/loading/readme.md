@@ -10,7 +10,7 @@ Loading indicators can be created using a [Loading Controller](../loading-contro
 
 ### Dismissing
 
-The loading indicator can be dismissed automatically after a specific amount of time by passing the number of milliseconds to display it in the `duration` of the loading options. By default the loading indicator will show even during page changes, but this can be disabled by setting `dismissOnPageChange` to `true`. To dismiss the loading indicator after creation, call the `dismiss()` method on the loading instance. The `onDidDismiss` function can be called to perform an action after the loading indicator is dismissed.
+The loading indicator can be dismissed automatically after a specific amount of time by passing the number of milliseconds to display it in the `duration` of the loading options. To dismiss the loading indicator after creation, call the `dismiss()` method on the loading instance. The `ionLoadingDidDismiss` event can be listened to in order to perform an action after the loading indicator is dismissed.
 
 
 <!-- Auto Generated Below -->
@@ -21,7 +21,7 @@ The loading indicator can be dismissed automatically after a specific amount of 
 ### Angular
 
 ```typescript
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 
 @Component({
@@ -50,6 +50,11 @@ export class LoadingExample {
     });
     return await loading.present();
   }
+  
+  @HostListener('document:ionLoadingDidDismiss', ['$event'])
+  onDidDismiss(event: CustomEvent) {
+    console.log('Loading dismissed!');
+  }
 }
 ```
 
@@ -65,6 +70,11 @@ async function presentLoading() {
     message: 'Hellooo',
     duration: 2000
   });
+  
+  loading.addEventListener('ionLoadingDidDismiss', (e) => {
+    console.log('Loading dismissed!');
+  });
+  
   return await loading.present();
 }
 
