@@ -31,7 +31,7 @@ The below chart details the item slots and where it will place the element insid
 | Slot    | Description                                                                 |
 |---------|-----------------------------------------------------------------------------|
 | `start` | Placed to the left of all other content in LTR, and to the `right` in RTL.  |
-| `end`   | Placed to the right of all other content in LTR, and to the `right` in RTL. |
+| `end`   | Placed to the right of all other content in LTR, and to the `left` in RTL.  |
 | none    | Placed inside of the input wrapper.                                         |
 
 
