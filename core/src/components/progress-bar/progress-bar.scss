@@ -21,6 +21,8 @@
 
   contain: strict;
   overflow: hidden;
+
+  direction: ltr;
 }
 
 :host(.ion-color) {
@@ -41,6 +43,7 @@
 .progress-buffer-bar:before,
 .buffer-circles {
   @include position(0, 0, 0, 0);
+
   position: absolute;
 
   width: 100%;
@@ -52,7 +55,8 @@
 
 .progress,
 .progress-buffer-bar {
-  @include transform-origin(start, top);
+  transform-origin: left top;
+
   transition: transform 150ms linear;
 }
 
@@ -84,7 +88,13 @@
 // --------------------------------------------------
 
 .indeterminate-bar-primary {
-  @include position(0, 0, 0, -145.166611%);
+  /* style-lint-disable property-blacklist */
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: -145.166611%;
+  /* style-lint-enable property-blacklist */
+
   animation: primary-indeterminate-translate 2s infinite linear;
 
   .progress-indeterminate {
@@ -94,7 +104,13 @@
 }
 
 .indeterminate-bar-secondary {
-  @include position(0, 0, 0, -54.888891%);
+  /* style-lint-disable property-blacklist */
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left:  -54.888891%;
+  /* style-lint-enable property-blacklist */
+
   animation: secondary-indeterminate-translate 2s infinite linear;
 
   .progress-indeterminate {
@@ -121,7 +137,7 @@
 :host(.progress-bar-reversed) {
   .progress,
   .progress-buffer-bar {
-    @include transform-origin(end, top);
+    transform-origin: right top;
   }
 
   .buffer-circles,
