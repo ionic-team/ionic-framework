@@ -153,7 +153,7 @@ At this time, there is no one-size-fits-all standard to automatically choose the
 correct language/spelling for a month name, or day of the week name, depending
 on the language or locale. Good news is that there is an
 [Intl.DatetimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DatetimeFormat)
-standard whichmost* browsers have adopted. However, at this time the standard
+standard which most* browsers have adopted. However, at this time the standard
 has not been fully implemented by all popular browsers so Ionic is unavailable
 to take advantage of ityet*. Additionally, Angular also provides an
 internationalization service, but it is still under heavy development so Ionic
