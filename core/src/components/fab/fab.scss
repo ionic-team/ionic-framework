@@ -19,15 +19,23 @@
 }
 
 :host(.fab-horizontal-start) {
-  @include position-horizontal(
-    calc(#{$fab-content-margin} + var(--ion-safe-area-left, 0px)), null
-  );
+  @include position-horizontal(calc(#{$fab-content-margin} + var(--ion-safe-area-left, 0px)), null);
+
+  @include rtl() {
+    /* stylelint-disable property-blacklist */
+    left: unset;
+    /* stylelint-enable property-blacklist */
+  }
 }
 
 :host(.fab-horizontal-end) {
-  @include position-horizontal(
-    null, calc(#{$fab-content-margin} + var(--ion-safe-area-right, 0px))
-  );
+  @include position-horizontal(null, calc(#{$fab-content-margin} + var(--ion-safe-area-right, 0px)));
+
+  @include rtl() {
+    /* stylelint-disable property-blacklist */
+    right: unset;
+    /* stylelint-enable property-blacklist */
+  }
 }
 
 
