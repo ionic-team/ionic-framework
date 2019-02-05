@@ -235,7 +235,11 @@ export class Range implements ComponentInterface {
     const currentX = detail.currentX;
 
     // figure out which knob they started closer to
-    const ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
+    let ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
+    if (document.dir === 'rtl') {
+      ratio = 1 - ratio;
+    }
+
     this.pressedKnob =
       !this.dualKnobs ||
       Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio)
@@ -262,6 +266,10 @@ export class Range implements ComponentInterface {
     // update the knob being interacted with
     const rect = this.rect;
     let ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
+    if (document.dir === 'rtl') {
+      ratio = 1 - ratio;
+    }
+
     if (this.snaps) {
       // snaps the ratio to the current value
       ratio = valueToRatio(
@@ -353,27 +361,52 @@ export class Range implements ComponentInterface {
   render() {
     const { min, max, step, ratioLower, ratioUpper } = this;
 
-    const barL = `${ratioLower * 100}%`;
-    const barR = `${100 - ratioUpper * 100}%`;
+    const barStart = `${ratioLower * 100}%`;
+    const barEnd = `${100 - ratioUpper * 100}%`;
+
+    const isRTL = document.dir === 'rtl';
+    const start = isRTL ? 'right' : 'left';
+    const end = isRTL ? 'left' : 'right';
 
     const ticks = [];
     if (this.snaps) {
       for (let value = min; value <= max; value += step) {
         const ratio = valueToRatio(value, min, max);
-        ticks.push({
+
+        const t: any = {
           ratio,
           active: ratio >= ratioLower && ratio <= ratioUpper,
-          left: `${ratio * 100}%`
-        });
+        };
+
+        t[start] = `${ratio * 100}%`;
+
+        ticks.push(t);
       }
     }
+
+    const tickStyle = (t: any) => {
+      const style: any = {};
+
+      style[start] = t[start];
+
+      return style;
+    };
+
+    const barStyle = () => {
+      const style: any = {};
+
+      style[start] = barStart;
+      style[end] = barEnd;
+
+      return style;
+    };
 
     return [
       <slot name="start"></slot>,
       <div class="range-slider" ref={el => this.rangeSlider = el}>
         {ticks.map(t => (
           <div
-            style={{ left: t.left }}
+            style={tickStyle(t)}
             role="presentation"
             class={{
               'range-tick': true,
@@ -386,10 +419,7 @@ export class Range implements ComponentInterface {
         <div
           class="range-bar range-bar-active"
           role="presentation"
-          style={{
-            left: barL,
-            right: barR
-          }}
+          style={barStyle()}
         />
 
         { renderKnob({
@@ -435,6 +465,17 @@ interface RangeKnob {
 }
 
 function renderKnob({ knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard }: RangeKnob) {
+  const isRTL = document.dir === 'rtl';
+  const start = isRTL ? 'right' : 'left';
+
+  const knobStyle = () => {
+    const style: any = {};
+
+    style[start] = `${ratio * 100}%`;
+
+    return style;
+  };
+
   return (
     <div
       onKeyDown={(ev: KeyboardEvent) => {
@@ -458,9 +499,7 @@ function renderKnob({ knob, value, ratio, min, max, disabled, pressed, pin, hand
         'range-knob-min': value === min,
         'range-knob-max': value === max
       }}
-      style={{
-        'left': `${ratio * 100}%`
-      }}
+      style={knobStyle()}
       role="slider"
       tabindex={disabled ? -1 : 0}
       aria-valuemin={min}

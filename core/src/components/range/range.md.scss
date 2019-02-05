@@ -105,6 +105,12 @@
     @include border-radius(50%, 50%, 50%, 0);
     @include margin-horizontal(-13px, null);
 
+    @include rtl() {
+      /* stylelint-disable property-blacklist */
+      left: unset;
+      /* stylelint-enable property-blacklist */
+    }
+
     position: absolute;
 
     width: 26px;
