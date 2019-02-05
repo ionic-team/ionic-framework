@@ -10,7 +10,7 @@ Loading indicators can be created using a [Loading Controller](../loading-contro
 
 ### Dismissing
 
-The loading indicator can be dismissed automatically after a specific amount of time by passing the number of milliseconds to display it in the `duration` of the loading options. By default the loading indicator will show even during page changes, but this can be disabled by setting `dismissOnPageChange` to `true`. To dismiss the loading indicator after creation, call the `dismiss()` method on the loading instance. The `onDidDismiss` function can be called to perform an action after the loading indicator is dismissed.
+The loading indicator can be dismissed automatically after a specific amount of time by passing the number of milliseconds to display it in the `duration` of the loading options. To dismiss the loading indicator after creation, call the `dismiss()` method on the loading instance. The `onDidDismiss` function can be called to perform an action after the loading indicator is dismissed.
 
 
 <!-- Auto Generated Below -->
@@ -37,7 +37,11 @@ export class LoadingExample {
       message: 'Hellooo',
       duration: 2000
     });
-    return await loading.present();
+    await loading.present();
+    
+    const { role, data } = await loading.onDidDismiss();
+    
+    console.log('Loading dismissed!');
   }
 
   async presentLoadingWithOptions() {
@@ -65,7 +69,12 @@ async function presentLoading() {
     message: 'Hellooo',
     duration: 2000
   });
-  return await loading.present();
+  
+  await loading.present();
+    
+  const { role, data } = await loading.onDidDismiss();
+  
+  console.log('Loading dismissed!');
 }
 
 async function presentLoadingWithOptions() {
