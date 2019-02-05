@@ -80,9 +80,8 @@
   );
 
   @include rtl() {
-    /* stylelint-disable property-blacklist */
+    /* stylelint-disable-next-line property-blacklist */
     left: unset;
-    /* stylelint-enable property-blacklist */
   }
 
   position: absolute;
@@ -103,9 +102,8 @@
   @include position(calc((var(--height) - var(--bar-height)) / 2), null, null, 0);
 
   @include rtl() {
-    /* stylelint-disable property-blacklist */
+    /* stylelint-disable-next-line property-blacklist */
     left: unset;
-    /* stylelint-enable property-blacklist */
   }
 
   position: absolute;
@@ -127,9 +125,8 @@
   );
 
   @include rtl() {
-    /* stylelint-disable property-blacklist */
+    /* stylelint-disable-next-line property-blacklist */
     left: unset;
-    /* stylelint-enable property-blacklist */
   }
 
   position: absolute;
