@@ -144,7 +144,7 @@ export class Select implements ComponentInterface {
        * set is properly rendered once
        * options have been loaded
        */
-      if (this.value) {
+      if (this.value !== undefined) {
         this.el.forceUpdate();
       }
 
