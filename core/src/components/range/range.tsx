@@ -373,21 +373,21 @@ export class Range implements ComponentInterface {
       for (let value = min; value <= max; value += step) {
         const ratio = valueToRatio(value, min, max);
 
-        const t: any = {
+        const tick: any = {
           ratio,
           active: ratio >= ratioLower && ratio <= ratioUpper,
         };
 
-        t[start] = `${ratio * 100}%`;
+        tick[start] = `${ratio * 100}%`;
 
-        ticks.push(t);
+        ticks.push(tick);
       }
     }
 
-    const tickStyle = (t: any) => {
+    const tickStyle = (tick: any) => {
       const style: any = {};
 
-      style[start] = t[start];
+      style[start] = tick[start];
 
       return style;
     };
@@ -404,13 +404,13 @@ export class Range implements ComponentInterface {
     return [
       <slot name="start"></slot>,
       <div class="range-slider" ref={el => this.rangeSlider = el}>
-        {ticks.map(t => (
+        {ticks.map(tick => (
           <div
-            style={tickStyle(t)}
+            style={tickStyle(tick)}
             role="presentation"
             class={{
               'range-tick': true,
-              'range-tick-active': t.active
+              'range-tick-active': tick.active
             }}
           />
         ))}
