@@ -2776,7 +2776,7 @@ export namespace Components {
     */
     'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
     /**
-    * Event fired when the nav will components
+    * Event fired when the nav will change components
     */
     'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
     /**
