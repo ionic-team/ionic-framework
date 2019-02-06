@@ -136,18 +136,18 @@ export class Select implements ComponentInterface {
 
     if (this.didInit) {
       this.updateOptions();
-      
+
       /**
        * In the event that options
        * are not loaded at component load
        * this ensures that any value that is
        * set is properly rendered once
        * options have been loaded
-       */      
+       */
       if (this.value) {
         this.el.forceUpdate();
       }
-      
+
     }
   }
 
