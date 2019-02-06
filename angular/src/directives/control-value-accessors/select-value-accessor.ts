@@ -22,7 +22,6 @@ export class SelectValueAccessor extends ValueAccessor {
 
   @HostListener('ionChange', ['$event.target.value'])
   _handleChangeEvent(value: any) {
-    console.log('ionChange',value);
     this.handleChangeEvent(value);
   }
 }

@@ -126,6 +126,7 @@ export class Select implements ComponentInterface {
         value: this.value,
       });
       this.emitStyle();
+      console.log('Value has changed');
     }
   }
 
@@ -328,6 +329,11 @@ export class Select implements ComponentInterface {
     this.childOpts = await Promise.all(
       Array.from(this.el.querySelectorAll('ion-select-option')).map(o => o.componentOnReady())
     );
+    console.log('Options have been loaded. Promises have resolved');
+    
+    if (this.didInit && this.value) {
+      this.updateOptions();
+    }
   }
 
   private updateOptions() {
