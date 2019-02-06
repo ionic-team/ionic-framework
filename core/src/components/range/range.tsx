@@ -41,6 +41,24 @@ export class Range implements ComponentInterface {
   @Prop() mode!: Mode;
 
   /**
+   * The neutral point of the range slider.
+   * Default: value is `0` or the `min` when `neutralPoint < min` or `max` when `max < neutralPoint`.
+   */
+  @Prop() neutralPoint = 0;
+  protected neutralPointChanged() {
+    if (!this.noUpdate) {
+      const { min, max, neutralPoint } = this;
+
+      if (max < neutralPoint) {
+        this.neutralPoint = max;
+      }
+      if (min < neutralPoint) {
+        this.neutralPoint = min;
+      }
+    }
+  }
+
+  /**
    * How long, in milliseconds, to wait to trigger the
    * `ionChange` event after each change in the range value.
    */
@@ -115,7 +133,7 @@ export class Range implements ComponentInterface {
   /**
    * the value of the range.
    */
-  @Prop({ mutable: true }) value: RangeValue = 0;
+  @Prop({ mutable: true }) value: RangeValue | null = null;
   @Watch('value')
   protected valueChanged(value: RangeValue) {
     if (!this.noUpdate) {
@@ -206,14 +224,14 @@ export class Range implements ComponentInterface {
   }
 
   private getValue(): RangeValue {
-    const value = this.value || 0;
+    const value = this.value || this.neutralPoint || 0;
     if (this.dualKnobs) {
       if (typeof value === 'object') {
         return value;
       }
       return {
-        lower: 0,
-        upper: value
+        lower: this.value === null ? this.neutralPoint : 0,
+        upper: this.value === null ? this.neutralPoint : value
       };
     } else {
       if (typeof value === 'object') {
@@ -349,20 +367,64 @@ export class Range implements ComponentInterface {
       }
     };
   }
+  protected getActiveBarPosition() {
+    const { min, max, neutralPoint, ratioLower, ratioUpper } = this;
+    const neutralPointRatio = valueToRatio(neutralPoint, min, max);
+
+    // dual knob handling
+    let left = `${ratioLower * 100}%`;
+    let right = `${100 - ratioUpper * 100}%`;
+
+    // single knob handling
+    if (!this.dualKnobs) {
+      if (this.ratioA < neutralPointRatio) {
+        right = `${neutralPointRatio * 100}%`;
+        left = `${this.ratioA * 100}%`;
+      } else {
+        right = `${100 - this.ratioA * 100}%`;
+        left = `${neutralPointRatio * 100}%`;
+      }
+    }
+
+    return {
+      left,
+      right
+    };
+  }
+
+  protected isTickActive(stepRatio: number) {
+    const { min, max, neutralPoint, ratioLower, ratioUpper } = this;
+    const neutralPointRatio = valueToRatio(neutralPoint, min, max);
+
+    if (this.dualKnobs) {
+      return (stepRatio >= ratioLower && stepRatio <= ratioUpper);
+    }
+
+    if (this.ratioA <= neutralPointRatio && stepRatio >= this.ratioA && stepRatio <= neutralPointRatio) {
+      return true;
+    }
+
+    if (this.ratioA >= neutralPointRatio && stepRatio <= this.ratioA && stepRatio >= neutralPointRatio) {
+      return true;
+    }
+
+    return false;
+  }
 
   render() {
-    const { min, max, step, ratioLower, ratioUpper } = this;
+    const { min, max, neutralPoint, step } = this;
 
-    const barL = `${ratioLower * 100}%`;
-    const barR = `${100 - ratioUpper * 100}%`;
+    const barPosition = this.getActiveBarPosition();
 
     const ticks = [];
+
     if (this.snaps) {
       for (let value = min; value <= max; value += step) {
         const ratio = valueToRatio(value, min, max);
+
         ticks.push({
           ratio,
-          active: ratio >= ratioLower && ratio <= ratioUpper,
+          active: this.isTickActive(ratio),
           left: `${ratio * 100}%`
         });
       }
@@ -387,8 +449,8 @@ export class Range implements ComponentInterface {
           class="range-bar range-bar-active"
           role="presentation"
           style={{
-            left: barL,
-            right: barR
+            left: barPosition.left,
+            right: barPosition.right
           }}
         />
 
@@ -401,7 +463,8 @@ export class Range implements ComponentInterface {
           disabled: this.disabled,
           handleKeyboard: this.handleKeyboard,
           min,
-          max
+          max,
+          neutralPoint
         })}
 
         { this.dualKnobs && renderKnob({
@@ -413,7 +476,8 @@ export class Range implements ComponentInterface {
           disabled: this.disabled,
           handleKeyboard: this.handleKeyboard,
           min,
-          max
+          max,
+          neutralPoint
         })}
       </div>,
       <slot name="end"></slot>
@@ -427,6 +491,7 @@ interface RangeKnob {
   ratio: number;
   min: number;
   max: number;
+  neutralPoint: number;
   disabled: boolean;
   pressed: boolean;
   pin: boolean;
@@ -434,7 +499,7 @@ interface RangeKnob {
   handleKeyboard: (name: KnobName, isIncrease: boolean) => void;
 }
 
-function renderKnob({ knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard }: RangeKnob) {
+function renderKnob({ knob, value, ratio, min, max, neutralPoint, disabled, pressed, pin, handleKeyboard }: RangeKnob) {
   return (
     <div
       onKeyDown={(ev: KeyboardEvent) => {
@@ -456,7 +521,8 @@ function renderKnob({ knob, value, ratio, min, max, disabled, pressed, pin, hand
         'range-knob-b': knob === 'B',
         'range-knob-pressed': pressed,
         'range-knob-min': value === min,
-        'range-knob-max': value === max
+        'range-knob-max': value === max,
+        'range-knob-neutral': value === neutralPoint
       }}
       style={{
         'left': `${ratio * 100}%`
@@ -467,6 +533,7 @@ function renderKnob({ knob, value, ratio, min, max, disabled, pressed, pin, hand
       aria-valuemax={max}
       aria-disabled={disabled ? 'true' : null}
       aria-valuenow={value}
+      aria-valueneutral={neutralPoint}
     >
       {pin && <div class="range-pin" role="presentation">{Math.round(value)}</div>}
       <div class="range-knob" role="presentation" />
