@@ -126,7 +126,6 @@ export class Select implements ComponentInterface {
         value: this.value,
       });
       this.emitStyle();
-      console.log('Value has changed');
     }
   }
 
@@ -134,9 +133,21 @@ export class Select implements ComponentInterface {
   @Listen('ionSelectOptionDidUnload')
   async selectOptionChanged() {
     await this.loadOptions();
-    console.log('Loaded options');
+
     if (this.didInit) {
       this.updateOptions();
+      
+      /**
+       * In the event that options
+       * are not loaded at component load
+       * this ensures that any value that is
+       * set is properly rendered once
+       * options have been loaded
+       */      
+      if (this.value) {
+        this.el.forceUpdate();
+      }
+      
     }
   }
 
@@ -329,11 +340,6 @@ export class Select implements ComponentInterface {
     this.childOpts = await Promise.all(
       Array.from(this.el.querySelectorAll('ion-select-option')).map(o => o.componentOnReady())
     );
-    console.log('Options have been loaded. Promises have resolved');
-    
-    if (this.didInit && this.value) {
-      this.updateOptions();
-    }
   }
 
   private updateOptions() {
@@ -428,7 +434,6 @@ export class Select implements ComponentInterface {
       addPlaceholderClass = true;
     }
 
-    console.log('Rendering',selectText);
     const selectTextClasses: CssClassMap = {
       'select-text': true,
       'select-placeholder': addPlaceholderClass
