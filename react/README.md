@@ -6,7 +6,7 @@ To get started simply install `@ionic/react` and `@ionic/core` with npm into you
 and to use TypeScript for the best experience.
 
 We are currently working on providing more detailed documentation on usage but please refer to our example application for now.
-If you would like to see a example app of the implementation please go to our [react conference app](https://github.com/ionic-team/ionic-react-conference-app)
+If you would like to see an example app of the implementation please go to our [react conference app](https://github.com/ionic-team/ionic-react-conference-app)
 
   
 ```ts
