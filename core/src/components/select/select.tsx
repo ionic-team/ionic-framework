@@ -133,6 +133,7 @@ export class Select implements ComponentInterface {
   @Listen('ionSelectOptionDidUnload')
   async selectOptionChanged() {
     await this.loadOptions();
+    console.log('Loaded options');
     if (this.didInit) {
       this.updateOptions();
     }
@@ -421,6 +422,7 @@ export class Select implements ComponentInterface {
       addPlaceholderClass = true;
     }
 
+    console.log('Rendering',selectText);
     const selectTextClasses: CssClassMap = {
       'select-text': true,
       'select-placeholder': addPlaceholderClass

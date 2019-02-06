@@ -15,10 +15,16 @@ export class ValueAccessor implements ControlValueAccessor {
   }
 
   handleChangeEvent(value: any) {
-    if (value !== this.lastValue) {
+    console.log('Handling change event in ControlValueAccessor');
+    console.log('Last Value',this.lastValue);
+    console.log('Current Value',value);
+
+    //if (value !== this.lastValue) {
       this.lastValue = value;
       this.onChange(value);
-    }
+      //the issue is somewhere in here with change detection 
+      console.log('Calling onChange',this.onChange, this)
+    //}
     setIonicClasses(this.el);
   }
 
@@ -29,6 +35,7 @@ export class ValueAccessor implements ControlValueAccessor {
   }
 
   registerOnChange(fn: (value: any) => void) {
+    console.log('register on change set',this.onChange);
     this.onChange = fn;
   }
 
