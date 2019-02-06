@@ -13,7 +13,7 @@ reorderGroup.addEventListener('ionItemReorder', (ev) => {
 });
 ```
 
-The event's detail includes all the relevant information about the reorder operation, including the `from` and `to` indexes. The meaning of this indexes are pretty self-explanatory, the item **from** index X, moved **to** the index Y.
+The event's detail includes all the relevant information about the reorder operation, including the `from` and `to` indexes. In other words, the item **from** index X, moved **to** the index Y.
 
 For example, in this list we move the item at index `0` to the index `3`:
 
@@ -42,7 +42,7 @@ Fortunately this `complete()` method can optionally accept an array as input and
 this.dataList = reorderGroup.complete(this.dataList);
 ```
 
-This utility is really handy when
+This utility is really handy when you do not want to manager re-ordering the list yourself.
 
 
 
@@ -180,7 +180,7 @@ reorderGroup.addEventListener('ionItemReorder', ({detail}) => {
 
 | Event            | Description                                                                                                                                                                                          | Type                                  |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
-| `ionItemReorder` | Event that needs to be listen to in order to respond to reorder action. `ion-reorder-group` uses this event to delegate to the user the reordering of data array.   The complete() method exposed as | `CustomEvent<ItemReorderEventDetail>` |
+| `ionItemReorder` | Event that needs to be listened to in order to complete the reorder action. The user will then need to call the `complete()` method to finalize the reorder action. | `CustomEvent<ItemReorderEventDetail>` |
 
 
 ## Methods
