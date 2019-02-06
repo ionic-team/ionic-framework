@@ -98,8 +98,9 @@ export class Platform {
    * | phablet         | on a phablet device.               |
    * | tablet          | on a tablet device.                |
    * | electron        | in Electron on a desktop device.   |
-   * | pwa             | as a PWA app.   |
+   * | pwa             | as a PWA app.                      |
    * | mobile          | on a mobile device.                |
+   * | mobileweb       | on a mobile device in a browser.   |
    * | desktop         | on a desktop device.               |
    * | hybrid          | is a cordova or capacitor app.     |
    *
