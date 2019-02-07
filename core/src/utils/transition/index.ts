@@ -15,6 +15,7 @@ export function transition(opts: TransitionOptions): Promise<TransitionResult> {
           result.animation.destroy();
         }
         afterTransition(opts);
+        console.log('ran transition',opts);
         resolve(result);
       }, error => {
         afterTransition(opts);
