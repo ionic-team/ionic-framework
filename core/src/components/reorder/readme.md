@@ -13,12 +13,6 @@ Reorder is a component that allows an item to be dragged to change its order. It
 </ion-item>
 ```
 
-## Properties
-
-| Property   | Attribute  | Description                            | Type      |
-| ---------- | ---------- | -------------------------------------- | --------- |
-| `slot`     | `slot`     | If `start`, the reorder icon will be shown before the label. If `end`, the reorder icon will be show after the label | `string` |
-
 <!-- Auto Generated Below -->
 
 
