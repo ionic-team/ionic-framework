@@ -13,7 +13,7 @@ reorderGroup.addEventListener('ionItemReorder', (ev) => {
 });
 ```
 
-The event's detail includes all the relevant information about the reorder operation, including the `from` and `to` indexes. In other words, the item **from** index X, moved **to** the index Y.
+The event's detail includes all the relevant information about the reorder operation, including the `from` and `to` indexes. In the context of reordering, an item moves `from` index X `to` index Y.
 
 For example, in this list we move the item at index `0` to the index `3`:
 
