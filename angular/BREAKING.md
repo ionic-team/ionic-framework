@@ -1061,7 +1061,7 @@ openLoading() {
 **New Usage Example:**
 
 ```javascript
-openLoading() {
+async openLoading() {
   let loading = this.loadingCtrl.create({
     content: 'Loading...'
   });
