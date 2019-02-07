@@ -18,7 +18,6 @@ Reorder is a component that allows an item to be dragged to change its order. It
 | Property   | Attribute  | Description                            | Type      |
 | ---------- | ---------- | -------------------------------------- | --------- |
 | `slot`     | `slot`     | If `start`, the reorder icon will be shown before the label. If `end`, the reorder icon will be show after the label | `string` |
-| `name`     | `name`     | The name of the icon to use for the reorder handle. | `string` ||
 
 <!-- Auto Generated Below -->
 
