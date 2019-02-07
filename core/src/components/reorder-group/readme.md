@@ -42,10 +42,6 @@ Fortunately this `complete()` method can optionally accept an array as input and
 this.dataList = reorderGroup.complete(this.dataList);
 ```
 
-This utility is really handy when you do not want to manager re-ordering the list yourself.
-
-
-
 <!-- Auto Generated Below -->
 
 
