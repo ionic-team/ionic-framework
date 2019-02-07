@@ -4,6 +4,10 @@ import { Color, Config, Mode, ScrollBaseDetail, ScrollDetail } from '../../inter
 import { isPlatform } from '../../utils/platform';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
+/**
+ * @slot
+ * @slot fixed - Element will not be scrollable within `ion-content`.
+ */
 @Component({
   tag: 'ion-content',
   styleUrl: 'content.scss',

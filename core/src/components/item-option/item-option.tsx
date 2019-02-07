@@ -3,6 +3,14 @@ import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/c
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @slot - The default slot should contain the option text
+ * @slot start - Content will be placed to the left edge of the option in LTR, and to the right edge in RTL.
+ * @slot top - Will show the icon above the text
+ * @slot icon-only - Use this if the option only contains an icon
+ * @slot bottom - Will show the icon below the text
+ * @slot end - Content will be placed to the right edge of the option in LTR, and to the left edge in RTL.
+ */
 @Component({
   tag: 'ion-item-option',
   styleUrls: {

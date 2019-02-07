@@ -217,6 +217,15 @@ Type: `Promise<boolean>`
 
 
 
+## Slots
+
+| Slot    | Description                                                     |
+| ------- | --------------------------------------------------------------- |
+|         | The default slot will display tabs at the bottom of the screen. |
+| `"end"` | Tabs will be placed at the bottom of the screen.                |
+| `"top"` | Tabs will be placed at the top of the scren.                    |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

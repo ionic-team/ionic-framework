@@ -3,6 +3,13 @@ import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/c
 import { Color, Config, CssClassMap, Mode, StyleEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @slot - The default slot should display the toolbar text.
+ * @slot start - Content will be placed to the left edge of the toolbar in LTR, and to the right edge in RTL.
+ * @slot secondary - Positions elements to the left of the content in `ios` mode, and directly to the right in `md` mode.
+ * @slot primary - Positions elements to the right of the content in `ios` mode, and to the far right in `md` mode.
+ * @slot end - Content will be placed to the right edge of the toolbar in LTR, and to the left edge in RTL.
+ */
 @Component({
   tag: 'ion-toolbar',
   styleUrls: {
