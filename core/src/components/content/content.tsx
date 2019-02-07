@@ -5,7 +5,7 @@ import { isPlatform } from '../../utils/platform';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
- * @slot
+ * @slot - The default slot should contain scrollable content
  * @slot fixed - Element will not be scrollable within `ion-content`.
  */
 @Component({
