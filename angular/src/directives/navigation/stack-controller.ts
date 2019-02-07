@@ -144,8 +144,6 @@ export class StackController {
     showGoBack: boolean,
     progressAnimation: boolean
   ) {
-    
-    console.log('transition', enteringView, leavingView, direction, showGoBack, progressAnimation)
     if (this.skipTransition) {
       this.skipTransition = false;
       return;

@@ -167,9 +167,9 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
       rootTransition.add(leavingToolBar);
 
       // fade out leaving toolbar items
-      leavingBackButton.fromTo(OPACITY, 0.99, 0, true);
-      leavingTitle.fromTo(OPACITY, 0.99, 0, true);
-      leavingToolBarItems.fromTo(OPACITY, 0.99, 0, true);
+      leavingBackButton.fromTo(OPACITY, 0.99, 0);
+      leavingTitle.fromTo(OPACITY, 0.99, 0);
+      leavingToolBarItems.fromTo(OPACITY, 0.99, 0);
 
       if (backDirection) {
         // leaving toolbar, back direction
@@ -179,7 +179,7 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
         // should just slide out, no fading out
         leavingToolBarBg
           .beforeClearStyles([OPACITY])
-          .fromTo(OPACITY, 1, 0.01, true);
+          .fromTo(OPACITY, 1, 0.01);
 
         if (backButtonEl) {
           const leavingBackBtnText = new AnimationC();
