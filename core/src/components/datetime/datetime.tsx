@@ -315,6 +315,20 @@ export class Datetime implements ComponentInterface {
     return pickerOptions;
   }
 
+  /**
+   * Gets a date value given a format
+   * Defaults to the current date if
+   * no date given
+   */
+  private getDateValue(date: DatetimeData, format: string): number {
+    const getValue = getValueFromFormat(date, format);
+
+    if (getValue) { return getValue; }
+
+    const defaultDate = parseDate(new Date().toISOString());
+    return getValueFromFormat((defaultDate as DatetimeData), format);
+  }
+
   private generateColumns(): PickerColumn[] {
     // if a picker format wasn't provided, then fallback
     // to use the display format
@@ -359,7 +373,7 @@ export class Datetime implements ComponentInterface {
 
       // cool, we've loaded up the columns with options
       // preselect the option for this column
-      const optValue = getValueFromFormat(this.datetimeValue, format);
+      const optValue = this.getDateValue(this.datetimeValue, format);
       const selectedIndex = colOptions.findIndex(opt => opt.value === optValue);
 
       return {
