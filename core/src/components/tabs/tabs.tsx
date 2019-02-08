@@ -4,8 +4,8 @@ import { Config, NavOutlet, RouteID, RouteWrite, TabButtonClickEventDetail } fro
 
 /**
  * @slot - The default slot will display tabs at the bottom of the screen.
- * @slot top - Tabs will be placed at the top of the scren.
- * @slot end - Tabs will be placed at the bottom of the screen.
+ * @slot top - Tabs will be placed at the top of the screen.
+ * @slot bottom - Tabs will be placed at the bottom of the screen.
  */
 @Component({
   tag: 'ion-tabs',

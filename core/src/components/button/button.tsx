@@ -5,8 +5,8 @@ import { hasShadowDom } from '../../utils/helpers';
 import { createColorClasses, openURL } from '../../utils/theme';
 
 /**
- * @slot - The default slot should contain the button text
- * @slot icon-only - Use this if the button only contains an icon
+ * @slot - The default slot should contain the button text.
+ * @slot icon-only - Use this if the button only contains an icon.
  * @slot start - Content will be placed to left of the button text in LTR, and to the right in RTL.
  * @slot end - Content will be placed to the right of the button text in LTR, and to the left in RTL.
  */

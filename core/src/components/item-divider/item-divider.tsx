@@ -4,9 +4,9 @@ import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
- * @slot - The default slot should contain the divider text
- * @slot start - Content will be placed to the left edge of the divider in LTR, and to the right edge in RTL.
- * @slot end - Content will be placed to the right edge of the divider in LTR, and to the left edge in RTL.
+ * @slot - The default slot should contain the divider text.
+ * @slot start - Content will be placed on the left side within the divider in LTR, and on the right side in RTL.
+ * @slot end - Content will be placed on the right side within the divider in LTR, and to the left side in RTL.
  */
 @Component({
   tag: 'ion-item-divider',
