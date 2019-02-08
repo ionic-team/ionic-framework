@@ -118,6 +118,16 @@ This attribute specifies the size of the button. Setting this attribute will cha
 | `ionFocus` | Emitted when the button has focus.   | `CustomEvent<void>` |
 
 
+## Slots
+
+| Slot          | Description                                                                            |
+| ------------- | -------------------------------------------------------------------------------------- |
+|               | The default slot should contain the button text.                                       |
+| `"end"`       | Content will be placed to the right of the button text in LTR, and to the left in RTL. |
+| `"icon-only"` | Use this if the button only contains an icon.                                          |
+| `"start"`     | Content will be placed to left of the button text in LTR, and to the right in RTL.     |
+
+
 ## CSS Custom Properties
 
 | Name                     | Description                             |
