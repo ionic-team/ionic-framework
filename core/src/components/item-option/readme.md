@@ -18,18 +18,6 @@ action for the item.
 | `mode`       | `mode`       | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined` |
 
 
-## Slots
-
-| Slot          | Description                                                                                 |
-| ------------- | ------------------------------------------------------------------------------------------- |
-|               | The default slot should contain the option text                                             |
-| `"bottom"`    | Will show the icon below the text                                                           |
-| `"end"`       | Content will be placed to the right edge of the option in LTR, and to the left edge in RTL. |
-| `"icon-only"` | Use this if the option only contains an icon                                                |
-| `"start"`     | Content will be placed to the left edge of the option in LTR, and to the right edge in RTL. |
-| `"top"`       | Will show the icon above the text                                                           |
-
-
 ## CSS Custom Properties
 
 | Name           | Description                   |

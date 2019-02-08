@@ -144,14 +144,6 @@ Type: `Promise<void>`
 
 
 
-## Slots
-
-| Slot      | Description                                          |
-| --------- | ---------------------------------------------------- |
-|           | The default slot should contain scrollable content   |
-| `"fixed"` | Element will not be scrollable within `ion-content`. |
-
-
 ## CSS Custom Properties
 
 | Name                | Description                    |
