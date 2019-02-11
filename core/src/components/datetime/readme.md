@@ -151,18 +151,20 @@ selection between the beginning of 2016, and October 31st of 2020:
 
 At this time, there is no one-size-fits-all standard to automatically choose the
 correct language/spelling for a month name, or day of the week name, depending
-on the language or locale. Good news is that there is an
-[Intl.DatetimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DatetimeFormat)
-standard which most* browsers have adopted. However, at this time the standard
-has not been fully implemented by all popular browsers so Ionic is unavailable
-to take advantage of ityet*. Additionally, Angular also provides an
-internationalization service, but it is still under heavy development so Ionic
-does not depend on it at this time.
+on the language or locale. 
 
-All things considered, the by far easiest solution is to just provide an array
-of names if the app needs to use names other than the default English version of
-month and day names. The month names and day names can be either configured at
-the app level, or individual `ion-datetime` level.
+The good news is that there is an [Intl.DatetimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DatetimeFormat)
+standard which [most browsers](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DatetimeFormat#Browser_compatibility) have adopted.
+
+However, at this time the standard has not been fully implemented by all popular browsers
+so Ionic is unavailable to take advantage of it yet. 
+
+Additionally, Angular also provides an internationalization service, but it is still
+under heavy development so Ionic does not depend on it at this time.
+
+The current best practice is to provide an array of names if the app needs to use names other 
+than the default English version of month and day names. The month names and day names can be 
+either configured at the app level, or individual `ion-datetime` level.
 
 ### Component Input Level
 
@@ -194,8 +196,7 @@ dates in JavaScript.
 ```html
 <ion-item>
   <ion-label>Date</ion-label>
-  <ion-datetime display-format="MM/DD/YYYY" >
-  </ion-datetime>
+  <ion-datetime display-format="MM/DD/YYYY"></ion-datetime>
 </ion-item>
 ```
 
