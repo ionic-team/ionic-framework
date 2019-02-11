@@ -34,6 +34,12 @@ export class SplitPane implements ComponentInterface {
   @Prop({ context: 'window' }) win!: Window;
 
   /**
+   * Indicates the direction of the component.
+   * Defaults to the value of the `dir` attribute on the html element.
+   */
+  @Prop({ reflectToAttr: true }) dir: string = document.dir;
+
+  /**
    * The content `id` of the split-pane's main content.
    * This property can be used instead of the `[main]` attribute to select the `main`
    * content of the split-pane.

@@ -81,12 +81,13 @@ slides.options = {
 
 ## Properties
 
-| Property    | Attribute   | Description                                                                                  | Type            | Default     |
-| ----------- | ----------- | -------------------------------------------------------------------------------------------- | --------------- | ----------- |
-| `mode`      | `mode`      | The mode determines which platform styles to use.                                            | `"ios" \| "md"` | `undefined` |
-| `options`   | `options`   | Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options | `any`           | `{}`        |
-| `pager`     | `pager`     | If `true`, show the pagination.                                                              | `boolean`       | `false`     |
-| `scrollbar` | `scrollbar` | If `true`, show the scrollbar.                                                               | `boolean`       | `false`     |
+| Property    | Attribute   | Description                                                                                                 | Type            | Default        |
+| ----------- | ----------- | ----------------------------------------------------------------------------------------------------------- | --------------- | -------------- |
+| `dir`       | `dir`       | Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element. | `string`        | `document.dir` |
+| `mode`      | `mode`      | The mode determines which platform styles to use.                                                           | `"ios" \| "md"` | `undefined`    |
+| `options`   | `options`   | Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options                | `any`           | `{}`           |
+| `pager`     | `pager`     | If `true`, show the pagination.                                                                             | `boolean`       | `false`        |
+| `scrollbar` | `scrollbar` | If `true`, show the scrollbar.                                                                              | `boolean`       | `false`        |
 
 
 ## Events

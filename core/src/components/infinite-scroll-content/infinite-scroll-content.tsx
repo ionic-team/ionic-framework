@@ -17,6 +17,12 @@ export class InfiniteScrollContent implements ComponentInterface {
   @Prop({ context: 'config' }) config!: Config;
 
   /**
+   * Indicates the direction of the component.
+   * Defaults to the value of the `dir` attribute on the html element.
+   */
+  @Prop({ reflectToAttr: true }) dir: string = document.dir;
+
+  /**
    * An animated SVG spinner that shows while loading.
    */
   @Prop({ mutable: true }) loadingSpinner?: SpinnerTypes | null;

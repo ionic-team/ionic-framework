@@ -16,6 +16,12 @@ export class ItemOptions implements ComponentInterface {
   @Prop({ context: 'window' }) win!: Window;
 
   /**
+   * Indicates the direction of the component.
+   * Defaults to the value of the `dir` attribute on the html element.
+   */
+  @Prop({ reflectToAttr: true }) dir: string = document.dir;
+
+  /**
    * The side the option button should be on. Possible values: `"start"` and `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
    *
    */

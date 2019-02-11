@@ -16,9 +16,10 @@ Skeleton Text is a component for rendering placeholder content. The element will
 
 ## Properties
 
-| Property | Attribute | Description                         | Type     | Default  |
-| -------- | --------- | ----------------------------------- | -------- | -------- |
-| `width`  | `width`   | Width for the element to render at. | `string` | `'100%'` |
+| Property | Attribute | Description                                                                                                 | Type     | Default        |
+| -------- | --------- | ----------------------------------------------------------------------------------------------------------- | -------- | -------------- |
+| `dir`    | `dir`     | Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element. | `string` | `document.dir` |
+| `width`  | `width`   | Width for the element to render at.                                                                         | `string` | `'100%'`       |
 
 
 ## CSS Custom Properties

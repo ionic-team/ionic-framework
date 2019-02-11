@@ -25,9 +25,10 @@
 
 ## Properties
 
-| Property | Attribute | Description                                                                                                                                                                                                                                                            | Type                  | Default     |
-| -------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
-| `color`  | `color`   | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` | `undefined` |
+| Property | Attribute | Description                                                                                                                                                                                                                                                            | Type                  | Default        |
+| -------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | -------------- |
+| `color`  | `color`   | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` | `undefined`    |
+| `dir`    | `dir`     | Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.                                                                                                                                                            | `string`              | `document.dir` |
 
 
 ## CSS Custom Properties

@@ -23,6 +23,12 @@ export class Spinner implements ComponentInterface {
   @Prop() color?: Color;
 
   /**
+   * Indicates the direction of the component.
+   * Defaults to the value of the `dir` attribute on the html element.
+   */
+  @Prop({ reflectToAttr: true }) dir: string = document.dir;
+
+  /**
    * Duration of the spinner animation in milliseconds. The default varies based on the spinner.
    */
   @Prop() duration?: number;

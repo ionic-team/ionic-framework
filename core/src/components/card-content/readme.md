@@ -9,9 +9,10 @@ It is recommended that any text content for a card should be placed in an `ion-c
 
 ## Properties
 
-| Property | Attribute | Description                                       | Type            | Default     |
-| -------- | --------- | ------------------------------------------------- | --------------- | ----------- |
-| `mode`   | `mode`    | The mode determines which platform styles to use. | `"ios" \| "md"` | `undefined` |
+| Property | Attribute | Description                                                                                                 | Type            | Default        |
+| -------- | --------- | ----------------------------------------------------------------------------------------------------------- | --------------- | -------------- |
+| `dir`    | `dir`     | Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element. | `string`        | `document.dir` |
+| `mode`   | `mode`    | The mode determines which platform styles to use.                                                           | `"ios" \| "md"` | `undefined`    |
 
 
 ----------------------------------------------

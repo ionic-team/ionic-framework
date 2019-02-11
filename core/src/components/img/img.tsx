@@ -21,6 +21,12 @@ export class Img implements ComponentInterface {
   @Prop() alt?: string;
 
   /**
+   * Indicates the direction of the component.
+   * Defaults to the value of the `dir` attribute on the html element.
+   */
+  @Prop({ reflectToAttr: true }) dir: string = document.dir;
+
+  /**
    * The image URL. This attribute is mandatory for the <img> element.
    */
   @Prop() src?: string;

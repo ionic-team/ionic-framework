@@ -76,9 +76,10 @@ Options can be expanded to take up the full width of the item if you swipe past 
 
 ## Properties
 
-| Property   | Attribute  | Description                                                | Type      | Default |
-| ---------- | ---------- | ---------------------------------------------------------- | --------- | ------- |
-| `disabled` | `disabled` | If `true`, the user cannot interact with the sliding-item. | `boolean` | `false` |
+| Property   | Attribute  | Description                                                                                                 | Type      | Default        |
+| ---------- | ---------- | ----------------------------------------------------------------------------------------------------------- | --------- | -------------- |
+| `dir`      | `dir`      | Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element. | `string`  | `document.dir` |
+| `disabled` | `disabled` | If `true`, the user cannot interact with the sliding-item.                                                  | `boolean` | `false`        |
 
 
 ## Events

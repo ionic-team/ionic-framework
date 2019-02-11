@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Listen } from '@stencil/core';
+import { Component, ComponentInterface, Listen, Prop } from '@stencil/core';
 
 import { Mode } from '../../interface';
 
@@ -12,6 +12,12 @@ import { Mode } from '../../interface';
 })
 export class Reorder implements ComponentInterface {
 
+  /**
+   * Indicates the direction of the component.
+   * Defaults to the value of the `dir` attribute on the html element.
+   */
+  @Prop({ reflectToAttr: true }) dir: string = document.dir;
+
   mode!: Mode;
 
   @Listen('click', { capture: true })
@@ -23,7 +29,7 @@ export class Reorder implements ComponentInterface {
   render() {
     return (
       <slot>
-        <ion-icon name="reorder" lazy={false} class="reorder-icon" />
+        <ion-icon name="reorder" lazy={false} class="reorder-icon"></ion-icon>
       </slot>
     );
   }

@@ -115,6 +115,10 @@ export namespace Components {
     */
     'cssClass'?: string | string[];
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * Dismiss the action sheet overlay after it has been presented.
     */
     'dismiss': (data?: any, role?: string | undefined) => Promise<boolean>;
@@ -177,6 +181,10 @@ export namespace Components {
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
     'cssClass'?: string | string[];
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * Animation to use when the action sheet is presented.
     */
@@ -257,6 +265,10 @@ export namespace Components {
     */
     'cssClass'?: string | string[];
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * Dismiss the alert overlay after it has been presented.
     */
     'dismiss': (data?: any, role?: string | undefined) => Promise<boolean>;
@@ -327,6 +339,10 @@ export namespace Components {
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
     'cssClass'?: string | string[];
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * Animation to use when the alert is presented.
     */
@@ -407,7 +423,7 @@ export namespace Components {
     /**
     * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
     */
-    'dir': string;
+    'dir'?: string;
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
@@ -421,8 +437,18 @@ export namespace Components {
   interface IonApp {}
   interface IonAppAttributes extends StencilHTMLAttributes {}
 
-  interface IonAvatar {}
-  interface IonAvatarAttributes extends StencilHTMLAttributes {}
+  interface IonAvatar {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+  }
+  interface IonAvatarAttributes extends StencilHTMLAttributes {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
+  }
 
   interface IonBackButton {
     /**
@@ -433,6 +459,10 @@ export namespace Components {
     * The url to navigate back to by default when there is no history.
     */
     'defaultHref'?: string;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     /**
     * The icon name to use for the back button.
     */
@@ -455,6 +485,10 @@ export namespace Components {
     * The url to navigate back to by default when there is no history.
     */
     'defaultHref'?: string;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * The icon name to use for the back button.
     */
@@ -508,6 +542,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -517,6 +555,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * The mode determines which platform styles to use.
     */
@@ -532,6 +574,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     /**
     * If `true`, the user cannot interact with the button.
     */
@@ -583,6 +629,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
+    /**
     * If `true`, the user cannot interact with the button.
     */
     'disabled'?: boolean;
@@ -632,16 +682,34 @@ export namespace Components {
     'type'?: 'submit' | 'reset' | 'button';
   }
 
-  interface IonButtons {}
-  interface IonButtonsAttributes extends StencilHTMLAttributes {}
+  interface IonButtons {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+  }
+  interface IonButtonsAttributes extends StencilHTMLAttributes {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
+  }
 
   interface IonCardContent {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
   }
   interface IonCardContentAttributes extends StencilHTMLAttributes {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * The mode determines which platform styles to use.
     */
@@ -653,6 +721,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     /**
     * The mode determines which platform styles to use.
     */
@@ -667,6 +739,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * The mode determines which platform styles to use.
     */
@@ -683,6 +759,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -692,6 +772,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * The mode determines which platform styles to use.
     */
@@ -704,6 +788,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -713,6 +801,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * The mode determines which platform styles to use.
     */
@@ -725,6 +817,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -734,6 +830,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * The mode determines which platform styles to use.
     */
@@ -749,6 +849,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     /**
     * If `true`, the user cannot interact with the checkbox.
     */
@@ -775,6 +879,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * If `true`, the user cannot interact with the checkbox.
     */
@@ -811,6 +919,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -825,6 +937,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
@@ -835,6 +951,10 @@ export namespace Components {
   }
 
   interface IonCol {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     /**
     * The amount to offset the column, in terms of how many columns it should shift to the end of the total available.
     */
@@ -933,6 +1053,10 @@ export namespace Components {
     'sizeXs'?: string;
   }
   interface IonColAttributes extends StencilHTMLAttributes {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * The amount to offset the column, in terms of how many columns it should shift to the end of the total available.
     */
@@ -1037,6 +1161,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.
     */
     'forceOverscroll'?: boolean;
@@ -1082,6 +1210,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.
     */
@@ -1133,6 +1265,10 @@ export namespace Components {
     * Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.
     */
     'dayValues'?: number[] | number | string;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     /**
     * If `true`, the user cannot interact with the datetime.
     */
@@ -1227,6 +1363,10 @@ export namespace Components {
     * Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.
     */
     'dayValues'?: number[] | number | string;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * If `true`, the user cannot interact with the datetime.
     */
@@ -1327,6 +1467,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * If `true`, the user cannot interact with the fab button.
     */
     'disabled': boolean;
@@ -1368,6 +1512,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * If `true`, the user cannot interact with the fab button.
     */
@@ -1416,6 +1564,10 @@ export namespace Components {
     */
     'activated': boolean;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * The side the fab list will show on relative to the main fab button.
     */
     'side': 'start' | 'end' | 'top' | 'bottom';
@@ -1425,6 +1577,10 @@ export namespace Components {
     * If `true`, the fab list will be show all fab buttons in the list.
     */
     'activated'?: boolean;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * The side the fab list will show on relative to the main fab button.
     */
@@ -1440,6 +1596,10 @@ export namespace Components {
     * Close an active FAB list container
     */
     'close': () => void;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     /**
     * If `true`, the fab will display on the edge of the header if `vertical` is `"top"`, and on the edge of the footer if it is `"bottom"`. Should be used with a `fixed` slot.
     */
@@ -1458,6 +1618,10 @@ export namespace Components {
     * If `true`, both the `ion-fab-button` and all `ion-fab-list` inside `ion-fab` will become active. That means `ion-fab-button` will become a `close` icon and `ion-fab-list` will become visible.
     */
     'activated'?: boolean;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * If `true`, the fab will display on the edge of the header if `vertical` is `"top"`, and on the edge of the footer if it is `"bottom"`. Should be used with a `fixed` slot.
     */
@@ -1495,11 +1659,19 @@ export namespace Components {
 
   interface IonGrid {
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * If `true`, the grid will have a fixed width based on the screen size.
     */
     'fixed': boolean;
   }
   interface IonGridAttributes extends StencilHTMLAttributes {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * If `true`, the grid will have a fixed width based on the screen size.
     */
@@ -1533,6 +1705,10 @@ export namespace Components {
     */
     'alt'?: string;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * The image URL. This attribute is mandatory for the <img> element.
     */
     'src'?: string;
@@ -1542,6 +1718,10 @@ export namespace Components {
     * This attribute defines the alternative text describing the image. Users will see this text displayed if the image URL is wrong, the image is not in one of the supported formats, or if the image is not yet downloaded.
     */
     'alt'?: string;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * Emitted when the img src is loaded
     */
@@ -1554,6 +1734,10 @@ export namespace Components {
 
   interface IonInfiniteScrollContent {
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * An animated SVG spinner that shows while loading.
     */
     'loadingSpinner'?: SpinnerTypes | null;
@@ -1563,6 +1747,10 @@ export namespace Components {
     'loadingText'?: string;
   }
   interface IonInfiniteScrollContentAttributes extends StencilHTMLAttributes {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * An animated SVG spinner that shows while loading.
     */
@@ -1579,6 +1767,10 @@ export namespace Components {
     */
     'complete': () => void;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * If `true`, the infinite scroll will be hidden and scroll event listeners will be removed.  Set this to true to disable the infinite scroll from actively trying to receive new data while scrolling. This is useful when it is known that there is no more data that can be added, and the infinite scroll is no longer needed.
     */
     'disabled': boolean;
@@ -1592,6 +1784,10 @@ export namespace Components {
     'threshold': string;
   }
   interface IonInfiniteScrollAttributes extends StencilHTMLAttributes {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * If `true`, the infinite scroll will be hidden and scroll event listeners will be removed.  Set this to true to disable the infinite scroll from actively trying to receive new data while scrolling. This is useful when it is known that there is no more data that can be added, and the infinite scroll is no longer needed.
     */
@@ -1647,6 +1843,10 @@ export namespace Components {
     * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
     */
     'debounce': number;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     /**
     * If `true`, the user cannot interact with the input.
     */
@@ -1766,6 +1966,10 @@ export namespace Components {
     */
     'debounce'?: number;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
+    /**
     * If `true`, the user cannot interact with the input.
     */
     'disabled'?: boolean;
@@ -1861,6 +2065,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -1874,6 +2082,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * The mode determines which platform styles to use.
     */
@@ -1892,6 +2104,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     /**
     * If `true`, the user cannot interact with the item option.
     */
@@ -1915,6 +2131,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
+    /**
     * If `true`, the user cannot interact with the item option.
     */
     'disabled'?: boolean;
@@ -1933,6 +2153,10 @@ export namespace Components {
   }
 
   interface IonItemOptions {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     'fireSwipeEvent': () => void;
     /**
     * The side the option button should be on. Possible values: `"start"` and `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
@@ -1940,6 +2164,10 @@ export namespace Components {
     'side': Side;
   }
   interface IonItemOptionsAttributes extends StencilHTMLAttributes {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * Emitted when the item has been fully swiped.
     */
@@ -1960,6 +2188,10 @@ export namespace Components {
     */
     'closeOpened': () => Promise<boolean>;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * If `true`, the user cannot interact with the sliding-item.
     */
     'disabled': boolean;
@@ -1973,6 +2205,10 @@ export namespace Components {
     'getSlidingRatio': () => Promise<number>;
   }
   interface IonItemSlidingAttributes extends StencilHTMLAttributes {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * If `true`, the user cannot interact with the sliding-item.
     */
@@ -2000,6 +2236,10 @@ export namespace Components {
     * The icon to use when `detail` is set to `true`.
     */
     'detailIcon': string;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     /**
     * If `true`, the user cannot interact with the item.
     */
@@ -2043,6 +2283,10 @@ export namespace Components {
     */
     'detailIcon'?: string;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
+    /**
     * If `true`, the user cannot interact with the item.
     */
     'disabled'?: boolean;
@@ -2074,6 +2318,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -2087,6 +2335,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * The mode determines which platform styles to use.
     */
@@ -2103,6 +2355,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -2112,6 +2368,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * The mode determines which platform styles to use.
     */
@@ -2123,6 +2383,10 @@ export namespace Components {
     * If `ion-item-sliding` are used inside the list, this method closes any open sliding item.  Returns `true` if an actual `ion-item-sliding` is closed.
     */
     'closeSlidingItems': () => Promise<boolean>;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     /**
     * If `true`, the list will have margin around it and rounded corners.
     */
@@ -2137,6 +2401,10 @@ export namespace Components {
     'mode': Mode;
   }
   interface IonListAttributes extends StencilHTMLAttributes {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * If `true`, the list will have margin around it and rounded corners.
     */
@@ -2180,6 +2448,10 @@ export namespace Components {
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
     'cssClass'?: string | string[];
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     /**
     * Dismiss the loading overlay after it has been presented.
     */
@@ -2248,6 +2520,10 @@ export namespace Components {
     */
     'cssClass'?: string | string[];
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
+    /**
     * Number of milliseconds to wait before dismissing the loading indicator.
     */
     'duration'?: number;
@@ -2311,6 +2587,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle
     */
     'menu'?: string;
@@ -2328,6 +2608,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle
     */
@@ -2422,6 +2706,10 @@ export namespace Components {
     */
     'contentId'?: string;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * If `true`, the menu is disabled.
     */
     'disabled': boolean;
@@ -2471,6 +2759,10 @@ export namespace Components {
     * The content's id the menu should use.
     */
     'contentId'?: string;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * If `true`, the menu is disabled.
     */
@@ -2552,6 +2844,10 @@ export namespace Components {
     'cssClass'?: string | string[];
     'delegate'?: FrameworkDelegate;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * Dismiss the modal overlay after it has been presented.
     */
     'dismiss': (data?: any, role?: string | undefined) => Promise<boolean>;
@@ -2610,6 +2906,10 @@ export namespace Components {
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
     'cssClass'?: string | string[];
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * Animation to use when the modal is presented.
     */
@@ -2807,6 +3107,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -2816,6 +3120,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * The mode determines which platform styles to use.
     */
@@ -2827,12 +3135,20 @@ export namespace Components {
     * Picker column data
     */
     'col': PickerColumn;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
   }
   interface IonPickerColumnAttributes extends StencilHTMLAttributes {
     /**
     * Picker column data
     */
     'col': PickerColumn;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
   }
 
   interface IonPickerController {
@@ -2872,6 +3188,10 @@ export namespace Components {
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
     'cssClass'?: string | string[];
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     /**
     * Dismiss the picker overlay after it has been presented.
     */
@@ -2939,6 +3259,10 @@ export namespace Components {
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
     'cssClass'?: string | string[];
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * Number of milliseconds to wait before dismissing the picker.
     */
@@ -3020,6 +3344,10 @@ export namespace Components {
     'cssClass'?: string | string[];
     'delegate'?: FrameworkDelegate;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * Dismiss the popover overlay after it has been presented.
     */
     'dismiss': (data?: any, role?: string | undefined) => Promise<boolean>;
@@ -3087,6 +3415,10 @@ export namespace Components {
     */
     'cssClass'?: string | string[];
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
+    /**
     * Animation to use when the popover is presented.
     */
     'enterAnimation'?: AnimationBuilder;
@@ -3142,6 +3474,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -3168,6 +3504,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
@@ -3191,6 +3531,10 @@ export namespace Components {
     */
     'allowEmptySelection': boolean;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * The name of the control, which is submitted with the form data.
     */
     'name': string;
@@ -3204,6 +3548,10 @@ export namespace Components {
     * If `true`, the radios can be deselected.
     */
     'allowEmptySelection'?: boolean;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * The name of the control, which is submitted with the form data.
     */
@@ -3227,6 +3575,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     /**
     * If `true`, the user cannot interact with the radio.
     */
@@ -3253,6 +3605,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * If `true`, the user cannot interact with the radio.
     */
@@ -3292,6 +3648,10 @@ export namespace Components {
     * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value.
     */
     'debounce': number;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     /**
     * If `true`, the user cannot interact with the range.
     */
@@ -3342,6 +3702,10 @@ export namespace Components {
     * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value.
     */
     'debounce'?: number;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * If `true`, the user cannot interact with the range.
     */
@@ -3398,6 +3762,10 @@ export namespace Components {
 
   interface IonRefresherContent {
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * A static icon to display when you begin to pull down
     */
     'pullingIcon'?: string | null;
@@ -3415,6 +3783,10 @@ export namespace Components {
     'refreshingText'?: string;
   }
   interface IonRefresherContentAttributes extends StencilHTMLAttributes {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * A static icon to display when you begin to pull down
     */
@@ -3447,6 +3819,10 @@ export namespace Components {
     */
     'complete': () => void;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * If `true`, the refresher will be hidden.
     */
     'disabled': boolean;
@@ -3472,6 +3848,10 @@ export namespace Components {
     * Time it takes to close the refresher.
     */
     'closeDuration'?: string;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * If `true`, the refresher will be hidden.
     */
@@ -3523,8 +3903,18 @@ export namespace Components {
     'onIonItemReorder'?: (event: CustomEvent<ItemReorderEventDetail>) => void;
   }
 
-  interface IonReorder {}
-  interface IonReorderAttributes extends StencilHTMLAttributes {}
+  interface IonReorder {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+  }
+  interface IonReorderAttributes extends StencilHTMLAttributes {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
+  }
 
   interface IonRippleEffect {
     /**
@@ -3667,8 +4057,18 @@ export namespace Components {
     'useHash'?: boolean;
   }
 
-  interface IonRow {}
-  interface IonRowAttributes extends StencilHTMLAttributes {}
+  interface IonRow {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+  }
+  interface IonRowAttributes extends StencilHTMLAttributes {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
+  }
 
   interface IonSearchbar {
     /**
@@ -3703,6 +4103,10 @@ export namespace Components {
     * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
     */
     'debounce': number;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     /**
     * Returns the native `<input>` element used under the hood.
     */
@@ -3774,6 +4178,10 @@ export namespace Components {
     */
     'debounce'?: number;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
@@ -3833,6 +4241,10 @@ export namespace Components {
     */
     'checked': boolean;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * If `true`, the user cannot interact with the segment button.
     */
     'disabled': boolean;
@@ -3854,6 +4266,10 @@ export namespace Components {
     * If `true`, the segment button is selected.
     */
     'checked'?: boolean;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * If `true`, the user cannot interact with the segment button.
     */
@@ -3882,6 +4298,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * If `true`, the user cannot interact with the segment.
     */
     'disabled': boolean;
@@ -3903,6 +4323,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * If `true`, the user cannot interact with the segment.
     */
@@ -4001,6 +4425,10 @@ export namespace Components {
     */
     'cancelText': string;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * If `true`, the user cannot interact with the select.
     */
     'disabled': boolean;
@@ -4050,6 +4478,10 @@ export namespace Components {
     * The text to display on the cancel button.
     */
     'cancelText'?: string;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * If `true`, the user cannot interact with the select.
     */
@@ -4110,21 +4542,43 @@ export namespace Components {
 
   interface IonSkeletonText {
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * Width for the element to render at.
     */
     'width': string;
   }
   interface IonSkeletonTextAttributes extends StencilHTMLAttributes {
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
+    /**
     * Width for the element to render at.
     */
     'width'?: string;
   }
 
-  interface IonSlide {}
-  interface IonSlideAttributes extends StencilHTMLAttributes {}
+  interface IonSlide {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+  }
+  interface IonSlideAttributes extends StencilHTMLAttributes {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
+  }
 
   interface IonSlides {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     /**
     * Get the index of the active slide.
     */
@@ -4203,6 +4657,10 @@ export namespace Components {
     'updateAutoHeight': (speed?: number | undefined) => Promise<void>;
   }
   interface IonSlidesAttributes extends StencilHTMLAttributes {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * The mode determines which platform styles to use.
     */
@@ -4291,6 +4749,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * Duration of the spinner animation in milliseconds. The default varies based on the spinner.
     */
     'duration'?: number;
@@ -4308,6 +4770,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * Duration of the spinner animation in milliseconds. The default varies based on the spinner.
     */
@@ -4328,6 +4794,10 @@ export namespace Components {
     */
     'contentId'?: string;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * If `true`, the split pane will be hidden.
     */
     'disabled': boolean;
@@ -4341,6 +4811,10 @@ export namespace Components {
     * The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane.  ```html    * <ion-split-pane content-id="my-content">    *   <ion-menu></ion-menu>    *   <div id="my-content">    * </ion-split-pane>    * ```
     */
     'contentId'?: string;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * If `true`, the split pane will be hidden.
     */
@@ -4361,6 +4835,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -4379,6 +4857,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
@@ -4393,6 +4875,10 @@ export namespace Components {
   }
 
   interface IonTabButton {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     /**
     * The selected tab component
     */
@@ -4419,6 +4905,10 @@ export namespace Components {
     'tab'?: string;
   }
   interface IonTabButtonAttributes extends StencilHTMLAttributes {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * The selected tab component
     */
@@ -4506,6 +4996,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -4515,6 +5009,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * The mode determines which platform styles to use.
     */
@@ -4546,6 +5044,10 @@ export namespace Components {
     * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
     */
     'debounce': number;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     /**
     * If `true`, the user cannot interact with the textarea.
     */
@@ -4629,6 +5131,10 @@ export namespace Components {
     */
     'debounce'?: number;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
+    /**
     * If `true`, the user cannot interact with the textarea.
     */
     'disabled'?: boolean;
@@ -4694,20 +5200,38 @@ export namespace Components {
     'wrap'?: 'hard' | 'soft' | 'off';
   }
 
-  interface IonThumbnail {}
-  interface IonThumbnailAttributes extends StencilHTMLAttributes {}
+  interface IonThumbnail {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+  }
+  interface IonThumbnailAttributes extends StencilHTMLAttributes {
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
+  }
 
   interface IonTitle {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
   }
   interface IonTitleAttributes extends StencilHTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
   }
 
   interface IonToastController {
@@ -4743,6 +5267,10 @@ export namespace Components {
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
     'cssClass'?: string | string[];
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     /**
     * Dismiss the toast overlay after it has been presented.
     */
@@ -4815,6 +5343,10 @@ export namespace Components {
     */
     'cssClass'?: string | string[];
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
+    /**
     * How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.
     */
     'duration'?: number;
@@ -4878,6 +5410,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * If `true`, the user cannot interact with the toggle.
     */
     'disabled': boolean;
@@ -4903,6 +5439,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * If `true`, the user cannot interact with the toggle.
     */
@@ -4939,6 +5479,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -4948,6 +5492,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir'?: string;
     /**
     * The mode determines which platform styles to use.
     */

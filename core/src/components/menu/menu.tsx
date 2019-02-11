@@ -49,6 +49,12 @@ export class Menu implements ComponentInterface, MenuI {
   @Prop() contentId?: string;
 
   /**
+   * Indicates the direction of the component.
+   * Defaults to the value of the `dir` attribute on the html element.
+   */
+  @Prop({ reflectToAttr: true }) dir: string = document.dir;
+
+  /**
    * An id for the menu.
    */
   @Prop() menuId?: string;

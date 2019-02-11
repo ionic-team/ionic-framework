@@ -30,6 +30,13 @@ There are several attributes that can be added to a row to customize this behavi
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property | Attribute | Description                                                                                                 | Type     | Default        |
+| -------- | --------- | ----------------------------------------------------------------------------------------------------------- | -------- | -------------- |
+| `dir`    | `dir`     | Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element. | `string` | `document.dir` |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

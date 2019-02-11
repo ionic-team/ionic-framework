@@ -39,6 +39,12 @@ export class PickerColumnCmp implements ComponentInterface {
   /** Picker column data */
   @Prop() col!: PickerColumn;
 
+  /**
+   * Indicates the direction of the component.
+   * Defaults to the value of the `dir` attribute on the html element.
+   */
+  @Prop({ reflectToAttr: true }) dir: string = document.dir;
+
   componentWillLoad() {
     let pickerRotateFactor = 0;
     let pickerScaleFactor = 0.81;

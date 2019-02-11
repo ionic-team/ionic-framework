@@ -40,6 +40,12 @@ export class Datetime implements ComponentInterface {
   @Prop() name: string = this.inputId;
 
   /**
+   * Indicates the direction of the component.
+   * Defaults to the value of the `dir` attribute on the html element.
+   */
+  @Prop({ reflectToAttr: true }) dir: string = document.dir;
+
+  /**
    * If `true`, the user cannot interact with the datetime.
    */
   @Prop() disabled = false;

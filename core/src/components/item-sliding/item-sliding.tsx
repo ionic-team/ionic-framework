@@ -49,6 +49,12 @@ export class ItemSliding implements ComponentInterface {
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
+   * Indicates the direction of the component.
+   * Defaults to the value of the `dir` attribute on the html element.
+   */
+  @Prop({ reflectToAttr: true }) dir: string = document.dir;
+
+  /**
    * If `true`, the user cannot interact with the sliding-item.
    */
   @Prop() disabled = false;

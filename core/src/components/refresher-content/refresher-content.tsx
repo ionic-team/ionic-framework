@@ -10,6 +10,12 @@ export class RefresherContent implements ComponentInterface {
   @Prop({ context: 'config' }) config!: Config;
 
   /**
+   * Indicates the direction of the component.
+   * Defaults to the value of the `dir` attribute on the html element.
+   */
+  @Prop({ reflectToAttr: true }) dir: string = document.dir;
+
+  /**
    * A static icon to display when you begin to pull down
    */
   @Prop({ mutable: true }) pullingIcon?: string | null;

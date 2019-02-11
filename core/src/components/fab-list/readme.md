@@ -30,10 +30,11 @@ The `ion-fab-list` element is a container for multiple fab buttons. This collect
 
 ## Properties
 
-| Property    | Attribute   | Description                                                         | Type                                    | Default    |
-| ----------- | ----------- | ------------------------------------------------------------------- | --------------------------------------- | ---------- |
-| `activated` | `activated` | If `true`, the fab list will be show all fab buttons in the list.   | `boolean`                               | `false`    |
-| `side`      | `side`      | The side the fab list will show on relative to the main fab button. | `"bottom" \| "end" \| "start" \| "top"` | `'bottom'` |
+| Property    | Attribute   | Description                                                                                                 | Type                                    | Default        |
+| ----------- | ----------- | ----------------------------------------------------------------------------------------------------------- | --------------------------------------- | -------------- |
+| `activated` | `activated` | If `true`, the fab list will be show all fab buttons in the list.                                           | `boolean`                               | `false`        |
+| `dir`       | `dir`       | Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element. | `string`                                | `document.dir` |
+| `side`      | `side`      | The side the fab list will show on relative to the main fab button.                                         | `"bottom" \| "end" \| "start" \| "top"` | `'bottom'`     |
 
 
 ----------------------------------------------

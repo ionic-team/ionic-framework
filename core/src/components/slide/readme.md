@@ -10,6 +10,13 @@ See the [Slides API Docs](../slides) for more usage information.
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property | Attribute | Description                                                                                                 | Type     | Default        |
+| -------- | --------- | ----------------------------------------------------------------------------------------------------------- | -------- | -------------- |
+| `dir`    | `dir`     | Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element. | `string` | `document.dir` |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

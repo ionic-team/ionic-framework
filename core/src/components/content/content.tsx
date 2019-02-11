@@ -57,6 +57,12 @@ export class Content implements ComponentInterface {
   @Prop() color?: Color;
 
   /**
+   * Indicates the direction of the component.
+   * Defaults to the value of the `dir` attribute on the html element.
+   */
+  @Prop({ reflectToAttr: true }) dir: string = document.dir;
+
+  /**
    * If `true`, the content will scroll behind the headers
    * and footers. This effect can easily be seen by setting the toolbar
    * to transparent.

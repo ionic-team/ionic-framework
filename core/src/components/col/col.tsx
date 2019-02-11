@@ -17,6 +17,12 @@ export class Col implements ComponentInterface {
   @Element() el!: HTMLStencilElement;
 
   /**
+   * Indicates the direction of the component.
+   * Defaults to the value of the `dir` attribute on the html element.
+   */
+  @Prop({ reflectToAttr: true }) dir: string = document.dir;
+
+  /**
    * The amount to offset the column, in terms of how many columns it should shift to the end
    * of the total available.
    */

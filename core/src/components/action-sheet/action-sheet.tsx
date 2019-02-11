@@ -29,6 +29,12 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   @Prop() overlayIndex!: number;
 
   /**
+   * Indicates the direction of the component.
+   * Defaults to the value of the `dir` attribute on the html element.
+   */
+  @Prop({ reflectToAttr: true }) dir: string = document.dir;
+
+  /**
    * The mode determines which platform styles to use.
    */
   @Prop() mode!: Mode;

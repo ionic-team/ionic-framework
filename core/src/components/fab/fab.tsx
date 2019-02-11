@@ -20,6 +20,12 @@ export class Fab implements ComponentInterface {
   @Prop() vertical?: 'top' | 'bottom' | 'center';
 
   /**
+   * Indicates the direction of the component.
+   * Defaults to the value of the `dir` attribute on the html element.
+   */
+  @Prop({ reflectToAttr: true }) dir: string = document.dir;
+
+  /**
    * If `true`, the fab will display on the edge of the header if
    * `vertical` is `"top"`, and on the edge of the footer if
    * it is `"bottom"`. Should be used with a `fixed` slot.

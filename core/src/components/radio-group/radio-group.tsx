@@ -19,6 +19,12 @@ export class RadioGroup implements ComponentInterface {
   @Prop() allowEmptySelection = false;
 
   /**
+   * Indicates the direction of the component.
+   * Defaults to the value of the `dir` attribute on the html element.
+   */
+  @Prop({ reflectToAttr: true }) dir: string = document.dir;
+
+  /**
    * The name of the control, which is submitted with the form data.
    */
   @Prop() name: string = this.inputId;

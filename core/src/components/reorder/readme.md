@@ -16,6 +16,13 @@ Reorder is a component that allows an item to be dragged to change its order. It
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property | Attribute | Description                                                                                                 | Type     | Default        |
+| -------- | --------- | ----------------------------------------------------------------------------------------------------------- | -------- | -------------- |
+| `dir`    | `dir`     | Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element. | `string` | `document.dir` |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

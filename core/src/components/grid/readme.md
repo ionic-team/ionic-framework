@@ -198,9 +198,10 @@ See [Grid Layout](/docs/layout/grid) for more information.
 
 ## Properties
 
-| Property | Attribute | Description                                                           | Type      | Default |
-| -------- | --------- | --------------------------------------------------------------------- | --------- | ------- |
-| `fixed`  | `fixed`   | If `true`, the grid will have a fixed width based on the screen size. | `boolean` | `false` |
+| Property | Attribute | Description                                                                                                 | Type      | Default        |
+| -------- | --------- | ----------------------------------------------------------------------------------------------------------- | --------- | -------------- |
+| `dir`    | `dir`     | Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element. | `string`  | `document.dir` |
+| `fixed`  | `fixed`   | If `true`, the grid will have a fixed width based on the screen size.                                       | `boolean` | `false`        |
 
 
 ## CSS Custom Properties

@@ -21,6 +21,12 @@ export class ToolbarTitle implements ComponentInterface {
    */
   @Prop() color?: Color;
 
+  /**
+   * Indicates the direction of the component.
+   * Defaults to the value of the `dir` attribute on the html element.
+   */
+  @Prop({ reflectToAttr: true }) dir: string = document.dir;
+
   private getMode() {
     const toolbar = this.el.closest('ion-toolbar');
     return (toolbar && toolbar.mode) || this.mode;

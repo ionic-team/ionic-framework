@@ -206,15 +206,16 @@ function openCustom() {
 
 ## Properties
 
-| Property       | Attribute        | Description                                                                                                        | Type                  | Default     |
-| -------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------ | --------------------- | ----------- |
-| `contentId`    | `content-id`     | The content's id the menu should use.                                                                              | `string \| undefined` | `undefined` |
-| `disabled`     | `disabled`       | If `true`, the menu is disabled.                                                                                   | `boolean`             | `false`     |
-| `maxEdgeStart` | `max-edge-start` | The edge threshold for dragging the menu open. If a drag/swipe happens over this value, the menu is not triggered. | `number`              | `50`        |
-| `menuId`       | `menu-id`        | An id for the menu.                                                                                                | `string \| undefined` | `undefined` |
-| `side`         | `side`           | Which side of the view the menu should be placed.                                                                  | `"end" \| "start"`    | `'start'`   |
-| `swipeGesture` | `swipe-gesture`  | If `true`, swiping the menu is enabled.                                                                            | `boolean`             | `true`      |
-| `type`         | `type`           | The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.                                | `string \| undefined` | `undefined` |
+| Property       | Attribute        | Description                                                                                                        | Type                  | Default        |
+| -------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------ | --------------------- | -------------- |
+| `contentId`    | `content-id`     | The content's id the menu should use.                                                                              | `string \| undefined` | `undefined`    |
+| `dir`          | `dir`            | Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.        | `string`              | `document.dir` |
+| `disabled`     | `disabled`       | If `true`, the menu is disabled.                                                                                   | `boolean`             | `false`        |
+| `maxEdgeStart` | `max-edge-start` | The edge threshold for dragging the menu open. If a drag/swipe happens over this value, the menu is not triggered. | `number`              | `50`           |
+| `menuId`       | `menu-id`        | An id for the menu.                                                                                                | `string \| undefined` | `undefined`    |
+| `side`         | `side`           | Which side of the view the menu should be placed.                                                                  | `"end" \| "start"`    | `'start'`      |
+| `swipeGesture` | `swipe-gesture`  | If `true`, swiping the menu is enabled.                                                                            | `boolean`             | `true`         |
+| `type`         | `type`           | The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.                                | `string \| undefined` | `undefined`    |
 
 
 ## Events

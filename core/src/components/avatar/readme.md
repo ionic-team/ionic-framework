@@ -57,6 +57,13 @@ Avatars can be used by themselves or inside of any element. If placed inside of 
 
 
 
+## Properties
+
+| Property | Attribute | Description                                                                                                 | Type     | Default        |
+| -------- | --------- | ----------------------------------------------------------------------------------------------------------- | -------- | -------------- |
+| `dir`    | `dir`     | Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element. | `string` | `document.dir` |
+
+
 ## CSS Custom Properties
 
 | Name              | Description                                 |

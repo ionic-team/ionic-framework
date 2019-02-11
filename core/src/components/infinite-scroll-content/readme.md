@@ -38,10 +38,11 @@ The `ion-infinite-scroll-content` component is the default child used by the `io
 
 ## Properties
 
-| Property         | Attribute         | Description                                       | Type                                                                                              | Default     |
-| ---------------- | ----------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ----------- |
-| `loadingSpinner` | `loading-spinner` | An animated SVG spinner that shows while loading. | `"bubbles" \| "circles" \| "crescent" \| "dots" \| "lines" \| "lines-small" \| null \| undefined` | `undefined` |
-| `loadingText`    | `loading-text`    | Optional text to display while loading.           | `string \| undefined`                                                                             | `undefined` |
+| Property         | Attribute         | Description                                                                                                 | Type                                                                                              | Default        |
+| ---------------- | ----------------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | -------------- |
+| `dir`            | `dir`             | Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element. | `string`                                                                                          | `document.dir` |
+| `loadingSpinner` | `loading-spinner` | An animated SVG spinner that shows while loading.                                                           | `"bubbles" \| "circles" \| "crescent" \| "dots" \| "lines" \| "lines-small" \| null \| undefined` | `undefined`    |
+| `loadingText`    | `loading-text`    | Optional text to display while loading.                                                                     | `string \| undefined`                                                                             | `undefined`    |
 
 
 ----------------------------------------------

@@ -26,6 +26,12 @@ export class Toolbar implements ComponentInterface {
   @Prop() color?: Color;
 
   /**
+   * Indicates the direction of the component.
+   * Defaults to the value of the `dir` attribute on the html element.
+   */
+  @Prop({ reflectToAttr: true }) dir: string = document.dir;
+
+  /**
    * The mode determines which platform styles to use.
    */
   @Prop() mode!: Mode;

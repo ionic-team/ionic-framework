@@ -19,6 +19,12 @@ export class InfiniteScroll implements ComponentInterface {
   @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
 
   /**
+   * Indicates the direction of the component.
+   * Defaults to the value of the `dir` attribute on the html element.
+   */
+  @Prop({ reflectToAttr: true }) dir: string = document.dir;
+
+  /**
    * The threshold distance from the bottom
    * of the content to call the `infinite` output event when scrolled.
    * The threshold value can be either a percent, or

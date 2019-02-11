@@ -24,6 +24,12 @@ export class TabButton implements ComponentInterface {
   @Prop({ mutable: true }) selected = false;
 
   /**
+   * Indicates the direction of the component.
+   * Defaults to the value of the `dir` attribute on the html element.
+   */
+  @Prop({ reflectToAttr: true }) dir: string = document.dir;
+
+  /**
    * The mode determines which platform styles to use.
    */
   @Prop() mode!: Mode;
