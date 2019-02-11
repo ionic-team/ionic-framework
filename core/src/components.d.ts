@@ -387,6 +387,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
+    /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
     'href'?: string;
@@ -400,6 +404,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Indicates the direction of the component. Defaults to the value of the `dir` attribute on the html element.
+    */
+    'dir': string;
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */

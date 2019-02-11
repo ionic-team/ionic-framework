@@ -31,6 +31,8 @@
   <ion-anchor href="#" class="cursive">Cursive Anchor</ion-anchor>
   <ion-anchor href="#" class="custom">Custom Anchor</ion-anchor>
   <ion-anchor href="#" color="secondary" class="custom">Custom Secondary Anchor</ion-anchor>
+  <ion-anchor class="custom-rtl">RTL Color Change</ion-anchor>
+  <ion-anchor dir="ltr" class="custom-rtl">Force LTR</ion-anchor>
 
   <style>
     ion-anchor {
@@ -51,6 +53,14 @@
     .custom {
       --background: blue;
       --color: white;
+    }
+
+    .custom-rtl {
+      color: #32db5c;
+    }
+
+    [dir="rtl"].custom-rtl {
+      color: #db3232;
     }
   </style>
 </body>

@@ -86,25 +86,25 @@
 // --------------------------------------------------
 // Used to cleanly add selectors to :host and :host()
 
-@function add-root-selector($root, $addHostSelector, $shadowDom: false) {
+@function add-root-selector($root, $addHostSelector) {
   $selectors: str-split($root, ",");
 
   $list: ();
 
   @each $selector in $selectors {
-    @if str-contains($selector, ":host(") {
-      $updated-host: str-replace($selector, ":host(", ":host(#{$addHostSelector}");
-      $list: append($list, $updated-host, comma);
+    // If :host is in the selector, break it apart to include dir
+    @if str-contains($selector, ":host") {
+      @if str-contains($selector, ":host(") {
+        $selector: str-replace($selector, ":host(", ":host(#{$addHostSelector}");
+      } @else {
+        $selector: str-replace($selector, ":host", ":host(#{$addHostSelector})");
+      }
 
-    } @else if str-contains($selector, ":host") {
-      $list: append($list, ":host(#{$addHostSelector}) + b", comma);
-
-    } @else if $shadowDom == true {
-      $list: append($list, ":host(#{$addHostSelector}) #{$selector}", comma);
-
+      $list: append($list, "#{$selector}", comma);
+    // If this is a normal CSS selector, add both shadow and non-shadow dir root
     } @else {
-      // TODO host-context should be for scoped only
-      $list: append($list, ":host-context(#{$addHostSelector}) #{$selector}", comma);
+      $list: append($list, "#{$addHostSelector} #{$selector}", comma);
+      $list: append($list, ":host(#{$addHostSelector}) #{$selector}", comma);
     }
   }
 
