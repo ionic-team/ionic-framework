@@ -10,7 +10,6 @@ import { createColorClasses, openURL } from '../../utils/theme';
 })
 export class Anchor implements ComponentInterface {
 
-  @Prop({ context: 'document' }) doc!: Document;
   @Prop({ context: 'window' }) win!: Window;
 
   /**
@@ -24,7 +23,7 @@ export class Anchor implements ComponentInterface {
    * Indicates the direction of the component.
    * Defaults to the value of the `dir` attribute on the html element.
    */
-  @Prop({ reflectToAttr: true, mutable: true }) dir!: string;
+  @Prop({ reflectToAttr: true }) dir: string = document.dir;
 
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.
@@ -41,10 +40,6 @@ export class Anchor implements ComponentInterface {
   @Listen('click')
   onClick(ev: Event) {
     openURL(this.win, this.href, ev, this.routerDirection);
-  }
-
-  componentWillLoad() {
-    this.dir = this.dir != null ? this.dir : this.doc.dir;
   }
 
   hostData() {
