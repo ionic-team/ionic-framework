@@ -3,9 +3,9 @@ import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } 
 import { Config, NavOutlet, RouteID, RouteWrite, TabButtonClickEventDetail } from '../../interface';
 
 /**
- * @slot - The default slot will display tabs at the bottom of the screen.
- * @slot top - Tabs will be placed at the top of the screen.
- * @slot bottom - Tabs will be placed at the bottom of the screen.
+ * @slot - Content is placed between the named slots if a slot is not provided.
+ * @slot top - Content is placed at the top of the screen.
+ * @slot bottom - Content is placed at the bottom of the screen.
  */
 @Component({
   tag: 'ion-tabs',

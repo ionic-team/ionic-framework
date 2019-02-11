@@ -4,11 +4,11 @@ import { Color, Config, CssClassMap, Mode, StyleEventDetail } from '../../interf
 import { createColorClasses } from '../../utils/theme';
 
 /**
- * @slot - The default slot should display the toolbar text.
- * @slot start - Content will be placed on the left side within the toolbar in LTR, and on the right side in RTL.
- * @slot secondary - Positions elements to the left of the content in `ios` mode, and directly to the right in `md` mode.
- * @slot primary - Positions elements to the right of the content in `ios` mode, and to the far right in `md` mode.
- * @slot end - Content will be placed on the right side within the toolbar in LTR, and on the left side in RTL.
+ * @slot - Content is placed between the named slots if a slot is not provided.
+ * @slot start - Content is placed to the left of the toolbar text in LTR, and to the right in RTL.
+ * @slot secondary - Content is placed to the left of the toolbar text in `ios` mode, and directly to the right in `md` mode.
+ * @slot primary - Content is placed to the right of the toolbar text in `ios` mode, and to the far right in `md` mode.
+ * @slot end - Content is placed to the left of the toolbar text in LTR, and to the right in RTL.
  */
 @Component({
   tag: 'ion-toolbar',

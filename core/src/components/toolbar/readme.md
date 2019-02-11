@@ -351,17 +351,6 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
 | `mode`   | `mode`    | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined` |
 
 
-## Slots
-
-| Slot          | Description                                                                                          |
-| ------------- | ---------------------------------------------------------------------------------------------------- |
-|               | The default slot should display the toolbar text.                                                    |
-| `"end"`       | Content will be placed on the right side within the toolbar in LTR, and on the left side in RTL.     |
-| `"primary"`   | Positions elements to the right of the content in `ios` mode, and to the far right in `md` mode.     |
-| `"secondary"` | Positions elements to the left of the content in `ios` mode, and directly to the right in `md` mode. |
-| `"start"`     | Content will be placed on the left side within the toolbar in LTR, and on the right side in RTL.     |
-
-
 ## CSS Custom Properties
 
 | Name               | Description                       |

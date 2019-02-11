@@ -61,15 +61,6 @@ Item Dividers are block elements that can be used to separate items in a list. T
 | `sticky` | `sticky`  | When it's set to `true`, the item-divider will stay visible when it reaches the top of the viewport until the next `ion-item-divider` replaces it.  This feature relies in `position:sticky`: https://caniuse.com/#feat=css-sticky                                     | `boolean`             | `false`     |
 
 
-## Slots
-
-| Slot      | Description                                                                                      |
-| --------- | ------------------------------------------------------------------------------------------------ |
-|           | The default slot should contain the divider text.                                                |
-| `"end"`   | Content will be placed on the right side within the divider in LTR, and to the left side in RTL. |
-| `"start"` | Content will be placed on the left side within the divider in LTR, and on the right side in RTL. |
-
-
 ## CSS Custom Properties
 
 | Name               | Description                        |

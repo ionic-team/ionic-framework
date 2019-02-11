@@ -4,12 +4,12 @@ import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
- * @slot - The default slot should contain the option text.
- * @slot start - Content will be placed on the left side within the option in LTR, and on the right side in RTL.
- * @slot top - Will show the icon above the text.
- * @slot icon-only - Use this if the option only contains an icon.
- * @slot bottom - Will show the icon below the text.
- * @slot end - Content will be placed on the right side within the option in LTR, and on the left side in RTL.
+ * @slot - Content is placed between the named slots if a slot is not provided.
+ * @slot start - Content is placed to the left of the option text in LTR, and to the right in RTL.
+ * @slot top - Content is placed above the option text.
+ * @slot icon-only - Should be used on an icon in an option that has no text.
+ * @slot bottom - Content is placed below the option text.
+ * @slot end - Content is placed to the right of the option text in LTR, and to the left in RTL.
  */
 @Component({
   tag: 'ion-item-option',

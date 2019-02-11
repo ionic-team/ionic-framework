@@ -4,9 +4,9 @@ import { Color, CssClassMap, Mode, RouterDirection, StyleEventDetail } from '../
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
- * @slot - The default slot should contain the item text.
- * @slot start - Content will be placed to the left of the item text in LTR, and to the right in RTL.
- * @slot end - Content will be placed to the right of the item text in LTR, and to the left in RTL.
+ * @slot - Content is placed between the named slots if a slot is not provided.
+ * @slot start - Content is placed to the left of the item text in LTR, and to the right in RTL.
+ * @slot end - Content is placed to the right of the item text in LTR, and to the left in RTL.
  */
 @Component({
   tag: 'ion-item',
