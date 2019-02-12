@@ -168,10 +168,10 @@ export interface IonicConfig {
   // PRIVATE configs
   keyboardHeight?: number;
   inputShims?: boolean;
-  scrollPadding?: string;
-  inputBlurring?: string;
+  scrollPadding?: boolean;
+  inputBlurring?: boolean;
   scrollAssist?: boolean;
-  hideCaretOnScroll?: string;
+  hideCaretOnScroll?: boolean;
 
   // INTERNAL configs
   persistConfig?: boolean;
