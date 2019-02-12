@@ -72,17 +72,17 @@ var win = (typeof window === 'undefined') ? {
 } : window; // eslint-disable-line
 
 /**
- * Dom7 2.1.2
+ * Dom7 2.1.3
  * Minimalistic JavaScript library for DOM manipulation, with a jQuery-compatible API
  * http://framework7.io/docs/dom.html
  *
- * Copyright 2018, Vladimir Kharlampidi
+ * Copyright 2019, Vladimir Kharlampidi
  * The iDangero.us
  * http://www.idangero.us/
  *
  * Licensed under MIT
  *
- * Released on: September 13, 2018
+ * Released on: February 11, 2019
  */
 
 class Dom7 {
@@ -359,6 +359,9 @@ function off(...args) {
         for (let k = handlers.length - 1; k >= 0; k -= 1) {
           const handler = handlers[k];
           if (listener && handler.listener === listener) {
+            el.removeEventListener(event, handler.proxyListener, capture);
+            handlers.splice(k, 1);
+          } else if (listener && handler.listener && handler.listener.dom7proxy && handler.listener.dom7proxy === listener) {
             el.removeEventListener(event, handler.proxyListener, capture);
             handlers.splice(k, 1);
           } else if (!listener) {
