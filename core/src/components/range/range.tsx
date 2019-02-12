@@ -54,7 +54,7 @@ export class Range implements ComponentInterface {
     if (max < neutralPoint) {
       this.neutralPoint = max;
     }
-    if (min < neutralPoint) {
+    if (neutralPoint < min) {
       this.neutralPoint = min;
     }
   }
