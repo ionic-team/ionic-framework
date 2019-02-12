@@ -457,8 +457,8 @@ export class Range implements ComponentInterface {
     const barStyle = () => {
       const style: any = {};
 
-      style[start] = barPosition.left;
-      style[end] = barPosition.right;
+      style[start] = barPosition[start];
+      style[end] = barPosition[end];
 
       return style;
     };
