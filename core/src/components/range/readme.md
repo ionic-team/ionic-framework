@@ -111,6 +111,14 @@ left or right of the range.
 | `ionFocus`  | Emitted when the range has focus.            | `CustomEvent<void>`                   |
 
 
+## Slots
+
+| Slot      | Description                                                                        |
+| --------- | ---------------------------------------------------------------------------------- |
+| `"end"`   | Content is placed to the right of the range slider in LTR, and to the left in RTL. |
+| `"start"` | Content is placed to the left of the range slider in LTR, and to the right in RTL. |
+
+
 ## CSS Custom Properties
 
 | Name                      | Description                        |
