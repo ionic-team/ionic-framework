@@ -5,8 +5,8 @@ async function presentPopover(ev) {
 
   const popover = await popoverController.create({
     component: 'popover-example-page',
-    translucent: true
     event: ev,
+    translucent: true
   });
   return await popover.present();
 }
