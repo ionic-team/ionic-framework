@@ -1,8 +1,11 @@
-import { InjectionToken } from '@angular/core';
+import { Injectable, InjectionToken } from '@angular/core';
 import { Config as CoreConfig, IonicConfig } from '@ionic/core';
 
 import { IonicWindow } from '../types/interfaces';
 
+@Injectable({
+  providedIn: 'root'
+})
 export class Config {
 
   get(key: keyof IonicConfig, fallback?: any): any {

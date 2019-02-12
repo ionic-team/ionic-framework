@@ -52,6 +52,10 @@
   pointer-events: none;
 }
 
+:host(.overlay-hidden) {
+  display: none;
+}
+
 :host(.ion-color) {
   --button-color: inherit;
 

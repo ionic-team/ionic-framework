@@ -22,7 +22,7 @@
   @include margin(0);
   @include padding(
     var(--padding-top),
-    calc(var(--padding-end) + var(--ion-safe-area-right, 0px))
+    calc(var(--padding-end) + var(--ion-safe-area-right, 0px)),
     var(--padding-bottom),
     calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
   );

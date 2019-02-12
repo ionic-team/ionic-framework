@@ -1,5 +1,5 @@
 
-export class GestureController {
+class GestureController {
 
   private gestureId = 0;
   private requestedStart = new Map<number, number>();
@@ -142,7 +142,7 @@ export class GestureController {
   }
 }
 
-export class GestureDelegate {
+class GestureDelegate {
   private ctrl?: GestureController;
   private priority: number;
 
@@ -202,7 +202,7 @@ export class GestureDelegate {
   }
 }
 
-export class BlockerDelegate {
+class BlockerDelegate {
 
   private ctrl?: GestureController;
 

@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
-import { Color, Config, Mode, TextInputChangeEvent } from '../../interface';
+import { Color, Config, Mode, SearchbarChangeEventDetail } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
@@ -116,7 +116,7 @@ export class Searchbar implements ComponentInterface {
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<SearchbarChangeEventDetail>;
 
   /**
    * Emitted when the cancel button is clicked.
@@ -166,6 +166,14 @@ export class Searchbar implements ComponentInterface {
     if (this.nativeInput) {
       this.nativeInput.focus();
     }
+  }
+
+  /**
+   * Returns the native `<input>` element used under the hood.
+   */
+  @Method()
+  getInputElement(): Promise<HTMLInputElement> {
+    return Promise.resolve(this.nativeInput!);
   }
 
   /**
@@ -347,7 +355,6 @@ export class Searchbar implements ComponentInterface {
         'searchbar-animated': animated,
         'searchbar-no-animate': animated && this.noAnimate,
         'searchbar-has-value': (this.getValue() !== ''),
-        'searchbar-show-cancel': this.showCancelButton,
         'searchbar-left-aligned': this.shouldAlignLeft,
         'searchbar-has-focus': this.focused
       }
@@ -366,10 +373,12 @@ export class Searchbar implements ComponentInterface {
         onTouchStart={this.onCancelSearchbar}
         class="searchbar-cancel-button"
       >
-        { this.mode === 'md'
-          ? <ion-icon mode={this.mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
-          : this.cancelButtonText
-        }
+        <div>
+          { this.mode === 'md'
+            ? <ion-icon mode={this.mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
+            : this.cancelButtonText
+          }
+        </div>
       </button>
     );
 

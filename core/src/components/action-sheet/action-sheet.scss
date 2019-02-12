@@ -39,6 +39,10 @@
   z-index: $z-index-overlay;
 }
 
+:host(.overlay-hidden) {
+  display: none;
+}
+
 .action-sheet-wrapper {
   @include position(null, 0, 0, 0);
   @include margin(auto);

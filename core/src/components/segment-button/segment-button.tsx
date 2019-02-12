@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
 
 import { Mode, SegmentButtonLayout } from '../../interface';
 
@@ -53,7 +53,8 @@ export class SegmentButton implements ComponentInterface {
     }
   }
 
-  private onClick = () => {
+  @Listen('click')
+  onClick() {
     this.checked = true;
   }
 
@@ -90,7 +91,6 @@ export class SegmentButton implements ComponentInterface {
         aria-pressed={this.checked ? 'true' : null}
         class="button-native"
         disabled={this.disabled}
-        onClick={this.onClick}
       >
         <slot></slot>
         {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}

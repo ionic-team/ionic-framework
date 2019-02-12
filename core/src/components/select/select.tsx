@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
-import { ActionSheetButton, ActionSheetOptions, AlertOptions, CssClassMap, Mode, OverlaySelect, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent } from '../../interface';
+import { ActionSheetButton, ActionSheetOptions, AlertOptions, CssClassMap, Mode, OverlaySelect, PopoverOptions, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, StyleEventDetail } from '../../interface';
 import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
@@ -18,6 +18,7 @@ export class Select implements ComponentInterface {
   private inputId = `ion-sel-${selectIds++}`;
   private overlay?: OverlaySelect;
   private didInit = false;
+  private buttonEl?: HTMLButtonElement;
 
   @Element() el!: HTMLIonSelectElement;
 
@@ -26,7 +27,6 @@ export class Select implements ComponentInterface {
   @Prop({ connect: 'ion-popover-controller' }) popoverCtrl!: HTMLIonPopoverControllerElement;
 
   @State() isExpanded = false;
-  @State() keyFocus = false;
 
   /**
    * The mode determines which platform styles to use.
@@ -90,7 +90,7 @@ export class Select implements ComponentInterface {
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange!: EventEmitter<SelectInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<SelectChangeEventDetail>;
 
   /**
    * Emitted when the selection is cancelled.
@@ -111,7 +111,7 @@ export class Select implements ComponentInterface {
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   @Watch('disabled')
   disabledChanged() {
@@ -136,6 +136,12 @@ export class Select implements ComponentInterface {
     if (this.didInit) {
       this.updateOptions();
     }
+  }
+
+  @Listen('click')
+  onClick(ev: UIEvent) {
+    this.setFocus();
+    this.open(ev);
   }
 
   async componentDidLoad() {
@@ -174,6 +180,7 @@ export class Select implements ComponentInterface {
     overlay.onDidDismiss().then(() => {
       this.overlay = undefined;
       this.isExpanded = false;
+      this.setFocus();
     });
     await overlay.present();
     return overlay;
@@ -353,6 +360,12 @@ export class Select implements ComponentInterface {
     return generateText(this.childOpts, this.value);
   }
 
+  private setFocus() {
+    if (this.buttonEl) {
+      this.buttonEl.focus();
+    }
+  }
+
   private emitStyle() {
     this.ionStyle.emit({
       'interactive': true,
@@ -364,20 +377,11 @@ export class Select implements ComponentInterface {
     });
   }
 
-  private onClick = (ev: UIEvent) => {
-    this.open(ev);
-  }
-
-  private onKeyUp = () => {
-    this.keyFocus = true;
-  }
-
   private onFocus = () => {
     this.ionFocus.emit();
   }
 
   private onBlur = () => {
-    this.keyFocus = false;
     this.ionBlur.emit();
   }
 
@@ -397,7 +401,6 @@ export class Select implements ComponentInterface {
       class: {
         'in-item': hostContext('ion-item', this.el),
         'select-disabled': this.disabled,
-        'select-key': this.keyFocus
       }
     };
   }
@@ -432,10 +435,10 @@ export class Select implements ComponentInterface {
       </div>,
       <button
         type="button"
-        onClick={this.onClick}
-        onKeyUp={this.onKeyUp}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
+        disabled={this.disabled}
+        ref={(el => this.buttonEl = el)}
       >
       </button>
     ];

@@ -9,8 +9,8 @@ instead a small subset of records (enough to fill the viewport) are rendered
 and reused as the user scrolls.
 
 ### The Basics
-The array of records should be passed to the `item` property on the `ion-virtual-scroll` element.
-The data given to the `item` property must be an array. An item
+The array of records should be passed to the `items` property on the `ion-virtual-scroll` element.
+The data given to the `items` property must be an array. An item
 template with the `*virtualItem` property is required in the `ion-virtual-scroll`.
 The `*virtualItem` property can be added to any element.
 
@@ -83,7 +83,7 @@ scrolling. In order to better control images, Ionic provides `<ion-img>`
 to manage HTTP requests and image rendering. While scrolling through items
 quickly, `<ion-img>` knows when and when not to make requests, when and
 when not to render images, and only loads the images that are viewable
-after scrolling. [Read more about `ion-img`.](../../img/Img/)
+after scrolling. [Read more about `ion-img`.](../img)
 
 It's also important for app developers to ensure image sizes are locked in,
 and after images have fully loaded they do not change size and affect any
@@ -132,7 +132,7 @@ dimensions are measured correctly.
 #### iOS Cordova WKWebView
 
 When deploying to iOS with Cordova, it's highly recommended to use the
-[WKWebView plugin](http://blog.ionic.io/cordova-ios-performance-improvements-drop-in-speed-with-wkwebview/)
+[WKWebView plugin](https://blog.ionicframework.com/cordova-ios-performance-improvements-drop-in-speed-with-wkwebview/)
 in order to take advantage of iOS's higher performing webview. Additionally,
 WKWebView is superior at scrolling efficiently in comparison to the older
 UIWebView.

@@ -51,11 +51,11 @@ content.addEventListener('ionScrollEnd', () => console.log('scroll end'));
 
 ## Events
 
-| Event            | Description                                                                                      | Detail           |
-| ---------------- | ------------------------------------------------------------------------------------------------ | ---------------- |
-| `ionScroll`      | Emitted while scrolling. This event is disabled by default. Look at the property: `scrollEvents` | ScrollDetail     |
-| `ionScrollEnd`   | Emitted when the scroll has ended.                                                               | ScrollBaseDetail |
-| `ionScrollStart` | Emitted when the scroll has started.                                                             | ScrollBaseDetail |
+| Event            | Description                                                                                      | Type                            |
+| ---------------- | ------------------------------------------------------------------------------------------------ | ------------------------------- |
+| `ionScroll`      | Emitted while scrolling. This event is disabled by default. Look at the property: `scrollEvents` | `CustomEvent<ScrollDetail>`     |
+| `ionScrollEnd`   | Emitted when the scroll has ended.                                                               | `CustomEvent<ScrollBaseDetail>` |
+| `ionScrollStart` | Emitted when the scroll has started.                                                             | `CustomEvent<ScrollBaseDetail>` |
 
 
 ## Methods
@@ -142,6 +142,14 @@ Scroll to the top of the component
 Type: `Promise<void>`
 
 
+
+
+## Slots
+
+| Slot      | Description                                                          |
+| --------- | -------------------------------------------------------------------- |
+|           | Content is placed in the scrollable area if provided without a slot. |
+| `"fixed"` | Should be used for fixed content that should not scroll.             |
 
 
 ## CSS Custom Properties

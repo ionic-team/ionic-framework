@@ -91,6 +91,10 @@
 // Activated Item
 // --------------------------------------------------
 
+:host(.ion-focused) .item-native {
+  background: var(--background-focused);
+}
+
 :host(.activated) .item-native {
   background: var(--background-activated);
 }
@@ -146,6 +150,10 @@
   box-shadow: var(--box-shadow);
   overflow: hidden;
   box-sizing: border-box;
+}
+
+.item-native::-moz-focus-inner {
+  border: 0;
 }
 
 button, a {
@@ -276,9 +284,8 @@ button, a {
 // Item Input Focused
 // --------------------------------------------------
 
-:host(.item-interactive.item-has-focus) {
-  --highlight-background: var(--highlight-color-focused);
-
+:host(.item-interactive.item-has-focus),
+:host(.item-interactive.ion-touched.ion-invalid) {
   // If the item has a full border and highlight is enabled, show the full item highlight
   --full-highlight-height: #{calc(var(--highlight-height) * var(--show-full-highlight))};
 
@@ -286,6 +293,12 @@ button, a {
   --inset-highlight-height: #{calc(var(--highlight-height) * var(--show-inset-highlight))};
 }
 
+// Item Input Focus
+// --------------------------------------------------
+
+:host(.item-interactive.item-has-focus) {
+  --highlight-background: var(--highlight-color-focused);
+}
 
 // Item Input Valid
 // --------------------------------------------------
@@ -293,7 +306,6 @@ button, a {
 :host(.item-interactive.ion-valid) {
   --highlight-background: var(--highlight-color-valid);
 }
-
 
 // Item Input Invalid
 // --------------------------------------------------

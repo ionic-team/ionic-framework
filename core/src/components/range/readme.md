@@ -104,11 +104,19 @@ left or right of the range.
 
 ## Events
 
-| Event       | Description                                  | Detail           |
-| ----------- | -------------------------------------------- | ---------------- |
-| `ionBlur`   | Emitted when the range loses focus.          | void             |
-| `ionChange` | Emitted when the value property has changed. | InputChangeEvent |
-| `ionFocus`  | Emitted when the range has focus.            | void             |
+| Event       | Description                                  | Type                                  |
+| ----------- | -------------------------------------------- | ------------------------------------- |
+| `ionBlur`   | Emitted when the range loses focus.          | `CustomEvent<void>`                   |
+| `ionChange` | Emitted when the value property has changed. | `CustomEvent<RangeChangeEventDetail>` |
+| `ionFocus`  | Emitted when the range has focus.            | `CustomEvent<void>`                   |
+
+
+## Slots
+
+| Slot      | Description                                                                        |
+| --------- | ---------------------------------------------------------------------------------- |
+| `"end"`   | Content is placed to the right of the range slider in LTR, and to the left in RTL. |
+| `"start"` | Content is placed to the left of the range slider in LTR, and to the right in RTL. |
 
 
 ## CSS Custom Properties

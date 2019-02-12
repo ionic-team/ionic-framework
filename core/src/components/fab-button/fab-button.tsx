@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop } from '@stencil/core';
 
 import { Color, Mode, RouterDirection } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
@@ -13,8 +13,6 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 })
 export class FabButton implements ComponentInterface {
   @Element() el!: HTMLElement;
-
-  @State() keyFocus = false;
 
   @Prop({ context: 'window' }) win!: Window;
 
@@ -86,17 +84,12 @@ export class FabButton implements ComponentInterface {
     this.ionFocus.emit();
   }
 
-  private onKeyUp = () => {
-    this.keyFocus = true;
-  }
-
   private onBlur = () => {
-    this.keyFocus = false;
     this.ionBlur.emit();
   }
 
   hostData() {
-    const { el, disabled, color, activated, show, translucent, size, keyFocus } = this;
+    const { el, disabled, color, activated, show, translucent, size } = this;
     const inList = hostContext('ion-fab-list', el);
     return {
       'aria-disabled': disabled ? 'true' : null,
@@ -109,7 +102,7 @@ export class FabButton implements ComponentInterface {
         'fab-button-disabled': disabled,
         'fab-button-translucent': translucent,
         'ion-activatable': true,
-        'focused': keyFocus,
+        'ion-focusable': true,
         [`fab-button-${size}`]: size !== undefined,
       }
     };
@@ -127,7 +120,6 @@ export class FabButton implements ComponentInterface {
         class="button-native"
         disabled={this.disabled}
         onFocus={this.onFocus}
-        onKeyUp={this.onKeyUp}
         onBlur={this.onBlur}
         onClick={(ev: Event) => openURL(this.win, this.href, ev, this.routerDirection)}
       >

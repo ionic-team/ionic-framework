@@ -2,22 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { attachEventProps } from './utils'
 import { ensureElementInBody, dashToPascalCase } from './utils';
+import { OverlayComponentElement, OverlayControllerComponentElement } from '../types';
 
-export function createOverlayComponent<T, E extends HTMLElement, C extends HTMLElement>(tagName: string, controllerTagName: string) {
+export function createOverlayComponent<T extends object, E extends OverlayComponentElement, C extends OverlayControllerComponentElement<E>>(tagName: string, controllerTagName: string) {
   const displayName = dashToPascalCase(tagName);
 
-  type IonicReactInternalProps = {
-    forwardedRef?: React.RefObject<E>;
+  type ReactProps = {
     children: React.ReactNode;
     show: boolean;
   }
+  type Props = T & ReactProps;
 
-  return class ReactControllerComponent extends React.Component<T & IonicReactInternalProps> {
+  return class ReactControllerComponent extends React.Component<Props> {
     element: E;
     controllerElement: C;
     el: HTMLDivElement;
 
-    constructor(props: T & IonicReactInternalProps) {
+    constructor(props: Props) {
       super(props);
 
       this.el = document.createElement('div');
@@ -29,22 +30,24 @@ export function createOverlayComponent<T, E extends HTMLElement, C extends HTMLE
 
     async componentDidMount() {
       this.controllerElement = ensureElementInBody<C>(controllerTagName);
-      await (this.controllerElement as any).componentOnReady();
+      await this.controllerElement.componentOnReady();
     }
 
-    async componentDidUpdate(prevProps: T & IonicReactInternalProps) {
+    async componentDidUpdate(prevProps: Props) {
       if (prevProps.show !== this.props.show && this.props.show === true) {
-        const { children, show, ...cProps} = this.props as any;
-        cProps.component = this.el;
-        cProps.componentProps = {};
+        const { children, show, ...cProps} = this.props;
 
-        this.element = await (this.controllerElement as any).create(cProps);
-        await (this.element as any).present();
+        this.element = await this.controllerElement.create({
+          ...cProps,
+          component: this.el,
+          componentProps: {}
+        });
+        await this.element.present();
 
         attachEventProps(this.element, cProps);
       }
       if (prevProps.show !== this.props.show && this.props.show === false) {
-        return await (this.element as any).dismiss();
+        await this.element.dismiss();
       }
     }
 
