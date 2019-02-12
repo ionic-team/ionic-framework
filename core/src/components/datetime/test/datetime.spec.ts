@@ -1,20 +1,14 @@
-import { Datetime } from '../datetime';
 import { DatetimeOptions } from '../datetime-interface';
-import { DatetimeData } from '../datetime-util';
+import { DatetimeData, getDateValue } from '../datetime-util';
 
 describe('Datetime', () => {
-  let datetime;
-  beforeEach(() => {
-    datetime = new Datetime();
-  });
-  
   describe('getDateValue()', () => {
     it('it should return the date value for the current day', () => {
       const today = new Date();
       
-      const dayValue = datetime.getDateValue({}, 'DD');
-      const monthvalue = datetime.getDateValue({}, 'MM');
-      const yearValue = datetime.getDateValue({}, 'YYYY');
+      const dayValue = getDateValue({}, 'DD');
+      const monthvalue = getDateValue({}, 'MM');
+      const yearValue = getDateValue({}, 'YYYY');
       
       expect(dayValue).toEqual(today.getDate());
       expect(monthvalue).toEqual(today.getMonth() + 1);
@@ -29,9 +23,9 @@ describe('Datetime', () => {
         day: date.getDate()
       }
       
-      const dayValue = datetime.getDateValue(dateTimeData, 'DD');
-      const monthvalue = datetime.getDateValue(dateTimeData, 'MM');
-      const yearValue = datetime.getDateValue(dateTimeData, 'YYYY');
+      const dayValue = getDateValue(dateTimeData, 'DD');
+      const monthvalue = getDateValue(dateTimeData, 'MM');
+      const yearValue = getDateValue(dateTimeData, 'YYYY');
       
       expect(dayValue).toEqual(date.getDate());
       expect(monthvalue).toEqual(date.getMonth() + 1);
