@@ -432,23 +432,25 @@ export class Range implements ComponentInterface {
     const start = isRTL ? 'right' : 'left';
     const end = isRTL ? 'left' : 'right';
 
-    const ticks = [];
+    const ticks: any[] = [];
 
     if (this.snaps) {
       for (let value = min; value <= max; value += step) {
         const ratio = valueToRatio(value, min, max);
 
-        ticks.push({
+        const tick: any = {
           ratio,
           active: this.isTickActive(ratio),
-          start: `${ratio * 100}%`
-        });
+        };
+
+        tick[start] = `${ratio * 100}%`;
+
+        ticks.push(tick);
       }
     }
 
     const tickStyle = (tick: any) => {
       const style: any = {};
-
       style[start] = tick[start];
 
       return style;
