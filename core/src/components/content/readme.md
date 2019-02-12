@@ -144,6 +144,14 @@ Type: `Promise<void>`
 
 
 
+## Slots
+
+| Slot      | Description                                                         |
+| --------- | ------------------------------------------------------------------- |
+|           | Content is placed in the scrollable area if a slot is not provided. |
+| `"fixed"` | Should be used for fixed content that should not scroll.            |
+
+
 ## CSS Custom Properties
 
 | Name                | Description                    |
