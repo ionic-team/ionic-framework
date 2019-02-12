@@ -13,7 +13,7 @@
 
 <body>
   <!-- Default -->
-  <ion-tab-bar selected-tab="1">
+  <ion-tab-bar translucent selected-tab="1">
 
     <ion-tab-button tab="1">
       <ion-label>Recents</ion-label>
@@ -31,7 +31,7 @@
   </ion-tab-bar>
 
   <!-- Badges -->
-  <ion-tab-bar selected-tab="1">
+  <ion-tab-bar translucent selected-tab="1">
     <ion-tab-button tab="1">
       <ion-icon name="heart"></ion-icon>
       <ion-label>Item One Max</ion-label>
@@ -53,7 +53,7 @@
     </ion-tab-button>
   </ion-tab-bar>
 
-  <ion-tab-bar selected-tab="1">
+  <ion-tab-bar translucent selected-tab="1">
     <ion-tab-button tab="1">
       <ion-icon name="musical-note"></ion-icon>
     </ion-tab-button>
@@ -75,7 +75,7 @@
     </ion-tab-button>
   </ion-tab-bar>
 
-  <ion-tab-bar selected-tab="1">
+  <ion-tab-bar translucent selected-tab="1">
     <ion-tab-button tab="1">
       <ion-icon name="heart"></ion-icon>
     </ion-tab-button>
@@ -89,7 +89,7 @@
     </ion-tab-button>
   </ion-tab-bar>
 
-  <ion-tab-bar selected-tab="1">
+  <ion-tab-bar translucent selected-tab="1">
     <ion-tab-button tab="1">
       <ion-icon name="musical-note"></ion-icon>
     </ion-tab-button>
@@ -110,7 +110,7 @@
   </ion-tab-bar>
 
   <!-- Custom Height -->
-  <ion-tab-bar color="danger" selected-tab="3" class="custom-height">
+  <ion-tab-bar translucent color="danger" selected-tab="3" class="custom-height">
     <ion-tab-button tab="1">
       <ion-icon name="heart"></ion-icon>
     </ion-tab-button>
@@ -129,7 +129,7 @@
   </ion-tab-bar>
 
   <!-- Custom Height / Alignment -->
-  <ion-tab-bar color="tertiary" selected-tab="3" class="custom-height custom-top">
+  <ion-tab-bar translucent color="tertiary" selected-tab="3" class="custom-height custom-top">
     <ion-tab-button tab="1">
       <ion-icon name="heart"></ion-icon>
     </ion-tab-button>
@@ -146,7 +146,7 @@
       <ion-icon name="calendar"></ion-icon>
     </ion-tab-button>
   </ion-tab-bar>
-  
+
   <!-- Translucent -->
   <ion-tab-bar translucent>
     <ion-tab-button tab="1">
@@ -165,9 +165,9 @@
       <ion-icon name="calendar"></ion-icon>
     </ion-tab-button>
   </ion-tab-bar>
-  
+
   <!-- Translucent / Custom Color -->
-  <ion-tab-bar translucent color="dark">
+  <ion-tab-bar translucent class="custom-background">
     <ion-tab-button tab="1">
       <ion-icon name="heart"></ion-icon>
     </ion-tab-button>
@@ -187,7 +187,9 @@
 
   <style>
     body {
-      background: #222;
+      background: linear-gradient(
+        to right, orange , yellow, green, cyan, blue, violet
+      );
     }
 
     ion-tab-bar {
@@ -202,6 +204,9 @@
       justify-content: start;
     }
 
+    .custom-background {
+      --background: rgba(124, 243, 217, 0.6);
+    }
   </style>
 </body>
 
