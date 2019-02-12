@@ -4,7 +4,7 @@ import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
- * @slot - Content is placed between the named slots if a slot is not provided.
+ * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the divider text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the divider text in LTR, and to the left in RTL.
  */
