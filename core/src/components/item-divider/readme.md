@@ -65,7 +65,7 @@ Item Dividers are block elements that can be used to separate items in a list. T
 
 | Slot      | Description                                                                        |
 | --------- | ---------------------------------------------------------------------------------- |
-|           | Content is placed between the named slots if a slot is not provided.               |
+|           | Content is placed between the named slots if provided without a slot.              |
 | `"end"`   | Content is placed to the right of the divider text in LTR, and to the left in RTL. |
 | `"start"` | Content is placed to the left of the divider text in LTR, and to the right in RTL. |
 
