@@ -79,6 +79,11 @@
     null
   );
 
+  @include rtl() {
+    /* stylelint-disable-next-line property-blacklist */
+    left: unset;
+  }
+
   position: absolute;
 
   width: var(--knob-handle-size);
@@ -95,6 +100,12 @@
 .range-bar {
   @include border-radius(var(--bar-border-radius));
   @include position(calc((var(--height) - var(--bar-height)) / 2), null, null, 0);
+
+  @include rtl() {
+    /* stylelint-disable-next-line property-blacklist */
+    left: unset;
+  }
+
   position: absolute;
 
   width: 100%;
@@ -112,6 +123,11 @@
     null, null,
     calc(50% - var(--knob-size) / 2)
   );
+
+  @include rtl() {
+    /* stylelint-disable-next-line property-blacklist */
+    left: unset;
+  }
 
   position: absolute;
 

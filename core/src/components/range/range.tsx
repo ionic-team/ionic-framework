@@ -4,6 +4,10 @@ import { Color, Gesture, GestureDetail, KnobName, Mode, RangeChangeEventDetail, 
 import { clamp, debounceEvent } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
+/**
+ * @slot start - Content is placed to the left of the range slider in LTR, and to the right in RTL.
+ * @slot end - Content is placed to the right of the range slider in LTR, and to the left in RTL.
+ */
 @Component({
   tag: 'ion-range',
   styleUrls: {
@@ -254,7 +258,11 @@ export class Range implements ComponentInterface {
     const currentX = detail.currentX;
 
     // figure out which knob they started closer to
-    const ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
+    let ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
+    if (document.dir === 'rtl') {
+      ratio = 1 - ratio;
+    }
+
     this.pressedKnob =
       !this.dualKnobs ||
       Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio)
@@ -281,6 +289,10 @@ export class Range implements ComponentInterface {
     // update the knob being interacted with
     const rect = this.rect;
     let ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
+    if (document.dir === 'rtl') {
+      ratio = 1 - ratio;
+    }
+
     if (this.snaps) {
       // snaps the ratio to the current value
       ratio = valueToRatio(
@@ -414,8 +426,11 @@ export class Range implements ComponentInterface {
 
   render() {
     const { min, max, neutralPoint, step } = this;
-
     const barPosition = this.getActiveBarPosition();
+
+    const isRTL = document.dir === 'rtl';
+    const start = isRTL ? 'right' : 'left';
+    const end = isRTL ? 'left' : 'right';
 
     const ticks = [];
 
@@ -426,21 +441,38 @@ export class Range implements ComponentInterface {
         ticks.push({
           ratio,
           active: this.isTickActive(ratio),
-          left: `${ratio * 100}%`
+          start: `${ratio * 100}%`
         });
       }
     }
 
+    const tickStyle = (tick: any) => {
+      const style: any = {};
+
+      style[start] = tick[start];
+
+      return style;
+    };
+
+    const barStyle = () => {
+      const style: any = {};
+
+      style[start] = barPosition.left;
+      style[end] = barPosition.right;
+
+      return style;
+    };
+
     return [
       <slot name="start"></slot>,
       <div class="range-slider" ref={el => this.rangeSlider = el}>
-        {ticks.map(t => (
+        {ticks.map(tick => (
           <div
-            style={{ left: t.left }}
+            style={tickStyle(tick)}
             role="presentation"
             class={{
               'range-tick': true,
-              'range-tick-active': t.active
+              'range-tick-active': tick.active
             }}
           />
         ))}
@@ -449,10 +481,7 @@ export class Range implements ComponentInterface {
         <div
           class="range-bar range-bar-active"
           role="presentation"
-          style={{
-            left: barPosition.left,
-            right: barPosition.right
-          }}
+          style={barStyle()}
         />
 
         { renderKnob({
@@ -501,6 +530,17 @@ interface RangeKnob {
 }
 
 function renderKnob({ knob, value, ratio, min, max, neutralPoint, disabled, pressed, pin, handleKeyboard }: RangeKnob) {
+  const isRTL = document.dir === 'rtl';
+  const start = isRTL ? 'right' : 'left';
+
+  const knobStyle = () => {
+    const style: any = {};
+
+    style[start] = `${ratio * 100}%`;
+
+    return style;
+  };
+
   return (
     <div
       onKeyDown={(ev: KeyboardEvent) => {
@@ -525,9 +565,7 @@ function renderKnob({ knob, value, ratio, min, max, neutralPoint, disabled, pres
         'range-knob-max': value === max,
         'range-knob-neutral': value === neutralPoint
       }}
-      style={{
-        'left': `${ratio * 100}%`
-      }}
+      style={knobStyle()}
       role="slider"
       tabindex={disabled ? -1 : 0}
       aria-valuemin={min}
