@@ -4,6 +4,10 @@ import { Color, Gesture, GestureDetail, KnobName, Mode, RangeChangeEventDetail, 
 import { clamp, debounceEvent } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
+/**
+ * @slot start - Content is placed to the left of the range slider in LTR, and to the right in RTL.
+ * @slot end - Content is placed to the right of the range slider in LTR, and to the left in RTL.
+ */
 @Component({
   tag: 'ion-range',
   styleUrls: {
