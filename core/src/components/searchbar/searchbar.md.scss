@@ -109,6 +109,10 @@
   display: block;
 }
 
+:host(.searchbar-has-focus) .searchbar-cancel-button + .searchbar-search-icon {
+  display: none;
+}
+
 
 // Searchbar in Toolbar
 // -----------------------------------------
