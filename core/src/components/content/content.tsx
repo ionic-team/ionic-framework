@@ -5,7 +5,7 @@ import { isPlatform } from '../../utils/platform';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
- * @slot - Content is placed in the scrollable area if a slot is not provided.
+ * @slot - Content is placed in the scrollable area if provided without a slot.
  * @slot fixed - Should be used for fixed content that should not scroll.
  */
 @Component({
