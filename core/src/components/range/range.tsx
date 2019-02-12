@@ -46,15 +46,16 @@ export class Range implements ComponentInterface {
    */
   @Prop() neutralPoint = 0;
   protected neutralPointChanged() {
-    if (!this.noUpdate) {
-      const { min, max, neutralPoint } = this;
+    if (this.noUpdate) {
+      return;
+    }
+    const { min, max, neutralPoint } = this;
 
-      if (max < neutralPoint) {
-        this.neutralPoint = max;
-      }
-      if (min < neutralPoint) {
-        this.neutralPoint = min;
-      }
+    if (max < neutralPoint) {
+      this.neutralPoint = max;
+    }
+    if (min < neutralPoint) {
+      this.neutralPoint = min;
     }
   }
 
