@@ -33,7 +33,7 @@
     "ionicons": "4.5.5"
   },
   "devDependencies": {
-    "@stencil/core": "0.17.0",
+    "@stencil/core": "0.17.3-0",
     "@stencil/sass": "0.1.1",
     "@stencil/utils": "latest",
     "@types/jest": "^23.3.13",
