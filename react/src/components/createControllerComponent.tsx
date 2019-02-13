@@ -1,21 +1,21 @@
 import React from 'react';
 import { attachEventProps } from './utils'
 import { ensureElementInBody, dashToPascalCase } from './utils';
+import { OverlayComponentElement, OverlayControllerComponentElement } from '../types';
 
-export function createControllerComponent<T, E extends HTMLElement, C extends HTMLElement>(tagName: string, controllerTagName: string) {
+export function createControllerComponent<T extends object, E extends OverlayComponentElement, C extends OverlayControllerComponentElement<E>>(tagName: string, controllerTagName: string) {
   const displayName = dashToPascalCase(tagName);
 
-  type IonicReactInternalProps = {
-    forwardedRef?: React.RefObject<E>;
-    children?: React.ReactNode;
-    show: boolean
+  type ReactProps = {
+    show: boolean;
   }
+  type Props = T & ReactProps;
 
-  return class ReactControllerComponent extends React.Component<T & IonicReactInternalProps> {
+  return class ReactControllerComponent extends React.Component<Props> {
     element: E;
     controllerElement: C;
 
-    constructor(props: T & IonicReactInternalProps) {
+    constructor(props: Props) {
       super(props);
     }
 
@@ -25,20 +25,20 @@ export function createControllerComponent<T, E extends HTMLElement, C extends HT
 
     async componentDidMount() {
       this.controllerElement = ensureElementInBody<C>(controllerTagName);
-      await (this.controllerElement as any).componentOnReady();
+      await this.controllerElement.componentOnReady();
     }
 
-    async componentDidUpdate(prevProps: T & IonicReactInternalProps) {
+    async componentDidUpdate(prevProps: Props) {
       if (prevProps.show !== this.props.show && this.props.show === true) {
-        const { children, show, ...cProps} = this.props as any;
+        const { show, ...cProps} = this.props;
 
-        this.element = await (this.controllerElement as any).create(cProps);
-        await (this.element as any).present();
+        this.element = await this.controllerElement.create(cProps);
+        await this.element.present();
 
         attachEventProps(this.element, cProps);
       }
       if (prevProps.show !== this.props.show && this.props.show === false) {
-        return await (this.element as any).dismiss();
+        await this.element.dismiss();
       }
     }
 

@@ -31,7 +31,7 @@ The below chart details the item slots and where it will place the element insid
 | Slot    | Description                                                                 |
 |---------|-----------------------------------------------------------------------------|
 | `start` | Placed to the left of all other content in LTR, and to the `right` in RTL.  |
-| `end`   | Placed to the right of all other content in LTR, and to the `right` in RTL. |
+| `end`   | Placed to the right of all other content in LTR, and to the `left` in RTL.  |
 | none    | Placed inside of the input wrapper.                                         |
 
 
@@ -719,6 +719,15 @@ Item Inputs
 | `mode`            | `mode`             | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                            | `undefined`           |
 | `routerDirection` | `router-direction` | When using a router, it specifies the transition direction when navigating to another page using `href`.                                                                                                                                                               | `"back" \| "forward" \| "root"`            | `'forward'`           |
 | `type`            | `type`             | The type of the button. Only used when an `onclick` or `button` property is present.                                                                                                                                                                                   | `"button" \| "reset" \| "submit"`          | `'button'`            |
+
+
+## Slots
+
+| Slot      | Description                                                                     |
+| --------- | ------------------------------------------------------------------------------- |
+|           | Content is placed between the named slots if provided without a slot.           |
+| `"end"`   | Content is placed to the right of the item text in LTR, and to the left in RTL. |
+| `"start"` | Content is placed to the left of the item text in LTR, and to the right in RTL. |
 
 
 ## CSS Custom Properties

@@ -1,7 +1,7 @@
 # ion-slides
 
 The Slides component is a multi-section container. Each section can be swiped
-or dragged between. It contains any number of [Slide](../Slide) components.
+or dragged between. It contains any number of [Slide](../slide) components.
 
 
 Adopted from Swiper.js:
@@ -287,6 +287,22 @@ Type: `Promise<void>`
 
 Update the underlying slider implementation. Call this if you've added or removed
 child slides.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `updateAutoHeight(speed?: number | undefined) => Promise<void>`
+
+Force swiper to update its height (when autoHeight enabled) for the duration equal to 'speed' parameter
+
+#### Parameters
+
+| Name    | Type                  | Description |
+| ------- | --------------------- | ----------- |
+| `speed` | `number \| undefined` |             |
 
 #### Returns
 

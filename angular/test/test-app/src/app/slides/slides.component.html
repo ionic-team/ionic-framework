@@ -8,17 +8,10 @@
 <ion-content>
   <ion-slides pager="true" (ionSlideDidChange)="checkIndex()">
 
-    <ion-slide>
-      <h1>Slide 1</h1>
+    <ion-slide *ngFor="let text of slidesData">
+      <h1>{{text}}</h1>
     </ion-slide>
 
-    <ion-slide>
-      <h1>Slide 2</h1>
-    </ion-slide>
-
-    <ion-slide>
-      <h1>Slide 3</h1>
-    </ion-slide>
   </ion-slides>
 
   <p>
@@ -26,6 +19,9 @@
     index2: <span id="slide-index-2">{{slideIndex2}}</span>
   </p>
 
+  <ion-button id="add-slides" (click)="addSlides()">
+    Add Slides
+  </ion-button>
   <ion-button id="btn-prev" (click)="prevSlide()">
     Prev Slide
   </ion-button>

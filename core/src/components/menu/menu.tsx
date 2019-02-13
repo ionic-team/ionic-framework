@@ -201,6 +201,7 @@ export class Menu implements ComponentInterface, MenuI {
     }
     if (this.gesture) {
       this.gesture.destroy();
+      this.gesture = undefined;
     }
 
     this.animation = undefined;

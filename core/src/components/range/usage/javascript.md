@@ -23,7 +23,15 @@
   </ion-item>
 
   <ion-item>
+    <ion-range min="1000" max="2000" step="100" snaps="true" neutralPoint="1500" color="secondary"></ion-range>
+  </ion-item>
+
+  <ion-item>
     <ion-range dual-knobs="true" min="21" max="72" step="3" snaps="true"></ion-range>
+  </ion-item>
+
+  <ion-item>
+    <ion-range dual-knobs="true" neutralPoint="30" min="21" max="72" step="3" snaps="true"></ion-range>
   </ion-item>
 </ion-list>
 ```
