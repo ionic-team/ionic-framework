@@ -163,7 +163,7 @@ export class ItemSliding implements ComponentInterface {
       this.closeOpened();
       return false;
     }
-    
+
     return !!(this.rightOptions || this.leftOptions);
   }
 
