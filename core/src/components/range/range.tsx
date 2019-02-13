@@ -535,13 +535,11 @@ interface RangeKnob {
 
 function renderKnob({ knob, value, ratio, min, max, neutralPoint, disabled, pressed, pin, handleKeyboard }: RangeKnob) {
   const isRTL = document.dir === 'rtl';
-  // const neutralPointRatio = valueToRatio(neutralPoint, min, max);
+  const start = isRTL ? 'right' : 'left';
 
   const knobStyle = () => {
-    const style = {
-      left: '0'
-    };
-    style.left = isRTL ? `${100 - ratio * 100}%` : `${ratio * 100}%`;
+    const style: any = {};
+    style[start] = `${ratio * 100}%`;
 
     return style;
   };
