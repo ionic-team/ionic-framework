@@ -362,6 +362,52 @@ export class Range implements ComponentInterface {
     };
   }
 
+  protected getActiveBarPosition() {
+    const { min, max, neutralPoint, ratioLower, ratioUpper } = this;
+    const neutralPointRatio = valueToRatio(neutralPoint, min, max);
+
+    const isRTL = document.dir === 'rtl';
+    const start = isRTL ? 'right' : 'left';
+    const end = isRTL ? 'left' : 'right';
+    const style: any = {};
+
+    // dual knob handling
+    style[start] = `${ratioLower * 100}%`;
+    style[end] = `${100 - ratioUpper * 100}%`;
+
+    // single knob handling
+    if (!this.dualKnobs) {
+      if (this.ratioA < neutralPointRatio) {
+        style[end] = `${neutralPointRatio * 100}%`;
+        style[start] = `${this.ratioA * 100}%`;
+      } else {
+        style[end] = `${100 - this.ratioA * 100}%`;
+        style[start] = `${neutralPointRatio * 100}%`;
+      }
+    }
+
+    return style;
+  }
+
+  protected isTickActive(stepRatio: number) {
+    const { min, max, neutralPoint, ratioLower, ratioUpper } = this;
+    const neutralPointRatio = valueToRatio(neutralPoint, min, max);
+
+    if (this.dualKnobs) {
+      return (stepRatio >= ratioLower && stepRatio <= ratioUpper);
+    }
+
+    if (this.ratioA <= neutralPointRatio && stepRatio >= this.ratioA && stepRatio <= neutralPointRatio) {
+      return true;
+    }
+
+    if (this.ratioA >= neutralPointRatio && stepRatio <= this.ratioA && stepRatio >= neutralPointRatio) {
+      return true;
+    }
+
+    return false;
+  }
+
   render() {
     const { min, max, step, ratioLower, ratioUpper } = this;
 
@@ -474,7 +520,6 @@ function renderKnob({ knob, value, ratio, min, max, disabled, pressed, pin, hand
 
   const knobStyle = () => {
     const style: any = {};
-
     style[start] = `${ratio * 100}%`;
 
     return style;
