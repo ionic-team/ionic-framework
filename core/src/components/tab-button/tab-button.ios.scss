@@ -142,5 +142,5 @@
 // iOS Tab Button: Translucent
 // --------------------------------------------------------------
 :host-context(ion-tab-bar.tab-bar-translucent) a:focus-visible {
-  background: $tab-button-ios-background-focused;
+  background: $tab-button-ios-translucent-background-color-focused;
 }
