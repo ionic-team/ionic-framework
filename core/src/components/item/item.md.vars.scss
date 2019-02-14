@@ -71,7 +71,7 @@ $item-md-label-margin-top:                  10px !default;
 $item-md-label-margin-end:                  0 !default;
 
 /// @prop - Margin bottom of the label
-$item-md-label-margin-bottom:               10px !default;
+$item-md-label-margin-bottom:               $item-md-label-margin-top !default;
 
 /// @prop - Margin start of the label
 $item-md-label-margin-start:                0 !default;
@@ -109,7 +109,7 @@ $item-md-multi-line-slot-margin-start:      null !default;
 // --------------------------------------------------
 
 /// @prop - Margin top for an icon in the start/end slot
-$item-md-icon-slot-margin-top:              16px !default;
+$item-md-icon-slot-margin-top:              12px !default;
 
 /// @prop - Margin end for an icon in the start/end slot
 $item-md-icon-slot-margin-end:              null !default;
