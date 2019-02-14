@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, h } from '@stencil/core';
 
 import { Color, Mode, RouterDirection } from '../../interface';
 import { hasShadowDom } from '../../utils/helpers';

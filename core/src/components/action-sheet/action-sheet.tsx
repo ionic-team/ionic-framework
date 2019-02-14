@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, h } from '@stencil/core';
 
 import { ActionSheetButton, Animation, AnimationBuilder, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';

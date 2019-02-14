@@ -1,4 +1,4 @@
-import { Build, Component, Element, Event, EventEmitter, Method, Prop, QueueApi, Watch } from '@stencil/core';
+import { Build, Component, Element, Event, EventEmitter, Method, Prop, QueueApi, Watch, h } from '@stencil/core';
 
 import { Animation, AnimationBuilder, ComponentProps, Config, FrameworkDelegate, Gesture, Mode, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, RouterDirection, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
 import { assert } from '../../utils/helpers';

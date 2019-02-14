@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop, Watch, h } from '@stencil/core';
 
 @Component({
   tag: 'ion-fab-list',

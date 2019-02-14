@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 
 @Component({
   tag: 'ion-skeleton-text',

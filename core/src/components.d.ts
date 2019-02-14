@@ -5,9 +5,9 @@
  */
 
 
-import '@stencil/core';
+import { JSXElements } from '@stencil/core';
 
-import 'ionicons';
+
 import {
   ActionSheetButton,
   ActionSheetOptions,
@@ -74,9 +74,6 @@ import {
   TransitionInstruction,
   ViewController,
 } from './interface';
-import {
-  EventEmitter,
-} from '@stencil/core';
 
 
 export namespace Components {
@@ -95,7 +92,7 @@ export namespace Components {
     */
     'getTop': () => Promise<HTMLIonActionSheetElement | undefined>;
   }
-  interface IonActionSheetControllerAttributes extends StencilHTMLAttributes {}
+  interface IonActionSheetControllerAttributes extends JSXElements.HTMLAttributes {}
 
   interface IonActionSheet {
     /**
@@ -160,7 +157,7 @@ export namespace Components {
     */
     'translucent': boolean;
   }
-  interface IonActionSheetAttributes extends StencilHTMLAttributes {
+  interface IonActionSheetAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, the action sheet will animate.
     */
@@ -237,7 +234,7 @@ export namespace Components {
     */
     'getTop': () => Promise<HTMLIonAlertElement | undefined>;
   }
-  interface IonAlertControllerAttributes extends StencilHTMLAttributes {}
+  interface IonAlertControllerAttributes extends JSXElements.HTMLAttributes {}
 
   interface IonAlert {
     /**
@@ -310,7 +307,7 @@ export namespace Components {
     */
     'translucent': boolean;
   }
-  interface IonAlertAttributes extends StencilHTMLAttributes {
+  interface IonAlertAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, the alert will animate.
     */
@@ -395,7 +392,7 @@ export namespace Components {
     */
     'routerDirection': RouterDirection;
   }
-  interface IonAnchorAttributes extends StencilHTMLAttributes {
+  interface IonAnchorAttributes extends JSXElements.HTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -411,10 +408,10 @@ export namespace Components {
   }
 
   interface IonApp {}
-  interface IonAppAttributes extends StencilHTMLAttributes {}
+  interface IonAppAttributes extends JSXElements.HTMLAttributes {}
 
   interface IonAvatar {}
-  interface IonAvatarAttributes extends StencilHTMLAttributes {}
+  interface IonAvatarAttributes extends JSXElements.HTMLAttributes {}
 
   interface IonBackButton {
     /**
@@ -438,7 +435,7 @@ export namespace Components {
     */
     'text'?: string | null;
   }
-  interface IonBackButtonAttributes extends StencilHTMLAttributes {
+  interface IonBackButtonAttributes extends JSXElements.HTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -475,7 +472,7 @@ export namespace Components {
     */
     'visible': boolean;
   }
-  interface IonBackdropAttributes extends StencilHTMLAttributes {
+  interface IonBackdropAttributes extends JSXElements.HTMLAttributes {
     /**
     * Emitted when the backdrop is tapped.
     */
@@ -504,7 +501,7 @@ export namespace Components {
     */
     'mode': Mode;
   }
-  interface IonBadgeAttributes extends StencilHTMLAttributes {
+  interface IonBadgeAttributes extends JSXElements.HTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -565,7 +562,7 @@ export namespace Components {
     */
     'type': 'submit' | 'reset' | 'button';
   }
-  interface IonButtonAttributes extends StencilHTMLAttributes {
+  interface IonButtonAttributes extends JSXElements.HTMLAttributes {
     /**
     * The type of button.
     */
@@ -625,7 +622,7 @@ export namespace Components {
   }
 
   interface IonButtons {}
-  interface IonButtonsAttributes extends StencilHTMLAttributes {}
+  interface IonButtonsAttributes extends JSXElements.HTMLAttributes {}
 
   interface IonCardContent {
     /**
@@ -633,7 +630,7 @@ export namespace Components {
     */
     'mode': Mode;
   }
-  interface IonCardContentAttributes extends StencilHTMLAttributes {
+  interface IonCardContentAttributes extends JSXElements.HTMLAttributes {
     /**
     * The mode determines which platform styles to use.
     */
@@ -654,7 +651,7 @@ export namespace Components {
     */
     'translucent': boolean;
   }
-  interface IonCardHeaderAttributes extends StencilHTMLAttributes {
+  interface IonCardHeaderAttributes extends JSXElements.HTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -679,7 +676,7 @@ export namespace Components {
     */
     'mode': Mode;
   }
-  interface IonCardSubtitleAttributes extends StencilHTMLAttributes {
+  interface IonCardSubtitleAttributes extends JSXElements.HTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -700,7 +697,7 @@ export namespace Components {
     */
     'mode': Mode;
   }
-  interface IonCardTitleAttributes extends StencilHTMLAttributes {
+  interface IonCardTitleAttributes extends JSXElements.HTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -721,7 +718,7 @@ export namespace Components {
     */
     'mode': Mode;
   }
-  interface IonCardAttributes extends StencilHTMLAttributes {
+  interface IonCardAttributes extends JSXElements.HTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -758,7 +755,7 @@ export namespace Components {
     */
     'value': string;
   }
-  interface IonCheckboxAttributes extends StencilHTMLAttributes {
+  interface IonCheckboxAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, the checkbox is selected.
     */
@@ -811,7 +808,7 @@ export namespace Components {
     */
     'outline': boolean;
   }
-  interface IonChipAttributes extends StencilHTMLAttributes {
+  interface IonChipAttributes extends JSXElements.HTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -924,7 +921,7 @@ export namespace Components {
     */
     'sizeXs'?: string;
   }
-  interface IonColAttributes extends StencilHTMLAttributes {
+  interface IonColAttributes extends JSXElements.HTMLAttributes {
     /**
     * The amount to offset the column, in terms of how many columns it should shift to the end of the total available.
     */
@@ -1069,7 +1066,7 @@ export namespace Components {
     */
     'scrollY': boolean;
   }
-  interface IonContentAttributes extends StencilHTMLAttributes {
+  interface IonContentAttributes extends JSXElements.HTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -1202,7 +1199,7 @@ export namespace Components {
     */
     'yearValues'?: number[] | number | string;
   }
-  interface IonDatetimeAttributes extends StencilHTMLAttributes {
+  interface IonDatetimeAttributes extends JSXElements.HTMLAttributes {
     /**
     * The text to display on the picker's cancel button.
     */
@@ -1351,7 +1348,7 @@ export namespace Components {
     */
     'type': 'submit' | 'reset' | 'button';
   }
-  interface IonFabButtonAttributes extends StencilHTMLAttributes {
+  interface IonFabButtonAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, the fab button will be show a close icon.
     */
@@ -1412,7 +1409,7 @@ export namespace Components {
     */
     'side': 'start' | 'end' | 'top' | 'bottom';
   }
-  interface IonFabListAttributes extends StencilHTMLAttributes {
+  interface IonFabListAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, the fab list will be show all fab buttons in the list.
     */
@@ -1445,7 +1442,7 @@ export namespace Components {
     */
     'vertical'?: 'top' | 'bottom' | 'center';
   }
-  interface IonFabAttributes extends StencilHTMLAttributes {
+  interface IonFabAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, both the `ion-fab-button` and all `ion-fab-list` inside `ion-fab` will become active. That means `ion-fab-button` will become a `close` icon and `ion-fab-list` will become visible.
     */
@@ -1474,7 +1471,7 @@ export namespace Components {
     */
     'translucent': boolean;
   }
-  interface IonFooterAttributes extends StencilHTMLAttributes {
+  interface IonFooterAttributes extends JSXElements.HTMLAttributes {
     /**
     * The mode determines which platform styles to use.
     */
@@ -1491,7 +1488,7 @@ export namespace Components {
     */
     'fixed': boolean;
   }
-  interface IonGridAttributes extends StencilHTMLAttributes {
+  interface IonGridAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, the grid will have a fixed width based on the screen size.
     */
@@ -1508,7 +1505,7 @@ export namespace Components {
     */
     'translucent': boolean;
   }
-  interface IonHeaderAttributes extends StencilHTMLAttributes {
+  interface IonHeaderAttributes extends JSXElements.HTMLAttributes {
     /**
     * The mode determines which platform styles to use.
     */
@@ -1529,7 +1526,7 @@ export namespace Components {
     */
     'src'?: string;
   }
-  interface IonImgAttributes extends StencilHTMLAttributes {
+  interface IonImgAttributes extends JSXElements.HTMLAttributes {
     /**
     * This attribute defines the alternative text describing the image. Users will see this text displayed if the image URL is wrong, the image is not in one of the supported formats, or if the image is not yet downloaded.
     */
@@ -1554,7 +1551,7 @@ export namespace Components {
     */
     'loadingText'?: string;
   }
-  interface IonInfiniteScrollContentAttributes extends StencilHTMLAttributes {
+  interface IonInfiniteScrollContentAttributes extends JSXElements.HTMLAttributes {
     /**
     * An animated SVG spinner that shows while loading.
     */
@@ -1583,7 +1580,7 @@ export namespace Components {
     */
     'threshold': string;
   }
-  interface IonInfiniteScrollAttributes extends StencilHTMLAttributes {
+  interface IonInfiniteScrollAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, the infinite scroll will be hidden and scroll event listeners will be removed.  Set this to true to disable the infinite scroll from actively trying to receive new data while scrolling. This is useful when it is known that there is no more data that can be added, and the infinite scroll is no longer needed.
     */
@@ -1720,7 +1717,7 @@ export namespace Components {
     */
     'value'?: string | null;
   }
-  interface IonInputAttributes extends StencilHTMLAttributes {
+  interface IonInputAttributes extends JSXElements.HTMLAttributes {
     /**
     * If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
     */
@@ -1861,7 +1858,7 @@ export namespace Components {
     */
     'sticky': boolean;
   }
-  interface IonItemDividerAttributes extends StencilHTMLAttributes {
+  interface IonItemDividerAttributes extends JSXElements.HTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -1877,7 +1874,7 @@ export namespace Components {
   }
 
   interface IonItemGroup {}
-  interface IonItemGroupAttributes extends StencilHTMLAttributes {}
+  interface IonItemGroupAttributes extends JSXElements.HTMLAttributes {}
 
   interface IonItemOption {
     /**
@@ -1901,7 +1898,7 @@ export namespace Components {
     */
     'mode': Mode;
   }
-  interface IonItemOptionAttributes extends StencilHTMLAttributes {
+  interface IonItemOptionAttributes extends JSXElements.HTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -1931,7 +1928,7 @@ export namespace Components {
     */
     'side': Side;
   }
-  interface IonItemOptionsAttributes extends StencilHTMLAttributes {
+  interface IonItemOptionsAttributes extends JSXElements.HTMLAttributes {
     /**
     * Emitted when the item has been fully swiped.
     */
@@ -1964,7 +1961,7 @@ export namespace Components {
     */
     'getSlidingRatio': () => Promise<number>;
   }
-  interface IonItemSlidingAttributes extends StencilHTMLAttributes {
+  interface IonItemSlidingAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, the user cannot interact with the sliding-item.
     */
@@ -1972,7 +1969,7 @@ export namespace Components {
     /**
     * Emitted when the sliding position changes.
     */
-    'onIonDrag'?: (event: CustomEvent) => void;
+    'onIonDrag'?: (event: CustomEvent<any>) => void;
   }
 
   interface IonItem {
@@ -2017,7 +2014,7 @@ export namespace Components {
     */
     'type': 'submit' | 'reset' | 'button';
   }
-  interface IonItemAttributes extends StencilHTMLAttributes {
+  interface IonItemAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, a button tag will be rendered and the item will be tappable.
     */
@@ -2074,7 +2071,7 @@ export namespace Components {
     */
     'position'?: 'fixed' | 'stacked' | 'floating';
   }
-  interface IonLabelAttributes extends StencilHTMLAttributes {
+  interface IonLabelAttributes extends JSXElements.HTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -2099,7 +2096,7 @@ export namespace Components {
     */
     'mode': Mode;
   }
-  interface IonListHeaderAttributes extends StencilHTMLAttributes {
+  interface IonListHeaderAttributes extends JSXElements.HTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -2128,7 +2125,7 @@ export namespace Components {
     */
     'mode': Mode;
   }
-  interface IonListAttributes extends StencilHTMLAttributes {
+  interface IonListAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, the list will have margin around it and rounded corners.
     */
@@ -2157,7 +2154,7 @@ export namespace Components {
     */
     'getTop': () => Promise<HTMLIonLoadingElement | undefined>;
   }
-  interface IonLoadingControllerAttributes extends StencilHTMLAttributes {}
+  interface IonLoadingControllerAttributes extends JSXElements.HTMLAttributes {}
 
   interface IonLoading {
     /**
@@ -2226,7 +2223,7 @@ export namespace Components {
     */
     'translucent': boolean;
   }
-  interface IonLoadingAttributes extends StencilHTMLAttributes {
+  interface IonLoadingAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, the loading indicator will animate.
     */
@@ -2311,7 +2308,7 @@ export namespace Components {
     */
     'mode': Mode;
   }
-  interface IonMenuButtonAttributes extends StencilHTMLAttributes {
+  interface IonMenuButtonAttributes extends JSXElements.HTMLAttributes {
     /**
     * Automatically hides the menu button when the corresponding menu is not active
     */
@@ -2381,7 +2378,7 @@ export namespace Components {
     */
     'toggle': (menuId?: string | null | undefined) => Promise<boolean>;
   }
-  interface IonMenuControllerAttributes extends StencilHTMLAttributes {}
+  interface IonMenuControllerAttributes extends JSXElements.HTMLAttributes {}
 
   interface IonMenuToggle {
     /**
@@ -2393,7 +2390,7 @@ export namespace Components {
     */
     'menu'?: string;
   }
-  interface IonMenuToggleAttributes extends StencilHTMLAttributes {
+  interface IonMenuToggleAttributes extends JSXElements.HTMLAttributes {
     /**
     * Automatically hides the content when the corresponding menu is not active.  By default, it's `true`. Change it to `false` in order to keep `ion-menu-toggle` always visible regardless the state of the menu.
     */
@@ -2458,7 +2455,7 @@ export namespace Components {
     */
     'type'?: string;
   }
-  interface IonMenuAttributes extends StencilHTMLAttributes {
+  interface IonMenuAttributes extends JSXElements.HTMLAttributes {
     /**
     * The content's id the menu should use.
     */
@@ -2519,7 +2516,7 @@ export namespace Components {
     */
     'getTop': () => Promise<HTMLIonModalElement | undefined>;
   }
-  interface IonModalControllerAttributes extends StencilHTMLAttributes {}
+  interface IonModalControllerAttributes extends JSXElements.HTMLAttributes {}
 
   interface IonModal {
     /**
@@ -2581,7 +2578,7 @@ export namespace Components {
     */
     'showBackdrop': boolean;
   }
-  interface IonModalAttributes extends StencilHTMLAttributes {
+  interface IonModalAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, the modal will animate.
     */
@@ -2641,7 +2638,7 @@ export namespace Components {
   }
 
   interface IonNavPop {}
-  interface IonNavPopAttributes extends StencilHTMLAttributes {}
+  interface IonNavPopAttributes extends JSXElements.HTMLAttributes {}
 
   interface IonNavPush {
     /**
@@ -2653,7 +2650,7 @@ export namespace Components {
     */
     'componentProps'?: ComponentProps;
   }
-  interface IonNavPushAttributes extends StencilHTMLAttributes {
+  interface IonNavPushAttributes extends JSXElements.HTMLAttributes {
     /**
     * Component to navigate to
     */
@@ -2674,7 +2671,7 @@ export namespace Components {
     */
     'componentProps'?: ComponentProps;
   }
-  interface IonNavSetRootAttributes extends StencilHTMLAttributes {
+  interface IonNavSetRootAttributes extends JSXElements.HTMLAttributes {
     /**
     * Component you want to make root for the navigation stack
     */
@@ -2762,7 +2759,7 @@ export namespace Components {
     */
     'swipeGesture'?: boolean;
   }
-  interface IonNavAttributes extends StencilHTMLAttributes {
+  interface IonNavAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, the nav should animate the transition of components.
     */
@@ -2803,7 +2800,7 @@ export namespace Components {
     */
     'mode': Mode;
   }
-  interface IonNoteAttributes extends StencilHTMLAttributes {
+  interface IonNoteAttributes extends JSXElements.HTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -2820,7 +2817,7 @@ export namespace Components {
     */
     'col': PickerColumn;
   }
-  interface IonPickerColumnAttributes extends StencilHTMLAttributes {
+  interface IonPickerColumnAttributes extends JSXElements.HTMLAttributes {
     /**
     * Picker column data
     */
@@ -2841,7 +2838,7 @@ export namespace Components {
     */
     'getTop': () => Promise<HTMLIonPickerElement | undefined>;
   }
-  interface IonPickerControllerAttributes extends StencilHTMLAttributes {}
+  interface IonPickerControllerAttributes extends JSXElements.HTMLAttributes {}
 
   interface IonPicker {
     /**
@@ -2910,7 +2907,7 @@ export namespace Components {
     */
     'showBackdrop': boolean;
   }
-  interface IonPickerAttributes extends StencilHTMLAttributes {
+  interface IonPickerAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, the picker will animate.
     */
@@ -2987,7 +2984,7 @@ export namespace Components {
     */
     'getTop': () => Promise<HTMLIonPopoverElement | undefined>;
   }
-  interface IonPopoverControllerAttributes extends StencilHTMLAttributes {}
+  interface IonPopoverControllerAttributes extends JSXElements.HTMLAttributes {}
 
   interface IonPopover {
     /**
@@ -3057,7 +3054,7 @@ export namespace Components {
     */
     'translucent': boolean;
   }
-  interface IonPopoverAttributes extends StencilHTMLAttributes {
+  interface IonPopoverAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, the popover will animate.
     */
@@ -3150,7 +3147,7 @@ export namespace Components {
     */
     'value': number;
   }
-  interface IonProgressBarAttributes extends StencilHTMLAttributes {
+  interface IonProgressBarAttributes extends JSXElements.HTMLAttributes {
     /**
     * If the buffer and value are smaller than 1, the buffer circles will show. The buffer should be between [0, 1].
     */
@@ -3191,7 +3188,7 @@ export namespace Components {
     */
     'value'?: any | null;
   }
-  interface IonRadioGroupAttributes extends StencilHTMLAttributes {
+  interface IonRadioGroupAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, the radios can be deselected.
     */
@@ -3236,7 +3233,7 @@ export namespace Components {
     */
     'value'?: any | null;
   }
-  interface IonRadioAttributes extends StencilHTMLAttributes {
+  interface IonRadioAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, the radio is selected.
     */
@@ -3329,7 +3326,7 @@ export namespace Components {
     */
     'value': RangeValue | null;
   }
-  interface IonRangeAttributes extends StencilHTMLAttributes {
+  interface IonRangeAttributes extends JSXElements.HTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -3414,7 +3411,7 @@ export namespace Components {
     */
     'refreshingText'?: string;
   }
-  interface IonRefresherContentAttributes extends StencilHTMLAttributes {
+  interface IonRefresherContentAttributes extends JSXElements.HTMLAttributes {
     /**
     * A static icon to display when you begin to pull down
     */
@@ -3467,7 +3464,7 @@ export namespace Components {
     */
     'snapbackDuration': string;
   }
-  interface IonRefresherAttributes extends StencilHTMLAttributes {
+  interface IonRefresherAttributes extends JSXElements.HTMLAttributes {
     /**
     * Time it takes to close the refresher.
     */
@@ -3512,7 +3509,7 @@ export namespace Components {
     */
     'disabled': boolean;
   }
-  interface IonReorderGroupAttributes extends StencilHTMLAttributes {
+  interface IonReorderGroupAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, the reorder will be hidden.
     */
@@ -3524,7 +3521,7 @@ export namespace Components {
   }
 
   interface IonReorder {}
-  interface IonReorderAttributes extends StencilHTMLAttributes {}
+  interface IonReorderAttributes extends JSXElements.HTMLAttributes {}
 
   interface IonRippleEffect {
     /**
@@ -3536,7 +3533,7 @@ export namespace Components {
     */
     'type': 'bounded' | 'unbounded';
   }
-  interface IonRippleEffectAttributes extends StencilHTMLAttributes {
+  interface IonRippleEffectAttributes extends JSXElements.HTMLAttributes {
     /**
     * Sets the type of ripple-effect:  - `bounded`: the ripple effect expands from the user's click position - `unbounded`: the ripple effect expands from the center of the button and overflows the container.  NOTE: Surfaces for bounded ripples should have the overflow property set to hidden, while surfaces for unbounded ripples should have it set to visible.
     */
@@ -3553,7 +3550,7 @@ export namespace Components {
     */
     'to': string | undefined | null;
   }
-  interface IonRouteRedirectAttributes extends StencilHTMLAttributes {
+  interface IonRouteRedirectAttributes extends JSXElements.HTMLAttributes {
     /**
     * A redirect route, redirects "from" a URL "to" another URL. This property is that "from" URL. It needs to be an exact match of the navigated URL in order to apply.  The path specified in this value is always an absolute path, even if the initial `/` slash is not specified.
     */
@@ -3561,7 +3558,7 @@ export namespace Components {
     /**
     * Internal event that fires when any value of this rule is added/removed from the DOM, or any of his public properties changes.  `ion-router` captures this event in order to update his internal registry of router rules.
     */
-    'onIonRouteRedirectChanged'?: (event: CustomEvent) => void;
+    'onIonRouteRedirectChanged'?: (event: CustomEvent<any>) => void;
     /**
     * A redirect route, redirects "from" a URL "to" another URL. This property is that "to" URL. When the defined `ion-route-redirect` rule matches, the router will redirect to the path specified in this property.  The value of this property is always an absolute path inside the scope of routes defined in `ion-router` it can't be used with another router or to perform a redirection to a different domain.  Note that this is a virtual redirect, it will not cause a real browser refresh, again, it's a redirect inside the context of ion-router.  When this property is not specified or his value is `undefined` the whole redirect route is noop, even if the "from" value matches.
     */
@@ -3582,7 +3579,7 @@ export namespace Components {
     */
     'url': string;
   }
-  interface IonRouteAttributes extends StencilHTMLAttributes {
+  interface IonRouteAttributes extends JSXElements.HTMLAttributes {
     /**
     * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
     */
@@ -3617,7 +3614,7 @@ export namespace Components {
     'setRouteId': (id: string, params: { [key: string]: any; } | undefined, direction: RouterDirection) => Promise<RouteWrite>;
     'swipeHandler'?: SwipeGestureHandler;
   }
-  interface IonRouterOutletAttributes extends StencilHTMLAttributes {
+  interface IonRouterOutletAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, the router-outlet should animate the transition of components.
     */
@@ -3648,7 +3645,7 @@ export namespace Components {
     */
     'useHash': boolean;
   }
-  interface IonRouterAttributes extends StencilHTMLAttributes {
+  interface IonRouterAttributes extends JSXElements.HTMLAttributes {
     /**
     * Emitted when the route had changed
     */
@@ -3668,7 +3665,7 @@ export namespace Components {
   }
 
   interface IonRow {}
-  interface IonRowAttributes extends StencilHTMLAttributes {}
+  interface IonRowAttributes extends JSXElements.HTMLAttributes {}
 
   interface IonSearchbar {
     /**
@@ -3740,7 +3737,7 @@ export namespace Components {
     */
     'value'?: string | null;
   }
-  interface IonSearchbarAttributes extends StencilHTMLAttributes {
+  interface IonSearchbarAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, enable searchbar animation.
     */
@@ -3849,7 +3846,7 @@ export namespace Components {
     */
     'value': string;
   }
-  interface IonSegmentButtonAttributes extends StencilHTMLAttributes {
+  interface IonSegmentButtonAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, the segment button is selected.
     */
@@ -3898,7 +3895,7 @@ export namespace Components {
     */
     'value'?: string | null;
   }
-  interface IonSegmentAttributes extends StencilHTMLAttributes {
+  interface IonSegmentAttributes extends JSXElements.HTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -3943,7 +3940,7 @@ export namespace Components {
     */
     'value'?: any | null;
   }
-  interface IonSelectOptionAttributes extends StencilHTMLAttributes {
+  interface IonSelectOptionAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, the user cannot interact with the select option.
     */
@@ -3976,7 +3973,7 @@ export namespace Components {
     */
     'subHeader'?: string;
   }
-  interface IonSelectPopoverAttributes extends StencilHTMLAttributes {
+  interface IonSelectPopoverAttributes extends JSXElements.HTMLAttributes {
     /**
     * Header text for the popover
     */
@@ -4045,7 +4042,7 @@ export namespace Components {
     */
     'value'?: any | null;
   }
-  interface IonSelectAttributes extends StencilHTMLAttributes {
+  interface IonSelectAttributes extends JSXElements.HTMLAttributes {
     /**
     * The text to display on the cancel button.
     */
@@ -4114,7 +4111,7 @@ export namespace Components {
     */
     'width': string;
   }
-  interface IonSkeletonTextAttributes extends StencilHTMLAttributes {
+  interface IonSkeletonTextAttributes extends JSXElements.HTMLAttributes {
     /**
     * Width for the element to render at.
     */
@@ -4122,7 +4119,7 @@ export namespace Components {
   }
 
   interface IonSlide {}
-  interface IonSlideAttributes extends StencilHTMLAttributes {}
+  interface IonSlideAttributes extends JSXElements.HTMLAttributes {}
 
   interface IonSlides {
     /**
@@ -4202,7 +4199,7 @@ export namespace Components {
     */
     'updateAutoHeight': (speed?: number | undefined) => Promise<void>;
   }
-  interface IonSlidesAttributes extends StencilHTMLAttributes {
+  interface IonSlidesAttributes extends JSXElements.HTMLAttributes {
     /**
     * The mode determines which platform styles to use.
     */
@@ -4303,7 +4300,7 @@ export namespace Components {
     */
     'paused': boolean;
   }
-  interface IonSpinnerAttributes extends StencilHTMLAttributes {
+  interface IonSpinnerAttributes extends JSXElements.HTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -4336,7 +4333,7 @@ export namespace Components {
     */
     'when': string | boolean;
   }
-  interface IonSplitPaneAttributes extends StencilHTMLAttributes {
+  interface IonSplitPaneAttributes extends JSXElements.HTMLAttributes {
     /**
     * The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane.  ```html    * <ion-split-pane content-id="my-content">    *   <ion-menu></ion-menu>    *   <div id="my-content">    * </ion-split-pane>    * ```
     */
@@ -4373,7 +4370,7 @@ export namespace Components {
     */
     'translucent': boolean;
   }
-  interface IonTabBarAttributes extends StencilHTMLAttributes {
+  interface IonTabBarAttributes extends JSXElements.HTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -4418,7 +4415,7 @@ export namespace Components {
     */
     'tab'?: string;
   }
-  interface IonTabButtonAttributes extends StencilHTMLAttributes {
+  interface IonTabButtonAttributes extends JSXElements.HTMLAttributes {
     /**
     * The selected tab component
     */
@@ -4461,7 +4458,7 @@ export namespace Components {
     */
     'tab': string;
   }
-  interface IonTabAttributes extends StencilHTMLAttributes {
+  interface IonTabAttributes extends JSXElements.HTMLAttributes {
     /**
     * The component to display inside of the tab.
     */
@@ -4489,7 +4486,7 @@ export namespace Components {
     'setRouteId': (id: string) => Promise<RouteWrite>;
     'useRouter': boolean;
   }
-  interface IonTabsAttributes extends StencilHTMLAttributes {
+  interface IonTabsAttributes extends JSXElements.HTMLAttributes {
     /**
     * Emitted when the navigation has finished transitioning to a new component.
     */
@@ -4510,7 +4507,7 @@ export namespace Components {
     */
     'mode': Mode;
   }
-  interface IonTextAttributes extends StencilHTMLAttributes {
+  interface IonTextAttributes extends JSXElements.HTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -4603,7 +4600,7 @@ export namespace Components {
     */
     'wrap'?: 'hard' | 'soft' | 'off';
   }
-  interface IonTextareaAttributes extends StencilHTMLAttributes {
+  interface IonTextareaAttributes extends JSXElements.HTMLAttributes {
     /**
     * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
     */
@@ -4695,7 +4692,7 @@ export namespace Components {
   }
 
   interface IonThumbnail {}
-  interface IonThumbnailAttributes extends StencilHTMLAttributes {}
+  interface IonThumbnailAttributes extends JSXElements.HTMLAttributes {}
 
   interface IonTitle {
     /**
@@ -4703,7 +4700,7 @@ export namespace Components {
     */
     'color'?: Color;
   }
-  interface IonTitleAttributes extends StencilHTMLAttributes {
+  interface IonTitleAttributes extends JSXElements.HTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -4724,7 +4721,7 @@ export namespace Components {
     */
     'getTop': () => Promise<HTMLIonToastElement | undefined>;
   }
-  interface IonToastControllerAttributes extends StencilHTMLAttributes {}
+  interface IonToastControllerAttributes extends JSXElements.HTMLAttributes {}
 
   interface IonToast {
     /**
@@ -4797,7 +4794,7 @@ export namespace Components {
     */
     'translucent': boolean;
   }
-  interface IonToastAttributes extends StencilHTMLAttributes {
+  interface IonToastAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, the toast will animate.
     */
@@ -4894,7 +4891,7 @@ export namespace Components {
     */
     'value'?: string | null;
   }
-  interface IonToggleAttributes extends StencilHTMLAttributes {
+  interface IonToggleAttributes extends JSXElements.HTMLAttributes {
     /**
     * If `true`, the toggle is selected.
     */
@@ -4943,7 +4940,7 @@ export namespace Components {
     */
     'mode': Mode;
   }
-  interface IonToolbarAttributes extends StencilHTMLAttributes {
+  interface IonToolbarAttributes extends JSXElements.HTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -5013,7 +5010,7 @@ export namespace Components {
     */
     'renderItem'?: (item: any, index: number) => any;
   }
-  interface IonVirtualScrollAttributes extends StencilHTMLAttributes {
+  interface IonVirtualScrollAttributes extends JSXElements.HTMLAttributes {
     /**
     * The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
     */
@@ -5059,6 +5056,11 @@ export namespace Components {
     */
     'renderItem'?: (item: any, index: number) => any;
   }
+}
+
+interface HTMLStencilElement extends HTMLElement {
+  componentOnReady(): Promise<this>;
+  forceUpdate(): void;
 }
 
 declare global {
@@ -6044,14 +6046,5 @@ declare global {
     'ion-toolbar': HTMLIonToolbarElement;
     'ion-virtual-scroll': HTMLIonVirtualScrollElement;
   }
-
-
-  export namespace JSX {
-    export interface Element {}
-    export interface IntrinsicElements extends StencilIntrinsicElements {
-      [tagName: string]: any;
-    }
-  }
-  export interface HTMLAttributes extends StencilHTMLAttributes {}
 
 }

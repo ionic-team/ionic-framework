@@ -1,5 +1,3 @@
-import 'ionicons';
-
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
 import { Config, configFromSession, configFromURL, saveConfig } from './config';

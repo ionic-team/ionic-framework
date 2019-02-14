@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 
 import { Config, Mode, SpinnerTypes } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';

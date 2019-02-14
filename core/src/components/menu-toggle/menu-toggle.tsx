@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Listen, Prop, State } from '@stencil/core';
+import { Component, ComponentInterface, Listen, Prop, State, h } from '@stencil/core';
 
 @Component({
   tag: 'ion-menu-toggle',
@@ -44,8 +44,8 @@ export class MenuToggle implements ComponentInterface {
     }
   }
 
-  @Listen('body:ionMenuChange')
-  @Listen('body:ionSplitPaneVisible')
+  @Listen('ionMenuChange', { target: 'body' })
+  @Listen('ionSplitPaneVisible', { target: 'body' })
   async updateVisibility() {
     const menuCtrl = await getMenuController(this.doc);
     if (menuCtrl) {

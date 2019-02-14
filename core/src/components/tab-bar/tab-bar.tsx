@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch, h } from '@stencil/core';
 
 import { Color, Mode, TabBarChangedEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -51,12 +51,12 @@ export class TabBar implements ComponentInterface {
   /** @internal */
   @Event() ionTabBarChanged!: EventEmitter<TabBarChangedEventDetail>;
 
-  @Listen('window:keyboardWillHide')
+  @Listen('keyboardWillHide', { target: 'window' })
   protected onKeyboardWillHide() {
     setTimeout(() => this.keyboardVisible = false, 50);
   }
 
-  @Listen('window:keyboardWillShow')
+  @Listen('keyboardWillShow', { target: 'window' })
   protected onKeyboardWillShow() {
     if (this.el.getAttribute('slot') !== 'top') {
       this.keyboardVisible = true;

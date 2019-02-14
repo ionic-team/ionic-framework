@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, EventListenerEnable, FunctionalComponent, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, EventListenerEnable, FunctionalComponent, Listen, Method, Prop, QueueApi, State, Watch, h } from '@stencil/core';
 
 import { Cell, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 
@@ -170,7 +170,7 @@ export class VirtualScroll implements ComponentInterface {
     this.updateVirtualScroll();
   }
 
-  @Listen('window:resize')
+  @Listen('resize', { target: 'window' })
   onResize() {
     this.updateVirtualScroll();
   }

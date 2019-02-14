@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch, h } from '@stencil/core';
 
 import { Animation, Config, Gesture, GestureDetail, MenuChangeEventDetail, MenuControllerI, MenuI, Mode, Side } from '../../interface';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
@@ -208,7 +208,7 @@ export class Menu implements ComponentInterface, MenuI {
     this.contentEl = this.backdropEl = this.menuInnerEl = undefined;
   }
 
-  @Listen('body:ionSplitPaneVisible')
+  @Listen('ionSplitPaneVisible', { target: 'body' })
   onSplitPaneChanged(ev: CustomEvent) {
     this.isPaneVisible = ev.detail.isPane(this.el);
     this.updateState();

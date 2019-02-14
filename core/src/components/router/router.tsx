@@ -73,7 +73,7 @@ export class Router implements ComponentInterface {
     this.win.addEventListener('ionRouteDataChanged', debounce(this.onRoutesChanged.bind(this), 100));
   }
 
-  @Listen('window:popstate')
+  @Listen('popstate', { target: 'window' })
   protected onPopState() {
     const direction = this.historyDirection();
     const path = this.getPath();
@@ -81,7 +81,7 @@ export class Router implements ComponentInterface {
     return this.writeNavStateRoot(path, direction);
   }
 
-  @Listen('document:ionBackButton')
+  @Listen('ionBackButton', { target: 'document' })
   protected onBackButton(ev: BackButtonEvent) {
     ev.detail.register(0, () => this.back());
   }

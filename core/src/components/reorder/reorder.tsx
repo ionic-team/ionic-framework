@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Listen } from '@stencil/core';
+import { Component, ComponentInterface, Listen, h } from '@stencil/core';
 
 import { Mode } from '../../interface';
 

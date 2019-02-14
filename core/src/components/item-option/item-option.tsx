@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop, h } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';

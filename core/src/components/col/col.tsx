@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop, h } from '@stencil/core';
 
 import { matchBreakpoint } from '../../utils/media';
 
@@ -156,7 +156,7 @@ export class Col implements ComponentInterface {
    */
   @Prop() sizeXl?: string;
 
-  @Listen('window:resize')
+  @Listen('resize', { target: 'window' })
   onResize() {
     this.el.forceUpdate();
   }

@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Listen, Prop, h } from '@stencil/core';
 
 import { Mode, SelectPopoverOption } from '../../interface';
 
