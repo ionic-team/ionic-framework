@@ -62,6 +62,7 @@
   },
   "jest": {
     "preset": "ts-jest",
-    "setupTestFrameworkScriptFile": "<rootDir>/jest.setup.js"
+    "setupTestFrameworkScriptFile": "<rootDir>/jest.setup.js",
+    "testPathIgnorePatterns": ["node_modules", "dist"]
   }
 }

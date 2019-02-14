@@ -6,7 +6,6 @@ import { render, fireEvent, cleanup } from 'react-testing-library';
 afterEach(cleanup);
 
 describe('createComponent - events', () => {
-
   test('should set events on handler', () => {
     const FakeOnClick = jest.fn((e) => e);
     const IonButton = createReactComponent<Components.IonButtonAttributes, HTMLIonButtonElement>('ion-button');
@@ -32,11 +31,9 @@ describe('createComponent - events', () => {
     const ionInputItem = getByText('ButtonNameA');
     expect(Object.keys((ionInputItem as any).__events)).toEqual(['ionFocus']);
   });
-
 });
 
 describe('createComponent - ref', () => {
-
   test('should pass ref on to web component instance', () => {
     const ionButtonRef: React.RefObject<any> = React.createRef();
     const IonButton = createReactComponent<Components.IonButtonAttributes, HTMLIonButtonElement>('ion-button');

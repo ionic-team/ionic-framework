@@ -1,15 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { OverlayEventDetail } from '@ionic/core';
 import { attachEventProps } from './utils'
 import { ensureElementInBody, dashToPascalCase } from './utils';
 import { OverlayComponentElement, OverlayControllerComponentElement } from '../types';
 
 export function createOverlayComponent<T extends object, E extends OverlayComponentElement, C extends OverlayControllerComponentElement<E>>(tagName: string, controllerTagName: string) {
   const displayName = dashToPascalCase(tagName);
+  const dismissEventName = `onIon${displayName}DidDismiss`;
 
   type ReactProps = {
     children: React.ReactNode;
-    show: boolean;
+    isOpen: boolean;
+    onDidDismiss: (event: CustomEvent<OverlayEventDetail>) => void;
   }
   type Props = T & ReactProps;
 
@@ -28,17 +31,18 @@ export function createOverlayComponent<T extends object, E extends OverlayCompon
       return displayName;
     }
 
-    async componentDidMount() {
+    componentDidMount() {
       this.controllerElement = ensureElementInBody<C>(controllerTagName);
-      await this.controllerElement.componentOnReady();
     }
 
     async componentDidUpdate(prevProps: Props) {
-      if (prevProps.show !== this.props.show && this.props.show === true) {
-        const { children, show, ...cProps} = this.props;
+      if (prevProps.isOpen !== this.props.isOpen && this.props.isOpen === true) {
+        const { children, isOpen, onDidDismiss, ...cProps} = this.props;
 
+        await this.controllerElement.componentOnReady();
         this.element = await this.controllerElement.create({
           ...cProps,
+          [dismissEventName]: onDidDismiss,
           component: this.el,
           componentProps: {}
         });
@@ -46,7 +50,7 @@ export function createOverlayComponent<T extends object, E extends OverlayCompon
 
         attachEventProps(this.element, cProps);
       }
-      if (prevProps.show !== this.props.show && this.props.show === false) {
+      if (prevProps.isOpen !== this.props.isOpen && this.props.isOpen === false) {
         await this.element.dismiss();
       }
     }
