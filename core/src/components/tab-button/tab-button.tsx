@@ -37,7 +37,7 @@ export class TabButton implements ComponentInterface {
   /**
    * The URL which will be used as the `href` within this tab's button anchor.
    */
-  @Prop() href?: string;
+  @Prop() href = '#';
 
   /**
    * A tab id must be provided for each `ion-tab`. It's used internally to reference

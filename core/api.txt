@@ -1045,7 +1045,7 @@ ion-tab-bar,css-prop,--color
 
 ion-tab-button,shadow
 ion-tab-button,prop,disabled,boolean,false,false,false
-ion-tab-button,prop,href,string | undefined,undefined,false,false
+ion-tab-button,prop,href,string,'#',false,false
 ion-tab-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide" | undefined,undefined,false,false
 ion-tab-button,prop,mode,"ios" | "md",undefined,false,false
 ion-tab-button,prop,selected,boolean,false,false,false
