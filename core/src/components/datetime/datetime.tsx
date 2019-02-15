@@ -4,7 +4,7 @@ import { DatetimeChangeEventDetail, DatetimeOptions, Mode, PickerColumn, PickerC
 import { clamp, findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
-import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getValueFromFormat, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
+import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getDateValue, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
 
 @Component({
   tag: 'ion-datetime',
@@ -359,7 +359,7 @@ export class Datetime implements ComponentInterface {
 
       // cool, we've loaded up the columns with options
       // preselect the option for this column
-      const optValue = getValueFromFormat(this.datetimeValue, format);
+      const optValue = getDateValue(this.datetimeValue, format);
       const selectedIndex = colOptions.findIndex(opt => opt.value === optValue);
 
       return {
