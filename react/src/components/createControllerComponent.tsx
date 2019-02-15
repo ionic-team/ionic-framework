@@ -6,7 +6,7 @@ import { OverlayComponentElement, OverlayControllerComponentElement } from '../t
 
 export function createControllerComponent<T extends object, E extends OverlayComponentElement, C extends OverlayControllerComponentElement<E>>(tagName: string, controllerTagName: string) {
   const displayName = dashToPascalCase(tagName);
-  const dismissEventName = `onIon${displayName}DidDismiss`;
+  const dismissEventName = `on${displayName}DidDismiss`;
 
   type ReactProps = {
     isOpen: boolean;
@@ -33,15 +33,19 @@ export function createControllerComponent<T extends object, E extends OverlayCom
     async componentDidUpdate(prevProps: Props) {
       if (prevProps.isOpen !== this.props.isOpen && this.props.isOpen === true) {
         const { isOpen, onDidDismiss, ...cProps} = this.props;
-
-        await this.controllerElement.componentOnReady();
-        this.element = await this.controllerElement.create({
+        const elementProps = {
           ...cProps,
           [dismissEventName]: onDidDismiss
-        });
-        await this.element.present();
+        };
 
-        attachEventProps(this.element, cProps);
+        if (this.controllerElement.componentOnReady) {
+          await this.controllerElement.componentOnReady();
+        }
+
+        this.element = await this.controllerElement.create(elementProps);
+        attachEventProps(this.element, elementProps);
+
+        await this.element.present();
       }
       if (prevProps.isOpen !== this.props.isOpen && this.props.isOpen === false) {
         await this.element.dismiss();

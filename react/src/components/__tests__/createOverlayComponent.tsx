@@ -10,9 +10,11 @@ describe('createComponent - events', () => {
   const IonActionSheet = createOverlayComponent<ActionSheetOptions, HTMLIonActionSheetElement, HTMLIonActionSheetControllerElement>('ion-action-sheet', 'ion-action-sheet-controller');
 
   test('should set events on handler', () => {
+    const onDismiss = jest.fn();
     const { baseElement } = render(
       <IonActionSheet
         isOpen={false}
+        onDidDismiss={onDismiss}
         buttons={[]}
       >
         ButtonNameA

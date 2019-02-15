@@ -38,17 +38,23 @@ export function createOverlayComponent<T extends object, E extends OverlayCompon
     async componentDidUpdate(prevProps: Props) {
       if (prevProps.isOpen !== this.props.isOpen && this.props.isOpen === true) {
         const { children, isOpen, onDidDismiss, ...cProps} = this.props;
-
-        await this.controllerElement.componentOnReady();
-        this.element = await this.controllerElement.create({
+        const elementProps = {
           ...cProps,
-          [dismissEventName]: onDidDismiss,
+          [dismissEventName]: onDidDismiss
+        }
+
+        if (this.controllerElement.componentOnReady) {
+          await this.controllerElement.componentOnReady();
+        }
+
+        this.element = await this.controllerElement.create({
+          ...elementProps,
           component: this.el,
           componentProps: {}
         });
-        await this.element.present();
+        attachEventProps(this.element, elementProps);
 
-        attachEventProps(this.element, cProps);
+        await this.element.present();
       }
       if (prevProps.isOpen !== this.props.isOpen && this.props.isOpen === false) {
         await this.element.dismiss();
