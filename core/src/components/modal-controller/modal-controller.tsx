@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Method, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Method, Prop } from '@stencil/core';
 
 import { ComponentRef, ModalOptions, OverlayController } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';

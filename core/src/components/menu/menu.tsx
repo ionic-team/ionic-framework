@@ -529,7 +529,7 @@ export class Menu implements ComponentInterface, MenuI {
       </div>,
 
       <ion-backdrop
-        ref={el => this.backdropEl = el}
+        ref={(el: any) => this.backdropEl = el}
         class="menu-backdrop"
         tappable={false}
         stopPropagation={false}
