@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, getMode, h } from '@stencil/core';
 
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
@@ -11,6 +11,9 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
+/**
+ * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-modal',
   styleUrls: {
@@ -25,21 +28,15 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   presented = false;
   animation: Animation | undefined;
+  mode = getMode<Mode>(this);
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'config' }) config!: Config;
 
   /** @internal */
   @Prop() overlayIndex!: number;
 
   /** @internal */
   @Prop() delegate?: FrameworkDelegate;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, the keyboard will be automatically dismissed when the overlay is presented.

@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi, getMode, h } from '@stencil/core';
 
-import { Color, Config, Mode, ScrollBaseDetail, ScrollDetail } from '../../interface';
+import { Color, Mode, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { isPlatform } from '../../utils/platform';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -45,11 +45,10 @@ export class Content implements ComponentInterface {
     isScrolling: true,
   };
 
-  mode!: Mode;
+  private mode = getMode<Mode>(this);
 
   @Element() el!: HTMLStencilElement;
 
-  @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'window' }) win!: Window;
 

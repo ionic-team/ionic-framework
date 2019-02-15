@@ -1,8 +1,11 @@
-import { Component, ComponentInterface, Element, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Method, Prop, getMode } from '@stencil/core';
 
 import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-list',
   styleUrls: {
@@ -12,12 +15,9 @@ import { createThemedClasses } from '../../utils/theme';
 })
 export class List implements ComponentInterface {
 
-  @Element() el!: HTMLElement;
+  private mode = getMode<Mode>(this);
 
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
+  @Element() el!: HTMLElement;
 
   /**
    * How the bottom border should be displayed on all items.

@@ -1,9 +1,13 @@
 import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 
-import { Color, Config, Mode } from '../../interface';
+import { config } from '../../global/ionic-global';
+import { Color } from '../../interface';
 import { clamp } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-progress-bar',
   styleUrls: {
@@ -13,13 +17,6 @@ import { createColorClasses } from '../../utils/theme';
   shadow: true
 })
 export class ProgressBar implements ComponentInterface {
-
-  @Prop({ context: 'config' }) config!: Config;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The state of the progress bar, based on if the time the process takes is known or not.
@@ -54,7 +51,7 @@ export class ProgressBar implements ComponentInterface {
 
   hostData() {
     const { color, type, reversed, value } = this;
-    const paused = this.config.getBoolean('_testing');
+    const paused = config.getBoolean('_testing');
     return {
       'role': 'progressbar',
       'aria-valuenow': type === 'determinate' ? value : null,

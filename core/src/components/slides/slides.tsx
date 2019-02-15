@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, Watch, getMode, h } from '@stencil/core';
 
 import { Mode } from '../../interface';
 import { rIC } from '../../utils/helpers.js';
@@ -22,13 +22,9 @@ export class Slides implements ComponentInterface {
 
   private readySwiper!: (swiper: SwiperInterface) => void;
   private swiper: Promise<SwiperInterface> = new Promise(resolve => { this.readySwiper = resolve; });
+  private mode = getMode<Mode>(this);
 
   @Element() el!: HTMLStencilElement;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * Options to pass to the swiper instance.

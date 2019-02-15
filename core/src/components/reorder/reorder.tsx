@@ -1,7 +1,5 @@
 import { Component, ComponentInterface, Listen, h } from '@stencil/core';
 
-import { Mode } from '../../interface';
-
 @Component({
   tag: 'ion-reorder',
   styleUrls: {
@@ -11,8 +9,6 @@ import { Mode } from '../../interface';
   shadow: true
 })
 export class Reorder implements ComponentInterface {
-
-  mode!: Mode;
 
   @Listen('click', { capture: true })
   onClick(ev: Event) {

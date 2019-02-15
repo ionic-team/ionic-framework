@@ -1,8 +1,11 @@
-import { Component, ComponentInterface, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop, getMode } from '@stencil/core';
 
 import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-footer',
   styleUrls: {
@@ -12,10 +15,7 @@ import { createThemedClasses } from '../../utils/theme';
 })
 export class Footer implements ComponentInterface {
 
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
+  private mode = getMode<Mode>(this);
 
   /**
    * If `true`, the footer will be translucent.

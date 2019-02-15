@@ -1,9 +1,11 @@
 import { Component, ComponentInterface, Element, Listen, Prop, h } from '@stencil/core';
 
-import { Color, Config, CssClassMap, Mode, StyleEventDetail } from '../../interface';
+import { Color, CssClassMap, StyleEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
+ * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ *
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the toolbar text in LTR, and to the right in RTL.
  * @slot secondary - Content is placed to the left of the toolbar text in `ios` mode, and directly to the right in `md` mode.
@@ -23,19 +25,12 @@ export class Toolbar implements ComponentInterface {
 
   @Element() el!: HTMLStencilElement;
 
-  @Prop({ context: 'config' }) config!: Config;
-
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   @Listen('ionStyle')
   childrenStyle(ev: CustomEvent<StyleEventDetail>) {

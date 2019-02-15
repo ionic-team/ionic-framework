@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch, getMode, h } from '@stencil/core';
 
-import { Animation, Config, Gesture, GestureDetail, MenuChangeEventDetail, MenuControllerI, MenuI, Mode, Side } from '../../interface';
+import { config } from '../../global/ionic-global';
+import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuControllerI, MenuI, Mode, Side } from '../../interface';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { assert, isEndSide as isEnd } from '../../utils/helpers';
 
@@ -19,7 +20,7 @@ export class Menu implements ComponentInterface, MenuI {
   private gesture?: Gesture;
   private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
 
-  mode!: Mode;
+  private mode = getMode<Mode>(this);
 
   isAnimating = false;
   width!: number; // TODO
@@ -35,7 +36,6 @@ export class Menu implements ComponentInterface, MenuI {
   @State() isPaneVisible = false;
   @State() isEndSide = false;
 
-  @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'isServer' }) isServer!: boolean;
   @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl!: HTMLIonMenuControllerElement;
   @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
@@ -143,7 +143,7 @@ export class Menu implements ComponentInterface, MenuI {
 
   async componentWillLoad() {
     if (this.type === undefined) {
-      this.type = this.config.get('menuType', this.mode === 'ios' ? 'reveal' : 'overlay');
+      this.type = config.get('menuType', this.mode === 'ios' ? 'reveal' : 'overlay');
     }
 
     if (this.isServer) {

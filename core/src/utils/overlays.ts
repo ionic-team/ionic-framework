@@ -1,3 +1,4 @@
+import { config } from '../global/ionic-global';
 import { AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, OverlayInterface } from '../interface';
 
 let lastId = 0;
@@ -98,7 +99,7 @@ export async function present(
   // get the user's animation fn if one was provided
   const animationBuilder = (overlay.enterAnimation)
     ? overlay.enterAnimation
-    : overlay.config.get(name, overlay.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
+    : config.get(name, overlay.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
   const completed = await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
   if (completed) {
@@ -125,7 +126,7 @@ export async function dismiss(
 
     const animationBuilder = (overlay.leaveAnimation)
       ? overlay.leaveAnimation
-      : overlay.config.get(name, overlay.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
+      : config.get(name, overlay.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
     await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
     overlay.didDismiss.emit({ data, role });
@@ -159,7 +160,7 @@ async function overlayAnimation(
   const aniRoot = baseEl.shadowRoot || overlay.el;
   const animation = overlay.animation = await import('./animation').then(mod => mod.create(animationBuilder, aniRoot, opts));
   overlay.animation = animation;
-  if (!overlay.animated || !overlay.config.getBoolean('animated', true)) {
+  if (!overlay.animated || !config.getBoolean('animated', true)) {
     animation.duration(0);
   }
   if (overlay.keyboardClose) {

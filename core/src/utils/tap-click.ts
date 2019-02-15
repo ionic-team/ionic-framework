@@ -1,8 +1,8 @@
-import { Config } from '../interface';
+import { config } from '../global/ionic-global';
 
 import { now, pointerCoord } from './helpers';
 
-export function startTapClick(doc: Document, config: Config) {
+export function startTapClick(doc: Document) {
   let lastTouch = -MOUSE_WAIT * 10;
   let lastActivated = 0;
   let scrollingEl: HTMLElement | undefined;

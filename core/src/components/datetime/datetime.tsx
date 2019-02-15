@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch, getMode, h } from '@stencil/core';
 
 import { DatetimeChangeEventDetail, DatetimeOptions, Mode, PickerColumn, PickerColumnOption, PickerOptions, StyleEventDetail } from '../../interface';
 import { clamp, findItemLabel, renderHiddenInput } from '../../utils/helpers';
@@ -6,6 +6,9 @@ import { hostContext } from '../../utils/theme';
 
 import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getValueFromFormat, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
 
+/**
+ * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-datetime',
   styleUrls: {
@@ -22,17 +25,13 @@ export class Datetime implements ComponentInterface {
   private datetimeMax: DatetimeData = {};
   private datetimeValue: DatetimeData = {};
   private buttonEl?: HTMLButtonElement;
+  private mode = getMode<Mode>(this);
 
   @Element() el!: HTMLIonDatetimeElement;
 
   @State() isExpanded = false;
 
   @Prop({ connect: 'ion-picker-controller' }) pickerCtrl!: HTMLIonPickerControllerElement;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The name of the control, which is submitted with the form data.

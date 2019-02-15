@@ -1,9 +1,11 @@
-import { Component, ComponentInterface, Element, Listen, Prop, State, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop, State, getMode, h } from '@stencil/core';
 
 import { Color, CssClassMap, Mode, RouterDirection, StyleEventDetail } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
+ * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ *
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the item text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the item text in LTR, and to the left in RTL.
@@ -17,7 +19,9 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
   shadow: true
 })
 export class Item implements ComponentInterface {
+
   private itemStyles = new Map<string, CssClassMap>();
+  private mode = getMode<Mode>(this);
 
   @Element() el!: HTMLStencilElement;
 
@@ -31,11 +35,6 @@ export class Item implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, a button tag will be rendered and the item will be tappable.

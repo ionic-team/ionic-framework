@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Prop, QueueApi, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop, QueueApi, getMode, h } from '@stencil/core';
 
 import { Gesture, GestureDetail, Mode, PickerColumn } from '../../interface';
 import { hapticSelectionChanged } from '../../utils/haptic';
@@ -15,7 +15,7 @@ import { clamp } from '../../utils/helpers';
   }
 })
 export class PickerColumnCmp implements ComponentInterface {
-  mode!: Mode;
+  private mode = getMode<Mode>(this);
 
   private bounceFrom!: number;
   private lastIndex?: number;

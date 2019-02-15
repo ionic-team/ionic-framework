@@ -32,7 +32,6 @@ import {
   MenuChangeEventDetail,
   MenuControllerI,
   ModalOptions,
-  Mode,
   NavComponent,
   NavOptions,
   OverlayEventDetail,
@@ -132,10 +131,6 @@ export namespace Components {
     */
     'leaveAnimation'?: AnimationBuilder;
     /**
-    * The mode determines which platform styles to use.
-    */
-    'mode': Mode;
-    /**
     * Returns a promise that resolves when the action-sheet did dismiss.
     */
     'onDidDismiss': () => Promise<OverlayEventDetail<any>>;
@@ -190,10 +185,6 @@ export namespace Components {
     * Animation to use when the action sheet is dismissed.
     */
     'leaveAnimation'?: AnimationBuilder;
-    /**
-    * The mode determines which platform styles to use.
-    */
-    'mode'?: Mode;
     /**
     * Emitted after the alert has dismissed.
     */
@@ -284,7 +275,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * Returns a promise that resolves when the alert did dismiss.
     */
@@ -351,7 +342,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * Emitted after the alert has dismissed.
     */
@@ -429,7 +420,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * The text to display in the back button.
     */
@@ -451,7 +442,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * The text to display in the back button.
     */
@@ -499,7 +490,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
   }
   interface IonBadgeAttributes extends JSXElements.HTMLAttributes {
     /**
@@ -509,7 +500,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
   }
 
   interface IonButton {
@@ -537,10 +528,6 @@ export namespace Components {
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
     'href'?: string;
-    /**
-    * The mode determines which platform styles to use.
-    */
-    'mode': Mode;
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
@@ -588,10 +575,6 @@ export namespace Components {
     */
     'href'?: string;
     /**
-    * The mode determines which platform styles to use.
-    */
-    'mode'?: Mode;
-    /**
     * Emitted when the button loses focus.
     */
     'onIonBlur'?: (event: CustomEvent<void>) => void;
@@ -628,13 +611,13 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
   }
   interface IonCardContentAttributes extends JSXElements.HTMLAttributes {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
   }
 
   interface IonCardHeader {
@@ -645,7 +628,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * If `true`, the card header will be translucent.
     */
@@ -659,7 +642,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * If `true`, the card header will be translucent.
     */
@@ -674,7 +657,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
   }
   interface IonCardSubtitleAttributes extends JSXElements.HTMLAttributes {
     /**
@@ -684,7 +667,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
   }
 
   interface IonCardTitle {
@@ -695,7 +678,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
   }
   interface IonCardTitleAttributes extends JSXElements.HTMLAttributes {
     /**
@@ -705,7 +688,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
   }
 
   interface IonCard {
@@ -716,7 +699,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
   }
   interface IonCardAttributes extends JSXElements.HTMLAttributes {
     /**
@@ -726,7 +709,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
   }
 
   interface IonCheckbox {
@@ -745,7 +728,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * The name of the control, which is submitted with the form data.
     */
@@ -771,7 +754,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * The name of the control, which is submitted with the form data.
     */
@@ -802,7 +785,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * Display an outline style button.
     */
@@ -816,7 +799,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * Display an outline style button.
     */
@@ -1153,7 +1136,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * Full names for each month name. This can be used to provide locale month names. Defaults to English.
     */
@@ -1247,7 +1230,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * Full names for each month name. This can be used to provide locale month names. Defaults to English.
     */
@@ -1326,7 +1309,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
@@ -1368,7 +1351,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * Emitted when the button loses focus.
     */
@@ -1465,7 +1448,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * If `true`, the footer will be translucent. Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content.
     */
@@ -1475,7 +1458,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * If `true`, the footer will be translucent. Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content.
     */
@@ -1499,7 +1482,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * If `true`, the header will be translucent. Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content.
     */
@@ -1509,7 +1492,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * If `true`, the header will be translucent. Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content.
     */
@@ -1667,7 +1650,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * If `true`, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"` or `"file"`, otherwise it is ignored.
     */
@@ -1781,7 +1764,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * If `true`, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"` or `"file"`, otherwise it is ignored.
     */
@@ -1852,7 +1835,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * When it's set to `true`, the item-divider will stay visible when it reaches the top of the viewport until the next `ion-item-divider` replaces it.  This feature relies in `position:sticky`: https://caniuse.com/#feat=css-sticky
     */
@@ -1866,7 +1849,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * When it's set to `true`, the item-divider will stay visible when it reaches the top of the viewport until the next `ion-item-divider` replaces it.  This feature relies in `position:sticky`: https://caniuse.com/#feat=css-sticky
     */
@@ -1896,7 +1879,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
   }
   interface IonItemOptionAttributes extends JSXElements.HTMLAttributes {
     /**
@@ -1918,7 +1901,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
   }
 
   interface IonItemOptions {
@@ -2004,7 +1987,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
@@ -2046,7 +2029,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
@@ -2065,7 +2048,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * The position determines where and how the label behaves inside an item.
     */
@@ -2079,7 +2062,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * The position determines where and how the label behaves inside an item.
     */
@@ -2094,7 +2077,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
   }
   interface IonListHeaderAttributes extends JSXElements.HTMLAttributes {
     /**
@@ -2104,7 +2087,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
   }
 
   interface IonList {
@@ -2123,7 +2106,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
   }
   interface IonListAttributes extends JSXElements.HTMLAttributes {
     /**
@@ -2137,7 +2120,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
   }
 
   interface IonLoadingController {
@@ -2196,7 +2179,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * Returns a promise that resolves when the loading did dismiss.
     */
@@ -2259,7 +2242,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * Emitted after the loading has dismissed.
     */
@@ -2306,7 +2289,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
   }
   interface IonMenuButtonAttributes extends JSXElements.HTMLAttributes {
     /**
@@ -2324,7 +2307,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
   }
 
   interface IonMenuController {
@@ -2559,7 +2542,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * Returns a promise that resolves when the modal did dismiss.
     */
@@ -2614,7 +2597,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * Emitted after the modal has dismissed.
     */
@@ -2798,7 +2781,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
   }
   interface IonNoteAttributes extends JSXElements.HTMLAttributes {
     /**
@@ -2808,7 +2791,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
   }
 
   interface IonPickerColumn {
@@ -2888,7 +2871,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * Returns a promise that resolves when the picker did dismiss.
     */
@@ -2947,7 +2930,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * Emitted after the picker has dismissed.
     */
@@ -3031,7 +3014,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * Returns a promise that resolves when the popover did dismiss.
     */
@@ -3094,7 +3077,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * Emitted after the popover has dismissed.
     */
@@ -3133,7 +3116,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * If true, reverse the progress bar direction.
     */
@@ -3159,7 +3142,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * If true, reverse the progress bar direction.
     */
@@ -3221,10 +3204,6 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
-    * The mode determines which platform styles to use.
-    */
-    'mode': Mode;
-    /**
     * The name of the control, which is submitted with the form data.
     */
     'name': string;
@@ -3246,10 +3225,6 @@ export namespace Components {
     * If `true`, the user cannot interact with the radio.
     */
     'disabled'?: boolean;
-    /**
-    * The mode determines which platform styles to use.
-    */
-    'mode'?: Mode;
     /**
     * The name of the control, which is submitted with the form data.
     */
@@ -3300,7 +3275,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * The name of the control, which is submitted with the form data.
     */
@@ -3354,7 +3329,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * The name of the control, which is submitted with the form data.
     */
@@ -3610,7 +3585,6 @@ export namespace Components {
     'commit': (enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
     'delegate'?: FrameworkDelegate;
     'getRouteId': () => Promise<RouteID | undefined>;
-    'mode': Mode;
     'setRouteId': (id: string, params: { [key: string]: any; } | undefined, direction: RouterDirection) => Promise<RouteWrite>;
     'swipeHandler'?: SwipeGestureHandler;
   }
@@ -3707,7 +3681,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * Set the input's placeholder.
     */
@@ -3773,7 +3747,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * Emitted when the input loses focus.
     */
@@ -3840,7 +3814,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * The value of the segment button.
     */
@@ -3862,7 +3836,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * Emitted when the segment button is clicked.
     */
@@ -3885,7 +3859,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * If `true`, the segment buttons will overflow and the user can swipe to see them.
     */
@@ -3907,7 +3881,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * Emitted when the value property has changed.
     */
@@ -4010,10 +3984,6 @@ export namespace Components {
     */
     'interfaceOptions': any;
     /**
-    * The mode determines which platform styles to use.
-    */
-    'mode': Mode;
-    /**
     * If `true`, the select can accept multiple values.
     */
     'multiple': boolean;
@@ -4059,10 +4029,6 @@ export namespace Components {
     * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [AlertController API docs](../../alert/AlertController/#create), the [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the [PopoverController API docs](../../popover/PopoverController/#create) for the create options for each interface.
     */
     'interfaceOptions'?: any;
-    /**
-    * The mode determines which platform styles to use.
-    */
-    'mode'?: Mode;
     /**
     * If `true`, the select can accept multiple values.
     */
@@ -4155,10 +4121,6 @@ export namespace Components {
     */
     'lockSwipes': (shouldLockSwipes: boolean) => Promise<void>;
     /**
-    * The mode determines which platform styles to use.
-    */
-    'mode': Mode;
-    /**
     * Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options
     */
     'options': any;
@@ -4200,10 +4162,6 @@ export namespace Components {
     'updateAutoHeight': (speed?: number | undefined) => Promise<void>;
   }
   interface IonSlidesAttributes extends JSXElements.HTMLAttributes {
-    /**
-    * The mode determines which platform styles to use.
-    */
-    'mode'?: Mode;
     /**
     * Emitted after the active slide has changed.
     */
@@ -4360,7 +4318,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * The selected tab component
     */
@@ -4378,7 +4336,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * The selected tab component
     */
@@ -4405,7 +4363,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * The selected tab component
     */
@@ -4431,7 +4389,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * The selected tab component
     */
@@ -4505,7 +4463,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
   }
   interface IonTextAttributes extends JSXElements.HTMLAttributes {
     /**
@@ -4515,7 +4473,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
   }
 
   interface IonTextarea {
@@ -4562,7 +4520,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * The name of the control, which is submitted with the form data.
     */
@@ -4640,7 +4598,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * The name of the control, which is submitted with the form data.
     */
@@ -4767,7 +4725,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * Returns a promise that resolves when the toast did dismiss.
     */
@@ -4834,7 +4792,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * Emitted after the toast has dismissed.
     */
@@ -4881,7 +4839,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * The name of the control, which is submitted with the form data.
     */
@@ -4907,7 +4865,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
     /**
     * The name of the control, which is submitted with the form data.
     */
@@ -4938,7 +4896,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode': Mode;
+    'mode'?: 'md' | 'ios';
   }
   interface IonToolbarAttributes extends JSXElements.HTMLAttributes {
     /**
@@ -4948,7 +4906,7 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
-    'mode'?: Mode;
+    'mode'?: 'md' | 'ios';
   }
 
   interface IonVirtualScroll {

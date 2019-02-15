@@ -1,8 +1,12 @@
-import { Component, ComponentInterface, Element, Listen, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop, getMode, h } from '@stencil/core';
 
-import { Color, Config, Mode } from '../../interface';
+import { config } from '../../global/ionic-global';
+import { Color, Mode } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
+/**
+ * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-back-button',
   styleUrls: {
@@ -13,9 +17,10 @@ import { createColorClasses, openURL } from '../../utils/theme';
 })
 export class BackButton implements ComponentInterface {
 
+  private mode = getMode<Mode>(this);
+
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'window' }) win!: Window;
 
   /**
@@ -24,11 +29,6 @@ export class BackButton implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The url to navigate back to by default when there is no history.
@@ -72,8 +72,8 @@ export class BackButton implements ComponentInterface {
 
   render() {
     const defaultBackButtonText = this.mode === 'ios' ? 'Back' : null;
-    const backButtonIcon = this.icon != null ? this.icon : this.config.get('backButtonIcon', 'arrow-back');
-    const backButtonText = this.text != null ? this.text : this.config.get('backButtonText', defaultBackButtonText);
+    const backButtonIcon = this.icon != null ? this.icon : config.get('backButtonIcon', 'arrow-back');
+    const backButtonText = this.text != null ? this.text : config.get('backButtonText', defaultBackButtonText);
 
     return (
       <button

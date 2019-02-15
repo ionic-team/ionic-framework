@@ -1,8 +1,11 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, getMode, h } from '@stencil/core';
 
 import { Color, Mode, RouterDirection } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
+/**
+ * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-fab-button',
   styleUrls: {
@@ -12,14 +15,12 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
   shadow: true
 })
 export class FabButton implements ComponentInterface {
+
+  private mode = getMode<Mode>(this);
+
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'window' }) win!: Window;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The color to use from your application's color palette.

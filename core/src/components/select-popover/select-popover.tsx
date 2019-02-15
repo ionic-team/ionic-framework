@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Listen, Prop, h } from '@stencil/core';
 
-import { Mode, SelectPopoverOption } from '../../interface';
+import { SelectPopoverOption } from '../../interface';
 
 /**
  * @internal
@@ -11,8 +11,6 @@ import { Mode, SelectPopoverOption } from '../../interface';
   scoped: true
 })
 export class SelectPopover implements ComponentInterface {
-
-  mode!: Mode;
 
   /** Header text for the popover */
   @Prop() header?: string;

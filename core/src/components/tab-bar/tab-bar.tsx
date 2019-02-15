@@ -1,8 +1,11 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch, h } from '@stencil/core';
 
-import { Color, Mode, TabBarChangedEventDetail } from '../../interface';
+import { Color, TabBarChangedEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-tab-bar',
   styleUrls: {
@@ -19,11 +22,6 @@ export class TabBar implements ComponentInterface {
   @Prop({ context: 'document' }) doc!: Document;
 
   @State() keyboardVisible = false;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The color to use from your application's color palette.

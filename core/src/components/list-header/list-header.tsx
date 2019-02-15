@@ -1,8 +1,11 @@
 import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 
-import { Color, Mode } from '../../interface';
+import { Color } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-list-header',
   styleUrls: {
@@ -12,11 +15,6 @@ import { createColorClasses } from '../../utils/theme';
   shadow: true
 })
 export class ListHeader implements ComponentInterface {
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The color to use from your application's color palette.

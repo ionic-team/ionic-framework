@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch, getMode } from '@stencil/core';
 
 import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
@@ -25,7 +25,7 @@ export class SplitPane implements ComponentInterface {
 
   private rmL: any;
 
-  mode!: Mode;
+  private mode = getMode<Mode>(this);
 
   @Element() el!: HTMLElement;
   @State() visible = false;

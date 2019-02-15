@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, getMode, h } from '@stencil/core';
 
-import { ActionSheetButton, Animation, AnimationBuilder, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { ActionSheetButton, Animation, AnimationBuilder, CssClassMap, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
@@ -19,19 +19,14 @@ import { mdLeaveAnimation } from './animations/md.leave';
 })
 export class ActionSheet implements ComponentInterface, OverlayInterface {
 
+  mode = getMode<Mode>(this);
   presented = false;
   animation?: Animation;
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'config' }) config!: Config;
   /** @internal */
   @Prop() overlayIndex!: number;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, the keyboard will be automatically dismissed when the overlay is presented.

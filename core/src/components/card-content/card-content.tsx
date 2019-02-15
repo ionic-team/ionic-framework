@@ -1,8 +1,11 @@
-import { Component, ComponentInterface, Prop } from '@stencil/core';
+import { Component, ComponentInterface, getMode } from '@stencil/core';
 
 import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-card-content',
   styleUrls: {
@@ -12,14 +15,9 @@ import { createThemedClasses } from '../../utils/theme';
 })
 export class CardContent implements ComponentInterface {
 
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
-
   hostData() {
     return {
-      class: createThemedClasses(this.mode, 'card-content')
+      class: createThemedClasses(getMode<Mode>(this), 'card-content')
     };
   }
 }

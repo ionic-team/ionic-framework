@@ -1,4 +1,4 @@
-import { Component, ComponentInterface } from '@stencil/core';
+import { Component, ComponentInterface, getMode } from '@stencil/core';
 
 import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
@@ -12,7 +12,7 @@ import { createThemedClasses } from '../../utils/theme';
 })
 export class ItemGroup implements ComponentInterface {
 
-  mode!: Mode;
+  private mode = getMode<Mode>(this);
 
   hostData() {
     return {

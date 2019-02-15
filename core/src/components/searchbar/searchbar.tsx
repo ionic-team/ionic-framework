@@ -1,9 +1,13 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch, getMode, h } from '@stencil/core';
 
-import { Color, Config, Mode, SearchbarChangeEventDetail } from '../../interface';
+import { config } from '../../global/ionic-global';
+import { Color, Mode, SearchbarChangeEventDetail } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-searchbar',
   styleUrls: {
@@ -17,10 +21,10 @@ export class Searchbar implements ComponentInterface {
   private nativeInput?: HTMLInputElement;
   private isCancelVisible = false;
   private shouldAlignLeft = true;
+  private mode = getMode<Mode>(this);
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'document' }) doc!: Document;
 
   @State() focused = false;
@@ -32,11 +36,6 @@ export class Searchbar implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, enable searchbar animation.
@@ -347,7 +346,7 @@ export class Searchbar implements ComponentInterface {
   }
 
   hostData() {
-    const animated = this.animated && this.config.getBoolean('animated', true);
+    const animated = this.animated && config.getBoolean('animated', true);
 
     return {
       class: {

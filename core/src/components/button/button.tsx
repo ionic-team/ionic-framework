@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, getMode, h } from '@stencil/core';
 
 import { Color, Mode, RouterDirection } from '../../interface';
 import { hasShadowDom } from '../../utils/helpers';
@@ -21,6 +21,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
 export class Button implements ComponentInterface {
 
   private inToolbar = false;
+  private mode = getMode<Mode>(this);
 
   @Element() el!: HTMLElement;
 
@@ -32,11 +33,6 @@ export class Button implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The type of button.

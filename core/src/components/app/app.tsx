@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Prop, QueueApi } from '@stencil/core';
 
-import { Config } from '../../interface';
+import { config } from '../../global/ionic-global';
 import { rIC } from '../../utils/helpers';
 import { isPlatform } from '../../utils/platform';
 
@@ -13,20 +13,19 @@ export class App implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'window' }) win!: Window;
-  @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
   componentDidLoad() {
     rIC(() => {
-      const { win, config, queue } = this;
+      const { win, queue } = this;
 
       if (!config.getBoolean('_testing')) {
-        importTapClick(win, config);
+        importTapClick(win);
       }
 
-      importInputShims(win, config);
-      importStatusTap(win, config, queue);
-      importHardwareBackButton(win, config);
+      importInputShims(win);
+      importStatusTap(win, queue);
+      importHardwareBackButton(win);
       importFocusVisible(win);
     });
   }
@@ -35,20 +34,20 @@ export class App implements ComponentInterface {
     return {
       class: {
         'ion-page': true,
-        'force-statusbar-padding': this.config.getBoolean('_forceStatusbarPadding')
+        'force-statusbar-padding': config.getBoolean('_forceStatusbarPadding')
       }
     };
   }
 }
 
-function importHardwareBackButton(win: Window, config: Config) {
+function importHardwareBackButton(win: Window) {
   const hardwareBackConfig = config.getBoolean('hardwareBackButton', isPlatform(win, 'hybrid'));
   if (hardwareBackConfig) {
     import('../../utils/hardware-back-button').then(module => module.startHardwareBackButton(win));
   }
 }
 
-function importStatusTap(win: Window, config: Config, queue: QueueApi) {
+function importStatusTap(win: Window, queue: QueueApi) {
   const statusTap = config.getBoolean('statusTap', isPlatform(win, 'hybrid'));
   if (statusTap) {
     import('../../utils/status-tap').then(module => module.startStatusTap(win, queue));
@@ -59,14 +58,14 @@ function importFocusVisible(win: Window) {
   import('../../utils/focus-visible').then(module => module.startFocusVisible(win.document));
 }
 
-function importTapClick(win: Window, config: Config) {
-  import('../../utils/tap-click').then(module => module.startTapClick(win.document, config));
+function importTapClick(win: Window) {
+  import('../../utils/tap-click').then(module => module.startTapClick(win.document));
 }
 
-function importInputShims(win: Window, config: Config) {
+function importInputShims(win: Window) {
   const inputShims = config.getBoolean('inputShims', needInputShims(win));
   if (inputShims) {
-    import('../../utils/input-shims/input-shims').then(module => module.startInputShims(win.document, config));
+    import('../../utils/input-shims/input-shims').then(module => module.startInputShims(win.document));
   }
 }
 

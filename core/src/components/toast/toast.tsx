@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, getMode, h } from '@stencil/core';
 
-import { Animation, AnimationBuilder, Color, Config, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { Animation, AnimationBuilder, Color, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { dismiss, eventMethod, present } from '../../utils/overlays';
 import { createColorClasses, getClassMap } from '../../utils/theme';
 
@@ -9,6 +9,9 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
+/**
+ * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-toast',
   styleUrls: {
@@ -22,22 +25,15 @@ export class Toast implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
 
   presented = false;
+  animation: Animation | undefined;
+  mode = getMode<Mode>(this); /* MODE */
 
   @Element() el!: HTMLElement;
-
-  animation: Animation | undefined;
-
-  @Prop({ context: 'config' }) config!: Config;
 
   /**
    * @internal
    */
   @Prop() overlayIndex!: number;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The color to use from your application's color palette.

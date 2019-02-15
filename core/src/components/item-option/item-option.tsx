@@ -1,9 +1,11 @@
-import { Component, ComponentInterface, Element, Listen, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop, getMode, h } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
+ * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ *
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the option text in LTR, and to the right in RTL.
  * @slot top - Content is placed above the option text.
@@ -21,6 +23,8 @@ import { createColorClasses } from '../../utils/theme';
 })
 export class ItemOption implements ComponentInterface {
 
+  private mode = getMode<Mode>(this);
+
   @Element() el!: HTMLElement;
 
   /**
@@ -29,11 +33,6 @@ export class ItemOption implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, the user cannot interact with the item option.

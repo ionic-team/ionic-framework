@@ -1,12 +1,15 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, getMode, h } from '@stencil/core';
 
-import { Animation, AnimationBuilder, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
+import { Animation, AnimationBuilder, CssClassMap, Mode, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
 import { dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 
+/**
+ * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-picker',
   styleUrls: {
@@ -19,20 +22,14 @@ export class Picker implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
 
   animation?: Animation;
+  mode = getMode<Mode>(this);
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'config' }) config!: Config;
 
   @State() presented = false;
 
   /** @internal */
   @Prop() overlayIndex!: number;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, the keyboard will be automatically dismissed when the overlay is presented.

@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch, getMode, h } from '@stencil/core';
 
 import { ActionSheetButton, ActionSheetOptions, AlertOptions, CssClassMap, Mode, OverlaySelect, PopoverOptions, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, StyleEventDetail } from '../../interface';
 import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
@@ -19,6 +19,7 @@ export class Select implements ComponentInterface {
   private overlay?: OverlaySelect;
   private didInit = false;
   private buttonEl?: HTMLButtonElement;
+  private mode = getMode<Mode>(this);
 
   @Element() el!: HTMLIonSelectElement;
 
@@ -27,11 +28,6 @@ export class Select implements ComponentInterface {
   @Prop({ connect: 'ion-popover-controller' }) popoverCtrl!: HTMLIonPopoverControllerElement;
 
   @State() isExpanded = false;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, the user cannot interact with the select.

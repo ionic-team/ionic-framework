@@ -1,9 +1,12 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch, getMode, h } from '@stencil/core';
 
 import { Mode, SegmentButtonLayout } from '../../interface';
 
 let ids = 0;
 
+/**
+ * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-segment-button',
   styleUrls: {
@@ -14,12 +17,9 @@ let ids = 0;
 })
 export class SegmentButton implements ComponentInterface {
 
-  @Element() el!: HTMLElement;
+  private mode = getMode<Mode>(this);
 
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
+  @Element() el!: HTMLElement;
 
   /**
    * If `true`, the segment button is selected.

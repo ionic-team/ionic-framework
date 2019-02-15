@@ -1,6 +1,7 @@
-import { Build, Component, Element, Event, EventEmitter, Method, Prop, QueueApi, Watch, h } from '@stencil/core';
+import { Build, Component, Element, Event, EventEmitter, Method, Prop, QueueApi, Watch, getMode, h } from '@stencil/core';
 
-import { Animation, AnimationBuilder, ComponentProps, Config, FrameworkDelegate, Gesture, Mode, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, RouterDirection, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
+import { config } from '../../global/ionic-global';
+import { Animation, AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture, Mode, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, RouterDirection, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
 import { assert } from '../../utils/helpers';
 import { TransitionOptions, lifecycle, setPageHidden, transition } from '../../utils/transition';
 
@@ -22,12 +23,11 @@ export class Nav implements NavOutlet {
   private views: ViewController[] = [];
   private gesture?: Gesture;
 
-  mode!: Mode;
+  private mode = getMode<Mode>(this);
 
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'window' }) win!: Window;
 
   /** @internal */
@@ -99,7 +99,7 @@ export class Nav implements NavOutlet {
       !this.el.closest('[no-router]');
 
     if (this.swipeGesture === undefined) {
-      this.swipeGesture = this.config.getBoolean(
+      this.swipeGesture = config.getBoolean(
         'swipeBackEnabled',
         this.mode === 'ios'
       );
@@ -223,18 +223,18 @@ export class Nav implements NavOutlet {
     opts?: NavOptions | null,
     done?: TransitionDoneFn
   ): Promise<boolean> {
-    const config: TransitionInstruction = {
+    const ti: TransitionInstruction = {
       removeStart: -1,
       removeCount: -1,
       opts
     };
     if (typeof indexOrViewCtrl === 'object' && (indexOrViewCtrl as ViewController).component) {
-      config.removeView = indexOrViewCtrl;
-      config.removeStart = 1;
+      ti.removeView = indexOrViewCtrl;
+      ti.removeStart = 1;
     } else if (typeof indexOrViewCtrl === 'number') {
-      config.removeStart = indexOrViewCtrl + 1;
+      ti.removeStart = indexOrViewCtrl + 1;
     }
-    return this.queueTrns(config, done);
+    return this.queueTrns(ti, done);
   }
 
   /**
@@ -783,9 +783,9 @@ export class Nav implements NavOutlet {
       queue: this.queue,
       window: this.win,
       baseEl: this.el,
-      animationBuilder: this.animation || opts.animationBuilder || this.config.get('navAnimation'),
+      animationBuilder: this.animation || opts.animationBuilder || config.get('navAnimation'),
       progressCallback,
-      animated: this.animated && this.config.getBoolean('animated', true),
+      animated: this.animated && config.getBoolean('animated', true),
 
       enteringEl,
       leavingEl,

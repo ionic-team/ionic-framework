@@ -1,9 +1,12 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch, getMode, h } from '@stencil/core';
 
 import { CheckboxChangeEventDetail, Color, Mode, StyleEventDetail } from '../../interface';
 import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
+/**
+ * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-checkbox',
   styleUrls: {
@@ -16,6 +19,7 @@ export class Checkbox implements ComponentInterface {
 
   private inputId = `ion-cb-${checkboxIds++}`;
   private buttonEl?: HTMLElement;
+  private mode = getMode<Mode>(this);
 
   @Element() el!: HTMLElement;
 
@@ -25,11 +29,6 @@ export class Checkbox implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The name of the control, which is submitted with the form data.

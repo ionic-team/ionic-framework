@@ -1,7 +1,11 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, getMode, h } from '@stencil/core';
 
-import { Config, Mode, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
+import { config } from '../../global/ionic-global';
+import { Mode, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
 
+/**
+ * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-tab-button',
   styleUrls: {
@@ -12,21 +16,17 @@ import { Config, Mode, TabBarChangedEventDetail, TabButtonClickEventDetail, TabB
 })
 export class TabButton implements ComponentInterface {
 
+  private mode = getMode<Mode>(this);
+
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'document' }) doc!: Document;
-  @Prop({ context: 'config' }) config!: Config;
 
   /**
    * The selected tab component
    */
   @Prop({ mutable: true }) selected = false;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * Set the layout of the text and icon in the tab bar.
@@ -77,7 +77,7 @@ export class TabButton implements ComponentInterface {
 
   componentWillLoad() {
     if (this.layout === undefined) {
-      this.layout = this.config.get('tabButtonLayout', 'icon-top');
+      this.layout = config.get('tabButtonLayout', 'icon-top');
     }
   }
 

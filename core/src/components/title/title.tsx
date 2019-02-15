@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop, getMode, h } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -10,7 +10,7 @@ import { createColorClasses } from '../../utils/theme';
 })
 export class ToolbarTitle implements ComponentInterface {
 
-  mode!: Mode;
+  private mode = getMode<Mode>(this);
 
   @Element() el!: HTMLElement;
 

@@ -1,8 +1,11 @@
 import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 
-import { Color, Mode } from '../../interface';
+import { Color } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-badge',
   styleUrls: {
@@ -18,11 +21,6 @@ export class Badge implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   hostData() {
     return {

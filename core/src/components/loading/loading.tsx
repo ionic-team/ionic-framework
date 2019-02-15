@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, getMode, h } from '@stencil/core';
 
-import { Animation, AnimationBuilder, Config, Mode, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
+import { config } from '../../global/ionic-global';
+import { Animation, AnimationBuilder, Mode, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
@@ -9,6 +10,9 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
+/**
+ * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-loading',
   styleUrls: {
@@ -20,20 +24,14 @@ import { mdLeaveAnimation } from './animations/md.leave';
 export class Loading implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
 
+  mode = getMode<Mode>(this);
   presented = false;
   animation?: Animation;
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'config' }) config!: Config;
-
   /** @internal */
   @Prop() overlayIndex!: number;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
@@ -113,7 +111,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   componentWillLoad() {
     if (this.spinner === undefined) {
-      this.spinner = this.config.get('loadingSpinner', this.mode === 'ios' ? 'lines' : 'crescent');
+      this.spinner = config.get('loadingSpinner', this.mode === 'ios' ? 'lines' : 'crescent');
     }
   }
 

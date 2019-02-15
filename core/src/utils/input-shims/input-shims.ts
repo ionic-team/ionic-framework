@@ -1,5 +1,5 @@
 
-import { Config } from '../../interface';
+import { config } from '../../global/ionic-global';
 
 import { enableHideCaretOnScroll } from './hacks/hide-caret';
 import { enableInputBlurring } from './hacks/input-blurring';
@@ -11,10 +11,7 @@ const SCROLL_ASSIST = true;
 const SCROLL_PADDING = true;
 const HIDE_CARET = true;
 
-export function startInputShims(
-  doc: Document,
-  config: Config,
-) {
+export function startInputShims(doc: Document) {
   const keyboardHeight = config.getNumber('keyboardHeight', 290);
   const scrollAssist = config.getBoolean('scrollAssist', true);
   const hideCaret = config.getBoolean('hideCaretOnScroll', true);

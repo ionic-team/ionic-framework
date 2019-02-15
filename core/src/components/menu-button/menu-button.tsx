@@ -1,7 +1,11 @@
-import { Component, ComponentInterface, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Prop, getMode, h } from '@stencil/core';
 
-import { Color, Config, Mode } from '../../interface';
+import { config } from '../../global/ionic-global';
+import { Color, Mode } from '../../interface';
 
+/**
+ * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-menu-button',
   styleUrls: {
@@ -12,7 +16,7 @@ import { Color, Config, Mode } from '../../interface';
 })
 export class MenuButton implements ComponentInterface {
 
-  @Prop({ context: 'config' }) config!: Config;
+  private mode = getMode<Mode>(this);
 
   /**
    * The color to use from your application's color palette.
@@ -20,11 +24,6 @@ export class MenuButton implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle
@@ -46,7 +45,7 @@ export class MenuButton implements ComponentInterface {
   }
 
   render() {
-    const menuIcon = this.config.get('menuIcon', 'menu');
+    const menuIcon = config.get('menuIcon', 'menu');
     return (
       <ion-menu-toggle menu={this.menu} autoHide={this.autoHide}>
         <button type="button">
