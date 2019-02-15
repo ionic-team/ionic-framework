@@ -1,7 +1,7 @@
 import React from 'react';
 import { attachEventProps } from './utils'
 import { ensureElementInBody, dashToPascalCase } from './utils';
-import { OverlayComponentElement, OverlayControllerComponentElement } from './types';
+import { OverlayComponentElement, OverlayControllerComponentElement } from '../types';
 
 export function createControllerComponent<T extends object, E extends OverlayComponentElement, C extends OverlayControllerComponentElement<E>>(tagName: string, controllerTagName: string) {
   const displayName = dashToPascalCase(tagName);
