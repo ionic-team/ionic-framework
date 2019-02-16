@@ -423,6 +423,10 @@ export class Nav implements NavOutlet {
     return Promise.resolve(this.getPreviousSync(view));
   }
 
+  /**
+   * Returns the number of views
+   */
+  @Method()
   getLength() {
     return this.views.length;
   }
