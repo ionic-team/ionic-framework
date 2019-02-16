@@ -138,6 +138,10 @@ export class Toast implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
+    if (this.showCloseButton) {
+      console.error(`showCloseButton has been deprecated, use "buttons" instead`);
+    }
+
     await present(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, this.position);
 
     if (this.duration > 0) {
@@ -173,13 +177,23 @@ export class Toast implements ComponentInterface, OverlayInterface {
   }
 
   private getButtons(): ToastButton[] {
-    return this.buttons
+    const buttons = this.buttons
       ? this.buttons.map(b => {
         return (typeof b === 'string')
           ? { text: b }
           : b;
       })
       : [];
+
+    if (this.showCloseButton) {
+      buttons.push({
+        text: this.closeButtonText || 'Close',
+        slot: 'end',
+        handler: () => this.dismiss(undefined, 'cancel')
+      });
+    }
+
+    return buttons;
   }
 
   private async buttonClick(button: ToastButton) {
@@ -282,12 +296,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
           </div>
 
           {this.renderButtons(endButtons, 'end')}
-
-          {this.showCloseButton &&
-            <ion-button fill="clear" class="toast-button" onClick={() => this.dismiss(undefined, 'cancel')}>
-              {this.closeButtonText || 'Close'}
-            </ion-button>
-          }
         </div>
       </div>
     );
