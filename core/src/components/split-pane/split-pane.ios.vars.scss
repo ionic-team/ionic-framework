@@ -1,0 +1,13 @@
+@import "../../themes/ionic.globals.ios";
+
+// Split Pane
+// --------------------------------------------------
+
+/// @prop - Minimum width of the split pane's side pane
+$split-pane-ios-side-min-width:     $split-pane-side-min-width !default;
+
+/// @prop - Maximum width of the split pane's side pane
+$split-pane-ios-side-max-width:     $split-pane-side-max-width !default;
+
+/// @prop - Border style of the side pane
+$split-pane-ios-border:             $hairlines-width solid $item-ios-border-color !default;

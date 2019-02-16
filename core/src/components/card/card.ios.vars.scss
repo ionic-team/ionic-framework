@@ -1,0 +1,34 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Card
+// --------------------------------------------------
+
+/// @prop - Margin top of the card
+$card-ios-margin-top:                  24px !default;
+
+/// @prop - Margin end of the card
+$card-ios-margin-end:                  16px !default;
+
+/// @prop - Margin bottom of the card
+$card-ios-margin-bottom:               $card-ios-margin-top !default;
+
+/// @prop - Margin start of the card
+$card-ios-margin-start:                16px !default;
+
+/// @prop - Background color of the card
+$card-ios-background-color:            $item-ios-background !default;
+
+/// @prop - Box shadow color of the card
+$card-ios-box-shadow-color:            rgba(0, 0, 0, .12) !default;
+
+/// @prop - Box shadow of the card
+$card-ios-box-shadow:                  0 4px 16px $card-ios-box-shadow-color !default;
+
+/// @prop - Border radius of the card
+$card-ios-border-radius:               8px !default;
+
+/// @prop - Font size of the card
+$card-ios-font-size:                   14px !default;
+
+/// @prop - Color of the card text
+$card-ios-text-color:                  $text-color-step-400 !default;

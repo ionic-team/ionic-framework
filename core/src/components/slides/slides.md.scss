@@ -1,0 +1,14 @@
+@import "./slides";
+@import "./slides.md.vars";
+
+// Material Design Slides
+// --------------------------------------------------
+
+.slides-md {
+  --bullet-background: #{$slides-md-bullet-background};
+  --bullet-background-active: #{$slides-md-bullet-background-active};
+  --progress-bar-background: #{$slides-md-progress-bar-background};
+  --progress-bar-background-active: #{$slides-md-progress-bar-background-active};
+  --scroll-bar-background: #{$slides-md-scroll-bar-background};
+  --scroll-bar-background-active: #{$slides-md-scroll-bar-drag-background};
+}

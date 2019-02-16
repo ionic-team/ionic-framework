@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Input - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <h1>Default</h1>
+  <ion-input placeholder="Input"></ion-input>
+  <ion-input value="value"></ion-input>
+  <ion-input type="number" placeholder="Enter a Number"></ion-input>
+  <ion-input type="number" value="44"></ion-input>
+
+  <h1>Colors</h1>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="4">
+        <ion-input color="primary" placeholder="Placeholder"></ion-input>
+      </ion-col>
+      <ion-col size="4">
+        <ion-input color="primary" value="Value"></ion-input>
+      </ion-col>
+      <ion-col size="4">
+        <ion-input color="primary" value="Disabled" disabled></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">
+        <ion-input color="secondary" placeholder="Placeholder"></ion-input>
+      </ion-col>
+      <ion-col size="4">
+        <ion-input color="secondary" value="Value"></ion-input>
+      </ion-col>
+      <ion-col size="4">
+        <ion-input color="secondary" value="Disabled" disabled></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">
+        <ion-input color="danger" placeholder="Placeholder"></ion-input>
+      </ion-col>
+      <ion-col size="4">
+        <ion-input color="danger" value="Value"></ion-input>
+      </ion-col>
+      <ion-col size="4">
+        <ion-input color="danger" value="Disabled" disabled></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">
+        <ion-input color="dark" placeholder="Placeholder"></ion-input>
+      </ion-col>
+      <ion-col size="4">
+        <ion-input color="dark" value="Value"></ion-input>
+      </ion-col>
+      <ion-col size="4">
+        <ion-input color="dark" value="Disabled" disabled></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">
+        <ion-input color="light" placeholder="Placeholder" class="custom"></ion-input>
+      </ion-col>
+      <ion-col size="4">
+        <ion-input color="light" value="Value" class="custom"></ion-input>
+      </ion-col>
+      <ion-col size="4">
+        <ion-input color="light" value="Disabled" disabled class="custom"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">
+        <ion-input placeholder="Placeholder" class="custom"></ion-input>
+      </ion-col>
+      <ion-col size="4">
+        <ion-input value="Value" class="custom"></ion-input>
+      </ion-col>
+      <ion-col size="4">
+        <ion-input value="Disabled" disabled class="custom"></ion-input>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <style>
+    .custom {
+      --color: green;
+    }
+  </style>
+</body>
+</html>

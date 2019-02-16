@@ -1,0 +1,33 @@
+@import "../../themes/ionic.globals";
+@import "../../themes/ionic.mixins";
+
+// Responsive Mixins
+// --------------------------------------------------
+
+
+// Creates a fixed width for the grid based on the screen size
+// ---------------------------------------------------------------------------------
+
+@mixin make-grid-widths($widths: $grid-widths, $breakpoints: $screen-breakpoints) {
+  @each $breakpoint, $width in $widths {
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      width: $width;
+    }
+  }
+
+  max-width: 100%;
+}
+
+
+// Adds padding to the element based on breakpoints
+// ---------------------------------------------------------------------------------
+
+@mixin make-breakpoint-padding($paddings) {
+  @each $breakpoint in map-keys($paddings) {
+    @include media-breakpoint-up($breakpoint) {
+      $padding: map-get($paddings, $breakpoint);
+
+      @include padding($padding);
+    }
+  }
+}

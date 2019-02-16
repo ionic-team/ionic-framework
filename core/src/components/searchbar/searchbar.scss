@@ -1,0 +1,145 @@
+@import "../../themes/ionic.globals";
+
+// Searchbar
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the searchbar
+   * @prop --cancel-button-color: Color of the searchbar cancel button
+   * @prop --clear-button-color: Color of the searchbar clear button
+   * @prop --color: Color of the searchbar text
+   * @prop --icon-color: Color of the searchbar icon
+   * @prop --placeholder-color: Color of the searchbar placeholder
+   * @prop --placeholder-font-style: Font style of the searchbar placeholder
+   * @prop --placeholder-font-weight: Font weight of the searchbar placeholder
+   * @prop --placeholder-opacity: Opacity of the searchbar placeholder
+   */
+  --placeholder-color: initial;
+  --placeholder-font-style: initial;
+  --placeholder-font-weight: initial;
+  --placeholder-opacity: .5;
+
+  @include font-smoothing();
+
+  display: flex;
+  position: relative;
+
+  align-items: center;
+
+  width: 100%;
+
+  color: var(--color);
+
+  font-family: $font-family-base;
+  box-sizing: border-box;
+}
+
+:host(.ion-color) {
+  color: current-color(contrast);
+}
+
+:host(.ion-color) .searchbar-input {
+  background: current-color(base);
+}
+
+:host(.ion-color) .searchbar-clear-button,
+:host(.ion-color) .searchbar-cancel-button,
+:host(.ion-color) .searchbar-search-icon {
+  color: inherit;
+}
+
+.searchbar-search-icon {
+  // Don't let them tap on the icon
+  color: var(--icon-color);
+
+  pointer-events: none;
+}
+
+.searchbar-input-container {
+  display: block;
+  position: relative;
+
+  flex-shrink: 1;
+
+  width: 100%;
+}
+
+.searchbar-input {
+  @include text-inherit();
+
+  box-sizing: border-box;
+
+  display: block;
+
+  width: 100%;
+
+  border: 0;
+
+  outline: none;
+
+  background: var(--background);
+
+  font-family: inherit;
+  appearance: none;
+
+  &::placeholder {
+    color: var(--placeholder-color);
+
+    font-family: inherit;
+    font-style: var(--placeholder-font-style);
+    font-weight: var(--placeholder-font-weight);
+
+    opacity: var(--placeholder-opacity);
+  }
+
+  &::-webkit-search-cancel-button,
+  &::-ms-clear {
+    display: none;
+  }
+}
+
+.searchbar-cancel-button {
+  @include margin(0);
+
+  display: none;
+
+  height: 100%;
+
+  border: 0;
+
+  outline: none;
+
+  color: var(--cancel-button-color);
+
+  cursor: pointer;
+  appearance: none;
+}
+
+.searchbar-cancel-button > div {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+}
+
+.searchbar-clear-button {
+  @include margin(0);
+  @include padding(0);
+
+  display: none;
+
+  min-height: 0;
+
+  outline: none;
+
+  color: var(--clear-button-color);
+  appearance: none;
+}
+
+:host(.searchbar-has-value.searchbar-has-focus) .searchbar-clear-button {
+  display: block;
+}

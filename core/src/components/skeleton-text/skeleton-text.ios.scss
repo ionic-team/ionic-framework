@@ -1,0 +1,16 @@
+@import "./skeleton-text";
+@import "./skeleton-text.ios.vars";
+
+
+// iOS Skeleton Text
+// --------------------------------------------------
+
+:host {
+  --background: #{$skeleton-text-ios-bar-background-color};
+}
+
+span {
+  background: var(--background);
+
+  opacity: $skeleton-text-ios-bar-opacity;
+}

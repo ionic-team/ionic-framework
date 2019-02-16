@@ -1,0 +1,22 @@
+@import "../../themes/ionic.globals";
+
+// Modals
+// --------------------------------------------------
+
+/// @prop - Min width of the modal inset
+$modal-inset-min-width:         768px !default;
+
+/// @prop - Minimum height of the small modal inset
+$modal-inset-min-height-small:  600px !default;
+
+/// @prop - Minimum height of the large modal inset
+$modal-inset-min-height-large:  768px !default;
+
+/// @prop - Width of the large modal inset
+$modal-inset-width:             600px !default;
+
+/// @prop - Height of the small modal inset
+$modal-inset-height-small:      500px !default;
+
+/// @prop - Height of the large modal inset
+$modal-inset-height-large:      600px !default;

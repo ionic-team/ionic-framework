@@ -1,0 +1,22 @@
+@import "./header";
+@import "./header.ios.vars";
+
+// iOS Header
+// --------------------------------------------------
+
+.header-ios ion-toolbar:last-child {
+  --border-width: 0 0 #{$hairlines-width};
+}
+
+.header-ios[no-border] ion-toolbar:last-child {
+  --border-width: 0;
+}
+
+.header-translucent-ios {
+  backdrop-filter: $header-ios-translucent-filter;
+}
+
+.header-translucent-ios ion-toolbar {
+  --opacity: .8;
+  --backdrop-filter: #{$header-ios-translucent-filter};
+}

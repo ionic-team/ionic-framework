@@ -1,0 +1,24 @@
+@import "../../themes/ionic.globals";
+
+
+// Skeleton Text
+// --------------------------------------------------
+
+:host {
+  /**
+   * --background: Background of the skeleton text
+   */
+
+  display: inline-block;
+
+  width: 100%;
+  pointer-events: none;
+
+  user-select: none;
+}
+
+span {
+  display: inline-block;
+
+  font-size: 8px;
+}

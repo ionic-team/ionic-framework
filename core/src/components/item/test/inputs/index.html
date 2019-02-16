@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Item - Inputs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Item inputs</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content padding-vertical>
+      <form onsubmit="return onSubmit(event)">
+      <ion-list>
+        <ion-item>
+          <ion-label>Simple item</ion-label>
+        </ion-item>
+
+        <ion-item id="item" button onclick="testClick(event)">
+          <ion-label>Item Button</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>DateTime</ion-label>
+          <ion-datetime name="date" id="datetime" min="1994-03-14" max="2017-12-09" display-format="MM/DD/YYYY"></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Select</ion-label>
+          <ion-select name="select" id="select">
+            <ion-select-option value="">No Game Console</ion-select-option>
+            <ion-select-option value="nes">NES</ion-select-option>
+            <ion-select-option value="n64" selected>Nintendo64</ion-select-option>
+            <ion-select-option value="ps">PlayStation</ion-select-option>
+            <ion-select-option value="genesis">Sega Genesis</ion-select-option>
+            <ion-select-option value="saturn">Sega Saturn</ion-select-option>
+            <ion-select-option value="snes">SNES</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Toggle</ion-label>
+          <ion-toggle name="toggle" id="toggle" name="Actually" slot="end"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Input (text)</ion-label>
+          <ion-input name="input" id="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Input (placeholder)</ion-label>
+          <ion-input name="input2" id="placeholder" placeholder="Placeholder"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Checkbox</ion-label>
+          <ion-checkbox name="checkbox" id="checkbox" slot="start"></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Range</ion-label>
+          <ion-range name="range" id="range" value="10"></ion-range>
+        </ion-item>
+      </ion-list>
+
+      <ion-button id="submit" type="submit">Submit</ion-button>
+      <p id="form-result"></p>
+    </form>
+
+      <ion-list>
+        <ion-list-header>Controls</ion-list-header>
+        <ion-item-divider>Value Controls</ion-item-divider>
+
+        <ion-item button onClick="toggleDisabled()" id="btnDisabled">
+          Toggle Disable
+        </ion-item>
+        <ion-item button onClick="setSomeValue()" id="btnSomeValue">
+          Set some value
+        </ion-item>
+        <ion-item button onClick="setEmptyValue()" id="btnEmptyValue">
+          Set empty value
+        </ion-item>
+        <ion-item button onClick="setNullValue()" id="btnNullValue">
+          Set "null" value
+        </ion-item>
+        <ion-item button onClick="setUndefinedValue()" id="btnUndefinedValue">
+          Set "undefined" value
+        </ion-item>
+        <ion-item-divider>Label Controls</ion-item-divider>
+        <ion-item button onClick="setLabelDefault()" id="btnLabelDefault">
+          Default
+        </ion-item>
+        <ion-item button onClick="setLabelFloating()" id="btnLabelFloating">
+          Floating
+        </ion-item>
+        <ion-item button onClick="setLabelStacked()" id="btnLabelStacked">
+          Stacked
+        </ion-item>
+        <ion-item button onClick="setLabelFixed()" id="btnLabelFixed">
+          Fixed
+        </ion-item>
+      </ion-list>
+    </ion-content>
+
+  </ion-app>
+
+  <script>
+    var ids = ['item', 'datetime', 'select', 'toggle', 'text', 'placeholder', 'checkbox', 'toggle', 'range']
+    var isDisabled = false;
+
+    function toggleDisabled() {
+      isDisabled = !isDisabled;
+      Object.values(getInputs()).forEach(el => el.disabled = isDisabled);
+    }
+
+    function setSomeValue() {
+      const {datetime, select, toggle, text, placeholder, checkbox, range} = getInputs();
+      text.value = placeholder.value = 'Some text';
+      toggle.checked = checkbox.checked = true;
+      datetime.value = '2016-12-09';
+      range.value = 20;
+      select.value = 'nes';
+    }
+
+    function setEmptyValue() {
+      const {datetime, select, text, placeholder, range} = getInputs();
+      text.value = placeholder.value = '';
+      datetime.value = '';
+      range.value = 0;
+      select.value = '';
+    }
+
+    function setNullValue() {
+      Object.values(getInputs()).forEach(el => el.value = null);
+      const {toggle, checkbox} = getInputs();
+      toggle.checked = checkbox.checked = false;
+    }
+
+    function setUndefinedValue() {
+      Object.values(getInputs()).forEach(el => el.value = undefined);
+      const {toggle, checkbox} = getInputs();
+      toggle.checked = checkbox.checked = false;
+    }
+
+    function setLabelDefault() {
+      setLabelPosition(undefined);
+    }
+
+    function setLabelFixed() {
+      setLabelPosition('fixed');
+    }
+
+    function setLabelFloating() {
+      setLabelPosition('floating');
+    }
+
+    function setLabelStacked() {
+      setLabelPosition('stacked');
+    }
+
+    function setLabelPosition(position) {
+      Array.from(document.querySelectorAll('ion-label'))
+        .forEach(label => label.position = position);
+    }
+
+    function getInputs() {
+      const elements = {};
+      for (var i = 0; i < ids.length; i++) {
+        elements[ids[i]] = document.getElementById(ids[i]);
+      }
+      return elements;
+    }
+
+    function testClick(ev) {
+      console.log('CLICK!', ev.target.tagName, ev.target.textContent.trim());
+    }
+
+    function onSubmit(ev) {
+      const data = new FormData(ev.target);
+      const json = {};
+      data.forEach((value, key) => {
+        json[key] = value;
+      })
+      document.getElementById('form-result').textContent = JSON.stringify(json);
+      return false;
+    }
+
+  </script>
+
+</html>

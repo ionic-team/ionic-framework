@@ -1,0 +1,19 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Card Header
+// --------------------------------------------------
+
+/// @prop - Padding top of the card
+$card-ios-padding-top:                 20px !default;
+
+/// @prop - Padding end of the card
+$card-ios-padding-end:                 $card-ios-padding-top !default;
+
+/// @prop - Padding bottom of the card
+$card-ios-padding-bottom:              $card-ios-padding-top !default;
+
+/// @prop - Padding start of the card
+$card-ios-padding-start:               $card-ios-padding-top !default;
+
+/// @prop - Font size of the card
+$card-ios-font-size:                   16px !default;

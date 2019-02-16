@@ -1,0 +1,116 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Action Sheet
+// --------------------------------------------------
+
+/// @prop - Text align of the action sheet
+$action-sheet-md-text-align:                            start !default;
+
+/// @prop - Background color of the action sheet
+$action-sheet-md-background-color:                      $overlay-md-background-color !default;
+
+/// @prop - Padding top of the action sheet
+$action-sheet-md-padding-top:                           0 !default;
+
+/// @prop - Padding bottom of the action sheet
+$action-sheet-md-padding-bottom:                        0 !default;
+
+
+// Action Sheet Title
+// --------------------------------------------------
+
+/// @prop - Height of the action sheet title
+$action-sheet-md-title-height:                          60px !default;
+
+/// @prop - Color of the action sheet title
+$action-sheet-md-title-color:                           rgba(var(--ion-text-color-rgb, $text-color-rgb), 0.54) !default;
+
+/// @prop - Font size of the action sheet title
+$action-sheet-md-title-font-size:                       16px !default;
+
+/// @prop - Padding top of the action sheet title
+$action-sheet-md-title-padding-top:                     20px !default;
+
+/// @prop - Padding end of the action sheet title
+$action-sheet-md-title-padding-end:                     16px !default;
+
+/// @prop - Padding bottom of the action sheet title
+$action-sheet-md-title-padding-bottom:                  17px !default;
+
+/// @prop - Padding start of the action sheet title
+$action-sheet-md-title-padding-start:                   $action-sheet-md-title-padding-end !default;
+
+
+// Action Sheet Subtitle
+// --------------------------------------------------
+
+/// @prop - Font size of the action sheet sub title
+$action-sheet-md-sub-title-font-size:                   14px !default;
+
+/// @prop - Padding top of the action sheet sub title
+$action-sheet-md-sub-title-padding-top:                 16px !default;
+
+/// @prop - Padding end of the action sheet sub title
+$action-sheet-md-sub-title-padding-end:                 0 !default;
+
+/// @prop - Padding bottom of the action sheet sub title
+$action-sheet-md-sub-title-padding-bottom:              0 !default;
+
+/// @prop - Padding start of the action sheet sub title
+$action-sheet-md-sub-title-padding-start:               $action-sheet-md-sub-title-padding-end !default;
+
+
+// Action Sheet Button
+// --------------------------------------------------
+
+/// @prop - Minimum height of the action sheet button
+$action-sheet-md-button-height:                         52px !default;
+
+/// @prop - Text color of the action sheet button
+$action-sheet-md-button-text-color:                     $text-color-step-150 !default;
+
+/// @prop - Font size of the action sheet button
+$action-sheet-md-button-font-size:                      16px !default;
+
+/// @prop - Padding top of the action sheet button
+$action-sheet-md-button-padding-top:                    0 !default;
+
+/// @prop - Padding end of the action sheet button
+$action-sheet-md-button-padding-end:                    16px !default;
+
+/// @prop - Padding bottom of the action sheet button
+$action-sheet-md-button-padding-bottom:                 $action-sheet-md-button-padding-top !default;
+
+/// @prop - Padding start of the action sheet button
+$action-sheet-md-button-padding-start:                  $action-sheet-md-button-padding-end !default;
+
+/// @prop - Background color of the action sheet button
+$action-sheet-md-button-background:                     transparent !default;
+
+/// @prop - Background color of the action sheet activated button
+$action-sheet-md-button-background-activated:           $background-color-step-50 !default;
+
+/// @prop - Background color of the selected action sheet button
+$action-sheet-md-button-background-selected:            null !default;
+
+
+// Action Sheet Icon
+// --------------------------------------------------
+
+/// @prop - Font size of the icon in the action sheet button
+$action-sheet-md-icon-font-size:                        24px !default;
+
+/// @prop - Margin top of the icon in the action sheet button
+$action-sheet-md-icon-margin-top:                       0 !default;
+
+/// @prop - Margin end of the icon in the action sheet button
+$action-sheet-md-icon-margin-end:                       32px !default;
+
+/// @prop - Margin bottom of the icon in the action sheet button
+$action-sheet-md-icon-margin-bottom:                    0 !default;
+
+/// @prop - Margin start of the icon in the action sheet button
+$action-sheet-md-icon-margin-start:                     0 !default;
+
+/// @prop - Color of the icon in the action sheet button
+$action-sheet-md-icon-color:                            $action-sheet-md-title-color !default;

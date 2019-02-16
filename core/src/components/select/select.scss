@@ -1,0 +1,85 @@
+@import "./select.vars";
+
+// Select
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --padding-top: Top padding of the select
+   * @prop --padding-end: End padding of the select
+   * @prop --padding-bottom: Bottom padding of the select
+   * @prop --padding-start: Start padding of the select
+   */
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
+  display: flex;
+  position: relative;
+
+  font-family: $font-family-base;
+
+  overflow: hidden;
+  z-index: $z-index-item-input;
+}
+
+:host(.in-item) {
+  position: static;
+
+  max-width: 45%;
+}
+
+:host(.select-disabled) {
+  opacity: .4;
+  pointer-events: none;
+}
+
+:host(.ion-focused) button {
+  border: 2px solid #5e9ed6;
+}
+
+.select-placeholder {
+  color: currentColor;
+
+  opacity: .33;
+}
+
+button {
+  @include input-cover();
+}
+
+.select-icon {
+  position: relative;
+}
+
+.select-text {
+  flex: 1;
+
+  min-width: 16px;
+
+  font-size: inherit;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+.select-icon-inner {
+  @include position(50%, null, null, 5px);
+  @include margin(-3px, null, null, null);
+
+  position: absolute;
+
+  width: 0;
+  height: 0;
+
+  border-top: 5px solid;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+
+  color: currentColor;
+
+  opacity: .33;
+
+  pointer-events: none;
+}

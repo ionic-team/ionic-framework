@@ -1,0 +1,61 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Searchbar
+// --------------------------------------------------
+
+/// @prop - Padding top of the searchbar
+$searchbar-md-padding-top:                       8px !default;
+
+/// @prop - Padding end of the searchbar
+$searchbar-md-padding-end:                       $searchbar-md-padding-top !default;
+
+/// @prop - Padding bottom of the searchbar
+$searchbar-md-padding-bottom:                    $searchbar-md-padding-top !default;
+
+/// @prop - Padding start of the searchbar
+$searchbar-md-padding-start:                     $searchbar-md-padding-end !default;
+
+/// @prop - Background of the searchbar
+$searchbar-md-background:                        inherit !default;
+
+/// @prop - Color of the searchbar cancel button
+$searchbar-md-cancel-button-color:               $text-color-step-100 !default;
+
+/// @prop - Background color of the searchbar cancel button
+$searchbar-md-cancel-button-background-color:    transparent !default;
+
+/// @prop - Font size of the searchbar cancel button
+$searchbar-md-cancel-button-font-size:           1.6em !default;
+
+/// @prop - Color of the searchbar input search icon
+$searchbar-md-input-search-icon-color:           $text-color-step-400 !default;
+
+/// @prop - Size of the searchbar input search icon
+$searchbar-md-input-search-icon-size:            20px !default;
+
+/// @prop - Height of the searchbar input
+$searchbar-md-input-height:                      auto !default;
+
+/// @prop - Line height of the searchbar input
+$searchbar-md-input-line-height:                 30px !default;
+
+/// @prop - Box shadow of the searchbar input
+$searchbar-md-input-box-shadow:                  0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12) !default;
+
+/// @prop - Color of the searchbar input placeholder
+$searchbar-md-input-placeholder-color:           $placeholder-text-color !default;
+
+/// @prop - Color of the searchbar input text
+$searchbar-md-input-text-color:                  $text-color-step-150 !default;
+
+/// @prop - Background of the searchbar input
+$searchbar-md-input-background-color:            $background-color !default;
+
+/// @prop - Border radius of the searchbar input
+$searchbar-md-input-border-radius:               2px !default;
+
+/// @prop - Color of the searchbar input clear icon
+$searchbar-md-input-clear-icon-color:            $text-color-step-400 !default;
+
+/// @prop - Size of the searchbar input clear icon
+$searchbar-md-input-clear-icon-size:             22px !default;

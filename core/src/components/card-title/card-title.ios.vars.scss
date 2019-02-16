@@ -1,0 +1,37 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Card Title
+// --------------------------------------------------
+
+/// @prop - Font size of the card title
+$card-ios-title-font-size:             28px !default;
+
+/// @prop - Font weight of the card title
+$card-ios-title-font-weight:           700 !default;
+
+/// @prop - Padding top of the card title
+$card-ios-title-padding-top:           0 !default;
+
+/// @prop - Padding end of the card title
+$card-ios-title-padding-end:           $card-ios-title-padding-top !default;
+
+/// @prop - Padding bottom of the card title
+$card-ios-title-padding-bottom:        $card-ios-title-padding-top !default;
+
+/// @prop - Padding start of the card title
+$card-ios-title-padding-start:         $card-ios-title-padding-top !default;
+
+/// @prop - Margin top of the card title
+$card-ios-title-margin-top:            0 !default;
+
+/// @prop - Margin end of the card title
+$card-ios-title-margin-end:            $card-ios-title-margin-top !default;
+
+/// @prop - Margin bottom of the card title
+$card-ios-title-margin-bottom:         $card-ios-title-margin-top !default;
+
+/// @prop - Margin start of the card title
+$card-ios-title-margin-start:          $card-ios-title-margin-top !default;
+
+/// @prop - Color of the card title
+$card-ios-title-text-color:            $text-color !default;

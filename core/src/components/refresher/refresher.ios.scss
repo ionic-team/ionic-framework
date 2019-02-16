@@ -1,0 +1,27 @@
+@import "./refresher";
+@import "./refresher.ios.vars";
+
+// Refresher Content
+// --------------------------------------------------
+
+.refresher-ios .refresher-pulling-icon,
+.refresher-ios .refresher-refreshing-icon {
+  color: $refresher-ios-icon-color;
+}
+
+.refresher-ios .refresher-pulling-text,
+.refresher-ios .refresher-refreshing-text {
+  color: $refresher-ios-text-color;
+}
+
+.refresher-ios .refresher-refreshing .spinner-lines-ios line,
+.refresher-ios .refresher-refreshing .spinner-lines-small-ios line,
+.refresher-ios .refresher-refreshing .spinner-crescent circle {
+  stroke: $refresher-ios-icon-color;
+}
+
+.refresher-ios .refresher-refreshing .spinner-bubbles circle,
+.refresher-ios .refresher-refreshing .spinner-circles circle,
+.refresher-ios .refresher-refreshing .spinner-dots circle {
+  fill: $refresher-ios-icon-color;
+}

@@ -1,0 +1,42 @@
+@import "./loading";
+@import "./loading.ios.vars";
+
+// iOS Loading Indicator
+// --------------------------------------------------
+
+:host {
+  --background: #{$loading-ios-background-color};
+  --max-width: #{$loading-ios-max-width};
+  --max-height: #{$loading-ios-max-height};
+  --spinner-color: #{$loading-ios-spinner-color};
+
+  color: $loading-ios-text-color;
+
+  font-size: $loading-ios-font-size;
+}
+
+.loading-wrapper {
+  @include border-radius($loading-ios-border-radius);
+  @include padding($loading-ios-padding-top, $loading-ios-padding-end, $loading-ios-padding-bottom, $loading-ios-padding-start);
+}
+
+
+// iOS Translucent Loading
+// -----------------------------------------
+
+:host(.loading-translucent) .loading-wrapper {
+  background-color: $loading-ios-translucent-background-color;
+  backdrop-filter: $loading-ios-translucent-filter;
+}
+
+
+// iOS Loading Content
+// -----------------------------------------
+
+.loading-content {
+  font-weight: $loading-ios-content-font-weight;
+}
+
+.loading-spinner + .loading-content {
+  @include margin-horizontal(16px, null);
+}

@@ -1,0 +1,37 @@
+@import "./back-button";
+@import "./back-button.ios.vars";
+
+// iOS Back Button
+// --------------------------------------------------
+
+:host {
+  --color: #{$back-button-ios-color};
+  --margin-top: 0;
+  --margin-end: 0;
+  --margin-bottom: 0;
+  --margin-start: 0;
+  --padding-top: 0;
+  --padding-end: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --min-height: 32px;
+  --min-width: auto;
+  --icon-padding-top: 0;
+  --icon-padding-end: 0;
+  --icon-padding-bottom: 0;
+  --icon-padding-start: 0;
+  --icon-margin-top: 0;
+  --icon-margin-end: -5px;
+  --icon-margin-bottom: 0;
+  --icon-margin-start: -4px;
+  --icon-font-size: 1.85em;
+
+  font-size: 17px;
+}
+
+.button-native {
+  transform: translateZ(0);
+
+  overflow: visible;
+  z-index: $back-button-ios-button-z-index;
+}

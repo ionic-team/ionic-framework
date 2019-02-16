@@ -1,0 +1,91 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Picker
+// --------------------------------------------------
+
+/// @prop - Height of the picker wrapper
+$picker-ios-height:                               260px !default;
+
+/// @prop - Border color of the picker wrapper
+$picker-ios-border-color:                         $item-ios-border-color !default;
+
+/// @prop - Background Color of the picker wrapper
+$picker-ios-background-color:                     $background-color !default;
+
+/// @prop - Top Background Color of the picker wrapper gradient
+$picker-ios-top-background-color:                 var(--background, $picker-ios-background-color) !default;
+
+/// @prop - Bottom Background Color alpha of the picker wrapper gradient
+$picker-ios-bottom-background-color-alpha:        .8 !default;
+
+/// @prop - Bottom Background Color of the picker wrapper gradient
+$picker-ios-bottom-background-color:              rgba(var(--background-rgb, $background-color-rgb), $picker-ios-bottom-background-color-alpha) !default;
+
+/// @prop - Height of the picker toolbar
+$picker-ios-toolbar-height:                       44px !default;
+
+/// @prop - Background color of the picker toolbar
+$picker-ios-toolbar-background-color:             $picker-ios-top-background-color !default;
+
+/// @prop - Height of the picker button
+$picker-ios-button-height:                        $picker-ios-toolbar-height !default;
+
+/// @prop - Text color of the picker button
+$picker-ios-button-text-color:                    ion-color(primary, base) !default;
+
+/// @prop - Font size of the picker button
+$picker-ios-button-font-size:                     16px !default;
+
+/// @prop - Padding top of the picker button
+$picker-ios-button-padding-top:                   0 !default;
+
+/// @prop - Padding end of the picker button
+$picker-ios-button-padding-end:                   1em !default;
+
+/// @prop - Padding bottom of the picker button
+$picker-ios-button-padding-bottom:                $picker-ios-button-padding-top !default;
+
+/// @prop - Padding start of the picker button
+$picker-ios-button-padding-start:                 $picker-ios-button-padding-end !default;
+
+/// @prop - Font weight of the strong picker button
+$picker-ios-button-strong-font-weight:            600 !default;
+
+/// @prop - Padding top of the picker column
+$picker-ios-column-padding-top:                   0 !default;
+
+/// @prop - Padding end of the picker column
+$picker-ios-column-padding-end:                   4px !default;
+
+/// @prop - Padding bottom of the picker column
+$picker-ios-column-padding-bottom:                $picker-ios-column-padding-top !default;
+
+/// @prop - Padding start of the picker column
+$picker-ios-column-padding-start:                 $picker-ios-column-padding-end !default;
+
+/// @prop - Perspective of the picker column
+$picker-ios-column-perspective:                   1000px !default;
+
+/// @prop - Padding top of the picker option
+$picker-ios-option-padding-top:                   0 !default;
+
+/// @prop - Padding end of the picker option
+$picker-ios-option-padding-end:                   $picker-ios-option-padding-top !default;
+
+/// @prop - Padding bottom of the picker option
+$picker-ios-option-padding-bottom:                $picker-ios-option-padding-top !default;
+
+/// @prop - Padding start of the picker option
+$picker-ios-option-padding-start:                 $picker-ios-option-padding-end !default;
+
+/// @prop - Text color of the picker option
+$picker-ios-option-text-color:                    $item-ios-color !default;
+
+/// @prop - Font size of the picker option
+$picker-ios-option-font-size:                     20px !default;
+
+/// @prop - Height of the picker option
+$picker-ios-option-height:                        42px !default;
+
+/// @prop - Offset y of the picker option
+$picker-ios-option-offset-y:                      (($picker-ios-height - $picker-ios-toolbar-height) / 2) - ($picker-ios-option-height / 2) - 10 !default;

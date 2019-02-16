@@ -1,0 +1,50 @@
+@import "./card-content";
+@import "./card-content.md.vars";
+
+// Material Design Card Content
+// --------------------------------------------------
+
+.card-content-md {
+  @include padding($card-md-padding-top, $card-md-padding-end, $card-md-padding-bottom, $card-md-padding-start);
+
+  font-size: $card-md-font-size;
+
+  line-height: $card-md-line-height;
+
+  h1 {
+    @include margin(0, 0, 2px);
+
+    font-size: 24px;
+    font-weight: normal;
+  }
+
+  h2 {
+    @include margin(2px, 0);
+
+    font-size: 16px;
+    font-weight: normal;
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    @include margin(2px, 0);
+
+    font-size: 14px;
+    font-weight: normal;
+  }
+
+  p {
+    @include margin(0, 0, 2px);
+
+    font-size: 14px;
+    font-weight: normal;
+
+    line-height: 1.5;
+  }
+}
+
+ion-card-header + .card-content-md {
+  padding-top: 0;
+}

@@ -1,0 +1,88 @@
+@import "./item-options.vars";
+
+// Item Options
+// --------------------------------------------------
+
+ion-item-options {
+  @include multi-dir() {
+    /* stylelint-disable property-blacklist */
+    top: 0;
+    right: 0;
+    /* stylelint-enable property-blacklist */
+  }
+
+  @include ltr() {
+    justify-content: flex-end;
+  }
+
+  @include rtl() {
+    justify-content: flex-start;
+
+    &:not(.item-options-end) {
+      /* stylelint-disable property-blacklist */
+      right: auto;
+      left: 0;
+      /* stylelint-enable property-blacklist */
+
+      justify-content: flex-end;
+    }
+  }
+
+  display: none;
+  position: absolute;
+
+  height: 100%;
+
+  font-size: 14px;
+
+  user-select: none;
+  z-index: $z-index-item-options;
+}
+
+.item-options-start {
+  @include multi-dir() {
+    /* stylelint-disable property-blacklist */
+    right: auto;
+    left: 0;
+    /* stylelint-enable property-blacklist */
+  }
+
+  @include ltr() {
+    justify-content: flex-start;
+  }
+
+  @include rtl() {
+    justify-content: flex-end;
+  }
+}
+
+.item-options-start ion-item-option:first-child {
+  @include padding-horizontal(null, var(--ion-safe-area-left));
+
+}
+
+.item-options-end ion-item-option:last-child {
+  @include padding-horizontal(null, var(--ion-safe-area-right));
+
+}
+
+.item-sliding-active-slide {
+  @include rtl() {
+    &.item-sliding-active-options-start ion-item-options:not(.item-options-end) {
+      width: 100%;
+
+      visibility: visible;
+    }
+  }
+
+  ion-item-options {
+    display: flex;
+  }
+
+  &.item-sliding-active-options-start .item-options-start,
+  &.item-sliding-active-options-end ion-item-options:not(.item-options-start) {
+    width: 100%;
+
+    visibility: visible;
+  }
+}

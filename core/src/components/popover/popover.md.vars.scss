@@ -1,0 +1,16 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Popover
+// --------------------------------------------------
+
+/// @prop - Width of the popover content
+$popover-md-width:                     250px !default;
+
+/// @prop - Maximum height of the popover content
+$popover-md-max-height:                90% !default;
+
+/// @prop - Border radius of the popover content
+$popover-md-border-radius:             4px !default;
+
+/// @prop - Box shadow of the popover content
+$popover-md-box-shadow:                0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12) !default;

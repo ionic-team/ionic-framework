@@ -1,0 +1,55 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Range
+// --------------------------------------------------
+
+/// @prop - Padding top/bottom of the range
+$range-md-padding-vertical:                  8px !default;
+
+/// @prop - Padding start/end of the range
+$range-md-padding-horizontal:                14px !default;
+
+/// @prop - Height of the range slider
+$range-md-slider-height:                     42px !default;
+
+/// @prop - Width of the area that will select the range knob
+$range-md-hit-width:                         42px !default;
+
+/// @prop - Height of the area that will select the range knob
+$range-md-hit-height:                        $range-md-slider-height !default;
+
+/// @prop - Height of the range bar
+$range-md-bar-height:                        2px !default;
+
+/// @prop - Background of the range bar
+$range-md-bar-background-color:              $background-color-step-250 !default;
+
+/// @prop - Background of the active range bar
+$range-md-bar-active-background-color:       current-color(base) !default;
+
+/// @prop - Width of the range knob
+$range-md-knob-width:                        18px !default;
+
+/// @prop - Height of the range knob
+$range-md-knob-height:                       $range-md-knob-width !default;
+
+/// @prop - Background of the range knob
+$range-md-knob-background-color:             $range-md-bar-active-background-color !default;
+
+/// @prop - Background of the range pin
+$range-md-pin-background-color:              $range-md-bar-active-background-color !default;
+
+/// @prop - Color of the range pin
+$range-md-pin-color:                         ion-color(primary, contrast) !default;
+
+/// @prop - Font size of the range pin
+$range-md-pin-font-size:                     12px !default;
+
+/// @prop - Padding top/bottom of the range pin
+$range-md-pin-padding-vertical:              8px !default;
+
+/// @prop - Padding start/end of the range pin
+$range-md-pin-padding-horizontal:            0 !default;
+
+/// @prop - Background of the range pin when the value is the minimum
+$range-md-pin-min-background-color:          $range-md-bar-background-color !default;

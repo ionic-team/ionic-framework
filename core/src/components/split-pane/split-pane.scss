@@ -1,0 +1,52 @@
+@import "./split-pane.vars";
+
+// Split Pane
+// --------------------------------------------------
+
+.split-pane {
+  /**
+   * @prop --border: Border between panes
+   */
+
+  @include position(0, 0, 0, 0);
+
+  display: flex;
+  position: absolute;
+
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+  contain: strict;
+}
+
+.split-pane-visible > .split-pane-side,
+.split-pane-visible > .split-pane-main {
+  @include position(0, 0, 0, 0);
+
+  position: relative;
+
+  flex: 1;
+
+  /* stylelint-disable-next-line declaration-no-important */
+  box-shadow: none !important;
+  z-index: 0;
+}
+
+.split-pane-visible > .split-pane-side:not(ion-menu),
+.split-pane-visible > ion-menu.split-pane-side.menu-enabled {
+  display: flex;
+
+  flex-shrink: 0;
+}
+
+.split-pane-side:not(ion-menu) {
+  display: none;
+}
+
+.split-pane-visible > .split-pane-side {
+  order: -1;
+}
+
+.split-pane-visible > .split-pane-side[side=end] {
+  order: 1;
+}

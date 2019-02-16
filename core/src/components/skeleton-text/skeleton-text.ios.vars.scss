@@ -1,0 +1,10 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Skeleton Text
+// --------------------------------------------------
+
+/// @prop - Background color of the skeleton text bar
+$skeleton-text-ios-bar-background-color:    $text-color !default;
+
+/// @prop - Opacity of the text bar for the skeleton text
+$skeleton-text-ios-bar-opacity:             .1 !default;

@@ -1,0 +1,82 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Segment Button
+// --------------------------------------------------
+
+/// @prop - Opacity of the segment button
+$segment-button-md-opacity:                           .6 !default;
+
+/// @prop - Text color of the segment button
+$segment-button-md-text-color:                        rgba(var(--ion-text-color-rgb, $text-color-rgb), $segment-button-md-opacity) !default;
+
+/// @prop - Background of the segment button
+$segment-button-md-background:                        none !default;
+
+/// @prop - Background of the checked segment button
+$segment-button-md-background-checked:                $segment-button-md-background !default;
+
+/// @prop - Background of the hovered segment button
+$segment-button-md-background-hover:                  ion-color(primary, base, .04) !default;
+
+/// @prop - Background of the activated segment button
+$segment-button-md-background-activated:              ion-color(primary, base, .16) !default;
+
+/// @prop - Width of the bottom border on the segment button
+$segment-button-md-border-bottom-width:               2px !default;
+
+/// @prop - Color of the bottom border on the segment button
+$segment-button-md-border-bottom-color:               transparent !default;
+
+/// @prop - Text color of the activated segment button
+$segment-button-md-text-color-checked:              ion-color(primary, base) !default;
+
+/// @prop - Border color of the activated segment button
+$segment-button-md-border-bottom-color-activated:     ion-color(primary, base) !default;
+
+/// @prop - Opacity of the activated segment button
+$segment-button-md-opacity-activated:                 1 !default;
+
+/// @prop - Opacity of the disabled segment button
+$segment-button-md-opacity-disabled:                  .3 !default;
+
+/// @prop - Padding top of the segment button
+$segment-button-md-padding-top:                       0 !default;
+
+/// @prop - Padding end of the segment button
+$segment-button-md-padding-end:                       16px !default;
+
+/// @prop - Padding bottom of the segment button
+$segment-button-md-padding-bottom:                    $segment-button-md-padding-top !default;
+
+/// @prop - Padding start of the segment button
+$segment-button-md-padding-start:                     $segment-button-md-padding-end !default;
+
+/// @prop - Minimum height of the segment button
+$segment-button-md-min-height:                        48px !default;
+
+/// @prop - Minimum width of the segment button
+$segment-button-md-min-width:                         90px !default;
+
+/// @prop - Maximum width of the segment button
+$segment-button-md-max-width:                         360px !default;
+
+/// @prop - Line height of the segment button
+$segment-button-md-line-height:                       40px !default;
+
+/// @prop - Font size of the segment button
+$segment-button-md-font-size:                         14px !default;
+
+/// @prop - Letter spacing of the segment button
+$segment-button-md-letter-spacing:                    .06em !default;
+
+/// @prop - Font weight of the segment button
+$segment-button-md-font-weight:                       500 !default;
+
+/// @prop - Transition of the segment button
+$segment-button-md-transition:                        color .15s linear 0s, opacity .15s linear 0s !default;
+
+/// @prop - Size of an icon in the segment button
+$segment-button-md-icon-size:                         24px !default;
+
+/// @prop - Line height of an icon in the segment button
+$segment-button-md-icon-line-height:                  $segment-button-md-line-height !default;

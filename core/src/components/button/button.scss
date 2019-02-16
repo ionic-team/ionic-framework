@@ -1,0 +1,291 @@
+@import "./button.vars";
+
+// Button
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the button
+   * @prop --background-activated: Background of the button when activated
+   * @prop --background-focused: Background of the button when focused
+   *
+   * @prop --color: Text color of the button
+   * @prop --color-activated: Text color of the button when activated
+   * @prop --color-focused: Text color of the button when focused
+   *
+   * @prop --transition: Transition of the button
+   *
+   * @prop --border-radius: Border radius of the button
+   * @prop --border-width: Border width of the button
+   * @prop --border-style: Border style of the button
+   * @prop --border-color: Border color of the button
+   *
+   * @prop --ripple-color: Color of the button ripple effect
+   *
+   * @prop --box-shadow: Box shadow of the button
+   * @prop --opacity: Opacity of the button
+   *
+   * @prop --padding-top: Padding top of the button
+   * @prop --padding-end: Padding end of the button
+   * @prop --padding-bottom: Padding bottom of the button
+   * @prop --padding-start: Padding start of the button
+   */
+  --overflow: hidden;
+  --ripple-color: currentColor;
+  --border-width: initial;
+  --border-color: initial;
+  --border-style: initial;
+  --box-shadow: none;
+
+  display: inline-block;
+
+  width: auto;
+
+  color: var(--color);
+
+  font-family: $font-family-base;
+
+  text-align: center;
+  text-decoration: none;
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  user-select: none;
+  vertical-align: top; // the better option for most scenarios
+  vertical-align: -webkit-baseline-middle; // the best for those that support it
+  pointer-events: auto;
+
+  font-kerning: none;
+}
+
+:host(.button-disabled) {
+  pointer-events: none;
+}
+
+:host(.button-disabled) .button-native {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
+}
+
+// Solid Button
+// --------------------------------------------------
+
+// Default Solid Color
+:host(.button-solid) {
+  --background: #{ion-color(primary, base)};
+  --background-focused: #{ion-color(primary, shade)};
+  --color: #{ion-color(primary, contrast)};
+  --color-activated: #{ion-color(primary, contrast)};
+  --color-focused: #{ion-color(primary, contrast)};
+}
+
+// Solid Button with Color
+:host(.button-solid.ion-color) .button-native {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+// Focused/Activated Solid Button with Color
+:host(.button-solid.ion-color.ion-focused) .button-native {
+  background: #{current-color(shade)};
+}
+
+
+// Outline Button
+// --------------------------------------------------
+
+// Default Outline Color
+:host(.button-outline) {
+  --border-color: #{ion-color(primary, base)};
+  --background: transparent;
+  --color: #{ion-color(primary, base)};
+  --color-focused: #{ion-color(primary, base)};
+}
+
+// Outline Button with Color
+:host(.button-outline.ion-color) .button-native {
+  border-color: current-color(base);
+
+  background: transparent;
+  color: current-color(base);
+}
+
+:host(.button-outline.ion-focused.ion-color) .button-native {
+  background: current-color(base, .1);
+  color: current-color(base);
+}
+
+
+// Clear Button
+// --------------------------------------------------
+
+// Default Clear Color
+:host(.button-clear) {
+  --border-width: 0;
+  --background: transparent;
+  --color: #{ion-color(primary, base)};
+}
+
+// Clear Button with Color
+:host(.button-clear.ion-color) .button-native {
+  background: transparent;
+  color: current-color(base);
+}
+
+// Focused Clear Button with Color
+:host(.button-clear.ion-focused.ion-color) .button-native {
+  background: current-color(base, .1);
+  color: current-color(base);
+}
+
+// Activated Clear Button with Color
+:host(.button-clear.activated.ion-color) .button-native {
+  background: transparent;
+}
+
+
+// Block Button
+// --------------------------------------------------
+
+:host(.button-block) {
+  display: block;
+}
+
+:host(.button-block) .button-native {
+  @include margin-horizontal(0);
+
+  display: block;
+
+  width: 100%;
+
+  clear: both;
+
+  contain: content;
+}
+
+:host(.button-block) .button-native::after {
+  clear: both;
+}
+
+
+// Full Button
+// --------------------------------------------------
+
+:host(.button-full) {
+  display: block;
+}
+
+:host(.button-full) .button-native {
+  @include margin-horizontal(0);
+
+  display: block;
+
+  width: 100%;
+
+  contain: content;
+}
+
+:host(.button-full:not(.button-round)) .button-native {
+  @include border-radius(0);
+
+  border-right-width: 0;
+  border-left-width: 0;
+}
+
+.button-native {
+  @include border-radius(var(--border-radius));
+  @include font-smoothing();
+  @include margin(0);
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include text-inherit();
+
+  display: block;
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  transition: var(--transition);
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  outline: none;
+
+  background: var(--background);
+
+  line-height: 1;
+
+  box-shadow: var(--box-shadow);
+  contain: layout style;
+  cursor: pointer;
+  opacity: var(--opacity);
+  overflow: var(--overflow);
+
+  z-index: 0;
+  box-sizing: border-box;
+  appearance: none;
+}
+
+.button-native::-moz-focus-inner {
+  border: 0;
+}
+
+:host(.ion-focused) .button-native {
+  background: var(--background-focused);
+  color: var(--color-focused);
+}
+
+:host(.activated) .button-native {
+  background: var(--background-activated);
+  color: var(--color-activated);
+}
+
+
+// .button > .button-container:hover {
+//   opacity: var(--opacity-hover);
+// }
+
+.button-inner {
+  display: flex;
+
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+}
+
+
+// Button Icons
+// --------------------------------------------------
+
+::slotted(ion-icon) {
+  font-size: 1.4em;
+  pointer-events: none;
+}
+
+::slotted(ion-icon[slot="start"]) {
+  @include margin(0, .3em, 0, -.3em);
+}
+
+::slotted(ion-icon[slot="end"]) {
+  @include margin(0, -.2em, 0, .3em);
+}
+
+::slotted(ion-icon[slot="icon-only"]) {
+  font-size: 1.8em;
+}
+
+
+// Button Ripple effect
+// --------------------------------------------------
+
+ion-ripple-effect {
+  color: var(--ripple-color);
+}

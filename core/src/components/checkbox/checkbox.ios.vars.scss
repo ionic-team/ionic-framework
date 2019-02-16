@@ -1,0 +1,80 @@
+@import "../../themes/ionic.globals.ios";
+@import "../item/item.ios.vars";
+
+// iOS Checkbox
+// --------------------------------------------------
+
+/// @prop - Background color of the checkbox when off
+$checkbox-ios-background-color-off:       $item-ios-background !default;
+
+/// @prop - Background color of the checkbox when on
+$checkbox-ios-background-color-on:        ion-color(primary, base) !default;
+
+/// @prop - Background color of focus indicator for checkbox when focused
+$checkbox-ios-background-color-focused:   ion-color(primary, tint) !default;
+
+/// @prop - Size of the checkbox icon
+$checkbox-ios-icon-size:                  26px !default;
+
+/// @prop - Border color of the checkbox icon when off
+$checkbox-ios-icon-border-color-off:      $item-ios-border-color !default;
+
+/// @prop - Border color of the checkbox icon when on
+$checkbox-ios-icon-border-color-on:       $checkbox-ios-background-color-on !default;
+
+/// @prop - Border width of the checkbox icon
+$checkbox-ios-icon-border-width:          1px !default;
+
+/// @prop - Border style of the checkbox icon
+$checkbox-ios-icon-border-style:          solid !default;
+
+/// @prop - Border radius of the checkbox icon
+$checkbox-ios-icon-border-radius:         50% !default;
+
+/// @prop - Width of the checkmark border in the checkbox
+$checkbox-ios-checkmark-border-width:     1px !default;
+
+/// @prop - Style of the checkmark border in the checkbox
+$checkbox-ios-checkmark-border-style:     solid !default;
+
+/// @prop - Color of the checkmark border in the checkbox
+$checkbox-ios-checkmark-border-color:     ion-color(primary, contrast) !default;
+
+/// @prop - Top of the checkmark in the checkbox
+$checkbox-ios-checkmark-top:              $checkbox-ios-icon-size / 6 !default;
+
+/// @prop - Start of the checkmark in the checkbox
+$checkbox-ios-checkmark-start:            ($checkbox-ios-icon-size / 3) + 1px !default;
+
+/// @prop - Width of the checkmark in the checkbox
+$checkbox-ios-checkmark-width:            ($checkbox-ios-icon-size / 6) + 1px !default;
+
+/// @prop - Height of the checkmark in the checkbox
+$checkbox-ios-checkmark-height:           $checkbox-ios-icon-size / 2 !default;
+
+/// @prop - Opacity of the disabled checkbox
+$checkbox-ios-disabled-opacity:           .3 !default;
+
+/// @prop - Margin top of the left checkbox item
+$checkbox-ios-item-start-margin-top:      8px !default;
+
+/// @prop - Margin end of the left checkbox item
+$checkbox-ios-item-start-margin-end:      $item-ios-padding-end !default;
+
+/// @prop - Margin bottom of the left checkbox item
+$checkbox-ios-item-start-margin-bottom:   $checkbox-ios-item-start-margin-top !default;
+
+/// @prop - Margin start of the left checkbox item
+$checkbox-ios-item-start-margin-start:    2px !default;
+
+/// @prop - Margin top of the right checkbox item
+$checkbox-ios-item-end-margin-top:        10px !default;
+
+/// @prop - Margin end of the right checkbox item
+$checkbox-ios-item-end-margin-end:        8px !default;
+
+/// @prop - Margin bottom of the right checkbox item
+$checkbox-ios-item-end-margin-bottom:     9px !default;
+
+/// @prop - Margin start of the right checkbox item
+$checkbox-ios-item-end-margin-start:      0 !default;

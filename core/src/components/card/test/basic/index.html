@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Card - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Card - Basic</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content id="content">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+          <ion-card-title>Card Title</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a week in the woods.
+          Wash your spirit clean.
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-item lines="none">
+          <ion-icon name="pin" slot="start"></ion-icon>
+          <ion-label>ion-item in a card, icon left, button right</ion-label>
+          <ion-button fill="outline" slot="end">View</ion-button>
+        </ion-item>
+
+        <ion-card-content>
+          This is content, without any paragraph or header tags, within an ion-card-content element.
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="custom2">
+        <ion-card-header>
+          <ion-card-subtitle>
+            Subtitle
+          </ion-card-subtitle>
+          <ion-card-title>
+            Title
+          </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          The British use the term "header", but the American term "head-shot" the English simply refuse to adopt.
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card color="secondary">
+        <ion-card-header>
+          <ion-card-subtitle>Subtitle</ion-card-subtitle>
+          <ion-card-title>Title</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          This is content, without any paragraph or header tags, within an ion-card-content element.
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-content>
+          <h1>Heading 1</h1>
+          <h2>Heading 2</h2>
+          <h3>Heading 3</h3>
+          <h4>Heading 4</h4>
+          <h5>Heading 5</h5>
+          <h6>Heading 6</h6>
+          <p>Paragraph</p>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-list lines="none">
+          <ion-item href="#" class="activated">
+            <ion-icon name="wifi" slot="start"></ion-icon>
+            <ion-label>Link Item .activated</ion-label>
+            <ion-note>More</ion-note>
+          </ion-item>
+
+          <ion-item href="#">
+            <ion-icon name="wine" slot="start"></ion-icon>
+            <ion-label>Link Item</ion-label>
+            <ion-note>More</ion-note>
+          </ion-item>
+
+          <ion-item button class="activated">
+            <ion-icon name="warning" slot="start"></ion-icon>
+            <ion-label>Button Item .activated</ion-label>
+            <ion-note>More</ion-note>
+          </ion-item>
+
+          <ion-item button>
+            <ion-icon name="walk" slot="start"></ion-icon>
+            <ion-label>Button Item</ion-label>
+            <ion-note>More</ion-note>
+          </ion-item>
+        </ion-list>
+      </ion-card>
+    </ion-content>
+
+  </ion-app>
+  <style>
+    .content {
+      background: #e5e5e5;
+    }
+
+  </style>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+@import "../../themes/ionic.globals.ios";
+@import "../item/item.ios.vars";
+
+// iOS Radio
+// --------------------------------------------------
+
+/// @prop - Color of the checked radio
+$radio-ios-color-on:                  current-color(base) !default;
+
+/// @prop - Background color of focus indicator for radio when focused
+$radio-ios-background-color-focused:  ion-color(primary, tint) !default;
+
+/// @prop - Width of the radio icon
+$radio-ios-icon-width:                15px !default;
+
+/// @prop - Height of the radio icon
+$radio-ios-icon-height:               24px !default;
+
+/// @prop - Border width of the radio icon
+$radio-ios-icon-border-width:         2px !default;
+
+/// @prop - Border style of the radio icon
+$radio-ios-icon-border-style:         solid !default;
+
+/// @prop - Opacity of the disabled radio
+$radio-ios-disabled-opacity:          .3 !default;
+
+/// @prop - Margin top of the item-start in a radio
+$radio-ios-item-start-margin-top:     8px !default;
+
+/// @prop - Margin end of the item-start in a radio
+$radio-ios-item-start-margin-end:     21px !default;
+
+/// @prop - Margin bottom of the item-start in a radio
+$radio-ios-item-start-margin-bottom:  8px !default;
+
+/// @prop - Margin start of the item-start in a radio
+$radio-ios-item-start-margin-start:   3px !default;
+
+/// @prop - Margin top of the item-end in a radio
+$radio-ios-item-end-margin-top:       8px !default;
+
+/// @prop - Margin end of the item-end in a radio
+$radio-ios-item-end-margin-end:       11px !default;
+
+/// @prop - Margin bottom of the item-end in a radio
+$radio-ios-item-end-margin-bottom:    $radio-ios-item-end-margin-top !default;
+
+/// @prop - Margin start of the item-end in a radio
+$radio-ios-item-end-margin-start:     ($item-ios-padding-start / 2) !default;

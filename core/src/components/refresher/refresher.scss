@@ -1,0 +1,100 @@
+@import "../../themes/ionic.globals";
+@import "./refresher.vars";
+
+ion-refresher {
+  @include position(0, null, null, 0);
+
+  display: none;
+  position: absolute;
+
+  width: 100%;
+  height: $refresher-height;
+
+  z-index: $z-index-refresher;
+
+  &.refresher-active {
+    display: block;
+  }
+}
+
+// Refresher Content
+// --------------------------------------------------
+
+ion-refresher-content {
+  display: flex;
+
+  flex-direction: column;
+  justify-content: center;
+
+  height: 100%;
+}
+
+.refresher-pulling,
+.refresher-refreshing {
+  display: none;
+
+  width: 100%;
+}
+
+.refresher-pulling-icon,
+.refresher-refreshing-icon {
+  @include transform-origin(center);
+
+  transition: 200ms;
+
+  font-size: $refresher-icon-font-size;
+
+  text-align: center;
+}
+
+.refresher-pulling-text,
+.refresher-refreshing-text {
+  font-size: $refresher-text-font-size;
+
+  text-align: center;
+}
+
+// Refresher Content States
+// --------------------------------------------------
+
+.refresher-pulling ion-refresher-content {
+  .refresher-pulling {
+    display: block;
+  }
+}
+
+.refresher-ready  ion-refresher-content {
+  .refresher-pulling {
+    display: block;
+  }
+
+  .refresher-pulling-icon {
+    transform: rotate(180deg);
+  }
+}
+
+.refresher-refreshing  ion-refresher-content {
+  .refresher-refreshing {
+    display: block;
+  }
+}
+
+.refresher-cancelling ion-refresher-content {
+  .refresher-pulling {
+    display: block;
+  }
+
+  .refresher-pulling-icon {
+    transform: scale(0);
+  }
+}
+
+.refresher-completing ion-refresher-content {
+  .refresher-refreshing {
+    display: block;
+  }
+
+  .refresher-refreshing-icon {
+    transform: scale(0);
+  }
+}

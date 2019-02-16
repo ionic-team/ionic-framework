@@ -1,0 +1,27 @@
+@import "./refresher";
+@import "./refresher.md.vars";
+
+// Refresher Content
+// --------------------------------------------------
+
+.refresher-md .refresher-pulling-icon,
+.refresher-md .refresher-refreshing-icon {
+  color: $refresher-md-icon-color;
+}
+
+.refresher-md .refresher-pulling-text,
+.refresher-md .refresher-refreshing-text {
+  color: $refresher-md-text-color;
+}
+
+.refresher-md .refresher-refreshing .spinner-lines-md line,
+.refresher-md .refresher-refreshing .spinner-lines-small-md line,
+.refresher-md .refresher-refreshing .spinner-crescent circle {
+  stroke: $refresher-md-icon-color;
+}
+
+.refresher-md .refresher-refreshing .spinner-bubbles circle,
+.refresher-md .refresher-refreshing .spinner-circles circle,
+.refresher-md .refresher-refreshing .spinner-dots circle {
+  fill: $refresher-md-icon-color;
+}

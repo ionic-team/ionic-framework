@@ -1,0 +1,65 @@
+@import "../../themes/ionic.globals";
+
+// Menu Button
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --color: Color of the menu button
+   */
+
+  color: var(--color);
+
+  text-align: center;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  text-transform: none;
+
+  white-space: nowrap;
+  font-kerning: none;
+}
+
+button {
+  @include text-inherit();
+  @include margin(0);
+  @include padding(0);
+  @include font-smoothing();
+
+  display: flex;
+
+  position: relative;
+
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  height: 32px;
+
+  border: 0;
+
+  outline: none;
+
+  background: transparent;
+
+  line-height: 1;
+
+  cursor: pointer;
+  user-select: none;
+  z-index: 0;
+  appearance: none;
+}
+
+ion-icon {
+  @include margin(0);
+  @include padding(0);
+
+  pointer-events: none;
+}
+
+// Menu Button with Color
+// --------------------------------------------------
+
+:host(.ion-color) .button-native {
+  color: current-color(base);
+}

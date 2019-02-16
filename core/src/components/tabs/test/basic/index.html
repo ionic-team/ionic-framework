@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Tab - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+
+  <style>
+  :root {
+    --ion-safe-area-bottom: 40px;
+  }
+  </style>
+</head>
+
+<body>
+
+  <ion-app>
+    <ion-tabs>
+
+      <ion-tab tab="tab-one">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Tab One</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content padding>
+          <h1>Tab One</h1>
+          <ion-button expand="block" onclick="updateBadgeCount()">Update Badge Count</ion-button>
+          <ion-button color="secondary" expand="block" onclick="updateBadgeColor()">Update Badge Color</ion-button>
+        </ion-content>
+      </ion-tab>
+
+      <ion-tab tab="schedule">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Tab Two</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content padding>
+          <h1>Tab Two</h1>
+        </ion-content>
+      </ion-tab>
+
+      <ion-tab tab="tab-three">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Tab Three</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content padding>
+          <h1>Tab Three</h1>
+        </ion-content>
+      </ion-tab>
+
+      <ion-tab tab="hidden-tab">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Hidden Tab</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content padding>
+          <h1>Hidden Tab</h1>
+        </ion-content>
+      </ion-tab>
+
+      <ion-tab tab="tab-four" component="page-one"></ion-tab>
+
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button href="" tab="tab-one" class="e2eTabOneButton">
+          <ion-label>Tab One</ion-label>
+          <ion-icon name="star"></ion-icon>
+        </ion-tab-button>
+
+        <ion-tab-button tab="schedule" class="e2eTabTwoButton">
+          <ion-label>Tab Two</ion-label>
+          <ion-icon name="globe"></ion-icon>
+          <ion-badge color="danger">6</ion-badge>
+        </ion-tab-button>
+
+        <ion-tab-button tab="tab-three" class="e2eTabThreeButton" disabled>
+          <ion-label>Tab Three</ion-label>
+          <ion-icon name="logo-facebook"></ion-icon>
+          <ion-badge color="primary">6</ion-badge>
+        </ion-tab-button>
+
+        <ion-tab-button tab="hidden-tab" hidden>
+          <ion-label>Hidden</ion-label>
+          <ion-icon name="alert"></ion-icon>
+        </ion-tab-button>
+
+        <ion-tab-button tab="tab-four" class="e2eTabFourButton">
+          <ion-label>Tab Four</ion-label>
+          <ion-icon name="chatboxes"></ion-icon>
+        </ion-tab-button>
+
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-app>
+
+  <script>
+
+    class PageOne extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Page Four</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content padding>
+            Page Four
+          </ion-content>
+        `;
+      }
+    }
+    customElements.define('page-one', PageOne);
+
+  </script>
+</body>
+
+</html>

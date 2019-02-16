@@ -1,0 +1,17 @@
+@import "../../themes/ionic.globals.md";
+@import "../item/item.md.vars";
+
+// Material Design List Header
+// --------------------------------------------------
+
+/// @prop - Padding start of the header in a list
+$list-md-header-padding-start:   $item-md-padding-start !default;
+
+/// @prop - Minimum height of the header in a list
+$list-md-header-min-height:      45px !default;
+
+/// @prop - Font size of the header in a list
+$list-md-header-font-size:       14px !default;
+
+/// @prop - Text color of the header in a list
+$list-md-header-color:           $text-color !default;

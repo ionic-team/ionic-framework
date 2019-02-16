@@ -1,0 +1,13 @@
+@import "./avatar";
+@import "./avatar.md.vars";
+
+
+// Material Design Avatar
+// --------------------------------------------------
+
+:host {
+  --border-radius: #{$avatar-md-border-radius};
+
+  width: $avatar-md-width;
+  height: $avatar-md-height;
+}

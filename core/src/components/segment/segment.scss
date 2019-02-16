@@ -1,0 +1,48 @@
+@import "../../themes/ionic.globals";
+
+// Segment
+// --------------------------------------------------
+
+:host {
+  --indicator-color-checked: initial;
+  --ripple-color: initial;
+  --color-activated: initial;
+
+  @include font-smoothing();
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+
+  font-family: $font-family-base;
+
+  text-align: center;
+}
+
+
+// Segment: Disabled
+// --------------------------------------------------
+
+:host(.segment-disabled),
+::slotted(.segment-button-disabled) {
+  pointer-events: none;
+}
+
+
+// Segment: Scrollable
+// --------------------------------------------------
+
+:host(.segment-scrollable) {
+  justify-content: start;
+
+  width: auto;
+
+  overflow-x: scroll;
+}
+
+:host(.segment-scrollable::-webkit-scrollbar) {
+  display: none;
+}

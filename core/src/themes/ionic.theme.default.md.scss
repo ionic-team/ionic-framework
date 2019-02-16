@@ -1,0 +1,35 @@
+
+// Material Design Default Theme
+// --------------------------------------------------
+// This file should only contain variables that are
+// used to theme the application colors for Material
+// Design.
+
+// Material Design General Colors
+// --------------------------------------------------
+$backdrop-md-color:                         var(--ion-backdrop-color, #000) !default;
+$border-md-color:                           var(--ion-border-color, var(--ion-color-step-150, #c1c4cd)) !default;
+$box-shadow-md-color:                       var(--ion-box-shadow-color, #000) !default;
+$overlay-md-background-color:               var(--ion-overlay-background-color, #fff) !default;
+
+// Material Design Tabs & Tab bar
+// --------------------------------------------------
+$tabbar-md-background:                      var(--ion-tab-bar-background, $background-color) !default;
+$tabbar-md-background-focused:              var(--ion-tab-bar-background-focused, get-color-shade(#fff)) !default;
+$tabbar-md-border-color:                    var(--ion-tab-bar-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, .07)))) !default;
+$tabbar-md-color:                           var(--ion-tab-bar-color, $text-color-step-400) !default;
+$tabbar-md-color-activated:                 var(--ion-tab-bar-color-activated, ion-color(primary, base)) !default;
+
+// Material Design Toolbar
+// --------------------------------------------------
+$toolbar-md-background:                     var(--ion-toolbar-background, $background-color) !default;
+$toolbar-md-border-color:                   var(--ion-toolbar-border-color, $border-md-color) !default;
+$toolbar-md-color:                          var(--ion-toolbar-color, var(--ion-text-color, #424242)) !default;
+$toolbar-md-color-activated:                var(--ion-toolbar-color-activated, #4a4a4a) !default;
+
+// Material Design List & List Items
+// --------------------------------------------------
+$item-md-background:                        var(--ion-item-background, $background-color) !default;
+$item-md-background-activated:              var(--ion-item-background-activated, #f1f1f1) !default;
+$item-md-border-color:                      var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, .13)))) !default;
+$item-md-color:                             var(--ion-item-color, $text-color) !default;

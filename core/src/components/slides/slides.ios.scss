@@ -1,0 +1,14 @@
+@import "./slides";
+@import "./slides.ios.vars";
+
+// iOS Slides
+// --------------------------------------------------
+
+.slides-ios {
+  --bullet-background: #{$slides-ios-bullet-background};
+  --bullet-background-active: #{$slides-ios-bullet-background-active};
+  --progress-bar-background: #{$slides-ios-progress-bar-background};
+  --progress-bar-background-active: #{$slides-ios-progress-bar-background-active};
+  --scroll-bar-background: #{$slides-ios-scroll-bar-background};
+  --scroll-bar-background-active: #{$slides-ios-scroll-bar-drag-background};
+}

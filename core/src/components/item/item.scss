@@ -1,0 +1,368 @@
+@import "./item.vars";
+
+// Item
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the item
+   * @prop --background-activated: Background of the activated item
+   * @prop --border-color: Color of the item border
+   * @prop --border-radius: Radius of the item border
+   * @prop --border-style: Style of the item border
+   * @prop --border-width: Width of the item border
+   * @prop --box-shadow: Box shadow of the item
+   * @prop --color: Color of the item
+   *
+   * @prop --detail-icon-color: Color of the item detail icon
+   * @prop --detail-icon-opacity: Opacity of the item detail icon
+   * @prop --detail-icon-font-size: Font size of the item detail icon
+   * @prop --inner-border-width: Width of the item inner border
+   * @prop --inner-box-shadow: Box shadow of the item inner
+   * @prop --inner-padding-bottom: Bottom padding of the item inner
+   * @prop --inner-padding-end: End padding of the item inner
+   * @prop --inner-padding-start: Start padding of the item inner
+   * @prop --inner-padding-top: Top padding of the item inner
+   *
+   * @prop --min-height: Minimum height of the item
+   * @prop --padding-bottom: Bottom padding of the item
+   * @prop --padding-end: End padding of the item
+   * @prop --padding-start: Start padding of the item
+   * @prop --padding-top: Top padding of the item
+   * @prop --transition: Transition of the item
+   *
+   * @prop --highlight-height: The height of the highlight on the item
+   * @prop --highlight-color-focused: The color of the highlight on the item when focused
+   * @prop --highlight-color-valid: The color of the highlight on the item when valid
+   * @prop --highlight-color-invalid: The color of the highlight on the item when invalid
+   */
+  --border-radius: 0px;
+  --border-width: 0px;
+  --border-style: solid;
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+  --padding-end: 0px;
+  --padding-start: 0px;
+  --box-shadow: none;
+  --inner-border-width: 0px;
+  --inner-padding-top: 0px;
+  --inner-padding-bottom: 0px;
+  --inner-padding-start: 0px;
+  --inner-padding-end: 0px;
+  --inner-box-shadow: none;
+  --show-full-highlight: 0;
+  --show-inset-highlight: 0;
+  --detail-icon-color: initial;
+  --detail-icon-font-size: 20px;
+  --detail-icon-opacity: 0.25;
+
+  @include font-smoothing();
+
+  display: block;
+
+  position: relative;
+
+  outline: none;
+
+  color: var(--color);
+
+  font-family: $font-family-base;
+
+  text-align: initial;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+
+// Item with Color
+// --------------------------------------------------
+
+:host(.ion-color) .item-native {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+:host(.ion-color) .item-native,
+:host(.ion-color) .item-inner {
+  border-color: current-color(shade);
+}
+
+
+// Activated Item
+// --------------------------------------------------
+
+:host(.ion-focused) .item-native {
+  background: var(--background-focused);
+}
+
+:host(.activated) .item-native {
+  background: var(--background-activated);
+}
+
+:host(.ion-color.activated) .item-native {
+  background: current-color(tint);
+}
+
+
+// Disabled Item
+// --------------------------------------------------
+
+:host(.item-disabled) {
+  cursor: default;
+  opacity: .3;
+  pointer-events: none;
+}
+
+
+// Native Item
+// --------------------------------------------------
+
+.item-native {
+  @include border-radius(var(--border-radius));
+  @include margin(0);
+  @include padding(
+    var(--padding-top),
+    var(--padding-end),
+    var(--padding-bottom),
+    calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
+  );
+  @include text-inherit();
+
+  display: flex;
+  position: relative;
+
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  min-height: var(--min-height);
+
+  transition: var(--transition);
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  outline: none;
+
+  background: var(--background);
+
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.item-native::-moz-focus-inner {
+  border: 0;
+}
+
+button, a {
+  cursor: pointer;
+  user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+// Inner Item
+// --------------------------------------------------
+
+.item-inner {
+  @include margin(0);
+  @include padding(
+    var(--inner-padding-top),
+    calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end)),
+    var(--inner-padding-bottom),
+    var(--inner-padding-start)
+  );
+
+  display: flex;
+
+  flex: 1;
+  flex-direction: inherit;
+  align-items: inherit;
+  align-self: stretch;
+
+  min-height: inherit;
+
+  border-width: var(--inner-border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  box-shadow: var(--inner-box-shadow);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+// Item Detail Icon
+// -----------------------------------------
+
+.item-detail-icon {
+  color: var(--detail-icon-color);
+
+  font-size: var(--detail-icon-font-size);
+
+  opacity: var(--detail-icon-opacity);
+}
+
+
+// Item Slots
+// -----------------------------------------
+
+::slotted(ion-icon) {
+  font-size: 1.6em;
+}
+
+::slotted(ion-button) {
+  --margin-top: 0;
+  --margin-bottom: 0;
+  --margin-start: 0;
+  --margin-end: 0;
+
+  z-index: 1;
+}
+
+::slotted(ion-label) {
+  flex: 1;
+}
+
+
+// Item Input
+// -----------------------------------------
+
+:host([vertical-align-top]),
+:host(.item-input) {
+  align-items: flex-start;
+}
+
+.input-wrapper {
+  display: flex;
+
+  flex: 1;
+  flex-direction: inherit;
+  align-items: inherit;
+  align-self: stretch;
+
+  text-overflow: ellipsis;
+
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+:host(.item-label-stacked) .input-wrapper,
+:host(.item-label-floating) .input-wrapper {
+  flex: 1;
+  flex-direction: column;
+}
+
+// :host(.item-input-has-focus) a,
+// :host(.item-input-has-focus) button,
+// :host(.item-input-has-focus) textarea {
+//   pointer-events: auto;
+// }
+
+// Item Input Highlight
+// --------------------------------------------------
+
+.item-highlight,
+.item-inner-highlight {
+  @include position(null, 0, 0, 0);
+
+  position: absolute;
+
+  background: var(--highlight-background);
+}
+
+.item-highlight {
+  height: var(--full-highlight-height);
+}
+
+.item-inner-highlight {
+  height: var(--inset-highlight-height);
+}
+
+// Item Input Focused
+// --------------------------------------------------
+
+:host(.item-interactive.item-has-focus),
+:host(.item-interactive.ion-touched.ion-invalid) {
+  // If the item has a full border and highlight is enabled, show the full item highlight
+  --full-highlight-height: #{calc(var(--highlight-height) * var(--show-full-highlight))};
+
+  // If the item has an inset border and highlight is enabled, show the inset item highlight
+  --inset-highlight-height: #{calc(var(--highlight-height) * var(--show-inset-highlight))};
+}
+
+// Item Input Focus
+// --------------------------------------------------
+
+:host(.item-interactive.item-has-focus) {
+  --highlight-background: var(--highlight-color-focused);
+}
+
+// Item Input Valid
+// --------------------------------------------------
+
+:host(.item-interactive.ion-valid) {
+  --highlight-background: var(--highlight-color-valid);
+}
+
+// Item Input Invalid
+// --------------------------------------------------
+
+:host(.item-interactive.ion-invalid) {
+  --highlight-background: var(--highlight-color-invalid);
+}
+
+
+// Item Select
+// -----------------------------------------
+
+:host(.item-label-stacked) ::slotted(ion-select),
+:host(.item-label-floating) ::slotted(ion-select) {
+  --padding-start: 0;
+
+  align-self: stretch;
+
+  width: 100%;
+
+  max-width: 100%;
+}
+
+
+// Item Datetime
+// -----------------------------------------
+
+:host(.item-label-stacked) ::slotted(ion-datetime),
+:host(.item-label-floating) ::slotted(ion-datetime) {
+  --padding-start: 0;
+
+  width: 100%;
+}
+
+
+// Item w/ Multiple Inputs
+// -----------------------------------------
+// Multiple inputs in an item should have the input cover
+// relative to them instead of the item
+
+:host(.item-multiple-inputs) ::slotted(ion-datetime),
+:host(.item-multiple-inputs) ::slotted(ion-select) {
+  position: relative;
+}
+
+
+// Item Textarea
+// -----------------------------------------
+
+:host(.item-textarea) {
+  align-items: stretch;
+}
+
+
+// Item Reorder
+// --------------------------------------------------
+
+::slotted(ion-reorder[slot]) {
+  @include margin(0, null);
+}

@@ -1,0 +1,74 @@
+@import "../../themes/ionic.globals.md";
+@import "../item/item.md.vars";
+
+// Material Design Checkbox
+// --------------------------------------------------
+
+/// @prop - Opacity of the disabled checkbox
+$checkbox-md-disabled-opacity:           .3 !default;
+
+/// @prop - Background color of the checkbox icon when off
+$checkbox-md-icon-background-color-off:  $item-md-background !default;
+
+/// @prop - Background color of focus indicator for checkbox when focused
+$checkbox-md-background-color-focused:   ion-color(primary, tint) !default;
+
+/// @prop - Background color of the checkbox icon when on
+$checkbox-md-icon-background-color-on:   ion-color(primary, base) !default;
+
+/// @prop - Size of the checkbox icon
+$checkbox-md-icon-size:                  18px !default;
+
+/// @prop - Width of the checkbox icon checkmark
+$checkbox-md-icon-checkmark-width:       2px !default;
+
+/// @prop - Style of the checkbox icon checkmark
+$checkbox-md-icon-checkmark-style:       solid !default;
+
+/// @prop - Color of the checkbox icon checkmark
+$checkbox-md-icon-checkmark-color:       ion-color(primary, contrast) !default;
+
+/// @prop - Border width of the checkbox icon
+$checkbox-md-icon-border-width:          2px !default;
+
+/// @prop - Border style of the checkbox icon
+$checkbox-md-icon-border-style:          solid !default;
+
+/// @prop - Border radius of the checkbox icon
+$checkbox-md-icon-border-radius:         2px !default;
+
+/// @prop - Border color of the checkbox icon when off
+$checkbox-md-icon-border-color-off:      rgba(0, 0, 0, .54) !default;
+
+/// @prop - Border color of the checkbox icon when on
+$checkbox-md-icon-border-color-on:       ion-color(primary, base) !default;
+
+/// @prop - Transition duration of the checkbox
+$checkbox-md-transition-duration:        180ms !default;
+
+/// @prop - Transition easing of the checkbox
+$checkbox-md-transition-easing:          cubic-bezier(.4, 0, .2, 1) !default;
+
+/// @prop - Margin top of the start checkbox item
+$checkbox-md-item-start-margin-top:      18px !default;
+
+/// @prop - Margin end of the start checkbox item
+$checkbox-md-item-start-margin-end:      36px !default;
+
+/// @prop - Margin bottom of the start checkbox item
+$checkbox-md-item-start-margin-bottom:   $checkbox-md-item-start-margin-top !default;
+
+/// @prop - Margin start of the start checkbox item
+$checkbox-md-item-start-margin-start:    4px !default;
+
+/// @prop - Margin top of the end checkbox item
+$checkbox-md-item-end-margin-top:        18px !default;
+
+/// @prop - Margin end of the end checkbox item
+$checkbox-md-item-end-margin-end:        0 !default;
+
+/// @prop - Margin bottom of the end checkbox item
+$checkbox-md-item-end-margin-bottom:     $checkbox-md-item-end-margin-top !default;
+
+/// @prop - Margin start of the end checkbox item
+$checkbox-md-item-end-margin-start:      0 !default;

@@ -1,0 +1,48 @@
+@import "./fab-button";
+@import "./fab-button.md.vars";
+
+// Material Design FAB Button
+// --------------------------------------------------
+
+:host {
+  --background: #{$fab-md-background-color};
+  --background-activated: var(--background);
+  --background-focused: var(--background-activated);
+  --color: #{$fab-md-text-color};
+  --color-activated: #{$fab-md-text-color};
+  --color-focused: var(--color-activated);
+  --box-shadow: #{$fab-md-box-shadow};
+  --transition: #{
+    box-shadow 280ms cubic-bezier(.4, 0, .2, 1),
+    background-color 280ms cubic-bezier(.4, 0, .2, 1),
+    color 280ms cubic-bezier(.4, 0, .2, 1),
+    opacity 15ms linear 30ms,
+    transform 270ms cubic-bezier(0, 0, .2, 1) 0ms
+  };
+}
+
+:host(.activated) {
+  --box-shadow: #{$fab-md-box-shadow-activated};
+}
+
+::slotted(ion-icon),
+.close-icon {
+  font-size: $fab-md-icon-font-size;
+}
+
+
+// FAB buttons in a list
+// --------------------------------------------------
+
+:host(.fab-button-in-list) {
+  --color: #{$fab-md-list-button-text-color};
+  --color-activated: #{$fab-md-list-button-text-color};
+  --color-focused: var(--color-activated);
+  --background: #{$fab-md-list-button-background-color};
+  --background-activated: #{$fab-md-list-button-background-color-activated};
+  --background-focused: var(--background-activated);
+}
+
+:host(.fab-button-in-list) ::slotted(ion-icon) {
+  font-size: $fab-md-list-button-icon-font-size;
+}

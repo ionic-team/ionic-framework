@@ -1,0 +1,17 @@
+@import "./card-title";
+@import "./card-title.ios.vars";
+
+// iOS Card Title
+// --------------------------------------------------
+
+:host {
+  --color: #{$card-ios-title-text-color};
+
+  @include margin($card-ios-title-margin-top, $card-ios-title-margin-end, $card-ios-title-margin-bottom, $card-ios-title-margin-start);
+  @include padding($card-ios-title-padding-top, $card-ios-title-padding-end, $card-ios-title-padding-bottom, $card-ios-title-padding-start);
+
+  font-size: $card-ios-title-font-size;
+  font-weight: $card-ios-title-font-weight;
+
+  line-height: 1.2;
+}

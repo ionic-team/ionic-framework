@@ -1,0 +1,17 @@
+@import "./item-option";
+@import "./item-option.ios.vars";
+
+// iOS Item Option
+// --------------------------------------------------
+
+:host {
+  font-size: $item-option-button-ios-font-size;
+}
+
+:host(.activated) {
+  background: ion-color(primary, shade);
+}
+
+:host(.ion-color.activated) {
+  background: current-color(shade);
+}

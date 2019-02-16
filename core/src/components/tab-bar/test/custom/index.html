@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Tab Bar - Custom</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+  <link rel="stylesheet" href="../../../../../css/ionic.bundle.css">
+  <link rel="stylesheet" href="../../../../../scripts/testing/styles.css">
+</head>
+
+<body>
+  <ion-app>
+    <ion-content>
+      <!-- Default -->
+      <ion-tab-bar selected-tab="1">
+        <ion-tab-button tab="1">
+          <ion-icon name="clock"></ion-icon>
+          <ion-label>Recents</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="2">
+          <ion-icon name="star"></ion-icon>
+          <ion-label>Favorites</ion-label>
+          <ion-badge>6</ion-badge>
+        </ion-tab-button>
+
+        <ion-tab-button tab="3">
+          <ion-icon name="cog"></ion-icon>
+          <ion-label>Settings</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+
+      <!-- Custom Class -->
+      <ion-tab-bar selected-tab="11" class="custom-tab-bar-color">
+        <ion-tab-button tab="11">
+          <ion-icon name="clock"></ion-icon>
+          <ion-label>Recents</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="22">
+          <ion-icon name="star"></ion-icon>
+          <ion-label>Favorites</ion-label>
+          <ion-badge>6</ion-badge>
+        </ion-tab-button>
+
+        <ion-tab-button tab="33">
+          <ion-icon name="cog"></ion-icon>
+          <ion-label>Settings</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+
+      <!-- Color & Custom Class -->
+      <ion-tab-bar selected-tab="111" color="danger" class="custom-tab-bar-color">
+        <ion-tab-button tab="111">
+          <ion-icon name="clock"></ion-icon>
+          <ion-label>Recents</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="222">
+          <ion-icon name="star"></ion-icon>
+          <ion-label>Favorites</ion-label>
+          <ion-badge>6</ion-badge>
+        </ion-tab-button>
+
+        <ion-tab-button tab="333">
+          <ion-icon name="cog"></ion-icon>
+          <ion-label>Settings</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+
+      <!-- Custom Background Buttons -->
+      <ion-tab-bar selected-tab="1111" class="custom-tab-button-bar">
+        <ion-tab-button tab="1111" class="custom-tab-button-background-red">
+          <ion-icon name="clock"></ion-icon>
+          <ion-label>Recents</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="2222" class="custom-tab-button-background-yellow">
+          <ion-icon name="star"></ion-icon>
+          <ion-label>Favorites</ion-label>
+          <ion-badge>6</ion-badge>
+        </ion-tab-button>
+
+        <ion-tab-button tab="3333" class="custom-tab-button-background-green">
+          <ion-icon name="cog"></ion-icon>
+          <ion-label>Settings</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+
+      <!-- Custom Color Buttons -->
+      <ion-tab-bar selected-tab="1111">
+        <ion-tab-button tab="1111" class="custom-tab-button-color-red">
+          <ion-icon name="clock"></ion-icon>
+          <ion-label>Recents</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="2222" class="custom-tab-button-color-yellow">
+          <ion-icon name="star"></ion-icon>
+          <ion-label>Favorites</ion-label>
+          <ion-badge>6</ion-badge>
+        </ion-tab-button>
+
+        <ion-tab-button tab="3333" class="custom-tab-button-color-green">
+          <ion-icon name="cog"></ion-icon>
+          <ion-label>Settings</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+
+      <!-- Custom All -->
+      <ion-tab-bar selected-tab="11111" class="custom-all">
+        <ion-tab-button tab="11111">
+          <ion-icon name="clock"></ion-icon>
+          <ion-label>Recents</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="22222">
+          <ion-icon name="star" class="custom-icon"></ion-icon>
+        </ion-tab-button>
+
+        <ion-tab-button tab="33333">
+          <ion-icon name="cog"></ion-icon>
+          <ion-label>Settings</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-content>
+  </ion-app>
+
+  <style>
+    .custom-tab-bar-color {
+      --background: #7044ff;
+      --color: rgb(255, 0, 234, .6);
+      --color-selected: #ff00ea;
+    }
+
+    .custom-tab-bar-color ion-badge {
+      background: rgba(255, 255, 255, 0.8);
+      color: rgba(0, 0, 0, .5);
+    }
+
+    .custom-tab-button-bar {
+      --background: #178fb8;
+      --color: rgba(255, 255, 255, .6);
+      --color-selected: #ffffff;
+    }
+
+    .custom-tab-button-background-red {
+      --background: #a32b2b;
+    }
+
+    .custom-tab-button-background-yellow {
+      --background: #b7b915;
+    }
+
+    .custom-tab-button-background-green {
+      --background: #5a9b2e;
+    }
+
+    .custom-tab-button-color-red {
+      --color: rgba(163, 43, 43, .6);
+      --color-selected: #a32b2b;
+    }
+
+    .custom-tab-button-color-yellow {
+      --color: rgba(183, 185, 21, .6);
+      --color-selected: #b7b915;
+    }
+
+    .custom-tab-button-color-green {
+      --color: rgb(90, 155, 46, .6);
+      --color-selected: #5a9b2e;
+    }
+
+    .custom-all {
+      margin-top: 30px;
+      margin-bottom: 30px;
+      contain: none;
+
+      --background: #f6f6f6;
+      --color-selected: #1b8472;
+
+      --border: none;
+    }
+
+    .custom-all ion-tab-button:nth-child(2) {
+      --background: #1b8472;
+      --color: rgba(255, 255, 255, .6);
+      --color-selected: #ffffff;
+
+      border-radius: 50%;
+      max-width: 80px;
+      height: 80px;
+    }
+
+    .custom-icon {
+      font-size: 50px;
+    }
+  </style>
+</body>
+
+</html>

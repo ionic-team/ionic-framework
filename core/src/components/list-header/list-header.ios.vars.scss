@@ -1,0 +1,26 @@
+@import "../../themes/ionic.globals.ios";
+@import "../item/item.ios.vars";
+
+// iOS List Header
+// --------------------------------------------------
+
+/// @prop - Padding start of the header in a list
+$list-ios-header-padding-start:       $item-ios-padding-start !default;
+
+/// @prop - Font size of the header in a list
+$list-ios-header-font-size:           12px !default;
+
+/// @prop - Font weight of the header in a list
+$list-ios-header-font-weight:         500 !default;
+
+/// @prop - Letter spacing of the header in a list
+$list-ios-header-letter-spacing:      1px !default;
+
+/// @prop - Text transform of the header in a list
+$list-ios-header-text-transform:      uppercase !default;
+
+/// @prop - Text color of the header in a list
+$list-ios-header-color:               $text-color-step-150 !default;
+
+/// @prop - Background color of the header in a list
+$list-ios-header-background-color:    transparent !default;

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Slides - App Intro</title>
+
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+
+  <style>
+    ion-slides {
+      height: 100%;
+    }
+
+    .swiper-slide {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .swiper-slide img {
+      max-width: 300px;
+    }
+  </style>
+</head>
+
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="secondary">
+          <ion-button onclick="slidePrev()">Prev</ion-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button onclick="slideNext()">Next</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-slides class="slides">
+        <ion-slide>
+          <img src="https://images.unsplash.com/photo-1490718687940-0ecadf414600?auto=format&fit=crop&w=1352&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D"
+            class="slide-image" />
+          <div padding>
+            <h2 class="slide-title">
+              Welcome to
+              <b>ICA</b>
+            </h2>
+            <p>
+              The
+              <b>ionic conference app</b> is a practical preview of the ionic framework in action, and a demonstration of proper
+              code use.
+            </p>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <img src="https://images.unsplash.com/photo-1504703500545-4c4ee081b155?auto=format&fit=crop&w=1350&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D"
+            class="slide-image" />
+          <div padding>
+            <h2 class="slide-title">What is Ionic?</h2>
+            <p>
+              <b>Ionic Framework</b> is an open source SDK that enables developers to build high quality mobile apps with web
+              technologies like HTML, CSS, and JavaScript.</p>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <img src="https://images.unsplash.com/photo-1501879779179-4576bae71d8d?auto=format&fit=crop&w=1350&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D"
+            class="slide-image" />
+          <div padding>
+            <h2 class="slide-title">What is Ionic Pro?</h2>
+            <p>
+              <b>Ionic Pro</b> is a powerful set of services and features built on top of Ionic Framework that brings a totally
+              new level of app development agility to mobile dev teams.</p>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <img src="https://images.unsplash.com/photo-1485832329521-e944d75fa65e?auto=format&fit=crop&w=1350&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D"
+            class="slide-image" />
+          <ion-button onclick="toStart()">
+            Back to the start
+          </ion-button>
+        </ion-slide>
+      </ion-slides>
+    </ion-content>
+  </ion-app>
+  <script>
+    const slides = document.querySelector('.slides')
+    slides.pager = true;
+
+    function slideNext() {
+      slides.slideNext()
+    };
+
+    function slidePrev() {
+      slides.slidePrev();
+    };
+
+    function toStart() {
+      slides.slideTo(0);
+    }
+  </script>
+</body>
+
+</html>

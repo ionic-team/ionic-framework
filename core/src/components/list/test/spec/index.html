@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>List - Spec</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-list lines="none">
+    <ion-item>
+      <ion-label>
+        Single-line item
+      </ion-label>
+      <ion-icon name="square" slot="end"></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        Single-line item longer text
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon color="tertiary" slot="start" name="bluetooth"></ion-icon>
+      <ion-label>
+        Single-line item
+      </ion-label>
+      <ion-reorder slot="end"></ion-reorder>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="/src/components/avatar/test/avatar.svg">
+      </ion-avatar>
+      <ion-label>
+        Single-line item
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-thumbnail slot="start">
+        <img src="/src/components/thumbnail/test/thumbnail.svg">
+      </ion-thumbnail>
+      <ion-label>
+        Single-line item
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="/src/components/avatar/test/avatar.svg">
+      </ion-avatar>
+      <ion-label>
+        One-line item
+      </ion-label>
+      <ion-checkbox slot="end"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        One-line item
+      </ion-label>
+      <ion-radio slot="end"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        One-line item
+      </ion-label>
+      <ion-toggle slot="end"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        One-line item
+      </ion-label>
+      <ion-badge slot="end">99</ion-badge>
+    </ion-item>
+
+    <ion-item>
+      <ion-checkbox slot="start"></ion-checkbox>
+      <ion-label>
+        One-line item
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        Two-line item
+        <p>Secondary text</p>
+      </ion-label>
+      <ion-note slot="end">meta</ion-note>
+    </ion-item>
+
+    <!-- TODO
+        <ion-item>
+          <ion-label>
+            <span>Overline</span>
+            Two-line item
+          </ion-label>
+        </ion-item> -->
+
+    <ion-item>
+      <ion-icon name="bluetooth" slot="start"></ion-icon>
+      <ion-label>
+        Two-line item
+        <p>Secondary text</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="/src/components/avatar/test/avatar.svg">
+      </ion-avatar>
+      <ion-label>
+        Two-line item
+        <p>Secondary text</p>
+      </ion-label>
+      <ion-icon name="square" slot="end"></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-thumbnail slot="start">
+        <img src="/src/components/thumbnail/test/thumbnail.svg">
+      </ion-thumbnail>
+      <ion-label>
+        Two-line item
+        <p>Secondary text</p>
+      </ion-label>
+      <ion-icon name="square" slot="end"></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-label text-wrap>
+        Three-line item
+        <p>Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </ion-label>
+      <ion-note slot="end">meta</ion-note>
+    </ion-item>
+
+    <!-- TODO
+        <ion-item>
+          <ion-label>
+            <span>Overline</span>
+            Three-line item
+          </ion-label>
+        </ion-item> -->
+
+    <ion-item>
+      <ion-icon slot="start" name="bluetooth"></ion-icon>
+      <ion-label text-wrap>
+        Three-line item
+        <p>Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="/src/components/avatar/test/avatar.svg">
+      </ion-avatar>
+      <ion-label text-wrap>
+        Three-line item
+        <p>Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-thumbnail slot="start">
+        <img src="/src/components/thumbnail/test/thumbnail.svg">
+      </ion-thumbnail>
+      <ion-label text-wrap>
+        Three-line item
+        <p>Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Similar to the first list but flipped slots -->
+  <ion-list lines="none">
+    <ion-item>
+      <ion-avatar slot="end">
+        <img src="/src/components/avatar/test/avatar.svg">
+      </ion-avatar>
+      <ion-label>
+        Single-line item
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-thumbnail slot="end">
+        <img src="/src/components/thumbnail/test/thumbnail.svg">
+      </ion-thumbnail>
+      <ion-label>
+        Single-line item
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="end">
+        <img src="/src/components/avatar/test/avatar.svg">
+      </ion-avatar>
+      <ion-label>
+        One-line item
+      </ion-label>
+      <ion-checkbox slot="start"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        One-line item
+      </ion-label>
+      <ion-radio slot="start"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        One-line item
+      </ion-label>
+      <ion-toggle slot="start"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        One-line item
+      </ion-label>
+      <ion-badge slot="start">99</ion-badge>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        Two-line item
+        <p>Secondary text</p>
+      </ion-label>
+      <ion-note slot="start">meta</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="bluetooth" slot="end"></ion-icon>
+      <ion-label>
+        Two-line item
+        <p>Secondary text</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="end">
+        <img src="/src/components/avatar/test/avatar.svg">
+      </ion-avatar>
+      <ion-label>
+        Two-line item
+        <p>Secondary text</p>
+      </ion-label>
+      <ion-icon name="square" slot="start"></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-thumbnail slot="end">
+        <img src="/src/components/thumbnail/test/thumbnail.svg">
+      </ion-thumbnail>
+      <ion-label>
+        Two-line item
+        <p>Secondary text</p>
+      </ion-label>
+      <ion-icon name="square" slot="start"></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-label text-wrap>
+        Three-line item
+        <p>Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </ion-label>
+      <ion-note slot="start">meta</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="end" name="bluetooth"></ion-icon>
+      <ion-label text-wrap>
+        Three-line item
+        <p>Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="end">
+        <img src="/src/components/avatar/test/avatar.svg">
+      </ion-avatar>
+      <ion-label text-wrap>
+        Three-line item
+        <p>Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-thumbnail slot="end">
+        <img src="/src/components/thumbnail/test/thumbnail.svg">
+      </ion-thumbnail>
+      <ion-label text-wrap>
+        Three-line item
+        <p>Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <style>
+    body {
+      margin: 0;
+    }
+
+    body,
+    ion-list {
+      background: #e5e5e5 !important;
+    }
+
+    ion-item {
+      margin-bottom: 12px;
+    }
+
+  </style>
+</body>
+
+</html>

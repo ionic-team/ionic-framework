@@ -1,0 +1,23 @@
+@import "../../themes/ionic.globals.md";
+@import "../item/item.md.vars";
+
+// Material Design Textarea
+// --------------------------------------------------
+
+/// @prop - Font size of the textarea
+$textarea-md-font-size:                      inherit !default;
+
+/// @prop - Margin top of the textarea
+$textarea-md-padding-top:                     $item-md-padding-top !default;
+
+/// @prop - Margin end of the textarea
+$textarea-md-padding-end:                     0 !default;
+
+/// @prop - Margin bottom of the textarea
+$textarea-md-padding-bottom:                  $item-md-padding-bottom !default;
+
+/// @prop - Margin start of the textarea
+$textarea-md-padding-start:                   ($item-md-padding-start / 2) !default;
+
+/// @prop - Placeholder text color of the textarea
+$textarea-md-placeholder-color:             $placeholder-text-color !default;

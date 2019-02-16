@@ -1,0 +1,31 @@
+@import "./loading";
+@import "./loading.md.vars";
+
+// Material Design Loading Indicator
+// --------------------------------------------------
+
+:host {
+  --background: #{$loading-md-background};
+  --max-width: #{$loading-md-max-width};
+  --max-height: #{$loading-md-max-height};
+  --spinner-color: #{$loading-md-spinner-color};
+
+  color: $loading-md-text-color;
+
+  font-size: $loading-md-font-size;
+}
+
+.loading-wrapper {
+  @include border-radius($loading-md-border-radius);
+  @include padding($loading-md-padding-top, $loading-md-padding-end, $loading-md-padding-bottom, $loading-md-padding-start);
+
+  box-shadow: $loading-md-box-shadow;
+}
+
+
+// Material Design Loading Content
+// -----------------------------------------
+
+.loading-spinner + .loading-content {
+  @include margin-horizontal(16px, null);
+}

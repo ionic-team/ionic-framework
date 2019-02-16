@@ -1,0 +1,17 @@
+@import "./card";
+@import "./card.md.vars";
+
+// Material Design Card
+// --------------------------------------------------
+
+:host {
+  --background: var(--ion-item-background, transparent);
+  --color: #{$card-md-text-color};
+
+  @include margin($card-md-margin-top, $card-md-margin-end, $card-md-margin-bottom, $card-md-margin-start);
+  @include border-radius($card-md-border-radius);
+
+  font-size: $card-md-font-size;
+
+  box-shadow: $card-md-box-shadow;
+}

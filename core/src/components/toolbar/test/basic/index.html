@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Toolbar - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>Toolbar</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="primary">
+        <ion-buttons slot="secondary">
+          <ion-button>
+            <ion-icon slot="icon-only" name="contact"></ion-icon>
+          </ion-button>
+          <ion-button>
+            <ion-icon slot="icon-only" name="search"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button color="secondary">
+            <ion-icon slot="icon-only" name="more"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Subheader</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content id="content" fullscreen="true">
+      <ion-card color="secondary">
+        <ion-card-header>
+          Card Header
+        </ion-card-header>
+        <ion-card-content>
+          <ion-card-title>
+            Title
+          </ion-card-title>
+          Some normal text in content.
+          <h3>h3 in content</h3>
+          <p>
+            Paragraph in content.
+          </p>
+          <p>
+            Another paragraph in content.
+          </p>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card color="primary" class="rainbow-content">
+        <ion-card-header>
+          Card Header
+        </ion-card-header>
+        <ion-card-content>
+          <ion-card-title>
+            Title
+          </ion-card-title>
+          Some normal text in content.
+          <h3>h3 in content</h3>
+          <p>
+            Paragraph in content.
+          </p>
+          <p>
+            Another paragraph in content.
+          </p>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card color="primary">
+        <ion-card-header>
+          Card Header
+        </ion-card-header>
+        <ion-card-content>
+          <ion-card-title>
+            Title
+          </ion-card-title>
+          Some normal text in content.
+          <h3>h3 in content</h3>
+          <p>
+            Paragraph in content.
+          </p>
+          <p>
+            Another paragraph in content.
+          </p>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-list id="dynamicList">
+      </ion-list>
+
+    </ion-content>
+
+    <ion-footer>
+      <ion-toolbar>
+        <ion-buttons slot="primary">
+          <ion-button>
+            <ion-icon slot="icon-only" name="search"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-searchbar>
+        </ion-searchbar>
+      </ion-toolbar>
+
+      <ion-toolbar>
+        <ion-title>
+          Footer
+        </ion-title>
+      </ion-toolbar>
+    </ion-footer>
+  </ion-app>
+
+  <style>
+    .rainbow-content {
+      background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    }
+
+  </style>
+
+  <script>
+    let items = [];
+    for (var i = 0; i < 30; i++) {
+      items.push(i + 1);
+    }
+    const list = document.getElementById('dynamicList');
+
+    let html = '';
+    for (let item of items) {
+      html += `<ion-item>${item}</ion-item>`;
+    }
+    list.innerHTML = html;
+  </script>
+</body>
+
+</html>

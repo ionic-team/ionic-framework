@@ -1,0 +1,34 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design FAB Button
+// --------------------------------------------------
+
+/// @prop - Box shadow of the FAB button
+$fab-md-box-shadow:                               0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12) !default;
+
+/// @prop - Box shadow of the activated FAB button
+$fab-md-box-shadow-activated:                     0 7px 8px -4px rgba(0, 0, 0, .2), 0 12px 17px 2px rgba(0, 0, 0, .14), 0 5px 22px 4px rgba(0, 0, 0, .12) !default;
+
+/// @prop - Background color of the button
+$fab-md-background-color:                         ion-color(primary, base) !default;
+
+/// @prop - Background color of the activated button
+$fab-md-background-color-activated:               ion-color(primary, shade) !default;
+
+/// @prop - Text color of the button
+$fab-md-text-color:                               ion-color(primary, contrast) !default;
+
+/// @prop - Font size of the button icon
+$fab-md-icon-font-size:                           24px !default;
+
+/// @prop - Background color of the button in a list
+$fab-md-list-button-background-color:             ion-color(light, base) !default;
+
+/// @prop - Background color of the activated button in a list
+$fab-md-list-button-background-color-activated:   ion-color(light, shade) !default;
+
+/// @prop - Text color of the button in a list
+$fab-md-list-button-text-color:                   rgba(var(--ion-text-color-rgb, $text-color-rgb), 0.54) !default;
+
+/// @prop - Font size of the button icon in a list
+$fab-md-list-button-icon-font-size:               18px !default;

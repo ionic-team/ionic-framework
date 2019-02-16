@@ -1,0 +1,21 @@
+@import "../../themes/ionic.globals";
+
+// Button
+// --------------------------------------------------
+
+/// @prop - Padding top of the round button
+$button-round-padding-top:        0 !default;
+
+/// @prop - Padding end of the round button
+$button-round-padding-end:        26px !default;
+
+/// @prop - Padding bottom of the round button
+$button-round-padding-bottom:     $button-round-padding-top !default;
+
+/// @prop - Padding start of the round button
+$button-round-padding-start:      $button-round-padding-end !default;
+
+/// @prop - Border radius of the round button
+$button-round-border-radius:      64px !default;
+
+/// @prop - Opacity of the button when disabled

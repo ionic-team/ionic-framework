@@ -1,0 +1,186 @@
+@import "./alert.vars";
+
+// Alert
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the alert
+   *
+   * @prop --min-width: Minimum width of the alert
+   * @prop --width: Width of the alert
+   * @prop --max-width: Maximum width of the alert
+   *
+   * @prop --min-height: Minimum height of the alert
+   * @prop --height: Height of the alert
+   * @prop --max-height: Maximum height of the alert
+   */
+  --min-width: #{$alert-min-width};
+  --width: auto;
+  --min-height: auto;
+  --height: auto;
+  --max-height: #{$alert-max-height};
+
+  @include font-smoothing();
+  @include position(0, 0, 0, 0);
+
+  display: flex;
+  position: fixed;
+
+  align-items: center;
+  justify-content: center;
+
+  font-family: $font-family-base;
+
+  contain: strict;
+  touch-action: none;
+  user-select: none;
+  z-index: $z-index-overlay;
+}
+
+:host(.overlay-hidden) {
+  display: none;
+}
+
+:host(.alert-top) {
+  @include padding(50px, null, null, null);
+
+  align-items: flex-start;
+}
+
+.alert-wrapper {
+  display: flex;
+
+  flex-direction: column;
+
+  width: var(--width);
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+
+  height: var(--height);
+  min-height: var(--min-height);
+  max-height: var(--max-height);
+
+  background: var(--background);
+
+  contain: content;
+  opacity: 0;
+  z-index: $z-index-overlay-wrapper;
+}
+
+.alert-title {
+  @include margin(0);
+  @include padding(0);
+}
+
+.alert-sub-title {
+  @include margin(5px, 0, 0);
+  @include padding(0);
+
+  font-weight: normal;
+}
+
+.alert-message {
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  overflow-y: scroll;
+  overscroll-behavior-y: contain;
+}
+
+.alert-checkbox-group::-webkit-scrollbar,
+.alert-radio-group::-webkit-scrollbar,
+.alert-message::-webkit-scrollbar {
+  display: none;
+}
+
+.alert-input {
+  @include padding(10px, 0);
+
+  width: 100%;
+
+  border: 0;
+
+  background: inherit;
+
+  font: inherit;
+  box-sizing: border-box;
+}
+
+.alert-button-group {
+  display: flex;
+
+  flex-direction: row;
+
+  width: 100%;
+}
+
+.alert-button-group-vertical {
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.alert-button {
+  @include margin(0);
+
+  display: block;
+
+  border: 0;
+
+  font-size: $alert-button-font-size;
+
+  line-height: $alert-button-line-height;
+
+  z-index: 0;
+}
+
+.alert-button.ion-focused,
+.alert-tappable.ion-focused {
+  background: $background-color-step-100;
+}
+
+.alert-button-inner {
+  display: flex;
+
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+}
+
+.alert-tappable {
+  @include margin(0);
+  @include padding(0);
+
+  display: flex;
+
+  width: 100%;
+
+  border: 0;
+
+  background: transparent;
+
+  font-size: inherit;
+
+  line-height: initial;
+
+  text-align: start;
+  appearance: none;
+
+  contain: strict;
+}
+
+.alert-button,
+.alert-checkbox,
+.alert-input,
+.alert-radio {
+  outline: none;
+}
+
+.alert-radio-icon,
+.alert-checkbox-icon,
+.alert-checkbox-inner {
+  box-sizing: border-box;
+}

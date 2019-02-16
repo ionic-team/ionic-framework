@@ -1,0 +1,17 @@
+@import "./select";
+@import "./select.ios.vars";
+
+// iOS Select
+// --------------------------------------------------
+
+:host {
+  --padding-top: #{$select-ios-padding-top};
+  --padding-end: #{$select-ios-padding-end};
+  --padding-bottom: #{$select-ios-padding-bottom};
+  --padding-start: #{$select-ios-padding-start};
+}
+
+.select-icon {
+  width: 12px;
+  height: 18px;
+}

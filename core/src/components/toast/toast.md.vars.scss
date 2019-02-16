@@ -1,0 +1,34 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Toast
+// --------------------------------------------------
+
+/// @prop - Background of the toast
+$toast-md-background:                              $text-color-step-200 !default;
+
+/// @prop - Box shadow of the toast
+$toast-md-box-shadow:                              0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12) !default;
+
+/// @prop - Font size of the toast
+$toast-md-font-size:                               14px !default;
+
+/// @prop - Color of the toast
+$toast-md-color:                                   $background-color-step-50 !default;
+
+/// @prop - Border radius of the toast wrapper
+$toast-md-border-radius:                           4px !default;
+
+/// @prop - Font size of the toast message
+$toast-md-message-line-height:                     20px !default;
+
+/// @prop - Padding top of the toast message
+$toast-md-message-padding-top:                     14px !default;
+
+/// @prop - Padding end of the toast message
+$toast-md-message-padding-end:                     16px !default;
+
+/// @prop - Padding bottom of the toast message
+$toast-md-message-padding-bottom:                  $toast-md-message-padding-top !default;
+
+/// @prop - Padding start of the toast message
+$toast-md-message-padding-start:                   $toast-md-message-padding-end !default;

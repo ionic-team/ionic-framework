@@ -1,0 +1,214 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Item
+// --------------------------------------------------
+
+/// @prop - Minimum height of the item
+$item-md-min-height:                        48px !default;
+
+/// @prop - Color of the item paragraph
+$item-md-paragraph-text-color:              $text-color-step-400 !default;
+
+/// @prop - Font size of the item
+$item-md-font-size:                         16px !default;
+
+/// @prop - Width of the avatar in the item
+$item-md-avatar-width:                      40px !default;
+
+/// @prop - Height of the avatar in the item
+$item-md-avatar-height:                     $item-md-avatar-width !default;
+
+/// @prop - Width of the thumbnail in the item
+$item-md-thumbnail-width:                   56px !default;
+
+/// @prop - Height of the thumbnail in the item
+$item-md-thumbnail-height:                  $item-md-thumbnail-width !default;
+
+/// @prop - Color of the detail arrow icon
+$item-md-detail-icon-color:                 $item-md-border-color !default;
+
+/// @prop - Padding top for the item content
+$item-md-padding-top:                       10px !default;
+
+/// @prop - Padding end for the item content
+$item-md-padding-end:                       16px !default;
+
+/// @prop - Padding bottom for the item content
+$item-md-padding-bottom:                    11px !default;
+
+/// @prop - Padding start for the item content
+$item-md-padding-start:                     16px !default;
+
+/// @prop - Border bottom width for the item when lines are displayed
+$item-md-border-bottom-width:               1px !default;
+
+/// @prop - Border bottom style for the item when lines are displayed
+$item-md-border-bottom-style:               solid !default;
+
+/// @prop - Border bottom color for the item when lines are displayed
+$item-md-border-bottom-color:               $item-md-border-color !default;
+
+/// @prop - Border bottom for the item when lines are displayed
+$item-md-border-bottom:                     $item-md-border-bottom-width $item-md-border-bottom-style $item-md-border-color !default;
+
+/// @prop - Color of the item input highlight
+$item-md-input-highlight-color:             ion-color(primary, base) !default;
+
+/// @prop - Color of the item input highlight when valid
+$item-md-input-highlight-color-valid:       ion-color(success, base) !default;
+
+/// @prop - Color of the item input highlight when invalid
+$item-md-input-highlight-color-invalid:     ion-color(danger, base) !default;
+
+
+// Item Label
+// --------------------------------------------------
+
+/// @prop - Margin top of the label
+$item-md-label-margin-top:                  11px !default;
+
+/// @prop - Margin end of the label
+$item-md-label-margin-end:                  0 !default;
+
+/// @prop - Margin bottom of the label
+$item-md-label-margin-bottom:               10px !default;
+
+/// @prop - Margin start of the label
+$item-md-label-margin-start:                0 !default;
+
+
+// Item Slots
+// --------------------------------------------------
+
+/// @prop - Margin start for the start slot
+$item-md-start-slot-margin-start:           null !default;
+
+/// @prop - Margin end for the start slot
+$item-md-start-slot-margin-end:             32px !default;
+
+/// @prop - Margin start for the end slot
+$item-md-end-slot-margin-start:             32px !default;
+
+/// @prop - Margin end for the end slot
+$item-md-end-slot-margin-end:               null !default;
+
+/// @prop - Margin top for content in the start/end slot in a multi-line item
+$item-md-multi-line-slot-margin-top:        16px !default;
+
+/// @prop - Margin end for content in the start/end slot in a multi-line item
+$item-md-multi-line-slot-margin-end:        null !default;
+
+/// @prop - Margin bottom for content in the start/end slot in a multi-line item
+$item-md-multi-line-slot-margin-bottom:     16px !default;
+
+/// @prop - Margin start for content in the start/end slot in a multi-line item
+$item-md-multi-line-slot-margin-start:      null !default;
+
+
+// Icon Slots
+// --------------------------------------------------
+
+/// @prop - Margin top for an icon in the start/end slot
+$item-md-icon-slot-margin-top:              12px !default;
+
+/// @prop - Margin end for an icon in the start/end slot
+$item-md-icon-slot-margin-end:              null !default;
+
+/// @prop - Margin bottom for an icon in the start/end slot
+$item-md-icon-slot-margin-bottom:           $item-md-icon-slot-margin-top !default;
+
+/// @prop - Margin start for an icon in the start/end slot
+$item-md-icon-slot-margin-start:            null !default;
+
+/// @prop - Margin start for an icon in the start slot
+$item-md-icon-start-slot-margin-start:      null !default;
+
+/// @prop - Margin end for an icon in the start slot
+$item-md-icon-start-slot-margin-end:        32px !default;
+
+/// @prop - Margin start for an icon in the end slot
+$item-md-icon-end-slot-margin-start:        16px !default;
+
+/// @prop - Margin end for an icon in the end slot
+$item-md-icon-end-slot-margin-end:          null !default;
+
+/// @prop - Color for an icon in the start/end slot
+$item-md-icon-slot-color:                   rgba(var(--ion-text-color-rgb, $text-color-rgb), 0.54) !default;
+
+/// @prop - Font size of an icon in the start/end slot
+$item-md-icon-slot-font-size:                  24px !default;
+
+
+// Label Slots
+// --------------------------------------------------
+
+/// @prop - Margin top for the end slot inside of a floating/stacked label
+$item-md-label-slot-end-margin-top:         7px !default;
+
+/// @prop - Margin end for the end slot inside of a floating/stacked label
+$item-md-label-slot-end-margin-end:         null !default;
+
+/// @prop - Margin bottom for the end slot inside of a floating/stacked label
+$item-md-label-slot-end-margin-bottom:      $item-md-label-slot-end-margin-top !default;
+
+/// @prop - Margin start for the end slot inside of a floating/stacked label
+$item-md-label-slot-end-margin-start:       $item-md-label-slot-end-margin-end !default;
+
+
+// Note Slots
+// --------------------------------------------------
+
+/// @prop - Font size of a note in the start/end slot
+$item-md-note-slot-font-size:               11px !default;
+
+/// @prop - Padding top for a note in the start/end slot
+$item-md-note-slot-padding-top:             18px !default;
+
+/// @prop - Padding end for a note in the start/end slot
+$item-md-note-slot-padding-end:             0 !default;
+
+/// @prop - Padding bottom for a note in the start/end slot
+$item-md-note-slot-padding-bottom:          10px !default;
+
+/// @prop - Padding start for a note in the start/end slot
+$item-md-note-slot-padding-start:           $item-md-note-slot-padding-end !default;
+
+/// @prop - Padding start for a note in the start slot
+$item-md-note-start-slot-padding-start:     null !default;
+
+/// @prop - Padding end for a note in the start slot
+$item-md-note-start-slot-padding-end:       16px !default;
+
+/// @prop - Padding start for a note in the end slot
+$item-md-note-end-slot-padding-start:       16px !default;
+
+/// @prop - Padding end for a note in the end slot
+$item-md-note-end-slot-padding-end:         null !default;
+
+
+// Avatar/Thumbnail Slots
+// --------------------------------------------------
+
+/// @prop - Margin top for an avatar/thumbnail in the start/end slot
+$item-md-media-slot-margin-top:             8px !default;
+
+/// @prop - Margin end for an avatar/thumbnail in the start/end slot
+$item-md-media-slot-margin-end:             null !default;
+
+/// @prop - Margin bottom for an avatar/thumbnail in the start/end slot
+$item-md-media-slot-margin-bottom:          8px !default;
+
+/// @prop - Margin start for an avatar/thumbnail in the start/end slot
+$item-md-media-slot-margin-start:           $item-md-media-slot-margin-end !default;
+
+/// @prop - Margin start for an avatar/thumbnail in the start slot
+$item-md-media-start-slot-margin-start:     null !default;
+
+/// @prop - Margin end for an avatar/thumbnail in the start slot
+$item-md-media-start-slot-margin-end:       16px !default;
+
+/// @prop - Margin start for an avatar/thumbnail in the end slot
+$item-md-media-end-slot-margin-start:       16px !default;
+
+/// @prop - Margin end for an avatar/thumbnail in the end slot
+$item-md-media-end-slot-margin-end:         null !default;

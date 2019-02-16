@@ -1,0 +1,116 @@
+@import "../../themes/ionic.globals";
+
+// Content
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the Content
+   * @prop --color: Color of the Content
+   * @prop --padding-top: Padding top of the Content
+   * @prop --padding-bottom: Padding bottom of the Content
+   * @prop --padding-start: Padding start of the Content
+   * @prop --padding-end: Padding end of the Content
+   * @prop --keyboard-offset: Keyboard offset of the Content
+   * @prop --offset-top: Offset top of the Content
+   * @prop --offset-bottom: Offset bottom of the Content
+   */
+  --background: #{$background-color};
+  --color: #{$text-color};
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+  --padding-start: 0px;
+  --padding-end: 0px;
+  --keyboard-offset: 0px;
+  --offset-top: 0px;
+  --offset-bottom: 0px;
+  --overflow: auto;
+
+  display: block;
+  position: relative;
+
+  flex: 1;
+
+  width: 100%;
+  height: 100%;
+
+  /* stylelint-disable */
+  margin: 0 !important;
+
+  padding: 0 !important;
+  /* stylelint-enable */
+
+  font-family: $font-family-base;
+
+  contain: size style;
+}
+
+:host(.ion-color) .inner-scroll {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+// TODO we should remove outer-content in favor of a color
+:host(.outer-content) {
+  --background: #{$background-color-step-50};
+}
+
+.inner-scroll {
+  @include position(calc(var(--offset-top) * -1), 0px,calc(var(--offset-bottom) * -1), 0px);
+  @include padding(calc(var(--padding-top) + var(--offset-top)), var(--padding-end), calc(var(--padding-bottom) + var(--keyboard-offset) + var(--offset-bottom)), var(--padding-start));
+
+  position: absolute;
+
+  background: var(--background);
+  color: var(--color);
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+}
+
+.scroll-y,
+.scroll-x {
+  -webkit-overflow-scrolling: touch;
+  will-change: scroll-position;
+  overscroll-behavior: contain;
+}
+
+.scroll-y {
+  touch-action: pan-y;
+  overflow-y: var(--overflow);
+}
+
+.scroll-x {
+  touch-action: pan-x;
+  overflow-x: var(--overflow);
+}
+
+.scroll-x.scroll-y {
+  touch-action: auto;
+}
+
+.overscroll::before,
+.overscroll::after {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  content: "";
+}
+
+.overscroll::before {
+  bottom: -1px;
+}
+
+.overscroll::after {
+  top: -1px;
+}
+
+:host(.content-sizing) {
+  contain: none;
+}
+:host(.content-sizing) .inner-scroll {
+  position: relative;
+}

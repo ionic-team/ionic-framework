@@ -1,0 +1,49 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Loading Indicator
+// --------------------------------------------------
+
+/// @prop - Font size of the loading wrapper
+$loading-ios-font-size:                             14px !default;
+
+/// @prop - Padding top of the loading wrapper
+$loading-ios-padding-top:                           24px !default;
+
+/// @prop - Padding end of the loading wrapper
+$loading-ios-padding-end:                           34px !default;
+
+/// @prop - Padding bottom of the loading wrapper
+$loading-ios-padding-bottom:                        $loading-ios-padding-top !default;
+
+/// @prop - Padding start of the loading wrapper
+$loading-ios-padding-start:                         $loading-ios-padding-end !default;
+
+/// @prop - Max width of the loading wrapper
+$loading-ios-max-width:                             270px !default;
+
+/// @prop - Maximum height of the loading wrapper
+$loading-ios-max-height:                            90% !default;
+
+/// @prop - Border radius of the loading wrapper
+$loading-ios-border-radius:                         8px !default;
+
+/// @prop - Text color of the loading wrapper
+$loading-ios-text-color:                            $text-color !default;
+
+/// @prop - Background of the loading wrapper
+$loading-ios-background-color:                      $background-color-step-50 !default;
+
+/// @prop - Background color alpha of the translucent loading wrapper
+$loading-ios-translucent-background-color-alpha:    .8 !default;
+
+/// @prop - Background color of the translucent loading wrapper
+$loading-ios-translucent-background-color:          rgba($background-color-rgb, $loading-ios-translucent-background-color-alpha) !default;
+
+/// @prop - Font weight of the loading content
+$loading-ios-content-font-weight:                   bold !default;
+
+/// @prop - Color of the loading spinner
+$loading-ios-spinner-color:                         $text-color-step-400 !default;
+
+/// @prop - Filter of the translucent loading
+$loading-ios-translucent-filter:                    saturate(180%) blur(20px) !default;

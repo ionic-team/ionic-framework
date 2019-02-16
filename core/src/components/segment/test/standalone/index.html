@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Segment - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-toolbar>
+    <ion-segment value="Free">
+      <ion-segment-button value="Paid">
+        <ion-label>Paid</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="Free">
+        <ion-label>Free</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="Top">
+        <ion-label>Top</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <ion-segment color="dark" value="Reading List">
+    <ion-segment-button value="Bookmarks">
+      <ion-icon name="book"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="Reading List">
+      <ion-icon name="glasses"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="Shared Links">
+      <ion-icon name="at"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-segment id="browserSegment" color="danger">
+    <ion-segment-button href="#bookmarks" value="bookmarks">
+      <ion-label>Bookmarks</ion-label>
+    </ion-segment-button>
+    <ion-segment-button href="#reading" value="reading">
+      <ion-label>Reading List</ion-label>
+    </ion-segment-button>
+    <ion-segment-button href="#links" value="links">
+      <ion-label>Shared Links</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <pre><code><span id="browserResults"></span></code></pre>
+
+  <ion-segment color="secondary" value="active">
+    <ion-segment-button value="active">
+      <ion-label>Active</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="disabled" disabled="true">
+      <ion-label>Disabled</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="inactive" disabled="false">
+      <ion-label>Inactive</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-segment class="custom" value="active">
+    <ion-segment-button value="active">
+      <ion-label>Active</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="disabled" disabled="true">
+      <ion-label>Disabled</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="inactive" disabled="false">
+      <ion-label>Inactive</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-segment class="custom-icon" value="instagram">
+    <ion-segment-button class="segment-facebook" value="facebook">
+      <ion-label>Facebook</ion-label>
+      <ion-icon name="logo-facebook"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button class="segment-instagram" value="instagram">
+      <ion-label>Instagram</ion-label>
+      <ion-icon name="logo-instagram"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button class="segment-slack" value="slack">
+      <ion-label>Slack</ion-label>
+      <ion-icon name="logo-slack"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+</body>
+
+<script>
+  var segment = document.getElementById('browserSegment');
+  var results = document.getElementById('browserResults');
+
+  checkUrl();
+
+  segment.addEventListener('ionChange', function () {
+    checkUrl();
+  });
+
+  function checkUrl() {
+    var url = window.location.href;
+
+    if (url.search('#bookmarks') > -1) {
+      setResults('bookmarks');
+    } else if (url.search('#reading') > -1) {
+      setResults('reading');
+    } else if (url.search('#links') > -1) {
+      setResults('links');
+    }
+  }
+
+  function setResults(value) {
+    results.innerHTML = value.charAt(0).toUpperCase() + value.slice(1);
+    segment.value = value;
+  }
+</script>
+
+<style>
+  body {
+    margin: 0;
+  }
+
+  ion-segment {
+    margin-bottom: 10px;
+  }
+
+  ion-toolbar ion-segment {
+    margin-bottom: 0;
+  }
+
+  pre {
+    border: 1px solid #e6e9ee;
+    background: white;
+    margin: 10px;
+    padding: 4px;
+    line-height: 24px;
+  }
+
+  code {
+    display: block;
+    padding: 0.5em;
+    background: #ffffff;
+    word-wrap: normal;
+    white-space: pre;
+    color: #314361;
+  }
+
+  .custom {
+    --background-checked: navy;
+    --background: papayawhip;
+    --border-color-checked: navy;
+    --border-color-disabled: navy;
+    --border-color: navy;
+    --color-checked: papayawhip;
+    --color-disabled: rgba(0, 0, 0, 0.3);
+    --color: navy;
+  }
+
+  .custom-icon {
+    --indicator-color: lightgray;
+  }
+
+  .segment-facebook {
+    --background-hover: rgba(59, 89, 153, .04);
+    --color-checked: #3b5999;
+  }
+
+  .segment-instagram {
+    --background-hover: rgba(228, 64, 95, .04);
+    --color-checked: #e4405f;
+  }
+
+  .segment-slack {
+    --background-hover: rgba(58, 175, 133, .04);
+    --color-checked: #3aaf85;
+  }
+
+  .custom-icon ion-icon {
+    font-size: 44px;
+  }
+
+</style>
+
+</html>

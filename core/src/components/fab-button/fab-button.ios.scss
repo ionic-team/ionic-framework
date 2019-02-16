@@ -1,0 +1,70 @@
+@import "./fab-button";
+@import "./fab-button.ios.vars";
+
+// iOS FAB Button
+// --------------------------------------------------
+
+:host {
+  --background: #{$fab-ios-background-color};
+  --background-activated: #{$fab-ios-background-color-activated};
+  --background-focused: var(--background-activated);
+  --color: #{$fab-ios-text-color};
+  --color-activated: #{$fab-ios-text-color};
+  --color-focused: var(--color-activated);
+  --box-shadow: #{$fab-ios-box-shadow};
+  --transition: #{$fab-ios-transition};
+}
+
+:host(.activated) {
+  --box-shadow: #{$fab-ios-box-shadow-activated};
+  --transform: #{$fab-ios-transform};
+  --transition: #{$fab-ios-transition-activated};
+}
+
+::slotted(ion-icon),
+.close-icon {
+  font-size: $fab-ios-icon-font-size;
+}
+
+// FAB buttons in a list
+// --------------------------------------------------
+
+:host(.fab-button-in-list) {
+  --background: #{$fab-ios-list-button-background-color};
+  --background-activated: #{$fab-ios-list-button-background-color-activated};
+  --background-focused: var(--background-activated);
+  --color: #{$fab-ios-list-button-text-color};
+  --color-activated: #{$fab-ios-list-button-text-color};
+  --color-focused: var(--color-activated);
+  --transition: #{transform 200ms ease 10ms,
+              opacity 200ms ease 10ms};
+}
+
+:host(.fab-button-in-list) ::slotted(ion-icon) {
+  font-size: $fab-ios-list-button-icon-font-size;
+}
+
+
+// Translucent FAB buttons
+// --------------------------------------------------
+
+:host(.fab-button-translucent) {
+  --background: #{$fab-ios-translucent-background-color};
+  --backdrop-filter: #{$fab-ios-translucent-filter};
+}
+
+:host(.fab-button-translucent-in-list) {
+  --background: #{$fab-ios-list-button-translucent-background-color};
+}
+
+// Translucent FAB buttons with color
+// --------------------------------------------------
+
+:host(.ion-color.fab-button-translucent) .button-native {
+  background: #{current-color(base, $fab-ios-translucent-background-color-alpha)};
+}
+
+:host(.ion-color.ion-focused.fab-button-translucent) .button-native,
+:host(.ion-color.activated.fab-button-translucent) .button-native {
+  background: #{current-color(base)};
+}

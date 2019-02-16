@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Loading - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <button id="basic" onclick="presentLoading()">Show Loading</button>
+  <button onclick="presentLoadingWithOptions({duration: 2000, content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.'})">Show Loading with long content</button>
+  <button onclick="presentLoadingWithOptions({duration: 2000, content: 'Loading Please Wait...', spinner: null})">Show Loading with no spinner</button>
+  <button onclick="presentLoadingWithOptions({duration: 5000, content: 'Loading Please Wait...', translucent: true})">Show Loading with translucent</button>
+  <button onclick="presentLoadingWithOptions({duration: 5000, content: 'Loading Please Wait...', translucent: true, cssClass: 'custom-class custom-loading'})">Show Loading with cssClass</button>
+
+  <ion-loading-controller></ion-loading-controller>
+
+  <style>
+    body > button {
+      display: block;
+      clear: both;
+      width: 100%;
+      padding: 12px 8px;
+      font-size: 1em;
+      background: #f8f8f8;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+  </style>
+
+  <script>
+    async function presentLoading() {
+      const loadingController = document.querySelector('ion-loading-controller');
+      await loadingController.componentOnReady();
+      const loadingElement = await loadingController.create({
+        message: 'Hellooo',
+        duration: 5000
+      });
+      return await loadingElement.present();
+    }
+
+    async function presentLoadingWithOptions(opts) {
+      const loadingController = document.querySelector('ion-loading-controller');
+      await loadingController.componentOnReady();
+      const loadingElement = await loadingController.create(opts);
+      return await loadingElement.present();
+    }
+  </script>
+</body>
+</html>

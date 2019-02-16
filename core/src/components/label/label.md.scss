@@ -1,0 +1,79 @@
+@import "./label";
+@import "./label.md.vars";
+
+// Material Design Label
+// --------------------------------------------------
+
+:host([text-wrap]) {
+  line-height: $label-md-text-wrap-line-height;
+}
+
+
+// Material Design Stacked & Floating Labels
+// --------------------------------------------------
+
+:host(.label-stacked) {
+  font-size: 12.8px;
+}
+
+:host(.label-floating) {
+  @include transform(translate3d(0, 27px, 0));
+  @include transform-origin(start, top);
+
+  transition: transform 150ms ease-in-out;
+}
+
+:host(.label-stacked),
+:host(.label-floating) {
+  @include margin(null, null, 0, 0);
+}
+
+
+// MD Typography
+// --------------------------------------------------
+
+::slotted(*) h1 {
+  @include margin(0, 0, 2px);
+
+  font-size: 24px;
+  font-weight: normal;
+}
+
+::slotted(*) h2 {
+  @include margin(2px, 0);
+
+  font-size: 16px;
+  font-weight: normal;
+}
+
+::slotted(*) h3,
+::slotted(*) h4,
+::slotted(*) h5,
+::slotted(*) h6 {
+  @include margin(2px, 0);
+
+  font-size: 14px;
+  font-weight: normal;
+
+  line-height: normal;
+}
+
+::slotted(*) p {
+  @include margin(0, 0, 2px);
+
+  font-size: 14px;
+
+  line-height: 20px;
+
+  text-overflow: inherit;
+
+  overflow: inherit;
+}
+
+::slotted(p) {
+  color: $item-md-paragraph-text-color;
+}
+
+:host-context(.ion-color)::slotted(p) {
+  color: inherit;
+}

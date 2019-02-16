@@ -1,0 +1,95 @@
+@import "../../themes/ionic.globals.md";
+@import "../item/item.md.vars";
+
+// Material Design Toggle
+// --------------------------------------------------
+
+/// @prop - Color of the active toggle
+$toggle-md-active-color:                          ion-color(primary, base) !default;
+
+/// @prop - Width of the toggle track
+$toggle-md-track-width:                           36px !default;
+
+/// @prop - Height of the toggle track
+$toggle-md-track-height:                          14px !default;
+
+/// @prop - Background color of the toggle track
+$toggle-md-track-background-color-off:            ion-color(medium, tint) !default;
+
+/// @prop - Background color alpha of the checked toggle track
+$toggle-md-track-background-color-alpha-on:       .5 !default;
+
+/// @prop - Background color of the checked toggle track
+$toggle-md-track-background-color-on:             ion-color(primary, base, $toggle-md-track-background-color-alpha-on) !default;
+
+/// @prop - Width of the toggle handle
+$toggle-md-handle-width:                          20px !default;
+
+/// @prop - Height of the toggle handle
+$toggle-md-handle-height:                         20px !default;
+
+/// @prop - Border radius of the toggle handle
+$toggle-md-handle-border-radius:                  50% !default;
+
+/// @prop - Box shadow of the toggle handle
+$toggle-md-handle-box-shadow:                     0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12) !default;
+
+/// @prop - Background color of the toggle handle
+$toggle-md-handle-background-color-off:           $background-color !default;
+
+/// @prop - Background color of the checked toggle handle
+$toggle-md-handle-background-color-on:            $toggle-md-active-color !default;
+
+/// @prop - Margin top of the toggle
+$toggle-md-media-margin-top:                      0 !default;
+
+/// @prop - Margin end of the toggle
+$toggle-md-media-margin-end:                      $toggle-md-media-margin-top !default;
+
+/// @prop - Margin bottom of the toggle
+$toggle-md-media-margin-bottom:                   $toggle-md-media-margin-top !default;
+
+/// @prop - Margin start of the toggle
+$toggle-md-media-margin-start:                    $toggle-md-media-margin-end !default;
+
+/// @prop - Transition duration of the toggle icon
+$toggle-md-transition-duration:                   160ms !default;
+
+/// @prop - Opacity of the disabled toggle
+$toggle-md-disabled-opacity:                      .3 !default;
+
+/// @prop - Padding top of standalone toggle
+$toggle-md-padding-top:                           12px !default;
+
+/// @prop - Padding end of standalone toggle
+$toggle-md-padding-end:                           $toggle-md-padding-top !default;
+
+/// @prop - Padding bottom of standalone toggle
+$toggle-md-padding-bottom:                        $toggle-md-padding-top !default;
+
+/// @prop - Padding start of standalone toggle
+$toggle-md-padding-start:                         $toggle-md-padding-end !default;
+
+/// @prop - Padding top of the toggle positioned on the start in an item
+$toggle-md-item-start-padding-top:                12px !default;
+
+/// @prop - Padding end of the toggle positioned on the start in an item
+$toggle-md-item-start-padding-end:                18px !default;
+
+/// @prop - Padding bottom of the toggle positioned on the start in an item
+$toggle-md-item-start-padding-bottom:             12px !default;
+
+/// @prop - Padding start the toggle positioned on the start in an item
+$toggle-md-item-start-padding-start:              2px !default;
+
+/// @prop - Padding top of the toggle positioned on the end in an item
+$toggle-md-item-end-padding-top:                  12px !default;
+
+/// @prop - Padding end of the toggle positioned on the end in an item
+$toggle-md-item-end-padding-end:                  0 !default;
+
+/// @prop - Padding bottom of the toggle positioned on the end in an item
+$toggle-md-item-end-padding-bottom:               12px !default;
+
+/// @prop - Padding start of the toggle positioned on the end in an item
+$toggle-md-item-end-padding-start:                $item-md-padding-start !default;

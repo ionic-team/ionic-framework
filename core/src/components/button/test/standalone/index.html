@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Button - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <h3>Default</h3>
+  <p>
+    <ion-button>Default</ion-button>
+    <ion-button><ion-icon slot="icon-only" name="star"></ion-icon></ion-button>
+    <ion-button><ion-icon slot="start" name="pin"></ion-icon>Map</ion-button>
+    <ion-button shape="round">Round</ion-button>
+    <ion-button fill="outline">Outline</ion-button>
+    <ion-button fill="clear">Clear</ion-button>
+    <ion-button fill="outline" expand="full">Full Outline Full Outline Full Outline Full Outline Full Outline Full Outline Full Outline</ion-button>
+    <ion-button fill="clear" expand="block">Block Clear</ion-button>
+  </p>
+
+  <h3>Colors</h3>
+  <p>
+    <ion-button color="primary">Primary</ion-button>
+    <ion-button color="secondary">Secondary</ion-button>
+    <ion-button color="tertiary">Tertiary</ion-button>
+    <ion-button fill="outline" color="success">Success Outline</ion-button>
+    <ion-button fill="clear" color="warning">Warning Clear</ion-button>
+    <ion-button color="danger">Danger</ion-button>
+    <ion-button color="light">Light</ion-button>
+    <ion-button expand="block" fill="outline" color="medium">Medium Outline</ion-button>
+    <ion-button expand="full" fill="clear" color="dark">Dark Clear</ion-button>
+  </p>
+
+  <h3>Custom</h3>
+
+  <!-- Custom Font -->
+  <ion-button class="wide">wide</ion-button>
+  <ion-button class="large">large</ion-button>
+  <ion-button class="round">rounded</ion-button>
+
+  <!-- Custom Colors -->
+  <ion-button class="custom">custom</ion-button>
+  <ion-button class="custom activated">custom.activated</ion-button>
+  <ion-button color="secondary" class="custom">custom w/ secondary</ion-button>
+
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button>Default</ion-button>
+    </ion-buttons>
+    <ion-title>Bar</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="secondary">Secondary</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button class="custom">Custom</ion-button>
+      <ion-button class="custom activated">Custom.a</ion-button>
+    </ion-buttons>
+    <ion-title>Bar</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="secondary" class="custom">Custom Secondary</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <style>
+    .wide {
+      width: 100px;
+    }
+
+    .large {
+      font-weight: normal;
+      font-size: 24px;
+    }
+
+    .round {
+      width: 60px;
+      height: 60px;
+      --border-radius: 50%;
+      --vertical-align: middle;
+
+      --padding-start: 10px;
+      --padding-end: 10px;
+    }
+
+    .custom {
+      --background: lightpink;
+      --background-activated: green;
+      --color: #222;
+      --color-activated: white;
+      --opacity: 1;
+    }
+  </style>
+</body>
+</html>

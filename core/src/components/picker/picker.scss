@@ -1,0 +1,127 @@
+@import "./picker.vars";
+
+// Picker
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the picker
+   * @prop --background-rgb: Background of the picker in rgb format
+   *
+   * @prop --border-radius: Border radius of the picker
+   * @prop --border-color: Border color of the picker
+   * @prop --border-width: Border width of the picker
+   * @prop --border-style: Border style of the picker
+   *
+   * @prop --min-width: Minimum width of the picker
+   * @prop --width: Width of the picker
+   * @prop --max-width: Maximum width of the picker
+   *
+   * @prop --min-height: Minimum height of the picker
+   * @prop --height: Height of the picker
+   * @prop --max-height: Maximum height of the picker
+   */
+  --border-radius: 0;
+  --border-style: solid;
+  --min-width: auto;
+  --width: #{$picker-width};
+  --max-width: #{$picker-max-width};
+  --min-height: auto;
+  --max-height: auto;
+
+  @include font-smoothing();
+  @include position(0, null, null, 0);
+
+  display: block;
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  font-family: $font-family-base;
+
+  contain: strict;
+  user-select: none;
+  z-index: $z-index-overlay;
+}
+
+:host(.overlay-hidden) {
+  display: none;
+}
+
+.picker-wrapper {
+  @include border-radius(var(--border-radius));
+  @include position(null, 0, 0, 0);
+  @include margin(auto);
+  @include transform(translate3d(0, 100%, 0));
+
+  display: flex;
+  position: absolute;
+
+  flex-direction: column;
+
+  width: var(--width);
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+
+  height: var(--height);
+  min-height: var(--min-height);
+  max-height: var(--max-height);
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  background: var(--background);
+
+  contain: strict;
+  overflow: hidden;
+  z-index: $z-index-overlay-wrapper;
+}
+
+// Picker Toolbar and Buttons
+// --------------------------------------------------
+
+.picker-toolbar {
+  width: 100%;
+
+  background: transparent;
+
+  contain: strict;
+  z-index: 1;
+}
+
+.picker-button {
+  border: 0;
+
+  font-family: inherit;
+}
+
+.picker-button {
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}
+
+// Picker Columns and Highlight
+// --------------------------------------------------
+
+.picker-columns {
+  display: flex;
+  position: relative;
+
+  justify-content: center;
+
+  margin-bottom: var(--ion-safe-area-bottom, 0);
+
+  contain: strict;
+  direction: ltr;
+  overflow: hidden;
+}
+
+.picker-above-highlight,
+.picker-below-highlight {
+  display: none;
+  pointer-events: none;
+}

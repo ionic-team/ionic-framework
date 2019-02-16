@@ -1,0 +1,34 @@
+// Roboto Font
+// Google
+// Apache License, version 2.0
+// http://www.apache.org/licenses/LICENSE-2.0.html
+
+$roboto-font-path: $font-path !default;
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  src: local("Roboto Light"), local("Roboto-Light"), url("#{$roboto-font-path}/roboto-light.woff2") format("woff2"), url("#{$roboto-font-path}/roboto-light.woff") format("woff"), url("#{$roboto-font-path}/roboto-light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Roboto"), local("Roboto-Regular"), url("#{$roboto-font-path}/roboto-regular.woff2") format("woff2"), url("#{$roboto-font-path}/roboto-regular.woff") format("woff"), url("#{$roboto-font-path}/roboto-regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  src: local("Roboto Medium"), local("Roboto-Medium"), url("#{$roboto-font-path}/roboto-medium.woff2") format("woff2"), url("#{$roboto-font-path}/roboto-medium.woff") format("woff"), url("#{$roboto-font-path}/roboto-medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  src: local("Roboto Bold"), local("Roboto-Bold"), url("#{$roboto-font-path}/roboto-bold.woff2") format("woff2"), url("#{$roboto-font-path}/roboto-bold.woff") format("woff"), url("#{$roboto-font-path}/roboto-bold.ttf") format("truetype");
+}

@@ -1,0 +1,13 @@
+@import "../../themes/ionic.globals";
+
+// Floating Action Buttons
+// --------------------------------------------------
+
+/// @prop - Width and height of the FAB button
+$fab-size:                              56px !default;
+
+/// @prop - Width and height of the mini FAB button
+$fab-small-size:                         40px !default;
+
+/// @prop - Border radius of the FAB button
+$fab-border-radius:                     50% !default;

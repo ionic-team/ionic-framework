@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Back Button</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <h3>Default</h3>
+  <p>
+    <ion-back-button></ion-back-button>
+    <ion-back-button text="Back"></ion-back-button>
+    <ion-back-button icon="add"></ion-back-button>
+    <ion-back-button text="Text Only" icon=""></ion-back-button>
+    <ion-back-button icon="heart" text="Love" color="danger"></ion-back-button>
+  </p>
+
+  <h3>Colors</h3>
+  <p>
+    <ion-back-button color="primary"></ion-back-button>
+    <ion-back-button color="secondary"></ion-back-button>
+    <ion-back-button color="tertiary"></ion-back-button>
+    <ion-back-button color="success"></ion-back-button>
+    <ion-back-button color="warning"></ion-back-button>
+    <ion-back-button color="danger"></ion-back-button>
+    <ion-back-button color="light"></ion-back-button>
+    <ion-back-button color="medium"></ion-back-button>
+    <ion-back-button color="dark"></ion-back-button>
+  </p>
+  <p>
+    <ion-back-button color="primary" class="activated"></ion-back-button>
+    <ion-back-button color="secondary" class="activated"></ion-back-button>
+    <ion-back-button color="tertiary" class="activated"></ion-back-button>
+    <ion-back-button color="success" class="activated"></ion-back-button>
+    <ion-back-button color="warning" class="activated"></ion-back-button>
+    <ion-back-button color="danger" class="activated"></ion-back-button>
+    <ion-back-button color="light" class="activated"></ion-back-button>
+    <ion-back-button color="medium" class="activated"></ion-back-button>
+    <ion-back-button color="dark" class="activated"></ion-back-button>
+  </p>
+
+  <h3>Custom</h3>
+
+  <!-- Custom Font -->
+  <ion-back-button class="wide" text="wide"></ion-back-button>
+  <ion-back-button class="large" text="large"></ion-back-button>
+  <ion-back-button class="round" text="round"></ion-back-button>
+
+  <!-- Custom Colors -->
+  <ion-back-button class="custom"></ion-back-button>
+  <ion-back-button class="custom activated"></ion-back-button>
+  <ion-back-button color="secondary" class="custom"></ion-back-button>
+
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+      <ion-back-button class="activated"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Default</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button class="custom"></ion-back-button>
+      <ion-back-button class="custom activated"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Custom</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="secondary"></ion-back-button>
+      <ion-back-button color="secondary" class="activated"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Secondary</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+      <ion-back-button class="activated"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Danger</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button text="Back" icon=""></ion-back-button>
+      <ion-back-button text="Back" icon="" class="activated"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Dark</ion-title>
+  </ion-toolbar>
+
+  <style>
+    ion-back-button {
+      display: inline-block !important;
+    }
+
+    .wide {
+      --background: lightblue;
+
+      width: 200px;
+    }
+
+    .large {
+      font-size: 32px;
+      text-transform: capitalize;
+    }
+
+    .custom {
+      --background: lightpink;
+      --color: rgb(214, 60, 235);
+      --border-radius: 10px;
+      --padding-start: 10px;
+      --padding-end: 10px;
+    }
+  </style>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+@import "./footer";
+@import "./footer.md.vars";
+
+// Material Design Footer
+// --------------------------------------------------
+
+.footer-md::before {
+  // Using a datauri png background image for improved scroll
+  // performance rather than using a box-shadow. There is a
+  // noticeable performance difference on older Android devices.
+  @include position(-$footer-md-box-shadow-height, null, auto, 0);
+  @include background-position(start, 0, top, 0);
+
+  position: absolute;
+
+  width: 100%;
+  height: $footer-md-box-shadow-height;
+
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAHBAMAAADzDtBxAAAAD1BMVEUAAAAAAAAAAAAAAAAAAABPDueNAAAABXRSTlMUCS0gBIh/TXEAAAAaSURBVAjXYxCEAgY4UIICBmMogMsgFLtAAQCNSwXZKOdPxgAAAABJRU5ErkJggg==");
+  background-repeat: repeat-x;
+
+  content: "";
+}
+
+.footer-md[no-border]::before {
+  display: none;
+}

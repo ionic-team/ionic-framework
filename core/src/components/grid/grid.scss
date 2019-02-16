@@ -1,0 +1,48 @@
+@import "./grid.vars";
+
+// Grid
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --ion-grid-padding: Padding for the Grid
+   * @prop --ion-grid-padding-xs: Padding for the Grid on xs screens
+   * @prop --ion-grid-padding-sm: Padding for the Grid on sm screens
+   * @prop --ion-grid-padding-md: Padding for the Grid on md screens
+   * @prop --ion-grid-padding-lg: Padding for the Grid on lg screens
+   * @prop --ion-grid-padding-xl: Padding for the Grid on xl screens
+   *
+   * @prop --ion-grid-width: Width of the fixed Grid
+   * @prop --ion-grid-width-xs: Width of the fixed Grid on xs screens
+   * @prop --ion-grid-width-sm: Width of the fixed Grid on sm screens
+   * @prop --ion-grid-width-md: Width of the fixed Grid on md screens
+   * @prop --ion-grid-width-lg: Width of the fixed Grid on lg screens
+   * @prop --ion-grid-width-xl: Width of the fixed Grid on xl screens
+   */
+
+  @include make-breakpoint-padding($grid-paddings);
+  @include margin-horizontal(auto);
+
+  display: block;
+
+  flex: 1;
+}
+
+// Fixed Grid
+// --------------------------------------------------
+
+:host(.grid-fixed) {
+  @include make-grid-widths();
+}
+
+// Grid Padding
+// --------------------------------------------------
+
+// Remove the padding from grid and all immediate children columns
+:host([no-padding]) {
+  @include padding(0);
+}
+
+:host([no-padding]) ::slotted(ion-col) {
+  @include padding(0);
+}

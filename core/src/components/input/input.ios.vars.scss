@@ -1,0 +1,83 @@
+@import "../../themes/ionic.globals.ios";
+@import "../item/item.ios.vars";
+
+// iOS Input
+// --------------------------------------------------
+
+/// @prop - Font size of the input
+$input-ios-font-size:                     inherit !default;
+
+/// @prop - Margin top of the input
+$input-ios-padding-top:                    $item-ios-padding-top !default;
+
+/// @prop - Margin end of the input
+$input-ios-padding-end:                    ($item-ios-padding-end / 2) !default;
+
+/// @prop - Margin bottom of the input
+$input-ios-padding-bottom:                 $item-ios-padding-bottom !default;
+
+/// @prop - Margin start of the input
+$input-ios-padding-start:                  0 !default;
+
+/// @prop - Margin start of the input when it is after a label
+$input-ios-by-label-margin-start:         $item-ios-padding-start !default;
+
+/// @prop - Padding top of the inset input
+$input-ios-inset-padding-top:             ($item-ios-padding-top / 2) !default;
+
+/// @prop - Padding end of the inset input
+$input-ios-inset-padding-end:             ($item-ios-padding-end / 2) !default;
+
+/// @prop - Padding bottom of the inset input
+$input-ios-inset-padding-bottom:          ($item-ios-padding-bottom / 2) !default;
+
+/// @prop - Padding start of the inset input
+$input-ios-inset-padding-start:           ($item-ios-padding-start / 2) !default;
+
+/// @prop - Margin top of the inset input
+$input-ios-inset-margin-top:              ($item-ios-padding-top / 2) !default;
+
+/// @prop - Margin end of the inset input
+$input-ios-inset-margin-end:              $item-ios-padding-end !default;
+
+/// @prop - Margin bottom of the inset input
+$input-ios-inset-margin-bottom:           ($item-ios-padding-bottom / 2) !default;
+
+/// @prop - Margin start of the inset input
+$input-ios-inset-margin-start:            0 !default;
+
+/// @prop - Width of the icon used to clear the input
+$input-ios-input-clear-icon-width:        30px !default;
+
+/// @prop - Color of the icon used to clear the input
+$input-ios-input-clear-icon-color:        $text-color-step-400 !default;
+
+/// @prop - Icon used to clear the input
+$input-ios-input-clear-icon-svg:          "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='" + $input-ios-input-clear-icon-color + "' d='M403.1,108.9c-81.2-81.2-212.9-81.2-294.2,0s-81.2,212.9,0,294.2c81.2,81.2,212.9,81.2,294.2,0S484.3,190.1,403.1,108.9z M352,340.2L340.2,352l-84.4-84.2l-84,83.8L160,339.8l84-83.8l-84-83.8l11.8-11.8l84,83.8l84.4-84.2l11.8,11.8L267.6,256L352,340.2z'/></svg>" !default;
+
+/// @prop - Size of the icon used to clear the input
+$input-ios-input-clear-icon-size:         18px !default;
+
+/// @prop - Padding end of the input with clear input
+$input-ios-input-clear-padding-end:       ($input-ios-input-clear-icon-width + $item-ios-padding-end) !default;
+
+/// @prop - Placeholder Text color of the input
+$input-ios-placeholder-color:              $placeholder-text-color !default;
+
+/// @prop - Show the focus highlight when the input has focus
+$input-ios-show-focus-highlight:          false !default;
+
+/// @prop - Show the valid highlight when it is valid and has a value
+$input-ios-show-valid-highlight:          $input-ios-show-focus-highlight !default;
+
+/// @prop - Show the invalid highlight when it is invalid and has value
+$input-ios-show-invalid-highlight:        $input-ios-show-focus-highlight !default;
+
+/// @prop - Color of the input highlight
+$input-ios-highlight-color:               ion-color(primary, base) !default;
+
+/// @prop - Color of the input highlight when valid
+$input-ios-highlight-color-valid:         ion-color(success, base) !default;
+
+/// @prop - Color of the input highlight when invalid
+$input-ios-highlight-color-invalid:       ion-color(danger, base) !default;

@@ -1,0 +1,106 @@
+@import "./toast.vars";
+
+// Toast
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the toast
+   * @prop --color: Color of the toast text
+   *
+   * @prop --border-color: Border color of the toast
+   * @prop --border-radius: Border radius of the toast
+   * @prop --border-width: Border width of the toast
+   * @prop --border-style: Border style of the toast
+   *
+   * @prop --box-shadow: Box shadow of the toast
+   *
+   * @prop --min-width: Minimum width of the toast
+   * @prop --width: Width of the toast
+   * @prop --max-width: Maximum width of the toast
+   *
+   * @prop --min-height: Minimum height of the toast
+   * @prop --height: Height of the toast
+   * @prop --max-height: Maximum height of the toast
+   *
+   * @prop --button-color: Color of the button text
+   */
+  --border-width: 0;
+  --border-style: none;
+  --border-color: initial;
+  --box-shadow: none;
+  --min-width: auto;
+  --width: auto;
+  --min-height: auto;
+  --height: auto;
+  --max-height: auto;
+
+  @include position(0, null, null, 0);
+
+  display: block;
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  color: var(--color);
+
+  font-family: $font-family-base;
+
+  contain: strict;
+  z-index: $z-index-overlay;
+  pointer-events: none;
+}
+
+:host(.overlay-hidden) {
+  display: none;
+}
+
+:host(.ion-color) {
+  --button-color: inherit;
+
+  color: #{current-color(contrast)};
+}
+
+:host(.ion-color) .toast-wrapper {
+  background: #{current-color(base)};
+}
+
+.toast-wrapper {
+  @include border-radius(var(--border-radius));
+
+  width: var(--width);
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+
+  height: var(--height);
+  min-height: var(--min-height);
+  max-height: var(--max-height);
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  background: var(--background);
+
+  box-shadow: var(--box-shadow);
+}
+
+.toast-container {
+  display: flex;
+
+  align-items: center;
+  pointer-events: auto;
+
+  contain: content;
+}
+
+.toast-button {
+  color: var(--button-color);
+}
+
+.toast-message {
+  flex: 1;
+
+  white-space: pre-wrap;
+}

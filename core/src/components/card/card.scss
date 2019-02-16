@@ -1,0 +1,52 @@
+@import "../../themes/ionic.globals";
+
+// Card
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the card
+   * @prop --color: Color of the card
+   */
+  --ion-safe-area-left: 0px;
+  --ion-safe-area-right: 0px;
+
+  @include font-smoothing();
+
+  display: block;
+  position: relative;
+
+  background: var(--background);
+  color: var(--color);
+
+  font-family: $font-family-base;
+
+  overflow: hidden;
+}
+
+// Card Colors
+// ---------------------------------------------
+
+:host(.ion-color) {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+:host(.ion-color)::slotted(*) ion-card-header,
+:host(.ion-color)::slotted(*) ion-card-title,
+:host(.ion-color)::slotted(*) ion-card-subtitle {
+  color: current-color(contrast);
+}
+
+// Slotted Content
+// ---------------------------------------------
+
+::slotted(*) img {
+  display: block;
+
+  width: 100%;
+}
+
+::slotted(*) ion-list {
+  @include margin(0);
+}

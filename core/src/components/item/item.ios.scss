@@ -1,0 +1,212 @@
+@import "./item";
+@import "./item.ios.vars";
+
+// iOS Item
+// --------------------------------------------------
+
+:host {
+  --min-height: #{$item-ios-min-height};
+  --transition: background-color 200ms linear;
+  --padding-start: #{$item-ios-padding-start};
+  --inner-padding-end: #{$item-ios-padding-end / 2};
+  --inner-border-width: #{0px 0px $item-ios-border-bottom-width 0px};
+  --background: #{$item-ios-background};
+  --background-activated: #{$item-ios-background-activated};
+  --background-focused: #{$item-ios-background-activated};
+  --border-color: #{$item-ios-border-bottom-color};
+  --color: #{$item-ios-color};
+  --highlight-height: 0;
+  --highlight-color-focused: #{$item-ios-input-highlight-color};
+  --highlight-color-valid: #{$item-ios-input-highlight-color-valid};
+  --highlight-color-invalid: #{$item-ios-input-highlight-color-invalid};
+
+  font-size: $item-ios-font-size;
+}
+
+:host(.activated) {
+  --transition: none;
+}
+
+
+// iOS Item Lines
+// --------------------------------------------------
+
+// Default input items have an inset border
+:host(.item-interactive) {
+  --show-full-highlight: 0;
+  --show-inset-highlight: 1;
+}
+
+// Full lines - apply the border to the item
+// Inset lines - apply the border to the item inner
+:host(.item-lines-full) {
+  --border-width: #{0px 0px $item-ios-border-bottom-width 0px};
+  --show-full-highlight: 1;
+  --show-inset-highlight: 0;
+}
+
+:host(.item-lines-inset) {
+  --inner-border-width: #{0px 0px $item-ios-border-bottom-width 0px};
+  --show-full-highlight: 0;
+  --show-inset-highlight: 1;
+}
+
+// Full lines - remove the border from the item inner (inset list items)
+// Inset lines - remove the border on the item (full list items)
+// No lines - remove the border on both (full / inset list items)
+:host(.item-lines-inset),
+:host(.item-lines-none) {
+  --border-width: 0px;
+  --show-full-highlight: 0;
+}
+
+:host(.item-lines-full),
+:host(.item-lines-none) {
+  --inner-border-width: 0px;
+  --show-inset-highlight: 0;
+}
+
+
+// iOS Item Slots
+// --------------------------------------------------
+
+::slotted([slot="start"]) {
+  @include margin($item-ios-slot-start-margin-top, $item-ios-slot-start-margin-end, $item-ios-slot-start-margin-bottom, $item-ios-slot-start-margin-start);
+}
+
+::slotted([slot="end"]) {
+  @include margin($item-ios-slot-end-margin-top, $item-ios-slot-end-margin-end, $item-ios-slot-end-margin-bottom, $item-ios-slot-end-margin-start);
+}
+
+
+// iOS Slotted Icon
+// --------------------------------------------------
+
+::slotted(ion-icon[slot="start"]),
+::slotted(ion-icon[slot="end"]) {
+  @include margin($item-ios-icon-slot-margin-top, $item-ios-icon-slot-margin-end, $item-ios-icon-slot-margin-bottom, $item-ios-icon-slot-margin-start);
+}
+
+
+// iOS Slotted Toggle
+// --------------------------------------------------
+
+::slotted(ion-toggle[slot="start"]),
+::slotted(ion-toggle[slot="end"]) {
+  @include margin(0);
+}
+
+// iOS Stacked / Floating Labels
+// --------------------------------------------------
+
+:host(.item-label-stacked) ::slotted([slot="end"]),
+:host(.item-label-floating) ::slotted([slot="end"]) {
+  @include margin($item-ios-label-slot-end-margin-top, $item-ios-label-slot-end-margin-end, $item-ios-label-slot-end-margin-bottom, $item-ios-label-slot-end-margin-start);
+}
+
+
+// iOS Item Button
+// --------------------------------------------------
+
+::slotted(.button-small) {
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+  --padding-start: .5em;
+  --padding-end: .5em;
+
+  height: 24px;
+
+  font-size: 13px;
+}
+
+
+// iOS Item Avatar & Thumbnail
+// --------------------------------------------------
+
+::slotted(ion-avatar) {
+  width: $item-ios-avatar-width;
+  height: $item-ios-avatar-height;
+}
+
+::slotted(ion-thumbnail) {
+  width: $item-ios-thumbnail-width;
+  height: $item-ios-thumbnail-height;
+}
+
+::slotted(ion-avatar[slot="end"]),
+::slotted(ion-thumbnail[slot="end"]) {
+  @include margin(($item-ios-padding-end / 2));
+}
+
+
+// iOS Radio / Toggle Item Label
+// -----------------------------------------
+
+:host(.item-radio) ::slotted(ion-label),
+:host(.item-toggle) ::slotted(ion-label) {
+  @include margin-horizontal(0px, null);
+}
+
+
+// TODO: MOVE FROM RADIO
+// iOS Radio Item Label: Checked
+// -----------------------------------------
+
+// :host(.item-radio-checked) ::slotted(ion-label) {
+//   color: $radio-ios-color-on;
+// }
+
+
+// iOS Slotted Label
+// --------------------------------------------------
+
+::slotted(ion-label) {
+  @include margin(10px, 8px, 10px, 0);
+}
+
+
+// iOS Stacked & Floating Inputs
+// --------------------------------------------------
+
+:host(.item-label-floating),
+:host(.item-label-stacked) {
+  --min-height: 68px;
+}
+
+// TODO: refactor, ion-item and ion-textarea have the same CSS
+:host(.item-label-stacked) ::slotted(ion-select),
+:host(.item-label-floating) ::slotted(ion-select) {
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --padding-start: 0px;
+}
+
+
+// FROM TEXTAREA
+// iOS Stacked & Floating Textarea
+// --------------------------------------------------
+
+// TODO
+// .item-ios.item-label-stacked .label-ios + .input + .cloned-input,
+// .item-ios.item-label-floating .label-ios + .input + .cloned-input {
+//   @include margin-horizontal(0, null);
+// }
+
+
+// iOS Input After Label
+// --------------------------------------------------
+
+// .label-ios + .input .native-input,
+// .label-ios + .input + .cloned-input {
+//   @include margin-horizontal($input-ios-by-label-margin-start, null);
+// }
+
+// iOS Textarea After Label
+// --------------------------------------------------
+
+// .label-ios + ion-textarea .native-textarea,
+// .label-ios + .input + .cloned-input {
+//   @include margin-horizontal($textarea-ios-by-label-margin-start, null);
+
+//   width: calc(100% - (#{$item-ios-padding-end} / 2) - #{$item-ios-padding-start});
+// }

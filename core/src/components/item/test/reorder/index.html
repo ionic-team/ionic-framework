@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Item - Reorder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>Item Reorder</ion-title>
+        <ion-buttons slot="primary">
+          <ion-button onclick="toggle()">Edit</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content id="content">
+      <ion-list>
+        <ion-reorder-group id="reorderGroup"></ion-reorder-group>
+      </ion-list>
+
+      <ion-list>
+        <ion-list-header>start</ion-list-header>
+        <ion-reorder-group id="startGroup"></ion-reorder-group>
+      </ion-list>
+
+      <ion-list>
+        <ion-list-header>end</ion-list-header>
+        <ion-reorder-group id="endGroup"></ion-reorder-group>
+      </ion-list>
+    </ion-content>
+
+  </ion-app>
+
+  <style>
+    .item {
+      background-color: inherit;
+    }
+
+  </style>
+
+  <script>
+    var isReordering = false;
+
+    var groups = [
+      {
+        id: 'reorderGroup',
+        sliding: false
+      }, {
+        id: 'startGroup',
+        sliding: true,
+        side: 'start'
+      }, {
+        id: 'endGroup',
+        sliding: true,
+        side: 'end'
+      }
+    ];
+
+    for (var i = 0; i < groups.length; i++) {
+      initGroup(groups[i]);
+    }
+
+    function clickedButton(number) {
+      console.log('clicked', number);
+    }
+
+    function toggle() {
+      isReordering = !isReordering;
+
+      for (var i = 0; i < groups.length; i++) {
+        var groupEl = document.getElementById(groups[i].id);
+        groupEl.disabled = !isReordering;
+      }
+    }
+
+    // Reorder the items for a given list
+    function reorder(list, items, indexes) {
+      items = reorderArray(items, indexes);
+      renderGroup(list, items);
+    }
+
+    function initGroup(group) {
+      var groupEl = document.getElementById(group.id);
+
+      groupEl.addEventListener('ionItemReorder', function (ev) {
+        reorder(groupEl, groupItems, indexes);
+      });
+
+      var groupItems = [];
+      for (var i = 0; i < 5; i++) {
+        groupItems.push(i);
+      }
+
+      if (group.sliding) {
+        groupEl.side = group.side;
+        renderSlidingGroup(group, groupEl, groupItems);
+      } else {
+        renderGroup(group, groupEl, groupItems);
+      }
+    }
+
+    function renderGroup(group, groupEl, items) {
+      groupEl.innerHTML = '';
+
+      for (var i = 0; i < items.length; i++) {
+        groupEl.innerHTML += `
+          <ion-item onClick="clickedButton(${i})"
+            style="min-height: ${i * 2 + 35}px; --background: rgb(${255 - i * 4}, ${255 - i * 4}, ${255 - i * 4})">
+            ${i}
+            <ion-reorder slot="end"></ion-reorder>
+          </ion-item>`;
+      }
+    }
+
+    function renderSlidingGroup(group, groupEl, items) {
+      groupEl.innerHTML = '';
+
+      for (var i = 0; i < items.length; i++) {
+        groupEl.innerHTML += `
+          <ion-item-sliding>
+            <ion-item onclick="clickedButton(${i})">
+              <ion-reorder slot="${group.side}"></ion-reorder>
+              <ion-label>
+                <h2>Sliding item ${i}</h2>
+              </ion-label>
+              <div slot="end">right</div>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option color="danger">
+                <ion-icon name="trash" slot="start"></ion-icon>
+                Remove
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>`;
+      }
+    }
+  </script>
+
+</html>

@@ -1,0 +1,90 @@
+@import "./buttons.md.vars";
+@import "./buttons";
+
+// Material Design Toolbar Default Button
+// --------------------------------------------------
+
+::slotted(*) ion-button {
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --box-shadow: none;
+
+  height: 32px;
+
+  font-size: #{$toolbar-md-button-font-size};
+  font-weight: 500;
+}
+
+::slotted(*) ion-button:not(.button-round) {
+  --border-radius: #{$toolbar-md-button-border-radius};
+}
+
+
+// Material Design Toolbar w/ Color Default Button
+// --------------------------------------------------
+
+:host-context(.ion-color)::slotted(*) .button {
+  --color: initial;
+  --color-activated: initial;
+  --color-focused: initial;
+  --background-focused: #{ion-color(primary, contrast, 0.1)};
+}
+
+
+// Material Design Toolbar Solid Button
+// --------------------------------------------------
+
+::slotted(*) .button-solid {
+  --color: #{$toolbar-md-background};
+  --color-activated: #{$toolbar-md-background};
+  --background: #{$toolbar-md-color};
+  --background-activated: #{$toolbar-md-color};
+}
+
+
+// Material Design Toolbar Outline Button
+// --------------------------------------------------
+
+::slotted(*) .button-outline {
+  --color: initial;
+  --color-activated: currentColor;
+  --background: transparent;
+  --background-activated: transparent;
+  --border-color: currentColor;
+}
+
+
+// Material Design Toolbar Clear Button
+// --------------------------------------------------
+
+::slotted(*) .button-clear {
+  --color: initial;
+  --color-activated: currentColor;
+  --background: transparent;
+}
+
+
+// Material Design Toolbar Button Icon
+// --------------------------------------------------
+::slotted(*) ion-icon[slot="start"] {
+  @include margin(0);
+  @include margin-horizontal(null, .3em);
+
+  font-size: 1.4em;
+}
+
+::slotted(*) ion-icon[slot="end"] {
+  @include margin(0);
+  @include margin-horizontal(.4em, null);
+
+  font-size: 1.4em;
+}
+
+::slotted(*) ion-icon[slot="icon-only"] {
+  @include padding(0);
+  @include margin(0);
+
+  font-size: 1.8em;
+}

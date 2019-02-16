@@ -1,0 +1,106 @@
+@import "./textarea.vars";
+
+// Textarea
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the textarea
+   * @prop --border-radius: Border radius of the textarea
+   * @prop --color: Color of the text
+   * @prop --placeholder-color: Color of the placeholder text
+   * @prop --placeholder-font-style: Style of the placeholder text
+   * @prop --placeholder-font-weight: Weight of the placeholder text
+   * @prop --placeholder-opacity: Opacity of the placeholder text
+   * @prop --padding-top: Top padding of the textarea
+   * @prop --padding-end: End padding of the textarea
+   * @prop --padding-bottom: Bottom padding of the textarea
+   * @prop --padding-start: Start padding of the textarea
+   */
+  --background: initial;
+  --color: initial;
+  --placeholder-color: initial;
+  --placeholder-font-style: initial;
+  --placeholder-font-weight: initial;
+  --placeholder-opacity: .5;
+  --padding-top: 0;
+  --padding-end: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --border-radius: 0;
+
+  display: block;
+  position: relative;
+
+  flex: 1;
+
+  width: 100%;
+  box-sizing: border-box;
+
+  background: var(--background);
+  color: var(--color);
+
+  font-family: $font-family-base;
+
+  z-index: $z-index-item-input;
+}
+
+:host(.ion-color) {
+  background: initial;
+}
+
+:host(.ion-color) {
+  color: current-color(base);
+}
+
+// Textarea Within An Item
+// --------------------------------------------------
+
+:host-context(ion-item) {
+  position: static;
+}
+
+:host-context(ion-item:not(.item-label)) {
+  --padding-start: 0;
+}
+
+
+// Native Textarea
+// --------------------------------------------------
+
+.native-textarea {
+  @include text-inherit();
+  @include border-radius(var(--border-radius));
+  @include margin(0);
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+
+  outline: none;
+
+  background: transparent;
+  box-sizing: border-box;
+  resize: none;
+  appearance: none;
+
+  white-space: pre-wrap;
+
+  &::placeholder {
+    color: var(--placeholder-color);
+
+    font-family: inherit;
+    font-style: var(--placeholder-font-style);
+    font-weight: var(--placeholder-font-weight);
+
+    opacity: var(--placeholder-opacity);
+  }
+}
+
+.native-textarea[disabled] {
+  opacity: .4;
+}

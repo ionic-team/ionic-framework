@@ -1,0 +1,153 @@
+triage:
+  label: triage
+  removeLabelWhenProjectAssigned: true
+  dryRun: false
+
+closeAndLock:
+  labels:
+    - label: "ionitron: support"
+      message: >
+        Thanks for the issue! This issue appears to be a support request. We use this issue tracker exclusively for
+        bug reports and feature requests. Please use our [forum](https://forum.ionicframework.com) or our
+        [slack channel](https://ionicworldwide.herokuapp.com/) for questions about the framework.
+
+
+        Thank you for using Ionic!
+    - label: "ionitron: appflow"
+      message: >
+        Thanks for the issue! This issue appears to be related to Ionic Appflow. We use this issue tracker exclusively for
+        bug reports and feature requests. Please use the [Ionic Appflow Support Forum](https://ionic.zendesk.com/hc/en-us/requests/new)
+        to report this issue.
+
+
+        Thank you for using Ionic!
+    - label: "ionitron: missing template"
+      message: >
+        Thanks for the issue! It appears that you have not filled out the provided issue template. We use this issue
+        template in order to gather more information and further assist you. Please create a new issue and ensure the
+        template is fully filled out.
+
+
+        Thank you for using Ionic!
+  close: true
+  lock: true
+  dryRun: false
+
+lockClosed:
+  days: 30
+  maxIssuesPerRun: 100
+  message: >
+    Thanks for the issue! This issue is being locked to prevent comments that are not relevant to the original issue.
+    If this is still an issue with the latest version of Ionic, please create a new issue and ensure the template is fully filled out.
+  dryRun: false
+
+stale:
+  days: 365
+  maxIssuesPerRun: 100
+  exemptLabels:
+    - good first issue
+    - triage
+  exemptAssigned: true
+  exemptProjects: true
+  exemptMilestones: true
+  label: "ionitron: stale issue"
+  message: >
+    Thanks for the issue! This issue is being closed due to inactivity. If this is still
+    an issue with the latest version of Ionic, please create a new issue and ensure the
+    template is fully filled out.
+
+
+    Thank you for using Ionic!
+  close: true
+  lock: true
+  dryRun: false
+
+noReply:
+  days: 30
+  maxIssuesPerRun: 100
+  label: "needs: reply"
+  responseLabel: triage
+  exemptProjects: true
+  exemptMilestones: true
+  message: >
+    Thanks for the issue! This issue is being closed due to the lack of a reply. If this is still
+    an issue with the latest version of Ionic, please create a new issue and ensure the
+    template is fully filled out.
+
+
+    Thank you for using Ionic!
+  close: true
+  lock: true
+  dryRun: false
+
+labelPullRequest:
+  labels:
+    - label: "package: angular"
+      branch: master
+      path: ^angular
+    - label: "package: core"
+      branch: master
+      path: ^core
+    - label: "package: react"
+      branch: master
+      path: ^react
+    - label: "package: vue"
+      branch: master
+      path: ^vue
+  dryRun: false
+
+wrongRepo:
+  repos:
+    - label: "ionitron: v3"
+      repo: ionic-v3
+      message: >
+        Thanks for the issue! We have moved the source code and issues for Ionic 3 into a separate repository.
+        I am moving this issue to the repository for Ionic 3. Please track this issue over there.
+
+
+        Thank you for using Ionic!
+    - label: "ionitron: cli"
+      repo: ionic-cli
+      message: >
+        Thanks for the issue! We use this issue tracker exclusively for bug reports and feature requests
+        associated with the Ionic Framework. It appears that this issue is associated with the Ionic CLI.
+        I am moving this issue to the Ionic CLI repository. Please track this issue over there.
+
+
+        Thank you for using Ionic!
+    - label: "ionitron: docs"
+      repo: ionic-docs
+      message: >
+        Thanks for the issue! We use this issue tracker exclusively for bug reports and feature requests
+        associated with the Ionic Framework. It appears that this issue is associated with the Ionic Documentation.
+        I am moving this issue to the Ionic Docs repository. Please track this issue over there.
+
+
+        Thank you for using Ionic!
+    - label: "ionitron: stencil"
+      repo: stencil
+      message: >
+        Thanks for the issue! We use this issue tracker exclusively for bug reports and feature requests
+        associated with the Ionic Framework. It appears that this issue is associated with Stencil.
+        I am moving this issue to the Stencil repository. Please track this issue over there.
+
+
+        Thank you for using Ionic!
+    - label: "ionitron: native"
+      repo: ionic-native
+      message: >
+        Thanks for the issue! We use this issue tracker exclusively for bug reports and feature requests
+        associated with the Ionic Framework. It appears that this issue is associated with Ionic Native.
+        I am moving this issue to the Ionic Native repository. Please track this issue over there.
+
+
+        Thank you for using Ionic!
+  close: true
+  lock: true
+  dryRun: false
+
+screenshot:
+  appId: 18001
+  checkName: "build"
+  baseUrl: "https://screenshot.ionicframework.com"
+  dryRun: false

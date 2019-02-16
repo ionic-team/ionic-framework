@@ -1,0 +1,302 @@
+@import "../../themes/ionic.globals.ios";
+@import "../item/item.ios.vars";
+
+// iOS Alert
+// --------------------------------------------------
+
+/// @prop - Font size of the alert
+$alert-ios-font-size:                                   14px !default;
+
+/// @prop - Max width of the alert
+$alert-ios-max-width:                                   270px !default;
+
+/// @prop - Border radius of the alert
+$alert-ios-border-radius:                               13px !default;
+
+/// @prop - Background color of the alert
+$alert-ios-background-color:                            $overlay-ios-background-color !default;
+
+/// @prop - Background color alpha of the alert when translucent
+$alert-ios-translucent-background-color-alpha:          .9 !default;
+
+/// @prop - Background color of the alert when translucent
+$alert-ios-translucent-background-color:                rgba($background-color-rgb, $alert-ios-translucent-background-color-alpha) !default;
+
+/// @prop - Box shadow of the alert
+$alert-ios-box-shadow:                                  none !default;
+
+/// @prop - Padding top of the alert head
+$alert-ios-head-padding-top:                            12px !default;
+
+/// @prop - Padding end of the alert head
+$alert-ios-head-padding-end:                            16px !default;
+
+/// @prop - Padding bottom of the alert head
+$alert-ios-head-padding-bottom:                         7px !default;
+
+/// @prop - Padding start of the alert head
+$alert-ios-head-padding-start:                          $alert-ios-head-padding-end !default;
+
+/// @prop - Text align of the alert head
+$alert-ios-head-text-align:                             center !default;
+
+/// @prop - Color of the alert title
+$alert-ios-title-color:                                 $text-color !default;
+
+/// @prop - Margin top of the alert title
+$alert-ios-title-margin-top:                            8px !default;
+
+/// @prop - Font size of the alert title
+$alert-ios-title-font-size:                             17px !default;
+
+/// @prop - Font weight of the alert title
+$alert-ios-title-font-weight:                           600 !default;
+
+/// @prop - Font size of the alert sub title
+$alert-ios-sub-title-font-size:                         14px !default;
+
+/// @prop - Text color of the alert sub title
+$alert-ios-sub-title-text-color:                        $text-color-step-400 !default;
+
+/// @prop - Padding top of the alert message
+$alert-ios-message-padding-top:                         0 !default;
+
+/// @prop - Padding end of the alert message
+$alert-ios-message-padding-end:                         16px !default;
+
+/// @prop - Padding bottom of the alert message
+$alert-ios-message-padding-bottom:                      21px !default;
+
+/// @prop - Padding start of the alert message
+$alert-ios-message-padding-start:                       $alert-ios-message-padding-end !default;
+
+/// @prop - Font size of the alert message
+$alert-ios-message-font-size:                           13px !default;
+
+/// @prop - Text align of the alert message
+$alert-ios-message-text-align:                          center !default;
+
+/// @prop - Text color of the alert message
+$alert-ios-message-text-color:                          $text-color !default;
+
+/// @prop - Padding top of the alert empty message
+$alert-ios-message-empty-padding-top:                   0 !default;
+
+/// @prop - Padding end of the alert empty message
+$alert-ios-message-empty-padding-end:                   0 !default;
+
+/// @prop - Padding bottom of the alert empty message
+$alert-ios-message-empty-padding-bottom:                12px !default;
+
+/// @prop - Padding start of the alert empty message
+$alert-ios-message-empty-padding-start:                 0 !default;
+
+/// @prop - Maximum height of the alert content
+$alert-ios-content-max-height:                          240px !default;
+
+/// @prop - Margin top of the alert input
+$alert-ios-input-margin-top:                            10px !default;
+
+/// @prop - Padding top on the alert input
+$alert-ios-input-padding-top:                           6px !default;
+
+/// @prop - Padding end on the alert input
+$alert-ios-input-padding-end:                           $alert-ios-input-padding-top !default;
+
+/// @prop - Padding bottom on the alert input
+$alert-ios-input-padding-bottom:                        $alert-ios-input-padding-top !default;
+
+/// @prop - Padding start on the alert input
+$alert-ios-input-padding-start:                         $alert-ios-input-padding-end !default;
+
+/// @prop - Placeholder Color for input
+$alert-ios-input-placeholder-color:                     $placeholder-text-color !default;
+
+/// @prop - Border color of the alert input
+$alert-ios-input-border-color:                          $background-color-step-250 !default;
+
+/// @prop - Border of the alert input
+$alert-ios-input-border:                                $hairlines-width solid $alert-ios-input-border-color !default;
+
+/// @prop - Border radius of the alert input
+$alert-ios-input-border-radius:                         4px !default;
+
+/// @prop - Background color of the alert input
+$alert-ios-input-background-color:                      $background-color !default;
+
+/// @prop - Flex wrap of the alert button group
+$alert-ios-button-group-flex-wrap:                      wrap !default;
+
+/// @prop - Flex of the alert button
+$alert-ios-button-flex:                                 1 1 auto !default;
+
+/// @prop - Margin of the alert button
+$alert-ios-button-margin:                               0 !default;
+
+/// @prop - Min width of the alert button
+$alert-ios-button-min-width:                            50% !default;
+
+/// @prop - Minimum height of the alert button
+$alert-ios-button-min-height:                           44px !default;
+
+/// @prop - Font size of the alert button
+$alert-ios-button-font-size:                            17px !default;
+
+/// @prop - Color of the text in the alert button
+$alert-ios-button-text-color:                           ion-color(primary, base) !default;
+
+/// @prop - Background color of the alert button
+$alert-ios-button-background-color:                     transparent !default;
+
+/// @prop - Background color alpha of the alert activated button
+$alert-ios-button-background-color-alpha-activated:     .1 !default;
+
+/// @prop - Background color of the alert activated button
+$alert-ios-button-background-color-activated:           rgba(var(--ion-text-color-rgb, $text-color-rgb), $alert-ios-button-background-color-alpha-activated) !default;
+
+/// @prop - Border width of the alert button
+$alert-ios-button-border-width:                         $hairlines-width !default;
+
+/// @prop - Border style of the alert button
+$alert-ios-button-border-style:                         solid !default;
+
+/// @prop - Border color alpha of the alert button
+$alert-ios-button-border-color-alpha:                   .2 !default;
+
+/// @prop - Border color of the alert button
+$alert-ios-button-border-color:                         rgba(var(--ion-text-color-rgb, $text-color-rgb), $alert-ios-button-border-color-alpha) !default;
+
+/// @prop - Border radius of the alert button
+$alert-ios-button-border-radius:                        0 !default;
+
+/// @prop - Font weight of the main text on the alert button
+$alert-ios-button-main-font-weight:                     bold !default;
+
+/// @prop - Border top of the alert list
+$alert-ios-list-border-top:                             $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color !default;
+
+/// @prop - Padding top on the label for the radio alert
+$alert-ios-radio-label-padding-top:                     13px !default;
+
+/// @prop - Padding end on the label for the radio alert
+$alert-ios-radio-label-padding-end:                     $alert-ios-radio-label-padding-top !default;
+
+/// @prop - Padding bottom on the label for the radio alert
+$alert-ios-radio-label-padding-bottom:                  $alert-ios-radio-label-padding-top !default;
+
+/// @prop - Padding start on the label for the radio alert
+$alert-ios-radio-label-padding-start:                   $alert-ios-radio-label-padding-end !default;
+
+/// @prop - Text color of the label for the radio alert
+$alert-ios-radio-label-text-color:                      $text-color !default;
+
+/// @prop - Text color of the label for the checked radio alert
+$alert-ios-radio-label-text-color-checked:              $alert-ios-button-text-color !default;
+
+/// @prop - Min width of the radio alert
+$alert-ios-radio-min-width:                             30px !default;
+
+/// @prop - Top of the icon in the radio alert
+$alert-ios-radio-icon-top:                              -7px !default;
+
+/// @prop - Start of the icon in the radio alert
+$alert-ios-radio-icon-start:                            7px !default;
+
+/// @prop - Width of the icon in the radio alert
+$alert-ios-radio-icon-width:                            6px !default;
+
+/// @prop - Height of the icon in the radio alert
+$alert-ios-radio-icon-height:                           12px !default;
+
+/// @prop - Border width of the icon in the radio alert
+$alert-ios-radio-icon-border-width:                     2px !default;
+
+/// @prop - Border style of the icon in the radio alert
+$alert-ios-radio-icon-border-style:                     solid !default;
+
+/// @prop - Border color of the icon in the radio alert
+$alert-ios-radio-icon-border-color:                     $alert-ios-button-text-color !default;
+
+/// @prop - Transform of the icon in the radio alert
+$alert-ios-radio-icon-transform:                        rotate(45deg) !default;
+
+/// @prop - Padding top of the label for the checkbox in the alert
+$alert-ios-checkbox-label-padding-top:                  13px !default;
+
+/// @prop - Padding end of the label for the checkbox in the alert
+$alert-ios-checkbox-label-padding-end:                  $alert-ios-checkbox-label-padding-top !default;
+
+/// @prop - Padding bottom of the label for the checkbox in the alert
+$alert-ios-checkbox-label-padding-bottom:               $alert-ios-checkbox-label-padding-top !default;
+
+/// @prop - Padding start of the label for the checkbox in the alert
+$alert-ios-checkbox-label-padding-start:                $alert-ios-checkbox-label-padding-end !default;
+
+/// @prop - Text color of the label for the checkbox in the alert
+$alert-ios-checkbox-label-text-color:                   $text-color !default;
+
+/// @prop - Margin top of the checkbox in the alert
+$alert-ios-checkbox-margin-top:                         10px !default;
+
+/// @prop - Margin end of the checkbox in the alert
+$alert-ios-checkbox-margin-end:                         6px !default;
+
+/// @prop - Margin bottom of the checkbox in the alert
+$alert-ios-checkbox-margin-bottom:                      10px !default;
+
+/// @prop - Margin start of the checkbox in the alert
+$alert-ios-checkbox-margin-start:                       16px !default;
+
+/// @prop - Size of the checkbox in the alert
+$alert-ios-checkbox-size:                               24px !default;
+
+/// @prop - Border width of the checkbox in the alert
+$alert-ios-checkbox-border-width:                       1px !default;
+
+/// @prop - Border style of the checkbox in the alert
+$alert-ios-checkbox-border-style:                       solid !default;
+
+/// @prop - Border radius of the checkbox in the alert
+$alert-ios-checkbox-border-radius:                      50% !default;
+
+/// @prop - Border color of the checkbox in the alert when off
+$alert-ios-checkbox-border-color-off:                   $item-ios-border-color !default;
+
+/// @prop - Border color of the checkbox in the alert when on
+$alert-ios-checkbox-border-color-on:                    ion-color(primary, base) !default;
+
+/// @prop - Background color of the checkbox in the alert when off
+$alert-ios-checkbox-background-color-off:               $item-ios-background !default;
+
+/// @prop - Background color of the checkbox in the alert when on
+$alert-ios-checkbox-background-color-on:                ion-color(primary, base) !default;
+
+/// @prop - Top of the icon in the checkbox alert
+$alert-ios-checkbox-icon-top:                           $alert-ios-checkbox-size / 6 !default;
+
+/// @prop - Start of the icon in the checkbox alert
+$alert-ios-checkbox-icon-start:                         ($alert-ios-checkbox-size / 3) + 1px !default;
+
+/// @prop - Width of the icon in the checkbox alert
+$alert-ios-checkbox-icon-width:                         ($alert-ios-checkbox-size / 6) + 1px !default;
+
+/// @prop - Height of the icon in the checkbox alert
+$alert-ios-checkbox-icon-height:                        $alert-ios-checkbox-size / 2 !default;
+
+/// @prop - Border width of the icon in the checkbox alert
+$alert-ios-checkbox-icon-border-width:                  $alert-ios-checkbox-border-width !default;
+
+/// @prop - Border style of the icon in the checkbox alert
+$alert-ios-checkbox-icon-border-style:                  $alert-ios-checkbox-border-style !default;
+
+/// @prop - Border color of the icon in the checkbox alert
+$alert-ios-checkbox-icon-border-color:                  $background-color !default;
+
+/// @prop - Transform of the icon in the checkbox alert
+$alert-ios-checkbox-icon-transform:                     rotate(45deg) !default;
+
+/// @prop - Filter of the translucent alert
+$alert-ios-translucent-filter:                          saturate(180%) blur(20px) !default;
+
+/// @prop - Height of the tappable inputs in the checkbox alert
+$alert-ios-tappable-height:                             $item-ios-min-height !default;

@@ -1,0 +1,14 @@
+@import "../../themes/ionic.globals.ios";
+
+
+// iOS Avatar
+// --------------------------------------------------
+
+/// @prop - Width of the avatar
+$avatar-ios-width:                   48px !default;
+
+/// @prop - Height of the avatar
+$avatar-ios-height:                  $avatar-ios-width !default;
+
+/// @prop - Border radius of the avatar
+$avatar-ios-border-radius:           50% !default;

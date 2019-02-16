@@ -1,0 +1,28 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Menu
+// --------------------------------------------------
+
+/// @prop - Background of the menu
+$menu-ios-background:            $background-color !default;
+
+/// @prop - Box shadow color of the menu
+$menu-ios-box-shadow-color:      rgba(0, 0, 0, .08) !default;
+
+/// @prop - Box shadow of the menu
+$menu-ios-box-shadow:            -8px 0 42px $menu-ios-box-shadow-color !default;
+
+/// @prop - Box shadow of the menu in rtl mode
+$menu-ios-box-shadow-rtl:        8px 0 42px $menu-ios-box-shadow-color !default;
+
+/// @prop - Box shadow of the reveal menu
+$menu-ios-box-shadow-reveal:     $menu-ios-box-shadow !default;
+
+/// @prop - Box shadow of the reveal menu
+$menu-ios-box-shadow-reveal-rtl: $menu-ios-box-shadow-rtl !default;
+
+/// @prop - Box shadow of the push menu
+$menu-ios-box-shadow-push:       null !default;
+
+/// @prop - Box shadow of the overlay menu
+$menu-ios-box-shadow-overlay:    null !default;

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Item - Lines</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Item Lines</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content id="content">
+      <ion-list-header>
+        <ion-label>Header</ion-label>
+      </ion-list-header>
+
+      <!-- Default -->
+      <ion-item>
+        <ion-label>Default Item Lines</ion-label>
+      </ion-item>
+
+      <!-- Lines Inset -->
+      <ion-item lines="inset">
+        <ion-label>Item Lines Inset</ion-label>
+      </ion-item>
+
+      <!-- Lines Full -->
+      <ion-item lines="full">
+        <ion-label>Item Lines Full</ion-label>
+      </ion-item>
+
+      <!-- Default -->
+      <ion-item>
+        <ion-icon name="star" slot="start"></ion-icon>
+        <ion-label>Default Item Lines</ion-label>
+        <ion-icon name="information-circle" slot="end"></ion-icon>
+      </ion-item>
+
+      <!-- Lines Inset -->
+      <ion-item lines="inset">
+        <ion-icon name="star" slot="start"></ion-icon>
+        <ion-label>Item Lines Inset</ion-label>
+        <ion-icon name="information-circle" slot="end"></ion-icon>
+      </ion-item>
+
+      <!-- Lines Full -->
+      <ion-item lines="full">
+        <ion-icon name="star" slot="start"></ion-icon>
+        <ion-label>Item Lines Full</ion-label>
+        <ion-icon name="information-circle" slot="end"></ion-icon>
+      </ion-item>
+
+      <!-- Lines None -->
+      <ion-item lines="none">
+        <ion-icon name="star" slot="start"></ion-icon>
+        <ion-label>Item Lines None</ion-label>
+        <ion-icon name="information-circle" slot="end"></ion-icon>
+      </ion-item>
+
+      <!-- List Lines Full -->
+      <ion-list lines="full">
+        <ion-list-header>List Full Lines</ion-list-header>
+        <ion-item>
+          <ion-label>Item</ion-label>
+        </ion-item>
+        <ion-item lines="inset">
+          <ion-label>Item Inset</ion-label>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Item None</ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-list lines="inset">
+        <ion-list-header>
+          List Inset Lines
+        </ion-list-header>
+        <ion-item>
+          <ion-label>Item</ion-label>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-label>Item Full</ion-label>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Item None</ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-list lines="none">
+        <ion-list-header>
+          List No Lines
+        </ion-list-header>
+        <ion-item>
+          <ion-label>Item</ion-label>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-label>Item Full</ion-label>
+        </ion-item>
+        <ion-item lines="inset">
+          <ion-label>Item Inset</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Item</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Item</ion-label>
+        </ion-item>
+      </ion-list>
+
+      <h2>Colors</h2>
+
+      <!-- Default -->
+      <ion-item color="secondary">
+        <ion-label>Item</ion-label>
+      </ion-item>
+
+      <!-- Lines Inset -->
+      <ion-item color="secondary" lines="inset">
+        <ion-label>Item Lines Inset</ion-label>
+      </ion-item>
+
+      <!-- Lines Full -->
+      <ion-item color="secondary" lines="full">
+        <ion-label>Item Lines Full</ion-label>
+      </ion-item>
+
+      <!-- Default -->
+      <ion-item color="danger">
+        <ion-icon name="star" slot="start"></ion-icon>
+        <ion-label>Item</ion-label>
+        <ion-icon name="information-circle" slot="end"></ion-icon>
+      </ion-item>
+
+      <!-- Lines Inset -->
+      <ion-item color="danger" lines="inset">
+        <ion-icon name="star" slot="start"></ion-icon>
+        <ion-label>Item Lines Inset</ion-label>
+        <ion-icon name="information-circle" slot="end"></ion-icon>
+      </ion-item>
+
+      <!-- Lines Full -->
+      <ion-item color="danger" lines="full">
+        <ion-icon name="star" slot="start"></ion-icon>
+        <ion-label>Item Lines Full</ion-label>
+        <ion-icon name="information-circle" slot="end"></ion-icon>
+      </ion-item>
+
+      <!-- Lines None -->
+      <ion-item color="danger" lines="none">
+        <ion-icon name="star" slot="start"></ion-icon>
+        <ion-label>Item Lines None</ion-label>
+        <ion-icon name="information-circle" slot="end"></ion-icon>
+      </ion-item>
+
+      <!-- List Lines Full -->
+      <ion-list lines="full">
+        <ion-list-header>List Full Lines</ion-list-header>
+        <ion-item color="light">
+          <ion-label>Item</ion-label>
+        </ion-item>
+        <ion-item color="light">
+          <ion-label>Item</ion-label>
+        </ion-item>
+        <ion-item color="light" lines="inset">
+          <ion-label>Item Inset</ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-list lines="inset">
+        <ion-list-header>
+          List Inset Lines
+        </ion-list-header>
+        <ion-item color="dark">
+          <ion-label>Item</ion-label>
+        </ion-item>
+        <ion-item color="dark" lines="full">
+          <ion-label>Item Full</ion-label>
+        </ion-item>
+        <ion-item color="dark">
+          <ion-label>Item</ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-list lines="none">
+        <ion-list-header>
+          List No Lines
+        </ion-list-header>
+        <ion-item color="tertiary">
+          <ion-label>Item</ion-label>
+        </ion-item>
+        <ion-item color="tertiary" lines="full">
+          <ion-label>Item Full</ion-label>
+        </ion-item>
+        <ion-item color="tertiary" lines="inset">
+          <ion-label>Item Inset</ion-label>
+        </ion-item>
+        <ion-item color="tertiary">
+          <ion-label>Item</ion-label>
+        </ion-item>
+        <ion-item color="tertiary">
+          <ion-label>Item</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-app>
+  <script>
+    function testClick(ev) {
+      console.log('CLICK!', ev.target.tagName, ev.target.textContent.trim());
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Searchbar
+// --------------------------------------------------
+
+/// @prop - Padding top of the searchbar
+$searchbar-ios-padding-top:                       12px !default;
+
+/// @prop - Padding end of the searchbar
+$searchbar-ios-padding-end:                       $searchbar-ios-padding-top !default;
+
+/// @prop - Padding bottom of the searchbar
+$searchbar-ios-padding-bottom:                    $searchbar-ios-padding-top !default;
+
+/// @prop - Padding start of the searchbar
+$searchbar-ios-padding-start:                     $searchbar-ios-padding-end !default;
+
+/// @prop - Font size of the searchbar cancel button
+$searchbar-ios-cancel-button-font-size:           16px !default;
+
+/// @prop - Color of the searchbar cancel button
+$searchbar-ios-cancel-button-color:               ion-color(primary, base) !default;
+
+/// @prop - Background color of the searchbar cancel button
+$searchbar-ios-cancel-button-background-color:    transparent !default;
+
+/// @prop - Size of the searchbar input search icon
+$searchbar-ios-input-search-icon-size:            16px !default;
+
+/// @prop - Color of the searchbar input search icon
+$searchbar-ios-input-search-icon-color:           $text-color-step-400 !default;
+
+/// @prop - Height of the searchbar input
+$searchbar-ios-input-height:                      36px !default;
+
+/// @prop - Border radius of the searchbar input
+$searchbar-ios-input-border-radius:               10px !default;
+
+/// @prop - Color of the searchbar input placeholder
+$searchbar-ios-input-placeholder-color:           $text-color-step-400 !default;
+
+/// @prop - Color of the searchbar input text
+$searchbar-ios-input-text-color:                  $text-color !default;
+
+/// @prop - Background color alpha of the searchbar input
+$searchbar-ios-input-background-color-alpha:      .07 !default;
+
+/// @prop - Background color of the searchbar input
+$searchbar-ios-input-background-color:            rgba(var(--ion-text-color-rgb, $text-color-rgb), $searchbar-ios-input-background-color-alpha) !default;
+
+/// @prop - Transition of the searchbar input
+$searchbar-ios-input-transition:                  all 300ms ease !default;
+
+/// @prop - Transition of the searchbar input cancel button
+$searchbar-ios-cancel-transition:                 all 300ms ease !default;
+
+/// @prop - Alpha of the searchbar input icons
+$searchbar-ios-input-icon-opacity:                .5 !default;
+
+/// @prop - Color of the searchbar input clear icon
+$searchbar-ios-input-clear-icon-color:            $text-color-step-400 !default;
+
+/// @prop - Size of the searchbar input clear icon
+$searchbar-ios-input-clear-icon-size:             18px !default;

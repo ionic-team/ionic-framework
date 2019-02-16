@@ -1,0 +1,27 @@
+@import "./input";
+@import "./input.ios.vars";
+
+:host {
+  --padding-top: #{$input-ios-padding-top};
+  --padding-end: #{$input-ios-padding-end};
+  --padding-bottom: #{$input-ios-padding-bottom};
+  --padding-start: #{$input-ios-padding-start};
+
+  font-size: $input-ios-font-size;
+}
+
+:host-context(.item-label-stacked),
+:host-context(.item-label-floating) {
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --padding-start: 0px;
+}
+
+.input-clear-icon {
+  @include svg-background-image($input-ios-input-clear-icon-svg);
+
+  width: $input-ios-input-clear-icon-width;
+  height: $input-ios-input-clear-icon-width;
+
+  background-size: $input-ios-input-clear-icon-size;
+}

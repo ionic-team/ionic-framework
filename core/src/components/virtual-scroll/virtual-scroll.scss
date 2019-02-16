@@ -1,0 +1,25 @@
+@import "../../themes/ionic.globals";
+
+ion-virtual-scroll {
+  display: block;
+  position: relative;
+
+  width: 100%;
+
+  contain: strict;
+
+  user-select: none;
+}
+
+.virtual-loading {
+  opacity: 0;
+}
+
+.virtual-item {
+  @include position(0, 0, null, 0);
+
+  position: absolute;
+
+  transition-duration: 0ms;
+  will-change: transform;
+}

@@ -1,0 +1,171 @@
+@import "./toggle";
+@import "./toggle.ios.vars";
+
+// iOS Toggle
+// -----------------------------------------
+
+:host {
+  --background: #{$toggle-ios-background-color-off};
+  --background-checked: #{ion-color(primary, base)};
+  --handle-background: #{$toggle-ios-handle-background-color};
+  --handle-background-checked: #{$toggle-ios-handle-background-color};
+
+  box-sizing: content-box;
+
+  position: relative;
+
+  width: $toggle-ios-width;
+  height: $toggle-ios-height;
+
+  contain: strict;
+}
+
+:host(.ion-color.toggle-checked) .toggle-icon {
+  background: current-color(base);
+}
+
+:host(.ion-color.toggle-checked) .toggle-inner {
+  background: current-color(contrast);
+}
+
+// iOS Toggle Background Track: Unchecked
+// -----------------------------------------
+
+.toggle-icon {
+  @include border-radius($toggle-ios-border-radius);
+
+  display: block;
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  // Needed to prevent visual glitch in safari/iOS
+  // See https://github.com/ionic-team/ionic/issues/14626
+  transform: translate3d(0,0,0);
+
+  transition: background-color $toggle-ios-transition-duration;
+
+  background-color: $toggle-ios-border-color-off;
+
+  overflow: hidden;
+  pointer-events: none;
+}
+
+
+// iOS Toggle Background Oval: Unchecked
+// -----------------------------------------
+
+.toggle-icon::before {
+  @include position($toggle-ios-border-width, $toggle-ios-border-width, $toggle-ios-border-width, $toggle-ios-border-width);
+  @include border-radius($toggle-ios-border-radius);
+
+  position: absolute;
+
+  transform: scale3d(1, 1, 1);
+
+  transition: transform $toggle-ios-transition-duration;
+
+  background: var(--background);
+
+  content: "";
+}
+
+
+// iOS Toggle Inner Knob: Unchecked
+// -----------------------------------------
+
+.toggle-inner {
+  @include position($toggle-ios-border-width, null, null, $toggle-ios-border-width);
+  @include border-radius($toggle-ios-handle-border-radius);
+
+  position: absolute;
+
+  width: $toggle-ios-handle-width;
+  height: $toggle-ios-handle-height;
+
+  transition: transform $toggle-ios-transition-duration, width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms, right 110ms ease-in-out 80ms;
+
+  background: var(--handle-background);
+
+  box-shadow: $toggle-ios-handle-box-shadow;
+  will-change: transform;
+  contain: strict;
+}
+
+
+// iOS Toggle Background Track: Checked
+// -----------------------------------------
+
+:host(.toggle-checked) .toggle-icon {
+  background: var(--background-checked);
+}
+
+
+// iOS Toggle Background Oval: Activated or Checked
+// -----------------------------------------
+
+:host(.toggle-activated) .toggle-icon::before,
+:host(.toggle-checked) .toggle-icon::before {
+  transform: scale3d(0, 0, 0);
+}
+
+
+// iOS Toggle Inner Knob: Checked
+// -----------------------------------------
+
+:host(.toggle-checked) .toggle-inner {
+  @include transform(translate3d($toggle-ios-width - $toggle-ios-handle-width - ($toggle-ios-border-width * 2), 0, 0));
+
+  background: var(--handle-background-checked);
+}
+
+
+// iOS Toggle Background Oval: Activated and Checked
+// -----------------------------------------
+
+:host(.toggle-activated.toggle-checked) .toggle-inner::before {
+  transform: scale3d(0, 0, 0);
+}
+
+
+// iOS Toggle Inner Knob: Activated and Unchecked
+// -----------------------------------------
+
+:host(.toggle-activated) .toggle-inner {
+  width: $toggle-ios-handle-width + 6;
+}
+
+
+// iOS Toggle Inner Knob: Activated and Checked
+// -----------------------------------------
+
+:host(.toggle-activated.toggle-checked) .toggle-inner {
+  // when pressing down on the toggle and IS checked
+  // make the knob wider and move it left a bit
+
+  @include position-horizontal($toggle-ios-border-width - 6, null);
+}
+
+
+// iOS Toggle: Disabled
+// -----------------------------------------
+
+// .item-ios.item-toggle-disabled ion-label
+
+:host(.toggle-disabled) {
+  opacity: $toggle-ios-disabled-opacity;
+}
+
+
+// iOS Toggle Within An Item
+// -----------------------------------------
+
+:host(.in-item[slot]) {
+  @include margin($toggle-ios-media-margin);
+  @include padding($toggle-ios-item-end-padding-top, $toggle-ios-item-end-padding-end, $toggle-ios-item-end-padding-bottom, $toggle-ios-item-end-padding-start);
+}
+
+:host(.in-item[slot="start"]) {
+  @include padding($toggle-ios-item-start-padding-top, $toggle-ios-item-start-padding-end, $toggle-ios-item-start-padding-bottom, $toggle-ios-item-start-padding-start);
+}

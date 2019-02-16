@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Checkbox - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body padding>
+  <h1>Default</h1>
+  <ion-checkbox></ion-checkbox>
+  <ion-checkbox checked></ion-checkbox>
+  <ion-checkbox disabled></ion-checkbox>
+  <ion-checkbox disabled checked></ion-checkbox>
+
+  <h1>Colors</h1>
+  <ion-checkbox color="primary"></ion-checkbox>
+  <ion-checkbox color="secondary"></ion-checkbox>
+  <ion-checkbox color="tertiary"></ion-checkbox>
+  <ion-checkbox color="success"></ion-checkbox>
+  <ion-checkbox color="warning"></ion-checkbox>
+  <ion-checkbox color="danger"></ion-checkbox>
+  <ion-checkbox color="light"></ion-checkbox>
+  <ion-checkbox color="medium"></ion-checkbox>
+  <ion-checkbox color="dark"></ion-checkbox>
+
+  <hr>
+
+  <ion-checkbox checked color="primary"></ion-checkbox>
+  <ion-checkbox checked color="secondary"></ion-checkbox>
+  <ion-checkbox checked color="tertiary"></ion-checkbox>
+  <ion-checkbox checked color="success"></ion-checkbox>
+  <ion-checkbox checked color="warning"></ion-checkbox>
+  <ion-checkbox checked color="danger"></ion-checkbox>
+  <ion-checkbox checked color="light"></ion-checkbox>
+  <ion-checkbox checked color="medium"></ion-checkbox>
+  <ion-checkbox checked color="dark"></ion-checkbox>
+
+  <hr>
+
+  <ion-checkbox checked disabled color="primary"></ion-checkbox>
+  <ion-checkbox checked disabled color="secondary"></ion-checkbox>
+  <ion-checkbox checked disabled color="tertiary"></ion-checkbox>
+  <ion-checkbox checked disabled color="success"></ion-checkbox>
+  <ion-checkbox checked disabled color="warning"></ion-checkbox>
+  <ion-checkbox checked disabled color="danger"></ion-checkbox>
+  <ion-checkbox checked disabled color="light"></ion-checkbox>
+  <ion-checkbox checked disabled color="medium"></ion-checkbox>
+  <ion-checkbox checked disabled color="dark"></ion-checkbox>
+
+  <h1>Custom</h1>
+  <ion-checkbox class="custom"></ion-checkbox>
+  <ion-checkbox class="custom" checked></ion-checkbox>
+  <ion-checkbox class="custom" disabled></ion-checkbox>
+  <ion-checkbox class="custom" disabled checked></ion-checkbox>
+
+  <h1>Custom: checked</h1>
+  <ion-checkbox class="custom-checked"></ion-checkbox>
+  <ion-checkbox class="custom-checked" checked></ion-checkbox>
+  <ion-checkbox class="custom-checked" disabled></ion-checkbox>
+  <ion-checkbox class="custom-checked" disabled checked></ion-checkbox>
+
+  <h1>Custom: light</h1>
+  <ion-checkbox class="custom-light"></ion-checkbox>
+  <ion-checkbox class="custom-light" checked></ion-checkbox>
+  <ion-checkbox class="custom-light" disabled></ion-checkbox>
+  <ion-checkbox class="custom-light" disabled checked></ion-checkbox>
+
+  <h1>Custom: transition</h1>
+  <ion-checkbox class="custom-transition"></ion-checkbox>
+  <ion-checkbox class="custom-transition" checked></ion-checkbox>
+
+  <style>
+    .custom {
+      --background: #444;
+      --border-color: #000;
+    }
+
+    .custom-checked {
+      --background: lightblue;
+      --border-color: lightpink;
+
+      --background-checked: lightpink;
+      --border-color-checked: lightblue;
+    }
+
+    .custom-light {
+      --background: lightgrey;
+      --border-color: darkgrey;
+
+      --background-checked: darkgrey;
+      --border-color-checked: transparent;
+
+      --checkmark-color: #000;
+    }
+
+    .custom-transition {
+      --transition: all 5s ease-out;
+    }
+  </style>
+</body>
+</html>

@@ -1,0 +1,25 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Card Header
+// --------------------------------------------------
+
+/// @prop - Padding top of the card header
+$card-ios-header-padding-top:                           20px !default;
+
+/// @prop - Padding end of the card header
+$card-ios-header-padding-end:                           $card-ios-header-padding-top !default;
+
+/// @prop - Padding bottom of the card header
+$card-ios-header-padding-bottom:                        16px !default;
+
+/// @prop - Padding start of the card header
+$card-ios-header-padding-start:                         $card-ios-header-padding-end !default;
+
+/// @prop - Filter of the translucent card header background color alpha
+$card-ios-header-translucent-background-color-alpha:    .9 !default;
+
+/// @prop - Filter of the translucent card header background color
+$card-ios-header-translucent-background-color:          rgba($background-color-rgb, $card-ios-header-translucent-background-color-alpha) !default;
+
+/// @prop - Filter of the translucent card header
+$card-ios-header-translucent-filter:                    saturate(180%) blur(30px) !default;

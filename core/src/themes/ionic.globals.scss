@@ -1,0 +1,63 @@
+
+// Global Utility Functions
+@import "./ionic.functions.string";
+
+// Global Color Functions
+@import "./ionic.functions.color";
+
+// Global Mixins
+@import "./ionic.mixins";
+
+// Default Theme
+@import "./ionic.theme.default";
+
+
+// Default General
+// --------------------------------------------------
+$font-family-base:                  var(--ion-font-family, inherit) !default;
+
+// Global app direction
+$app-direction: null !default;
+
+// Global font path
+$font-path: "/dist/fonts" !default;
+
+// Hairlines width
+$hairlines-width: .55px !default;
+
+// The minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries
+$screen-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;
+
+
+// Z-Index
+// --------------------------------------------------
+// Grouped by elements which would be siblings
+
+$z-index-menu-overlay:           80;
+$z-index-overlay:                1000;
+$z-index-click-block:            99999;
+
+$z-index-fixed-content:          999;
+$z-index-scroll-content:         1;
+$z-index-refresher:              -1;
+
+$z-index-page-container:         0;
+$z-index-toolbar:                10;
+$z-index-toolbar-background:     -1;
+$z-index-toolbar-buttons:        99;
+
+$z-index-backdrop:               2;
+$z-index-overlay-wrapper:        10;
+
+$z-index-item-options:           1;
+$z-index-item-input:             2;
+$z-index-item-divider:           100;
+
+$z-index-reorder-selected:       100;

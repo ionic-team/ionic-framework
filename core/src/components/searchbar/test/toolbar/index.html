@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Ionic Searchbar Toolbar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+      <ion-header no-border translucent>
+        <ion-toolbar>
+          <ion-title>Searchbar - Toolbar</ion-title>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-searchbar translucent></ion-searchbar>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content" fullscreen>
+        <h5 padding-start padding-top> Search - Transparent Toolbar </h5>
+        <ion-toolbar transparent>
+          <ion-searchbar show-cancel-button></ion-searchbar>
+        </ion-toolbar>
+
+        <h5 padding-start padding-top> Search - Default Toolbar </h5>
+        <ion-toolbar>
+          <ion-searchbar show-cancel-button></ion-searchbar>
+        </ion-toolbar>
+
+        <h5 padding-start padding-top> Search - Primary Toolbar </h5>
+        <ion-toolbar color="primary">
+          <ion-searchbar show-cancel-button></ion-searchbar>
+        </ion-toolbar>
+
+        <h5 padding-start padding-top> Search - Secondary Toolbar </h5>
+        <ion-toolbar color="secondary">
+          <ion-searchbar show-cancel-button></ion-searchbar>
+        </ion-toolbar>
+
+        <h5 padding-start padding-top> Search - Tertiary Toolbar </h5>
+        <ion-toolbar color="tertiary">
+          <ion-searchbar show-cancel-button></ion-searchbar>
+        </ion-toolbar>
+
+        <h5 padding-start padding-top> Search - Success Toolbar </h5>
+        <ion-toolbar color="success">
+          <ion-searchbar show-cancel-button></ion-searchbar>
+        </ion-toolbar>
+
+        <h5 padding-start padding-top> Search - Warning Toolbar </h5>
+        <ion-toolbar color="warning">
+          <ion-searchbar show-cancel-button></ion-searchbar>
+        </ion-toolbar>
+
+        <h5 padding-start padding-top> Search - Danger Toolbar </h5>
+        <ion-toolbar color="danger">
+          <ion-searchbar show-cancel-button></ion-searchbar>
+        </ion-toolbar>
+
+        <h5 padding-start padding-top> Search - Light Toolbar </h5>
+        <ion-toolbar color="light">
+          <ion-searchbar show-cancel-button></ion-searchbar>
+        </ion-toolbar>
+
+        <h5 padding-start padding-top> Search - Medium Toolbar </h5>
+        <ion-toolbar color="medium">
+          <ion-searchbar show-cancel-button></ion-searchbar>
+        </ion-toolbar>
+
+        <h5 padding-start padding-top> Search - Dark Toolbar </h5>
+        <ion-toolbar color="dark">
+          <ion-searchbar show-cancel-button placeholder="Filter Schedules"></ion-searchbar>
+        </ion-toolbar>
+        
+        <h5 padding-start padding-top> Search - Dark Toolbar, Primary Search </h5>
+        <ion-toolbar color="dark">
+          <ion-searchbar show-cancel-button color="primary" placeholder="Filter Schedules"></ion-searchbar>
+        </ion-toolbar>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6"><f class="red"></f></ion-col>
+            <ion-col size="6"><f class="green"></f></ion-col>
+            <ion-col size="6"><f class="blue"></f></ion-col>
+            <ion-col size="6"><f class="yellow"></f></ion-col>
+            <ion-col size="6"><f class="pink"></f></ion-col>
+            <ion-col size="6"><f class="purple"></f></ion-col>
+            <ion-col size="6"><f class="black"></f></ion-col>
+            <ion-col size="6"><f class="orange"></f></ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-content>
+
+  </ion-app>
+
+  <style>
+    f {
+      display: block;
+      width: 100%;
+      height: 200px;
+      margin: 20px auto;
+    }
+
+    .red {
+      background-color: #ea445a;
+    }
+
+    .green {
+      background-color: #76d672;
+    }
+
+    .blue {
+      background-color: #3478f6;
+    }
+
+    .yellow {
+      background-color: #ffff80;
+    }
+
+    .pink {
+      background-color: #ff6b86;
+    }
+
+    .purple {
+      background-color: #7e34f6;
+    }
+
+    .black {
+      background-color: #000;
+    }
+
+    .orange {
+      background-color: #f69234;
+    }
+
+  </style>
+</body>
+
+</html>

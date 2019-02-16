@@ -1,0 +1,217 @@
+@import "./fab-button.vars";
+
+// Floating Action Buttons
+// --------------------------------------------------
+
+:host {
+  --transition: background-color, opacity 100ms linear;
+  --ripple-color: currentColor;
+  --border-radius: #{$fab-border-radius};
+  --border-width: 0;
+  --border-style: none;
+  --border-color: initial;
+  --padding-top: 0;
+  --padding-end: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+
+  /**
+   * @prop --background: Background of the button
+   * @prop --background-activated: Background of the button when activated
+   * @prop --background-focused: Background of the button when focused
+   *
+   * @prop --color: Text color of the button
+   * @prop --color-activated: Text color of the button when activated
+   * @prop --color-focused: Text color of the button when focused
+   *
+   * @prop --transition: Transition of the button
+   *
+   * @prop --border-radius: Border radius of the button
+   * @prop --border-width: Border width of the button
+   * @prop --border-style: Border style of the button
+   * @prop --border-color: Border color of the button
+   *
+   * @prop --ripple-color: Color of the button ripple effect
+   *
+   * @prop --box-shadow: Box shadow of the button
+   *
+   * @prop --padding-top: Padding top of the button
+   * @prop --padding-end: Padding end of the button
+   * @prop --padding-bottom: Padding bottom of the button
+   * @prop --padding-start: Padding start of the button
+   */
+  @include margin(0);
+  display: block;
+
+  width: #{$fab-size};
+  height: #{$fab-size};
+
+  font-size: 14px;
+
+  text-align: center;
+  text-overflow: ellipsis;
+  text-transform: none;
+
+  white-space: nowrap;
+  font-kerning: none;
+}
+
+
+// FAB with Color
+// --------------------------------------------------
+
+// Default Button with Color
+:host(.ion-color) .button-native {
+  background: #{current-color(base)};
+  color: #{current-color(contrast)};
+}
+
+// Focused/Activated Button with Color
+:host(.ion-color.ion-focused) .button-native,
+:host(.ion-color.activated) .button-native {
+  background: #{current-color(shade)};
+  color: #{current-color(contrast)};
+}
+
+.button-native {
+  @include border-radius(var(--border-radius));
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include text-inherit();
+
+  display: block;
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  transform: var(--transform);
+
+  transition: var(--transition);
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  outline: none;
+
+  background: var(--background);
+
+  background-clip: padding-box;
+  color: var(--color);
+
+  box-shadow: var(--box-shadow);
+  contain: strict;
+  cursor: pointer;
+  overflow: hidden;
+  z-index: 0;
+  appearance: none;
+
+  box-sizing: border-box;
+}
+
+::slotted(ion-icon) {
+  line-height: 1;
+}
+
+.button-inner {
+  @include position(0, 0, null, 0);
+
+  display: flex;
+  position: absolute;
+
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+
+  transition: all ease-in-out 300ms;
+  transition-property: transform, opacity;
+}
+
+
+// FAB States
+// --------------------------------------------------
+
+// Activated / Pressed Button
+:host(.activated) .button-native {
+  background: var(--background-activated);
+  color: var(--color-activated);
+}
+
+// Focused Button
+:host(.ion-focused) .button-native {
+  background: var(--background-focused);
+  color: var(--color-focused);
+}
+
+// Disabled Button
+:host(.fab-button-disabled) {
+  pointer-events: none;
+}
+
+:host(.fab-button-disabled) .button-native {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
+}
+
+// FAB Content
+// --------------------------------------------------
+
+::slotted(ion-icon) {
+  line-height: 1;
+}
+
+
+// FAB small (mini
+// --------------------------------------------------
+
+:host(.fab-button-small) {
+  @include margin(($fab-size - $fab-small-size) / 2);
+
+  width: #{$fab-small-size};
+  height: #{$fab-small-size};
+}
+
+// FAB Close Icon
+// --------------------------------------------------
+
+.close-icon {
+  @include position(0, 0, null, 0);
+
+  display: flex;
+  position: absolute;
+
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+
+  transform: scale(.4) rotateZ(-45deg);
+
+  transition: all ease-in-out 300ms;
+  transition-property: transform, opacity;
+
+  opacity: 0;
+}
+
+// FAB Animation
+// --------------------------------------------------
+
+:host(.fab-button-close-active) .close-icon {
+  transform: scale(1) rotateZ(0deg);
+
+  opacity: 1;
+}
+
+:host(.fab-button-close-active) .button-inner {
+  transform: scale(.4) rotateZ(45deg);
+
+  opacity: 0;
+}
+
+ion-ripple-effect {
+  color: var(--ripple-color);
+}

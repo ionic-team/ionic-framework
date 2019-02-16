@@ -1,0 +1,47 @@
+@import "../../themes/ionic.globals.md";
+@import "../item/item.md.vars";
+
+// Material Design List
+// --------------------------------------------------
+
+/// @prop - Margin top of the list
+$list-md-margin-top:                   0 !default;
+
+/// @prop - Margin end of the list
+$list-md-margin-end:                   0 !default;
+
+/// @prop - Margin bottom of the list
+$list-md-margin-bottom:                0 !default;
+
+/// @prop - Margin start of the list
+$list-md-margin-start:                 0 !default;
+
+/// @prop - Padding top of the list
+$list-md-padding-top:                  8px !default;
+
+/// @prop - Padding end of the list
+$list-md-padding-end:                  0 !default;
+
+/// @prop - Padding bottom of the list
+$list-md-padding-bottom:               8px !default;
+
+/// @prop - Padding start of the list
+$list-md-padding-start:                0 !default;
+
+/// @prop - Border bottom of the item in a list
+$list-md-item-border-bottom-width:     $item-md-border-bottom-width !default;
+
+/// @prop - Margin top of the inset list
+$list-inset-md-margin-top:             16px !default;
+
+/// @prop - Margin end of the inset list
+$list-inset-md-margin-end:             16px !default;
+
+/// @prop - Margin bottom of the inset list
+$list-inset-md-margin-bottom:          16px !default;
+
+/// @prop - Margin start of the inset list
+$list-inset-md-margin-start:           16px !default;
+
+/// @prop - Border radius of the inset list
+$list-inset-md-border-radius:          2px !default;

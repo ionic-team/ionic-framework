@@ -1,0 +1,49 @@
+@import "./toolbar";
+@import "./toolbar.ios.vars";
+
+// iOS Toolbar
+// --------------------------------------------------
+
+:host {
+  --background: #{$toolbar-ios-background};
+  --color: #{$toolbar-ios-color};
+  --border-color: #{$toolbar-ios-border-color};
+  --padding-top: 4px;
+  --padding-bottom: 4px;
+  --padding-start: 4px;
+  --padding-end: 4px;
+  --min-height: 44px;
+}
+
+// Toolbar: Content
+// --------------------------------------------------
+
+.toolbar-content {
+  flex: 1;
+  order: map-get($toolbar-order-ios, content);
+
+  min-width: 0;
+}
+
+// iOS Toolbar Slot Placement
+// --------------------------------------------------
+
+::slotted([slot="start"]) {
+  order: map-get($toolbar-order-ios, slot-start);
+}
+
+::slotted([slot="secondary"]) {
+  order: map-get($toolbar-order-ios, slot-secondary);
+}
+
+::slotted([slot="primary"]) {
+  order: map-get($toolbar-order-ios, slot-primary);
+
+  text-align: end;
+}
+
+::slotted([slot="end"]) {
+  order: map-get($toolbar-order-ios, slot-end);
+
+  text-align: end;
+}

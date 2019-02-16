@@ -1,0 +1,35 @@
+@import "../../themes/ionic.globals.ios";
+@import "../item/item.ios.vars";
+
+// iOS List
+// --------------------------------------------------
+
+/// @prop - Margin top of the list
+$list-ios-margin-top:                 10px !default;
+
+/// @prop - Margin end of the list
+$list-ios-margin-end:                 0 !default;
+
+/// @prop - Margin bottom of the list
+$list-ios-margin-bottom:              32px !default;
+
+/// @prop - Margin start of the list
+$list-ios-margin-start:               0 !default;
+
+/// @prop - Border bottom of the item in a list
+$list-ios-item-border-bottom-width:   $item-ios-border-bottom-width !default;
+
+/// @prop - Margin top of the inset list
+$list-inset-ios-margin-top:           16px !default;
+
+/// @prop - Margin end of the inset list
+$list-inset-ios-margin-end:           16px !default;
+
+/// @prop - Margin bottom of the inset list
+$list-inset-ios-margin-bottom:        16px !default;
+
+/// @prop - Margin start of the inset list
+$list-inset-ios-margin-start:         16px !default;
+
+/// @prop - Border radius of the inset list
+$list-inset-ios-border-radius:        4px !default;

@@ -1,0 +1,79 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Picker
+// --------------------------------------------------
+
+/// @prop - Height of the picker wrapper
+$picker-md-height:                                  260px !default;
+
+/// @prop - Border color of the picker wrapper
+$picker-md-border-color:                            $item-md-border-color !default;
+
+/// @prop - Background Color of the picker wrapper
+$picker-md-background-color:                        $background-color !default;
+
+/// @prop - Top Background Color of the picker wrapper gradient
+$picker-md-top-background-color:                    $picker-md-background-color !default;
+
+/// @prop - Bottom Background Color alpha of the picker wrapper gradient
+$picker-md-bottom-background-color-alpha:           .8 !default;
+
+/// @prop - Bottom Background Color of the picker wrapper gradient
+$picker-md-bottom-background-color:                 rgba($background-color-rgb, $picker-md-bottom-background-color-alpha) !default;
+
+/// @prop - Height of the picker toolbar
+$picker-md-toolbar-height:                          44px !default;
+
+/// @prop - Background of the picker toolbar
+$picker-md-toolbar-background-color:                $picker-md-top-background-color !default;
+
+/// @prop - Height of the picker button
+$picker-md-button-height:                           $picker-md-toolbar-height !default;
+
+/// @prop - Text color of the picker button
+$picker-md-button-text-color:                       ion-color(primary, base) !default;
+
+/// @prop - Background of the picker button
+$picker-md-button-background-color:                 transparent !default;
+
+/// @prop - Font size of the picker button
+$picker-md-button-font-size:                        14px !default;
+
+/// @prop - Padding top of the picker column
+$picker-md-column-padding-top:                      0 !default;
+
+/// @prop - Padding end of the picker column
+$picker-md-column-padding-end:                      8px !default;
+
+/// @prop - Padding bottom of the picker column
+$picker-md-column-padding-bottom:                   $picker-md-column-padding-top !default;
+
+/// @prop - Padding start of the picker column
+$picker-md-column-padding-start:                    $picker-md-column-padding-end !default;
+
+/// @prop - Padding top of the picker option
+$picker-md-option-padding-top:                      0 !default;
+
+/// @prop - Padding end of the picker option
+$picker-md-option-padding-end:                      $picker-md-option-padding-top !default;
+
+/// @prop - Padding bottom of the picker option
+$picker-md-option-padding-bottom:                   $picker-md-option-padding-top !default;
+
+/// @prop - Padding start of the picker option
+$picker-md-option-padding-start:                    $picker-md-option-padding-end !default;
+
+/// @prop - Text color of the picker option
+$picker-md-option-text-color:                       $item-md-color !default;
+
+/// @prop - Font size of the picker option
+$picker-md-option-font-size:                        22px !default;
+
+/// @prop - Height of the picker option
+$picker-md-option-height:                           42px !default;
+
+/// @prop - Offset y of the picker option
+$picker-md-option-offset-y:                         (($picker-md-height - $picker-md-toolbar-height) / 2) - ($picker-md-option-height / 2) - 10 !default;
+
+/// @prop - Text color of the selected picker option
+$picker-md-option-selected-color:                   ion-color(primary, base) !default;

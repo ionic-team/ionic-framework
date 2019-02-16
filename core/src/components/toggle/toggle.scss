@@ -1,0 +1,39 @@
+@import "../../themes/ionic.globals";
+
+// Toggle
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the toggle
+   * @prop --background-checked: Background of the toggle when checked
+   * @prop --handle-background: Background of the toggle handle
+   * @prop --handle-background-checked: Background of the toggle handle when checked
+   */
+
+  /* stylelint-disable-next-line declaration-no-important */
+  box-sizing: content-box !important;
+
+  display: inline-block;
+
+  outline: none;
+
+  contain: content;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  z-index: $z-index-item-input;
+}
+
+:host(.ion-focused) input {
+  border: 2px solid #5e9ed6;
+}
+
+:host(.toggle-disabled) {
+  pointer-events: none;
+}
+
+button {
+  @include input-cover();
+}
+

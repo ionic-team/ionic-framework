@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Select - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique ipsum ipsum, eget hendrerit erat gravida vitae. Cras condimentum aliquam diam faucibus facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti. Duis libero quam, varius ac quam et, pulvinar pretium libero. Suspendisse mollis eros a vehicula pellentesque. Sed viverra eros vel lorem lacinia, lobortis congue dolor dignissim. In congue tincidunt massa, sit amet elementum turpis eleifend in. Nullam laoreet condimentum pharetra. Donec cursus viverra eros nec lacinia. Sed dapibus nulla vel augue efficitur tincidunt. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce suscipit auctor sem et eleifend. Nullam vitae magna ex. Quisque dolor arcu, congue in nisi eu, ullamcorper tincidunt sapien. Praesent sed molestie ante, vitae tincidunt odio.</p>
+  <p>Duis quis rhoncus libero, vitae mollis tortor. Phasellus mollis tellus in auctor ullamcorper. Vivamus eget sagittis arcu, sed egestas dolor. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer mi sapien, pharetra ut sapien vulputate, congue dictum libero. Integer dapibus, arcu at ullamcorper tempus, nulla dolor vestibulum arcu, sit amet laoreet libero leo eu turpis. Nulla varius maximus molestie.</p>
+  <p>Phasellus interdum sem ut viverra bibendum. Vivamus vel turpis arcu. Maecenas ultricies pretium dolor id blandit. In nibh sapien, tristique quis purus vitae, placerat sollicitudin ante. Suspendisse venenatis libero rutrum odio ultricies blandit. Proin a fringilla sem. Etiam pretium metus sem, eu lacinia tellus blandit id.</p>
+  <p>Vestibulum aliquam sapien elementum hendrerit viverra. Vivamus vulputate ligula id dui accumsan, at pulvinar mauris lobortis. Integer a ultrices nulla. Cras ultricies sollicitudin erat. Nam nec dolor a enim vestibulum egestas id non dui. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer sodales libero congue magna dictum auctor. Duis vitae tellus tempor, tempus dolor semper, dictum eros. Etiam at suscipit lacus. Proin magna ipsum, pulvinar rhoncus vulputate vel, finibus nec nisi. Praesent felis neque, porttitor ac pellentesque et, mattis non lorem. Etiam et ex ultrices, posuere purus id, vestibulum massa.</p>
+
+  <ion-select id="gender" placeholder="Select One">
+    <ion-select-option value="f">Female</ion-select-option>
+    <ion-select-option value="m">Male</ion-select-option>
+  </ion-select>
+
+  <ion-select id="hairColor" ok-text="Okay" cancel-text="Dismiss">
+    <ion-select-option value="brown" selected>Brown</ion-select-option>
+    <ion-select-option value="blonde">Blonde</ion-select-option>
+    <ion-select-option value="black">Black</ion-select-option>
+    <ion-select-option value="red">Red</ion-select-option>
+  </ion-select>
+
+  <ion-select id="gaming" interface="popover" value="popover" ok-text="Okay" cancel-text="Dismiss">
+    <ion-select-option value="popover">Popover</ion-select-option>
+    <ion-select-option value="nes">NES</ion-select-option>
+    <ion-select-option value="n64">Nintendo64</ion-select-option>
+    <ion-select-option value="ps">PlayStation</ion-select-option>
+    <ion-select-option value="genesis">Sega Genesis</ion-select-option>
+    <ion-select-option value="saturn">Sega Saturn</ion-select-option>
+    <ion-select-option value="snes">SNES</ion-select-option>
+  </ion-select>
+
+  <ion-select placeholder="Month">
+    <ion-select-option value="01">January</ion-select-option>
+    <ion-select-option value="02">February</ion-select-option>
+    <ion-select-option value="03" selected="true">March</ion-select-option>
+    <ion-select-option value="04">April</ion-select-option>
+    <ion-select-option value="05">May</ion-select-option>
+    <ion-select-option value="06">June</ion-select-option>
+    <ion-select-option value="07">July</ion-select-option>
+    <ion-select-option value="08">August</ion-select-option>
+    <ion-select-option value="09">September</ion-select-option>
+    <ion-select-option value="10">October</ion-select-option>
+    <ion-select-option value="11">November</ion-select-option>
+    <ion-select-option value="12">December</ion-select-option>
+  </ion-select>
+
+  <ion-select placeholder="Year">
+    <ion-select-option>1989</ion-select-option>
+    <ion-select-option>1990</ion-select-option>
+    <ion-select-option>1991</ion-select-option>
+    <ion-select-option>1992</ion-select-option>
+    <ion-select-option>1993</ion-select-option>
+    <ion-select-option selected="true">1994</ion-select-option>
+    <ion-select-option>1995</ion-select-option>
+    <ion-select-option>1996</ion-select-option>
+    <ion-select-option>1997</ion-select-option>
+    <ion-select-option>1998</ion-select-option>
+    <ion-select-option>1999</ion-select-option>
+  </ion-select>
+
+  <ion-select class="custom" placeholder="Day">
+    <ion-select-option>Sunday</ion-select-option>
+    <ion-select-option>Monday</ion-select-option>
+    <ion-select-option>Tuesday</ion-select-option>
+    <ion-select-option>Wednesday</ion-select-option>
+    <ion-select-option>Thursday</ion-select-option>
+    <ion-select-option>Friday</ion-select-option>
+    <ion-select-option>Saturday</ion-select-option>
+  </ion-select>
+
+  <style>
+    .custom {
+      color: crimson;
+    }
+  </style>
+</body>
+</html>

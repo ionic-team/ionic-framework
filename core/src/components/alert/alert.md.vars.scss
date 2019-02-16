@@ -1,0 +1,320 @@
+@import "../../themes/ionic.globals.md";
+@import "../item/item.md.vars";
+
+// Material Design Alert
+// --------------------------------------------------
+
+/// @prop - Font size of the alert
+$alert-md-font-size:                          14px !default;
+
+/// @prop - Max width of the alert
+$alert-md-max-width:                          280px !default;
+
+/// @prop - Border radius of the alert
+$alert-md-border-radius:                      4px !default;
+
+/// @prop - Background color of the alert
+$alert-md-background-color:                   $overlay-md-background-color !default;
+
+/// @prop - Box shadow color of the alert
+$alert-md-box-shadow:                         0 11px 15px -7px rgba(0, 0, 0, .2), 0 24px 38px 3px rgba(0, 0, 0, .14), 0 9px 46px 8px rgba(0, 0, 0, .12) !default;
+
+/// @prop - Padding top of the alert head
+$alert-md-head-padding-top:                   20px !default;
+
+/// @prop - Padding end of the alert head
+$alert-md-head-padding-end:                   23px !default;
+
+/// @prop - Padding bottom of the alert head
+$alert-md-head-padding-bottom:                15px !default;
+
+/// @prop - Padding start of the alert head
+$alert-md-head-padding-start:                 $alert-md-head-padding-end !default;
+
+/// @prop - Text align of the alert head
+$alert-md-head-text-align:                    start !default;
+
+/// @prop - Color of the alert title
+$alert-md-title-color:                        $text-color !default;
+
+/// @prop - Font size of the alert title
+$alert-md-title-font-size:                    20px !default;
+
+/// @prop - Font weight of the alert title
+$alert-md-title-font-weight:                  500 !default;
+
+/// @prop - Font size of the alert sub title
+$alert-md-sub-title-font-size:                16px !default;
+
+/// @prop - Text color of the alert sub title
+$alert-md-sub-title-text-color:               $text-color !default;
+
+/// @prop - Padding top of the alert message
+$alert-md-message-padding-top:                20px !default;
+
+/// @prop - Padding end of the alert message
+$alert-md-message-padding-end:                24px !default;
+
+/// @prop - Padding bottom of the alert message
+$alert-md-message-padding-bottom:             $alert-md-message-padding-top !default;
+
+/// @prop - Padding start of the alert message
+$alert-md-message-padding-start:              $alert-md-message-padding-end !default;
+
+/// @prop - Font size of the alert message
+$alert-md-message-font-size:                  16px !default;
+
+/// @prop - Text color of the alert message
+$alert-md-message-text-color:                 $text-color-step-450 !default;
+
+/// @prop - Padding top of the alert empty message
+$alert-md-message-empty-padding-top:          0 !default;
+
+/// @prop - Padding end of the alert empty message
+$alert-md-message-empty-padding-end:          $alert-md-message-empty-padding-top !default;
+
+/// @prop - Padding bottom of the alert empty message
+$alert-md-message-empty-padding-bottom:       $alert-md-message-empty-padding-top !default;
+
+/// @prop - Padding start of the alert empty message
+$alert-md-message-empty-padding-start:        $alert-md-message-empty-padding-end !default;
+
+/// @prop - Maximum height of the alert content
+$alert-md-content-max-height:                 240px !default;
+
+/// @prop - Border width of the alert input
+$alert-md-input-border-width:                 1px !default;
+
+/// @prop - Border style of the alert input
+$alert-md-input-border-style:                 solid !default;
+
+/// @prop - Border color of the alert input
+$alert-md-input-border-color:                 $background-color-step-150 !default;
+
+/// @prop - Text color of the alert input
+$alert-md-input-text-color:                   $text-color !default;
+
+/// @prop - Border width of the alert input when focused
+$alert-md-input-border-width-focused:         2px !default;
+
+/// @prop - Border style of the alert input when focused
+$alert-md-input-border-style-focused:         $alert-md-input-border-style !default;
+
+/// @prop - Border color of the alert input when focused
+$alert-md-input-border-color-focused:         ion-color(primary, base) !default;
+
+/// @prop - Margin top of the alert input
+$alert-md-input-margin-top:                   5px !default;
+
+/// @prop - Margin end of the alert input
+$alert-md-input-margin-end:                   0 !default;
+
+/// @prop - Margin bottom of the alert input
+$alert-md-input-margin-bottom:                5px !default;
+
+/// @prop - Margin start of the alert input
+$alert-md-input-margin-start:                 0 !default;
+
+/// @prop - Placeholder Color for input
+$alert-md-input-placeholder-color:            $placeholder-text-color !default;
+
+/// @prop - Flex wrap of the alert button group
+$alert-md-button-group-flex-wrap:             wrap-reverse !default;
+
+/// @prop - Justify content of the alert button group
+$alert-md-button-group-justify-content:       flex-end !default;
+
+/// @prop - Padding top of the alert button
+$alert-md-button-padding-top:                 10px !default;
+
+/// @prop - Padding end of the alert button
+$alert-md-button-padding-end:                 $alert-md-button-padding-top !default;
+
+/// @prop - Padding bottom of the alert button
+$alert-md-button-padding-bottom:              $alert-md-button-padding-top !default;
+
+/// @prop - Padding start of the alert button
+$alert-md-button-padding-start:               $alert-md-button-padding-end !default;
+
+/// @prop - Margin top of the alert button
+$alert-md-button-margin-top:                  0 !default;
+
+/// @prop - Margin end of the alert button
+$alert-md-button-margin-end:                  8px !default;
+
+/// @prop - Margin bottom of the alert button
+$alert-md-button-margin-bottom:               0 !default;
+
+/// @prop - Margin start of the alert button
+$alert-md-button-margin-start:                0 !default;
+
+/// @prop - Font weight of the alert button
+$alert-md-button-font-weight:                 500 !default;
+
+/// @prop - Text color of the alert button
+$alert-md-button-text-color:                  ion-color(primary, base) !default;
+
+/// @prop - Background color of the alert button
+$alert-md-button-background-color:            transparent !default;
+
+/// @prop - Background color of the alert activated button
+$alert-md-button-background-color-activated:  ion-color(primary, base, .04) !default;
+
+/// @prop - Border radius of the alert button
+$alert-md-button-border-radius:               2px !default;
+
+/// @prop - Text transform of the alert button
+$alert-md-button-text-transform:              uppercase !default;
+
+/// @prop - Text align of the alert button
+$alert-md-button-text-align:                  end !default;
+
+/// @prop - Border top of the alert list
+$alert-md-list-border-top:                    1px solid $alert-md-input-border-color !default;
+
+/// @prop - Border bottom of the alert list
+$alert-md-list-border-bottom:                 $alert-md-list-border-top !default;
+
+/// @prop - Top of the alert radio
+$alert-md-radio-top:                          0 !default;
+
+/// @prop - Left of the alert radio
+$alert-md-radio-left:                         26px !default;
+
+/// @prop - Width of the alert radio
+$alert-md-radio-width:                        20px !default;
+
+/// @prop - Height of the alert radio
+$alert-md-radio-height:                       $alert-md-radio-width !default;
+
+/// @prop - Border width of the alert radio
+$alert-md-radio-border-width:                 2px !default;
+
+/// @prop - Border style of the alert radio
+$alert-md-radio-border-style:                 solid !default;
+
+/// @prop - Border radius of the alert radio
+$alert-md-radio-border-radius:                50% !default;
+
+/// @prop - Border color of the alert radio when off
+$alert-md-radio-border-color-off:             $text-color-step-450 !default;
+
+/// @prop - Border color of the alert radio when on
+$alert-md-radio-border-color-on:              $alert-md-button-text-color !default;
+
+/// @prop - Width of the icon in the alert radio
+$alert-md-radio-icon-width:                   $alert-md-radio-width / 2 !default;
+
+/// @prop - Height of the icon in the alert radio
+$alert-md-radio-icon-height:                  $alert-md-radio-icon-width !default;
+
+/// @prop - Top of the icon in the alert radio
+$alert-md-radio-icon-top:                     ($alert-md-radio-width - $alert-md-radio-icon-width - $alert-md-radio-border-width * 2) / 2 !default;
+
+/// @prop - Start of the icon in the radio alert
+$alert-md-radio-icon-start:                   $alert-md-radio-icon-top !default;
+
+/// @prop - Border radius of the icon in the alert radio
+$alert-md-radio-icon-border-radius:           $alert-md-radio-border-radius !default;
+
+/// @prop - Transform of the icon in the alert radio when off
+$alert-md-radio-icon-transform-off:           scale3d(0, 0, 0) !default;
+
+/// @prop - Transform of the icon in the alert radio when on
+$alert-md-radio-icon-transform-on:            scale3d(1, 1, 1) !default;
+
+/// @prop - Transition of the icon in the alert radio
+$alert-md-radio-icon-transition:              transform 280ms cubic-bezier(.4, 0, .2, 1) !default;
+
+/// @prop - Padding top on the label for the radio alert
+$alert-md-radio-label-padding-top:            13px !default;
+
+/// @prop - Padding end on the label for the radio alert
+$alert-md-radio-label-padding-end:            26px !default;
+
+/// @prop - Padding bottom on the label for the radio alert
+$alert-md-radio-label-padding-bottom:         $alert-md-radio-label-padding-top !default;
+
+/// @prop - Padding start on the label for the radio alert
+$alert-md-radio-label-padding-start:          $alert-md-radio-label-padding-end + 26px !default;
+
+/// @prop - Font size of the label for the radio alert
+$alert-md-radio-label-font-size:              16px !default;
+
+/// @prop - Text color of the label for the radio alert
+$alert-md-radio-label-text-color:             $text-color-step-150 !default;
+
+/// @prop - Text color of the label for the checked radio alert
+$alert-md-radio-label-text-color-checked:     $alert-md-radio-label-text-color !default;
+
+/// @prop - Top of the checkbox in the alert
+$alert-md-checkbox-top:                       0 !default;
+
+/// @prop - Left of the checkbox in the alert
+$alert-md-checkbox-left:                      26px !default;
+
+/// @prop - Width of the checkbox in the alert
+$alert-md-checkbox-width:                     16px !default;
+
+/// @prop - Height of the checkbox in the alert
+$alert-md-checkbox-height:                    16px !default;
+
+/// @prop - Border width of the checkbox in the alert
+$alert-md-checkbox-border-width:              2px !default;
+
+/// @prop - Border style of the checkbox in the alert
+$alert-md-checkbox-border-style:              solid !default;
+
+/// @prop - Border radius of the checkbox in the alert
+$alert-md-checkbox-border-radius:             2px !default;
+
+/// @prop - Border color of the checkbox in the alert when off
+$alert-md-checkbox-border-color-off:          $text-color-step-450 !default;
+
+/// @prop - Border color of the checkbox in the alert when on
+$alert-md-checkbox-border-color-on:           $alert-md-button-text-color !default;
+
+/// @prop - Top of the icon in the checkbox alert
+$alert-md-checkbox-icon-top:                  0 !default;
+
+/// @prop - Start of the icon in the checkbox alert
+$alert-md-checkbox-icon-start:                3px !default;
+
+/// @prop - Width of the icon in the checkbox alert
+$alert-md-checkbox-icon-width:                6px !default;
+
+/// @prop - Height of the icon in the checkbox alert
+$alert-md-checkbox-icon-height:               10px !default;
+
+/// @prop - Border width of the icon in the checkbox alert
+$alert-md-checkbox-icon-border-width:         2px !default;
+
+/// @prop - Border style of the icon in the checkbox alert
+$alert-md-checkbox-icon-border-style:         solid !default;
+
+/// @prop - Border color of the icon in the checkbox alert
+$alert-md-checkbox-icon-border-color:         ion-color(primary, contrast) !default;
+
+/// @prop - Transform of the icon in the checkbox alert
+$alert-md-checkbox-icon-transform:            rotate(45deg) !default;
+
+/// @prop - Padding top of the label for the checkbox in the alert
+$alert-md-checkbox-label-padding-top:         13px !default;
+
+/// @prop - Padding end of the label for the checkbox in the alert
+$alert-md-checkbox-label-padding-end:         $alert-md-checkbox-left !default;
+
+/// @prop - Padding bottom of the label for the checkbox in the alert
+$alert-md-checkbox-label-padding-bottom:      $alert-md-checkbox-label-padding-top !default;
+
+/// @prop - Padding start of the label for the checkbox in the alert
+$alert-md-checkbox-label-padding-start:       $alert-md-checkbox-label-padding-end + 27px !default;
+
+/// @prop - Text color of the label for the checkbox in the alert
+$alert-md-checkbox-label-text-color:          $text-color-step-150 !default;
+
+/// @prop - Font size of the label for the checkbox in the alert
+$alert-md-checkbox-label-font-size:           16px !default;
+
+/// @prop - Height of the tappable inputs in the checkbox alert
+$alert-md-tappable-height:                    $item-md-min-height !default;

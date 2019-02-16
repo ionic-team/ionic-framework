@@ -1,0 +1,143 @@
+@import "./menu.vars";
+
+// Menu
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the menu
+   *
+   * @prop --min-width: Minimum width of the menu
+   * @prop --width: Width of the menu
+   * @prop --max-width: Maximum width of the menu
+   *
+   * @prop --min-height: Minimum height of the menu
+   * @prop --height: Height of the menu
+   * @prop --max-height: Maximum height of the menu
+   */
+  --width: #{$menu-width};
+  --min-width: auto;
+  --max-width: auto;
+  --height: 100%;
+  --min-height: auto;
+  --max-height: auto;
+  --background: #{$background-color};
+
+  @include position(0, 0, 0, 0);
+
+  display: none;
+  position: absolute;
+
+  contain: strict;
+}
+
+:host(.show-menu) {
+  display: block;
+}
+
+
+.menu-inner {
+  @include position(0, auto, 0, 0);
+  @include transform(translate3d(-9999px, 0, 0));
+
+  display: flex;
+  position: absolute;
+
+  flex-direction: column;
+  justify-content: space-between;
+
+  width: var(--width);
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+
+  height: var(--height);
+  min-height: var(--min-height);
+  max-height: var(--max-height);
+
+  background: var(--background);
+
+  contain: strict;
+}
+
+:host(.menu-side-start) .menu-inner {
+  --ion-safe-area-right: 0px;
+
+  @include multi-dir() {
+    /* stylelint-disable property-blacklist */
+    right: auto;
+    left: 0;
+  }
+}
+
+:host(.menu-side-end) .menu-inner {
+  --ion-safe-area-left: 0px;
+
+  @include multi-dir() {
+    right: 0;
+    left: auto;
+    /* stylelint-enable property-blacklist */
+  }
+}
+
+ion-backdrop {
+  display: none;
+
+  opacity: .01;
+  z-index: -1;
+}
+
+@media (max-width: 340px) {
+  .menu-inner {
+    --width: #{$menu-small-width};
+  }
+}
+
+
+// Menu Reveal
+// --------------------------------------------------
+// The content slides over to reveal the menu underneath.
+// The menu itself, which is under the content, does not move.
+
+:host(.menu-type-reveal) {
+  z-index: 0;
+}
+
+:host(.menu-type-reveal.show-menu) .menu-inner {
+  @include transform(translate3d(0, 0, 0));
+}
+
+
+// Menu Overlay
+// --------------------------------------------------
+// The menu slides over the content. The content
+// itself, which is under the menu, does not move.
+
+:host(.menu-type-overlay) {
+  z-index: $z-index-menu-overlay;
+}
+
+:host(.menu-type-overlay) .show-backdrop {
+  display: block;
+
+  cursor: pointer;
+}
+
+
+// Menu Split Pane
+// --------------------------------------------------
+
+:host(.menu-pane-visible) .menu-inner {
+  @include position-horizontal(0, 0);
+
+  width: auto;
+
+  /* stylelint-disable declaration-no-important */
+  transform: none !important;
+
+  box-shadow: none !important;
+}
+
+:host(.menu-pane-visible) ion-backdrop {
+  display: hidden !important;
+  /* stylelint-enable declaration-no-important */
+}

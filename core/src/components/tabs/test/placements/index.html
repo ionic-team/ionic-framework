@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Tab - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+
+  <ion-app>
+    <ion-tabs>
+      <ion-tab tab="star-tab">
+
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Tab One</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content padding>
+          Tab One
+        </ion-content>
+
+      </ion-tab>
+
+      <ion-tab tab="globe-tab">
+
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Tab Two</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content padding>
+          Tab Two
+        </ion-content>
+
+      </ion-tab>
+
+      <ion-tab tab="facebook-tab">
+
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Tab Three</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content padding>
+          Tab Three
+        </ion-content>
+
+      </ion-tab>
+
+      <ion-tab tab="page-one" disabled icon="chatboxes" component="page-one"></ion-tab>
+
+      <ion-tab-bar slot="top">
+        <ion-tab-button tab="star-tab">
+          <ion-icon name="star"></ion-icon>
+        </ion-tab-button>
+
+        <ion-tab-button tab="globe-tab">
+          <ion-icon name="globe"></ion-icon>
+        </ion-tab-button>
+
+        <ion-tab-button tab="facebook-tab">
+          <ion-icon name="logo-facebook"></ion-icon>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+
+  </ion-app>
+</body>
+
+</html>

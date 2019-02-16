@@ -1,0 +1,92 @@
+@import "./buttons.ios.vars";
+@import "./buttons";
+
+
+// iOS Toolbar Default Button
+// --------------------------------------------------
+
+::slotted(*) ion-button {
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 5px;
+  --padding-end: 5px;
+
+  height: 32px;
+
+  font-size: #{$toolbar-ios-button-font-size};
+  font-weight: 400;
+}
+
+::slotted(*) ion-button:not(.button-round) {
+  --border-radius: #{$toolbar-ios-button-border-radius};
+}
+
+// iOS Toolbar with Color Default Button
+// --------------------------------------------------
+
+:host-context(.ion-color)::slotted(*) .button {
+  --color: initial;
+  --color-activated: initial;
+}
+
+
+// iOS Toolbar Button Solid
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  ::slotted(*) .button-solid-ios:hover {
+    opacity: .4;
+  }
+}
+
+
+// iOS Toolbar Button Icon
+// --------------------------------------------------
+::slotted(*) ion-icon[slot="start"] {
+  @include margin(0);
+  @include margin-horizontal(null, .3em);
+
+  font-size: 24px;
+
+  line-height: .67;
+}
+
+::slotted(*) ion-icon[slot="end"] {
+  @include margin(0);
+  @include margin-horizontal(.4em, null);
+
+  font-size: 24px;
+
+  line-height: .67;
+}
+
+::slotted(*) ion-icon[slot="icon-only"] {
+  @include padding(0);
+  @include margin(0);
+
+  font-size: 31px;
+
+  line-height: .67;
+}
+
+
+// iOS Toolbar Menu Toggle
+// --------------------------------------------------
+
+// .button-menutoggle-ios {
+//   order: map-get($toolbar-order-ios, menu-toggle-start);
+
+//   min-width: 36px;
+
+//   --padding-top: 0;
+//   --padding-bottom: 0;
+//   --padding-start: 0;
+//   --padding-end: 0;
+
+//   ion-icon {
+//     @include padding(0, 6px);
+
+//     font-size: 28px;
+//   }
+// }
+

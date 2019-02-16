@@ -1,0 +1,17 @@
+@import "./card-title";
+@import "./card-title.md.vars";
+
+// Material Design Card Title
+// --------------------------------------------------
+
+:host {
+  --color: #{$card-md-title-text-color};
+
+  @include margin($card-md-title-margin-top, $card-md-title-margin-end, $card-md-title-margin-bottom, $card-md-title-margin-start);
+  @include padding($card-md-title-padding-top, $card-md-title-padding-end, $card-md-title-padding-bottom, $card-md-title-padding-start);
+
+  font-size: $card-md-title-font-size;
+  font-weight: 500;
+
+  line-height: 1.2;
+}

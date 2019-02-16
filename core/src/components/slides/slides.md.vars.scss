@@ -1,0 +1,28 @@
+@import "../../themes/ionic.globals.md";
+
+/// @prop - Background color of the bullet
+$slides-md-bullet-background:                   $text-color-step-800 !default;
+
+/// @prop - Background color of the active bullet
+$slides-md-bullet-background-active:            ion-color(primary, base) !default;
+
+/// @prop - Alpha to use for the background color of the progress bar
+$slides-md-progress-bar-background-alpha:       .25 !default;
+
+/// @prop - Background color of the progress
+$slides-md-progress-bar-background:             rgba(var(--ion-text-color-rgb, $text-color-rgb), $slides-md-progress-bar-background-alpha) !default;
+
+/// @prop - Background color of the progress bar
+$slides-md-progress-bar-background-active:      ion-color(primary, shade) !default;
+
+/// @prop - Alpha to use for the background color of the scroll bar
+$slides-md-scroll-bar-background-alpha:         .1 !default;
+
+/// @prop - Background color of the scroll bar
+$slides-md-scroll-bar-background:               rgba(var(--ion-text-color-rgb, $text-color-rgb), $slides-md-scroll-bar-background-alpha) !default;
+
+/// @prop - Alpha to use for the background color of the scroll bar while dragging
+$slides-md-scroll-bar-drag-background-alpha:    .5 !default;
+
+/// @prop - Background color of the scroll bar drag handle
+$slides-md-scroll-bar-drag-background:          rgba(var(--ion-text-color-rgb, $text-color-rgb), $slides-md-scroll-bar-drag-background-alpha) !default;

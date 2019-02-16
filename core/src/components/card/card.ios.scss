@@ -1,0 +1,19 @@
+@import "./card";
+@import "./card.ios.vars";
+
+// iOS Card
+// --------------------------------------------------
+
+:host {
+  --background: var(--ion-item-background, transparent);
+  --color: #{$card-ios-text-color};
+
+  @include margin($card-ios-margin-top, $card-ios-margin-end, $card-ios-margin-bottom, $card-ios-margin-start);
+  @include border-radius($card-ios-border-radius);
+
+  transform: translateZ(0);
+
+  font-size: $card-ios-font-size;
+
+  box-shadow: $card-ios-box-shadow;
+}

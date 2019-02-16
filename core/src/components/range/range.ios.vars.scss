@@ -1,0 +1,79 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Range
+// --------------------------------------------------
+
+/// @prop - Padding top/bottom of the range
+$range-ios-padding-vertical:                  8px !default;
+
+/// @prop - Padding start/end of the range
+$range-ios-padding-horizontal:                16px !default;
+
+/// @prop - Height of the range slider
+$range-ios-slider-height:                     42px !default;
+
+/// @prop - Width of the area that will select the range knob
+$range-ios-hit-width:                         42px !default;
+
+/// @prop - Height of the area that will select the range knob
+$range-ios-hit-height:                        $range-ios-slider-height !default;
+
+/// @prop - Height of the range bar
+$range-ios-bar-height:                        1px !default;
+
+/// @prop - Background of the range bar
+$range-ios-bar-background-color:              $background-color-step-250 !default;
+
+/// @prop - Background of the active range bar
+$range-ios-bar-active-background-color:       current-color(base) !default;
+
+/// @prop - Width of the range knob
+$range-ios-knob-width:                        28px !default;
+
+/// @prop - Height of the range knob
+$range-ios-knob-height:                       $range-ios-knob-width !default;
+
+/// @prop - Box shadow of the range knob
+$range-ios-knob-box-shadow:                   0 3px 1px rgba(0, 0, 0, .1), 0 4px 8px rgba(0, 0, 0, .13), 0 0 0 1px rgba(0, 0, 0, .02) !default;
+
+/// @prop - Border radius of the range knob
+$range-ios-knob-border-radius:                50% !default;
+
+/// @prop - Background of the range knob
+$range-ios-knob-background-color:             $background-color !default;
+
+/// @prop - Width of the range tick
+$range-ios-tick-width:                        $range-ios-bar-height !default;
+
+/// @prop - Height of the range tick
+$range-ios-tick-height:                       8px !default;
+
+/// @prop - Border radius of the range tick
+$range-ios-tick-border-radius:                0 !default;
+
+/// @prop - Background of the range tick
+$range-ios-tick-background-color:             $range-ios-bar-background-color !default;
+
+/// @prop - Background of the active range tick
+$range-ios-tick-active-background-color:      $range-ios-bar-active-background-color !default;
+
+/// @prop - Background of the range pin
+$range-ios-pin-background-color:              transparent !default;
+
+/// @prop - Color of the range pin
+$range-ios-pin-color:                         $text-color !default;
+
+/// @prop - Font size of the range pin
+$range-ios-pin-font-size:                     12px !default;
+
+/// @prop - Padding top of the range pin
+$range-ios-pin-padding-top:                   8px !default;
+
+/// @prop - Padding end of the range pin
+$range-ios-pin-padding-end:                   $range-ios-pin-padding-top !default;
+
+/// @prop - Padding bottom of the range pin
+$range-ios-pin-padding-bottom:                $range-ios-pin-padding-top !default;
+
+/// @prop - Padding start of the range pin
+$range-ios-pin-padding-start:                 $range-ios-pin-padding-end !default;

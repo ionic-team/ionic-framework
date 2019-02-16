@@ -1,0 +1,113 @@
+@import "../../themes/ionic.globals";
+
+// Toolbar
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the toolbar
+   * @prop --border-color: Color of the toolbar border
+   * @prop --border-style: Style of the toolbar border
+   * @prop --border-width: Width of the toolbar border
+   * @prop --color: Color of the toolbar text
+   * @prop --min-height: Minimum height of the toolbar
+   * @prop --opacity: Opacity of the toolbar background
+   * @prop --padding-bottom: Bottom padding of the toolbar
+   * @prop --padding-end: End padding of the toolbar
+   * @prop --padding-start: Start padding of the toolbar
+   * @prop --padding-top: Top padding of the toolbar
+   */
+  --border-width: 0;
+  --border-style: solid;
+  --opacity: 1;
+
+  @include font-smoothing();
+  @include padding-horizontal(
+    var(--ion-safe-area-left),
+    var(--ion-safe-area-right)
+  );
+
+  display: block;
+
+  position: relative;
+
+  width: 100%;
+
+  color: var(--color);
+
+  font-family: $font-family-base;
+
+  contain: content;
+
+  z-index: $z-index-toolbar;
+  box-sizing: border-box;
+}
+
+:host(.ion-color) {
+  color: current-color(contrast);
+}
+
+:host(.ion-color) .toolbar-background {
+  background: current-color(base);
+}
+
+.toolbar-container {
+  @include padding(
+    var(--padding-top),
+    var(--padding-end),
+    var(--padding-bottom),
+    var(--padding-start)
+  );
+  display: flex;
+  position: relative;
+
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+
+  min-height: var(--min-height);
+
+  contain: content;
+  overflow: hidden;
+  z-index: $z-index-toolbar;
+
+  box-sizing: border-box;
+}
+
+// Toolbar: Transparent
+// --------------------------------------------------
+
+.toolbar-background {
+  @include position(0, 0, 0, 0);
+
+  position: absolute;
+
+  transform: translateZ(0);
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  background: var(--background);
+
+  contain: strict;
+  opacity: var(--opacity);
+  z-index: $z-index-toolbar-background;
+  pointer-events: none;
+}
+
+
+// Toolbar: Segment
+// --------------------------------------------------
+
+:host(.toolbar-segment) {
+  --min-height: auto;
+}
+
+::slotted(ion-progress-bar) {
+  @include position(null, 0, 0, 0);
+
+  position: absolute;
+}

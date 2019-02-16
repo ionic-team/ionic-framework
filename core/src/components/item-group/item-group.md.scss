@@ -1,0 +1,11 @@
+@import "./item-group";
+@import "./item-group.md.vars";
+
+
+// Material Design Item Group
+// --------------------------------------------------
+
+.item-group-md ion-item:last-child,
+.item-group-md ion-item-sliding:last-child ion-item {
+  --border-width: 0;
+}

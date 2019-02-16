@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Badge - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body padding>
+  <h1>Default</h1>
+
+  <!-- Default -->
+  <ion-badge>99</ion-badge>
+
+  <hr>
+
+  <!-- Colors -->
+  <ion-badge color="primary">11</ion-badge>
+  <ion-badge color="secondary">22</ion-badge>
+  <ion-badge color="tertiary">33</ion-badge>
+  <ion-badge color="success">44</ion-badge>
+  <ion-badge color="warning">55</ion-badge>
+  <ion-badge color="danger">66</ion-badge>
+  <ion-badge color="light">77</ion-badge>
+  <ion-badge color="medium">88</ion-badge>
+  <ion-badge color="dark">99</ion-badge>
+
+  <h1>Custom</h1>
+
+  <!-- Custom Font -->
+  <ion-badge class="wide">wide</ion-badge>
+  <ion-badge class="large">large</ion-badge>
+  <ion-badge class="round">round</ion-badge>
+
+  <!-- Custom Colors -->
+  <ion-badge class="custom">custom</ion-badge>
+  <ion-badge color="secondary" class="custom">custom w/ secondary</ion-badge>
+
+  <style>
+    ion-badge {
+      --background: blue;
+    }
+
+    .wide {
+      min-width: 80px;
+    }
+
+    .large {
+      font-weight: normal;
+      font-size: 24px;
+    }
+
+    .round {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      vertical-align: middle;
+      line-height: 50px;
+    }
+
+    .custom {
+      --background: lightpink;
+      --color: #222;
+    }
+  </style>
+</body>
+</html>

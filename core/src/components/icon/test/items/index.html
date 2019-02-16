@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Icon - Items</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+  <style>
+    profile-modal {
+      background: red;
+    }
+
+  </style>
+</head>
+
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Icon - Items</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content id="content">
+      <ion-list>
+        <ion-item>
+          <ion-icon id="dynamicColor" name="home" slot="start"></ion-icon>
+          <code>
+            dynamicColor name="home"
+          </code>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="home" is-active="true" slot="start"></ion-icon>
+          <code>
+            name="home" is-active="true"
+          </code>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon id="dynamicProp" is-active="false" slot="start"></ion-icon>
+          <code>
+            dynamicProp is-active="false"
+          </code>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon id="dynamicAttr" is-active="false" slot="start"></ion-icon>
+          <code>
+            dynamicAttr is-active="false"
+          </code>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="md-home" is-active="true" slot="start"></ion-icon>
+          <code>
+            name="md-home" is-active="true"
+          </code>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="ios-home" is-active="true" slot="start"></ion-icon>
+          <code>
+            name="ios-home" is-active="true"
+          </code>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="ios-home" slot="start"></ion-icon>
+          <code>
+            name="ios-home"
+          </code>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="md-home" color="primary" slot="start"></ion-icon>
+          <code>
+            name="md-home"
+          </code>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="logo-twitter" color="secondary" slot="start"></ion-icon>
+          <code>
+            name="logo-twitter"
+          </code>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon ios="logo-apple" md="logo-android" slot="start"></ion-icon>
+          <code>
+            ios="logo-apple" md="logo-android"
+          </code>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon ios="md-color-filter" md="ios-color-filter" slot="start"></ion-icon>
+          <code>
+            ios="md-color-filter" md="ios-color-filter"
+          </code>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon ios="md-color-filter" md="ios-color-filter" is-active="false" slot="start"></ion-icon>
+          <code>
+            ios="md-color-filter" md="ios-color-filter" is-active="false"
+          </code>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon slot="start"></ion-icon>
+          <code>
+            name="null"
+          </code>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="home" hidden="true" slot="start"></ion-icon>
+          <code>
+            name="home" hidden="true"
+          </code>
+        </ion-item>
+
+      </ion-list>
+
+      <script>
+        var dynamicColor = document.getElementById('dynamicColor');
+        var dynamicProp = document.getElementById('dynamicProp');
+        var dynamicAttr = document.getElementById('dynamicAttr');
+
+        dynamicColor.setAttribute('color', 'danger');
+
+        let interval = setInterval(function () {
+          if (dynamicProp.name === 'home') {
+            dynamicProp.name = 'ios-home';
+            dynamicAttr.setAttribute('name', 'ios-home');
+          } else if (dynamicProp.name === 'ios-home') {
+            dynamicProp.name = 'md-home';
+            dynamicAttr.setAttribute('name', 'md-home');
+          } else {
+            dynamicProp.name = 'home';
+            dynamicAttr.setAttribute('name', 'home');
+          }
+        }, 1000);
+
+        setTimeout(function () {
+          clearInterval(interval);
+        }, 4000);
+      </script>
+
+    </ion-content>
+
+  </ion-app>
+</body>
+
+</html>

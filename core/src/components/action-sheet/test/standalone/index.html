@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Action Sheet - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <button id="basic" onclick="presentBasic()">Basic</button>
+  <button id="noBackdropDismiss" onclick="presentNoBackdropDismiss()">No Backdrop Dismiss</button>
+  <button id="alertFromActionSheet" onclick="presentAlert()">Alert from Action Sheet</button>
+  <button id="scrollableOptions" onclick="presentScroll()">Scrollable Options</button>
+  <button id="scrollWithoutCancel" onclick="presentScrollNoCancel()">Scroll Without Cancel</button>
+  <button id="cancelOnly" onclick="presentCancelOnly()">Cancel Only</button>
+  <button id="icons" onclick="presentIcons()">Icons</button>
+  <button id="cssClass" onclick="presentWithCssClass()">Custom CSS Class</button>
+
+  <ion-action-sheet-controller></ion-action-sheet-controller>
+
+  <style>
+    body > button {
+      display: block;
+      clear: both;
+      width: 100%;
+      padding: 12px 8px;
+      font-size: 1em;
+      background: #f8f8f8;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+  </style>
+
+  <script>
+    window.addEventListener('ionActionSheetDidDismiss', function(e){console.log('didDismiss', e)})
+    async function presentBasic() {
+      const actionSheetController = document.querySelector('ion-action-sheet-controller');
+      await actionSheetController.componentOnReady();
+      const actionSheetElement = await actionSheetController.create({
+        header: "Albums",
+        buttons: [{
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            console.log('Delete clicked');
+          }
+        }, {
+          text: 'Share',
+          icon: 'share',
+          handler: () => {
+            console.log('Share clicked');
+          }
+        }, {
+          text: 'Play (open modal)',
+          icon: 'arrow-dropright-circle',
+          handler: () => {
+            console.log('Play clicked');
+          }
+        }, {
+          text: 'Favorite',
+          icon: 'heart',
+          role: 'selected',
+          handler: () => {
+            console.log('Favorite clicked');
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }]
+      })
+      await actionSheetElement.present();
+    }
+
+    async function presentIcons() {
+      const mode = Ionic.mode;
+
+      const actionSheetController = document.querySelector('ion-action-sheet-controller');
+      await actionSheetController.componentOnReady();
+      const actionSheetElement = await actionSheetController.create({
+        header: "Albums",
+        buttons: [{
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            console.log('Delete clicked');
+          }
+        }, {
+          text: 'Share',
+          icon: 'share',
+          handler: () => {
+            console.log('Share clicked');
+          }
+        }, {
+          text: 'Play (open modal)',
+          icon: 'arrow-dropright-circle',
+          handler: () => {
+            console.log('Play clicked');
+          }
+        }, {
+          text: 'Favorite',
+          icon: 'heart',
+          handler: () => {
+            console.log('Favorite clicked');
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel',
+          icon: 'close',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }]
+      })
+      await actionSheetElement.present();
+    }
+
+    async function presentNoBackdropDismiss() {
+      const actionSheetController = document.querySelector('ion-action-sheet-controller');
+      await actionSheetController.componentOnReady();
+      const actionSheetElement = await actionSheetController.create({
+        buttons: [{
+          text: 'Archive',
+          handler: () => {
+            console.log('Archive clicked');
+          }
+        }, {
+          text: 'Destructive',
+          role: 'destructive',
+          handler: () => {
+            console.log('Destructive clicked');
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }]
+      });
+      await actionSheetElement.present();
+    }
+
+    async function presentAlert() {
+      const actionSheetController = document.querySelector('ion-action-sheet-controller');
+      await actionSheetController.componentOnReady();
+      const actionSheetElement = await actionSheetController.create({
+        buttons: [{
+          text: 'Open Alert',
+          handler: () => {
+            console.log('Open Alert clicked');
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }]
+      });
+      await actionSheetElement.present();
+    }
+
+    async function presentScroll() {
+      const actionSheetController = document.querySelector('ion-action-sheet-controller');
+      await actionSheetController.componentOnReady();
+      const actionSheetElement = await actionSheetController.create({
+        buttons: [
+          {
+            text: 'Add Reaction',
+            handler: () => {
+              console.log('Add Reaction clicked');
+            }
+          }, {
+            text: 'Copy Text',
+            handler: () => {
+              console.log('Copy Text clicked');
+            }
+          }, {
+            text: 'Share Text',
+            handler: () => {
+              console.log('Share Text clicked');
+            }
+          }, {
+            text: 'Copy Link to Message',
+            handler: () => {
+              console.log('Copy Link to Message clicked');
+            }
+          }, {
+            text: 'Remind Me',
+            handler: () => {
+              console.log('Remind Me clicked');
+            }
+          }, {
+            text: 'Pin File',
+            handler: () => {
+              console.log('Pin File clicked');
+            }
+          }, {
+            text: 'Star File',
+            handler: () => {
+              console.log('Star File clicked');
+            }
+          }, {
+            text: 'Mark Unread',
+            handler: () => {
+              console.log('Mark Unread clicked');
+            }
+          }, {
+            text: 'Edit Title',
+            handler: () => {
+              console.log('Edit Title clicked');
+            }
+          }, {
+            text: 'Save Image',
+            handler: () => {
+              console.log('Save Image clicked');
+            }
+          }, {
+            text: 'Copy Image',
+            handler: () => {
+              console.log('Copy Image clicked');
+            }
+          }, {
+            text: 'Delete File',
+            role: 'destructive',
+            handler: () => {
+              console.log('Delete File clicked');
+            }
+          }, {
+            text: 'Cancel',
+            role: 'cancel', // will always sort to be on the bottom
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          }
+        ]
+      });
+      await actionSheetElement.present();
+    }
+
+    async function presentScrollNoCancel() {
+      const actionSheetController = document.querySelector('ion-action-sheet-controller');
+      await actionSheetController.componentOnReady();
+      const actionSheetElement = await actionSheetController.create({
+        buttons: [
+          {
+            text: 'Add Reaction',
+            handler: () => {
+              console.log('Add Reaction clicked');
+            }
+          }, {
+            text: 'Copy Text',
+            handler: () => {
+              console.log('Copy Text clicked');
+            }
+          }, {
+            text: 'Share Text',
+            handler: () => {
+              console.log('Share Text clicked');
+            }
+          }, {
+            text: 'Copy Link to Message',
+            handler: () => {
+              console.log('Copy Link to Message clicked');
+            }
+          }, {
+            text: 'Remind Me',
+            handler: () => {
+              console.log('Remind Me clicked');
+            }
+          }, {
+            text: 'Pin File',
+            handler: () => {
+              console.log('Pin File clicked');
+            }
+          }, {
+            text: 'Star File',
+            handler: () => {
+              console.log('Star File clicked');
+            }
+          }, {
+            text: 'Mark Unread',
+            handler: () => {
+              console.log('Mark Unread clicked');
+            }
+          }, {
+            text: 'Edit Title',
+            handler: () => {
+              console.log('Edit Title clicked');
+            }
+          }, {
+            text: 'Save Image',
+            handler: () => {
+              console.log('Save Image clicked');
+            }
+          }, {
+            text: 'Copy Image',
+            handler: () => {
+              console.log('Copy Image clicked');
+            }
+          }, {
+            text: 'Delete File',
+            role: 'destructive',
+            handler: () => {
+              console.log('Delete File clicked');
+            }
+          }
+        ]
+      });
+      await actionSheetElement.present();
+    }
+
+    async function presentCancelOnly() {
+      const actionSheetController = document.querySelector('ion-action-sheet-controller');
+      await actionSheetController.componentOnReady();
+      const actionSheetElement = await actionSheetController.create({
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel', // will always sort to be on the bottom
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          }
+        ]
+      });
+      await actionSheetElement.present();
+    }
+
+    async function presentWithCssClass() {
+      const actionSheetController = document.querySelector('ion-action-sheet-controller');
+      await actionSheetController.componentOnReady();
+      const actionSheetElement = await actionSheetController.create({
+        header: "Custom Css Class",
+        cssClass: "my-class my-custom-class",
+        buttons: [
+          {
+            text: 'Test',
+            role: 'test',
+            cssClass: 'my-cancel-button my-custom-button customClass',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          }
+        ]
+      });
+      await actionSheetElement.present();
+    }
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Item Option
+// --------------------------------------------------
+
+/// @prop - Font size of the item option button
+$item-option-button-ios-font-size:          16px !default;
+
+/// @prop - Background color of the item option button
+$item-option-button-ios-background-color:   ion-color(primary, base) !default;
+
+/// @prop - Text color of the item option button
+$item-option-button-ios-text-color:         ion-color(primary, contrast) !default;
+
+/// @prop - color of the item option button icon
+$item-option-button-ios-icon-color:         ion-color(primary, contrast) !default;

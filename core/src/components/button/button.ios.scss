@@ -1,0 +1,129 @@
+@import "./button";
+@import "./button.ios.vars";
+
+
+// iOS Button
+// --------------------------------------------------
+
+:host {
+  --border-radius: #{$button-ios-border-radius};
+  --padding-top: #{$button-ios-padding-top};
+  --padding-bottom: #{$button-ios-padding-bottom};
+  --padding-start: #{$button-ios-padding-start};
+  --padding-end: #{$button-ios-padding-end};
+  --transition: background-color, opacity 100ms linear;
+
+  @include margin($button-ios-margin-top, $button-ios-margin-end, $button-ios-margin-bottom, $button-ios-margin-start);
+
+  height: #{$button-ios-height};
+
+  font-size: #{$button-ios-font-size};
+  font-weight: #{$button-ios-font-weight};
+
+  letter-spacing: #{$button-ios-letter-spacing};
+}
+
+// iOS Solid Button
+// --------------------------------------------------
+
+:host(.button-solid) {
+  --background-activated: #{ion-color(primary, shade)};
+}
+
+:host(.button-solid.activated) {
+  --opacity: #{$button-ios-opacity-activated};
+}
+
+// iOS Outline Button
+// --------------------------------------------------
+
+:host(.button-outline) {
+  --border-radius: #{$button-ios-outline-border-radius};
+  --border-width: #{$button-ios-outline-border-width};
+  --border-style: #{$button-ios-outline-border-style};
+  --background-activated: #{ion-color(primary, base)};
+  --background-focused: #{ion-color(primary, base, .1)};
+  --color-activated: #{ion-color(primary, contrast)};
+}
+
+:host(.button-outline.activated.ion-color) .button-native {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+
+// iOS Clear Button
+// --------------------------------------------------
+
+:host(.button-clear.activated) {
+  --opacity: #{$button-ios-clear-opacity-activated};
+}
+
+:host(.button-clear) {
+  --background-activated: transparent;
+  --background-focused: #{ion-color(primary, base, .1)};
+  --color-activated: #{ion-color(primary, base)};
+  --color-focused: #{ion-color(primary, base)};
+}
+
+
+// iOS Round Button
+// --------------------------------------------------
+
+:host(.button-round) {
+  --border-radius: #{$button-ios-round-border-radius};
+  --padding-top: #{$button-ios-round-padding-top};
+  --padding-start: #{$button-ios-round-padding-start};
+  --padding-end: #{$button-ios-round-padding-end};
+  --padding-bottom: #{$button-ios-round-padding-bottom};
+}
+
+
+// iOS Button Sizes
+// --------------------------------------------------
+
+:host(.button-large) {
+  --border-radius: #{$button-ios-large-border-radius};
+  --padding-top: #{$button-ios-large-padding-top};
+  --padding-start: #{$button-ios-large-padding-start};
+  --padding-end: #{$button-ios-large-padding-end};
+  --padding-bottom: #{$button-ios-large-padding-bottom};
+
+  height: #{$button-ios-large-height};
+
+  font-size: #{$button-ios-large-font-size};
+}
+
+:host(.button-small) {
+  --border-radius: #{$button-ios-small-border-radius};
+  --padding-top: #{$button-ios-small-padding-top};
+  --padding-start: #{$button-ios-small-padding-start};
+  --padding-end: #{$button-ios-small-padding-end};
+  --padding-bottom: #{$button-ios-small-padding-bottom};
+
+  height: #{$button-ios-small-height};
+
+  font-size: #{$button-ios-small-font-size};
+}
+
+
+// iOS strong Button
+// --------------------------------------------------
+
+:host(.button-strong) {
+  font-weight: #{$button-ios-strong-font-weight};
+}
+
+
+// iOS Button Focus
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(.button-solid:hover) {
+    --opacity: #{$button-ios-opacity-hover};
+  }
+
+  :host(.button-clear:hover) {
+    --opacity: #{$button-ios-clear-opacity-hover};
+  }
+}

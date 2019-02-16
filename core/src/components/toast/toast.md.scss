@@ -1,0 +1,38 @@
+@import "./toast";
+@import "./toast.md.vars";
+
+// Material Design Toast
+// --------------------------------------------------
+
+:host {
+  --background: #{$toast-md-background};
+  --border-radius: #{$toast-md-border-radius};
+  --box-shadow: #{$toast-md-box-shadow};
+  --button-color: #{ion-color(primary, base)};
+  --color: #{$toast-md-color};
+  --max-width: #{$toast-max-width};
+
+  font-size: #{$toast-md-font-size};
+}
+
+.toast-wrapper {
+  @include position-horizontal(8px, 8px);
+  @include margin(auto);
+
+  display: block;
+  position: absolute;
+
+  opacity: .01;
+
+  z-index: $z-index-overlay-wrapper;
+}
+
+.toast-message {
+  @include padding($toast-md-message-padding-top, $toast-md-message-padding-end, $toast-md-message-padding-bottom, $toast-md-message-padding-start);
+
+  line-height: $toast-md-message-line-height;
+}
+
+.toast-button {
+  --margin-end: 0;
+}

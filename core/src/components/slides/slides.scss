@@ -1,0 +1,50 @@
+@import "./slides.vars";
+@import "./slides-vendor";
+
+// Slides
+// --------------------------------------------------
+
+.slides {
+  /**
+   * @prop --bullet-background: Background of the pagination bullets
+   * @prop --bullet-background-active: Background of the active pagination bullet
+   */
+  display: block;
+
+  user-select: none;
+}
+
+
+// Pagination Bullets
+// --------------------------------------------------
+
+.swiper-pagination-bullet {
+  background: var(--bullet-background);
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--bullet-background-active);
+}
+
+
+// Pagination Progress Bar
+// --------------------------------------------------
+
+.swiper-pagination-progressbar {
+  background: var(--progress-bar-background);
+}
+
+.swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
+  background: var(--progress-bar-background-active);
+}
+
+// Scrollbar
+// --------------------------------------------------
+
+.swiper-scrollbar {
+  background: var(--scroll-bar-background);
+}
+
+.swiper-scrollbar-drag {
+  background: var(--scroll-bar-background-active);
+}

@@ -1,0 +1,122 @@
+@import "./searchbar";
+@import "./searchbar.md.vars";
+
+// Material Design Searchbar
+// --------------------------------------------------
+
+:host {
+  --clear-button-color: initial;
+  --cancel-button-color: #{$searchbar-md-cancel-button-color};
+  --color: #{$searchbar-md-input-text-color};
+  --icon-color: #{$searchbar-md-input-search-icon-color};
+  --background: #{$searchbar-md-input-background-color};
+
+  @include padding($searchbar-md-padding-top, $searchbar-md-padding-end, $searchbar-md-padding-bottom, $searchbar-md-padding-start);
+
+  background: $searchbar-md-background;
+}
+
+
+// Searchbar Search Icon
+// -----------------------------------------
+
+.searchbar-search-icon {
+  @include position(11px, null, null, 16px);
+
+  width: $searchbar-md-input-search-icon-size + 1;
+  height: $searchbar-md-input-search-icon-size + 1;
+}
+
+
+// Searchbar Cancel Icon
+// -----------------------------------------
+
+.searchbar-cancel-button {
+  @include position(0, null, null, 5px);
+
+  background-color: $searchbar-md-cancel-button-background-color;
+
+  font-size: $searchbar-md-cancel-button-font-size;
+}
+
+// Searchbar Search & Cancel Icon
+// -----------------------------------------
+
+.searchbar-search-icon,
+.searchbar-cancel-button {
+  position: absolute;
+}
+
+.searchbar-search-icon.activated,
+.searchbar-cancel-button.activated {
+  background-color: transparent;
+}
+
+
+// Searchbar Input Field
+// -----------------------------------------
+
+.searchbar-input {
+  @include padding(6px, 55px);
+  @include border-radius($searchbar-md-input-border-radius);
+  @include background-position(start, 8px, center);
+
+  height: $searchbar-md-input-height;
+
+  font-size: 16px;
+  font-weight: 400;
+
+  line-height: $searchbar-md-input-line-height;
+
+  box-shadow: $searchbar-md-input-box-shadow;
+}
+
+
+// Searchbar Clear Input Icon
+// -----------------------------------------
+
+.searchbar-clear-button {
+  @include position(0, 13px, null, null);
+  @include padding(0);
+
+  position: absolute;
+
+  height: 100%;
+
+  border: 0;
+
+  background-color: transparent;
+}
+
+.searchbar-clear-button.activated {
+  background-color: transparent;
+}
+
+.searchbar-clear-icon {
+  width: $searchbar-md-input-clear-icon-size;
+  height: 100%;
+}
+
+
+// Searchbar Focused
+// -----------------------------------------
+
+:host(.searchbar-has-focus) .searchbar-search-icon {
+  display: block;
+}
+
+:host(.searchbar-has-focus) .searchbar-cancel-button {
+  display: block;
+}
+
+:host(.searchbar-has-focus) .searchbar-cancel-button + .searchbar-search-icon {
+  display: none;
+}
+
+
+// Searchbar in Toolbar
+// -----------------------------------------
+
+:host-context(ion-toolbar) {
+  @include padding(3px);
+}

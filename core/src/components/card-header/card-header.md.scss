@@ -1,0 +1,14 @@
+@import "./card-header";
+@import "./card-header.md.vars";
+
+// Material Design Card Header
+// --------------------------------------------------
+
+:host {
+  @include padding($card-md-header-padding-top, $card-md-header-padding-end, $card-md-header-padding-bottom, $card-md-header-padding-start);
+}
+
+::slotted(ion-card-title:not(:first-child)),
+::slotted(ion-card-subtitle:not(:first-child)) {
+  margin-top: 8px;
+}

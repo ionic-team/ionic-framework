@@ -1,0 +1,31 @@
+@import "./input";
+@import "./input.md.vars";
+
+
+// Material Design Input
+// --------------------------------------------------
+
+:host {
+  --padding-top: #{$input-md-padding-top};
+  --padding-end: #{$input-md-padding-end};
+  --padding-bottom: #{$input-md-padding-bottom};
+  --padding-start: #{$input-md-padding-start};
+
+  font-size: $input-md-font-size;
+}
+
+:host-context(.item-label-stacked),
+:host-context(.item-label-floating) {
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --padding-start: 0;
+}
+
+.input-clear-icon {
+  @include svg-background-image($input-md-input-clear-icon-svg);
+
+  width: $input-md-input-clear-icon-width;
+  height: $input-md-input-clear-icon-width;
+
+  background-size: $input-md-input-clear-icon-size;
+}

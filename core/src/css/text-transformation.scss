@@ -1,0 +1,32 @@
+@import "../themes/ionic.globals";
+@import "../themes/ionic.mixins";
+
+// Text Transformation
+// --------------------------------------------------
+// Creates text transform attributes based on screen size
+
+@each $breakpoint in map-keys($screen-breakpoints) {
+  $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
+
+  @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+    // Provide `[text-{bp}]` attributes for transforming the text based
+    // on the breakpoint
+    .ion-text#{$infix}-uppercase,
+    [text#{$infix}-uppercase] {
+      /* stylelint-disable-next-line declaration-no-important */
+      text-transform: uppercase !important;
+    }
+
+    .ion-text#{$infix}-lowercase,
+    [text#{$infix}-lowercase] {
+      /* stylelint-disable-next-line declaration-no-important */
+      text-transform: lowercase !important;
+    }
+
+    .ion-text#{$infix}-capitalize,
+    [text#{$infix}-capitalize] {
+      /* stylelint-disable-next-line declaration-no-important */
+      text-transform: capitalize !important;
+    }
+  }
+}

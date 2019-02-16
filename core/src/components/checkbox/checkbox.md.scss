@@ -1,0 +1,65 @@
+@import "./checkbox";
+@import "./checkbox.md.vars";
+
+// Material Design Checkbox
+// --------------------------------------------------
+
+:host {
+  // Border
+  --border-radius: calc(var(--size) * .125);
+  --border-width: #{$checkbox-md-icon-border-width};
+  --border-style: #{$checkbox-md-icon-border-style};
+  --border-color: #{$checkbox-md-icon-border-color-off};
+
+  // Background
+  --background: #{$checkbox-md-icon-background-color-off};
+  --transition: #{background $checkbox-md-transition-duration $checkbox-md-transition-easing};
+
+  // Size
+  --size: #{$checkbox-md-icon-size};
+  width: var(--size);
+
+  height: var(--size);
+}
+
+
+.checkbox-icon path {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  stroke-width: 3;
+}
+
+:host(.checkbox-checked) .checkbox-icon path {
+  stroke-dashoffset: 0;
+
+  transition: stroke-dashoffset 90ms linear 90ms;
+}
+
+
+// Material Design Checkbox: Disabled
+// -----------------------------------------
+
+// TODO .item-md.item-checkbox-disabled ion-label
+:host(.checkbox-disabled) {
+  opacity: $checkbox-md-disabled-opacity;
+}
+
+// Material Design Checkbox Within An Item
+// -----------------------------------------
+
+:host(.in-item) {
+  // end position by default
+  @include margin($checkbox-md-item-end-margin-top, $checkbox-md-item-end-margin-end, $checkbox-md-item-end-margin-bottom, $checkbox-md-item-end-margin-start);
+
+  display: block;
+  position: static;
+}
+
+:host(.in-item[slot="start"]) {
+  @include margin($checkbox-md-item-start-margin-top, $checkbox-md-item-start-margin-end, $checkbox-md-item-start-margin-bottom, $checkbox-md-item-start-margin-start);
+}
+
+// REVIEW
+// .checkbox-md + .item-inner ion-label {
+//   @include margin-horizontal(0, null);
+// }

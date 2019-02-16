@@ -1,6 +1,7 @@
 *~
 *.sw[mnpcod]
 *.log
+*.lock
 *.tmp
 *.tmp.*
 log.txt
@@ -8,25 +9,50 @@ log.txt
 *.sublime-workspace
 
 .idea/
+.vscode/
 .sass-cache/
 .versions/
 coverage/
+collection/
 dist/
 node_modules/
 tmp/
 temp/
+core/theme-builder/
+core/test-components/
+core/css/
+angular/css/
 $RECYCLE.BIN/
 
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
-
-scripts/resources/web-animations-js/test/
-scripts/resources/web-animations-js/inter-*
-scripts/resources/web-animations-js/**/*.map
-scripts/resources/web-animations-js/**/*.md
-scripts/resources/web-animations-js/**/*.sh
-scripts/resources/web-animations-js/**/*.yml
-scripts/resources/web-animations-js/**/*.gz
+.env
 
 .package.tmp.json
+
+src/themes/version.scss
+scripts/e2e/webpackEntryPoints.json
+scripts/build/e2e-generated-tsconfig.json
+*.css.ts
+
+stats.json
+
+# demo stuff
+demos/node_modules
+demos/polyfills
+demos/css
+demos/fonts
+demos/src/**/*.js
+demos/src/**/*.map
+demos/src/**/*.ngfactory.ts
+demos/src/**/*.d.ts
+demos/src/**/*.metadata.json
+demos/src/**/*.css.shim.ts
+
+# stencil
+angular/css/
+core/css/
+core/loader/
+.stencil/
+angular/build/

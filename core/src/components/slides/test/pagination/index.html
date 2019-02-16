@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Slides - Pagination</title>
+
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-content id="content">
+      <ion-slides>
+        <ion-slide>
+          <h1>Default Slides</h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>Slide 2</h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>Slide 3</h1>
+        </ion-slide>
+      </ion-slides>
+
+      <ion-slides pager>
+        <ion-slide>
+          <h1>Bullet Pagination</h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>Slide 2</h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>Slide 3</h1>
+        </ion-slide>
+      </ion-slides>
+
+      <ion-slides pager class="custom-bullets">
+        <ion-slide>
+          <h1>Custom Bullet Pagination</h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>Slide 2</h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>Slide 3</h1>
+        </ion-slide>
+      </ion-slides>
+
+      <ion-slides pager class="progressbar-pagination">
+        <ion-slide>
+          <h1>Progress Pagination</h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>Slide 2</h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>Slide 3</h1>
+        </ion-slide>
+      </ion-slides>
+
+      <ion-slides pager class="progressbar-pagination custom-progressbar">
+        <ion-slide>
+          <h1>Custom Progress Pagination</h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>Slide 2</h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>Slide 3</h1>
+        </ion-slide>
+      </ion-slides>
+
+      <ion-slides pager class="fraction-pagination">
+        <ion-slide>
+          <h1>Fraction Pagination</h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>Slide 2</h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>Slide 3</h1>
+        </ion-slide>
+      </ion-slides>
+    </ion-content>
+  </ion-app>
+
+  <script>
+    var progressSlides = document.getElementsByClassName('progressbar-pagination');
+
+    for (var i = 0; i < progressSlides.length; i++) {
+      progressSlides[i].options = {
+        pagination: {
+          el: '.swiper-pagination',
+          type: 'progressbar'
+        }
+      }
+    }
+
+    var fractionSlides = document.getElementsByClassName('fraction-pagination');
+
+    for (var i = 0; i < fractionSlides.length; i++) {
+      fractionSlides[i].options = {
+        pagination: {
+          el: '.swiper-pagination',
+          type: 'fraction'
+        }
+      }
+    }
+
+  </script>
+
+  <style>
+    ion-slides {
+      border-bottom: 1px solid #e5e5e5;
+      margin-bottom: 20px;
+    }
+
+    ion-slide {
+      height: 100px !important;
+    }
+
+    .custom-bullets {
+      --bullet-background: #ffb6c1;
+      --bullet-background-active: #ff6a80;
+    }
+
+    .custom-progressbar {
+      --progress-bar-background: #add8e6;
+      --progress-bar-background-active: #72bcd4;
+    }
+  </style>
+</body>
+
+</html>

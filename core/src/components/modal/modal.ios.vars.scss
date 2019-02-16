@@ -1,0 +1,10 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Modals
+// --------------------------------------------------
+
+/// @prop - Background color for the modal
+$modal-ios-background-color:          $background-color !default;
+
+/// @prop - Border radius for the modal
+$modal-ios-border-radius:             10px !default;

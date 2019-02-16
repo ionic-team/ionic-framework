@@ -1,0 +1,10 @@
+@import "../../themes/ionic.globals.ios";
+
+// Material Design Infinite Scroll
+// --------------------------------------------------
+
+/// @prop - Color of the infinite scroll loading indicator
+$infinite-scroll-ios-loading-color:  $text-color-step-400 !default;
+
+/// @prop - Color of the infinite scroll loading indicator text
+$infinite-scroll-ios-loading-text-color:  $infinite-scroll-ios-loading-color !default;

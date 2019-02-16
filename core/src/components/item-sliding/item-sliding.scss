@@ -1,0 +1,67 @@
+@import "../../themes/ionic.globals";
+
+// Item Sliding
+// --------------------------------------------------
+
+ion-item-sliding {
+  display: block;
+  position: relative;
+
+  width: 100%;
+
+  overflow: hidden;
+
+  user-select: none;
+}
+
+ion-item-sliding .item {
+  user-select: none;
+}
+
+.item-sliding-active-slide .item {
+  position: relative;
+
+  transition: transform 500ms cubic-bezier(.36, .66, .04, 1);
+
+  opacity: 1;
+  z-index: $z-index-item-options + 1;
+  pointer-events: none;
+  will-change: transform;
+}
+
+
+.item-sliding-active-swipe-end .item-options-end .item-option-expandable {
+  @include multi-dir() {
+    /* stylelint-disable-next-line property-blacklist */
+    padding-left: 90%;
+  }
+
+  @include ltr() {
+    order: 1;
+  }
+
+  @include rtl() {
+    order: -1;
+  }
+
+  transition-duration: .6s;
+  transition-property: padding-left;
+}
+
+.item-sliding-active-swipe-start .item-options-start .item-option-expandable {
+  @include multi-dir() {
+    /* stylelint-disable-next-line property-blacklist */
+    padding-right: 90%;
+  }
+
+  @include ltr() {
+    order: -1;
+  }
+
+  @include rtl() {
+    order: 1;
+  }
+
+  transition-duration: .6s;
+  transition-property: padding-right;
+}

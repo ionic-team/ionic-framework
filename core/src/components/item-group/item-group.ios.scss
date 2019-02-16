@@ -1,0 +1,11 @@
+@import "./item-group";
+@import "./item-group.ios.vars";
+
+
+// iOS Item Group
+// --------------------------------------------------
+
+.item-group-ios ion-item:last-child,
+.item-group-ios ion-item-sliding:last-child .item {
+  --border-width: 0;
+}

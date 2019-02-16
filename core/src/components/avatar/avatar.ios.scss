@@ -1,0 +1,13 @@
+@import "./avatar";
+@import "./avatar.ios.vars";
+
+
+// iOS Avatar
+// --------------------------------------------------
+
+:host {
+  --border-radius: #{$avatar-ios-border-radius};
+
+  width: $avatar-ios-width;
+  height: $avatar-ios-height;
+}

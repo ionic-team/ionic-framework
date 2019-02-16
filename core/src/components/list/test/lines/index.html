@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>List - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>List - Basic</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list lines="full">
+        <ion-list-header>Lines: full</ion-list-header>
+        <ion-item>Pokémon Yellow</ion-item>
+        <ion-item>Super Metroid</ion-item>
+        <ion-item>Mega Man X</ion-item>
+        <ion-item>The Legend of Zelda</ion-item>
+        <ion-item>Pac-Man</ion-item>
+      </ion-list>
+
+      <ion-list lines="inset">
+        <ion-list-header>Lines: inset</ion-list-header>
+        <ion-item>Super Mario World</ion-item>
+        <ion-item>Street Fighter II</ion-item>
+        <ion-item>Half Life</ion-item>
+        <ion-item>Portal</ion-item>
+      </ion-list>
+
+      <ion-list lines="none">
+        <ion-list-header>Lines: none</ion-list-header>
+        <ion-item>Star Fox</ion-item>
+        <ion-item>Tetris</ion-item>
+        <ion-item>Donkey Kong III</ion-item>
+        <ion-item>Goldeneye 007</ion-item>
+      </ion-list>
+
+      <ion-list>
+        <ion-list-header>Lines: Default</ion-list-header>
+        <ion-item>Fallout</ion-item>
+        <ion-item>GTA</ion-item>
+        <ion-item>Halo</ion-item>
+        <ion-item>Doom</ion-item>
+        <ion-item>Final Fantasy VII</ion-item>
+      </ion-list>
+
+      <ion-list>
+        <ion-list-header>Wrapper item: default</ion-list-header>
+        <div><ion-item>Pokémon Yellow</ion-item></div>
+        <div><ion-item>Super Metroid</ion-item></div>
+        <div><ion-item>Mega Man X</ion-item></div>
+        <div><ion-item>The Legend of Zelda</ion-item></div>
+        <div><ion-item>Pac-Man</ion-item></div>
+      </ion-list>
+
+      <ion-list lines="none">
+        <ion-list-header>Wrapper list lines: none</ion-list-header>
+        <div><ion-item>Pokémon Yellow</ion-item></div>
+        <div><ion-item>Super Metroid</ion-item></div>
+        <div><ion-item>Mega Man X</ion-item></div>
+        <div><ion-item>The Legend of Zelda</ion-item></div>
+        <div><ion-item>Pac-Man</ion-item></div>
+      </ion-list>
+
+      <ion-list>
+        <ion-list-header>Wrapper w/ item lines: none</ion-list-header>
+        <div><ion-item lines="none">Pokémon Yellow</ion-item></div>
+        <div><ion-item lines="none">Super Metroid</ion-item></div>
+        <div><ion-item lines="none">Mega Man X</ion-item></div>
+        <div><ion-item lines="none">The Legend of Zelda</ion-item></div>
+        <div><ion-item lines="none">Pac-Man</ion-item></div>
+      </ion-list>
+    </ion-content>
+
+  </ion-app>
+</body>
+
+</html>

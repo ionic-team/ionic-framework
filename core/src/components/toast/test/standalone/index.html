@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Toast - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <button id="basic" onclick="presentToast('bottom')">Show Toast Bottom</button>
+  <button onclick="presentToast('top')">Show Toast Top</button>
+  <button onclick="presentToast('middle')">Show Toast Middle</button>
+  <button onclick="presentToastWithOptions({message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.', duration: 2000})">Show Toast with long message</button>
+  <button onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true})">Show Toast with Close Button</button>
+  <button onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, closeButtonText: 'closing time'})">Show Toast with Custom Close Button Text</button>
+  <button onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, translucent: true})">Show Translucent Toast</button>
+  <button onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, cssClass: 'custom'})">Show Toast with Custom Properties</button>
+
+  <ion-toast-controller></ion-toast-controller>
+
+  <style>
+    body > button {
+      display: block;
+      clear: both;
+      width: 100%;
+      padding: 12px 8px;
+      font-size: 1em;
+      background: #f8f8f8;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+
+    .custom {
+      --background: papayawhip;
+      --button-color: blue;
+      --color: red;
+    }
+  </style>
+
+  <script>
+    window.addEventListener('ionToastDidDismiss', function(e){console.log('didDismiss', e)})
+    window.addEventListener('ionToastWillDismiss', function(e){console.log('willDismiss', e)})
+
+    async function presentToast(position) {
+      const toastController = document.querySelector('ion-toast-controller');
+      await toastController.componentOnReady();
+      const toastElement = await toastController.create({
+        message: 'Hellooo',
+        position,
+        duration: 2000
+      });
+      return await toastElement.present();
+    }
+
+    async function presentToastWithOptions(opts) {
+      const toastController = document.querySelector('ion-toast-controller');
+      await toastController.componentOnReady();
+      const toastElement = await toastController.create(opts);
+      return await toastElement.present();
+    }
+  </script>
+</body>
+</html>

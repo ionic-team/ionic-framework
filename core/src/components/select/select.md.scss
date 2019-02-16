@@ -1,0 +1,17 @@
+@import "./select";
+@import "./select.md.vars";
+
+// Material Design Select
+// --------------------------------------------------
+
+:host {
+  --padding-top: #{$select-md-padding-top};
+  --padding-end: #{$select-md-padding-end};
+  --padding-bottom: #{$select-md-padding-bottom};
+  --padding-start: #{$select-md-padding-start};
+}
+
+.select-icon {
+  width: 19px;
+  height: 19px;
+}

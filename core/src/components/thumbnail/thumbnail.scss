@@ -1,0 +1,32 @@
+@import "../../themes/ionic.globals";
+
+
+// Thumbnail
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --border-radius: Border radius of the thumbnail
+   * @prop --size: Size of the thumbnail
+   */
+  --size: 48px;
+  --border-radius: 0;
+
+  @include border-radius(var(--border-radius));
+
+  display: block;
+
+  width: var(--size);
+  height: var(--size);
+}
+
+::slotted(ion-img),
+::slotted(img) {
+  @include border-radius(var(--border-radius));
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  overflow: hidden;
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Toggle - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <!-- Default -->
+  <ion-toggle></ion-toggle>
+
+  <!-- Colors -->
+  <ion-toggle checked color="primary"></ion-toggle>
+  <ion-toggle checked color="secondary"></ion-toggle>
+  <ion-toggle checked color="tertiary"></ion-toggle>
+  <ion-toggle checked color="success"></ion-toggle>
+  <ion-toggle checked color="warning"></ion-toggle>
+  <ion-toggle checked color="danger"></ion-toggle>
+  <ion-toggle checked color="light"></ion-toggle>
+  <ion-toggle checked color="medium"></ion-toggle>
+  <ion-toggle checked color="dark"></ion-toggle>
+  <ion-toggle checked class="custom"></ion-toggle>
+
+  <!-- Disabled -->
+  <ion-toggle checked disabled></ion-toggle>
+  <ion-toggle checked disabled color="secondary"></ion-toggle>
+
+  <style>
+    .custom {
+      --background-checked: papayawhip;
+      --handle-background-checked: purple;
+    }
+  </style>
+</body>
+</html>

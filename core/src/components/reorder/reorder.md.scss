@@ -1,0 +1,11 @@
+@import "./reorder";
+@import "./reorder.md.vars";
+
+// Material Design Reorder
+// --------------------------------------------------
+
+.reorder-icon {
+  font-size: $reorder-md-icon-font-size;
+
+  opacity: $reorder-md-icon-opacity;
+}

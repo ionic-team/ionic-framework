@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Select - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Select - Conflict</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+
+        <ion-item>
+          <ion-label>Alert</ion-label>
+          <ion-select id="alert" placeholder="Select One" interface="alert">
+            <ion-select-option class="s-unselected">Unselected</ion-select-option>
+            <ion-select-option class="s-zero">Zero</ion-select-option>
+            <ion-select-option class="s-empty">Empty String</ion-select-option>
+            <ion-select-option class="s-null">Null</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Action-sheet</ion-label>
+          <ion-select id="action" placeholder="Select One" interface="action-sheet">
+            <ion-select-option class="s-unselected">Unselected</ion-select-option>
+            <ion-select-option class="s-zero">Zero</ion-select-option>
+            <ion-select-option class="s-empty">Empty String</ion-select-option>
+            <ion-select-option class="s-null">Null</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Popover</ion-label>
+          <ion-select id="popover" placeholder="Select One" interface="popover">
+            <ion-select-option class="s-unselected">Unselected</ion-select-option>
+            <ion-select-option class="s-zero">Zero</ion-select-option>
+            <ion-select-option class="s-empty">Empty String</ion-select-option>
+            <ion-select-option class="s-null">Null</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <span id="results"></span>
+
+      </ion-list>
+
+    </ion-content>
+
+    <script>
+      Array.from(document.querySelectorAll('.s-unselected')).forEach(s => s.value = undefined);
+      Array.from(document.querySelectorAll('.s-zero')).forEach(s => s.value = 0);
+      Array.from(document.querySelectorAll('.s-empty')).forEach(s => s.value = '');
+      Array.from(document.querySelectorAll('.s-null')).forEach(s => s.value = null);
+
+      function updateValues() {
+        const alert = document.getElementById('alert').value;
+        const actionSheet = document.getElementById('action').value;
+        const popover = document.getElementById('popover').value;
+
+        document.getElementById('results').textContent = `
+        Alert: ${alert}
+        Action-sheet: ${actionSheet}
+        Popover: ${popover}
+        `;
+      }
+      document.addEventListener('ionChange', () => updateValues());
+    </script>
+  </ion-app>
+</body>
+
+</html>

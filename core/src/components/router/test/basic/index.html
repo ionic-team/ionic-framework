@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Nav</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+  <script>
+
+    class PageOne extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Page One</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          page one
+          <p><a href='#/two/second-page'>Go to page 2</a></p>
+          <p><a href='#/two/three/hola'>Go to page 3 (hola)</a></p>
+          <p><a href='#/two/three/something'>Go to page 3 (something)</a></p>
+
+        </ion-content>`;
+      }
+    }
+
+    class PageTwo extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Page Two</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <p><a href='#/two/three/hola'>Go to page 3 (hola)</a></p>
+          <p><a href='#/two/three/hello'>Go to page 3 (hello)</a></p>
+        </ion-content>`;
+      }
+    }
+
+    class PageThree extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Page 3 ${this.prop1}</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <p><a href='#/two/three/hola'>Go to page 3 (hola)</a></p>
+          <p><a href='#/two/three/hello'>Go to page 3 (hello)</a></p>
+          <p><a href='#/two/second-page'>Go to page 2</a></p>
+          <p><a href='#/two/'>Go to page 1</a></p>
+        </ion-content>`;
+      }
+    }
+
+    class TabOne extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Tab one</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          this is the first pahe
+        </ion-content>`;
+      }
+    }
+
+    class TabTwo extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Tab Two</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <ion-nav></ion-nav>
+        </ion-content>`;
+      }
+    }
+
+    class TabThree extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Tab three</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          hey! this is the 3 tab
+        </ion-content>`;
+      }
+    }
+
+    class TabsPage extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+<ion-tabs>
+
+  <ion-tab tab="tab-one" component="tab-one"></ion-tab>
+  <ion-tab tab="tab-two" component="tab-two"></ion-tab>
+  <ion-tab tab="tab-three" component="tab-three"></ion-tab>
+  <ion-tab tab="tab-four">
+    inline tab 4
+  </ion-tab>
+
+  <ion-tab-bar slot="bottom">
+
+    <ion-tab-button tab="tab-one">
+      <ion-label>Plain List</ion-label>
+      <ion-icon name="star"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab-two">
+      <ion-label>Schedule</ion-label>
+      <ion-icon name="globe"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab-three">
+      <ion-label>Stopwatch</ion-label>
+      <ion-icon name="logo-facebook"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab-four">
+      <ion-label>Messages</ion-label>
+      <ion-icon name="star"></ion-icon>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+</ion-tabs>
+`;
+      }
+    }
+
+    class LoginPage extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Login Page</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          page one
+          <p><a href='#/two/second-page'>Go to page 2</a></p>
+          <p><a href='#/two/three/hola'>Go to page 3 (hola)</a></p>
+          <p><a href='#/two/three/something'>Go to page 3 (something)</a></p>
+        </ion-content>`;
+      }
+    }
+
+    class LoginConfirmPage extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Login Confirm Page</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          page one
+          <p><a href='#/two/second-page'>Go to page 2</a></p>
+          <p><a href='#/two/three/hola'>Go to page 3 (hola)</a></p>
+          <p><a href='#/two/three/something'>Go to page 3 (something)</a></p>
+        </ion-content>`;
+      }
+    }
+
+    customElements.define('page-one', PageOne);
+    customElements.define('page-two', PageTwo);
+    customElements.define('page-three', PageThree);
+
+    customElements.define('tabs-page', TabsPage);
+    customElements.define('tab-one', TabOne);
+    customElements.define('tab-two', TabTwo);
+    customElements.define('tab-three', TabThree);
+
+    customElements.define('login-page', LoginPage);
+    customElements.define('login-confirm-page', LoginConfirmPage);
+
+  </script>
+</head>
+
+<body>
+
+  <ion-app>
+
+    <ion-router>
+      <ion-route url="/login" component="login-page"></ion-route>
+      <ion-route url="/login-confirm" component="login-confirm-page"></ion-route>
+
+      <ion-route url="/" component="tabs-page">
+        <ion-route url="/" component="tab-one"> </ion-route>
+        <ion-route url="/two" component="tab-two">
+          <ion-route component="page-one"> </ion-route>
+          <ion-route url="/second-page" component="page-two"> </ion-route>
+          <ion-route url="/three/:prop1" component="page-three"> </ion-route>
+        </ion-route>
+        <ion-route url="/three" component="tab-three"> </ion-route>
+        <ion-route url="/four" component="tab-four"> </ion-route>
+      </ion-route>
+
+    </ion-router>
+
+    <ion-nav></ion-nav>
+  </ion-app>
+
+  <style>
+    f {
+      display: block;
+      margin: 15px auto;
+      max-width: 150px;
+      height: 150px;
+      background: blue;
+    }
+
+    f:last-of-type {
+      background: yellow;
+    }
+
+  </style>
+</body>
+
+<script>
+
+</script>
+
+</html>

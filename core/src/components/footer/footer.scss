@@ -1,0 +1,19 @@
+@import "../../themes/ionic.globals";
+
+// Footer
+// --------------------------------------------------
+
+ion-footer {
+  display: block;
+  position: relative;
+
+  order: 1;
+
+  width: 100%;
+
+  z-index: $z-index-toolbar;
+}
+
+ion-footer ion-toolbar:last-child {
+  padding-bottom: var(--ion-safe-area-bottom, 0);
+}

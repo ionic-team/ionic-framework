@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Range - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-range value="20"></ion-range>
+  <ion-range value="60" color="light"></ion-range>
+  <ion-range value="80" color="dark"></ion-range>
+  <ion-range pin="true" color="secondary" value="86">
+    <ion-icon size="small" name="ios-sunny" slot="start"></ion-icon>
+    <ion-icon name="ios-sunny" slot="end"></ion-icon>
+  </ion-range>
+  <ion-range pin="true" color="danger" value="54">
+    <ion-icon size="small" name="ios-thermometer" slot="start"></ion-icon>
+    <ion-icon name="ios-thermometer" slot="end"></ion-icon>
+  </ion-range>
+  <ion-range value="50" pin class="custom"></ion-range>
+  <ion-range value="150" pin color="tertiary" class="custom"></ion-range>
+
+  <style>
+    .custom {
+      --knob-background: purple;
+      --bar-background: papayawhip;
+      --bar-background-active: hotpink;
+      --bar-height: 3px;
+      --pin-background: pink;
+      --pin-color: purple;
+    }
+  </style>
+</body>
+</html>

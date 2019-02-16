@@ -1,0 +1,19 @@
+@import "./card-subtitle";
+@import "./card-subtitle.ios.vars";
+
+// iOS Card Subtitle
+// --------------------------------------------------
+
+:host {
+  --color: #{$card-ios-subtitle-color};
+
+  @include margin($card-ios-subtitle-margin-top, $card-ios-subtitle-margin-end, $card-ios-subtitle-margin-bottom, $card-ios-subtitle-margin-start);
+  @include padding($card-ios-subtitle-padding-top, $card-ios-subtitle-padding-end, $card-ios-subtitle-padding-bottom, $card-ios-subtitle-padding-start);
+
+  font-size: $card-ios-subtitle-font-size;
+  font-weight: $card-ios-subtitle-font-weight;
+
+  letter-spacing: $card-ios-subtitle-letter-spacing;
+
+  text-transform: $card-ios-subtitle-text-transform;
+}

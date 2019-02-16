@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Searchbar - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-searchbar
+    value="test"
+    type="tel"
+    show-cancel-button
+    debounce="500">
+  </ion-searchbar>
+
+  <ion-searchbar
+    animated="true"
+    show-cancel-button
+    debounce="500">
+  </ion-searchbar>
+
+  <ion-searchbar
+    id="dynamicProp"
+    value="33"
+    autocorrect="on"
+    show-cancel-button="true"
+    autocomplete="on"
+    spellcheck="false"
+    type="number"
+    placeholder="Filter Schedules">
+  </ion-searchbar>
+
+  <ion-searchbar
+    value="after view"
+    autocorrect="off"
+    autocomplete="off"
+    spellcheck="true"
+    type="text"
+    show-cancel-button="false">
+  </ion-searchbar>
+
+  <ion-searchbar
+    show-cancel-button
+    cancel-button-text="Really Long Cancel"
+    color="danger">
+  </ion-searchbar>
+
+  <ion-searchbar
+    value="mysearch"
+    cancel-button-text="Really Long Cancel"
+    color="dark"
+    show-cancel-button>
+  </ion-searchbar>
+
+  <ion-searchbar
+    mode="ios"
+    animated="true"
+    show-cancel-button
+    placeholder="Search">
+  </ion-searchbar>
+
+  <ion-searchbar
+    mode="md"
+    animated="true"
+    show-cancel-button
+    placeholder="Search">
+  </ion-searchbar>
+
+  <ion-searchbar
+    autocorrect="on"
+    show-cancel-button="true"
+    autocomplete="on"
+    spellcheck="true"
+    type="text"
+    debounce="5000"
+    placeholder="Check the log">
+  </ion-searchbar>
+
+  <ion-searchbar
+    id="dynamicAttr"
+    placeholder="Search"
+    animated="true"
+    show-cancel-button="false">
+  </ion-searchbar>
+
+  <ion-searchbar class="custom" show-cancel-button="true"></ion-searchbar>
+
+    <style>
+    .custom {
+      --background: papayawhip;
+      --cancel-button-color: red;
+      --clear-button-color: green;
+      --color: blue;
+      --icon-color: blue;
+      --placeholder-color: orange;
+      --placeholder-font-style: italic;
+      --placeholder-font-weight: 700;
+      --placeholder-opacity: 1;
+    }
+  </style>
+</body>
+</html>

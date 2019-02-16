@@ -1,0 +1,20 @@
+@import "../../themes/ionic.globals.ios";
+@import "../item/item.ios.vars";
+
+// iOS Item Divider
+// --------------------------------------------------
+
+/// @prop - Font size of the item
+$item-ios-divider-font-size:              17px !default;
+
+/// @prop - Background for the divider
+$item-ios-divider-background:             $background-color-step-50 !default;
+
+/// @prop - Color for the divider
+$item-ios-divider-color:                  $text-color-step-150 !default;
+
+/// @prop - Padding start for the divider
+$item-ios-divider-padding-start:          $item-ios-padding-start !default;
+
+/// @prop - Padding end for the divider
+$item-ios-divider-padding-end:            $item-ios-padding-end !default;

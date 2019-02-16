@@ -1,0 +1,63 @@
+@import "./datetime.vars";
+
+// Datetime
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --padding-top: Padding top of the datetime
+   * @prop --padding-end: Padding end of the datetime
+   * @prop --padding-bottom: Padding bottom of the datetime
+   * @prop --padding-start: Padding start of the datetime
+   *
+   * @prop --placeholder-color: Color of the datetime placeholder
+   */
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
+  display: flex;
+  position: relative;
+
+  min-width: $datetime-min-width;
+  min-height: $datetime-min-height;
+
+  font-family: $font-family-base;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  z-index: $z-index-item-input;
+}
+
+:host(.in-item) {
+  position: static;
+}
+
+:host(.datetime-placeholder) {
+  color: var(--placeholder-color);
+}
+
+:host(.datetime-disabled) {
+  opacity: .3;
+  pointer-events: none;
+}
+
+:host(.datetime-readonly) {
+  pointer-events: none;
+}
+
+button {
+  @include input-cover();
+}
+
+.datetime-text {
+  @include text-inherit();
+
+  flex: 1;
+
+  min-height: inherit;
+
+  direction: ltr;
+  overflow: inherit;
+}

@@ -1,0 +1,47 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Toolbar
+// --------------------------------------------------
+
+/// @prop - Order of the toolbar elements
+$toolbar-order-md: (
+  back-button: 0,
+  menu-toggle-start: 1,
+  slot-start: 2,
+  content: 3,
+  slot-secondary: 4,
+  slot-primary: 5,
+  slot-end: 6,
+  menu-toggle-end: 7,
+);
+
+/// @prop - Font size of the toolbar button
+$toolbar-md-button-font-size:                     14px !default;
+
+/// @prop - Text color of the toolbar button
+$toolbar-md-button-color:                         $toolbar-md-color !default;
+
+/// @prop - Background color of the toolbar button
+$toolbar-md-button-background-color:              $toolbar-md-background !default;
+
+/// @prop - Background color of the toolbar button when activated
+$toolbar-md-button-background-color-activated:    $toolbar-md-color-activated !default;
+
+/// @prop - Border radius of the toolbar button
+$toolbar-md-button-border-radius:                 2px !default;
+
+/// @prop - Fill color of the toolbar button icon
+$toolbar-md-button-icon-fill-color:               currentColor !default;
+
+/// @prop - Font weight of the strong toolbar button
+$toolbar-md-button-strong-font-weight:            bold !default;
+
+
+// Material Design Title
+// --------------------------------------------------
+
+/// @prop - Font size of the toolbar title
+$toolbar-md-title-font-size:             20px !default;
+
+/// @prop - Text color of the toolbar title
+$toolbar-md-title-text-color:            $toolbar-md-color !default;

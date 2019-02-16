@@ -1,0 +1,26 @@
+@import "../../themes/ionic.globals";
+
+
+// Avatar
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --border-radius: Border radius of the avatar and inner image
+   */
+  @include border-radius(var(--border-radius));
+
+  display: block;
+}
+
+::slotted(ion-img),
+::slotted(img) {
+  @include border-radius(var(--border-radius));
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  overflow: hidden;
+}

@@ -1,0 +1,45 @@
+@import "../../themes/ionic.globals";
+
+// Radio
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --color: Color of the radio
+   * @prop --color-checked: Color of the checked radio
+   */
+
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+
+  user-select: none;
+
+  z-index: $z-index-item-input;
+}
+
+:host(.radio-disabled) {
+  pointer-events: none;
+}
+
+
+.radio-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  contain: layout size style;
+}
+
+button {
+  @include input-cover();
+}
+
+.radio-icon,
+.radio-inner {
+  box-sizing: border-box;
+}

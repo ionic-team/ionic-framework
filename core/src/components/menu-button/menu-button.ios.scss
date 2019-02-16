@@ -1,0 +1,20 @@
+@import "./menu-button";
+
+// iOS Menu Button
+// --------------------------------------------------
+
+:host {
+  --color: #{ion-color(primary, base)};
+}
+
+:host(.activated) {
+  opacity: 0.4;
+}
+
+button {
+  @include padding(0, 5px);
+}
+
+ion-icon {
+  font-size: 31px;
+}

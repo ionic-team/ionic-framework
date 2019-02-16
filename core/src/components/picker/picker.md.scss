@@ -1,0 +1,83 @@
+@import "./picker";
+@import "./picker.md.vars";
+
+// Material Design Picker
+// --------------------------------------------------
+
+:host {
+  --background: #{$picker-md-background-color};
+  --border-width: #{$hairlines-width 0 0};
+  --border-color: #{$picker-md-border-color};
+  --height: #{$picker-md-height};
+
+  color: $picker-md-option-text-color;
+}
+
+.picker-toolbar {
+  display: flex;
+
+  justify-content: flex-end;
+
+  height: $picker-md-toolbar-height;
+}
+
+.picker-button,
+.picker-button.activated {
+  @include margin(0);
+  @include padding(0, 1.1em);
+
+  height: $picker-md-button-height;
+
+  background: $picker-md-button-background-color;
+  color: $picker-md-button-text-color;
+
+  font-size: $picker-md-button-font-size;
+  font-weight: 500;
+
+  text-transform: uppercase;
+
+  box-shadow: none;
+}
+
+.picker-columns {
+  height: $picker-md-height - $picker-md-toolbar-height;
+  perspective: 1800px;
+}
+
+.picker-above-highlight {
+  @include position(0, null, null, 0);
+  @include transform(translate3d(0, 0, 90px));
+
+  position: absolute;
+
+  width: 100%;
+  height: $picker-md-option-offset-y + 4px;
+
+  border-bottom: 1px solid $picker-md-border-color;
+
+  background: linear-gradient(
+    to bottom,
+    $picker-md-top-background-color 20%,
+    $picker-md-bottom-background-color 100%);
+
+  z-index: 10;
+}
+
+.picker-below-highlight {
+  @include position($picker-md-option-offset-y + $picker-md-option-height - 4, null, null, 0);
+  @include transform(translate3d(0, 0, 90px));
+
+  position: absolute;
+
+  width: 100%;
+  height: $picker-md-option-offset-y + $picker-md-option-height;
+
+  border-top: 1px solid $picker-md-border-color;
+
+  background: linear-gradient(
+    to top,
+    $picker-md-top-background-color 30%,
+    $picker-md-bottom-background-color 100%);
+
+  z-index: 11;
+}

@@ -1,0 +1,19 @@
+@import "../../themes/ionic.globals";
+
+// Header
+// --------------------------------------------------
+
+ion-header {
+  display: block;
+  position: relative;
+
+  order: -1;
+
+  width: 100%;
+
+  z-index: $z-index-toolbar;
+}
+
+ion-header ion-toolbar:first-child {
+  padding-top: var(--ion-safe-area-top, 0);
+}

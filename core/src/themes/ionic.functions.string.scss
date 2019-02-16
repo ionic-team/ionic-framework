@@ -1,0 +1,112 @@
+
+// String Util Functions
+// --------------------------------------------------
+
+// String Replace Function
+// --------------------------------------------------
+
+@function str-replace($string, $search, $replace: "") {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+// String Split Function
+// --------------------------------------------------
+
+@function str-split($string, $separator) {
+  // empty array/list
+  $split-arr: ();
+  // first index of separator in string
+  $index: str-index($string, $separator);
+  // loop through string
+  @while $index != null {
+    // get the substring from the first character to the separator
+    $item: str-slice($string, 1, $index - 1);
+    // push item to array
+    $split-arr: append($split-arr, $item);
+    // remove item and separator from string
+    $string: str-slice($string, $index + 1);
+    // find new index of separator
+    $index: str-index($string, $separator);
+  }
+  // add the remaining string to list (the last item)
+  $split-arr: append($split-arr, $string);
+
+  @return $split-arr;
+}
+
+
+// Str Extract Function
+// --------------------------------------------------
+
+@function str-extract($string, $start, $end) {
+  $start-index: str-index($string, $start);
+
+  @if $start-index {
+    $post: str-slice($string, $start-index + str-length($start));
+    $end-index: str-index($post, $end);
+
+    @if $end-index {
+      @return str-slice($post, 1, $end-index - 1);
+    }
+  }
+
+  @return null;
+}
+
+
+// Str Contains Function
+// --------------------------------------------------
+
+@function str-contains($string, $needle) {
+  @if (type-of($string) == string) {
+    @return str-index($string, $needle) != null;
+  }
+
+  @return false;
+}
+
+
+// URL Encode Function
+// --------------------------------------------------
+
+@function url-encode($val) {
+  $spaces: str-replace($val, " ", "%20");
+  $encoded: str-replace($spaces, "#", "%23");
+  @return $encoded;
+}
+
+
+// Add Selector
+// --------------------------------------------------
+// Used to cleanly add selectors to :host and :host()
+
+@function add-root-selector($root, $addHostSelector, $shadowDom: false) {
+  $selectors: str-split($root, ",");
+
+  $list: ();
+
+  @each $selector in $selectors {
+    @if str-contains($selector, ":host(") {
+      $updated-host: str-replace($selector, ":host(", ":host(#{$addHostSelector}");
+      $list: append($list, $updated-host, comma);
+
+    } @else if str-contains($selector, ":host") {
+      $list: append($list, ":host(#{$addHostSelector}) + b", comma);
+
+    } @else if $shadowDom == true {
+      $list: append($list, ":host(#{$addHostSelector}) #{$selector}", comma);
+
+    } @else {
+      // TODO host-context should be for scoped only
+      $list: append($list, ":host-context(#{$addHostSelector}) #{$selector}", comma);
+    }
+  }
+
+  @return $list;
+}

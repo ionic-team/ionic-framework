@@ -1,0 +1,94 @@
+@import "./label";
+@import "./label.ios.vars";
+
+// iOS Label
+// --------------------------------------------------
+
+:host([text-wrap]) {
+  font-size: $label-ios-text-wrap-font-size;
+
+  line-height: $label-ios-text-wrap-line-height;
+}
+
+
+// iOS Stacked & Floating Labels
+// --------------------------------------------------
+
+:host(.label-stacked) {
+  @include margin(null, null, 4px, null);
+
+  font-size: 13.6px;
+}
+
+:host(.label-floating) {
+  @include margin(null, null, 0, null);
+  @include transform(translate3d(0, 27px, 0));
+  @include transform-origin(start, top);
+
+  transition: transform 150ms ease-in-out;
+}
+
+:host-context(.item-has-focus).label-stacked,
+:host-context(.item-has-focus).label-floating {
+  color: $label-ios-text-color-focused;
+}
+
+
+// iOS Typography
+// --------------------------------------------------
+
+::slotted(*) h1 {
+  @include margin(0, 0, 2px);
+
+  font-size: 24px;
+  font-weight: normal;
+}
+
+::slotted(*) h2 {
+  @include margin(0, 0, 2px);
+
+  font-size: 17px;
+  font-weight: normal;
+}
+
+::slotted(*) h3,
+::slotted(*) h4,
+::slotted(*) h5,
+::slotted(*) h6 {
+  @include margin(0, 0, 3px);
+
+  font-size: 14px;
+  font-weight: normal;
+
+  line-height: normal;
+}
+
+::slotted(*) p {
+  @include margin($item-ios-paragraph-margin-top, $item-ios-paragraph-margin-end, $item-ios-paragraph-margin-bottom, $item-ios-paragraph-margin-start);
+
+  font-size: $item-ios-paragraph-font-size;
+
+  line-height: normal;
+
+  text-overflow: inherit;
+
+  overflow: inherit;
+}
+
+::slotted(p) {
+  color: #{$item-ios-paragraph-text-color};
+}
+
+:host-context(.ion-color)::slotted(p) {
+  color: inherit;
+}
+
+
+::slotted(*) h2:last-child,
+::slotted(*) h3:last-child,
+::slotted(*) h4:last-child,
+::slotted(*) h5:last-child,
+::slotted(*) h6:last-child,
+::slotted(*) p:last-child {
+  @include margin(null, null, 0, null);
+}

@@ -1,0 +1,25 @@
+@import "../../themes/ionic.globals.ios";
+
+/// @prop - Color of backdrop
+$popover-backdrop-ios-color:                          $backdrop-ios-color !default;
+
+// iOS Popover
+// --------------------------------------------------
+
+/// @prop - Width of the popover content
+$popover-ios-width:                                   200px !default;
+
+/// @prop - Maximum height of the popover content
+$popover-ios-max-height:                              90% !default;
+
+/// @prop - Border radius of the popover content
+$popover-ios-border-radius:                           10px !default;
+
+/// @prop - Background color alpha of the popover content
+$popover-ios-translucent-background-color-alpha:      .8 !default;
+
+/// @prop - Background color of the popover content
+$popover-ios-translucent-background-color:            rgba($background-color-rgb, $popover-ios-translucent-background-color-alpha) !default;
+
+/// @prop - Filter of the translucent popover
+$popover-ios-translucent-filter:                      saturate(180%) blur(20px) !default;

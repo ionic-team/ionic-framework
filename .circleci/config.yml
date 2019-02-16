@@ -1,0 +1,211 @@
+version: 2
+
+aliases:
+  - &restore-cache
+      keys:
+        - dependency-cache-{{ checksum "package.json" }}-3
+
+  - &save-cache
+      key: dependency-cache-{{ checksum "package.json" }}-3
+      paths:
+        - node_modules
+
+  - &restore-cache-core
+      keys:
+        - dependency-cache-{{ checksum "core/package.json" }}-3
+
+  - &save-cache-core
+      key: dependency-cache-{{ checksum "core/package.json" }}-3
+      paths:
+        - core/node_modules
+
+  - &restore-cache-core-stencil
+      keys:
+        - stencil-cache-2
+
+  - &save-cache-core-stencil
+      key: stencil-cache-2
+      paths:
+        - core/.stencil
+        - core/screenshot/images
+
+defaults: &defaults
+  docker:
+    - image: circleci/node:10-browsers
+  working_directory: /tmp/workspace
+
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache: *restore-cache
+      - run: npm install
+      - save_cache: *save-cache
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - "*"
+
+  build-core:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - restore_cache: *restore-cache-core
+      - restore_cache: *restore-cache-core-stencil
+      - run:
+          command: npm install
+          working_directory: /tmp/workspace/core
+      - save_cache: *save-cache-core
+      - run:
+          command: npm run build -- --max-workers 1
+          working_directory: /tmp/workspace/core
+      - save_cache: *save-cache-core-stencil
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - "*"
+
+  build-angular:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm install
+          working_directory: /tmp/workspace/angular
+      - run:
+          command: sudo npm link
+          working_directory: /tmp/workspace/core
+      - run:
+          command: sudo npm link @ionic/core
+          working_directory: /tmp/workspace/angular
+      - run:
+          command: npm run build
+          working_directory: /tmp/workspace/angular
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - "*"
+
+  test-core-clean-build:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Checking clean build
+          command: git diff --exit-code
+          working_directory: /tmp/workspace/core
+
+  test-core-lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm run lint
+          working_directory: /tmp/workspace/core
+
+  test-core-spec:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm run test.spec
+          working_directory: /tmp/workspace/core
+
+  test-core-treeshake:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm run test.treeshake
+          working_directory: /tmp/workspace/core
+
+  test-core-screenshot:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Run Screenshot
+          command: npx stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci || true
+          working_directory: /tmp/workspace/core
+
+  test-core-screenshot-master:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Run Screenshot
+          command: npx stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci --update-screenshot || true
+          working_directory: /tmp/workspace/core
+
+  test-angular-lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm run lint
+          working_directory: /tmp/workspace/angular
+
+  test-angular-e2e:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm install
+          working_directory: /tmp/workspace/angular/test/test-app
+      - run:
+          command: npm test
+          working_directory: /tmp/workspace/angular/test/test-app
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build
+      - build-core:
+          requires: [build]
+      - test-core-clean-build:
+          requires: [build-core]
+      - test-core-lint:
+          requires: [build-core]
+      - test-core-spec:
+          requires: [build-core]
+      - test-core-treeshake:
+          requires: [build-core]
+      - test-core-screenshot:
+          requires: [build-core]
+          filters:
+            branches:
+              ignore: master
+      - test-core-screenshot-master:
+          requires: [build-core]
+          filters:
+            branches:
+              only: master
+
+      - build-angular:
+          requires: [build-core]
+      - test-angular-lint:
+          requires: [build-angular]
+      - test-angular-e2e:
+          requires: [build-angular]

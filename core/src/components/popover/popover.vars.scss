@@ -1,0 +1,10 @@
+@import "../../themes/ionic.globals";
+
+// Popover
+// --------------------------------------------------
+
+/// @prop - Text color of the popover content
+$popover-text-color:              $text-color !default;
+
+/// @prop - Background color of the popover content
+$popover-background-color:        $background-color !default;

@@ -1,0 +1,99 @@
+@import "./item-divider";
+@import "./item-divider.ios.vars";
+
+// iOS Item Divider
+// --------------------------------------------------
+
+:host {
+  --background: #{$item-ios-divider-background};
+  --color: #{$item-ios-divider-color};
+  --padding-start: #{$item-ios-divider-padding-start};
+
+  @include border-radius(0);
+
+  position: relative;
+
+  font-size: $item-ios-divider-font-size;
+}
+
+.item-divider-inner {
+  @include padding-horizontal(null, $item-ios-divider-padding-end / 2);
+}
+
+
+// iOS Item Divider Slots
+// --------------------------------------------------
+
+:host([slot="start"]) {
+  @include margin($item-ios-slot-start-margin-top, $item-ios-slot-start-margin-end, $item-ios-slot-start-margin-bottom, $item-ios-slot-start-margin-start);
+}
+
+:host([slot="end"]) {
+  @include margin($item-ios-slot-end-margin-top, $item-ios-slot-end-margin-end, $item-ios-slot-end-margin-bottom, $item-ios-slot-end-margin-start);
+}
+
+::slotted(ion-icon[slot="start"]),
+::slotted(ion-icon[slot="end"]) {
+  @include margin($item-ios-icon-slot-margin-top, $item-ios-icon-slot-margin-end, $item-ios-icon-slot-margin-bottom, $item-ios-icon-slot-margin-start);
+}
+
+
+// Material Design Slotted Label
+// --------------------------------------------------
+
+::slotted(ion-label) {
+  @include margin(10px, 8px, 10px, 0);
+}
+
+
+// iOS Item Divider Content
+// --------------------------------------------------
+
+::slotted(h1) {
+  @include margin(0, 0, 2px);
+
+  font-size: 24px;
+  font-weight: normal;
+}
+
+::slotted(h2) {
+  @include margin(0, 0, 2px);
+
+  font-size: 17px;
+  font-weight: normal;
+}
+
+::slotted(h3),
+::slotted(h4),
+::slotted(h5),
+::slotted(h6) {
+  @include margin(0, 0, 3px);
+
+  font-size: 14px;
+  font-weight: normal;
+
+  line-height: normal;
+}
+
+::slotted(p) {
+  @include margin($item-ios-paragraph-margin-top, $item-ios-paragraph-margin-end, $item-ios-paragraph-margin-bottom, $item-ios-paragraph-margin-start);
+
+  color: $item-ios-paragraph-text-color;
+
+  font-size: $item-ios-paragraph-font-size;
+
+  line-height: normal;
+
+  text-overflow: inherit;
+
+  overflow: inherit;
+}
+
+::slotted(h2:last-child)
+::slotted(h3:last-child),
+::slotted(h4:last-child),
+::slotted(h5:last-child),
+::slotted(h6:last-child),
+::slotted(p:last-child) {
+  @include margin(null, null, 0, null);
+}

@@ -1,0 +1,82 @@
+@import "../../themes/ionic.globals";
+
+
+// Label
+// --------------------------------------------------
+
+:host-context(.item) {
+  /**
+   * @prop --color: Color of the label
+   */
+  --color: initial;
+
+  display: block;
+
+  color: var(--color);
+
+  font-family: $font-family-base;
+  font-size: inherit;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+:host(.ion-color) {
+  color: current-color(base);
+}
+
+:host([text-wrap]) {
+  white-space: normal;
+}
+
+:host-context(.item-interactive-disabled) {
+  cursor: default;
+  opacity: .3;
+  pointer-events: none;
+}
+
+:host-context(.item-input) {
+  flex: initial;
+
+  max-width: 200px;
+  pointer-events: none;
+}
+
+
+// Fixed Inputs
+// --------------------------------------------------
+
+:host(.label-fixed) {
+  flex: 0 0 100px;
+
+  width: 100px;
+  min-width: 100px;
+  max-width: 200px;
+}
+
+// Stacked & Floating Inputs
+// --------------------------------------------------
+
+:host(.label-stacked),
+:host(.label-floating) {
+  @include margin(null, null, 0, null);
+
+  align-self: stretch;
+
+  width: auto;
+  max-width: 100%;
+}
+
+:host-context(.item-has-focus).label-floating,
+:host-context(.item-has-placeholder).label-floating,
+:host-context(.item-has-value).label-floating {
+  @include transform(translate3d(0, 0, 0), scale(.8));
+}
+
+:host(.label-no-animate.label-floating) {
+  transition: none;
+}

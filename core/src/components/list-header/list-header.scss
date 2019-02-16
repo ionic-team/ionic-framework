@@ -1,0 +1,34 @@
+@import "../../themes/ionic.globals";
+
+
+// List Header
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the list header
+   * @prop --color: Color of the list header text
+   */
+
+  @include font-smoothing();
+  @include margin(0);
+  @include padding(0);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  min-height: 40px;
+
+  background: var(--background);
+  color: var(--color);
+
+  overflow: hidden;
+}
+
+:host(.ion-color) {
+  background: current-color(base);
+  color: current-color(contrast);
+}

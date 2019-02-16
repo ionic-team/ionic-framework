@@ -1,0 +1,175 @@
+@import "../../themes/ionic.globals";
+
+// Range
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --bar-background: Background of the range bar
+   * @prop --bar-background-active: Background of the active range bar
+   * @prop --bar-height: Height of the range bar
+   * @prop --bar-border-radius: Border radius of the range bar
+   * @prop --height: Height of the range
+   * @prop --knob-background: Background of the range knob
+   * @prop --knob-border-radius: Border radius of the range knob
+   * @prop --knob-box-shadow: Box shadow of the range knob
+   * @prop --knob-size: Size of the range knob
+   */
+  --knob-handle-size: calc(var(--knob-size) * 2);
+
+  display: flex;
+  position: relative;
+
+  flex: 3;
+  align-items: center;
+
+  font-family: $font-family-base;
+
+  user-select: none;
+  z-index: $z-index-item-input;
+}
+
+:host(.range-disabled) {
+  pointer-events: none;
+}
+
+::slotted(ion-label) {
+  flex: initial;
+}
+
+::slotted(ion-icon[slot]) {
+  font-size: 24px;
+}
+
+.range-slider {
+  position: relative;
+
+  flex: 1;
+
+  width: 100%;
+  height: var(--height);
+
+  contain: size layout style;
+
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+:host(.range-pressed) .range-slider {
+  cursor: grabbing;
+}
+
+.range-pin {
+  position: absolute;
+
+  background: current-color(base);
+  color: current-color(contrast);
+
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.range-knob-handle {
+  @include position(
+    calc((var(--height) - var(--knob-handle-size)) / 2),
+    null, null, 0
+  );
+  @include margin-horizontal(
+    calc(0px - var(--knob-handle-size) / 2),
+    null
+  );
+
+  @include rtl() {
+    /* stylelint-disable-next-line property-blacklist */
+    left: unset;
+  }
+
+  position: absolute;
+
+  width: var(--knob-handle-size);
+  height: var(--knob-handle-size);
+
+  text-align: center;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}
+
+.range-bar {
+  @include border-radius(var(--bar-border-radius));
+  @include position(calc((var(--height) - var(--bar-height)) / 2), null, null, 0);
+
+  @include rtl() {
+    /* stylelint-disable-next-line property-blacklist */
+    left: unset;
+  }
+
+  position: absolute;
+
+  width: 100%;
+  height: var(--bar-height);
+
+  background: var(--bar-background);
+
+  pointer-events: none;
+}
+
+.range-knob {
+  @include border-radius(var(--knob-border-radius));
+  @include position(
+    calc(50% - var(--knob-size) / 2),
+    null, null,
+    calc(50% - var(--knob-size) / 2)
+  );
+
+  @include rtl() {
+    /* stylelint-disable-next-line property-blacklist */
+    left: unset;
+  }
+
+  position: absolute;
+
+  width: var(--knob-size);
+  height: var(--knob-size);
+
+  background: var(--knob-background);
+
+  box-shadow: var(--knob-box-shadow);
+  z-index: 2;
+  pointer-events: none;
+}
+
+:host(.range-pressed) .range-bar-active {
+  will-change: left, right;
+}
+
+
+// Range in Item
+// ----------------------------
+
+// .item ion-range .item-inner {
+//   overflow: visible;
+
+//   width: 100%;
+// }
+
+// .item ion-range .input-wrapper {
+//   overflow: visible;
+
+//   flex-direction: column;
+
+//   width: 100%;
+// }
+
+
+
+:host(.in-item) {
+  width: 100%;
+}
+
+
+:host(.in-item) ::slotted(ion-label) {
+  align-self: center;
+}

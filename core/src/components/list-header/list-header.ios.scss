@@ -1,0 +1,21 @@
+@import "./list-header";
+@import "./list-header.ios.vars";
+
+// iOS List Header
+// --------------------------------------------------
+
+:host {
+  --background: #{$list-ios-header-background-color};
+  --color: #{$list-ios-header-color};
+
+  @include padding-horizontal(calc(var(--ion-safe-area-left, 0px) + #{$list-ios-header-padding-start}), null);
+
+  position: relative;
+
+  font-size: $list-ios-header-font-size;
+  font-weight: $list-ios-header-font-weight;
+
+  letter-spacing: $list-ios-header-letter-spacing;
+
+  text-transform: $list-ios-header-text-transform;
+}

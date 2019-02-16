@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Item - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-item>
+    <ion-label>Item Text</ion-label>
+  </ion-item>
+
+  <ion-item button color="danger">
+    <ion-label>Item Tappable Danger</ion-label>
+  </ion-item>
+
+  <ion-item button color="danger" class="activated">
+    <ion-label>Item Tappable Danger.activated</ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <h1>Item Multiline Text</h1>
+      <h2>Heading</h2>
+      <h3>Heading</h3>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Item Icons</ion-label>
+    <ion-icon name="heart" slot="end"></ion-icon>
+    <ion-icon name="star" slot="start"></ion-icon>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Item Button</ion-label>
+    <button slot="start"><ion-icon name="heart" slot="end"></ion-icon>Start Button</button>
+    <button slot="end">End Button<ion-icon name="star" slot="start"></ion-icon></button>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Item Avatar</ion-label>
+    <ion-avatar slot="start"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs="></ion-avatar>
+    <ion-avatar slot="end"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs="></ion-avatar>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Item Thumbnail</ion-label>
+    <ion-thumbnail slot="start"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs="></ion-thumbnail>
+    <ion-thumbnail slot="end"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs="></ion-thumbnail>
+  </ion-item>
+</body>
+
+<style>
+  body {
+    margin: 0;
+  }
+</style>
+</html>

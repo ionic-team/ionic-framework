@@ -1,0 +1,25 @@
+@import "./split-pane";
+@import "./split-pane.ios.vars";
+
+// Split Pane
+// --------------------------------------------------
+
+.split-pane-ios {
+  --border: #{$split-pane-ios-border};
+}
+
+.split-pane-ios.split-pane-visible > .split-pane-side {
+  min-width: $split-pane-ios-side-min-width;
+  max-width: $split-pane-ios-side-max-width;
+
+  border-right: var(--border);
+  border-left: 0;
+}
+
+.split-pane-ios.split-pane-visible > .split-pane-side[side=end] {
+  min-width: $split-pane-ios-side-min-width;
+  max-width: $split-pane-ios-side-max-width;
+
+  border-right: 0;
+  border-left: var(--border);
+}

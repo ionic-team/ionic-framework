@@ -1,0 +1,43 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Card Subtitle
+// --------------------------------------------------
+
+/// @prop - Font size of the card subtitle
+$card-ios-subtitle-font-size:            12px !default;
+
+/// @prop - Font weight of the card subtitle
+$card-ios-subtitle-font-weight:          700 !default;
+
+/// @prop - Font weight of the card subtitle
+$card-ios-subtitle-text-transform:       uppercase !default;
+
+/// @prop - Letter spacing of the card subtitle
+$card-ios-subtitle-letter-spacing:       .4px !default;
+
+/// @prop - Padding top of the card subtitle
+$card-ios-subtitle-padding-top:          0 !default;
+
+/// @prop - Padding end of the card subtitle
+$card-ios-subtitle-padding-end:          $card-ios-subtitle-padding-top !default;
+
+/// @prop - Padding bottom of the card subtitle
+$card-ios-subtitle-padding-bottom:       $card-ios-subtitle-padding-top !default;
+
+/// @prop - Padding start of the card subtitle
+$card-ios-subtitle-padding-start:        $card-ios-subtitle-padding-end !default;
+
+/// @prop - Margin top of the card subtitle
+$card-ios-subtitle-margin-top:           0 !default;
+
+/// @prop - Margin end of the card subtitle
+$card-ios-subtitle-margin-end:           $card-ios-subtitle-margin-top !default;
+
+/// @prop - Margin bottom of the card subtitle
+$card-ios-subtitle-margin-bottom:        4px !default;
+
+/// @prop - Margin start of the card subtitle
+$card-ios-subtitle-margin-start:         $card-ios-subtitle-margin-end !default;
+
+/// @prop - Color of the card subtitle
+$card-ios-subtitle-color:                $text-color-step-400 !default;

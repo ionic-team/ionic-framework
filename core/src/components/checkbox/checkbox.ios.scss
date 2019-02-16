@@ -1,0 +1,47 @@
+@import "./checkbox";
+@import "./checkbox.ios.vars";
+
+// iOS Checkbox
+// --------------------------------------------------
+
+:host {
+  // Border
+  --border-radius: #{$checkbox-ios-icon-border-radius};
+  --border-width: #{$checkbox-ios-icon-border-width};
+  --border-style: #{$checkbox-ios-icon-border-style};
+  --border-color: #{$checkbox-ios-icon-border-color-off};
+
+  // Background
+  --background: #{$checkbox-ios-background-color-off};
+
+  // Size
+  --size: #{$checkbox-ios-icon-size};
+  width: var(--size);
+
+  height: var(--size);
+}
+
+
+// iOS Checkbox: Disabled
+// -----------------------------------------
+
+// TODO: .item-ios.item-checkbox-disabled ion-label
+:host(.checkbox-disabled) {
+  opacity: $checkbox-ios-disabled-opacity;
+}
+
+
+// iOS Checkbox Within An Item
+// -----------------------------------------
+
+:host(.in-item) {
+  // end position by default
+  @include margin($checkbox-ios-item-end-margin-top, $checkbox-ios-item-end-margin-end, $checkbox-ios-item-end-margin-bottom, $checkbox-ios-item-end-margin-start);
+
+  display: block;
+  position: static;
+}
+
+:host(.in-item[slot="start"]) {
+  @include margin($checkbox-ios-item-start-margin-top, $checkbox-ios-item-start-margin-end, $checkbox-ios-item-start-margin-bottom, $checkbox-ios-item-start-margin-start);
+}

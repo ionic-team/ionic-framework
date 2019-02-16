@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Card - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-card>
+    <ion-card-content>
+      This is just your basic card with some text to boot. Like it? Keep scrolling...
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>
+        Subtitle
+      </ion-card-subtitle>
+      <ion-card-title>
+        Title
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      The British use the term "header".
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Colors-->
+  <ion-card class="custom">
+    <ion-card-header>
+      <ion-card-subtitle>
+        Subtitle
+      </ion-card-subtitle>
+      <ion-card-title>
+        Title
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      The British use the term "header".
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="custom2">
+    <ion-card-header>
+      <ion-card-subtitle>
+        Subtitle
+      </ion-card-subtitle>
+      <ion-card-title>
+        Title
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      The British use the term "header".
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card color="secondary">
+    <ion-card-header>
+      <ion-card-subtitle>
+        Subtitle
+      </ion-card-subtitle>
+      <ion-card-title>
+        Title
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      The British use the term "header".
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card color="danger">
+    <ion-card-header>
+      <ion-card-subtitle>
+        Subtitle
+      </ion-card-subtitle>
+      <ion-card-title>
+        Title
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      The British use the term "header".
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card color="light">
+    <ion-card-header>
+      <ion-card-subtitle>
+        Subtitle
+      </ion-card-subtitle>
+      <ion-card-title>
+        Title
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      The British use the term "header".
+    </ion-card-content>
+  </ion-card>
+
+  <style>
+    .custom {
+      --background: #f6f6f6;
+      --color: orange;
+    }
+
+    .custom ion-card-subtitle,
+    .custom ion-card-title {
+      --color: orange;
+    }
+
+    .custom2 {
+      --background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAB4AAAARQAQMAAAA2ut43AAAABlBMVEXMzMz////TjRV2AAAEPUlEQVR42u3RMREAMBDDsPAn/eXhavOq87Ztu7u7+6eBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBf2hvgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgatgn4GBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGr7S0wMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBwFewzMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwcLW9BQYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBq6CfQYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgautrfAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAVbDPwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwNX2FhgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGLgK9hkYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBi42t4CAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDV8E+AwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDA1fbW2BgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYOAq2GdgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGDgansLDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMXAX7DAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDFxtb4GBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGrYJ+BgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBq+0tMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwcBXsMzAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMHC1vQUGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgaugn0GBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGjvYD5WuYrpZqdmcAAAAASUVORK5CYII=) center 50%;
+      --color: white;
+      text-shadow: 2px 2px 6px black;
+    }
+
+    .custom2 ion-card-subtitle,
+    .custom2 ion-card-title {
+      --color: white;
+    }
+  </style>
+</body>
+</html>

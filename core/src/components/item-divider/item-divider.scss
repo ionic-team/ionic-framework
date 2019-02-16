@@ -1,0 +1,87 @@
+@import "./item-divider.vars";
+
+
+// Item Divider
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the item divider
+   * @prop --color: Color of the item divider
+   * @prop --padding-start: Start padding of the item divider
+   * @prop --padding-end: End padding of the item divider
+   * @prop --padding-top: Top padding of the item divider
+   * @prop --padding-bottom: Bottom padding of the item divider
+   */
+  --padding-start: 0px;
+  --padding-end: 0px;
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+
+  @include font-smoothing();
+  @include margin(0);
+  @include padding(
+    var(--padding-top),
+    calc(var(--padding-end) + var(--ion-safe-area-right, 0px)),
+    var(--padding-bottom),
+    calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
+  );
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  min-height: $item-divider-min-height;
+
+  background: var(--background);
+  color: var(--color);
+
+  font-family: $font-family-base;
+
+  overflow: hidden;
+  z-index: $z-index-item-divider;
+  box-sizing: border-box;
+}
+
+:host(.ion-color) {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+:host(.item-divider-sticky) {
+  position: sticky;
+  top: 0;
+}
+
+.item-divider-inner {
+  @include margin(0);
+  @include padding(0);
+
+  display: flex;
+
+  flex: 1;
+  flex-direction: inherit;
+  align-items: inherit;
+  align-self: stretch;
+
+  min-height: inherit;
+
+  border: 0;
+
+  overflow: hidden;
+}
+
+.item-divider-wrapper {
+  display: flex;
+
+  flex: 1;
+  flex-direction: inherit;
+  align-items: inherit;
+  align-self: stretch;
+
+  text-overflow: ellipsis;
+
+  overflow: hidden;
+}

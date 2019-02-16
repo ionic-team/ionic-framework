@@ -1,0 +1,62 @@
+@import "../../themes/ionic.globals.md";
+@import "../item/item.md.vars";
+
+// Material Design Radio
+// --------------------------------------------------
+
+/// @prop - Color of the checked radio
+$radio-md-color-on:                  current-color(base) !default;
+
+/// @prop - Background color of focus indicator for radio when focused
+$radio-md-background-color-focused:  ion-color(primary, tint) !default;
+
+/// @prop - Color of the unchecked radio
+$radio-md-color-off:                 $text-color-step-600 !default;
+
+/// @prop - Width of the radio icon
+$radio-md-icon-width:                20px !default;
+
+/// @prop - Height of the radio icon
+$radio-md-icon-height:               20px !default;
+
+/// @prop - Border width of the radio icon
+$radio-md-icon-border-width:         2px !default;
+
+/// @prop - Border style of the radio icon
+$radio-md-icon-border-style:         solid !default;
+
+/// @prop - Border radius of the radio icon
+$radio-md-icon-border-radius:        50% !default;
+
+/// @prop - Transition duration of the radio
+$radio-md-transition-duration:       280ms !default;
+
+/// @prop - Transition easing of the radio
+$radio-md-transition-easing:         cubic-bezier(.4, 0, .2, 1) !default;
+
+/// @prop - Opacity of the disabled radio
+$radio-md-disabled-opacity:          .3 !default;
+
+/// @prop - Margin top of the item-start in a radio
+$radio-md-item-start-margin-top:     11px !default;
+
+/// @prop - Margin end of the item-start in a radio
+$radio-md-item-start-margin-end:     36px !default;
+
+/// @prop - Margin bottom of the item-start in a radio
+$radio-md-item-start-margin-bottom:  10px !default;
+
+/// @prop - Margin start of the item-start in a radio
+$radio-md-item-start-margin-start:   4px !default;
+
+/// @prop - Margin top of the item-end in a radio
+$radio-md-item-end-margin-top:       9px !default;
+
+/// @prop - Margin end of the item-end in a radio
+$radio-md-item-end-margin-end:       0 !default;
+
+/// @prop - Margin bottom of the item-end in a radio
+$radio-md-item-end-margin-bottom:    $radio-md-item-end-margin-top !default;
+
+/// @prop - Margin start of the item-end in a radio
+$radio-md-item-end-margin-start:     0 !default;

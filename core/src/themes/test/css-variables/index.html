@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>CSS Variable - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+
+  <style>
+    .wrapper {
+      display: flex;
+      flex-direction: row;
+    }
+
+    section {
+      width: 25%;
+      padding: 0 8px;
+    }
+
+    .right-container {
+      display: flex;
+      height: 100%;
+      align-items: center;
+    }
+
+    .right-container ion-select {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    ion-fab-button {
+      display: inline-block;
+    }
+
+    ion-segment {
+      margin-bottom: 8px;
+    }
+
+    .icon-section ion-icon {
+      font-size: 48px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <ion-app>
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="list">
+          <ion-label>Lists</ion-label>
+          <ion-icon name="list"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button tab="colors">
+          <ion-label>Colors</ion-label>
+          <ion-icon name="brush"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button tab="other">
+          <ion-label>Other</ion-label>
+          <ion-icon name="more"></ion-icon>
+        </ion-tab-button>
+      </ion-tab-bar>
+
+      <ion-tab tab="list">
+        <ion-header>
+          <ion-toolbar color="primary">
+            <ion-title>Lists</ion-title>
+
+            <div slot="end" class="right-container">
+              <ion-label>Select a Theme:</ion-label>
+              <ion-select interface="popover" class="theme-picker">
+                <ion-select-option value="default" selected>Default</ion-select-option>
+                <ion-select-option value="oceanic">Oceanic</ion-select-option>
+                <ion-select-option value="vibrant">Vibrant</ion-select-option>
+                <ion-select-option value="dark">Dark</ion-select-option>
+              </ion-select>
+            </div>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content padding>
+          <div class="wrapper">
+            <section>
+              <ion-card>
+                <ion-card-header>
+                  <ion-card-title>Card Header</ion-card-title>
+                </ion-card-header>
+
+                <ion-card-content>
+                  Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a week in the woods.
+                  Wash your spirit clean.
+                </ion-card-content>
+              </ion-card>
+              <ion-card>
+                <ion-item>
+                  <ion-icon name="pin" slot="start"></ion-icon>
+                  ion-item in a card, icon left, button right
+                  <ion-button fill="outline" slot="end">View</ion-button>
+                </ion-item>
+
+                <ion-card-content>
+                  This is content, without any paragraph or header tags, within an ion-card-content element.
+                </ion-card-content>
+              </ion-card>
+
+              <ion-card>
+                <ion-item href="#" class="activated">
+                  <ion-icon name="wifi" slot="start"></ion-icon>
+                  Card Link Item 1 .activated
+                </ion-item>
+
+                <ion-item href="#">
+                  <ion-icon name="wine" slot="start"></ion-icon>
+                  Card Link Item 2
+                </ion-item>
+
+                <ion-item class="activated">
+                  <ion-icon name="warning" slot="start"></ion-icon>
+                  Card Button Item 1 .activated
+                </ion-item>
+
+                <ion-item>
+                  <ion-icon name="walk" slot="start"></ion-icon>
+                  Card Button Item 2
+                </ion-item>
+              </ion-card>
+            </section>
+
+            <section>
+              <ion-list>
+                <ion-item>
+                  <ion-label>Pokémon Yellow</ion-label>
+                  <ion-note slot="end">Note</ion-note>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Super Metroid</ion-label>
+                  <ion-note slot="end">Note</ion-note>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Mega Man X</ion-label>
+                  <ion-note slot="end">Note</ion-note>
+                </ion-item>
+                <ion-item>
+                  <ion-label>The Legend of Zelda</ion-label>
+                  <ion-note slot="end">Note</ion-note>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Pac-Man</ion-label>
+                  <ion-note slot="end">Note</ion-note>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Super Mario World</ion-label>
+                  <ion-note slot="end">Note</ion-note>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Street Fighter II</ion-label>
+                  <ion-note slot="end">Note</ion-note>
+                </ion-item>
+                <ion-item-divider>Sliding Items</ion-item-divider>
+                <ion-item-sliding>
+                  <ion-item><ion-label>Half Life</ion-label></ion-item>
+                  <ion-item-options>
+                    <ion-item-option>More</ion-item-option>
+                  </ion-item-options>
+                </ion-item-sliding>
+                <ion-item-sliding>
+                  <ion-item color="secondary"><ion-label>Final Fantasy VII</ion-label></ion-item>
+                  <ion-item-options>
+                    <ion-item-option>More</ion-item-option>
+                  </ion-item-options>
+                </ion-item-sliding>
+                <ion-item-sliding>
+                  <ion-item><ion-label>Tetris</ion-label></ion-item>
+                  <ion-item-options>
+                    <ion-item-option>More</ion-item-option>
+                  </ion-item-options>
+                </ion-item-sliding>
+                <ion-item-sliding>
+                  <ion-item><ion-label>Donkey Kong III</ion-label></ion-item>
+                  <ion-item-options>
+                    <ion-item-option>More</ion-item-option>
+                  </ion-item-options>
+                </ion-item-sliding>
+                <ion-item-sliding>
+                  <ion-item><ion-label>Goldeneye 007</ion-label></ion-item>
+                  <ion-item-options>
+                    <ion-item-option>More</ion-item-option>
+                  </ion-item-options>
+                </ion-item-sliding>
+              </ion-list>
+            </section>
+
+            <section>
+              <ion-radio-group id="fruitRadio">
+                <ion-item-divider>
+                  <ion-label>Fruits</ion-label>
+                </ion-item-divider>
+                <ion-item>
+                  <ion-label>Apple</ion-label>
+                  <ion-radio slot="start" value="apple"></ion-radio>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label>Grape, checked, disabled</ion-label>
+                  <ion-radio slot="start" id="grapeChecked" value="grape" checked disabled></ion-radio>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label>Cherry</ion-label>
+                  <ion-radio slot="start" color="danger" value="cherry"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+
+              <ion-radio-group id="fruitRadio">
+                <ion-item-divider>
+                  <ion-label>Veggies</ion-label>
+                </ion-item-divider>
+                <ion-item>
+                  <ion-label>Celery</ion-label>
+                  <ion-radio color="tertiary" slot="start" value="celery"></ion-radio>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label>Lettuce, checked, disabled</ion-label>
+                  <ion-radio color="tertiary" slot="start" value="lettuce" checked disabled></ion-radio>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label>Onion</ion-label>
+                  <ion-radio color="tertiary" slot="start" value="onion"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+
+              <ion-item>
+                <ion-range value="20"></ion-range>
+              </ion-item>
+
+              <ion-item>
+                <ion-range color="success" value="20"></ion-range>
+              </ion-item>
+
+              <ion-item>
+                <ion-range color="warning" value="20"></ion-range>
+              </ion-item>
+
+              <ion-item>
+                <ion-range color="danger" value="20"></ion-range>
+              </ion-item>
+            </section>
+
+            <section>
+              <ion-item>
+                <ion-label>Default</ion-label>
+                <ion-checkbox slot="end" checked></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                <ion-label>Primary</ion-label>
+                <ion-checkbox slot="end" color="primary" checked></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                <ion-label>Secondary</ion-label>
+                <ion-checkbox slot="end" color="secondary" checked></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                <ion-label>Warning</ion-label>
+                <ion-checkbox slot="end" color="warning" checked></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                <ion-label>Danger</ion-label>
+                <ion-checkbox slot="end" color="danger" checked></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                <ion-label>Light</ion-label>
+                <ion-checkbox slot="end" color="light" checked></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                <ion-label>Dark</ion-label>
+                <ion-checkbox slot="end" color="dark" checked></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                <ion-label>Unchecked by Default</ion-label>
+                <ion-checkbox slot="end"></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                <ion-label>Disabled</ion-label>
+                <ion-checkbox slot="end" disabled></ion-checkbox>
+              </ion-item>
+
+              <ion-item>
+                <ion-toggle slot="start"></ion-toggle>
+                <ion-label>Blueberry</ion-label>
+              </ion-item>
+
+              <ion-item>
+                <ion-toggle color="success" slot="start" checked></ion-toggle>
+                <ion-label>Lettuce</ion-label>
+              </ion-item>
+
+              <ion-item>
+                <ion-toggle color="danger" slot="start" checked></ion-toggle>
+                <ion-label>Apple</ion-label>
+              </ion-item>
+
+              <ion-item>
+                <ion-toggle color="tertiary" slot="start" checked></ion-toggle>
+                <ion-label>Radish</ion-label>
+              </ion-item>
+
+              <ion-item>
+                <ion-toggle color="dark" slot="start" checked></ion-toggle>
+                <ion-label>Blackberry</ion-label>
+              </ion-item>
+            </section>
+          </div>
+        </ion-content>
+      </ion-tab>
+
+      <ion-tab tab="colors">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Colors</ion-title>
+            <div slot="end" class="right-container">
+              <ion-label>Select a Theme:</ion-label>
+              <ion-select interface="popover" class="theme-picker">
+                <ion-select-option value="default" selected>Default</ion-select-option>
+                <ion-select-option value="oceanic">Oceanic</ion-select-option>
+                <ion-select-option value="vibrant">Vibrant</ion-select-option>
+                <ion-select-option value="dark">Dark</ion-select-option>
+              </ion-select>
+            </div>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content padding>
+          <div class="wrapper">
+            <section>
+              <p>
+                <ion-button color="primary">Primary</ion-button>
+                <ion-button color="secondary">Secondary</ion-button>
+                <ion-button color="tertiary">Tertiary</ion-button>
+                <ion-button fill="outline" color="success">Success Outline</ion-button>
+                <ion-button fill="clear" color="warning">Warning Clear</ion-button>
+                <ion-button color="danger">Danger</ion-button>
+                <ion-button color="light">Light</ion-button>
+                <ion-button expand="block" fill="outline" color="medium">Medium Outline</ion-button>
+                <ion-button expand="full" fill="clear" color="dark">Dark Clear</ion-button>
+              </p>
+
+              <p>
+                <ion-button class="focused" color="primary">Primary</ion-button>
+                <ion-button class="focused" color="secondary">Secondary</ion-button>
+                <ion-button class="focused" color="tertiary">Tertiary</ion-button>
+                <ion-button class="focused" fill="outline" color="success">Success Outline</ion-button>
+                <ion-button class="focused" fill="clear" color="warning">Warning Clear</ion-button>
+                <ion-button class="focused" color="danger">Danger</ion-button>
+                <ion-button class="focused" color="light">Light</ion-button>
+                <ion-button class="focused" expand="block" fill="outline" color="medium">Medium Outline</ion-button>
+                <ion-button class="focused" expand="full" fill="clear" color="dark">Dark Clear</ion-button>
+              </p>
+
+              <p>
+                <ion-button class="activated" color="primary">Primary</ion-button>
+                <ion-button class="activated" color="secondary">Secondary</ion-button>
+                <ion-button class="activated" color="tertiary">Tertiary</ion-button>
+                <ion-button class="activated" fill="outline" color="success">Success Outline</ion-button>
+                <ion-button class="activated" fill="clear" color="warning">Warning Clear</ion-button>
+                <ion-button class="activated" color="danger">Danger</ion-button>
+                <ion-button class="activated" color="light">Light</ion-button>
+                <ion-button class="activated" expand="block" fill="outline" color="medium">Medium Outline</ion-button>
+                <ion-button class="activated" expand="full" fill="clear" color="dark">Dark Clear</ion-button>
+              </p>
+            </section>
+
+            <section>
+              <p>
+                <ion-button>Default</ion-button>
+                <ion-button>
+                  <ion-icon slot="icon-only" name="star"></ion-icon>
+                </ion-button>
+                <ion-button>
+                  <ion-icon slot="start" name="pin"></ion-icon>Map</ion-button>
+                <ion-button shape="round">Round</ion-button>
+                <ion-button fill="outline">Outline</ion-button>
+                <ion-button fill="clear">Clear</ion-button>
+                <ion-button fill="outline" expand="full">Full Outline</ion-button>
+                <ion-button fill="clear" expand="block">Block Clear</ion-button>
+              </p>
+
+              <p>
+                <ion-fab-button>
+                  <ion-icon name="logo-facebook"></ion-icon>
+                </ion-fab-button>
+                <ion-fab-button size="small">
+                  <ion-icon name="logo-twitter"></ion-icon>
+                </ion-fab-button>
+                <ion-fab-button color="secondary">
+                  <ion-icon name="logo-vimeo"></ion-icon>
+                </ion-fab-button>
+                <ion-fab-button color="tertiary">
+                  <ion-icon name="logo-instagram"></ion-icon>
+                </ion-fab-button>
+              </p>
+
+              <p>
+                <ion-chip>
+                  <ion-label>Default</ion-label>
+                </ion-chip>
+                <ion-chip color="primary">
+                  <ion-label>Primary</ion-label>
+                </ion-chip>
+                <ion-chip color="secondary">
+                  <ion-label>Secondary</ion-label>
+                </ion-chip>
+                <ion-chip color="tertiary">
+                  <ion-label>Tertiary</ion-label>
+                </ion-chip>
+                <ion-chip color="success">
+                  <ion-label>Success</ion-label>
+                </ion-chip>
+                <ion-chip color="warning">
+                  <ion-label>Warning</ion-label>
+                </ion-chip>
+                <ion-chip color="danger">
+                  <ion-label>Danger</ion-label>
+                </ion-chip>
+                <ion-chip color="light">
+                  <ion-label>Light</ion-label>
+                </ion-chip>
+                <ion-chip color="medium">
+                  <ion-label>Medium</ion-label>
+                </ion-chip>
+                <ion-chip color="dark">
+                  <ion-label>Dark</ion-label>
+                </ion-chip>
+              </p>
+
+              <p>
+                <ion-badge></ion-badge>
+                <ion-badge color="primary">11</ion-badge>
+                <ion-badge color="secondary">22</ion-badge>
+                <ion-badge color="tertiary">33</ion-badge>
+                <ion-badge color="success">44</ion-badge>
+                <ion-badge color="warning">55</ion-badge>
+                <ion-badge color="danger">66</ion-badge>
+                <ion-badge color="light">77</ion-badge>
+                <ion-badge color="medium">88</ion-badge>
+                <ion-badge color="dark">99</ion-badge>
+              </p>
+
+              <p class="icon-section">
+                <ion-icon name="logo-ionic" color="primary"></ion-icon>
+                <ion-icon name="logo-angular"></ion-icon>
+                <ion-icon name="heart" color="danger"></ion-icon>
+                <ion-icon name="logo-ionitron" color="primary"></ion-icon>
+
+                <ion-icon name="happy" color="warning"></ion-icon>
+                <ion-icon name="people"></ion-icon>
+                <ion-icon name="person" color="tertiary"></ion-icon>
+                <ion-icon name="contact"></ion-icon>
+
+                <ion-icon name="apps"></ion-icon>
+                <ion-icon name="lock"></ion-icon>
+                <ion-icon name="key" color="success"></ion-icon>
+                <ion-icon name="unlock"></ion-icon>
+
+                <ion-icon name="map" color="secondary"></ion-icon>
+                <ion-icon name="navigate"></ion-icon>
+                <ion-icon name="pin"></ion-icon>
+                <ion-icon name="locate"></ion-icon>
+
+                <ion-icon name="mic"></ion-icon>
+                <ion-icon name="musical-notes" color="warning"></ion-icon>
+                <ion-icon name="volume-high"></ion-icon>
+                <ion-icon name="microphone" color="tertiary"></ion-icon>
+
+                <ion-icon name="cafe" color="success"></ion-icon>
+                <ion-icon name="calculator"></ion-icon>
+                <ion-icon name="bus"></ion-icon>
+                <ion-icon name="wine" color="danger"></ion-icon>
+
+
+              </p>
+            </section>
+
+            <section>
+              <p>
+                <ion-searchbar></ion-searchbar>
+                <ion-searchbar color="primary"></ion-searchbar>
+                <ion-searchbar color="tertiary"></ion-searchbar>
+                <ion-searchbar color="warning"></ion-searchbar>
+                <ion-searchbar color="light"></ion-searchbar>
+                <ion-searchbar color="dark"></ion-searchbar>
+              </p>
+              <p>
+                <ion-segment>
+                  <ion-segment-button checked>All</ion-segment-button>
+                  <ion-segment-button>Favorites</ion-segment-button>
+                </ion-segment>
+
+                <ion-segment color="primary">
+                  <ion-segment-button checked>All</ion-segment-button>
+                  <ion-segment-button>Favorites</ion-segment-button>
+                </ion-segment>
+
+                <ion-segment color="secondary">
+                  <ion-segment-button checked>All</ion-segment-button>
+                  <ion-segment-button>Favorites</ion-segment-button>
+                </ion-segment>
+
+                <ion-segment color="success">
+                  <ion-segment-button checked>All</ion-segment-button>
+                  <ion-segment-button>Favorites</ion-segment-button>
+                </ion-segment>
+
+                <ion-segment color="light">
+                  <ion-segment-button checked>All</ion-segment-button>
+                  <ion-segment-button>Favorites</ion-segment-button>
+                </ion-segment>
+
+                <ion-segment color="medium">
+                  <ion-segment-button checked>All</ion-segment-button>
+                  <ion-segment-button>Favorites</ion-segment-button>
+                </ion-segment>
+
+              </p>
+            </section>
+
+            <section>
+              <p>
+                <ion-toolbar>
+                  <ion-title>Default</ion-title>
+                </ion-toolbar>
+
+                <ion-toolbar>
+                  <ion-buttons slot="start">
+                    <ion-button color="danger">
+                      <ion-icon slot="icon-only" name="add"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                  <ion-buttons slot="primary">
+                    <ion-button>
+                      <ion-icon slot="icon-only" name="more"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                  <ion-title>Toolbar</ion-title>
+                </ion-toolbar>
+
+                <ion-toolbar color="primary">
+                  <ion-buttons slot="start">
+                    <ion-button color="danger">
+                      <ion-icon slot="icon-only" name="add"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                  <ion-buttons slot="primary">
+                    <ion-button>
+                      <ion-icon slot="icon-only" name="more"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                  <ion-segment>
+                    <ion-segment-button>All</ion-segment-button>
+                    <ion-segment-button checked>Favorites</ion-segment-button>
+                  </ion-segment>
+                </ion-toolbar>
+
+                <ion-toolbar color="secondary">
+                  <ion-buttons slot="primary">
+                    <ion-button>
+                      <ion-icon slot="icon-only" name="more"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                  <ion-searchbar></ion-searchbar>
+                </ion-toolbar>
+
+                <ion-toolbar color="tertiary">
+                  <ion-buttons slot="start">
+                    <ion-button color="danger">
+                      <ion-icon slot="icon-only" name="add"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                  <ion-buttons slot="primary">
+                    <ion-button>
+                      <ion-icon slot="icon-only" name="more"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                  <ion-title>Tertiary</ion-title>
+                </ion-toolbar>
+
+                <ion-toolbar color="success">
+                  <ion-buttons slot="start">
+                    <ion-button color="danger">
+                      <ion-icon slot="icon-only" name="add"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                  <ion-buttons slot="primary">
+                    <ion-button>
+                      <ion-icon slot="icon-only" name="more"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                  <ion-title>Success</ion-title>
+                </ion-toolbar>
+
+                <ion-toolbar color="warning">
+                  <ion-buttons slot="start">
+                    <ion-button color="danger">
+                      <ion-icon slot="icon-only" name="add"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                  <ion-buttons slot="primary">
+                    <ion-button>
+                      <ion-icon slot="icon-only" name="more"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                  <ion-title>Warning</ion-title>
+                </ion-toolbar>
+
+                <ion-toolbar color="danger">
+                  <ion-buttons slot="primary">
+                    <ion-button>
+                      <ion-icon slot="icon-only" name="more"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                  <ion-searchbar></ion-searchbar>
+                </ion-toolbar>
+
+                <ion-toolbar color="light">
+                  <ion-buttons slot="start">
+                    <ion-button color="danger">
+                      <ion-icon slot="icon-only" name="add"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                  <ion-buttons slot="primary">
+                    <ion-button>
+                      <ion-icon slot="icon-only" name="more"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                  <ion-segment>
+                    <ion-segment-button>All</ion-segment-button>
+                    <ion-segment-button checked>Favorites</ion-segment-button>
+                  </ion-segment>
+                </ion-toolbar>
+
+                <ion-toolbar color="medium">
+                  <ion-buttons slot="start">
+                    <ion-button color="danger">
+                      <ion-icon slot="icon-only" name="add"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                  <ion-buttons slot="primary">
+                    <ion-button>
+                      <ion-icon slot="icon-only" name="more"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                  <ion-title>Medium</ion-title>
+                </ion-toolbar>
+
+                <ion-toolbar color="dark">
+                  <ion-buttons slot="start">
+                    <ion-button color="danger">
+                      <ion-icon slot="icon-only" name="add"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                  <ion-buttons slot="primary">
+                    <ion-button>
+                      <ion-icon slot="icon-only" name="more"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                  <ion-title>Dark</ion-title>
+                </ion-toolbar>
+              </p>
+            </section>
+          </div>
+        </ion-content>
+      </ion-tab>
+
+      <ion-tab tab="other">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Other</ion-title>
+            <div slot="end" class="right-container">
+              <ion-label>Select a Theme:</ion-label>
+              <ion-select interface="popover" class="theme-picker">
+                <ion-select-option value="default" selected>Default</ion-select-option>
+                <ion-select-option value="oceanic">Oceanic</ion-select-option>
+                <ion-select-option value="vibrant">Vibrant</ion-select-option>
+                <ion-select-option value="dark">Dark</ion-select-option>
+              </ion-select>
+            </div>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <div class="wrapper">
+
+          </div>
+        </ion-content>
+      </ion-tab>
+    </ion-tabs>
+  </ion-app>
+
+  <script>
+    const cssCache = new Map();
+    const selects = document.querySelectorAll('.theme-picker');
+
+    for (let i = 0; i < selects.length; i++) {
+      selects[i].addEventListener('ionChange', (ev) => {
+        const theme = event.detail && event.detail.value;
+        toggleTheme(theme);
+      })
+    }
+
+    function toggleTheme(theme) {
+      const styleTarget = document.documentElement.style;
+      if (theme === 'default') {
+        styleTarget.cssText = '';
+      } else {
+        if (cssCache.has(theme)) {
+          styleTarget.cssText = cssCache.get(theme);
+        } else {
+          fetch(`/src/themes/test/css-variables/css/${theme}.css`)
+            .then(result => result.text())
+            .then(css => {
+              cssCache.set(theme, css.replace(/(:root ?{)|}|\/\*\*.*\*\*\/|\s/g, '').trim());
+              toggleTheme(theme);
+            });
+        }
+      }
+
+      for (let i = 0; i < selects.length; i++) {
+        selects[i].value = theme;
+      }
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,102 @@
+@import "../themes/ionic.globals";
+@import "../themes/ionic.mixins";
+
+// Typography
+// --------------------------------------------------
+
+/// @prop - Font weight of all headings
+$headings-font-weight:         500 !default;
+
+/// @prop - Line height of all headings
+$headings-line-height:         1.2 !default;
+
+/// @prop - Font size of heading level 1
+$h1-font-size:                 26px !default;
+
+/// @prop - Font size of heading level 2
+$h2-font-size:                 24px !default;
+
+/// @prop - Font size of heading level 3
+$h3-font-size:                 22px !default;
+
+/// @prop - Font size of heading level 4
+$h4-font-size:                 20px !default;
+
+/// @prop - Font size of heading level 5
+$h5-font-size:                 18px !default;
+
+/// @prop - Font size of heading level 6
+$h6-font-size:                 16px !default;
+
+html {
+  font-family: var(--ion-font-family);
+}
+
+a {
+  background-color: transparent;
+  color: ion-color(primary, base);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @include margin(16px, null, 10px, null);
+
+  font-weight: $headings-font-weight;
+
+  line-height: $headings-line-height;
+}
+
+h1 {
+  @include margin(20px, null, null, null);
+
+  font-size: $h1-font-size;
+}
+
+h2 {
+  @include margin(18px, null, null, null);
+
+  font-size: $h2-font-size;
+}
+
+h3 {
+  font-size: $h3-font-size;
+}
+
+h4 {
+  font-size: $h4-font-size;
+}
+
+h5 {
+  font-size: $h5-font-size;
+}
+
+h6 {
+  font-size: $h6-font-size;
+}
+
+small {
+  font-size: 75%;
+}
+
+sub,
+sup {
+  position: relative;
+
+  font-size: 75%;
+
+  line-height: 0;
+
+  vertical-align: baseline;
+}
+
+sup {
+  top: -.5em;
+}
+
+sub {
+  bottom: -.25em;
+}

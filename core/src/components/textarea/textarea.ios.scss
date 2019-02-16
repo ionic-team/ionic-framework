@@ -1,0 +1,21 @@
+@import "./textarea";
+@import "./textarea.ios.vars";
+
+// iOS Textarea
+// --------------------------------------------------
+
+:host {
+  --padding-top: #{$textarea-ios-padding-top};
+  --padding-end: #{$textarea-ios-padding-end};
+  --padding-bottom: #{$textarea-ios-padding-bottom};
+  --padding-start: #{$textarea-ios-padding-start};
+
+  font-size: $textarea-ios-font-size;
+}
+
+:host-context(.item-label-stacked),
+:host-context(.item-label-floating) {
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --padding-start: 0px;
+}

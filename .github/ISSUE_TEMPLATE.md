@@ -1,42 +1,54 @@
-**Note: If you are having problems formatting your issue please refer to this article on using markdown in Github:**
+<!-- Before submitting an issue, please consult our docs (https://beta.ionicframework.com/docs/) and API reference (https://beta.ionicframework.com/docs/api/) -->
 
-https://guides.github.com/features/mastering-markdown/
+<!-- Please make sure you are posting an issue pertaining to the Ionic Framework. If you are having an issue with the Ionic Appflow services (Ionic View, Ionic Deploy, etc.) please consult the Ionic Appflow support portal (https://ionic.zendesk.com/hc/en-us) -->
 
-**Note: for support questions, please use one of these channels:** 
+<!-- Please do not submit support requests or "How to" questions here. Instead, please use one of these channels: https://forum.ionicframework.com/ or http://ionicworldwide.herokuapp.com/ -->
 
-https://forum.ionicframework.com/
-http://ionicworldwide.herokuapp.com/
+<!-- ISSUES MISSING IMPORTANT INFORMATION MAY BE CLOSED WITHOUT INVESTIGATION. -->
 
+**Ionic version:**
+<!-- (For Ionic 1.x issues, please use https://github.com/ionic-team/ionic-v1) -->
+<!-- (For Ionic 2.x & 3.x issues, please use https://github.com/ionic-team/ionic-v3) -->
+[x] **4.x**
 
-#### Short description of the problem:
+**I'm submitting a ...** 
+<!--  (check one with "x") -->
+[ ] bug report
+[ ] feature request
 
+<!-- Please do not submit support requests or "How to" questions here. Instead, please use one of these channels: https://forum.ionicframework.com/ or http://ionicworldwide.herokuapp.com/ -->
 
-#### What behavior are you expecting?
+**Current behavior:**
+<!-- Describe how the bug manifests. -->
 
+**Expected behavior:**
+<!-- Describe what the behavior would be without the bug. -->
 
 **Steps to reproduce:**
-1. 
-2. 
-3. 
+<!--  Please explain the steps required to duplicate the issue, especially if you are able to provide a sample application. -->
+
+**Related code:**
+
+<!-- If you are able to illustrate the bug or feature request with an example, please provide a sample application via one of the following means:
+
+A sample application via GitHub
+
+StackBlitz (https://stackblitz.com)
+
+Plunker (http://plnkr.co/edit/cpeRJs?p=preview)
+
+-->
 
 ```
-insert any relevant code between the above and below backticks
+insert short code snippets here
 ```
 
-**Other information:** (e.g. stacktraces, related issues, suggestions how to fix, stackoverflow links, forum links, etc)
- 
+**Other information:**
+<!-- List any other information that is relevant to your issue. Stack traces, related issues, suggestions on how to fix, Stack Overflow links, forum links, etc. -->
 
-**Which Ionic Version?** 1.x or 2.x
+**Ionic info:** 
+<!-- (run `ionic info` from a terminal/cmd prompt and paste output below): -->
 
-
-#### Plunker that shows an example of your issue
-
-**For Ionic 1 issues** - http://plnkr.co/edit/Xo1QyAUx35ny1Xf9ODHx?p=preview
-
-**For Ionic 2 issues** - http://plnkr.co/edit/me3Uk0GKWVRhZWU0usad?p=preview
-
-
-**Run `ionic info` from terminal/cmd prompt:** (paste output below)
-
-
-
+```
+insert the output from ionic info here
+```

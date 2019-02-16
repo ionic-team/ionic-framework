@@ -1,0 +1,29 @@
+@import "./backdrop.vars";
+
+// Backdrop
+// --------------------------------------------------
+
+:host {
+  @include position(0, 0, 0, 0);
+
+  display: block;
+  position: absolute;
+
+  transform: translateZ(0);
+
+  contain: strict;
+  cursor: pointer;
+  opacity: .01;
+  touch-action: none;
+  z-index: $z-index-backdrop;
+}
+
+
+:host(.backdrop-hide) {
+  background: transparent;
+}
+
+:host(.backdrop-no-tappable) {
+  cursor: auto;
+}
+

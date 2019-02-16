@@ -1,0 +1,23 @@
+@import "../../themes/ionic.globals.md";
+@import "../item/item.md.vars";
+
+// Material Design Item Divider
+// --------------------------------------------------
+
+/// @prop - Color for the divider
+$item-md-divider-color:              $text-color-step-600 !default;
+
+/// @prop - Background for the divider
+$item-md-divider-background:         $background-color !default;
+
+/// @prop - Font size for the divider
+$item-md-divider-font-size:          14px !default;
+
+/// @prop - Border bottom for the divider
+$item-md-divider-border-bottom:      1px solid $item-md-border-color !default;
+
+/// @prop - Padding start for the divider
+$item-md-divider-padding-start:      $item-md-padding-start !default;
+
+/// @prop - Padding end for the divider
+$item-md-divider-padding-end:        0 !default;

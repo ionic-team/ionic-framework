@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Inputs test
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+
+    <ion-item>
+      <ion-label>DateTime</ion-label>
+      <ion-datetime [(ngModel)]="datetime" min="1994-03-14" max="2017-12-09" display-format="MM/DD/YYYY"></ion-datetime>
+      <ion-note slot="end" id="datetime-note">{{datetime}}</ion-note>
+    </ion-item>
+
+    <ion-item color="dark">
+      <ion-label>DateTime Mirror</ion-label>
+      <ion-datetime [(ngModel)]="datetime" min="1994-03-14" max="2017-12-09" display-format="MM/DD/YYYY"></ion-datetime>
+      <ion-note slot="end">{{datetime}}</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Select</ion-label>
+      <ion-select [(ngModel)]="select">
+        <ion-select-option value="">No Game Console</ion-select-option>
+        <ion-select-option value="nes">NES</ion-select-option>
+        <ion-select-option value="n64" selected>Nintendo64</ion-select-option>
+        <ion-select-option value="ps">PlayStation</ion-select-option>
+        <ion-select-option value="genesis">Sega Genesis</ion-select-option>
+        <ion-select-option value="saturn">Sega Saturn</ion-select-option>
+        <ion-select-option value="snes">SNES</ion-select-option>
+      </ion-select>
+      <ion-note slot="end" id="select-note">{{select}}</ion-note>
+    </ion-item>
+
+    <ion-item color="dark">
+      <ion-label>Select Mirror</ion-label>
+      <ion-select [(ngModel)]="select">
+        <ion-select-option value="">No Game Console</ion-select-option>
+        <ion-select-option value="nes">NES</ion-select-option>
+        <ion-select-option value="n64" selected>Nintendo64</ion-select-option>
+        <ion-select-option value="ps">PlayStation</ion-select-option>
+        <ion-select-option value="genesis">Sega Genesis</ion-select-option>
+        <ion-select-option value="saturn">Sega Saturn</ion-select-option>
+        <ion-select-option value="snes">SNES</ion-select-option>
+      </ion-select>
+      <ion-note slot="end">{{select}}</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Toggle</ion-label>
+      <ion-toggle [(ngModel)]="toggle" slot="end"></ion-toggle>
+      <ion-note slot="end" id="toggle-note">{{toggle}}</ion-note>
+    </ion-item>
+
+    <ion-item color="dark">
+      <ion-label>Toggle Mirror</ion-label>
+      <ion-toggle [(ngModel)]="toggle" slot="end"></ion-toggle>
+      <ion-note slot="end">{{toggle}}</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Input</ion-label>
+      <ion-input [(ngModel)]="input"></ion-input>
+      <ion-note slot="end" id="input-note">{{input}}</ion-note>
+    </ion-item>
+
+    <ion-item color="dark">
+      <ion-label>Input Mirror</ion-label>
+      <ion-input [(ngModel)]="input"></ion-input>
+      <ion-note slot="end">{{input}}</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Checkbox</ion-label>
+      <ion-checkbox [(ngModel)]="checkbox" slot="start"></ion-checkbox>
+      <ion-note slot="end" id="checkbox-note">{{checkbox}}</ion-note>
+    </ion-item>
+
+    <ion-item color="dark">
+      <ion-label>Checkbox Mirror</ion-label>
+      <ion-checkbox [(ngModel)]="checkbox" slot="start"></ion-checkbox>
+      <ion-note slot="end">{{checkbox}}</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Range</ion-label>
+      <ion-range [(ngModel)]="range"></ion-range>
+      <ion-note slot="end" id="range-note">{{range}}</ion-note>
+    </ion-item>
+    
+    <ion-item color="dark">
+      <ion-label>Range Mirror</ion-label>
+      <ion-range [(ngModel)]="range"></ion-range>
+      <ion-note slot="end">{{range}}</ion-note>
+    </ion-item>
+
+  </ion-list>
+  <p>
+    <ion-button (click)="setValues()" id="set-button">Set values</ion-button>
+    <ion-button (click)="resetValues()" id="reset-button">Reset values</ion-button>
+  </p>
+</ion-content>

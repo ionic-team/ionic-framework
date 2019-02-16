@@ -1,0 +1,19 @@
+@import "./modal";
+@import "./modal.md.vars";
+
+
+// Material Design Modals
+// --------------------------------------------------
+
+@media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
+  :host {
+    --border-radius: 2px;
+    --box-shadow: #{$modal-inset-box-shadow};
+  }
+}
+
+.modal-wrapper {
+  @include transform(translate3d(0, 40px, 0));
+
+  opacity: .01;
+}

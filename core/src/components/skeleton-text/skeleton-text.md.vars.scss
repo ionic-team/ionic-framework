@@ -1,0 +1,10 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Skeleton Text
+// --------------------------------------------------
+
+/// @prop - Background color of the skeleton text bar
+$skeleton-text-md-bar-background-color:     $text-color !default;
+
+/// @prop - Opacity of the text bar for the skeleton text
+$skeleton-text-md-bar-opacity:              .1 !default;

@@ -1,0 +1,12 @@
+@import "./item-option";
+@import "./item-option.md.vars";
+
+// Material Design Item Option
+// --------------------------------------------------
+
+:host {
+  font-size: $item-option-button-md-font-size;
+  font-weight: 500;
+
+  text-transform: uppercase;
+}

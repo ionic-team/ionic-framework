@@ -1,0 +1,9 @@
+@import "./note.ios.vars";
+@import "./note";
+
+// iOS Note
+// --------------------------------------------------
+
+:host {
+  --color: #{$note-ios-color};
+}

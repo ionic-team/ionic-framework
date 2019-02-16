@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Item Sliding - Lines</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Item Sliding - Lines</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-list-header>Default List</ion-list-header>
+        <!-- Sliding items are generated below -->
+      </ion-list>
+
+      <ion-list lines="full">
+        <ion-list-header>Full List</ion-list-header>
+        <!-- Sliding items are generated below -->
+      </ion-list>
+
+      <ion-list lines="inset">
+        <ion-list-header>Inset List</ion-list-header>
+        <!-- Sliding items are generated below -->
+      </ion-list>
+
+      <ion-list lines="none">
+        <ion-list-header>No Lines List</ion-list-header>
+        <!-- Sliding items are generated below -->
+      </ion-list>
+    </ion-content>
+
+    <script>
+
+
+      var lists = document.getElementsByTagName('ion-list');
+      console.log(lists, lists.length);
+      for (var i = 0; i < lists.length; i++) {
+        console.log(lists[i]);
+        for (var j = 0; j < 3; j++) {
+          addSlidingItem(lists[i]);
+        }
+      }
+
+      function addSlidingItem(list) {
+        const slidingItem = document.createElement('ion-item-sliding');
+        slidingItem.innerHTML = `
+          <ion-item>
+            <ion-label>
+              <h2>Item Options Both Sides</h2>
+            </ion-label>
+          </ion-item>
+          <ion-item-options side="start">
+            <ion-item-option color="secondary" expandable>
+              <ion-icon name="ios-checkmark"></ion-icon>
+              Unread
+            </ion-item-option>
+          </ion-item-options>
+
+          <ion-item-options side="end">
+            <ion-item-option color="light">
+              <ion-icon name="mail"></ion-icon>
+              Archive
+            </ion-item-option>
+            <ion-item-option color="danger" expandable>
+              <ion-icon name="trash"></ion-icon>
+              Delete
+            </ion-item-option>
+          </ion-item-options>
+        `;
+
+        list.appendChild(slidingItem);
+      }
+    </script>
+  </ion-app>
+</body>
+
+</html>

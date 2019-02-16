@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Spinner - Color</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Spinner - Color</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content id="content">
+      <ion-list>
+        <ion-list-header>
+          Spinner Loading Indicators
+        </ion-list-header>
+        <ion-item>
+          <ion-spinner slot="start"></ion-spinner>
+          Show Default Spinner
+        </ion-item>
+        <ion-item>
+          <ion-spinner color="primary" slot="start" name="lines"></ion-spinner>
+          Show Lines (Primary)
+        </ion-item>
+        <ion-item>
+          <ion-spinner color="secondary" slot="start" name="ios-small"></ion-spinner>
+          Show Lines Small (Secondary)
+        </ion-item>
+        <ion-item>
+          <ion-spinner color="danger" slot="start" name="dots"></ion-spinner>
+          Show Dots (Danger)
+        </ion-item>
+        <ion-item>
+          <ion-spinner color="light" slot="start" name="bubbles"></ion-spinner>
+          Show Bubbles (Light)
+        </ion-item>
+        <ion-item>
+          <ion-spinner color="dark" slot="start" name="circles"></ion-spinner>
+          Show Circles (Dark)
+        </ion-item>
+        <ion-item>
+          <ion-spinner color="primary" slot="start" name="crescent"></ion-spinner>
+          Show Crescent (Primary)
+        </ion-item>
+        <ion-item>
+          <ion-spinner color="secondary" slot="start" paused></ion-spinner>
+          Show Paused Default Spinner (Secondary)
+        </ion-item>
+      </ion-list>
+    </ion-content>
+
+  </ion-app>
+</body>
+
+</html>

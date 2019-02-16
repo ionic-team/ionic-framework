@@ -1,0 +1,139 @@
+@import "./button";
+@import "./button.md.vars";
+
+// Material Design Button
+// --------------------------------------------------
+
+:host {
+  --border-radius: #{$button-md-border-radius};
+  --padding-top: #{$button-md-padding-top};
+  --padding-bottom: #{$button-md-padding-bottom};
+  --padding-start: #{$button-md-padding-start};
+  --padding-end: #{$button-md-padding-end};
+  --transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),
+                background-color 15ms linear,
+                color 15ms linear;
+
+  @include margin($button-md-margin-top, $button-md-margin-end, $button-md-margin-bottom, $button-md-margin-start);
+
+  height: #{$button-md-height};
+
+  font-size: #{$button-md-font-size};
+  font-weight: #{$button-md-font-weight};
+
+  letter-spacing: #{$button-md-letter-spacing};
+
+  text-transform: #{$button-md-text-transform};
+}
+
+// Material Design Solid Button
+// --------------------------------------------------
+
+:host(.button-solid) {
+  --background-activated: var(--background);
+  --box-shadow: #{$button-md-box-shadow};
+}
+
+:host(.button-solid.activated) {
+  --box-shadow: #{$button-md-box-shadow-activated};
+}
+
+// Material Design Outline Button
+// --------------------------------------------------
+
+:host(.button-outline) {
+  --border-width: 2px;
+  --border-style: solid;
+  --box-shadow: none;
+  --background-activated: transparent;
+  --background-focused: #{ion-color(primary, base, .1)};
+  --color-activated: #{ion-color(primary, base)};
+}
+
+:host(.button-outline.activated.ion-color) .button-native {
+  background: transparent;
+}
+
+
+// Material Design Clear Button
+// --------------------------------------------------
+
+:host(.button-clear) {
+  --opacity: #{$button-md-clear-opacity};
+  --background-activated: transparent;
+  --background-focused: #{ion-color(primary, base, .1)};
+  --color-activated: #{ion-color(primary, base)};
+  --color-focused: #{ion-color(primary, base)};
+}
+
+
+// Material Design Round Button
+// --------------------------------------------------
+
+:host(.button-round) {
+  --border-radius: #{$button-md-round-border-radius};
+  --padding-top: #{$button-md-round-padding-top};
+  --padding-start: #{$button-md-round-padding-start};
+  --padding-end: #{$button-md-round-padding-end};
+  --padding-bottom: #{$button-md-round-padding-bottom};
+}
+
+
+// Material Design Button Sizes
+// --------------------------------------------------
+
+:host(.button-large) {
+  --padding-top: #{$button-md-large-padding-top};
+  --padding-start: #{$button-md-large-padding-start};
+  --padding-end: #{$button-md-large-padding-end};
+  --padding-bottom: #{$button-md-large-padding-bottom};
+
+  height: #{$button-md-large-height};
+
+  font-size: #{$button-md-large-font-size};
+}
+
+:host(.button-small) {
+  --padding-top: #{$button-md-small-padding-top};
+  --padding-start: #{$button-md-small-padding-start};
+  --padding-end: #{$button-md-small-padding-end};
+  --padding-bottom: #{$button-md-small-padding-bottom};
+
+  height: #{$button-md-small-height};
+
+  font-size: #{$button-md-small-font-size};
+}
+
+
+// MD strong Button
+// --------------------------------------------------
+
+:host(.button-strong) {
+  font-weight: #{$button-md-strong-font-weight};
+}
+
+::slotted(ion-icon[slot="icon-only"]) {
+  @include padding(0);
+}
+
+
+// Material Design Button Sizes
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(.button-outline:hover) .button-native {
+    background: ion-color(primary, base, .04);
+  }
+
+  :host(.button-outline.ion-color:hover) .button-native {
+    background: current-color(base, .04);
+  }
+
+  :host(.button-clear:hover) .button-native {
+    background: ion-color(primary, base, .04);
+  }
+
+  :host(.button-clear.ion-color:hover) .button-native {
+    background: current-color(base, .04);
+  }
+}

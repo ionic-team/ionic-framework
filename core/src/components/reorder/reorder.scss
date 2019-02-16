@@ -1,0 +1,22 @@
+@import "./reorder.vars";
+
+// Reorder
+// --------------------------------------------------
+
+:host([slot]) {
+  display: none;
+
+  line-height: 0;
+
+  z-index: 100;
+}
+
+
+// Reorder Icon
+// --------------------------------------------------
+
+.reorder-icon {
+  display: block;
+
+  font-size: 22px;
+}

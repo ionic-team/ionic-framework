@@ -1,0 +1,14 @@
+@import "../../themes/ionic.globals.md";
+
+
+// Material Design Avatar
+// --------------------------------------------------
+
+/// @prop - Width of the avatar
+$avatar-md-width:                   64px !default;
+
+/// @prop - Height of the avatar
+$avatar-md-height:                  $avatar-md-width !default;
+
+/// @prop - Border radius of the avatar
+$avatar-md-border-radius:           50% !default;

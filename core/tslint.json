@@ -1,0 +1,31 @@
+{
+  "extends": ["tslint-ionic-rules/strict", "tslint-react"],
+  "linterOptions": {
+    "exclude": [
+      "**/*.spec.ts",
+      "**/*.spec.tsx"
+    ]
+  },
+  "rules": {
+    "no-conditional-assignment": false,
+    "no-non-null-assertion": false,
+    "no-unnecessary-type-assertion": false,
+    "no-import-side-effect": false,
+    "trailing-comma": false,
+    "no-null-keyword": false,
+    "no-console": false,
+    "no-unbound-method": true,
+    "no-floating-promises": false,
+    "no-invalid-template-strings": true,
+    "ban-export-const-enum": true,
+
+    "jsx-key": false,
+    "jsx-self-close": false,
+    "jsx-curly-spacing": [true, "never"],
+    "jsx-boolean-value": [true, "never"],
+    "jsx-no-bind": false,
+    "jsx-no-lambda": false,
+    "jsx-no-multiline-js": false,
+    "jsx-wrap-multiline": false
+  }
+}

@@ -1,0 +1,96 @@
+@import "./picker";
+@import "./picker.ios.vars";
+
+// iOS Picker
+// --------------------------------------------------
+
+:host {
+  --background: #{$picker-ios-background-color};
+  --border-width: #{1px 0 0};
+  --border-color: #{$picker-ios-border-color};
+  --height: #{$picker-ios-height};
+
+  color: $picker-ios-option-text-color;
+}
+
+.picker-toolbar {
+  display: flex;
+
+  height: $picker-ios-toolbar-height;
+
+  border-bottom: $hairlines-width solid var(--border-color);
+}
+
+.picker-toolbar-button {
+  flex: 1;
+
+  text-align: end;
+}
+
+.picker-toolbar-button:last-child .picker-button {
+  font-weight: $picker-ios-button-strong-font-weight;
+}
+
+.picker-toolbar-button:first-child {
+  font-weight: normal;
+
+  text-align: start;
+}
+
+.picker-button,
+.picker-button.activated {
+  @include margin(0);
+  @include padding($picker-ios-button-padding-top, $picker-ios-button-padding-end, $picker-ios-button-padding-bottom, $picker-ios-button-padding-start);
+
+  height: $picker-ios-button-height;
+
+  background: transparent;
+  color: $picker-ios-button-text-color;
+
+  font-size: $picker-ios-button-font-size;
+}
+
+.picker-columns {
+  height: $picker-ios-height - $picker-ios-toolbar-height - 1;
+  perspective: $picker-ios-column-perspective;
+}
+
+.picker-above-highlight {
+  @include position(0, null, null, 0);
+  @include transform(translate3d(0, 0, 90px));
+
+  display: block;
+  position: absolute;
+
+  width: 100%;
+  height: $picker-ios-option-offset-y + 4px;
+
+  border-bottom: 1px solid var(--border-color);
+
+  background: linear-gradient(
+    to bottom,
+    $picker-ios-top-background-color 20%,
+    $picker-ios-bottom-background-color 100%);
+
+  z-index: 10;
+}
+
+.picker-below-highlight {
+  @include position($picker-ios-option-offset-y + $picker-ios-option-height - 4, null, null, 0);
+  @include transform(translate3d(0, 0, 90px));
+
+  display: block;
+  position: absolute;
+
+  width: 100%;
+  height: $picker-ios-option-offset-y + $picker-ios-option-height;
+
+  border-top: 1px solid var(--border-color);
+
+  background: linear-gradient(
+    to top,
+    $picker-ios-top-background-color 30%,
+    $picker-ios-bottom-background-color 100%);
+
+  z-index: 11;
+}

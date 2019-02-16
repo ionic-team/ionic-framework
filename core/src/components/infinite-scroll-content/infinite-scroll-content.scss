@@ -1,0 +1,38 @@
+@import "./infinite-scroll-content.vars";
+
+// Infinite Scroll Content
+// --------------------------------------------------
+
+ion-infinite-scroll-content {
+  display: flex;
+
+  flex-direction: column;
+  justify-content: center;
+
+  min-height: $infinite-scroll-content-min-height;
+
+  text-align: center;
+
+  user-select: none;
+}
+
+.infinite-loading {
+  @include margin($infinite-scroll-loading-margin-top, $infinite-scroll-loading-margin-end, $infinite-scroll-loading-margin-bottom, $infinite-scroll-loading-margin-start);
+
+  display: none;
+
+  width: 100%;
+}
+
+
+.infinite-loading-text {
+  @include margin($infinite-scroll-loading-text-margin-top, $infinite-scroll-loading-text-margin-end, $infinite-scroll-loading-text-margin-bottom, $infinite-scroll-loading-text-margin-start);
+}
+
+
+
+// Infinite Scroll Content States
+// --------------------------------------------------
+.infinite-scroll-loading ion-infinite-scroll-content > .infinite-loading {
+  display: block;
+}

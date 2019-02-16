@@ -1,0 +1,90 @@
+@import "./list";
+@import "./list.md.vars";
+
+// Material Design List
+// --------------------------------------------------
+
+.list-md {
+  @include margin($list-md-margin-top, $list-md-margin-end, $list-md-margin-bottom, $list-md-margin-start);
+  @include padding($list-md-padding-top, $list-md-padding-end, $list-md-padding-bottom, $list-md-padding-start);
+
+  background: $item-md-background;
+}
+
+.list-md > .input:last-child::after {
+  @include position-horizontal(0, null);
+}
+
+
+// Material Design Inset List
+// --------------------------------------------------
+
+.list-md.list-inset {
+  @include margin($list-inset-md-margin-top, $list-inset-md-margin-end, $list-inset-md-margin-bottom, $list-inset-md-margin-start);
+  @include border-radius($list-inset-md-border-radius);
+}
+
+.list-md.list-inset ion-item:first-child {
+  --border-radius: #{$list-inset-md-border-radius $list-inset-md-border-radius 0 0};
+  --border-width: 0;
+}
+
+.list-md.list-inset ion-item:last-child {
+  --border-radius: #{0 0 $list-inset-md-border-radius, $list-inset-md-border-radius};
+  --border-width: 0;
+}
+
+.list-md.list-inset .item-interactive {
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+.list-md.list-inset + ion-list.list-inset {
+  @include margin(0, null, null, null);
+}
+
+
+// Material Design No Lines List
+// --------------------------------------------------
+
+.list-md-lines-none .item {
+  --border-width: 0;
+  --inner-border-width: 0;
+}
+
+// Material Design Full Lines List
+// --------------------------------------------------
+
+.list-md-lines-full .item,
+.list-md .item-lines-full {
+  --border-width: #{0 0 $list-md-item-border-bottom-width 0};
+}
+
+.list-md-lines-full .item {
+  --inner-border-width: 0;
+}
+
+
+// Material Design Inset Lines List
+// --------------------------------------------------
+
+.list-md-lines-inset .item,
+.list-md .item-lines-inset {
+  --inner-border-width: #{0 0 $list-md-item-border-bottom-width 0};
+}
+
+// Remove the border from items in lists
+// if they are explicitly styled by the item
+// to be different than the list
+.list-md .item-lines-inset {
+  --border-width: 0;
+}
+
+.list-md .item-lines-full {
+  --inner-border-width: 0;
+}
+
+.list-md .item-lines-none {
+  --border-width: 0;
+  --inner-border-width: 0;
+}

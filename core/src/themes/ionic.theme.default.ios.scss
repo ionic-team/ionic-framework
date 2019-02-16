@@ -1,0 +1,34 @@
+// Ionic iOS Theme
+// -------------------------------------------------------------------------------------------
+// This file contains the theme variables shared
+// between modes. This should only include variables
+// used to theme the application colors for iOS.
+
+// iOS General Colors
+// --------------------------------------------------
+$backdrop-ios-color:                        var(--ion-backdrop-color, #000) !default;
+$border-ios-color:                          var(--ion-border-color, var(--ion-color-step-150, #dedede)) !default;
+$box-shadow-ios-color:                      var(--ion-box-shadow-color, #000) !default;
+$overlay-ios-background-color:              var(--ion-overlay-background-color, var(--ion-color-step-150, #f9f9f9)) !default;
+
+// iOS Tabs & Tab bar
+// --------------------------------------------------
+$tabbar-ios-background:                     var(--ion-tab-bar-background, $background-color) !default;
+$tabbar-ios-background-focused:             var(--ion-tab-bar-background-focused, get-color-shade(#fff)) !default;
+$tabbar-ios-border-color:                   var(--ion-tab-bar-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, .2)))) !default;
+$tabbar-ios-color:                          var(--ion-tab-bar-color, $text-color-step-550) !default;
+$tabbar-ios-color-activated:                var(--ion-tab-bar-color-activated, ion-color(primary, base)) !default;
+
+// iOS Toolbar
+// --------------------------------------------------
+$toolbar-ios-background:                    var(--ion-toolbar-background, var(--ion-color-step-50, #fff)) !default;
+$toolbar-ios-border-color:                  var(--ion-toolbar-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, .2)))) !default;
+$toolbar-ios-color:                         var(--ion-toolbar-color, $text-color) !default;
+$toolbar-ios-color-activated:               var(--ion-toolbar-color-activated, ion-color(primary, base)) !default;
+
+// iOS List & List Items
+// --------------------------------------------------
+$item-ios-background:                       var(--ion-item-background, $background-color) !default;
+$item-ios-background-activated:             var(--ion-item-background-activated, #d9d9d9) !default;
+$item-ios-border-color:                     var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, #c8c7cc))) !default;
+$item-ios-color:                            var(--ion-item-color, $text-color) !default;

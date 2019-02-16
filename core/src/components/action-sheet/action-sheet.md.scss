@@ -1,0 +1,80 @@
+@import "./action-sheet";
+@import "./action-sheet.md.vars";
+
+// Material Design Action Sheet Title
+// -----------------------------------------
+
+:host {
+  --background: #{$action-sheet-md-background-color};
+  --background-selected: #{var(--background, $action-sheet-md-button-background-selected)};
+  --background-activated: var(--background);
+}
+
+.action-sheet-title {
+  @include padding($action-sheet-md-title-padding-top, $action-sheet-md-title-padding-end, $action-sheet-md-title-padding-bottom, $action-sheet-md-title-padding-start);
+
+  height: $action-sheet-md-title-height;
+
+  color: var(--color, $action-sheet-md-title-color);
+
+  font-size: $action-sheet-md-title-font-size;
+
+  text-align: $action-sheet-md-text-align;
+}
+
+.action-sheet-sub-title {
+  @include padding($action-sheet-md-sub-title-padding-top, $action-sheet-md-sub-title-padding-end, $action-sheet-md-sub-title-padding-bottom, $action-sheet-md-sub-title-padding-start);
+
+  font-size: $action-sheet-md-sub-title-font-size;
+}
+
+
+// Material Design Action Sheet Group
+// -----------------------------------------
+
+.action-sheet-group:first-child {
+  @include padding($action-sheet-md-padding-top, null, null, null);
+}
+
+.action-sheet-group:last-child {
+  @include padding(null, null, $action-sheet-md-padding-bottom, null);
+}
+
+
+// Material Design Action Sheet Buttons
+// -----------------------------------------
+
+.action-sheet-button {
+  @include padding($action-sheet-md-button-padding-top, $action-sheet-md-button-padding-end, $action-sheet-md-button-padding-bottom, $action-sheet-md-button-padding-start);
+
+  position: relative;
+
+  height: $action-sheet-md-button-height;
+
+  background: transparent;
+  color: var(--color, $action-sheet-md-button-text-color);
+
+  font-size: $action-sheet-md-button-font-size;
+
+  text-align: $action-sheet-md-text-align;
+
+  contain: strict;
+  overflow: hidden;
+}
+
+.action-sheet-icon {
+  @include padding(null, null, 4px, null);
+  @include margin($action-sheet-md-icon-margin-top, $action-sheet-md-icon-margin-end, $action-sheet-md-icon-margin-bottom, $action-sheet-md-icon-margin-start);
+
+  color: var(--color, $action-sheet-md-icon-color);
+
+  font-size: $action-sheet-md-icon-font-size;
+}
+
+.action-sheet-button-inner {
+  justify-content: flex-start;
+}
+
+.action-sheet-selected {
+  font-weight: bold;
+}

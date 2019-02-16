@@ -1,0 +1,75 @@
+@import "./popover.vars";
+
+// Popover
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the popover
+   * @prop --box-shadow: Box shadow of the popover
+   *
+   * @prop --min-width: Minimum width of the popover
+   * @prop --width: Width of the popover
+   * @prop --max-width: Maximum width of the popover
+   *
+   * @prop --min-height: Minimum height of the popover
+   * @prop --height: Height of the popover
+   * @prop --max-height: Maximum height of the popover
+   */
+  --background: #{$popover-background-color};
+  --min-width: 0;
+  --min-height: 0;
+  --max-width: auto;
+  --height: auto;
+
+  @include position(0, 0, 0, 0);
+
+  display: flex;
+  position: fixed;
+
+  align-items: center;
+  justify-content: center;
+
+  color: $popover-text-color;
+
+  z-index: $z-index-overlay;
+}
+
+:host(.overlay-hidden) {
+  display: none;
+}
+
+.popover-wrapper {
+  opacity: 0;
+  z-index: $z-index-overlay-wrapper;
+}
+
+.popover-content {
+  display: flex;
+  position: absolute;
+
+  flex-direction: column;
+
+  width: var(--width);
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+
+  height: var(--height);
+  min-height: var(--min-height);
+  max-height: var(--max-height);
+
+  background: var(--background);
+
+  box-shadow: var(--box-shadow);
+
+  overflow: auto;
+  z-index: $z-index-overlay-wrapper;
+}
+
+.popover-viewport {
+  --ion-safe-area-top: 0px;
+  --ion-safe-area-right: 0px;
+  --ion-safe-area-bottom: 0px;
+  --ion-safe-area-left: 0px;
+}
+

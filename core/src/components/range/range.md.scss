@@ -1,0 +1,149 @@
+@import "./range";
+@import "./range.md.vars";
+
+// Material Design Range
+// --------------------------------------------------
+
+:host {
+  --knob-border-radius: 50%;
+  --knob-background: var(--bar-background-active);
+  --knob-box-shadow: none;
+  --knob-size: 18px;
+  --bar-height: #{$range-md-bar-height};
+  --bar-background: #{ion-color(primary, base, 0.26)};
+  --bar-background-active: #{ion-color(primary, base)};
+  --bar-border-radius: 0;
+  --height: #{$range-md-slider-height};
+  --pin-background: #{ion-color(primary, base)};
+  --pin-color: #{ion-color(primary, contrast)};
+
+  @include padding($range-md-padding-vertical, $range-md-padding-horizontal);
+
+  font-size: $range-md-pin-font-size;
+}
+
+:host(.ion-color) .range-bar {
+  background: current-color(base, 0.26);
+}
+
+:host(.ion-color) .range-bar-active,
+:host(.ion-color) .range-knob,
+:host(.ion-color) .range-pin,
+:host(.ion-color) .range-pin::before,
+:host(.ion-color) .range-tick {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+::slotted([slot="start"]) {
+  @include margin(0, 14px, 0, 0);
+}
+
+::slotted([slot="end"]) {
+  @include margin(0, 0, 0, 14px);
+}
+
+:host(.range-has-pin) {
+  @include padding($range-md-padding-vertical + $range-md-pin-font-size + $range-md-pin-padding-vertical, null, null, null);
+}
+
+.range-bar-active {
+  bottom: 0;
+
+  width: auto;
+
+  background: var(--bar-background-active);
+}
+
+.range-knob {
+  transform: scale(.67);
+
+  transition-duration: 120ms;
+  transition-property: transform, background-color, border;
+  transition-timing-function: ease;
+
+  z-index: 2;
+}
+
+.range-tick {
+  position: absolute;
+  top: calc((var(--height) - var(--bar-height)) / 2);
+
+  width: var(--bar-height);
+  height: var(--bar-height);
+
+  background: var(--bar-background-active);
+
+  z-index: 1;
+  pointer-events: none;
+}
+
+.range-tick-active {
+  background: transparent;
+}
+
+.range-pin {
+  @include padding($range-md-pin-padding-vertical, $range-md-pin-padding-horizontal);
+  @include border-radius(50%);
+  @include transform(translate3d(0, 0, 0), scale(.01));
+
+  display: inline-block;
+  position: relative;
+
+  min-width: 28px;
+  height: 28px;
+
+  transition: transform 120ms ease, background 120ms ease;
+
+  background: var(--pin-background);
+  color: var(--pin-color);
+
+  text-align: center;
+
+  &::before {
+    @include position(3px, null, null, 50%);
+    @include border-radius(50%, 50%, 50%, 0);
+    @include margin-horizontal(-13px, null);
+
+    @include rtl() {
+      /* stylelint-disable-next-line property-blacklist */
+      left: unset;
+    }
+
+    position: absolute;
+
+    width: 26px;
+    height: 26px;
+
+    transform: rotate(-45deg);
+
+    transition: background 120ms ease;
+
+    background: var(--pin-background);
+
+    content: "";
+    z-index: -1;
+  }
+}
+
+.range-knob-pressed .range-pin {
+  @include transform(translate3d(0, -24px, 0), scale(1));
+}
+
+:host(:not(.range-has-pin)) .range-knob-pressed .range-knob {
+  transform: scale(1);
+}
+
+:host(.range-disabled) .range-bar-active,
+:host(.range-disabled) .range-bar,
+:host(.range-disabled) .range-tick {
+  background-color: $range-md-bar-background-color;
+}
+
+:host(.range-disabled) .range-knob {
+  transform: scale(.55);
+
+  outline: 5px solid #fff;
+
+  background-color: $range-md-bar-background-color;
+}

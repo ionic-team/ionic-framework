@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Item - Colors</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Item Colors</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content id="content">
+      <ion-list>
+        <ion-item>
+          <ion-label>
+            <h1>Heading</h1>
+            <p>Paragraph</p>
+            <ion-text color="secondary">
+              <p>Secondary paragraph</p>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+
+        <ion-item button color="dark">
+          <ion-label>
+            <h1>Heading</h1>
+            <p>Paragraph</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item href="#" color="danger">
+          <ion-label>
+            a[ion-item] danger
+          </ion-label>
+        </ion-item>
+
+        <ion-item href="#" color="danger" class="activated">
+          <ion-label>
+            a[ion-item].activated danger
+          </ion-label>
+        </ion-item>
+
+        <ion-item button onclick="testClick(event)" color="secondary">
+          <ion-label>
+            button[ion-item]
+          </ion-label>
+        </ion-item>
+
+        <ion-item button onclick="testClick(event)" color="secondary" class="activated">
+          <ion-label>
+            button[ion-item].activated secondary
+          </ion-label>
+        </ion-item>
+
+        <ion-item color="primary">
+          <ion-button slot="start" color="dark">Dark</ion-button>
+          <ion-label>
+            <h1>Heading</h1>
+            <p>Normal paragraph</p>
+          </ion-label>
+          <ion-button slot="end" fill="outline">Outline</ion-button>
+        </ion-item>
+
+        <ion-item button onclick="testClick(event)" color="dark">
+          <ion-button slot="start">
+            <ion-icon slot="start" name="home"></ion-icon>
+            Left Icon
+          </ion-button>
+          <ion-label>
+            left icon buttons
+            <ion-text color="primary">
+              <p>Primary paragraph</p>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+
+        <ion-item button onclick="testClick(event)" disabled color="dark">
+          <ion-button slot="start">
+            <ion-icon slot="start" name="home"></ion-icon>
+            Left Icon
+          </ion-button>
+          <ion-label>
+            disabled left icon buttons
+            <ion-text color="primary">
+              <p>Primary paragraph</p>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+
+        <ion-item color="light">
+          <ion-button slot="start">
+            Right Icon
+            <ion-icon slot="end" name="home"></ion-icon>
+          </ion-button>
+          <ion-label>
+            right icon buttons
+          </ion-label>
+          <ion-button slot="end" fill="outline">
+            Right Icon
+            <ion-icon slot="end" name="star"></ion-icon>
+          </ion-button>
+        </ion-item>
+
+        <ion-item href="#" disabled color="danger">
+          <ion-label>
+            a ion-item disabled right icon/text button large
+            <p>Default paragraph</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+
+  </ion-app>
+
+  <script>
+    function testClick(ev) {
+      console.log('CLICK!', ev.target.tagName, ev.target.textContent.trim());
+    }
+  </script>
+</body>
+
+</html>
