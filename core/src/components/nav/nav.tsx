@@ -427,9 +427,13 @@ export class Nav implements NavOutlet {
    * Returns the number of views
    */
   @Method()
-  getLength() {
-    return this.views.length;
+  length() : Promise<number> {
+    return Promise.resolve(this.getLength());
   }
+
+ getLength() {
+    return this.views.length;
+}
 
   private getActiveSync(): ViewController | undefined {
     return this.views[this.views.length - 1];
