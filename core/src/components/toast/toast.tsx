@@ -139,7 +139,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Method()
   async present(): Promise<void> {
     if (this.showCloseButton) {
-      console.error(`showCloseButton has been deprecated, use "buttons" instead`);
+      console.warn(`showCloseButton has been deprecated, use "buttons" instead`);
     }
 
     await present(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, this.position);
