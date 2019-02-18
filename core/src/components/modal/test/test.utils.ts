@@ -7,7 +7,12 @@ export function cleanScreenshotName(screenshotName: string): string {
     .toLowerCase();
 }
 
-export async function testModal(type: string, selector: string, rtl = false, screenshotName: string = cleanScreenshotName(selector)) {
+export async function testModal(
+  type: string,
+  selector: string,
+  rtl = false,
+  screenshotName: string = cleanScreenshotName(selector)
+) {
   try {
     let pageUrl = `/src/components/modal/test/${type}?ionic:_testing=true`;
     if (rtl) {
