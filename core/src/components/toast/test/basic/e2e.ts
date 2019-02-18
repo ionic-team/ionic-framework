@@ -1,9 +1,19 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-async function testToast(selector: string, screenshotName: string, dismissedScreenshotName: string, rtl = false) {
+function cleanScreenshotName(screenshotName: string): string {
+  return screenshotName
+    .replace(/([-])/g, ' ')
+    .replace(/[^0-9a-zA-Z\s]/gi, '')
+    .toLowerCase();
+}
+
+async function testToast(selector: string, rtl = false, screenshotName: string = cleanScreenshotName(selector)) {
   try {
     let pageUrl = '/src/components/toast/test/basic?ionic:_testing=true';
-    if (rtl) { pageUrl = `${pageUrl}&rtl=true`; }
+    if (rtl) {
+      pageUrl = `${pageUrl}&rtl=true`;
+      screenshotName = `${screenshotName} rtl`;
+    }
 
     const page = await newE2EPage({
       url: pageUrl
@@ -24,7 +34,7 @@ async function testToast(selector: string, screenshotName: string, dismissedScre
     await toast.waitForNotVisible();
     await page.waitFor(250);
 
-    screenShotCompares.push(await page.compareScreenshot(dismissedScreenshotName));
+    screenShotCompares.push(await page.compareScreenshot(`dismiss ${screenshotName}`));
 
     toast = await page.find('ion-toast');
     expect(toast).toBeNull();
@@ -39,48 +49,39 @@ async function testToast(selector: string, screenshotName: string, dismissedScre
 }
 
 test('toast: bottom', async () => {
-  const screenshotName = 'bottom toast';
-  await testToast('#showBottomToast', screenshotName, `dismissed ${screenshotName}`);
+  await testToast('#show-bottom-toast');
 });
 
 test('toast: middle', async () => {
-  const screenshotName = 'middle toast';
-  await testToast('#showMiddleToast', screenshotName, `dismissed ${screenshotName}`);
+  await testToast('#show-middle-toast');
 });
 
 test('toast: top', async () => {
-  const screenshotName = 'bottom toast';
-  await testToast('#showTopToast', screenshotName, `dismissed ${screenshotName}`);
+  await testToast('#show-top-toast');
 });
 
 test('toast: two lines', async () => {
-  const screenshotName = 'two line';
-  await testToast('#twoLineToast', screenshotName, `dismissed ${screenshotName}`);
+  await testToast('#two-line-toast');
 });
 
 test('toast: close button', async () => {
-  const screenshotName = 'close button';
-  await testToast('#closeButtonToast', screenshotName, `dismissed ${screenshotName}`);
+  await testToast('#close-button-toast');
 });
 
 test('toast: custom close text', async () => {
-  const screenshotName = 'custom close text';
-  await testToast('#customCloseTextToast', screenshotName, `dismissed ${screenshotName}`);
+  await testToast('#custom-close-text-toast');
 });
 
 test('toast: translucent', async () => {
-  const screenshotName = 'translucent toast';
-  await testToast('#translucentToast', screenshotName, `dismissed ${screenshotName}`);
+  await testToast('#translucent-toast');
 });
 
 test('toast: color', async () => {
-  const screenshotName = 'color toast';
-  await testToast('#colorToast', screenshotName, `dismissed ${screenshotName}`);
+  await testToast('#color-toast');
 });
 
 test('toast: custom class', async () => {
-  const screenshotName = 'custom class toast';
-  await testToast('#customClassToast', screenshotName, `dismissed ${screenshotName}`);
+  await testToast('#custom-class-toast');
 });
 
 /**
@@ -88,46 +89,37 @@ test('toast: custom class', async () => {
  */
 
 test('toast:rtl: bottom', async () => {
-  const screenshotName = 'bottom toast rtl';
-  await testToast('#showBottomToast', screenshotName, `dismissed ${screenshotName}`, true);
+  await testToast('#show-bottom-toast', true);
 });
 
 test('toast:rtl: middle', async () => {
-  const screenshotName = 'middle toast rtl';
-  await testToast('#showMiddleToast', screenshotName, `dismissed ${screenshotName}`, true);
+  await testToast('#show-middle-toast', true);
 });
 
 test('toast:rtl: top', async () => {
-  const screenshotName = 'top toast rtl';
-  await testToast('#showTopToast', screenshotName, `dismissed ${screenshotName}`, true);
+  await testToast('#show-top-toast', true);
 });
 
 test('toast:rtl: two lines', async () => {
-  const screenshotName = 'two line';
-  await testToast('#twoLineToast', screenshotName, `dismissed ${screenshotName}`, true);
+  await testToast('#two-line-toast', true);
 });
 
 test('toast:rtl: close button', async () => {
-  const screenshotName = 'close button';
-  await testToast('#closeButtonToast', screenshotName, `dismissed ${screenshotName}`, true);
+  await testToast('#close-button-toast', true);
 });
 
 test('toast:rtl: custom close text', async () => {
-  const screenshotName = 'custom close text';
-  await testToast('#customCloseTextToast', screenshotName, `dismissed ${screenshotName}`, true);
+  await testToast('#custom-close-text-toast', true);
 });
 
 test('toast:rtl: translucent', async () => {
-  const screenshotName = 'translucent toast';
-  await testToast('#translucentToast', screenshotName, `dismissed ${screenshotName}`, true);
+  await testToast('#translucent-toast', true);
 });
 
 test('toast:rtl: color', async () => {
-  const screenshotName = 'color toast';
-  await testToast('#colorToast', screenshotName, `dismissed ${screenshotName}`, true);
+  await testToast('#color-toast', true);
 });
 
 test('toast:rtl: custom class', async () => {
-  const screenshotName = 'custom class toast';
-  await testToast('#customClassToast', screenshotName, `dismissed ${screenshotName}`, true);
+  await testToast('#custom-class-toast', true);
 });
