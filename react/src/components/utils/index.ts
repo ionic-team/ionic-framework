@@ -25,11 +25,9 @@ export function syncEvent(node: Element, eventName: string, newEventHandler: (e:
   }
 
   // Bind new listener.
-  if (newEventHandler) {
-    node.addEventListener(eventName, eventStore[eventName] = function handler(e: Event) {
-      newEventHandler.call(this, e);
-    });
-  }
+  node.addEventListener(eventName, eventStore[eventName] = function handler(e: Event) {
+    newEventHandler.call(this, e);
+  });
 }
 
 export const dashToPascalCase = (str: string) => str.toLowerCase().split('-').map(segment => segment.charAt(0).toUpperCase() + segment.slice(1)).join('');

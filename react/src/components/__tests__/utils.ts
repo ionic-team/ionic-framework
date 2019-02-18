@@ -12,11 +12,23 @@ describe('isCoveredByReact', () => {
 });
 
 describe('syncEvent', () => {
-  it('should add event to __events', () => {
+  it('should add event on sync and readd on additional syncs', () => {
     var div = document.createElement("div");
-    utils.syncEvent(div, 'ionClick', () => {});
+    const addEventListener = jest.spyOn(div, "addEventListener");
+    const removeEventListener = jest.spyOn(div, "removeEventListener");
+    const ionClickCallback = jest.fn();
 
-    expect(Object.keys((div as any).__events)).toEqual(['ionClick']);
+    utils.syncEvent(div, 'ionClick', ionClickCallback);
+    expect(removeEventListener).not.toHaveBeenCalled();
+    expect(addEventListener).toHaveBeenCalledWith('ionClick', expect.any(Function));
+
+    utils.syncEvent(div, 'ionClick', ionClickCallback);
+    expect(removeEventListener).toHaveBeenCalledWith('ionClick', expect.any(Function));
+    expect(addEventListener).toHaveBeenCalledWith('ionClick', expect.any(Function));
+
+    const event = new CustomEvent('ionClick', { detail: 'test'});
+    div.dispatchEvent(event);
+    expect(ionClickCallback).toHaveBeenCalled();
   })
 });
 

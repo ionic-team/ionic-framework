@@ -1,7 +1,6 @@
 import React from 'react';
 import { OverlayEventDetail } from '@ionic/core';
-import { attachEventProps } from './utils'
-import { ensureElementInBody, dashToPascalCase } from './utils';
+import { attachEventProps, ensureElementInBody, dashToPascalCase, generateUniqueId } from './utils'
 import { OverlayComponentElement, OverlayControllerComponentElement } from '../types';
 
 export function createControllerComponent<T extends object, E extends OverlayComponentElement, C extends OverlayControllerComponentElement<E>>(tagName: string, controllerTagName: string) {
@@ -17,9 +16,12 @@ export function createControllerComponent<T extends object, E extends OverlayCom
   return class ReactControllerComponent extends React.Component<Props> {
     element: E;
     controllerElement: C;
+    id: string;
 
     constructor(props: Props) {
       super(props);
+
+      this.id = generateUniqueId();
     }
 
     static get displayName() {

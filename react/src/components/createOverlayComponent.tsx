@@ -7,7 +7,7 @@ import { OverlayComponentElement, OverlayControllerComponentElement } from '../t
 
 export function createOverlayComponent<T extends object, E extends OverlayComponentElement, C extends OverlayControllerComponentElement<E>>(tagName: string, controllerTagName: string) {
   const displayName = dashToPascalCase(tagName);
-  const dismissEventName = `onIon${displayName}DidDismiss`;
+  const dismissEventName = `on${displayName}DidDismiss`;
 
   type ReactProps = {
     children: React.ReactNode;
