@@ -1,0 +1,12 @@
+@import "../../themes/ionic.globals.md";
+@import "./title";
+
+// Material Design Title
+// --------------------------------------------------
+
+:host {
+  @include padding(0, 20px);
+
+  font-size: 20px;
+  font-weight: 500;
+}
