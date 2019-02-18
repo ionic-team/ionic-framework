@@ -3,53 +3,53 @@ import { testLoading } from '../test.utils';
 const DIRECTORY = 'basic';
 
 test('loading: basic', async () => {
-  await testLoading(DIRECTORY, '#basic-loading')
+  await testLoading(DIRECTORY, '#basic-loading');
 });
 
 test('loading: long content basic', async () => {
-  await testLoading(DIRECTORY, '#long-content-loading')
+  await testLoading(DIRECTORY, '#long-content-loading');
 });
 
 test('loading: no spinner basic', async () => {
-  await testLoading(DIRECTORY, '#no-spinner-loading')
+  await testLoading(DIRECTORY, '#no-spinner-loading');
 });
 
 test('loading: translucent basic', async () => {
-  await testLoading(DIRECTORY, '#translucent-loading')
+  await testLoading(DIRECTORY, '#translucent-loading');
 });
 
 test('loading: custom class basic', async () => {
-  await testLoading(DIRECTORY, '#custom-class-loading')
+  await testLoading(DIRECTORY, '#custom-class-loading');
 });
 
 test('loading: backdrop standalone', async () => {
-  await testLoading(DIRECTORY, '#backdrop-loading')
+  await testLoading(DIRECTORY, '#backdrop-loading');
 });
 
 /**
  * RTL Tests
  */
- 
- test('loading:rtl: basic basic', async () => {
-  await testLoading(DIRECTORY, '#basic-loading', true)
+
+test('loading:rtl: basic basic', async () => {
+  await testLoading(DIRECTORY, '#basic-loading', true);
 });
 
 test('loading:rtl: long content basic', async () => {
-  await testLoading(DIRECTORY, '#long-content-loading', true)
+  await testLoading(DIRECTORY, '#long-content-loading', true);
 });
 
 test('loading:rtl: no spinner basic', async () => {
-  await testLoading(DIRECTORY, '#no-spinner-loading', true)
+  await testLoading(DIRECTORY, '#no-spinner-loading', true);
 });
 
 test('loading:rtl: translucent basic', async () => {
-  await testLoading(DIRECTORY, '#translucent-loading', true)
+  await testLoading(DIRECTORY, '#translucent-loading', true);
 });
 
 test('loading:rtl: custom class basic', async () => {
-  await testLoading(DIRECTORY, '#custom-class-loading', true)
+  await testLoading(DIRECTORY, '#custom-class-loading', true);
 });
 
 test('loading:rtl: backdrop standalone', async () => {
-  await testLoading(DIRECTORY, '#backdrop-loading', true)
+  await testLoading(DIRECTORY, '#backdrop-loading', true);
 });

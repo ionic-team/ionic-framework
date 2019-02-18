@@ -10,7 +10,7 @@ export function cleanScreenshotName(screenshotName: string): string {
 export async function testLoading(
   type: string,
   selector: string,
-  rtl: boolean = false,
+  rtl = false,
   screenshotName: string = cleanScreenshotName(selector)
 ) {
   try {
@@ -29,7 +29,7 @@ export async function testLoading(
     await page.click(selector);
     let loading = await page.find('ion-loading');
     expect(loading).not.toBeNull();
-  
+
     await loading.waitForVisible();
     await page.waitFor(500);
 
