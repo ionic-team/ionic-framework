@@ -6,7 +6,7 @@ export async function testActionSheet(
   type: string,
   selector: string,
   rtl = false,
-  afterScreenshotHook = async () => {/**/},
+  afterScreenshotHook = async (..._args: any[]): Promise<void> => {/**/},
   screenshotName: string = cleanScreenshotName(selector)
 ) {
   try {
