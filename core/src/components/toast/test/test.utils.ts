@@ -31,13 +31,11 @@ export async function testToast(
 
     let toast = await page.find('ion-toast');
     await toast.waitForVisible();
-    await page.waitFor(250);
 
     screenShotCompares.push(await page.compareScreenshot(screenshotName));
 
     await toast.callMethod('dismiss');
     await toast.waitForNotVisible();
-    await page.waitFor(250);
 
     screenShotCompares.push(await page.compareScreenshot(`dismiss ${screenshotName}`));
 
