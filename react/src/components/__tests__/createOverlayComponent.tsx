@@ -1,55 +1,17 @@
 import React from 'react';
 import { Components } from '@ionic/core'
 import { createOverlayComponent } from '../createOverlayComponent';
-import { render, cleanup, waitForElement } from 'react-testing-library';
+import { render, waitForElement } from 'react-testing-library';
 import * as utils from '../utils';
+import { createControllerUtils } from '../utils/controller-test-utils';
 import 'jest-dom/extend-expect';
 
-function cleanupAfterController(tagName: string) {
-  const controller = document.querySelector(`${tagName}-controller`);
-  if (controller) {
-    controller.remove();
-  }
-  const element = document.querySelector(tagName);
-  if (element) {
-    element.remove();
-  }
-  cleanup();
-}
-
-function createControllerElement(tagName: string): [HTMLElement, jest.Mock, jest.Mock] {
-  const element = document.createElement(tagName);
-  const presentFunction = jest.fn(() => {
-    element.setAttribute('active', 'true');
-    return Promise.resolve(true)
-  });
-  const dismissFunction = jest.fn(() => {
-    element.remove();
-    Promise.resolve(true)
-  });
-  (element as any).present = presentFunction;
-  (element as any).dismiss = dismissFunction;
-
-  return [element, presentFunction, dismissFunction];
-}
-
-function augmentController(tagName: string, baseElement: HTMLElement, container: HTMLElement, childElement: HTMLElement): HTMLElement {
-  const controller: HTMLElement = baseElement.querySelector(`${tagName}-controller`);
-  (controller as any).componentOnReady = jest.fn(async () => {
-    return true;
-  });
-  (controller as any).create = jest.fn(async () => {
-    container.append(childElement);
-    return childElement;
-  });
-
-  return controller;
-}
-
-describe('createComponent - events', () => {
+describe('createOverlayComponent - events', () => {
+  const { cleanupAfterController, createControllerElement, augmentController} = createControllerUtils('ion-action-sheet');
   type ActionSheetOptions = Components.IonActionSheetAttributes;
   const IonActionSheet = createOverlayComponent<ActionSheetOptions, HTMLIonActionSheetElement, HTMLIonActionSheetControllerElement>('ion-action-sheet', 'ion-action-sheet-controller');
-  afterEach(() => cleanupAfterController('ion-action-sheet'));
+
+  afterEach(cleanupAfterController);
 
   test('should set events on handler', async () => {
     const onDismiss = jest.fn();
@@ -81,9 +43,8 @@ describe('createComponent - events', () => {
       </IonActionSheet>
     );
 
-    const actionSheetController = baseElement.querySelector('ion-action-sheet-controller');
-    const [element, presentFunction] = createControllerElement('ion-action-sheet');
-    augmentController('ion-action-sheet', baseElement, container, element);
+    const [element, presentFunction] = createControllerElement();
+    const actionSheetController = augmentController(baseElement, container, element);
 
     const attachEventPropsSpy = jest.spyOn(utils, "attachEventProps");
 
@@ -108,7 +69,7 @@ describe('createComponent - events', () => {
   });
 
   test('should dismiss component on hiding', async () => {
-    const [element, , dismissFunction] = createControllerElement('ion-action-sheet');
+    const [element, , dismissFunction] = createControllerElement();
 
     const { baseElement, rerender, container } = render(
       <IonActionSheet
@@ -120,7 +81,7 @@ describe('createComponent - events', () => {
       </IonActionSheet>
     );
 
-    augmentController('ion-action-sheet', baseElement, container, element);
+    augmentController(baseElement, container, element);
 
     rerender(
       <IonActionSheet
