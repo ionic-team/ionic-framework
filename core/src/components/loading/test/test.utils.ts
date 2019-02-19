@@ -28,7 +28,7 @@ export async function testLoading(
 
     await page.click(selector);
     await page.waitForSelector(selector);
-    
+
     let loading = await page.find('ion-loading');
     expect(loading).not.toBeNull();
 
