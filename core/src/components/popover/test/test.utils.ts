@@ -28,7 +28,7 @@ export async function testPopover(
 
     await page.click(selector);
     await page.waitForSelector(selector);
-    
+
     let popover = await page.find('ion-popover');
     await popover.waitForVisible();
 
