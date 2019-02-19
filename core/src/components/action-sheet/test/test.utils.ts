@@ -6,7 +6,7 @@ export async function testActionSheet(
   type: string,
   selector: string,
   rtl = false,
-  backdrop = true,
+  afterScreenshotHook = async () => {/**/},
   screenshotName: string = cleanScreenshotName(selector)
 ) {
   try {
@@ -29,20 +29,7 @@ export async function testActionSheet(
 
     screenShotCompares.push(await page.compareScreenshot(screenshotName));
 
-    /**
-     * If backdrop dismiss is not enabled
-     * test to make sure it is actually disabled
-     * as intended
-     */
-    if (!backdrop) {
-      const backdrop = await page.find('ion-backdrop');
-      await backdrop.click();
-
-      screenShotCompares.push(await page.compareScreenshot(`dismissed backdrop ${screenshotName}`));
-
-      const isVisible = await actionSheet.isVisible();
-      expect(isVisible).toBe(true);
-    }
+    await afterScreenshotHook(page, screenshotName, screenShotCompares, actionSheet);
 
     await actionSheet.callMethod('dismiss');
     await actionSheet.waitForNotVisible();
@@ -56,6 +43,48 @@ export async function testActionSheet(
       expect(screenShotCompare).toMatchScreenshot();
     }
 
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function testActionSheetBackdrop(
+  page: any,
+  screenshotName: string,
+  screenShotCompares: any,
+  actionSheet: any
+) {
+  try {
+    console.log('backdrop hook');
+    const backdrop = await page.find('ion-backdrop');
+    await backdrop.click();
+
+    screenShotCompares.push(await page.compareScreenshot(`dismissed backdrop ${screenshotName}`));
+
+    const isVisible = await actionSheet.isVisible();
+    expect(isVisible).toBe(true);
+} catch (err) {
+    throw err;
+  }
+}
+
+export async function testActionSheetAlert(
+  page: any,
+  screenshotName: string,
+  screenShotCompares: any
+) {
+  try {
+    const openAlertBtn = await page.find({ text: 'Open Alert' });
+    await openAlertBtn.click();
+
+    const alert = await page.find('ion-alert');
+    await alert.waitForVisible();
+    await page.waitFor(250);
+
+    screenShotCompares.push(await page.compareScreenshot(`alert open ${screenshotName}`));
+
+    const alertOkayBtn = await page.find({ contains: 'Okay' });
+    await alertOkayBtn.click();
   } catch (err) {
     throw err;
   }
