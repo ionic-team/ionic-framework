@@ -27,15 +27,15 @@ export async function testModal(
     const screenShotCompares = [];
 
     await page.click(selector);
+    await page.waitForSelector(selector);
+
     let popover = await page.find('ion-modal');
     await popover.waitForVisible();
-    await page.waitFor(250);
 
     screenShotCompares.push(await page.compareScreenshot(screenshotName));
 
     await popover.callMethod('dismiss');
     await popover.waitForNotVisible();
-    await page.waitFor(250);
 
     screenShotCompares.push(await page.compareScreenshot(`dismiss ${screenshotName}`));
 
