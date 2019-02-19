@@ -192,7 +192,7 @@
 ::slotted(ion-label) {
   @include margin($item-md-label-margin-top, $item-md-label-margin-end, $item-md-label-margin-bottom, $item-md-label-margin-start);
   
-  line-height: 18px;
+  line-height: 1.2em;
 }
 
 
