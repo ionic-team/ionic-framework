@@ -5,7 +5,17 @@ import { render, cleanup, waitForElement, wait } from 'react-testing-library';
 import * as utils from '../utils';
 import 'jest-dom/extend-expect';
 
-afterEach(cleanup);
+function cleanupAfterController(tagName: string) {
+  const controller = document.querySelector(`${tagName}-controller`);
+  if (controller) {
+    controller.remove();
+  }
+  const element = document.querySelector(tagName);
+  if (element) {
+    element.remove();
+  }
+  cleanup();
+}
 
 function createControllerElement(tagName: string): [HTMLElement, jest.Mock, jest.Mock] {
   const element = document.createElement(tagName);
@@ -23,23 +33,24 @@ function createControllerElement(tagName: string): [HTMLElement, jest.Mock, jest
   return [element, presentFunction, dismissFunction];
 }
 
-function augmentController(baseElement: HTMLElement, container: HTMLElement, childElement: HTMLElement): HTMLElement {
-  const loadingController = baseElement.querySelector('ion-loading-controller');
-  (loadingController as any).componentOnReady = jest.fn(async () => {
+function augmentController(tagName: string, baseElement: HTMLElement, container: HTMLElement, childElement: HTMLElement): HTMLElement {
+  const controller: HTMLElement = baseElement.querySelector(`${tagName}-controller`);
+  (controller as any).componentOnReady = jest.fn(async () => {
     return true;
   });
-  (loadingController as any).create = jest.fn(async () => {
+  (controller as any).create = jest.fn(async () => {
     container.append(childElement);
     return childElement;
   });
 
-  return loadingController;
+  return controller;
 }
 
 describe('createComponent - events', () => {
 
   type LoadingOptions = Components.IonLoadingAttributes;
   const IonLoading = createControllerComponent<LoadingOptions, HTMLIonLoadingElement, HTMLIonLoadingControllerElement>('ion-loading', 'ion-loading-controller')
+  afterEach(() => cleanupAfterController('ion-loading'));
 
   test('should create controller component outside of the react component', async () => {
     const { container, baseElement } = render(
@@ -70,7 +81,7 @@ describe('createComponent - events', () => {
     );
 
     const [element, presentFunction] = createControllerElement('ion-loading');
-    const loadingController = augmentController(baseElement, container, element);
+    const loadingController = augmentController('ion-loading', baseElement, container, element);
 
     const attachEventPropsSpy = jest.spyOn(utils, "attachEventProps");
 
@@ -111,7 +122,7 @@ describe('createComponent - events', () => {
     );
 
     const [element, , dismissFunction] = createControllerElement('ion-loading');
-    augmentController(baseElement, container, element);
+    augmentController('ion-loading', baseElement, container, element);
 
     rerender(
       <IonLoading

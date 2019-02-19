@@ -5,25 +5,55 @@ import { render, cleanup, waitForElement } from 'react-testing-library';
 import * as utils from '../utils';
 import 'jest-dom/extend-expect';
 
-afterEach(cleanup);
+function cleanupAfterController(tagName: string) {
+  const controller = document.querySelector(`${tagName}-controller`);
+  if (controller) {
+    controller.remove();
+  }
+  const element = document.querySelector(tagName);
+  if (element) {
+    element.remove();
+  }
+  cleanup();
+}
 
 function createControllerElement(tagName: string): [HTMLElement, jest.Mock, jest.Mock] {
   const element = document.createElement(tagName);
-  const presentFunction = jest.fn(() => Promise.resolve(true));
-  const dismissFunction = jest.fn(() => Promise.resolve(true));
+  const presentFunction = jest.fn(() => {
+    element.setAttribute('active', 'true');
+    return Promise.resolve(true)
+  });
+  const dismissFunction = jest.fn(() => {
+    element.remove();
+    Promise.resolve(true)
+  });
   (element as any).present = presentFunction;
   (element as any).dismiss = dismissFunction;
 
   return [element, presentFunction, dismissFunction];
 }
 
+function augmentController(tagName: string, baseElement: HTMLElement, container: HTMLElement, childElement: HTMLElement): HTMLElement {
+  const controller: HTMLElement = baseElement.querySelector(`${tagName}-controller`);
+  (controller as any).componentOnReady = jest.fn(async () => {
+    return true;
+  });
+  (controller as any).create = jest.fn(async () => {
+    container.append(childElement);
+    return childElement;
+  });
+
+  return controller;
+}
+
 describe('createComponent - events', () => {
   type ActionSheetOptions = Components.IonActionSheetAttributes;
   const IonActionSheet = createOverlayComponent<ActionSheetOptions, HTMLIonActionSheetElement, HTMLIonActionSheetControllerElement>('ion-action-sheet', 'ion-action-sheet-controller');
+  afterEach(() => cleanupAfterController('ion-action-sheet'));
 
   test('should set events on handler', async () => {
     const onDismiss = jest.fn();
-    const { baseElement } = render(
+    const { baseElement, container } = render(
       <>
         <IonActionSheet
           isOpen={false}
@@ -35,8 +65,8 @@ describe('createComponent - events', () => {
         <span>ButtonNameA</span>
       </>
     );
-
-    expect(baseElement).toContainHTML('<div><span>ButtonNameA</span></div><ion-action-sheet-controller></ion-action-sheet-controller>');
+    expect(container).toContainHTML('<div><span>ButtonNameA</span></div>');
+    expect(baseElement.querySelector('ion-action-sheet-controller')).toBeInTheDocument();
   });
 
   test('should create component and attach props on opening', async () => {
@@ -53,13 +83,9 @@ describe('createComponent - events', () => {
 
     const actionSheetController = baseElement.querySelector('ion-action-sheet-controller');
     const [element, presentFunction] = createControllerElement('ion-action-sheet');
+    augmentController('ion-action-sheet', baseElement, container, element);
 
     const attachEventPropsSpy = jest.spyOn(utils, "attachEventProps");
-
-    (actionSheetController as any).create = jest.fn(() => {
-      baseElement.append(element);
-      return Promise.resolve(element);
-    });
 
     rerender(
       <IonActionSheet
@@ -71,7 +97,7 @@ describe('createComponent - events', () => {
       </IonActionSheet>
     );
 
-    await waitForElement(() => baseElement.querySelector('ion-action-sheet'), { container });
+    await waitForElement(() => container.querySelector('ion-action-sheet'));
 
     expect((actionSheetController as any).create).toHaveBeenCalled();
     expect(presentFunction).toHaveBeenCalled();
@@ -94,12 +120,7 @@ describe('createComponent - events', () => {
       </IonActionSheet>
     );
 
-    const actionSheetController = baseElement.querySelector('ion-action-sheet-controller');
-
-    (actionSheetController as any).create = jest.fn(() => {
-      baseElement.append(element);
-      return Promise.resolve(element);
-    });
+    augmentController('ion-action-sheet', baseElement, container, element);
 
     rerender(
       <IonActionSheet
@@ -111,7 +132,7 @@ describe('createComponent - events', () => {
       </IonActionSheet>
     );
 
-    await waitForElement(() => baseElement.querySelector('ion-action-sheet'), { container });
+    await waitForElement(() => container.querySelector('ion-action-sheet'));
 
     rerender(
       <IonActionSheet
