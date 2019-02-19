@@ -1,11 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
-
-export function cleanScreenshotName(screenshotName: string): string {
-  return screenshotName
-    .replace(/([-])/g, ' ')
-    .replace(/[^0-9a-zA-Z\s]/gi, '')
-    .toLowerCase();
-}
+import { generateE2EUrl, cleanScreenshotName } from '../../../utils/test/utils';
 
 export async function testMenu(
   type: string,
@@ -14,9 +8,8 @@ export async function testMenu(
   screenshotName: string = cleanScreenshotName(selector)
 ) {
   try {
-    let pageUrl = `/src/components/menu/test/${type}?ionic:_testing=true`;
+    const pageUrl = generateE2EUrl('menu', type, rtl);
     if (rtl) {
-      pageUrl = `${pageUrl}&rtl=true`;
       screenshotName = `${screenshotName} rtl`;
     }
 
@@ -29,7 +22,6 @@ export async function testMenu(
     const menu = await page.find(selector);
 
     await menu.callMethod('open');
-    await menu.waitForVisible();
     await page.waitFor(250);
 
     screenShotCompares.push(await page.compareScreenshot(screenshotName));

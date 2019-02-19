@@ -1,11 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
-
-export function cleanScreenshotName(screenshotName: string): string {
-  return screenshotName
-    .replace(/([-])/g, ' ')
-    .replace(/[^0-9a-zA-Z\s]/gi, '')
-    .toLowerCase();
-}
+import { generateE2EUrl, cleanScreenshotName } from '../../../utils/test/utils';
 
 export async function testPopover(
   type: string,
@@ -14,9 +8,8 @@ export async function testPopover(
   screenshotName: string = cleanScreenshotName(selector)
 ) {
   try {
-    let pageUrl = `/src/components/popover/test/${type}?ionic:_testing=true`;
+    const pageUrl = generateE2EUrl('popover', type, rtl);
     if (rtl) {
-      pageUrl = `${pageUrl}&rtl=true`;
       screenshotName = `${screenshotName} rtl`;
     }
 
