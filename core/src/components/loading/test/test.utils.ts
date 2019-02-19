@@ -27,17 +27,17 @@ export async function testLoading(
     const screenShotCompares = [];
 
     await page.click(selector);
+    await page.waitForSelector(selector);
+    
     let loading = await page.find('ion-loading');
     expect(loading).not.toBeNull();
 
     await loading.waitForVisible();
-    await page.waitFor(500);
 
     screenShotCompares.push(await page.compareScreenshot(screenshotName));
 
     await loading.callMethod('dismiss');
     await loading.waitForNotVisible();
-    await page.waitFor(250);
 
     screenShotCompares.push(await page.compareScreenshot(`dismiss ${screenshotName}`));
 
