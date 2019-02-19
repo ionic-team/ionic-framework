@@ -39,7 +39,8 @@
     "@types/node": "10.12.9",
     "@types/react": "16.7.6",
     "@types/react-dom": "16.0.9",
-    "@types/react-router": "^4.4.3",
+    "@types/react-router": "^4.4.4",
+    "@types/react-router-dom": "^4.3.1",
     "jest": "^23.0.0",
     "jest-dom": "^3.0.2",
     "np": "^3.1.0",
@@ -63,6 +64,9 @@
   "jest": {
     "preset": "ts-jest",
     "setupTestFrameworkScriptFile": "<rootDir>/jest.setup.js",
-    "testPathIgnorePatterns": ["node_modules", "dist"]
+    "testPathIgnorePatterns": [
+      "node_modules",
+      "dist"
+    ]
   }
 }

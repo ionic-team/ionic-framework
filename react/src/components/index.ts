@@ -1,4 +1,4 @@
-import { defineCustomElements } from '@ionic/core/loader';
+// import { defineCustomElements } from '@ionic/core/loader';
 import { Components as IoniconsComponents } from 'ionicons';
 import { Components } from '@ionic/core';
 import { createReactComponent } from './createComponent';
@@ -20,7 +20,7 @@ export { default as IonTabs } from './navigation/IonTabs';
 export { default as IonTabBar } from './navigation/IonTabBar';
 export { IonRouterOutlet, IonBackButton } from './navigation/IonRouterOutlet';
 
-defineCustomElements(window);
+// defineCustomElements(window);
 
 // createReactComponent
 export const IonTabBarInner = createReactComponent<Components.IonTabBarAttributes, HTMLIonTabBarElement>('ion-tab-bar');
