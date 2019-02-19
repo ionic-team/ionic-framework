@@ -1,5 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { generateE2EUrl, cleanScreenshotName } from '../../../utils/test/utils';
+
+import { cleanScreenshotName, generateE2EUrl } from '../../../utils/test/utils';
 
 export async function testToast(
   type: string,
@@ -8,7 +9,7 @@ export async function testToast(
   screenshotName: string = cleanScreenshotName(selector)
 ) {
   try {
-    const pageUrl = generateE2EUrl('toast', type, rtl)
+    const pageUrl = generateE2EUrl('toast', type, rtl);
     if (rtl) {
       screenshotName = `${screenshotName} rtl`;
     }

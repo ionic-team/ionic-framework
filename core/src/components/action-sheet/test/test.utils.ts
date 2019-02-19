@@ -1,5 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { generateE2EUrl, cleanScreenshotName } from '../../../utils/test/utils';
+
+import { cleanScreenshotName, generateE2EUrl } from '../../../utils/test/utils';
 
 export async function testActionSheet(
   type: string,
@@ -9,7 +10,7 @@ export async function testActionSheet(
   screenshotName: string = cleanScreenshotName(selector)
 ) {
   try {
-    const pageUrl = generateE2EUrl('action-sheet', type, rtl);;
+    const pageUrl = generateE2EUrl('action-sheet', type, rtl);
     if (rtl) {
       screenshotName = `${screenshotName} rtl`;
     }

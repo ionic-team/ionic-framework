@@ -1,5 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { generateE2EUrl, cleanScreenshotName } from '../../../utils/test/utils';
+
+import { cleanScreenshotName, generateE2EUrl } from '../../../utils/test/utils';
 
 export async function testPopover(
   type: string,
