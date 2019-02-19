@@ -37,7 +37,7 @@ export class TabButton implements ComponentInterface {
   /**
    * The URL which will be used as the `href` within this tab's button anchor.
    */
-  @Prop() href = '#';
+  @Prop() href?: string;
 
   /**
    * A tab id must be provided for each `ion-tab`. It's used internally to reference
@@ -111,7 +111,7 @@ export class TabButton implements ComponentInterface {
   render() {
     const { mode, href } = this;
     return (
-      <a href={href}>
+      <a href={href} tabindex="0">
         <slot></slot>
         {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
       </a>
