@@ -384,27 +384,25 @@ export class Range implements ComponentInterface {
     const { min, max, neutralPoint, ratioLower, ratioUpper } = this;
     const neutralPointRatio = valueToRatio(neutralPoint, min, max);
 
-    const isRTL = document.dir === 'rtl';
-    const start = isRTL ? 'right' : 'left';
-    const end = isRTL ? 'left' : 'right';
-    const style: any = {};
-
     // dual knob handling
-    style[start] = `${ratioLower * 100}%`;
-    style[end] = `${100 - ratioUpper * 100}%`;
+    let left = `${ratioLower * 100}%`;
+    let right = `${100 - ratioUpper * 100}%`;
 
     // single knob handling
     if (!this.dualKnobs) {
       if (this.ratioA < neutralPointRatio) {
-        style[end] = `${neutralPointRatio * 100}%`;
-        style[start] = `${this.ratioA * 100}%`;
+        right = `${neutralPointRatio * 100}%`;
+        left = `${this.ratioA * 100}%`;
       } else {
-        style[end] = `${100 - this.ratioA * 100}%`;
-        style[start] = `${neutralPointRatio * 100}%`;
+        right = `${100 - this.ratioA * 100}%`;
+        left = `${neutralPointRatio * 100}%`;
       }
     }
 
-    return style;
+    return {
+      left,
+      right
+    };
   }
 
   protected isTickActive(stepRatio: number) {
@@ -539,6 +537,7 @@ function renderKnob({ knob, value, ratio, min, max, neutralPoint, disabled, pres
 
   const knobStyle = () => {
     const style: any = {};
+
     style[start] = `${ratio * 100}%`;
 
     return style;
