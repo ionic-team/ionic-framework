@@ -4,34 +4,34 @@
 // --------------------------------------------------
 
 /// @prop - Padding top on the tab button
-$tab-button-ios-padding-top:                            0 !default;
+$tab-button-ios-padding-top:          0 !default;
 
 /// @prop - Padding end on the tab button
-$tab-button-ios-padding-end:                            2px !default;
+$tab-button-ios-padding-end:          2px !default;
 
 /// @prop - Padding bottom on the tab button
-$tab-button-ios-padding-bottom:                         $tab-button-ios-padding-top !default;
+$tab-button-ios-padding-bottom:       $tab-button-ios-padding-top !default;
 
 /// @prop - Padding start on the tab button
-$tab-button-ios-padding-start:                          $tab-button-ios-padding-end !default;
+$tab-button-ios-padding-start:        $tab-button-ios-padding-end !default;
 
 /// @prop - Max width of the tab button
-$tab-button-ios-max-width:                              240px !default;
+$tab-button-ios-max-width:            240px !default;
 
 /// @prop - Text color of the inactive tab button
-$tab-button-ios-text-color:                             $tabbar-ios-color !default;
+$tab-button-ios-text-color:           $tabbar-ios-color !default;
 
 /// @prop - Text color of the active tab button
-$tab-button-ios-text-color-active:                      $tabbar-ios-color-activated !default;
+$tab-button-ios-text-color-active:    $tabbar-ios-color-activated !default;
 
 /// @prop - Icon color of the inactive tab button
-$tab-button-ios-icon-color:                             $tabbar-ios-color !default;
+$tab-button-ios-icon-color:           $tabbar-ios-color !default;
 
 /// @prop - Icon color of the active tab button
-$tab-button-ios-icon-color-active:                      $tabbar-ios-color-activated !default;
+$tab-button-ios-icon-color-active:    $tabbar-ios-color-activated !default;
 
 /// @prop - Font size of the tab button text
-$tab-button-ios-font-size:                              10px !default;
+$tab-button-ios-font-size:            10px !default;
 
 /// @prop - Size of the tab button icon
-$tab-button-ios-icon-size:                              30px !default;
+$tab-button-ios-icon-size:            30px !default;
