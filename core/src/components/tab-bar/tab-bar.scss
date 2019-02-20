@@ -43,6 +43,10 @@
   background: #{current-color(base)};
 }
 
+:host(.tab-bar-translucent) ::slotted(ion-tab-button:not(.ion-focused)) {
+  background: transparent;
+}
+
 :host(.ion-color) ::slotted(ion-tab-button) {
   --background-focused: #{current-color(shade)};
   --color-selected: #{current-color(contrast)};
@@ -62,8 +66,4 @@
 :host(.tab-bar-hidden) {
   /* stylelint-disable-next-line declaration-no-important */
   display: none !important;
-}
-
-:host(.tab-bar-translucent) ::slotted(ion-tab-button:not(.ion-focused)) {
-  background: transparent;
 }
