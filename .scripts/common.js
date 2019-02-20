@@ -37,9 +37,9 @@ function checkGit(tasks) {
     {
       title: 'Check current branch',
       task: () => execa.stdout('git', ['symbolic-ref', '--short', 'HEAD']).then(branch => {
-        if (branch !== 'master') {
-          throw new Error(`Not on "master" branch`);
-        }
+        // if (branch !== 'master') {
+        //   throw new Error(`Not on "master" branch`);
+        // }
       })
     },
     {
