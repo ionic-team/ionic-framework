@@ -1,4 +1,6 @@
-// import { defineCustomElements } from '@ionic/core/loader';
+import { addIcons } from 'ionicons';
+import { ICON_PATHS } from 'ionicons/icons';
+import { defineCustomElements } from '@ionic/core/loader';
 import { Components as IoniconsComponents } from 'ionicons';
 import { Components } from '@ionic/core';
 import { createReactComponent } from './createComponent';
@@ -20,7 +22,11 @@ export { default as IonTabs } from './navigation/IonTabs';
 export { default as IonTabBar } from './navigation/IonTabBar';
 export { IonRouterOutlet, IonBackButton } from './navigation/IonRouterOutlet';
 
-// defineCustomElements(window);
+addIcons(ICON_PATHS);
+defineCustomElements(window);
+
+// ionicons
+export const IonIcon = createReactComponent<IoniconsComponents.IonIconAttributes, HTMLIonIconElement>('ion-icon');
 
 // createReactComponent
 export const IonTabBarInner = createReactComponent<Components.IonTabBarAttributes, HTMLIonTabBarElement>('ion-tab-bar');
@@ -51,7 +57,6 @@ export const IonFabList = createReactComponent<Components.IonFabListAttributes, 
 export const IonFooter = createReactComponent<Components.IonFooterAttributes, HTMLIonFooterElement>('ion-footer');
 export const IonGrid = createReactComponent<Components.IonGridAttributes, HTMLIonGridElement>('ion-grid');
 export const IonHeader = createReactComponent<Components.IonHeaderAttributes, HTMLIonHeaderElement>('ion-header');
-export const IonIcon = createReactComponent<IoniconsComponents.IonIconAttributes, HTMLIonIconElement>('ion-icon');
 export const IonImg = createReactComponent<Components.IonImgAttributes, HTMLIonImgElement>('ion-img');
 export const IonInfiniteScroll = createReactComponent<Components.IonInfiniteScrollAttributes, HTMLIonInfiniteScrollElement>('ion-infinite-scroll');
 export const IonInput = createReactComponent<Components.IonInputAttributes, HTMLIonInputElement>('ion-input');
