@@ -92,6 +92,7 @@ export class TabButton implements ComponentInterface {
   hostData() {
     const { disabled, hasIcon, hasLabel, layout, selected, tab } = this;
     return {
+      'tabindex': '0',
       'role': 'tab',
       'aria-selected': selected ? 'true' : null,
       'id': tab !== undefined ? `tab-button-${tab}` : null,
@@ -104,6 +105,8 @@ export class TabButton implements ComponentInterface {
         'tab-has-icon-only': hasIcon && !hasLabel,
         [`tab-layout-${layout}`]: true,
         'ion-activatable': true,
+        'ion-selectable': true,
+        'ion-focusable': true
       }
     };
   }
@@ -111,7 +114,7 @@ export class TabButton implements ComponentInterface {
   render() {
     const { mode, href } = this;
     return (
-      <a href={href} tabindex="0">
+      <a href={href}>
         <slot></slot>
         {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
       </a>

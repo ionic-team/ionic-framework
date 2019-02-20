@@ -137,10 +137,3 @@
 :host(.tab-layout-label-hide) ::slotted(ion-icon) {
   @include margin(0);
 }
-
-
-// iOS Tab Button: Translucent
-// --------------------------------------------------------------
-:host-context(ion-tab-bar.tab-bar-translucent) a:focus-visible {
-  background: $tab-button-ios-translucent-background-color-focused;
-}
