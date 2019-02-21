@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, QueueApi } from '@stencil/core';
 
 import { Gesture, GestureDetail, Mode, PickerColumn } from '../../interface';
 import { hapticSelectionChanged } from '../../utils/haptic';
@@ -38,6 +38,11 @@ export class PickerColumnCmp implements ComponentInterface {
 
   /** Picker column data */
   @Prop() col!: PickerColumn;
+
+  /**
+   * Emitted when the selected value of the column has changed.
+   */
+  @Event({ eventName: 'ionPickerColumnSelectionChanged' }) selectionChanged!: EventEmitter<PickerColumn>;
 
   componentWillLoad() {
     let pickerRotateFactor = 0;
@@ -176,6 +181,7 @@ export class PickerColumnCmp implements ComponentInterface {
       // have not set a last index yet
       hapticSelectionChanged();
       this.lastIndex = selectedIndex;
+      this.selectionChanged.emit(this.col);
     }
   }
 

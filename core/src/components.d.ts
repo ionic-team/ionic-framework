@@ -80,6 +80,9 @@ import {
 import {
   SelectCompareFn,
 } from './components/select/select-interface';
+import {
+  PickerSelectionChange,
+} from './components/picker/picker-interface';
 
 
 export namespace Components {
@@ -2836,6 +2839,10 @@ export namespace Components {
     * Picker column data
     */
     'col': PickerColumn;
+    /**
+    * Emitted when the selected value of the column has changed.
+    */
+    'onIonPickerColumnSelectionChanged'?: (event: CustomEvent<PickerColumn>) => void;
   }
 
   interface IonPickerController {
@@ -2970,6 +2977,10 @@ export namespace Components {
     * Emitted after the picker has presented.
     */
     'onIonPickerDidPresent'?: (event: CustomEvent<void>) => void;
+    /**
+    * Emitted when a value of a picker column has changed.
+    */
+    'onIonPickerSelectionChanged'?: (event: CustomEvent<PickerSelectionChange>) => void;
     /**
     * Emitted before the picker has dismissed.
     */

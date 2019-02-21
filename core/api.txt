@@ -712,6 +712,7 @@ ion-picker,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<an
 ion-picker,method,present,present() => Promise<void>
 ion-picker,event,ionPickerDidDismiss,OverlayEventDetail,true
 ion-picker,event,ionPickerDidPresent,void,true
+ion-picker,event,ionPickerSelectionChanged,PickerSelectionChange,true
 ion-picker,event,ionPickerWillDismiss,OverlayEventDetail,true
 ion-picker,event,ionPickerWillPresent,void,true
 ion-picker,css-prop,--background

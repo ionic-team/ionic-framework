@@ -3,6 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Me
 import { DatetimeChangeEventDetail, DatetimeOptions, Mode, PickerColumn, PickerColumnOption, PickerOptions, StyleEventDetail } from '../../interface';
 import { clamp, findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
+import { PickerSelectionChange } from '../picker/picker-interface';
 
 import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getDateValue, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
 
@@ -22,10 +23,12 @@ export class Datetime implements ComponentInterface {
   private datetimeMax: DatetimeData = {};
   private datetimeValue: DatetimeData = {};
   private buttonEl?: HTMLButtonElement;
+  private picker?: HTMLIonPickerElement;
 
   @Element() el!: HTMLIonDatetimeElement;
 
   @State() isExpanded = false;
+  @State() internalDateTimeValue: DatetimeData = {};
 
   @Prop({ connect: 'ion-picker-controller' }) pickerCtrl!: HTMLIonPickerControllerElement;
 
@@ -194,8 +197,18 @@ export class Datetime implements ComponentInterface {
    * Update the datetime value when the value changes
    */
   @Watch('value')
-  protected valueChanged() {
+  protected async valueChanged() {
+    // update view value
     this.updateDatetimeValue(this.value);
+    // update interal state
+    updateDate(this.internalDateTimeValue, this.value);
+
+    // Validate if picker is initialised
+    if (this.picker) {
+      this.internalDateTimeValue = await this.validate(this.picker);
+    }
+
+    // Set internal dateTime value
     this.emitStyle();
     this.ionChange.emit({
       value: this.value
@@ -240,7 +253,11 @@ export class Datetime implements ComponentInterface {
       dayShortNames: convertToArrayOfStrings(this.dayShortNames, 'dayShortNames')
     };
 
+    // set view value
     this.updateDatetimeValue(this.value);
+    // set internal dateTimeValue
+    updateDate(this.internalDateTimeValue, this.value);
+
     this.emitStyle();
   }
 
@@ -260,14 +277,26 @@ export class Datetime implements ComponentInterface {
     }
 
     const pickerOptions = this.generatePickerOptions();
-    const picker = await this.pickerCtrl.create(pickerOptions);
+    this.picker = await this.pickerCtrl.create(pickerOptions);
     this.isExpanded = true;
-    picker.onDidDismiss().then(() => {
+    this.picker.onDidDismiss().then(() => {
       this.isExpanded = false;
       this.setFocus();
     });
-    await this.validate(picker);
-    await picker.present();
+
+    // initial validation and set validated value
+    this.internalDateTimeValue = await this.validate(this.picker);
+
+    await this.picker.present();
+
+    this.picker.addEventListener('ionPickerSelectionChanged', async event => {
+      const customEvent = event as CustomEvent<PickerSelectionChange>;
+
+      // TODO: How to correctly render the update :S?
+      updateDate(this.internalDateTimeValue, customEvent.detail.selectedValue);
+      this.picker!.columns = this.generateColumns();
+      this.internalDateTimeValue = await this.validate(this.picker!);
+    });
   }
 
   private emitStyle() {
@@ -396,7 +425,7 @@ export class Datetime implements ComponentInterface {
     return divyColumns(columns);
   }
 
-  private async validate(picker: HTMLIonPickerElement) {
+  private async validate(picker: HTMLIonPickerElement): Promise<DatetimeData> {
     const today = new Date();
     const minCompareVal = dateDataSortValue(this.datetimeMin);
     const maxCompareVal = dateDataSortValue(this.datetimeMax);
@@ -441,12 +470,24 @@ export class Datetime implements ComponentInterface {
       [selectedYear, selectedMonth, selectedDay, 23, 59]
     );
 
-    await this.validateColumn(picker,
+    const selectedMinute = await this.validateColumn(picker,
       'minute', 4,
       minCompareVal, maxCompareVal,
       [selectedYear, selectedMonth, selectedDay, selectedHour, 0],
       [selectedYear, selectedMonth, selectedDay, selectedHour, 59]
     );
+
+    // Set dateTime to validated dateTime
+    return {
+      year: selectedYear,
+      month: selectedMonth,
+      day: selectedDay,
+      hour: selectedHour,
+      minute: selectedMinute,
+      millisecond: this.datetimeValue.millisecond,
+      second: this.datetimeValue.second,
+      tzOffset: this.datetimeValue.tzOffset
+    };
   }
 
   private calcMinMax() {

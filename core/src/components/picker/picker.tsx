@@ -6,6 +6,7 @@ import { createThemedClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
+import { PickerSelectionChange } from './picker-interface';
 
 @Component({
   tag: 'ion-picker',
@@ -105,6 +106,11 @@ export class Picker implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'ionPickerDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
+  /**
+   * Emitted when a value of a picker column has changed.
+   */
+  @Event({ eventName: 'ionPickerSelectionChanged' }) selectionChanged!: EventEmitter<PickerSelectionChange>;
+
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
     const cancelBtn = this.buttons.find(b => b.role === 'cancel');
@@ -113,6 +119,14 @@ export class Picker implements ComponentInterface, OverlayInterface {
     } else {
       this.dismiss();
     }
+  }
+
+  @Listen('ionPickerColumnSelectionChanged')
+  protected onPickerColumnSelectionChanged(column: PickerColumn) {
+    this.selectionChanged.emit({
+      column,
+      selectedValue: this.getSelected()
+    });
   }
 
   /**
@@ -238,7 +252,10 @@ export class Picker implements ComponentInterface, OverlayInterface {
         <div class="picker-columns">
           <div class="picker-above-highlight"></div>
             {this.presented && this.columns.map(c =>
-              <ion-picker-column col={c}></ion-picker-column>
+              <ion-picker-column
+                col={c}
+              >
+              </ion-picker-column>
             )}
           <div class="picker-below-highlight"></div>
         </div>

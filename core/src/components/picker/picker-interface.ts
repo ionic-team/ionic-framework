@@ -46,3 +46,10 @@ export interface PickerColumnOption {
   transform?: string;
   selected?: boolean;
 }
+
+export interface PickerSelectionChange {
+  column: PickerColumn;
+  selectedValue: {
+    [k: string]: any
+  };
+}
