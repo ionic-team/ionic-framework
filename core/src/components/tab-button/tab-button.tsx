@@ -89,10 +89,20 @@ export class TabButton implements ComponentInterface {
     return !!this.el.querySelector('ion-icon');
   }
 
+  private get tabIndex() {
+    const tabIndex = this.el.tabIndex;
+
+    if (tabIndex > -1) {
+      return tabIndex;
+    }
+
+    return 0;
+  }
+
   hostData() {
-    const { disabled, hasIcon, hasLabel, layout, selected, tab } = this;
+    const { disabled, hasIcon, hasLabel, tabIndex, layout, selected, tab } = this;
     return {
-      'tabindex': '0',
+      'tabindex': tabIndex,
       'role': 'tab',
       'aria-selected': selected ? 'true' : null,
       'id': tab !== undefined ? `tab-button-${tab}` : null,
