@@ -44,15 +44,7 @@ left or right of the range.
   </ion-item>
 
   <ion-item>
-    <ion-range min="1000" max="2000" step="100" snaps="true" neutralPoint="1500" color="secondary"></ion-range>
-  </ion-item>
-
-  <ion-item>
     <ion-range dualKnobs="true" min="21" max="72" step="3" snaps="true"></ion-range>
-  </ion-item>
-
-  <ion-item>
-    <ion-range dual-knobs="true" neutralPoint="30" min="21" max="72" step="3" snaps="true"></ion-range>
   </ion-item>
 </ion-list>
 ```
@@ -85,15 +77,7 @@ left or right of the range.
   </ion-item>
 
   <ion-item>
-    <ion-range min="1000" max="2000" step="100" snaps="true" neutralPoint="1500" color="secondary"></ion-range>
-  </ion-item>
-
-  <ion-item>
     <ion-range dual-knobs="true" min="21" max="72" step="3" snaps="true"></ion-range>
-  </ion-item>
-
-  <ion-item>
-    <ion-range dual-knobs="true" neutralPoint="30" min="21" max="72" step="3" snaps="true"></ion-range>
   </ion-item>
 </ion-list>
 ```
@@ -102,21 +86,20 @@ left or right of the range.
 
 ## Properties
 
-| Property       | Attribute       | Description                                                                                                                                                                                                                                                            | Type                                                  | Default     |
-| -------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- | ----------- |
-| `color`        | `color`         | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`                                 | `undefined` |
-| `debounce`     | `debounce`      | How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value.                                                                                                                                                              | `number`                                              | `0`         |
-| `disabled`     | `disabled`      | If `true`, the user cannot interact with the range.                                                                                                                                                                                                                    | `boolean`                                             | `false`     |
-| `dualKnobs`    | `dual-knobs`    | Show two knobs.                                                                                                                                                                                                                                                        | `boolean`                                             | `false`     |
-| `max`          | `max`           | Maximum integer value of the range.                                                                                                                                                                                                                                    | `number`                                              | `100`       |
-| `min`          | `min`           | Minimum integer value of the range.                                                                                                                                                                                                                                    | `number`                                              | `0`         |
-| `mode`         | `mode`          | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                                       | `undefined` |
-| `name`         | `name`          | The name of the control, which is submitted with the form data.                                                                                                                                                                                                        | `string`                                              | `''`        |
-| `neutralPoint` | `neutral-point` | The neutral point of the range slider. Default: value is `0` or the `min` when `neutralPoint < min` or `max` when `max < neutralPoint`.                                                                                                                                | `number`                                              | `0`         |
-| `pin`          | `pin`           | If `true`, a pin with integer value is shown when the knob is pressed.                                                                                                                                                                                                 | `boolean`                                             | `false`     |
-| `snaps`        | `snaps`         | If `true`, the knob snaps to tick marks evenly spaced based on the step property value.                                                                                                                                                                                | `boolean`                                             | `false`     |
-| `step`         | `step`          | Specifies the value granularity.                                                                                                                                                                                                                                       | `number`                                              | `1`         |
-| `value`        | `value`         | the value of the range.                                                                                                                                                                                                                                                | `null \| number \| { lower: number; upper: number; }` | `null`      |
+| Property    | Attribute    | Description                                                                                                                                                                                                                                                            | Type                                          | Default     |
+| ----------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- | ----------- |
+| `color`     | `color`      | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`                         | `undefined` |
+| `debounce`  | `debounce`   | How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value.                                                                                                                                                              | `number`                                      | `0`         |
+| `disabled`  | `disabled`   | If `true`, the user cannot interact with the range.                                                                                                                                                                                                                    | `boolean`                                     | `false`     |
+| `dualKnobs` | `dual-knobs` | Show two knobs.                                                                                                                                                                                                                                                        | `boolean`                                     | `false`     |
+| `max`       | `max`        | Maximum integer value of the range.                                                                                                                                                                                                                                    | `number`                                      | `100`       |
+| `min`       | `min`        | Minimum integer value of the range.                                                                                                                                                                                                                                    | `number`                                      | `0`         |
+| `mode`      | `mode`       | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                               | `undefined` |
+| `name`      | `name`       | The name of the control, which is submitted with the form data.                                                                                                                                                                                                        | `string`                                      | `''`        |
+| `pin`       | `pin`        | If `true`, a pin with integer value is shown when the knob is pressed.                                                                                                                                                                                                 | `boolean`                                     | `false`     |
+| `snaps`     | `snaps`      | If `true`, the knob snaps to tick marks evenly spaced based on the step property value.                                                                                                                                                                                | `boolean`                                     | `false`     |
+| `step`      | `step`       | Specifies the value granularity.                                                                                                                                                                                                                                       | `number`                                      | `1`         |
+| `value`     | `value`      | the value of the range.                                                                                                                                                                                                                                                | `number \| { lower: number; upper: number; }` | `0`         |
 
 
 ## Events
