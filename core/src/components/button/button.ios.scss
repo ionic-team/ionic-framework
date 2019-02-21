@@ -34,6 +34,10 @@
   --opacity: #{$button-ios-opacity-activated};
 }
 
+:host(.button-solid.activated.ion-color) .button-native {
+  background: current-color(shade);
+}
+
 // iOS Outline Button
 // --------------------------------------------------
 
