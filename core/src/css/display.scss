@@ -22,7 +22,7 @@
   }
 
   @include media-breakpoint-down($breakpoint, $screen-breakpoints) {
-    // Provide `ion-hide-{bp}-up` classes for hiding the element based
+    // Provide `ion-hide-{bp}-down` classes for hiding the element based
     // on the breakpoint
     .ion-hide-#{$infix}-down {
       display: none !important;
