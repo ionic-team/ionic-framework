@@ -90,10 +90,10 @@ export class TabButton implements ComponentInterface {
   }
 
   private get tabIndex() {
-    const tabIndex = this.el.tabIndex;
+    const hasTabIndex = this.el.hasAttribute('tabindex');
 
-    if (tabIndex > -1) {
-      return tabIndex;
+    if (hasTabIndex) {
+      return this.el.getAttribute('tabindex');
     }
 
     return 0;
