@@ -176,11 +176,7 @@ export function dateDataSortValue(data: DatetimeData): number {
 }
 
 export function daysInMonth(month: number, year: number): number {
-  return (month === 4 || month === 6 || month === 9 || month === 11) ? 30 : (month === 2) ? isLeapYear(year) ? 29 : 28 : 31;
-}
-
-export function isLeapYear(year: number): boolean {
-  return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+  return new Date(new Date(`${month < 12 ? year : year + 1}-${month < 12 ? month + 1 : 1}-1`).setDate(0)).getDate();
 }
 
 const ISO_8601_REGEXP = /^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
