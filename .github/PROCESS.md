@@ -103,7 +103,7 @@ The overall flow:
 
 Branches created from `stable`:
 
-- A `hotfix` branch (e.g. `hotfix-missing-export`) should be the *only* branch that is created from stable and it gets merged back into both `master` and `stable` when complete
+- A `hotfix` branch (e.g. `hotfix-missing-export`) should be the ***only*** branch that is created from stable and it gets merged back into both `master` and `stable` when complete
 
 #### Master Branch
 
@@ -122,7 +122,7 @@ The following branch should be created from `master` and merged back to *both* `
 
 ### Feature Branches
 
-Each new feature should reside in its own branch, based on the `master` branch. When a feature is complete, it should go into a pull request that gets merged back into `master`. Features should never interact directly with `stable`.
+Each new feature should reside in its own branch, based on the `master` branch. When a feature is complete, it should go into a pull request that gets merged back into `master`. A pull request adding a feature should be approved by two team members. Features should never interact directly with `stable`.
 
 
 ### Release Branches
@@ -163,7 +163,7 @@ Maintenance or “hotfix” branches are used to quickly patch production releas
 
 1. Confirm squash and merge into `master`.
 
-#### Merging Changes from `master` into your Branch
+#### Updating from `master`
 
 1. Pull the latest changes locally.
 1. Merge the changes, fixing any conflicts.
@@ -210,10 +210,10 @@ Hotfixes bypass `master` and should only be used for urgent fixes that can't wai
 1. Navigate to the root of the repository.
 1. Run `npm i` if it hasn't already been done.
 1. Run `npm run release.prepare`
-  - Select the version based on the type of commits and the [Ionic Versioning](https://ionicframework.com/docs/intro/versioning)
-  - After the process completes, verify the version number in all packages
-  - Verify the changelog commits are accurate and follow the [proper format]((https://github.com/ionic-team/ionic/blob/master/.github/CONTRIBUTING.md#commit-message-format))
-  - Commit these changes with the version number as the message, e.g. `git commit -m "4.1.0"`
+    - Select the version based on the type of commits and the [Ionic Versioning](https://ionicframework.com/docs/intro/versioning)
+    - After the process completes, verify the version number in all packages
+    - Verify the changelog commits are accurate and follow the [proper format]((https://github.com/ionic-team/ionic/blob/master/.github/CONTRIBUTING.md#commit-message-format))
+    - Commit these changes with the version number as the message, e.g. `git commit -m "4.1.0"`
 1. Run `npm run release`
 1. Click **Merge pull request**. Use the dropdown to select this option if necessary. This will preserve the commit history from `master` by creating a merge commit.
 
