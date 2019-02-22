@@ -81,6 +81,8 @@ if there is no response within 30 days, the issue will be closed and locked.
 
 ## Workflow
 
+### Overview
+
 We have two long-living branches:
 
 - `master`: completed features, bug fixes, refactors, chores
@@ -88,14 +90,13 @@ We have two long-living branches:
 
 The overall flow:
 
-1. A `release` branch is created from `master`
 1. Feature, refactor, and bug fix branches are created from `master`
 1. When a feature, refactor, or fix is complete it is merged into `master`
+1. A release branch is created from `master`
 1. When the release branch is done it is merged into `master` and `stable`
-1. If an issue in `stable` is detected a `hotfix` branch is created from `stable`
-1. Once the `hotfix` is complete it is merged to both `master` and `stable`
+1. If an issue in `stable` is detected a hotfix branch is created from `stable`
+1. Once the hotfix is complete it is merged to both `master` and `stable`
 1. All branches should follow the syntax of `{type}-{details}` where `{type}` is the type of branch (`hotfix`, `release`, or one of the [commit types](https://github.com/ionic-team/ionic/blob/master/.github/CONTRIBUTING.md#commit-message-format)) and `{details}` is a few hyphen separated words explaining the branch
-
 
 ### Stable and Master Branches
 
@@ -103,19 +104,23 @@ The overall flow:
 
 Branches created from `stable`:
 
-- A `hotfix` branch (e.g. `hotfix-missing-export`) should be the ***only*** branch that is created from stable and it gets merged back into both `master` and `stable` when complete
+The following branch should be merged back to **both** `master` and `stable`:
+
+- A `hotfix` branch (e.g. `hotfix-missing-export`): a bug fix that is fixing a regression or issue with a published release
+
+A `hotfix` branch should be the **only** branch that is created from stable.
 
 #### Master Branch
 
 Branches created from `master`:
 
-The following branches should be created from `master` and merged back to `master` via a pull request:
+The following branches should be merged back to `master` via a pull request:
 
 1. A feature branch (e.g. `feat-desktop-support`): an addition to the API that is not a bug fix or regression fix
 1. A bug fix branch (e.g. `fix-tab-color`): a bug fix that is not fixing a regression or issue with a published release
 1. All other types listed in the [commit message types](https://github.com/ionic-team/ionic/blob/master/.github/CONTRIBUTING.md#commit-message-format): `docs`, `style`, `refactor`, `perf`, `test`, `chore`
 
-The following branch should be created from `master` and merged back to *both* `master` and `stable`:
+The following branch should be merged back to **both** `master` and `stable`:
 
 1. A `release` branch (e.g. `release-4.1.x`): contains all fixes and (optionally) features that are tested and should go into the release
 
@@ -130,6 +135,8 @@ Each new feature should reside in its own branch, based on the `master` branch. 
 Once `master` has acquired enough features for a release (or a predetermined release date is approaching), fork a release branch off of `master`. Creating this branch starts the next release cycle, so no new features can be added after this point - only bug fixes, documentation generation, and other release-oriented tasks should go in this branch.
 
 Once the release is ready to ship, it will get merged into `stable` and `master`, then the release branch will be deleted. It’s important to merge back into `master` because critical updates may have been added to the release branch and they need to be accessible to new features. This should be done in a pull request after review.
+
+See the [steps for releasing](#releasing) below for detailed information on how to publish a release.
 
 
 ### Hotfix Branches
@@ -211,7 +218,7 @@ Hotfixes bypass `master` and should only be used for urgent fixes that can't wai
 1. Run `npm i` if it hasn't already been done.
 1. Run `npm run release.prepare`
     - Select the version based on the type of commits and the [Ionic Versioning](https://ionicframework.com/docs/intro/versioning)
-    - After the process completes, verify the version number in all packages
+    - After the process completes, verify the version number in all packages (`core`, `docs`, `angular`)
     - Verify the changelog commits are accurate and follow the [proper format]((https://github.com/ionic-team/ionic/blob/master/.github/CONTRIBUTING.md#commit-message-format))
     - Commit these changes with the version number as the message, e.g. `git commit -m "4.1.0"`
 1. Run `npm run release`
