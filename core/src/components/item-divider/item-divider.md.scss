@@ -43,10 +43,11 @@
 // --------------------------------------------------
 
 ::slotted(ion-icon) {
-
-  color: $item-md-icon-slot-color;
-
   font-size: $item-md-icon-slot-font-size;
+}
+
+:host(:not(.ion-color)) ::slotted(ion-icon) {
+    color: $item-md-icon-slot-color;
 }
 
 ::slotted(ion-icon[slot]) {
