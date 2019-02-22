@@ -127,7 +127,7 @@ Each new feature should reside in its own branch, based on the `master` branch. 
 
 ### Release Branches
 
-Once `master` has acquired enough features for a release (or a predetermined release date is approaching), you fork a release branch off of `master`. Creating this branch starts the next release cycle, so no new features can be added after this point - only bug fixes, documentation generation, and other release-oriented tasks should go in this branch.
+Once `master` has acquired enough features for a release (or a predetermined release date is approaching), fork a release branch off of `master`. Creating this branch starts the next release cycle, so no new features can be added after this point - only bug fixes, documentation generation, and other release-oriented tasks should go in this branch.
 
 Once the release is ready to ship, it will get merged into `stable` and `master`, then the release branch will be deleted. It’s important to merge back into `master` because critical updates may have been added to the release branch and they need to be accessible to new features. This should be done in a pull request after review.
 
