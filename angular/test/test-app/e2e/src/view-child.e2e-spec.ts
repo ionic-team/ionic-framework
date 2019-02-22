@@ -15,7 +15,7 @@ describe('view-child', () => {
     expect(await element(by.css('#color-button.ion-color-danger')).isPresent()).toBeTruthy();
 
     // tabs should be found
-    expect(await element(by.css('#tabs-result')).getText()).toEqual('tabs found');
+    expect(await element(by.css('#tabs-result')).getText()).toEqual('all found');
   });
 
 });

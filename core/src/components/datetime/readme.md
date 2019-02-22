@@ -151,18 +151,20 @@ selection between the beginning of 2016, and October 31st of 2020:
 
 At this time, there is no one-size-fits-all standard to automatically choose the
 correct language/spelling for a month name, or day of the week name, depending
-on the language or locale. Good news is that there is an
-[Intl.DatetimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DatetimeFormat)
-standard whichmost* browsers have adopted. However, at this time the standard
-has not been fully implemented by all popular browsers so Ionic is unavailable
-to take advantage of ityet*. Additionally, Angular also provides an
-internationalization service, but it is still under heavy development so Ionic
-does not depend on it at this time.
+on the language or locale. 
 
-All things considered, the by far easiest solution is to just provide an array
-of names if the app needs to use names other than the default English version of
-month and day names. The month names and day names can be either configured at
-the app level, or individual `ion-datetime` level.
+The good news is that there is an [Intl.DatetimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DatetimeFormat)
+standard which [most browsers](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DatetimeFormat#Browser_compatibility) have adopted.
+
+However, at this time the standard has not been fully implemented by all popular browsers
+so Ionic is unavailable to take advantage of it yet. 
+
+Additionally, Angular also provides an internationalization service, but it is still
+under heavy development so Ionic does not depend on it at this time.
+
+The current best practice is to provide an array of names if the app needs to use names other 
+than the default English version of month and day names. The month names and day names can be 
+either configured at the app level, or individual `ion-datetime` level.
 
 ### Component Input Level
 
@@ -194,8 +196,7 @@ dates in JavaScript.
 ```html
 <ion-item>
   <ion-label>Date</ion-label>
-  <ion-datetime display-format="MM/DD/YYYY" >
-  </ion-datetime>
+  <ion-datetime display-format="MM/DD/YYYY"></ion-datetime>
 </ion-item>
 ```
 
@@ -453,6 +454,7 @@ customPickerOptions.pickerOptions = customPickerButtons;
 | `pickerFormat`    | `picker-format`     | The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.                                                       | `string \| undefined`                                                                                                                                                                                                                                                                                                                                                                                                    | `undefined`     |
 | `pickerOptions`   | --                  | Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.                                                                                                                                                                                                                                                                                                                                                               | `undefined \| { columns?: PickerColumn[] \| undefined; buttons?: PickerButton[] \| undefined; cssClass?: string \| string[] \| undefined; backdropDismiss?: boolean \| undefined; animated?: boolean \| undefined; mode?: "ios" \| "md" \| undefined; keyboardClose?: boolean \| undefined; id?: string \| undefined; enterAnimation?: AnimationBuilder \| undefined; leaveAnimation?: AnimationBuilder \| undefined; }` | `undefined`     |
 | `placeholder`     | `placeholder`       | The text to display when there's no date selected yet. Using lowercase to match the input attribute                                                                                                                                                                                                                                                                                                                                                                                               | `null \| string \| undefined`                                                                                                                                                                                                                                                                                                                                                                                            | `undefined`     |
+| `readonly`        | `readonly`          | If `true`, the datetime appears normal but is not interactive.                                                                                                                                                                                                                                                                                                                                                                                                                                    | `boolean`                                                                                                                                                                                                                                                                                                                                                                                                                | `false`         |
 | `value`           | `value`             | The value of the datetime as a valid ISO 8601 datetime string.                                                                                                                                                                                                                                                                                                                                                                                                                                    | `null \| string \| undefined`                                                                                                                                                                                                                                                                                                                                                                                            | `undefined`     |
 | `yearValues`      | `year-values`       | Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.                                                                         | `number \| number[] \| string \| undefined`                                                                                                                                                                                                                                                                                                                                                                              | `undefined`     |
 

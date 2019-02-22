@@ -18,6 +18,7 @@ export class Select implements ComponentInterface {
   private inputId = `ion-sel-${selectIds++}`;
   private overlay?: OverlaySelect;
   private didInit = false;
+  private buttonEl?: HTMLButtonElement;
 
   @Element() el!: HTMLIonSelectElement;
 
@@ -26,7 +27,6 @@ export class Select implements ComponentInterface {
   @Prop({ connect: 'ion-popover-controller' }) popoverCtrl!: HTMLIonPopoverControllerElement;
 
   @State() isExpanded = false;
-  @State() keyFocus = false;
 
   /**
    * The mode determines which platform styles to use.
@@ -133,9 +133,28 @@ export class Select implements ComponentInterface {
   @Listen('ionSelectOptionDidUnload')
   async selectOptionChanged() {
     await this.loadOptions();
+
     if (this.didInit) {
       this.updateOptions();
+
+      /**
+       * In the event that options
+       * are not loaded at component load
+       * this ensures that any value that is
+       * set is properly rendered once
+       * options have been loaded
+       */
+      if (this.value !== undefined) {
+        this.el.forceUpdate();
+      }
+
     }
+  }
+
+  @Listen('click')
+  onClick(ev: UIEvent) {
+    this.setFocus();
+    this.open(ev);
   }
 
   async componentDidLoad() {
@@ -174,6 +193,7 @@ export class Select implements ComponentInterface {
     overlay.onDidDismiss().then(() => {
       this.overlay = undefined;
       this.isExpanded = false;
+      this.setFocus();
     });
     await overlay.present();
     return overlay;
@@ -353,6 +373,12 @@ export class Select implements ComponentInterface {
     return generateText(this.childOpts, this.value);
   }
 
+  private setFocus() {
+    if (this.buttonEl) {
+      this.buttonEl.focus();
+    }
+  }
+
   private emitStyle() {
     this.ionStyle.emit({
       'interactive': true,
@@ -364,20 +390,11 @@ export class Select implements ComponentInterface {
     });
   }
 
-  private onClick = (ev: UIEvent) => {
-    this.open(ev);
-  }
-
-  private onKeyUp = () => {
-    this.keyFocus = true;
-  }
-
   private onFocus = () => {
     this.ionFocus.emit();
   }
 
   private onBlur = () => {
-    this.keyFocus = false;
     this.ionBlur.emit();
   }
 
@@ -397,7 +414,6 @@ export class Select implements ComponentInterface {
       class: {
         'in-item': hostContext('ion-item', this.el),
         'select-disabled': this.disabled,
-        'select-key': this.keyFocus
       }
     };
   }
@@ -432,10 +448,10 @@ export class Select implements ComponentInterface {
       </div>,
       <button
         type="button"
-        onClick={this.onClick}
-        onKeyUp={this.onKeyUp}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
+        disabled={this.disabled}
+        ref={(el => this.buttonEl = el)}
       >
       </button>
     ];

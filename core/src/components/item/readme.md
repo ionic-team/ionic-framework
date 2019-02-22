@@ -31,7 +31,7 @@ The below chart details the item slots and where it will place the element insid
 | Slot    | Description                                                                 |
 |---------|-----------------------------------------------------------------------------|
 | `start` | Placed to the left of all other content in LTR, and to the `right` in RTL.  |
-| `end`   | Placed to the right of all other content in LTR, and to the `right` in RTL. |
+| `end`   | Placed to the right of all other content in LTR, and to the `left` in RTL.  |
 | none    | Placed inside of the input wrapper.                                         |
 
 
@@ -98,7 +98,7 @@ Detail Arrows
   </ion-label>
 </ion-item>
 
-<ion-item (click)="buttonClick()">
+<ion-item (click)="buttonClick()" detail>
   <ion-label>
     Button Item with Detail Arrow
   </ion-label>
@@ -176,33 +176,37 @@ Item Lines
 <!-- List Full Lines -->
 <ion-list lines="full">
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>Full Lines Item 1</ion-label>
   </ion-item>
 
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>Full Lines Item 2</ion-label>
   </ion-item>
 </ion-list>
 
 <!-- List Inset Lines -->
 <ion-list lines="inset">
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>Inset Lines Item 1</ion-label>
   </ion-item>
 
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>Inset Lines Item 2</ion-label>
   </ion-item>
 </ion-list>
 
 <!-- List No Lines -->
 <ion-list lines="none">
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>No lines Item 1</ion-label>
   </ion-item>
 
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>No lines Item 2</ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>No lines Item 3</ion-label>
   </ion-item>
 </ion-list>
 ```
@@ -418,7 +422,7 @@ Detail Arrows
   </ion-label>
 </ion-item>
 
-<ion-item onclick="buttonClick()">
+<ion-item onclick="buttonClick()" detail>
   <ion-label>
     Button Item with Detail Arrow
   </ion-label>
@@ -496,33 +500,37 @@ Item Lines
 <!-- List Full Lines -->
 <ion-list lines="full">
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>Full Lines Item 1</ion-label>
   </ion-item>
 
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>Full Lines Item 2</ion-label>
   </ion-item>
 </ion-list>
 
 <!-- List Inset Lines -->
 <ion-list lines="inset">
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>Inset Lines Item 1</ion-label>
   </ion-item>
 
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>Inset Lines Item 2</ion-label>
   </ion-item>
 </ion-list>
 
 <!-- List No Lines -->
 <ion-list lines="none">
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>No lines Item 1</ion-label>
   </ion-item>
 
   <ion-item>
-    <ion-label>Item</ion-label>
+    <ion-label>No lines Item 2</ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>No lines Item 3</ion-label>
   </ion-item>
 </ion-list>
 ```
@@ -711,6 +719,15 @@ Item Inputs
 | `mode`            | `mode`             | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                            | `undefined`           |
 | `routerDirection` | `router-direction` | When using a router, it specifies the transition direction when navigating to another page using `href`.                                                                                                                                                               | `"back" \| "forward" \| "root"`            | `'forward'`           |
 | `type`            | `type`             | The type of the button. Only used when an `onclick` or `button` property is present.                                                                                                                                                                                   | `"button" \| "reset" \| "submit"`          | `'button'`            |
+
+
+## Slots
+
+| Slot      | Description                                                                     |
+| --------- | ------------------------------------------------------------------------------- |
+|           | Content is placed between the named slots if provided without a slot.           |
+| `"end"`   | Content is placed to the right of the item text in LTR, and to the left in RTL. |
+| `"start"` | Content is placed to the left of the item text in LTR, and to the right in RTL. |
 
 
 ## CSS Custom Properties
