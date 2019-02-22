@@ -67,7 +67,7 @@ export class ReorderGroup implements ComponentInterface {
       el: this.doc.body,
       queue: this.queue,
       gestureName: 'reorder',
-      gesturePriority: 90,
+      gesturePriority: 110,
       threshold: 0,
       direction: 'y',
       passive: false,
