@@ -274,10 +274,10 @@ export class ItemSliding implements ComponentInterface {
         ? SlidingState.Start | SlidingState.SwipeStart
         : SlidingState.Start;
     } else {
-      this.tmr = window.setTimeout(() => {
+      this.tmr = setTimeout(() => {
         this.state = SlidingState.Disabled;
         this.tmr = undefined;
-      }, 600);
+      }, 600) as any;
 
       openSlidingItem = undefined;
       style.transform = '';

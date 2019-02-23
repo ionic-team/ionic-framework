@@ -15,7 +15,7 @@ export function shadow<T extends Element>(el: T): ShadowRoot | T {
 
 export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement, opts: TransitionOptions): Promise<Animation> {
 
-  const isRTL = document.dir === 'rtl';
+  const isRTL = (navEl.ownerDocument as any).dir === 'rtl';
   const OFF_RIGHT = isRTL ? '-99.5%' : '99.5%';
   const OFF_LEFT = isRTL ? '33%' : '-33%';
 
