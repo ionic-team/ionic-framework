@@ -6,7 +6,7 @@ import { Config, configFromSession, configFromURL, saveConfig } from './config';
 
 declare const Context: any;
 
-const win = Context['window'] ? Context['window'] : typeof window !== 'undefined' ? window : {} as Window;
+const win = Context['window'] ? Context['window'] : typeof (window as any) !== 'undefined' ? window : {} as Window;
 
 const Ionic = (win as any)['Ionic'] = (win as any)['Ionic'] || {};
 
