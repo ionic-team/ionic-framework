@@ -1,5 +1,7 @@
-import { ComponentFactoryResolver, Injectable, Injector } from '@angular/core';
+import { ComponentFactoryResolver, Inject, Injectable, Injector } from '@angular/core';
 import { ModalOptions } from '@ionic/core';
+
+import { DOCUMENT } from '@angular/common';
 
 import { OverlayBaseController } from '../util/overlay';
 
@@ -12,8 +14,9 @@ export class ModalController extends OverlayBaseController<ModalOptions, HTMLIon
     private angularDelegate: AngularDelegate,
     private resolver: ComponentFactoryResolver,
     private injector: Injector,
+    @Inject(DOCUMENT) doc: any
   ) {
-    super('ion-modal-controller');
+    super('ion-modal-controller', doc);
   }
 
   create(opts: ModalOptions): Promise<HTMLIonModalElement> {
