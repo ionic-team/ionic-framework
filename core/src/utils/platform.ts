@@ -12,9 +12,7 @@ export const setupPlatforms = (win: any) => {
   let platforms: string[] | undefined | null = win.Ionic.platforms;
   if (platforms == null) {
     platforms = win.Ionic.platforms = detectPlatforms(win);
-    platforms.forEach(p => {
-      win.document.documentElement.classList.add(`plt-${p}`);
-    });
+    platforms.forEach(p => win.document.documentElement.classList.add(`plt-${p}`));
   }
   return platforms;
 };
