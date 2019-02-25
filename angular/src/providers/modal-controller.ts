@@ -1,7 +1,6 @@
+import { DOCUMENT } from '@angular/common';
 import { ComponentFactoryResolver, Inject, Injectable, Injector } from '@angular/core';
 import { ModalOptions } from '@ionic/core';
-
-import { DOCUMENT } from '@angular/common';
 
 import { OverlayBaseController } from '../util/overlay';
 
