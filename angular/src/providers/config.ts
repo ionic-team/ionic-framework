@@ -43,7 +43,7 @@ export class Config {
 export const ConfigToken = new InjectionToken<any>('USERCONFIG');
 
 function getConfig(): CoreConfig | null {
-  if (typeof window !== 'undefined') {
+  if (typeof (window as any) !== 'undefined') {
     const Ionic = (window as IonicWindow).Ionic;
     if (Ionic && Ionic.config) {
       return Ionic.config;

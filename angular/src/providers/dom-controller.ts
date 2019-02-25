@@ -23,7 +23,7 @@ export class DomController {
 }
 
 function getQueue() {
-  const win = typeof window !== 'undefined' ? window : null as any;
+  const win = typeof (window as any) !== 'undefined' ? window : null as any;
 
   if (win != null) {
     const Ionic = win.Ionic;
