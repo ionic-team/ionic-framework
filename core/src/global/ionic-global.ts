@@ -36,7 +36,7 @@ if (config.getBoolean('persistConfig')) {
 // first see if the mode was set as an attribute on <html>
 // which could have been set by the user, or by prerendering
 // otherwise get the mode via config settings, and fallback to md
-const documentElement = win.document ? win.document.documentElement : null;
+const documentElement = (win as any).document ? win.document.documentElement : null;
 const mode = config.get('mode', (documentElement && documentElement.getAttribute('mode')) || (isPlatform(win, 'ios') ? 'ios' : 'md'));
 Ionic.mode = Context.mode = mode;
 config.set('mode', mode);

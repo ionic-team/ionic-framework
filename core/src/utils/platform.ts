@@ -75,13 +75,13 @@ const isElectron = (win: Window): boolean =>
   testUserAgent(win, /electron/);
 
 const isPWA = (win: Window): boolean =>
-  win.matchMedia ? (win.matchMedia('(display-mode: standalone)').matches || (win.navigator as any).standalone) : false;
+  (win as any).matchMedia ? (win.matchMedia('(display-mode: standalone)').matches || (win.navigator as any).standalone) : false;
 
 export const testUserAgent = (win: Window, expr: RegExp) =>
-  win.navigator && win.navigator.userAgent ? expr.test(win.navigator.userAgent) : false;
+  (win as any).navigator && (win.navigator as any).userAgent ? expr.test(win.navigator.userAgent) : false;
 
 const matchMedia = (win: any, query: string): boolean =>
-  win.matchMedia ? win.matchMedia(query).matches : false;
+  (win as any).matchMedia ? win.matchMedia(query).matches : false;
 
 export const PLATFORMS_MAP = {
   'ipad': isIpad,
