@@ -32,8 +32,7 @@ export function setupPlatforms(win: any) {
   let platforms: string[] | undefined | null = win.Ionic.platforms;
   if (platforms == null) {
     platforms = win.Ionic.platforms = detectPlatforms(win);
-    const classList = win.document.documentElement.classList;
-    platforms.forEach(p => classList.add(`plt-${p}`));
+    platforms.forEach(p => win.document.documentElement.classList.add(`plt-${p}`));
   }
   return platforms;
 }
@@ -93,13 +92,11 @@ function isHybrid(win: Window) {
   return isCordova(win) || isCapacitorNative(win);
 }
 
-function isCordova(window: Window): boolean {
-  const win = window as any;
+function isCordova(win: any): boolean {
   return !!(win['cordova'] || win['phonegap'] || win['PhoneGap']);
 }
 
-function isCapacitorNative(window: Window): boolean {
-  const win = window as any;
+function isCapacitorNative(win: any): boolean {
   const capacitor = win['Capacitor'];
   return !!(capacitor && capacitor.isNative);
 }
@@ -116,6 +113,6 @@ export function testUserAgent(win: Window, expr: RegExp) {
   return expr.test(win.navigator.userAgent);
 }
 
-function matchMedia(win: Window, query: string): boolean {
-  return win.matchMedia(query).matches;
+function matchMedia(win: any, query: string): boolean {
+  return win.matchMedia ? win.matchMedia(query).matches : false;
 }
