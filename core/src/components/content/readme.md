@@ -36,6 +36,26 @@ content.addEventListener('ionScrollEnd', () => console.log('scroll end'));
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonContent } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+  <IonContent
+    scrollEvents={true}
+    onIonScrollStart={() => {}}
+    onIonScroll={() => {}}
+    onIonScrollEnd={() => {}}>
+  </IonContent>
+);
+
+export default Example;
+```
+
+
 
 ## Properties
 
@@ -142,14 +162,6 @@ Scroll to the top of the component
 Type: `Promise<void>`
 
 
-
-
-## Slots
-
-| Slot      | Description                                                          |
-| --------- | -------------------------------------------------------------------- |
-|           | Content is placed in the scrollable area if provided without a slot. |
-| `"fixed"` | Should be used for fixed content that should not scroll.             |
 
 
 ## CSS Custom Properties

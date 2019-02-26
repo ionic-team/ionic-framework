@@ -91,6 +91,70 @@ This attribute specifies the size of the button. Setting this attribute will cha
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonButton, IonIcon } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+  <>
+    {/*-- Default --*/}
+    <IonButton>Default</IonButton>
+
+    {/*-- Anchor --*/}
+    <IonButton href="#">Anchor</IonButton>
+
+    {/*-- Colors --*/}
+    <IonButton color="primary">Primary</IonButton>
+    <IonButton color="secondary">Secondary</IonButton>
+    <IonButton color="tertiary">Tertiary</IonButton>
+    <IonButton color="success">Success</IonButton>
+    <IonButton color="warning">Warning</IonButton>
+    <IonButton color="danger">Danger</IonButton>
+    <IonButton color="light">Light</IonButton>
+    <IonButton color="medium">Medium</IonButton>
+    <IonButton color="dark">Dark</IonButton>
+
+    {/*-- Expand --*/}
+    <IonButton expand="full">Full Button</IonButton>
+    <IonButton expand="block">Block Button</IonButton>
+
+    {/*-- Round --*/}
+    <IonButton shape="round">Round Button</IonButton>
+
+    {/*-- Fill --*/}
+    <IonButton expand="full" fill="outline">Outline + Full</IonButton>
+    <IonButton expand="block" fill="outline">Outline + Block</IonButton>
+    <IonButton shape="round" fill="outline">Outline + Round</IonButton>
+
+    {/*-- Icons --*/}
+    <IonButton>
+      <IonIcon slot="start" name="star" />
+      Left Icon
+    </IonButton>
+
+    <IonButton>
+      Right Icon
+      <IonIcon slot="end" name="star" />
+    </IonButton>
+
+    <IonButton>
+      <IonIcon slot="icon-only" name="star" />
+    </IonButton>
+
+    {/*-- Sizes --*/}
+    <IonButton size="large">Large</IonButton>
+    <IonButton>Default</IonButton>
+    <IonButton size="small">Small</IonButton>
+  </>
+);
+
+export default Example;
+```
+
+
 
 ## Properties
 
@@ -116,16 +180,6 @@ This attribute specifies the size of the button. Setting this attribute will cha
 | ---------- | ------------------------------------ | ------------------- |
 | `ionBlur`  | Emitted when the button loses focus. | `CustomEvent<void>` |
 | `ionFocus` | Emitted when the button has focus.   | `CustomEvent<void>` |
-
-
-## Slots
-
-| Slot          | Description                                                                       |
-| ------------- | --------------------------------------------------------------------------------- |
-|               | Content is placed between the named slots if provided without a slot.             |
-| `"end"`       | Content is placed to the right of the button text in LTR, and to the left in RTL. |
-| `"icon-only"` | Should be used on an icon in a button that has no text.                           |
-| `"start"`     | Content is placed to the left of the button text in LTR, and to the right in RTL. |
 
 
 ## CSS Custom Properties
