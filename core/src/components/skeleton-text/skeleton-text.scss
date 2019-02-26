@@ -38,8 +38,6 @@ span {
 // -----------------------------------------------------------
 
 :host(.skeleton-text-animated) {
-  @include border-radius(inherit);
-
   position: relative;
 
   width: 100%;
