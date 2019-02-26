@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Skeleton Text - Basic</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
@@ -12,11 +13,172 @@
 </head>
 
 <body>
-  <ion-skeleton-text width=40px></ion-skeleton-text>
-  <ion-skeleton-text width=200px></ion-skeleton-text>
-  <ion-skeleton-text width=600px></ion-skeleton-text>
-  <ion-skeleton-text width=100px></ion-skeleton-text>
-  <ion-skeleton-text width=80px></ion-skeleton-text>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Skeleton Text</ion-title>
+        <ion-buttons slot="primary">
+          <ion-button onClick="toggleSkeleton()">Toggle</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list id="data">
+        <ion-list-header>Data</ion-list-header>
+        <ion-item>
+          <ion-avatar slot="start">
+            <img src="/src/components/avatar/test/avatar.svg">
+          </ion-avatar>
+          <ion-label>
+            <h3>
+              Normal text
+            </h3>
+            <p>
+              Normal text
+            </p>
+            <p>
+              Normal text
+            </p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <img src="/src/components/thumbnail/test/thumbnail.svg">
+          </ion-thumbnail>
+          <ion-label>
+            <h3>
+              Normal text
+            </h3>
+            <p>
+              Normal text
+            </p>
+            <p>
+              Normal text
+            </p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-list id="skeleton">
+        <ion-list-header><ion-skeleton-text width="20%"></ion-skeleton-text></ion-list-header>
+        <ion-item>
+          <ion-avatar slot="start">
+            <ion-skeleton-text></ion-skeleton-text>
+          </ion-avatar>
+          <ion-label>
+            <h3>
+              <ion-skeleton-text width="50%"></ion-skeleton-text>
+            </h3>
+            <p>
+              <ion-skeleton-text width="80%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text width="60%"></ion-skeleton-text>
+            </p>
+          </ion-label>
+
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <ion-skeleton-text></ion-skeleton-text>
+          </ion-thumbnail>
+          <ion-label>
+            <h3>
+              <ion-skeleton-text width="50%"></ion-skeleton-text>
+            </h3>
+            <p>
+              <ion-skeleton-text width="80%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text width="60%"></ion-skeleton-text>
+            </p>
+          </ion-label>
+
+        </ion-item>
+      </ion-list>
+
+      <ion-list>
+        <ion-list-header>Animated</ion-list-header>
+        <ion-item>
+          <ion-avatar slot="start">
+            <ion-skeleton-text animated></ion-skeleton-text>
+          </ion-avatar>
+          <ion-label>
+            <h3>
+              <ion-skeleton-text animated width="50%"></ion-skeleton-text>
+            </h3>
+            <p>
+              <ion-skeleton-text animated width="80%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated width="60%"></ion-skeleton-text>
+            </p>
+          </ion-label>
+
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <ion-skeleton-text animated></ion-skeleton-text>
+          </ion-thumbnail>
+          <ion-label>
+            <h3>
+              <ion-skeleton-text animated width="50%"></ion-skeleton-text>
+            </h3>
+            <p>
+              <ion-skeleton-text animated width="80%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated width="60%"></ion-skeleton-text>
+            </p>
+          </ion-label>
+
+        </ion-item>
+      </ion-list>
+
+      <div style="border-radius: 50%; height: 50px; width: 50px">
+        <ion-skeleton-text></ion-skeleton-text>
+      </div>
+
+      <ion-skeleton-text style="width: 40px; height: 50px"></ion-skeleton-text>
+      <p>
+        <ion-skeleton-text width=200px></ion-skeleton-text>
+      </p>
+      <p>
+        <ion-skeleton-text width=600px></ion-skeleton-text>
+      </p>
+      <p>
+        <ion-skeleton-text width=100px></ion-skeleton-text>
+      </p>
+      <p>
+        <ion-skeleton-text width=80px></ion-skeleton-text>
+      </p>
+    </ion-content>
+  </ion-app>
+
+  <style>
+    #data {
+      display: none;
+    }
+
+    #skeleton {
+      display: block;
+    }
+  </style>
+
+  <script>
+    function toggleSkeleton() {
+      const skeletonEl = document.getElementById('skeleton'),
+        skeletonStyle = window.getComputedStyle(skeletonEl),
+        skeletonDisplay = skeletonStyle.getPropertyValue('display');
+      const dataEl = document.getElementById('data'),
+        dataStyle = window.getComputedStyle(dataEl),
+        dataDisplay = dataStyle.getPropertyValue('display');
+      console.log(skeletonDisplay, dataDisplay);
+
+      document.getElementById('skeleton').style.display = skeletonDisplay === 'none' ? 'block' : 'none';
+      document.getElementById('data').style.display = dataDisplay === 'none' ? 'block' : 'none';
+    }
+  </script>
 </body>
 
 </html>

@@ -7,18 +7,62 @@
 :host {
   /**
    * --background: Background of the skeleton text
+   * --border-radius: Border radius of the skeleton text
    */
+  --background: #{rgba(var(--ion-text-color-rgb, $text-color-rgb), .1)};
 
-  display: inline-block;
+  @include border-radius(var(--border-radius, inherit));
+
+  display: block;
 
   width: 100%;
-  pointer-events: none;
+  height: 100%;
+
+  margin-top: 3px;
+  margin-bottom: 4px;
+
+  background: var(--background);
+
+  line-height: 10px;
 
   user-select: none;
+
+  pointer-events: none;
 }
 
 span {
   display: inline-block;
-
-  font-size: 8px;
 }
+
+// Animated Skeleton Text
+// -----------------------------------------------------------
+
+:host(.skeleton-text-animated) {
+  @include border-radius(inherit);
+
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  background: #f6f7f8;
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 800px 104px;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: shimmer;
+  animation-timing-function: linear;
+}
+
+/* stylelint-disable property-blacklist */
+@keyframes shimmer {
+  0% {
+    background-position: -468px 0
+  }
+
+  100% {
+    background-position: 468px 0
+  }
+}
+/* stylelint-enable property-blacklist */
