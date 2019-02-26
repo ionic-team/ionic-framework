@@ -114,6 +114,15 @@ export default Example
 | `sticky` | `sticky`  | When it's set to `true`, the item-divider will stay visible when it reaches the top of the viewport until the next `ion-item-divider` replaces it.  This feature relies in `position:sticky`: https://caniuse.com/#feat=css-sticky                                     | `boolean`             | `false`     |
 
 
+## Slots
+
+| Slot      | Description                                                                        |
+| --------- | ---------------------------------------------------------------------------------- |
+|           | Content is placed between the named slots if provided without a slot.              |
+| `"end"`   | Content is placed to the right of the divider text in LTR, and to the left in RTL. |
+| `"start"` | Content is placed to the left of the divider text in LTR, and to the right in RTL. |
+
+
 ## CSS Custom Properties
 
 | Name               | Description                        |
