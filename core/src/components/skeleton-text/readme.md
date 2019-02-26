@@ -16,16 +16,17 @@ Skeleton Text is a component for rendering placeholder content. The element will
 
 ## Properties
 
-| Property | Attribute | Description                         | Type     | Default  |
-| -------- | --------- | ----------------------------------- | -------- | -------- |
-| `width`  | `width`   | Width for the element to render at. | `string` | `'100%'` |
+| Property   | Attribute  | Description                                | Type      | Default  |
+| ---------- | ---------- | ------------------------------------------ | --------- | -------- |
+| `animated` | `animated` | If `true`, the skeleton text will animate. | `boolean` | `false`  |
+| `width`    | `width`    | Width for the element to render at.        | `string`  | `'100%'` |
 
 
 ## CSS Custom Properties
 
-| Name           | Description                     |
-| -------------- | ------------------------------- |
-| `--background` | Background of the skeleton text |
+| Name           | Description                                                                         |
+| -------------- | ----------------------------------------------------------------------------------- |
+| `--background` | Background of the skeleton text --border-radius: Border radius of the skeleton text |
 
 
 ----------------------------------------------

@@ -975,6 +975,7 @@ ion-select,css-prop,--padding-start
 ion-select,css-prop,--padding-top
 
 ion-skeleton-text,shadow
+ion-skeleton-text,prop,animated,boolean,false,false,false
 ion-skeleton-text,prop,width,string,'100%',false,false
 ion-skeleton-text,css-prop,--background
 
