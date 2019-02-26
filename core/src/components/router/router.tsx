@@ -92,7 +92,7 @@ export class Router implements ComponentInterface {
   @Method()
   push(url: string, direction: RouterDirection = 'forward') {
     if (url.startsWith('.')) {
-      url = (new URL(url, window.location.href)).pathname;
+      url = (new URL(url, this.win.location.href)).pathname;
     }
     console.debug('[ion-router] URL pushed -> updating nav', url, direction);
 
