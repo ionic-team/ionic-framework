@@ -3275,15 +3275,15 @@ export namespace Components {
     /**
     * The mode determines which platform styles to use.
     */
+    'mode': Mode;
+    /**
+    * The mode determines which platform styles to use.
+    */
     'mode'?: 'md' | 'ios';
     /**
     * The name of the control, which is submitted with the form data.
     */
     'name': string;
-    /**
-    * The neutral point of the range slider. Default: value is `0` or the `min` when `neutralPoint < min` or `max` when `max < neutralPoint`.
-    */
-    'neutralPoint': number;
     /**
     * If `true`, a pin with integer value is shown when the knob is pressed.
     */
@@ -3299,7 +3299,7 @@ export namespace Components {
     /**
     * the value of the range.
     */
-    'value': RangeValue | null;
+    'value': RangeValue;
   }
   interface IonRangeAttributes extends JSXElements.HTMLAttributes {
     /**
@@ -3331,13 +3331,13 @@ export namespace Components {
     */
     'mode'?: 'md' | 'ios';
     /**
+    * The mode determines which platform styles to use.
+    */
+    'mode'?: Mode;
+    /**
     * The name of the control, which is submitted with the form data.
     */
     'name'?: string;
-    /**
-    * The neutral point of the range slider. Default: value is `0` or the `min` when `neutralPoint < min` or `max` when `max < neutralPoint`.
-    */
-    'neutralPoint'?: number;
     /**
     * Emitted when the range loses focus.
     */
@@ -3365,7 +3365,7 @@ export namespace Components {
     /**
     * the value of the range.
     */
-    'value'?: RangeValue | null;
+    'value'?: RangeValue;
   }
 
   interface IonRefresherContent {

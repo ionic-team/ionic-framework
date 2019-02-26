@@ -1,25 +1,39 @@
+import { addIcons } from 'ionicons';
+import { ICON_PATHS } from 'ionicons/icons';
+import { defineCustomElements } from '@ionic/core/loader';
 import { Components as IoniconsComponents } from 'ionicons';
 import { Components } from '@ionic/core';
 import { createReactComponent } from './createComponent';
-
 export { AlertButton, AlertInput } from '@ionic/core';
 
-export { default as IonActionSheet } from './IonActionSheet';
+// createControllerComponent
 export { default as IonAlert } from './IonAlert';
 export { default as IonLoading } from './IonLoading';
+export { default as IonToast } from './IonToast';
+
+// createOverlayComponent
+export { default as IonActionSheet } from './IonActionSheet';
 export { default as IonModal } from './IonModal';
 export { default as IonPopover } from './IonPopover';
-export { default as IonToast } from './IonToast';
+
+// Custom Components
+export { default as IonPage } from './IonPage';
 export { default as IonTabs } from './navigation/IonTabs';
 export { default as IonTabBar } from './navigation/IonTabBar';
 export { IonRouterOutlet, IonBackButton } from './navigation/IonRouterOutlet';
 
+addIcons(ICON_PATHS);
+defineCustomElements(window);
+
+// ionicons
+export const IonIcon = createReactComponent<IoniconsComponents.IonIconAttributes, HTMLIonIconElement>('ion-icon');
+
+// createReactComponent
 export const IonTabBarInner = createReactComponent<Components.IonTabBarAttributes, HTMLIonTabBarElement>('ion-tab-bar');
 export const IonRouterOutletInner = createReactComponent<Components.IonRouterOutletAttributes, HTMLIonRouterOutletElement>('ion-router-outlet');
 export const IonBackButtonInner = createReactComponent<Components.IonBackButtonAttributes, HTMLIonBackButtonElement>('ion-back-button');
 export const IonTab = createReactComponent<Components.IonTabAttributes, HTMLIonTabElement>('ion-tab');
 export const IonTabButton = createReactComponent<Components.IonTabButtonAttributes, HTMLIonTabButtonElement>('ion-tab-button');
-
 export const IonAnchor = createReactComponent<Components.IonAnchorAttributes, HTMLIonAnchorElement>('ion-anchor');
 export const IonApp = createReactComponent<Components.IonAppAttributes, HTMLIonAppElement>('ion-app');
 export const IonAvatar = createReactComponent<Components.IonAvatarAttributes, HTMLIonAvatarElement>('ion-avatar');
@@ -43,7 +57,6 @@ export const IonFabList = createReactComponent<Components.IonFabListAttributes, 
 export const IonFooter = createReactComponent<Components.IonFooterAttributes, HTMLIonFooterElement>('ion-footer');
 export const IonGrid = createReactComponent<Components.IonGridAttributes, HTMLIonGridElement>('ion-grid');
 export const IonHeader = createReactComponent<Components.IonHeaderAttributes, HTMLIonHeaderElement>('ion-header');
-export const IonIcon = createReactComponent<IoniconsComponents.IonIconAttributes, HTMLIonIconElement>('ion-icon');
 export const IonImg = createReactComponent<Components.IonImgAttributes, HTMLIonImgElement>('ion-img');
 export const IonInfiniteScroll = createReactComponent<Components.IonInfiniteScrollAttributes, HTMLIonInfiniteScrollElement>('ion-infinite-scroll');
 export const IonInput = createReactComponent<Components.IonInputAttributes, HTMLIonInputElement>('ion-input');

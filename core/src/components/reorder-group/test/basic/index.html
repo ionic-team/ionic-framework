@@ -34,12 +34,22 @@
             <ion-reorder slot="end"></ion-reorder>
           </ion-item>
 
-          <ion-item button onclick="openAlert()">
-            <ion-label>
-              Item 2 (default ion-reorder)
-            </ion-label>
-            <ion-reorder slot="end"></ion-reorder>
-          </ion-item>
+          <ion-item-sliding>
+            <ion-item button onclick="openAlert()">
+              <ion-label>
+                Item 2 (default ion-reorder with ion-item-sliding)
+              </ion-label>
+              <ion-reorder slot="end"></ion-reorder>
+            </ion-item>
+            <ion-item-options side="start">
+              <ion-item-option>Favorite</ion-item-option>
+              <ion-item-option color="danger">Share</ion-item-option>
+            </ion-item-options>
+
+            <ion-item-options side="end">
+              <ion-item-option>Unread</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
 
           <ion-item button onclick="openAlert()">
             <ion-label>
