@@ -1,10 +1,24 @@
 ```tsx
-import React from 'react'
-import { IonAvatar } from '@ionic/react';
+import React from 'react';
 
-const AvatarExample: React.SFC<{}> = () => (
+import { IonFab, IonFabButton, IonFabList } from '@ionic/react';
 
+const Example: React.SFC<{}> = () => (
+
+  <IonFab vertical="bottom" horizontal="end">
+    <IonFabButton>Share</IonFabButton>
+
+    <IonFabList side="top">
+      <IonFabButton>Facebook</IonFabButton>
+      <IonFabButton>Twitter</IonFabButton>
+      <IonFabButton>Youtube</IonFabButton>
+    </IonFabList>
+
+    <IonFabList side="start">
+      <IonFabButton>Vimeo</IonFabButton>
+    </IonFabList>
+
+  </IonFab>
 );
 
-export default AvatarExample;
-```
+export default Example

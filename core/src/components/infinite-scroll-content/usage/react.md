@@ -1,10 +1,18 @@
 ```tsx
-import React from 'react'
-import { IonAvatar } from '@ionic/react';
+import React from 'react';
 
-const AvatarExample: React.SFC<{}> = () => (
+import { IonContent, IonInfiniteScroll } from '@ionic/react';
 
+const Example: React.SFC<{}> = () => (
+
+  <IonContent>
+    <IonInfiniteScroll>
+      <IonInfiniteScrollContent
+        loadingSpinner="bubbles"
+        loadingText="Loading more data…">
+      </IonInfiniteScrollContent>
+    </IonInfiniteScroll>
+  </IonContent>
 );
 
-export default AvatarExample;
-```
+export default Example

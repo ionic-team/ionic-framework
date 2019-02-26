@@ -1,10 +1,35 @@
 ```tsx
-import React from 'react'
-import { IonAvatar } from '@ionic/react';
+import React from 'react';
 
-const AvatarExample: React.SFC<{}> = () => (
+import { IonSpinner } from '@ionic/react';
 
+const Example: React.SFC<{}> = () => (
+  <>
+    {/*-- Default Spinner --*/}
+    <IonSpinner></IonSpinner>
+
+    {/*-- Lines --*/}
+    <IonSpinner name="lines"></IonSpinner>
+
+    {/*-- Lines Small --*/}
+    <IonSpinner name="lines-small"></IonSpinner>
+
+    {/*-- Dots --*/}
+    <IonSpinner name="dots"></IonSpinner>
+
+    {/*-- Bubbles --*/}
+    <IonSpinner name="bubbles"></IonSpinner>
+
+    {/*-- Circles --*/}
+    <IonSpinner name="circles"></IonSpinner>
+
+    {/*-- Crescent --*/}
+    <IonSpinner name="crescent"></IonSpinner>
+
+    {/*-- Paused Default Spinner --*/}
+    <IonSpinner paused></IonSpinner>
+  </>
 );
 
-export default AvatarExample;
+export default Example;
 ```

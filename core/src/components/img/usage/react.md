@@ -1,10 +1,26 @@
 ```tsx
-import React from 'react'
-import { IonAvatar } from '@ionic/react';
+import React from 'react';
 
-const AvatarExample: React.SFC<{}> = () => (
+import { IonList, IonItem, IonThumbnail, IonImg, IonLabel } from '@ionic/react';
 
+type Item = {
+  src: string;
+  text: string
+};
+const items: Item[] = [];
+
+const Example: React.SFC<{}> = () => (
+
+  <IonList>
+    {items.map(({src, text}) =>
+      <IonItem>
+        <IonThumbnail slot="start">
+          <IonImg src={src}></IonImg>
+        </IonThumbnail>
+        <IonLabel>{text}}</IonLabel>
+      </IonItem>
+    )}
+  </IonList>
 );
 
-export default AvatarExample;
-```
+export default Example
