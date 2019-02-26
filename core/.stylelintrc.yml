@@ -7,6 +7,7 @@ ignoreFiles:
   - src/css/flex-utils.scss
   - src/css/normalize.scss
   - src/css/text-alignment.scss
+  - src/css/display.scss
   - src/components/slides/slides-vendor.scss
   - src/themes/ionic.mixins.scss
   - src/themes/ionic.functions.color.scss
