@@ -140,34 +140,6 @@
 
 </body>
 
-<script>
-  var segment = document.getElementById('browserSegment');
-  var results = document.getElementById('browserResults');
-
-  checkUrl();
-
-  segment.addEventListener('ionChange', function () {
-    checkUrl();
-  });
-
-  function checkUrl() {
-    var url = window.location.href;
-
-    if (url.search('#bookmarks') > -1) {
-      setResults('bookmarks');
-    } else if (url.search('#reading') > -1) {
-      setResults('reading');
-    } else if (url.search('#links') > -1) {
-      setResults('links');
-    }
-  }
-
-  function setResults(value) {
-    results.innerHTML = value.charAt(0).toUpperCase() + value.slice(1);
-    segment.value = value;
-  }
-</script>
-
 <style>
   body {
     margin: 0;
