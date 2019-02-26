@@ -6,7 +6,7 @@ describe('Range', () => {
     sharedRange = new Range();
   });
   describe('ensureValueInBounds()', () => {
-    it('it should return the clamped value for a range single knob component', () => {
+    it('should return the clamped value for a range single knob component', () => {
       sharedRange.min = 0;
       sharedRange.max = 100;
       
@@ -23,7 +23,7 @@ describe('Range', () => {
       });
     });
     
-    it('it should return the clamped value for a range dual knob component', () => {
+    it('should return the clamped value for a range dual knob component', () => {
       sharedRange.min = 0;
       sharedRange.max = 100;
       sharedRange.dualKnobs = true;
