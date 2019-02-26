@@ -15,10 +15,10 @@
 
   display: block;
 
-  width: 100%;
-  height: 100%;
+  width: inherit;
+  height: inherit;
 
-  margin-top: 3px;
+  margin-top: 4px;
   margin-bottom: 4px;
 
   background: var(--background);
@@ -34,14 +34,18 @@ span {
   display: inline-block;
 }
 
+:host(.in-media) {
+  @include margin(0);
+
+  height: 100%;
+  width: 100%;
+}
+
 // Animated Skeleton Text
 // -----------------------------------------------------------
 
 :host(.skeleton-text-animated) {
   position: relative;
-
-  width: 100%;
-  height: 100%;
 
   background: #f6f7f8;
   background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);

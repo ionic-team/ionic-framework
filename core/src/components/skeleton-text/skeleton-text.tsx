@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
 
 import { Config } from '../../interface';
+import { hostContext } from '../../utils/theme';
 
 @Component({
   tag: 'ion-skeleton-text',
@@ -8,6 +9,8 @@ import { Config } from '../../interface';
   shadow: true
 })
 export class SkeletonText implements ComponentInterface {
+
+  @Element() el!: HTMLElement;
 
   @Prop({ context: 'config' }) config!: Config;
 
@@ -29,10 +32,12 @@ export class SkeletonText implements ComponentInterface {
 
   hostData() {
     const animated = this.animated && this.config.getBoolean('animated', true);
+    const inMedia = hostContext('ion-avatar', this.el) || hostContext('ion-thumbnail', this.el);
 
     return {
       class: {
-        'skeleton-text-animated': animated
+        'skeleton-text-animated': animated,
+        'in-media': inMedia
       },
       style: {
         width: this.width
