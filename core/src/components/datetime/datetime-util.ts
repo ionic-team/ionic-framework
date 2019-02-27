@@ -112,7 +112,7 @@ export function renderTextFormat(format: string, value: any, date: DatetimeData 
   return value.toString();
 }
 
-export function dateValueRange(format: string, min: DatetimeData, max: DatetimeData): any[] {
+export function dateValueRange(format: string, min: DatetimeData, max: DatetimeData, current: DatetimeData): any[] {
   const opts: any[] = [];
 
   if (format === FORMAT_YYYY || format === FORMAT_YY) {
@@ -137,7 +137,7 @@ export function dateValueRange(format: string, min: DatetimeData, max: DatetimeD
   } else if (format === FORMAT_DDDD || format === FORMAT_DDD ||
              format === FORMAT_DD || format === FORMAT_D) {
     // day
-    for (let i = 1; i < 32; i++) {
+    for (let i = 1; i < daysInMonth(current.month!, current.year!) + 1; i++) {
       opts.push(i);
     }
 

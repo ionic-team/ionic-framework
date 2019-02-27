@@ -205,7 +205,7 @@ export class Datetime implements ComponentInterface {
 
     // Validate if picker is initialised
     if (this.picker) {
-      this.internalDateTimeValue = await this.validate(this.picker);
+      this.internalDateTimeValue = await this.validate(this.picker.columns);
     }
 
     // Set internal dateTime value
@@ -285,17 +285,21 @@ export class Datetime implements ComponentInterface {
     });
 
     // initial validation and set validated value
-    this.internalDateTimeValue = await this.validate(this.picker);
+    this.internalDateTimeValue = await this.validate(this.picker.columns);
 
     await this.picker.present();
 
     this.picker.addEventListener('ionPickerSelectionChanged', async event => {
       const customEvent = event as CustomEvent<PickerSelectionChange>;
-
-      // TODO: How to correctly render the update :S?
       updateDate(this.internalDateTimeValue, customEvent.detail.selectedValue);
-      this.picker!.columns = this.generateColumns();
-      this.internalDateTimeValue = await this.validate(this.picker!);
+      // validate days
+      if (typeof this.internalDateTimeValue.month !== 'undefined' && typeof this.internalDateTimeValue.day !== 'undefined') {
+        const numberOfDays = daysInMonth(this.internalDateTimeValue.month, this.internalDateTimeValue.year || new Date().getFullYear());
+        this.internalDateTimeValue.day = this.internalDateTimeValue.day < numberOfDays ? this.internalDateTimeValue.day : numberOfDays;
+      }
+      const columns = this.generateColumns();
+      this.internalDateTimeValue = await this.validate(columns);
+      this.picker!.columns = columns;
     });
   }
 
@@ -390,7 +394,7 @@ export class Datetime implements ComponentInterface {
       const self = this as any;
       values = self[key + 'Values']
         ? convertToArrayOfNumbers(self[key + 'Values'], key)
-        : dateValueRange(format, this.datetimeMin, this.datetimeMax);
+        : dateValueRange(format, this.datetimeMin, this.datetimeMax, this.internalDateTimeValue);
 
       const colOptions = values.map(val => {
         return {
@@ -425,11 +429,11 @@ export class Datetime implements ComponentInterface {
     return divyColumns(columns);
   }
 
-  private async validate(picker: HTMLIonPickerElement): Promise<DatetimeData> {
+  private async validate(columns: PickerColumn[]): Promise<DatetimeData> {
     const today = new Date();
     const minCompareVal = dateDataSortValue(this.datetimeMin);
     const maxCompareVal = dateDataSortValue(this.datetimeMax);
-    const yearCol = await picker.getColumn('year');
+    const yearCol = columns.find(column => column.name === 'year');
 
     let selectedYear: number = today.getFullYear();
     if (yearCol) {
@@ -448,7 +452,7 @@ export class Datetime implements ComponentInterface {
       }
     }
 
-    const selectedMonth = await this.validateColumn(picker,
+    const selectedMonth = await this.validateColumn(columns,
       'month', 1,
       minCompareVal, maxCompareVal,
       [selectedYear, 0, 0, 0, 0],
@@ -456,21 +460,21 @@ export class Datetime implements ComponentInterface {
     );
 
     const numDaysInMonth = daysInMonth(selectedMonth, selectedYear);
-    const selectedDay = await this.validateColumn(picker,
+    const selectedDay = await this.validateColumn(columns,
       'day', 2,
       minCompareVal, maxCompareVal,
       [selectedYear, selectedMonth, 0, 0, 0],
       [selectedYear, selectedMonth, numDaysInMonth, 23, 59]
     );
 
-    const selectedHour = await this.validateColumn(picker,
+    const selectedHour = await this.validateColumn(columns,
       'hour', 3,
       minCompareVal, maxCompareVal,
       [selectedYear, selectedMonth, selectedDay, 0, 0],
       [selectedYear, selectedMonth, selectedDay, 23, 59]
     );
 
-    const selectedMinute = await this.validateColumn(picker,
+    const selectedMinute = await this.validateColumn(columns,
       'minute', 4,
       minCompareVal, maxCompareVal,
       [selectedYear, selectedMonth, selectedDay, selectedHour, 0],
@@ -491,7 +495,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private calcMinMax() {
-    const todaysYear = new Date().getFullYear();
+    const year = new Date().getFullYear();
 
     if (this.yearValues !== undefined) {
       const years = convertToArrayOfNumbers(this.yearValues, 'year');
@@ -503,22 +507,24 @@ export class Datetime implements ComponentInterface {
       }
     } else {
       if (this.min === undefined) {
-        this.min = (todaysYear - 100).toString();
+        this.min = (year - 100).toString();
       }
       if (this.max === undefined) {
-        this.max = todaysYear.toString();
+        this.max = year.toString();
       }
     }
     const min = this.datetimeMin = parseDate(this.min)!;
     const max = this.datetimeMax = parseDate(this.max)!;
 
-    min.year = min.year || todaysYear;
-    max.year = max.year || todaysYear;
+    min.year = typeof min.year !== 'undefined' && min.year <= year ? min.year : year;
+    max.year = typeof max.year !== 'undefined' && max.year >= year ? max.year : year;
 
     min.month = min.month || 1;
     max.month = max.month || 12;
+
+    const maxDaysInMonth = daysInMonth(max.month, max.year);
     min.day = min.day || 1;
-    max.day = max.day || 31;
+    max.day = typeof max.day !== 'undefined' && max.day <= maxDaysInMonth ? max.day : maxDaysInMonth;
     min.hour = min.hour || 0;
     max.hour = max.hour || 23;
     min.minute = min.minute || 0;
@@ -542,8 +548,8 @@ export class Datetime implements ComponentInterface {
     }
   }
 
-  private async validateColumn(picker: HTMLIonPickerElement, name: string, index: number, min: number, max: number, lowerBounds: number[], upperBounds: number[]): Promise<number> {
-    const column = await picker.getColumn(name);
+  private async validateColumn(columns: PickerColumn[], name: string, index: number, min: number, max: number, lowerBounds: number[], upperBounds: number[]): Promise<number> {
+    const column = columns.find(col => col.name === name);
     if (!column) {
       return 0;
     }

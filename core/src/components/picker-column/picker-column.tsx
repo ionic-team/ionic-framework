@@ -30,6 +30,7 @@ export class PickerColumnCmp implements ComponentInterface {
   private gesture?: Gesture;
   private rafId: any;
   private tmrId: any;
+  private columnChangedTmrId: any;
   private noAnimate = true;
 
   @Element() el!: HTMLElement;
@@ -41,7 +42,9 @@ export class PickerColumnCmp implements ComponentInterface {
 
   @Watch('col')
   protected async valueChanged() {
-    this.refresh();
+    this.columnChangedTmrId = setTimeout(() => {
+      this.refresh(false);
+    }, 250);
   }
 
   /**
@@ -92,6 +95,9 @@ export class PickerColumnCmp implements ComponentInterface {
   componentDidUnload() {
     cancelAnimationFrame(this.rafId);
     clearTimeout(this.tmrId);
+    if (this.columnChangedTmrId) {
+      clearTimeout(this.columnChangedTmrId);
+    }
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
