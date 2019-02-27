@@ -1,4 +1,5 @@
 import { setMode } from '@stencil/core';
+import 'ionicons';
 
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
