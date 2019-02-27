@@ -29,6 +29,27 @@ enum PlatformConfiguration {
     },
     innerWidth: 375,
     innerHeight: 812
+  },
+  iPadPro = {
+    navigator: {
+      userAgent: 'Mozilla/5.0 (iPad; CPU OS 12_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Mobile/15E148 Safari/604.1'
+    },
+    innerWidth: 1024,
+    innerHeight: 1366
+  },
+  Pixel2XL = {
+    navigator: {
+      userAgent: 'Mozilla/5.0 (Linux; Android 8.0.0; Pixel 2 XL Build/OPD1.170816.004) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Mobile Safari/537.36'
+    },
+    innerWidth: 411,
+    innerHeight: 823
+  },
+  GalaxyView = {
+    navigator: {
+      userAgent: 'Mozilla/5.0 (Linux; Android 5.1.1; SM-T670 Build/LMY47X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36'
+    },
+    innerWidth: 1920,
+    innerHeight: 1080
   }
 }
 
@@ -110,7 +131,25 @@ describe('Platform Tests', () => {
       expect(isPlatform(sharedWindow, 'cordova')).toEqual(true);
       expect(isPlatform(sharedWindow, 'hybrid')).toEqual(true);
     });
-
+    
+    it('should return true for "ipad" and "tablet" on an iPad Pro', () => {
+      configureBrowser(sharedWindow, PlatformConfiguration.iPadPro);    
+      expect(isPlatform(sharedWindow, 'ipad')).toEqual(true);
+      expect(isPlatform(sharedWindow, 'tablet')).toEqual(true);
+    });
+    
+    it('should return true for "android" and false for "tablet" on a Pixel 2 XL', () => {
+      configureBrowser(sharedWindow, PlatformConfiguration.Pixel2XL);    
+      expect(isPlatform(sharedWindow, 'android')).toEqual(true);
+      expect(isPlatform(sharedWindow, 'tablet')).toEqual(false);
+    });
+    
+    it('should return true for "android" and "tablet" on a Galaxy View', () => {
+      configureBrowser(sharedWindow, PlatformConfiguration.GalaxyView);    
+      expect(isPlatform(sharedWindow, 'android')).toEqual(true);
+      expect(isPlatform(sharedWindow, 'tablet')).toEqual(true);
+    });
+    
   })
 });
 
