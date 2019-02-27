@@ -4105,19 +4105,13 @@ export namespace Components {
     * If `true`, the skeleton text will animate.
     */
     'animated': boolean;
-    /**
-    * Width for the element to render at.
-    */
-    'width': string;
+    'width'?: string;
   }
   interface IonSkeletonTextAttributes extends StencilHTMLAttributes {
     /**
     * If `true`, the skeleton text will animate.
     */
     'animated'?: boolean;
-    /**
-    * Width for the element to render at.
-    */
     'width'?: string;
   }
 

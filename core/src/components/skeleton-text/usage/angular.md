@@ -24,7 +24,7 @@
       </ion-label>
     </ion-item>
     <ion-item>
-      <ion-thumbnail width="20px" slot="start">
+      <ion-thumbnail slot="start">
         <img src="./thumbnail.svg">
       </ion-thumbnail>
       <ion-label>
@@ -40,7 +40,7 @@
       </ion-label>
     </ion-item>
     <ion-item>
-      <ion-icon name="call" width="20px" slot="start"></ion-icon>
+      <ion-icon name="call" slot="start"></ion-icon>
       <ion-label>
         <h3>
           {{ data.heading }}
@@ -59,16 +59,16 @@
 <!-- Skeleton screen -->
 <div *ngIf="!data">
   <div class="ion-padding custom-skeleton">
-    <ion-skeleton-text animated width="60%"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
     <ion-skeleton-text animated></ion-skeleton-text>
-    <ion-skeleton-text animated width="88%"></ion-skeleton-text>
-    <ion-skeleton-text animated width="70%"></ion-skeleton-text>
-    <ion-skeleton-text animated width="60%"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
   </div>
 
   <ion-list>
     <ion-list-header>
-      <ion-skeleton-text animated width="20%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
     </ion-list-header>
     <ion-item>
       <ion-avatar slot="start">
@@ -76,13 +76,13 @@
       </ion-avatar>
       <ion-label>
         <h3>
-          <ion-skeleton-text animated width="50%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
         </h3>
         <p>
-          <ion-skeleton-text animated width="80%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
         </p>
         <p>
-          <ion-skeleton-text animated width="60%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
         </p>
       </ion-label>
     </ion-item>
@@ -92,27 +92,27 @@
       </ion-thumbnail>
       <ion-label>
         <h3>
-          <ion-skeleton-text animated width="50%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
         </h3>
         <p>
-          <ion-skeleton-text animated width="80%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
         </p>
         <p>
-          <ion-skeleton-text animated width="60%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
         </p>
       </ion-label>
     </ion-item>
     <ion-item>
-      <ion-skeleton-text animated width="27px" style="height: 27px" slot="start"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 27px; height: 27px" slot="start"></ion-skeleton-text>
       <ion-label>
         <h3>
-          <ion-skeleton-text animated width="50%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
         </h3>
         <p>
-          <ion-skeleton-text animated width="80%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
         </p>
         <p>
-          <ion-skeleton-text animated width="60%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
         </p>
       </ion-label>
     </ion-item>

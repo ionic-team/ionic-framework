@@ -16,7 +16,7 @@
 
   display: block;
 
-  width: inherit;
+  width: 100%;
   height: inherit;
 
   margin-top: 4px;
@@ -38,7 +38,6 @@ span {
 :host(.in-media) {
   @include margin(0);
 
-  width: 100%;
   height: 100%;
 }
 

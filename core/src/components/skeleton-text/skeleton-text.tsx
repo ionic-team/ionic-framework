@@ -20,9 +20,23 @@ export class SkeletonText implements ComponentInterface {
   @Prop() animated = false;
 
   /**
-   * Width for the element to render at.
+   * @deprecated - use CSS instead
+   * The width of the skeleton text. If supplied, it will override the CSS style.
    */
-  @Prop() width = '100%';
+  @Prop() width?: string;
+
+  calculateWidth() {
+    // If width was passed in to the property use that first
+    if (this.width) {
+      return {
+        style: {
+          width: this.width
+        }
+      };
+    }
+
+    return;
+  }
 
   render() {
     return (
@@ -39,9 +53,7 @@ export class SkeletonText implements ComponentInterface {
         'skeleton-text-animated': animated,
         'in-media': inMedia
       },
-      style: {
-        width: this.width
-      }
+      ...this.calculateWidth()
     };
   }
 }
