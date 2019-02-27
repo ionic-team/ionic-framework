@@ -4,7 +4,8 @@ import { Animation } from '../../../interface';
  * Md Popover Enter Animation
  */
 export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> {
-  const isRTL = document.dir === 'rtl';
+  const doc = (baseEl.ownerDocument as any);
+  const isRTL = doc.dir === 'rtl';
 
   let originY = 'top';
   let originX = isRTL ? 'right' : 'left';
@@ -14,8 +15,8 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev?
   const contentWidth = contentDimentions.width;
   const contentHeight = contentDimentions.height;
 
-  const bodyWidth = window.innerWidth;
-  const bodyHeight = window.innerHeight;
+  const bodyWidth = doc.defaultView.innerWidth;
+  const bodyHeight = doc.defaultView.innerHeight;
 
   // If ev was passed, use that for target element
   const targetDim =
