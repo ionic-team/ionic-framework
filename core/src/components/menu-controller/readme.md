@@ -13,12 +13,6 @@ The Menu Controller makes it easy to control a Menu. The methods provided can be
 Close the menu. If no menu is specified, then it will close any menu
 that is open. If a menu is specified, it will close that menu.
 
-#### Parameters
-
-| Name     | Type                          | Description |
-| -------- | ----------------------------- | ----------- |
-| `menuId` | `null \| string \| undefined` |             |
-
 #### Returns
 
 Type: `Promise<boolean>`
@@ -31,13 +25,6 @@ Used to enable or disable a menu. For example, there could be multiple
 left menus, but only one of them should be able to be opened at the same
 time. If there are multiple menus on the same side, then enabling one menu
 will also automatically disable all the others that are on the same side.
-
-#### Parameters
-
-| Name           | Type                          | Description |
-| -------------- | ----------------------------- | ----------- |
-| `shouldEnable` | `boolean`                     |             |
-| `menuId`       | `null \| string \| undefined` |             |
 
 #### Returns
 
@@ -52,12 +39,6 @@ return the first menu found. If the specified menu is `start` or `end`, then
 it will return the enabled menu on that side. Otherwise, it will try to find
 the menu using the menu's `id` property. If a menu is not found then it will
 return `null`.
-
-#### Parameters
-
-| Name     | Type                          | Description |
-| -------- | ----------------------------- | ----------- |
-| `menuId` | `null \| string \| undefined` |             |
 
 #### Returns
 
@@ -99,12 +80,6 @@ Type: `Promise<boolean>`
 
 Returns `true` if the specified menu is enabled.
 
-#### Parameters
-
-| Name     | Type                          | Description |
-| -------- | ----------------------------- | ----------- |
-| `menuId` | `null \| string \| undefined` |             |
-
 #### Returns
 
 Type: `Promise<boolean>`
@@ -116,12 +91,6 @@ Type: `Promise<boolean>`
 Returns `true` if the specified menu is open. If the menu is not specified, it
 will return `true` if any menu is currently open.
 
-#### Parameters
-
-| Name     | Type                          | Description |
-| -------- | ----------------------------- | ----------- |
-| `menuId` | `null \| string \| undefined` |             |
-
 #### Returns
 
 Type: `Promise<boolean>`
@@ -131,12 +100,6 @@ Type: `Promise<boolean>`
 ### `open(menuId?: string | null | undefined) => Promise<boolean>`
 
 Open the menu.
-
-#### Parameters
-
-| Name     | Type                          | Description |
-| -------- | ----------------------------- | ----------- |
-| `menuId` | `null \| string \| undefined` |             |
 
 #### Returns
 
@@ -152,13 +115,6 @@ Registers a new animation that can be used in any `ion-menu`.
    * <ion-menu type="my-animation">
    * ```
 
-#### Parameters
-
-| Name        | Type                                                                    | Description |
-| ----------- | ----------------------------------------------------------------------- | ----------- |
-| `name`      | `string`                                                                |             |
-| `animation` | `(Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>` |             |
-
 #### Returns
 
 Type: `void`
@@ -168,13 +124,6 @@ Type: `void`
 ### `swipeGesture(shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>`
 
 Used to enable or disable the ability to swipe open the menu.
-
-#### Parameters
-
-| Name           | Type                          | Description |
-| -------------- | ----------------------------- | ----------- |
-| `shouldEnable` | `boolean`                     |             |
-| `menuId`       | `null \| string \| undefined` |             |
 
 #### Returns
 
@@ -186,12 +135,6 @@ Type: `Promise<HTMLIonMenuElement | undefined>`
 
 Toggle the menu. If it's closed, it will open, and if opened, it
 will close.
-
-#### Parameters
-
-| Name     | Type                          | Description |
-| -------- | ----------------------------- | ----------- |
-| `menuId` | `null \| string \| undefined` |             |
 
 #### Returns
 

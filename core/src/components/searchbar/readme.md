@@ -92,7 +92,6 @@ A Searchbar should be used instead of an input to search lists. A clear button i
 | `clearIcon`        | `clear-icon`         | Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md`.                                                                                                                                                                                     | `string \| undefined`                                                       | `undefined`       |
 | `color`            | `color`              | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`                                                       | `undefined`       |
 | `debounce`         | `debounce`           | Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.                                                                                                                                                                | `number`                                                                    | `250`             |
-| `mode`             | `mode`               | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                                                             | `undefined`       |
 | `placeholder`      | `placeholder`        | Set the input's placeholder.                                                                                                                                                                                                                                           | `string`                                                                    | `'Search'`        |
 | `searchIcon`       | `search-icon`        | The icon to use as the search icon.                                                                                                                                                                                                                                    | `string`                                                                    | `'search'`        |
 | `showCancelButton` | `show-cancel-button` | If `true`, show the cancel button.                                                                                                                                                                                                                                     | `boolean`                                                                   | `false`           |
@@ -103,14 +102,14 @@ A Searchbar should be used instead of an input to search lists. A clear button i
 
 ## Events
 
-| Event       | Description                                     | Type                                      |
-| ----------- | ----------------------------------------------- | ----------------------------------------- |
-| `ionBlur`   | Emitted when the input loses focus.             | `CustomEvent<void>`                       |
-| `ionCancel` | Emitted when the cancel button is clicked.      | `CustomEvent<void>`                       |
-| `ionChange` | Emitted when the value has changed.             | `CustomEvent<SearchbarChangeEventDetail>` |
-| `ionClear`  | Emitted when the clear input button is clicked. | `CustomEvent<void>`                       |
-| `ionFocus`  | Emitted when the input has focus.               | `CustomEvent<void>`                       |
-| `ionInput`  | Emitted when a keyboard input ocurred.          | `CustomEvent<KeyboardEvent>`              |
+| Event       | Description                                     | Type                |
+| ----------- | ----------------------------------------------- | ------------------- |
+| `ionBlur`   | Emitted when the input loses focus.             | `CustomEvent<TODO>` |
+| `ionCancel` | Emitted when the cancel button is clicked.      | `CustomEvent<TODO>` |
+| `ionChange` | Emitted when the value has changed.             | `CustomEvent<TODO>` |
+| `ionClear`  | Emitted when the clear input button is clicked. | `CustomEvent<TODO>` |
+| `ionFocus`  | Emitted when the input has focus.               | `CustomEvent<TODO>` |
+| `ionInput`  | Emitted when a keyboard input ocurred.          | `CustomEvent<TODO>` |
 
 
 ## Methods

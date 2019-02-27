@@ -85,7 +85,7 @@ Options can be expanded to take up the full width of the item if you swipe past 
 
 | Event     | Description                                | Type                |
 | --------- | ------------------------------------------ | ------------------- |
-| `ionDrag` | Emitted when the sliding position changes. | `CustomEvent<void>` |
+| `ionDrag` | Emitted when the sliding position changes. | `CustomEvent<TODO>` |
 
 
 ## Methods

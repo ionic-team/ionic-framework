@@ -136,19 +136,18 @@ async function presentActionSheet() {
 | `header`               | `header`           | Title for the action sheet.                                                                                                     | `string \| undefined`                                                                  | `undefined` |
 | `keyboardClose`        | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                          | `boolean`                                                                              | `true`      |
 | `leaveAnimation`       | --                 | Animation to use when the action sheet is dismissed.                                                                            | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
-| `mode`                 | `mode`             | The mode determines which platform styles to use.                                                                               | `"ios" \| "md"`                                                                        | `undefined` |
 | `subHeader`            | `sub-header`       | Subtitle for the action sheet.                                                                                                  | `string \| undefined`                                                                  | `undefined` |
 | `translucent`          | `translucent`      | If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports backdrop-filter. | `boolean`                                                                              | `false`     |
 
 
 ## Events
 
-| Event                       | Description                             | Type                              |
-| --------------------------- | --------------------------------------- | --------------------------------- |
-| `ionActionSheetDidDismiss`  | Emitted after the alert has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionActionSheetDidPresent`  | Emitted after the alert has presented.  | `CustomEvent<void>`               |
-| `ionActionSheetWillDismiss` | Emitted before the alert has dismissed. | `CustomEvent<OverlayEventDetail>` |
-| `ionActionSheetWillPresent` | Emitted before the alert has presented. | `CustomEvent<void>`               |
+| Event                       | Description                             | Type                |
+| --------------------------- | --------------------------------------- | ------------------- |
+| `ionActionSheetDidDismiss`  | Emitted after the alert has dismissed.  | `CustomEvent<TODO>` |
+| `ionActionSheetDidPresent`  | Emitted after the alert has presented.  | `CustomEvent<TODO>` |
+| `ionActionSheetWillDismiss` | Emitted before the alert has dismissed. | `CustomEvent<TODO>` |
+| `ionActionSheetWillPresent` | Emitted before the alert has presented. | `CustomEvent<TODO>` |
 
 
 ## Methods
@@ -156,13 +155,6 @@ async function presentActionSheet() {
 ### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
 
 Dismiss the action sheet overlay after it has been presented.
-
-#### Parameters
-
-| Name   | Type                  | Description |
-| ------ | --------------------- | ----------- |
-| `data` | `any`                 |             |
-| `role` | `string \| undefined` |             |
 
 #### Returns
 

@@ -7,7 +7,7 @@
 
 import { JSXElements } from '@stencil/core';
 
-
+import 'ionicons';
 import {
   ActionSheetButton,
   ActionSheetOptions,

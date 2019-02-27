@@ -74,19 +74,18 @@ async function presentPopover(ev) {
 | `event`                  | `event`            | The event to pass to the popover animation.                                                                      | `any`                                                                                  | `undefined` |
 | `keyboardClose`          | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                                                                              | `true`      |
 | `leaveAnimation`         | --                 | Animation to use when the popover is dismissed.                                                                  | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
-| `mode`                   | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                                                                        | `undefined` |
 | `showBackdrop`           | `show-backdrop`    | If `true`, a backdrop will be displayed behind the popover.                                                      | `boolean`                                                                              | `true`      |
 | `translucent`            | `translucent`      | If `true`, the popover will be translucent.                                                                      | `boolean`                                                                              | `false`     |
 
 
 ## Events
 
-| Event                   | Description                               | Type                              |
-| ----------------------- | ----------------------------------------- | --------------------------------- |
-| `ionPopoverDidDismiss`  | Emitted after the popover has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionPopoverDidPresent`  | Emitted after the popover has presented.  | `CustomEvent<void>`               |
-| `ionPopoverWillDismiss` | Emitted before the popover has dismissed. | `CustomEvent<OverlayEventDetail>` |
-| `ionPopoverWillPresent` | Emitted before the popover has presented. | `CustomEvent<void>`               |
+| Event                   | Description                               | Type                |
+| ----------------------- | ----------------------------------------- | ------------------- |
+| `ionPopoverDidDismiss`  | Emitted after the popover has dismissed.  | `CustomEvent<TODO>` |
+| `ionPopoverDidPresent`  | Emitted after the popover has presented.  | `CustomEvent<TODO>` |
+| `ionPopoverWillDismiss` | Emitted before the popover has dismissed. | `CustomEvent<TODO>` |
+| `ionPopoverWillPresent` | Emitted before the popover has presented. | `CustomEvent<TODO>` |
 
 
 ## Methods
@@ -94,13 +93,6 @@ async function presentPopover(ev) {
 ### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
 
 Dismiss the popover overlay after it has been presented.
-
-#### Parameters
-
-| Name   | Type                  | Description |
-| ------ | --------------------- | ----------- |
-| `data` | `any`                 |             |
-| `role` | `string \| undefined` |             |
 
 #### Returns
 

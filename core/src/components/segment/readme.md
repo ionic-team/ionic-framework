@@ -232,17 +232,16 @@ for (let i = 0; i < segments.length; i++) {
 | ------------ | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ----------- |
 | `color`      | `color`      | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`         | `undefined` |
 | `disabled`   | `disabled`   | If `true`, the user cannot interact with the segment.                                                                                                                                                                                                                  | `boolean`                     | `false`     |
-| `mode`       | `mode`       | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`               | `undefined` |
 | `scrollable` | `scrollable` | If `true`, the segment buttons will overflow and the user can swipe to see them.                                                                                                                                                                                       | `boolean`                     | `false`     |
 | `value`      | `value`      | the value of the segment.                                                                                                                                                                                                                                              | `null \| string \| undefined` | `undefined` |
 
 
 ## Events
 
-| Event       | Description                                  | Type                                    |
-| ----------- | -------------------------------------------- | --------------------------------------- |
-| `ionChange` | Emitted when the value property has changed. | `CustomEvent<SegmentChangeEventDetail>` |
-| `ionStyle`  | Emitted when the styles change.              | `CustomEvent<StyleEventDetail>`         |
+| Event       | Description                                  | Type                |
+| ----------- | -------------------------------------------- | ------------------- |
+| `ionChange` | Emitted when the value property has changed. | `CustomEvent<TODO>` |
+| `ionStyle`  | Emitted when the styles change.              | `CustomEvent<TODO>` |
 
 
 ----------------------------------------------

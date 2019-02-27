@@ -221,10 +221,10 @@ function openCustom() {
 
 | Event          | Description                                  | Type                |
 | -------------- | -------------------------------------------- | ------------------- |
-| `ionDidClose`  | Emitted when the menu is closed.             | `CustomEvent<void>` |
-| `ionDidOpen`   | Emitted when the menu is open.               | `CustomEvent<void>` |
-| `ionWillClose` | Emitted when the menu is about to be closed. | `CustomEvent<void>` |
-| `ionWillOpen`  | Emitted when the menu is about to be opened. | `CustomEvent<void>` |
+| `ionDidClose`  | Emitted when the menu is closed.             | `CustomEvent<TODO>` |
+| `ionDidOpen`   | Emitted when the menu is open.               | `CustomEvent<TODO>` |
+| `ionWillClose` | Emitted when the menu is about to be closed. | `CustomEvent<TODO>` |
+| `ionWillOpen`  | Emitted when the menu is about to be opened. | `CustomEvent<TODO>` |
 
 
 ## Methods
@@ -233,12 +233,6 @@ function openCustom() {
 
 Closes the menu. If the menu is already closed or it can't be closed,
 it returns `false`.
-
-#### Parameters
-
-| Name       | Type      | Description |
-| ---------- | --------- | ----------- |
-| `animated` | `boolean` |             |
 
 #### Returns
 
@@ -274,12 +268,6 @@ Type: `Promise<boolean>`
 Opens the menu. If the menu is already open or it can't be opened,
 it returns `false`.
 
-#### Parameters
-
-| Name       | Type      | Description |
-| ---------- | --------- | ----------- |
-| `animated` | `boolean` |             |
-
 #### Returns
 
 Type: `Promise<boolean>`
@@ -291,13 +279,6 @@ Type: `Promise<boolean>`
 Opens or closes the button.
 If the operation can't be completed successfully, it returns `false`.
 
-#### Parameters
-
-| Name         | Type      | Description |
-| ------------ | --------- | ----------- |
-| `shouldOpen` | `boolean` |             |
-| `animated`   | `boolean` |             |
-
 #### Returns
 
 Type: `Promise<boolean>`
@@ -308,12 +289,6 @@ Type: `Promise<boolean>`
 
 Toggles the menu. If the menu is already open, it will try to close, otherwise it will try to open it.
 If the operation can't be completed successfully, it returns `false`.
-
-#### Parameters
-
-| Name       | Type      | Description |
-| ---------- | --------- | ----------- |
-| `animated` | `boolean` |             |
 
 #### Returns
 

@@ -28,12 +28,6 @@ async function presentAlert() {
 
 Create an alert overlay with alert options
 
-#### Parameters
-
-| Name   | Type           | Description |
-| ------ | -------------- | ----------- |
-| `opts` | `AlertOptions` |             |
-
 #### Returns
 
 Type: `Promise<HTMLIonAlertElement>`
@@ -43,14 +37,6 @@ Type: `Promise<HTMLIonAlertElement>`
 ### `dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>`
 
 Dismiss the open alert overlay.
-
-#### Parameters
-
-| Name   | Type                  | Description |
-| ------ | --------------------- | ----------- |
-| `data` | `any`                 |             |
-| `role` | `string \| undefined` |             |
-| `id`   | `string \| undefined` |             |
 
 #### Returns
 

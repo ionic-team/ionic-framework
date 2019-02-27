@@ -110,7 +110,6 @@ left or right of the range.
 | `dualKnobs`    | `dual-knobs`    | Show two knobs.                                                                                                                                                                                                                                                        | `boolean`                                             | `false`     |
 | `max`          | `max`           | Maximum integer value of the range.                                                                                                                                                                                                                                    | `number`                                              | `100`       |
 | `min`          | `min`           | Minimum integer value of the range.                                                                                                                                                                                                                                    | `number`                                              | `0`         |
-| `mode`         | `mode`          | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                                       | `undefined` |
 | `name`         | `name`          | The name of the control, which is submitted with the form data.                                                                                                                                                                                                        | `string`                                              | `''`        |
 | `neutralPoint` | `neutral-point` | The neutral point of the range slider. Default: value is `0` or the `min` when `neutralPoint < min` or `max` when `max < neutralPoint`.                                                                                                                                | `number`                                              | `0`         |
 | `pin`          | `pin`           | If `true`, a pin with integer value is shown when the knob is pressed.                                                                                                                                                                                                 | `boolean`                                             | `false`     |
@@ -121,11 +120,11 @@ left or right of the range.
 
 ## Events
 
-| Event       | Description                                  | Type                                  |
-| ----------- | -------------------------------------------- | ------------------------------------- |
-| `ionBlur`   | Emitted when the range loses focus.          | `CustomEvent<void>`                   |
-| `ionChange` | Emitted when the value property has changed. | `CustomEvent<RangeChangeEventDetail>` |
-| `ionFocus`  | Emitted when the range has focus.            | `CustomEvent<void>`                   |
+| Event       | Description                                  | Type                |
+| ----------- | -------------------------------------------- | ------------------- |
+| `ionBlur`   | Emitted when the range loses focus.          | `CustomEvent<TODO>` |
+| `ionChange` | Emitted when the value property has changed. | `CustomEvent<TODO>` |
+| `ionFocus`  | Emitted when the range has focus.            | `CustomEvent<TODO>` |
 
 
 ## Slots

@@ -106,7 +106,6 @@ async function presentLoadingWithOptions() {
 | `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                                                                                         | `true`      |
 | `leaveAnimation`  | --                 | Animation to use when the loading indicator is dismissed.                                                        | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined`            | `undefined` |
 | `message`         | `message`          | Optional text content to display in the loading indicator.                                                       | `string \| undefined`                                                                             | `undefined` |
-| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                                                                                   | `undefined` |
 | `showBackdrop`    | `show-backdrop`    | If `true`, a backdrop will be displayed behind the loading indicator.                                            | `boolean`                                                                                         | `true`      |
 | `spinner`         | `spinner`          | The name of the spinner to display.                                                                              | `"bubbles" \| "circles" \| "crescent" \| "dots" \| "lines" \| "lines-small" \| null \| undefined` | `undefined` |
 | `translucent`     | `translucent`      | If `true`, the loading indicator will be translucent.                                                            | `boolean`                                                                                         | `false`     |
@@ -114,12 +113,12 @@ async function presentLoadingWithOptions() {
 
 ## Events
 
-| Event                   | Description                               | Type                              |
-| ----------------------- | ----------------------------------------- | --------------------------------- |
-| `ionLoadingDidDismiss`  | Emitted after the loading has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionLoadingDidPresent`  | Emitted after the loading has presented.  | `CustomEvent<void>`               |
-| `ionLoadingWillDismiss` | Emitted before the loading has dismissed. | `CustomEvent<OverlayEventDetail>` |
-| `ionLoadingWillPresent` | Emitted before the loading has presented. | `CustomEvent<void>`               |
+| Event                   | Description                               | Type                |
+| ----------------------- | ----------------------------------------- | ------------------- |
+| `ionLoadingDidDismiss`  | Emitted after the loading has dismissed.  | `CustomEvent<TODO>` |
+| `ionLoadingDidPresent`  | Emitted after the loading has presented.  | `CustomEvent<TODO>` |
+| `ionLoadingWillDismiss` | Emitted before the loading has dismissed. | `CustomEvent<TODO>` |
+| `ionLoadingWillPresent` | Emitted before the loading has presented. | `CustomEvent<TODO>` |
 
 
 ## Methods
@@ -127,13 +126,6 @@ async function presentLoadingWithOptions() {
 ### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
 
 Dismiss the loading overlay after it has been presented.
-
-#### Parameters
-
-| Name   | Type                  | Description |
-| ------ | --------------------- | ----------- |
-| `data` | `any`                 |             |
-| `role` | `string \| undefined` |             |
 
 #### Returns
 

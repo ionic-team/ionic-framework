@@ -124,7 +124,6 @@ It is meant for text `type` inputs only, such as `"text"`, `"password"`, `"email
 | `maxlength`      | `maxlength`      | If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.                                                                                                                                                                     | `number \| undefined`                                                                           | `undefined`    |
 | `min`            | `min`            | The minimum value, which must not be greater than its maximum (max attribute) value.                                                                                                                                                                                                                                                                 | `string \| undefined`                                                                           | `undefined`    |
 | `minlength`      | `minlength`      | If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.                                                                                                                                                                     | `number \| undefined`                                                                           | `undefined`    |
-| `mode`           | `mode`           | The mode determines which platform styles to use.                                                                                                                                                                                                                                                                                                    | `"ios" \| "md"`                                                                                 | `undefined`    |
 | `multiple`       | `multiple`       | If `true`, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"` or `"file"`, otherwise it is ignored.                                                                                                                                                                                          | `boolean \| undefined`                                                                          | `undefined`    |
 | `name`           | `name`           | The name of the control, which is submitted with the form data.                                                                                                                                                                                                                                                                                      | `string`                                                                                        | `this.inputId` |
 | `pattern`        | `pattern`        | A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored. | `string \| undefined`                                                                           | `undefined`    |
@@ -140,12 +139,12 @@ It is meant for text `type` inputs only, such as `"text"`, `"password"`, `"email
 
 ## Events
 
-| Event       | Description                            | Type                                  |
-| ----------- | -------------------------------------- | ------------------------------------- |
-| `ionBlur`   | Emitted when the input loses focus.    | `CustomEvent<void>`                   |
-| `ionChange` | Emitted when the value has changed.    | `CustomEvent<InputChangeEventDetail>` |
-| `ionFocus`  | Emitted when the input has focus.      | `CustomEvent<void>`                   |
-| `ionInput`  | Emitted when a keyboard input ocurred. | `CustomEvent<KeyboardEvent>`          |
+| Event       | Description                            | Type                |
+| ----------- | -------------------------------------- | ------------------- |
+| `ionBlur`   | Emitted when the input loses focus.    | `CustomEvent<TODO>` |
+| `ionChange` | Emitted when the value has changed.    | `CustomEvent<TODO>` |
+| `ionFocus`  | Emitted when the input has focus.      | `CustomEvent<TODO>` |
+| `ionInput`  | Emitted when a keyboard input ocurred. | `CustomEvent<TODO>` |
 
 
 ## Methods

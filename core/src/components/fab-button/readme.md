@@ -45,7 +45,6 @@ If the FAB button is not wrapped with `<ion-fab>`, it will scroll with the conte
 | `color`           | `color`            | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`             | `undefined` |
 | `disabled`        | `disabled`         | If `true`, the user cannot interact with the fab button.                                                                                                                                                                                                               | `boolean`                         | `false`     |
 | `href`            | `href`             | Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.                                                                                                                                                | `string \| undefined`             | `undefined` |
-| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                   | `undefined` |
 | `routerDirection` | `router-direction` | When using a router, it specifies the transition direction when navigating to another page using `href`.                                                                                                                                                               | `"back" \| "forward" \| "root"`   | `'forward'` |
 | `show`            | `show`             | If `true`, the fab button will show when in a fab-list.                                                                                                                                                                                                                | `boolean`                         | `false`     |
 | `size`            | `size`             | The size of the button. Set this to `small` in order to have a mini fab.                                                                                                                                                                                               | `"small" \| undefined`            | `undefined` |
@@ -57,8 +56,8 @@ If the FAB button is not wrapped with `<ion-fab>`, it will scroll with the conte
 
 | Event      | Description                          | Type                |
 | ---------- | ------------------------------------ | ------------------- |
-| `ionBlur`  | Emitted when the button loses focus. | `CustomEvent<void>` |
-| `ionFocus` | Emitted when the button has focus.   | `CustomEvent<void>` |
+| `ionBlur`  | Emitted when the button loses focus. | `CustomEvent<TODO>` |
+| `ionFocus` | Emitted when the button has focus.   | `CustomEvent<TODO>` |
 
 
 ## CSS Custom Properties

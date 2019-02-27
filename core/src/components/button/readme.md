@@ -102,7 +102,6 @@ This attribute specifies the size of the button. Setting this attribute will cha
 | `expand`          | `expand`           | Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.                                                                                                                                                        | `"block" \| "full" \| undefined`                            | `undefined` |
 | `fill`            | `fill`             | Set to `"clear"` for a transparent button, to `"outline"` for a transparent button with a border, or to `"solid"`. The default style is `"solid"` except inside of a toolbar, where the default is `"clear"`.                                                          | `"clear" \| "default" \| "outline" \| "solid" \| undefined` | `undefined` |
 | `href`            | `href`             | Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.                                                                                                                                                | `string \| undefined`                                       | `undefined` |
-| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                                             | `undefined` |
 | `routerDirection` | `router-direction` | When using a router, it specifies the transition direction when navigating to another page using `href`.                                                                                                                                                               | `"back" \| "forward" \| "root"`                             | `'forward'` |
 | `shape`           | `shape`            | The button shape.                                                                                                                                                                                                                                                      | `"round" \| undefined`                                      | `undefined` |
 | `size`            | `size`             | The button size.                                                                                                                                                                                                                                                       | `"default" \| "large" \| "small" \| undefined`              | `undefined` |
@@ -114,8 +113,8 @@ This attribute specifies the size of the button. Setting this attribute will cha
 
 | Event      | Description                          | Type                |
 | ---------- | ------------------------------------ | ------------------- |
-| `ionBlur`  | Emitted when the button loses focus. | `CustomEvent<void>` |
-| `ionFocus` | Emitted when the button has focus.   | `CustomEvent<void>` |
+| `ionBlur`  | Emitted when the button loses focus. | `CustomEvent<TODO>` |
+| `ionFocus` | Emitted when the button has focus.   | `CustomEvent<TODO>` |
 
 
 ## Slots

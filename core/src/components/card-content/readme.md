@@ -7,13 +7,6 @@ It is recommended that any text content for a card should be placed in an `ion-c
 <!-- Auto Generated Below -->
 
 
-## Properties
-
-| Property | Attribute | Description                                       | Type            | Default     |
-| -------- | --------- | ------------------------------------------------- | --------------- | ----------- |
-| `mode`   | `mode`    | The mode determines which platform styles to use. | `"ios" \| "md"` | `undefined` |
-
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

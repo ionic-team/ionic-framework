@@ -294,13 +294,6 @@ dirty any time the content or their style changes.
 
 The subset of items to be updated can are specifing by an offset and a length.
 
-#### Parameters
-
-| Name     | Type     | Description |
-| -------- | -------- | ----------- |
-| `offset` | `number` |             |
-| `len`    | `number` |             |
-
 #### Returns
 
 Type: `void`
@@ -310,12 +303,6 @@ Type: `void`
 ### `positionForItem(index: number) => Promise<number>`
 
 Returns the position of the virtual item at the given index.
-
-#### Parameters
-
-| Name    | Type     | Description |
-| ------- | -------- | ----------- |
-| `index` | `number` |             |
 
 #### Returns
 

@@ -153,18 +153,17 @@ async function presentModal() {
 | `enterAnimation`         | --                 | Animation to use when the modal is presented.                                                                    | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
 | `keyboardClose`          | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                                                                              | `true`      |
 | `leaveAnimation`         | --                 | Animation to use when the modal is dismissed.                                                                    | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
-| `mode`                   | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                                                                        | `undefined` |
 | `showBackdrop`           | `show-backdrop`    | If `true`, a backdrop will be displayed behind the modal.                                                        | `boolean`                                                                              | `true`      |
 
 
 ## Events
 
-| Event                 | Description                             | Type                              |
-| --------------------- | --------------------------------------- | --------------------------------- |
-| `ionModalDidDismiss`  | Emitted after the modal has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionModalDidPresent`  | Emitted after the modal has presented.  | `CustomEvent<void>`               |
-| `ionModalWillDismiss` | Emitted before the modal has dismissed. | `CustomEvent<OverlayEventDetail>` |
-| `ionModalWillPresent` | Emitted before the modal has presented. | `CustomEvent<void>`               |
+| Event                 | Description                             | Type                |
+| --------------------- | --------------------------------------- | ------------------- |
+| `ionModalDidDismiss`  | Emitted after the modal has dismissed.  | `CustomEvent<TODO>` |
+| `ionModalDidPresent`  | Emitted after the modal has presented.  | `CustomEvent<TODO>` |
+| `ionModalWillDismiss` | Emitted before the modal has dismissed. | `CustomEvent<TODO>` |
+| `ionModalWillPresent` | Emitted before the modal has presented. | `CustomEvent<TODO>` |
 
 
 ## Methods
@@ -172,13 +171,6 @@ async function presentModal() {
 ### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
 
 Dismiss the modal overlay after it has been presented.
-
-#### Parameters
-
-| Name   | Type                  | Description |
-| ------ | --------------------- | ----------- |
-| `data` | `any`                 |             |
-| `role` | `string \| undefined` |             |
 
 #### Returns
 

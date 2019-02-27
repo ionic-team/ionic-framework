@@ -100,7 +100,6 @@ async function presentToastWithOptions() {
 | `keyboardClose`   | `keyboard-close`    | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                                                                 | `boolean`                                                                              | `false`     |
 | `leaveAnimation`  | --                  | Animation to use when the toast is dismissed.                                                                                                                                                                                                                          | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
 | `message`         | `message`           | Message to be shown in the toast.                                                                                                                                                                                                                                      | `string \| undefined`                                                                  | `undefined` |
-| `mode`            | `mode`              | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                                                                        | `undefined` |
 | `position`        | `position`          | The position of the toast on the screen.                                                                                                                                                                                                                               | `"bottom" \| "middle" \| "top"`                                                        | `'bottom'`  |
 | `showCloseButton` | `show-close-button` | If `true`, the close button will be displayed.                                                                                                                                                                                                                         | `boolean`                                                                              | `false`     |
 | `translucent`     | `translucent`       | If `true`, the toast will be translucent.                                                                                                                                                                                                                              | `boolean`                                                                              | `false`     |
@@ -108,12 +107,12 @@ async function presentToastWithOptions() {
 
 ## Events
 
-| Event                 | Description                             | Type                              |
-| --------------------- | --------------------------------------- | --------------------------------- |
-| `ionToastDidDismiss`  | Emitted after the toast has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionToastDidPresent`  | Emitted after the toast has presented.  | `CustomEvent<void>`               |
-| `ionToastWillDismiss` | Emitted before the toast has dismissed. | `CustomEvent<OverlayEventDetail>` |
-| `ionToastWillPresent` | Emitted before the toast has presented. | `CustomEvent<void>`               |
+| Event                 | Description                             | Type                |
+| --------------------- | --------------------------------------- | ------------------- |
+| `ionToastDidDismiss`  | Emitted after the toast has dismissed.  | `CustomEvent<TODO>` |
+| `ionToastDidPresent`  | Emitted after the toast has presented.  | `CustomEvent<TODO>` |
+| `ionToastWillDismiss` | Emitted before the toast has dismissed. | `CustomEvent<TODO>` |
+| `ionToastWillPresent` | Emitted before the toast has presented. | `CustomEvent<TODO>` |
 
 
 ## Methods
@@ -121,13 +120,6 @@ async function presentToastWithOptions() {
 ### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
 
 Dismiss the toast overlay after it has been presented.
-
-#### Parameters
-
-| Name   | Type                  | Description |
-| ------ | --------------------- | ----------- |
-| `data` | `any`                 |             |
-| `role` | `string \| undefined` |             |
 
 #### Returns
 

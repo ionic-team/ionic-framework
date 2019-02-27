@@ -149,7 +149,6 @@ export const config: Config = {
       }
     ]
   },
-  copy: [{ src: '**/*.scss' }],
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   globalScript: 'src/global/ionic-global.ts',
   enableCache: true,

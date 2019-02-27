@@ -88,7 +88,7 @@ backdrop.stopPropagation = false;
 
 | Event            | Description                          | Type                |
 | ---------------- | ------------------------------------ | ------------------- |
-| `ionBackdropTap` | Emitted when the backdrop is tapped. | `CustomEvent<void>` |
+| `ionBackdropTap` | Emitted when the backdrop is tapped. | `CustomEvent<TODO>` |
 
 
 ----------------------------------------------

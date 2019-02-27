@@ -81,34 +81,33 @@ slides.options = {
 
 ## Properties
 
-| Property    | Attribute   | Description                                                                                  | Type            | Default     |
-| ----------- | ----------- | -------------------------------------------------------------------------------------------- | --------------- | ----------- |
-| `mode`      | `mode`      | The mode determines which platform styles to use.                                            | `"ios" \| "md"` | `undefined` |
-| `options`   | `options`   | Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options | `any`           | `{}`        |
-| `pager`     | `pager`     | If `true`, show the pagination.                                                              | `boolean`       | `false`     |
-| `scrollbar` | `scrollbar` | If `true`, show the scrollbar.                                                               | `boolean`       | `false`     |
+| Property    | Attribute   | Description                                                                                  | Type      | Default |
+| ----------- | ----------- | -------------------------------------------------------------------------------------------- | --------- | ------- |
+| `options`   | `options`   | Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options | `any`     | `{}`    |
+| `pager`     | `pager`     | If `true`, show the pagination.                                                              | `boolean` | `false` |
+| `scrollbar` | `scrollbar` | If `true`, show the scrollbar.                                                               | `boolean` | `false` |
 
 
 ## Events
 
 | Event                     | Description                                                 | Type                |
 | ------------------------- | ----------------------------------------------------------- | ------------------- |
-| `ionSlideDidChange`       | Emitted after the active slide has changed.                 | `CustomEvent<void>` |
-| `ionSlideDoubleTap`       | Emitted when the user double taps on the slide's container. | `CustomEvent<void>` |
-| `ionSlideDrag`            | Emitted when the slider is actively being moved.            | `CustomEvent<void>` |
-| `ionSlideNextEnd`         | Emitted when the next slide has ended.                      | `CustomEvent<void>` |
-| `ionSlideNextStart`       | Emitted when the next slide has started.                    | `CustomEvent<void>` |
-| `ionSlidePrevEnd`         | Emitted when the previous slide has ended.                  | `CustomEvent<void>` |
-| `ionSlidePrevStart`       | Emitted when the previous slide has started.                | `CustomEvent<void>` |
-| `ionSlideReachEnd`        | Emitted when the slider is at the last slide.               | `CustomEvent<void>` |
-| `ionSlideReachStart`      | Emitted when the slider is at its initial position.         | `CustomEvent<void>` |
-| `ionSlidesDidLoad`        | Emitted after Swiper initialization                         | `CustomEvent<void>` |
-| `ionSlideTap`             | Emitted when the user taps/clicks on the slide's container. | `CustomEvent<void>` |
-| `ionSlideTouchEnd`        | Emitted when the user releases the touch.                   | `CustomEvent<void>` |
-| `ionSlideTouchStart`      | Emitted when the user first touches the slider.             | `CustomEvent<void>` |
-| `ionSlideTransitionEnd`   | Emitted when the slide transition has ended.                | `CustomEvent<void>` |
-| `ionSlideTransitionStart` | Emitted when the slide transition has started.              | `CustomEvent<void>` |
-| `ionSlideWillChange`      | Emitted before the active slide has changed.                | `CustomEvent<void>` |
+| `ionSlideDidChange`       | Emitted after the active slide has changed.                 | `CustomEvent<TODO>` |
+| `ionSlideDoubleTap`       | Emitted when the user double taps on the slide's container. | `CustomEvent<TODO>` |
+| `ionSlideDrag`            | Emitted when the slider is actively being moved.            | `CustomEvent<TODO>` |
+| `ionSlideNextEnd`         | Emitted when the next slide has ended.                      | `CustomEvent<TODO>` |
+| `ionSlideNextStart`       | Emitted when the next slide has started.                    | `CustomEvent<TODO>` |
+| `ionSlidePrevEnd`         | Emitted when the previous slide has ended.                  | `CustomEvent<TODO>` |
+| `ionSlidePrevStart`       | Emitted when the previous slide has started.                | `CustomEvent<TODO>` |
+| `ionSlideReachEnd`        | Emitted when the slider is at the last slide.               | `CustomEvent<TODO>` |
+| `ionSlideReachStart`      | Emitted when the slider is at its initial position.         | `CustomEvent<TODO>` |
+| `ionSlidesDidLoad`        | Emitted after Swiper initialization                         | `CustomEvent<TODO>` |
+| `ionSlideTap`             | Emitted when the user taps/clicks on the slide's container. | `CustomEvent<TODO>` |
+| `ionSlideTouchEnd`        | Emitted when the user releases the touch.                   | `CustomEvent<TODO>` |
+| `ionSlideTouchStart`      | Emitted when the user first touches the slider.             | `CustomEvent<TODO>` |
+| `ionSlideTransitionEnd`   | Emitted when the slide transition has ended.                | `CustomEvent<TODO>` |
+| `ionSlideTransitionStart` | Emitted when the slide transition has started.              | `CustomEvent<TODO>` |
+| `ionSlideWillChange`      | Emitted before the active slide has changed.                | `CustomEvent<TODO>` |
 
 
 ## Methods
@@ -167,12 +166,6 @@ Type: `Promise<number>`
 
 Lock or unlock the ability to slide to the next slides.
 
-#### Parameters
-
-| Name                    | Type      | Description |
-| ----------------------- | --------- | ----------- |
-| `shouldLockSwipeToNext` | `boolean` |             |
-
 #### Returns
 
 Type: `Promise<void>`
@@ -182,12 +175,6 @@ Type: `Promise<void>`
 ### `lockSwipeToPrev(shouldLockSwipeToPrev: boolean) => Promise<void>`
 
 Lock or unlock the ability to slide to the previous slides.
-
-#### Parameters
-
-| Name                    | Type      | Description |
-| ----------------------- | --------- | ----------- |
-| `shouldLockSwipeToPrev` | `boolean` |             |
 
 #### Returns
 
@@ -199,12 +186,6 @@ Type: `Promise<void>`
 
 Lock or unlock the ability to slide to change slides.
 
-#### Parameters
-
-| Name               | Type      | Description |
-| ------------------ | --------- | ----------- |
-| `shouldLockSwipes` | `boolean` |             |
-
 #### Returns
 
 Type: `Promise<void>`
@@ -214,13 +195,6 @@ Type: `Promise<void>`
 ### `slideNext(speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>`
 
 Transition to the next slide.
-
-#### Parameters
-
-| Name           | Type                   | Description |
-| -------------- | ---------------------- | ----------- |
-| `speed`        | `number \| undefined`  |             |
-| `runCallbacks` | `boolean \| undefined` |             |
 
 #### Returns
 
@@ -232,13 +206,6 @@ Type: `Promise<void>`
 
 Transition to the previous slide.
 
-#### Parameters
-
-| Name           | Type                   | Description |
-| -------------- | ---------------------- | ----------- |
-| `speed`        | `number \| undefined`  |             |
-| `runCallbacks` | `boolean \| undefined` |             |
-
 #### Returns
 
 Type: `Promise<void>`
@@ -248,14 +215,6 @@ Type: `Promise<void>`
 ### `slideTo(index: number, speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>`
 
 Transition to the specified slide.
-
-#### Parameters
-
-| Name           | Type                   | Description |
-| -------------- | ---------------------- | ----------- |
-| `index`        | `number`               |             |
-| `speed`        | `number \| undefined`  |             |
-| `runCallbacks` | `boolean \| undefined` |             |
 
 #### Returns
 
@@ -297,12 +256,6 @@ Type: `Promise<void>`
 ### `updateAutoHeight(speed?: number | undefined) => Promise<void>`
 
 Force swiper to update its height (when autoHeight enabled) for the duration equal to 'speed' parameter
-
-#### Parameters
-
-| Name    | Type                  | Description |
-| ------- | --------------------- | ----------- |
-| `speed` | `number \| undefined` |             |
 
 #### Returns
 

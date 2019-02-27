@@ -81,7 +81,7 @@ Another approach is to modify the value of `to`, since given `to` the value of `
 
 | Event                     | Description                                                                                                                                                                                                               | Type                |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| `ionRouteRedirectChanged` | Internal event that fires when any value of this rule is added/removed from the DOM, or any of his public properties changes.  `ion-router` captures this event in order to update his internal registry of router rules. | `CustomEvent<void>` |
+| `ionRouteRedirectChanged` | Internal event that fires when any value of this rule is added/removed from the DOM, or any of his public properties changes.  `ion-router` captures this event in order to update his internal registry of router rules. | `CustomEvent<TODO>` |
 
 
 ----------------------------------------------

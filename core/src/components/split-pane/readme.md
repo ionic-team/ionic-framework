@@ -94,9 +94,9 @@ SplitPane also provides some predefined media queries that can be used.
 
 ## Events
 
-| Event                 | Description                                                        | Type                              |
-| --------------------- | ------------------------------------------------------------------ | --------------------------------- |
-| `ionSplitPaneVisible` | Expression to be called when the split-pane visibility has changed | `CustomEvent<{visible: boolean}>` |
+| Event                 | Description                                                        | Type                |
+| --------------------- | ------------------------------------------------------------------ | ------------------- |
+| `ionSplitPaneVisible` | Expression to be called when the split-pane visibility has changed | `CustomEvent<TODO>` |
 
 
 ## CSS Custom Properties

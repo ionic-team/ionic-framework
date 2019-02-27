@@ -325,7 +325,6 @@ customActionSheetSelect.interfaceOptions = customActionSheetOptions;
 | `disabled`         | `disabled`          | If `true`, the user cannot interact with the select.                                                                                                                                                                                                                                                                                                                              | `boolean`                                | `false`        |
 | `interface`        | `interface`         | The interface the select should use: `action-sheet`, `popover` or `alert`.                                                                                                                                                                                                                                                                                                        | `"action-sheet" \| "alert" \| "popover"` | `'alert'`      |
 | `interfaceOptions` | `interface-options` | Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [AlertController API docs](../../alert/AlertController/#create), the [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the [PopoverController API docs](../../popover/PopoverController/#create) for the create options for each interface. | `any`                                    | `{}`           |
-| `mode`             | `mode`              | The mode determines which platform styles to use.                                                                                                                                                                                                                                                                                                                                 | `"ios" \| "md"`                          | `undefined`    |
 | `multiple`         | `multiple`          | If `true`, the select can accept multiple values.                                                                                                                                                                                                                                                                                                                                 | `boolean`                                | `false`        |
 | `name`             | `name`              | The name of the control, which is submitted with the form data.                                                                                                                                                                                                                                                                                                                   | `string`                                 | `this.inputId` |
 | `okText`           | `ok-text`           | The text to display on the ok button.                                                                                                                                                                                                                                                                                                                                             | `string`                                 | `'OK'`         |
@@ -336,12 +335,12 @@ customActionSheetSelect.interfaceOptions = customActionSheetOptions;
 
 ## Events
 
-| Event       | Description                              | Type                                   |
-| ----------- | ---------------------------------------- | -------------------------------------- |
-| `ionBlur`   | Emitted when the select loses focus.     | `CustomEvent<void>`                    |
-| `ionCancel` | Emitted when the selection is cancelled. | `CustomEvent<void>`                    |
-| `ionChange` | Emitted when the value has changed.      | `CustomEvent<SelectChangeEventDetail>` |
-| `ionFocus`  | Emitted when the select has focus.       | `CustomEvent<void>`                    |
+| Event       | Description                              | Type                |
+| ----------- | ---------------------------------------- | ------------------- |
+| `ionBlur`   | Emitted when the select loses focus.     | `CustomEvent<TODO>` |
+| `ionCancel` | Emitted when the selection is cancelled. | `CustomEvent<TODO>` |
+| `ionChange` | Emitted when the value has changed.      | `CustomEvent<TODO>` |
+| `ionFocus`  | Emitted when the select has focus.       | `CustomEvent<TODO>` |
 
 
 ## Methods
@@ -350,12 +349,6 @@ customActionSheetSelect.interfaceOptions = customActionSheetOptions;
 
 Opens the select overlay, it could be an alert, action-sheet or popover,
 based in `ion-select` settings.
-
-#### Parameters
-
-| Name | Type                   | Description |
-| ---- | ---------------------- | ----------- |
-| `ev` | `UIEvent \| undefined` |             |
 
 #### Returns
 

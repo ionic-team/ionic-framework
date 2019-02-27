@@ -51,11 +51,11 @@ content.addEventListener('ionScrollEnd', () => console.log('scroll end'));
 
 ## Events
 
-| Event            | Description                                                                                      | Type                            |
-| ---------------- | ------------------------------------------------------------------------------------------------ | ------------------------------- |
-| `ionScroll`      | Emitted while scrolling. This event is disabled by default. Look at the property: `scrollEvents` | `CustomEvent<ScrollDetail>`     |
-| `ionScrollEnd`   | Emitted when the scroll has ended.                                                               | `CustomEvent<ScrollBaseDetail>` |
-| `ionScrollStart` | Emitted when the scroll has started.                                                             | `CustomEvent<ScrollBaseDetail>` |
+| Event            | Description                                                                                      | Type                |
+| ---------------- | ------------------------------------------------------------------------------------------------ | ------------------- |
+| `ionScroll`      | Emitted while scrolling. This event is disabled by default. Look at the property: `scrollEvents` | `CustomEvent<TODO>` |
+| `ionScrollEnd`   | Emitted when the scroll has ended.                                                               | `CustomEvent<TODO>` |
+| `ionScrollStart` | Emitted when the scroll has started.                                                             | `CustomEvent<TODO>` |
 
 
 ## Methods
@@ -79,14 +79,6 @@ Type: `Promise<HTMLElement>`
 
 Scroll by a specified X/Y distance in the component
 
-#### Parameters
-
-| Name       | Type     | Description |
-| ---------- | -------- | ----------- |
-| `x`        | `number` |             |
-| `y`        | `number` |             |
-| `duration` | `number` |             |
-
 #### Returns
 
 Type: `Promise<void>`
@@ -96,12 +88,6 @@ Type: `Promise<void>`
 ### `scrollToBottom(duration?: number) => Promise<void>`
 
 Scroll to the bottom of the component
-
-#### Parameters
-
-| Name       | Type     | Description |
-| ---------- | -------- | ----------- |
-| `duration` | `number` |             |
 
 #### Returns
 
@@ -113,14 +99,6 @@ Type: `Promise<void>`
 
 Scroll to a specified X/Y location in the component
 
-#### Parameters
-
-| Name       | Type                          | Description |
-| ---------- | ----------------------------- | ----------- |
-| `x`        | `null \| number \| undefined` |             |
-| `y`        | `null \| number \| undefined` |             |
-| `duration` | `number`                      |             |
-
 #### Returns
 
 Type: `Promise<void>`
@@ -130,12 +108,6 @@ Type: `Promise<void>`
 ### `scrollToTop(duration?: number) => Promise<void>`
 
 Scroll to the top of the component
-
-#### Parameters
-
-| Name       | Type     | Description |
-| ---------- | -------- | ----------- |
-| `duration` | `number` |             |
 
 #### Returns
 
