@@ -56,6 +56,15 @@
       </ion-list>
 
       <ion-list>
+        <ion-list-header>Object Values with trackBy</ion-list-header>
+
+        <ion-item>
+          <ion-label>Users</ion-label>
+          <ion-select id="objectSelectCompareWith"></ion-select>
+        </ion-item>
+      </ion-list>
+
+      <ion-list>
         <ion-list-header>Select - Custom Interface Options</ion-list-header>
 
         <ion-item color="danger">
@@ -280,6 +289,49 @@
     </style>
 
     <script>
+      var objectOptions = [
+        {
+          id: 1,
+          first: 'Alice',
+          last: 'Smith',
+        },
+        {
+          id: 2,
+          first: 'Bob',
+          last: 'Davis',
+        },
+        {
+          id: 3,
+          first: 'Charlie',
+          last: 'Rosenburg',
+        }
+      ];
+
+      var compareWithFn = (o1, o2) => {
+        return o1 && o2 ? o1.id === o2.id : o1 === o2;
+      };
+
+      var objectSelect = document.getElementById('objectSelectCompareWith');
+      objectSelect.compareWith = compareWithFn; // 'id';
+      for (var i = 0; i < objectOptions.length; i++) {
+        var value = objectOptions[i];
+        var selectOption = document.createElement('ion-select-option');
+        selectOption.value = objectOptions[i];
+        selectOption.textContent = value.first + ' ' + value.last;
+        if (i === 0) {
+          selectOption.selected = true;
+        }
+        objectSelect.appendChild(selectOption);
+      }
+
+      setTimeout(() => {
+        objectSelect.value = {
+          id: 1,
+          first: 'Alice',
+          last: 'Smith',
+        };
+      }, 3000);
+      
       var pets = document.getElementById('pets');
       pets.value = ['bird', 'dog'];
 
