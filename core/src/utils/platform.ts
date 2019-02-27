@@ -37,7 +37,7 @@ const isAndroid = (win: Window) =>
 
 const isAndroidTablet = (win: Window) => {
   return isAndroid(win) && !testUserAgent(win, /mobile/i);
-}
+};
 
 const isPhablet = (win: Window) => {
   const width = win.innerWidth;
@@ -62,7 +62,7 @@ const isTablet = (win: Window) => {
       (smallest > 460 && smallest < 820) &&
       (largest > 780 && largest < 1400)
     )
-  )
+  );
 };
 
 const isMobile = (win: Window) =>
