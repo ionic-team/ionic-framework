@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, QueueApi, Watch } from '@stencil/core';
 
 import { Gesture, GestureDetail, Mode, PickerColumn } from '../../interface';
 import { hapticSelectionChanged } from '../../utils/haptic';
@@ -38,6 +38,11 @@ export class PickerColumnCmp implements ComponentInterface {
 
   /** Picker column data */
   @Prop() col!: PickerColumn;
+
+  @Watch('col')
+  protected async valueChanged() {
+    this.refresh();
+  }
 
   /**
    * Emitted when the selected value of the column has changed.
