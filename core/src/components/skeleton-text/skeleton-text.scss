@@ -1,15 +1,16 @@
-@import "../../themes/ionic.globals";
-
+@import "./skeleton-text.vars";
 
 // Skeleton Text
 // --------------------------------------------------
 
 :host {
   /**
-   * --background: Background of the skeleton text
-   * --border-radius: Border radius of the skeleton text
+   * @prop --background: Background of the skeleton text
+   * @prop --background-rgb: Background of the skeleton text in rgb format
+   *
+   * @prop --border-radius: Border radius of the skeleton text
    */
-  --background: #{rgba(var(--ion-text-color-rgb, $text-color-rgb), .1)};
+  --background: #{$skeleton-text-background};
 
   @include border-radius(var(--border-radius, inherit));
 
@@ -37,8 +38,8 @@ span {
 :host(.in-media) {
   @include margin(0);
 
-  height: 100%;
   width: 100%;
+  height: 100%;
 }
 
 // Animated Skeleton Text
@@ -47,8 +48,7 @@ span {
 :host(.skeleton-text-animated) {
   position: relative;
 
-  background: #f6f7f8;
-  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background: linear-gradient(to right, $skeleton-text-background 8%, $skeleton-text-background-animated 18%, $skeleton-text-background 33%);
   background-size: 800px 104px;
   animation-duration: 1s;
   animation-fill-mode: forwards;

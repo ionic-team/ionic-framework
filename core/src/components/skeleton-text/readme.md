@@ -332,9 +332,11 @@ function onLoad() {
 
 ## CSS Custom Properties
 
-| Name           | Description                                                                         |
-| -------------- | ----------------------------------------------------------------------------------- |
-| `--background` | Background of the skeleton text --border-radius: Border radius of the skeleton text |
+| Name               | Description                                   |
+| ------------------ | --------------------------------------------- |
+| `--background`     | Background of the skeleton text               |
+| `--background-rgb` | Background of the skeleton text in rgb format |
+| `--border-radius`  | Border radius of the skeleton text            |
 
 
 ----------------------------------------------
