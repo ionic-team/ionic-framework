@@ -43,8 +43,8 @@ export class PickerColumnCmp implements ComponentInterface {
   @Watch('col')
   protected async valueChanged() {
     this.columnChangedTmrId = setTimeout(() => {
-      this.refresh(false);
-    }, 250);
+      this.refresh(false, 0, true);
+    }, 0);
   }
 
   /**
@@ -314,7 +314,7 @@ export class PickerColumnCmp implements ComponentInterface {
     }
   }
 
-  private refresh(forceRefresh?: boolean) {
+  private refresh(forceRefresh?: boolean, duration = TRANSITION_DURATION, saveY = true) {
     let min = this.col.options.length - 1;
     let max = 0;
     const options = this.col.options;
@@ -329,7 +329,7 @@ export class PickerColumnCmp implements ComponentInterface {
     if (this.col.prevSelected !== selectedIndex || forceRefresh) {
       const y = (selectedIndex * this.optHeight) * -1;
       this.velocity = 0;
-      this.update(y, TRANSITION_DURATION, true);
+      this.update(y, duration, saveY);
     }
   }
 
