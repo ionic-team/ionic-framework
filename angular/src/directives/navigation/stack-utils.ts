@@ -1,6 +1,6 @@
 import { ComponentRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RouterDirection } from '@ionic/core';
+import { NavDirection, RouterDirection } from '@ionic/core';
 
 export function insertView(views: RouteView[], view: RouteView, direction: RouterDirection) {
   if (direction === 'root') {
@@ -44,7 +44,7 @@ export function getUrl(router: Router, activatedRoute: ActivatedRoute) {
 
 export function isTabSwitch(enteringView: RouteView, leavingView: RouteView | undefined) {
   if (!leavingView) {
-    return false;
+    return true;
   }
   return enteringView.stackId !== leavingView.stackId;
 }
@@ -78,6 +78,13 @@ export function destroyView(view: RouteView | undefined) {
     view.ref.destroy();
     view.unlistenEvents();
   }
+}
+
+export interface StackEvent {
+  enteringView: RouteView;
+  direction: RouterDirection;
+  animation: NavDirection | undefined;
+  tabSwitch: boolean;
 }
 
 export interface RouteView {

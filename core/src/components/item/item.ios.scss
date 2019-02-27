@@ -12,6 +12,7 @@
   --inner-border-width: #{0px 0px $item-ios-border-bottom-width 0px};
   --background: #{$item-ios-background};
   --background-activated: #{$item-ios-background-activated};
+  --background-focused: #{$item-ios-background-activated};
   --border-color: #{$item-ios-border-bottom-color};
   --color: #{$item-ios-color};
   --highlight-height: 0;
@@ -69,18 +70,34 @@
 // iOS Item Slots
 // --------------------------------------------------
 
-::slotted(:not(.interactive)[slot="start"]) {
+::slotted([slot="start"]) {
   @include margin($item-ios-slot-start-margin-top, $item-ios-slot-start-margin-end, $item-ios-slot-start-margin-bottom, $item-ios-slot-start-margin-start);
 }
 
-::slotted(:not(.interactive)[slot="end"]) {
+::slotted([slot="end"]) {
   @include margin($item-ios-slot-end-margin-top, $item-ios-slot-end-margin-end, $item-ios-slot-end-margin-bottom, $item-ios-slot-end-margin-start);
 }
+
+
+// iOS Slotted Icon
+// --------------------------------------------------
 
 ::slotted(ion-icon[slot="start"]),
 ::slotted(ion-icon[slot="end"]) {
   @include margin($item-ios-icon-slot-margin-top, $item-ios-icon-slot-margin-end, $item-ios-icon-slot-margin-bottom, $item-ios-icon-slot-margin-start);
 }
+
+
+// iOS Slotted Toggle
+// --------------------------------------------------
+
+::slotted(ion-toggle[slot="start"]),
+::slotted(ion-toggle[slot="end"]) {
+  @include margin(0);
+}
+
+// iOS Stacked / Floating Labels
+// --------------------------------------------------
 
 :host(.item-label-stacked) ::slotted([slot="end"]),
 :host(.item-label-floating) ::slotted([slot="end"]) {
@@ -121,6 +138,16 @@
   @include margin(($item-ios-padding-end / 2));
 }
 
+
+// iOS Radio / Toggle Item Label
+// -----------------------------------------
+
+:host(.item-radio) ::slotted(ion-label),
+:host(.item-toggle) ::slotted(ion-label) {
+  @include margin-horizontal(0px, null);
+}
+
+
 // TODO: MOVE FROM RADIO
 // iOS Radio Item Label: Checked
 // -----------------------------------------
@@ -128,12 +155,6 @@
 // :host(.item-radio-checked) ::slotted(ion-label) {
 //   color: $radio-ios-color-on;
 // }
-
-
-:host(.item-radio) ::slotted(ion-label),
-:host(.item-toggle) ::slotted(ion-label) {
-  @include margin-horizontal(0px, null);
-}
 
 
 // iOS Slotted Label
@@ -152,10 +173,7 @@
   --min-height: 68px;
 }
 
-:host(.item-label-stacked) ::slotted(ion-input),
-:host(.item-label-floating) ::slotted(ion-input),
-:host(.item-label-stacked) ::slotted(ion-textarea),
-:host(.item-label-floating) ::slotted(ion-textarea),
+// TODO: refactor, ion-item and ion-textarea have the same CSS
 :host(.item-label-stacked) ::slotted(ion-select),
 :host(.item-label-floating) ::slotted(ion-select) {
   --padding-top: 8px;
@@ -163,12 +181,6 @@
   --padding-start: 0px;
 }
 
-
-// TODO
-// .item-ios.item-label-stacked .label-ios + .input + .cloned-input,
-// .item-ios.item-label-floating .label-ios + .input + .cloned-input {
-//   @include margin-horizontal(0, null);
-// }
 
 // FROM TEXTAREA
 // iOS Stacked & Floating Textarea

@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 import { Color, Mode, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
-import { debounceEvent, findItemLabel, renderHiddenInput } from '../../utils/helpers';
+import { debounceEvent, findItemLabel } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -10,7 +10,7 @@ import { createColorClasses } from '../../utils/theme';
     ios: 'textarea.ios.scss',
     md: 'textarea.md.scss'
   },
-  shadow: true
+  scoped: true
 })
 export class Textarea implements ComponentInterface {
 
@@ -182,6 +182,14 @@ export class Textarea implements ComponentInterface {
     }
   }
 
+  /**
+   * Returns the native `<textarea>` element used under the hood.
+   */
+  @Method()
+  getInputElement(): Promise<HTMLTextAreaElement> {
+    return Promise.resolve(this.nativeInput!);
+  }
+
   private emitStyle() {
     this.ionStyle.emit({
       'interactive': true,
@@ -263,8 +271,6 @@ export class Textarea implements ComponentInterface {
 
   render() {
     const value = this.getValue();
-    renderHiddenInput(false, this.el, this.name, value, this.disabled);
-
     const labelId = this.inputId + '-lbl';
     const label = findItemLabel(this.el);
     if (label) {

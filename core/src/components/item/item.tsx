@@ -3,6 +3,11 @@ import { Component, ComponentInterface, Element, Listen, Prop, State } from '@st
 import { Color, CssClassMap, Mode, RouterDirection, StyleEventDetail } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
+/**
+ * @slot - Content is placed between the named slots if provided without a slot.
+ * @slot start - Content is placed to the left of the item text in LTR, and to the right in RTL.
+ * @slot end - Content is placed to the right of the item text in LTR, and to the left in RTL.
+ */
 @Component({
   tag: 'ion-item',
   styleUrls: {
@@ -137,6 +142,7 @@ export class Item implements ComponentInterface {
         'item': true,
         'item-multiple-inputs': this.multipleInputs,
         'ion-activatable': this.isClickable(),
+        'ion-focusable': true,
       }
     };
   }
@@ -153,6 +159,7 @@ export class Item implements ComponentInterface {
       <TagType
         {...attrs}
         class="item-native"
+        disabled={this.disabled}
         onClick={(ev: Event) => openURL(win, href, ev, routerDirection)}
       >
         <slot name="start"></slot>

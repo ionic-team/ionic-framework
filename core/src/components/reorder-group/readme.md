@@ -13,7 +13,7 @@ reorderGroup.addEventListener('ionItemReorder', (ev) => {
 });
 ```
 
-The event's detail includes all the relevant information about the reorder operation, including the `from` and `to` indexes. The meaning of this indexes are pretty self-explanatory, the item **from** index X, moved **to** the index Y.
+The event's detail includes all the relevant information about the reorder operation, including the `from` and `to` indexes. In the context of reordering, an item moves `from` index X `to` index Y.
 
 For example, in this list we move the item at index `0` to the index `3`:
 
@@ -41,10 +41,6 @@ Fortunately this `complete()` method can optionally accept an array as input and
 ```ts
 this.dataList = reorderGroup.complete(this.dataList);
 ```
-
-This utility is really handy when
-
-
 
 <!-- Auto Generated Below -->
 
@@ -168,6 +164,67 @@ reorderGroup.addEventListener('ionItemReorder', ({detail}) => {
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonContent, IonList, IonItem, IonLabel, IonReorder, IonReorderGroup, IonIcon } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+
+  <IonContent>
+    <IonList>
+      <IonReorderGroup>
+
+        <IonItem>
+          <IonLabel>
+            Item 1
+          </IonLabel>
+          <IonReorder slot="end"></IonReorder>
+        </IonItem>
+
+        <IonItem>
+          <IonLabel>
+            Item 2 (default ion-reorder slot="start")
+          </IonLabel>
+          <IonReorder slot="start"></IonReorder>
+        </IonItem>
+
+        <IonItem>
+          <IonLabel>
+            Item 3 (custom ion-reorder)
+          </IonLabel>
+          <IonReorder slot="end">
+            <IonIcon name="pizza" />
+          </IonReorder>
+        </IonItem>
+
+        <IonItem>
+          <IonLabel>
+            Item 4 (custom ion-reorder slot="start")
+          </IonLabel>
+          <IonReorder slot="start">
+            <IonIcon name="pizza" />
+          </IonReorder>
+        </IonItem>
+
+        <IonReorder>
+          <IonItem>
+            <IonLabel>
+              Item 5 (the whole item can be dragged)
+            </IonLabel>
+            </IonItem>
+        </IonReorder>
+
+      </IonReorderGroup>
+    </IonList>
+  </IonContent>
+);
+
+export default Example
+
+
 
 ## Properties
 
@@ -178,9 +235,9 @@ reorderGroup.addEventListener('ionItemReorder', ({detail}) => {
 
 ## Events
 
-| Event            | Description                                                                                                                                                                                          | Type                                  |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
-| `ionItemReorder` | Event that needs to be listen to in order to respond to reorder action. `ion-reorder-group` uses this event to delegate to the user the reordering of data array.   The complete() method exposed as | `CustomEvent<ItemReorderEventDetail>` |
+| Event            | Description                                                                                                                                                                                           | Type                                  |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| `ionItemReorder` | Event that needs to be listened to in order to complete the reorder action. Once the event has been emitted, the `complete()` method then needs to be called in order to finalize the reorder action. | `CustomEvent<ItemReorderEventDetail>` |
 
 
 ## Methods

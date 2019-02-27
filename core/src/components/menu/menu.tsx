@@ -155,7 +155,7 @@ export class Menu implements ComponentInterface, MenuI {
     const el = this.el;
     const parent = el.parentNode as any;
     const content = this.contentId !== undefined
-      ? document.getElementById(this.contentId)
+      ? this.doc.getElementById(this.contentId)
       : parent && parent.querySelector && parent.querySelector('[main]');
 
     if (!content || !content.tagName) {
@@ -201,6 +201,7 @@ export class Menu implements ComponentInterface, MenuI {
     }
     if (this.gesture) {
       this.gesture.destroy();
+      this.gesture = undefined;
     }
 
     this.animation = undefined;

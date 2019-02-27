@@ -19,7 +19,7 @@ $picker-ios-top-background-color:                 var(--background, $picker-ios-
 $picker-ios-bottom-background-color-alpha:        .8 !default;
 
 /// @prop - Bottom Background Color of the picker wrapper gradient
-$picker-ios-bottom-background-color:              rgba(var(--background-rgb, var(--ion-background-color-rgb, $background-color-rgb)), $picker-ios-bottom-background-color-alpha) !default;
+$picker-ios-bottom-background-color:              rgba(var(--background-rgb, $background-color-rgb), $picker-ios-bottom-background-color-alpha) !default;
 
 /// @prop - Height of the picker toolbar
 $picker-ios-toolbar-height:                       44px !default;

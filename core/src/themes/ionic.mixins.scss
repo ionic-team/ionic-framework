@@ -13,6 +13,10 @@
 
   appearance: none;
   outline: none;
+
+  &::-moz-focus-inner {
+    border: 0;
+  }
 }
 
 @mixin text-inherit() {
@@ -138,42 +142,30 @@
 // ----------------------------------------------------------
 
 @mixin multi-dir() {
-  @if $app-direction == multi {
-    $root: #{&};
-    @at-root [dir] {
-      #{$root} {
-        @content;
-      }
-    }
-  } @else {
-    @content;
-  }
+  @content;
+
+  // @if $app-direction == multi {
+  //   $root: #{&};
+  //   @at-root [dir] {
+  //     #{$root} {
+  //       @content;
+  //     }
+  //   }
+  // } @else {
+  //   @content;
+  // }
 }
 
 @mixin rtl() {
-  @if $app-direction == multi or $app-direction == null {
-    $root: #{&};
-    @at-root [dir="rtl"] {
-      #{$root} {
-        @content;
-      }
-    }
-  } @else if $app-direction == rtl {
+  $root: #{&};
+
+  @at-root #{add-root-selector($root, "[dir=rtl]")} {
     @content;
   }
 }
 
 @mixin ltr() {
-  @if $app-direction == multi {
-    $root: #{&};
-    @at-root [dir="ltr"] {
-      #{$root} {
-        @content;
-      }
-    }
-  } @else if $app-direction == ltr or $app-direction == null {
-    @content;
-  }
+  @content;
 }
 
 
@@ -210,19 +202,26 @@
 // @param {string} $end
 // ----------------------------------------------------------
 @mixin property-horizontal($prop, $start, $end: $start) {
-  @if $start == $end {
-    @include multi-dir() {
-      #{$prop}-left: $start;
-      #{$prop}-right: $end;
-    }
+  @if $start == 0 and $end == 0 {
+    #{$prop}-left: $start;
+    #{$prop}-right: $end;
+
   } @else {
-    @include ltr() {
-      #{$prop}-left: $start;
-      #{$prop}-right: $end;
-    }
-    @include rtl() {
-      #{$prop}-left: $end;
-      #{$prop}-right: $start;
+    #{$prop}-left: $start;
+    #{$prop}-right: $end;
+
+    @at-root @supports((margin-inline-start: 0) or (-webkit-margin-start: 0)) {
+      @if $start != null {
+        #{$prop}-left: unset;
+      }
+      @if $end != null {
+        #{$prop}-right: unset;
+      }
+
+      -webkit-#{$prop}-start: $start;
+      #{$prop}-inline-start: $start;
+      -webkit-#{$prop}-end: $end;
+      #{$prop}-inline-end: $end;
     }
   }
 }
@@ -236,32 +235,9 @@
 // @param {boolean} $content include content or use default
 // ----------------------------------------------------------
 @mixin property($prop, $top, $end: $top, $bottom: $top, $start: $end) {
-  @if $top == $end and $top == $bottom and $top == $start {
-    @include multi-dir() {
-      #{$prop}: $top;
-    }
-  } @else if $top == $bottom and $end == $start and $top != null and $end != null {
-    @include multi-dir() {
-      #{$prop}: $top $end;
-    }
-  } @else if $end == $start and $top != null and $end != null and $bottom != null {
-    @include multi-dir() {
-      #{$prop}: $top $end $bottom;
-    }
-  } @else if $top != null and $end != null and $bottom != null and $start != null {
-    @include ltr() {
-      #{$prop}: $top $end $bottom $start;
-    }
-    @include rtl() {
-      #{$prop}: $top $start $bottom $end;
-    }
-  } @else {
-    @include property-horizontal($prop, $start, $end);
-    @include multi-dir() {
-      #{$prop}-top: $top;
-      #{$prop}-bottom: $bottom;
-    }
-  }
+  @include property-horizontal($prop, $start, $end);
+  #{$prop}-top: $top;
+  #{$prop}-bottom: $bottom;
 }
 
 // Add padding horizontal

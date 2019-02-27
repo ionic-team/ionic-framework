@@ -1,3 +1,16 @@
+/**
+ * Gets a date value given a format
+ * Defaults to the current date if
+ * no date given
+ */
+export function getDateValue(date: DatetimeData, format: string): number {
+  const getValue = getValueFromFormat(date, format);
+
+  if (getValue) { return getValue; }
+
+  const defaultDate = parseDate(new Date().toISOString());
+  return getValueFromFormat((defaultDate as DatetimeData), format);
+}
 
 export function renderDatetime(template: string, value: DatetimeData | undefined, locale: LocaleData): string | undefined {
   if (value === undefined) {

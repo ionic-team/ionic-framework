@@ -61,19 +61,13 @@ export class SplitPane implements ComponentInterface {
   @Prop() when: string | boolean = QUERY['lg'];
 
   /**
-   * Emitted when the split pane is visible.
-   */
-  @Event({ bubbles: false }) ionChange!: EventEmitter<{visible: boolean}>;
-
-  /**
    * Expression to be called when the split-pane visibility has changed
    */
-  @Event() ionSplitPaneVisible!: EventEmitter;
+  @Event() ionSplitPaneVisible!: EventEmitter<{visible: boolean}>;
 
   @Watch('visible')
   visibleChanged(visible: boolean) {
     const detail = { visible, isPane: this.isPane.bind(this) };
-    this.ionChange.emit(detail);
     this.ionSplitPaneVisible.emit(detail);
   }
 
@@ -122,14 +116,17 @@ export class SplitPane implements ComponentInterface {
       return;
     }
 
-    // Listen on media query
-    const callback = (q: MediaQueryList) => {
-      this.visible = q.matches;
-    };
-    const mediaList = this.win.matchMedia(mediaQuery);
-    mediaList.addListener(callback as any);
-    this.rmL = () => mediaList.removeListener(callback as any);
-    this.visible = mediaList.matches;
+    if ((this.win as any).matchMedia) {
+      // Listen on media query
+      const callback = (q: MediaQueryList) => {
+        this.visible = q.matches;
+      };
+
+      const mediaList = this.win.matchMedia(mediaQuery);
+      (mediaList as any).addListener(callback as any);
+      this.rmL = () => (mediaList as any).removeListener(callback as any);
+      this.visible = mediaList.matches;
+    }
   }
 
   private isPane(element: HTMLElement): boolean {

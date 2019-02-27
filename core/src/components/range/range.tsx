@@ -1,9 +1,13 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { Color, Gesture, GestureDetail, KnobName, Mode, RangeChangeEventDetail, RangeValue, StyleEventDetail } from '../../interface';
 import { clamp, debounceEvent } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
+/**
+ * @slot start - Content is placed to the left of the range slider in LTR, and to the right in RTL.
+ * @slot end - Content is placed to the right of the range slider in LTR, and to the left in RTL.
+ */
 @Component({
   tag: 'ion-range',
   styleUrls: {
@@ -23,6 +27,7 @@ export class Range implements ComponentInterface {
   @Element() el!: HTMLStencilElement;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
+  @Prop({ context: 'document' }) doc!: Document;
 
   @State() private ratioA = 0;
   @State() private ratioB = 0;
@@ -145,6 +150,24 @@ export class Range implements ComponentInterface {
    */
   @Event() ionBlur!: EventEmitter<void>;
 
+  @Listen('focusout')
+  onBlur() {
+    if (this.hasFocus) {
+      this.hasFocus = false;
+      this.ionBlur.emit();
+      this.emitStyle();
+    }
+  }
+
+  @Listen('focusin')
+  onFocus() {
+    if (!this.hasFocus) {
+      this.hasFocus = true;
+      this.ionFocus.emit();
+      this.emitStyle();
+    }
+  }
+
   componentWillLoad() {
     this.updateRatio();
     this.debounceChanged();
@@ -165,7 +188,14 @@ export class Range implements ComponentInterface {
     this.gesture.setDisabled(this.disabled);
   }
 
-  private handleKeyboard(knob: string, isIncrease: boolean) {
+  componentDidUnload() {
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
+  }
+
+  private handleKeyboard = (knob: KnobName, isIncrease: boolean) => {
     let step = this.step;
     step = step > 0 ? step : 1;
     step = step / (this.max - this.min);
@@ -173,9 +203,9 @@ export class Range implements ComponentInterface {
       step *= -1;
     }
     if (knob === 'A') {
-      this.ratioA += step;
+      this.ratioA = clamp(0, this.ratioA + step, 1);
     } else {
-      this.ratioB += step;
+      this.ratioB = clamp(0, this.ratioB + step, 1);
     }
     this.updateValue();
   }
@@ -200,39 +230,28 @@ export class Range implements ComponentInterface {
 
   private emitStyle() {
     this.ionStyle.emit({
+      'interactive': true,
       'interactive-disabled': this.disabled
     });
   }
 
-  private fireBlur() {
-    if (this.hasFocus) {
-      this.hasFocus = false;
-      this.ionBlur.emit();
-      this.emitStyle();
-    }
-  }
-
-  private fireFocus() {
-    if (!this.hasFocus) {
-      this.hasFocus = true;
-      this.ionFocus.emit();
-      this.emitStyle();
-    }
-  }
-
   private onStart(detail: GestureDetail) {
-    this.fireFocus();
-
     const rect = this.rect = this.rangeSlider!.getBoundingClientRect() as any;
     const currentX = detail.currentX;
 
     // figure out which knob they started closer to
-    const ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
+    let ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
+    if (this.doc.dir === 'rtl') {
+      ratio = 1 - ratio;
+    }
+
     this.pressedKnob =
       !this.dualKnobs ||
       Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio)
         ? 'A'
         : 'B';
+
+    this.setFocus(this.pressedKnob);
 
     // update the active knob's position
     this.update(currentX);
@@ -245,7 +264,6 @@ export class Range implements ComponentInterface {
   private onEnd(detail: GestureDetail) {
     this.update(detail.currentX);
     this.pressedKnob = undefined;
-    this.fireBlur();
   }
 
   private update(currentX: number) {
@@ -253,10 +271,17 @@ export class Range implements ComponentInterface {
     // update the knob being interacted with
     const rect = this.rect;
     let ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
+    if (this.doc.dir === 'rtl') {
+      ratio = 1 - ratio;
+    }
+
     if (this.snaps) {
       // snaps the ratio to the current value
-      const value = ratioToValue(ratio, this.min, this.max, this.step);
-      ratio = valueToRatio(value, this.min, this.max);
+      ratio = valueToRatio(
+        ratioToValue(ratio, this.min, this.max, this.step),
+        this.min,
+        this.max
+      );
     }
 
     // update which knob is pressed
@@ -317,6 +342,15 @@ export class Range implements ComponentInterface {
     this.noUpdate = false;
   }
 
+  private setFocus(knob: KnobName) {
+    if (this.el.shadowRoot) {
+      const knobEl = this.el.shadowRoot.querySelector(knob === 'A' ? '.range-knob-a' : '.range-knob-b') as HTMLElement | undefined;
+      if (knobEl) {
+        knobEl.focus();
+      }
+    }
+  }
+
   hostData() {
     return {
       class: {
@@ -332,31 +366,57 @@ export class Range implements ComponentInterface {
   render() {
     const { min, max, step, ratioLower, ratioUpper } = this;
 
-    const barL = `${ratioLower * 100}%`;
-    const barR = `${100 - ratioUpper * 100}%`;
+    const barStart = `${ratioLower * 100}%`;
+    const barEnd = `${100 - ratioUpper * 100}%`;
+
+    const doc = this.doc;
+    const isRTL = doc.dir === 'rtl';
+    const start = isRTL ? 'right' : 'left';
+    const end = isRTL ? 'left' : 'right';
 
     const ticks = [];
     if (this.snaps) {
       for (let value = min; value <= max; value += step) {
         const ratio = valueToRatio(value, min, max);
-        ticks.push({
+
+        const tick: any = {
           ratio,
           active: ratio >= ratioLower && ratio <= ratioUpper,
-          left: `${ratio * 100}%`
-        });
+        };
+
+        tick[start] = `${ratio * 100}%`;
+
+        ticks.push(tick);
       }
     }
+
+    const tickStyle = (tick: any) => {
+      const style: any = {};
+
+      style[start] = tick[start];
+
+      return style;
+    };
+
+    const barStyle = () => {
+      const style: any = {};
+
+      style[start] = barStart;
+      style[end] = barEnd;
+
+      return style;
+    };
 
     return [
       <slot name="start"></slot>,
       <div class="range-slider" ref={el => this.rangeSlider = el}>
-        {ticks.map(t => (
+        {ticks.map(tick => (
           <div
-            style={{ left: t.left }}
+            style={tickStyle(tick)}
             role="presentation"
             class={{
               'range-tick': true,
-              'range-tick-active': t.active
+              'range-tick-active': tick.active
             }}
           />
         ))}
@@ -365,32 +425,29 @@ export class Range implements ComponentInterface {
         <div
           class="range-bar range-bar-active"
           role="presentation"
-          style={{
-            left: barL,
-            right: barR
-          }}
+          style={barStyle()}
         />
 
-        { renderKnob({
+        { renderKnob(isRTL, {
           knob: 'A',
           pressed: this.pressedKnob === 'A',
           value: this.valA,
           ratio: this.ratioA,
           pin: this.pin,
           disabled: this.disabled,
-          handleKeyboard: this.handleKeyboard.bind(this),
+          handleKeyboard: this.handleKeyboard,
           min,
           max
         })}
 
-        { this.dualKnobs && renderKnob({
+        { this.dualKnobs && renderKnob(isRTL, {
           knob: 'B',
           pressed: this.pressedKnob === 'B',
           value: this.valB,
           ratio: this.ratioB,
           pin: this.pin,
           disabled: this.disabled,
-          handleKeyboard: this.handleKeyboard.bind(this),
+          handleKeyboard: this.handleKeyboard,
           min,
           max
         })}
@@ -401,7 +458,7 @@ export class Range implements ComponentInterface {
 }
 
 interface RangeKnob {
-  knob: string;
+  knob: KnobName;
   value: number;
   ratio: number;
   min: number;
@@ -410,10 +467,20 @@ interface RangeKnob {
   pressed: boolean;
   pin: boolean;
 
-  handleKeyboard: (name: string, isIncrease: boolean) => void;
+  handleKeyboard: (name: KnobName, isIncrease: boolean) => void;
 }
 
-function renderKnob({ knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard }: RangeKnob) {
+function renderKnob(isRTL: boolean, { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard }: RangeKnob) {
+  const start = isRTL ? 'right' : 'left';
+
+  const knobStyle = () => {
+    const style: any = {};
+
+    style[start] = `${ratio * 100}%`;
+
+    return style;
+  };
+
   return (
     <div
       onKeyDown={(ev: KeyboardEvent) => {
@@ -431,13 +498,13 @@ function renderKnob({ knob, value, ratio, min, max, disabled, pressed, pin, hand
       }}
       class={{
         'range-knob-handle': true,
+        'range-knob-a': knob === 'A',
+        'range-knob-b': knob === 'B',
         'range-knob-pressed': pressed,
         'range-knob-min': value === min,
         'range-knob-max': value === max
       }}
-      style={{
-        'left': `${ratio * 100}%`
-      }}
+      style={knobStyle()}
       role="slider"
       tabindex={disabled ? -1 : 0}
       aria-valuemin={min}

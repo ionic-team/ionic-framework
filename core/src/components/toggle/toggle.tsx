@@ -16,15 +16,17 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 export class Toggle implements ComponentInterface {
 
   private inputId = `ion-tg-${toggleIds++}`;
-  private pivotX = 0;
   private gesture?: Gesture;
+  private buttonEl?: HTMLElement;
+  private lastDrag = 0;
 
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
+  @Prop({ context: 'document' }) doc!: Document;
+
   @State() activated = false;
-  @State() keyFocus = false;
 
   /**
    * The mode determines which platform styles to use.
@@ -99,27 +101,6 @@ export class Toggle implements ComponentInterface {
     }
   }
 
-  @Listen('click')
-  onClick() {
-    this.checked = !this.checked;
-  }
-
-  @Listen('keyup')
-  onKeyUp() {
-    this.keyFocus = true;
-  }
-
-  @Listen('focus')
-  onFocus() {
-    this.ionFocus.emit();
-  }
-
-  @Listen('blur')
-  onBlur() {
-    this.keyFocus = false;
-    this.ionBlur.emit();
-  }
-
   componentWillLoad() {
     this.emitStyle();
   }
@@ -130,12 +111,27 @@ export class Toggle implements ComponentInterface {
       queue: this.queue,
       gestureName: 'toggle',
       gesturePriority: 100,
-      threshold: 0,
-      onStart: ev => this.onStart(ev),
+      threshold: 5,
+      passive: false,
+      onStart: () => this.onStart(),
       onMove: ev => this.onMove(ev),
       onEnd: ev => this.onEnd(ev),
     });
     this.disabledChanged();
+  }
+
+  componentDidUnload() {
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
+  }
+
+  @Listen('click')
+  onClick() {
+    if (this.lastDrag + 300 < Date.now()) {
+      this.checked = !this.checked;
+    }
   }
 
   private emitStyle() {
@@ -144,59 +140,65 @@ export class Toggle implements ComponentInterface {
     });
   }
 
-  private onStart(detail: GestureDetail) {
-    this.pivotX = detail.currentX;
+  private onStart() {
     this.activated = true;
 
     // touch-action does not work in iOS
-    detail.event.preventDefault();
-    return true;
+    this.setFocus();
   }
 
   private onMove(detail: GestureDetail) {
-    const currentX = detail.currentX;
-    if (shouldToggle(this.checked, currentX - this.pivotX, -15)) {
+    if (shouldToggle(this.doc, this.checked, detail.deltaX, -10)) {
       this.checked = !this.checked;
-      this.pivotX = currentX;
       hapticSelection();
     }
   }
 
-  private onEnd(detail: GestureDetail) {
-    const delta = detail.currentX - this.pivotX;
-    if (shouldToggle(this.checked, delta, 4)) {
-      this.checked = !this.checked;
-      hapticSelection();
-    }
-
+  private onEnd(ev: GestureDetail) {
     this.activated = false;
+    this.lastDrag = Date.now();
+    ev.event.preventDefault();
+    ev.event.stopImmediatePropagation();
   }
 
   private getValue() {
     return this.value || '';
   }
 
+  private setFocus() {
+    if (this.buttonEl) {
+      this.buttonEl.focus();
+    }
+  }
+
+  private onFocus = () => {
+    this.ionFocus.emit();
+  }
+
+  private onBlur = () => {
+    this.ionBlur.emit();
+  }
+
   hostData() {
-    const labelId = this.inputId + '-lbl';
-    const label = findItemLabel(this.el);
+    const { inputId, disabled, checked, activated, color, el } = this;
+    const labelId = inputId + '-lbl';
+    const label = findItemLabel(el);
     if (label) {
       label.id = labelId;
     }
 
     return {
       'role': 'checkbox',
-      'tabindex': '0',
-      'aria-disabled': this.disabled ? 'true' : null,
-      'aria-checked': `${this.checked}`,
+      'aria-disabled': disabled ? 'true' : null,
+      'aria-checked': `${checked}`,
       'aria-labelledby': labelId,
 
       class: {
-        ...createColorClasses(this.color),
-        'in-item': hostContext('ion-item', this.el),
-        'toggle-activated': this.activated,
-        'toggle-checked': this.checked,
-        'toggle-disabled': this.disabled,
-        'toggle-key': this.keyFocus,
+        ...createColorClasses(color),
+        'in-item': hostContext('ion-item', el),
+        'toggle-activated': activated,
+        'toggle-checked': checked,
+        'toggle-disabled': disabled,
         'interactive': true
       }
     };
@@ -206,16 +208,24 @@ export class Toggle implements ComponentInterface {
     const value = this.getValue();
     renderHiddenInput(true, this.el, this.name, (this.checked ? value : ''), this.disabled);
 
-    return (
+    return [
       <div class="toggle-icon">
         <div class="toggle-inner"/>
-      </div>
-    );
+      </div>,
+      <button
+        type="button"
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+        disabled={this.disabled}
+        ref={el => this.buttonEl = el}
+      >
+      </button>
+    ];
   }
 }
 
-function shouldToggle(checked: boolean, deltaX: number, margin: number): boolean {
-  const isRTL = document.dir === 'rtl';
+function shouldToggle(doc: HTMLDocument, checked: boolean, deltaX: number, margin: number): boolean {
+  const isRTL = doc.dir === 'rtl';
 
   if (checked) {
     return (!isRTL && (margin > deltaX)) ||

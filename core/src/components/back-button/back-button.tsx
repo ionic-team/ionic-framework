@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
 
 import { Color, Config, Mode } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
@@ -45,6 +45,7 @@ export class BackButton implements ComponentInterface {
    */
   @Prop() text?: string | null;
 
+  @Listen('click')
   async onClick(ev: Event) {
     const nav = this.el.closest('ion-nav');
     ev.preventDefault();
@@ -78,7 +79,6 @@ export class BackButton implements ComponentInterface {
       <button
         type="button"
         class="button-native"
-        onClick={(ev: Event) => this.onClick(ev)}
       >
         <span class="button-inner">
           {backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false}></ion-icon>}

@@ -4,7 +4,7 @@ An Action Sheet is a dialog that displays a set of options. It appears on top of
 
 ### Creating
 
-An action sheet can be created by the [Action Sheet Controller](../../action-sheet-controller/ActionSheetController) from an array of `buttons`, with each button including properties for its `text`, and optionally a `handler` and `role`. If a handler returns `false` then the action sheet will not be dismissed. An action sheet can also optionally have a `title`, `subTitle` and an `icon`.
+An action sheet can be created by the [Action Sheet Controller](../action-sheet-controller) from an array of `buttons`, with each button including properties for its `text`, and optionally a `handler` and `role`. If a handler returns `false` then the action sheet will not be dismissed. An action sheet can also optionally have a `title`, `subTitle` and an `icon`.
 
 ### Buttons
 
@@ -123,22 +123,89 @@ async function presentActionSheet() {
 ```
 
 
+### React
+
+```typescript
+import React, { Component } from 'react'
+import { IonActionSheet } from '@ionic/react';
+
+type Props = {}
+type State = {
+  showActionSheet: boolean
+}
+
+export default class ActionSheetExample extends Component<Props, State> {
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      showActionSheet: false
+    };
+  }
+
+  render() {
+    return (
+      <IonActionSheet
+        isOpen={this.state.showActionSheet}
+        onDidDismiss={() => this.setState(() => ({ showActionSheet: false }))}
+        buttons={[{
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            console.log('Delete clicked');
+          }
+        }, {
+          text: 'Share',
+          icon: 'share',
+          handler: () => {
+            console.log('Share clicked');
+          }
+        }, {
+          text: 'Play (open modal)',
+          icon: 'arrow-dropright-circle',
+          handler: () => {
+            console.log('Play clicked');
+          }
+        }, {
+          text: 'Favorite',
+          icon: 'heart',
+          handler: () => {
+            console.log('Favorite clicked');
+          }
+        }, {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }]}
+      >
+      </IonActionSheet>
+    );
+  }
+}
+
+```
+
+
 
 ## Properties
 
-| Property               | Attribute          | Description                                                                                                      | Type                                                                                   | Default     |
-| ---------------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ----------- |
-| `animated`             | `animated`         | If `true`, the action sheet will animate.                                                                        | `boolean`                                                                              | `true`      |
-| `backdropDismiss`      | `backdrop-dismiss` | If `true`, the action sheet will be dismissed when the backdrop is clicked.                                      | `boolean`                                                                              | `true`      |
-| `buttons` _(required)_ | --                 | An array of buttons for the action sheet.                                                                        | `(string \| ActionSheetButton)[]`                                                      | `undefined` |
-| `cssClass`             | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string \| string[] \| undefined`                                                      | `undefined` |
-| `enterAnimation`       | --                 | Animation to use when the action sheet is presented.                                                             | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
-| `header`               | `header`           | Title for the action sheet.                                                                                      | `string \| undefined`                                                                  | `undefined` |
-| `keyboardClose`        | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                                                                              | `true`      |
-| `leaveAnimation`       | --                 | Animation to use when the action sheet is dismissed.                                                             | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
-| `mode`                 | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                                                                        | `undefined` |
-| `subHeader`            | `sub-header`       | Subtitle for the action sheet.                                                                                   | `string \| undefined`                                                                  | `undefined` |
-| `translucent`          | `translucent`      | If `true`, the action sheet will be translucent.                                                                 | `boolean`                                                                              | `false`     |
+| Property               | Attribute          | Description                                                                                                                     | Type                                                                                   | Default     |
+| ---------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ----------- |
+| `animated`             | `animated`         | If `true`, the action sheet will animate.                                                                                       | `boolean`                                                                              | `true`      |
+| `backdropDismiss`      | `backdrop-dismiss` | If `true`, the action sheet will be dismissed when the backdrop is clicked.                                                     | `boolean`                                                                              | `true`      |
+| `buttons` _(required)_ | --                 | An array of buttons for the action sheet.                                                                                       | `(string \| ActionSheetButton)[]`                                                      | `undefined` |
+| `cssClass`             | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.                | `string \| string[] \| undefined`                                                      | `undefined` |
+| `enterAnimation`       | --                 | Animation to use when the action sheet is presented.                                                                            | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
+| `header`               | `header`           | Title for the action sheet.                                                                                                     | `string \| undefined`                                                                  | `undefined` |
+| `keyboardClose`        | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                          | `boolean`                                                                              | `true`      |
+| `leaveAnimation`       | --                 | Animation to use when the action sheet is dismissed.                                                                            | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
+| `mode`                 | `mode`             | The mode determines which platform styles to use.                                                                               | `"ios" \| "md"`                                                                        | `undefined` |
+| `subHeader`            | `sub-header`       | Subtitle for the action sheet.                                                                                                  | `string \| undefined`                                                                  | `undefined` |
+| `translucent`          | `translucent`      | If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports backdrop-filter. | `boolean`                                                                              | `false`     |
 
 
 ## Events
