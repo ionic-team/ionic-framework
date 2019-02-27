@@ -9,7 +9,7 @@ If `value` is set on the `<ion-select>`, the selected option will be chosen base
 
 ## Interfaces
 
-By default, select uses the [AlertController API](../../alert/AlertController) to open up the overlay of options in an alert. The interface can be changed to use the [ActionSheetController API](../../action-sheet/ActionSheetController) or [PopoverController API](../../popover/PopoverController) by passing `action-sheet` or `popover`, respectively, to the `interface` property. Read on to the other sections for the limitations of the different interfaces.
+By default, select uses the [AlertController API](../alert-controller) to open up the overlay of options in an alert. The interface can be changed to use the [ActionSheetController API](../action-sheet-controller) or [PopoverController API](../popover-controller) by passing `action-sheet` or `popover`, respectively, to the `interface` property. Read on to the other sections for the limitations of the different interfaces.
 
 
 ## Single Selection
@@ -33,7 +33,7 @@ The `action-sheet` and `popover` interfaces do not have an `OK` button, clicking
 
 ## Interface Options
 
-Since select uses the alert, action sheet and popover interfaces, options can be passed to these components through the `interfaceOptions` property. This can be used to pass a custom header, subheader, css class, and more. See the [AlertController API docs](../../alert/AlertController/#create), [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create), and [PopoverController API docs](../../popover/PopoverController/#create) for the properties that each interface accepts.
+Since select uses the alert, action sheet and popover interfaces, options can be passed to these components through the `interfaceOptions` property. This can be used to pass a custom header, subheader, css class, and more. See the [AlertController API docs](../alert-controller), [ActionSheetController API docs](../action-sheet-controller), and [PopoverController API docs](../popover-controller) for the properties that each interface accepts.
 
 
 <!-- Auto Generated Below -->
@@ -313,6 +313,143 @@ var customActionSheetOptions = {
   subHeader: 'Select your favorite color'
 };
 customActionSheetSelect.interfaceOptions = customActionSheetOptions;
+```
+
+
+### React
+
+```tsx
+import React from 'react';
+
+import { IonList, IonListHeader, IonItem, IonLabel, IonSelect, IonSelectOption } from '@ionic/react';
+
+const customAlertOptions = {
+  header: 'Pizza Toppings',
+  subHeader: 'Select your toppings',
+  message: '$1.00 per topping',
+  translucent: true
+};
+
+const customPopoverOptions = {
+  header: 'Hair Color',
+  subHeader: 'Select your hair color',
+  message: 'Only select your dominant hair color'
+};
+
+const customActionSheetOptions = {
+  header: 'Colors',
+  subHeader: 'Select your favorite color'
+};
+
+const Example: React.SFC<{}> = () => (
+  <>
+    ## Single Selection
+
+
+    <IonList>
+      <IonListHeader>Single Selection</IonListHeader>
+
+      <IonItem>
+        <IonLabel>Gender</IonLabel>
+        <IonSelect placeholder="Select One">
+          <IonSelectOption value="f">Female</IonSelectOption>
+          <IonSelectOption value="m">Male</IonSelectOption>
+        </IonSelect>
+      </IonItem>
+
+      <IonItem>
+        <IonLabel>Hair Color</IonLabel>
+        <IonSelect value="brown" okText="Okay" cancelText="Dismiss">
+          <IonSelectOption value="brown">Brown</IonSelectOption>
+          <IonSelectOption value="blonde">Blonde</IonSelectOption>
+          <IonSelectOption value="black">Black</IonSelectOption>
+          <IonSelectOption value="red">Red</IonSelectOption>
+        </IonSelect>
+      </IonItem>
+    </IonList>
+
+
+    ## Multiple Selection
+
+
+    <IonList>
+      <IonListHeader>Multiple Selection</IonListHeader>
+
+      <IonItem>
+        <IonLabel>Toppings</IonLabel>
+        <IonSelect multiple={true} cancelText="Nah" okText="Okay!">
+          <IonSelectOption value="bacon">Bacon</IonSelectOption>
+          <IonSelectOption value="olives">Black Olives</IonSelectOption>
+          <IonSelectOption value="xcheese">Extra Cheese</IonSelectOption>
+          <IonSelectOption value="peppers">Green Peppers</IonSelectOption>
+          <IonSelectOption value="mushrooms">Mushrooms</IonSelectOption>
+          <IonSelectOption value="onions">Onions</IonSelectOption>
+          <IonSelectOption value="pepperoni">Pepperoni</IonSelectOption>
+          <IonSelectOption value="pineapple">Pineapple</IonSelectOption>
+          <IonSelectOption value="sausage">Sausage</IonSelectOption>
+          <IonSelectOption value="Spinach">Spinach</IonSelectOption>
+        </IonSelect>
+      </IonItem>
+
+      <IonItem>
+        <IonLabel>Pets</IonLabel>
+        <IonSelect multiple={true}>
+          <IonSelectOption value="bird" selected>Bird</IonSelectOption>
+          <IonSelectOption value="cat">Cat</IonSelectOption>
+          <IonSelectOption value="dog" selected>Dog</IonSelectOption>
+          <IonSelectOption value="honeybadger">Honey Badger</IonSelectOption>
+        </IonSelect>
+      </IonItem>
+    </IonList>
+
+
+    ## Interface Options
+
+
+    <IonList>
+      <IonListHeader>Interface Options</IonListHeader>
+
+      <IonItem>
+        <IonLabel>Alert</IonLabel>
+        <IonSelect interfaceOptions={customAlertOptions} interface="alert" multiple={true} placeholder="Select One">
+          <IonSelectOption value="bacon">Bacon</IonSelectOption>
+          <IonSelectOption value="olives">Black Olives</IonSelectOption>
+          <IonSelectOption value="xcheese">Extra Cheese</IonSelectOption>
+          <IonSelectOption value="peppers">Green Peppers</IonSelectOption>
+          <IonSelectOption value="mushrooms">Mushrooms</IonSelectOption>
+          <IonSelectOption value="onions">Onions</IonSelectOption>
+          <IonSelectOption value="pepperoni">Pepperoni</IonSelectOption>
+          <IonSelectOption value="pineapple">Pineapple</IonSelectOption>
+          <IonSelectOption value="sausage">Sausage</IonSelectOption>
+          <IonSelectOption value="Spinach">Spinach</IonSelectOption>
+        </IonSelect>
+      </IonItem>
+
+      <IonItem>
+        <IonLabel>Popover</IonLabel>
+        <IonSelect interfaceOptions={customPopoverOptions} interface="popover" placeholder="Select One">
+          <IonSelectOption value="brown">Brown</IonSelectOption>
+          <IonSelectOption value="blonde">Blonde</IonSelectOption>
+          <IonSelectOption value="black">Black</IonSelectOption>
+          <IonSelectOption value="red">Red</IonSelectOption>
+        </IonSelect>
+      </IonItem>
+
+      <IonItem>
+        <IonLabel>Action Sheet</IonLabel>
+        <IonSelect interfaceOptions={customActionSheetOptions} interface="action-sheet" placeholder="Select One">
+          <IonSelectOption value="red">Red</IonSelectOption>
+          <IonSelectOption value="purple">Purple</IonSelectOption>
+          <IonSelectOption value="yellow">Yellow</IonSelectOption>
+          <IonSelectOption value="orange">Orange</IonSelectOption>
+          <IonSelectOption value="green">Green</IonSelectOption>
+        </IonSelect>
+      </IonItem>
+    </IonList>
+  </>
+);
+
+export default Example;
 ```
 
 

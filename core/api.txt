@@ -999,6 +999,7 @@ ion-slides,method,slideTo,slideTo(index: number, speed?: number | undefined, run
 ion-slides,method,startAutoplay,startAutoplay() => Promise<void>
 ion-slides,method,stopAutoplay,stopAutoplay() => Promise<void>
 ion-slides,method,update,update() => Promise<void>
+ion-slides,method,updateAutoHeight,updateAutoHeight(speed?: number | undefined) => Promise<void>
 ion-slides,event,ionSlideDidChange,void,true
 ion-slides,event,ionSlideDoubleTap,void,true
 ion-slides,event,ionSlideDrag,void,true

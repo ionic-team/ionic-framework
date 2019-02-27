@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-test('select: basic', async () => {
+test.skip('select: basic', async () => {
   const page = await newE2EPage({
     url: '/src/components/select/test/basic?ionic:_testing=true'
   });

@@ -3,26 +3,30 @@
 
 // Float Elements
 // --------------------------------------------------
-// Creates float attributes based on screen size
+// Creates float classes based on screen size
 
 @each $breakpoint in map-keys($screen-breakpoints) {
   $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
 
   @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
-    // Provide `[float-{bp}]` attributes for floating the element based
-    // on the breakpoint
+    // Provide `.ion-float-{bp}-{side}` classes for floating the element based
+    // on the breakpoint and side
+    .ion-float#{$infix}-left,
     [float#{$infix}-left] {
       @include float(left, !important);
     }
 
+    .ion-float#{$infix}-right,
     [float#{$infix}-right] {
       @include float(right, !important);
     }
 
+    .ion-float#{$infix}-start,
     [float#{$infix}-start] {
       @include float(start, !important);
     }
 
+    .ion-float#{$infix}-end,
     [float#{$infix}-end] {
       @include float(end, !important);
     }
