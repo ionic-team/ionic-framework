@@ -27,6 +27,8 @@ export class Toggle implements ComponentInterface {
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
+  @Prop({ context: 'document' }) doc!: Document;
+
   @State() activated = false;
 
   /**
@@ -144,7 +146,7 @@ export class Toggle implements ComponentInterface {
   }
 
   private onMove(detail: GestureDetail) {
-    if (shouldToggle(this.checked, detail.deltaX, -10)) {
+    if (shouldToggle(this.doc, this.checked, detail.deltaX, -10)) {
       this.checked = !this.checked;
       hapticSelection();
     }
@@ -220,8 +222,8 @@ export class Toggle implements ComponentInterface {
   }
 }
 
-function shouldToggle(checked: boolean, deltaX: number, margin: number): boolean {
-  const isRTL = document.dir === 'rtl';
+function shouldToggle(doc: HTMLDocument, checked: boolean, deltaX: number, margin: number): boolean {
+  const isRTL = doc.dir === 'rtl';
 
   if (checked) {
     return (!isRTL && (margin > deltaX)) ||

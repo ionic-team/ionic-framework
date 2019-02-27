@@ -3281,10 +3281,6 @@ export namespace Components {
     */
     'name': string;
     /**
-    * The neutral point of the range slider. Default: value is `0` or the `min` when `neutralPoint < min` or `max` when `max < neutralPoint`.
-    */
-    'neutralPoint': number;
-    /**
     * If `true`, a pin with integer value is shown when the knob is pressed.
     */
     'pin': boolean;
@@ -3299,7 +3295,7 @@ export namespace Components {
     /**
     * the value of the range.
     */
-    'value': RangeValue | null;
+    'value': RangeValue;
   }
   interface IonRangeAttributes extends JSXElements.HTMLAttributes {
     /**
@@ -3335,10 +3331,6 @@ export namespace Components {
     */
     'name'?: string;
     /**
-    * The neutral point of the range slider. Default: value is `0` or the `min` when `neutralPoint < min` or `max` when `max < neutralPoint`.
-    */
-    'neutralPoint'?: number;
-    /**
     * Emitted when the range loses focus.
     */
     'onIonBlur'?: (event: CustomEvent<void>) => void;
@@ -3365,7 +3357,7 @@ export namespace Components {
     /**
     * the value of the range.
     */
-    'value'?: RangeValue | null;
+    'value'?: RangeValue;
   }
 
   interface IonRefresherContent {
