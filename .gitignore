@@ -53,6 +53,7 @@ demos/src/**/*.css.shim.ts
 # stencil
 angular/css/
 core/css/
+core/hydrate/
 core/loader/
 .stencil/
 angular/build/
