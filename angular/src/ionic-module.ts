@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
 import { IonicConfig } from '@ionic/core';
 
@@ -141,7 +141,8 @@ export class IonicModule {
           useFactory: appInitialize,
           multi: true,
           deps: [
-            ConfigToken
+            ConfigToken,
+            DOCUMENT
           ]
         }
       ]

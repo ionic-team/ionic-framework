@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable } from '@angular/core';
 
 import { proxyMethod } from '../util/util';
 
@@ -8,13 +9,16 @@ const CTRL = 'ion-menu-controller';
 })
 export class MenuController {
 
+  constructor(@Inject(DOCUMENT) private doc: any) {
+  }
+
   /**
    * Programmatically open the Menu.
    * @param [menuId]  Optionally get the menu by its id, or side.
    * @return returns a promise when the menu is fully opened
    */
   open(menuId?: string): Promise<boolean> {
-    return proxyMethod(CTRL, 'open', menuId);
+    return proxyMethod(CTRL, this.doc, 'open', menuId);
   }
 
   /**
@@ -25,7 +29,7 @@ export class MenuController {
    * @return returns a promise when the menu is fully closed
    */
   close(menuId?: string): Promise<boolean> {
-    return proxyMethod(CTRL, 'close', menuId);
+    return proxyMethod(CTRL, this.doc, 'close', menuId);
   }
 
   /**
@@ -35,7 +39,7 @@ export class MenuController {
    * @return returns a promise when the menu has been toggled
    */
   toggle(menuId?: string): Promise<boolean> {
-    return proxyMethod(CTRL, 'toggle', menuId);
+    return proxyMethod(CTRL, this.doc, 'toggle', menuId);
   }
 
   /**
@@ -47,7 +51,7 @@ export class MenuController {
    * @return Returns the instance of the menu, which is useful for chaining.
    */
   enable(shouldEnable: boolean, menuId?: string): Promise<HTMLIonMenuElement> {
-    return proxyMethod(CTRL, 'enable', shouldEnable, menuId);
+    return proxyMethod(CTRL, this.doc, 'enable', shouldEnable, menuId);
   }
 
   /**
@@ -57,7 +61,7 @@ export class MenuController {
    * @return Returns the instance of the menu, which is useful for chaining.
    */
   swipeEnable(shouldEnable: boolean, menuId?: string): Promise<HTMLIonMenuElement> {
-    return proxyMethod(CTRL, 'swipeEnable', shouldEnable, menuId);
+    return proxyMethod(CTRL, this.doc, 'swipeEnable', shouldEnable, menuId);
   }
 
   /**
@@ -66,7 +70,7 @@ export class MenuController {
    * If the menuId is not specified, it returns true if ANY menu is currenly open.
    */
   isOpen(menuId?: string): Promise<boolean> {
-    return proxyMethod(CTRL, 'isOpen', menuId);
+    return proxyMethod(CTRL, this.doc, 'isOpen', menuId);
   }
 
   /**
@@ -74,7 +78,7 @@ export class MenuController {
    * @return Returns true if the menu is currently enabled, otherwise false.
    */
   isEnabled(menuId?: string): Promise<boolean> {
-    return proxyMethod(CTRL, 'isEnabled', menuId);
+    return proxyMethod(CTRL, this.doc, 'isEnabled', menuId);
   }
 
   /**
@@ -87,20 +91,20 @@ export class MenuController {
    * @return Returns the instance of the menu if found, otherwise `null`.
    */
   get(menuId?: string): Promise<HTMLIonMenuElement> {
-    return proxyMethod(CTRL, 'get', menuId);
+    return proxyMethod(CTRL, this.doc, 'get', menuId);
   }
 
   /**
    * @return Returns the instance of the menu already opened, otherwise `null`.
    */
   getOpen(): Promise<HTMLIonMenuElement> {
-    return proxyMethod(CTRL, 'getOpen');
+    return proxyMethod(CTRL, this.doc, 'getOpen');
   }
 
   /**
    * @return Returns an array of all menu instances.
    */
   getMenus(): Promise<HTMLIonMenuElement[]> {
-    return proxyMethod(CTRL, 'getMenus');
+    return proxyMethod(CTRL, this.doc, 'getMenus');
   }
 }
