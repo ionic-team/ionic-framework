@@ -20,14 +20,13 @@ export class SkeletonText implements ComponentInterface {
   @Prop() animated = false;
 
   /**
-   * @deprecated - use CSS instead
-   * The width of the skeleton text. If supplied, it will override the CSS style.
+   * @deprecated - Use CSS instead. The width of the skeleton text. If supplied, it will override the CSS style.
    */
   @Prop() width?: string;
 
   calculateWidth() {
     // If width was passed in to the property use that first
-    if (this.width) {
+    if (this.width !== undefined) {
       return {
         style: {
           width: this.width
