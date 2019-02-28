@@ -15,7 +15,7 @@
   --background: #{$checkbox-md-icon-background-color-off};
 
   // Transition
-  --transition: #{$checkbox-md-transition-duration $checkbox-md-transition-easing};
+  --transition: #{background $checkbox-md-transition-duration $checkbox-md-transition-easing};
 
   // Size
   --size: #{$checkbox-md-icon-size};

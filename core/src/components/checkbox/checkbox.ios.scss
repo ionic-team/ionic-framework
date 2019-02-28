@@ -39,6 +39,8 @@
   @include margin($checkbox-ios-item-end-margin-top, $checkbox-ios-item-end-margin-end, $checkbox-ios-item-end-margin-bottom, $checkbox-ios-item-end-margin-start);
 
   display: block;
+
+  position: static;
 }
 
 :host(.in-item[slot="start"]) {
