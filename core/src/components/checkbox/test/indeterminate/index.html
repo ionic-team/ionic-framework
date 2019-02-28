@@ -11,7 +11,7 @@
   <script src="../../../../../dist/ionic.js"></script>
 </head>
 
-<body>
+<body onLoad="onLoad()">
   <ion-app>
 
     <ion-header>
@@ -21,6 +21,40 @@
     </ion-header>
 
     <ion-content id="content">
+      <ion-list-header>
+        Native
+      </ion-list-header>
+
+      <div class="ion-padding-start">
+        <!-- Default to unchecked -->
+        <label for="unchecked">Unchecked</label>
+        <input name="unchecked" type="checkbox">
+        <br>
+
+        <!-- Default to checked -->
+        <label for="checked">Checked</label>
+        <input name="checked" type="checkbox" checked/>
+        <br>
+
+        <!-- Default to indeterminate -->
+        <label for="indeterminate">Indeterminate</label>
+        <input name="indeterminate" type="checkbox" class="indeterminate">
+        <br>
+
+        <!-- Default to checked / indeterminate -->
+        <label for="both">Checked / Indeterminate</label>
+        <input name="both" type="checkbox" checked class="indeterminate">
+        <br>
+      </div>
+
+      <ion-list-header>
+        Ionic
+      </ion-list-header>
+      <ion-item>
+        <ion-label>Unchecked</ion-label>
+        <ion-checkbox slot="end"></ion-checkbox>
+      </ion-item>
+
       <ion-item>
         <ion-label>Checked</ion-label>
         <ion-checkbox slot="end" checked></ion-checkbox>
@@ -32,12 +66,21 @@
       </ion-item>
 
       <ion-item>
-        <ion-label>Indeterminate Checked</ion-label>
+        <ion-label>Checked / Indeterminate</ion-label>
         <ion-checkbox slot="end" checked indeterminate></ion-checkbox>
       </ion-item>
     </ion-content>
 
   </ion-app>
 </body>
+
+<script>
+  var checkboxes = document.getElementsByClassName("indeterminate");
+
+  for (var i = 0; i < checkboxes.length; i++) {
+    var checkbox = checkboxes[i];
+    checkbox.indeterminate = true;
+  }
+</script>
 
 </html>
