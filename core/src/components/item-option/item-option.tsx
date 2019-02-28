@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Listen, Prop, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, getMode, h } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -50,44 +50,42 @@ export class ItemOption implements ComponentInterface {
    */
   @Prop() href?: string;
 
-  @Listen('click')
-  onClick(ev: Event) {
+  private onClick = (ev: Event) => {
     const el = (ev.target as HTMLElement).closest('ion-item-option');
     if (el) {
       ev.preventDefault();
     }
   }
 
-  hostData() {
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        'item-option-expandable': this.expandable,
-        'ion-activatable': true,
-      }
-    };
-  }
-
   render() {
     const TagType = this.href === undefined ? 'button' : 'a' as any;
 
     return (
-      <TagType
-        type="button"
-        class="button-native"
-        disabled={this.disabled}
-        href={this.href}
+      <Host
+        onClick={this.onClick}
+        class={{
+          ...createColorClasses(this.color),
+          'item-option-expandable': this.expandable,
+          'ion-activatable': true,
+        }}
       >
-        <span class="button-inner">
-          <slot name="start"></slot>
-          <slot name="top" />
-          <slot name="icon-only" />
-          <slot></slot>
-          <slot name="bottom" />
-          <slot name="end"></slot>
-        </span>
-        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-      </TagType>
+        <TagType
+          type="button"
+          class="button-native"
+          disabled={this.disabled}
+          href={this.href}
+        >
+          <span class="button-inner">
+            <slot name="start"></slot>
+            <slot name="top" />
+            <slot name="icon-only" />
+            <slot></slot>
+            <slot name="bottom" />
+            <slot name="end"></slot>
+          </span>
+          {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+        </TagType>
+      </Host>
     );
   }
 }

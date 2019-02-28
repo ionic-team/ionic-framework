@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Listen, Prop, State, h } from '@stencil/core';
+import { Component, ComponentInterface, Listen, Prop, State, h, Host } from '@stencil/core';
 
 @Component({
   tag: 'ion-menu-toggle',
@@ -33,17 +33,6 @@ export class MenuToggle implements ComponentInterface {
     return this.updateVisibility();
   }
 
-  @Listen('click')
-  async onClick() {
-    const menuCtrl = await getMenuController(this.doc);
-    if (menuCtrl) {
-      const menu = await menuCtrl.get(this.menu);
-      if (menu) {
-        menuCtrl.toggle(this.menu);
-      }
-    }
-  }
-
   @Listen('ionMenuChange', { target: 'body' })
   @Listen('ionSplitPaneVisible', { target: 'body' })
   async updateVisibility() {
@@ -58,18 +47,29 @@ export class MenuToggle implements ComponentInterface {
     this.visible = false;
   }
 
-  hostData() {
-    const hidden = this.autoHide && !this.visible;
-    return {
-      'aria-hidden': hidden ? 'true' : null,
-      class: {
-        'menu-toggle-hidden': hidden,
+  private onClick = async () => {
+    const menuCtrl = await getMenuController(this.doc);
+    if (menuCtrl) {
+      const menu = await menuCtrl.get(this.menu);
+      if (menu) {
+        menuCtrl.toggle(this.menu);
       }
-    };
+    }
   }
 
   render() {
-    return <slot></slot>;
+    const hidden = this.autoHide && !this.visible;
+    return (
+      <Host
+        aria-hidden={hidden ? 'true' : null}
+        onClick={this.onClick}
+        class={{
+          'menu-toggle-hidden': hidden,
+        }}
+      >
+        <slot></slot>;
+      </Host>
+    );
   }
 }
 

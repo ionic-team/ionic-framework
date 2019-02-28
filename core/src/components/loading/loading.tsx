@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, getMode, h } from '@stencil/core';
 
 import { config } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, Mode, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
@@ -115,11 +115,6 @@ export class Loading implements ComponentInterface, OverlayInterface {
     }
   }
 
-  @Listen('ionBackdropTap')
-  protected onBackdropTap() {
-    this.dismiss(undefined, BACKDROP);
-  }
-
   /**
    * Present the loading overlay after it has been created.
    */
@@ -162,30 +157,34 @@ export class Loading implements ComponentInterface, OverlayInterface {
     return eventMethod(this.el, 'ionLoadingWillDismiss');
   }
 
-  hostData() {
-    return {
-      style: {
-        zIndex: 40000 + this.overlayIndex
-      },
-      class: {
-        ...getClassMap(this.cssClass),
-        'loading-translucent': this.translucent
-      }
-    };
+
+  private onBackdropTap = () => {
+    this.dismiss(undefined, BACKDROP);
   }
 
   render() {
-    return [
-      <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss} />,
-      <div class="loading-wrapper" role="dialog">
-        {this.spinner && (
-          <div class="loading-spinner">
-            <ion-spinner name={this.spinner} />
-          </div>
-        )}
+    return (
+      <Host
+        onIonBackdropTap={this.onBackdropTap}
+        style={{
+          zIndex: 40000 + this.overlayIndex
+        }}
+        class={{
+          ...getClassMap(this.cssClass),
+          'loading-translucent': this.translucent
+        }}
+      >
+        <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss} />
+        <div class="loading-wrapper" role="dialog">
+          {this.spinner && (
+            <div class="loading-spinner">
+              <ion-spinner name={this.spinner} />
+            </div>
+          )}
 
-        {this.message && <div class="loading-content">{this.message}</div>}
-      </div>
-    ];
+          {this.message && <div class="loading-content">{this.message}</div>}
+        </div>
+      </Host>
+    );
   }
 }

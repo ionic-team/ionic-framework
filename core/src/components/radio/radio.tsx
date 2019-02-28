@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, Watch, h } from '@stencil/core';
 
 import { Color, RadioChangeEventDetail, StyleEventDetail } from '../../interface';
 import { findItemLabel } from '../../utils/helpers';
@@ -120,20 +120,19 @@ export class Radio implements ComponentInterface {
     this.ionRadioDidUnload.emit();
   }
 
-  @Listen('click')
-  onClick() {
-    if (this.checked) {
-      this.ionDeselect.emit();
-    } else {
-      this.checked = true;
-    }
-  }
-
   private emitStyle() {
     this.ionStyle.emit({
       'radio-checked': this.checked,
       'interactive-disabled': this.disabled,
     });
+  }
+
+  private onClick = () => {
+    if (this.checked) {
+      this.ionDeselect.emit();
+    } else {
+      this.checked = true;
+    }
   }
 
   private onFocus = () => {
@@ -144,41 +143,40 @@ export class Radio implements ComponentInterface {
     this.ionBlur.emit();
   }
 
-  hostData() {
+  render() {
     const { inputId, disabled, checked, color, el } = this;
     const labelId = inputId + '-lbl';
     const label = findItemLabel(el);
     if (label) {
       label.id = labelId;
     }
-    return {
-      'role': 'radio',
-      'aria-disabled': disabled ? 'true' : null,
-      'aria-checked': `${checked}`,
-      'aria-labelledby': labelId,
-      class: {
-        ...createColorClasses(color),
-        'in-item': hostContext('ion-item', el),
-        'interactive': true,
-        'radio-checked': checked,
-        'radio-disabled': disabled,
-      }
-    };
-  }
-
-  render() {
-    return [
-      <div class="radio-icon">
-        <div class="radio-inner"/>
-      </div>,
-      <button
-        type="button"
-        onFocus={this.onFocus}
-        onBlur={this.onBlur}
-        disabled={this.disabled}
+    return (
+      <Host
+        role="radio"
+        aria-disabled={disabled ? 'true' : null}
+        aria-checked={`${checked}`}
+        aria-labelledby={labelId}
+        onClick={this.onClick}
+        class={{
+          ...createColorClasses(color),
+          'in-item': hostContext('ion-item', el),
+          'interactive': true,
+          'radio-checked': checked,
+          'radio-disabled': disabled,
+        }}
       >
-      </button>,
-    ];
+        <div class="radio-icon">
+          <div class="radio-inner"/>
+        </div>,
+        <button
+          type="button"
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+          disabled={this.disabled}
+        >
+        </button>,
+      </Host>
+    );
   }
 }
 

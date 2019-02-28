@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, getMode, h, Host } from '@stencil/core';
 
 import { config } from '../../global/ionic-global';
 import { Mode, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
@@ -61,20 +61,6 @@ export class TabButton implements ComponentInterface {
     this.selected = this.tab === ev.detail.tab;
   }
 
-  @Listen('click')
-  onClick(ev: Event) {
-    if (this.tab !== undefined) {
-      if (!this.disabled) {
-        this.ionTabButtonClick.emit({
-          tab: this.tab,
-          href: this.href,
-          selected: this.selected
-        });
-      }
-      ev.preventDefault();
-    }
-  }
-
   componentWillLoad() {
     if (this.layout === undefined) {
       this.layout = config.get('tabButtonLayout', 'icon-top');
@@ -89,32 +75,43 @@ export class TabButton implements ComponentInterface {
     return !!this.el.querySelector('ion-icon');
   }
 
-  hostData() {
-    const { disabled, hasIcon, hasLabel, layout, selected, tab } = this;
-    return {
-      'role': 'tab',
-      'aria-selected': selected ? 'true' : null,
-      'id': tab !== undefined ? `tab-button-${tab}` : null,
-      class: {
-        'tab-selected': selected,
-        'tab-disabled': disabled,
-        'tab-has-label': hasLabel,
-        'tab-has-icon': hasIcon,
-        'tab-has-label-only': hasLabel && !hasIcon,
-        'tab-has-icon-only': hasIcon && !hasLabel,
-        [`tab-layout-${layout}`]: true,
-        'ion-activatable': true,
+  private onClick = (ev: Event) => {
+    if (this.tab !== undefined) {
+      if (!this.disabled) {
+        this.ionTabButtonClick.emit({
+          tab: this.tab,
+          href: this.href,
+          selected: this.selected
+        });
       }
-    };
+      ev.preventDefault();
+    }
   }
 
   render() {
-    const { mode, href } = this;
+    const { mode, href, disabled, hasIcon, hasLabel, layout, selected, tab } = this;
     return (
-      <a href={href}>
-        <slot></slot>
-        {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
-      </a>
+      <Host
+        role="tab"
+        aria-selected={selected ? 'true' : null}
+        id={tab !== undefined ? `tab-button-${tab}` : null}
+        onClick={this.onClick}
+        class={{
+          'tab-selected': selected,
+          'tab-disabled': disabled,
+          'tab-has-label': hasLabel,
+          'tab-has-icon': hasIcon,
+          'tab-has-label-only': hasLabel && !hasIcon,
+          'tab-has-icon-only': hasIcon && !hasLabel,
+          [`tab-layout-${layout}`]: true,
+          'ion-activatable': true,
+        }}
+      >
+        <a href={href}>
+          <slot></slot>
+          {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
+        </a>
+      </Host>
     );
   }
 }

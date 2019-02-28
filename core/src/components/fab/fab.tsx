@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Listen, Method, Prop, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Method, Prop, Watch, h } from '@stencil/core';
 
 @Component({
   tag: 'ion-fab',
@@ -49,14 +49,6 @@ export class Fab implements ComponentInterface {
     }
   }
 
-  @Listen('click')
-  onClick() {
-    const hasList = !!this.el.querySelector('ion-fab-list');
-    if (hasList) {
-      this.activated = !this.activated;
-    }
-  }
-
   /**
    * Close an active FAB list container
    */
@@ -65,18 +57,26 @@ export class Fab implements ComponentInterface {
     this.activated = false;
   }
 
-  hostData() {
-    return {
-      class: {
-        [`fab-horizontal-${this.horizontal}`]: this.horizontal !== undefined,
-        [`fab-vertical-${this.vertical}`]: this.vertical !== undefined,
-        'fab-edge': this.edge
-      }
-    };
+  private onClick = () => {
+    const hasList = !!this.el.querySelector('ion-fab-list');
+    if (hasList) {
+      this.activated = !this.activated;
+    }
   }
 
   render() {
-    return <slot></slot>;
+    return (
+      <Host
+        onClick={this.onClick}
+        class={{
+          [`fab-horizontal-${this.horizontal}`]: this.horizontal !== undefined,
+          [`fab-vertical-${this.vertical}`]: this.vertical !== undefined,
+          'fab-edge': this.edge
+        }}
+      >
+        <slot></slot>
+      </Host>
+    );
   }
 
 }

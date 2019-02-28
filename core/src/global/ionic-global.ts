@@ -5,8 +5,7 @@ import { isPlatform, setupPlatforms } from '../utils/platform';
 
 import { Config, configFromSession, configFromURL, saveConfig } from './config';
 
-declare const Context: any;
-
+const Context: any = {};
 const win = typeof (window as any) !== 'undefined' ? window : {} as Window;
 
 const Ionic = (win as any)['Ionic'] = (win as any)['Ionic'] || {};

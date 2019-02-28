@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, getMode, h } from '@stencil/core';
 
 import { Color, Mode, RouterDirection } from '../../interface';
 import { hasShadowDom } from '../../utils/helpers';
@@ -103,8 +103,7 @@ export class Button implements ComponentInterface {
     this.inToolbar = !!this.el.closest('ion-buttons');
   }
 
-  @Listen('click')
-  onClick(ev: Event) {
+  private onClick = (ev: Event) => {
     if (this.type === 'button') {
       openURL(this.win, this.href, ev, this.routerDirection);
 
@@ -134,52 +133,52 @@ export class Button implements ComponentInterface {
     this.ionBlur.emit();
   }
 
-  hostData() {
-    const { buttonType, disabled, color, expand, shape, size, strong } = this;
+  render() {
+    const { buttonType, type, disabled, color, expand, href, shape, size, strong } = this;
+    const TagType = href === undefined ? 'button' : 'a' as any;
+    const attrs = (TagType === 'button')
+      ? { type }
+      : { href };
+
     let fill = this.fill;
     if (fill === undefined) {
       fill = this.inToolbar ? 'clear' : 'solid';
     }
-    return {
-      'aria-disabled': disabled ? 'true' : null,
-      class: {
-        ...createColorClasses(color),
-        [buttonType]: true,
-        [`${buttonType}-${expand}`]: expand !== undefined,
-        [`${buttonType}-${size}`]: size !== undefined,
-        [`${buttonType}-${shape}`]: shape !== undefined,
-        [`${buttonType}-${fill}`]: true,
-        [`${buttonType}-strong`]: strong,
-
-        'button-disabled': disabled,
-        'ion-activatable': true,
-        'ion-focusable': true,
-      }
-    };
-  }
-
-  render() {
-    const TagType = this.href === undefined ? 'button' : 'a' as any;
-    const attrs = (TagType === 'button')
-      ? { type: this.type }
-      : { href: this.href };
 
     return (
-      <TagType
-        {...attrs}
-        class="button-native"
-        disabled={this.disabled}
-        onFocus={this.onFocus}
-        onBlur={this.onBlur}
+      <Host
+        aria-disabled={disabled ? 'true' : null}
+        onClick={this.onClick}
+        class={{
+          ...createColorClasses(color),
+          [buttonType]: true,
+          [`${buttonType}-${expand}`]: expand !== undefined,
+          [`${buttonType}-${size}`]: size !== undefined,
+          [`${buttonType}-${shape}`]: shape !== undefined,
+          [`${buttonType}-${fill}`]: true,
+          [`${buttonType}-strong`]: strong,
+
+          'button-disabled': disabled,
+          'ion-activatable': true,
+          'ion-focusable': true,
+        }}
       >
-        <span class="button-inner">
-          <slot name="icon-only"></slot>
-          <slot name="start"></slot>
-          <slot></slot>
-          <slot name="end"></slot>
-        </span>
-        {this.mode === 'md' && <ion-ripple-effect type={this.inToolbar ? 'unbounded' : 'bounded'}></ion-ripple-effect>}
-      </TagType>
+        <TagType
+          {...attrs}
+          class="button-native"
+          disabled={this.disabled}
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+        >
+          <span class="button-inner">
+            <slot name="icon-only"></slot>
+            <slot name="start"></slot>
+            <slot></slot>
+            <slot name="end"></slot>
+          </span>
+          {this.mode === 'md' && <ion-ripple-effect type={this.inToolbar ? 'unbounded' : 'bounded'}></ion-ripple-effect>}
+        </TagType>
+      </Host>
     );
   }
 }

@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Listen, Prop, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, getMode, h } from '@stencil/core';
 
 import { config } from '../../global/ionic-global';
 import { Color, Mode } from '../../interface';
@@ -45,8 +45,7 @@ export class BackButton implements ComponentInterface {
    */
   @Prop() text?: string | null;
 
-  @Listen('click')
-  async onClick(ev: Event) {
+  private onClick = async (ev: Event) => {
     const nav = this.el.closest('ion-nav');
     ev.preventDefault();
 
@@ -56,36 +55,34 @@ export class BackButton implements ComponentInterface {
     return openURL(this.win, this.defaultHref, ev, 'back');
   }
 
-  hostData() {
-    const showBackButton = this.defaultHref !== undefined;
-
-    return {
-      class: {
-        ...createColorClasses(this.color),
-
-        'button': true, // ion-buttons target .button
-        'ion-activatable': true,
-        'show-back-button': showBackButton
-      }
-    };
-  }
-
   render() {
+    const showBackButton = this.defaultHref !== undefined;
     const defaultBackButtonText = this.mode === 'ios' ? 'Back' : null;
     const backButtonIcon = this.icon != null ? this.icon : config.get('backButtonIcon', 'arrow-back');
     const backButtonText = this.text != null ? this.text : config.get('backButtonText', defaultBackButtonText);
 
     return (
-      <button
-        type="button"
-        class="button-native"
+      <Host
+        onClick={this.onClick}
+        class={{
+          ...createColorClasses(this.color),
+
+          'button': true, // ion-buttons target .button
+          'ion-activatable': true,
+          'show-back-button': showBackButton
+        }}
       >
-        <span class="button-inner">
-          {backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false}></ion-icon>}
-          {backButtonText && <span class="button-text">{backButtonText}</span>}
-        </span>
-        {this.mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
-      </button>
+        <button
+          type="button"
+          class="button-native"
+        >
+          <span class="button-inner">
+            {backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false}></ion-icon>}
+            {backButtonText && <span class="button-text">{backButtonText}</span>}
+          </span>
+          {this.mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
+        </button>
+      </Host>
     );
   }
 }

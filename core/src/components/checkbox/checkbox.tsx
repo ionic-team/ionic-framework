@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, Watch, getMode, h } from '@stencil/core';
 
 import { CheckboxChangeEventDetail, Color, Mode, StyleEventDetail } from '../../interface';
 import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
@@ -96,16 +96,15 @@ export class Checkbox implements ComponentInterface {
     });
   }
 
-  @Listen('click')
-  onClick() {
-    this.setFocus();
-    this.checked = !this.checked;
-  }
-
   private setFocus() {
     if (this.buttonEl) {
       this.buttonEl.focus();
     }
+  }
+
+  private onClick = () => {
+    this.setFocus();
+    this.checked = !this.checked;
   }
 
   private onFocus = () => {
@@ -116,47 +115,46 @@ export class Checkbox implements ComponentInterface {
     this.ionBlur.emit();
   }
 
-  hostData() {
-    const { inputId, disabled, checked, color, el } = this;
+  render() {
+    const { inputId, disabled, name, checked, color, value, el } = this;
     const labelId = inputId + '-lbl';
     const label = findItemLabel(el);
     if (label) {
       label.id = labelId;
     }
-    return {
-      'role': 'checkbox',
-      'aria-disabled': disabled ? 'true' : null,
-      'aria-checked': `${checked}`,
-      'aria-labelledby': labelId,
-      class: {
-        ...createColorClasses(color),
-        'in-item': hostContext('ion-item', el),
-        'checkbox-checked': checked,
-        'checkbox-disabled': disabled,
-        'interactive': true
-      }
-    };
-  }
+    renderHiddenInput(true, el, name, (checked ? value : ''), disabled);
 
-  render() {
-    renderHiddenInput(true, this.el, this.name, (this.checked ? this.value : ''), this.disabled);
-
-    return [
-      <svg class="checkbox-icon" viewBox="0 0 24 24">
-        { this.mode === 'md'
-          ? <path d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
-          : <path d="M5.9,12.5l3.8,3.8l8.8-8.8"/>
-        }
-      </svg>,
-      <button
-        type="button"
-        onFocus={this.onFocus}
-        onBlur={this.onBlur}
-        disabled={this.disabled}
-        ref={el => this.buttonEl = el}
+    return (
+      <Host
+        role="checkbox"
+        aria-disabled={disabled ? 'true' : null}
+        aria-checked={`${checked}`}
+        aria-labelledby={labelId}
+        onClick={this.onClick}
+        class={{
+          ...createColorClasses(color),
+          'in-item': hostContext('ion-item', el),
+          'checkbox-checked': checked,
+          'checkbox-disabled': disabled,
+          'interactive': true
+        }}
       >
-      </button>
-    ];
+        <svg class="checkbox-icon" viewBox="0 0 24 24">
+          { this.mode === 'md'
+            ? <path d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+            : <path d="M5.9,12.5l3.8,3.8l8.8-8.8"/>
+          }
+        </svg>
+        <button
+          type="button"
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+          disabled={this.disabled}
+          ref={elm => this.buttonEl = elm}
+        >
+        </button>
+      </Host>
+    );
   }
 }
 

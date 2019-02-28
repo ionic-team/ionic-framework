@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, Watch, getMode, h } from '@stencil/core';
 
 import { Mode, SegmentButtonLayout } from '../../interface';
 
@@ -53,11 +53,6 @@ export class SegmentButton implements ComponentInterface {
     }
   }
 
-  @Listen('click')
-  onClick() {
-    this.checked = true;
-  }
-
   private get hasLabel() {
     return !!this.el.querySelector('ion-label');
   }
@@ -66,36 +61,40 @@ export class SegmentButton implements ComponentInterface {
     return !!this.el.querySelector('ion-icon');
   }
 
-  hostData() {
-    const { checked, disabled, hasIcon, hasLabel, layout } = this;
-    return {
-      'aria-disabled': disabled ? 'true' : null,
-      class: {
-        'segment-button-has-label': hasLabel,
-        'segment-button-has-icon': hasIcon,
-        'segment-button-has-label-only': hasLabel && !hasIcon,
-        'segment-button-has-icon-only': hasIcon && !hasLabel,
-        'segment-button-disabled': disabled,
-        'segment-button-checked': checked,
-        [`segment-button-layout-${layout}`]: true,
-        'ion-activatable': true,
-        'ion-activatable-instant': true,
-      }
-    };
+  private onClick = () => {
+    this.checked = true;
   }
 
   render() {
-    return [
-      <button
-        type="button"
-        aria-pressed={this.checked ? 'true' : null}
-        class="button-native"
-        disabled={this.disabled}
+    const { checked, disabled, hasIcon, mode, hasLabel, layout } = this;
+
+    return (
+      <Host
+        aria-disabled={disabled ? 'true' : null}
+        onClick={this.onClick}
+        class={{
+          'segment-button-has-label': hasLabel,
+          'segment-button-has-icon': hasIcon,
+          'segment-button-has-label-only': hasLabel && !hasIcon,
+          'segment-button-has-icon-only': hasIcon && !hasLabel,
+          'segment-button-disabled': disabled,
+          'segment-button-checked': checked,
+          [`segment-button-layout-${layout}`]: true,
+          'ion-activatable': true,
+          'ion-activatable-instant': true,
+        }}
       >
-        <slot></slot>
-        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-      </button>,
-      <div class="segment-button-indicator"></div>
-    ];
+        <button
+          type="button"
+          aria-pressed={checked ? 'true' : null}
+          class="button-native"
+          disabled={disabled}
+        >
+          <slot></slot>
+          {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+        </button>,
+        <div class="segment-button-indicator"></div>
+      </Host>
+    );
   }
 }

@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch, getMode, h, Host } from '@stencil/core';
 
 import { ActionSheetButton, ActionSheetOptions, AlertOptions, CssClassMap, Mode, OverlaySelect, PopoverOptions, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, StyleEventDetail } from '../../interface';
 import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
@@ -143,14 +143,7 @@ export class Select implements ComponentInterface {
       if (this.value !== undefined) {
         this.el.forceUpdate();
       }
-
     }
-  }
-
-  @Listen('click')
-  onClick(ev: UIEvent) {
-    this.setFocus();
-    this.open(ev);
   }
 
   async componentDidLoad() {
@@ -386,32 +379,17 @@ export class Select implements ComponentInterface {
     });
   }
 
+  private onClick = (ev: UIEvent) => {
+    this.setFocus();
+    this.open(ev);
+  }
+
   private onFocus = () => {
     this.ionFocus.emit();
   }
 
   private onBlur = () => {
     this.ionBlur.emit();
-  }
-
-  hostData() {
-    const labelId = this.inputId + '-lbl';
-    const label = findItemLabel(this.el);
-    if (label) {
-      label.id = labelId;
-    }
-
-    return {
-      'role': 'combobox',
-      'aria-disabled': this.disabled ? 'true' : null,
-      'aria-expanded': `${this.isExpanded}`,
-      'aria-haspopup': 'dialog',
-      'aria-labelledby': labelId,
-      class: {
-        'in-item': hostContext('ion-item', this.el),
-        'select-disabled': this.disabled,
-      }
-    };
   }
 
   render() {
@@ -435,22 +413,35 @@ export class Select implements ComponentInterface {
       'select-placeholder': addPlaceholderClass
     };
 
-    return [
-      <div class={selectTextClasses}>
-        {selectText}
-      </div>,
-      <div class="select-icon" role="presentation">
-        <div class="select-icon-inner"></div>
-      </div>,
-      <button
-        type="button"
-        onFocus={this.onFocus}
-        onBlur={this.onBlur}
-        disabled={this.disabled}
-        ref={(el => this.buttonEl = el)}
+    return (
+      <Host
+        role="combobox"
+        aria-disabled={this.disabled ? 'true' : null}
+        aria-expanded={`${this.isExpanded}`}
+        aria-haspopup="dialog"
+        aria-labelledby={labelId}
+        onClick={this.onClick}
+        class={{
+          'in-item': hostContext('ion-item', this.el),
+          'select-disabled': this.disabled,
+        }}
       >
-      </button>
-    ];
+        <div class={selectTextClasses}>
+          {selectText}
+        </div>,
+        <div class="select-icon" role="presentation">
+          <div class="select-icon-inner"></div>
+        </div>,
+        <button
+          type="button"
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+          disabled={this.disabled}
+          ref={(el => this.buttonEl = el)}
+        >
+        </button>
+      </Host>
+    );
   }
 }
 
