@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, QueueApi, State, Watch, h } from '@stencil/core';
 
 @Component({
   tag: 'ion-infinite-scroll',
@@ -16,7 +16,6 @@ export class InfiniteScroll implements ComponentInterface {
   @State() isLoading = false;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
 
   /**
    * The threshold distance from the bottom
@@ -53,12 +52,11 @@ export class InfiniteScroll implements ComponentInterface {
   @Prop() disabled = false;
 
   @Watch('disabled')
-  protected disabledChanged(val: boolean) {
+  protected disabledChanged() {
     if (this.disabled) {
       this.isLoading = false;
       this.isBusy = false;
     }
-    this.enableScrollEvents(!val);
   }
 
   /**
@@ -82,7 +80,6 @@ export class InfiniteScroll implements ComponentInterface {
       this.scrollEl = await contentEl.getScrollElement();
     }
     this.thresholdChanged(this.threshold);
-    this.enableScrollEvents(!this.disabled);
     if (this.position === 'top') {
       this.queue.write(() => {
         if (this.scrollEl) {
@@ -96,8 +93,7 @@ export class InfiniteScroll implements ComponentInterface {
     this.scrollEl = undefined;
   }
 
-  @Listen('scroll', { enabled: false })
-  protected onScroll() {
+  private onScroll = () => {
     const scrollEl = this.scrollEl;
     if (!scrollEl || !this.canStart()) {
       return 1;
@@ -203,19 +199,16 @@ export class InfiniteScroll implements ComponentInterface {
     );
   }
 
-  private enableScrollEvents(shouldListen: boolean) {
-    if (this.scrollEl) {
-      this.enableListener(this, 'scroll', shouldListen, this.scrollEl);
-    }
-  }
-
-  hostData() {
-    return {
-      class: {
+  render() {
+    return (
+      <Host
+        class={{
         'infinite-scroll-loading': this.isLoading,
         'infinite-scroll-enabled': !this.disabled
-      }
-    };
+        }}
+        onScroll={this.disabled ? undefined : this.onScroll}
+      />
+    );
   }
 
 }

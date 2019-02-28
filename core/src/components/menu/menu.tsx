@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, QueueApi, State, Watch, getMode, h } from '@stencil/core';
 
 import { config } from '../../global/ionic-global';
 import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuControllerI, MenuI, Mode, Side } from '../../interface';
@@ -38,7 +38,6 @@ export class Menu implements ComponentInterface, MenuI {
 
   @Prop({ context: 'isServer' }) isServer!: boolean;
   @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl!: HTMLIonMenuControllerElement;
-  @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
   @Prop({ context: 'window' }) win!: Window;
   @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'document' }) doc!: Document;
@@ -214,9 +213,9 @@ export class Menu implements ComponentInterface, MenuI {
     this.updateState();
   }
 
-  @Listen('click', { enabled: false, capture: true })
+  @Listen('click', { capture: true })
   onBackdropClick(ev: any) {
-    if (this.lastOnEnd < ev.timeStamp - 100) {
+    if (this._isOpen && this.lastOnEnd < ev.timeStamp - 100) {
       const shouldClose = (ev.composedPath)
         ? !ev.composedPath().includes(this.menuInnerEl)
         : false;
@@ -452,9 +451,6 @@ export class Menu implements ComponentInterface, MenuI {
       this.blocker.unblock();
     }
 
-    // add/remove backdrop click listeners
-    this.enableListener(this, 'click', isOpen);
-
     if (isOpen) {
       // add css class
       if (this.contentEl) {
@@ -505,36 +501,34 @@ export class Menu implements ComponentInterface, MenuI {
     this.afterAnimation(false);
   }
 
-  hostData() {
-    const { isEndSide, type, disabled, isPaneVisible } = this;
-    return {
-      role: 'complementary',
-      class: {
-        [`menu-type-${type}`]: true,
-        'menu-enabled': !disabled,
-        'menu-side-end': isEndSide,
-        'menu-side-start': !isEndSide,
-        'menu-pane-visible': isPaneVisible
-      }
-    };
-  }
-
   render() {
-    return [
-      <div
-        class="menu-inner"
-        ref={el => this.menuInnerEl = el}
+    const { isEndSide, type, disabled, isPaneVisible } = this;
+    return (
+      <Host
+        role="complementary"
+        class={{
+          [`menu-type-${type}`]: true,
+          'menu-enabled': !disabled,
+          'menu-side-end': isEndSide,
+          'menu-side-start': !isEndSide,
+          'menu-pane-visible': isPaneVisible
+        }}
       >
-        <slot></slot>
-      </div>,
+        <div
+          class="menu-inner"
+          ref={el => this.menuInnerEl = el}
+        >
+          <slot></slot>
+        </div>
 
-      <ion-backdrop
-        ref={(el: any) => this.backdropEl = el}
-        class="menu-backdrop"
-        tappable={false}
-        stopPropagation={false}
-      />
-    ];
+        <ion-backdrop
+          ref={(el: any) => this.backdropEl = el}
+          class="menu-backdrop"
+          tappable={false}
+          stopPropagation={false}
+        />
+      </Host>
+    );
   }
 }
 

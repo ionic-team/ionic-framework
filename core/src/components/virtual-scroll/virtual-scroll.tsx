@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, EventListenerEnable, FunctionalComponent, Listen, Method, Prop, QueueApi, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, FunctionalComponent, Listen, Method, Prop, QueueApi, State, Watch, h } from '@stencil/core';
 
 import { Cell, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 
@@ -24,13 +24,13 @@ export class VirtualScroll implements ComponentInterface {
   private currentScrollTop = 0;
   private indexDirty = 0;
   private lastItemLen = 0;
+  private rmEvent: (() => void) | undefined;
 
   @Element() el!: HTMLStencilElement;
 
   @State() totalHeight = 0;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
   @Prop({ context: 'window' }) win!: Window;
 
   /**
@@ -165,11 +165,6 @@ export class VirtualScroll implements ComponentInterface {
     this.scrollEl = undefined;
   }
 
-  @Listen('scroll', { enabled: false, passive: false })
-  onScroll() {
-    this.updateVirtualScroll();
-  }
-
   @Listen('resize', { target: 'window' })
   onResize() {
     this.updateVirtualScroll();
@@ -233,6 +228,10 @@ export class VirtualScroll implements ComponentInterface {
     if (this.items) {
       this.checkRange(this.lastItemLen);
     }
+  }
+
+  private onScroll = () => {
+    this.updateVirtualScroll();
   }
 
   private updateVirtualScroll() {
@@ -390,9 +389,18 @@ export class VirtualScroll implements ComponentInterface {
   }
 
   private enableScrollEvents(shouldListen: boolean) {
-    if (this.scrollEl) {
+    if (this.rmEvent) {
+      this.rmEvent();
+      this.rmEvent = undefined;
+    }
+
+    const scrollEl = this.scrollEl;
+    if (scrollEl) {
       this.isEnabled = shouldListen;
-      this.enableListener(this, 'scroll', shouldListen, this.scrollEl);
+      scrollEl.addEventListener('scroll', this.onScroll);
+      this.rmEvent = () => {
+        scrollEl.removeEventListener('scroll', this.onScroll);
+      };
     }
   }
 
