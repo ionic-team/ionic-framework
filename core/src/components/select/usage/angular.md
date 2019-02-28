@@ -105,7 +105,7 @@ export class SelectExample {
     return o1 && o2 ? o1.id === o2.id : o1 === o2;
   };
 
-  compareWith = compareWithFn; // or 'id'
+  compareWith = compareWithFn;
 }
 ```
 

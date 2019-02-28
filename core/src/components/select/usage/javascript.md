@@ -96,7 +96,7 @@
   };
 
   let objectSelectElement = document.getElementById('objectSelectCompareWith');
-  objectSelectElement.compareWith = compareWithFn; // 'id';
+  objectSelectElement.compareWith = compareWithFn;
   
   objectOptions.forEach((option, i) => {
     let selectOption = document.createElement('ion-select-option');

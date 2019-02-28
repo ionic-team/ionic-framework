@@ -23,10 +23,11 @@ By adding the `multiple` attribute to select, users are able to select multiple 
 
 Note: the `action-sheet` and `popover` interfaces will not work with multiple selection.
 
-## Objects as Values
-By default, the select uses object equality (`===`) to determine if an option is selected. You can override this behavior by providing a
-property name or a function to the `compareWith` property.
+## Object Value References
 
+When using objects for select values, it is possible for the identities of these objects to change if they are coming from a server or database, while the selected value's identity remains the same. For example, this can occur when an existing record with the desired object value is loaded into the select, but the newly retrieved select options now have different identities. This will result in the select appearing to have no value at all, even though the original selection in still intact.
+
+By default, the select uses object equality (`===`) to determine if an option is selected. This can be overridden by providing a property name or a function to the `compareWith` property.
 
 ## Select Buttons
 
@@ -154,7 +155,7 @@ export class SelectExample {
     return o1 && o2 ? o1.id === o2.id : o1 === o2;
   };
 
-  compareWith = compareWithFn; // or 'id'
+  compareWith = compareWithFn;
 }
 ```
 
@@ -334,7 +335,7 @@ export class SelectExample {
   };
 
   let objectSelectElement = document.getElementById('objectSelectCompareWith');
-  objectSelectElement.compareWith = compareWithFn; // 'id';
+  objectSelectElement.compareWith = compareWithFn;
   
   objectOptions.forEach((option, i) => {
     let selectOption = document.createElement('ion-select-option');
