@@ -21,15 +21,6 @@
   height: var(--size);
 }
 
-// iOS Checkbox: Indeterminate
-// -----------------------------------------
-
-:host::after {
-  margin-top: 0px;
-  margin-inline-start: -6.5px;
-
-  border-width: 0.5px;
-}
 
 // iOS Checkbox: Disabled
 // -----------------------------------------
