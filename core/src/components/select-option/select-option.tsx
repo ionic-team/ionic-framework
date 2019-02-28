@@ -30,7 +30,7 @@ export class SelectOption implements ComponentInterface {
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
    */
-  @Prop() cssClass?: string | string[];
+  @Prop() class?: string | { [className: string]: boolean; } | undefined;
 
   /**
    * Emitted when the select option loads.
