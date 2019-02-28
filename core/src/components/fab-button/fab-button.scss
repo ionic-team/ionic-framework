@@ -109,12 +109,6 @@
   box-sizing: border-box;
 }
 
-.button-native[disabled] {
-  cursor: default;
-  opacity: .5;
-  pointer-events: none;
-}
-
 ::slotted(ion-icon) {
   line-height: 1;
 }
@@ -154,6 +148,12 @@
 
 // Disabled Button
 :host(.fab-button-disabled) {
+  pointer-events: none;
+}
+
+:host(.fab-button-disabled) .button-native {
+  cursor: default;
+  opacity: .5;
   pointer-events: none;
 }
 

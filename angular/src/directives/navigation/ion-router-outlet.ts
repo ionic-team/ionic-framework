@@ -82,11 +82,13 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
         this.activateWith(context.route, context.resolver || null);
       }
     }
-    this.nativeEl.componentOnReady().then(() => {
-      if (this._swipeGesture === undefined) {
-        this.swipeGesture = this.config.getBoolean('swipeBackEnabled', this.nativeEl.mode === 'ios');
-      }
-    });
+    if ((this.nativeEl as any).componentOnReady) {
+      this.nativeEl.componentOnReady().then(() => {
+        if (this._swipeGesture === undefined) {
+          this.swipeGesture = this.config.getBoolean('swipeBackEnabled', this.nativeEl.mode === 'ios');
+        }
+      });
+    }
   }
 
   get isActivated(): boolean {
@@ -182,20 +184,32 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     });
   }
 
-  canGoBack(deep = 1, stackId?: string) {
+  /**
+   * Returns `true` if there are pages in the stack to go back.
+   */
+  canGoBack(deep = 1, stackId?: string): boolean {
     return this.stackCtrl.canGoBack(deep, stackId);
   }
 
-  pop(deep = 1, stackId?: string) {
+  /**
+   * Resolves to `true` if it the outlet was able to sucessfully pop the last N pages.
+   */
+  pop(deep = 1, stackId?: string): Promise<boolean> {
     return this.stackCtrl.pop(deep, stackId);
   }
 
-  getLastUrl(stackId?: string) {
+  /**
+   * Returns the URL of the active page of each stack.
+   */
+  getLastUrl(stackId?: string): string | undefined {
     const active = this.stackCtrl.getLastUrl(stackId);
     return active ? active.url : undefined;
   }
 
-  getActiveStackId() {
+  /**
+   * Returns the active stack ID. In the context of ion-tabs, it means the active tab.
+   */
+  getActiveStackId(): string | undefined {
     return this.stackCtrl.getActiveStackId();
   }
 }

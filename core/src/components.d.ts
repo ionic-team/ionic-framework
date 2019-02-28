@@ -2776,7 +2776,7 @@ export namespace Components {
     */
     'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
     /**
-    * Event fired when the nav will components
+    * Event fired when the nav will change components
     */
     'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
     /**
@@ -3510,7 +3510,7 @@ export namespace Components {
     */
     'disabled'?: boolean;
     /**
-    * Event that needs to be listen to in order to respond to reorder action. `ion-reorder-group` uses this event to delegate to the user the reordering of data array.   The complete() method exposed as
+    * Event that needs to be listened to in order to complete the reorder action. Once the event has been emitted, the `complete()` method then needs to be called in order to finalize the reorder action.
     */
     'onIonItemReorder'?: (event: CustomEvent<ItemReorderEventDetail>) => void;
   }
@@ -4102,14 +4102,16 @@ export namespace Components {
 
   interface IonSkeletonText {
     /**
-    * Width for the element to render at.
+    * If `true`, the skeleton text will animate.
     */
-    'width': string;
+    'animated': boolean;
+    'width'?: string;
   }
   interface IonSkeletonTextAttributes extends StencilHTMLAttributes {
     /**
-    * Width for the element to render at.
+    * If `true`, the skeleton text will animate.
     */
+    'animated'?: boolean;
     'width'?: string;
   }
 
@@ -4189,6 +4191,10 @@ export namespace Components {
     * Update the underlying slider implementation. Call this if you've added or removed child slides.
     */
     'update': () => Promise<void>;
+    /**
+    * Force swiper to update its height (when autoHeight enabled) for the duration equal to 'speed' parameter
+    */
+    'updateAutoHeight': (speed?: number | undefined) => Promise<void>;
   }
   interface IonSlidesAttributes extends StencilHTMLAttributes {
     /**
