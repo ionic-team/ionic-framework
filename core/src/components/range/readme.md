@@ -136,6 +136,7 @@ export default Example;
 | `dualKnobs` | `dual-knobs` | Show two knobs.                                                                                                                                                                                                                                                        | `boolean`                                     | `false`     |
 | `max`       | `max`        | Maximum integer value of the range.                                                                                                                                                                                                                                    | `number`                                      | `100`       |
 | `min`       | `min`        | Minimum integer value of the range.                                                                                                                                                                                                                                    | `number`                                      | `0`         |
+| `mode`      | `mode`       | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `'md' \| 'ios'`                               | `undefined` |
 | `name`      | `name`       | The name of the control, which is submitted with the form data.                                                                                                                                                                                                        | `string`                                      | `''`        |
 | `pin`       | `pin`        | If `true`, a pin with integer value is shown when the knob is pressed.                                                                                                                                                                                                 | `boolean`                                     | `false`     |
 | `snaps`     | `snaps`      | If `true`, the knob snaps to tick marks evenly spaced based on the step property value.                                                                                                                                                                                | `boolean`                                     | `false`     |
@@ -145,11 +146,11 @@ export default Example;
 
 ## Events
 
-| Event       | Description                                  | Type                |
-| ----------- | -------------------------------------------- | ------------------- |
-| `ionBlur`   | Emitted when the range loses focus.          | `CustomEvent<TODO>` |
-| `ionChange` | Emitted when the value property has changed. | `CustomEvent<TODO>` |
-| `ionFocus`  | Emitted when the range has focus.            | `CustomEvent<TODO>` |
+| Event       | Description                                  | Type                                  |
+| ----------- | -------------------------------------------- | ------------------------------------- |
+| `ionBlur`   | Emitted when the range loses focus.          | `CustomEvent<void>`                   |
+| `ionChange` | Emitted when the value property has changed. | `CustomEvent<RangeChangeEventDetail>` |
+| `ionFocus`  | Emitted when the range has focus.            | `CustomEvent<void>`                   |
 
 
 ## Slots

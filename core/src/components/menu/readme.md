@@ -288,10 +288,10 @@ export default Example;
 
 | Event          | Description                                  | Type                |
 | -------------- | -------------------------------------------- | ------------------- |
-| `ionDidClose`  | Emitted when the menu is closed.             | `CustomEvent<TODO>` |
-| `ionDidOpen`   | Emitted when the menu is open.               | `CustomEvent<TODO>` |
-| `ionWillClose` | Emitted when the menu is about to be closed. | `CustomEvent<TODO>` |
-| `ionWillOpen`  | Emitted when the menu is about to be opened. | `CustomEvent<TODO>` |
+| `ionDidClose`  | Emitted when the menu is closed.             | `CustomEvent<void>` |
+| `ionDidOpen`   | Emitted when the menu is open.               | `CustomEvent<void>` |
+| `ionWillClose` | Emitted when the menu is about to be closed. | `CustomEvent<void>` |
+| `ionWillOpen`  | Emitted when the menu is about to be opened. | `CustomEvent<void>` |
 
 
 ## Methods

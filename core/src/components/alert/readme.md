@@ -816,18 +816,19 @@ export default class AlertExample extends Component<Props, State> {
 | `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                                                                              | `true`      |
 | `leaveAnimation`  | --                 | Animation to use when the alert is dismissed.                                                                    | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
 | `message`         | `message`          | The main message to be displayed in the alert.                                                                   | `string \| undefined`                                                                  | `undefined` |
+| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                | `'md' \| 'ios'`                                                                        | `undefined` |
 | `subHeader`       | `sub-header`       | The subtitle in the heading of the alert. Displayed under the title.                                             | `string \| undefined`                                                                  | `undefined` |
 | `translucent`     | `translucent`      | If `true`, the alert will be translucent.                                                                        | `boolean`                                                                              | `false`     |
 
 
 ## Events
 
-| Event                 | Description                             | Type                |
-| --------------------- | --------------------------------------- | ------------------- |
-| `ionAlertDidDismiss`  | Emitted after the alert has dismissed.  | `CustomEvent<TODO>` |
-| `ionAlertDidPresent`  | Emitted after the alert has presented.  | `CustomEvent<TODO>` |
-| `ionAlertWillDismiss` | Emitted before the alert has dismissed. | `CustomEvent<TODO>` |
-| `ionAlertWillPresent` | Emitted before the alert has presented. | `CustomEvent<TODO>` |
+| Event                 | Description                             | Type                                   |
+| --------------------- | --------------------------------------- | -------------------------------------- |
+| `ionAlertDidDismiss`  | Emitted after the alert has dismissed.  | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionAlertDidPresent`  | Emitted after the alert has presented.  | `CustomEvent<void>`                    |
+| `ionAlertWillDismiss` | Emitted before the alert has dismissed. | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionAlertWillPresent` | Emitted before the alert has presented. | `CustomEvent<void>`                    |
 
 
 ## Methods

@@ -209,12 +209,12 @@ export default class ActionSheetExample extends Component<Props, State> {
 
 ## Events
 
-| Event                       | Description                             | Type                |
-| --------------------------- | --------------------------------------- | ------------------- |
-| `ionActionSheetDidDismiss`  | Emitted after the alert has dismissed.  | `CustomEvent<TODO>` |
-| `ionActionSheetDidPresent`  | Emitted after the alert has presented.  | `CustomEvent<TODO>` |
-| `ionActionSheetWillDismiss` | Emitted before the alert has dismissed. | `CustomEvent<TODO>` |
-| `ionActionSheetWillPresent` | Emitted before the alert has presented. | `CustomEvent<TODO>` |
+| Event                       | Description                             | Type                                   |
+| --------------------------- | --------------------------------------- | -------------------------------------- |
+| `ionActionSheetDidDismiss`  | Emitted after the alert has dismissed.  | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionActionSheetDidPresent`  | Emitted after the alert has presented.  | `CustomEvent<void>`                    |
+| `ionActionSheetWillDismiss` | Emitted before the alert has dismissed. | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionActionSheetWillPresent` | Emitted before the alert has presented. | `CustomEvent<void>`                    |
 
 
 ## Methods

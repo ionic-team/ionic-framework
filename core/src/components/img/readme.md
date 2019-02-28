@@ -65,7 +65,7 @@ export default Example
 
 | Event           | Description                        | Type                |
 | --------------- | ---------------------------------- | ------------------- |
-| `ionImgDidLoad` | Emitted when the img src is loaded | `CustomEvent<TODO>` |
+| `ionImgDidLoad` | Emitted when the img src is loaded | `CustomEvent<void>` |
 
 
 ----------------------------------------------

@@ -90,11 +90,11 @@ export default Example
 
 ## Events
 
-| Event       | Description                                | Type                |
-| ----------- | ------------------------------------------ | ------------------- |
-| `ionBlur`   | Emitted when the radio button loses focus. | `CustomEvent<TODO>` |
-| `ionFocus`  | Emitted when the radio button has focus.   | `CustomEvent<TODO>` |
-| `ionSelect` | Emitted when the radio button is selected. | `CustomEvent<TODO>` |
+| Event       | Description                                | Type                                  |
+| ----------- | ------------------------------------------ | ------------------------------------- |
+| `ionBlur`   | Emitted when the radio button loses focus. | `CustomEvent<void>`                   |
+| `ionFocus`  | Emitted when the radio button has focus.   | `CustomEvent<void>`                   |
+| `ionSelect` | Emitted when the radio button is selected. | `CustomEvent<RadioChangeEventDetail>` |
 
 
 ## CSS Custom Properties

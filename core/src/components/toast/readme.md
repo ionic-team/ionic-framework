@@ -148,6 +148,7 @@ export class Toast extends Component<Props, State> {
 | `keyboardClose`   | `keyboard-close`    | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                                                                 | `boolean`                                                                              | `false`     |
 | `leaveAnimation`  | --                  | Animation to use when the toast is dismissed.                                                                                                                                                                                                                          | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
 | `message`         | `message`           | Message to be shown in the toast.                                                                                                                                                                                                                                      | `string \| undefined`                                                                  | `undefined` |
+| `mode`            | `mode`              | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `'md' \| 'ios'`                                                                        | `undefined` |
 | `position`        | `position`          | The position of the toast on the screen.                                                                                                                                                                                                                               | `"bottom" \| "middle" \| "top"`                                                        | `'bottom'`  |
 | `showCloseButton` | `show-close-button` | If `true`, the close button will be displayed.                                                                                                                                                                                                                         | `boolean`                                                                              | `false`     |
 | `translucent`     | `translucent`       | If `true`, the toast will be translucent.                                                                                                                                                                                                                              | `boolean`                                                                              | `false`     |
@@ -155,12 +156,12 @@ export class Toast extends Component<Props, State> {
 
 ## Events
 
-| Event                 | Description                             | Type                |
-| --------------------- | --------------------------------------- | ------------------- |
-| `ionToastDidDismiss`  | Emitted after the toast has dismissed.  | `CustomEvent<TODO>` |
-| `ionToastDidPresent`  | Emitted after the toast has presented.  | `CustomEvent<TODO>` |
-| `ionToastWillDismiss` | Emitted before the toast has dismissed. | `CustomEvent<TODO>` |
-| `ionToastWillPresent` | Emitted before the toast has presented. | `CustomEvent<TODO>` |
+| Event                 | Description                             | Type                                   |
+| --------------------- | --------------------------------------- | -------------------------------------- |
+| `ionToastDidDismiss`  | Emitted after the toast has dismissed.  | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionToastDidPresent`  | Emitted after the toast has presented.  | `CustomEvent<void>`                    |
+| `ionToastWillDismiss` | Emitted before the toast has dismissed. | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionToastWillPresent` | Emitted before the toast has presented. | `CustomEvent<void>`                    |
 
 
 ## Methods

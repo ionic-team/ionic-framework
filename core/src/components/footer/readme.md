@@ -47,9 +47,10 @@ export default Example;
 
 ## Properties
 
-| Property      | Attribute     | Description                                                                                                                                               | Type      | Default |
-| ------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------- |
-| `translucent` | `translucent` | If `true`, the footer will be translucent. Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content. | `boolean` | `false` |
+| Property      | Attribute     | Description                                                                                                                                               | Type            | Default     |
+| ------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | ----------- |
+| `mode`        | `mode`        | The mode determines which platform styles to use.                                                                                                         | `'md' \| 'ios'` | `undefined` |
+| `translucent` | `translucent` | If `true`, the footer will be translucent. Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content. | `boolean`       | `false`     |
 
 
 ----------------------------------------------

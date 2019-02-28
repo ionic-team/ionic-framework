@@ -114,9 +114,9 @@ export default Example;
 
 ## Events
 
-| Event     | Description                                | Type                |
-| --------- | ------------------------------------------ | ------------------- |
-| `ionDrag` | Emitted when the sliding position changes. | `CustomEvent<TODO>` |
+| Event     | Description                                | Type               |
+| --------- | ------------------------------------------ | ------------------ |
+| `ionDrag` | Emitted when the sliding position changes. | `CustomEvent<any>` |
 
 
 ## Methods

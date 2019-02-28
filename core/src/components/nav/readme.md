@@ -22,8 +22,8 @@ Unlike RouterOutlet, Nav is not tied to a particular router. Meaning that if we 
 
 | Event              | Description                                     | Type                |
 | ------------------ | ----------------------------------------------- | ------------------- |
-| `ionNavDidChange`  | Event fired when the nav has changed components | `CustomEvent<TODO>` |
-| `ionNavWillChange` | Event fired when the nav will change components | `CustomEvent<TODO>` |
+| `ionNavDidChange`  | Event fired when the nav has changed components | `CustomEvent<void>` |
+| `ionNavWillChange` | Event fired when the nav will change components | `CustomEvent<void>` |
 
 
 ## Methods

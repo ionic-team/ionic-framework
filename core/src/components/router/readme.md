@@ -61,10 +61,10 @@ If you're using Angular, please see [ion-router-outlet](../router-outlet) instea
 
 ## Events
 
-| Event                | Description                                     | Type                |
-| -------------------- | ----------------------------------------------- | ------------------- |
-| `ionRouteDidChange`  | Emitted when the route had changed              | `CustomEvent<TODO>` |
-| `ionRouteWillChange` | Event emitted when the route is about to change | `CustomEvent<TODO>` |
+| Event                | Description                                     | Type                             |
+| -------------------- | ----------------------------------------------- | -------------------------------- |
+| `ionRouteDidChange`  | Emitted when the route had changed              | `CustomEvent<RouterEventDetail>` |
+| `ionRouteWillChange` | Event emitted when the route is about to change | `CustomEvent<RouterEventDetail>` |
 
 
 ## Methods

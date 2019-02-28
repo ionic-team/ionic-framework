@@ -121,7 +121,7 @@ export default Example;
 
 | Event            | Description                          | Type                |
 | ---------------- | ------------------------------------ | ------------------- |
-| `ionBackdropTap` | Emitted when the backdrop is tapped. | `CustomEvent<TODO>` |
+| `ionBackdropTap` | Emitted when the backdrop is tapped. | `CustomEvent<void>` |
 
 
 ----------------------------------------------

@@ -71,11 +71,11 @@ export default Example;
 
 ## Events
 
-| Event            | Description                                                                                      | Type                |
-| ---------------- | ------------------------------------------------------------------------------------------------ | ------------------- |
-| `ionScroll`      | Emitted while scrolling. This event is disabled by default. Look at the property: `scrollEvents` | `CustomEvent<TODO>` |
-| `ionScrollEnd`   | Emitted when the scroll has ended.                                                               | `CustomEvent<TODO>` |
-| `ionScrollStart` | Emitted when the scroll has started.                                                             | `CustomEvent<TODO>` |
+| Event            | Description                                                                                      | Type                            |
+| ---------------- | ------------------------------------------------------------------------------------------------ | ------------------------------- |
+| `ionScroll`      | Emitted while scrolling. This event is disabled by default. Look at the property: `scrollEvents` | `CustomEvent<ScrollDetail>`     |
+| `ionScrollEnd`   | Emitted when the scroll has ended.                                                               | `CustomEvent<ScrollBaseDetail>` |
+| `ionScrollStart` | Emitted when the scroll has started.                                                             | `CustomEvent<ScrollBaseDetail>` |
 
 
 ## Methods

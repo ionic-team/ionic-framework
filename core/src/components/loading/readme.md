@@ -155,6 +155,7 @@ export class LoadingExample extends Component<Props, State> {
 | `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                                                                                         | `true`      |
 | `leaveAnimation`  | --                 | Animation to use when the loading indicator is dismissed.                                                        | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined`            | `undefined` |
 | `message`         | `message`          | Optional text content to display in the loading indicator.                                                       | `string \| undefined`                                                                             | `undefined` |
+| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                | `'md' \| 'ios'`                                                                                   | `undefined` |
 | `showBackdrop`    | `show-backdrop`    | If `true`, a backdrop will be displayed behind the loading indicator.                                            | `boolean`                                                                                         | `true`      |
 | `spinner`         | `spinner`          | The name of the spinner to display.                                                                              | `"bubbles" \| "circles" \| "crescent" \| "dots" \| "lines" \| "lines-small" \| null \| undefined` | `undefined` |
 | `translucent`     | `translucent`      | If `true`, the loading indicator will be translucent.                                                            | `boolean`                                                                                         | `false`     |
@@ -162,12 +163,12 @@ export class LoadingExample extends Component<Props, State> {
 
 ## Events
 
-| Event                   | Description                               | Type                |
-| ----------------------- | ----------------------------------------- | ------------------- |
-| `ionLoadingDidDismiss`  | Emitted after the loading has dismissed.  | `CustomEvent<TODO>` |
-| `ionLoadingDidPresent`  | Emitted after the loading has presented.  | `CustomEvent<TODO>` |
-| `ionLoadingWillDismiss` | Emitted before the loading has dismissed. | `CustomEvent<TODO>` |
-| `ionLoadingWillPresent` | Emitted before the loading has presented. | `CustomEvent<TODO>` |
+| Event                   | Description                               | Type                                   |
+| ----------------------- | ----------------------------------------- | -------------------------------------- |
+| `ionLoadingDidDismiss`  | Emitted after the loading has dismissed.  | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionLoadingDidPresent`  | Emitted after the loading has presented.  | `CustomEvent<void>`                    |
+| `ionLoadingWillDismiss` | Emitted before the loading has dismissed. | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionLoadingWillPresent` | Emitted before the loading has presented. | `CustomEvent<void>`                    |
 
 
 ## Methods

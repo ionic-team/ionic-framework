@@ -15,6 +15,7 @@ action for the item.
 | `disabled`   | `disabled`   | If `true`, the user cannot interact with the item option.                                                                                                                                                                                                              | `boolean`             | `false`     |
 | `expandable` | `expandable` | If `true`, the option will expand to take up the available width and cover any other options.                                                                                                                                                                          | `boolean`             | `false`     |
 | `href`       | `href`       | Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.                                                                                                                                                | `string \| undefined` | `undefined` |
+| `mode`       | `mode`       | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `'md' \| 'ios'`       | `undefined` |
 
 
 ## Slots

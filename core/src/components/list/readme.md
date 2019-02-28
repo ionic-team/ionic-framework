@@ -223,6 +223,7 @@ export default Example;
 | -------- | --------- | ------------------------------------------------------------------- | ------------------------------------------ | ----------- |
 | `inset`  | `inset`   | If `true`, the list will have margin around it and rounded corners. | `boolean`                                  | `false`     |
 | `lines`  | `lines`   | How the bottom border should be displayed on all items.             | `"full" \| "inset" \| "none" \| undefined` | `undefined` |
+| `mode`   | `mode`    | The mode determines which platform styles to use.                   | `'md' \| 'ios'`                            | `undefined` |
 
 
 ## Methods

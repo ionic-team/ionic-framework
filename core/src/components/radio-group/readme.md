@@ -109,9 +109,9 @@ export default Example
 
 ## Events
 
-| Event       | Description                         | Type                |
-| ----------- | ----------------------------------- | ------------------- |
-| `ionChange` | Emitted when the value has changed. | `CustomEvent<TODO>` |
+| Event       | Description                         | Type                                       |
+| ----------- | ----------------------------------- | ------------------------------------------ |
+| `ionChange` | Emitted when the value has changed. | `CustomEvent<RadioGroupChangeEventDetail>` |
 
 
 ----------------------------------------------

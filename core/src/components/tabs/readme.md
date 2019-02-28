@@ -205,10 +205,10 @@ export default Example;
 
 ## Events
 
-| Event               | Description                                                                | Type                |
-| ------------------- | -------------------------------------------------------------------------- | ------------------- |
-| `ionTabsDidChange`  | Emitted when the navigation has finished transitioning to a new component. | `CustomEvent<TODO>` |
-| `ionTabsWillChange` | Emitted when the navigation is about to transition to a new component.     | `CustomEvent<TODO>` |
+| Event               | Description                                                                | Type                            |
+| ------------------- | -------------------------------------------------------------------------- | ------------------------------- |
+| `ionTabsDidChange`  | Emitted when the navigation has finished transitioning to a new component. | `CustomEvent<{ tab: string; }>` |
+| `ionTabsWillChange` | Emitted when the navigation is about to transition to a new component.     | `CustomEvent<{ tab: string; }>` |
 
 
 ## Methods
