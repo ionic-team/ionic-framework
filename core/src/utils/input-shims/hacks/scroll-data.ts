@@ -14,7 +14,7 @@ export function getScrollData(componentEl: HTMLElement, contentEl: HTMLElement, 
     itemEl.getBoundingClientRect(),
     contentEl.getBoundingClientRect(),
     keyboardHeight,
-    window.innerHeight
+    (componentEl as any).ownerDocument.defaultView.innerHeight
   );
 }
 

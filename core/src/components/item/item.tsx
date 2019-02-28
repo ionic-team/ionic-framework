@@ -3,6 +3,11 @@ import { Component, ComponentInterface, Element, Listen, Prop, State } from '@st
 import { Color, CssClassMap, Mode, RouterDirection, StyleEventDetail } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
+/**
+ * @slot - Content is placed between the named slots if provided without a slot.
+ * @slot start - Content is placed to the left of the item text in LTR, and to the right in RTL.
+ * @slot end - Content is placed to the right of the item text in LTR, and to the left in RTL.
+ */
 @Component({
   tag: 'ion-item',
   styleUrls: {
@@ -143,17 +148,12 @@ export class Item implements ComponentInterface {
   }
 
   render() {
-    const { href, detail, mode, win, routerDirection, type } = this;
-    let detailIcon = this.detailIcon;
+    const { href, detail, mode, win, detailIcon, routerDirection, type } = this;
 
     const clickable = this.isClickable();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
     const attrs = TagType === 'button' ? { type } : { href };
     const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
-
-    if (showDetail && detailIcon === 'ios-arrow-forward' && document.dir === 'rtl') {
-      detailIcon = 'ios-arrow-back';
-    }
 
     return [
       <TagType
