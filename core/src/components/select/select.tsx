@@ -486,13 +486,13 @@ function isOptionSelected(currentValue: any[] | any, optionValue: any, compareWi
   }
 }
 
-function compareOptions(o1: any, o2: any, compareWith?: string | SelectCompareFn | null): boolean {
+function compareOptions(currentValue: any, optionValue: any, compareWith?: string | SelectCompareFn | null): boolean {
   if (typeof compareWith === 'function') {
-    return compareWith(o1, o2);
+    return compareWith(currentValue, optionValue);
   } else if (typeof compareWith === 'string') {
-    return o1[compareWith] === o2[compareWith];
+    return currentValue[compareWith] === optionValue[compareWith];
   } else {
-    return o1 === o2;
+    return currentValue === optionValue;
   }
 }
 
