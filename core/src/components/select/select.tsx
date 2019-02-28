@@ -475,24 +475,24 @@ function parseValue(value: any) {
   return value.toString();
 }
 
-function isOptionSelected(currentValue: any[] | any, optionValue: any, compareWith?: string | SelectCompareFn | null) {
+function isOptionSelected(currentValue: any[] | any, compareValue: any, compareWith?: string | SelectCompareFn | null) {
   if (currentValue === undefined) {
     return false;
   }
   if (Array.isArray(currentValue)) {
-    return currentValue.some(val => compareOptions(val, optionValue, compareWith));
+    return currentValue.some(val => compareOptions(val, compareValue, compareWith));
   } else {
-    return compareOptions(currentValue, optionValue, compareWith);
+    return compareOptions(currentValue, compareValue, compareWith);
   }
 }
 
-function compareOptions(currentValue: any, optionValue: any, compareWith?: string | SelectCompareFn | null): boolean {
+function compareOptions(currentValue: any, compareValue: any, compareWith?: string | SelectCompareFn | null): boolean {
   if (typeof compareWith === 'function') {
-    return compareWith(currentValue, optionValue);
+    return compareWith(currentValue, compareValue);
   } else if (typeof compareWith === 'string') {
-    return currentValue[compareWith] === optionValue[compareWith];
+    return currentValue[compareWith] === compareValue[compareWith];
   } else {
-    return currentValue === optionValue;
+    return currentValue === compareValue;
   }
 }
 

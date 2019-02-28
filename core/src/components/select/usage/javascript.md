@@ -73,7 +73,7 @@
 ```
 
 ```javascript
-  var objectOptions = [
+  let objectOptions = [
     {
       id: 1,
       first: 'Alice',
@@ -91,20 +91,21 @@
     }
   ];
 
-  var compareWithFn = (o1, o2) => {
+  let compareWithFn = (o1, o2) => {
     return o1 && o2 ? o1.id === o2.id : o1 === o2;
   };
 
-  var objectSelect = document.getElementById('objectSelectCompareWith');
-  objectSelect.compareWith = compareWithFn; // or 'id'
-
-  for (var i = 0; i < objectOptions.length; i++) {
-    var value = objectOptions[i];
-    var selectOption = document.createElement('ion-select-option');
-    selectOption.value = objectOptions[i];
-    selectOption.textContent = value.first + ' ' + value.last;
-    objectSelect.appendChild(selectOption);
-  }
+  let objectSelectElement = document.getElementById('objectSelectCompareWith');
+  objectSelectElement.compareWith = compareWithFn; // 'id';
+  
+  objectOptions.forEach((option, i) => {
+    let selectOption = document.createElement('ion-select-option');
+    selectOption.value = option;
+    selectOption.textContent = option.first + ' ' + option.last;
+    selectOption.selected = (i === 0);
+    
+    objectSelectElement.appendChild(selectOption)
+  });
 }
 ```
 
