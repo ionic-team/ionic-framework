@@ -954,7 +954,7 @@ ion-select-option,prop,value,any,undefined,false,false
 
 ion-select,shadow
 ion-select,prop,cancelText,string,'Cancel',false,false
-ion-select,prop,compareWith,((o1: any, o2: any) => boolean) | null | string | undefined,undefined,false,false
+ion-select,prop,compareWith,((currentValue: any, optionValue: any) => boolean) | null | string | undefined,undefined,false,false
 ion-select,prop,disabled,boolean,false,false,false
 ion-select,prop,interface,"action-sheet" | "alert" | "popover",'alert',false,false
 ion-select,prop,interfaceOptions,any,{},false,false

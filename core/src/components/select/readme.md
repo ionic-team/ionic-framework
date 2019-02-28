@@ -444,6 +444,28 @@ const customActionSheetOptions = {
   subHeader: 'Select your favorite color'
 };
 
+const objectOptions = [
+  {
+    id: 1,
+    first: 'Alice',
+    last: 'Smith'
+  },
+  {
+    id: 2,
+    first: 'Bob',
+    last: 'Davis'
+  },
+  {
+    id: 3,
+    first: 'Charlie',
+    last: 'Rosenburg'
+  }
+];
+
+const compareWith = (o1: any, o2: any) => {
+  return o1 && o2 ? o1.id === o2.id : o1 === o2;
+};
+
 const Example: React.SFC<{}> = () => (
   <>
     ## Single Selection
@@ -504,6 +526,20 @@ const Example: React.SFC<{}> = () => (
         </IonSelect>
       </IonItem>
     </IonList>
+    
+    ## Objects as Values
+    
+    <IonList>
+      <IonListHeader>Objects as Values (compareWith)</IonListHeader>
+      <IonItem>
+        <IonLabel>Users</IonLabel>
+        <IonSelect compareWith={compareWith}>
+          {objectOptions.map((object, i) => {
+            return <IonSelectOption key={object.id} value={object.id}>{object.first} {object.last}</IonSelectOption>
+          })}
+        </IonSelect>
+      </IonItem>
+    </IonList>
 
 
     ## Interface Options
@@ -559,20 +595,20 @@ export default Example;
 
 ## Properties
 
-| Property           | Attribute           | Description                                                                                                                                                                                                                                                                                                                                                                       | Type                                                             | Default        |
-| ------------------ | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | -------------- |
-| `cancelText`       | `cancel-text`       | The text to display on the cancel button.                                                                                                                                                                                                                                                                                                                                         | `string`                                                         | `'Cancel'`     |
-| `compareWith`      | `compare-with`      | A property name or function used to compare object values                                                                                                                                                                                                                                                                                                                         | `((o1: any, o2: any) => boolean) \| null \| string \| undefined` | `undefined`    |
-| `disabled`         | `disabled`          | If `true`, the user cannot interact with the select.                                                                                                                                                                                                                                                                                                                              | `boolean`                                                        | `false`        |
-| `interface`        | `interface`         | The interface the select should use: `action-sheet`, `popover` or `alert`.                                                                                                                                                                                                                                                                                                        | `"action-sheet" \| "alert" \| "popover"`                         | `'alert'`      |
-| `interfaceOptions` | `interface-options` | Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [AlertController API docs](../../alert/AlertController/#create), the [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the [PopoverController API docs](../../popover/PopoverController/#create) for the create options for each interface. | `any`                                                            | `{}`           |
-| `mode`             | `mode`              | The mode determines which platform styles to use.                                                                                                                                                                                                                                                                                                                                 | `"ios" \| "md"`                                                  | `undefined`    |
-| `multiple`         | `multiple`          | If `true`, the select can accept multiple values.                                                                                                                                                                                                                                                                                                                                 | `boolean`                                                        | `false`        |
-| `name`             | `name`              | The name of the control, which is submitted with the form data.                                                                                                                                                                                                                                                                                                                   | `string`                                                         | `this.inputId` |
-| `okText`           | `ok-text`           | The text to display on the ok button.                                                                                                                                                                                                                                                                                                                                             | `string`                                                         | `'OK'`         |
-| `placeholder`      | `placeholder`       | The text to display when the select is empty.                                                                                                                                                                                                                                                                                                                                     | `null \| string \| undefined`                                    | `undefined`    |
-| `selectedText`     | `selected-text`     | The text to display instead of the selected option's value.                                                                                                                                                                                                                                                                                                                       | `null \| string \| undefined`                                    | `undefined`    |
-| `value`            | `value`             | the value of the select.                                                                                                                                                                                                                                                                                                                                                          | `any`                                                            | `undefined`    |
+| Property           | Attribute           | Description                                                                                                                                                                                                                                                                                                                                                                       | Type                                                                                | Default        |
+| ------------------ | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | -------------- |
+| `cancelText`       | `cancel-text`       | The text to display on the cancel button.                                                                                                                                                                                                                                                                                                                                         | `string`                                                                            | `'Cancel'`     |
+| `compareWith`      | `compare-with`      | A property name or function used to compare object values                                                                                                                                                                                                                                                                                                                         | `((currentValue: any, optionValue: any) => boolean) \| null \| string \| undefined` | `undefined`    |
+| `disabled`         | `disabled`          | If `true`, the user cannot interact with the select.                                                                                                                                                                                                                                                                                                                              | `boolean`                                                                           | `false`        |
+| `interface`        | `interface`         | The interface the select should use: `action-sheet`, `popover` or `alert`.                                                                                                                                                                                                                                                                                                        | `"action-sheet" \| "alert" \| "popover"`                                            | `'alert'`      |
+| `interfaceOptions` | `interface-options` | Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [AlertController API docs](../../alert/AlertController/#create), the [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the [PopoverController API docs](../../popover/PopoverController/#create) for the create options for each interface. | `any`                                                                               | `{}`           |
+| `mode`             | `mode`              | The mode determines which platform styles to use.                                                                                                                                                                                                                                                                                                                                 | `"ios" \| "md"`                                                                     | `undefined`    |
+| `multiple`         | `multiple`          | If `true`, the select can accept multiple values.                                                                                                                                                                                                                                                                                                                                 | `boolean`                                                                           | `false`        |
+| `name`             | `name`              | The name of the control, which is submitted with the form data.                                                                                                                                                                                                                                                                                                                   | `string`                                                                            | `this.inputId` |
+| `okText`           | `ok-text`           | The text to display on the ok button.                                                                                                                                                                                                                                                                                                                                             | `string`                                                                            | `'OK'`         |
+| `placeholder`      | `placeholder`       | The text to display when the select is empty.                                                                                                                                                                                                                                                                                                                                     | `null \| string \| undefined`                                                       | `undefined`    |
+| `selectedText`     | `selected-text`     | The text to display instead of the selected option's value.                                                                                                                                                                                                                                                                                                                       | `null \| string \| undefined`                                                       | `undefined`    |
+| `value`            | `value`             | the value of the select.                                                                                                                                                                                                                                                                                                                                                          | `any`                                                                               | `undefined`    |
 
 
 ## Events
