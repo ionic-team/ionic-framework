@@ -1,6 +1,6 @@
 ```html
 <!-- Data to display after skeleton screen -->
-<div id="data">
+<div *ngIf="data">
   <div class="ion-padding">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ac eros est. Cras iaculis pulvinar arcu non vehicula. Fusce at quam a eros malesuada condimentum. Aliquam tincidunt tincidunt vehicula.
   </div>
@@ -13,13 +13,13 @@
       </ion-avatar>
       <ion-label>
         <h3>
-          Normal text
+          {{ data.heading }}
         </h3>
         <p>
-          Lorem ipsum dolor sit amet, consectetur
+          {{ data.para1 }}
         </p>
         <p>
-          adipiscing elit.
+          {{ data.para2 }}
         </p>
       </ion-label>
     </ion-item>
@@ -29,13 +29,13 @@
       </ion-thumbnail>
       <ion-label>
         <h3>
-          Normal text
+          {{ data.heading }}
         </h3>
         <p>
-          Lorem ipsum dolor sit amet, consectetur
+          {{ data.para1 }}
         </p>
         <p>
-          adipiscing elit.
+          {{ data.para2 }}
         </p>
       </ion-label>
     </ion-item>
@@ -43,13 +43,13 @@
       <ion-icon name="call" slot="start"></ion-icon>
       <ion-label>
         <h3>
-          Normal text
+          {{ data.heading }}
         </h3>
         <p>
-          Lorem ipsum dolor sit amet, consectetur
+          {{ data.para1 }}
         </p>
         <p>
-          adipiscing elit.
+          {{ data.para2 }}
         </p>
       </ion-label>
     </ion-item>
@@ -57,7 +57,7 @@
 </div>
 
 <!-- Skeleton screen -->
-<div id="skeleton">
+<div *ngIf="!data">
   <div class="ion-padding custom-skeleton">
     <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
     <ion-skeleton-text animated></ion-skeleton-text>
@@ -121,10 +121,6 @@
 ```
 
 ```css
-#data {
-  display: none;
-}
-
 /* Custom Skeleton Line Height and Margin */
 .custom-skeleton ion-skeleton-text {
   line-height: 13px;
@@ -135,14 +131,27 @@
 }
 ```
 
-```javascript
-function onLoad() {
-  const skeletonEl = document.getElementById('skeleton');
-  const dataEl = document.getElementById('data');
+```typescript
+import { Component } from '@angular/core';
 
-  setTimeout(() => {
-    skeletonEl.style.display = 'none';
-    dataEl.style.display = 'block';
-  }, 5000);
+@Component({
+  selector: 'skeleton-text-example',
+  templateUrl: 'skeleton-text-example.html',
+  styleUrls: ['./skeleton-text-example.css']
+})
+export class SkeletonTextExample {
+  data: any;
+
+  constructor() {}
+
+  ionViewWillEnter() {
+    setTimeout(() => {
+      this.data = {
+        'heading': 'Normal text',
+        'para1': 'Lorem ipsum dolor sit amet, consectetur',
+        'para2': 'adipiscing elit.'
+      };
+    }, 5000);
+  }
 }
 ```

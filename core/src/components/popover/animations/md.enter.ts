@@ -22,9 +22,10 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev?
   const targetDim =
     ev && ev.target && (ev.target as HTMLElement).getBoundingClientRect();
 
+  // As per MD spec, by default position the popover below the target (trigger) element
   const targetTop =
-    targetDim != null && 'top' in targetDim
-      ? targetDim.top
+    targetDim != null && 'bottom' in targetDim
+      ? targetDim.bottom
       : bodyHeight / 2 - contentHeight / 2;
 
   const targetLeft =
@@ -60,7 +61,7 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev?
     targetTop + targetHeight + contentHeight > bodyHeight &&
     targetTop - contentHeight > 0
   ) {
-    popoverCSS.top = targetTop - contentHeight;
+    popoverCSS.top = targetTop - contentHeight - targetHeight;
     baseEl.className = baseEl.className + ' popover-bottom';
     originY = 'bottom';
     // If there isn't room for it to pop up above the target cut it off

@@ -748,7 +748,7 @@ export class IonSelectOption {
 proxyInputs(IonSelectOption, ['disabled', 'selected', 'value']);
 
 export declare interface IonSkeletonText extends StencilComponents<'IonSkeletonText'> {}
-@Component({ selector: 'ion-skeleton-text', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['width'] })
+@Component({ selector: 'ion-skeleton-text', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['animated', 'width'] })
 export class IonSkeletonText {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef) {
@@ -756,7 +756,7 @@ export class IonSkeletonText {
     this.el = r.nativeElement;
   }
 }
-proxyInputs(IonSkeletonText, ['width']);
+proxyInputs(IonSkeletonText, ['animated', 'width']);
 
 export declare interface IonSlide extends StencilComponents<'IonSlide'> {}
 @Component({ selector: 'ion-slide', changeDetection: 0, template: '<ng-content></ng-content>' })
