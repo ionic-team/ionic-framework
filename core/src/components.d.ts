@@ -4068,6 +4068,9 @@ export namespace Components {
     * If `true`, the skeleton text will animate.
     */
     'animated': boolean;
+    /**
+    * The width of the skeleton text. If supplied, it will override the CSS style.
+    */
     'width'?: string;
   }
   interface IonSkeletonTextAttributes extends JSXElements.HTMLAttributes {
@@ -4075,6 +4078,9 @@ export namespace Components {
     * If `true`, the skeleton text will animate.
     */
     'animated'?: boolean;
+    /**
+    * The width of the skeleton text. If supplied, it will override the CSS style.
+    */
     'width'?: string;
   }
 
