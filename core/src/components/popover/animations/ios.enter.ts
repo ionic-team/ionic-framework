@@ -12,8 +12,8 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev
   const contentWidth = contentDimentions.width;
   const contentHeight = contentDimentions.height;
 
-  const bodyWidth = window.innerWidth;
-  const bodyHeight = window.innerHeight;
+  const bodyWidth = (baseEl.ownerDocument as any).defaultView.innerWidth;
+  const bodyHeight = (baseEl.ownerDocument as any).defaultView.innerHeight;
 
   // If ev was passed, use that for target element
   const targetDim = ev && ev.target && (ev.target as HTMLElement).getBoundingClientRect();
