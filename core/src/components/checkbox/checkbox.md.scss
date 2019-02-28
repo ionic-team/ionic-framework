@@ -58,6 +58,8 @@
   @include margin($checkbox-md-item-end-margin-top, $checkbox-md-item-end-margin-end, $checkbox-md-item-end-margin-bottom, $checkbox-md-item-end-margin-start);
 
   display: block;
+
+  position: static;
 }
 
 :host(.in-item[slot="start"]) {
