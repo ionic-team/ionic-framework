@@ -1,17 +1,17 @@
-import { testDisabledFAB, testFAB } from '../test.utils';
+import { testDisabledFab, testFab } from '../test.utils';
 
 test('fab: basic', async () => {
-  await testFAB('basic', '#fab1');
+  await testFab('basic', '#fab1');
 });
 
 test('fab:rtl: basic', async () => {
-  await testFAB('basic', '#fab1', true);
+  await testFab('basic', '#fab1', true);
 });
 
 test('fab: disabled', async () => {
-  await testDisabledFAB('basic', '#fab2');
+  await testDisabledFab('basic', '#fab2');
 });
 
 test('fab:rtl: disabled', async () => {
-  await testDisabledFAB('basic', '#fab2', true);
+  await testDisabledFab('basic', '#fab2', true);
 });
