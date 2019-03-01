@@ -16,8 +16,12 @@ export const getDateValue = (date: DatetimeData, format: string): number => {
  * Given a Date, generate a date string that
  * *looks* like UTC but is set relative
  * to the user's timezone
+ * The timeZone param is used for forcing a timezone. This
+ * is mainly used for testing timezones and is typically
+ * left undefined. As a result, Intl.DateTimeFormat will
+ * set the timezone to the runtime's default timezone
  */
-export const generateTimeZoneAwareDate = (date: Date = new Date()): string => {
+export const generateTimeZoneAwareDate = (date: Date = new Date(), timeZone?: string): string => {
   const dateParts = new Intl.DateTimeFormat('default', {
     year: 'numeric',
     month: '2-digit',
@@ -25,7 +29,8 @@ export const generateTimeZoneAwareDate = (date: Date = new Date()): string => {
     hour: '2-digit',
     minute: '2-digit',
     second: '2-digit',
-    hour12: false
+    hour12: false,
+    timeZone
   }).formatToParts(date);
 
   const dateIndex: any = {};

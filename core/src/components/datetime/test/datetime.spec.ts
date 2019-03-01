@@ -5,7 +5,7 @@ describe('Datetime', () => {
   describe('generateTimeZoneAwareDate()', () => {
     it('should generate a timezone aware UTC-like string', () => {
       const date = new Date("01 March 2019 15:32:05 GMT-0500 (Eastern Standard Time)");
-      const getUTCString = generateTimeZoneAwareDate(date);
+      const getUTCString = generateTimeZoneAwareDate(date, 'America/New_York');
       
       expect(getUTCString).toEqual('2019-03-01T15:32:05.000Z');
     });
