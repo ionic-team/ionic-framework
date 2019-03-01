@@ -90,7 +90,10 @@ export class ItemSliding implements ComponentInterface {
 
     this.item = null;
     this.leftOptions = this.rightOptions = undefined;
-    this.closeOpened();
+
+    if (openSlidingItem === this.el) {
+      openSlidingItem = undefined;
+    }
   }
 
   /**
