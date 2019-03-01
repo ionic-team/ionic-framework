@@ -1,70 +1,79 @@
-import { newE2EPage } from '@stencil/core/testing';
+import { testToast } from '../test.utils';
 
-test('toast: basic', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/toast/test/basic?ionic:_testing=true'
-  });
+const DIRECTORY = 'basic';
 
-  // Show bottom toast
-  let button = await page.find('#showBottomToast');
-  await button.click();
+test('toast: bottom', async () => {
+  await testToast(DIRECTORY, '#show-bottom-toast');
+});
 
-  let toast = await page.find('ion-toast');
-  await toast.waitForVisible();
-  await page.waitFor(250);
+test('toast: middle', async () => {
+  await testToast(DIRECTORY, '#show-middle-toast');
+});
 
-  let compare = await page.compareScreenshot(`bottom toast`);
-  expect(compare).toMatchScreenshot();
+test('toast: top', async () => {
+  await testToast(DIRECTORY, '#show-top-toast');
+});
 
-  await toast.callMethod('dismiss');
-  await toast.waitForNotVisible();
-  await page.waitFor(250);
+test('toast: two lines', async () => {
+  await testToast(DIRECTORY, '#two-line-toast');
+});
 
-  compare = await page.compareScreenshot('dismissed bottom toast');
-  expect(compare).toMatchScreenshot();
+test('toast: close button', async () => {
+  await testToast(DIRECTORY, '#close-button-toast');
+});
 
-  toast = await page.find('ion-toast');
-  expect(toast).toBeNull();
+test('toast: custom close text', async () => {
+  await testToast(DIRECTORY, '#custom-close-text-toast');
+});
 
-  // Show middle toast
-  button = await page.find('#showMiddleToast');
-  await button.click();
+test('toast: translucent', async () => {
+  await testToast(DIRECTORY, '#translucent-toast');
+});
 
-  toast = await page.find('ion-toast');
-  await toast.waitForVisible();
-  await page.waitFor(250);
+test('toast: color', async () => {
+  await testToast(DIRECTORY, '#color-toast');
+});
 
-  compare = await page.compareScreenshot(`middle toast`);
-  expect(compare).toMatchScreenshot();
+test('toast: custom class', async () => {
+  await testToast(DIRECTORY, '#custom-class-toast');
+});
 
-  await toast.callMethod('dismiss');
-  await toast.waitForNotVisible();
-  await page.waitFor(250);
+/**
+ * RTL Tests
+ */
 
-  compare = await page.compareScreenshot('dismissed middle toast');
-  expect(compare).toMatchScreenshot();
+test('toast:rtl: bottom', async () => {
+  await testToast(DIRECTORY, '#show-bottom-toast', true);
+});
 
-  toast = await page.find('ion-toast');
-  expect(toast).toBeNull();
+test('toast:rtl: middle', async () => {
+  await testToast(DIRECTORY, '#show-middle-toast', true);
+});
 
-  // Show top toast
-  button = await page.find('#showTopToast');
-  await button.click();
+test('toast:rtl: top', async () => {
+  await testToast(DIRECTORY, '#show-top-toast', true);
+});
 
-  toast = await page.find('ion-toast');
-  await toast.waitForVisible();
-  await page.waitFor(250);
+test('toast:rtl: two lines', async () => {
+  await testToast(DIRECTORY, '#two-line-toast', true);
+});
 
-  compare = await page.compareScreenshot(`top toast`);
-  expect(compare).toMatchScreenshot();
+test('toast:rtl: close button', async () => {
+  await testToast(DIRECTORY, '#close-button-toast', true);
+});
 
-  await toast.callMethod('dismiss');
-  await toast.waitForNotVisible();
-  await page.waitFor(250);
+test('toast:rtl: custom close text', async () => {
+  await testToast(DIRECTORY, '#custom-close-text-toast', true);
+});
 
-  compare = await page.compareScreenshot('dismissed top toast');
-  expect(compare).toMatchScreenshot();
+test('toast:rtl: translucent', async () => {
+  await testToast(DIRECTORY, '#translucent-toast', true);
+});
 
-  toast = await page.find('ion-toast');
-  expect(toast).toBeNull();
+test('toast:rtl: color', async () => {
+  await testToast(DIRECTORY, '#color-toast', true);
+});
+
+test('toast:rtl: custom class', async () => {
+  await testToast(DIRECTORY, '#custom-class-toast', true);
 });
