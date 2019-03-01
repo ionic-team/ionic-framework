@@ -126,7 +126,25 @@ export class Range implements ComponentInterface {
     if (!this.noUpdate) {
       this.updateRatio();
     }
+
+    value = this.ensureValueInBounds(value);
+
     this.ionChange.emit({ value });
+  }
+
+  private clampBounds = (value: any): number => {
+    return clamp(this.min, value, this.max);
+  }
+
+  private ensureValueInBounds = (value: any) => {
+    if (this.dualKnobs) {
+      return {
+        lower: this.clampBounds(value.lower),
+        upper: this.clampBounds(value.upper)
+      };
+    } else {
+      return this.clampBounds(value);
+    }
   }
 
   /**
