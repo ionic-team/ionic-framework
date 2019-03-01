@@ -78,11 +78,11 @@ import {
   EventEmitter,
 } from '@stencil/core';
 import {
-  SelectCompareFn,
-} from './components/select/select-interface';
-import {
   PickerSelectionChange,
 } from './components/picker/picker-interface';
+import {
+  SelectCompareFn,
+} from './components/select/select-interface';
 
 
 export namespace Components {
