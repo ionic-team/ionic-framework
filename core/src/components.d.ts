@@ -3309,10 +3309,6 @@ export namespace Components {
     */
     'name': string;
     /**
-    * The neutral point of the range slider. Default: value is `0` or the `min` when `neutralPoint < min` or `max` when `max < neutralPoint`.
-    */
-    'neutralPoint': number;
-    /**
     * If `true`, a pin with integer value is shown when the knob is pressed.
     */
     'pin': boolean;
@@ -3327,7 +3323,7 @@ export namespace Components {
     /**
     * the value of the range.
     */
-    'value': RangeValue | null;
+    'value': RangeValue;
   }
   interface IonRangeAttributes extends StencilHTMLAttributes {
     /**
@@ -3363,10 +3359,6 @@ export namespace Components {
     */
     'name'?: string;
     /**
-    * The neutral point of the range slider. Default: value is `0` or the `min` when `neutralPoint < min` or `max` when `max < neutralPoint`.
-    */
-    'neutralPoint'?: number;
-    /**
     * Emitted when the range loses focus.
     */
     'onIonBlur'?: (event: CustomEvent<void>) => void;
@@ -3393,7 +3385,7 @@ export namespace Components {
     /**
     * the value of the range.
     */
-    'value'?: RangeValue | null;
+    'value'?: RangeValue;
   }
 
   interface IonRefresherContent {
@@ -4110,14 +4102,16 @@ export namespace Components {
 
   interface IonSkeletonText {
     /**
-    * Width for the element to render at.
+    * If `true`, the skeleton text will animate.
     */
-    'width': string;
+    'animated': boolean;
+    'width'?: string;
   }
   interface IonSkeletonTextAttributes extends StencilHTMLAttributes {
     /**
-    * Width for the element to render at.
+    * If `true`, the skeleton text will animate.
     */
+    'animated'?: boolean;
     'width'?: string;
   }
 

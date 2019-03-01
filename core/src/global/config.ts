@@ -34,26 +34,25 @@ export class Config {
   }
 }
 
-export function configFromSession(): any {
+export function configFromSession(win: Window): any {
   try {
-    const configStr = window.sessionStorage.getItem(IONIC_SESSION_KEY);
+    const configStr = win.sessionStorage.getItem(IONIC_SESSION_KEY);
     return configStr !== null ? JSON.parse(configStr) : {};
   } catch (e) {
     return {};
   }
 }
 
-export function saveConfig(config: any) {
+export function saveConfig(win: Window, config: any) {
   try {
-    window.sessionStorage.setItem(IONIC_SESSION_KEY, JSON.stringify(config));
+    win.sessionStorage.setItem(IONIC_SESSION_KEY, JSON.stringify(config));
   } catch (e) {
     return;
   }
 }
 
-export function configFromURL() {
+export function configFromURL(win: Window) {
   const config: any = {};
-  const win = window;
   win.location.search.slice(1)
     .split('&')
     .map(entry => entry.split('='))

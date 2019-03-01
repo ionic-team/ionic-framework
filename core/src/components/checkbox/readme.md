@@ -95,6 +95,96 @@ export class HomePage {
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonCheckbox, IonList, IonItem, IonLabel } from '@ionic/react';
+
+const form = [
+  { val: 'Pepperoni', isChecked: true },
+  { val: 'Sausage', isChecked: false },
+  { val: 'Mushroom', isChecked: false }
+];
+
+const CheckboxExample: React.SFC<{}> = () => (
+  <>
+    {/*-- Default Checkbox --*/}
+    <IonCheckbox />
+
+    {/*-- Disabled Checkbox --*/}
+    <IonCheckbox disabled={true} />
+
+    {/*-- Checked Checkbox --*/}
+    <IonCheckbox checked={true} />
+
+    {/*-- Checkbox Colors --*/}
+    <IonCheckbox color="primary" />
+    <IonCheckbox color="secondary" />
+    <IonCheckbox color="danger" />
+    <IonCheckbox color="light" />
+    <IonCheckbox color="dark" />
+
+    {/*-- Checkboxes in a List --*/}
+    <IonList>
+      { form.map(({val, isChecked}) => (
+        <IonItem key={val}>
+          <IonLabel>{{val}}</IonLabel>
+          <IonCheckbox slot="end" value={val} checked={isChecked} />
+        </IonItem>
+      )) }
+    </IonList>
+  </>
+);
+
+export default CheckboxExample;
+
+
+### Vue
+
+```html
+<template>
+  <!-- Default Checkbox -->
+  <ion-checkbox></ion-checkbox>
+
+  <!-- Disabled Checkbox -->
+  <ion-checkbox disabled="true"></ion-checkbox>
+
+  <!-- Checked Checkbox -->
+  <ion-checkbox checked="true"></ion-checkbox>
+
+  <!-- Checkbox Colors -->
+  <ion-checkbox color="primary"></ion-checkbox>
+  <ion-checkbox color="secondary"></ion-checkbox>
+  <ion-checkbox color="danger"></ion-checkbox>
+  <ion-checkbox color="light"></ion-checkbox>
+  <ion-checkbox color="dark"></ion-checkbox>
+
+  <!-- Checkboxes in a List -->
+  <ion-list>
+    <ion-item v-for="entry in form">
+      <ion-label>{{entry.val}}</ion-label>
+      <ion-checkbox slot="end" v-on:input="entry.checked = $event.target.value" v-bind:value="entry.isChecked"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+</template>
+
+<script lang="ts">
+  import { Component, Vue } from 'vue-property-decorator';
+
+  @Component()
+  export default class Menu extends Vue {
+    form = [
+      { val: 'Pepperoni', isChecked: true },
+      { val: 'Sausage', isChecked: false },
+      { val: 'Mushroom', isChecked: false }
+    ];
+  }
+</script>
+```
+
+
 
 ## Properties
 
