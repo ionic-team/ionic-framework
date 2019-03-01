@@ -13,7 +13,7 @@ export const getDateValue = (date: DatetimeData, format: string): number => {
 };
 
 /**
- * Given a Date, generate a date string that 
+ * Given a Date, generate a date string that
  * *looks* like UTC but is set relative
  * to the user's timezone
  */
@@ -27,17 +27,17 @@ export const generateTimeZoneAwareDate = (date: Date = new Date()): string => {
     second: '2-digit',
     hour12: false
   }).formatToParts(date);
-  
+
   const dateIndex: any = {};
-  
+
   dateParts.forEach(part => {
-    if (part.type === 'literal') { return }
-    
+    if (part.type === 'literal') { return; }
+
     dateIndex[part.type] = part.value;
   });
-  
+
   return `${dateIndex.year}-${dateIndex.month}-${dateIndex.day}T${dateIndex.hour}:${dateIndex.minute}:${dateIndex.second}.000Z`;
-}
+};
 
 export const renderDatetime = (template: string, value: DatetimeData | undefined, locale: LocaleData): string | undefined => {
   if (value === undefined) {
@@ -70,7 +70,7 @@ export const renderDatetime = (template: string, value: DatetimeData | undefined
   }
 
   return template;
-}
+};
 
 export const renderTextFormat = (format: string, value: any, date: DatetimeData | undefined, locale: LocaleData): string | undefined => {
   if ((format === FORMAT_DDDD || format === FORMAT_DDD)) {
@@ -137,7 +137,7 @@ export const renderTextFormat = (format: string, value: any, date: DatetimeData 
   }
 
   return value.toString();
-}
+};
 
 export const dateValueRange = (format: string, min: DatetimeData, max: DatetimeData): any[] => {
   const opts: any[] = [];
@@ -192,23 +192,23 @@ export const dateValueRange = (format: string, min: DatetimeData, max: DatetimeD
   }
 
   return opts;
-}
+};
 
 export const dateSortValue = (year: number | undefined, month: number | undefined, day: number | undefined, hour = 0, minute = 0): number => {
   return parseInt(`1${fourDigit(year)}${twoDigit(month)}${twoDigit(day)}${twoDigit(hour)}${twoDigit(minute)}`, 10);
-}
+};
 
 export const dateDataSortValue = (data: DatetimeData): number => {
   return dateSortValue(data.year, data.month, data.day, data.hour, data.minute);
-}
+};
 
 export const daysInMonth = (month: number, year: number): number => {
   return (month === 4 || month === 6 || month === 9 || month === 11) ? 30 : (month === 2) ? isLeapYear(year) ? 29 : 28 : 31;
-}
+};
 
 export const isLeapYear = (year: number): boolean => {
   return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
-}
+};
 
 const ISO_8601_REGEXP = /^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
 const TIME_REGEXP = /^((\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
@@ -266,7 +266,7 @@ export const parseDate = (val: string | undefined | null): DatetimeData | undefi
     millisecond: parse[7],
     tzOffset,
   };
-}
+};
 
 export const updateDate = (existingData: DatetimeData, newData: any): boolean => {
   if (newData && newData !== '') {
@@ -312,7 +312,7 @@ export const updateDate = (existingData: DatetimeData, newData: any): boolean =>
     }
   }
   return false;
-}
+};
 
 export const parseTemplate = (template: string): string[] => {
   const formats: string[] = [];
@@ -345,7 +345,7 @@ export const parseTemplate = (template: string): string[] => {
   });
 
   return formats;
-}
+};
 
 export const getValueFromFormat = (date: DatetimeData, format: string) => {
   if (format === FORMAT_A || format === FORMAT_a) {
@@ -355,7 +355,7 @@ export const getValueFromFormat = (date: DatetimeData, format: string) => {
     return (date.hour! > 12 ? date.hour! - 12 : date.hour);
   }
   return (date as any)[convertFormatToKey(format)!];
-}
+};
 
 export const convertFormatToKey = (format: string): string | undefined => {
   for (const k in FORMAT_KEYS) {
@@ -364,7 +364,7 @@ export const convertFormatToKey = (format: string): string | undefined => {
     }
   }
   return undefined;
-}
+};
 
 export const convertDataToISO = (data: DatetimeData): string => {
   // https://www.w3.org/TR/NOTE-datetime
@@ -418,7 +418,7 @@ export const convertDataToISO = (data: DatetimeData): string => {
   }
 
   return rtn;
-}
+};
 
 /**
  * Use to convert a string of comma separated strings or
@@ -446,7 +446,7 @@ export const convertToArrayOfStrings = (input: string | string[] | undefined | n
   }
 
   return values;
-}
+};
 
 /**
  * Use to convert a string of comma separated numbers or
@@ -474,19 +474,19 @@ export const convertToArrayOfNumbers = (input: any[] | string | number, type: st
   }
 
   return values;
-}
+};
 
 const twoDigit = (val: number | undefined): string => {
   return ('0' + (val !== undefined ? Math.abs(val) : '0')).slice(-2);
-}
+};
 
 const threeDigit = (val: number | undefined): string => {
   return ('00' + (val !== undefined ? Math.abs(val) : '0')).slice(-3);
-}
+};
 
 const fourDigit = (val: number | undefined): string => {
   return ('000' + (val !== undefined ? Math.abs(val) : '0')).slice(-4);
-}
+};
 
 export interface DatetimeData {
   year?: number;
