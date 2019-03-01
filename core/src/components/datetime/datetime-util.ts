@@ -3,16 +3,43 @@
  * Defaults to the current date if
  * no date given
  */
-export function getDateValue(date: DatetimeData, format: string): number {
+export const getDateValue = (date: DatetimeData, format: string): number => {
   const getValue = getValueFromFormat(date, format);
 
   if (getValue) { return getValue; }
 
-  const defaultDate = parseDate(new Date().toISOString());
+  const defaultDate = parseDate(generateTimeZoneAwareDate());
   return getValueFromFormat((defaultDate as DatetimeData), format);
+};
+
+/**
+ * Given a Date, generate a date string that 
+ * *looks* like UTC but is set relative
+ * to the user's timezone
+ */
+export const generateTimeZoneAwareDate = (date: Date = new Date()): string => {
+  const dateParts = new Intl.DateTimeFormat('default', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  }).formatToParts(date);
+  
+  const dateIndex: any = {};
+  
+  dateParts.forEach(part => {
+    if (part.type === 'literal') { return }
+    
+    dateIndex[part.type] = part.value;
+  });
+  
+  return `${dateIndex.year}-${dateIndex.month}-${dateIndex.day}T${dateIndex.hour}:${dateIndex.minute}:${dateIndex.second}.000Z`;
 }
 
-export function renderDatetime(template: string, value: DatetimeData | undefined, locale: LocaleData): string | undefined {
+export const renderDatetime = (template: string, value: DatetimeData | undefined, locale: LocaleData): string | undefined => {
   if (value === undefined) {
     return undefined;
   }
@@ -45,7 +72,7 @@ export function renderDatetime(template: string, value: DatetimeData | undefined
   return template;
 }
 
-export function renderTextFormat(format: string, value: any, date: DatetimeData | undefined, locale: LocaleData): string | undefined {
+export const renderTextFormat = (format: string, value: any, date: DatetimeData | undefined, locale: LocaleData): string | undefined => {
   if ((format === FORMAT_DDDD || format === FORMAT_DDD)) {
     try {
       value = (new Date(date!.year!, date!.month! - 1, date!.day)).getDay();
@@ -112,7 +139,7 @@ export function renderTextFormat(format: string, value: any, date: DatetimeData 
   return value.toString();
 }
 
-export function dateValueRange(format: string, min: DatetimeData, max: DatetimeData): any[] {
+export const dateValueRange = (format: string, min: DatetimeData, max: DatetimeData): any[] => {
   const opts: any[] = [];
 
   if (format === FORMAT_YYYY || format === FORMAT_YY) {
@@ -167,26 +194,26 @@ export function dateValueRange(format: string, min: DatetimeData, max: DatetimeD
   return opts;
 }
 
-export function dateSortValue(year: number | undefined, month: number | undefined, day: number | undefined, hour = 0, minute = 0): number {
+export const dateSortValue = (year: number | undefined, month: number | undefined, day: number | undefined, hour = 0, minute = 0): number => {
   return parseInt(`1${fourDigit(year)}${twoDigit(month)}${twoDigit(day)}${twoDigit(hour)}${twoDigit(minute)}`, 10);
 }
 
-export function dateDataSortValue(data: DatetimeData): number {
+export const dateDataSortValue = (data: DatetimeData): number => {
   return dateSortValue(data.year, data.month, data.day, data.hour, data.minute);
 }
 
-export function daysInMonth(month: number, year: number): number {
+export const daysInMonth = (month: number, year: number): number => {
   return (month === 4 || month === 6 || month === 9 || month === 11) ? 30 : (month === 2) ? isLeapYear(year) ? 29 : 28 : 31;
 }
 
-export function isLeapYear(year: number): boolean {
+export const isLeapYear = (year: number): boolean => {
   return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
 }
 
 const ISO_8601_REGEXP = /^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
 const TIME_REGEXP = /^((\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
 
-export function parseDate(val: string | undefined | null): DatetimeData | undefined {
+export const parseDate = (val: string | undefined | null): DatetimeData | undefined => {
   // manually parse IS0 cuz Date.parse cannot be trusted
   // ISO 8601 format: 1994-12-15T13:47:20Z
   let parse: any[] | null = null;
@@ -241,7 +268,7 @@ export function parseDate(val: string | undefined | null): DatetimeData | undefi
   };
 }
 
-export function updateDate(existingData: DatetimeData, newData: any): boolean {
+export const updateDate = (existingData: DatetimeData, newData: any): boolean => {
   if (newData && newData !== '') {
 
     if (typeof newData === 'string') {
@@ -287,7 +314,7 @@ export function updateDate(existingData: DatetimeData, newData: any): boolean {
   return false;
 }
 
-export function parseTemplate(template: string): string[] {
+export const parseTemplate = (template: string): string[] => {
   const formats: string[] = [];
 
   template = template.replace(/[^\w\s]/gi, ' ');
@@ -320,7 +347,7 @@ export function parseTemplate(template: string): string[] {
   return formats;
 }
 
-export function getValueFromFormat(date: DatetimeData, format: string) {
+export const getValueFromFormat = (date: DatetimeData, format: string) => {
   if (format === FORMAT_A || format === FORMAT_a) {
     return (date.hour! < 12 ? 'am' : 'pm');
   }
@@ -330,7 +357,7 @@ export function getValueFromFormat(date: DatetimeData, format: string) {
   return (date as any)[convertFormatToKey(format)!];
 }
 
-export function convertFormatToKey(format: string): string | undefined {
+export const convertFormatToKey = (format: string): string | undefined => {
   for (const k in FORMAT_KEYS) {
     if (FORMAT_KEYS[k].f === format) {
       return FORMAT_KEYS[k].k;
@@ -339,7 +366,7 @@ export function convertFormatToKey(format: string): string | undefined {
   return undefined;
 }
 
-export function convertDataToISO(data: DatetimeData): string {
+export const convertDataToISO = (data: DatetimeData): string => {
   // https://www.w3.org/TR/NOTE-datetime
   let rtn = '';
   if (data.year !== undefined) {
@@ -397,7 +424,7 @@ export function convertDataToISO(data: DatetimeData): string {
  * Use to convert a string of comma separated strings or
  * an array of strings, and clean up any user input
  */
-export function convertToArrayOfStrings(input: string | string[] | undefined | null, type: string): string[] | undefined {
+export const convertToArrayOfStrings = (input: string | string[] | undefined | null, type: string): string[] | undefined => {
   if (input == null) {
     return undefined;
   }
@@ -425,7 +452,7 @@ export function convertToArrayOfStrings(input: string | string[] | undefined | n
  * Use to convert a string of comma separated numbers or
  * an array of numbers, and clean up any user input
  */
-export function convertToArrayOfNumbers(input: any[] | string | number, type: string): number[] {
+export const convertToArrayOfNumbers = (input: any[] | string | number, type: string): number[] => {
   if (typeof input === 'string') {
     // convert the string to an array of strings
     // auto remove any whitespace and [] characters
@@ -449,15 +476,15 @@ export function convertToArrayOfNumbers(input: any[] | string | number, type: st
   return values;
 }
 
-function twoDigit(val: number | undefined): string {
+const twoDigit = (val: number | undefined): string => {
   return ('0' + (val !== undefined ? Math.abs(val) : '0')).slice(-2);
 }
 
-function threeDigit(val: number | undefined): string {
+const threeDigit = (val: number | undefined): string => {
   return ('00' + (val !== undefined ? Math.abs(val) : '0')).slice(-3);
 }
 
-function fourDigit(val: number | undefined): string {
+const fourDigit = (val: number | undefined): string => {
   return ('000' + (val !== undefined ? Math.abs(val) : '0')).slice(-4);
 }
 

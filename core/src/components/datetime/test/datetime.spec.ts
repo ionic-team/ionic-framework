@@ -1,9 +1,17 @@
 import { DatetimeOptions } from '../datetime-interface';
-import { DatetimeData, getDateValue } from '../datetime-util';
+import { DatetimeData, getDateValue, generateTimeZoneAwareDate } from '../datetime-util';
 
 describe('Datetime', () => {
+  describe('generateTimeZoneAwareDate()', () => {
+    it('should generate a timezone aware UTC-like string', () => {
+      const date = new Date("01 March 2019 15:32:05 GMT-0500 (Eastern Standard Time)");
+      const getUTCString = generateTimeZoneAwareDate(date);
+      
+      expect(getUTCString).toEqual('2019-03-01T15:32:05.000Z');
+    });
+  });
   describe('getDateValue()', () => {
-    it('it should return the date value for the current day', () => {
+    it('should return the date value for the current day', () => {
       const today = new Date();
       
       const dayValue = getDateValue({}, 'DD');
@@ -15,7 +23,7 @@ describe('Datetime', () => {
       expect(yearValue).toEqual(today.getFullYear());
     });
     
-    it('it should return the date value for a given day', () => {
+    it('should return the date value for a given day', () => {
       const date = new Date('15 October 1995');
       const dateTimeData: DatetimeData = {
         year: date.getFullYear(),
