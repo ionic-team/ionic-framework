@@ -47,6 +47,7 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev?
   // exceeds the body width it is off screen to the right so adjust
   if (popoverCSS.left < POPOVER_MD_BODY_PADDING) {
     popoverCSS.left = POPOVER_MD_BODY_PADDING;
+    originX = isRTL ? 'left' : 'right';
   } else if (
     contentWidth + POPOVER_MD_BODY_PADDING + popoverCSS.left >
     bodyWidth
