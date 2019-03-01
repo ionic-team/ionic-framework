@@ -33,13 +33,13 @@
     "ionicons": "4.5.5"
   },
   "devDependencies": {
-    "@stencil/core": "0.17.3-0",
+    "@stencil/core": "0.18.0",
     "@stencil/sass": "0.1.1",
     "@stencil/utils": "latest",
     "@types/jest": "^23.3.13",
     "@types/node": "10.12.18",
     "@types/puppeteer": "1.11.2",
-    "@types/swiper": "4.4.1",
+    "@types/swiper": "4.4.2",
     "agadoo": "^1.0.0",
     "autoprefixer": "9.4.6",
     "aws-sdk": "^2.320.0",
@@ -55,7 +55,7 @@
     "rollup-plugin-node-resolve": "4.0.0",
     "stylelint": "9.10.1",
     "stylelint-order": "2.0.0",
-    "swiper": "4.4.6",
+    "swiper": "4.5.0",
     "tslint": "^5.10.0",
     "tslint-ionic-rules": "0.0.21",
     "tslint-react": "^3.6.0"
