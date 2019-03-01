@@ -43,7 +43,7 @@ export class PickerColumnCmp implements ComponentInterface {
   @Watch('col')
   protected async valueChanged() {
     setTimeout(() => {
-      this.refresh(false, 0, true);
+      this.refresh(false, TRANSITION_DURATION, true);
     });
   }
 
@@ -194,7 +194,6 @@ export class PickerColumnCmp implements ComponentInterface {
       // have not set a last index yet
       hapticSelectionChanged();
       this.lastIndex = selectedIndex;
-      this.selectionChanged.emit(this.col);
     }
   }
 
@@ -226,6 +225,9 @@ export class PickerColumnCmp implements ComponentInterface {
       if (notLockedIn) {
         // isn't locked in yet, keep decelerating until it is
         this.rafId = requestAnimationFrame(() => this.decelerate());
+      } else {
+        // trigger change after deceleration finished
+        this.selectionChanged.emit(this.col);
       }
 
     } else if (this.y % this.optHeight !== 0) {
@@ -308,6 +310,8 @@ export class PickerColumnCmp implements ComponentInterface {
       const opt = (detail.event.target as Element).closest('.picker-opt');
       if (opt && opt.hasAttribute('opt-index')) {
         this.setSelected(parseInt(opt.getAttribute('opt-index')!, 10), TRANSITION_DURATION);
+        // dirctly trigger selection changed if element gets clicked or velocity is 0
+        this.selectionChanged.emit(this.col);
       }
 
     } else {
