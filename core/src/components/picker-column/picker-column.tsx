@@ -42,9 +42,9 @@ export class PickerColumnCmp implements ComponentInterface {
 
   @Watch('col')
   protected async valueChanged() {
-    this.columnChangedTmrId = setTimeout(() => {
+    setTimeout(() => {
       this.refresh(false, 0, true);
-    }, 0);
+    });
   }
 
   /**
@@ -172,6 +172,8 @@ export class PickerColumnCmp implements ComponentInterface {
         opt.transform = transform;
         button.style.transform = transform;
       }
+      button.style.visibility = 'visible';
+
       // Update selected item
       if (selected !== opt.selected) {
         opt.selected = selected;
@@ -365,6 +367,7 @@ export class PickerColumnCmp implements ComponentInterface {
             type="button"
             class={{ 'picker-opt': true, 'picker-opt-disabled': !!o.disabled }}
             opt-index={index}
+            style={{ 'visibility': 'hidden' }}
           >
             {o.text}
           </Button>
