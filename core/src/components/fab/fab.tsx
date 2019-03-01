@@ -34,7 +34,7 @@ export class Fab implements ComponentInterface {
   @Watch('activated')
   activatedChanged() {
     const activated = this.activated;
-    const fab = this.getFAB();
+    const fab = this.getFab();
     if (fab) {
       fab.activated = activated;
     }
@@ -49,14 +49,14 @@ export class Fab implements ComponentInterface {
     }
   }
 
-  getFAB() {
+  getFab() {
     return this.el.querySelector('ion-fab-button');
   }
 
   @Listen('click')
   onClick() {
     const hasList = !!this.el.querySelector('ion-fab-list');
-    const getButton = this.getFAB();
+    const getButton = this.getFab();
     const isButtonDisabled = getButton && getButton.disabled;
 
     if (hasList && !isButtonDisabled) {
