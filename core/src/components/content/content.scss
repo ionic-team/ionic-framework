@@ -42,7 +42,7 @@
 
   font-family: $font-family-base;
 
-  contain: layout size style;
+  contain: size style;
 }
 
 :host(.ion-color) .inner-scroll {

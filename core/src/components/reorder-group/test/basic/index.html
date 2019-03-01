@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
   <script src="../../../../../dist/ionic.js"></script>
 </head>
 
@@ -26,35 +27,45 @@
       <ion-list>
         <ion-reorder-group id="reorder">
 
-          <ion-item>
+          <ion-item button onclick="openAlert()">
             <ion-label>
               Item 1 (default ion-reorder)
             </ion-label>
             <ion-reorder slot="end"></ion-reorder>
           </ion-item>
 
-          <ion-item>
-            <ion-label>
-              Item 2 (default ion-reorder)
-            </ion-label>
-            <ion-reorder slot="end"></ion-reorder>
-          </ion-item>
+          <ion-item-sliding>
+            <ion-item button onclick="openAlert()">
+              <ion-label>
+                Item 2 (default ion-reorder with ion-item-sliding)
+              </ion-label>
+              <ion-reorder slot="end"></ion-reorder>
+            </ion-item>
+            <ion-item-options side="start">
+              <ion-item-option>Favorite</ion-item-option>
+              <ion-item-option color="danger">Share</ion-item-option>
+            </ion-item-options>
 
-          <ion-item>
+            <ion-item-options side="end">
+              <ion-item-option>Unread</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+
+          <ion-item button onclick="openAlert()">
             <ion-label>
               Item 3 (default ion-reorder slot="start")
             </ion-label>
             <ion-reorder slot="start"></ion-reorder>
           </ion-item>
 
-          <ion-item color="secondary">
+          <ion-item button color="secondary">
             <ion-label>
               Item 4 (default ion-reorder slot="start")
             </ion-label>
             <ion-reorder slot="start"></ion-reorder>
           </ion-item>
 
-          <ion-item>
+          <ion-item button onclick="openAlert()">
             <ion-label>
               Item 5 (custom ion-reorder)
             </ion-label>
@@ -63,7 +74,7 @@
             </ion-reorder>
           </ion-item>
 
-          <ion-item>
+          <ion-item button onclick="openAlert()">
             <ion-label>
               Item 6 (custom ion-reorder)
             </ion-label>
@@ -72,7 +83,7 @@
             </ion-reorder>
           </ion-item>
 
-          <ion-item>
+          <ion-item button onclick="openAlert()">
             <ion-label>
               Item 7 (custom ion-reorder slot="start")
             </ion-label>
@@ -82,7 +93,7 @@
           </ion-item>
 
           <ion-reorder>
-            <ion-item>
+            <ion-item button onclick="openAlert()">
               <ion-label>
                 Item 8 (the whole item can be dragged)
               </ion-label>
@@ -90,7 +101,7 @@
           </ion-reorder>
 
           <ion-reorder>
-            <ion-item>
+            <ion-item button onclick="openAlert()">
               <ion-label>
                 Item 9 (the whole item can be dragged)
               </ion-label>
@@ -98,7 +109,7 @@
           </ion-reorder>
 
           <ion-reorder>
-            <ion-item>
+            <ion-item button onclick="openAlert()">
               <ion-label>
                 Item 10 (the whole item can be dragged)
               </ion-label>
@@ -112,6 +123,9 @@
   </ion-app>
 
   <script>
+    function openAlert() {
+      alert('click');
+    }
     function toggleEdit() {
       const reorderGroup = document.getElementById('reorder');
       reorderGroup.disabled = !reorderGroup.disabled;

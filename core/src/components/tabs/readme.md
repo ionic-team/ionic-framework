@@ -163,32 +163,101 @@ Using tabs with Angular's router is fairly straight forward. Here you only need 
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBadge } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+
+  <IonTabs>
+    <IonTabBar slot="bottom">
+      <IonTabButton tab="schedule">
+        <IonIcon name="calendar" />
+        <IonLabel>Schedule</IonLabel>
+        <IonBadge>6</IonBadge>
+      </IonTabButton>
+
+      <IonTabButton tab="speakers">
+        <IonIcon name="contacts" />
+        <IonLabel>Speakers</IonLabel>
+      </IonTabButton>
+
+      <IonTabButton tab="map">
+        <IonIcon name="map" />
+        <IonLabel>Map</IonLabel>
+      </IonTabButton>
+
+      <IonTabButton tab="about">
+        <IonIcon name="information-circle" />
+        <IonLabel>About</IonLabel>
+      </IonTabButton>
+    </IonTabBar>
+  </IonTabs>
+);
+
+export default Example;
+```
+
+
+### Vue
+
+```html
+<template>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="schedule">
+        <ion-icon name="calendar"></ion-icon>
+        <ion-label>Schedule</ion-label>
+        <ion-badge>6</ion-badge>
+      </ion-tab-button>
+
+      <ion-tab-button tab="speakers">
+        <ion-icon name="contacts"></ion-icon>
+        <ion-label>Speakers</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="map">
+        <ion-icon name="map"></ion-icon>
+        <ion-label>Map</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="about">
+        <ion-icon name="information-circle"></ion-icon>
+        <ion-label>About</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</template>
+```
+
+
 
 ## Events
 
-| Event              | Description                                                                | Detail                   |
-| ------------------ | -------------------------------------------------------------------------- | ------------------------ |
-| `ionChange`        | Emitted when the tab changes.                                              | {tab: HTMLIonTabElement} |
-| `ionNavDidChange`  | Emitted when the navigation has finished transitioning to a new component. | void                     |
-| `ionNavWillChange` | Emitted when the navigation is about to transition to a new component.     | void                     |
-| `ionNavWillLoad`   | Emitted when the navigation will load a component.                         | void                     |
+| Event               | Description                                                                | Type                         |
+| ------------------- | -------------------------------------------------------------------------- | ---------------------------- |
+| `ionTabsDidChange`  | Emitted when the navigation has finished transitioning to a new component. | `CustomEvent<{tab: string}>` |
+| `ionTabsWillChange` | Emitted when the navigation is about to transition to a new component.     | `CustomEvent<{tab: string}>` |
 
 
 ## Methods
 
-### `getSelected() => Promise<HTMLIonTabElement | undefined>`
+### `getSelected() => Promise<string | undefined>`
 
 Get the currently selected tab
 
 #### Returns
 
-Type: `Promise<HTMLIonTabElement | undefined>`
+Type: `Promise<string | undefined>`
 
 
 
 ### `getTab(tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>`
 
-Get the tab at the given index
+Get the tab element given the tab name
 
 #### Parameters
 
@@ -217,6 +286,15 @@ Index or the Tab instance, of the tab to select.
 Type: `Promise<boolean>`
 
 
+
+
+## Slots
+
+| Slot       | Description                                                           |
+| ---------- | --------------------------------------------------------------------- |
+|            | Content is placed between the named slots if provided without a slot. |
+| `"bottom"` | Content is placed at the bottom of the screen.                        |
+| `"top"`    | Content is placed at the top of the screen.                           |
 
 
 ----------------------------------------------

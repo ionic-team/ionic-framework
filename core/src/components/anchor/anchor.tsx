@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Listen, Prop } from '@stencil/core';
 
 import { Color, RouterDirection } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
@@ -31,6 +31,11 @@ export class Anchor implements ComponentInterface {
    */
   @Prop() routerDirection: RouterDirection = 'forward';
 
+  @Listen('click')
+  onClick(ev: Event) {
+    openURL(this.win, this.href, ev, this.routerDirection);
+  }
+
   hostData() {
     return {
       class: {
@@ -42,10 +47,7 @@ export class Anchor implements ComponentInterface {
 
   render() {
     return (
-      <a
-        href={this.href}
-        onClick={(ev: Event) => openURL(this.win, this.href, ev, this.routerDirection)}
-      >
+      <a href={this.href}>
         <slot></slot>
       </a>
     );

@@ -56,8 +56,12 @@
 // Textarea Within An Item
 // --------------------------------------------------
 
-:host(.in-item) {
+:host-context(ion-item) {
   position: static;
+}
+
+:host-context(ion-item:not(.item-label)) {
+  --padding-start: 0;
 }
 
 
@@ -80,10 +84,11 @@
   outline: none;
 
   background: transparent;
-
   box-sizing: border-box;
   resize: none;
   appearance: none;
+
+  white-space: pre-wrap;
 
   &::placeholder {
     color: var(--placeholder-color);

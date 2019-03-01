@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { Gesture, GestureDetail, ItemReorderDetail } from '../../interface';
+import { Gesture, GestureDetail, ItemReorderEventDetail } from '../../interface';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/haptic';
 
 const enum ReordeGroupState {
@@ -50,13 +50,11 @@ export class ReorderGroup implements ComponentInterface {
   }
 
   /**
-   * Event that needs to be listen to in order to respond to reorder action.
-   * `ion-reorder-group` uses this event to delegate to the user the reordering of data array.
-   *
-   *
-   * The complete() method exposed as
+   * Event that needs to be listened to in order to complete the reorder action.
+   * Once the event has been emitted, the `complete()` method then needs
+   * to be called in order to finalize the reorder action.
    */
-  @Event() ionItemReorder!: EventEmitter<ItemReorderDetail>;
+  @Event() ionItemReorder!: EventEmitter<ItemReorderEventDetail>;
 
   async componentDidLoad() {
     const contentEl = this.el.closest('ion-content');
@@ -65,11 +63,11 @@ export class ReorderGroup implements ComponentInterface {
       this.scrollEl = await contentEl.getScrollElement();
     }
 
-    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
+    this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.doc.body,
       queue: this.queue,
       gestureName: 'reorder',
-      gesturePriority: 90,
+      gesturePriority: 110,
       threshold: 0,
       direction: 'y',
       passive: false,
@@ -84,6 +82,10 @@ export class ReorderGroup implements ComponentInterface {
 
   componentDidUnload() {
     this.onEnd();
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
   }
 
   /**
@@ -106,7 +108,6 @@ export class ReorderGroup implements ComponentInterface {
     }
     const item = findReorderItem(reorderEl, this.el);
     if (!item) {
-      console.error('reorder node not found');
       return false;
     }
     ev.data = item;
@@ -303,16 +304,14 @@ function indexForItem(element: any): number {
   return element['$ionIndex'];
 }
 
-function findReorderItem(node: HTMLElement, container: HTMLElement): HTMLElement | undefined {
-  let nested = 0;
-  let parent;
-  while (node && nested < 6) {
-    parent = node.parentNode as HTMLElement;
+function findReorderItem(node: HTMLElement | null, container: HTMLElement): HTMLElement | undefined {
+  let parent: HTMLElement | null;
+  while (node) {
+    parent = node.parentElement;
     if (parent === container) {
       return node;
     }
     node = parent;
-    nested++;
   }
   return undefined;
 }

@@ -85,6 +85,94 @@ export class RefresherExample {
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonContent, IonRefresher, IonRefresherContent } from '@ionic/react';
+
+function doRefresh(event: CustomEvent) {
+  console.log('Begin async operation');
+
+  setTimeout(() => {
+    console.log('Async operation has ended');
+    event.target.complete();
+  }, 2000);
+}
+
+const Example: React.SFC<{}> = () => (
+  <>
+    {/*-- Default Refresher --*/}
+    <IonContent>
+      <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
+        <IonRefresherContent></IonRefresherContent>
+      </IonRefresher>
+    </IonContent>
+
+    {/*-- Custom Refresher Content --*/}
+    <IonContent>
+      <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
+        <IonRefresherContent
+          pullingIcon="arrow-dropdown"
+          pullingText="Pull to refresh"
+          refreshingSpinner="circles"
+          refreshingText="Refreshing...">
+        </IonRefresherContent>
+      </IonRefresher>
+    </IonContent>
+  </>
+
+  }
+
+
+);
+
+export default Example
+
+
+### Vue
+
+```html
+<template>
+  <!-- Default Refresher -->
+  <ion-content>
+    <ion-refresher slot="fixed" @ionRefresh="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+  </ion-content>
+
+  <!-- Custom Refresher Content -->
+  <ion-content>
+    <ion-refresher slot="fixed" @ionRefresh="doRefresh($event)">
+      <ion-refresher-content
+        pullingIcon="arrow-dropdown"
+        pullingText="Pull to refresh"
+        refreshingSpinner="circles"
+        refreshingText="Refreshing...">
+      </ion-refresher-content>
+    </ion-refresher>
+  </ion-content>
+</template>
+<script lang="ts">
+  import { Component, Vue } from 'vue-property-decorator';
+
+  @Component()
+  export default class Menu extends Vue {
+
+    doRefresh(event) {
+      console.log('Begin async operation');
+
+      setTimeout(() => {
+        console.log('Async operation has ended');
+        event.target.complete();
+      }, 2000);
+    }
+  }
+</script>
+```
+
+
 
 ## Properties
 
@@ -99,11 +187,11 @@ export class RefresherExample {
 
 ## Events
 
-| Event        | Description                                                                                                                                                                                                                                                                  | Detail               |
-| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| `ionPull`    | Emitted while the user is pulling down the content and exposing the refresher.                                                                                                                                                                                               | void                 |
-| `ionRefresh` | Emitted when the user lets go of the content and has pulled down further than the `pullMin` or pulls the content down and exceeds the pullMax. Updates the refresher state to `refreshing`. The `complete()` method should be called when the async operation has completed. | RefresherEventDetail |
-| `ionStart`   | Emitted when the user begins to start pulling down.                                                                                                                                                                                                                          | void                 |
+| Event        | Description                                                                                                                                                                                                                                                                  | Type                                |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
+| `ionPull`    | Emitted while the user is pulling down the content and exposing the refresher.                                                                                                                                                                                               | `CustomEvent<void>`                 |
+| `ionRefresh` | Emitted when the user lets go of the content and has pulled down further than the `pullMin` or pulls the content down and exceeds the pullMax. Updates the refresher state to `refreshing`. The `complete()` method should be called when the async operation has completed. | `CustomEvent<RefresherEventDetail>` |
+| `ionStart`   | Emitted when the user begins to start pulling down.                                                                                                                                                                                                                          | `CustomEvent<void>`                 |
 
 
 ## Methods

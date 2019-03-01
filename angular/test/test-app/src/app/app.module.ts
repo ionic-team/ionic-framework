@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,14 @@ import { VirtualScrollInnerComponent } from './virtual-scroll-inner/virtual-scro
 import { NestedOutletComponent } from './nested-outlet/nested-outlet.component';
 import { NestedOutletPageComponent } from './nested-outlet-page/nested-outlet-page.component';
 import { NestedOutletPage2Component } from './nested-outlet-page2/nested-outlet-page2.component';
+import { NavComponent } from './nav/nav.component';
+import { ViewChildComponent } from './view-child/view-child.component';
+import { ProvidersComponent } from './providers/providers.component';
+import { SlidesComponent } from './slides/slides.component';
+import { FormComponent } from './form/form.component';
+import { NavigationPage1Component } from './navigation-page1/navigation-page1.component';
+import { NavigationPage2Component } from './navigation-page2/navigation-page2.component';
+import { NavigationPage3Component } from './navigation-page3/navigation-page3.component';
 
 @NgModule({
   declarations: [
@@ -40,16 +49,26 @@ import { NestedOutletPage2Component } from './nested-outlet-page2/nested-outlet-
     VirtualScrollInnerComponent,
     NestedOutletComponent,
     NestedOutletPageComponent,
-    NestedOutletPage2Component
+    NestedOutletPage2Component,
+    NavComponent,
+    ViewChildComponent,
+    ProvidersComponent,
+    SlidesComponent,
+    FormComponent,
+    NavigationPage1Component,
+    NavigationPage2Component,
+    NavigationPage3Component
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule.forRoot(),
   ],
   entryComponents: [
-    ModalExampleComponent
+    ModalExampleComponent,
+    NavComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

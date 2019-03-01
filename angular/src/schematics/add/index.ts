@@ -1,20 +1,20 @@
 import {
-  Rule,
-  SchematicContext,
-  SchematicsException,
-  Tree,
   apply,
   chain,
   mergeWith,
   move,
+  Rule,
+  SchematicContext,
+  SchematicsException,
   template,
+  Tree,
   url
 } from '@angular-devkit/schematics';
-import { Path, join } from '@angular-devkit/core';
+import { join, Path } from '@angular-devkit/core';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { addPackageToPackageJson } from './../utils/package';
 import { addModuleImportToRootModule } from './../utils/ast';
-import { addStyle, getWorkspace, addArchitectBuilder } from './../utils/config';
+import { addArchitectBuilder, addStyle, getWorkspace } from './../utils/config';
 import { Schema as IonAddOptions } from './schema';
 
 function addIonicAngularToPackageJson(): Rule {
@@ -36,10 +36,11 @@ function addIonicAngularToolkitToPackageJson(): Rule {
   };
 }
 
-function addIonicAngularModuleToAppModule(): Rule {
+function addIonicAngularModuleToAppModule(projectSourceRoot): Rule {
   return (host: Tree) => {
     addModuleImportToRootModule(
       host,
+      projectSourceRoot,
       'IonicModule.forRoot()',
       '@ionic/angular'
     );
@@ -118,14 +119,14 @@ export default function ngAdd(options: IonAddOptions): Rule {
 
     const sourcePath = join(project.root as Path, 'src');
     const rootTemplateSource = apply(url('./files/root'), [
-      template({ ...options }),
+      template({...options}),
       move(sourcePath)
     ]);
     return chain([
       // @ionic/angular
       addIonicAngularToPackageJson(),
       addIonicAngularToolkitToPackageJson(),
-      addIonicAngularModuleToAppModule(),
+      addIonicAngularModuleToAppModule(sourcePath),
       addIonicBuilder(),
       addIonicStyles(),
       mergeWith(rootTemplateSource),

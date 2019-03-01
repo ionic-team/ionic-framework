@@ -1,16 +1,13 @@
 import { defineCustomElements } from '@ionic/core/loader';
-import { addIcons } from 'ionicons';
-import { ICON_PATHS } from 'ionicons/icons';
 
 import { Config } from './providers/config';
 import { IonicWindow } from './types/interfaces';
 
-export function appInitialize(config: Config) {
+export function appInitialize(config: Config, doc: Document) {
   return (): any => {
-    const win: IonicWindow | undefined = window as any;
-    if (typeof win !== 'undefined') {
+    const win: IonicWindow | undefined = doc.defaultView as any;
+    if (win) {
       const Ionic = win.Ionic = win.Ionic || {};
-      addIcons(ICON_PATHS);
 
       Ionic.config = config;
       Ionic.asyncQueue = false;

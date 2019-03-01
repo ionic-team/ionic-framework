@@ -1,4 +1,4 @@
-<ion-tabs>
+<ion-tabs (ionTabsDidChange)="tabChanged($event)">
   <ion-tab-bar>
     <ion-tab-button tab="account">
       <ion-label>Tab One</ion-label>
@@ -17,3 +17,6 @@
 
   </ion-tab-bar>
 </ion-tabs>
+<ion-fab horizontal="end" vertical="top">
+  <ion-fab-button id="tabs-state" style="width: 100px;">{{tabCounter}}.{{tabEvent}}</ion-fab-button>
+</ion-fab>

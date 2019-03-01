@@ -1,9 +1,15 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
 
 import { Color, Mode, RouterDirection } from '../../interface';
 import { hasShadowDom } from '../../utils/helpers';
 import { createColorClasses, openURL } from '../../utils/theme';
 
+/**
+ * @slot - Content is placed between the named slots if provided without a slot.
+ * @slot icon-only - Should be used on an icon in a button that has no text.
+ * @slot start - Content is placed to the left of the button text in LTR, and to the right in RTL.
+ * @slot end - Content is placed to the right of the button text in LTR, and to the left in RTL.
+ */
 @Component({
   tag: 'ion-button',
   styleUrls: {
@@ -19,8 +25,6 @@ export class Button implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'window' }) win!: Window;
-
-  @State() keyFocus = false;
 
   /**
    * The color to use from your application's color palette.
@@ -103,22 +107,10 @@ export class Button implements ComponentInterface {
     this.inToolbar = !!this.el.closest('ion-buttons');
   }
 
-  private onFocus = () => {
-    this.ionFocus.emit();
-  }
-
-  private onKeyUp = () => {
-    this.keyFocus = true;
-  }
-
-  private onBlur = () => {
-    this.keyFocus = false;
-    this.ionBlur.emit();
-  }
-
-  private onClick = (ev: Event) => {
+  @Listen('click')
+  onClick(ev: Event) {
     if (this.type === 'button') {
-      return openURL(this.win, this.href, ev, this.routerDirection);
+      openURL(this.win, this.href, ev, this.routerDirection);
 
     } else if (hasShadowDom(this.el)) {
       // this button wants to specifically submit a form
@@ -128,7 +120,7 @@ export class Button implements ComponentInterface {
       if (form) {
         ev.preventDefault();
 
-        const fakeButton = document.createElement('button');
+        const fakeButton = this.win.document.createElement('button');
         fakeButton.type = this.type;
         fakeButton.style.display = 'none';
         form.appendChild(fakeButton);
@@ -136,17 +128,24 @@ export class Button implements ComponentInterface {
         fakeButton.remove();
       }
     }
-    return Promise.resolve(false);
+  }
+
+  private onFocus = () => {
+    this.ionFocus.emit();
+  }
+
+  private onBlur = () => {
+    this.ionBlur.emit();
   }
 
   hostData() {
-    const { buttonType, keyFocus, disabled, color, expand, shape, size, strong } = this;
+    const { buttonType, disabled, color, expand, shape, size, strong } = this;
     let fill = this.fill;
     if (fill === undefined) {
       fill = this.inToolbar ? 'clear' : 'solid';
     }
     return {
-      'aria-disabled': this.disabled ? 'true' : null,
+      'aria-disabled': disabled ? 'true' : null,
       class: {
         ...createColorClasses(color),
         [buttonType]: true,
@@ -156,9 +155,9 @@ export class Button implements ComponentInterface {
         [`${buttonType}-${fill}`]: true,
         [`${buttonType}-strong`]: strong,
 
-        'focused': keyFocus,
         'button-disabled': disabled,
         'ion-activatable': true,
+        'ion-focusable': true,
       }
     };
   }
@@ -175,9 +174,7 @@ export class Button implements ComponentInterface {
         class="button-native"
         disabled={this.disabled}
         onFocus={this.onFocus}
-        onKeyUp={this.onKeyUp}
         onBlur={this.onBlur}
-        onClick={this.onClick}
       >
         <span class="button-inner">
           <slot name="icon-only"></slot>

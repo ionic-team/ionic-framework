@@ -17,7 +17,7 @@
 $font-family-base:                  var(--ion-font-family, inherit) !default;
 
 // Global app direction
-$app-direction: ltr !default;
+$app-direction: null !default;
 
 // Global font path
 $font-path: "/dist/fonts" !default;

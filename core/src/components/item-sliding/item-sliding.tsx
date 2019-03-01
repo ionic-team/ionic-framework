@@ -66,10 +66,9 @@ export class ItemSliding implements ComponentInterface {
 
   async componentDidLoad() {
     this.item = this.el.querySelector('ion-item');
-
     await this.updateOptions();
 
-    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
+    this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
       queue: this.queue,
       gestureName: 'item-swipe',
@@ -86,10 +85,15 @@ export class ItemSliding implements ComponentInterface {
   componentDidUnload() {
     if (this.gesture) {
       this.gesture.destroy();
+      this.gesture = undefined;
     }
 
     this.item = null;
     this.leftOptions = this.rightOptions = undefined;
+
+    if (openSlidingItem === this.el) {
+      openSlidingItem = undefined;
+    }
   }
 
   /**
@@ -127,6 +131,7 @@ export class ItemSliding implements ComponentInterface {
   async closeOpened(): Promise<boolean> {
     if (openSlidingItem !== undefined) {
       openSlidingItem.close();
+      openSlidingItem = undefined;
       return true;
     }
     return false;
@@ -161,6 +166,7 @@ export class ItemSliding implements ComponentInterface {
       this.closeOpened();
       return false;
     }
+
     return !!(this.rightOptions || this.leftOptions);
   }
 
@@ -271,10 +277,10 @@ export class ItemSliding implements ComponentInterface {
         ? SlidingState.Start | SlidingState.SwipeStart
         : SlidingState.Start;
     } else {
-      this.tmr = window.setTimeout(() => {
+      this.tmr = setTimeout(() => {
         this.state = SlidingState.Disabled;
         this.tmr = undefined;
-      }, 600);
+      }, 600) as any;
 
       openSlidingItem = undefined;
       style.transform = '';

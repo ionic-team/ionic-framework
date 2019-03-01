@@ -29,7 +29,6 @@ export class Nav implements NavOutlet {
   @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'window' }) win!: Window;
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
 
   /** @internal */
   @Prop() delegate?: FrameworkDelegate;
@@ -82,16 +81,17 @@ export class Nav implements NavOutlet {
 
   /**
    * Event fired when Nav will load a component
+   * @internal
    */
   @Event() ionNavWillLoad!: EventEmitter<void>;
   /**
-   * Event fired when the nav will components
+   * Event fired when the nav will change components
    */
-  @Event() ionNavWillChange!: EventEmitter<void>;
+  @Event({ bubbles: false }) ionNavWillChange!: EventEmitter<void>;
   /**
    * Event fired when the nav has changed components
    */
-  @Event() ionNavDidChange!: EventEmitter<void>;
+  @Event({ bubbles: false }) ionNavDidChange!: EventEmitter<void>;
 
   componentWillLoad() {
     this.useRouter =
@@ -130,6 +130,7 @@ export class Nav implements NavOutlet {
 
     if (this.gesture) {
       this.gesture.destroy();
+      this.gesture = undefined;
     }
 
     // release swipe back gesture and transition
@@ -779,13 +780,12 @@ export class Nav implements NavOutlet {
     const animationOpts: TransitionOptions = {
       mode: this.mode,
       showGoBack: this.canGoBackSync(enteringView),
-      animationCtrl: this.animationCtrl,
       queue: this.queue,
       window: this.win,
       baseEl: this.el,
       animationBuilder: this.animation || opts.animationBuilder || this.config.get('navAnimation'),
       progressCallback,
-      animated: this.animated,
+      animated: this.animated && this.config.getBoolean('animated', true),
 
       enteringEl,
       leavingEl,

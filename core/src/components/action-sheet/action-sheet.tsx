@@ -24,7 +24,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
   /** @internal */
   @Prop() overlayIndex!: number;
@@ -76,7 +75,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   @Prop() subHeader?: string;
 
   /**
-   * If `true`, the action sheet will be translucent.
+   * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports backdrop-filter.
    */
   @Prop() translucent = false;
 
@@ -84,16 +83,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
    * If `true`, the action sheet will animate.
    */
   @Prop() animated = true;
-
-  /**
-   * Emitted after the alert has loaded.
-   */
-  @Event() ionActionSheetDidLoad!: EventEmitter<void>;
-
-  /**
-   * Emitted after the alert has unloaded.
-   */
-  @Event() ionActionSheetDidUnload!: EventEmitter<void>;
 
   /**
    * Emitted after the alert has presented.
@@ -114,14 +103,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
    * Emitted after the alert has dismissed.
    */
   @Event({ eventName: 'ionActionSheetDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
-
-  componentDidLoad() {
-    this.ionActionSheetDidLoad.emit();
-  }
-
-  componentDidUnload() {
-    this.ionActionSheetDidUnload.emit();
-  }
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
@@ -209,6 +190,8 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   hostData() {
     return {
+      'role': 'dialog',
+      'aria-modal': 'true',
       style: {
         zIndex: 20000 + this.overlayIndex,
       },

@@ -82,6 +82,55 @@ SplitPane also provides some predefined media queries that can be used.
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonSplitPane, IonMenu, IonHeader, IonToolbar, IonTitle, IonRouterOutlet } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+
+  <IonSplitPane contentId="menuContent">
+    {/*--  our side menu  --*/}
+    <IonMenu contentId="menuContent">
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Menu</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+    </IonMenu>
+
+    {/*-- the main content --*/}
+    <IonRouterOutlet></IonRouterOutlet>
+  </IonSplitPane>
+);
+
+export default Example;
+```
+
+
+### Vue
+
+```html
+<template>
+  <ion-split-pane contentId="menu-content">
+    <!--  our side menu  -->
+    <ion-menu contentId="menu-content">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+    </ion-menu>
+
+    <!-- the main content -->
+    <ion-router-outlet id="menu-content"></ion-router-outlet>
+  </ion-split-pane>
+</template>
+```
+
+
 
 ## Properties
 
@@ -94,10 +143,9 @@ SplitPane also provides some predefined media queries that can be used.
 
 ## Events
 
-| Event                 | Description                                                        | Detail             |
-| --------------------- | ------------------------------------------------------------------ | ------------------ |
-| `ionChange`           | Emitted when the split pane is visible.                            | {visible: boolean} |
-| `ionSplitPaneVisible` | Expression to be called when the split-pane visibility has changed | void               |
+| Event                 | Description                                                        | Type                              |
+| --------------------- | ------------------------------------------------------------------ | --------------------------------- |
+| `ionSplitPaneVisible` | Expression to be called when the split-pane visibility has changed | `CustomEvent<{visible: boolean}>` |
 
 
 ## CSS Custom Properties
