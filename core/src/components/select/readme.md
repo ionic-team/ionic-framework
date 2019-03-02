@@ -114,7 +114,7 @@ Since select uses the alert, action sheet and popover interfaces, options can be
 ```html
 <ion-list>
   <ion-list-header>Objects as Values (compareWith)</ion-list-header>
-
+  
   <ion-item>
     <ion-label>Users</ion-label>
     <ion-select [compareWith]="compareWith">
@@ -336,13 +336,13 @@ export class SelectExample {
 
   let objectSelectElement = document.getElementById('objectSelectCompareWith');
   objectSelectElement.compareWith = compareWithFn;
-
+  
   objectOptions.forEach((option, i) => {
     let selectOption = document.createElement('ion-select-option');
     selectOption.value = option;
     selectOption.textContent = option.first + ' ' + option.last;
     selectOption.selected = (i === 0);
-
+    
     objectSelectElement.appendChild(selectOption)
   });
 }
@@ -528,9 +528,9 @@ const Example: React.SFC<{}> = () => (
         </IonSelect>
       </IonItem>
     </IonList>
-
+    
     ## Objects as Values
-
+    
     <IonList>
       <IonListHeader>Objects as Values (compareWith)</IonListHeader>
       <IonItem>
@@ -745,7 +745,7 @@ export default Example;
 | `disabled`         | `disabled`          | If `true`, the user cannot interact with the select.                                                                                                                                                                                                                                                                                                                              | `boolean`                                                                            | `false`        |
 | `interface`        | `interface`         | The interface the select should use: `action-sheet`, `popover` or `alert`.                                                                                                                                                                                                                                                                                                        | `"action-sheet" \| "alert" \| "popover"`                                             | `'alert'`      |
 | `interfaceOptions` | `interface-options` | Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [AlertController API docs](../../alert/AlertController/#create), the [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the [PopoverController API docs](../../popover/PopoverController/#create) for the create options for each interface. | `any`                                                                                | `{}`           |
-| `mode`             | `mode`              | The mode determines which platform styles to use.                                                                                                                                                                                                                                                                                                                                 | `"ios" \| "md"`                                                                      | `undefined`    |
+| `mode`             | `mode`              | The mode determines which platform styles to use.                                                                                                                                                                                                                                                                                                                                 | `'md' \| 'ios'`                                                                      | `undefined`    |
 | `multiple`         | `multiple`          | If `true`, the select can accept multiple values.                                                                                                                                                                                                                                                                                                                                 | `boolean`                                                                            | `false`        |
 | `name`             | `name`              | The name of the control, which is submitted with the form data.                                                                                                                                                                                                                                                                                                                   | `string`                                                                             | `this.inputId` |
 | `okText`           | `ok-text`           | The text to display on the ok button.                                                                                                                                                                                                                                                                                                                                             | `string`                                                                             | `'OK'`         |

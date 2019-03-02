@@ -74,9 +74,6 @@ import {
   ViewController,
 } from './interface';
 import {
-  EventEmitter,
-} from '@stencil/core';
-import {
   SelectCompareFn,
 } from './components/select/select-interface';
 
@@ -3986,6 +3983,10 @@ export namespace Components {
     */
     'interfaceOptions': any;
     /**
+    * The mode determines which platform styles to use.
+    */
+    'mode'?: 'md' | 'ios';
+    /**
     * If `true`, the select can accept multiple values.
     */
     'multiple': boolean;
@@ -4035,6 +4036,10 @@ export namespace Components {
     * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [AlertController API docs](../../alert/AlertController/#create), the [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the [PopoverController API docs](../../popover/PopoverController/#create) for the create options for each interface.
     */
     'interfaceOptions'?: any;
+    /**
+    * The mode determines which platform styles to use.
+    */
+    'mode'?: 'md' | 'ios';
     /**
     * If `true`, the select can accept multiple values.
     */
