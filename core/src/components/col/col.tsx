@@ -2,8 +2,7 @@ import { Component, ComponentInterface, Element, Listen, Prop, h } from '@stenci
 
 import { matchBreakpoint } from '../../utils/media';
 
-const win = window as any;
-const SUPPORTS_VARS = !!(win.CSS && win.CSS.supports && win.CSS.supports('--a: 0'));
+const SUPPORTS_VARS = typeof window !== 'undefined' ? !!((window as any).CSS && (window as any).CSS.supports && (window as any).CSS.supports('--a: 0')) : false;
 const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 
 @Component({
