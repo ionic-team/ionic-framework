@@ -237,7 +237,9 @@ export class Refresher implements ComponentInterface {
     }
 
     // prevent native scroll events
-    ev.preventDefault();
+    if (ev.cancelable) {
+      ev.preventDefault();
+    }
 
     // the refresher is actively pulling at this point
     // move the scroll element within the content element

@@ -26,11 +26,11 @@
     </ion-header>
 
     <ion-content id="content" padding>
-      <ion-button class="e2eShowPopover" expand="block" onclick="presentPopover({ component: 'profile-page', event: event })">Show Popover</ion-button>
-      <ion-button expand="block" onclick="presentPopover({ component: 'translucent-page', event: event, translucent: true })">Show Translucent Popover</ion-button>
-      <ion-button expand="block" color="secondary" onclick="presentPopover({ component: 'list-page', event: event })">Show Long List Popover</ion-button>
-      <ion-button expand="block" color="danger" onclick="presentPopover({ component: 'profile-page' })">No Event Popover</ion-button>
-      <ion-button expand="block" color="tertiary" onclick="presentPopover({ component: 'translucent-page', event: event, cssClass: 'my-custom-class' })">Custom Class Popover</ion-button>
+      <ion-button id="basic-popover" expand="block" onclick="presentPopover({ component: 'profile-page', event: event })">Show Popover</ion-button>
+      <ion-button id="translucent-popover" expand="block" onclick="presentPopover({ component: 'translucent-page', event: event, translucent: true })">Show Translucent Popover</ion-button>
+      <ion-button id="long-list-popover" expand="block" color="secondary" onclick="presentPopover({ component: 'list-page', event: event })">Show Long List Popover</ion-button>
+      <ion-button id="no-event-popover" expand="block" color="danger" onclick="presentPopover({ component: 'profile-page' })">No Event Popover</ion-button>
+      <ion-button id="custom-class-popover" expand="block" color="tertiary" onclick="presentPopover({ component: 'translucent-page', event: event, cssClass: 'my-custom-class' })">Custom Class Popover</ion-button>
 
       <ion-popover-controller></ion-popover-controller>
     </ion-content>
