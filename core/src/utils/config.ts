@@ -178,18 +178,3 @@ export interface IonicConfig {
   _forceStatusbarPadding?: boolean;
   _testing?: boolean;
 }
-
-export function setupConfig(config: IonicConfig) {
-  const win = window as any;
-  const Ionic = win.Ionic;
-  if (Ionic && Ionic.config && Ionic.config.constructor.name !== 'Object') {
-    console.error('ionic config was already initialized');
-    return;
-  }
-  win.Ionic = win.Ionic || {};
-  win.Ionic.config = {
-    ...win.Ionic.config,
-    ...config
-  };
-  return win.Ionic.config;
-}

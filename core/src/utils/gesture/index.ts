@@ -4,7 +4,13 @@ import { GESTURE_CONTROLLER } from './gesture-controller';
 import { createPointerEvents } from './pointer-events';
 import { createPanRecognizer } from './recognizers';
 
-export function createGesture(config: GestureConfig): Gesture {
+export const createGesture = (config: GestureConfig): Gesture => {
+
+  let hasCapturedPan = false;
+  let hasStartedPan = false;
+  let hasFiredStart = true;
+  let isMoveQueued = false;
+
   const finalConfig = {
     disableScroll: false,
     direction: 'x',
@@ -12,7 +18,6 @@ export function createGesture(config: GestureConfig): Gesture {
     passive: true,
     maxAngle: 40,
     threshold: 10,
-
     ...config
   };
 
@@ -41,16 +46,6 @@ export function createGesture(config: GestureConfig): Gesture {
     data: undefined
   };
 
-  const pointerEvents = createPointerEvents(
-    finalConfig.el,
-    pointerDown,
-    pointerMove,
-    pointerUp,
-    {
-      capture: false,
-    }
-  );
-
   const pan = createPanRecognizer(finalConfig.direction, finalConfig.threshold, finalConfig.maxAngle);
   const gesture = GESTURE_CONTROLLER.createGesture({
     name: config.gestureName,
@@ -58,12 +53,7 @@ export function createGesture(config: GestureConfig): Gesture {
     disableScroll: config.disableScroll
   });
 
-  let hasCapturedPan = false;
-  let hasStartedPan = false;
-  let hasFiredStart = true;
-  let isMoveQueued = false;
-
-  function pointerDown(ev: UIEvent): boolean {
+  const pointerDown = (ev: UIEvent) => {
     const timeStamp = now(ev);
     if (hasStartedPan || !hasFiredStart) {
       return false;
@@ -94,9 +84,9 @@ export function createGesture(config: GestureConfig): Gesture {
     }
     pan.start(detail.startX, detail.startY);
     return true;
-  }
+  };
 
-  function pointerMove(ev: UIEvent) {
+  const pointerMove = (ev: UIEvent) => {
     // fast path, if gesture is currently captured
     // do minimum job to get user-land even dispatched
     if (hasCapturedPan) {
@@ -115,9 +105,9 @@ export function createGesture(config: GestureConfig): Gesture {
         abortGesture();
       }
     }
-  }
+  };
 
-  function fireOnMove() {
+  const fireOnMove = () => {
     // Since fireOnMove is called inside a RAF, onEnd() might be called,
     // we must double check hasCapturedPan
     if (!hasCapturedPan) {
@@ -127,9 +117,9 @@ export function createGesture(config: GestureConfig): Gesture {
     if (onMove) {
       onMove(detail);
     }
-  }
+  };
 
-  function tryToCapturePan(): boolean {
+  const tryToCapturePan = () => {
     if (gesture && !gesture.capture()) {
       return false;
     }
@@ -152,35 +142,35 @@ export function createGesture(config: GestureConfig): Gesture {
       fireOnStart();
     }
     return true;
-  }
+  };
 
-  function fireOnStart() {
+  const fireOnStart = () => {
     if (onStart) {
       onStart(detail);
     }
     hasFiredStart = true;
-  }
+  };
 
-  function abortGesture() {
+  const abortGesture = () => {
     reset();
     pointerEvents.stop();
     if (notCaptured) {
       notCaptured(detail);
     }
-  }
+  };
 
-  function reset() {
+  const reset = () => {
     hasCapturedPan = false;
     hasStartedPan = false;
     isMoveQueued = false;
     hasFiredStart = true;
 
     gesture.release();
-  }
+  };
 
   // END *************************
 
-  function pointerUp(ev: UIEvent | undefined) {
+  const pointerUp = (ev: UIEvent | undefined) => {
     const tmpHasCaptured = hasCapturedPan;
     const tmpHasFiredStart = hasFiredStart;
     reset();
@@ -202,7 +192,17 @@ export function createGesture(config: GestureConfig): Gesture {
     if (notCaptured) {
       notCaptured(detail);
     }
-  }
+  };
+
+  const pointerEvents = createPointerEvents(
+    finalConfig.el,
+    pointerDown,
+    pointerMove,
+    pointerUp,
+    {
+      capture: false,
+    }
+  );
 
   return {
     setDisabled(disabled: boolean) {
@@ -216,34 +216,33 @@ export function createGesture(config: GestureConfig): Gesture {
       pointerEvents.destroy();
     }
   };
-}
+};
 
-function calcGestureData(detail: GestureDetail, ev: UIEvent | undefined) {
-  if (!ev) {
-    return;
+const calcGestureData = (detail: GestureDetail, ev: UIEvent | undefined) => {
+  if (ev) {
+    const prevX = detail.currentX;
+    const prevY = detail.currentY;
+    const prevT = detail.timeStamp;
+
+    updateDetail(ev, detail);
+
+    const currentX = detail.currentX;
+    const currentY = detail.currentY;
+    const timestamp = detail.timeStamp = now(ev);
+    const timeDelta = timestamp - prevT;
+    if (timeDelta > 0 && timeDelta < 100) {
+      const velocityX = (currentX - prevX) / timeDelta;
+      const velocityY = (currentY - prevY) / timeDelta;
+      detail.velocityX = velocityX * 0.7 + detail.velocityX * 0.3;
+      detail.velocityY = velocityY * 0.7 + detail.velocityY * 0.3;
+    }
+    detail.deltaX = currentX - detail.startX;
+    detail.deltaY = currentY - detail.startY;
+    detail.event = ev;
   }
-  const prevX = detail.currentX;
-  const prevY = detail.currentY;
-  const prevT = detail.timeStamp;
+};
 
-  updateDetail(ev, detail);
-
-  const currentX = detail.currentX;
-  const currentY = detail.currentY;
-  const timestamp = detail.timeStamp = now(ev);
-  const timeDelta = timestamp - prevT;
-  if (timeDelta > 0 && timeDelta < 100) {
-    const velocityX = (currentX - prevX) / timeDelta;
-    const velocityY = (currentY - prevY) / timeDelta;
-    detail.velocityX = velocityX * 0.7 + detail.velocityX * 0.3;
-    detail.velocityY = velocityY * 0.7 + detail.velocityY * 0.3;
-  }
-  detail.deltaX = currentX - detail.startX;
-  detail.deltaY = currentY - detail.startY;
-  detail.event = ev;
-}
-
-function updateDetail(ev: any, detail: GestureDetail) {
+const updateDetail = (ev: any, detail: GestureDetail) => {
   // get X coordinates for either a mouse click
   // or a touch depending on the given event
   let x = 0;
@@ -261,11 +260,10 @@ function updateDetail(ev: any, detail: GestureDetail) {
   }
   detail.currentX = x;
   detail.currentY = y;
-}
+};
 
-function now(ev: UIEvent) {
-  return ev.timeStamp || Date.now();
-}
+const now = (ev: UIEvent) =>
+  ev.timeStamp || Date.now();
 
 export interface GestureDetail {
   type: string;

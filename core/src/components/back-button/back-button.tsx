@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Host, Prop, getMode, h } from '@stencil/core';
 
-import { config } from '../../global/ionic-global';
+import { getContext } from '../../global/context';
 import { Color, Mode } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
@@ -17,6 +17,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
 })
 export class BackButton implements ComponentInterface {
 
+  private config = getContext(this, 'config');
   private mode = getMode<Mode>(this);
 
   @Element() el!: HTMLElement;
@@ -58,8 +59,8 @@ export class BackButton implements ComponentInterface {
   render() {
     const showBackButton = this.defaultHref !== undefined;
     const defaultBackButtonText = this.mode === 'ios' ? 'Back' : null;
-    const backButtonIcon = this.icon != null ? this.icon : config.get('backButtonIcon', 'arrow-back');
-    const backButtonText = this.text != null ? this.text : config.get('backButtonText', defaultBackButtonText);
+    const backButtonIcon = this.icon != null ? this.icon : this.config.get('backButtonIcon', 'arrow-back');
+    const backButtonText = this.text != null ? this.text : this.config.get('backButtonText', defaultBackButtonText);
 
     return (
       <Host

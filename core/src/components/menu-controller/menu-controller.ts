@@ -1,6 +1,6 @@
 import { Build, Component, Method, Prop } from '@stencil/core';
 
-import { config } from '../../global/ionic-global';
+import { getContext } from '../../global/context';
 import { Animation, AnimationBuilder, MenuControllerI, MenuI } from '../../interface';
 
 import { menuOverlayAnimation } from './animations/overlay';
@@ -13,6 +13,7 @@ import { menuRevealAnimation } from './animations/reveal';
 })
 export class MenuController implements MenuControllerI {
 
+  private config = getContext(this, 'config');
   private menus: MenuI[] = [];
   private menuAnimations = new Map<string, AnimationBuilder>();
 
@@ -259,7 +260,7 @@ export class MenuController implements MenuControllerI {
     }
     const animation = await import('../../utils/animation')
       .then(mod => mod.create(animationBuilder, null, menuCmp));
-    if (!config.getBoolean('animated', true)) {
+    if (!this.config.getBoolean('animated', true)) {
       animation.duration(0);
     }
     return animation;

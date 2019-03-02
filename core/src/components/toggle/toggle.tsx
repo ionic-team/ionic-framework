@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, QueueApi, State, Watch, h, Host } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, QueueApi, State, Watch, h } from '@stencil/core';
 
 import { Color, Gesture, GestureDetail, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
 import { hapticSelection } from '../../utils/haptic';
@@ -26,8 +26,8 @@ export class Toggle implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
-
   @Prop({ context: 'document' }) doc!: Document;
+  @Prop({ context: 'window' }) win!: Window;
 
   @State() activated = false;
 
@@ -141,7 +141,7 @@ export class Toggle implements ComponentInterface {
   private onMove(detail: GestureDetail) {
     if (shouldToggle(this.doc, this.checked, detail.deltaX, -10)) {
       this.checked = !this.checked;
-      hapticSelection();
+      hapticSelection(this.win);
     }
   }
 
@@ -218,7 +218,7 @@ export class Toggle implements ComponentInterface {
   }
 }
 
-function shouldToggle(doc: HTMLDocument, checked: boolean, deltaX: number, margin: number): boolean {
+const shouldToggle = (doc: HTMLDocument, checked: boolean, deltaX: number, margin: number): boolean => {
   const isRTL = doc.dir === 'rtl';
 
   if (checked) {
@@ -228,6 +228,6 @@ function shouldToggle(doc: HTMLDocument, checked: boolean, deltaX: number, margi
     return (!isRTL && (- margin < deltaX)) ||
       (isRTL && (margin > deltaX));
   }
-}
+};
 
 let toggleIds = 0;

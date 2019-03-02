@@ -35,6 +35,7 @@ export class ReorderGroup implements ComponentInterface {
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'document' }) doc!: Document;
+  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * If `true`, the reorder will be hidden.
@@ -155,7 +156,7 @@ export class ReorderGroup implements ComponentInterface {
 
     item.classList.add(ITEM_REORDER_SELECTED);
 
-    hapticSelectionStart();
+    hapticSelectionStart(this.win);
   }
 
   private onMove(ev: GestureDetail) {
@@ -177,7 +178,7 @@ export class ReorderGroup implements ComponentInterface {
       const fromIndex = indexForItem(selectedItem);
       this.lastToIndex = toIndex;
 
-      hapticSelectionChanged();
+      hapticSelectionChanged(this.win);
       this.reorderMove(fromIndex, toIndex);
     }
 
@@ -207,7 +208,7 @@ export class ReorderGroup implements ComponentInterface {
       });
     }
 
-    hapticSelectionEnd();
+    hapticSelectionEnd(this.win);
   }
 
   private completeSync(listOrReorder?: boolean | any[]): any {
@@ -300,11 +301,9 @@ export class ReorderGroup implements ComponentInterface {
   }
 }
 
-function indexForItem(element: any): number {
-  return element['$ionIndex'];
-}
+const indexForItem = (elm: any): number => elm['$ionIndex'];
 
-function findReorderItem(node: HTMLElement | null, container: HTMLElement): HTMLElement | undefined {
+const findReorderItem = (node: HTMLElement | null, container: HTMLElement): HTMLElement | undefined => {
   let parent: HTMLElement | null;
   while (node) {
     parent = node.parentElement;
@@ -314,15 +313,15 @@ function findReorderItem(node: HTMLElement | null, container: HTMLElement): HTML
     node = parent;
   }
   return undefined;
-}
+};
 
 const AUTO_SCROLL_MARGIN = 60;
 const SCROLL_JUMP = 10;
 const ITEM_REORDER_SELECTED = 'reorder-selected';
 
-function reorderArray(array: any[], from: number, to: number): any[] {
+const reorderArray = (array: any[], from: number, to: number): any[] => {
   const element = array[from];
   array.splice(from, 1);
   array.splice(to, 0, element);
   return array.slice();
-}
+};

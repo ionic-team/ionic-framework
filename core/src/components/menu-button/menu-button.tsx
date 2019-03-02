@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Prop, getMode, h } from '@stencil/core';
 
-import { config } from '../../global/ionic-global';
+import { getContext } from '../../global/context';
 import { Color, Mode } from '../../interface';
 
 /**
@@ -16,6 +16,7 @@ import { Color, Mode } from '../../interface';
 })
 export class MenuButton implements ComponentInterface {
 
+  private config = getContext(this, 'config');
   private mode = getMode<Mode>(this);
 
   /**
@@ -45,7 +46,7 @@ export class MenuButton implements ComponentInterface {
   }
 
   render() {
-    const menuIcon = config.get('menuIcon', 'menu');
+    const menuIcon = this.config.get('menuIcon', 'menu');
     return (
       <ion-menu-toggle menu={this.menu} autoHide={this.autoHide}>
         <button type="button">

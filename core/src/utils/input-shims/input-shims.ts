@@ -1,5 +1,4 @@
-
-import { config } from '../../global/ionic-global';
+import { Config } from '../../global/config';
 
 import { enableHideCaretOnScroll } from './hacks/hide-caret';
 import { enableInputBlurring } from './hacks/input-blurring';
@@ -11,7 +10,7 @@ const SCROLL_ASSIST = true;
 const SCROLL_PADDING = true;
 const HIDE_CARET = true;
 
-export function startInputShims(doc: Document) {
+export function startInputShims(config: Config, doc: Document) {
   const keyboardHeight = config.getNumber('keyboardHeight', 290);
   const scrollAssist = config.getBoolean('scrollAssist', true);
   const hideCaret = config.getBoolean('hideCaretOnScroll', true);
@@ -21,7 +20,7 @@ export function startInputShims(doc: Document) {
   const hideCaretMap = new WeakMap<HTMLElement, () => void>();
   const scrollAssistMap = new WeakMap<HTMLElement, () => void>();
 
-  function registerInput(componentEl: HTMLElement) {
+  const registerInput = (componentEl: HTMLElement) => {
     const inputEl = (componentEl.shadowRoot || componentEl).querySelector('input');
     const scrollEl = componentEl.closest('ion-content');
 
@@ -38,9 +37,9 @@ export function startInputShims(doc: Document) {
       const rmFn = enableScrollAssist(componentEl, inputEl, scrollEl, keyboardHeight);
       scrollAssistMap.set(componentEl, rmFn);
     }
-  }
+  };
 
-  function unregisterInput(componentEl: HTMLElement) {
+  const unregisterInput = (componentEl: HTMLElement) => {
     if (HIDE_CARET && hideCaret) {
       const fn = hideCaretMap.get(componentEl);
       if (fn) {
@@ -56,7 +55,7 @@ export function startInputShims(doc: Document) {
       }
       scrollAssistMap.delete(componentEl);
     }
-  }
+  };
 
   if (inputBlurring && INPUT_BLURRING) {
     enableInputBlurring(doc);

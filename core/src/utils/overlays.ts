@@ -1,29 +1,30 @@
-import { config } from '../global/ionic-global';
+import { getContext } from '../global/context';
 import { AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, OverlayInterface } from '../interface';
 
 let lastId = 0;
 
-export function createOverlay<T extends HTMLIonOverlayElement>(element: T, opts: object | undefined): Promise<T> {
-  const doc = element.ownerDocument!;
+export const createOverlay = <T extends HTMLIonOverlayElement>(elm: T, opts: object | undefined): Promise<T> => {
+  const doc = elm.ownerDocument!;
+  const overlayIndex = lastId++;
+
   connectListeners(doc);
 
   // convert the passed in overlay options into props
   // that get passed down into the new overlay
-  Object.assign(element, opts);
-  element.classList.add('overlay-hidden');
-  const overlayIndex = lastId++;
-  element.overlayIndex = overlayIndex;
-  if (!element.hasAttribute('id')) {
-    element.id = `ion-overlay-${overlayIndex}`;
+  Object.assign(elm, opts);
+  elm.classList.add('overlay-hidden');
+  elm.overlayIndex = overlayIndex;
+  if (!elm.hasAttribute('id')) {
+    elm.id = `ion-overlay-${overlayIndex}`;
   }
 
   // append the overlay element to the document body
-  getAppRoot(doc).appendChild(element);
+  getAppRoot(doc).appendChild(elm);
 
-  return element.componentOnReady();
-}
+  return elm.componentOnReady();
+};
 
-export function connectListeners(doc: Document) {
+export const connectListeners = (doc: Document) => {
   if (lastId === 0) {
     lastId = 1;
     // trap focus inside overlays
@@ -57,39 +58,39 @@ export function connectListeners(doc: Document) {
       }
     });
   }
-}
+};
 
-export function dismissOverlay(doc: Document, data: any, role: string | undefined, overlayTag: string, id?: string): Promise<boolean> {
+export const dismissOverlay = (doc: Document, data: any, role: string | undefined, overlayTag: string, id?: string): Promise<boolean> => {
   const overlay = getOverlay(doc, overlayTag, id);
   if (!overlay) {
     return Promise.reject('overlay does not exist');
   }
   return overlay.dismiss(data, role);
-}
+};
 
-export function getOverlays(doc: Document, overlayTag?: string): HTMLIonOverlayElement[] {
+export const getOverlays = (doc: Document, overlayTag?: string): HTMLIonOverlayElement[] => {
   const overlays = (Array.from(getAppRoot(doc).children) as HTMLIonOverlayElement[]).filter(c => c.overlayIndex > 0);
   if (overlayTag === undefined) {
     return overlays;
   }
   overlayTag = overlayTag.toUpperCase();
   return overlays.filter(c => c.tagName === overlayTag);
-}
+};
 
-export function getOverlay(doc: Document, overlayTag?: string, id?: string): HTMLIonOverlayElement | undefined {
+export const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTMLIonOverlayElement | undefined => {
   const overlays = getOverlays(doc, overlayTag);
   return (id === undefined)
     ? overlays[overlays.length - 1]
     : overlays.find(o => o.id === id);
-}
+};
 
-export async function present(
+export const present = async (
   overlay: OverlayInterface,
   name: keyof IonicConfig,
   iosEnterAnimation: AnimationBuilder,
   mdEnterAnimation: AnimationBuilder,
   opts?: any
-) {
+) => {
   if (overlay.presented) {
     return;
   }
@@ -97,6 +98,7 @@ export async function present(
   overlay.willPresent.emit();
 
   // get the user's animation fn if one was provided
+  const config = getContext(overlay, 'config');
   const animationBuilder = (overlay.enterAnimation)
     ? overlay.enterAnimation
     : config.get(name, overlay.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
@@ -105,9 +107,9 @@ export async function present(
   if (completed) {
     overlay.didPresent.emit();
   }
-}
+};
 
-export async function dismiss(
+export const dismiss = async (
   overlay: OverlayInterface,
   data: any | undefined,
   role: string | undefined,
@@ -115,7 +117,7 @@ export async function dismiss(
   iosLeaveAnimation: AnimationBuilder,
   mdLeaveAnimation: AnimationBuilder,
   opts?: any
-): Promise<boolean> {
+): Promise<boolean> => {
   if (!overlay.presented) {
     return false;
   }
@@ -124,6 +126,7 @@ export async function dismiss(
   try {
     overlay.willDismiss.emit({ data, role });
 
+    const config = getContext(overlay, 'config');
     const animationBuilder = (overlay.leaveAnimation)
       ? overlay.leaveAnimation
       : config.get(name, overlay.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
@@ -137,18 +140,17 @@ export async function dismiss(
 
   overlay.el.remove();
   return true;
-}
+};
 
-function getAppRoot(doc: Document) {
-  return doc.querySelector('ion-app') || doc.body;
-}
+const getAppRoot = (doc: Document) =>
+  doc.querySelector('ion-app') || doc.body;
 
-async function overlayAnimation(
+const overlayAnimation = async (
   overlay: OverlayInterface,
   animationBuilder: AnimationBuilder,
   baseEl: any,
   opts: any
-): Promise<boolean> {
+): Promise<boolean> => {
   if (overlay.animation) {
     overlay.animation.destroy();
     overlay.animation = undefined;
@@ -160,6 +162,8 @@ async function overlayAnimation(
   const aniRoot = baseEl.shadowRoot || overlay.el;
   const animation = overlay.animation = await import('./animation').then(mod => mod.create(animationBuilder, aniRoot, opts));
   overlay.animation = animation;
+
+  const config = getContext(overlay, 'config');
   if (!overlay.animated || !config.getBoolean('animated', true)) {
     animation.duration(0);
   }
@@ -176,40 +180,39 @@ async function overlayAnimation(
   animation.destroy();
   overlay.animation = undefined;
   return hasCompleted;
-}
+};
 
-export function autoFocus(containerEl: HTMLElement): HTMLElement | undefined {
-  const focusableEls = containerEl.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]');
+export const autoFocus = (containerEl: HTMLElement): HTMLElement | undefined => {
+  const focusableEls = containerEl.querySelectorAll('a[href],area[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),button:not([disabled]),[tabindex="0"]');
   if (focusableEls.length > 0) {
     const el = focusableEls[0] as HTMLInputElement;
     el.focus();
     return el;
   }
   return undefined;
-}
+};
 
-export function eventMethod<T>(element: HTMLElement, eventName: string): Promise<T> {
+export const eventMethod = <T>(elm: HTMLElement, eventName: string): Promise<T> => {
   let resolve: (detail: T) => void;
   const promise = new Promise<T>(r => resolve = r);
-  onceEvent(element, eventName, (event: any) => {
+  onceEvent(elm, eventName, (event: any) => {
     resolve(event.detail);
   });
   return promise;
-}
+};
 
-export function onceEvent(element: HTMLElement, eventName: string, callback: (ev: Event) => void) {
+export const onceEvent = (elm: HTMLElement, eventName: string, callback: (ev: Event) => void) => {
   const handler = (ev: Event) => {
-    element.removeEventListener(eventName, handler);
+    elm.removeEventListener(eventName, handler);
     callback(ev);
   };
-  element.addEventListener(eventName, handler);
-}
+  elm.addEventListener(eventName, handler);
+};
 
-export function isCancel(role: string | undefined): boolean {
-  return role === 'cancel' || role === BACKDROP;
-}
+export const isCancel = (role: string | undefined): boolean =>
+  role === 'cancel' || role === BACKDROP;
 
-function isDescendant(parent: HTMLElement, child: HTMLElement | null) {
+const isDescendant = (parent: HTMLElement, child: HTMLElement | null) => {
   while (child) {
     if (child === parent) {
       return true;
@@ -217,6 +220,6 @@ function isDescendant(parent: HTMLElement, child: HTMLElement | null) {
     child = child.parentElement;
   }
   return false;
-}
+};
 
 export const BACKDROP = 'backdrop';

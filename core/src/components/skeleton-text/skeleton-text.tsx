@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Prop, h } from '@stencil/core';
 
-import { Config } from '../../interface';
+import { getContext } from '../../global/context';
 import { hostContext } from '../../utils/theme';
 
 @Component({
@@ -10,9 +10,9 @@ import { hostContext } from '../../utils/theme';
 })
 export class SkeletonText implements ComponentInterface {
 
-  @Element() el!: HTMLElement;
+  private config = getContext(this, 'config');
 
-  @Prop({ context: 'config' }) config!: Config;
+  @Element() el!: HTMLElement;
 
   /**
    * If `true`, the skeleton text will animate.

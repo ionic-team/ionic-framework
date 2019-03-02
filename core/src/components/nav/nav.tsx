@@ -1,6 +1,6 @@
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, QueueApi, Watch, getMode, h } from '@stencil/core';
 
-import { config } from '../../global/ionic-global';
+import { getContext } from '../../global/context';
 import { Animation, AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture, Mode, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, RouterDirection, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
 import { assert } from '../../utils/helpers';
 import { TransitionOptions, lifecycle, setPageHidden, transition } from '../../utils/transition';
@@ -23,6 +23,7 @@ export class Nav implements NavOutlet {
   private views: ViewController[] = [];
   private gesture?: Gesture;
 
+  private config = getContext(this, 'config');
   private mode = getMode<Mode>(this);
 
   @Element() el!: HTMLElement;
@@ -99,7 +100,7 @@ export class Nav implements NavOutlet {
       !this.el.closest('[no-router]');
 
     if (this.swipeGesture === undefined) {
-      this.swipeGesture = config.getBoolean(
+      this.swipeGesture = this.config.getBoolean(
         'swipeBackEnabled',
         this.mode === 'ios'
       );
@@ -783,9 +784,9 @@ export class Nav implements NavOutlet {
       queue: this.queue,
       window: this.win,
       baseEl: this.el,
-      animationBuilder: this.animation || opts.animationBuilder || config.get('navAnimation'),
+      animationBuilder: this.animation || opts.animationBuilder || this.config.get('navAnimation'),
       progressCallback,
-      animated: this.animated && config.getBoolean('animated', true),
+      animated: this.animated && this.config.getBoolean('animated', true),
 
       enteringEl,
       leavingEl,

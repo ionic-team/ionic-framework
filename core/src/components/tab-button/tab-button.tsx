@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, getMode, h, Host } from '@stencil/core';
 
-import { config } from '../../global/ionic-global';
+import { getContext } from '../../global/context';
 import { Mode, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
 
 /**
@@ -16,6 +16,7 @@ import { Mode, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLay
 })
 export class TabButton implements ComponentInterface {
 
+  private config = getContext(this, 'config');
   private mode = getMode<Mode>(this);
 
   @Element() el!: HTMLElement;
@@ -63,7 +64,7 @@ export class TabButton implements ComponentInterface {
 
   componentWillLoad() {
     if (this.layout === undefined) {
-      this.layout = config.get('tabButtonLayout', 'icon-top');
+      this.layout = this.config.get('tabButtonLayout', 'icon-top');
     }
   }
 

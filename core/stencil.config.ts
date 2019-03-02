@@ -62,24 +62,24 @@ export const config: Config = {
     {
       type: 'hydrate'
     },
-    {
-      type: 'docs',
-      strict: true
-    },
-    {
-      type: 'docs-json',
-      file: '../docs/core.json'
-    },
-    {
-      type: 'stats',
-      file: 'stats.json'
-    },
-    {
-      type: 'docs-custom',
-      generator: apiSpecGenerator({
-        file: 'api.txt'
-      })
-    },
+    // {
+    //   type: 'docs',
+    //   strict: true
+    // },
+    // {
+    //   type: 'docs-json',
+    //   file: '../docs/core.json'
+    // },
+    // {
+    //   type: 'stats',
+    //   file: 'stats.json'
+    // },
+    // {
+    //   type: 'docs-custom',
+    //   generator: apiSpecGenerator({
+    //     file: 'api.txt'
+    //   })
+    // },
     {
       type: 'angular',
       componentCorePackage: '@ionic/core',

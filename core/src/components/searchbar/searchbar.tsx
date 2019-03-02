@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch, getMode, h } from '@stencil/core';
 
-import { config } from '../../global/ionic-global';
+import { getContext } from '../../global/context';
 import { Color, Mode, SearchbarChangeEventDetail } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
@@ -21,6 +21,7 @@ export class Searchbar implements ComponentInterface {
   private nativeInput?: HTMLInputElement;
   private isCancelVisible = false;
   private shouldAlignLeft = true;
+  private config = getContext(this, 'config');
   private mode = getMode<Mode>(this);
 
   @Element() el!: HTMLElement;
@@ -346,7 +347,7 @@ export class Searchbar implements ComponentInterface {
   }
 
   hostData() {
-    const animated = this.animated && config.getBoolean('animated', true);
+    const animated = this.animated && this.config.getBoolean('animated', true);
 
     return {
       class: {

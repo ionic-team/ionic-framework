@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 
-import { config } from '../../global/ionic-global';
+import { getContext } from '../../global/context';
 import { Color } from '../../interface';
 import { clamp } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
@@ -17,6 +17,8 @@ import { createColorClasses } from '../../utils/theme';
   shadow: true
 })
 export class ProgressBar implements ComponentInterface {
+
+  private config = getContext(this, 'config');
 
   /**
    * The state of the progress bar, based on if the time the process takes is known or not.
@@ -51,7 +53,7 @@ export class ProgressBar implements ComponentInterface {
 
   hostData() {
     const { color, type, reversed, value } = this;
-    const paused = config.getBoolean('_testing');
+    const paused = this.config.getBoolean('_testing');
     return {
       'role': 'progressbar',
       'aria-valuenow': type === 'determinate' ? value : null,

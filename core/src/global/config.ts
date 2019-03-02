@@ -34,41 +34,33 @@ export class Config {
   }
 }
 
-export function configFromSession(win: Window): any {
+export const configFromSession = (win: Window): any => {
   try {
     const configStr = win.sessionStorage.getItem(IONIC_SESSION_KEY);
     return configStr !== null ? JSON.parse(configStr) : {};
   } catch (e) {
     return {};
   }
-}
+};
 
-export function saveConfig(win: Window, config: any) {
+export const saveConfig = (win: Window, config: any) => {
   try {
     win.sessionStorage.setItem(IONIC_SESSION_KEY, JSON.stringify(config));
-  } catch (e) {
-    return;
-  }
-}
+  } catch (e) {/**/}
+};
 
-export function configFromURL(win: Window) {
+export const configFromURL = (win: Window) => {
   const config: any = {};
   win.location.search.slice(1)
     .split('&')
     .map(entry => entry.split('='))
     .map(([key, value]) => [decodeURIComponent(key), decodeURIComponent(value)])
-    .filter(([key]) => startsWith(key, IONIC_PREFIX))
+    .filter(([key]) => key.startsWith(IONIC_PREFIX))
     .map(([key, value]) => [key.slice(IONIC_PREFIX.length), value])
-    .forEach(([key, value]) => {
-      config[key] = value;
-    });
+    .forEach(([key, value]) => config[key] = value);
 
   return config;
-}
-
-function startsWith(input: string, search: string): boolean {
-  return input.substr(0, search.length) === search;
-}
+};
 
 const IONIC_PREFIX = 'ionic:';
 const IONIC_SESSION_KEY = 'ionic-persist-config';

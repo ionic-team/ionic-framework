@@ -35,6 +35,7 @@ export class PickerColumnCmp implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
+  @Prop({ context: 'window' }) win!: Window;
 
   /** Picker column data */
   @Prop() col!: PickerColumn;
@@ -174,7 +175,7 @@ export class PickerColumnCmp implements ComponentInterface {
 
     if (this.lastIndex !== selectedIndex) {
       // have not set a last index yet
-      hapticSelectionChanged();
+      hapticSelectionChanged(this.win);
       this.lastIndex = selectedIndex;
     }
   }

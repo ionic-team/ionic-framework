@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, getMode, h } from '@stencil/core';
 
-import { config } from '../../global/ionic-global';
+import { getContext } from '../../global/context';
 import { Animation, AnimationBuilder, Mode, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
@@ -110,7 +110,8 @@ export class Loading implements ComponentInterface, OverlayInterface {
   @Event({ eventName: 'ionLoadingDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   componentWillLoad() {
-    if (this.spinner === undefined) {
+    if (this.spinner == null) {
+      const config = getContext(this, 'config');
       this.spinner = config.get('loadingSpinner', this.mode === 'ios' ? 'lines' : 'crescent');
     }
   }
