@@ -59,6 +59,6 @@
     "vue-router": "^3.0.1"
   },
   "dependencies": {
-    "@ionic/core": "4.0.1"
+    "@ionic/core": "^4.0.0"
   }
 }
