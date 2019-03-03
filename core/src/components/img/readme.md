@@ -22,6 +22,52 @@ Img is a tag that will lazily load an image when ever the tag is in the viewport
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonList, IonItem, IonThumbnail, IonImg, IonLabel } from '@ionic/react';
+
+type Item = {
+  src: string;
+  text: string
+};
+const items: Item[] = [];
+
+const Example: React.SFC<{}> = () => (
+
+  <IonList>
+    {items.map(({src, text}) =>
+      <IonItem>
+        <IonThumbnail slot="start">
+          <IonImg src={src}></IonImg>
+        </IonThumbnail>
+        <IonLabel>{text}}</IonLabel>
+      </IonItem>
+    )}
+  </IonList>
+);
+
+export default Example
+
+
+### Vue
+
+```html
+<template>
+  <ion-list>
+    <ion-item v-for="item in items" :key="item.src">
+      <ion-thumbnail slot="start">
+        <ion-img :src="item.src"></ion-img>
+      </ion-thumbnail>
+      <ion-label>{{item.text}}</ion-label>
+    </ion-item>
+  </ion-list>
+</template>
+```
+
+
 
 ## Properties
 

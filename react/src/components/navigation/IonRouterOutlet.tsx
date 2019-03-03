@@ -4,6 +4,7 @@ import { Components } from '@ionic/core';
 import { generateUniqueId } from '../utils';
 import { Location } from 'history';
 import { IonBackButtonInner, IonRouterOutletInner } from '../index';
+import IonPage from '../IonPage';
 
 type ChildProps = RouteProps & {
   computedMatch: match<any>
@@ -190,27 +191,27 @@ class RouterOutlet extends Component<Props, State> {
               props = {
                 'ref': this.leavingEl,
                 'hidden': this.state.direction == null,
-                'className': 'ion-page' + (this.state.direction == null ? ' ion-page-hidden' : '')
+                'className': (this.state.direction == null ? ' ion-page-hidden' : '')
               };
             } else if (item.id === this.state.activeId) {
               props = {
                 'ref': this.enteringEl,
-                'className': 'ion-page' + (this.state.direction != null ? ' ion-page-invisible' : '')
+                'className': (this.state.direction != null ? ' ion-page-invisible' : '')
               };
             } else {
               props = {
                 'aria-hidden': true,
-                'className': 'ion-page ion-page-hidden'
+                'className': 'ion-page-hidden'
               };
             }
 
             return (
-              <div
+              <IonPage
                 {...props}
                 key={item.id}
               >
                 { this.renderChild(item) }
-              </div>
+              </IonPage>
             );
           })}
         </Context.Provider>

@@ -1,3 +1,19 @@
+## [4.0.2](https://github.com/ionic-team/ionic/compare/v4.0.1...v4.0.2) (2019-02-20)
+
+
+### Bug Fixes
+
+* **button:** show proper shade for activated button on ios ([#17508](https://github.com/ionic-team/ionic/issues/17508)) ([3a9b679](https://github.com/ionic-team/ionic/commit/3a9b679)), closes [#17436](https://github.com/ionic-team/ionic/issues/17436)
+* **config:** update types for scrollPadding, inputBlurring and hideCaretOnScroll to boolean ([#17302](https://github.com/ionic-team/ionic/issues/17302)) ([39fbc32](https://github.com/ionic-team/ionic/commit/39fbc32))
+* **datetime:** default to current date when no value given ([#17443](https://github.com/ionic-team/ionic/issues/17443)) ([644f9f4](https://github.com/ionic-team/ionic/commit/644f9f4))
+* **item-sliding:** Sliding no longer breaks after removing an item ([#17492](https://github.com/ionic-team/ionic/issues/17492)) ([e27bb2e](https://github.com/ionic-team/ionic/commit/e27bb2e))
+* **range:** implement RTL (from PR 17157) ([#17384](https://github.com/ionic-team/ionic/issues/17384)) ([4f203bc](https://github.com/ionic-team/ionic/commit/4f203bc)), closes [#17012](https://github.com/ionic-team/ionic/issues/17012)
+* **searchbar:** allow setting of toolbar color and searchbar color ([#17474](https://github.com/ionic-team/ionic/issues/17474)) ([ba4e117](https://github.com/ionic-team/ionic/commit/ba4e117))
+* **select:** Account for when options are not loaded immediately ([#17405](https://github.com/ionic-team/ionic/issues/17405)) ([f9f1775](https://github.com/ionic-team/ionic/commit/f9f1775))
+* **tab-bar:** add translucent tab-bar styles back ([#17376](https://github.com/ionic-team/ionic/issues/17376)) ([374bd77](https://github.com/ionic-team/ionic/commit/374bd77))
+
+
+
 ## [4.0.1](https://github.com/ionic-team/ionic/compare/v4.0.0...v4.0.1) (2019-02-06)
 
 

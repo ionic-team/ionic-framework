@@ -21,6 +21,29 @@ Footer can be a wrapper for ion-toolbar to make sure the content area is sized c
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonContent, IonFooter, IonToolbar, IonTitle } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+  <>
+    <IonContent></IonContent>
+
+    <IonFooter>
+      <IonToolbar>
+        <IonTitle>Footer</IonTitle>
+      </IonToolbar>
+    </IonFooter>
+  </>
+);
+
+export default Example;
+```
+
+
 
 ## Properties
 

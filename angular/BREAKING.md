@@ -1061,10 +1061,16 @@ openLoading() {
 **New Usage Example:**
 
 ```javascript
-openLoading() {
+async openLoading() {
   let loading = this.loadingCtrl.create({
     content: 'Loading...'
   });
+  
+  await loading.present();
+  
+  const { role, data } = await loading.onDidDismiss();
+    
+  console.log('Loading dismissed!');
 }
 ```
 

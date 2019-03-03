@@ -720,7 +720,7 @@ export class IonSegmentButton {
 proxyInputs(IonSegmentButton, ['mode', 'checked', 'disabled', 'layout', 'value']);
 
 export declare interface IonSelect extends StencilComponents<'IonSelect'> {}
-@Component({ selector: 'ion-select', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['mode', 'disabled', 'cancelText', 'okText', 'placeholder', 'name', 'selectedText', 'multiple', 'interface', 'interfaceOptions', 'value'] })
+@Component({ selector: 'ion-select', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['mode', 'disabled', 'cancelText', 'okText', 'placeholder', 'name', 'selectedText', 'multiple', 'interface', 'interfaceOptions', 'compareWith', 'value'] })
 export class IonSelect {
   ionChange!: EventEmitter<CustomEvent>;
   ionCancel!: EventEmitter<CustomEvent>;
@@ -734,7 +734,7 @@ export class IonSelect {
   }
 }
 proxyMethods(IonSelect, ['open']);
-proxyInputs(IonSelect, ['mode', 'disabled', 'cancelText', 'okText', 'placeholder', 'name', 'selectedText', 'multiple', 'interface', 'interfaceOptions', 'value']);
+proxyInputs(IonSelect, ['mode', 'disabled', 'cancelText', 'okText', 'placeholder', 'name', 'selectedText', 'multiple', 'interface', 'interfaceOptions', 'compareWith', 'value']);
 
 export declare interface IonSelectOption extends StencilComponents<'IonSelectOption'> {}
 @Component({ selector: 'ion-select-option', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['disabled', 'selected', 'value'] })
@@ -748,7 +748,7 @@ export class IonSelectOption {
 proxyInputs(IonSelectOption, ['disabled', 'selected', 'value']);
 
 export declare interface IonSkeletonText extends StencilComponents<'IonSkeletonText'> {}
-@Component({ selector: 'ion-skeleton-text', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['width'] })
+@Component({ selector: 'ion-skeleton-text', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['animated', 'width'] })
 export class IonSkeletonText {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef) {
@@ -756,7 +756,7 @@ export class IonSkeletonText {
     this.el = r.nativeElement;
   }
 }
-proxyInputs(IonSkeletonText, ['width']);
+proxyInputs(IonSkeletonText, ['animated', 'width']);
 
 export declare interface IonSlide extends StencilComponents<'IonSlide'> {}
 @Component({ selector: 'ion-slide', changeDetection: 0, template: '<ng-content></ng-content>' })

@@ -91,6 +91,126 @@ This attribute specifies the size of the button. Setting this attribute will cha
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonButton, IonIcon } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+  <>
+    {/*-- Default --*/}
+    <IonButton>Default</IonButton>
+
+    {/*-- Anchor --*/}
+    <IonButton href="#">Anchor</IonButton>
+
+    {/*-- Colors --*/}
+    <IonButton color="primary">Primary</IonButton>
+    <IonButton color="secondary">Secondary</IonButton>
+    <IonButton color="tertiary">Tertiary</IonButton>
+    <IonButton color="success">Success</IonButton>
+    <IonButton color="warning">Warning</IonButton>
+    <IonButton color="danger">Danger</IonButton>
+    <IonButton color="light">Light</IonButton>
+    <IonButton color="medium">Medium</IonButton>
+    <IonButton color="dark">Dark</IonButton>
+
+    {/*-- Expand --*/}
+    <IonButton expand="full">Full Button</IonButton>
+    <IonButton expand="block">Block Button</IonButton>
+
+    {/*-- Round --*/}
+    <IonButton shape="round">Round Button</IonButton>
+
+    {/*-- Fill --*/}
+    <IonButton expand="full" fill="outline">Outline + Full</IonButton>
+    <IonButton expand="block" fill="outline">Outline + Block</IonButton>
+    <IonButton shape="round" fill="outline">Outline + Round</IonButton>
+
+    {/*-- Icons --*/}
+    <IonButton>
+      <IonIcon slot="start" name="star" />
+      Left Icon
+    </IonButton>
+
+    <IonButton>
+      Right Icon
+      <IonIcon slot="end" name="star" />
+    </IonButton>
+
+    <IonButton>
+      <IonIcon slot="icon-only" name="star" />
+    </IonButton>
+
+    {/*-- Sizes --*/}
+    <IonButton size="large">Large</IonButton>
+    <IonButton>Default</IonButton>
+    <IonButton size="small">Small</IonButton>
+  </>
+);
+
+export default Example;
+```
+
+
+### Vue
+
+```html
+<template>
+  <!-- Default -->
+  <ion-button>Default</ion-button>
+
+  <!-- Anchor -->
+  <ion-button href="#">Anchor</ion-button>
+
+  <!-- Colors -->
+  <ion-button color="primary">Primary</ion-button>
+  <ion-button color="secondary">Secondary</ion-button>
+  <ion-button color="tertiary">Tertiary</ion-button>
+  <ion-button color="success">Success</ion-button>
+  <ion-button color="warning">Warning</ion-button>
+  <ion-button color="danger">Danger</ion-button>
+  <ion-button color="light">Light</ion-button>
+  <ion-button color="medium">Medium</ion-button>
+  <ion-button color="dark">Dark</ion-button>
+
+  <!-- Expand -->
+  <ion-button expand="full">Full Button</ion-button>
+  <ion-button expand="block">Block Button</ion-button>
+
+  <!-- Round -->
+  <ion-button shape="round">Round Button</ion-button>
+
+  <!-- Fill -->
+  <ion-button expand="full" fill="outline">Outline + Full</ion-button>
+  <ion-button expand="block" fill="outline">Outline + Block</ion-button>
+  <ion-button shape="round" fill="outline">Outline + Round</ion-button>
+
+  <!-- Icons -->
+  <ion-button>
+    <ion-icon slot="start" name="star"></ion-icon>
+    Left Icon
+  </ion-button>
+
+  <ion-button>
+    Right Icon
+    <ion-icon slot="end" name="star"></ion-icon>
+  </ion-button>
+
+  <ion-button>
+    <ion-icon slot="icon-only" name="star"></ion-icon>
+  </ion-button>
+
+  <!-- Sizes -->
+  <ion-button size="large">Large</ion-button>
+  <ion-button>Default</ion-button>
+  <ion-button size="small">Small</ion-button>
+</template>
+```
+
+
 
 ## Properties
 
@@ -116,6 +236,16 @@ This attribute specifies the size of the button. Setting this attribute will cha
 | ---------- | ------------------------------------ | ------------------- |
 | `ionBlur`  | Emitted when the button loses focus. | `CustomEvent<void>` |
 | `ionFocus` | Emitted when the button has focus.   | `CustomEvent<void>` |
+
+
+## Slots
+
+| Slot          | Description                                                                       |
+| ------------- | --------------------------------------------------------------------------------- |
+|               | Content is placed between the named slots if provided without a slot.             |
+| `"end"`       | Content is placed to the right of the button text in LTR, and to the left in RTL. |
+| `"icon-only"` | Should be used on an icon in a button that has no text.                           |
+| `"start"`     | Content is placed to the left of the button text in LTR, and to the right in RTL. |
 
 
 ## CSS Custom Properties
