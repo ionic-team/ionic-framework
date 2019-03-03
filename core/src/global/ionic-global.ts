@@ -11,7 +11,7 @@ export interface Context {
   isServer: boolean;
 }
 
-export default (win: any, doc: Document) => {
+export default (win: any, doc: Document, isServer: boolean) => {
   const Ionic = (win as any).Ionic = (win as any).Ionic || {};
 
   // queue used to coordinate DOM reads and
@@ -50,7 +50,8 @@ export default (win: any, doc: Document) => {
     config.set('animated', false);
   }
 
-  setMode(elm => (elm as any).mode || elm.getAttribute('mode') || mode);
+  setMode((elm: any) => (elm as any).mode || elm.getAttribute('mode') || mode);
 
   setContext(win, 'config', config);
+  setContext(win, 'isServer', isServer);
 };
