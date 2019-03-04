@@ -74,6 +74,76 @@ backdrop.stopPropagation = false;
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonBackdrop } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+  <>
+    {/*-- Default backdrop --*/}
+    <IonBackdrop />
+
+    {/*-- Backdrop that is not tappable --*/}
+    <IonBackdrop tappable={false} />
+
+    {/*-- Backdrop that is not visible --*/}
+    <IonBackdrop visible={false} />
+
+    {/*-- Backdrop with propagation --*/}
+    <IonBackdrop stopPropagation={false} />
+
+    <IonBackdrop
+      tappable={true}
+      visible={true}
+      stopPropagation={true}
+    />
+  </>
+);
+
+export default Example;
+```
+
+
+### Vue
+
+```html
+<template>
+  <!-- Default backdrop -->
+  <ion-backdrop></ion-backdrop>
+
+  <!-- Backdrop that is not tappable -->
+  <ion-backdrop tappable="false"></ion-backdrop>
+
+  <!-- Backdrop that is not visible -->
+  <ion-backdrop visible="false"></ion-backdrop>
+
+  <!-- Backdrop with propagation -->
+  <ion-backdrop stopPropagation="false"></ion-backdrop>
+
+  <!-- Backdrop that sets dynamic properties -->
+  <ion-backdrop
+    :tappable="enableBackdropDismiss"
+    :visible="showBackdrop"
+    :stopPropagation="shouldPropagate">
+  </ion-backdrop>
+</template>
+
+<script lang="ts">
+  import { Component, Vue } from 'vue-property-decorator';
+
+  @Component()
+  export default class Menu extends Vue {
+    backdropDismiss = false;
+    showBackdrop = false;
+    shouldPropagate = false;
+  }
+</script>
+```
+
+
 
 ## Properties
 
