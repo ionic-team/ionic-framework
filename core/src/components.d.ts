@@ -77,6 +77,9 @@ import {
 import {
   EventEmitter,
 } from '@stencil/core';
+import {
+  SelectCompareFn,
+} from './components/select/select-interface';
 
 
 export namespace Components {
@@ -746,6 +749,10 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
+    * If `true`, the checkbox will visually appear as indeterminate.
+    */
+    'indeterminate': boolean;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -771,6 +778,10 @@ export namespace Components {
     * If `true`, the user cannot interact with the checkbox.
     */
     'disabled'?: boolean;
+    /**
+    * If `true`, the checkbox will visually appear as indeterminate.
+    */
+    'indeterminate'?: boolean;
     /**
     * The mode determines which platform styles to use.
     */
@@ -4001,6 +4012,10 @@ export namespace Components {
     */
     'cancelText': string;
     /**
+    * A property name or function used to compare object values
+    */
+    'compareWith'?: string | SelectCompareFn | null;
+    /**
     * If `true`, the user cannot interact with the select.
     */
     'disabled': boolean;
@@ -4050,6 +4065,10 @@ export namespace Components {
     * The text to display on the cancel button.
     */
     'cancelText'?: string;
+    /**
+    * A property name or function used to compare object values
+    */
+    'compareWith'?: string | SelectCompareFn | null;
     /**
     * If `true`, the user cannot interact with the select.
     */

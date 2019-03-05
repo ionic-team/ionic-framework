@@ -104,6 +104,10 @@
   font-size: $item-md-icon-slot-font-size;
 }
 
+:host(.ion-color) ::slotted(ion-icon) {
+  color: current-color(contrast);
+}
+
 ::slotted(ion-icon[slot]) {
   @include margin($item-md-icon-slot-margin-top, $item-md-icon-slot-margin-end, $item-md-icon-slot-margin-bottom, $item-md-icon-slot-margin-start);
 }
