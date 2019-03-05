@@ -77,6 +77,9 @@ import {
 import {
   EventEmitter,
 } from '@stencil/core';
+import {
+  SelectCompareFn,
+} from './components/select/select-interface';
 
 
 export namespace Components {
@@ -746,6 +749,10 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
+    * If `true`, the checkbox will visually appear as indeterminate.
+    */
+    'indeterminate': boolean;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -771,6 +778,10 @@ export namespace Components {
     * If `true`, the user cannot interact with the checkbox.
     */
     'disabled'?: boolean;
+    /**
+    * If `true`, the checkbox will visually appear as indeterminate.
+    */
+    'indeterminate'?: boolean;
     /**
     * The mode determines which platform styles to use.
     */
@@ -3309,10 +3320,6 @@ export namespace Components {
     */
     'name': string;
     /**
-    * The neutral point of the range slider. Default: value is `0` or the `min` when `neutralPoint < min` or `max` when `max < neutralPoint`.
-    */
-    'neutralPoint': number;
-    /**
     * If `true`, a pin with integer value is shown when the knob is pressed.
     */
     'pin': boolean;
@@ -3327,7 +3334,7 @@ export namespace Components {
     /**
     * the value of the range.
     */
-    'value': RangeValue | null;
+    'value': RangeValue;
   }
   interface IonRangeAttributes extends StencilHTMLAttributes {
     /**
@@ -3363,10 +3370,6 @@ export namespace Components {
     */
     'name'?: string;
     /**
-    * The neutral point of the range slider. Default: value is `0` or the `min` when `neutralPoint < min` or `max` when `max < neutralPoint`.
-    */
-    'neutralPoint'?: number;
-    /**
     * Emitted when the range loses focus.
     */
     'onIonBlur'?: (event: CustomEvent<void>) => void;
@@ -3393,7 +3396,7 @@ export namespace Components {
     /**
     * the value of the range.
     */
-    'value'?: RangeValue | null;
+    'value'?: RangeValue;
   }
 
   interface IonRefresherContent {
@@ -4001,6 +4004,10 @@ export namespace Components {
     */
     'cancelText': string;
     /**
+    * A property name or function used to compare object values
+    */
+    'compareWith'?: string | SelectCompareFn | null;
+    /**
     * If `true`, the user cannot interact with the select.
     */
     'disabled': boolean;
@@ -4050,6 +4057,10 @@ export namespace Components {
     * The text to display on the cancel button.
     */
     'cancelText'?: string;
+    /**
+    * A property name or function used to compare object values
+    */
+    'compareWith'?: string | SelectCompareFn | null;
     /**
     * If `true`, the user cannot interact with the select.
     */
@@ -4110,14 +4121,16 @@ export namespace Components {
 
   interface IonSkeletonText {
     /**
-    * Width for the element to render at.
+    * If `true`, the skeleton text will animate.
     */
-    'width': string;
+    'animated': boolean;
+    'width'?: string;
   }
   interface IonSkeletonTextAttributes extends StencilHTMLAttributes {
     /**
-    * Width for the element to render at.
+    * If `true`, the skeleton text will animate.
     */
+    'animated'?: boolean;
     'width'?: string;
   }
 
