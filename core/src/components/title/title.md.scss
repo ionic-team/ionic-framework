@@ -1,0 +1,11 @@
+@import "./title";
+
+// Material Design Title
+// --------------------------------------------------
+
+:host(.title-md) {
+  @include padding(0, 12px);
+
+  font-size: 20px;
+  font-weight: 500;
+}
