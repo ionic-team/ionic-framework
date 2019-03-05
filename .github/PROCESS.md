@@ -83,6 +83,8 @@ if there is no response within 30 days, the issue will be closed and locked.
 
 ### Overview
 
+![](https://user-images.githubusercontent.com/6577830/53817482-80e6c480-3f33-11e9-9e09-be8dcf840ef8.png)
+
 We have two long-living branches:
 
 - `master`: completed features, bug fixes, refactors, chores
