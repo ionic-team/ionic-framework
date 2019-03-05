@@ -4,6 +4,8 @@ import { ActionSheetButton, ActionSheetOptions, AlertOptions, CssClassMap, Mode,
 import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
+import { SelectCompareFn } from './select-interface';
+
 @Component({
   tag: 'ion-select',
   styleUrls: {
@@ -81,6 +83,11 @@ export class Select implements ComponentInterface {
    * create options for each interface.
    */
   @Prop() interfaceOptions: any = {};
+
+  /**
+   * A property name or function used to compare object values
+   */
+  @Prop() compareWith?: string | SelectCompareFn | null;
 
   /**
    * the value of the select.
@@ -346,7 +353,7 @@ export class Select implements ComponentInterface {
     // iterate all options, updating the selected prop
     let canSelect = true;
     for (const selectOption of this.childOpts) {
-      const selected = canSelect && isOptionSelected(this.value, selectOption.value);
+      const selected = canSelect && isOptionSelected(this.value, selectOption.value, this.compareWith);
       selectOption.selected = selected;
 
       // if current option is selected and select is single-option, we can't select
@@ -370,7 +377,7 @@ export class Select implements ComponentInterface {
     if (selectedText != null && selectedText !== '') {
       return selectedText;
     }
-    return generateText(this.childOpts, this.value);
+    return generateText(this.childOpts, this.value, this.compareWith);
   }
 
   private setFocus() {
@@ -468,33 +475,45 @@ function parseValue(value: any) {
   return value.toString();
 }
 
-function isOptionSelected(currentValue: any[] | any, optionValue: any) {
+function isOptionSelected(currentValue: any[] | any, compareValue: any, compareWith?: string | SelectCompareFn | null) {
   if (currentValue === undefined) {
     return false;
   }
   if (Array.isArray(currentValue)) {
-    return currentValue.includes(optionValue);
+    return currentValue.some(val => compareOptions(val, compareValue, compareWith));
   } else {
-    return currentValue === optionValue;
+    return compareOptions(currentValue, compareValue, compareWith);
   }
 }
 
-function generateText(opts: HTMLIonSelectOptionElement[], value: any | any[]) {
+function compareOptions(currentValue: any, compareValue: any, compareWith?: string | SelectCompareFn | null): boolean {
+  if (typeof compareWith === 'function') {
+    return compareWith(currentValue, compareValue);
+  } else if (typeof compareWith === 'string') {
+    return currentValue[compareWith] === compareValue[compareWith];
+  } else {
+    return currentValue === compareValue;
+  }
+}
+
+function generateText(opts: HTMLIonSelectOptionElement[], value: any | any[], compareWith?: string | SelectCompareFn | null) {
   if (value === undefined) {
     return '';
   }
   if (Array.isArray(value)) {
     return value
-      .map(v => textForValue(opts, v))
+      .map(v => textForValue(opts, v, compareWith))
       .filter(opt => opt !== null)
       .join(', ');
   } else {
-    return textForValue(opts, value) || '';
+    return textForValue(opts, value, compareWith) || '';
   }
 }
 
-function textForValue(opts: HTMLIonSelectOptionElement[], value: any): string | null {
-  const selectOpt = opts.find(opt => opt.value === value);
+function textForValue(opts: HTMLIonSelectOptionElement[], value: any, compareWith?: string | SelectCompareFn | null): string | null {
+  const selectOpt = opts.find(opt => {
+    return compareOptions(opt.value, value, compareWith);
+  });
   return selectOpt
     ? selectOpt.textContent
     : null;

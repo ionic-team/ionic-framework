@@ -192,7 +192,7 @@ export default class ActionSheetExample extends Component<Props, State> {
 
 ### Vue
 
-```vue
+```html
 <template>
   <IonVuePage :title="'Action Sheet'">
     <ion-button @click="presentActionSheet">Show Action Sheet</ion-button>
