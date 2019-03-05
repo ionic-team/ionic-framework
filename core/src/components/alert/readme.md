@@ -803,7 +803,7 @@ export default class AlertExample extends Component<Props, State> {
 
 ### Vue
 
-```vue
+```html
 <template>
   <IonVuePage :title="'Alert'">
     <ion-button @click="presentAlert">Show Alert</ion-button>

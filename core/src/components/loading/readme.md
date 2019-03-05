@@ -144,7 +144,7 @@ export class LoadingExample extends Component<Props, State> {
 
 ### Vue
 
-```vue
+```html
 <template>
   <IonVuePage :title="'Loading'">
     <ion-button @click="presentLoading">Show Loading</ion-button>

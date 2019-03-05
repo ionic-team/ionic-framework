@@ -140,7 +140,7 @@ export class IonCardTitle {
 proxyInputs(IonCardTitle, ['color', 'mode']);
 
 export declare interface IonCheckbox extends StencilComponents<'IonCheckbox'> {}
-@Component({ selector: 'ion-checkbox', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['checked', 'color', 'disabled', 'mode', 'name', 'value'] })
+@Component({ selector: 'ion-checkbox', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['checked', 'color', 'disabled', 'indeterminate', 'mode', 'name', 'value'] })
 export class IonCheckbox {
   ionChange!: EventEmitter<CustomEvent>;
   ionFocus!: EventEmitter<CustomEvent>;
@@ -152,7 +152,7 @@ export class IonCheckbox {
     proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
   }
 }
-proxyInputs(IonCheckbox, ['checked', 'color', 'disabled', 'mode', 'name', 'value']);
+proxyInputs(IonCheckbox, ['checked', 'color', 'disabled', 'indeterminate', 'mode', 'name', 'value']);
 
 export declare interface IonChip extends StencilComponents<'IonChip'> {}
 @Component({ selector: 'ion-chip', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'outline'] })
@@ -720,7 +720,7 @@ export class IonSegmentButton {
 proxyInputs(IonSegmentButton, ['checked', 'disabled', 'layout', 'mode', 'value']);
 
 export declare interface IonSelect extends StencilComponents<'IonSelect'> {}
-@Component({ selector: 'ion-select', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['mode', 'disabled', 'cancelText', 'okText', 'placeholder', 'name', 'selectedText', 'multiple', 'interface', 'interfaceOptions', 'compareWith', 'value'] })
+@Component({ selector: 'ion-select', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['cancelText', 'compareWith', 'disabled', 'interface', 'interfaceOptions', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'value'] })
 export class IonSelect {
   ionChange!: EventEmitter<CustomEvent>;
   ionCancel!: EventEmitter<CustomEvent>;
@@ -734,7 +734,7 @@ export class IonSelect {
   }
 }
 proxyMethods(IonSelect, ['open']);
-proxyInputs(IonSelect, ['mode', 'disabled', 'cancelText', 'okText', 'placeholder', 'name', 'selectedText', 'multiple', 'interface', 'interfaceOptions', 'compareWith', 'value']);
+proxyInputs(IonSelect, ['cancelText', 'compareWith', 'disabled', 'interface', 'interfaceOptions', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'value']);
 
 export declare interface IonSelectOption extends StencilComponents<'IonSelectOption'> {}
 @Component({ selector: 'ion-select-option', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['disabled', 'selected', 'value'] })

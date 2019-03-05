@@ -729,6 +729,10 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
+    * If `true`, the checkbox will visually appear as indeterminate.
+    */
+    'indeterminate': boolean;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode'?: 'md' | 'ios';
@@ -754,6 +758,10 @@ export namespace Components {
     * If `true`, the user cannot interact with the checkbox.
     */
     'disabled'?: boolean;
+    /**
+    * If `true`, the checkbox will visually appear as indeterminate.
+    */
+    'indeterminate'?: boolean;
     /**
     * The mode determines which platform styles to use.
     */

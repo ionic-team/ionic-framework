@@ -41,6 +41,11 @@ export class Checkbox implements ComponentInterface {
   @Prop({ mutable: true }) checked = false;
 
   /**
+   * If `true`, the checkbox will visually appear as indeterminate.
+   */
+  @Prop({ mutable: true }) indeterminate = false;
+
+  /**
    * If `true`, the user cannot interact with the checkbox.
    */
   @Prop() disabled = false;
@@ -105,6 +110,7 @@ export class Checkbox implements ComponentInterface {
   private onClick = () => {
     this.setFocus();
     this.checked = !this.checked;
+    this.indeterminate = false;
   }
 
   private onFocus = () => {
@@ -136,6 +142,7 @@ export class Checkbox implements ComponentInterface {
           'in-item': hostContext('ion-item', el),
           'checkbox-checked': checked,
           'checkbox-disabled': disabled,
+          'checkbox-indeterminate': this.indeterminate,
           'interactive': true
         }}
       >
