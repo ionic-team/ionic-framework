@@ -299,7 +299,7 @@ export class Datetime implements ComponentInterface {
       }
       const columns = this.generateColumns();
       this.internalDateTimeValue = await this.validate(columns);
-      this.picker!.columns = columns;
+      Object.assign(this.picker!.columns, columns);
     });
   }
 
@@ -405,7 +405,7 @@ export class Datetime implements ComponentInterface {
 
       // cool, we've loaded up the columns with options
       // preselect the option for this column
-      const optValue = getDateValue(this.datetimeValue, format);
+      const optValue = getDateValue(this.internalDateTimeValue, format);
 
       const selectedIndex = colOptions.findIndex(opt => opt.value === optValue);
 
