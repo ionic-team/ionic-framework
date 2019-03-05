@@ -202,7 +202,7 @@ Changes the refresher's state from `refreshing` to `cancelling`.
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 
@@ -218,7 +218,7 @@ the refresher. This method also changes the refresher's state from
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 

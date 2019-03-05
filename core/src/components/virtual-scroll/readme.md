@@ -353,7 +353,7 @@ It's equivalent to calling:
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 
@@ -366,7 +366,7 @@ The subset of items to be updated can are specifing by an offset and a length.
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 

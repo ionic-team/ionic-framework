@@ -212,7 +212,7 @@ Sets focus on the specified `ion-searchbar`. Use this method instead of the glob
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 

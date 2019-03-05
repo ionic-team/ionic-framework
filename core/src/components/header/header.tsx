@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Prop, getMode } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, getMode, h } from '@stencil/core';
 
 import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
@@ -24,15 +24,18 @@ export class Header implements ComponentInterface {
    */
   @Prop() translucent = false;
 
-  hostData() {
+  render() {
     const themedClasses = createThemedClasses(this.mode, 'header');
     const translucentClasses = this.translucent ? createThemedClasses(this.mode, 'header-translucent') : null;
 
-    return {
-      class: {
-        ...themedClasses,
-        ...translucentClasses
-      }
-    };
+    return (
+      <Host
+        class={{
+          ...themedClasses,
+          ...translucentClasses
+        }}
+      >
+      </Host>
+    );
   }
 }

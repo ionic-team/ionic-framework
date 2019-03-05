@@ -117,7 +117,7 @@ Registers a new animation that can be used in any `ion-menu`.
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 

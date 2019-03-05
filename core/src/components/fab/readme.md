@@ -292,7 +292,7 @@ Close an active FAB list container
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 

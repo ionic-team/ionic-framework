@@ -243,7 +243,7 @@ Sets focus on the specified `ion-textarea`. Use this method instead of the globa
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 

@@ -272,7 +272,7 @@ Sets focus on the specified `ion-input`. Use this method instead of the global
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 
