@@ -15,7 +15,7 @@ export function shadow<T extends Element>(el: T): ShadowRoot | T {
 
 export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement, opts: TransitionOptions): Promise<Animation> {
 
-  const isRTL = document.dir === 'rtl';
+  const isRTL = (navEl.ownerDocument as any).dir === 'rtl';
   const OFF_RIGHT = isRTL ? '-99.5%' : '99.5%';
   const OFF_LEFT = isRTL ? '33%' : '-33%';
 
@@ -167,9 +167,9 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
       rootTransition.add(leavingToolBar);
 
       // fade out leaving toolbar items
-      leavingBackButton.fromTo(OPACITY, 0.99, 0, true);
-      leavingTitle.fromTo(OPACITY, 0.99, 0, true);
-      leavingToolBarItems.fromTo(OPACITY, 0.99, 0, true);
+      leavingBackButton.fromTo(OPACITY, 0.99, 0);
+      leavingTitle.fromTo(OPACITY, 0.99, 0);
+      leavingToolBarItems.fromTo(OPACITY, 0.99, 0);
 
       if (backDirection) {
         // leaving toolbar, back direction
@@ -179,7 +179,7 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
         // should just slide out, no fading out
         leavingToolBarBg
           .beforeClearStyles([OPACITY])
-          .fromTo(OPACITY, 1, 0.01, true);
+          .fromTo(OPACITY, 1, 0.01);
 
         if (backButtonEl) {
           const leavingBackBtnText = new AnimationC();

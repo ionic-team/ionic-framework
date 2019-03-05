@@ -4,7 +4,8 @@ import { Animation } from '../../../interface';
  * Md Popover Enter Animation
  */
 export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> {
-  const isRTL = document.dir === 'rtl';
+  const doc = (baseEl.ownerDocument as any);
+  const isRTL = doc.dir === 'rtl';
 
   let originY = 'top';
   let originX = isRTL ? 'right' : 'left';
@@ -14,16 +15,17 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev?
   const contentWidth = contentDimentions.width;
   const contentHeight = contentDimentions.height;
 
-  const bodyWidth = window.innerWidth;
-  const bodyHeight = window.innerHeight;
+  const bodyWidth = doc.defaultView.innerWidth;
+  const bodyHeight = doc.defaultView.innerHeight;
 
   // If ev was passed, use that for target element
   const targetDim =
     ev && ev.target && (ev.target as HTMLElement).getBoundingClientRect();
 
+  // As per MD spec, by default position the popover below the target (trigger) element
   const targetTop =
-    targetDim != null && 'top' in targetDim
-      ? targetDim.top
+    targetDim != null && 'bottom' in targetDim
+      ? targetDim.bottom
       : bodyHeight / 2 - contentHeight / 2;
 
   const targetLeft =
@@ -59,7 +61,7 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev?
     targetTop + targetHeight + contentHeight > bodyHeight &&
     targetTop - contentHeight > 0
   ) {
-    popoverCSS.top = targetTop - contentHeight;
+    popoverCSS.top = targetTop - contentHeight - targetHeight;
     baseEl.className = baseEl.className + ' popover-bottom';
     originY = 'bottom';
     // If there isn't room for it to pop up above the target cut it off

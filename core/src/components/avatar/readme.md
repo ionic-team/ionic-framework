@@ -10,30 +10,7 @@ Avatars can be used by themselves or inside of any element. If placed inside of 
 
 ## Usage
 
-### Angular
-
-```html
-<ion-avatar>
-  <img [src]="user.img">
-</ion-avatar>
-
-<ion-chip>
-  <ion-avatar>
-    <img [src]="user.img">
-  </ion-avatar>
-  <ion-label>Chip Avatar</ion-label>
-</ion-chip>
-
-<ion-item>
-  <ion-avatar slot="start">
-    <img [src]="user.img">
-  </ion-avatar>
-  <ion-label>Item Avatar</ion-label>
-</ion-item>
-```
-
-
-### Javascript
+### Angular / javascript
 
 ```html
 <ion-avatar>
@@ -53,6 +30,63 @@ Avatars can be used by themselves or inside of any element. If placed inside of 
   </ion-avatar>
   <ion-label>Item Avatar</ion-label>
 </ion-item>
+```
+
+
+### React
+
+```tsx
+import React from 'react'
+import { IonAvatar, IonChip, IonItem, IonLabel } from '@ionic/react';
+
+const AvatarExample: React.SFC<{}> = () => (
+  <>
+    <IonAvatar>
+      <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
+    </IonAvatar>
+
+    <IonChip>
+      <IonAvatar>
+        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
+      </IonAvatar>
+      <IonLabel>Chip Avatar</IonLabel>
+    </IonChip>
+
+    <IonItem>
+      <IonAvatar slot="start">
+        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
+      </IonAvatar>
+      <IonLabel>Item Avatar</IonLabel>
+    </IonItem>
+  </>
+);
+
+export default AvatarExample;
+```
+
+
+### Vue
+
+```html
+<template>
+  <ion-avatar>
+    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+  </ion-avatar>
+
+  <ion-chip>
+    <ion-avatar>
+      <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+    </ion-avatar>
+    <ion-label>Chip Avatar</ion-label>
+  </ion-chip>
+
+  <ion-item>
+    <ion-avatar slot="start">
+      <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+    </ion-avatar>
+    <ion-label>Item Avatar</ion-label>
+  </ion-item>
+</template>
 ```
 
 
