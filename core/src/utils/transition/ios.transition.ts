@@ -184,7 +184,7 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
       leavingBackButton.fromTo(OPACITY, 0.99, 0);
       leavingTitle.fromTo(OPACITY, 0.99, 0);
       leavingToolBarButtons.fromTo(OPACITY, 0.99, 0, 0);
-      leavingToolBarItems.fromTo(OPACITY, 0.99, 0);
+      leavingToolbarItems.fromTo(OPACITY, 0.99, 0);
 
       if (backDirection) {
         // leaving toolbar, back direction
