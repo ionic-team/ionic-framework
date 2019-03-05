@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, QueueApi, h } from '@stencil/core';
 
 import { getContext } from '../../global/context';
 import { rIC } from '../../utils/helpers';
@@ -49,12 +49,14 @@ export class App implements ComponentInterface {
     }
   }
 
-  hostData() {
-    return {
-      class: {
-        'ion-page': true,
-        'force-statusbar-padding': this.config.getBoolean('_forceStatusbarPadding')
-      }
-    };
+  render() {
+    return (
+      <Host
+        class={{
+          'ion-page': true,
+          'force-statusbar-padding': this.config.getBoolean('_forceStatusbarPadding') }}
+      >
+      </Host>
+    );
   }
 }
