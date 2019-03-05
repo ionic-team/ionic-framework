@@ -180,7 +180,7 @@ export class ModalExample extends Component<Props, State> {
 
 ### Vue
 
-```vue
+```html
 <template>
   <div>
     <ion-header>
@@ -209,7 +209,7 @@ export default {
 </script>
 ```
 
-```vue
+```html
 <template>
   <ion-page class="ion-page" main>
     <ion-content class="ion-content" padding>
