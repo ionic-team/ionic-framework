@@ -36,6 +36,40 @@ content.addEventListener('ionScrollEnd', () => console.log('scroll end'));
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonContent } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+  <IonContent
+    scrollEvents={true}
+    onIonScrollStart={() => {}}
+    onIonScroll={() => {}}
+    onIonScrollEnd={() => {}}>
+  </IonContent>
+);
+
+export default Example;
+```
+
+
+### Vue
+
+```html
+<template>
+  <ion-content
+    :scrollEvents="true"
+    @ionScrollStart="logScrollStart()"
+    @ionScroll="logScrolling($event)"
+    @ionScrollEnd="logScrollEnd()">
+  </ion-content>
+</template>
+```
+
+
 
 ## Properties
 
