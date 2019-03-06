@@ -33,9 +33,7 @@ export class VueDelegate implements FrameworkDelegate {
 
     // Get the Vue controller
     return createVueComponent(this.vue, component).then((Component: VueConstructor) => {
-      const componentInstance = new Component({
-        propsData: opts
-      });
+      const componentInstance = new Component(opts);
       componentInstance.$mount();
 
       // Add any classes to the Vue component's root element

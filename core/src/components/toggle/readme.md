@@ -87,6 +87,96 @@ Toggles change the state of a single option. Toggles can be switched on or off b
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonToggle, IonList, IonItem, IonLabel } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+  <>
+    {/*-- Default Toggle --*/}
+    <IonToggle></IonToggle>
+
+    {/*-- Disabled Toggle --*/}
+    <IonToggle disabled></IonToggle>
+
+    {/*-- Checked Toggle --*/}
+    <IonToggle checked></IonToggle>
+
+    {/*-- Toggle Colors --*/}
+    <IonToggle color="primary"></IonToggle>
+    <IonToggle color="secondary"></IonToggle>
+    <IonToggle color="danger"></IonToggle>
+    <IonToggle color="light"></IonToggle>
+    <IonToggle color="dark"></IonToggle>
+
+    {/*-- Toggles in a List --*/}
+    <IonList>
+      <IonItem>
+        <IonLabel>Pepperoni</IonLabel>
+        <IonToggle value="pepperoni" onChange={() => {}}></IonToggle>
+      </IonItem>
+
+      <IonItem>
+        <IonLabel>Sausage</IonLabel>
+        <IonToggle value="sausage" onChange={() => {}} disabled={true}></IonToggle>
+      </IonItem>
+
+      <IonItem>
+        <IonLabel>Mushrooms</IonLabel>
+        <IonToggle value="mushrooms" onChange={() => {}}></IonToggle>
+      </IonItem>
+    </IonList>
+  </>
+);
+
+export default Example;
+```
+
+
+### Vue
+
+```html
+<template>
+  <!-- Default Toggle -->
+  <ion-toggle></ion-toggle>
+
+  <!-- Disabled Toggle -->
+  <ion-toggle disabled></ion-toggle>
+
+  <!-- Checked Toggle -->
+  <ion-toggle checked></ion-toggle>
+
+  <!-- Toggle Colors -->
+  <ion-toggle color="primary"></ion-toggle>
+  <ion-toggle color="secondary"></ion-toggle>
+  <ion-toggle color="danger"></ion-toggle>
+  <ion-toggle color="light"></ion-toggle>
+  <ion-toggle color="dark"></ion-toggle>
+
+  <!-- Toggles in a List -->
+  <ion-list>
+    <ion-item>
+      <ion-label>Pepperoni</ion-label>
+      <ion-toggle @ionChange="toppings.push($event.target.value)" value="pepperoni" v-bind:checked="toppings.indexOf('pepperoni') !== -1"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Sausage</ion-label>
+      <ion-toggle @ionChange="toppings.push($event.target.value)" value="sausage" v-bind:checked="toppings.indexOf('pepperoni') !== -1" disabled="true"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Mushrooms</ion-label>
+      <ion-toggle @ionChange="toppings.push($event.target.value)" value="mushrooms" v-bind:checked="toppings.indexOf('pepperoni') !== -1"></ion-toggle>
+    </ion-item>
+  </ion-list>
+</template>
+```
+
+
 
 ## Properties
 
