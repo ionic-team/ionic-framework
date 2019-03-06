@@ -228,4 +228,5 @@ Hotfixes bypass `master` and should only be used for urgent fixes that can't wai
 
     <img width="191" alt="Merge pull request button" src="https://user-images.githubusercontent.com/236501/47032669-8be1b980-d138-11e8-9a90-d1518c223184.png">
 
-1. Squash and merge the release branch back into `master` to ensure any changes made on the release branch get added to future releases.
+1. Rewrite the commit message to `merge release-4.1.0` with the proper release branch.
+1. Create a pull request and merge the release branch back into `master` using the same commit format in the last step, to ensure any changes made on the release branch get added to future releases.
