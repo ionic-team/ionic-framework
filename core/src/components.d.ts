@@ -1422,7 +1422,7 @@ export namespace Components {
     /**
     * Close an active FAB list container
     */
-    'close': () => void;
+    'close': () => Promise<void>;
     /**
     * If `true`, the fab will display on the edge of the header if `vertical` is `"top"`, and on the edge of the footer if it is `"bottom"`. Should be used with a `fixed` slot.
     */
@@ -1560,7 +1560,7 @@ export namespace Components {
     /**
     * Call `complete()` within the `ionInfinite` output event handler when your async operation has completed. For example, the `loading` state is while the app is performing an asynchronous operation, such as receiving more data from an AJAX request to add more items to a data list. Once the data has been received and UI updated, you then call this method to signify that the loading has completed. This method will change the infinite scroll's state from `loading` to `enabled`.
     */
-    'complete': () => void;
+    'complete': () => Promise<void>;
     /**
     * If `true`, the infinite scroll will be hidden and scroll event listeners will be removed.  Set this to true to disable the infinite scroll from actively trying to receive new data while scrolling. This is useful when it is known that there is no more data that can be added, and the infinite scroll is no longer needed.
     */
@@ -1689,7 +1689,7 @@ export namespace Components {
     /**
     * Sets focus on the specified `ion-input`. Use this method instead of the global `input.focus()`.
     */
-    'setFocus': () => void;
+    'setFocus': () => Promise<void>;
     /**
     * The initial size of the control. This value is in pixels unless the value of the type attribute is `"text"` or `"password"`, in which case it is an integer number of characters. This attribute applies only when the `type` attribute is set to `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
     */
@@ -1916,7 +1916,7 @@ export namespace Components {
   }
 
   interface IonItemOptions {
-    'fireSwipeEvent': () => void;
+    'fireSwipeEvent': () => Promise<void>;
     /**
     * The side the option button should be on. Possible values: `"start"` and `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
     */
@@ -2362,7 +2362,7 @@ export namespace Components {
     /**
     * Registers a new animation that can be used in any `ion-menu`.  ```    * <ion-menu type="my-animation">    * ```
     */
-    'registerAnimation': (name: string, animation: AnimationBuilder) => void;
+    'registerAnimation': (name: string, animation: AnimationBuilder) => Promise<void>;
     /**
     * Used to enable or disable the ability to swipe open the menu.
     */
@@ -3412,7 +3412,7 @@ export namespace Components {
     /**
     * Changes the refresher's state from `refreshing` to `cancelling`.
     */
-    'cancel': () => void;
+    'cancel': () => Promise<void>;
     /**
     * Time it takes to close the refresher.
     */
@@ -3420,7 +3420,7 @@ export namespace Components {
     /**
     * Call `complete()` when your async operation has completed. For example, the `refreshing` state is while the app is performing an asynchronous operation, such as receiving more data from an AJAX request. Once the data has been received, you then call this method to signify that the refreshing has completed and to close the refresher. This method also changes the refresher's state from `refreshing` to `completing`.
     */
-    'complete': () => void;
+    'complete': () => Promise<void>;
     /**
     * If `true`, the refresher will be hidden.
     */
@@ -3608,7 +3608,7 @@ export namespace Components {
     */
     'back': () => Promise<void>;
     'navChanged': (direction: RouterDirection) => Promise<boolean>;
-    'printDebug': () => void;
+    'printDebug': () => Promise<void>;
     /**
     * Navigate to the specified URL.
     */
@@ -3696,7 +3696,7 @@ export namespace Components {
     /**
     * Sets focus on the specified `ion-searchbar`. Use this method instead of the global `input.focus()`.
     */
-    'setFocus': () => void;
+    'setFocus': () => Promise<void>;
     /**
     * If `true`, show the cancel button.
     */
@@ -4571,7 +4571,7 @@ export namespace Components {
     /**
     * Sets focus on the specified `ion-textarea`. Use this method instead of the global `input.focus()`.
     */
-    'setFocus': () => void;
+    'setFocus': () => Promise<void>;
     /**
     * If `true`, the element will have its spelling and grammar checked.
     */
@@ -4952,11 +4952,11 @@ export namespace Components {
     /**
     * This method marks the tail the items array as dirty, so they can be re-rendered.  It's equivalent to calling:  ```js    * virtualScroll.checkRange(lastItemLen);    * ```
     */
-    'checkEnd': () => void;
+    'checkEnd': () => Promise<void>;
     /**
     * This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as dirty any time the content or their style changes.  The subset of items to be updated can are specifing by an offset and a length.
     */
-    'checkRange': (offset: number, len?: number) => void;
+    'checkRange': (offset: number, len?: number) => Promise<void>;
     'domRender'?: DomRenderFn;
     /**
     * Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.

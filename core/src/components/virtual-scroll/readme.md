@@ -341,7 +341,7 @@ export default Example;
 
 ## Methods
 
-### `checkEnd() => void`
+### `checkEnd() => Promise<void>`
 
 This method marks the tail the items array as dirty, so they can be re-rendered.
 
@@ -357,7 +357,7 @@ Type: `Promise<void>`
 
 
 
-### `checkRange(offset: number, len?: number) => void`
+### `checkRange(offset: number, len?: number) => Promise<void>`
 
 This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as
 dirty any time the content or their style changes.

@@ -107,7 +107,7 @@ Type: `Promise<boolean>`
 
 
 
-### `registerAnimation(name: string, animation: AnimationBuilder) => void`
+### `registerAnimation(name: string, animation: AnimationBuilder) => Promise<void>`
 
 Registers a new animation that can be used in any `ion-menu`.
 
