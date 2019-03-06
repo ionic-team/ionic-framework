@@ -49,6 +49,9 @@ demos/src/**/*.ngfactory.ts
 demos/src/**/*.d.ts
 demos/src/**/*.metadata.json
 demos/src/**/*.css.shim.ts
+prerender.html
+prerender-hydrated.html
+prerender-static.html
 
 # stencil
 angular/css/
