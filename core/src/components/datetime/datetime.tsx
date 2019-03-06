@@ -359,9 +359,9 @@ export class Datetime implements ComponentInterface {
 
       // cool, we've loaded up the columns with options
       // preselect the option for this column
-      const optValue = parseInt(formatDateValue(this.value!, format));
-      console.log(this.value, format, optValue)
-      //getDateValue(this.datetimeValue, format);
+      const optValue = parseInt(formatDateValue(this.value!, format), 10);
+      console.log(this.value, format, optValue);
+      // getDateValue(this.datetimeValue, format);
 
       const selectedIndex = colOptions.findIndex(opt => opt.value === optValue);
 
@@ -531,7 +531,7 @@ export class Datetime implements ComponentInterface {
     // create the text of the formatted data
     const template = this.displayFormat || this.pickerFormat || DEFAULT_FORMAT;
     console.log(template, this.datetimeValue, this.locale
-    )
+    );
     return renderDatetime(template, this.datetimeValue, this.locale);
   }
 
