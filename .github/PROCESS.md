@@ -224,7 +224,6 @@ Hotfixes bypass `master` and should only be used for urgent fixes that can't wai
     - Verify the changelog commits are accurate and follow the [proper format]((https://github.com/ionic-team/ionic/blob/master/.github/CONTRIBUTING.md#commit-message-format))
     - Commit these changes with the version number as the message, e.g. `git commit -m "4.1.0"`
 1. Run `npm run release`
-1. Push your changes to git, using `git push` or the desktop app
 1. Click **Merge pull request**. Use the dropdown to select this option if necessary.
 
     <img width="191" alt="Merge pull request button" src="https://user-images.githubusercontent.com/236501/47032669-8be1b980-d138-11e8-9a90-d1518c223184.png">
