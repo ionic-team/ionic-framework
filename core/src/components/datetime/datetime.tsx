@@ -524,7 +524,7 @@ export class Datetime implements ComponentInterface {
     return 0;
   }
 
-  private getText() {
+  private getText(): string | undefined {
     // create the text of the formatted data
     const template = this.displayFormat || this.pickerFormat || DEFAULT_FORMAT;
     return formatDateValue(this.value!, template); // this.locale
