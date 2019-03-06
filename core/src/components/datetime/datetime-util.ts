@@ -1,3 +1,25 @@
+import { parseISO, format } from 'date-fns';
+
+export const formatDateValue = (date: string, formatString: string): string => {
+  const parsedISOString = parseISO(date);
+  return format(parsedISOString, cleanFormatString(formatString), { awareOfUnicodeTokens: true });
+};
+
+export const cleanFormatString = (formatString: string): string => {
+  const formatsToClean: any[][] = [
+    [/DD/g, 'dd'],
+    [/TZD/g, "XXX"],
+    [/T/g, "'T'"]
+  ]
+  
+  formatsToClean.forEach(format => {
+    formatString = formatString.replace(format[0], format[1]);
+  });
+  
+  const b = performance.now();
+  return formatString;
+}
+
 /**
  * Gets a date value given a format
  * Defaults to the current date if
@@ -365,9 +387,14 @@ export function convertDataToISO(data: DatetimeData): string {
 
           if (data.tzOffset === undefined) {
             // YYYY-MM-DDTHH:mm:SSZ
+            console.log('z is for zebra')
             rtn += 'Z';
 
           } else {
+            
+            const date = new Date();
+            data.tzOffset = date.getTimezoneOffset() * -1;
+            
             // YYYY-MM-DDTHH:mm:SS+/-HH:mm
             rtn += (data.tzOffset > 0 ? '+' : '-') + twoDigit(Math.floor(Math.abs(data.tzOffset / 60))) + ':' + twoDigit(data.tzOffset % 60);
           }
@@ -389,7 +416,7 @@ export function convertDataToISO(data: DatetimeData): string {
       }
     }
   }
-
+  console.log('formatted iso date',rtn)
   return rtn;
 }
 
