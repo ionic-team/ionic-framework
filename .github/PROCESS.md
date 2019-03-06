@@ -225,8 +225,8 @@ Hotfixes bypass `master` and should only be used for urgent fixes that can't wai
     - Commit these changes with the version number as the message, e.g. `git commit -m "4.1.0"`
 1. Run `npm run release`
 1. Push your changes to git, using `git push` or the desktop app
-1. Click **Squash and merge** to merge the pull request into `stable`. Use the dropdown to select this option if necessary.
+1. Click **Merge pull request**. Use the dropdown to select this option if necessary.
 
-    <img width="192" alt="Squash and merge button" src="https://user-images.githubusercontent.com/236501/47031620-da418900-d135-11e8-91ff-e84f2478b2b3.png">
+    <img width="191" alt="Merge pull request button" src="https://user-images.githubusercontent.com/236501/47032669-8be1b980-d138-11e8-9a90-d1518c223184.png">
 
 1. Squash and merge the release branch back into `master` to ensure any changes made on the release branch get added to future releases.
