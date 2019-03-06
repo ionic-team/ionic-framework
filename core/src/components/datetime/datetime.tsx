@@ -4,7 +4,7 @@ import { DatetimeChangeEventDetail, DatetimeOptions, Mode, PickerColumn, PickerC
 import { clamp, findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
-import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getDateValue, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
+import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, formatDateValue, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
 
 @Component({
   tag: 'ion-datetime',
@@ -359,7 +359,10 @@ export class Datetime implements ComponentInterface {
 
       // cool, we've loaded up the columns with options
       // preselect the option for this column
-      const optValue = getDateValue(this.datetimeValue, format);
+      const optValue = parseInt(formatDateValue(this.value!, format));
+      console.log(this.value, format, optValue)
+      //getDateValue(this.datetimeValue, format);
+
       const selectedIndex = colOptions.findIndex(opt => opt.value === optValue);
 
       return {
@@ -527,6 +530,8 @@ export class Datetime implements ComponentInterface {
   private getText() {
     // create the text of the formatted data
     const template = this.displayFormat || this.pickerFormat || DEFAULT_FORMAT;
+    console.log(template, this.datetimeValue, this.locale
+    )
     return renderDatetime(template, this.datetimeValue, this.locale);
   }
 

@@ -1,7 +1,28 @@
 import { DatetimeOptions } from '../datetime-interface';
 import { DatetimeData, getDateValue, generateTimeZoneAwareDate } from '../datetime-util';
 
+import { parseISO, format } from 'date-fns';
 describe('Datetime', () => {
+  describe('parseDateValue()', () => {
+    it.only('should parse a datetime string', () => {
+      const dateString = '1994-12-15T13:47:20.789+05:00';
+      const parsedISOString = parseISO(dateString);
+      const formattedDate = format(parsedISOString, 'MM');  
+      console.log(parsedISOString, formattedDate);
+/*
+      
+      const doParse = parse(dateString, 'YYYY-MM-DDTHH:mmZ', new Date(), { awareOfUnicodeTokens: true });
+      console.log('parsed',doParse);
+      
+      const doParseISO = parseISO(dateString);
+      console.log('parsed iso',doParseISO);
+      
+      const doFormat = format(doParse, 'MM');
+      console.log('did format',doFormat)
+*/
+    });
+  }); 
+/*
   describe('generateTimeZoneAwareDate()', () => {
     it('should generate a timezone aware UTC-like string', () => {
       const date = new Date("01 March 2019 15:32:05 GMT-0500 (Eastern Standard Time)");
@@ -40,4 +61,5 @@ describe('Datetime', () => {
       expect(yearValue).toEqual(date.getFullYear());
     });
   });
+*/
 });

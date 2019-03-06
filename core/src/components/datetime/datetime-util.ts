@@ -1,3 +1,9 @@
+import { parse } from 'date-fns';
+
+export const formatDateValue = (date: string, formatString: string): string => {
+  return parse(date, formatString, new Date());
+}
+
 /**
  * Gets a date value given a format
  * Defaults to the current date if

@@ -23,7 +23,12 @@
     <ion-content id="content" padding fullscreen>
       <f></f>
       <f></f>
-
+<ion-fab vertical="bottom" horizontal="end" edge slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add">
+      </ion-icon>
+    </ion-fab-button>
+  </ion-fab>
       <pre id="log" style="right:10px; bottom:50px; text-shadow: 0 0 2px rgba(0, 0, 0, 0.24);" slot="fixed">log</pre>
       <ion-button>Test</ion-button>
       <ion-fab-button disabled href="#path" onclick="throw 'no clickable'">FAB</ion-fab-button>
@@ -140,15 +145,39 @@
         </ion-fab-button>
       </ion-fab>
     </ion-content>
+    
+    <ion-tabs>
+    <ion-tab-bar slot="bottom">
+        <ion-tab-button href="" tab="tab-one" class="e2eTabOneButton">
+          <ion-label>Tab One</ion-label>
+          <ion-icon name="star"></ion-icon>
+        </ion-tab-button>
 
-    <ion-footer>
-      <ion-toolbar>
-        <ion-buttons slot="secondary">
-          <ion-button onclick="closeLists()">Close</ion-button>
-        </ion-buttons>
-        <ion-title>Footer</ion-title>
-      </ion-toolbar>
-    </ion-footer>
+        <ion-tab-button tab="schedule" class="e2eTabTwoButton">
+          <ion-label>Tab Two</ion-label>
+          <ion-icon name="globe"></ion-icon>
+          <ion-badge color="danger">6</ion-badge>
+        </ion-tab-button>
+
+        <ion-tab-button tab="tab-three" class="e2eTabThreeButton" disabled>
+          <ion-label>Tab Three</ion-label>
+          <ion-icon name="logo-facebook"></ion-icon>
+          <ion-badge color="primary">6</ion-badge>
+        </ion-tab-button>
+
+        <ion-tab-button tab="hidden-tab" hidden>
+          <ion-label>Hidden</ion-label>
+          <ion-icon name="alert"></ion-icon>
+        </ion-tab-button>
+
+        <ion-tab-button tab="tab-four" class="e2eTabFourButton">
+          <ion-label>Tab Four</ion-label>
+          <ion-icon name="chatboxes"></ion-icon>
+        </ion-tab-button>
+
+      </ion-tab-bar>
+    </ion-tabs>
+
 
     <script>
       function insertAfter(el, referenceNode) {
