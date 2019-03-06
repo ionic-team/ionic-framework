@@ -1,7 +1,7 @@
 // import { parse } from 'date-fns';
 
 export const formatDateValue = (date: string, formatString: string): string => {
-  console.log(formatString)
+  console.log(formatString);
   return date;
   // return parse(date, formatString, new Date());
 };
