@@ -3332,6 +3332,10 @@ export namespace Components {
     */
     'step': number;
     /**
+    * If `false`, tick marks are not displayed. Only applies when `snaps` is `true`.
+    */
+    'ticks': boolean;
+    /**
     * the value of the range.
     */
     'value': RangeValue;
@@ -3393,6 +3397,10 @@ export namespace Components {
     * Specifies the value granularity.
     */
     'step'?: number;
+    /**
+    * If `false`, tick marks are not displayed. Only applies when `snaps` is `true`.
+    */
+    'ticks'?: boolean;
     /**
     * the value of the range.
     */
