@@ -122,7 +122,12 @@ export class Item implements ComponentInterface {
   }
 
   private isClickable(): boolean {
-    return (this.href !== undefined || this.button);
+    const attributeNames = this.el.getAttributeNames();
+    let hasClick = false;
+    if(attributeNames){
+      hasClick = this.el.getAttributeNames().some(v => ["click", "(click)", "onclick", "(onclick)"].includes(v));
+    }
+    return (this.href !== undefined || this.button || hasClick);
   }
 
   hostData() {
