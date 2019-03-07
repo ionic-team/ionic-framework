@@ -4,7 +4,7 @@ import { DatetimeChangeEventDetail, DatetimeOptions, Mode, PickerColumn, PickerC
 import { clamp, findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
-import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, formatDateValue, parseDate, parseTemplate, renderTextFormat, updateDate } from './datetime-util';
+import { DatetimeData, LocaleData, convertDataToISO, convertFormatStringToNumerical, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, formatDateValue, parseDate, parseTemplate, renderTextFormat, updateDate } from './datetime-util';
 
 @Component({
   tag: 'ion-datetime',
@@ -312,11 +312,7 @@ export class Datetime implements ComponentInterface {
             const date = new Date();
             this.datetimeValue.tzOffset = date.getTimezoneOffset() * -1;
 
-            console.log('TZ offset', date.getTimezoneOffset());
-
             this.value = convertDataToISO(this.datetimeValue);
-
-            console.log('new value', this.value);
           }
         }
       ];
@@ -361,15 +357,19 @@ export class Datetime implements ComponentInterface {
 
       const colOptions = values.map(val => {
         return {
-          value: val,
+          value: val.toString(),
           text: renderTextFormat(format, val, undefined, this.locale),
         };
       });
 
       // cool, we've loaded up the columns with options
       // preselect the option for this column
-      const optValue = parseInt(formatDateValue(this.value!, format), 10);
-      const selectedIndex = colOptions.findIndex(opt => opt.value === optValue);
+      const cleanedFormat = convertFormatStringToNumerical(format);
+      const optValue = formatDateValue(this.value!, cleanedFormat);
+
+      const selectedIndex = colOptions.findIndex(opt => {
+        return opt.value === optValue;
+      });
 
       return {
         name: key,

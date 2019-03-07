@@ -1,19 +1,6 @@
 import { format as formatDate, parseISO } from 'date-fns';
 
-export const formatDateValue = (date = '', formatString: string): string => {
-  const dateString = (date.length > 0) ? date : new Date().toISOString();
-  const parsedISOString = parseISO(dateString);
-  return formatDate(parsedISOString, cleanFormatString(formatString));
-};
-
-export const cleanFormatString = (formatString: string): string => {
-  const formatsToClean: any[][] = [
-    [/DD/g, 'dd'],
-    [/TZD/g, 'XXX'],
-    [/T/g, '\'T\''],
-    [/YYYY/g, 'yyyy']
-  ];
-
+const cleanFormatString = (formatString: string, formatsToClean: any[][] = []): string => {
   formatsToClean.forEach(formatToClean => {
     formatString = formatString.replace(formatToClean[0], formatToClean[1]);
   });
@@ -21,19 +8,38 @@ export const cleanFormatString = (formatString: string): string => {
   return formatString;
 };
 
-/**
- * Gets a date value given a format
- * Defaults to the current date if
- * no date given
- */
-export function getDateValue(date: DatetimeData, format: string): number {
-  const getValue = getValueFromFormat(date, format);
+export const convertFormatStringToNumerical = (formatString: string): string => {
+  return cleanFormatString(
+    formatString,
+    [
+      [/(DDDD|DDD)/g, 'D'],
+      [/(MMMM|MMM)/g, 'M'],
+      [/mm/g, 'm'],
+      [/ss/g, 's'],
+      [/HH/g, 'H'],
+      [/hh/g, 'h']
+    ]
+  );
+};
 
-  if (getValue) { return getValue; }
+export const convertFormatStringToUnicodeTokens = (formatString: string): string => {
+  return cleanFormatString(
+    formatString,
+    [
+      [/TZD/g, 'XXX'],
+      [/D/g, 'd'],
+      [/T/g, '\'T\''],
+      [/Y/g, 'y']
+    ]
+  );
+};
 
-  const defaultDate = parseDate(new Date().toISOString());
-  return getValueFromFormat((defaultDate as DatetimeData), format);
-}
+export const formatDateValue = (date = '', formatString: string): string => {
+  const dateString = (date.length > 0) ? date : new Date().toISOString();
+
+  const parsedISOString = parseISO(dateString);
+  return formatDate(parsedISOString, convertFormatStringToUnicodeTokens(formatString));
+};
 
 export function renderDatetime(template: string, value: DatetimeData | undefined, locale: LocaleData): string | undefined {
   if (value === undefined) {
