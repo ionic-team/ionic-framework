@@ -56,14 +56,36 @@
 .button-inner {
   display: flex;
 
-  flex-direction: column;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
 
   width: 100%;
   height: 100%;
+}
+
+.horizontal-wrapper {
+  display: flex;
+
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+}
+
+::slotted(*) {
+  flex-shrink: 0;
+}
+
+::slotted([slot="start"]) {
+  @include margin(0, 5px, 0, 0);
+}
+
+::slotted([slot="end"]) {
+  @include margin(0, 0, 0, 5px);
 }
 
 ::slotted([slot="icon-only"]) {
