@@ -386,13 +386,9 @@ export function convertDataToISO(data: DatetimeData): string {
 
           if (data.tzOffset === undefined) {
             // YYYY-MM-DDTHH:mm:SSZ
-            console.log('z is for zebra');
             rtn += 'Z';
 
           } else {
-
-            const date = new Date();
-            data.tzOffset = date.getTimezoneOffset() * -1;
 
             // YYYY-MM-DDTHH:mm:SS+/-HH:mm
             rtn += (data.tzOffset > 0 ? '+' : '-') + twoDigit(Math.floor(Math.abs(data.tzOffset / 60))) + ':' + twoDigit(data.tzOffset % 60);

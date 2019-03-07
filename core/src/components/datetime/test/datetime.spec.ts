@@ -17,7 +17,7 @@ describe('Datetime', () => {
       })
     });
   });
-/*
+
   describe('formatDateValue()', () => {
     it('should properly format dates according to time zone and format string', () => {
       const dateFormats = [
@@ -30,7 +30,6 @@ describe('Datetime', () => {
       })
     });
   });
-*/
   describe('getDateValue()', () => {
     it('it should return the date value for the current day', () => {
       const today = new Date();

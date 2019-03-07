@@ -307,6 +307,11 @@ export class Datetime implements ComponentInterface {
           text: this.doneText,
           handler: (data: any) => {
             this.updateDatetimeValue(data);
+
+            // this is a hack
+            const date = new Date();
+            this.datetimeValue.tzOffset = date.getTimezoneOffset() * -1;
+
             this.value = convertDataToISO(this.datetimeValue);
           }
         }
