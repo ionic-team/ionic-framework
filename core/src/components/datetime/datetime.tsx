@@ -312,7 +312,11 @@ export class Datetime implements ComponentInterface {
             const date = new Date();
             this.datetimeValue.tzOffset = date.getTimezoneOffset() * -1;
 
+            console.log('TZ offset', date.getTimezoneOffset());
+
             this.value = convertDataToISO(this.datetimeValue);
+
+            console.log('new value', this.value);
           }
         }
       ];
@@ -532,6 +536,7 @@ export class Datetime implements ComponentInterface {
   private getText(): string | undefined {
     // create the text of the formatted data
     const template = this.displayFormat || this.pickerFormat || DEFAULT_FORMAT;
+
     return formatDateValue(this.value!, template); // this.locale
   }
 

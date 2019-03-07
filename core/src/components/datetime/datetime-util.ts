@@ -1,7 +1,8 @@
 import { format as formatDate, parseISO } from 'date-fns';
 
-export const formatDateValue = (date: string, formatString: string): string => {
-  const parsedISOString = parseISO(date);
+export const formatDateValue = (date = '', formatString: string): string => {
+  const dateString = (date.length > 0) ? date : new Date().toISOString();
+  const parsedISOString = parseISO(dateString);
   return formatDate(parsedISOString, cleanFormatString(formatString));
 };
 
@@ -25,13 +26,13 @@ export const cleanFormatString = (formatString: string): string => {
  * Defaults to the current date if
  * no date given
  */
-export function getDateValue(date: DatetimeData, formatString: string): number {
-  const getValue = getValueFromFormat(date, formatString);
+export function getDateValue(date: DatetimeData, format: string): number {
+  const getValue = getValueFromFormat(date, format);
 
   if (getValue) { return getValue; }
 
   const defaultDate = parseDate(new Date().toISOString());
-  return getValueFromFormat((defaultDate as DatetimeData), formatString);
+  return getValueFromFormat((defaultDate as DatetimeData), format);
 }
 
 export function renderDatetime(template: string, value: DatetimeData | undefined, locale: LocaleData): string | undefined {
