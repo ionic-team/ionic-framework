@@ -2,14 +2,15 @@ import { format as formatDate, parseISO } from 'date-fns';
 
 export const formatDateValue = (date: string, formatString: string): string => {
   const parsedISOString = parseISO(date);
-  return formatDate(parsedISOString, cleanFormatString(formatString), { awareOfUnicodeTokens: true });
+  return formatDate(parsedISOString, cleanFormatString(formatString));
 };
 
 export const cleanFormatString = (formatString: string): string => {
   const formatsToClean: any[][] = [
     [/DD/g, 'dd'],
     [/TZD/g, 'XXX'],
-    [/T/g, '\'T\'']
+    [/T/g, '\'T\''],
+    [/YYYY/g, 'yyyy']
   ];
 
   formatsToClean.forEach(formatToClean => {
@@ -411,7 +412,7 @@ export function convertDataToISO(data: DatetimeData): string {
       }
     }
   }
-  console.log('formatted iso date', rtn);
+
   return rtn;
 }
 
