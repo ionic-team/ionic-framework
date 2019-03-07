@@ -37,20 +37,9 @@
   box-sizing: border-box;
 }
 
-:host(:focus) {
-  outline: none;
-}
 
-:host(:focus) {
-  --background: rgba(0, 0, 0, .16);
-}
-
-:host(.activated) {
-  --background: rgba(0, 0, 0, .20);
-}
-
-
-// Colors
+// Chip Colors
+// ---------------------------------------------
 
 :host(.ion-color) {
   background: current-color(base, .08);
@@ -66,17 +55,18 @@
 }
 
 
-// Outline
+// Outline Chip
+// ---------------------------------------------
 
 :host(.chip-outline) {
   border-width: 1px;
   border-style: solid;
 }
 
-:host(.chip-outline:not(.ion-color)) {
-  border-color: rgba(0, 0, 0, .32);
-
+:host(.chip-outline) {
   background: transparent;
+
+  border-color: rgba(0, 0, 0, .32);
 }
 
 :host(.chip-outline.ion-color) {
@@ -92,7 +82,8 @@
 }
 
 
-// Icon
+// Chip Icon
+// ---------------------------------------------
 
 ::slotted(ion-icon) {
   font-size: 20px;
@@ -111,7 +102,8 @@
 }
 
 
-// Avatar
+// Chip Avatar
+// ---------------------------------------------
 
 ::slotted(ion-avatar) {
   width: 24px;
@@ -127,7 +119,28 @@
 }
 
 
-// Hover
+// Chip: Focus
+// ---------------------------------------------
+
+:host(:focus) {
+  outline: none;
+}
+
+:host(:focus) {
+  --background: rgba(0, 0, 0, .16);
+}
+
+
+// Chip: Activated
+// ---------------------------------------------
+
+:host(.activated) {
+  --background: rgba(0, 0, 0, .20);
+}
+
+
+// Chip: Hover
+// ---------------------------------------------
 
 @media (any-hover: hover) {
   :host(:hover) {
