@@ -42,6 +42,11 @@ export class Checkbox implements ComponentInterface {
   @Prop({ mutable: true }) checked = false;
 
   /**
+   * If `true`, the checkbox will visually appear as indeterminate.
+   */
+  @Prop({ mutable: true }) indeterminate = false;
+
+  /**
    * If `true`, the user cannot interact with the checkbox.
    */
   @Prop() disabled = false;
@@ -101,6 +106,7 @@ export class Checkbox implements ComponentInterface {
   onClick() {
     this.setFocus();
     this.checked = !this.checked;
+    this.indeterminate = false;
   }
 
   private setFocus() {
@@ -134,6 +140,7 @@ export class Checkbox implements ComponentInterface {
         'in-item': hostContext('ion-item', el),
         'checkbox-checked': checked,
         'checkbox-disabled': disabled,
+        'checkbox-indeterminate': this.indeterminate,
         'interactive': true
       }
     };
@@ -142,12 +149,19 @@ export class Checkbox implements ComponentInterface {
   render() {
     renderHiddenInput(true, this.el, this.name, (this.checked ? this.value : ''), this.disabled);
 
+    let path = this.indeterminate
+      ? <path d="M6 12L18 12"/>
+      : <path d="M5.9,12.5l3.8,3.8l8.8-8.8" />;
+
+    if (this.mode === 'md') {
+      path = this.indeterminate
+        ? <path d="M2 12H22"/>
+        : <path d="M1.73,12.91 8.1,19.28 22.79,4.59"/>;
+    }
+
     return [
       <svg class="checkbox-icon" viewBox="0 0 24 24">
-        { this.mode === 'md'
-          ? <path d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
-          : <path d="M5.9,12.5l3.8,3.8l8.8-8.8"/>
-        }
+        {path}
       </svg>,
       <button
         type="button"

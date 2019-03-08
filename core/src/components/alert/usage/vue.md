@@ -1,4 +1,4 @@
-```vue
+```html
 <template>
   <IonVuePage :title="'Alert'">
     <ion-button @click="presentAlert">Show Alert</ion-button>
