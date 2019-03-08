@@ -38,6 +38,8 @@
   @include text-inherit();
   @include padding(0, .7em);
 
+  display: inline-block;
+
   position: relative;
 
   width: 100%;
@@ -51,6 +53,8 @@
 
   cursor: pointer;
   appearance: none;
+
+  box-sizing: border-box;
 }
 
 .button-inner {
