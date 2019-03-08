@@ -12,7 +12,6 @@ export function getDateValue(date: DatetimeData, format: string): number {
   return getValueFromFormat((defaultDate as DatetimeData), format);
 }
 
-
 export function renderDatetime(template: string, value: DatetimeData | undefined, locale: LocaleData): string | undefined {
   if (value === undefined) {
     return undefined;
@@ -246,34 +245,36 @@ export function parseDate(val: string | undefined | null): DatetimeData | undefi
  * Converts a valid UTC datetime string
  * To the user's local timezone
  * Note: This is not meant for time strings
- * such as "01:47" 
+ * such as "01:47"
  */
-export const getLocalDateTime = (dateString: string): Date => {
-  const date = (dateString) ? new Date(dateString) : new Date();
+export const getLocalDateTime = (dateString = ''): Date => {
+  const date = (dateString.length > 0) ? new Date(dateString) : new Date();
 
   return new Date(
     Date.UTC(
       date.getFullYear(),
-  		date.getMonth(),
-  		date.getDate(),
-  		date.getHours(),
-  		date.getMinutes(),
-  		date.getSeconds(),
-  		date.getMilliseconds()
+      date.getMonth(),
+      date.getDate(),
+      date.getHours(),
+      date.getMinutes(),
+      date.getSeconds(),
+      date.getMilliseconds()
     )
   );
-}
+};
 
 export function updateDate(existingData: DatetimeData, newData: any): boolean {
-  
+
   if (!newData || typeof newData === 'string') {
     const localDateTime = getLocalDateTime(newData);
     try {
-      const toISO = localDateTime.toISOString()
+      const toISO = localDateTime.toISOString();
       newData = toISO;
-    } catch(err) {}
+    } catch (err) {
+      //
+    }
   }
-  
+
   if (newData && newData !== '') {
 
     if (typeof newData === 'string') {
