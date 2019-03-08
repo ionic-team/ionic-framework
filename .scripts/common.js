@@ -37,8 +37,8 @@ function checkGit(tasks) {
     {
       title: 'Check current branch',
       task: () => execa.stdout('git', ['symbolic-ref', '--short', 'HEAD']).then(branch => {
-        if (branch !== 'master') {
-          throw new Error(`Not on "master" branch`);
+        if (branch.indexOf('release') === -1 && branch.indexOf('hotfix') === -1) {
+          throw new Error(`Must be on a "release" or "hotfix" branch.`);
         }
       })
     },
