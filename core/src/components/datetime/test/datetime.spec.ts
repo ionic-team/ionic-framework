@@ -1,4 +1,4 @@
-import { DatetimeData, getDateValue } from '../datetime-util';
+import { DatetimeData, getDateValue, getLocalDateTime } from '../datetime-util';
 
 describe('Datetime', () => {
   describe('getDateValue()', () => {
@@ -29,6 +29,22 @@ describe('Datetime', () => {
       expect(dayValue).toEqual(date.getDate());
       expect(monthvalue).toEqual(date.getMonth() + 1);
       expect(yearValue).toEqual(date.getFullYear());
+    });
+  });
+  
+  describe('getLocalDateTime()', () => {
+    it.only('should format a datetime string according to the local timezone', () => {
+      const hour = 12;
+      const paddedHour = hour.toString().padStart(2, '0');
+      
+      const timeZoneOffset = new Date().getTimezoneOffset() / 60;
+      const hourOffset = (hour - timeZoneOffset).toString().padStart(2, '0');
+      
+      const dateString = `2019-03-02T${paddedHour}:08:06.601-00:00`;
+      const expectedDateString = `2019-03-02T${hourOffset}:08:06.601Z`;
+      
+      const convertToLocal = getLocalDateTime(dateString).toISOString();
+      expect(convertToLocal).toEqual(expectedDateString);
     });
   });
 });
