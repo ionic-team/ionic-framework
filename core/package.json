@@ -45,7 +45,6 @@
     "aws-sdk": "^2.320.0",
     "chromedriver": "^2.38.3",
     "clean-css-cli": "^4.1.11",
-    "date-fns": "^2.0.0-alpha.27",
     "fs-extra": "^7.0.0",
     "jest": "23.6.0",
     "jest-cli": "23.6.0",

@@ -1,45 +1,17 @@
-import { format as formatDate, parseISO } from 'date-fns';
+/**
+ * Gets a date value given a format
+ * Defaults to the current date if
+ * no date given
+ */
+export function getDateValue(date: DatetimeData, format: string): number {
+  const getValue = getValueFromFormat(date, format);
 
-const cleanFormatString = (formatString: string, formatsToClean: any[][] = []): string => {
-  formatsToClean.forEach(formatToClean => {
-    formatString = formatString.replace(formatToClean[0], formatToClean[1]);
-  });
+  if (getValue) { return getValue; }
 
-  return formatString;
-};
+  const defaultDate = parseDate(new Date().toISOString());
+  return getValueFromFormat((defaultDate as DatetimeData), format);
+}
 
-export const convertFormatStringToNumerical = (formatString: string): string => {
-  return cleanFormatString(
-    formatString,
-    [
-      [/(DDDD|DDD)/g, 'D'],
-      [/(MMMM|MMM)/g, 'M'],
-      [/mm/g, 'm'],
-      [/ss/g, 's'],
-      [/HH/g, 'H'],
-      [/hh/g, 'h']
-    ]
-  );
-};
-
-export const convertFormatStringToUnicodeTokens = (formatString: string): string => {
-  return cleanFormatString(
-    formatString,
-    [
-      [/TZD/g, 'XXX'],
-      [/D/g, 'd'],
-      [/T/g, '\'T\''],
-      [/Y/g, 'y']
-    ]
-  );
-};
-
-export const formatDateValue = (date = '', formatString: string): string => {
-  const dateString = (date.length > 0) ? date : new Date().toISOString();
-
-  const parsedISOString = parseISO(dateString);
-  return formatDate(parsedISOString, convertFormatStringToUnicodeTokens(formatString));
-};
 
 export function renderDatetime(template: string, value: DatetimeData | undefined, locale: LocaleData): string | undefined {
   if (value === undefined) {
@@ -270,7 +242,38 @@ export function parseDate(val: string | undefined | null): DatetimeData | undefi
   };
 }
 
+/**
+ * Converts a valid UTC datetime string
+ * To the user's local timezone
+ * Note: This is not meant for time strings
+ * such as "01:47" 
+ */
+export const getLocalDateTime = (dateString: string): Date => {
+  const date = (dateString) ? new Date(dateString) : new Date();
+
+  return new Date(
+    Date.UTC(
+      date.getFullYear(),
+  		date.getMonth(),
+  		date.getDate(),
+  		date.getHours(),
+  		date.getMinutes(),
+  		date.getSeconds(),
+  		date.getMilliseconds()
+    )
+  );
+}
+
 export function updateDate(existingData: DatetimeData, newData: any): boolean {
+  
+  if (!newData || typeof newData === 'string') {
+    const localDateTime = getLocalDateTime(newData);
+    try {
+      const toISO = localDateTime.toISOString()
+      newData = toISO;
+    } catch(err) {}
+  }
+  
   if (newData && newData !== '') {
 
     if (typeof newData === 'string') {
