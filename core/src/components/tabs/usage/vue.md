@@ -1,6 +1,7 @@
 ```html
 <template>
-  <ion-tabs>
+  <!-- Listen to before and after tab change events -->
+  <ion-tabs @IonTabsWillChange="beforeTabChange" @IonTabsDidChange="afterTabChange">
     <ion-tab tab="schedule">
       <Schedule />
     </ion-tab>
