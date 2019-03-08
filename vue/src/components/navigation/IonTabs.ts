@@ -1,13 +1,17 @@
 import Vue, { CreateElement, RenderContext, VNode } from 'vue';
 import { Route } from 'vue-router';
 
+interface EventListeners {
+  [key: string]: Function | Function[];
+}
+
 const tabBars = [] as VNode[];
 const cachedTabs = [] as VNode[];
 
 export default {
   name: 'IonTabs',
   functional: true,
-  render(h: CreateElement, { parent, data, slots }: RenderContext) {
+  render(h: CreateElement, { parent, data, slots, listeners }: RenderContext) {
     const renderQueue = [] as VNode[];
     const postRenderQueue = [] as VNode[];
     const route = parent.$route;
@@ -84,15 +88,15 @@ export default {
 
     // Render
     return h('div', { ...data, style: hostStyles }, [
-      parseSlot(slots().top, selectedTab),
+      parseSlot(slots().top, selectedTab, listeners),
       h('div', { class: 'tabs-inner', style: tabsInner }, renderQueue),
-      parseSlot(slots().bottom, selectedTab),
+      parseSlot(slots().bottom, selectedTab, listeners),
     ]);
   }
 };
 
 // Search for ion-tab-bar in VNode array
-function parseSlot(slot: VNode[], tab: string): VNode[] {
+function parseSlot(slot: VNode[], tab: string, listeners: EventListeners): VNode[] {
   const vnodes = [] as VNode[];
 
   if (!slot) {
@@ -100,14 +104,16 @@ function parseSlot(slot: VNode[], tab: string): VNode[] {
   }
 
   for (const vnode of slot) {
-    vnodes.push(vnode.tag && vnode.tag.match(/ion-tab-bar$/) ? parseTabBar(vnode, tab) : vnode);
+    vnodes.push(vnode.tag && vnode.tag.match(/ion-tab-bar$/) ? parseTabBar(vnode, tab, listeners) : vnode);
   }
 
   return vnodes;
 }
 
 // Set selected tab attribute and click handlers
-function parseTabBar(vnode: VNode, tab: string): VNode {
+function parseTabBar(vnode: VNode, tab: string, listeners: EventListeners): VNode {
+  const { IonTabsWillChange, IonTabsDidChange } = listeners;
+
   if (!vnode.data) {
     vnode.data = {
       attrs: {
@@ -129,10 +135,23 @@ function parseTabBar(vnode: VNode, tab: string): VNode {
           Object.assign(child.data, {
             on: {
               click: (e: Event) => {
-                const url = (child.elm as HTMLIonTabButtonElement).tab || '/';
-                const route = hasDataAttr(child, 'to') ? child.data!.attrs!.to : url;
+                const path = (child.elm as HTMLIonTabButtonElement).tab || '/';
+                const route = hasDataAttr(child, 'to') ? child.data!.attrs!.to : { path };
                 e.preventDefault();
-                vnode.context!.$router.push(route);
+
+                if (Array.isArray(IonTabsWillChange)) {
+                  IonTabsWillChange.map(item => item(route));
+                } else if (IonTabsWillChange) {
+                  IonTabsWillChange(route);
+                }
+
+                vnode.context!.$router.push(route, () => {
+                  if (Array.isArray(IonTabsDidChange)) {
+                    IonTabsDidChange.map(item => item(route));
+                  } else if (IonTabsDidChange) {
+                    IonTabsDidChange(route);
+                  }
+                });
               }
             }
           });
