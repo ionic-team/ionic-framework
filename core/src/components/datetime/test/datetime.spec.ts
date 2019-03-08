@@ -1,4 +1,4 @@
-import { DatetimeData, getDateValue, getLocalDateTime } from '../datetime-util';
+import { DatetimeData, getDateValue } from '../datetime-util';
 
 describe('Datetime', () => {
   describe('getDateValue()', () => {
