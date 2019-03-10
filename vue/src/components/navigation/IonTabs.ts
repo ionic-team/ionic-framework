@@ -131,30 +131,35 @@ function parseTabBar(vnode: VNode, tab: string, listeners: EventListeners): VNod
   if (vnode.children) {
     for (const child of vnode.children) {
       if (child.tag && child.tag === 'ion-tab-button') {
-        if (!child.data || !child.data.on || !child.data.on.click) {
-          Object.assign(child.data, {
-            on: {
-              click: (e: Event) => {
-                const path = (child.elm as HTMLIonTabButtonElement).tab || '/';
-                const route = hasDataAttr(child, 'to') ? child.data!.attrs!.to : { path };
-                e.preventDefault();
+        const clickHandler = (e: Event) => {
+          const path = (child.elm as HTMLIonTabButtonElement).tab || '/';
+          const route = hasDataAttr(child, 'to') ? child.data!.attrs!.to : { path };
+          e.preventDefault();
 
-                if (Array.isArray(IonTabsWillChange)) {
-                  IonTabsWillChange.map(item => item(route));
-                } else if (IonTabsWillChange) {
-                  IonTabsWillChange(route);
-                }
+          if (Array.isArray(IonTabsWillChange)) {
+            IonTabsWillChange.map(item => item(route));
+          } else if (IonTabsWillChange) {
+            IonTabsWillChange(route);
+          }
 
-                vnode.context!.$router.push(route, () => {
-                  if (Array.isArray(IonTabsDidChange)) {
-                    IonTabsDidChange.map(item => item(route));
-                  } else if (IonTabsDidChange) {
-                    IonTabsDidChange(route);
-                  }
-                });
-              }
+          vnode.context!.$router.push(route, () => {
+            if (Array.isArray(IonTabsDidChange)) {
+              IonTabsDidChange.map(item => item(route));
+            } else if (IonTabsDidChange) {
+              IonTabsDidChange(route);
             }
           });
+        };
+
+        if (!child.data || !child.data.on || !child.data.on.click) {
+          Object.assign(child.data, { on: { click: clickHandler } });
+        } else if (child.data.on.click) {
+          // Always push our click handler to end of array
+          if (Array.isArray(child.data.on.click)) {
+            child.data.on.click.push(clickHandler);
+          } else {
+            child.data.on.click = [child.data.on.click as Function, clickHandler];
+          }
         }
       }
     }
