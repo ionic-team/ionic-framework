@@ -1,4 +1,4 @@
-```vue
+```html
 <template>
   <IonVuePage :title="'Loading'">
     <ion-button @click="presentLoading">Show Loading</ion-button>
