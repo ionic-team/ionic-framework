@@ -1,160 +1,115 @@
 import { testUserAgent, getPlatforms, isPlatform } from '../platform';
+import { PlatformConfiguration, configureBrowser } from './platform.utils';
 
-enum PlatformConfiguration {
-  AndroidTablet = {
-    navigator: {
-      userAgent: 'Mozilla/5.0 (Linux; Android 7.0; Pixel C Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/52.0.2743.98 Safari/537.36'
-    },
-    innerWidth: 800,
-    innerHeight: 1200
-  },
-  Capacitor = {
-    Capacitor: {
-      isNative: true
-    }
-  },
-  Cordova = {
-    cordova: true
-  },
-  DesktopSafari = {
-    navigator: {
-      userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9'
-    },
-    innerWidth: 1920,
-    innerHeight: 1080
-  },
-  iPhone = {
-    navigator: {
-      userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Mobile/15E148 Safari/604.1'
-    },
-    innerWidth: 375,
-    innerHeight: 812
-  },
-  iPadPro = {
-    navigator: {
-      userAgent: 'Mozilla/5.0 (iPad; CPU OS 12_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Mobile/15E148 Safari/604.1'
-    },
-    innerWidth: 1024,
-    innerHeight: 1366
-  },
-  Pixel2XL = {
-    navigator: {
-      userAgent: 'Mozilla/5.0 (Linux; Android 8.0.0; Pixel 2 XL Build/OPD1.170816.004) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Mobile Safari/537.36'
-    },
-    innerWidth: 411,
-    innerHeight: 823
-  },
-  GalaxyView = {
-    navigator: {
-      userAgent: 'Mozilla/5.0 (Linux; Android 5.1.1; SM-T670 Build/LMY47X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36'
-    },
-    innerWidth: 1920,
-    innerHeight: 1080
-  }
-}
-
-describe('Platform Tests', () => {
-  /**
-   * The `window` object is not reset
-   * after each test, so we need to do
-   * that manually otherwise tests will
-   * interefere with each other
-   */
-   
-  let sharedWindow;
-  beforeEach(() => {
-    sharedWindow = Object.create(window);
-  });
-  
+describe('Platform Tests', () => {  
   describe('testUserAgent()', () => {
     it('should return true when testing if user agent is an iPhone', () => {
-      configureBrowser(sharedWindow, PlatformConfiguration.iPhone);
-      expect(testUserAgent(sharedWindow, /iPhone/)).toEqual(true);
+      const window = configureBrowser(PlatformConfiguration.iPhone);
+      expect(testUserAgent(window, /iPhone/)).toEqual(true);
     })
     
     it('should return false when testing if user agent is an iPad', () => {
-      configureBrowser(sharedWindow, PlatformConfiguration.iPhone);
-      expect(testUserAgent(sharedWindow, /iPad/)).toEqual(false);
+      const window = configureBrowser(PlatformConfiguration.iPhone);
+      expect(testUserAgent(window, /iPad/)).toEqual(false);
     })
     
     it('should return false when testing if user agent is an Android', () => {
-     configureBrowser(sharedWindow, PlatformConfiguration.iPhone);
-      expect(testUserAgent(sharedWindow, /android|sink/i)).toEqual(false);
+      const window = configureBrowser(PlatformConfiguration.iPhone);
+      expect(testUserAgent(window, /android|sink/i)).toEqual(false);
     })
     
     it('should return true when testing if user agent is an Android', () => {
-      configureBrowser(sharedWindow, PlatformConfiguration.AndroidTablet);
-      expect(testUserAgent(sharedWindow, /android|sink/i)).toEqual(true);
+      const window = configureBrowser(PlatformConfiguration.AndroidTablet);
+      expect(testUserAgent(window, /android|sink/i)).toEqual(true);
     })
   });
   
   describe('getPlatforms()', () => {
     it('should contain "desktop" platform', () => {
-      configureBrowser(sharedWindow, PlatformConfiguration.DesktopSafari);    
-      expect(getPlatforms(sharedWindow)).toContain('desktop');
+      const window = configureBrowser(PlatformConfiguration.DesktopSafari);    
+      expect(getPlatforms(window)).toContain('desktop');
     });
     
     it('should contain "android" and "tablet" platforms', () => {
-      configureBrowser(sharedWindow, PlatformConfiguration.AndroidTablet);
+      const window = configureBrowser(PlatformConfiguration.AndroidTablet);
       
-      const platforms = getPlatforms(sharedWindow);
+      const platforms = getPlatforms(window);
       expect(platforms).toContain('android');
       expect(platforms).toContain('tablet');
     })
     
     it('should contain "capacitor" platform', () => {
-      configureBrowser(sharedWindow, PlatformConfiguration.Capacitor);    
-      expect(getPlatforms(sharedWindow)).toContain('capacitor');
+      const window = configureBrowser(PlatformConfiguration.Capacitor);    
+      expect(getPlatforms(window)).toContain('capacitor');
     })
   });
   
   describe('isPlatform()', () => {
     it('should return true for "capacitor" and "hybrid" in a Capacitor app', () => {
-      configureBrowser(sharedWindow, PlatformConfiguration.Capacitor);    
-      expect(isPlatform(sharedWindow, 'capacitor')).toEqual(true);
-      expect(isPlatform(sharedWindow, 'hybrid')).toEqual(true);
+      const window = configureBrowser(PlatformConfiguration.Capacitor);    
+      expect(isPlatform(window, 'capacitor')).toEqual(true);
+      expect(isPlatform(window, 'hybrid')).toEqual(true);
     });
     
-    it('should return false for "capacitor" on desktop safari', () => {
-      configureBrowser(sharedWindow, PlatformConfiguration.DesktopSafari);    
-      expect(isPlatform(sharedWindow, 'capacitor')).toEqual(false);
+    it('should return false for "capacitor" and true for "desktop" on desktop safari', () => {
+      const window = configureBrowser(PlatformConfiguration.DesktopSafari);    
+      expect(isPlatform(window, 'capacitor')).toEqual(false);
+      expect(isPlatform(window, 'desktop')).toEqual(true);
     });
     
     it('should return true for "android" and "tablet" on an android tablet', () => {
-      configureBrowser(sharedWindow, PlatformConfiguration.AndroidTablet);    
-      expect(isPlatform(sharedWindow, 'android')).toEqual(true);
-      expect(isPlatform(sharedWindow, 'tablet')).toEqual(true);
+      const window = configureBrowser(PlatformConfiguration.AndroidTablet);    
+      expect(isPlatform(window, 'android')).toEqual(true);
+      expect(isPlatform(window, 'tablet')).toEqual(true);
     });
     
     it('should return true for "cordova" and "hybrid" in a Cordova app', () => {
-      configureBrowser(sharedWindow, PlatformConfiguration.Cordova);    
-      expect(isPlatform(sharedWindow, 'cordova')).toEqual(true);
-      expect(isPlatform(sharedWindow, 'hybrid')).toEqual(true);
+      const window = configureBrowser(PlatformConfiguration.Cordova);    
+      expect(isPlatform(window, 'cordova')).toEqual(true);
+      expect(isPlatform(window, 'hybrid')).toEqual(true);
     });
     
     it('should return true for "ipad" and "tablet" on an iPad Pro', () => {
-      configureBrowser(sharedWindow, PlatformConfiguration.iPadPro);    
-      expect(isPlatform(sharedWindow, 'ipad')).toEqual(true);
-      expect(isPlatform(sharedWindow, 'tablet')).toEqual(true);
+      const window = configureBrowser(PlatformConfiguration.iPadPro);    
+      expect(isPlatform(window, 'ipad')).toEqual(true);
+      expect(isPlatform(window, 'tablet')).toEqual(true);
     });
     
     it('should return true for "android" and false for "tablet" on a Pixel 2 XL', () => {
-      configureBrowser(sharedWindow, PlatformConfiguration.Pixel2XL);    
-      expect(isPlatform(sharedWindow, 'android')).toEqual(true);
-      expect(isPlatform(sharedWindow, 'tablet')).toEqual(false);
+      const window = configureBrowser(PlatformConfiguration.Pixel2XL);    
+      expect(isPlatform(window, 'android')).toEqual(true);
+      expect(isPlatform(window, 'tablet')).toEqual(false);
     });
     
     it('should return true for "android" and "tablet" on a Galaxy View', () => {
-      configureBrowser(sharedWindow, PlatformConfiguration.GalaxyView);    
-      expect(isPlatform(sharedWindow, 'android')).toEqual(true);
-      expect(isPlatform(sharedWindow, 'tablet')).toEqual(true);
+      const window = configureBrowser(PlatformConfiguration.GalaxyView);    
+      expect(isPlatform(window, 'android')).toEqual(true);
+      expect(isPlatform(window, 'tablet')).toEqual(true);
     });
     
+    it('should return false for "android" and "tablet" on desktop Safari', () => {
+      const window = configureBrowser(PlatformConfiguration.DesktopSafari);    
+      expect(isPlatform(window, 'android')).toEqual(false);
+      expect(isPlatform(window, 'tablet')).toEqual(false);
+    });
+    
+    it('should return false for "android" and "tablet" on iPhone', () => {
+      const window = configureBrowser(PlatformConfiguration.iPhone);    
+      expect(isPlatform(window, 'android')).toEqual(false);
+      expect(isPlatform(window, 'tablet')).toEqual(false);
+    });
+    
+    it('should return true for "android", false for "tablet", and false for "desktop" on Galaxy S9 Plus', () => {
+      const window = configureBrowser(PlatformConfiguration.GalaxyS9Plus);    
+      expect(isPlatform(window, 'android')).toEqual(true);
+      expect(isPlatform(window, 'tablet')).toEqual(false);
+      expect(isPlatform(window, 'mobile')).toEqual(true);
+    });
+    
+    it('should return true for "pwa" and false for "cordova"', () => {
+      const window = configureBrowser(PlatformConfiguration.PWA);    
+      expect(isPlatform(window, 'pwa')).toEqual(true);
+      expect(isPlatform(window, 'cordova')).toEqual(false);
+    });
   })
 });
-
-function configureBrowser(win: Window, config: PlatformConfiguration): void {
-  for (let attributeKey in config) {
-    win[attributeKey] = config[attributeKey];
-  }
-}
