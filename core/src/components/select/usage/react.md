@@ -21,6 +21,28 @@ const customActionSheetOptions = {
   subHeader: 'Select your favorite color'
 };
 
+const objectOptions = [
+  {
+    id: 1,
+    first: 'Alice',
+    last: 'Smith'
+  },
+  {
+    id: 2,
+    first: 'Bob',
+    last: 'Davis'
+  },
+  {
+    id: 3,
+    first: 'Charlie',
+    last: 'Rosenburg'
+  }
+];
+
+const compareWith = (o1: any, o2: any) => {
+  return o1 && o2 ? o1.id === o2.id : o1 === o2;
+};
+
 const Example: React.SFC<{}> = () => (
   <>
     ## Single Selection
@@ -78,6 +100,20 @@ const Example: React.SFC<{}> = () => (
           <IonSelectOption value="cat">Cat</IonSelectOption>
           <IonSelectOption value="dog" selected>Dog</IonSelectOption>
           <IonSelectOption value="honeybadger">Honey Badger</IonSelectOption>
+        </IonSelect>
+      </IonItem>
+    </IonList>
+    
+    ## Objects as Values
+    
+    <IonList>
+      <IonListHeader>Objects as Values (compareWith)</IonListHeader>
+      <IonItem>
+        <IonLabel>Users</IonLabel>
+        <IonSelect compareWith={compareWith}>
+          {objectOptions.map((object, i) => {
+            return <IonSelectOption key={object.id} value={object.id}>{object.first} {object.last}</IonSelectOption>
+          })}
         </IonSelect>
       </IonItem>
     </IonList>
