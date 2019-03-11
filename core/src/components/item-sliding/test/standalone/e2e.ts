@@ -21,6 +21,12 @@ test('item-sliding: standalone', async () => {
 
   compares.push(await page.compareScreenshot());
 
+  // Grab item with anchor option
+  item = await page.find('#anchor');
+  await openItem(item, page);
+
+  compares.push(await page.compareScreenshot());
+
   for (const compare of compares) {
     expect(compare).toMatchScreenshot();
   }
