@@ -1,3 +1,12 @@
+## [4.1.1](https://github.com/ionic-team/ionic/compare/v4.1.0...v4.1.1) (2019-03-07)
+
+
+### Bug Fixes
+
+* **display:** update to correct css classes ([cabbeb2](https://github.com/ionic-team/ionic/commit/cabbeb2))
+
+
+
 # [4.1.0 Hydrogen](https://github.com/ionic-team/ionic/compare/v4.0.2...v4.1.0) (2019-03-06)
 
 
