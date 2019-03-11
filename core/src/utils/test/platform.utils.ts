@@ -22,7 +22,8 @@ export const PlatformConfiguration = {
       userAgent: 'Mozilla/5.0 (Linux; Android 7.0; Pixel C Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/52.0.2743.98 Safari/537.36'
     },
     innerWidth: 800,
-    innerHeight: 1200
+    innerHeight: 1200,
+    matchMedia: mockMatchMedia(['(any-pointer:coarse)'])
   },
   Capacitor: {
     Capacitor: {
@@ -50,28 +51,32 @@ export const PlatformConfiguration = {
       userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Mobile/15E148 Safari/604.1'
     },
     innerWidth: 375,
-    innerHeight: 812
+    innerHeight: 812,
+    matchMedia: mockMatchMedia(['(any-pointer:coarse)'])
   },
   iPadPro: {
     navigator: {
       userAgent: 'Mozilla/5.0 (iPad; CPU OS 12_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Mobile/15E148 Safari/604.1'
     },
     innerWidth: 1024,
-    innerHeight: 1366
+    innerHeight: 1366,
+    matchMedia: mockMatchMedia(['(any-pointer:coarse)'])
   },
   Pixel2XL: {
     navigator: {
       userAgent: 'Mozilla/5.0 (Linux; Android 8.0.0; Pixel 2 XL Build/OPD1.170816.004) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Mobile Safari/537.36'
     },
     innerWidth: 411,
-    innerHeight: 823
+    innerHeight: 823,
+    matchMedia: mockMatchMedia(['(any-pointer:coarse)'])
   },
   GalaxyView: {
     navigator: {
       userAgent: 'Mozilla/5.0 (Linux; Android 5.1.1; SM-T670 Build/LMY47X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36'
     },
     innerWidth: 1920,
-    innerHeight: 1080
+    innerHeight: 1080,
+    matchMedia: mockMatchMedia(['(any-pointer:coarse)'])
   },
   GalaxyS9Plus: {
     navigator: {

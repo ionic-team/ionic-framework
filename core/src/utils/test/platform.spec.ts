@@ -75,16 +75,18 @@ describe('Platform Tests', () => {
       expect(isPlatform(window, 'tablet')).toEqual(true);
     });
     
-    it('should return true for "android" and false for "tablet" on a Pixel 2 XL', () => {
+    it('should return true for "android", false for "tablet, and false for "desktop"" on a Pixel 2 XL', () => {
       const window = configureBrowser(PlatformConfiguration.Pixel2XL);    
       expect(isPlatform(window, 'android')).toEqual(true);
       expect(isPlatform(window, 'tablet')).toEqual(false);
+      expect(isPlatform(window, 'desktop')).toEqual(false);
     });
     
-    it('should return true for "android" and "tablet" on a Galaxy View', () => {
+    it('should return true for "android" and "tablet" and false for "desktop" on a Galaxy View', () => {
       const window = configureBrowser(PlatformConfiguration.GalaxyView);    
       expect(isPlatform(window, 'android')).toEqual(true);
       expect(isPlatform(window, 'tablet')).toEqual(true);
+      expect(isPlatform(window, 'desktop')).toEqual(false);
     });
     
     it('should return false for "android" and "tablet" on desktop Safari', () => {
@@ -93,17 +95,18 @@ describe('Platform Tests', () => {
       expect(isPlatform(window, 'tablet')).toEqual(false);
     });
     
-    it('should return false for "android" and "tablet" on iPhone', () => {
+    it('should return false for "android" and "tablet" and false for "desktop" on iPhone', () => {
       const window = configureBrowser(PlatformConfiguration.iPhone);    
       expect(isPlatform(window, 'android')).toEqual(false);
       expect(isPlatform(window, 'tablet')).toEqual(false);
+      expect(isPlatform(window, 'desktop')).toEqual(false);
     });
     
     it('should return true for "android", false for "tablet", and false for "desktop" on Galaxy S9 Plus', () => {
       const window = configureBrowser(PlatformConfiguration.GalaxyS9Plus);    
       expect(isPlatform(window, 'android')).toEqual(true);
       expect(isPlatform(window, 'tablet')).toEqual(false);
-      expect(isPlatform(window, 'mobile')).toEqual(true);
+      expect(isPlatform(window, 'desktop')).toEqual(false);
     });
     
     it('should return true for "pwa" and false for "cordova"', () => {
