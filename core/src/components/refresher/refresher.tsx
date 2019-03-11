@@ -136,7 +136,7 @@ export class Refresher implements ComponentInterface {
    * `refreshing` to `completing`.
    */
   @Method()
-  complete() {
+  async complete() {
     this.close(RefresherState.Completing, '120ms');
   }
 
@@ -144,7 +144,7 @@ export class Refresher implements ComponentInterface {
    * Changes the refresher's state from `refreshing` to `cancelling`.
    */
   @Method()
-  cancel() {
+  async cancel() {
     this.close(RefresherState.Cancelling, '');
   }
 

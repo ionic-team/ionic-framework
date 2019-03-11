@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, getMode, h, Host } from '@stencil/core';
 
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
@@ -112,28 +112,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.dismiss();
   }
 
-  @Listen('ionBackdropTap')
-  protected onBackdropTap() {
-    this.dismiss(undefined, BACKDROP);
-  }
-
-  @Listen('ionModalDidPresent')
-  @Listen('ionModalWillPresent')
-  @Listen('ionModalWillDismiss')
-  @Listen('ionModalDidDismiss')
-  protected lifecycle(modalEvent: CustomEvent) {
-    const el = this.usersElement;
-    const name = LIFECYCLE_MAP[modalEvent.type];
-    if (el && name) {
-      const ev = new CustomEvent(name, {
-        bubbles: false,
-        cancelable: false,
-        detail: modalEvent.detail
-      });
-      el.dispatchEvent(ev);
-    }
-  }
-
   /**
    * Present the modal overlay after it has been created.
    */
@@ -185,27 +163,47 @@ export class Modal implements ComponentInterface, OverlayInterface {
     return eventMethod(this.el, 'ionModalWillDismiss');
   }
 
-  hostData() {
-    return {
-      'no-router': true,
-      'aria-modal': 'true',
-      class: {
-        ...createThemedClasses(this.mode, 'modal'),
-        ...getClassMap(this.cssClass)
-      },
-      style: {
-        zIndex: 20000 + this.overlayIndex,
-      }
-    };
+  private onBackdropTap = () => {
+    this.dismiss(undefined, BACKDROP);
+  }
+
+  private lifecycle = (modalEvent: CustomEvent) => {
+    const el = this.usersElement;
+    const name = LIFECYCLE_MAP[modalEvent.type];
+    if (el && name) {
+      const ev = new CustomEvent(name, {
+        bubbles: false,
+        cancelable: false,
+        detail: modalEvent.detail
+      });
+      el.dispatchEvent(ev);
+    }
   }
 
   render() {
     const dialogClasses = createThemedClasses(this.mode, 'modal-wrapper');
 
-    return [
-      <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss}/>,
-      <div role="dialog" class={dialogClasses}></div>
-    ];
+    return (
+      <Host
+        no-router
+        aria-modal
+        onIonBackdropTap={this.onBackdropTap}
+        onIonModalDidPresent={this.lifecycle}
+        onIonModalWillPresent={this.lifecycle}
+        onIonModalWillDismiss={this.lifecycle}
+        onIonModalDidDismiss={this.lifecycle}
+        class={{
+          ...createThemedClasses(this.mode, 'modal'),
+          ...getClassMap(this.cssClass)
+        }}
+        style={{
+          zIndex: 20000 + this.overlayIndex,
+        }}
+      >
+        <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss}/>
+        <div role="dialog" class={dialogClasses}></div>
+      </Host>
+    );
   }
 }
 

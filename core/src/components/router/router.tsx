@@ -4,7 +4,6 @@ import { BackButtonEvent, RouteChain, RouterDirection, RouterEventDetail } from 
 import { debounce } from '../../utils/helpers';
 
 import { ROUTER_INTENT_BACK, ROUTER_INTENT_FORWARD, ROUTER_INTENT_NONE } from './utils/constants';
-import { printRedirects, printRoutes } from './utils/debug';
 import { readNavState, waitUntilNavNode, writeNavState } from './utils/dom';
 import { routeRedirect, routerIDsToChain, routerPathToChain } from './utils/matching';
 import { readRedirects, readRoutes } from './utils/parser';
@@ -107,15 +106,6 @@ export class Router implements ComponentInterface {
   back() {
     this.win.history.back();
     return Promise.resolve(this.waitPromise);
-  }
-
-  /** @internal */
-  @Method()
-  printDebug() {
-    console.debug('CURRENT PATH', this.getPath());
-    console.debug('PREVIOUS PATH', this.previousPath);
-    printRoutes(readRoutes(this.el));
-    printRedirects(readRedirects(this.el));
   }
 
   /** @internal */

@@ -201,7 +201,7 @@ export class MenuController implements MenuControllerI {
    * ```
    */
   @Method()
-  registerAnimation(name: string, animation: AnimationBuilder) {
+  async registerAnimation(name: string, animation: AnimationBuilder) {
     this.menuAnimations.set(name, animation);
   }
 

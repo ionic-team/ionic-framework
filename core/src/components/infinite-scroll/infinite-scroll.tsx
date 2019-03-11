@@ -138,7 +138,7 @@ export class InfiniteScroll implements ComponentInterface {
    * to `enabled`.
    */
   @Method()
-  complete() {
+  async complete() {
     const scrollEl = this.scrollEl;
     if (!this.isLoading || !scrollEl) {
       return;

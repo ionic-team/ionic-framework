@@ -28,7 +28,7 @@ export class ItemOptions implements ComponentInterface {
 
   /** @internal */
   @Method()
-  fireSwipeEvent() {
+  async fireSwipeEvent() {
     this.ionSwipe.emit({
       side: this.side
     });

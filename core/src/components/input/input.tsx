@@ -239,7 +239,7 @@ export class Input implements ComponentInterface {
    * `input.focus()`.
    */
   @Method()
-  setFocus() {
+  async setFocus() {
     if (this.nativeInput) {
       this.nativeInput.focus();
     }

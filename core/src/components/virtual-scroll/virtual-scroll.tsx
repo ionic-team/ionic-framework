@@ -185,7 +185,7 @@ export class VirtualScroll implements ComponentInterface {
    * The subset of items to be updated can are specifing by an offset and a length.
    */
   @Method()
-  checkRange(offset: number, len = -1) {
+  async checkRange(offset: number, len = -1) {
     // TODO: kind of hacky how we do in-place updated of the cells
     // array. this part needs a complete refactor
     if (!this.items) {
@@ -224,7 +224,7 @@ export class VirtualScroll implements ComponentInterface {
    * ```
    */
   @Method()
-  checkEnd() {
+  async checkEnd() {
     if (this.items) {
       this.checkRange(this.lastItemLen);
     }
