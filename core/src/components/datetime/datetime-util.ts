@@ -241,7 +241,38 @@ export function parseDate(val: string | undefined | null): DatetimeData | undefi
   };
 }
 
+/**
+ * Converts a valid UTC datetime string
+ * To the user's local timezone
+ * Note: This is not meant for time strings
+ * such as "01:47"
+ */
+export const getLocalDateTime = (dateString = ''): Date => {
+  const date = (dateString.length > 0) ? new Date(dateString) : new Date();
+
+  return new Date(
+    Date.UTC(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      date.getHours(),
+      date.getMinutes(),
+      date.getSeconds(),
+      date.getMilliseconds()
+    )
+  );
+};
+
 export function updateDate(existingData: DatetimeData, newData: any): boolean {
+
+  if (!newData || typeof newData === 'string') {
+    const localDateTime = getLocalDateTime(newData);
+
+    if (!Number.isNaN(localDateTime.getTime())) {
+      newData = localDateTime.toISOString();
+    }
+  }
+
   if (newData && newData !== '') {
 
     if (typeof newData === 'string') {
@@ -368,6 +399,7 @@ export function convertDataToISO(data: DatetimeData): string {
             rtn += 'Z';
 
           } else {
+
             // YYYY-MM-DDTHH:mm:SS+/-HH:mm
             rtn += (data.tzOffset > 0 ? '+' : '-') + twoDigit(Math.floor(Math.abs(data.tzOffset / 60))) + ':' + twoDigit(data.tzOffset % 60);
           }
