@@ -64,9 +64,10 @@
 }
 
 :host(.chip-outline) {
-  background: transparent;
 
   border-color: rgba(0, 0, 0, .32);
+
+  background: transparent;
 }
 
 :host(.chip-outline.ion-color) {
