@@ -11,91 +11,11 @@ If you would like to see an example app of the implementation please go to our [
   
 # Current Status of Components
 
-Below is a list of components and their current status.  Please know that these will not be final implementations but this list can be used to understand current progress.
+Below is a list of components yet to be implemented. More information about 
 
 | Component |
 | ------------------ |
-| `IonActionSheet` |
-| `IonAlert` | 
-| `IonAnchor` | 
-| `IonApp` | 
-| `IonAvatar` | 
-| `IonBackButton` | 
-| `IonBackdrop` | 
-| `IonBadge` | 
-| `IonButton` | 
-| `IonButtons` | 
-| `IonCard` | 
-| `IonCardContent` | 
-| `IonCardHeader` | 
-| `IonCardSubtitle` | 
-| `IonCardTitle` | 
-| `IonCheckbox` | 
-| `IonChip` | 
-| `IonCol` | 
-| `IonContent` | 
-| `IonDatetime` | 
-| `IonFab` | 
-| `IonFabButton` | 
-| `IonFabList` | 
-| `IonFooter` | 
-| `IonGrid` | 
-| `IonHeader` | 
-| `IonIcon` | 
-| `IonImg` | 
 | `IonInfiniteScroll` | 
-| `IonInput` | 
-| `IonItem` | 
-| `IonItemDivider` | 
-| `IonItemGroup` | 
-| `IonItemOption` | 
-| `IonItemOptions` | 
-| `IonItemSliding` | 
-| `IonLabel` | 
-| `IonList` | 
-| `IonListHeader` | 
-| `IonLoading` | 
-| `IonMenu` | 
-| `IonMenuButton` | 
-| `IonMenuToggle` | 
-| `IonModal` | 
-| `IonNote` | 
-| `IonPicker` | 
-| `IonPickerColumn` | 
-| `IonPopover` | 
-| `IonProgressBar` | 
-| `IonRadio` | 
-| `IonRadioGroup` | 
-| `IonRange` | 
-| `IonRefresher` | 
-| `IonRefresherContent` | 
-| `IonReorder` | 
-| `IonReorderGroup` | 
-| `IonRippleEffect` | 
-| `IonRouterOutlet` | 
-| `IonRow` | 
-| `IonSearchbar` | 
-| `IonSegment` | 
-| `IonSegmentButton` | 
-| `IonSelect` | 
-| `IonSelectOption` | 
-| `IonSelectPopover` | 
-| `IonSkeletonText` | 
-| `IonSlide` | 
-| `IonSlides` | 
-| `IonSpinner` | 
-| `IonSplitPane` | 
-| `IonTab` | 
-| `IonTabBar` | 
-| `IonTabButton` | 
-| `IonTabs` | 
-| `IonText` | 
-| `IonTextarea` | 
-| `IonThumbnail` | 
-| `IonTitle` | 
-| `IonToast` | 
-| `IonToggle` | 
-| `IonToolbar` | 
 | `IonVirtualScroll` | 
 
 ## Publishing a Native Application
@@ -106,17 +26,33 @@ If you want to publish your app to the App Store or Google Play you will need to
 More information on this can be found here. https://beta.ionicframework.com/docs/cli
 If you want to learn more about Capacitor our dedicated site can be found here. https://capacitor.ionicframework.com/
 
-The commands that you will need to execute are below.
+The commands that you will need to execute are below in your project's root.
 ```sh
-ionic capacitor add
+ionic init "My React App" --type=custom
+ionic integrations enable capacitor
+```
+
+Open the './capacitor.config.json' file in your projects root.
+Change `"webDir": "www"` to be `"webDir": "build"` (dependent on your config but create-react-app defaults with this as the build directory)
+
+Then run the following command to get started with either `ios` or `android` platforms.
+```
+ionic capacitor add <android|ios>
+```
+
+After build you build your app you will need to copy your capacitor resources into the build dir so execute the following command.
+```
 ionic capacitor copy
-ionic capacitor run
+```
+
+To open your application to build/emulate in Android Studio or Xcode run the `open` command.
+```
+ionic capacitor open <android|ios>
 ```
 
 ## Related
 
-* [Ionic Core Components](https://www.npmjs.com/package/@ionic/core)
-* [Ionic Documentation](https://beta.ionicframework.com/docs/)
+* [Ionic Documentation](https://ionicframework.com/docs/)
 * [Ionic Worldwide Slack](http://ionicworldwide.herokuapp.com/)
 * [Ionic Forum](https://forum.ionicframework.com/)
 * [Ionicons](http://ionicons.com/)
