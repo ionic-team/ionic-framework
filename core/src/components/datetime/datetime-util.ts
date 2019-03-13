@@ -267,7 +267,7 @@ export function updateDate(existingData: DatetimeData, newData: any): boolean {
 
   if (!newData || typeof newData === 'string') {
     const localDateTime = getLocalDateTime(newData);
-    
+
     if (!Number.isNaN(localDateTime.getTime())) {
       newData = localDateTime.toISOString();
     }
