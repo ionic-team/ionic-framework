@@ -25,7 +25,6 @@
   @include position(0, 0, 0, 0);
 
   display: flex;
-  position: fixed;
 
   align-items: center;
   justify-content: center;
@@ -46,6 +45,14 @@
   @include padding(50px, null, null, null);
 
   align-items: flex-start;
+}
+
+html ion-alert {
+  position: fixed;
+}
+
+html.plt-ios.plt-hybrid ion-alert {
+  position: absolute;
 }
 
 .alert-wrapper {
