@@ -52,28 +52,6 @@ describe('Datetime', () => {
         expect(convertToLocal.toISOString()).toEqual(expectedDateString);
       });
     });
-    
-    it('should return default date time given an invalid value', () => {
-      
-      const dateStringTests = [
-        null,
-        undefined,
-        'abc123',
-        '!@#',
-        '',
-        '--2019-02-14T09:00:00.000Z--'
-      ];
-      
-      dateStringTests.forEach(test => {
-        const date = new Date();
-        
-        const convertToLocal = getLocalDateTime(test);
-        
-        expect(convertToLocal.getFullYear()).toEqual(date.getFullYear())
-        expect(convertToLocal.getMonth()).toEqual(date.getMonth())
-        expect(convertToLocal.getDate()).toEqual(date.getDate())
-      });
-    });
   });
 });
 
