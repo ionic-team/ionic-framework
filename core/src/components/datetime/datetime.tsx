@@ -542,6 +542,8 @@ export class Datetime implements ComponentInterface {
     // create the text of the formatted data
     const template = this.displayFormat || this.pickerFormat || DEFAULT_FORMAT;
 
+    if (this.value === undefined || this.value === null) { return; }
+
     return renderDatetime(template, this.datetimeValue, this.locale);
   }
 
