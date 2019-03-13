@@ -247,8 +247,12 @@ export function parseDate(val: string | undefined | null): DatetimeData | undefi
  * Note: This is not meant for time strings
  * such as "01:47"
  */
-export const getLocalDateTime = (dateString = ''): Date => {
-  const date = (dateString.length > 0) ? new Date(dateString) : new Date();
+export const getLocalDateTime = (dateString: any = ''): Date => {
+  let date = (typeof dateString === 'string' && dateString.length > 0) ? new Date(dateString) : new Date();
+
+  if (Number.isNaN(date.getTime())) {
+    date = new Date();
+  }
 
   return new Date(
     Date.UTC(
@@ -267,10 +271,7 @@ export function updateDate(existingData: DatetimeData, newData: any): boolean {
 
   if (!newData || typeof newData === 'string') {
     const localDateTime = getLocalDateTime(newData);
-
-    if (!Number.isNaN(localDateTime.getTime())) {
-      newData = localDateTime.toISOString();
-    }
+    newData = localDateTime.toISOString();
   }
 
   if (newData && newData !== '') {
