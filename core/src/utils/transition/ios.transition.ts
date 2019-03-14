@@ -41,10 +41,10 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
   // setting up enter view
   const contentEl = enteringEl.querySelector(':scope > ion-content');
   const headerEls = enteringEl.querySelectorAll(':scope > ion-header > *:not(ion-toolbar), :scope > ion-footer > *');
-  const enteringToolBarElems = enteringEl.querySelectorAll(':scope > ion-header > ion-toolbar');
+  const enteringToolBarEls = enteringEl.querySelectorAll(':scope > ion-header > ion-toolbar');
   const enteringContent = new AnimationC();
 
-  if (!contentEl && enteringToolBarElems.length === 0 && headerEls.length === 0) {
+  if (!contentEl && enteringToolBarEls.length === 0 && headerEls.length === 0) {
     enteringContent.addElement(enteringEl.querySelector(':scope > .ion-page, :scope > ion-nav, :scope > ion-tabs'));
   } else {
     enteringContent.addElement(contentEl);
@@ -65,7 +65,7 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
       .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
   }
 
-  enteringToolBarElems.forEach(enteringToolBarElem => {
+  enteringToolBarEls.forEach(enteringToolBarElem => {
     const enteringToolBar = new AnimationC();
     enteringToolBar.addElement(enteringToolBarElem);
     rootTransition.add(enteringToolBar);
@@ -152,8 +152,8 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
         .fromTo(OPACITY, 1, OFF_OPACITY, true);
     }
 
-    const leavingToolBarElems = leavingEl.querySelectorAll(':scope > ion-header > ion-toolbar');
-    leavingToolBarElems.forEach(leavingToolBarElem => {
+    const leavingToolBarEls = leavingEl.querySelectorAll(':scope > ion-header > ion-toolbar');
+    leavingToolBarEls.forEach(leavingToolBarElem => {
       const leavingToolBar = new AnimationC();
       leavingToolBar.addElement(leavingToolBarElem);
 
@@ -164,9 +164,9 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
       leavingToolBarButtons.addElement(leavingToolBarElem.querySelectorAll('ion-buttons,[menuToggle]'));
 
       const leavingToolBarItems = new AnimationC();
-      const leavingToolBarItemElems = leavingToolBarElem.querySelectorAll(':scope > *:not(ion-title):not(ion-buttons):not([menuToggle])');
-      if (leavingToolBarItemElems.length > 0) {
-        leavingToolBarItems.addElement(leavingToolBarItemElems);
+      const leavingToolBarItemEls = leavingToolBarElem.querySelectorAll(':scope > *:not(ion-title):not(ion-buttons):not([menuToggle])');
+      if (leavingToolBarItemEls.length > 0) {
+        leavingToolBarItems.addElement(leavingToolBarItemEls);
       }
 
       const leavingToolBarBg = new AnimationC();
