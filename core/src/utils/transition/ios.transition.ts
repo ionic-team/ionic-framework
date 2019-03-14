@@ -65,25 +65,25 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
       .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
   }
 
-  enteringToolBarEls.forEach(enteringToolBarElem => {
+  enteringToolBarEls.forEach(enteringToolBarEl => {
     const enteringToolBar = new AnimationC();
-    enteringToolBar.addElement(enteringToolBarElem);
+    enteringToolBar.addElement(enteringToolBarEl);
     rootTransition.add(enteringToolBar);
 
     const enteringTitle = new AnimationC();
-    enteringTitle.addElement(enteringToolBarElem.querySelector('ion-title'));
+    enteringTitle.addElement(enteringToolBarEl.querySelector('ion-title'));
 
     const enteringToolBarButtons = new AnimationC();
-    enteringToolBarButtons.addElement(enteringToolBarElem.querySelectorAll('ion-buttons,[menuToggle]'));
+    enteringToolBarButtons.addElement(enteringToolBarEl.querySelectorAll('ion-buttons,[menuToggle]'));
 
     const enteringToolBarItems = new AnimationC();
-    enteringToolBarItems.addElement(enteringToolBarElem.querySelectorAll(':scope > *:not(ion-title):not(ion-buttons):not([menuToggle])'));
+    enteringToolBarItems.addElement(enteringToolBarEl.querySelectorAll(':scope > *:not(ion-title):not(ion-buttons):not([menuToggle])'));
 
     const enteringToolBarBg = new AnimationC();
-    enteringToolBarBg.addElement(shadow(enteringToolBarElem).querySelector('.toolbar-background'));
+    enteringToolBarBg.addElement(shadow(enteringToolBarEl).querySelector('.toolbar-background'));
 
     const enteringBackButton = new AnimationC();
-    const backButtonEl = enteringToolBarElem.querySelector('ion-back-button');
+    const backButtonEl = enteringToolBarEl.querySelector('ion-back-button');
 
     if (backButtonEl) {
       enteringBackButton.addElement(backButtonEl);
@@ -153,27 +153,27 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
     }
 
     const leavingToolBarEls = leavingEl.querySelectorAll(':scope > ion-header > ion-toolbar');
-    leavingToolBarEls.forEach(leavingToolBarElem => {
+    leavingToolBarEls.forEach(leavingToolBarEl => {
       const leavingToolBar = new AnimationC();
-      leavingToolBar.addElement(leavingToolBarElem);
+      leavingToolBar.addElement(leavingToolBarEl);
 
       const leavingTitle = new AnimationC();
-      leavingTitle.addElement(leavingToolBarElem.querySelector('ion-title'));
+      leavingTitle.addElement(leavingToolBarEl.querySelector('ion-title'));
 
       const leavingToolBarButtons = new AnimationC();
-      leavingToolBarButtons.addElement(leavingToolBarElem.querySelectorAll('ion-buttons,[menuToggle]'));
+      leavingToolBarButtons.addElement(leavingToolBarEl.querySelectorAll('ion-buttons,[menuToggle]'));
 
       const leavingToolBarItems = new AnimationC();
-      const leavingToolBarItemEls = leavingToolBarElem.querySelectorAll(':scope > *:not(ion-title):not(ion-buttons):not([menuToggle])');
+      const leavingToolBarItemEls = leavingToolBarEl.querySelectorAll(':scope > *:not(ion-title):not(ion-buttons):not([menuToggle])');
       if (leavingToolBarItemEls.length > 0) {
         leavingToolBarItems.addElement(leavingToolBarItemEls);
       }
 
       const leavingToolBarBg = new AnimationC();
-      leavingToolBarBg.addElement(shadow(leavingToolBarElem).querySelector('.toolbar-background'));
+      leavingToolBarBg.addElement(shadow(leavingToolBarEl).querySelector('.toolbar-background'));
 
       const leavingBackButton = new AnimationC();
-      const backButtonEl = leavingToolBarElem.querySelector('ion-back-button');
+      const backButtonEl = leavingToolBarEl.querySelector('ion-back-button');
       if (backButtonEl) {
         leavingBackButton.addElement(backButtonEl);
       }
