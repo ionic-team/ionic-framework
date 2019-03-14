@@ -247,8 +247,8 @@ export function parseDate(val: string | undefined | null): DatetimeData | undefi
  * Note: This is not meant for time strings
  * such as "01:47"
  */
-export const getLocalDateTime = (dateString = ''): Date => {
-  const date = (dateString.length > 0) ? new Date(dateString) : new Date();
+export const getLocalDateTime = (dateString: any = ''): Date => {
+  const date = (typeof dateString === 'string' && dateString.length > 0) ? new Date(dateString) : new Date();
 
   return new Date(
     Date.UTC(
