@@ -41,7 +41,7 @@ export class PickerColumnCmp implements ComponentInterface {
   /** Picker column data */
   @Prop() col!: PickerColumn;
   @Watch('col')
-  protected async colChanged() {
+  protected colChanged() {
     this.refresh(true);
   }
 
@@ -331,13 +331,13 @@ export class PickerColumnCmp implements ComponentInterface {
      * a value different than the value at
      * selectedIndex
      */
-    if (this.velocity === 0) {
-      const selectedIndex = clamp(min, this.col.selectedIndex || 0, max);
-      if (this.col.prevSelected !== selectedIndex || forceRefresh) {
-        const y = (selectedIndex * this.optHeight) * -1;
-        this.velocity = 0;
-        this.update(y, TRANSITION_DURATION, true);
-      }
+    if (this.velocity !== 0) { return; }
+
+    const selectedIndex = clamp(min, this.col.selectedIndex || 0, max);
+    if (this.col.prevSelected !== selectedIndex || forceRefresh) {
+      const y = (selectedIndex * this.optHeight) * -1;
+      this.velocity = 0;
+      this.update(y, TRANSITION_DURATION, true);
     }
   }
 
