@@ -261,10 +261,28 @@ export class Datetime implements ComponentInterface {
 
     const pickerOptions = this.generatePickerOptions();
     const picker = await this.pickerCtrl.create(pickerOptions);
+
     this.isExpanded = true;
     picker.onDidDismiss().then(() => {
       this.isExpanded = false;
       this.setFocus();
+    });
+    picker.addEventListener('ionPickerColChange', async (event: any) => {
+      const data = event.detail;
+      const colSelectedIndex = data.selectedIndex;
+      const colOptions = data.options;
+
+      const changeData: any = {};
+      changeData[data.name] = {
+        value: colOptions[colSelectedIndex].value
+      };
+
+      this.updateDatetimeValue(changeData);
+      const columns = this.generateColumns();
+
+      picker.columns = columns;
+
+      await this.validate(picker);
     });
     await this.validate(picker);
     await picker.present();

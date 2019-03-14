@@ -2836,6 +2836,7 @@ export namespace Components {
     * Picker column data
     */
     'col': PickerColumn;
+    'onIonPickerColChange'?: (event: CustomEvent<PickerColumn>) => void;
   }
 
   interface IonPickerController {
