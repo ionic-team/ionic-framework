@@ -152,8 +152,8 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
         .fromTo(OPACITY, 1, OFF_OPACITY, true);
     }
 
-    const leavingToolBarElemms = leavingEl.querySelectorAll(':scope > ion-header > ion-toolbar');
-    leavingToolBarElemms.forEach(leavingToolBarElem => {
+    const leavingToolBarElems = leavingEl.querySelectorAll(':scope > ion-header > ion-toolbar');
+    leavingToolBarElems.forEach(leavingToolBarElem => {
       const leavingToolBar = new AnimationC();
       leavingToolBar.addElement(leavingToolBarElem);
 
