@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, QueueApi, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { Gesture, GestureDetail, Mode, PickerColumn } from '../../interface';
 import { hapticSelectionChanged } from '../../utils/haptic';
@@ -40,18 +40,24 @@ export class PickerColumnCmp implements ComponentInterface {
   /** Picker column data */
   @Prop() col!: PickerColumn;
 
+  @State() internalCol!: PickerColumn;
+
   @Watch('col')
-  protected async valueChanged() {
-    setTimeout(() => {
-      // save latest value of noAnimate
-      const noAnimate = this.noAnimate;
-      // do not animate this refreshs
-      this.noAnimate = true;
-      // refresh
-      this.refresh(false);
-      // reset old noAnimate value
-      this.noAnimate = noAnimate;
-    });
+  colChanged(newCol: PickerColumn, oldCol: PickerColumn) {
+    // Simple check if columns has really changed (because it is an object)
+    if (JSON.stringify(oldCol) !== JSON.stringify(newCol)) {
+      this.internalCol = { ...newCol };
+      setTimeout(() => {
+        // save latest value of noAnimate
+        const noAnimate = this.noAnimate;
+        // do not animate this refreshs
+        this.noAnimate = true;
+        // refresh
+        this.refresh(false);
+        // reset old noAnimate value
+        this.noAnimate = noAnimate;
+      });
+    }
   }
 
   /**
@@ -70,6 +76,8 @@ export class PickerColumnCmp implements ComponentInterface {
 
     this.rotateFactor = pickerRotateFactor;
     this.scaleFactor = pickerScaleFactor;
+
+    this.internalCol = this.col;
   }
 
   async componentDidLoad() {
@@ -191,7 +199,7 @@ export class PickerColumnCmp implements ComponentInterface {
         }
       }
     }
-    this.col.prevSelected = selectedIndex;
+    this.internalCol!.prevSelected = selectedIndex;
 
     if (saveY) {
       this.y = y;
@@ -234,7 +242,7 @@ export class PickerColumnCmp implements ComponentInterface {
         this.rafId = requestAnimationFrame(() => this.decelerate());
       } else {
         // trigger change after deceleration finished
-        this.selectionChanged.emit(this.col);
+        this.selectionChanged.emit(this.internalCol!);
       }
 
     } else if (this.y % this.optHeight !== 0) {
@@ -249,7 +257,7 @@ export class PickerColumnCmp implements ComponentInterface {
   }
 
   private indexForY(y: number) {
-    return Math.min(Math.max(Math.abs(Math.round(y / this.optHeight)), 0), this.col.options.length - 1);
+    return Math.min(Math.max(Math.abs(Math.round(y / this.optHeight)), 0), this.internalCol!.options.length - 1);
   }
 
   // TODO should this check disabled?
@@ -263,7 +271,7 @@ export class PickerColumnCmp implements ComponentInterface {
 
     // reset everything
     cancelAnimationFrame(this.rafId);
-    const options = this.col.options;
+    const options = this.internalCol!.options;
     let minY = (options.length - 1);
     let maxY = 0;
     for (let i = 0; i < options.length; i++) {
@@ -318,7 +326,7 @@ export class PickerColumnCmp implements ComponentInterface {
       if (opt && opt.hasAttribute('opt-index')) {
         this.setSelected(parseInt(opt.getAttribute('opt-index')!, 10), TRANSITION_DURATION);
         // dirctly trigger selection changed if element gets clicked or velocity is 0
-        this.selectionChanged.emit(this.col);
+        this.selectionChanged.emit(this.internalCol!);
       }
 
     } else {
@@ -328,9 +336,9 @@ export class PickerColumnCmp implements ComponentInterface {
   }
 
   private refresh(forceRefresh?: boolean) {
-    let min = this.col.options.length - 1;
+    let min = this.internalCol!.options.length - 1;
     let max = 0;
-    const options = this.col.options;
+    const options = this.internalCol!.options;
     for (let i = 0; i < options.length; i++) {
       if (!options[i].disabled) {
         min = Math.min(min, i);
@@ -338,8 +346,8 @@ export class PickerColumnCmp implements ComponentInterface {
       }
     }
 
-    const selectedIndex = clamp(min, this.col.selectedIndex || 0, max);
-    if (this.col.prevSelected !== selectedIndex || forceRefresh) {
+    const selectedIndex = clamp(min, this.internalCol!.selectedIndex || 0, max);
+    if (this.internalCol!.prevSelected !== selectedIndex || forceRefresh) {
       const y = (selectedIndex * this.optHeight) * -1;
       this.velocity = 0;
       this.update(y, TRANSITION_DURATION, true);
@@ -350,17 +358,17 @@ export class PickerColumnCmp implements ComponentInterface {
     return {
       class: {
         'picker-col': true,
-        'picker-opts-left': this.col.align === 'left',
-        'picker-opts-right': this.col.align === 'right'
+        'picker-opts-left': this.internalCol!.align === 'left',
+        'picker-opts-right': this.internalCol!.align === 'right'
       },
       style: {
-        'max-width': this.col.columnWidth
+        'max-width': this.internalCol!.columnWidth
       }
     };
   }
 
   render() {
-    const col = this.col;
+    const col = this.internalCol!;
     const Button = 'button' as any;
     return [
       col.prefix && (
