@@ -20,8 +20,8 @@ const Example: React.SFC<{}> = () => (
       <IonLabel>Default Item</IonLabel>
     </IonItem>
 
-    <IonItem text-wrap>
-      <IonLabel>
+    <IonItem>
+      <IonLabel text-wrap>
         Multi-line text that should wrap when it is too long
         to fit on one line in the item.
       </IonLabel>
