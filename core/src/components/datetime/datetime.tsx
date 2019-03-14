@@ -299,7 +299,7 @@ export class Datetime implements ComponentInterface {
       }
       const columns = this.generateColumns();
       this.internalDateTimeValue = await this.validate(columns);
-      Object.assign(this.picker!.columns, columns);
+      this.picker!.columns = columns;
     });
   }
 
