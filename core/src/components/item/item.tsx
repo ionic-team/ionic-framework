@@ -23,7 +23,7 @@ export class Item implements ComponentInterface {
   private itemStyles = new Map<string, CssClassMap>();
   private mode = getMode<Mode>(this);
 
-  @Element() el!: HTMLStencilElement;
+  @Element() el!: HTMLIonItemElement;
 
   @State() multipleInputs = false;
 

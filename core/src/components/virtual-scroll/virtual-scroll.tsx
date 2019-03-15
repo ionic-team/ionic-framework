@@ -26,7 +26,7 @@ export class VirtualScroll implements ComponentInterface {
   private lastItemLen = 0;
   private rmEvent: (() => void) | undefined;
 
-  @Element() el!: HTMLStencilElement;
+  @Element() el!: HTMLIonVirtualScrollElement;
 
   @State() totalHeight = 0;
 

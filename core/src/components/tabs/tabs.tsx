@@ -17,7 +17,7 @@ export class Tabs implements NavOutlet {
   private transitioning = false;
   private leavingTab?: HTMLIonTabElement;
 
-  @Element() el!: HTMLStencilElement;
+  @Element() el!: HTMLIonTabsElement;
 
   @State() tabs: HTMLIonTabElement[] = [];
   @State() selectedTab?: HTMLIonTabElement;

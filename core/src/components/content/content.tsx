@@ -47,7 +47,7 @@ export class Content implements ComponentInterface {
 
   private mode = getMode<Mode>(this);
 
-  @Element() el!: HTMLStencilElement;
+  @Element() el!: HTMLIonContentElement;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'window' }) win!: Window;

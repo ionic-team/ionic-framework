@@ -21,7 +21,7 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(elm: T, opts: obj
   // append the overlay element to the document body
   getAppRoot(doc).appendChild(elm);
 
-  return elm.componentOnReady();
+  return (elm as any).componentOnReady();
 };
 
 export const connectListeners = (doc: Document) => {

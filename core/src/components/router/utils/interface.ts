@@ -39,6 +39,6 @@ export interface RouteNode extends RouteEntry {
 }
 
 export type RouterDirection = 'forward' | 'back' | 'root';
-export type NavOutletElement = NavOutlet & HTMLStencilElement;
+export type NavOutletElement = NavOutlet & HTMLElement;
 export type RouteChain = RouteEntry[];
 export type RouteTree = RouteNode[];

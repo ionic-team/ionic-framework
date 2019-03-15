@@ -31,7 +31,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
   presented = false;
   animation?: Animation;
 
-  @Element() el!: HTMLStencilElement;
+  @Element() el!: HTMLIonAlertElement;
 
   /** @internal */
   @Prop() overlayIndex!: number;

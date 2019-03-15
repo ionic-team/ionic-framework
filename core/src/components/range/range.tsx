@@ -27,7 +27,7 @@ export class Range implements ComponentInterface {
   private rangeSlider?: HTMLElement;
   private gesture?: Gesture;
 
-  @Element() el!: HTMLStencilElement;
+  @Element() el!: HTMLIonRangeElement;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'document' }) doc!: Document;

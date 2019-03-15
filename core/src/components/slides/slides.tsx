@@ -24,7 +24,7 @@ export class Slides implements ComponentInterface {
   private swiper: Promise<SwiperInterface> = new Promise(resolve => { this.readySwiper = resolve; });
   private mode = getMode<Mode>(this);
 
-  @Element() el!: HTMLStencilElement;
+  @Element() el!: HTMLIonSlidesElement;
 
   /**
    * Options to pass to the swiper instance.

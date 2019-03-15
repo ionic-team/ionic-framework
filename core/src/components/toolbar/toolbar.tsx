@@ -23,7 +23,7 @@ import { createColorClasses } from '../../utils/theme';
 export class Toolbar implements ComponentInterface {
   private childrenStyles = new Map<string, CssClassMap>();
 
-  @Element() el!: HTMLStencilElement;
+  @Element() el!: HTMLIonToolbarElement;
 
   /**
    * The color to use from your application's color palette.

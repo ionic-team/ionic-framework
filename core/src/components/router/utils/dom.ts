@@ -17,7 +17,7 @@ export async function writeNavState(
     if (index >= chain.length || !outlet) {
       return changed;
     }
-    await outlet.componentOnReady();
+    await (outlet as any).componentOnReady();
 
     const route = chain[index];
     const result = await outlet.setRouteId(route.id, route.params, direction);

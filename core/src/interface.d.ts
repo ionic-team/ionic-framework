@@ -41,9 +41,9 @@ export type Side = 'start' | 'end';
 export type PredefinedColors = 'primary' | 'secondary' | 'tertiary' | 'success' | 'warning' | 'danger' | 'light' | 'medium' | 'dark';
 export type Color = PredefinedColors | string;
 export type Mode = 'ios' | 'md';
-export type ComponentTags = keyof StencilIntrinsicElements;
+export type ComponentTags = string;
 export type ComponentRef = Function | HTMLElement | string | null;
-export type ComponentProps<T = null> = T extends ComponentTags ? StencilIntrinsicElements[T] : {[key: string]: any};
+export type ComponentProps<T = null> = {[key: string]: any};
 export type CssClassMap = { [className: string]: boolean };
 export type BackButtonEvent = CustomEvent<BackButtonEventDetail>;
 
@@ -60,27 +60,29 @@ export interface StyleEventDetail {
   [styleName: string]: boolean;
 }
 
-declare global {
-  interface StencilGlobalHTMLAttributes {
-    // for ion-menu and ion-split-pane
-    main?: boolean;
-    padding?: boolean;
-    ['padding-top']?: boolean;
-    ['padding-bottom']?: boolean;
-    ['padding-left']?: boolean;
-    ['padding-right']?: boolean;
-    ['padding-horizontal']?: boolean;
-    ['padding-vertical']?: boolean;
+declare module "@stencil/core" {
+  namespace JSXBase {
+    export interface HTMLAttributes {
+      // for ion-menu and ion-split-pane
+      main?: boolean;
+      padding?: boolean;
+      ['padding-top']?: boolean;
+      ['padding-bottom']?: boolean;
+      ['padding-left']?: boolean;
+      ['padding-right']?: boolean;
+      ['padding-horizontal']?: boolean;
+      ['padding-vertical']?: boolean;
 
-    margin?: boolean;
-    ['margin-top']?: boolean;
-    ['margin-bottom']?: boolean;
-    ['margin-left']?: boolean;
-    ['margin-right']?: boolean;
-    ['margin-horizontal']?: boolean;
-    ['margin-vertical']?: boolean;
+      margin?: boolean;
+      ['margin-top']?: boolean;
+      ['margin-bottom']?: boolean;
+      ['margin-left']?: boolean;
+      ['margin-right']?: boolean;
+      ['margin-horizontal']?: boolean;
+      ['margin-vertical']?: boolean;
 
-    ['no-padding']?: boolean;
-    ['no-margin']?: boolean;
+      ['no-padding']?: boolean;
+      ['no-margin']?: boolean;
+    }
   }
 }
