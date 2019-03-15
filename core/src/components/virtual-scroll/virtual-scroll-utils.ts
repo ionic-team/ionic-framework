@@ -181,7 +181,7 @@ export function getShouldUpdate(dirtyIndex: number, currentRange: Range, range: 
 }
 
 export function findCellIndex(cells: Cell[], index: number): number {
-  const max = cells[cells.length - 1].index || 0;
+  const max = cells.length > 0 ? cells[cells.length - 1].index : 0;
   if (index === 0) {
     return 0;
   } else if (index === max + 1) {
