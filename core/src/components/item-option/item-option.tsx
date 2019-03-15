@@ -80,12 +80,14 @@ export class ItemOption implements ComponentInterface {
         href={this.href}
       >
         <span class="button-inner">
-          <slot name="start"></slot>
-          <slot name="top" />
-          <slot name="icon-only" />
-          <slot></slot>
-          <slot name="bottom" />
-          <slot name="end"></slot>
+          <slot name="top"></slot>
+          <div class="horizontal-wrapper">
+            <slot name="start"></slot>
+            <slot name="icon-only"></slot>
+            <slot></slot>
+            <slot name="end"></slot>
+          </div>
+          <slot name="bottom"></slot>
         </span>
         {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </TagType>
