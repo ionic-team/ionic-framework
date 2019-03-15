@@ -137,6 +137,7 @@ ion-button,prop,disabled,boolean,false,false,true
 ion-button,prop,expand,"block" | "full" | undefined,undefined,false,true
 ion-button,prop,fill,"clear" | "default" | "outline" | "solid" | undefined,undefined,false,true
 ion-button,prop,href,string | undefined,undefined,false,false
+ion-button,prop,mode,"ios" | "md",undefined,false,false
 ion-button,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 ion-button,prop,shape,"round" | undefined,undefined,false,true
 ion-button,prop,size,"default" | "large" | "small" | undefined,undefined,false,true
@@ -315,7 +316,7 @@ ion-fab,prop,activated,boolean,false,false,false
 ion-fab,prop,edge,boolean,false,false,false
 ion-fab,prop,horizontal,"center" | "end" | "start" | undefined,undefined,false,false
 ion-fab,prop,vertical,"bottom" | "center" | "top" | undefined,undefined,false,false
-ion-fab,method,close,close() => void
+ion-fab,method,close,close() => Promise<void>
 
 ion-fab-button,shadow
 ion-fab-button,prop,activated,boolean,false,false,false
@@ -384,7 +385,7 @@ ion-infinite-scroll,none
 ion-infinite-scroll,prop,disabled,boolean,false,false,false
 ion-infinite-scroll,prop,position,"bottom" | "top",'bottom',false,false
 ion-infinite-scroll,prop,threshold,string,'15%',false,false
-ion-infinite-scroll,method,complete,complete() => void
+ion-infinite-scroll,method,complete,complete() => Promise<void>
 ion-infinite-scroll,event,ionInfinite,void,true
 
 ion-infinite-scroll-content,none
@@ -420,7 +421,7 @@ ion-input,prop,step,string | undefined,undefined,false,false
 ion-input,prop,type,"date" | "email" | "number" | "password" | "search" | "tel" | "text" | "time" | "url",'text',false,false
 ion-input,prop,value,null | string | undefined,'',false,false
 ion-input,method,getInputElement,getInputElement() => Promise<HTMLInputElement>
-ion-input,method,setFocus,setFocus() => void
+ion-input,method,setFocus,setFocus() => Promise<void>
 ion-input,event,ionBlur,void,true
 ion-input,event,ionChange,InputChangeEventDetail,true
 ion-input,event,ionFocus,void,true
@@ -605,7 +606,7 @@ ion-menu-controller,method,isAnimating,isAnimating() => Promise<boolean>
 ion-menu-controller,method,isEnabled,isEnabled(menuId?: string | null | undefined) => Promise<boolean>
 ion-menu-controller,method,isOpen,isOpen(menuId?: string | null | undefined) => Promise<boolean>
 ion-menu-controller,method,open,open(menuId?: string | null | undefined) => Promise<boolean>
-ion-menu-controller,method,registerAnimation,registerAnimation(name: string, animation: AnimationBuilder) => void
+ion-menu-controller,method,registerAnimation,registerAnimation(name: string, animation: AnimationBuilder) => Promise<void>
 ion-menu-controller,method,swipeGesture,swipeGesture(shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
 ion-menu-controller,method,toggle,toggle(menuId?: string | null | undefined) => Promise<boolean>
 
@@ -775,6 +776,7 @@ ion-radio,shadow
 ion-radio,prop,checked,boolean,false,false,false
 ion-radio,prop,color,string | undefined,undefined,false,false
 ion-radio,prop,disabled,boolean,false,false,false
+ion-radio,prop,mode,"ios" | "md",undefined,false,false
 ion-radio,prop,name,string,this.inputId,false,false
 ion-radio,prop,value,any,undefined,false,false
 ion-radio,event,ionBlur,void,true
@@ -821,8 +823,8 @@ ion-refresher,prop,disabled,boolean,false,false,false
 ion-refresher,prop,pullMax,number,this.pullMin + 60,false,false
 ion-refresher,prop,pullMin,number,60,false,false
 ion-refresher,prop,snapbackDuration,string,'280ms',false,false
-ion-refresher,method,cancel,cancel() => void
-ion-refresher,method,complete,complete() => void
+ion-refresher,method,cancel,cancel() => Promise<void>
+ion-refresher,method,complete,complete() => Promise<void>
 ion-refresher,method,getProgress,getProgress() => Promise<number>
 ion-refresher,event,ionPull,void,true
 ion-refresher,event,ionRefresh,RefresherEventDetail,true
@@ -887,7 +889,7 @@ ion-searchbar,prop,spellcheck,boolean,false,false,false
 ion-searchbar,prop,type,"email" | "number" | "password" | "search" | "tel" | "text" | "url",'search',false,false
 ion-searchbar,prop,value,null | string | undefined,'',false,false
 ion-searchbar,method,getInputElement,getInputElement() => Promise<HTMLInputElement>
-ion-searchbar,method,setFocus,setFocus() => void
+ion-searchbar,method,setFocus,setFocus() => Promise<void>
 ion-searchbar,event,ionBlur,void,true
 ion-searchbar,event,ionCancel,void,true
 ion-searchbar,event,ionChange,SearchbarChangeEventDetail,true
@@ -951,6 +953,7 @@ ion-select,prop,compareWith,((currentValue: any, compareValue: any) => boolean) 
 ion-select,prop,disabled,boolean,false,false,false
 ion-select,prop,interface,"action-sheet" | "alert" | "popover",'alert',false,false
 ion-select,prop,interfaceOptions,any,{},false,false
+ion-select,prop,mode,"ios" | "md",undefined,false,false
 ion-select,prop,multiple,boolean,false,false,false
 ion-select,prop,name,string,this.inputId,false,false
 ion-select,prop,okText,string,'OK',false,false
@@ -1095,7 +1098,7 @@ ion-textarea,prop,spellcheck,boolean,false,false,false
 ion-textarea,prop,value,null | string | undefined,'',false,false
 ion-textarea,prop,wrap,"hard" | "off" | "soft" | undefined,undefined,false,false
 ion-textarea,method,getInputElement,getInputElement() => Promise<HTMLTextAreaElement>
-ion-textarea,method,setFocus,setFocus() => void
+ion-textarea,method,setFocus,setFocus() => Promise<void>
 ion-textarea,event,ionBlur,void,true
 ion-textarea,event,ionChange,TextareaChangeEventDetail,true
 ion-textarea,event,ionFocus,void,true
@@ -1204,6 +1207,6 @@ ion-virtual-scroll,prop,nodeRender,((el: HTMLElement | null, cell: Cell, domInde
 ion-virtual-scroll,prop,renderFooter,((item: any, index: number) => any) | undefined,undefined,false,false
 ion-virtual-scroll,prop,renderHeader,((item: any, index: number) => any) | undefined,undefined,false,false
 ion-virtual-scroll,prop,renderItem,((item: any, index: number) => any) | undefined,undefined,false,false
-ion-virtual-scroll,method,checkEnd,checkEnd() => void
-ion-virtual-scroll,method,checkRange,checkRange(offset: number, len?: number) => void
+ion-virtual-scroll,method,checkEnd,checkEnd() => Promise<void>
+ion-virtual-scroll,method,checkRange,checkRange(offset: number, len?: number) => Promise<void>
 ion-virtual-scroll,method,positionForItem,positionForItem(index: number) => Promise<number>
