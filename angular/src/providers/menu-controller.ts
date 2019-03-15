@@ -61,7 +61,7 @@ export class MenuController {
    * @return Returns the instance of the menu, which is useful for chaining.
    */
   swipeGesture(shouldEnable: boolean, menuId?: string): Promise<HTMLIonMenuElement> {
-    return proxyMethod(CTRL, 'swipeGesture', shouldEnable, menuId);
+    return proxyMethod(CTRL, this.doc, 'swipeGesture', shouldEnable, menuId);
   }
 
   /**
