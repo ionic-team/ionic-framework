@@ -19,7 +19,7 @@ export async function testActionSheet(
       url: pageUrl
     });
 
-    const screenShotCompares = [];
+    const screenshotCompares = [];
 
     const presentBtn = await page.find(selector);
     await presentBtn.click();
@@ -27,20 +27,20 @@ export async function testActionSheet(
     let actionSheet = await page.find('ion-action-sheet');
     await actionSheet.waitForVisible();
 
-    screenShotCompares.push(await page.compareScreenshot(screenshotName));
+    screenshotCompares.push(await page.compareScreenshot(screenshotName));
 
-    await afterScreenshotHook(page, screenshotName, screenShotCompares, actionSheet);
+    await afterScreenshotHook(page, screenshotName, screenshotCompares, actionSheet);
 
     await actionSheet.callMethod('dismiss');
     await actionSheet.waitForNotVisible();
 
-    screenShotCompares.push(await page.compareScreenshot(`dismissed ${screenshotName}`));
+    screenshotCompares.push(await page.compareScreenshot(`dismissed ${screenshotName}`));
 
     actionSheet = await page.find('ion-action-sheet');
     expect(actionSheet).toBe(null);
 
-    for (const screenShotCompare of screenShotCompares) {
-      expect(screenShotCompare).toMatchScreenshot();
+    for (const screenshotCompare of screenshotCompares) {
+      expect(screenshotCompare).toMatchScreenshot();
     }
 
   } catch (err) {
@@ -51,7 +51,7 @@ export async function testActionSheet(
 export async function testActionSheetBackdrop(
   page: any,
   screenshotName: string,
-  screenShotCompares: any,
+  screenshotCompares: any,
   actionSheet: any
 ) {
   try {
@@ -59,7 +59,7 @@ export async function testActionSheetBackdrop(
     const backdrop = await page.find('ion-backdrop');
     await backdrop.click();
 
-    screenShotCompares.push(await page.compareScreenshot(`dismissed backdrop ${screenshotName}`));
+    screenshotCompares.push(await page.compareScreenshot(`dismissed backdrop ${screenshotName}`));
 
     const isVisible = await actionSheet.isVisible();
     expect(isVisible).toBe(true);
@@ -71,7 +71,7 @@ export async function testActionSheetBackdrop(
 export async function testActionSheetAlert(
   page: any,
   screenshotName: string,
-  screenShotCompares: any
+  screenshotCompares: any
 ) {
   try {
     const openAlertBtn = await page.find({ text: 'Open Alert' });
@@ -81,7 +81,7 @@ export async function testActionSheetAlert(
     await alert.waitForVisible();
     await page.waitFor(250);
 
-    screenShotCompares.push(await page.compareScreenshot(`alert open ${screenshotName}`));
+    screenshotCompares.push(await page.compareScreenshot(`alert open ${screenshotName}`));
 
     const alertOkayBtn = await page.find({ contains: 'Okay' });
     await alertOkayBtn.click();
