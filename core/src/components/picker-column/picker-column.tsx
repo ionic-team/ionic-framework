@@ -220,6 +220,7 @@ export class PickerColumnCmp implements ComponentInterface {
         // isn't locked in yet, keep decelerating until it is
         this.rafId = requestAnimationFrame(() => this.decelerate());
       } else {
+        this.velocity = 0;
         this.emitColChange();
       }
 
@@ -331,7 +332,7 @@ export class PickerColumnCmp implements ComponentInterface {
      * a value different than the value at
      * selectedIndex
      */
-    if (this.velocity !== 0 && !forceRefresh) { return; }
+    if (this.velocity !== 0) { return; }
 
     const selectedIndex = clamp(min, this.col.selectedIndex || 0, max);
     if (this.col.prevSelected !== selectedIndex || forceRefresh) {
