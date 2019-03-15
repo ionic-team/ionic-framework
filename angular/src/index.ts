@@ -37,4 +37,4 @@ export { IonicRouteStrategy } from './util/ionic-router-reuse-strategy';
 
 // PACKAGE MODULE
 export { IonicModule } from './ionic-module';
-export { IonicHydrateModule } from './ionic-hydrate-module';
+// export { IonicHydrateModule } from './ionic-hydrate-module';
