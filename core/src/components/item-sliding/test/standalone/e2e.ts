@@ -6,26 +6,29 @@ test('item-sliding: standalone', async () => {
   });
 
   const compares = [];
-
   compares.push(await page.compareScreenshot());
 
-  // Pass item with start icons in option
-  await openItem('#start', page);
+  // Pass sliding item with start icons in option
+  await openItem('#startItem', page);
   compares.push(await page.compareScreenshot(`start icons open`));
+  await closeItem(page);
 
-  // Pass item with top icons in option
-  await openItem('#top', page);
+  // Pass sliding item with top icons in option
+  await openItem('#topItem', page);
   compares.push(await page.compareScreenshot(`top icons open`));
+  await closeItem(page);
 
-  // Pass item with anchor option
-  await openItem('#anchor', page);
+  // Pass sliding item with anchor option
+  await openItem('#anchorItem', page);
   compares.push(await page.compareScreenshot(`anchor option`));
+  await closeItem(page);
 
   for (const compare of compares) {
     expect(compare).toMatchScreenshot();
   }
 });
 
+// Opens a sliding item by simulating a drag event
 async function openItem(id: string, page: any) {
   try {
     const slidingItem = await page.$(id);
@@ -37,13 +40,19 @@ async function openItem(id: string, page: any) {
 
     await page.mouse.move(centerX, centerY);
     await page.mouse.down();
+    await page.mouse.move(centerX / 2, centerY);
     await page.mouse.move(0, centerY);
     await page.mouse.up();
-
-    const slidingEl = await page.find(id);
-    const open = await slidingEl.callMethod('getOpenAmount');
-    console.log('open amount is', open);
   } catch (err) {
     throw err;
   }
+}
+
+// Close a sliding item after taking a screenshot
+// to allow other sliding items to open
+async function closeItem(page: any) {
+  await page.mouse.move(0, 0);
+  await page.mouse.down();
+  await page.mouse.up();
+  await page.waitFor(1000);
 }
