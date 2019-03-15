@@ -40,7 +40,7 @@ describe('Datetime', () => {
         { expectedHourUTC: 12, input: `2019-11-02T12:08:06.601-00:00`, expectedOutput: `2019-11-02T%HOUR%:08:06.601Z` },
         { expectedHourUTC: 8, input: `1994-12-15T13:47:20.789+05:00`, expectedOutput: `1994-12-15T%HOUR%:47:20.789Z` },
         { expectedHourUTC: 18, input: `1994-12-15T13:47:20.789-05:00`, expectedOutput: `1994-12-15T%HOUR%:47:20.789Z` },
-        { expectedHourUTC: 9, input: `2019-02-14T09:00:00.000Z`, expectedOutput: `2019-02-14T%HOUR%:00:00.000Z` } 
+        { expectedHourUTC: 9, input: `2019-02-14T09:00:00.000Z`, expectedOutput: `2019-02-14T%HOUR%:00:00.000Z` }
       ];
       
       dateStringTests.forEach(test => {
