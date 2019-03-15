@@ -13,6 +13,9 @@ export async function openItemSliding(id: string, page: any) {
     await page.mouse.move(centerX / 2, centerY);
     await page.mouse.move(0, centerY);
     await page.mouse.up();
+
+    // Add a timeout to make sure the item is open
+    await page.waitFor(2000);
   } catch (err) {
     throw err;
   }
