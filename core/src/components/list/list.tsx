@@ -4,7 +4,7 @@ import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
 /**
- * @virtualProp {'ios' | 'md'} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-list',

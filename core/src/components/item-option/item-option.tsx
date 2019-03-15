@@ -4,7 +4,7 @@ import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
- * @virtualProp {'ios' | 'md'} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the option text in LTR, and to the right in RTL.

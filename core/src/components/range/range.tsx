@@ -6,7 +6,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
  *
- * @virtualProp {'ios' | 'md'} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot start - Content is placed to the left of the range slider in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the range slider in LTR, and to the left in RTL.

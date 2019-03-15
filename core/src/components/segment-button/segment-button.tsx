@@ -5,7 +5,7 @@ import { Mode, SegmentButtonLayout } from '../../interface';
 let ids = 0;
 
 /**
- * @virtualProp {'ios' | 'md'} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-segment-button',

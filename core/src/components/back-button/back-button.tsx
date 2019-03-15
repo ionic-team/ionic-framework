@@ -5,7 +5,7 @@ import { Color, Mode } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
 /**
- * @virtualProp {'ios' | 'md'} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-back-button',

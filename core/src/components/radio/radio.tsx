@@ -4,6 +4,9 @@ import { Color, RadioChangeEventDetail, StyleEventDetail } from '../../interface
 import { findItemLabel } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-radio',
   styleUrls: {
