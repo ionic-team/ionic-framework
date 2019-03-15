@@ -108,7 +108,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   protected dispatchCancelHandler(ev: CustomEvent) {
     const role = ev.detail.role;
     if (isCancel(role)) {
-      const cancelButton = this.getButtons().find(b => b.role === 'cancel');
+      const cancelButton = this.s().find(b => b.role === 'cancel');
       this.callButtonHandler(cancelButton);
     }
   }
@@ -175,7 +175,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
     return true;
   }
 
-  private getButtons(): ActionSheetButton[] {
+  private s(): ActionSheetButton[] {
     return this.buttons.map(b => {
       return (typeof b === 'string')
         ? { text: b }
@@ -198,7 +198,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const allButtons = this.getButtons();
+    const allButtons = this.s();
     const cancelButton = allButtons.find(b => b.role === 'cancel');
     const buttons = allButtons.filter(b => b.role !== 'cancel');
 

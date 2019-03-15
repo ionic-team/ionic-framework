@@ -427,7 +427,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
     }
 
     return [
-      <ion-backdrop skdjhfkjdf={12} tappable={this.backdropDismiss}/>,
+      <ion-backdrop tappable={this.backdropDismiss}/>,
 
       <div class="alert-wrapper">
 

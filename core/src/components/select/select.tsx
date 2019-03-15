@@ -508,5 +508,5 @@ function textForValue(opts: HTMLIonSelectOptionElement[], value: any, compareWit
     ? selectOpt.textContent
     : null;
 }
-
 let selectIds = 0;
+
