@@ -18,22 +18,22 @@ export async function testMenu(
       url: pageUrl
     });
 
-    const screenShotCompares = [];
+    const screenshotCompares = [];
 
     const menu = await page.find(selector);
 
     await menu.callMethod('open');
     await page.waitFor(250);
 
-    screenShotCompares.push(await page.compareScreenshot(screenshotName));
+    screenshotCompares.push(await page.compareScreenshot(screenshotName));
 
     await menu.callMethod('close');
     await page.waitFor(250);
 
-    screenShotCompares.push(await page.compareScreenshot(`dismiss ${screenshotName}`));
+    screenshotCompares.push(await page.compareScreenshot(`dismiss ${screenshotName}`));
 
-    for (const screenShotCompare of screenShotCompares) {
-      expect(screenShotCompare).toMatchScreenshot();
+    for (const screenshotCompare of screenshotCompares) {
+      expect(screenshotCompare).toMatchScreenshot();
     }
   } catch (err) {
     throw err;
