@@ -320,8 +320,8 @@ export class Content implements ComponentInterface {
         onScroll={ev => this.onScroll(ev)}
       >
         <slot></slot>
-      </div>,
-      <slot name="fixed"></slot>
+        <slot name="fixed"></slot>
+      </div>
     ];
   }
 }
