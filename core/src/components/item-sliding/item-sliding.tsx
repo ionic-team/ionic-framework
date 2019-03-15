@@ -319,10 +319,10 @@ export class ItemSliding implements ComponentInterface {
 
 function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolean, isOnResetZone: boolean): boolean {
   // The logic required to know when the sliding item should close (openAmount=0)
-  // depends on three booleans (isCloseDirection, isMovingFast, isOnCloseZone)
+  // depends on three booleans (isResetDirection, isMovingFast, isOnResetZone)
   // and it ended up being too complicated to be written manually without errors
   // so the truth table is attached below: (0=false, 1=true)
-  // isCloseDirection | isMovingFast | isOnCloseZone || shouldClose
+  // isResetDirection | isMovingFast | isOnResetZone || shouldClose
   //         0        |       0      |       0       ||    0
   //         0        |       0      |       1       ||    1
   //         0        |       1      |       0       ||    0
