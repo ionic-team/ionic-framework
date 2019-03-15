@@ -4,7 +4,7 @@ import { getContext } from '../../global/context';
 import { Mode, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
 
 /**
- * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ * @virtualProp {'ios' | 'md'} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-tab-button',

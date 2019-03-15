@@ -9,6 +9,8 @@ import { createColorClasses, openURL } from '../../utils/theme';
  * @slot icon-only - Should be used on an icon in a button that has no text.
  * @slot start - Content is placed to the left of the button text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the button text in LTR, and to the left in RTL.
+ *
+ * @virtualProp {'ios' | 'md'} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-button',

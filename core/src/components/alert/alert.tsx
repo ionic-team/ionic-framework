@@ -10,7 +10,7 @@ import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
 /**
- * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ * @virtualProp {'ios' | 'md'} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-alert',

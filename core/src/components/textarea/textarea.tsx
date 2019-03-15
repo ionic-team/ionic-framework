@@ -5,7 +5,7 @@ import { debounceEvent, findItemLabel } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 /**
- * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ * @virtualProp {'ios' | 'md'} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-textarea',

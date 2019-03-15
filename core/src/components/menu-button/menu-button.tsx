@@ -4,7 +4,7 @@ import { getContext } from '../../global/context';
 import { Color, Mode } from '../../interface';
 
 /**
- * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ * @virtualProp {'ios' | 'md'} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-menu-button',

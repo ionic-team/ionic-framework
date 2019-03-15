@@ -4,7 +4,7 @@ import { Color, Mode, RouterDirection } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
- * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ * @virtualProp {'ios' | 'md'} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-fab-button',

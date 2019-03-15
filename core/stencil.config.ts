@@ -74,12 +74,9 @@ export const config: Config = {
     //   type: 'stats',
     //   file: 'stats.json'
     // },
-    // {
-    //   type: 'docs-custom',
-    //   generator: apiSpecGenerator({
-    //     file: 'api.txt'
-    //   })
-    // },
+    // apiSpecGenerator({
+    //   file: 'api.txt'
+    // }),
     {
       type: 'angular',
       componentCorePackage: '@ionic/core',

@@ -20,7 +20,7 @@ A Picker is a dialog that displays a row of buttons and columns underneath. It a
 | `enterAnimation`  | --                 | Animation to use when the picker is presented.                                                                   | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
 | `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                                                                              | `true`      |
 | `leaveAnimation`  | --                 | Animation to use when the picker is dismissed.                                                                   | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
-| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                | `'md' \| 'ios'`                                                                        | `undefined` |
+| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                | `'ios' \| 'md'`                                                                        | `undefined` |
 | `showBackdrop`    | `show-backdrop`    | If `true`, a backdrop will be displayed behind the picker.                                                       | `boolean`                                                                              | `true`      |
 
 

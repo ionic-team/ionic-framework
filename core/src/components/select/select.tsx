@@ -7,7 +7,7 @@ import { hostContext } from '../../utils/theme';
 import { SelectCompareFn } from './select-interface';
 
 /**
- * @virtualProp {'md' | 'ios'} mode - The mode determines which platform styles to use.
+ * @virtualProp {'ios' | 'md'} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-select',
