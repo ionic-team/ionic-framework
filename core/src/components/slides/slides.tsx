@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, Watch, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, Watch, getMode, h, Host } from '@stencil/core';
 
 import { Mode } from '../../interface';
 import { rIC } from '../../utils/helpers.js';
@@ -438,22 +438,20 @@ export class Slides implements ComponentInterface {
     return { ...swiperOptions, ...this.options, ...eventOptions };
   }
 
-  hostData() {
-    return {
-      class: {
-        ...createThemedClasses(this.mode, 'slides'),
-        'swiper-container': true
-      }
-    };
-  }
-
   render() {
-    return [
-      <div class="swiper-wrapper">
-        <slot></slot>
-      </div>,
-      this.pager && <div class="swiper-pagination" ref={el => this.paginationEl = el}></div>,
-      this.scrollbar && <div class="swiper-scrollbar" ref={el => this.scrollbarEl = el}></div>
-    ];
+    return (
+      <Host
+        class={{
+          ...createThemedClasses(this.mode, 'slides'),
+          'swiper-container': true
+        }}
+      >
+        <div class="swiper-wrapper">
+          <slot></slot>
+        </div>
+        {this.pager && <div class="swiper-pagination" ref={el => this.paginationEl = el}></div>}
+        {this.scrollbar && <div class="swiper-scrollbar" ref={el => this.scrollbarEl = el}></div>}
+      </Host>
+    );
   }
 }

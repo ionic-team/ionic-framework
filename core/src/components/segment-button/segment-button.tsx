@@ -92,7 +92,7 @@ export class SegmentButton implements ComponentInterface {
         >
           <slot></slot>
           {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-        </button>,
+        </button>
         <div class="segment-button-indicator"></div>
       </Host>
     );

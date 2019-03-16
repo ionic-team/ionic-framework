@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Event, EventEmitter, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Event, EventEmitter, Listen, Prop, Host, h } from '@stencil/core';
 
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { now } from '../../utils/helpers';
@@ -74,13 +74,15 @@ export class Backdrop implements ComponentInterface {
     }
   }
 
-  hostData() {
-    return {
-      tabindex: '-1',
-      class: {
-        'backdrop-hide': !this.visible,
-        'backdrop-no-tappable': !this.tappable,
-      }
-    };
+  render() {
+    return (
+      <Host
+        tabindex="-1"
+        class={{
+          'backdrop-hide': !this.visible,
+          'backdrop-no-tappable': !this.tappable,
+        }}
+      />
+    );
   }
 }

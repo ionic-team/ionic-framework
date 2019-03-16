@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop, h, Host } from '@stencil/core';
 
 import { Color } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -48,25 +48,23 @@ export class ItemDivider implements ComponentInterface {
     });
   }
 
-  hostData() {
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        'item-divider-sticky': this.sticky,
-        'item': true,
-      }
-    };
-  }
-
   render() {
-    return [
-      <slot name="start"></slot>,
-      <div class="item-divider-inner">
-        <div class="item-divider-wrapper">
-          <slot></slot>
+    return (
+      <Host
+        class={{
+          ...createColorClasses(this.color),
+          'item-divider-sticky': this.sticky,
+          'item': true,
+        }}
+      >
+        <slot name="start"></slot>
+        <div class="item-divider-inner">
+          <div class="item-divider-wrapper">
+            <slot></slot>
+          </div>
+          <slot name="end"></slot>
         </div>
-        <slot name="end"></slot>
-      </div>
-    ];
+      </Host>
+    );
   }
 }

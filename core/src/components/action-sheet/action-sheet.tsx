@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, getMode, h, Host } from '@stencil/core';
 
 import { ActionSheetButton, Animation, AnimationBuilder, CssClassMap, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
@@ -111,7 +111,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   protected dispatchCancelHandler(ev: CustomEvent) {
     const role = ev.detail.role;
     if (isCancel(role)) {
-      const cancelButton = this.s().find(b => b.role === 'cancel');
+      const cancelButton = this.getButtons().find(b => b.role === 'cancel');
       this.callButtonHandler(cancelButton);
     }
   }
@@ -178,7 +178,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
     return true;
   }
 
-  private s(): ActionSheetButton[] {
+  private getButtons(): ActionSheetButton[] {
     return this.buttons.map(b => {
       return (typeof b === 'string')
         ? { text: b }
@@ -186,69 +186,67 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
     });
   }
 
-  hostData() {
-    return {
-      'role': 'dialog',
-      'aria-modal': 'true',
-      style: {
-        zIndex: 20000 + this.overlayIndex,
-      },
-      class: {
-        ...getClassMap(this.cssClass),
-        'action-sheet-translucent': this.translucent
-      }
-    };
-  }
-
   render() {
-    const allButtons = this.s();
+    const allButtons = this.getButtons();
     const cancelButton = allButtons.find(b => b.role === 'cancel');
     const buttons = allButtons.filter(b => b.role !== 'cancel');
 
-    return [
-      <ion-backdrop tappable={this.backdropDismiss}/>,
-      <div class="action-sheet-wrapper" role="dialog">
-        <div class="action-sheet-container">
-          <div class="action-sheet-group">
-            {this.header !== undefined &&
-              <div class="action-sheet-title">
-                {this.header}
-                {this.subHeader && <div class="action-sheet-sub-title">{this.subHeader}</div>}
+    return (
+      <Host
+        role="dialog"
+        aria-modal="true"
+        style={{
+          zIndex: 20000 + this.overlayIndex,
+        }}
+        class={{
+          ...getClassMap(this.cssClass),
+          'action-sheet-translucent': this.translucent
+        }}
+      >
+        <ion-backdrop tappable={this.backdropDismiss}/>
+        <div class="action-sheet-wrapper" role="dialog">
+          <div class="action-sheet-container">
+            <div class="action-sheet-group">
+              {this.header !== undefined &&
+                <div class="action-sheet-title">
+                  {this.header}
+                  {this.subHeader && <div class="action-sheet-sub-title">{this.subHeader}</div>}
+                </div>
+              }
+              {buttons.map(b =>
+                <button type="button" ion-activatable class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
+                  <span class="action-sheet-button-inner">
+                    {b.icon && <ion-icon icon={b.icon} lazy={false} class="action-sheet-icon" />}
+                    {b.text}
+                  </span>
+                  {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+                </button>
+              )}
+            </div>
+
+            {cancelButton &&
+              <div class="action-sheet-group action-sheet-group-cancel">
+                <button
+                  type="button"
+                  class={buttonClass(cancelButton)}
+                  onClick={() => this.buttonClick(cancelButton)}
+                >
+                  <span class="action-sheet-button-inner">
+                    {cancelButton.icon &&
+                      <ion-icon
+                        icon={cancelButton.icon}
+                        lazy={false}
+                        class="action-sheet-icon"
+                      />}
+                    {cancelButton.text}
+                  </span>
+                </button>
               </div>
             }
-            {buttons.map(b =>
-              <button type="button" ion-activatable class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
-                <span class="action-sheet-button-inner">
-                  {b.icon && <ion-icon icon={b.icon} lazy={false} class="action-sheet-icon" />}
-                  {b.text}
-                </span>
-                {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-              </button>
-            )}
           </div>
-
-          {cancelButton &&
-            <div class="action-sheet-group action-sheet-group-cancel">
-              <button
-                type="button"
-                class={buttonClass(cancelButton)}
-                onClick={() => this.buttonClick(cancelButton)}
-              >
-                <span class="action-sheet-button-inner">
-                  {cancelButton.icon &&
-                    <ion-icon
-                      icon={cancelButton.icon}
-                      lazy={false}
-                      class="action-sheet-icon"
-                    />}
-                  {cancelButton.text}
-                </span>
-              </button>
-            </div>
-          }
         </div>
-      </div>
-    ];
+      </Host>
+    );
   }
 }
 

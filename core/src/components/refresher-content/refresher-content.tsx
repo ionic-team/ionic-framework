@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Prop, h, Host } from '@stencil/core';
 
 import { getContext } from '../../global/context';
 import { SpinnerTypes } from '../../interface';
@@ -40,27 +40,29 @@ export class RefresherContent implements ComponentInterface {
   }
 
   render() {
-    return [
-      <div class="refresher-pulling">
-        {this.pullingIcon &&
-          <div class="refresher-pulling-icon">
-            <ion-icon icon={this.pullingIcon} lazy={false}></ion-icon>
-          </div>
-        }
-        {this.pullingText &&
-          <div class="refresher-pulling-text" innerHTML={this.pullingText}></div>
-        }
-      </div>,
-      <div class="refresher-refreshing">
-        {this.refreshingSpinner &&
-          <div class="refresher-refreshing-icon">
-            <ion-spinner name={this.refreshingSpinner}></ion-spinner>
-          </div>
-        }
-        {this.refreshingText &&
-          <div class="refresher-refreshing-text" innerHTML={this.refreshingText}></div>
-        }
-      </div>
-    ];
+    return (
+      <Host>
+        <div class="refresher-pulling">
+          {this.pullingIcon &&
+            <div class="refresher-pulling-icon">
+              <ion-icon icon={this.pullingIcon} lazy={false}></ion-icon>
+            </div>
+          }
+          {this.pullingText &&
+            <div class="refresher-pulling-text" innerHTML={this.pullingText}></div>
+          }
+        </div>
+        <div class="refresher-refreshing">
+          {this.refreshingSpinner &&
+            <div class="refresher-refreshing-icon">
+              <ion-spinner name={this.refreshingSpinner}></ion-spinner>
+            </div>
+          }
+          {this.refreshingText &&
+            <div class="refresher-refreshing-text" innerHTML={this.refreshingText}></div>
+          }
+        </div>
+      </Host>
+    );
   }
 }

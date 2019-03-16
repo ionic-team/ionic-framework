@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Listen, Prop, State, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop, State, getMode, h, Host } from '@stencil/core';
 
 import { Color, CssClassMap, Mode, RouterDirection, StyleEventDetail } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
@@ -124,55 +124,51 @@ export class Item implements ComponentInterface {
     return (this.href !== undefined || this.button);
   }
 
-  hostData() {
-    const childStyles = {};
-    this.itemStyles.forEach(value => {
-      Object.assign(childStyles, value);
-    });
-
-    return {
-      'aria-disabled': this.disabled ? 'true' : null,
-      class: {
-        ...childStyles,
-        ...createColorClasses(this.color),
-        [`item-lines-${this.lines}`]: this.lines !== undefined,
-        'item-disabled': this.disabled,
-        'in-list': hostContext('ion-list', this.el),
-        'item': true,
-        'item-multiple-inputs': this.multipleInputs,
-        'ion-activatable': this.isClickable(),
-        'ion-focusable': true,
-      }
-    };
-  }
-
   render() {
-    const { href, detail, mode, win, detailIcon, routerDirection, type } = this;
-
+    const childStyles = {};
+    const { href, detail, mode, win, disabled, detailIcon, routerDirection, type } = this;
     const clickable = this.isClickable();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
     const attrs = TagType === 'button' ? { type } : { href };
     const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
+    this.itemStyles.forEach(value => {
+      Object.assign(childStyles, value);
+    });
 
-    return [
-      <TagType
-        {...attrs}
-        class="item-native"
-        disabled={this.disabled}
-        onClick={(ev: Event) => openURL(win, href, ev, routerDirection)}
+    return (
+      <Host
+        aria-disabled={disabled ? 'true' : null}
+        class={{
+          ...childStyles,
+          ...createColorClasses(this.color),
+          [`item-lines-${this.lines}`]: this.lines !== undefined,
+          'item-disabled': this.disabled,
+          'in-list': hostContext('ion-list', this.el),
+          'item': true,
+          'item-multiple-inputs': this.multipleInputs,
+          'ion-activatable': this.isClickable(),
+          'ion-focusable': true,
+        }}
       >
-        <slot name="start"></slot>
-        <div class="item-inner">
-          <div class="input-wrapper">
-            <slot></slot>
+        <TagType
+          {...attrs}
+          class="item-native"
+          disabled={disabled}
+          onClick={(ev: Event) => openURL(win, href, ev, routerDirection)}
+        >
+          <slot name="start"></slot>
+          <div class="item-inner">
+            <div class="input-wrapper">
+              <slot></slot>
+            </div>
+            <slot name="end"></slot>
+            {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon"></ion-icon>}
+            <div class="item-inner-highlight"></div>
           </div>
-          <slot name="end"></slot>
-          {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon"></ion-icon>}
-          <div class="item-inner-highlight"></div>
-        </div>
-        {clickable && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-      </TagType>,
-      <div class="item-highlight"></div>
-    ];
+          {clickable && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+        </TagType>
+        <div class="item-highlight"></div>
+      </Host>
+    );
   }
 }

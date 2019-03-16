@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, getMode, h, Host } from '@stencil/core';
 
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
@@ -193,28 +193,26 @@ export class Popover implements ComponentInterface, OverlayInterface {
     return eventMethod(this.el, 'ionPopoverWillDismiss');
   }
 
-  hostData() {
-    return {
-      'aria-modal': 'true',
-      'no-router': true,
-      style: {
-        zIndex: 20000 + this.overlayIndex,
-      },
-      class: {
-        ...getClassMap(this.cssClass),
-        'popover-translucent': this.translucent
-      }
-    };
-  }
-
   render() {
-    return [
-      <ion-backdrop tappable={this.backdropDismiss} visible={this.showBackdrop}/>,
-      <div class="popover-wrapper">
-        <div class="popover-arrow"></div>
-        <div class="popover-content"></div>
-      </div>
-    ];
+    return (
+      <Host
+        aria-modal="true"
+        no-router
+        style={{
+          zIndex: 20000 + this.overlayIndex,
+        }}
+        class={{
+          ...getClassMap(this.cssClass),
+          'popover-translucent': this.translucent
+        }}
+      >
+        <ion-backdrop tappable={this.backdropDismiss} visible={this.showBackdrop}/>
+        <div class="popover-wrapper">
+          <div class="popover-arrow"></div>
+          <div class="popover-content"></div>
+        </div>
+      </Host>
+    );
   }
 }
 

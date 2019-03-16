@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, getMode, h, Host } from '@stencil/core';
 
 import { Animation, AnimationBuilder, CssClassMap, Mode, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
 import { dismiss, eventMethod, present } from '../../utils/overlays';
@@ -197,50 +197,48 @@ export class Picker implements ComponentInterface, OverlayInterface {
     return selected;
   }
 
-  hostData() {
-    return {
-      'aria-modal': 'true',
-      class: {
-        ...createThemedClasses(this.mode, 'picker'),
-        ...getClassMap(this.cssClass)
-      },
-      style: {
-        zIndex: 20000 + this.overlayIndex
-      }
-    };
-  }
-
   render() {
-    return [
-      <ion-backdrop
-        visible={this.showBackdrop}
-        tappable={this.backdropDismiss}
+    return (
+      <Host
+        aria-modal="true"
+        class={{
+          ...createThemedClasses(this.mode, 'picker'),
+          ...getClassMap(this.cssClass)
+        }}
+        style={{
+          zIndex: 20000 + this.overlayIndex
+        }}
       >
-      </ion-backdrop>,
-      <div class="picker-wrapper" role="dialog">
-        <div class="picker-toolbar">
-          {this.buttons.map(b => (
-            <div class={buttonWrapperClass(b)}>
-              <button
-                type="button"
-                onClick={() => this.buttonClick(b)}
-                class={buttonClass(b)}
-              >
-                {b.text}
-              </button>
-            </div>
-          ))}
-        </div>
+        <ion-backdrop
+          visible={this.showBackdrop}
+          tappable={this.backdropDismiss}
+        >
+        </ion-backdrop>
+        <div class="picker-wrapper" role="dialog">
+          <div class="picker-toolbar">
+            {this.buttons.map(b => (
+              <div class={buttonWrapperClass(b)}>
+                <button
+                  type="button"
+                  onClick={() => this.buttonClick(b)}
+                  class={buttonClass(b)}
+                >
+                  {b.text}
+                </button>
+              </div>
+            ))}
+          </div>
 
-        <div class="picker-columns">
-          <div class="picker-above-highlight"></div>
-            {this.presented && this.columns.map(c =>
-              <ion-picker-column col={c}></ion-picker-column>
-            )}
-          <div class="picker-below-highlight"></div>
+          <div class="picker-columns">
+            <div class="picker-above-highlight"></div>
+              {this.presented && this.columns.map(c =>
+                <ion-picker-column col={c}></ion-picker-column>
+              )}
+            <div class="picker-below-highlight"></div>
+          </div>
         </div>
-      </div>
-    ];
+      </Host>
+    );
   }
 }
 

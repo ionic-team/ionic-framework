@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Prop, h, Host } from '@stencil/core';
 
 import { getContext } from '../../global/context';
 import { Color } from '../../interface';
@@ -51,23 +51,6 @@ export class ProgressBar implements ComponentInterface {
    */
   @Prop() color?: Color;
 
-  hostData() {
-    const { color, type, reversed, value } = this;
-    const paused = this.config.getBoolean('_testing');
-    return {
-      'role': 'progressbar',
-      'aria-valuenow': type === 'determinate' ? value : null,
-      'aria-valuemin': 0,
-      'aria-valuemax': 1,
-      class: {
-        ...createColorClasses(color),
-        [`progress-bar-${type}`]: true,
-        'progress-paused': paused,
-        'progress-bar-reversed': reversed,
-      }
-    };
-  }
-
   render() {
     if (this.type === 'indeterminate') {
       return [
@@ -75,14 +58,28 @@ export class ProgressBar implements ComponentInterface {
         <div class="indeterminate-bar-secondary"><span class="progress-indeterminate"></span></div>
       ];
     }
-
-    const value = clamp(0, this.value, 1);
+    const { color, type, reversed, value } = this;
+    const paused = this.config.getBoolean('_testing');
+    const finalValue = clamp(0, value, 1);
     const buffer = clamp(0, this.buffer, 1);
 
-    return [
-      <div class="progress" style={{ transform: `scaleX(${value})` }}></div>,
-      buffer !== 1 && <div class="buffer-circles"></div>,
-      <div class="progress-buffer-bar" style={{ transform: `scaleX(${buffer})` }}></div>,
-    ];
+    return (
+      <Host
+        role="progressbar"
+        aria-valuenow={type === 'determinate' ? finalValue : null}
+        aria-valuemin={0}
+        aria-valuemax={1}
+        class={{
+          ...createColorClasses(color),
+          [`progress-bar-${type}`]: true,
+          'progress-paused': paused,
+          'progress-bar-reversed': reversed,
+        }}
+      >
+        <div class="progress" style={{ transform: `scaleX(${finalValue})` }}></div>
+        buffer !== 1 && <div class="buffer-circles"></div>
+        <div class="progress-buffer-bar" style={{ transform: `scaleX(${buffer})` }}></div>
+      </Host>
+    );
   }
 }

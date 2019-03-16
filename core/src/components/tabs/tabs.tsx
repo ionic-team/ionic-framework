@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, h } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, h, Host } from '@stencil/core';
 
 import { NavOutlet, RouteID, RouteWrite, TabButtonClickEventDetail } from '../../interface';
 
@@ -200,12 +200,14 @@ export class Tabs implements NavOutlet {
   }
 
   render() {
-    return [
-      <slot name="top"></slot>,
-      <div class="tabs-inner">
-        <slot></slot>
-      </div>,
-      <slot name="bottom"></slot>
-    ];
+    return (
+      <Host>
+        <slot name="top"></slot>
+        <div class="tabs-inner">
+          <slot></slot>
+        </div>
+        <slot name="bottom"></slot>
+      </Host>
+    );
   }
 }

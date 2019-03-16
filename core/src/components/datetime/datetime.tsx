@@ -599,7 +599,7 @@ export class Datetime implements ComponentInterface {
           'in-item': hostContext('ion-item', el)
         }}
       >
-        <div class="datetime-text">{datetimeText}</div>,
+        <div class="datetime-text">{datetimeText}</div>
         <button
           type="button"
           onFocus={this.onFocus}

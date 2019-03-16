@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, Watch, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, Watch, getMode, h, Host } from '@stencil/core';
 
 import { AlertButton, AlertInput, Animation, AnimationBuilder, CssClassMap, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
@@ -380,19 +380,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
     );
   }
 
-  hostData() {
-    return {
-      'role': 'dialog',
-      'aria-modal': 'true',
-      style: {
-        zIndex: 20000 + this.overlayIndex,
-      },
-      class: {
-        ...getClassMap(this.cssClass),
-        'alert-translucent': this.translucent
-      }
-    };
-  }
 
   private renderAlertButtons() {
     const buttons = this.processedButtons;
@@ -426,23 +413,35 @@ export class Alert implements ComponentInterface, OverlayInterface {
       labelledById = subHdrId;
     }
 
-    return [
-      <ion-backdrop tappable={this.backdropDismiss}/>,
+    return (
+      <Host
+        role="dialog"
+        aria-modal="true"
+        style={{
+          zIndex: 20000 + this.overlayIndex,
+        }}
+        class={{
+          ...getClassMap(this.cssClass),
+          'alert-translucent': this.translucent
+        }}
+      >
 
-      <div class="alert-wrapper">
+        <ion-backdrop tappable={this.backdropDismiss}/>
+        <div class="alert-wrapper">
 
-        <div class="alert-head">
-          {this.header && <h2 id={hdrId} class="alert-title">{this.header}</h2>}
-          {this.subHeader && <h2 id={subHdrId} class="alert-sub-title">{this.subHeader}</h2>}
+          <div class="alert-head">
+            {this.header && <h2 id={hdrId} class="alert-title">{this.header}</h2>}
+            {this.subHeader && <h2 id={subHdrId} class="alert-sub-title">{this.subHeader}</h2>}
+          </div>
+
+          <div id={msgId} class="alert-message" innerHTML={this.message}></div>
+
+          {this.renderAlertInputs(labelledById)}
+          {this.renderAlertButtons()}
+
         </div>
-
-        <div id={msgId} class="alert-message" innerHTML={this.message}></div>
-
-        {this.renderAlertInputs(labelledById)}
-        {this.renderAlertButtons()}
-
-      </div>
-    ];
+      </Host>
+    );
   }
 }
 

@@ -170,14 +170,14 @@ export class Radio implements ComponentInterface {
       >
         <div class="radio-icon">
           <div class="radio-inner"/>
-        </div>,
+        </div>
         <button
           type="button"
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           disabled={this.disabled}
         >
-        </button>,
+        </button>
       </Host>
     );
   }

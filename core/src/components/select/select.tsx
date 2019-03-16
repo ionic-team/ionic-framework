@@ -438,10 +438,10 @@ export class Select implements ComponentInterface {
       >
         <div class={selectTextClasses}>
           {selectText}
-        </div>,
+        </div>
         <div class="select-icon" role="presentation">
           <div class="select-icon-inner"></div>
-        </div>,
+        </div>
         <button
           type="button"
           onFocus={this.onFocus}

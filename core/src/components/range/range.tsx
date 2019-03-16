@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch, h, Host } from '@stencil/core';
 
 import { Color, Gesture, GestureDetail, KnobName, RangeChangeEventDetail, RangeValue, StyleEventDetail } from '../../interface';
 import { clamp, debounceEvent } from '../../utils/helpers';
@@ -423,53 +423,56 @@ export class Range implements ComponentInterface {
       return style;
     };
 
-    return [
-      <slot name="start"></slot>,
-      <div class="range-slider" ref={el => this.rangeSlider = el}>
-        {ticks.map(tick => (
+    return (
+      <Host>
+
+        <slot name="start"></slot>
+        <div class="range-slider" ref={el => this.rangeSlider = el}>
+          {ticks.map(tick => (
+            <div
+              style={tickStyle(tick)}
+              role="presentation"
+              class={{
+                'range-tick': true,
+                'range-tick-active': tick.active
+              }}
+            />
+          ))}
+
+          <div class="range-bar" role="presentation" />
           <div
-            style={tickStyle(tick)}
+            class="range-bar range-bar-active"
             role="presentation"
-            class={{
-              'range-tick': true,
-              'range-tick-active': tick.active
-            }}
+            style={barStyle()}
           />
-        ))}
 
-        <div class="range-bar" role="presentation" />
-        <div
-          class="range-bar range-bar-active"
-          role="presentation"
-          style={barStyle()}
-        />
+          { renderKnob(isRTL, {
+            knob: 'A',
+            pressed: this.pressedKnob === 'A',
+            value: this.valA,
+            ratio: this.ratioA,
+            pin: this.pin,
+            disabled: this.disabled,
+            handleKeyboard: this.handleKeyboard,
+            min,
+            max
+          })}
 
-        { renderKnob(isRTL, {
-          knob: 'A',
-          pressed: this.pressedKnob === 'A',
-          value: this.valA,
-          ratio: this.ratioA,
-          pin: this.pin,
-          disabled: this.disabled,
-          handleKeyboard: this.handleKeyboard,
-          min,
-          max
-        })}
-
-        { this.dualKnobs && renderKnob(isRTL, {
-          knob: 'B',
-          pressed: this.pressedKnob === 'B',
-          value: this.valB,
-          ratio: this.ratioB,
-          pin: this.pin,
-          disabled: this.disabled,
-          handleKeyboard: this.handleKeyboard,
-          min,
-          max
-        })}
-      </div>,
-      <slot name="end"></slot>
-    ];
+          { this.dualKnobs && renderKnob(isRTL, {
+            knob: 'B',
+            pressed: this.pressedKnob === 'B',
+            value: this.valB,
+            ratio: this.ratioB,
+            pin: this.pin,
+            disabled: this.disabled,
+            handleKeyboard: this.handleKeyboard,
+            min,
+            max
+          })}
+        </div>
+        <slot name="end"></slot>
+      </Host>
+    );
   }
 }
 

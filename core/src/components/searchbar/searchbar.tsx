@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch, getMode, h, Host } from '@stencil/core';
 
 import { getContext } from '../../global/context';
 import { Color, Mode, SearchbarChangeEventDetail } from '../../interface';
@@ -346,25 +346,10 @@ export class Searchbar implements ComponentInterface {
     return this.value || '';
   }
 
-  hostData() {
-    const animated = this.animated && this.config.getBoolean('animated', true);
-
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        'searchbar-animated': animated,
-        'searchbar-no-animate': animated && this.noAnimate,
-        'searchbar-has-value': (this.getValue() !== ''),
-        'searchbar-left-aligned': this.shouldAlignLeft,
-        'searchbar-has-focus': this.focused
-      }
-    };
-  }
-
   render() {
     const clearIcon = this.clearIcon || (this.mode === 'ios' ? 'ios-close-circle' : 'md-close');
     const searchIcon = this.searchIcon;
-
+    const animated = this.animated && this.config.getBoolean('animated', true);
     const cancelButton = this.showCancelButton && (
       <button
         type="button"
@@ -382,37 +367,48 @@ export class Searchbar implements ComponentInterface {
       </button>
     );
 
-    return [
-      <div class="searchbar-input-container">
-        <input
-          ref={el => this.nativeInput = el}
-          class="searchbar-input"
-          onInput={this.onInput}
-          onBlur={this.onBlur}
-          onFocus={this.onFocus}
-          placeholder={this.placeholder}
-          type={this.type}
-          value={this.getValue()}
-          autoComplete={this.autocomplete}
-          autoCorrect={this.autocorrect}
-          spellCheck={this.spellcheck}
-        />
+    return (
+      <Host
+        class={{
+          ...createColorClasses(this.color),
+          'searchbar-animated': animated,
+          'searchbar-no-animate': animated && this.noAnimate,
+          'searchbar-has-value': (this.getValue() !== ''),
+          'searchbar-left-aligned': this.shouldAlignLeft,
+          'searchbar-has-focus': this.focused
+        }}
+      >
+        <div class="searchbar-input-container">
+          <input
+            ref={el => this.nativeInput = el}
+            class="searchbar-input"
+            onInput={this.onInput}
+            onBlur={this.onBlur}
+            onFocus={this.onFocus}
+            placeholder={this.placeholder}
+            type={this.type}
+            value={this.getValue()}
+            autoComplete={this.autocomplete}
+            autoCorrect={this.autocorrect}
+            spellCheck={this.spellcheck}
+          />
 
-        {this.mode === 'md' && cancelButton}
+          {this.mode === 'md' && cancelButton}
 
-        <ion-icon mode={this.mode} icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
+          <ion-icon mode={this.mode} icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
 
-        <button
-          type="button"
-          no-blur
-          class="searchbar-clear-button"
-          onMouseDown={this.onClearInput}
-          onTouchStart={this.onClearInput}
-        >
-          <ion-icon mode={this.mode} icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
-        </button>
-      </div>,
-      this.mode === 'ios' && cancelButton
-    ];
+          <button
+            type="button"
+            no-blur
+            class="searchbar-clear-button"
+            onMouseDown={this.onClearInput}
+            onTouchStart={this.onClearInput}
+          >
+            <ion-icon mode={this.mode} icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
+          </button>
+        </div>
+        { this.mode === 'ios' && cancelButton }
+      </Host>
+    );
   }
 }

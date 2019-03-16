@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Listen, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop, h, Host } from '@stencil/core';
 
 import { Color, CssClassMap, StyleEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -59,32 +59,30 @@ export class Toolbar implements ComponentInterface {
     }
   }
 
-  hostData() {
+  render() {
     const childStyles = {};
     this.childrenStyles.forEach(value => {
       Object.assign(childStyles, value);
     });
 
-    return {
-      class: {
-        ...childStyles,
-        ...createColorClasses(this.color)
-      }
-    };
-  }
-
-  render() {
-    return [
-      <div class="toolbar-background"></div>,
-      <div class="toolbar-container">
-        <slot name="start"></slot>
-        <slot name="secondary"></slot>
-        <div class="toolbar-content">
-          <slot></slot>
+    return (
+      <Host
+        class={{
+          ...childStyles,
+          ...createColorClasses(this.color)
+        }}
+      >
+        <div class="toolbar-background"></div>
+        <div class="toolbar-container">
+          <slot name="start"></slot>
+          <slot name="secondary"></slot>
+          <div class="toolbar-content">
+            <slot></slot>
+          </div>
+          <slot name="primary"></slot>
+          <slot name="end"></slot>
         </div>
-        <slot name="primary"></slot>
-        <slot name="end"></slot>
-      </div>
-    ];
+      </Host>
+    );
   }
 }

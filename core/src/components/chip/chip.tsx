@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Prop, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, getMode, h } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -16,8 +16,6 @@ import { createColorClasses } from '../../utils/theme';
 })
 export class Chip implements ComponentInterface {
 
-  private mode = getMode<Mode>(this);
-
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -30,20 +28,18 @@ export class Chip implements ComponentInterface {
    */
   @Prop() outline = false;
 
-  hostData() {
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        'chip-outline': this.outline,
-        'ion-activatable': true,
-      }
-    };
-  }
-
   render() {
-    return [
-      <slot></slot>,
-      this.mode === 'md' ? <ion-ripple-effect></ion-ripple-effect> : null
-    ];
+    return (
+      <Host
+        class={{
+          ...createColorClasses(this.color),
+          'chip-outline': this.outline,
+          'ion-activatable': true,
+        }}
+      >
+        <slot></slot>
+        {getMode<Mode>(this) === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+      </Host>
+    );
   }
 }
