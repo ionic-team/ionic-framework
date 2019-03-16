@@ -116,6 +116,10 @@ export namespace Components {
     */
     'leaveAnimation'?: AnimationBuilder;
     /**
+    * The mode determines which platform styles to use.
+    */
+    'mode'?: "ios" | "md";
+    /**
     * Returns a promise that resolves when the action-sheet did dismiss.
     */
     'onDidDismiss': () => Promise<OverlayEventDetail<any>>;
@@ -2627,6 +2631,10 @@ declare namespace LocalJSX {
     * Animation to use when the action sheet is dismissed.
     */
     'leaveAnimation'?: AnimationBuilder;
+    /**
+    * The mode determines which platform styles to use.
+    */
+    'mode'?: "ios" | "md";
     /**
     * Emitted after the alert has dismissed.
     */
