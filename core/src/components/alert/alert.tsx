@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, Watch, getMode, h, Host } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, Watch, getMode, h } from '@stencil/core';
 
 import { AlertButton, AlertInput, Animation, AnimationBuilder, CssClassMap, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
@@ -379,7 +379,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
       </div>
     );
   }
-
 
   private renderAlertButtons() {
     const buttons = this.processedButtons;

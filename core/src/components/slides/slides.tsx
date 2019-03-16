@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, Watch, getMode, h, Host } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, Watch, getMode, h } from '@stencil/core';
 
 import { Mode } from '../../interface';
 import { rIC } from '../../utils/helpers.js';

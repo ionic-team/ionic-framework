@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, h, Host } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Host, Listen, Method, Prop, State, h } from '@stencil/core';
 
 import { NavOutlet, RouteID, RouteWrite, TabButtonClickEventDetail } from '../../interface';
 

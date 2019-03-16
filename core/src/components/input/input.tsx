@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch, h, Host } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { Color, InputChangeEventDetail, StyleEventDetail, TextFieldTypes } from '../../interface';
 import { debounceEvent, findItemLabel } from '../../utils/helpers';

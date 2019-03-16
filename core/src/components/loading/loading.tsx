@@ -110,9 +110,13 @@ export class Loading implements ComponentInterface, OverlayInterface {
   @Event({ eventName: 'ionLoadingDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   componentWillLoad() {
-    if (this.spinner == null) {
-      const config = getContext(this, 'config');
-      this.spinner = config.get('loadingSpinner', this.mode === 'ios' ? 'lines' : 'crescent');
+    if (this.spinner === undefined) {
+const config = getContext(this, 'config');
+
+this.spinner = config.get(
+        'loadingSpinner',
+        config.get('spinner', this.mode === 'ios' ? 'lines' : 'crescent')
+      );
     }
   }
 
@@ -157,7 +161,6 @@ export class Loading implements ComponentInterface, OverlayInterface {
   onWillDismiss(): Promise<OverlayEventDetail> {
     return eventMethod(this.el, 'ionLoadingWillDismiss');
   }
-
 
   private onBackdropTap = () => {
     this.dismiss(undefined, BACKDROP);

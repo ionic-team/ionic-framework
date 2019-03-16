@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch, getMode, h, Host } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, getMode, h } from '@stencil/core';
 
 import { getContext } from '../../global/context';
 import { Color, Mode, SearchbarChangeEventDetail } from '../../interface';
@@ -407,7 +407,7 @@ export class Searchbar implements ComponentInterface {
             <ion-icon mode={this.mode} icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
           </button>
         </div>
-        { this.mode === 'ios' && cancelButton }
+        {this.mode === 'ios' && cancelButton}
       </Host>
     );
   }

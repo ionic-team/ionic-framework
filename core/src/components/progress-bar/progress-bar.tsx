@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Prop, h, Host } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { getContext } from '../../global/context';
 import { Color } from '../../interface';

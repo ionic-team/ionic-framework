@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Prop, h, Host } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, getMode, h } from '@stencil/core';
 
 import { getContext } from '../../global/context';
 import { SpinnerTypes } from '../../interface';
@@ -8,6 +8,7 @@ import { SpinnerTypes } from '../../interface';
 })
 export class RefresherContent implements ComponentInterface {
 
+  private mode = getMode(this);
   private config = getContext(this, 'config');
 
   /**
@@ -35,7 +36,10 @@ export class RefresherContent implements ComponentInterface {
       this.pullingIcon = this.config.get('refreshingIcon', 'arrow-down');
     }
     if (this.refreshingSpinner === undefined) {
-      this.refreshingSpinner = this.config.get('refreshingSpinner', this.config.get('spinner', 'lines'));
+      this.refreshingSpinner = this.config.get(
+        'refreshingSpinner',
+        this.config.get('spinner', this.mode === 'ios' ? 'lines' : 'crescent')
+      );
     }
   }
 

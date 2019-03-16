@@ -55,7 +55,7 @@ When the ionic's router (`ion-router`) is used, the `tab` property matches the "
 The following route within the scope of a `ion-tabs` outlet:
 
 ```html
-<ion-route path="/settings-page" component="settings"></ion-route>
+<ion-route url="/settings-page" component="settings"></ion-route>
 ```
 
 Would match the following tab:

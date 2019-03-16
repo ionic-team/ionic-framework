@@ -6,14 +6,14 @@ export const createContext = <T>() => {
   return {
     set<Value extends keyof T>(win: any, key: Value, value: T[Value]) {
       let ctx = contexts.get(win);
-      if (ctx == null) {
+      if (ctx === undefined) {
         contexts.set(win, ctx = new Map());
       }
       ctx.set(key, value);
     },
     get<Value extends keyof T>(ref: any, key: Value): T[Value] {
       const ctx = contexts.get(getWindow(ref));
-      return ctx != null ? ctx.get(key) : undefined;
+      return ctx !== undefined ? ctx.get(key) : undefined;
     }
   };
 };

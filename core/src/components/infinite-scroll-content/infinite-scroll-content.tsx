@@ -30,7 +30,7 @@ export class InfiniteScrollContent implements ComponentInterface {
     if (this.loadingSpinner === undefined) {
       this.loadingSpinner = this.config.get(
         'infiniteLoadingSpinner',
-        this.config.get('spinner', 'lines')
+        this.config.get('spinner', this.mode === 'ios' ? 'lines' : 'crescent')
       );
     }
   }

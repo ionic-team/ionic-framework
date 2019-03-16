@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Listen, Prop, State, getMode, h, Host } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Listen, Prop, State, getMode, h } from '@stencil/core';
 
 import { Color, CssClassMap, Mode, RouterDirection, StyleEventDetail } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';

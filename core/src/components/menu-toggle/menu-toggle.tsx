@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Listen, Prop, State, h, Host } from '@stencil/core';
+import { Component, ComponentInterface, Host, Listen, Prop, State, h } from '@stencil/core';
 
 @Component({
   tag: 'ion-menu-toggle',

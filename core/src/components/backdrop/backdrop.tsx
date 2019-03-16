@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Event, EventEmitter, Listen, Prop, Host, h } from '@stencil/core';
+import { Component, ComponentInterface, Event, EventEmitter, Host, Listen, Prop, h } from '@stencil/core';
 
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { now } from '../../utils/helpers';
