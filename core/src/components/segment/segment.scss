@@ -11,7 +11,8 @@
   @include font-smoothing();
 
   display: flex;
-
+  align-self : stretch;
+  
   align-items: center;
   justify-content: center;
 
@@ -19,8 +20,6 @@
 
   font-family: $font-family-base;
 
-  align-self : stretch;
-  
   text-align: center;
 }
 
