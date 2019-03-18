@@ -85,7 +85,7 @@ export class MyComponent {
   customDayShortNames = ['s\u00f8n', 'man', 'tir', 'ons', 'tor', 'fre', 'l\u00f8r'];
   customPickerOptions: any;
 
-  constructor(){
+  constructor() {
     this.customPickerOptions = {
       buttons: [{
         text: 'Save',
