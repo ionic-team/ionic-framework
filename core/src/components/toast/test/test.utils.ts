@@ -18,7 +18,7 @@ export async function testToast(
       url: pageUrl
     });
 
-    const screenShotCompares = [];
+    const screenshotCompares = [];
 
     const button = await page.find(selector);
     await button.click();
@@ -26,18 +26,18 @@ export async function testToast(
     let toast = await page.find('ion-toast');
     await toast.waitForVisible();
 
-    screenShotCompares.push(await page.compareScreenshot(screenshotName));
+    screenshotCompares.push(await page.compareScreenshot(screenshotName));
 
     await toast.callMethod('dismiss');
     await toast.waitForNotVisible();
 
-    screenShotCompares.push(await page.compareScreenshot(`dismiss ${screenshotName}`));
+    screenshotCompares.push(await page.compareScreenshot(`dismiss ${screenshotName}`));
 
     toast = await page.find('ion-toast');
     expect(toast).toBeNull();
 
-    for (const screenShotCompare of screenShotCompares) {
-      expect(screenShotCompare).toMatchScreenshot();
+    for (const screenshotCompare of screenshotCompares) {
+      expect(screenshotCompare).toMatchScreenshot();
     }
 
   } catch (err) {
