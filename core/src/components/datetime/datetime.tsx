@@ -175,7 +175,7 @@ export class Datetime implements ComponentInterface {
 
   /**
    * Any additional options that the picker interface can accept.
-   * See the [Picker API docs](../../picker/Picker) for the picker options.
+   * See the [Picker API docs](../picker) for the picker options.
    */
   @Prop() pickerOptions?: DatetimeOptions;
 

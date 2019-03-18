@@ -1193,7 +1193,7 @@ export namespace Components {
     */
     'pickerFormat'?: string;
     /**
-    * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
+    * Any additional options that the picker interface can accept. See the [Picker API docs](../picker) for the picker options.
     */
     'pickerOptions'?: DatetimeOptions;
     /**
@@ -1299,7 +1299,7 @@ export namespace Components {
     */
     'pickerFormat'?: string;
     /**
-    * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
+    * Any additional options that the picker interface can accept. See the [Picker API docs](../picker) for the picker options.
     */
     'pickerOptions'?: DatetimeOptions;
     /**
