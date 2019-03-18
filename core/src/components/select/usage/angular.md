@@ -59,6 +59,56 @@
 </ion-list>
 ```
 
+## Objects as Values
+
+```html
+<ion-list>
+  <ion-list-header>Objects as Values (compareWith)</ion-list-header>
+  
+  <ion-item>
+    <ion-label>Users</ion-label>
+    <ion-select [compareWith]="compareWith">
+      <ion-select-option *ngFor="let user of users">{{user.first + ' ' + user.last}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-list>
+```
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'select-example',
+  templateUrl: 'select-example.html',
+  styleUrls: ['./select-example.css'],
+})
+export class SelectExample {
+  users: any[] = [
+    {
+      id: 1,
+      first: 'Alice',
+      last: 'Smith',
+    },
+    {
+      id: 2,
+      first: 'Bob',
+      last: 'Davis',
+    },
+    {
+      id: 3,
+      first: 'Charlie',
+      last: 'Rosenburg',
+    }
+  ];
+
+  compareWithFn = (o1, o2) => {
+    return o1 && o2 ? o1.id === o2.id : o1 === o2;
+  };
+
+  compareWith = compareWithFn;
+}
+```
+
 ## Interface Options
 
 ```html

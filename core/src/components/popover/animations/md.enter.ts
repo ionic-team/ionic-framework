@@ -22,9 +22,10 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev?
   const targetDim =
     ev && ev.target && (ev.target as HTMLElement).getBoundingClientRect();
 
+  // As per MD spec, by default position the popover below the target (trigger) element
   const targetTop =
-    targetDim != null && 'top' in targetDim
-      ? targetDim.top
+    targetDim != null && 'bottom' in targetDim
+      ? targetDim.bottom
       : bodyHeight / 2 - contentHeight / 2;
 
   const targetLeft =
@@ -46,12 +47,19 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev?
   // exceeds the body width it is off screen to the right so adjust
   if (popoverCSS.left < POPOVER_MD_BODY_PADDING) {
     popoverCSS.left = POPOVER_MD_BODY_PADDING;
+
+    // Same origin in this case for both LTR & RTL
+    // Note: in LTR, originX is already 'left'
+    originX = 'left';
   } else if (
     contentWidth + POPOVER_MD_BODY_PADDING + popoverCSS.left >
     bodyWidth
   ) {
     popoverCSS.left = bodyWidth - contentWidth - POPOVER_MD_BODY_PADDING;
-    originX = isRTL ? 'left' : 'right';
+
+    // Same origin in this case for both LTR & RTL
+    // Note: in RTL, originX is already 'right'
+    originX = 'right';
   }
 
   // If the popover when popped down stretches past bottom of screen,
@@ -60,7 +68,7 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev?
     targetTop + targetHeight + contentHeight > bodyHeight &&
     targetTop - contentHeight > 0
   ) {
-    popoverCSS.top = targetTop - contentHeight;
+    popoverCSS.top = targetTop - contentHeight - targetHeight;
     baseEl.className = baseEl.className + ' popover-bottom';
     originY = 'bottom';
     // If there isn't room for it to pop up above the target cut it off

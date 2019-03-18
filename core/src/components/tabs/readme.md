@@ -55,7 +55,7 @@ When the ionic's router (`ion-router`) is used, the `tab` property matches the "
 The following route within the scope of a `ion-tabs` outlet:
 
 ```html
-<ion-route path="/settings-page" component="settings"></ion-route>
+<ion-route url="/settings-page" component="settings"></ion-route>
 ```
 
 Would match the following tab:
@@ -199,6 +199,38 @@ const Example: React.SFC<{}> = () => (
 );
 
 export default Example;
+```
+
+
+### Vue
+
+```html
+<template>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="schedule">
+        <ion-icon name="calendar"></ion-icon>
+        <ion-label>Schedule</ion-label>
+        <ion-badge>6</ion-badge>
+      </ion-tab-button>
+
+      <ion-tab-button tab="speakers">
+        <ion-icon name="contacts"></ion-icon>
+        <ion-label>Speakers</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="map">
+        <ion-icon name="map"></ion-icon>
+        <ion-label>Map</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="about">
+        <ion-icon name="information-circle"></ion-icon>
+        <ion-label>About</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</template>
 ```
 
 
