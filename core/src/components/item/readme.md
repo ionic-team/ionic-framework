@@ -1414,6 +1414,7 @@ Item Inputs
 | `--padding-end`             | End padding of the item                             |
 | `--padding-start`           | Start padding of the item                           |
 | `--padding-top`             | Top padding of the item                             |
+| `--ripple-color`            | Color of the item ripple effect                     |
 | `--transition`              | Transition of the item                              |
 
 
