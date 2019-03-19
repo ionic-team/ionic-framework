@@ -47,12 +47,19 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev?
   // exceeds the body width it is off screen to the right so adjust
   if (popoverCSS.left < POPOVER_MD_BODY_PADDING) {
     popoverCSS.left = POPOVER_MD_BODY_PADDING;
+
+    // Same origin in this case for both LTR & RTL
+    // Note: in LTR, originX is already 'left'
+    originX = 'left';
   } else if (
     contentWidth + POPOVER_MD_BODY_PADDING + popoverCSS.left >
     bodyWidth
   ) {
     popoverCSS.left = bodyWidth - contentWidth - POPOVER_MD_BODY_PADDING;
-    originX = isRTL ? 'left' : 'right';
+
+    // Same origin in this case for both LTR & RTL
+    // Note: in RTL, originX is already 'right'
+    originX = 'right';
   }
 
   // If the popover when popped down stretches past bottom of screen,
