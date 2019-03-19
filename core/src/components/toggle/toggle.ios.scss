@@ -24,6 +24,9 @@
   background: current-color(base);
 }
 
+:host(.ion-color.toggle-checked) .toggle-inner {
+  background: current-color(contrast);
+}
 
 // iOS Toggle Background Track: Unchecked
 // -----------------------------------------
