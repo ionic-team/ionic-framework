@@ -21,15 +21,15 @@ export async function testMenu(
     const screenshotCompares = [];
 
     const menu = await page.find(selector);
-    await page.waitFor(250);
+    await page.waitFor(150);
 
     await menu.callMethod('open');
-    await page.waitFor(250);
+    await page.waitFor(150);
 
     screenshotCompares.push(await page.compareScreenshot(screenshotName));
 
     await menu.callMethod('close');
-    await page.waitFor(250);
+    await page.waitFor(150);
 
     screenshotCompares.push(await page.compareScreenshot(`dismiss ${screenshotName}`));
 
