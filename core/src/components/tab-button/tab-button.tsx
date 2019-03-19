@@ -90,6 +90,8 @@ export class TabButton implements ComponentInterface {
   }
 
   private get tabIndex() {
+    if (this.disabled) { return -1; }
+
     const hasTabIndex = this.el.hasAttribute('tabindex');
 
     if (hasTabIndex) {
