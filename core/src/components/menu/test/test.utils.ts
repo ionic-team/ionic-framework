@@ -23,7 +23,7 @@ export async function testMenu(
     const menu = await page.find(selector);
 
     await menu.callMethod('open');
-    await page.waitFor(350);
+    await page.waitFor(500);
 
     screenshotCompares.push(await page.compareScreenshot(screenshotName));
 
