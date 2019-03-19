@@ -24,12 +24,16 @@ export async function testFab(
     const fab = await getFabComponent(page, selector);
     await fab.click();
 
+    await page.waitFor(150);
+
     await ensureFabState(fab, 'active');
 
     screenshotCompares.push(await page.compareScreenshot(`${screenshotName} open`));
 
     const fabButton = await getFabButton(fab);
     await fabButton.click();
+
+    await page.waitFor(150);
 
     await ensureFabState(fab, 'inactive');
 
