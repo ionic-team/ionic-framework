@@ -5,6 +5,16 @@ test('tab-bar: custom', async () => {
     url: '/src/components/tab-bar/test/custom?ionic:_testing=true'
   });
 
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
+  const screenshotCompares = [];
+
+  screenshotCompares.push(await page.compareScreenshot('tab-bar: custom default'));
+
+  await page.waitFor(150);
+  await page.keyboard.press('Tab');
+
+  screenshotCompares.push(await page.compareScreenshot('tab-bar: custom tabbed'));
+
+  for (const screenshotCompare of screenshotCompares) {
+    expect(screenshotCompare).toMatchScreenshot();
+  }
 });
