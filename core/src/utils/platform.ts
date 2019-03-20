@@ -35,6 +35,10 @@ const isIOS = (win: Window) =>
 const isAndroid = (win: Window) =>
   testUserAgent(win, /android|sink/i);
 
+const isAndroidTablet = (win: Window) => {
+  return isAndroid(win) && !testUserAgent(win, /mobile/i);
+};
+
 const isPhablet = (win: Window) => {
   const width = win.innerWidth;
   const height = win.innerHeight;
@@ -50,8 +54,15 @@ const isTablet = (win: Window) => {
   const height = win.innerHeight;
   const smallest = Math.min(width, height);
   const largest = Math.max(width, height);
-  return (smallest > 460 && smallest < 820) &&
-    (largest > 780 && largest < 1400);
+
+  return (
+    isIpad(win) ||
+    isAndroidTablet(win) ||
+    (
+      (smallest > 460 && smallest < 820) &&
+      (largest > 780 && largest < 1400)
+    )
+  );
 };
 
 const isMobile = (win: Window) =>

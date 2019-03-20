@@ -18,7 +18,7 @@ export async function testLoading(
       url: pageUrl
     });
 
-    const screenShotCompares = [];
+    const screenshotCompares = [];
 
     await page.click(selector);
     await page.waitForSelector(selector);
@@ -28,18 +28,18 @@ export async function testLoading(
 
     await loading.waitForVisible();
 
-    screenShotCompares.push(await page.compareScreenshot(screenshotName));
+    screenshotCompares.push(await page.compareScreenshot(screenshotName));
 
     await loading.callMethod('dismiss');
     await loading.waitForNotVisible();
 
-    screenShotCompares.push(await page.compareScreenshot(`dismiss ${screenshotName}`));
+    screenshotCompares.push(await page.compareScreenshot(`dismiss ${screenshotName}`));
 
     loading = await page.find('ion-loading');
     expect(loading).toBeNull();
 
-    for (const screenShotCompare of screenShotCompares) {
-      expect(screenShotCompare).toMatchScreenshot();
+    for (const screenshotCompare of screenshotCompares) {
+      expect(screenshotCompare).toMatchScreenshot();
     }
 
   } catch (err) {

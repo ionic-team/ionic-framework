@@ -509,6 +509,7 @@ ion-item,css-prop,--padding-bottom
 ion-item,css-prop,--padding-end
 ion-item,css-prop,--padding-start
 ion-item,css-prop,--padding-top
+ion-item,css-prop,--ripple-color
 ion-item,css-prop,--transition
 
 ion-label,scoped
