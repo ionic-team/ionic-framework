@@ -1,3 +1,21 @@
+## [4.1.2](https://github.com/ionic-team/ionic/compare/v4.1.1...v4.1.2) (2019-03-20)
+
+
+### Bug Fixes
+
+* **chip:** use transparent outline on color chips ([#17719](https://github.com/ionic-team/ionic/issues/17719)) ([f6783db](https://github.com/ionic-team/ionic/commit/f6783db))
+* **datetime:** default to local date ([#17706](https://github.com/ionic-team/ionic/issues/17706)) ([bab56e8](https://github.com/ionic-team/ionic/commit/bab56e8))
+* **input:** use max-height for input for consistency across browsers ([#17394](https://github.com/ionic-team/ionic/issues/17394)) ([67a9137](https://github.com/ionic-team/ionic/commit/67a9137))
+* **item:** add missing ripple color CSS property ([#17814](https://github.com/ionic-team/ionic/issues/17814)) ([807820f](https://github.com/ionic-team/ionic/commit/807820f)), closes [#17523](https://github.com/ionic-team/ionic/issues/17523)
+* **item-option:** add styling for slots other than icon-only ([#17711](https://github.com/ionic-team/ionic/issues/17711)) ([14f758c](https://github.com/ionic-team/ionic/commit/14f758c)), closes [#17737](https://github.com/ionic-team/ionic/issues/17737) [#17402](https://github.com/ionic-team/ionic/issues/17402)
+* **platform:** account for larger tablets ([#17630](https://github.com/ionic-team/ionic/issues/17630)) ([29dbd07](https://github.com/ionic-team/ionic/commit/29dbd07))
+* **popover:** update animation origin in RTL/MD ([#17645](https://github.com/ionic-team/ionic/issues/17645)) ([617453b](https://github.com/ionic-team/ionic/commit/617453b)), closes [#17012](https://github.com/ionic-team/ionic/issues/17012)
+* **spinner:** fix default spinner logic for relevant components ([#17660](https://github.com/ionic-team/ionic/issues/17660)) ([9c48fa7](https://github.com/ionic-team/ionic/commit/9c48fa7)), closes [#17659](https://github.com/ionic-team/ionic/issues/17659)
+* **toggle:** do not use the contrast color for toggle inner color ([#17798](https://github.com/ionic-team/ionic/issues/17798)) ([2225941](https://github.com/ionic-team/ionic/commit/2225941)), closes [#17536](https://github.com/ionic-team/ionic/issues/17536)
+* **transition:** animate all toolbars in iOS page transitions ([#17224](https://github.com/ionic-team/ionic/issues/17224)) ([7d01207](https://github.com/ionic-team/ionic/commit/7d01207))
+
+
+
 ## [4.1.1](https://github.com/ionic-team/ionic/compare/v4.1.0...v4.1.1) (2019-03-07)
 
 
