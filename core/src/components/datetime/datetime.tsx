@@ -272,6 +272,12 @@ export class Datetime implements ComponentInterface {
       const colSelectedIndex = data.selectedIndex;
       const colOptions = data.options;
 
+      /**
+       * Don't bother checking for non-dates as things like hours or minutes
+       * are always going to have the same number of column options
+       */
+      if (data.name !== 'month' && data.name !== 'day' && data.name !== 'year') { return; }
+
       const changeData: any = {};
       changeData[data.name] = {
         value: colOptions[colSelectedIndex].value
