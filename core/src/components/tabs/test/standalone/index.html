@@ -14,7 +14,7 @@
   </script>
 </head>
 
-<body>
+<body onload="selectTab()">
   <ion-tabs>
     <ion-tab tab="tab-one">
       <div class="content-div div-one">
@@ -71,6 +71,14 @@
       background-color: #4f6cac;
     }
   </style>
+
+  <script>
+    async function selectTab() {
+      const tabs = document.querySelector('ion-tabs');
+      await tabs.componentOnReady();
+      await tabs.select('tab-three');
+    }
+  </script>
 </body>
 
 </html>
