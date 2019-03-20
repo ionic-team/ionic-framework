@@ -11,9 +11,7 @@
   @include font-smoothing();
 
   display: flex;
-   
-  align-items: center;
-  align-self : stretch;
+  align-items: stretch;
   justify-content: center;
 
   width: 100%;
