@@ -36,6 +36,10 @@ export class PickerColumnCmp implements ComponentInterface {
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
+  /**
+   * Emitted when the selected value has changed
+   * @internal
+   */
   @Event() ionPickerColChange!: EventEmitter<PickerColumn>;
 
   /** Picker column data */
