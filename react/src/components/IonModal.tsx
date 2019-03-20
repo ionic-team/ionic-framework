@@ -1,6 +1,6 @@
 import { Components } from '@ionic/core';
 import { createOverlayComponent } from './createOverlayComponent';
-import { Omit } from './types';
+import { Omit } from '../types';
 
 export type ModalOptions = Omit<Components.IonModalAttributes,  'component' | 'componentProps'> & {
   children: React.ReactNode;

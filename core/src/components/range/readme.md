@@ -83,6 +83,83 @@ left or right of the range.
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonList, IonItem, IonRange, IonLabel, IonIcon } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+
+  <IonList>
+    <IonItem>
+      <IonRange color="danger" pin={true}></IonRange>
+    </IonItem>
+
+    <IonItem>
+      <IonRange min={-200} max={200} color="secondary">
+        <IonLabel slot="start">-200</IonLabel>
+        <IonLabel slot="end">200</IonLabel>
+      </IonRange>
+    </IonItem>
+
+   <IonItem>
+     <IonRange min={20} max={80} step={2}>
+       <IonIcon size="small" slot="start" name="sunny" />
+       <IonIcon slot="end" name="sunny" />
+     </IonRange>
+   </IonItem>
+
+    <IonItem>
+      <IonRange min={1000} max={2000} step={100} snaps={true} color="secondary"></IonRange>
+    </IonItem>
+
+    <IonItem>
+      <IonRange dualKnobs={true} min={21} max={72} step={3} snaps={true}></IonRange>
+    </IonItem>
+  </IonList>
+);
+
+export default Example;
+```
+
+
+### Vue
+
+```html
+<template>
+  <ion-list>
+    <ion-item>
+      <ion-range color="danger" pin="true"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-range min="-200" max="200" color="secondary">
+        <ion-label slot="start">-200</ion-label>
+        <ion-label slot="end">200</ion-label>
+      </ion-range>
+    </ion-item>
+
+  <ion-item>
+    <ion-range min="20" max="80" step="2">
+      <ion-icon size="small" slot="start" name="sunny"></ion-icon>
+      <ion-icon slot="end" name="sunny"></ion-icon>
+    </ion-range>
+  </ion-item>
+
+    <ion-item>
+      <ion-range min="1000" max="2000" step="100" snaps="true" color="secondary"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-range dualKnobs="true" min="21" max="72" step="3" snaps="true"></ion-range>
+    </ion-item>
+  </ion-list>
+</template>
+```
+
+
 
 ## Properties
 
@@ -109,6 +186,14 @@ left or right of the range.
 | `ionBlur`   | Emitted when the range loses focus.          | `CustomEvent<void>`                   |
 | `ionChange` | Emitted when the value property has changed. | `CustomEvent<RangeChangeEventDetail>` |
 | `ionFocus`  | Emitted when the range has focus.            | `CustomEvent<void>`                   |
+
+
+## Slots
+
+| Slot      | Description                                                                        |
+| --------- | ---------------------------------------------------------------------------------- |
+| `"end"`   | Content is placed to the right of the range slider in LTR, and to the left in RTL. |
+| `"start"` | Content is placed to the left of the range slider in LTR, and to the right in RTL. |
 
 
 ## CSS Custom Properties

@@ -31,6 +31,13 @@
       <ion-list>
         <ion-item-divider>
           <ion-label>
+            Divider with a slotted icon
+          </ion-label>
+          <ion-icon name="trash" slot="start"></ion-icon>
+        </ion-item-divider>
+
+        <ion-item-divider>
+          <ion-label>
             Divider in List
           </ion-label>
         </ion-item-divider>
@@ -77,8 +84,8 @@
           <ion-button slot="end">button</ion-button>
         </ion-item-divider>
 
-        <ion-item text-wrap class="custom-item">
-          <ion-label>
+        <ion-item class="custom-item">
+          <ion-label text-wrap>
             Multiline text that should wrap when it is too long to fit on one line in the item. Attribute on .item
           </ion-label>
         </ion-item>
@@ -101,7 +108,7 @@
           </ion-label>
         </ion-item-divider>
 
-        <ion-item text-wrap>
+        <ion-item>
           <ion-label>
             <h1>H1 Title Text</h1>
           </ion-label>

@@ -33,11 +33,7 @@ export function createReactComponent<T extends object, E>(tagName: string) {
     }
 
     componentWillReceiveProps(props: InternalProps) {
-      const node = ReactDOM.findDOMNode(this);
-
-      if (!(node instanceof HTMLElement)) {
-        return;
-      }
+      const node = ReactDOM.findDOMNode(this) as HTMLElement;
 
       attachEventProps(node, props);
     }

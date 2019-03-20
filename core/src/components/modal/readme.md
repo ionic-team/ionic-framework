@@ -5,7 +5,7 @@ A Modal is a dialog that appears on top of the app's content, and must be dismis
 
 ### Creating
 
-Modals can be created using a [Modal Controller](../../modal-controller/ModalController). They can be customized by passing modal options in the modal controller's create method.
+Modals can be created using a [Modal Controller](../modal-controller). They can be customized by passing modal options in the modal controller's create method.
 
 
 ### Passing paramaters
@@ -36,7 +36,7 @@ instance.prop2 = value2;
 This way, your component can access the passed params, check the "Usage" section for further code example for each frameworks.
 
 
-### Retuning data
+### Returning data
 
 Modals can also return data back to the controller when they are dismissed.
 
@@ -137,6 +137,110 @@ async function presentModal() {
   });
   await modalElement.present();
 }
+```
+
+
+### React
+
+```tsx
+import React, { Component } from 'react'
+import { IonModal } from '@ionic/react';
+
+type Props = {}
+type State = {
+  showModal: boolean
+}
+
+export class ModalExample extends Component<Props, State> {
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      showModal: false
+    };
+  }
+
+  render() {
+    return (
+      <IonModal
+        isOpen={this.state.showModal}
+        onDidDismiss={() => this.setState(() => ({ showModal: false }))}
+      >
+        <p>This is modal content</p>
+        <IonButton onClick={() => this.setState(() => ({ showModal: false }))}>
+          Close Modal
+        </IonButton>
+      </IonModal>
+    );
+  }
+}
+
+```
+
+
+### Vue
+
+```html
+<template>
+  <div>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{ title }}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content padding>
+      {{ content }}
+    </ion-content>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Modal',
+  props: {
+    title: { type: String, default: 'Super Modal' },
+  },
+  data() {
+    return {
+      content: 'Content',
+    }
+  },
+}
+</script>
+```
+
+```html
+<template>
+  <ion-page class="ion-page" main>
+    <ion-content class="ion-content" padding>
+      <ion-button @click="openModal">Open Modal</ion-button>
+    </ion-content>
+  </ion-page>
+</template>
+
+<script>
+import Modal from './modal.vue'
+
+export default {
+  methods: {
+    openModal() {
+      return this.$ionic.modalController
+        .create({
+          component: Modal,
+          componentProps: {
+            data: {
+              content: 'New Content',
+            },
+            propsData: {
+              title: 'New title',
+            },
+          },
+        })
+        .then(m => m.present())
+    },
+  },
+}
+</script>
 ```
 
 

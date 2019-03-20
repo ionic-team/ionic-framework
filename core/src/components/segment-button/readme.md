@@ -1,6 +1,6 @@
 # ion-segment-button
 
-Segment buttons are groups of related buttons inside of a [Segment](../../segment/Segment). They are displayed in a horizontal row. A segment button can be checked by default by adding the `checked` attribute or by setting the `value` of the segment to the `value` of the segment button. Only one segment button should be selected at a time.
+Segment buttons are groups of related buttons inside of a [Segment](../segment). They are displayed in a horizontal row. A segment button can be checked by default by adding the `checked` attribute or by setting the `value` of the segment to the `value` of the segment button. Only one segment button should be selected at a time.
 
 
 <!-- Auto Generated Below -->
@@ -312,6 +312,311 @@ for (let i = 0; i < segmentButtons.length; i++) {
     console.log('Segment button clicked', ev);
   })
 }
+```
+
+
+### React
+
+```tsx
+import React from 'react';
+
+import { IonSegment, IonSegmentButton, IonLabel, IonIcon } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+  <>
+    {/*-- Segment buttons with text and click listeners --*/}
+    <IonSegment>
+      <IonSegmentButton onIonSelect={() => console.log('Friends segment selected')}>
+        <IonLabel>Friends</IonLabel>
+      </IonSegmentButton>
+      <IonSegmentButton onIonSelect={() => console.log('Enemies segment selected')}>
+        <IonLabel>Enemies</IonLabel>
+      </IonSegmentButton>
+    </IonSegment>
+
+    {/*-- Segment buttons with the first checked and the last disabled --*/}
+    <IonSegment>
+      <IonSegmentButton checked>
+        <IonLabel>Paid</IonLabel>
+      </IonSegmentButton>
+      <IonSegmentButton>
+        <IonLabel>Free</IonLabel>
+      </IonSegmentButton>
+      <IonSegmentButton disabled>
+        <IonLabel>Top</IonLabel>
+      </IonSegmentButton>
+    </IonSegment>
+
+    {/*-- Segment buttons with values and icons --*/}
+    <IonSegment>
+      <IonSegmentButton value="camera">
+        <IonIcon name="camera" />
+      </IonSegmentButton>
+      <IonSegmentButton value="bookmark">
+        <IonIcon name="bookmark" />
+      </IonSegmentButton>
+    </IonSegment>
+
+    {/*-- Segment with a value that checks the last button --*/}
+    <IonSegment value="shared">
+      <IonSegmentButton value="bookmarks">
+        <IonLabel>Bookmarks</IonLabel>
+      </IonSegmentButton>
+      <IonSegmentButton value="reading">
+        <IonLabel>Reading List</IonLabel>
+      </IonSegmentButton>
+      <IonSegmentButton value="shared">
+        <IonLabel>Shared Links</IonLabel>
+      </IonSegmentButton>
+    </IonSegment>
+
+    {/*-- Label only --*/}
+    <IonSegment>
+      <IonSegmentButton checked>
+        <IonLabel>Item One</IonLabel>
+      </IonSegmentButton>
+      <IonSegmentButton>
+        <IonLabel>Item Two</IonLabel>
+      </IonSegmentButton>
+      <IonSegmentButton>
+        <IonLabel>Item Three</IonLabel>
+      </IonSegmentButton>
+    </IonSegment>
+
+    {/*-- Icon only --*/}
+    <IonSegment>
+      <IonSegmentButton>
+        <IonIcon name="call" />
+      </IonSegmentButton>
+      <IonSegmentButton checked>
+        <IonIcon name="heart" />
+      </IonSegmentButton>
+      <IonSegmentButton>
+        <IonIcon name="pin" />
+      </IonSegmentButton>
+    </IonSegment>
+
+    {/*-- Icon top --*/}
+    <IonSegment>
+      <IonSegmentButton>
+        <IonLabel>Item One</IonLabel>
+        <IonIcon name="call" />
+      </IonSegmentButton>
+      <IonSegmentButton checked>
+        <IonLabel>Item Two</IonLabel>
+        <IonIcon name="heart" />
+      </IonSegmentButton>
+      <IonSegmentButton>
+        <IonLabel>Item Three</IonLabel>
+        <IonIcon name="pin" />
+      </IonSegmentButton>
+    </IonSegment>
+
+    {/*-- Icon bottom --*/}
+    <IonSegment>
+      <IonSegmentButton checked layout="icon-bottom">
+        <IonIcon name="call" />
+        <IonLabel>Item One</IonLabel>
+      </IonSegmentButton>
+      <IonSegmentButton layout="icon-bottom">
+        <IonIcon name="heart" />
+        <IonLabel>Item Two</IonLabel>
+      </IonSegmentButton>
+      <IonSegmentButton layout="icon-bottom">
+        <IonIcon name="pin" />
+        <IonLabel>Item Three</IonLabel>
+      </IonSegmentButton>
+    </IonSegment>
+
+    {/*-- Icon start --*/}
+    <IonSegment>
+      <IonSegmentButton checked layout="icon-start">
+        <IonLabel>Item One</IonLabel>
+        <IonIcon name="call" />
+      </IonSegmentButton>
+      <IonSegmentButton layout="icon-start">
+        <IonLabel>Item Two</IonLabel>
+        <IonIcon name="heart" />
+      </IonSegmentButton>
+      <IonSegmentButton layout="icon-start">
+        <IonLabel>Item Three</IonLabel>
+        <IonIcon name="pin" />
+      </IonSegmentButton>
+    </IonSegment>
+
+    {/*-- Icon end --*/}
+    <IonSegment>
+      <IonSegmentButton checked layout="icon-end">
+        <IonIcon name="call" />
+        <IonLabel>Item One</IonLabel>
+      </IonSegmentButton>
+      <IonSegmentButton disabled layout="icon-end">
+        <IonIcon name="heart" />
+        <IonLabel>Item Two</IonLabel>
+      </IonSegmentButton>
+      <IonSegmentButton layout="icon-end">
+        <IonIcon name="pin" />
+        <IonLabel>Item Three</IonLabel>
+      </IonSegmentButton>
+    </IonSegment>
+  </>
+);
+
+export default Example;
+```
+
+
+### Vue
+
+```html
+<template>
+  <!-- Segment buttons with text and click listeners -->
+  <ion-segment>
+    <ion-segment-button @ionSelect="segmentButtonClicked($event)">
+      <ion-label>Friends</ion-label>
+    </ion-segment-button>
+    <ion-segment-button @ionSelect="segmentButtonClicked($event)">
+      <ion-label>Enemies</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Segment buttons with the first checked and the last disabled -->
+  <ion-segment>
+    <ion-segment-button checked>
+      <ion-label>Paid</ion-label>
+    </ion-segment-button>
+    <ion-segment-button>
+      <ion-label>Free</ion-label>
+    </ion-segment-button>
+    <ion-segment-button disabled>
+      <ion-label>Top</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Segment buttons with values and icons -->
+  <ion-segment>
+    <ion-segment-button value="camera">
+      <ion-icon name="camera"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="bookmark">
+      <ion-icon name="bookmark"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Segment with a value that checks the last button -->
+  <ion-segment value="shared">
+    <ion-segment-button value="bookmarks">
+      <ion-label>Bookmarks</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="reading">
+      <ion-label>Reading List</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="shared">
+      <ion-label>Shared Links</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Label only -->
+  <ion-segment>
+    <ion-segment-button checked>
+      <ion-label>Item One</ion-label>
+    </ion-segment-button>
+    <ion-segment-button>
+      <ion-label>Item Two</ion-label>
+    </ion-segment-button>
+    <ion-segment-button>
+      <ion-label>Item Three</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Icon only -->
+  <ion-segment>
+    <ion-segment-button>
+      <ion-icon name="call"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button checked>
+      <ion-icon name="heart"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button>
+      <ion-icon name="pin"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Icon top -->
+  <ion-segment>
+    <ion-segment-button>
+      <ion-label>Item One</ion-label>
+      <ion-icon name="call"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button checked>
+      <ion-label>Item Two</ion-label>
+      <ion-icon name="heart"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button>
+      <ion-label>Item Three</ion-label>
+      <ion-icon name="pin"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Icon bottom -->
+  <ion-segment>
+    <ion-segment-button checked layout="icon-bottom">
+      <ion-icon name="call"></ion-icon>
+      <ion-label>Item One</ion-label>
+    </ion-segment-button>
+    <ion-segment-button layout="icon-bottom">
+      <ion-icon name="heart"></ion-icon>
+      <ion-label>Item Two</ion-label>
+    </ion-segment-button>
+    <ion-segment-button layout="icon-bottom">
+      <ion-icon name="pin"></ion-icon>
+      <ion-label>Item Three</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Icon start -->
+  <ion-segment>
+    <ion-segment-button checked layout="icon-start">
+      <ion-label>Item One</ion-label>
+      <ion-icon name="call"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button layout="icon-start">
+      <ion-label>Item Two</ion-label>
+      <ion-icon name="heart"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button layout="icon-start">
+      <ion-label>Item Three</ion-label>
+      <ion-icon name="pin"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Icon end -->
+  <ion-segment>
+    <ion-segment-button checked layout="icon-end">
+      <ion-icon name="call"></ion-icon>
+      <ion-label>Item One</ion-label>
+    </ion-segment-button>
+    <ion-segment-button disabled layout="icon-end">
+      <ion-icon name="heart"></ion-icon>
+      <ion-label>Item Two</ion-label>
+    </ion-segment-button>
+    <ion-segment-button layout="icon-end">
+      <ion-icon name="pin"></ion-icon>
+      <ion-label>Item Three</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</template>
+
+<script lang="ts">
+  import { Component, Vue } from 'vue-property-decorator';
+
+  @Component()
+  export default class MenuExample extends Vue {
+    segmentButtonClicked(ev: any) {
+      console.log('Segment button clicked', ev);
+    }
+  }
+</script>
 ```
 
 

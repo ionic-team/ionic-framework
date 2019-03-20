@@ -77,6 +77,9 @@ import {
 import {
   EventEmitter,
 } from '@stencil/core';
+import {
+  SelectCompareFn,
+} from './components/select/select-interface';
 
 
 export namespace Components {
@@ -746,6 +749,10 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
+    * If `true`, the checkbox will visually appear as indeterminate.
+    */
+    'indeterminate': boolean;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -771,6 +778,10 @@ export namespace Components {
     * If `true`, the user cannot interact with the checkbox.
     */
     'disabled'?: boolean;
+    /**
+    * If `true`, the checkbox will visually appear as indeterminate.
+    */
+    'indeterminate'?: boolean;
     /**
     * The mode determines which platform styles to use.
     */
@@ -1985,7 +1996,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.
+    * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
     */
     'detail'?: boolean;
     /**
@@ -2027,7 +2038,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.
+    * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
     */
     'detail'?: boolean;
     /**
@@ -3510,7 +3521,7 @@ export namespace Components {
     */
     'disabled'?: boolean;
     /**
-    * Event that needs to be listen to in order to respond to reorder action. `ion-reorder-group` uses this event to delegate to the user the reordering of data array.   The complete() method exposed as
+    * Event that needs to be listened to in order to complete the reorder action. Once the event has been emitted, the `complete()` method then needs to be called in order to finalize the reorder action.
     */
     'onIonItemReorder'?: (event: CustomEvent<ItemReorderEventDetail>) => void;
   }
@@ -3993,6 +4004,10 @@ export namespace Components {
     */
     'cancelText': string;
     /**
+    * A property name or function used to compare object values
+    */
+    'compareWith'?: string | SelectCompareFn | null;
+    /**
     * If `true`, the user cannot interact with the select.
     */
     'disabled': boolean;
@@ -4042,6 +4057,10 @@ export namespace Components {
     * The text to display on the cancel button.
     */
     'cancelText'?: string;
+    /**
+    * A property name or function used to compare object values
+    */
+    'compareWith'?: string | SelectCompareFn | null;
     /**
     * If `true`, the user cannot interact with the select.
     */
@@ -4102,14 +4121,16 @@ export namespace Components {
 
   interface IonSkeletonText {
     /**
-    * Width for the element to render at.
+    * If `true`, the skeleton text will animate.
     */
-    'width': string;
+    'animated': boolean;
+    'width'?: string;
   }
   interface IonSkeletonTextAttributes extends StencilHTMLAttributes {
     /**
-    * Width for the element to render at.
+    * If `true`, the skeleton text will animate.
     */
+    'animated'?: boolean;
     'width'?: string;
   }
 

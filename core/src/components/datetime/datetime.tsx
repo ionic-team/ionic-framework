@@ -4,7 +4,7 @@ import { DatetimeChangeEventDetail, DatetimeOptions, Mode, PickerColumn, PickerC
 import { clamp, findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
-import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getValueFromFormat, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
+import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getDateValue, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
 
 @Component({
   tag: 'ion-datetime',
@@ -307,6 +307,19 @@ export class Datetime implements ComponentInterface {
           text: this.doneText,
           handler: (data: any) => {
             this.updateDatetimeValue(data);
+
+            /**
+             * Prevent convertDataToISO from doing any
+             * kind of transformation based on timezone
+             * This cancels out any change it attempts to make
+             *
+             * Important: Take the timezone offset based on
+             * the date that is currently selected, otherwise
+             * there can be 1 hr difference when dealing w/ DST
+             */
+            const date = new Date(convertDataToISO(this.datetimeValue));
+            this.datetimeValue.tzOffset = date.getTimezoneOffset() * -1;
+
             this.value = convertDataToISO(this.datetimeValue);
           }
         }
@@ -359,7 +372,8 @@ export class Datetime implements ComponentInterface {
 
       // cool, we've loaded up the columns with options
       // preselect the option for this column
-      const optValue = getValueFromFormat(this.datetimeValue, format);
+      const optValue = getDateValue(this.datetimeValue, format);
+
       const selectedIndex = colOptions.findIndex(opt => opt.value === optValue);
 
       return {
@@ -527,6 +541,13 @@ export class Datetime implements ComponentInterface {
   private getText() {
     // create the text of the formatted data
     const template = this.displayFormat || this.pickerFormat || DEFAULT_FORMAT;
+
+    if (
+      this.value === undefined ||
+      this.value === null ||
+      this.value.length === 0
+    ) { return; }
+
     return renderDatetime(template, this.datetimeValue, this.locale);
   }
 

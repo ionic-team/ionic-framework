@@ -2,6 +2,11 @@ import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } 
 
 import { Config, NavOutlet, RouteID, RouteWrite, TabButtonClickEventDetail } from '../../interface';
 
+/**
+ * @slot - Content is placed between the named slots if provided without a slot.
+ * @slot top - Content is placed at the top of the screen.
+ * @slot bottom - Content is placed at the bottom of the screen.
+ */
 @Component({
   tag: 'ion-tabs',
   styleUrl: 'tabs.scss',
