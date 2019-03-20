@@ -35,8 +35,8 @@ export async function testFab(
 
     screenshotCompares.push(await page.compareScreenshot(`${screenshotName} close`));
 
-    for (const screenShotCompare of screenshotCompares) {
-      expect(screenShotCompare).toMatchScreenshot();
+    for (const screenshotCompare of screenshotCompares) {
+      expect(screenshotCompare).toMatchScreenshot();
     }
   } catch (err) {
     throw err;
@@ -69,8 +69,8 @@ export async function testDisabledFab(
 
     screenshotCompares.push(await page.compareScreenshot(`disabled ${screenshotName} attempt open`));
 
-    for (const screenShotCompare of screenshotCompares) {
-      expect(screenShotCompare).toMatchScreenshot();
+    for (const screenshotCompare of screenshotCompares) {
+      expect(screenshotCompare).toMatchScreenshot();
     }
   } catch (err) {
     throw err;
