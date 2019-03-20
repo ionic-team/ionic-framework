@@ -197,7 +197,6 @@ export class Datetime implements ComponentInterface {
   protected valueChanged() {
     this.updateDatetimeValue(this.value);
     this.emitStyle();
-    console.log(this.value);
     this.ionChange.emit({
       value: this.value
     });
