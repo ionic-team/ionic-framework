@@ -261,10 +261,35 @@ export class Datetime implements ComponentInterface {
 
     const pickerOptions = this.generatePickerOptions();
     const picker = await this.pickerCtrl.create(pickerOptions);
+
     this.isExpanded = true;
     picker.onDidDismiss().then(() => {
       this.isExpanded = false;
       this.setFocus();
+    });
+    picker.addEventListener('ionPickerColChange', async (event: any) => {
+      const data = event.detail;
+
+      /**
+       * Don't bother checking for non-dates as things like hours or minutes
+       * are always going to have the same number of column options
+       */
+      if (data.name !== 'month' && data.name !== 'day' && data.name !== 'year') { return; }
+
+      const colSelectedIndex = data.selectedIndex;
+      const colOptions = data.options;
+
+      const changeData: any = {};
+      changeData[data.name] = {
+        value: colOptions[colSelectedIndex].value
+      };
+
+      this.updateDatetimeValue(changeData);
+      const columns = this.generateColumns();
+
+      picker.columns = columns;
+
+      await this.validate(picker);
     });
     await this.validate(picker);
     await picker.present();
@@ -300,6 +325,7 @@ export class Datetime implements ComponentInterface {
           text: this.cancelText,
           role: 'cancel',
           handler: () => {
+            this.updateDatetimeValue(this.value);
             this.ionCancel.emit();
           }
         },
