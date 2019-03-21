@@ -33,8 +33,9 @@ export async function checkModeClasses(el: E2EElement, selector?: string) {
   const component = selector !== undefined ? selector : el.nodeName.toLowerCase().replace('ion-', '');
 
   const mode = await el.getProperty('mode');
-  expect(el).toHaveClass(`${component}-${mode}`);
 
   // TODO remove
-  console.log(`found: ${component}-${mode}`);
+  console.log(`component: ${component} classes: ${el.className}`);
+
+  expect(el).toHaveClass(`${component}-${mode}`);
 }

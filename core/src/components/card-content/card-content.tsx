@@ -1,7 +1,6 @@
 import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-card-content',
@@ -19,7 +18,10 @@ export class CardContent implements ComponentInterface {
 
   hostData() {
     return {
-      class: createThemedClasses(this.mode, 'card-content')
+      class: {
+        [`card-content`]: true,
+        [`card-content-${this.mode}`]: true
+      }
     };
   }
 }

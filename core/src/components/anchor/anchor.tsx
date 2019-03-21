@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Listen, Prop } from '@stencil/core';
 
-import { Color, RouterDirection } from '../../interface';
+import { Color, Mode, RouterDirection } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
 @Component({
@@ -18,6 +18,11 @@ export class Anchor implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
+
+  /**
+   * The mode determines which platform styles to use.
+   */
+  @Prop() mode!: Mode;
 
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.
@@ -40,6 +45,8 @@ export class Anchor implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
+        [`anchor`]: true,
+        [`anchor-${this.mode}`]: true,
         'ion-activatable': true
       }
     };

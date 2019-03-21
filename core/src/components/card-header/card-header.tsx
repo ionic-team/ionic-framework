@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
-import { createColorClasses, createThemedClasses } from '../../utils/theme';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-card-header',
@@ -33,8 +33,9 @@ export class CardHeader implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
-        ...createThemedClasses(this.mode, 'card-header'),
-        'card-header-translucent': this.translucent
+        'card-header-translucent': this.translucent,
+        [`card-header`]: true,
+        [`card-header-${this.mode}`]: true
       }
     };
   }

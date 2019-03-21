@@ -1,7 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { Gesture, GestureDetail, Mode, RefresherEventDetail } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-refresher',
@@ -350,7 +349,8 @@ export class Refresher implements ComponentInterface {
     return {
       slot: 'fixed',
       class: {
-        ...createThemedClasses(this.mode, 'refresher'),
+        [`refresher`]: true,
+        [`refresher-${this.mode}`]: true,
 
         'refresher-active': this.state !== RefresherState.Inactive,
         'refresher-pulling': this.state === RefresherState.Pulling,

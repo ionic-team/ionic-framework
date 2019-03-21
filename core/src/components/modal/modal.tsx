@@ -193,7 +193,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
       'no-router': true,
       'aria-modal': 'true',
       class: {
-        ...createThemedClasses(this.mode, 'modal'),
+        [`modal`]: true,
+        [`modal-${this.mode}`]: true,
         ...getClassMap(this.cssClass)
       },
       style: {

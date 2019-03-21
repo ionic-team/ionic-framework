@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
-import { createColorClasses, createThemedClasses } from '../../utils/theme';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-card-subtitle',
@@ -28,7 +28,8 @@ export class CardSubtitle implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
-        ...createThemedClasses(this.mode, 'card-subtitle')
+        [`card-subtitle`]: true,
+        [`card-subtitle-${this.mode}`]: true
       },
       'role': 'heading',
       'aria-level': '3'

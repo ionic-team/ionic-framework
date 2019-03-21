@@ -1,5 +1,6 @@
 import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
 
+import { Mode } from '../../interface';
 import { matchBreakpoint } from '../../utils/media';
 
 const win = window as any;
@@ -15,6 +16,11 @@ export class Col implements ComponentInterface {
   @Prop({ context: 'window' }) win!: Window;
 
   @Element() el!: HTMLStencilElement;
+
+  /**
+   * The mode determines which platform styles to use.
+   */
+  @Prop() mode!: Mode;
 
   /**
    * The amount to offset the column, in terms of how many columns it should shift to the end
@@ -247,6 +253,10 @@ export class Col implements ComponentInterface {
   hostData() {
     const isRTL = this.win.document.dir === 'rtl';
     return {
+      class: {
+        [`col`]: true,
+        [`col-${this.mode}`]: true
+      },
       style: {
         ...this.calculateOffset(isRTL),
         ...this.calculatePull(isRTL),

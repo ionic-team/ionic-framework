@@ -1,7 +1,6 @@
 import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Config, Mode, SpinnerTypes } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-infinite-scroll-content',
@@ -37,7 +36,10 @@ export class InfiniteScrollContent implements ComponentInterface {
 
   hostData() {
     return {
-      class: createThemedClasses(this.mode, 'infinite-scroll-content')
+      class: {
+        [`infinite-scroll-content`]: true,
+        [`infinite-scroll-content-${this.mode}`]: true,
+      }
     };
   }
 

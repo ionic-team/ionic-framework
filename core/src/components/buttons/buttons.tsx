@@ -1,4 +1,6 @@
-import { Component, ComponentInterface } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
+
+import { Mode } from '../../interface';
 
 @Component({
   tag: 'ion-buttons',
@@ -8,4 +10,18 @@ import { Component, ComponentInterface } from '@stencil/core';
   },
   scoped: true,
 })
-export class Buttons implements ComponentInterface {}
+export class Buttons implements ComponentInterface {
+  /**
+   * The mode determines which platform styles to use.
+   */
+  @Prop() mode!: Mode;
+
+  hostData() {
+    return {
+      class: {
+        [`buttons`]: true,
+        [`buttons-${this.mode}`]: true
+      }
+    };
+  }
+}

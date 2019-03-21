@@ -137,6 +137,8 @@ export class Checkbox implements ComponentInterface {
       'aria-labelledby': labelId,
       class: {
         ...createColorClasses(color),
+        [`checkbox`]: true,
+        [`checkbox-${this.mode}`]: true,
         'in-item': hostContext('ion-item', el),
         'checkbox-checked': checked,
         'checkbox-disabled': disabled,
