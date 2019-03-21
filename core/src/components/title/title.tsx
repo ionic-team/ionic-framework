@@ -28,10 +28,12 @@ export class ToolbarTitle implements ComponentInterface {
 
   hostData() {
     const mode = this.getMode();
+
     return {
       class: {
         ...createColorClasses(this.color),
-        [`title-${mode}`]: true
+        [`title`]: true,
+        [`title-${mode}`]: true,
       }
     };
   }

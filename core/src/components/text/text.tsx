@@ -24,7 +24,11 @@ export class Text implements ComponentInterface {
 
   hostData() {
     return {
-      class: createColorClasses(this.color)
+      class: {
+        ...createColorClasses(this.color),
+        [`text`]: true,
+        [`text-${this.mode}`]: true,
+      }
     };
   }
 

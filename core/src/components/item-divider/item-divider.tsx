@@ -55,6 +55,8 @@ export class ItemDivider implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
+        [`item-divider`]: true,
+        [`item-divider-${this.mode}`]: true,
         'item-divider-sticky': this.sticky,
         'item': true,
       }

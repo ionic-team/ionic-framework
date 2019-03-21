@@ -163,6 +163,8 @@ export class Radio implements ComponentInterface {
       'aria-labelledby': labelId,
       class: {
         ...createColorClasses(color),
+        [`radio`]: true,
+        [`radio-${this.mode}`]: true,
         'in-item': hostContext('ion-item', el),
         'interactive': true,
         'radio-checked': checked,

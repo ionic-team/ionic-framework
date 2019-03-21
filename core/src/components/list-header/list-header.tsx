@@ -27,7 +27,11 @@ export class ListHeader implements ComponentInterface {
 
   hostData() {
     return {
-      class: createColorClasses(this.color)
+      class: {
+        ...createColorClasses(this.color),
+        [`list-header`]: true,
+        [`list-header-${this.mode}`]: true,
+      }
     };
   }
 
