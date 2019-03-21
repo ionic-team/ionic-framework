@@ -16,22 +16,25 @@ export function cleanScreenshotName(screenshotName: string): string {
     .toLowerCase();
 }
 
-// Given an element, get the node name of that element
-// and its current mode to verify the correct mode class exists
+// Given an element and optional selector, use the selector if
+// it exists or get the node name of that element if not. Combine
+// with the current mode to verify the correct classes exist.
 //
-// Example:
+// Examples:
 // await checkModeClasses(await page.find('ion-card-content'))
+// => expect(el).toHaveClass(`card-content-{mode}`);
 //
-// ios => expect(el).toHaveClass(`card-content-ios`);
-// mode => expect(el).toHaveClass(`card-content-md`);
-// -----------------------------------------------------------------
-export async function checkModeClasses(el: E2EElement, name?: string) {
-  // If passed a name to use, use that, else grab the nodeName
-  // of the element and remove the ion prefix to get the class name
-  const selector = name ? name : el.nodeName.toLowerCase().replace('ion-', '');
+// await checkModeClasses(await page.find('ion-card-content'), 'some-class')
+// => expect(el).toHaveClass(`some-class-{mode}`);
+// -----------------------------------------------------------------------------
+export async function checkModeClasses(el: E2EElement, selector?: string) {
+  // If passed a selector to use, use that, else grab the nodeName
+  // of the element and remove the ion prefix to get the class selector
+  const component = selector !== undefined ? selector : el.nodeName.toLowerCase().replace('ion-', '');
+
   const mode = await el.getProperty('mode');
-  expect(el).toHaveClass(`${selector}-${mode}`);
+  expect(el).toHaveClass(`${component}-${mode}`);
 
   // TODO remove
-  console.log('selector', selector, 'mode', mode);
+  console.log(`found: ${component}-${mode}`);
 }
