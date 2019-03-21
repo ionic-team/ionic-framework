@@ -7,7 +7,6 @@ test('header: translucent', async () => {
     url: '/src/components/header/test/translucent?ionic:_testing=true'
   });
 
-  await checkModeClasses(await page.find('ion-header'));
   await checkModeClasses(await page.find('ion-header'), 'header-translucent');
 
   const compare = await page.compareScreenshot();
