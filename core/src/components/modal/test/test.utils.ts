@@ -23,18 +23,18 @@ export async function testModal(
     await page.click(selector);
     await page.waitForSelector(selector);
 
-    let popover = await page.find('ion-modal');
-    await popover.waitForVisible();
+    let modal = await page.find('ion-modal');
+    await modal.waitForVisible();
 
     screenshotCompares.push(await page.compareScreenshot(screenshotName));
 
-    await popover.callMethod('dismiss');
-    await popover.waitForNotVisible();
+    await modal.callMethod('dismiss');
+    await modal.waitForNotVisible();
 
     screenshotCompares.push(await page.compareScreenshot(`dismiss ${screenshotName}`));
 
-    popover = await page.find('ion-modal');
-    expect(popover).toBeNull();
+    modal = await page.find('ion-modal');
+    expect(modal).toBeNull();
 
     for (const screenshotCompare of screenshotCompares) {
       expect(screenshotCompare).toMatchScreenshot();
