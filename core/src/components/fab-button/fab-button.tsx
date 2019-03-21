@@ -45,10 +45,10 @@ export class FabButton implements ComponentInterface {
   @Prop() href?: string;
 
   /**
- * The target attribute specifies where to open the linked document.
- * Only applies if a href is provided too.
- * The default options are: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`and `{framename}`.
- */
+   * The target attribute specifies where to open the linked document.
+   * Only applies if a href is provided too.
+   * The default options are: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`and `{framename}`.
+   */
   @Prop() target?: string;
 
   /**
