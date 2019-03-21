@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, QueueApi, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop, QueueApi } from '@stencil/core';
 
 import { Gesture, GestureDetail, Mode, PickerColumn } from '../../interface';
 import { hapticSelectionChanged } from '../../utils/haptic';
@@ -36,18 +36,8 @@ export class PickerColumnCmp implements ComponentInterface {
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
-  /**
-   * Emitted when the selected value has changed
-   * @internal
-   */
-  @Event() ionPickerColChange!: EventEmitter<PickerColumn>;
-
   /** Picker column data */
   @Prop() col!: PickerColumn;
-  @Watch('col')
-  protected colChanged() {
-    this.refresh();
-  }
 
   componentWillLoad() {
     let pickerRotateFactor = 0;
@@ -98,10 +88,6 @@ export class PickerColumnCmp implements ComponentInterface {
     }
   }
 
-  private emitColChange() {
-    this.ionPickerColChange.emit(this.col);
-  }
-
   private setSelected(selectedIndex: number, duration: number) {
     // if there is a selected index, then figure out it's y position
     // if there isn't a selected index, then just use the top y position
@@ -112,8 +98,6 @@ export class PickerColumnCmp implements ComponentInterface {
     // set what y position we're at
     cancelAnimationFrame(this.rafId);
     this.update(y, duration, true);
-
-    this.emitColChange();
   }
 
   private update(y: number, duration: number, saveY: boolean) {
@@ -223,9 +207,6 @@ export class PickerColumnCmp implements ComponentInterface {
       if (notLockedIn) {
         // isn't locked in yet, keep decelerating until it is
         this.rafId = requestAnimationFrame(() => this.decelerate());
-      } else {
-        this.velocity = 0;
-        this.emitColChange();
       }
 
     } else if (this.y % this.optHeight !== 0) {
@@ -296,12 +277,10 @@ export class PickerColumnCmp implements ComponentInterface {
     if (this.bounceFrom > 0) {
       // bounce back up
       this.update(this.minY, 100, true);
-      this.emitColChange();
       return;
     } else if (this.bounceFrom < 0) {
       // bounce back down
       this.update(this.maxY, 100, true);
-      this.emitColChange();
       return;
     }
 
@@ -328,15 +307,6 @@ export class PickerColumnCmp implements ComponentInterface {
         max = Math.max(max, i);
       }
     }
-
-    /**
-     * Only update selected value if column has a
-     * velocity of 0. If it does not, then the
-     * column is animating might land on
-     * a value different than the value at
-     * selectedIndex
-     */
-    if (this.velocity !== 0) { return; }
 
     const selectedIndex = clamp(min, this.col.selectedIndex || 0, max);
     if (this.col.prevSelected !== selectedIndex || forceRefresh) {
