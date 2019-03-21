@@ -11,11 +11,7 @@ import { Mode } from '../../interface';
   shadow: true
 })
 export class Avatar implements ComponentInterface {
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
+  mode!: Mode;
 
   hostData() {
     return {

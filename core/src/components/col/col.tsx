@@ -13,14 +13,11 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
   shadow: true
 })
 export class Col implements ComponentInterface {
+  mode!: Mode;
+
   @Prop({ context: 'window' }) win!: Window;
 
   @Element() el!: HTMLStencilElement;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The amount to offset the column, in terms of how many columns it should shift to the end

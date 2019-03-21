@@ -11,10 +11,7 @@ import { Mode } from '../../interface';
   scoped: true,
 })
 export class Buttons implements ComponentInterface {
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
+  mode!: Mode;
 
   hostData() {
     return {

@@ -394,10 +394,6 @@ export namespace Components {
     */
     'href'?: string;
     /**
-    * The mode determines which platform styles to use.
-    */
-    'mode': Mode;
-    /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection': RouterDirection;
@@ -412,40 +408,16 @@ export namespace Components {
     */
     'href'?: string;
     /**
-    * The mode determines which platform styles to use.
-    */
-    'mode'?: Mode;
-    /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection'?: RouterDirection;
   }
 
-  interface IonApp {
-    /**
-    * The mode determines which platform styles to use.
-    */
-    'mode': Mode;
-  }
-  interface IonAppAttributes extends StencilHTMLAttributes {
-    /**
-    * The mode determines which platform styles to use.
-    */
-    'mode'?: Mode;
-  }
+  interface IonApp {}
+  interface IonAppAttributes extends StencilHTMLAttributes {}
 
-  interface IonAvatar {
-    /**
-    * The mode determines which platform styles to use.
-    */
-    'mode': Mode;
-  }
-  interface IonAvatarAttributes extends StencilHTMLAttributes {
-    /**
-    * The mode determines which platform styles to use.
-    */
-    'mode'?: Mode;
-  }
+  interface IonAvatar {}
+  interface IonAvatarAttributes extends StencilHTMLAttributes {}
 
   interface IonBackButton {
     /**
@@ -655,18 +627,8 @@ export namespace Components {
     'type'?: 'submit' | 'reset' | 'button';
   }
 
-  interface IonButtons {
-    /**
-    * The mode determines which platform styles to use.
-    */
-    'mode': Mode;
-  }
-  interface IonButtonsAttributes extends StencilHTMLAttributes {
-    /**
-    * The mode determines which platform styles to use.
-    */
-    'mode'?: Mode;
-  }
+  interface IonButtons {}
+  interface IonButtonsAttributes extends StencilHTMLAttributes {}
 
   interface IonCardContent {
     /**
@@ -877,10 +839,6 @@ export namespace Components {
 
   interface IonCol {
     /**
-    * The mode determines which platform styles to use.
-    */
-    'mode': Mode;
-    /**
     * The amount to offset the column, in terms of how many columns it should shift to the end of the total available.
     */
     'offset'?: string;
@@ -978,10 +936,6 @@ export namespace Components {
     'sizeXs'?: string;
   }
   interface IonColAttributes extends StencilHTMLAttributes {
-    /**
-    * The mode determines which platform styles to use.
-    */
-    'mode'?: Mode;
     /**
     * The amount to offset the column, in terms of how many columns it should shift to the end of the total available.
     */

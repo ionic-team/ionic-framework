@@ -9,13 +9,9 @@ import { isPlatform } from '../../utils/platform';
   styleUrl: 'app.scss'
 })
 export class App implements ComponentInterface {
+  mode!: Mode;
 
   @Element() el!: HTMLElement;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   @Prop({ context: 'window' }) win!: Window;
   @Prop({ context: 'config' }) config!: Config;
