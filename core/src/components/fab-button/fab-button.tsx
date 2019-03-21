@@ -45,6 +45,13 @@ export class FabButton implements ComponentInterface {
   @Prop() href?: string;
 
   /**
+ * The target attribute specifies where to open the linked document.
+ * Only applies if a href is provided too.
+ * The default options are: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`and `{framename}`.
+ */
+  @Prop() target?: string;
+
+  /**
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
@@ -112,7 +119,10 @@ export class FabButton implements ComponentInterface {
     const TagType = this.href === undefined ? 'button' : 'a' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
-      : { href: this.href };
+      : {
+        href: this.href,
+        target: this.target
+      };
 
     return (
       <TagType
