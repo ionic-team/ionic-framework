@@ -39,6 +39,8 @@ export class MenuButton implements ComponentInterface {
   hostData() {
     return {
       class: {
+        [`menu-button`]: true,
+        [`menu-button-${this.mode}`]: true,
         'button': true,  // ion-buttons target .button
         'ion-activatable': true,
       }

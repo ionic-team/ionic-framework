@@ -9,10 +9,13 @@ test('component: modes', async () => {
     url: '/src/utils/test/modes?ionic:_testing=true'
   });
 
+  // await checkModeClasses(await page.find('ion-action-sheet'));
+  await checkModeClasses(await page.find('ion-alert'));
   await checkModeClasses(await page.find('ion-anchor'));
   await checkModeClasses(await page.find('ion-app'));
   await checkModeClasses(await page.find('ion-avatar'));
   await checkModeClasses(await page.find('ion-back-button'));
+  await checkModeClasses(await page.find('ion-backdrop'));
   await checkModeClasses(await page.find('ion-badge'));
   await checkModeClasses(await page.find('ion-button'));
   await checkModeClasses(await page.find('ion-buttons'));
@@ -34,6 +37,7 @@ test('component: modes', async () => {
   await checkModeClasses(await page.find('ion-header'));
   await checkModeClasses(await page.find('ion-img'));
   await checkModeClasses(await page.find('ion-infinite-scroll'));
+  await checkModeClasses(await page.find('ion-infinite-scroll-content'));
   await checkModeClasses(await page.find('ion-input'));
   await checkModeClasses(await page.find('ion-item'));
   await checkModeClasses(await page.find('ion-item-divider'));
@@ -44,12 +48,21 @@ test('component: modes', async () => {
   await checkModeClasses(await page.find('ion-label'));
   await checkModeClasses(await page.find('ion-list'));
   await checkModeClasses(await page.find('ion-list-header'));
+  await checkModeClasses(await page.find('ion-loading'));
+  await checkModeClasses(await page.find('ion-modal'));
+  await checkModeClasses(await page.find('ion-menu'));
+  await checkModeClasses(await page.find('ion-menu-button'));
   await checkModeClasses(await page.find('ion-menu-toggle'));
   await checkModeClasses(await page.find('ion-note'));
+  await checkModeClasses(await page.find('ion-picker'));
+  // await checkModeClasses(await page.find('ion-picker-column'));
+  await checkModeClasses(await page.find('ion-popover'));
   await checkModeClasses(await page.find('ion-progress-bar'));
   await checkModeClasses(await page.find('ion-radio'));
   await checkModeClasses(await page.find('ion-radio-group'));
   await checkModeClasses(await page.find('ion-range'));
+  await checkModeClasses(await page.find('ion-refresher'));
+  await checkModeClasses(await page.find('ion-refresher-content'));
   await checkModeClasses(await page.find('ion-reorder'));
   await checkModeClasses(await page.find('ion-reorder-group'));
   await checkModeClasses(await page.find('ion-ripple-effect'));
@@ -59,6 +72,7 @@ test('component: modes', async () => {
   await checkModeClasses(await page.find('ion-segment-button'));
   await checkModeClasses(await page.find('ion-select'));
   await checkModeClasses(await page.find('ion-select-option'));
+  await checkModeClasses(await page.find('ion-select-popover'));
   await checkModeClasses(await page.find('ion-skeleton-text'));
   await checkModeClasses(await page.find('ion-slide'));
   await checkModeClasses(await page.find('ion-slides'));
@@ -68,7 +82,9 @@ test('component: modes', async () => {
   await checkModeClasses(await page.find('ion-tab-button'));
   await checkModeClasses(await page.find('ion-text'));
   await checkModeClasses(await page.find('ion-textarea'));
+  await checkModeClasses(await page.find('ion-thumbnail'));
   await checkModeClasses(await page.find('ion-title'));
+  await checkModeClasses(await page.find('ion-toast'));
   await checkModeClasses(await page.find('ion-toggle'));
   await checkModeClasses(await page.find('ion-toolbar'));
 });

@@ -170,6 +170,8 @@ export class Toast implements ComponentInterface, OverlayInterface {
       class: {
         ...createColorClasses(this.color),
         ...getClassMap(this.cssClass),
+        [`toast`]: true,
+        [`toast-${this.mode}`]: true,
         'toast-translucent': this.translucent
       }
     };
