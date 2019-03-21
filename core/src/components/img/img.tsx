@@ -1,11 +1,14 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
+import { Mode } from '../../interface';
+
 @Component({
   tag: 'ion-img',
   styleUrl: 'img.scss',
   shadow: true
 })
 export class Img implements ComponentInterface {
+  mode!: Mode;
 
   private io?: IntersectionObserver;
 
@@ -69,6 +72,15 @@ export class Img implements ComponentInterface {
       this.io.disconnect();
       this.io = undefined;
     }
+  }
+
+  hostData() {
+    return {
+      class: {
+        [`img`]: true,
+        [`img-${this.mode}`]: true,
+      }
+    };
   }
 
   render() {

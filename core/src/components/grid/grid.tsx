@@ -1,11 +1,14 @@
 import { Component, ComponentInterface, Prop } from '@stencil/core';
 
+import { Mode } from '../../interface';
+
 @Component({
   tag: 'ion-grid',
   styleUrl: 'grid.scss',
   shadow: true
 })
 export class Grid implements ComponentInterface {
+  mode!: Mode;
 
   /**
    * If `true`, the grid will have a fixed width based on the screen size.
@@ -15,6 +18,8 @@ export class Grid implements ComponentInterface {
   hostData() {
     return {
       class: {
+        [`grid`]: true,
+        [`grid-${this.mode}`]: true,
         'grid-fixed': this.fixed
       }
     };
