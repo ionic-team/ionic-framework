@@ -7,7 +7,7 @@ Items are elements that can contain text, icons, avatars, images, inputs, and an
 
 When the `detail` property is set to `true`, a right arrow icon will display on the item. This is useful for indicating that an item can be clicked. The right arrow icon will automatically show when an item has an `href` or `button` property set. To hide the right arrow icon, set the `detail` property to `false`.
 
-The `detail` property value is not set automatically on items with click handlers because there is no way of consistently detecting these handlers. For example, adding an `href` property or `onclick` property would work, but if a click handler was added using `addEventListener`, there would be no way of knowing it existed beforehand. As a result, it is necessary to manually set the `detail` property.
+The `detail` property value is not automatically set on items with click handlers because there is no way of consistently detecting these handlers. For example, adding an `href` property or `onclick` property would work, but if a click handler was added using `addEventListener`, there would be no way of knowing it existed beforehand. As a result, it is necessary to manually set the `detail` property in these situations.
 
 <!--
 
