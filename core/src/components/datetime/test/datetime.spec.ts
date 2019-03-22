@@ -68,7 +68,6 @@ describe('Datetime', () => {
       expect(daysInMonth(10, 2019)).toBe(31);
       expect(daysInMonth(11, 2019)).toBe(30);
       expect(daysInMonth(12, 2019)).toBe(31);
-
       expect(daysInMonth(2, 2020)).toBe(29);
     });
   });
