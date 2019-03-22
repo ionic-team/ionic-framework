@@ -785,19 +785,6 @@ export namespace Components {
     */
     'translucent': boolean;
   }
-  interface IonIcon {
-    'ariaLabel'?: string;
-    'color'?: string;
-    'flipRtl'?: boolean;
-    'icon'?: string;
-    'ios'?: string;
-    'lazy'?: boolean;
-    'md'?: string;
-    'mode'?: string;
-    'name'?: string;
-    'size'?: string;
-    'src'?: string;
-  }
   interface IonImg {
     /**
     * This attribute defines the alternative text describing the image. Users will see this text displayed if the image URL is wrong, the image is not in one of the supported formats, or if the image is not yet downloaded.
@@ -964,7 +951,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.
+    * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
     */
     'detail'?: boolean;
     /**
@@ -3309,19 +3296,6 @@ declare namespace LocalJSX {
     */
     'translucent'?: boolean;
   }
-  interface IonIcon extends JSXBase.HTMLAttributes {
-    'ariaLabel'?: string;
-    'color'?: string;
-    'flipRtl'?: boolean;
-    'icon'?: string;
-    'ios'?: string;
-    'lazy'?: boolean;
-    'md'?: string;
-    'mode'?: string;
-    'name'?: string;
-    'size'?: string;
-    'src'?: string;
-  }
   interface IonImg extends JSXBase.HTMLAttributes {
     /**
     * This attribute defines the alternative text describing the image. Users will see this text displayed if the image URL is wrong, the image is not in one of the supported formats, or if the image is not yet downloaded.
@@ -3500,7 +3474,7 @@ declare namespace LocalJSX {
     */
     'color'?: Color;
     /**
-    * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.
+    * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
     */
     'detail'?: boolean;
     /**
@@ -5030,7 +5004,6 @@ declare namespace LocalJSX {
     'IonFooter': Components.IonFooter;
     'IonGrid': Components.IonGrid;
     'IonHeader': Components.IonHeader;
-    'IonIcon': Components.IonIcon;
     'IonImg': Components.IonImg;
     'IonInfiniteScroll': Components.IonInfiniteScroll;
     'IonInfiniteScrollContent': Components.IonInfiniteScrollContent;
@@ -5131,7 +5104,6 @@ declare namespace LocalJSX {
     'IonFooter': LocalJSX.IonFooter;
     'IonGrid': LocalJSX.IonGrid;
     'IonHeader': LocalJSX.IonHeader;
-    'IonIcon': LocalJSX.IonIcon;
     'IonImg': LocalJSX.IonImg;
     'IonInfiniteScroll': LocalJSX.IonInfiniteScroll;
     'IonInfiniteScrollContent': LocalJSX.IonInfiniteScrollContent;
@@ -5381,7 +5353,6 @@ declare global {
     prototype: HTMLIonHeaderElement;
     new (): HTMLIonHeaderElement;
   };
-
 
   interface HTMLIonImgElement extends Components.IonImg, HTMLStencilElement {}
   var HTMLIonImgElement: {
@@ -5825,7 +5796,6 @@ declare global {
     'ion-footer': HTMLIonFooterElement
     'ion-grid': HTMLIonGridElement
     'ion-header': HTMLIonHeaderElement
-
     'ion-img': HTMLIonImgElement
     'ion-infinite-scroll': HTMLIonInfiniteScrollElement
     'ion-infinite-scroll-content': HTMLIonInfiniteScrollContentElement
@@ -5926,7 +5896,6 @@ declare global {
     'ion-footer': HTMLIonFooterElement;
     'ion-grid': HTMLIonGridElement;
     'ion-header': HTMLIonHeaderElement;
-
     'ion-img': HTMLIonImgElement;
     'ion-infinite-scroll': HTMLIonInfiniteScrollElement;
     'ion-infinite-scroll-content': HTMLIonInfiniteScrollContentElement;

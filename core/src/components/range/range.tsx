@@ -367,44 +367,15 @@ export class Range implements ComponentInterface {
     }
   }
 
-  hostData() {
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        'in-item': hostContext('ion-item', this.el),
-        'range-disabled': this.disabled,
-        'range-pressed': this.pressedKnob !== undefined,
-        'range-has-pin': this.pin
-      }
-    };
-  }
-
   render() {
     const { min, max, step, ratioLower, ratioUpper } = this;
 
     const barStart = `${ratioLower * 100}%`;
     const barEnd = `${100 - ratioUpper * 100}%`;
 
-    const doc = this.doc;
-    const isRTL = doc.dir === 'rtl';
+    const isRTL = this.doc.dir === 'rtl';
     const start = isRTL ? 'right' : 'left';
     const end = isRTL ? 'left' : 'right';
-
-    const ticks = [];
-    if (this.snaps) {
-      for (let value = min; value <= max; value += step) {
-        const ratio = valueToRatio(value, min, max);
-
-        const tick: any = {
-          ratio,
-          active: ratio >= ratioLower && ratio <= ratioUpper,
-        };
-
-        tick[start] = `${ratio * 100}%`;
-
-        ticks.push(tick);
-      }
-    }
 
     const tickStyle = (tick: any) => {
       const style: any = {};
@@ -423,9 +394,32 @@ export class Range implements ComponentInterface {
       return style;
     };
 
-    return (
-      <Host>
+    const cssClass = {
+      ...createColorClasses(this.color),
+      'in-item': hostContext('ion-item', this.el),
+      'range-disabled': this.disabled,
+      'range-pressed': this.pressedKnob !== undefined,
+      'range-has-pin': this.pin
+    };
 
+    const ticks = [];
+    if (this.snaps) {
+      for (let value = min; value <= max; value += step) {
+        const ratio = valueToRatio(value, min, max);
+
+        const tick: any = {
+          ratio,
+          active: ratio >= ratioLower && ratio <= ratioUpper,
+        };
+
+        tick[start] = `${ratio * 100}%`;
+
+        ticks.push(tick);
+      }
+    }
+
+    return (
+      <Host class={cssClass}>
         <slot name="start"></slot>
         <div class="range-slider" ref={el => this.rangeSlider = el}>
           {ticks.map(tick => (
