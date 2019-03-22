@@ -25,7 +25,7 @@
         <ion-label>a[ion-item]</ion-label>
       </ion-item>
 
-      <ion-item class="activated" href="#" onclick="testClick(event)">
+      <ion-item class="custom activated" href="#" onclick="testClick(event)">
         <ion-label>a[ion-item].activated</ion-label>
       </ion-item>
 
@@ -144,6 +144,12 @@
     </ion-content>
 
   </ion-app>
+
+  <style>
+    .custom {
+      --ripple-color: pink;
+    }
+  </style>
 
   <script>
     const attach = document.getElementById('attachClick');

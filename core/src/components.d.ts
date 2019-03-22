@@ -77,6 +77,9 @@ import {
 import {
   EventEmitter,
 } from '@stencil/core';
+import {
+  SelectCompareFn,
+} from './components/select/select-interface';
 
 
 export namespace Components {
@@ -746,6 +749,10 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
+    * If `true`, the checkbox will visually appear as indeterminate.
+    */
+    'indeterminate': boolean;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -771,6 +778,10 @@ export namespace Components {
     * If `true`, the user cannot interact with the checkbox.
     */
     'disabled'?: boolean;
+    /**
+    * If `true`, the checkbox will visually appear as indeterminate.
+    */
+    'indeterminate'?: boolean;
     /**
     * The mode determines which platform styles to use.
     */
@@ -1182,7 +1193,7 @@ export namespace Components {
     */
     'pickerFormat'?: string;
     /**
-    * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
+    * Any additional options that the picker interface can accept. See the [Picker API docs](../picker) for the picker options.
     */
     'pickerOptions'?: DatetimeOptions;
     /**
@@ -1288,7 +1299,7 @@ export namespace Components {
     */
     'pickerFormat'?: string;
     /**
-    * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
+    * Any additional options that the picker interface can accept. See the [Picker API docs](../picker) for the picker options.
     */
     'pickerOptions'?: DatetimeOptions;
     /**
@@ -1648,6 +1659,10 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
+    * Returns the native `<input>` element used under the hood.
+    */
+    'getInputElement': () => Promise<HTMLInputElement>;
+    /**
     * A hint to the browser for which keyboard to display. This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
     */
     'inputmode'?: string;
@@ -1985,7 +2000,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.
+    * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
     */
     'detail'?: boolean;
     /**
@@ -2027,7 +2042,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.
+    * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
     */
     'detail'?: boolean;
     /**
@@ -2776,7 +2791,7 @@ export namespace Components {
     */
     'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
     /**
-    * Event fired when the nav will components
+    * Event fired when the nav will change components
     */
     'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
     /**
@@ -3510,7 +3525,7 @@ export namespace Components {
     */
     'disabled'?: boolean;
     /**
-    * Event that needs to be listen to in order to respond to reorder action. `ion-reorder-group` uses this event to delegate to the user the reordering of data array.   The complete() method exposed as
+    * Event that needs to be listened to in order to complete the reorder action. Once the event has been emitted, the `complete()` method then needs to be called in order to finalize the reorder action.
     */
     'onIonItemReorder'?: (event: CustomEvent<ItemReorderEventDetail>) => void;
   }
@@ -3624,7 +3639,7 @@ export namespace Components {
     /**
     * Go back to previous page in the window.history.
     */
-    'goBack': () => Promise<void>;
+    'back': () => Promise<void>;
     'navChanged': (direction: RouterDirection) => Promise<boolean>;
     'printDebug': () => void;
     /**
@@ -3695,6 +3710,10 @@ export namespace Components {
     * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
     */
     'debounce': number;
+    /**
+    * Returns the native `<input>` element used under the hood.
+    */
+    'getInputElement': () => Promise<HTMLInputElement>;
     /**
     * The mode determines which platform styles to use.
     */
@@ -3989,6 +4008,10 @@ export namespace Components {
     */
     'cancelText': string;
     /**
+    * A property name or function used to compare object values
+    */
+    'compareWith'?: string | SelectCompareFn | null;
+    /**
     * If `true`, the user cannot interact with the select.
     */
     'disabled': boolean;
@@ -4038,6 +4061,10 @@ export namespace Components {
     * The text to display on the cancel button.
     */
     'cancelText'?: string;
+    /**
+    * A property name or function used to compare object values
+    */
+    'compareWith'?: string | SelectCompareFn | null;
     /**
     * If `true`, the user cannot interact with the select.
     */
@@ -4098,14 +4125,16 @@ export namespace Components {
 
   interface IonSkeletonText {
     /**
-    * Width for the element to render at.
+    * If `true`, the skeleton text will animate.
     */
-    'width': string;
+    'animated': boolean;
+    'width'?: string;
   }
   interface IonSkeletonTextAttributes extends StencilHTMLAttributes {
     /**
-    * Width for the element to render at.
+    * If `true`, the skeleton text will animate.
     */
+    'animated'?: boolean;
     'width'?: string;
   }
 
@@ -4185,6 +4214,10 @@ export namespace Components {
     * Update the underlying slider implementation. Call this if you've added or removed child slides.
     */
     'update': () => Promise<void>;
+    /**
+    * Force swiper to update its height (when autoHeight enabled) for the duration equal to 'speed' parameter
+    */
+    'updateAutoHeight': (speed?: number | undefined) => Promise<void>;
   }
   interface IonSlidesAttributes extends StencilHTMLAttributes {
     /**
@@ -4534,6 +4567,10 @@ export namespace Components {
     * If `true`, the user cannot interact with the textarea.
     */
     'disabled': boolean;
+    /**
+    * Returns the native `<textarea>` element used under the hood.
+    */
+    'getInputElement': () => Promise<HTMLTextAreaElement>;
     /**
     * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
     */

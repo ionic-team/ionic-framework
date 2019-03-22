@@ -169,6 +169,14 @@ export class Searchbar implements ComponentInterface {
   }
 
   /**
+   * Returns the native `<input>` element used under the hood.
+   */
+  @Method()
+  getInputElement(): Promise<HTMLInputElement> {
+    return Promise.resolve(this.nativeInput!);
+  }
+
+  /**
    * Clears the input field and triggers the control change.
    */
   private onClearInput = (ev?: Event) => {

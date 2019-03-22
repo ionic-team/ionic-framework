@@ -1,7 +1,7 @@
 # ion-slides
 
 The Slides component is a multi-section container. Each section can be swiped
-or dragged between. It contains any number of [Slide](../Slide) components.
+or dragged between. It contains any number of [Slide](../slide) components.
 
 
 Adopted from Swiper.js:
@@ -75,6 +75,66 @@ var slides = document.querySelector('ion-slides');
 slides.options = {
   effect: 'flip'
 }
+```
+
+
+### React
+
+```tsx
+import React from 'react';
+
+import { IonSlides, IonSlide } from '@ionic/react';
+
+const slideOpts = {
+  effect: 'flip'
+};
+
+const Example: React.SFC<{}> = () => (
+  <IonSlides pager={true} options={slideOpts}>
+    <IonSlide>
+      <h1>Slide 1</h1>
+    </IonSlide>
+    <IonSlide>
+      <h1>Slide 2</h1>
+    </IonSlide>
+    <IonSlide>
+      <h1>Slide 3</h1>
+    </IonSlide>
+  </IonSlides>
+);
+
+export default Example;
+```
+
+
+### Vue
+
+```html
+<template>
+  <ion-slides pager="true" :options="slideOpts">
+    <ion-slide>
+      <h1>Slide 1</h1>
+    </ion-slide>
+    <ion-slide>
+      <h1>Slide 2</h1>
+    </ion-slide>
+    <ion-slide>
+      <h1>Slide 3</h1>
+    </ion-slide>
+  </ion-slides>
+</template>
+
+
+<script lang="ts">
+  import { Component, Vue } from 'vue-property-decorator';
+
+  @Component()
+  export default class SelectExample extends Vue {
+    slideOpts = {
+      effect: 'flip'
+    };
+  }
+</script>
 ```
 
 
@@ -287,6 +347,22 @@ Type: `Promise<void>`
 
 Update the underlying slider implementation. Call this if you've added or removed
 child slides.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `updateAutoHeight(speed?: number | undefined) => Promise<void>`
+
+Force swiper to update its height (when autoHeight enabled) for the duration equal to 'speed' parameter
+
+#### Parameters
+
+| Name    | Type                  | Description |
+| ------- | --------------------- | ----------- |
+| `speed` | `number \| undefined` |             |
 
 #### Returns
 

@@ -195,6 +195,7 @@ ion-checkbox,shadow
 ion-checkbox,prop,checked,boolean,false,false,false
 ion-checkbox,prop,color,string | undefined,undefined,false,false
 ion-checkbox,prop,disabled,boolean,false,false,false
+ion-checkbox,prop,indeterminate,boolean,false,false,false
 ion-checkbox,prop,mode,"ios" | "md",undefined,false,false
 ion-checkbox,prop,name,string,this.inputId,false,false
 ion-checkbox,prop,value,string,'on',false,false
@@ -421,6 +422,7 @@ ion-input,prop,spellcheck,boolean,false,false,false
 ion-input,prop,step,string | undefined,undefined,false,false
 ion-input,prop,type,"date" | "email" | "number" | "password" | "search" | "tel" | "text" | "time" | "url",'text',false,false
 ion-input,prop,value,null | string | undefined,'',false,false
+ion-input,method,getInputElement,getInputElement() => Promise<HTMLInputElement>
 ion-input,method,setFocus,setFocus() => void
 ion-input,event,ionBlur,void,true
 ion-input,event,ionChange,InputChangeEventDetail,true
@@ -508,6 +510,7 @@ ion-item,css-prop,--padding-bottom
 ion-item,css-prop,--padding-end
 ion-item,css-prop,--padding-start
 ion-item,css-prop,--padding-top
+ion-item,css-prop,--ripple-color
 ion-item,css-prop,--transition
 
 ion-label,scoped
@@ -865,7 +868,7 @@ ion-router-outlet,prop,animation,((Animation: Animation, baseEl: any, opts?: any
 ion-router,none
 ion-router,prop,root,string,'/',false,false
 ion-router,prop,useHash,boolean,true,false,false
-ion-router,method,goBack,goBack() => Promise<void>
+ion-router,method,back,back() => Promise<void>
 ion-router,method,push,push(url: string, direction?: RouterDirection) => Promise<boolean>
 ion-router,event,ionRouteDidChange,RouterEventDetail,true
 ion-router,event,ionRouteWillChange,RouterEventDetail,true
@@ -888,6 +891,7 @@ ion-searchbar,prop,showCancelButton,boolean,false,false,false
 ion-searchbar,prop,spellcheck,boolean,false,false,false
 ion-searchbar,prop,type,"email" | "number" | "password" | "search" | "tel" | "text" | "url",'search',false,false
 ion-searchbar,prop,value,null | string | undefined,'',false,false
+ion-searchbar,method,getInputElement,getInputElement() => Promise<HTMLInputElement>
 ion-searchbar,method,setFocus,setFocus() => void
 ion-searchbar,event,ionBlur,void,true
 ion-searchbar,event,ionCancel,void,true
@@ -953,6 +957,7 @@ ion-select-option,prop,value,any,undefined,false,false
 
 ion-select,shadow
 ion-select,prop,cancelText,string,'Cancel',false,false
+ion-select,prop,compareWith,((currentValue: any, compareValue: any) => boolean) | null | string | undefined,undefined,false,false
 ion-select,prop,disabled,boolean,false,false,false
 ion-select,prop,interface,"action-sheet" | "alert" | "popover",'alert',false,false
 ion-select,prop,interfaceOptions,any,{},false,false
@@ -974,8 +979,11 @@ ion-select,css-prop,--padding-start
 ion-select,css-prop,--padding-top
 
 ion-skeleton-text,shadow
-ion-skeleton-text,prop,width,string,'100%',false,false
+ion-skeleton-text,prop,animated,boolean,false,false,false
+ion-skeleton-text,prop,width,string | undefined,undefined,false,false
 ion-skeleton-text,css-prop,--background
+ion-skeleton-text,css-prop,--background-rgb
+ion-skeleton-text,css-prop,--border-radius
 
 ion-slide,none
 
@@ -998,6 +1006,7 @@ ion-slides,method,slideTo,slideTo(index: number, speed?: number | undefined, run
 ion-slides,method,startAutoplay,startAutoplay() => Promise<void>
 ion-slides,method,stopAutoplay,stopAutoplay() => Promise<void>
 ion-slides,method,update,update() => Promise<void>
+ion-slides,method,updateAutoHeight,updateAutoHeight(speed?: number | undefined) => Promise<void>
 ion-slides,event,ionSlideDidChange,void,true
 ion-slides,event,ionSlideDoubleTap,void,true
 ion-slides,event,ionSlideDrag,void,true
@@ -1092,6 +1101,7 @@ ion-textarea,prop,rows,number | undefined,undefined,false,false
 ion-textarea,prop,spellcheck,boolean,false,false,false
 ion-textarea,prop,value,null | string | undefined,'',false,false
 ion-textarea,prop,wrap,"hard" | "off" | "soft" | undefined,undefined,false,false
+ion-textarea,method,getInputElement,getInputElement() => Promise<HTMLTextAreaElement>
 ion-textarea,method,setFocus,setFocus() => void
 ion-textarea,event,ionBlur,void,true
 ion-textarea,event,ionChange,TextareaChangeEventDetail,true
