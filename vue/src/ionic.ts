@@ -11,7 +11,7 @@ import {
 import { IonicConfig } from '@ionic/core';
 import { appInitialize } from './app-initialize';
 import { VueDelegate } from './controllers/vue-delegate';
-import IonTabs from './components/navigation/IonTabs';
+import IonTabs from './components/navigation/ion-tabs';
 
 export interface Controllers {
   actionSheetController: ActionSheetController;
