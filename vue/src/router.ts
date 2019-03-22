@@ -3,6 +3,7 @@ import { PluginFunction } from 'vue';
 import { RouterArgs, VueWindow } from './interfaces';
 import IonVueRouter from './components/ion-vue-router.vue';
 import IonVueRouterTransitionless from './components/ion-vue-router-transitionless.vue';
+import { BackButtonEvent } from '@ionic/core';
 
 const vueWindow = window as VueWindow;
 const inBrowser: boolean = typeof window !== 'undefined';
@@ -37,6 +38,13 @@ export default class Router extends _VueRouter {
 
     // Extend the existing history object
     this.extendHistory();
+
+    // Listen to Ionic's back button event
+    document.addEventListener('ionBackButton', (e: Event) => {
+      (e as BackButtonEvent).detail.register(0, () => {
+        this.back();
+      });
+    });
   }
 
   extendHistory(): void {
