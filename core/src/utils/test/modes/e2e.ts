@@ -55,7 +55,7 @@ test('component: modes', async () => {
   await checkModeClasses(await page.find('ion-menu-toggle'));
   await checkModeClasses(await page.find('ion-note'));
   await checkModeClasses(await page.find('ion-picker'));
-  // await checkModeClasses(await page.find('ion-picker-column'));
+  await checkModeClasses(await page.find('ion-picker-column'));
   await checkModeClasses(await page.find('ion-popover'));
   await checkModeClasses(await page.find('ion-progress-bar'));
   await checkModeClasses(await page.find('ion-radio'));

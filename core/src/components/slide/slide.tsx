@@ -1,5 +1,6 @@
 import { Component, ComponentInterface, Event } from '@stencil/core';
 import { EventEmitter } from 'ionicons/dist/types/stencil.core';
+
 import { Mode } from '../../interface';
 
 @Component({
