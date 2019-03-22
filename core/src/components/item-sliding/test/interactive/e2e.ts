@@ -1,12 +1,14 @@
 import { newE2EPage } from '@stencil/core/testing';
 
+import { openItemSliding } from '../test.utils';
+
 test('item-sliding: interactive', async () => {
   const page = await newE2EPage({
     url: '/src/components/item-sliding/test/interactive?ionic:_testing=true'
   });
 
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
+  const compares = [];
+  compares.push(await page.compareScreenshot());
 
   const items = await page.$$('ion-item-sliding');
   expect(items.length).toEqual(3);
@@ -20,30 +22,30 @@ test('item-sliding: interactive', async () => {
 
   const itemsAfterSecondSlide = await page.$$('ion-item-sliding');
   expect(itemsAfterSecondSlide.length).toEqual(1);
+
+  for (const compare of compares) {
+    expect(compare).toMatchScreenshot();
+  }
 });
 
 async function slideAndDelete(item: any, page: any) {
   try {
     // Get the element's ID
     const id = await(await item.getProperty('id')).jsonValue();
-
-    // Simulate a drag
-    const boundingBox = await item.boundingBox();
-    const centerX = parseFloat(boundingBox.x + boundingBox.width / 2);
-    const centerY = parseFloat(boundingBox.y + boundingBox.height / 2);
-
-    await page.mouse.move(centerX, centerY);
-    await page.mouse.down();
-    await page.mouse.move(0, centerY);
-    await page.mouse.up();
-
-    // Click the "delete" option
-    const options = await item.$$('ion-item-option');
-    await options[0].click();
-
-    // Wait for element to be removed from DOM
-    await page.waitForSelector(id, { hidden: true });
+    await openItemSliding(`#${id}`, page);
+    await deleteItemSliding(item, page, id);
   } catch (err) {
     throw err;
   }
+}
+
+async function deleteItemSliding(item: any, page: any, id: string) {
+  // Click the "delete" option
+  const options = await item.$$('ion-item-option');
+  await options[0].click();
+
+  // Wait for element to be removed from DOM
+  await page.waitForSelector(id, { hidden: true });
+
+  await page.waitFor(1000);
 }
