@@ -214,9 +214,9 @@ Hotfixes bypass `master` and should only be used for urgent fixes that can't wai
 ## Releasing
 
 1. Create the release branch from `master`, for example: `release-4.1.0`.
-1. Submit a pull request to merge the release branch into `stable`.
+1. Submit a pull request from the release branch into `stable`. Do not merge this pull request yet.
 1. Verify all tests are passing, fix any bugs if needed and make sure no undesired commits are in.
-1. Navigate to the root of the repository.
+1. Navigate to the root of the repository while on the release branch.
 1. Run `npm i` if it hasn't already been done.
 1. Run `npm run release.prepare`
     - Select the version based on the type of commits and the [Ionic Versioning](https://ionicframework.com/docs/intro/versioning)
