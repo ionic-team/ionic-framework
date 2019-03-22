@@ -54,6 +54,8 @@ export function attachEventProps<E extends HTMLElement>(node: E, props: any) {
       if (!isCoveredByReact(eventNameLc)) {
         syncEvent(node, eventNameLc, props[name]);
       }
+    } else if (name.indexOf('ion') === 0) {
+      syncEvent(node, name, props[name]);
     } else {
       (node as any)[name] = props[name];
     }
