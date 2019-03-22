@@ -11,7 +11,7 @@ import {
 import { IonicConfig } from '@ionic/core';
 import { appInitialize } from './app-initialize';
 import { VueDelegate } from './controllers/vue-delegate';
-import IonRouterOutlet  from './components/router-outlet';
+import IonTabs from './components/navigation/IonTabs';
 
 export interface Controllers {
   actionSheetController: ActionSheetController;
@@ -30,10 +30,11 @@ declare module 'vue/types/vue' {
 }
 
 
-function createApi(Vue: VueConstructor, $root: VueImport) {
+function createApi(Vue: VueConstructor) {
   const cache: Partial<Controllers> = {};
-  const vueDelegate = new VueDelegate(Vue, $root);
-  const api: Controllers = {
+  const vueDelegate = new VueDelegate(Vue);
+
+  return {
     get actionSheetController() {
       if (!cache.actionSheetController) {
         cache.actionSheetController = new ActionSheetController();
@@ -77,8 +78,6 @@ function createApi(Vue: VueConstructor, $root: VueImport) {
       return cache.toastController;
     }
   };
-
-  return api;
 }
 
 let Vue: typeof VueImport;
@@ -94,11 +93,13 @@ export const install: PluginFunction<IonicConfig> = (_Vue, config) => {
   }
   Vue = _Vue;
   Vue.config.ignoredElements.push(/^ion-/);
-  Vue.component('IonRouterView', IonRouterOutlet);
+  Vue.component('IonTabs', IonTabs);
 
   appInitialize(config);
 
+  const api = createApi(Vue);
+
   Object.defineProperty(Vue.prototype, '$ionic', {
-    get() { return createApi(Vue, this.$root); }
+    get() { return api; }
   });
 };
