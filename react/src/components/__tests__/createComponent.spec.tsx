@@ -1,5 +1,5 @@
 import React from 'react';
-import { Components } from '@ionic/core'
+import { Components } from '@ionic/core';
 import { createReactComponent } from '../createComponent';
 import { render, fireEvent, cleanup } from 'react-testing-library';
 

@@ -287,30 +287,28 @@ dates in JavaScript.
 </ion-item>
 ```
 
-```javascript
-this.customYearValues = [2020, 2016, 2008, 2004, 2000, 1996];
+```typescript
+@Component({…})
+export class MyComponent {
+  customYearValues = [2020, 2016, 2008, 2004, 2000, 1996];
+  customDayShortNames = ['s\u00f8n', 'man', 'tir', 'ons', 'tor', 'fre', 'l\u00f8r'];
+  customPickerOptions: any;
 
-this.customDayShortNames = [
-  's\u00f8n',
-  'man',
-  'tir',
-  'ons',
-  'tor',
-  'fre',
-  'l\u00f8r'
-];
-
-this.customPickerOptions = {
-  buttons: [{
-    text: 'Save',
-    handler: () => console.log('Clicked Save!')
-  }, {
-    text: 'Log',
-    handler: () => {
-      console.log('Clicked Log. Do not Dismiss.');
-      return false;
+  constructor() {
+    this.customPickerOptions = {
+      buttons: [{
+        text: 'Save',
+        handler: () => console.log('Clicked Save!')
+      }, {
+        text: 'Log',
+        handler: () => {
+          console.log('Clicked Log. Do not Dismiss.');
+          return false;
+        }
+      }]
     }
-  }]
+  }
+
 }
 ```
 
@@ -697,7 +695,7 @@ export default Example;
 | `monthValues`     | `month-values`      | Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`. | `number \| number[] \| string \| undefined`                                                                                                                                                                                                                                                                                                                                                                              | `undefined`     |
 | `name`            | `name`              | The name of the control, which is submitted with the form data.                                                                                                                                                                                                                                                                                                                                                                                                                                   | `string`                                                                                                                                                                                                                                                                                                                                                                                                                 | `this.inputId`  |
 | `pickerFormat`    | `picker-format`     | The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.                                                       | `string \| undefined`                                                                                                                                                                                                                                                                                                                                                                                                    | `undefined`     |
-| `pickerOptions`   | --                  | Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.                                                                                                                                                                                                                                                                                                                                                               | `undefined \| { columns?: PickerColumn[] \| undefined; buttons?: PickerButton[] \| undefined; cssClass?: string \| string[] \| undefined; backdropDismiss?: boolean \| undefined; animated?: boolean \| undefined; mode?: "ios" \| "md" \| undefined; keyboardClose?: boolean \| undefined; id?: string \| undefined; enterAnimation?: AnimationBuilder \| undefined; leaveAnimation?: AnimationBuilder \| undefined; }` | `undefined`     |
+| `pickerOptions`   | --                  | Any additional options that the picker interface can accept. See the [Picker API docs](../picker) for the picker options.                                                                                                                                                                                                                                                                                                                                                                         | `undefined \| { columns?: PickerColumn[] \| undefined; buttons?: PickerButton[] \| undefined; cssClass?: string \| string[] \| undefined; backdropDismiss?: boolean \| undefined; animated?: boolean \| undefined; mode?: "ios" \| "md" \| undefined; keyboardClose?: boolean \| undefined; id?: string \| undefined; enterAnimation?: AnimationBuilder \| undefined; leaveAnimation?: AnimationBuilder \| undefined; }` | `undefined`     |
 | `placeholder`     | `placeholder`       | The text to display when there's no date selected yet. Using lowercase to match the input attribute                                                                                                                                                                                                                                                                                                                                                                                               | `null \| string \| undefined`                                                                                                                                                                                                                                                                                                                                                                                            | `undefined`     |
 | `readonly`        | `readonly`          | If `true`, the datetime appears normal but is not interactive.                                                                                                                                                                                                                                                                                                                                                                                                                                    | `boolean`                                                                                                                                                                                                                                                                                                                                                                                                                | `false`         |
 | `value`           | `value`             | The value of the datetime as a valid ISO 8601 datetime string.                                                                                                                                                                                                                                                                                                                                                                                                                                    | `null \| string \| undefined`                                                                                                                                                                                                                                                                                                                                                                                            | `undefined`     |
