@@ -9,7 +9,7 @@ test('component: modes', async () => {
     url: '/src/utils/test/modes?ionic:_testing=true'
   });
 
-  // await checkModeClasses(await page.find('ion-action-sheet'));
+  await checkModeClasses(await page.find('ion-action-sheet'));
   await checkModeClasses(await page.find('ion-alert'));
   await checkModeClasses(await page.find('ion-anchor'));
   await checkModeClasses(await page.find('ion-app'));
