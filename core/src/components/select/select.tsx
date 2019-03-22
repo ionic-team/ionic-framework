@@ -142,8 +142,8 @@ export class Select implements ComponentInterface {
     await this.loadOptions();
 
     if (this.didInit) {
-      this.updateOverlayOptions();
       this.updateOptions();
+      this.updateOverlayOptions();
 
       /**
        * In the event that options
