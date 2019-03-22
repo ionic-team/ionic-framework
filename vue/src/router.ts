@@ -1,18 +1,11 @@
 import VueRouter, { Route } from 'vue-router';
 import { PluginFunction } from 'vue';
-import { RouterArgs, VueWindow } from './interfaces';
-import IonVueRouter from './components/ion-vue-router.vue';
-import IonVueRouterTransitionless from './components/ion-vue-router-transitionless.vue';
+import { RouterArgs } from './interfaces';
+import IonVueRouter from './components/ion-vue-router';
 import { BackButtonEvent } from '@ionic/core';
 
-const vueWindow = window as VueWindow;
-const inBrowser: boolean = typeof window !== 'undefined';
-
-// Detect environment (browser, module, etc.)
-const _VueRouter: typeof VueRouter = inBrowser && vueWindow.VueRouter ? vueWindow.VueRouter : VueRouter;
-
 // Extend the official VueRouter
-export default class Router extends _VueRouter {
+export default class Router extends VueRouter {
   direction: number;
   directionOverride: number | null;
   viewCount: number;
@@ -39,15 +32,26 @@ export default class Router extends _VueRouter {
     // Extend the existing history object
     this.extendHistory();
 
+    // Wait for transition to finish before confirming navigation
+    this.extendTransitionConfirmation();
+
     // Listen to Ionic's back button event
     document.addEventListener('ionBackButton', (e: Event) => {
-      (e as BackButtonEvent).detail.register(0, () => {
-        this.back();
-      });
+      (e as BackButtonEvent).detail.register(0, () => this.back());
     });
   }
 
-  extendHistory(): void {
+  extendTransitionConfirmation() {
+    this.history._confirmTransition = this.history.confirmTransition;
+    this.history.confirmTransition = async (...opts: any) => {
+      if (undefined !== this.transition) {
+        await this.transition;
+      }
+      this.history._confirmTransition(...opts);
+    };
+  }
+
+  extendHistory() {
     // Save a reference to the original method
     this.history._updateRoute = this.history.updateRoute;
 
@@ -101,7 +105,7 @@ export default class Router extends _VueRouter {
   }
 }
 
-Router.install = (Vue, { disableIonicTransitions = false }: { disableIonicTransitions?: boolean } = {}): void => {
+Router.install = (Vue) => {
   // If already installed - skip
   if (Router.installed) {
     return;
@@ -110,14 +114,8 @@ Router.install = (Vue, { disableIonicTransitions = false }: { disableIonicTransi
   Router.installed = true;
 
   // Install the official VueRouter
-  _VueRouter.install(Vue);
+  VueRouter.install(Vue);
 
   // Register the IonVueRouter component globally
-  // either with default Ionic transitions turned on or off
-  Vue.component('IonVueRouter', disableIonicTransitions ? IonVueRouterTransitionless : IonVueRouter);
+  Vue.component('IonVueRouter', IonVueRouter);
 };
-
-// Auto-install when Vue is found (i.e. in browser via <script> tag)
-if (inBrowser && vueWindow.Vue) {
-  vueWindow.Vue.use(Router, { disableIonicTransitions: vueWindow.disableIonicTransitions });
-}
