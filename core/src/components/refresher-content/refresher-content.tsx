@@ -1,11 +1,13 @@
 import { Component, ComponentInterface, Prop } from '@stencil/core';
 
-import { Config, SpinnerTypes } from '../../interface';
+import { Config, Mode, SpinnerTypes } from '../../interface';
 
 @Component({
   tag: 'ion-refresher-content'
 })
 export class RefresherContent implements ComponentInterface {
+
+  mode!: Mode;
 
   @Prop({ context: 'config' }) config!: Config;
 
@@ -34,7 +36,10 @@ export class RefresherContent implements ComponentInterface {
       this.pullingIcon = this.config.get('refreshingIcon', 'arrow-down');
     }
     if (this.refreshingSpinner === undefined) {
-      this.refreshingSpinner = this.config.get('refreshingSpinner', this.config.get('spinner', 'lines'));
+      this.refreshingSpinner = this.config.get(
+        'refreshingSpinner',
+        this.config.get('spinner', this.mode === 'ios' ? 'lines' : 'crescent')
+      );
     }
   }
 
