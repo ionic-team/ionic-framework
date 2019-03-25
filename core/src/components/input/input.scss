@@ -110,9 +110,9 @@
   // Hides Spinner on Webkit (Chrome)
   .native-input[type=number]::-webkit-outer-spin-button,
   .native-input[type=number]::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      
-      @include margin(0);
+    @include margin(0);
+
+    -webkit-appearance: none;
   }
 
   // Hides Spinner on Firefox
