@@ -4,7 +4,7 @@ Items are elements that can contain text, icons, avatars, images, inputs, and an
 
 ## Clickable Items
 
-An item is considered "clickable" if it has an `href` or `button` property set. Clickable items have a few visual differences that indicate they can be interacted with. For example, a clickable item receives the ripple effect on Material Design mode, has a highlight when activated, and has a [detail arrow](/#detail-arrows.
+An item is considered "clickable" if it has an `href` or `button` property set. Clickable items have a few visual differences that indicate they can be interacted with. For example, a clickable item receives the ripple effect upon activation in `md` mode, has a highlight when activated in `ios` mode, and has a [detail arrow](/#detail-arrows) by default in `ios` mode.
 
 ## Detail Arrows
 
