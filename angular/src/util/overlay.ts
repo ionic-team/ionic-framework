@@ -20,7 +20,7 @@ export class OverlayBaseController<Opts, Overlay> {
   /**
    * Returns the top overlay.
    */
-  getTop(): Promise<Overlay> {
+  getTop(): Promise<Overlay | undefined> {
     return proxyMethod(this.ctrl, this.doc, 'getTop');
   }
 }
