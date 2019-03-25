@@ -44,7 +44,7 @@ export class Item implements ComponentInterface {
 
   /**
    * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
-   * is `ios` and an `href`, `onclick` or `button` property is present.
+   * is `ios` and an `href` or `button` property is present.
    */
   @Prop() detail?: boolean;
 
