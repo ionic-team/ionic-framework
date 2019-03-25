@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-import { checkModeClasses } from '../utils';
+import { checkComponentModeClasses, checkModeClasses } from '../utils';
 
 // This test is to loop through all components that should have mode
 // classes and test them
@@ -9,82 +9,33 @@ test('component: modes', async () => {
     url: '/src/utils/test/modes?ionic:_testing=true'
   });
 
-  await checkModeClasses(await page.find('ion-action-sheet'));
-  await checkModeClasses(await page.find('ion-alert'));
-  await checkModeClasses(await page.find('ion-anchor'));
-  await checkModeClasses(await page.find('ion-app'));
-  await checkModeClasses(await page.find('ion-avatar'));
-  await checkModeClasses(await page.find('ion-back-button'));
-  await checkModeClasses(await page.find('ion-backdrop'));
-  await checkModeClasses(await page.find('ion-badge'));
-  await checkModeClasses(await page.find('ion-button'));
-  await checkModeClasses(await page.find('ion-buttons'));
-  await checkModeClasses(await page.find('ion-card-content'));
-  await checkModeClasses(await page.find('ion-card-header'));
-  await checkModeClasses(await page.find('ion-card-subtitle'));
-  await checkModeClasses(await page.find('ion-card-title'));
-  await checkModeClasses(await page.find('ion-card'));
-  await checkModeClasses(await page.find('ion-checkbox'));
-  await checkModeClasses(await page.find('ion-chip'));
-  await checkModeClasses(await page.find('ion-col'));
-  await checkModeClasses(await page.find('ion-content'));
-  await checkModeClasses(await page.find('ion-datetime'));
-  await checkModeClasses(await page.find('ion-fab'));
-  await checkModeClasses(await page.find('ion-fab-button'));
-  await checkModeClasses(await page.find('ion-fab-list'));
-  await checkModeClasses(await page.find('ion-footer'));
-  await checkModeClasses(await page.find('ion-grid'));
-  await checkModeClasses(await page.find('ion-header'));
-  await checkModeClasses(await page.find('ion-img'));
-  await checkModeClasses(await page.find('ion-infinite-scroll'));
-  await checkModeClasses(await page.find('ion-infinite-scroll-content'));
-  await checkModeClasses(await page.find('ion-input'));
-  await checkModeClasses(await page.find('ion-item'));
-  await checkModeClasses(await page.find('ion-item-divider'));
-  await checkModeClasses(await page.find('ion-item-group'));
-  await checkModeClasses(await page.find('ion-item-option'));
-  await checkModeClasses(await page.find('ion-item-options'));
-  await checkModeClasses(await page.find('ion-item-sliding'));
-  await checkModeClasses(await page.find('ion-label'));
-  await checkModeClasses(await page.find('ion-list'));
-  await checkModeClasses(await page.find('ion-list-header'));
-  await checkModeClasses(await page.find('ion-loading'));
-  await checkModeClasses(await page.find('ion-modal'));
-  await checkModeClasses(await page.find('ion-menu'));
-  await checkModeClasses(await page.find('ion-menu-button'));
-  await checkModeClasses(await page.find('ion-menu-toggle'));
-  await checkModeClasses(await page.find('ion-note'));
-  await checkModeClasses(await page.find('ion-picker'));
-  await checkModeClasses(await page.find('ion-picker-column'));
-  await checkModeClasses(await page.find('ion-popover'));
-  await checkModeClasses(await page.find('ion-progress-bar'));
-  await checkModeClasses(await page.find('ion-radio'));
-  await checkModeClasses(await page.find('ion-radio-group'));
-  await checkModeClasses(await page.find('ion-range'));
-  await checkModeClasses(await page.find('ion-refresher'));
-  await checkModeClasses(await page.find('ion-refresher-content'));
-  await checkModeClasses(await page.find('ion-reorder'));
-  await checkModeClasses(await page.find('ion-reorder-group'));
-  await checkModeClasses(await page.find('ion-ripple-effect'));
-  await checkModeClasses(await page.find('ion-row'));
-  await checkModeClasses(await page.find('ion-searchbar'));
-  await checkModeClasses(await page.find('ion-segment'));
-  await checkModeClasses(await page.find('ion-segment-button'));
-  await checkModeClasses(await page.find('ion-select'));
-  await checkModeClasses(await page.find('ion-select-option'));
-  await checkModeClasses(await page.find('ion-select-popover'));
-  await checkModeClasses(await page.find('ion-skeleton-text'));
-  await checkModeClasses(await page.find('ion-slide'));
-  await checkModeClasses(await page.find('ion-slides'));
-  await checkModeClasses(await page.find('ion-spinner'));
-  await checkModeClasses(await page.find('ion-split-pane'));
-  await checkModeClasses(await page.find('ion-tab-bar'));
-  await checkModeClasses(await page.find('ion-tab-button'));
-  await checkModeClasses(await page.find('ion-text'));
-  await checkModeClasses(await page.find('ion-textarea'));
-  await checkModeClasses(await page.find('ion-thumbnail'));
-  await checkModeClasses(await page.find('ion-title'));
-  await checkModeClasses(await page.find('ion-toast'));
-  await checkModeClasses(await page.find('ion-toggle'));
-  await checkModeClasses(await page.find('ion-toolbar'));
+  // components that need to have the `item` class
+  // for use in styling by other components
+  // e.g. <ion-item-divider class="item">
+  let tags = ['ion-item', 'ion-item-divider', 'ion-item-group'];
+
+  for (const tag of tags) {
+    const el = await page.find(tag);
+    expect(el).toHaveClass('item');
+  }
+
+  // components that need to have their tag name
+  // + mode as a class for internal styling
+  // e.g. <ion-card-content class="card-content-md">
+  tags = ['ion-card-content', 'ion-footer', 'ion-header', 'ion-infinite-scroll-content', 'ion-item-group', 'ion-item-options', 'ion-list', 'ion-picker', 'ion-refresher', 'ion-slides', 'ion-split-pane'];
+
+  for (const tag of tags) {
+    const el = await page.find(tag);
+    await checkComponentModeClasses(el);
+  }
+
+  // components that need to have the mode class
+  // added for external / user styling
+  // e.g. <ion-badge class="md">
+  tags = ['ion-action-sheet', 'ion-alert', 'ion-anchor', 'ion-app', 'ion-avatar', 'ion-back-button', 'ion-backdrop', 'ion-badge', 'ion-button', 'ion-buttons', 'ion-card-content', 'ion-card-header', 'ion-card-subtitle', 'ion-card-title', 'ion-card', 'ion-checkbox', 'ion-chip', 'ion-col', 'ion-content', 'ion-datetime', 'ion-fab', 'ion-fab-button', 'ion-fab-list', 'ion-footer', 'ion-grid', 'ion-header', 'ion-img', 'ion-infinite-scroll', 'ion-infinite-scroll-content', 'ion-input', 'ion-item', 'ion-item-divider', 'ion-item-group', 'ion-item-option', 'ion-item-options', 'ion-item-sliding', 'ion-label', 'ion-list', 'ion-list-header', 'ion-loading', 'ion-modal', 'ion-menu', 'ion-menu-button', 'ion-menu-toggle', 'ion-note', 'ion-picker', 'ion-picker-column', 'ion-popover', 'ion-progress-bar', 'ion-radio', 'ion-radio-group', 'ion-range', 'ion-refresher', 'ion-refresher-content', 'ion-reorder', 'ion-reorder-group', 'ion-ripple-effect', 'ion-row', 'ion-searchbar', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-select-option', 'ion-select-popover', 'ion-skeleton-text', 'ion-slide', 'ion-slides', 'ion-spinner', 'ion-split-pane', 'ion-tab-bar', 'ion-tab-button', 'ion-text', 'ion-textarea', 'ion-thumbnail', 'ion-title', 'ion-toast', 'ion-toggle', 'ion-toolbar'];
+
+  for (const tag of tags) {
+    const el = await page.find(tag);
+    await checkModeClasses(el);
+  }
 });
