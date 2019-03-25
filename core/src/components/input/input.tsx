@@ -90,6 +90,11 @@ export class Input implements ComponentInterface {
   }
 
   /**
+   * Hide Spinner in Input Number
+   */
+  @Prop() hideSpinner = false;
+
+  /**
    * A hint to the browser for which keyboard to display.
    * This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
    */
@@ -328,7 +333,8 @@ export class Input implements ComponentInterface {
       class: {
         ...createColorClasses(this.color),
         'has-value': this.hasValue(),
-        'has-focus': this.hasFocus
+        'has-focus': this.hasFocus,
+        'hide-spinner': this.hideSpinner,
       }
     };
   }

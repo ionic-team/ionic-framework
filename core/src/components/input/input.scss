@@ -106,7 +106,19 @@
   opacity: .4;
 }
 
+:host(.hide-spinner) {
+  // Hides Spinner on Webkit (Chrome)
+  .native-input[type=number]::-webkit-outer-spin-button,
+  .native-input[type=number]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+  }
 
+  // Hides Spinner on Firefox
+  .native-input[type=number] {
+    -moz-appearance:textfield;
+  }
+}
 
 // Input Cover: Unfocused
 // --------------------------------------------------

@@ -404,6 +404,7 @@ ion-input,prop,clearOnEdit,boolean | undefined,undefined,false,false
 ion-input,prop,color,string | undefined,undefined,false,false
 ion-input,prop,debounce,number,0,false,false
 ion-input,prop,disabled,boolean,false,false,false
+ion-input,prop,hideSpinner,boolean,false,false,false
 ion-input,prop,inputmode,string | undefined,undefined,false,false
 ion-input,prop,max,string | undefined,undefined,false,false
 ion-input,prop,maxlength,number | undefined,undefined,false,false
