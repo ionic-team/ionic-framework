@@ -23,7 +23,7 @@ export async function testMenu(
 
     await page.waitFor(500);
 
-    if (menuId && menuId.length > 0) {
+    if (menuId.length > 0) {
       const menuCtrl = await page.find('ion-menu-controller');
       await menuCtrl.callMethod('enable', true, menuId);
     }
