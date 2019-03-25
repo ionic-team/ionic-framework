@@ -23,7 +23,7 @@ export class Reorder implements ComponentInterface {
   hostData() {
     return {
       class: {
-        [`reorder-${this.mode}`]: true,
+        [`${this.mode}`]: true,
       }
     };
   }

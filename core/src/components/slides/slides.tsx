@@ -444,6 +444,8 @@ export class Slides implements ComponentInterface {
   hostData() {
     return {
       class: {
+        [`${this.mode}`]: true,
+
         // Used internally for styling
         [`slides-${this.mode}`]: true,
 

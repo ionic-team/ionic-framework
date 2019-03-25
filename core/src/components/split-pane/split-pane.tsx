@@ -164,6 +164,8 @@ export class SplitPane implements ComponentInterface {
   hostData() {
     return {
       class: {
+        [`${this.mode}`]: true,
+
         // Used internally for styling
         [`split-pane-${this.mode}`]: true,
 

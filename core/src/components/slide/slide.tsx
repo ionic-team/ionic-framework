@@ -24,7 +24,7 @@ export class Slide implements ComponentInterface {
   hostData() {
     return {
       class: {
-        [`slide-${this.mode}`]: true,
+        [`${this.mode}`]: true,
         'swiper-slide': true
       }
     };

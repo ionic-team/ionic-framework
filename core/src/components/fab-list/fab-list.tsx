@@ -36,7 +36,7 @@ export class FabList implements ComponentInterface {
   hostData() {
     return {
       class: {
-        [`fab-list-${this.mode}`]: true,
+        [`${this.mode}`]: true,
         'fab-list-active': this.activated,
         [`fab-list-side-${this.side}`]: true
       }

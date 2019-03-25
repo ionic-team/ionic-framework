@@ -37,7 +37,10 @@ export class InfiniteScrollContent implements ComponentInterface {
   hostData() {
     return {
       class: {
-        [`infinite-scroll-content-${this.mode}`]: true,
+        [`${this.mode}`]: true,
+
+        // Used internally for styling
+        [`infinite-scroll-content-${this.mode}`]: true
       }
     };
   }

@@ -193,7 +193,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       'no-router': true,
       'aria-modal': 'true',
       class: {
-        [`modal-${this.mode}`]: true,
+        [`${this.mode}`]: true,
         ...getClassMap(this.cssClass)
       },
       style: {
@@ -205,7 +205,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   render() {
     const dialogClasses = {
       [`modal-wrapper`]: true,
-      [`modal-wrapper-${this.mode}`]: true,
+      [`${this.mode}`]: true,
     };
 
     return [

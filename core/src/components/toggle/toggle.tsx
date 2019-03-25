@@ -195,7 +195,7 @@ export class Toggle implements ComponentInterface {
 
       class: {
         ...createColorClasses(color),
-        [`toggle-${this.mode}`]: true,
+        [`${this.mode}`]: true,
         'in-item': hostContext('ion-item', el),
         'toggle-activated': activated,
         'toggle-checked': checked,

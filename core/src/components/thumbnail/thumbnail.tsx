@@ -13,7 +13,7 @@ export class Thumbnail implements ComponentInterface {
   hostData() {
     return {
       class: {
-        [`thumbnail-${this.mode}`]: true,
+        [`${this.mode}`]: true,
       }
     };
   }

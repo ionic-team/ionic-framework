@@ -46,7 +46,7 @@ export class RefresherContent implements ComponentInterface {
   hostData() {
     return {
       class: {
-        [`refresher-content-${this.mode}`]: true,
+        [`${this.mode}`]: true,
       }
     };
   }

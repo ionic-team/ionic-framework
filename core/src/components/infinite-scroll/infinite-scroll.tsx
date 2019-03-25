@@ -215,7 +215,7 @@ export class InfiniteScroll implements ComponentInterface {
   hostData() {
     return {
       class: {
-        [`infinite-scroll-${this.mode}`]: true,
+        [`${this.mode}`]: true,
         'infinite-scroll-loading': this.isLoading,
         'infinite-scroll-enabled': !this.disabled
       }

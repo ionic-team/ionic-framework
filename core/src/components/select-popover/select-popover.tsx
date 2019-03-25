@@ -37,7 +37,7 @@ export class SelectPopover implements ComponentInterface {
   hostData() {
     return {
       class: {
-        [`select-popover-${this.mode}`]: true,
+        [`${this.mode}`]: true,
       }
     };
   }

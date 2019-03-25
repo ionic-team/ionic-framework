@@ -419,7 +419,7 @@ export class Select implements ComponentInterface {
       'aria-haspopup': 'dialog',
       'aria-labelledby': labelId,
       class: {
-        [`select-${this.mode}`]: true,
+        [`${this.mode}`]: true,
         'in-item': hostContext('ion-item', this.el),
         'select-disabled': this.disabled,
       }

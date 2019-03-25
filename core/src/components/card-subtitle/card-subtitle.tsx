@@ -28,7 +28,7 @@ export class CardSubtitle implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
-        [`card-subtitle-${this.mode}`]: true
+        [`${this.mode}`]: true
       },
       'role': 'heading',
       'aria-level': '3'

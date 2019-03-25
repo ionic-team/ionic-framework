@@ -137,7 +137,7 @@ export class Item implements ComponentInterface {
         ...childStyles,
         ...createColorClasses(this.color),
         'item': true,
-        [`item-${this.mode}`]: true,
+        [`${this.mode}`]: true,
         [`item-lines-${this.lines}`]: this.lines !== undefined,
         'item-disabled': this.disabled,
         'in-list': hostContext('ion-list', this.el),

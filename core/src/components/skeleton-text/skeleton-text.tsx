@@ -50,7 +50,7 @@ export class SkeletonText implements ComponentInterface {
 
     return {
       class: {
-        [`skeleton-text-${this.mode}`]: true,
+        [`${this.mode}`]: true,
         'skeleton-text-animated': animated,
         'in-media': inMedia
       },

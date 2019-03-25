@@ -174,7 +174,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
       },
       class: {
         ...getClassMap(this.cssClass),
-        [`loading-${this.mode}`]: true,
+        [`${this.mode}`]: true,
         'loading-translucent': this.translucent
       }
     };

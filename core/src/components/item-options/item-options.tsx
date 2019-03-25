@@ -40,8 +40,11 @@ export class ItemOptions implements ComponentInterface {
     const isEnd = isEndSide(this.win, this.side);
     return {
       class: {
+        [`${this.mode}`]: true,
+
         // Used internally for styling
         [`item-options-${this.mode}`]: true,
+
         'item-options-start': !isEnd,
         'item-options-end': isEnd
       }

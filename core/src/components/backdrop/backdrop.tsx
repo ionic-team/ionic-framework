@@ -80,7 +80,7 @@ export class Backdrop implements ComponentInterface {
     return {
       tabindex: '-1',
       class: {
-        [`backdrop-${this.mode}`]: true,
+        [`${this.mode}`]: true,
         'backdrop-hide': !this.visible,
         'backdrop-no-tappable': !this.tappable,
       }

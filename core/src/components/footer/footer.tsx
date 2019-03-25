@@ -26,7 +26,11 @@ export class Footer implements ComponentInterface {
   hostData() {
     return {
       class: {
+        [`${this.mode}`]: true,
+
+        // Used internally for styling
         [`footer-${this.mode}`]: true,
+
         [`footer-translucent`]: this.translucent,
         [`footer-translucent-${this.mode}`]: this.translucent,
       }

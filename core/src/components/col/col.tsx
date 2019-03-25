@@ -251,7 +251,7 @@ export class Col implements ComponentInterface {
     const isRTL = this.win.document.dir === 'rtl';
     return {
       class: {
-        [`col-${this.mode}`]: true
+        [`${this.mode}`]: true
       },
       style: {
         ...this.calculateOffset(isRTL),

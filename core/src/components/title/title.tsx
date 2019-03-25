@@ -31,8 +31,9 @@ export class ToolbarTitle implements ComponentInterface {
 
     return {
       class: {
+        [`${mode}`]: true,
+
         ...createColorClasses(this.color),
-        [`title-${mode}`]: true,
       }
     };
   }

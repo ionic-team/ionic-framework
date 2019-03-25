@@ -392,7 +392,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
       },
       class: {
         ...getClassMap(this.cssClass),
-        [`alert-${this.mode}`]: true,
+        [`${this.mode}`]: true,
         'alert-translucent': this.translucent
       }
     };

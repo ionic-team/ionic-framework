@@ -77,7 +77,7 @@ export class Img implements ComponentInterface {
   hostData() {
     return {
       class: {
-        [`img-${this.mode}`]: true,
+        [`${this.mode}`]: true,
       }
     };
   }

@@ -19,6 +19,8 @@ export class CardContent implements ComponentInterface {
   hostData() {
     return {
       class: {
+        [`${this.mode}`]: true,
+
         // Used internally for styling
         [`card-content-${this.mode}`]: true
       }
