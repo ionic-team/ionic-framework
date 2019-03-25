@@ -63,7 +63,6 @@ export class ItemOption implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
-        [`item-option`]: true,
         [`item-option-${this.mode}`]: true,
         'item-option-expandable': this.expandable,
         'ion-activatable': true,

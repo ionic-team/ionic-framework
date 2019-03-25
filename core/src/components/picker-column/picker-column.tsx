@@ -349,7 +349,6 @@ export class PickerColumnCmp implements ComponentInterface {
   hostData() {
     return {
       class: {
-        [`picker-column`]: true,
         [`picker-column-${this.mode}`]: true,
         'picker-col': true,
         'picker-opts-left': this.col.align === 'left',

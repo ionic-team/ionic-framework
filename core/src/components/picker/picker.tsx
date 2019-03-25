@@ -204,7 +204,6 @@ export class Picker implements ComponentInterface, OverlayInterface {
     return {
       'aria-modal': 'true',
       class: {
-        [`picker`]: true,
         [`picker-${this.mode}`]: true,
         ...getClassMap(this.cssClass)
       },

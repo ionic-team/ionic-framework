@@ -66,7 +66,6 @@ export class MenuToggle implements ComponentInterface {
     return {
       'aria-hidden': hidden ? 'true' : null,
       class: {
-        [`menu-toggle`]: true,
         [`menu-toggle-${this.mode}`]: true,
         'menu-toggle-hidden': hidden,
       }

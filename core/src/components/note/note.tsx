@@ -28,7 +28,6 @@ export class Note implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
-        [`note`]: true,
         [`note-${this.mode}`]: true,
       }
     };

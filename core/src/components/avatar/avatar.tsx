@@ -16,7 +16,6 @@ export class Avatar implements ComponentInterface {
   hostData() {
     return {
       class: {
-        [`avatar`]: true,
         [`avatar-${this.mode}`]: true,
       }
     };

@@ -16,7 +16,6 @@ export class Buttons implements ComponentInterface {
   hostData() {
     return {
       class: {
-        [`buttons`]: true,
         [`buttons-${this.mode}`]: true
       }
     };

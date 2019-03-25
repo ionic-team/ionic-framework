@@ -29,7 +29,6 @@ export class Card implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
-        [`card`]: true,
         [`card-${this.mode}`]: true
       }
     };

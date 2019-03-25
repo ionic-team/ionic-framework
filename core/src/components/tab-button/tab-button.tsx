@@ -96,7 +96,6 @@ export class TabButton implements ComponentInterface {
       'aria-selected': selected ? 'true' : null,
       'id': tab !== undefined ? `tab-button-${tab}` : null,
       class: {
-        [`tab-button`]: true,
         [`tab-button-${this.mode}`]: true,
         'tab-selected': selected,
         'tab-disabled': disabled,

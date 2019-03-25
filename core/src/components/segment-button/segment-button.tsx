@@ -71,7 +71,6 @@ export class SegmentButton implements ComponentInterface {
     return {
       'aria-disabled': disabled ? 'true' : null,
       class: {
-        [`segment-button`]: true,
         [`segment-button-${this.mode}`]: true,
         'segment-button-has-label': hasLabel,
         'segment-button-has-icon': hasIcon,

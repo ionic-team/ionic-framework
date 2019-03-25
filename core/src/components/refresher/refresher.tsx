@@ -349,7 +349,6 @@ export class Refresher implements ComponentInterface {
     return {
       slot: 'fixed',
       class: {
-        [`refresher`]: true,
         [`refresher-${this.mode}`]: true,
 
         'refresher-active': this.state !== RefresherState.Inactive,

@@ -267,7 +267,6 @@ export class Textarea implements ComponentInterface {
       'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...createColorClasses(this.color),
-        [`textarea`]: true,
         [`textarea-${this.mode}`]: true,
       }
     };

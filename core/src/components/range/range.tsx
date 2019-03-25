@@ -373,7 +373,6 @@ export class Range implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
-        [`range`]: true,
         [`range-${this.mode}`]: true,
         'in-item': hostContext('ion-item', this.el),
         'range-disabled': this.disabled,

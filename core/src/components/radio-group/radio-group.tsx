@@ -125,7 +125,6 @@ export class RadioGroup implements ComponentInterface {
       'role': 'radiogroup',
       'aria-labelledby': this.labelId,
       class: {
-        [`radio-group`]: true,
         [`radio-group-${this.mode}`]: true,
       }
     };

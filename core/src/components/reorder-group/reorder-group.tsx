@@ -294,7 +294,6 @@ export class ReorderGroup implements ComponentInterface {
   hostData() {
     return {
       class: {
-        [`reorder-group`]: true,
         [`reorder-group-${this.mode}`]: true,
         'reorder-enabled': !this.disabled,
         'reorder-list-active': this.state !== ReordeGroupState.Idle,

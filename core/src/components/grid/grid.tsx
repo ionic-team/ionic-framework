@@ -18,7 +18,6 @@ export class Grid implements ComponentInterface {
   hostData() {
     return {
       class: {
-        [`grid`]: true,
         [`grid-${this.mode}`]: true,
         'grid-fixed': this.fixed
       }

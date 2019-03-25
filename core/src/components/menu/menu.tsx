@@ -510,7 +510,6 @@ export class Menu implements ComponentInterface, MenuI {
     return {
       role: 'complementary',
       class: {
-        [`menu`]: true,
         [`menu-${this.mode}`]: true,
         [`menu-type-${type}`]: true,
         'menu-enabled': !disabled,

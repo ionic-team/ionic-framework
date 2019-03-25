@@ -35,7 +35,6 @@ export class App implements ComponentInterface {
   hostData() {
     return {
       class: {
-        [`app`]: true,
         [`app-${this.mode}`]: true,
         'ion-page': true,
         'force-statusbar-padding': this.config.getBoolean('_forceStatusbarPadding')

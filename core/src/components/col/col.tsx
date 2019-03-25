@@ -251,7 +251,6 @@ export class Col implements ComponentInterface {
     const isRTL = this.win.document.dir === 'rtl';
     return {
       class: {
-        [`col`]: true,
         [`col-${this.mode}`]: true
       },
       style: {

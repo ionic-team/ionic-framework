@@ -46,7 +46,6 @@ export class List implements ComponentInterface {
   hostData() {
     return {
       class: {
-        [`list`]: true,
         [`list-${this.mode}`]: true,
         'list-inset': this.inset,
         [`list-lines-${this.lines}`]: this.lines !== undefined,

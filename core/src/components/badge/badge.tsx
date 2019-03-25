@@ -28,7 +28,6 @@ export class Badge implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
-        [`badge`]: true,
         [`badge-${this.mode}`]: true
       }
     };

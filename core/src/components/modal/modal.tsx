@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Me
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
-import { createThemedClasses, getClassMap } from '../../utils/theme';
+import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -193,7 +193,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       'no-router': true,
       'aria-modal': 'true',
       class: {
-        [`modal`]: true,
         [`modal-${this.mode}`]: true,
         ...getClassMap(this.cssClass)
       },
@@ -204,7 +203,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const dialogClasses = createThemedClasses(this.mode, 'modal-wrapper');
+    const dialogClasses = {
+      [`modal-wrapper`]: true,
+      [`modal-wrapper-${this.mode}`]: true,
+    };
 
     return [
       <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss}/>,

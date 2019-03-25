@@ -136,7 +136,7 @@ export class Item implements ComponentInterface {
       class: {
         ...childStyles,
         ...createColorClasses(this.color),
-        [`item`]: true,
+        'item': true,
         [`item-${this.mode}`]: true,
         [`item-lines-${this.lines}`]: this.lines !== undefined,
         'item-disabled': this.disabled,

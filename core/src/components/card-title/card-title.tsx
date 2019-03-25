@@ -28,7 +28,6 @@ export class CardTitle implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
-        [`card-title`]: true,
         [`card-title-${this.mode}`]: true
       },
       'role': 'heading',

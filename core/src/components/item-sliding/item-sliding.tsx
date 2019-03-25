@@ -308,7 +308,6 @@ export class ItemSliding implements ComponentInterface {
   hostData() {
     return {
       class: {
-        [`item-sliding`]: true,
         [`item-sliding-${this.mode}`]: true,
         'item-sliding-active-slide': (this.state !== SlidingState.Disabled),
         'item-sliding-active-options-end': (this.state & SlidingState.End) !== 0,

@@ -41,7 +41,6 @@ export class Anchor implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
-        [`anchor`]: true,
         [`anchor-${this.mode}`]: true,
         'ion-activatable': true
       }

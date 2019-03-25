@@ -34,7 +34,6 @@ export class CardHeader implements ComponentInterface {
       class: {
         ...createColorClasses(this.color),
         'card-header-translucent': this.translucent,
-        [`card-header`]: true,
         [`card-header-${this.mode}`]: true
       }
     };

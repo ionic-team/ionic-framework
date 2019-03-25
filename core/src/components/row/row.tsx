@@ -13,7 +13,6 @@ export class Row implements ComponentInterface {
   hostData() {
     return {
       class: {
-        [`row`]: true,
         [`row-${this.mode}`]: true,
       }
     };

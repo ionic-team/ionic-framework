@@ -26,7 +26,6 @@ export class Text implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
-        [`text`]: true,
         [`text-${this.mode}`]: true,
       }
     };

@@ -99,7 +99,6 @@ export class Segment implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
-        [`segment`]: true,
         [`segment-${this.mode}`]: true,
         'segment-disabled': this.disabled,
         'segment-scrollable': this.scrollable

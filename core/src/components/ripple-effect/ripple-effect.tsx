@@ -82,7 +82,6 @@ export class RippleEffect implements ComponentInterface {
     return {
       role: 'presentation',
       class: {
-        [`ripple-effect`]: true,
         [`ripple-effect-${this.mode}`]: true,
         'unbounded': this.unbounded
       }
