@@ -112,9 +112,6 @@ export async function checkComponentModeClasses(el: E2EElement, selector?: strin
 
   const mode = await el.getProperty('mode');
 
-  // TODO remove
-  console.log(`component: ${component} classes: ${el.className}`);
-
   expect(el).toHaveClass(`${component}-${mode}`);
 }
 
@@ -125,9 +122,6 @@ export async function checkComponentModeClasses(el: E2EElement, selector?: strin
  */
 export async function checkModeClasses(el: E2EElement) {
   const mode = await el.getProperty('mode');
-
-  // TODO remove
-  console.log(`component: ${el.nodeName} classes: ${el.className}`);
 
   expect(el).toHaveClass(`${mode}`);
 }

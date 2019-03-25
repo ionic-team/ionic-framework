@@ -196,8 +196,9 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         zIndex: 20000 + this.overlayIndex,
       },
       class: {
-        ...getClassMap(this.cssClass),
         [`${this.mode}`]: true,
+
+        ...getClassMap(this.cssClass),
         'action-sheet-translucent': this.translucent
       }
     };
