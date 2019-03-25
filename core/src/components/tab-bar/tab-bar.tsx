@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, QueueApi, State, Watch, h } from '@stencil/core';
 
 import { Color, TabBarChangedEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -65,22 +65,19 @@ export class TabBar implements ComponentInterface {
     this.selectedTabChanged();
   }
 
-  hostData() {
-    const { color, translucent, keyboardVisible } = this;
-    return {
-      'role': 'tablist',
-      'aria-hidden': keyboardVisible ? 'true' : null,
-      class: {
-        ...createColorClasses(color),
-        'tab-bar-translucent': translucent,
-        'tab-bar-hidden': keyboardVisible,
-      }
-    };
-  }
-
   render() {
     return (
-      <slot></slot>
+      <Host
+        role="tablist"
+        aria-hidden={this.keyboardVisible ? 'true' : null}
+        class={{
+          ...createColorClasses(this.color),
+          'tab-bar-translucent': this.translucent,
+          'tab-bar-hidden': this.keyboardVisible,
+        }}
+      >
+        <slot></slot>
+      </Host>
     );
   }
 }

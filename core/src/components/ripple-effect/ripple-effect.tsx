@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Method, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Method, Prop, QueueApi, h } from '@stencil/core';
 
 @Component({
   tag: 'ion-ripple-effect',
@@ -75,22 +75,25 @@ export class RippleEffect implements ComponentInterface {
     return this.type === 'unbounded';
   }
 
-  hostData() {
-    return {
-      role: 'presentation',
-      class: {
+  render() {
+    return (
+      <Host
+        role="presentation"
+        class={{
         'unbounded': this.unbounded
-      }
-    };
+      }}
+      >
+      </Host>
+    );
   }
 }
 
-function removeRipple(ripple: HTMLElement) {
+const removeRipple = (ripple: HTMLElement) => {
   ripple.classList.add('fade-out');
   setTimeout(() => {
     ripple.remove();
   }, 200);
-}
+};
 
 const PADDING = 10;
 const INITIAL_ORIGIN_SCALE = 0.5;
