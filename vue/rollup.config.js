@@ -10,6 +10,7 @@ function outputConfig(suffix, format, opts = {}) {
     {
       file: resolve(`./dist/ionic-vue${suffix}.js`),
       name: 'IonicVue',
+      exports: 'named',
       sourcemap: true,
       format,
     },
@@ -36,10 +37,10 @@ function baseConfig() {
       'vue-router',
       'vue-class-component',
       'vue-property-decorator',
+      '@ionic/core',
       '@ionic/core/loader',
-      '@ionic/core/css/ionic.bundle.css',
-      '@ionic/core/dist/ionic/svg',
-      'ionicons/dist/collection/icon/icon.css',
+      'ionicons',
+      'ionicons/icons',
     ],
     plugins: [
       vue(),

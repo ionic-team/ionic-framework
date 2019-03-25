@@ -6,7 +6,7 @@
 export function getDateValue(date: DatetimeData, format: string): number {
   const getValue = getValueFromFormat(date, format);
 
-  if (getValue) { return getValue; }
+  if (getValue !== undefined) { return getValue; }
 
   const defaultDate = parseDate(new Date().toISOString());
   return getValueFromFormat((defaultDate as DatetimeData), format);
