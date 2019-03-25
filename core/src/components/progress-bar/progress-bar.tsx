@@ -65,7 +65,7 @@ export class ProgressBar implements ComponentInterface {
         [`${this.mode}`]: true,
         [`progress-bar-${type}`]: true,
         'progress-paused': paused,
-        'progress-bar-reversed': reversed,
+        'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed
       }
     };
   }
