@@ -21,22 +21,21 @@ export async function testMenu(
 
     const screenshotCompares = [];
 
-    await page.waitFor(500);
-
     if (menuId.length > 0) {
       const menuCtrl = await page.find('ion-menu-controller');
+      await page.waitFor(250);
       await menuCtrl.callMethod('enable', true, menuId);
     }
 
     const menu = await page.find(selector);
 
     await menu.callMethod('open');
-    await page.waitFor(3000);
+    await page.waitFor(250);
 
     screenshotCompares.push(await page.compareScreenshot(screenshotName));
 
     await menu.callMethod('close');
-    await page.waitFor(3000);
+    await page.waitFor(250);
 
     screenshotCompares.push(await page.compareScreenshot(`dismiss ${screenshotName}`));
 
