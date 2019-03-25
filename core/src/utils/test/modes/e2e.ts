@@ -2,13 +2,15 @@ import { newE2EPage } from '@stencil/core/testing';
 
 import { checkComponentModeClasses, checkModeClasses } from '../utils';
 
-// This test is to loop through all components that should have mode
-// classes and test them
+// This test is to loop through all components that should have
+// specific classes added and test them
 test('component: modes', async () => {
   const page = await newE2EPage({
     url: '/src/utils/test/modes?ionic:_testing=true'
   });
 
+  // First test: .button class
+  // ----------------------------------------------------------------
   // components that need to have the `button` class
   // for use in styling by other components (`ion-buttons`)
   // e.g. <ion-back-button class="button">
@@ -19,6 +21,8 @@ test('component: modes', async () => {
     expect(el).toHaveClass('button');
   }
 
+  // Second test: .item class
+  // ----------------------------------------------------------------
   // components that need to have the `item` class
   // for use in styling by other components
   // e.g. <ion-item-divider class="item">
@@ -29,6 +33,8 @@ test('component: modes', async () => {
     expect(el).toHaveClass('item');
   }
 
+  // Third test: .{component}-{mode} class
+  // ----------------------------------------------------------------
   // components that need to have their tag name
   // + mode as a class for internal styling
   // e.g. <ion-card-content class="card-content-md">
@@ -39,6 +45,8 @@ test('component: modes', async () => {
     await checkComponentModeClasses(el);
   }
 
+  // Fourth test: .{mode} class
+  // ----------------------------------------------------------------
   // components that need to have the mode class
   // added for external / user styling
   // e.g. <ion-badge class="md">
@@ -49,4 +57,18 @@ test('component: modes', async () => {
     const el = await page.find(tag);
     await checkModeClasses(el);
   }
+
+  // Fifth test: changing mode
+  // ----------------------------------------------------------------
+  // change the mode on a button and then check the classes
+  // make sure it has the new mode and not the old mode
+  // e.g. <ion-button mode="blah">
+  const button = await page.find('ion-button');
+  const mode = await button.getProperty('mode');
+
+  button.setAttribute('mode', 'blah');
+  await page.waitForChanges();
+
+  expect(button).not.toHaveClass(`${mode}`);
+  expect(button).toHaveClass(`blah`);
 });
