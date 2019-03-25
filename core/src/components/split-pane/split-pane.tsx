@@ -164,6 +164,7 @@ export class SplitPane implements ComponentInterface {
   hostData() {
     return {
       class: {
+        // Used internally for styling
         [`split-pane-${this.mode}`]: true,
 
         'split-pane-visible': this.visible

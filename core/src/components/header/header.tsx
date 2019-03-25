@@ -26,7 +26,6 @@ export class Header implements ComponentInterface {
   hostData() {
     return {
       class: {
-        [`header`]: true,
         [`header-${this.mode}`]: true,
         [`header-translucent`]: this.translucent,
         [`header-translucent-${this.mode}`]: this.translucent,

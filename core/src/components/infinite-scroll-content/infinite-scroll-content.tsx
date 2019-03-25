@@ -37,7 +37,6 @@ export class InfiniteScrollContent implements ComponentInterface {
   hostData() {
     return {
       class: {
-        [`infinite-scroll-content`]: true,
         [`infinite-scroll-content-${this.mode}`]: true,
       }
     };
