@@ -3332,7 +3332,7 @@ export namespace Components {
     */
     'step': number;
     /**
-    * If `false`, tick marks are not displayed. Only applies when `snaps` is `true`.
+    * If `true`, tick marks are displayed based on the step value. Only applies when `snaps` is `true`.
     */
     'ticks': boolean;
     /**
@@ -3398,7 +3398,7 @@ export namespace Components {
     */
     'step'?: number;
     /**
-    * If `false`, tick marks are not displayed. Only applies when `snaps` is `true`.
+    * If `true`, tick marks are displayed based on the step value. Only applies when `snaps` is `true`.
     */
     'ticks'?: boolean;
     /**
