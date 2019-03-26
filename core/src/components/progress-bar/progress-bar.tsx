@@ -64,7 +64,7 @@ export class ProgressBar implements ComponentInterface {
         ...createColorClasses(color),
         [`progress-bar-${type}`]: true,
         'progress-paused': paused,
-        'progress-bar-reversed': reversed,
+        'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed
       }
     };
   }
