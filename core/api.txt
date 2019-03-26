@@ -805,6 +805,7 @@ ion-range,prop,name,string,'',false,false
 ion-range,prop,pin,boolean,false,false,false
 ion-range,prop,snaps,boolean,false,false,false
 ion-range,prop,step,number,1,false,false
+ion-range,prop,ticks,boolean,true,false,false
 ion-range,prop,value,number | { lower: number; upper: number; },0,false,false
 ion-range,event,ionBlur,void,true
 ion-range,event,ionChange,RangeChangeEventDetail,true
