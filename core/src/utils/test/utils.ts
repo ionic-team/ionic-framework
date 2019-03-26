@@ -1,3 +1,6 @@
+import { E2EPage } from '@stencil/core/testing';
+import { ElementHandle } from 'puppeteer';
+
 export function generateE2EUrl(component: string, type: string, rtl = false): string {
   let url = `/src/components/${component}/test/${type}?ionic:_testing=true`;
   if (rtl) {
@@ -87,3 +90,22 @@ export const waitForFunctionTestContext = async (fn: any, params: any, interval 
     }, interval);
   });
 };
+
+/**
+ * Pierce through shadow roots
+ * https://github.com/GoogleChrome/puppeteer/issues/858#issuecomment-359763824
+ */
+export async function queryDeep(page: E2EPage, ...selectors: string[]): Promise<ElementHandle> {
+  const shadowSelectorFn = (el: Element, selector: string): Element | null => (el && el.shadowRoot) && el.shadowRoot.querySelector(selector);
+
+  return new Promise(async resolve => {
+    const [ firstSelector, ...restSelectors ] = selectors;
+    let parentElement = await page.$(firstSelector);
+
+    for (const selector of restSelectors) {
+      parentElement = await page.evaluateHandle(shadowSelectorFn, parentElement, selector) as any;
+    }
+
+    if (parentElement) { resolve(parentElement); }
+  });
+}

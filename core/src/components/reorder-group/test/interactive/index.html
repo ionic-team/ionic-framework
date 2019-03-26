@@ -15,25 +15,41 @@
   <ion-list><ion-reorder-group disabled="false"></ion-reorder-group></ion-list>
 
   <script>
-    let lists = document.getElementsByTagName('ion-reorder-group');
-
-      for (var i = 0; i < lists.length; i++) {
-        lists[i].addEventListener('ionItemReorder', ({detail}) => detail.complete(true));
-        for (var j = 0; j < 3; j++) addReorderItem(lists[i]);
+    class TestReorderListShadowDom extends HTMLElement {
+      constructor() {
+        super();
+        const shadow = this.attachShadow({mode: 'open'});
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = `<ion-list><ion-reorder-group disabled="false"></ion-reorder-group></ion-list>`;
+        shadow.appendChild(wrapper);
       }
+    }
 
-      function addReorderItem(list) {
-        const reorderItem = document.createElement('ion-reorder');
-        reorderItem.innerHTML = `<ion-item>
-            <ion-label>
-              <h2>Item ${list.childElementCount}</h2>
-            </ion-label>
-        </ion-item>`;
+    customElements.define('test-reorder-list-shadow-dom', TestReorderListShadowDom);
 
-        reorderItem.id = `item-${list.childElementCount}`;
+    function addReorderItem(list) {
+      const reorderItem = document.createElement('ion-reorder');
+      reorderItem.innerHTML = `<ion-item>
+          <ion-label>
+            <h2>Item ${list.childElementCount}</h2>
+          </ion-label>
+      </ion-item>`;
 
-        list.appendChild(reorderItem);
-      }
+      reorderItem.id = `item-${list.childElementCount}`;
+
+      list.appendChild(reorderItem);
+    }
+
+    const testShadowDomEl = document.createElement('test-reorder-list-shadow-dom');
+    document.body.appendChild(testShadowDomEl);
+
+    let lists = Array.from(document.getElementsByTagName('ion-reorder-group'));
+    lists.push(testShadowDomEl.shadowRoot.querySelector('ion-reorder-group'));
+
+    for (var i = 0; i < lists.length; i++) {
+      lists[i].addEventListener('ionItemReorder', ({detail}) => detail.complete(true));
+      for (var j = 0; j < 3; j++) addReorderItem(lists[i]);
+    }
   </script>
 </body>
 </html>
