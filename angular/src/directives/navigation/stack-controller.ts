@@ -58,6 +58,18 @@ export class StackController {
       animation = undefined;
     }
     const viewsSnapshot = this.views.slice();
+    
+    const currentNavigation = this.router.getCurrentNavigation();
+    if (
+      currentNavigation && 
+      currentNavigation.extras && 
+      currentNavigation.extras.replaceUrl
+    ) {
+      if (this.views.length > 0) {
+        this.views.splice(-1, 1);
+      }
+    }
+    
     const views = this.insertView(enteringView, direction);
     return this.wait(async () => {
       await this.transition(enteringView, leavingView, animation, this.canGoBack(1), false);
