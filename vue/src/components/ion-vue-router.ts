@@ -56,6 +56,9 @@ export default {
 };
 
 function catchIonicGoBack(parent: Vue, event: Event): void {
+  // In case of nested ion-vue-routers run only once
+  event.stopImmediatePropagation();
+
   if (!event.target) return;
 
   // We only care for the event coming from Ionic's back button
