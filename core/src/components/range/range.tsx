@@ -106,6 +106,12 @@ export class Range implements ComponentInterface {
   @Prop() step = 1;
 
   /**
+   * If `true`, tick marks are displayed based on the step value.
+   * Only applies when `snaps` is `true`.
+   */
+  @Prop() ticks = true;
+
+  /**
    * If `true`, the user cannot interact with the range.
    */
   @Prop() disabled = false;
@@ -393,7 +399,7 @@ export class Range implements ComponentInterface {
     const end = isRTL ? 'left' : 'right';
 
     const ticks = [];
-    if (this.snaps) {
+    if (this.snaps && this.ticks) {
       for (let value = min; value <= max; value += step) {
         const ratio = valueToRatio(value, min, max);
 
