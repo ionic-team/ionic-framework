@@ -106,7 +106,7 @@ export class Range implements ComponentInterface {
   @Prop() step = 1;
 
   /**
-   * If `false`, tick marks are not displayed.
+   * If `true`, tick marks are displayed based on the step value.
    * Only applies when `snaps` is `true`.
    */
   @Prop() ticks = true;
