@@ -18,6 +18,16 @@ export function cleanScreenshotName(screenshotName: string): string {
 }
 
 /**
+ * Gets the value of a property on an element
+ */
+export const getElementProperty = async (element: any, property: string): Promise<string> => {
+  const getProperty = await element.getProperty(property);
+  if (!getProperty) { return ''; }
+
+  return getProperty.jsonValue();
+};
+
+/**
  * Listens for an event and fires a callback
  * @param page - The Puppeteer `page` object
  * @param eventType: string - The event name to listen for. ex: `ionPickerColChange`
