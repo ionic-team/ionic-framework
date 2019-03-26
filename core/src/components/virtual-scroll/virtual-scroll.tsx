@@ -327,9 +327,9 @@ export class VirtualScroll implements ComponentInterface {
     if (cell !== this.cells[index]) {
       return;
     }
-    cell.visible = true;
-    if (cell.height !== height) {
-      console.debug(`[virtual] cell height changed ${cell.height}px -> ${height}px`);
+    if (cell.height !== height || cell.visible !== true) {
+      console.debug(`[virtual] cell height or visibility changed ${cell.height}px -> ${height}px`);
+      cell.visible = true;
       cell.height = height;
       this.indexDirty = Math.min(this.indexDirty, index);
       this.scheduleUpdate();
