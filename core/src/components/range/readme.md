@@ -153,10 +153,19 @@ export default Example;
     </ion-item>
 
     <ion-item>
-      <ion-range dualKnobs="true" min="21" max="72" step="3" snaps="true"></ion-range>
+      <ion-range ref="rangeDualKnob" dualKnobs="true" min="21" max="72" step="3" snaps="true"></ion-range>
     </ion-item>
   </ion-list>
 </template>
+
+<script>
+export default {
+  mounted() {
+    // Sets initial value for dual-knob ion-range
+    this.$refs.rangeDualKnob.value = { lower: 24, upper: 42 };
+  }
+}
+</script>
 ```
 
 
