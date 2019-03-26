@@ -60,6 +60,13 @@ export class StackController {
     const viewsSnapshot = this.views.slice();
 
     const currentNavigation = this.router.getCurrentNavigation();
+    /**
+     * If the navigation action
+     * sets `replaceUrl: true`
+     * then we need to make sure
+     * we remove the last item
+     * from our views stack
+     */
     if (
       currentNavigation &&
       currentNavigation.extras &&
