@@ -17,15 +17,19 @@ const Example: React.SFC<{}> = () => (
       </IonRange>
     </IonItem>
 
-   <IonItem>
-     <IonRange min={20} max={80} step={2}>
-       <IonIcon size="small" slot="start" name="sunny" />
-       <IonIcon slot="end" name="sunny" />
-     </IonRange>
-   </IonItem>
+    <IonItem>
+      <IonRange min={20} max={80} step={2}>
+        <IonIcon size="small" slot="start" name="sunny" />
+        <IonIcon slot="end" name="sunny" />
+      </IonRange>
+    </IonItem>
 
     <IonItem>
       <IonRange min={1000} max={2000} step={100} snaps={true} color="secondary"></IonRange>
+    </IonItem>
+
+    <IonItem>
+      <IonRange min={1000} max={2000} step={100} snaps={true} ticks={false} color="secondary"></IonRange>
     </IonItem>
 
     <IonItem>
