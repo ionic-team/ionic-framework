@@ -64,10 +64,10 @@ export class ReorderGroup implements ComponentInterface {
     }
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
-      el: this.doc.body,
+      el: this.el,
       queue: this.queue,
       gestureName: 'reorder',
-      gesturePriority: 90,
+      gesturePriority: 110,
       threshold: 0,
       direction: 'y',
       passive: false,
