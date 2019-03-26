@@ -397,6 +397,10 @@ export namespace Components {
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection': RouterDirection;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target'?: string;
   }
   interface IonAnchorAttributes extends StencilHTMLAttributes {
     /**
@@ -411,6 +415,10 @@ export namespace Components {
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection'?: RouterDirection;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target'?: string;
   }
 
   interface IonApp {}
@@ -564,6 +572,10 @@ export namespace Components {
     */
     'strong': boolean;
     /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target'?: string;
+    /**
     * The type of the button.
     */
     'type': 'submit' | 'reset' | 'button';
@@ -621,6 +633,10 @@ export namespace Components {
     * If `true`, activates a button with a heavier font weight.
     */
     'strong'?: boolean;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target'?: string;
     /**
     * The type of the button.
     */
@@ -1911,6 +1927,14 @@ export namespace Components {
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target'?: string;
+    /**
+    * The type of the button.
+    */
+    'type': 'submit' | 'reset' | 'button';
   }
   interface IonItemOptionAttributes extends StencilHTMLAttributes {
     /**
@@ -1933,6 +1957,14 @@ export namespace Components {
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target'?: string;
+    /**
+    * The type of the button.
+    */
+    'type'?: 'submit' | 'reset' | 'button';
   }
 
   interface IonItemOptions {
@@ -2024,6 +2056,10 @@ export namespace Components {
     */
     'routerDirection': RouterDirection;
     /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target'?: string;
+    /**
     * The type of the button. Only used when an `onclick` or `button` property is present.
     */
     'type': 'submit' | 'reset' | 'button';
@@ -2065,6 +2101,10 @@ export namespace Components {
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection'?: RouterDirection;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target'?: string;
     /**
     * The type of the button. Only used when an `onclick` or `button` property is present.
     */
@@ -4411,7 +4451,7 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
-    * The URL which will be used as the `href` within this tab's button anchor.
+    * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
     'href'?: string;
     /**
@@ -4430,6 +4470,10 @@ export namespace Components {
     * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
     */
     'tab'?: string;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target'?: string;
   }
   interface IonTabButtonAttributes extends StencilHTMLAttributes {
     /**
@@ -4437,7 +4481,7 @@ export namespace Components {
     */
     'disabled'?: boolean;
     /**
-    * The URL which will be used as the `href` within this tab's button anchor.
+    * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
     'href'?: string;
     /**
@@ -4456,6 +4500,10 @@ export namespace Components {
     * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
     */
     'tab'?: string;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target'?: string;
   }
 
   interface IonTab {

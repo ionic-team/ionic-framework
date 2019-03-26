@@ -89,6 +89,13 @@ export class Button implements ComponentInterface {
   @Prop() strong = false;
 
   /**
+   * Specifies where to display the linked URL.
+   * Only applies when an `href` is provided.
+   * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+   */
+  @Prop() target?: string;
+
+  /**
    * The type of the button.
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
@@ -166,7 +173,10 @@ export class Button implements ComponentInterface {
     const TagType = this.href === undefined ? 'button' : 'a' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
-      : { href: this.href };
+      : {
+        href: this.href,
+        target: this.target
+      };
 
     return (
       <TagType

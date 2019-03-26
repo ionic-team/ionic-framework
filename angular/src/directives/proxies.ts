@@ -61,7 +61,7 @@ export class IonBadge {
 proxyInputs(IonBadge, ['color', 'mode']);
 
 export declare interface IonButton extends StencilComponents<'IonButton'> {}
-@Component({ selector: 'ion-button', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'buttonType', 'disabled', 'expand', 'fill', 'routerDirection', 'href', 'shape', 'size', 'strong', 'type'] })
+@Component({ selector: 'ion-button', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'buttonType', 'disabled', 'expand', 'fill', 'routerDirection', 'href', 'shape', 'size', 'strong', 'target', 'type'] })
 export class IonButton {
   ionFocus!: EventEmitter<CustomEvent>;
   ionBlur!: EventEmitter<CustomEvent>;
@@ -72,7 +72,7 @@ export class IonButton {
     proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
   }
 }
-proxyInputs(IonButton, ['color', 'mode', 'buttonType', 'disabled', 'expand', 'fill', 'routerDirection', 'href', 'shape', 'size', 'strong', 'type']);
+proxyInputs(IonButton, ['color', 'mode', 'buttonType', 'disabled', 'expand', 'fill', 'routerDirection', 'href', 'shape', 'size', 'strong', 'target', 'type']);
 
 export declare interface IonButtons extends StencilComponents<'IonButtons'> {}
 @Component({ selector: 'ion-buttons', changeDetection: 0, template: '<ng-content></ng-content>' })
@@ -346,7 +346,7 @@ proxyMethods(IonInput, ['setFocus', 'getInputElement']);
 proxyInputs(IonInput, ['color', 'mode', 'accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'debounce', 'disabled', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'spellcheck', 'step', 'size', 'type', 'value']);
 
 export declare interface IonItem extends StencilComponents<'IonItem'> {}
-@Component({ selector: 'ion-item', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'button', 'detail', 'detailIcon', 'disabled', 'href', 'lines', 'routerDirection', 'type'] })
+@Component({ selector: 'ion-item', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'button', 'detail', 'detailIcon', 'disabled', 'href', 'lines', 'routerDirection', 'target', 'type'] })
 export class IonItem {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef) {
@@ -354,7 +354,7 @@ export class IonItem {
     this.el = r.nativeElement;
   }
 }
-proxyInputs(IonItem, ['color', 'mode', 'button', 'detail', 'detailIcon', 'disabled', 'href', 'lines', 'routerDirection', 'type']);
+proxyInputs(IonItem, ['color', 'mode', 'button', 'detail', 'detailIcon', 'disabled', 'href', 'lines', 'routerDirection', 'target', 'type']);
 
 export declare interface IonItemDivider extends StencilComponents<'IonItemDivider'> {}
 @Component({ selector: 'ion-item-divider', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'sticky'] })
@@ -378,7 +378,7 @@ export class IonItemGroup {
 }
 
 export declare interface IonItemOption extends StencilComponents<'IonItemOption'> {}
-@Component({ selector: 'ion-item-option', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'disabled', 'expandable', 'href'] })
+@Component({ selector: 'ion-item-option', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'disabled', 'expandable', 'href', 'target', 'type'] })
 export class IonItemOption {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef) {
@@ -386,7 +386,7 @@ export class IonItemOption {
     this.el = r.nativeElement;
   }
 }
-proxyInputs(IonItemOption, ['color', 'mode', 'disabled', 'expandable', 'href']);
+proxyInputs(IonItemOption, ['color', 'mode', 'disabled', 'expandable', 'href', 'target', 'type']);
 
 export declare interface IonItemOptions extends StencilComponents<'IonItemOptions'> {}
 @Component({ selector: 'ion-item-options', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['side'] })
@@ -833,7 +833,7 @@ export class IonTabBar {
 proxyInputs(IonTabBar, ['mode', 'color', 'selectedTab', 'translucent']);
 
 export declare interface IonTabButton extends StencilComponents<'IonTabButton'> {}
-@Component({ selector: 'ion-tab-button', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['selected', 'mode', 'layout', 'href', 'tab', 'disabled'] })
+@Component({ selector: 'ion-tab-button', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['mode', 'disabled', 'href', 'layout', 'selected', 'tab', 'target'] })
 export class IonTabButton {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef) {
@@ -841,7 +841,7 @@ export class IonTabButton {
     this.el = r.nativeElement;
   }
 }
-proxyInputs(IonTabButton, ['selected', 'mode', 'layout', 'href', 'tab', 'disabled']);
+proxyInputs(IonTabButton, ['mode', 'disabled', 'href', 'layout', 'selected', 'tab', 'target']);
 
 export declare interface IonText extends StencilComponents<'IonText'> {}
 @Component({ selector: 'ion-text', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode'] })

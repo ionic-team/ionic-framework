@@ -19,14 +19,20 @@ export class TabButton implements ComponentInterface {
   @Prop({ context: 'config' }) config!: Config;
 
   /**
-   * The selected tab component
-   */
-  @Prop({ mutable: true }) selected = false;
-
-  /**
    * The mode determines which platform styles to use.
    */
   @Prop() mode!: Mode;
+
+  /**
+   * The selected tab component
+   */
+  @Prop() disabled = false;
+
+  /**
+   * Contains a URL or a URL fragment that the hyperlink points to.
+   * If this property is set, an anchor tag will be rendered.
+   */
+  @Prop() href?: string;
 
   /**
    * Set the layout of the text and icon in the tab bar.
@@ -35,9 +41,9 @@ export class TabButton implements ComponentInterface {
   @Prop({ mutable: true }) layout?: TabButtonLayout;
 
   /**
-   * The URL which will be used as the `href` within this tab's button anchor.
+   * The selected tab component
    */
-  @Prop() href?: string;
+  @Prop({ mutable: true }) selected = false;
 
   /**
    * A tab id must be provided for each `ion-tab`. It's used internally to reference
@@ -46,9 +52,11 @@ export class TabButton implements ComponentInterface {
   @Prop() tab?: string;
 
   /**
-   * The selected tab component
+   * Specifies where to display the linked URL.
+   * Only applies when an `href` is provided.
+   * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
    */
-  @Prop() disabled = false;
+  @Prop() target?: string;
 
   /**
    * Emitted when the tab bar is clicked
@@ -109,9 +117,10 @@ export class TabButton implements ComponentInterface {
   }
 
   render() {
-    const { mode, href } = this;
+    const { mode, href, target } = this;
+
     return (
-      <a href={href}>
+      <a href={href} target={target}>
         <slot></slot>
         {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
       </a>

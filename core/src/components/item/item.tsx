@@ -76,6 +76,13 @@ export class Item implements ComponentInterface {
   @Prop() routerDirection: RouterDirection = 'forward';
 
   /**
+   * Specifies where to display the linked URL.
+   * Only applies when an `href` is provided.
+   * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+   */
+  @Prop() target?: string;
+
+  /**
    * The type of the button. Only used when an `onclick` or `button` property is present.
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
@@ -148,11 +155,16 @@ export class Item implements ComponentInterface {
   }
 
   render() {
-    const { href, detail, mode, win, detailIcon, routerDirection, type } = this;
+    const { detail, mode, win, detailIcon, routerDirection } = this;
 
     const clickable = this.isClickable();
-    const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
-    const attrs = TagType === 'button' ? { type } : { href };
+    const TagType = clickable ? (this.href === undefined ? 'button' : 'a') : 'div' as any;
+    const attrs = (TagType === 'button')
+      ? { type: this.type }
+      : {
+        href: this.href,
+        target: this.target
+      };
     const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
 
     return [
@@ -160,7 +172,7 @@ export class Item implements ComponentInterface {
         {...attrs}
         class="item-native"
         disabled={this.disabled}
-        onClick={(ev: Event) => openURL(win, href, ev, routerDirection)}
+        onClick={(ev: Event) => openURL(win, this.href, ev, routerDirection)}
       >
         <slot name="start"></slot>
         <div class="item-inner">

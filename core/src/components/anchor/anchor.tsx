@@ -31,6 +31,13 @@ export class Anchor implements ComponentInterface {
    */
   @Prop() routerDirection: RouterDirection = 'forward';
 
+  /**
+   * Specifies where to display the linked URL.
+   * Only applies when an `href` is provided.
+   * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+   */
+  @Prop() target?: string;
+
   @Listen('click')
   onClick(ev: Event) {
     openURL(this.win, this.href, ev, this.routerDirection);
@@ -47,7 +54,7 @@ export class Anchor implements ComponentInterface {
 
   render() {
     return (
-      <a href={this.href}>
+      <a href={this.href} target={this.target}>
         <slot></slot>
       </a>
     );

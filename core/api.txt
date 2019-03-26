@@ -74,6 +74,7 @@ ion-anchor,shadow
 ion-anchor,prop,color,string | undefined,undefined,false,false
 ion-anchor,prop,href,string | undefined,undefined,false,false
 ion-anchor,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
+ion-anchor,prop,target,string | undefined,undefined,false,false
 ion-anchor,css-prop,--background
 ion-anchor,css-prop,--color
 
@@ -143,6 +144,7 @@ ion-button,prop,routerDirection,"back" | "forward" | "root",'forward',false,fals
 ion-button,prop,shape,"round" | undefined,undefined,false,true
 ion-button,prop,size,"default" | "large" | "small" | undefined,undefined,false,true
 ion-button,prop,strong,boolean,false,false,false
+ion-button,prop,target,string | undefined,undefined,false,false
 ion-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-button,event,ionBlur,void,true
 ion-button,event,ionFocus,void,true
@@ -457,6 +459,8 @@ ion-item-option,prop,disabled,boolean,false,false,false
 ion-item-option,prop,expandable,boolean,false,false,false
 ion-item-option,prop,href,string | undefined,undefined,false,false
 ion-item-option,prop,mode,"ios" | "md",undefined,false,false
+ion-item-option,prop,target,string | undefined,undefined,false,false
+ion-item-option,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-item-option,css-prop,--background
 ion-item-option,css-prop,--color
 
@@ -482,6 +486,7 @@ ion-item,prop,href,string | undefined,undefined,false,false
 ion-item,prop,lines,"full" | "inset" | "none" | undefined,undefined,false,false
 ion-item,prop,mode,"ios" | "md",undefined,false,false
 ion-item,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
+ion-item,prop,target,string | undefined,undefined,false,false
 ion-item,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-item,css-prop,--background
 ion-item,css-prop,--background-activated
@@ -1055,6 +1060,7 @@ ion-tab-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-star
 ion-tab-button,prop,mode,"ios" | "md",undefined,false,false
 ion-tab-button,prop,selected,boolean,false,false,false
 ion-tab-button,prop,tab,string | undefined,undefined,false,false
+ion-tab-button,prop,target,string | undefined,undefined,false,false
 ion-tab-button,css-prop,--background
 ion-tab-button,css-prop,--background-focused
 ion-tab-button,css-prop,--color

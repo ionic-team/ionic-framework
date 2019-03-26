@@ -51,6 +51,18 @@ export class ItemOption implements ComponentInterface {
    */
   @Prop() href?: string;
 
+  /**
+   * Specifies where to display the linked URL.
+   * Only applies when an `href` is provided.
+   * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+   */
+  @Prop() target?: string;
+
+  /**
+   * The type of the button.
+   */
+  @Prop() type: 'submit' | 'reset' | 'button' = 'button';
+
   @Listen('click')
   onClick(ev: Event) {
     const el = (ev.target as HTMLElement).closest('ion-item-option');
@@ -71,13 +83,18 @@ export class ItemOption implements ComponentInterface {
 
   render() {
     const TagType = this.href === undefined ? 'button' : 'a' as any;
+    const attrs = (TagType === 'button')
+    ? { type: this.type }
+    : {
+      href: this.href,
+      target: this.target
+    };
 
     return (
       <TagType
-        type="button"
+        {...attrs}
         class="button-native"
         disabled={this.disabled}
-        href={this.href}
       >
         <span class="button-inner">
           <slot name="top"></slot>
