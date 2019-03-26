@@ -5,6 +5,7 @@ import { cleanScreenshotName, generateE2EUrl } from '../../../utils/test/utils';
 export async function testMenu(
   type: string,
   selector: string,
+  menuId = '',
   rtl = false,
   screenshotName: string = cleanScreenshotName(selector)
 ) {
@@ -19,6 +20,12 @@ export async function testMenu(
     });
 
     const screenshotCompares = [];
+
+    if (menuId.length > 0) {
+      const menuCtrl = await page.find('ion-menu-controller');
+      await page.waitFor(250);
+      await menuCtrl.callMethod('enable', true, menuId);
+    }
 
     const menu = await page.find(selector);
 
