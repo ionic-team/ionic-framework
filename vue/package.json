@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Vue specific wrappers for @ionic/core",
   "main": "dist/ionic-vue.common.js",
   "types": "dist/types/index.d.ts",
