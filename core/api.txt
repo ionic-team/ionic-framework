@@ -380,6 +380,7 @@ ion-header,prop,translucent,boolean,false,false,false
 ion-img,shadow
 ion-img,prop,alt,string | undefined,undefined,false,false
 ion-img,prop,src,string | undefined,undefined,false,false
+ion-img,event,ionError,void,true
 ion-img,event,ionImgDidLoad,void,true
 
 ion-infinite-scroll-content,none
