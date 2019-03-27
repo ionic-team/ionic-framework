@@ -46,7 +46,7 @@ export class FabButton implements ComponentInterface {
 
   /**
    * Specifies where to display the linked URL.
-   * Only applies if a href is provided too.
+   * Only applies when an `href` is provided.
    * The default options are: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`and `{framename}`.
    */
   @Prop() target?: string;
