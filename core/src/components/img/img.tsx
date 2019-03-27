@@ -31,10 +31,10 @@ export class Img implements ComponentInterface {
     this.addIO();
   }
 
-  /** Emitted when the img src is loaded (error included) */
+  /** Emitted when the img src has been set */
   @Event() ionImgDidLoad!: EventEmitter<void>;
 
-  /** Emitted when img failed to load */
+  /** Emitted when the img fails to load */
   @Event() ionError!: EventEmitter<void>;
 
   componentDidLoad() {
