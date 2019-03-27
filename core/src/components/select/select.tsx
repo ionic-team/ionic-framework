@@ -1,8 +1,10 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
-import { ActionSheetButton, ActionSheetOptions, AlertOptions, CssClassMap, Mode, OverlaySelect, PopoverOptions, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, StyleEventDetail } from '../../interface';
+import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, Mode, OverlaySelect, PopoverOptions, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, StyleEventDetail } from '../../interface';
 import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
+
+import { SelectCompareFn } from './select-interface';
 
 @Component({
   tag: 'ion-select',
@@ -83,6 +85,11 @@ export class Select implements ComponentInterface {
   @Prop() interfaceOptions: any = {};
 
   /**
+   * A property name or function used to compare object values
+   */
+  @Prop() compareWith?: string | SelectCompareFn | null;
+
+  /**
    * the value of the select.
    */
   @Prop({ mutable: true }) value?: any | null;
@@ -136,6 +143,8 @@ export class Select implements ComponentInterface {
 
     if (this.didInit) {
       this.updateOptions();
+      this.updateOverlayOptions();
+      this.emitStyle();
 
       /**
        * In the event that options
@@ -220,40 +229,29 @@ export class Select implements ComponentInterface {
     return this.openAlert();
   }
 
-  private async openPopover(ev: UIEvent) {
-    const interfaceOptions = this.interfaceOptions;
+  private updateOverlayOptions(): void {
+    if (!this.overlay) { return; }
+    const overlay = (this.overlay as any);
 
-    const popoverOpts: PopoverOptions = {
-      mode: this.mode,
-      ...interfaceOptions,
-
-      component: 'ion-select-popover',
-      cssClass: ['select-popover', interfaceOptions.cssClass],
-      event: ev,
-      componentProps: {
-        header: interfaceOptions.header,
-        subHeader: interfaceOptions.subHeader,
-        message: interfaceOptions.message,
-        value: this.value,
-        options: this.childOpts.map(o => {
-          return {
-            text: o.textContent,
-            value: o.value,
-            checked: o.selected,
-            disabled: o.disabled,
-            handler: () => {
-              this.value = o.value;
-              this.close();
-            }
-          } as SelectPopoverOption;
-        })
-      }
-    };
-    return this.popoverCtrl.create(popoverOpts);
+    switch (this.interface) {
+      case 'action-sheet':
+        overlay.buttons = this.createActionSheetButtons(this.childOpts);
+        break;
+      case 'popover':
+        const popover = overlay.querySelector('ion-select-popover');
+        if (popover) {
+          popover.options = this.createPopoverOptions(this.childOpts);
+        }
+        break;
+      default:
+        const inputType = (this.multiple ? 'checkbox' : 'radio');
+        overlay.inputs = this.createAlertInputs(this.childOpts, inputType);
+        break;
+    }
   }
 
-  private async openActionSheet() {
-    const actionSheetButtons = this.childOpts.map(option => {
+  private createActionSheetButtons(data: any[]): ActionSheetButton[] {
+    const actionSheetButtons = data.map(option => {
       return {
         role: (option.selected ? 'selected' : ''),
         text: option.textContent,
@@ -272,12 +270,65 @@ export class Select implements ComponentInterface {
       }
     });
 
+    return actionSheetButtons;
+  }
+
+  private createAlertInputs(data: any[], inputType: string): AlertInput[] {
+    return data.map(o => {
+      return {
+        type: inputType,
+        label: o.textContent,
+        value: o.value,
+        checked: o.selected,
+        disabled: o.disabled
+      } as AlertInput;
+    });
+  }
+
+  private createPopoverOptions(data: any[]): SelectPopoverOption[] {
+    return data.map(o => {
+      return {
+        text: o.textContent,
+        value: o.value,
+        checked: o.selected,
+        disabled: o.disabled,
+        handler: () => {
+          this.value = o.value;
+          this.close();
+        }
+      } as SelectPopoverOption;
+    });
+  }
+
+  private async openPopover(ev: UIEvent) {
+    const interfaceOptions = this.interfaceOptions;
+
+    const popoverOpts: PopoverOptions = {
+      mode: this.mode,
+      ...interfaceOptions,
+
+      component: 'ion-select-popover',
+      cssClass: ['select-popover', interfaceOptions.cssClass],
+      event: ev,
+      componentProps: {
+        header: interfaceOptions.header,
+        subHeader: interfaceOptions.subHeader,
+        message: interfaceOptions.message,
+        value: this.value,
+        options: this.createPopoverOptions(this.childOpts)
+      }
+    };
+    return this.popoverCtrl.create(popoverOpts);
+  }
+
+  private async openActionSheet() {
+
     const interfaceOptions = this.interfaceOptions;
     const actionSheetOpts: ActionSheetOptions = {
       mode: this.mode,
       ...interfaceOptions,
 
-      buttons: actionSheetButtons,
+      buttons: this.createActionSheetButtons(this.childOpts),
       cssClass: ['select-action-sheet', interfaceOptions.cssClass]
     };
     return this.actionSheetCtrl.create(actionSheetOpts);
@@ -295,15 +346,7 @@ export class Select implements ComponentInterface {
       ...interfaceOptions,
 
       header: interfaceOptions.header ? interfaceOptions.header : labelText,
-      inputs: this.childOpts.map(o => {
-        return {
-          type: inputType,
-          label: o.textContent,
-          value: o.value,
-          checked: o.selected,
-          disabled: o.disabled
-        };
-      }),
+      inputs: this.createAlertInputs(this.childOpts, inputType),
       buttons: [
         {
           text: this.cancelText,
@@ -346,7 +389,7 @@ export class Select implements ComponentInterface {
     // iterate all options, updating the selected prop
     let canSelect = true;
     for (const selectOption of this.childOpts) {
-      const selected = canSelect && isOptionSelected(this.value, selectOption.value);
+      const selected = canSelect && isOptionSelected(this.value, selectOption.value, this.compareWith);
       selectOption.selected = selected;
 
       // if current option is selected and select is single-option, we can't select
@@ -370,7 +413,7 @@ export class Select implements ComponentInterface {
     if (selectedText != null && selectedText !== '') {
       return selectedText;
     }
-    return generateText(this.childOpts, this.value);
+    return generateText(this.childOpts, this.value, this.compareWith);
   }
 
   private setFocus() {
@@ -468,33 +511,45 @@ function parseValue(value: any) {
   return value.toString();
 }
 
-function isOptionSelected(currentValue: any[] | any, optionValue: any) {
+function isOptionSelected(currentValue: any[] | any, compareValue: any, compareWith?: string | SelectCompareFn | null) {
   if (currentValue === undefined) {
     return false;
   }
   if (Array.isArray(currentValue)) {
-    return currentValue.includes(optionValue);
+    return currentValue.some(val => compareOptions(val, compareValue, compareWith));
   } else {
-    return currentValue === optionValue;
+    return compareOptions(currentValue, compareValue, compareWith);
   }
 }
 
-function generateText(opts: HTMLIonSelectOptionElement[], value: any | any[]) {
+function compareOptions(currentValue: any, compareValue: any, compareWith?: string | SelectCompareFn | null): boolean {
+  if (typeof compareWith === 'function') {
+    return compareWith(currentValue, compareValue);
+  } else if (typeof compareWith === 'string') {
+    return currentValue[compareWith] === compareValue[compareWith];
+  } else {
+    return currentValue === compareValue;
+  }
+}
+
+function generateText(opts: HTMLIonSelectOptionElement[], value: any | any[], compareWith?: string | SelectCompareFn | null) {
   if (value === undefined) {
     return '';
   }
   if (Array.isArray(value)) {
     return value
-      .map(v => textForValue(opts, v))
+      .map(v => textForValue(opts, v, compareWith))
       .filter(opt => opt !== null)
       .join(', ');
   } else {
-    return textForValue(opts, value) || '';
+    return textForValue(opts, value, compareWith) || '';
   }
 }
 
-function textForValue(opts: HTMLIonSelectOptionElement[], value: any): string | null {
-  const selectOpt = opts.find(opt => opt.value === value);
+function textForValue(opts: HTMLIonSelectOptionElement[], value: any, compareWith?: string | SelectCompareFn | null): string | null {
+  const selectOpt = opts.find(opt => {
+    return compareOptions(opt.value, value, compareWith);
+  });
   return selectOpt
     ? selectOpt.textContent
     : null;

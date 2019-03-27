@@ -1,0 +1,16 @@
+@import "../../themes/ionic.globals";
+
+// Skeleton Text
+// --------------------------------------------------
+
+/// @prop - Background color alpha of the skeleton text
+$skeleton-text-background-alpha:            .065 !default;
+
+/// @prop - Background color of the skeleton text
+$skeleton-text-background:                  rgba(var(--background-rgb, var(--ion-text-color-rgb, $text-color-rgb)), $skeleton-text-background-alpha) !default;
+
+/// @prop - Background color alpha of the skeleton text animation
+$skeleton-text-background-animated-alpha:   .135 !default;
+
+/// @prop - Background color of the skeleton text animation
+$skeleton-text-background-animated:         rgba(var(--background-rgb, var(--ion-text-color-rgb, $text-color-rgb)), $skeleton-text-background-animated-alpha) !default;
