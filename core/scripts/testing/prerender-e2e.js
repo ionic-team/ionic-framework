@@ -1,45 +1,48 @@
 const fs = require('fs');
-const util = require('util');
-const readFile = util.promisify(fs.readFile);
-const writeFile = util.promisify(fs.writeFile);
-const readdir = util.promisify(fs.readdir);
-const stat = util.promisify(fs.stat);
 const path = require('path');
 const hydrate = require('../../hydrate');
+const domino = require('domino');
 
 let prerenderCount = 0;
 
 async function prerender(dirPath, srcIndexFilePath) {
-  const srcHtml = await readFile(srcIndexFilePath, 'utf-8');
+  const start = Date.now();
+  const srcHtml = fs.readFileSync(srcIndexFilePath, 'utf-8');
 
   const staticFilePath = path.join(dirPath, 'prerender-static.html');
+
   const staticResults = await hydrate.renderToString(srcHtml, {
     prettyHtml: true,
     removeScripts: true
   });
-
   if (staticResults.diagnostics.length > 0) {
-    throw new Error(staticResults.diagnostics[0].messageText);
+    throw new Error('staticResults: ' + staticResults.diagnostics[0].messageText);
   }
-
-  if (staticResults.html == null || typeof staticResults.html !== 'string' || staticResults.html.trim().length === 0) {
-    throw new Error(`empty prerendered html: ${indexFilePath}`);
-  }
+  fs.writeFileSync(staticFilePath, staticResults.html);
 
   const hydratedFilePath = path.join(dirPath, 'prerender-hydrated.html');
   const hydrateResults = await hydrate.renderToString(srcHtml, {
     prettyHtml: true
   });
+  if (hydrateResults.diagnostics.length > 0) {
+    throw new Error('hydrateResults: ' + hydrateResults.diagnostics[0].messageText);
+  }
+  fs.writeFileSync(hydratedFilePath, hydrateResults.html);
+
+  const dominoFilePath = path.join(dirPath, 'prerender-domino.html');
+  const dominoDoc = domino.createDocument(srcHtml, true);
+  const dominoResults = await hydrate.hydrateDocument(dominoDoc);
+  if (dominoResults.diagnostics.length > 0) {
+    throw new Error('dominoResults: ' + dominoResults.diagnostics[0].messageText);
+  }
+  const dominoHtml = dominoDoc.documentElement.outerHTML;
+  fs.writeFileSync(dominoFilePath, dominoHtml);
 
   const dstIndexFilePath = path.join(dirPath, 'prerender.html');
-  const indexHtml = buildPrerenderIndexHtml(staticResults.title);
+  const prerenderIndexHtml = buildPrerenderIndexHtml('staticResults.title');
+  fs.writeFileSync(dstIndexFilePath, prerenderIndexHtml);
 
-  await Promise.all([
-    writeFile(staticFilePath, staticResults.html),
-    writeFile(hydratedFilePath, hydrateResults.html),
-    writeFile(dstIndexFilePath, indexHtml)
-  ]);
-
+  console.log(dirPath, `${Date.now() - start}ms`);
   prerenderCount++;
 }
 
@@ -87,6 +90,10 @@ function buildPrerenderIndexHtml(title) {
         <iframe src="prerender-static.html"></iframe>
       </section>
       <section>
+        <input type="checkbox" checked> <a href="prerender-domino.html" target="_blank">Domino</a>
+        <iframe src="prerender-domino.html"></iframe>
+      </section>
+      <section>
         <input type="checkbox" checked> <a href="prerender-hydrated.html" target="_blank">Hydrated</a>
         <iframe src="prerender-hydrated.html"></iframe>
       </section>
@@ -97,13 +104,14 @@ function buildPrerenderIndexHtml(title) {
 }
 
 async function prerenderDir(dirPath, filterText) {
-  const items = await readdir(dirPath);
+  const items = fs.readdirSync(dirPath);
 
-  await Promise.all(items.map(async item => {
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
     const itemPath = path.join(dirPath, item);
-    const s = await stat(itemPath);
+    const stat = fs.statSync(itemPath);
 
-    if (s.isDirectory() && item !== 'spec') {
+    if (stat.isDirectory() && item !== 'spec') {
       await prerenderDir(itemPath, filterText);
 
     } else {
@@ -114,11 +122,18 @@ async function prerenderDir(dirPath, filterText) {
         await prerender(dirPath, itemPath);
       }
     }
-  }));
+  }
 }
 
 async function run() {
-  await prerenderDir(path.join(__dirname, '..', '..', 'src', 'components'), process.argv[2]);
-  console.log('prerendered:', prerenderCount);
+  const start = Date.now();
+  try {
+    await prerenderDir(path.join(__dirname, '..', '..', 'src', 'components'), process.argv[2]);
+  } catch (e) {
+    console.error(e);
+  }
+
+  console.log(`prerendered: ${prerenderCount}`);
+  console.log(`time: ${Date.now() - start}ms`);
 }
 run();

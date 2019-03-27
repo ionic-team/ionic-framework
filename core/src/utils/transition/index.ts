@@ -159,7 +159,8 @@ function fireDidEvents(enteringEl: HTMLElement | undefined, leavingEl: HTMLEleme
 
 export function lifecycle(el: HTMLElement | undefined, eventName: string) {
   if (el) {
-    const ev = new CustomEvent(eventName, {
+    const win = (el.ownerDocument as any).defaultView;
+    const ev = new (win as any).CustomEvent(eventName, {
       bubbles: false,
       cancelable: false,
     });

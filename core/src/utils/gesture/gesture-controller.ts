@@ -62,7 +62,8 @@ class GestureController {
       requestedStart.clear();
 
       if (this.doc) {
-        const event = new CustomEvent('ionGestureCaptured', { detail: { gestureName } });
+        const win = this.doc.defaultView as any;
+        const event = new win.CustomEvent('ionGestureCaptured', { detail: { gestureName } });
         this.doc.dispatchEvent(event);
       }
 

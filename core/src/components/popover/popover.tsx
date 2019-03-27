@@ -133,9 +133,10 @@ export class Popover implements ComponentInterface, OverlayInterface {
   @Listen('ionPopoverDidDismiss')
   protected lifecycle(modalEvent: CustomEvent) {
     const el = this.usersElement;
-    const name = LIFECYCLE_MAP[modalEvent.type];
-    if (el && name) {
-      const event = new CustomEvent(name, {
+    const eventName = LIFECYCLE_MAP[modalEvent.type];
+    if (el && eventName) {
+      const win = (el as any).ownerDocument.defaultView;
+      const event = new win.CustomEvent(eventName, {
         bubbles: false,
         cancelable: false,
         detail: modalEvent.detail

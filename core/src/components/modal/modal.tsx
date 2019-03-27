@@ -169,9 +169,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   private lifecycle = (modalEvent: CustomEvent) => {
     const el = this.usersElement;
-    const name = LIFECYCLE_MAP[modalEvent.type];
-    if (el && name) {
-      const ev = new CustomEvent(name, {
+    const eventName = LIFECYCLE_MAP[modalEvent.type];
+    if (el && eventName) {
+      const win = (el.ownerDocument as any).defaultView;
+      const ev = new win.CustomEvent(eventName, {
         bubbles: false,
         cancelable: false,
         detail: modalEvent.detail

@@ -15,7 +15,7 @@ export function startHardwareBackButton(win: Window) {
     }
 
     const handlers: HandlerRegister[] = [];
-    const ev: BackButtonEvent = new CustomEvent('ionBackButton', {
+    const ev: BackButtonEvent = new (win as any).CustomEvent('ionBackButton', {
       bubbles: false,
       detail: {
         register(priority: number, handler: Handler) {
