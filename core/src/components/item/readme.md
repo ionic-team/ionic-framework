@@ -2,10 +2,13 @@
 
 Items are elements that can contain text, icons, avatars, images, inputs, and any other native or custom elements. Generally they are placed in a list with other items. Items can be swiped, deleted, reordered, edited, and more.
 
+## Clickable Items
+
+An item is considered "clickable" if it has an `href` or `button` property set. Clickable items have a few visual differences that indicate they can be interacted with. For example, a clickable item receives the ripple effect upon activation in `md` mode, has a highlight when activated in `ios` mode, and has a [detail arrow](/#detail-arrows) by default in `ios` mode.
 
 ## Detail Arrows
 
-By default, clickable items will display a right arrow icon on `ios` mode. To hide the right arrow icon on clickable elements, set the `detail` property to `false`. To show the right arrow icon on an item that doesn't display it naturally, add the `detail` attribute to the item.
+By default [clickable items](/#clickable-items) will display a right arrow icon on `ios` mode. To hide the right arrow icon on clickable elements, set the `detail` property to `false`. To show the right arrow icon on an item that doesn't display it naturally, set the `detail` property to `true`.
 
 <!--
 
@@ -44,7 +47,7 @@ Items left align text and add an ellipsis when the text is wider than the item. 
 
 ### Highlight Height
 
-Items containing an input will highlight the input with a different color border when focused, valid, or invalid. By default, `md` items have a highlight with a height set to `2px` and `ios` has no highlight (technically the height is set to `0`). The height can be changed using the `--highlight-height` CSS property. To turn off the highlight, set this variable to `0`. For more information on setting CSS properties, see the [theming documentation](/docs/theming/css-variables).
+Items containing an input will highlight the bottom border of the input with a different color when focused, valid, or invalid. By default, `md` items have a highlight with a height set to `2px` and `ios` has no highlight (technically the height is set to `0`). The height can be changed using the `--highlight-height` CSS property. To turn off the highlight, set this variable to `0`. For more information on setting CSS properties, see the [theming documentation](/docs/theming/css-variables).
 
 ### Highlight Color
 
@@ -1018,6 +1021,346 @@ export default Example;
 ```
 
 
+### Vue
+
+Basic Usage
+
+```html
+<template>
+  <!-- Default Item -->
+  <ion-item>
+    <ion-label>
+      Item
+    </ion-label>
+  </ion-item>
+
+  <!-- Item as a Button -->
+  <ion-item @click="buttonClick()">
+    <ion-label>
+      Button Item
+    </ion-label>
+  </ion-item>
+
+  <!-- Item as an Anchor -->
+  <ion-item href="https://www.ionicframework.com">
+    <ion-label>
+      Anchor Item
+    </ion-label>
+  </ion-item>
+
+  <ion-item color="secondary">
+    <ion-label>
+      Secondary Color Item
+    </ion-label>
+  </ion-item>
+</template>
+```
+
+Detail Arrows
+
+```html
+<template>
+  <ion-item detail>
+    <ion-label>
+      Standard Item with Detail Arrow
+    </ion-label>
+  </ion-item>
+
+  <ion-item @click="buttonClick()" detail>
+    <ion-label>
+      Button Item with Detail Arrow
+    </ion-label>
+  </ion-item>
+
+  <ion-item detail="false" href="https://www.ionicframework.com">
+    <ion-label>
+      Anchor Item with no Detail Arrow
+    </ion-label>
+  </ion-item>
+</template>
+```
+
+List Items
+
+```html
+<template>
+  <ion-list>
+    <ion-item>
+      <ion-label>
+        Item
+      </ion-label>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label>
+        No Lines Item
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label text-wrap>
+      Multiline text that should wrap when it is too long
+      to fit on one line in the item.
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label text-wrap>
+        <ion-text color="primary">
+          <h3>H3 Primary Title</h3>
+        </ion-text>
+        <p>Paragraph line 1</p>
+        <ion-text color="secondary">
+          <p>Paragraph line 2 secondary</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label>
+        Item with Full Lines
+      </ion-label>
+    </ion-item>
+
+  </ion-list>
+</template>
+```
+
+Item Lines
+
+```html
+<template>
+  <!-- Item Inset Lines -->
+  <ion-item lines="inset">
+    <ion-label>Item Lines Inset</ion-label>
+  </ion-item>
+
+  <!-- Item Full Lines -->
+  <ion-item lines="full">
+    <ion-label>Item Lines Full</ion-label>
+  </ion-item>
+
+  <!-- Item None Lines -->
+  <ion-item lines="none">
+    <ion-label>Item Lines None</ion-label>
+  </ion-item>
+
+  <!-- List Full Lines -->
+  <ion-list lines="full">
+    <ion-item>
+      <ion-label>Full Lines Item 1</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Full Lines Item 2</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- List Inset Lines -->
+  <ion-list lines="inset">
+    <ion-item>
+      <ion-label>Inset Lines Item 1</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Inset Lines Item 2</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- List No Lines -->
+  <ion-list lines="none">
+    <ion-item>
+      <ion-label>No lines Item 1</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>No lines Item 2</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>No lines Item 3</ion-label>
+    </ion-item>
+  </ion-list>
+</template>
+```
+
+
+Media Items
+
+```html
+<template>
+  <ion-item @click="testClick()">
+    <ion-avatar slot="start">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+    </ion-avatar>
+    <ion-label>
+      Avatar Start, Button Item
+    </ion-label>
+  </ion-item>
+
+  <ion-item href="#">
+    <ion-label>
+      Thumbnail End, Anchor Item
+    </ion-label>
+    <ion-thumbnail slot="end">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+    </ion-thumbnail>
+  </ion-item>
+
+  <ion-item>
+    <ion-thumbnail slot="start">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+    </ion-thumbnail>
+    <ion-label>
+      <h2>H2 Title Text</h2>
+      <p>Button on right</p>
+    </ion-label>
+    <ion-button fill="outline" slot="end">View</ion-button>
+  </ion-item>
+
+  <ion-item @click="testClick()">
+    <ion-thumbnail slot="start">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+    </ion-thumbnail>
+    <ion-label>
+      <h3>H3 Title Text</h3>
+      <p>Icon on right</p>
+    </ion-label>
+    <ion-icon name="close-circle" slot="end"></ion-icon>
+  </ion-item>
+</template>
+```
+
+Buttons in Items
+
+```html
+<template>
+  <ion-item>
+    <ion-button slot="start">
+      Start
+    </ion-button>
+    <ion-label>Button Start/End</ion-label>
+    <ion-button slot="end">
+      End
+    </ion-button>
+  </ion-item>
+
+  <ion-item>
+    <ion-button slot="start">
+      Start Icon
+      <ion-icon name="home" slot="end"></ion-icon>
+    </ion-button>
+    <ion-label>Buttons with Icons</ion-label>
+    <ion-button slot="end">
+      <ion-icon name="star" slot="end"></ion-icon>
+      End Icon
+    </ion-button>
+  </ion-item>
+
+  <ion-item>
+    <ion-button slot="start">
+      <ion-icon slot="icon-only" name="navigate"></ion-icon>
+    </ion-button>
+    <ion-label>Icon only Buttons</ion-label>
+    <ion-button slot="end">
+      <ion-icon slot="icon-only" name="star"></ion-icon>
+    </ion-button>
+  </ion-item>
+</template>
+```
+
+Icons in Items
+
+```html
+<template>
+  <ion-item>
+    <ion-label>
+      Icon End
+    </ion-label>
+    <ion-icon name="information-circle" slot="end"></ion-icon>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      Large Icon End
+    </ion-label>
+    <ion-icon name="information-circle" size="large" slot="end"></ion-icon>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      Small Icon End
+    </ion-label>
+    <ion-icon name="information-circle" size="small" slot="end"></ion-icon>
+  </ion-item>
+
+  <ion-item>
+    <ion-icon name="star" slot="start"></ion-icon>
+    <ion-label>
+      Icon Start
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      Two Icons End
+    </ion-label>
+    <ion-icon name="checkmark-circle" slot="end"></ion-icon>
+    <ion-icon name="shuffle" slot="end"></ion-icon>
+  </ion-item>
+</template>
+```
+
+Item Inputs
+
+```html
+<template>
+  <ion-item>
+    <ion-label position="floating">Datetime</ion-label>
+    <ion-datetime></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Select</ion-label>
+    <ion-select>
+      <ion-select-option value="">No Game Console</ion-select-option>
+      <ion-select-option value="nes">NES</ion-select-option>
+      <ion-select-option value="n64" selected>Nintendo64</ion-select-option>
+      <ion-select-option value="ps">PlayStation</ion-select-option>
+      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
+      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
+      <ion-select-option value="snes">SNES</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Toggle</ion-label>
+    <ion-toggle slot="end"></ion-toggle>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Floating Input</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Input (placeholder)</ion-label>
+    <ion-input placeholder="Placeholder"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Checkbox</ion-label>
+    <ion-checkbox slot="start"></ion-checkbox>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Range</ion-label>
+    <ion-range></ion-range>
+  </ion-item>
+</template>
+```
+
+
 
 ## Properties
 
@@ -1025,7 +1368,7 @@ export default Example;
 | ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ | --------------------- |
 | `button`          | `button`           | If `true`, a button tag will be rendered and the item will be tappable.                                                                                                                                                                                                | `boolean`                                  | `false`               |
 | `color`           | `color`            | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`                      | `undefined`           |
-| `detail`          | `detail`           | If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.                                                                                                            | `boolean \| undefined`                     | `undefined`           |
+| `detail`          | `detail`           | If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.                                                                                                                       | `boolean \| undefined`                     | `undefined`           |
 | `detailIcon`      | `detail-icon`      | The icon to use when `detail` is set to `true`.                                                                                                                                                                                                                        | `string`                                   | `'ios-arrow-forward'` |
 | `disabled`        | `disabled`         | If `true`, the user cannot interact with the item.                                                                                                                                                                                                                     | `boolean`                                  | `false`               |
 | `href`            | `href`             | Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.                                                                                                                                                | `string \| undefined`                      | `undefined`           |
@@ -1074,6 +1417,7 @@ export default Example;
 | `--padding-end`             | End padding of the item                             |
 | `--padding-start`           | Start padding of the item                           |
 | `--padding-top`             | Top padding of the item                             |
+| `--ripple-color`            | Color of the item ripple effect                     |
 | `--transition`              | Transition of the item                              |
 
 
