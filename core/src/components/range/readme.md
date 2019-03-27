@@ -32,15 +32,19 @@ left or right of the range.
     </ion-range>
   </ion-item>
 
- <ion-item>
-   <ion-range min="20" max="80" step="2">
-     <ion-icon size="small" slot="start" name="sunny"></ion-icon>
-     <ion-icon slot="end" name="sunny"></ion-icon>
-   </ion-range>
- </ion-item>
+  <ion-item>
+    <ion-range min="20" max="80" step="2">
+      <ion-icon size="small" slot="start" name="sunny"></ion-icon>
+      <ion-icon slot="end" name="sunny"></ion-icon>
+    </ion-range>
+  </ion-item>
 
   <ion-item>
     <ion-range min="1000" max="2000" step="100" snaps="true" color="secondary"></ion-range>
+  </ion-item>
+
+  <ion-item>
+    <ion-range min="1000" max="2000" step="100" snaps="true" ticks="false" color="secondary"></ion-range>
   </ion-item>
 
   <ion-item>
@@ -65,15 +69,19 @@ left or right of the range.
     </ion-range>
   </ion-item>
 
- <ion-item>
-   <ion-range min="20" max="80" step="2">
-     <ion-icon size="small" slot="start" name="sunny"></ion-icon>
-     <ion-icon slot="end" name="sunny"></ion-icon>
-   </ion-range>
- </ion-item>
+  <ion-item>
+    <ion-range min="20" max="80" step="2">
+      <ion-icon size="small" slot="start" name="sunny"></ion-icon>
+      <ion-icon slot="end" name="sunny"></ion-icon>
+    </ion-range>
+  </ion-item>
 
   <ion-item>
     <ion-range min="1000" max="2000" step="100" snaps="true" color="secondary"></ion-range>
+  </ion-item>
+
+  <ion-item>
+    <ion-range min="1000" max="2000" step="100" snaps="true" ticks="false" color="secondary"></ion-range>
   </ion-item>
 
   <ion-item>
@@ -104,15 +112,19 @@ const Example: React.SFC<{}> = () => (
       </IonRange>
     </IonItem>
 
-   <IonItem>
-     <IonRange min={20} max={80} step={2}>
-       <IonIcon size="small" slot="start" name="sunny" />
-       <IonIcon slot="end" name="sunny" />
-     </IonRange>
-   </IonItem>
+    <IonItem>
+      <IonRange min={20} max={80} step={2}>
+        <IonIcon size="small" slot="start" name="sunny" />
+        <IonIcon slot="end" name="sunny" />
+      </IonRange>
+    </IonItem>
 
     <IonItem>
       <IonRange min={1000} max={2000} step={100} snaps={true} color="secondary"></IonRange>
+    </IonItem>
+
+    <IonItem>
+      <IonRange min={1000} max={2000} step={100} snaps={true} ticks={false} color="secondary"></IonRange>
     </IonItem>
 
     <IonItem>
@@ -141,15 +153,19 @@ export default Example;
       </ion-range>
     </ion-item>
 
-  <ion-item>
-    <ion-range min="20" max="80" step="2">
-      <ion-icon size="small" slot="start" name="sunny"></ion-icon>
-      <ion-icon slot="end" name="sunny"></ion-icon>
-    </ion-range>
-  </ion-item>
+    <ion-item>
+      <ion-range min="20" max="80" step="2">
+        <ion-icon size="small" slot="start" name="sunny"></ion-icon>
+        <ion-icon slot="end" name="sunny"></ion-icon>
+      </ion-range>
+    </ion-item>
 
     <ion-item>
       <ion-range min="1000" max="2000" step="100" snaps="true" color="secondary"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-range min="1000" max="2000" step="100" snaps="true" ticks="false" color="secondary"></ion-range>
     </ion-item>
 
     <ion-item>
@@ -176,6 +192,7 @@ export default Example;
 | `pin`       | `pin`        | If `true`, a pin with integer value is shown when the knob is pressed.                                                                                                                                                                                                 | `boolean`                                     | `false`     |
 | `snaps`     | `snaps`      | If `true`, the knob snaps to tick marks evenly spaced based on the step property value.                                                                                                                                                                                | `boolean`                                     | `false`     |
 | `step`      | `step`       | Specifies the value granularity.                                                                                                                                                                                                                                       | `number`                                      | `1`         |
+| `ticks`     | `ticks`      | If `true`, tick marks are displayed based on the step value. Only applies when `snaps` is `true`.                                                                                                                                                                      | `boolean`                                     | `true`      |
 | `value`     | `value`      | the value of the range.                                                                                                                                                                                                                                                | `number \| { lower: number; upper: number; }` | `0`         |
 
 
