@@ -1354,6 +1354,10 @@ export namespace Components {
     */
     'size'?: 'small';
     /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target'?: string;
+    /**
     * If `true`, the fab button will be translucent.
     */
     'translucent': boolean;
@@ -1403,6 +1407,10 @@ export namespace Components {
     * The size of the button. Set this to `small` in order to have a mini fab.
     */
     'size'?: 'small';
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target'?: string;
     /**
     * If `true`, the fab button will be translucent.
     */

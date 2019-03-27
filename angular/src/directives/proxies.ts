@@ -222,7 +222,7 @@ proxyMethods(IonFab, ['close']);
 proxyInputs(IonFab, ['horizontal', 'vertical', 'edge', 'activated']);
 
 export declare interface IonFabButton extends StencilComponents<'IonFabButton'> {}
-@Component({ selector: 'ion-fab-button', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'activated', 'disabled', 'href', 'routerDirection', 'show', 'translucent', 'type', 'size'] })
+@Component({ selector: 'ion-fab-button', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'activated', 'disabled', 'href', 'target', 'routerDirection', 'show', 'translucent', 'type', 'size'] })
 export class IonFabButton {
   ionFocus!: EventEmitter<CustomEvent>;
   ionBlur!: EventEmitter<CustomEvent>;
@@ -233,7 +233,7 @@ export class IonFabButton {
     proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
   }
 }
-proxyInputs(IonFabButton, ['mode', 'color', 'activated', 'disabled', 'href', 'routerDirection', 'show', 'translucent', 'type', 'size']);
+proxyInputs(IonFabButton, ['mode', 'color', 'activated', 'disabled', 'href', 'target', 'routerDirection', 'show', 'translucent', 'type', 'size']);
 
 export declare interface IonFabList extends StencilComponents<'IonFabList'> {}
 @Component({ selector: 'ion-fab-list', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['activated', 'side'] })
