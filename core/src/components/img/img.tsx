@@ -13,6 +13,8 @@ export class Img implements ComponentInterface {
 
   @State() loadSrc?: string;
 
+  @State() loadError?: () => void;
+
   /**
    * This attribute defines the alternative text describing the image.
    * Users will see this text displayed if the image URL is wrong,
@@ -29,8 +31,11 @@ export class Img implements ComponentInterface {
     this.addIO();
   }
 
-  /** Emitted when the img src is loaded */
+  /** Emitted when the img src has been set */
   @Event() ionImgDidLoad!: EventEmitter<void>;
+
+  /** Emitted when the img fails to load */
+  @Event() ionError!: EventEmitter<void>;
 
   componentDidLoad() {
     this.addIO();
@@ -60,8 +65,13 @@ export class Img implements ComponentInterface {
   }
 
   private load() {
+    this.loadError = this.onError;
     this.loadSrc = this.src;
     this.ionImgDidLoad.emit();
+  }
+
+  private onError = () => {
+    this.ionError.emit();
   }
 
   private removeIO() {
@@ -77,6 +87,7 @@ export class Img implements ComponentInterface {
         src={this.loadSrc}
         alt={this.alt}
         decoding="async"
+        onError={this.loadError}
       />
     );
   }
