@@ -91,7 +91,7 @@
         message: 'click to close',
         buttons: [
           {
-            slot: 'start',
+            side: 'start',
             icon: 'star',
             handler: () => {
               console.log('favorite button clicked!')
@@ -100,7 +100,7 @@
           },
           {
             text: 'Close',
-            slot: 'end',
+            side: 'end',
             role: 'cancel',
             handler: () => {
               console.log('close button clicked!');
