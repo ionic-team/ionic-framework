@@ -24,7 +24,7 @@ export async function testFab(
     const fab = await getFabComponent(page, selector);
     await fab.click();
 
-    await page.waitFor(150);
+    await page.waitFor(250);
 
     await ensureFabState(fab, 'active');
 
@@ -33,7 +33,7 @@ export async function testFab(
     const fabButton = await getFabButton(fab);
     await fabButton.click();
 
-    await page.waitFor(150);
+    await page.waitFor(250);
 
     await ensureFabState(fab, 'inactive');
 
