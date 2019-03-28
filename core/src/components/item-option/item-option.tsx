@@ -60,10 +60,12 @@ export class ItemOption implements ComponentInterface {
   }
 
   hostData() {
+    const { disabled, expandable } = this;
     return {
       class: {
         ...createColorClasses(this.color),
-        'item-option-expandable': this.expandable,
+        'item-option-disabled': disabled,
+        'item-option-expandable': expandable,
         'ion-activatable': true,
       }
     };
