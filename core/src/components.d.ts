@@ -1547,7 +1547,11 @@ export namespace Components {
     */
     'alt'?: string;
     /**
-    * Emitted when the img src is loaded
+    * Emitted when the img fails to load
+    */
+    'onIonError'?: (event: CustomEvent<void>) => void;
+    /**
+    * Emitted when the img src has been set
     */
     'onIonImgDidLoad'?: (event: CustomEvent<void>) => void;
     /**
