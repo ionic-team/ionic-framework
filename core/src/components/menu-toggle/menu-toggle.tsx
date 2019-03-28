@@ -67,7 +67,7 @@ export class MenuToggle implements ComponentInterface {
           'menu-toggle-hidden': hidden,
         }}
       >
-        <slot></slot>;
+        <slot></slot>
       </Host>
     );
   }
