@@ -294,11 +294,12 @@ export declare interface IonImg extends Components.IonImg {}
 @Component({ selector: 'ion-img', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['alt', 'src'] })
 export class IonImg {
   ionImgDidLoad!: EventEmitter<CustomEvent>;
+  ionError!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionImgDidLoad']);
+    proxyOutputs(this, this.el, ['ionImgDidLoad', 'ionError']);
   }
 }
 proxyInputs(IonImg, ['alt', 'src']);
@@ -586,7 +587,7 @@ export class IonRadioGroup {
 proxyInputs(IonRadioGroup, ['allowEmptySelection', 'name', 'value']);
 
 export declare interface IonRange extends Components.IonRange {}
-@Component({ selector: 'ion-range', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'debounce', 'disabled', 'dualKnobs', 'max', 'min', 'mode', 'name', 'pin', 'snaps', 'step', 'value'] })
+@Component({ selector: 'ion-range', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'debounce', 'disabled', 'dualKnobs', 'max', 'min', 'mode', 'name', 'pin', 'snaps', 'step', 'ticks', 'value'] })
 export class IonRange {
   ionChange!: EventEmitter<CustomEvent>;
   ionFocus!: EventEmitter<CustomEvent>;
@@ -598,7 +599,7 @@ export class IonRange {
     proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
   }
 }
-proxyInputs(IonRange, ['color', 'debounce', 'disabled', 'dualKnobs', 'max', 'min', 'mode', 'name', 'pin', 'snaps', 'step', 'value']);
+proxyInputs(IonRange, ['color', 'debounce', 'disabled', 'dualKnobs', 'max', 'min', 'mode', 'name', 'pin', 'snaps', 'step', 'ticks', 'value']);
 
 export declare interface IonRefresher extends Components.IonRefresher {}
 @Component({ selector: 'ion-refresher', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['closeDuration', 'disabled', 'pullMax', 'pullMin', 'snapbackDuration'] })

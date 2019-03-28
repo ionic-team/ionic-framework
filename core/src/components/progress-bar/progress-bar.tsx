@@ -51,6 +51,23 @@ export class ProgressBar implements ComponentInterface {
    */
   @Prop() color?: Color;
 
+  hostData() {
+    const { color, type, reversed, value } = this;
+    const paused = this.config.getBoolean('_testing');
+    return {
+      'role': 'progressbar',
+      'aria-valuenow': type === 'determinate' ? value : null,
+      'aria-valuemin': 0,
+      'aria-valuemax': 1,
+      class: {
+        ...createColorClasses(color),
+        [`progress-bar-${type}`]: true,
+        'progress-paused': paused,
+        'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed
+      }
+    };
+  }
+
   render() {
     if (this.type === 'indeterminate') {
       return [

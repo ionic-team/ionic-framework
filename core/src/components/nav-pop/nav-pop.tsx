@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Listen, Host, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, h } from '@stencil/core';
 
 @Component({
   tag: 'ion-nav-pop',

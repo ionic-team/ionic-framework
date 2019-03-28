@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, QueueApi, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch, h } from '@stencil/core';
 
 import { Color, Gesture, GestureDetail, KnobName, RangeChangeEventDetail, RangeValue, StyleEventDetail } from '../../interface';
 import { clamp, debounceEvent } from '../../utils/helpers';
@@ -102,6 +102,12 @@ export class Range implements ComponentInterface {
    * Specifies the value granularity.
    */
   @Prop() step = 1;
+
+  /**
+   * If `true`, tick marks are displayed based on the step value.
+   * Only applies when `snaps` is `true`.
+   */
+  @Prop() ticks = true;
 
   /**
    * If `true`, the user cannot interact with the range.
@@ -367,15 +373,44 @@ export class Range implements ComponentInterface {
     }
   }
 
+  hostData() {
+    return {
+      class: {
+        ...createColorClasses(this.color),
+        'in-item': hostContext('ion-item', this.el),
+        'range-disabled': this.disabled,
+        'range-pressed': this.pressedKnob !== undefined,
+        'range-has-pin': this.pin
+      }
+    };
+  }
+
   render() {
     const { min, max, step, ratioLower, ratioUpper } = this;
 
     const barStart = `${ratioLower * 100}%`;
     const barEnd = `${100 - ratioUpper * 100}%`;
 
-    const isRTL = this.doc.dir === 'rtl';
+    const doc = this.doc;
+    const isRTL = doc.dir === 'rtl';
     const start = isRTL ? 'right' : 'left';
     const end = isRTL ? 'left' : 'right';
+
+    const ticks = [];
+    if (this.snaps && this.ticks) {
+      for (let value = min; value <= max; value += step) {
+        const ratio = valueToRatio(value, min, max);
+
+        const tick: any = {
+          ratio,
+          active: ratio >= ratioLower && ratio <= ratioUpper,
+        };
+
+        tick[start] = `${ratio * 100}%`;
+
+        ticks.push(tick);
+      }
+    }
 
     const tickStyle = (tick: any) => {
       const style: any = {};
@@ -394,79 +429,53 @@ export class Range implements ComponentInterface {
       return style;
     };
 
-    const cssClass = {
-      ...createColorClasses(this.color),
-      'in-item': hostContext('ion-item', this.el),
-      'range-disabled': this.disabled,
-      'range-pressed': this.pressedKnob !== undefined,
-      'range-has-pin': this.pin
-    };
-
-    const ticks = [];
-    if (this.snaps) {
-      for (let value = min; value <= max; value += step) {
-        const ratio = valueToRatio(value, min, max);
-
-        const tick: any = {
-          ratio,
-          active: ratio >= ratioLower && ratio <= ratioUpper,
-        };
-
-        tick[start] = `${ratio * 100}%`;
-
-        ticks.push(tick);
-      }
-    }
-
-    return (
-      <Host class={cssClass}>
-        <slot name="start"></slot>
-        <div class="range-slider" ref={el => this.rangeSlider = el}>
-          {ticks.map(tick => (
-            <div
-              style={tickStyle(tick)}
-              role="presentation"
-              class={{
-                'range-tick': true,
-                'range-tick-active': tick.active
-              }}
-            />
-          ))}
-
-          <div class="range-bar" role="presentation" />
+    return [
+      <slot name="start"></slot>,
+      <div class="range-slider" ref={el => this.rangeSlider = el}>
+        {ticks.map(tick => (
           <div
-            class="range-bar range-bar-active"
+            style={tickStyle(tick)}
             role="presentation"
-            style={barStyle()}
+            class={{
+              'range-tick': true,
+              'range-tick-active': tick.active
+            }}
           />
+        ))}
 
-          { renderKnob(isRTL, {
-            knob: 'A',
-            pressed: this.pressedKnob === 'A',
-            value: this.valA,
-            ratio: this.ratioA,
-            pin: this.pin,
-            disabled: this.disabled,
-            handleKeyboard: this.handleKeyboard,
-            min,
-            max
-          })}
+        <div class="range-bar" role="presentation" />
+        <div
+          class="range-bar range-bar-active"
+          role="presentation"
+          style={barStyle()}
+        />
 
-          { this.dualKnobs && renderKnob(isRTL, {
-            knob: 'B',
-            pressed: this.pressedKnob === 'B',
-            value: this.valB,
-            ratio: this.ratioB,
-            pin: this.pin,
-            disabled: this.disabled,
-            handleKeyboard: this.handleKeyboard,
-            min,
-            max
-          })}
-        </div>
-        <slot name="end"></slot>
-      </Host>
-    );
+        { renderKnob(isRTL, {
+          knob: 'A',
+          pressed: this.pressedKnob === 'A',
+          value: this.valA,
+          ratio: this.ratioA,
+          pin: this.pin,
+          disabled: this.disabled,
+          handleKeyboard: this.handleKeyboard,
+          min,
+          max
+        })}
+
+        { this.dualKnobs && renderKnob(isRTL, {
+          knob: 'B',
+          pressed: this.pressedKnob === 'B',
+          value: this.valB,
+          ratio: this.ratioB,
+          pin: this.pin,
+          disabled: this.disabled,
+          handleKeyboard: this.handleKeyboard,
+          min,
+          max
+        })}
+      </div>,
+      <slot name="end"></slot>
+    ];
   }
 }
 

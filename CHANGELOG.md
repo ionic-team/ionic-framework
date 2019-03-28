@@ -775,8 +775,8 @@ Here, we have an `ion-tab` element that accepts an icon, a label, and a link to 
   <ion-tab-bar>
 
     <!-- No ion-tab, just a link that looks like a tab -->
-    <ion-tab-button href="https://beta.ionicframework.com">
-      <!-- <a href="https://beta.ionicframework.com"> -->
+    <ion-tab-button href="https://ionicframework.com">
+      <!-- <a href="https://ionicframework.com"> -->
       <ion-icon name="globe"></ion-icon>
       <ion-label>Schedule</ion-label>
     </ion-tab-button>
