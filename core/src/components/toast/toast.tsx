@@ -138,10 +138,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    if (this.showCloseButton) {
-      console.warn(`showCloseButton has been deprecated, use "buttons" instead`);
-    }
-
     await present(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, this.position);
 
     if (this.duration > 0) {
@@ -188,7 +184,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
     if (this.showCloseButton) {
       buttons.push({
         text: this.closeButtonText || 'Close',
-        slot: 'end',
+        side: 'end',
         handler: () => this.dismiss(undefined, 'cancel')
       });
     }
@@ -269,8 +265,8 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
   render() {
     const allButtons = this.getButtons();
-    const startButtons = allButtons.filter(b => b.slot === 'start');
-    const endButtons = allButtons.filter(b => b.slot === 'end');
+    const startButtons = allButtons.filter(b => b.side === 'start');
+    const endButtons = allButtons.filter(b => b.side === 'end');
 
     const wrapperClass = {
       'toast-wrapper': true,
