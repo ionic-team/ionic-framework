@@ -1,8 +1,8 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-test('item: sliding', async () => {
+test('checkbox: indeterminate', async () => {
   const page = await newE2EPage({
-    url: '/src/components/item/test/sliding?ionic:_testing=true'
+    url: '/src/components/checkbox/test/indeterminate?ionic:_testing=true'
   });
 
   const compare = await page.compareScreenshot();

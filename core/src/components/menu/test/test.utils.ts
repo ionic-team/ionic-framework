@@ -5,6 +5,7 @@ import { cleanScreenshotName, generateE2EUrl } from '../../../utils/test/utils';
 export async function testMenu(
   type: string,
   selector: string,
+  menuId = '',
   rtl = false,
   screenshotName: string = cleanScreenshotName(selector)
 ) {
@@ -18,22 +19,28 @@ export async function testMenu(
       url: pageUrl
     });
 
-    const screenShotCompares = [];
+    const screenshotCompares = [];
+
+    if (menuId.length > 0) {
+      const menuCtrl = await page.find('ion-menu-controller');
+      await page.waitFor(250);
+      await menuCtrl.callMethod('enable', true, menuId);
+    }
 
     const menu = await page.find(selector);
 
     await menu.callMethod('open');
     await page.waitFor(250);
 
-    screenShotCompares.push(await page.compareScreenshot(screenshotName));
+    screenshotCompares.push(await page.compareScreenshot(screenshotName));
 
     await menu.callMethod('close');
     await page.waitFor(250);
 
-    screenShotCompares.push(await page.compareScreenshot(`dismiss ${screenshotName}`));
+    screenshotCompares.push(await page.compareScreenshot(`dismiss ${screenshotName}`));
 
-    for (const screenShotCompare of screenShotCompares) {
-      expect(screenShotCompare).toMatchScreenshot();
+    for (const screenshotCompare of screenshotCompares) {
+      expect(screenshotCompare).toMatchScreenshot();
     }
   } catch (err) {
     throw err;

@@ -749,6 +749,10 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
+    * If `true`, the checkbox will visually appear as indeterminate.
+    */
+    'indeterminate': boolean;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -774,6 +778,10 @@ export namespace Components {
     * If `true`, the user cannot interact with the checkbox.
     */
     'disabled'?: boolean;
+    /**
+    * If `true`, the checkbox will visually appear as indeterminate.
+    */
+    'indeterminate'?: boolean;
     /**
     * The mode determines which platform styles to use.
     */
@@ -1185,7 +1193,7 @@ export namespace Components {
     */
     'pickerFormat'?: string;
     /**
-    * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
+    * Any additional options that the picker interface can accept. See the [Picker API docs](../picker) for the picker options.
     */
     'pickerOptions'?: DatetimeOptions;
     /**
@@ -1291,7 +1299,7 @@ export namespace Components {
     */
     'pickerFormat'?: string;
     /**
-    * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
+    * Any additional options that the picker interface can accept. See the [Picker API docs](../picker) for the picker options.
     */
     'pickerOptions'?: DatetimeOptions;
     /**
@@ -1538,7 +1546,11 @@ export namespace Components {
     */
     'alt'?: string;
     /**
-    * Emitted when the img src is loaded
+    * Emitted when the img fails to load
+    */
+    'onIonError'?: (event: CustomEvent<void>) => void;
+    /**
+    * Emitted when the img src has been set
     */
     'onIonImgDidLoad'?: (event: CustomEvent<void>) => void;
     /**
@@ -1988,7 +2000,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.
+    * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
     */
     'detail'?: boolean;
     /**
@@ -2030,7 +2042,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.
+    * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
     */
     'detail'?: boolean;
     /**
@@ -3324,6 +3336,10 @@ export namespace Components {
     */
     'step': number;
     /**
+    * If `true`, tick marks are displayed based on the step value. Only applies when `snaps` is `true`.
+    */
+    'ticks': boolean;
+    /**
     * the value of the range.
     */
     'value': RangeValue;
@@ -3385,6 +3401,10 @@ export namespace Components {
     * Specifies the value granularity.
     */
     'step'?: number;
+    /**
+    * If `true`, tick marks are displayed based on the step value. Only applies when `snaps` is `true`.
+    */
+    'ticks'?: boolean;
     /**
     * the value of the range.
     */

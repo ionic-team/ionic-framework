@@ -24,6 +24,8 @@ export async function testFab(
     const fab = await getFabComponent(page, selector);
     await fab.click();
 
+    await page.waitFor(150);
+
     await ensureFabState(fab, 'active');
 
     screenshotCompares.push(await page.compareScreenshot(`${screenshotName} open`));
@@ -31,12 +33,14 @@ export async function testFab(
     const fabButton = await getFabButton(fab);
     await fabButton.click();
 
+    await page.waitFor(150);
+
     await ensureFabState(fab, 'inactive');
 
     screenshotCompares.push(await page.compareScreenshot(`${screenshotName} close`));
 
-    for (const screenShotCompare of screenshotCompares) {
-      expect(screenShotCompare).toMatchScreenshot();
+    for (const screenshotCompare of screenshotCompares) {
+      expect(screenshotCompare).toMatchScreenshot();
     }
   } catch (err) {
     throw err;
@@ -69,8 +73,8 @@ export async function testDisabledFab(
 
     screenshotCompares.push(await page.compareScreenshot(`disabled ${screenshotName} attempt open`));
 
-    for (const screenShotCompare of screenshotCompares) {
-      expect(screenShotCompare).toMatchScreenshot();
+    for (const screenshotCompare of screenshotCompares) {
+      expect(screenshotCompare).toMatchScreenshot();
     }
   } catch (err) {
     throw err;
