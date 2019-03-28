@@ -23,7 +23,7 @@ Below is a list of components yet to be implemented. More information about
 You can now make use of all of the ionic components in your React application.
 If you want to publish your app to the App Store or Google Play you will need to use the ionic cli to execute Capacitor commands to do so.
 
-More information on this can be found here. https://beta.ionicframework.com/docs/cli
+More information on this can be found here. https://ionicframework.com/docs/cli
 If you want to learn more about Capacitor our dedicated site can be found here. https://capacitor.ionicframework.com/
 
 The commands that you will need to execute are below in your project's root.
