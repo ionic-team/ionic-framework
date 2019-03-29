@@ -1,7 +1,7 @@
 import { getContext } from '../global/context';
 import { AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, OverlayInterface } from '../interface';
 
-let lastId = 0;
+let lastId = 1;
 
 export const createOverlay = <T extends HTMLIonOverlayElement>(elm: T, opts: object | undefined): Promise<T> => {
   const doc = elm.ownerDocument!;
