@@ -2,10 +2,12 @@ import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, D
 import { ActivatedRoute, ChildrenOutletContexts, OutletContext, PRIMARY_OUTLET, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
+
 import { Config } from '../../providers/config';
 import { NavController } from '../../providers/nav-controller';
+
 import { StackController } from './stack-controller';
-import { getUrl, RouteView } from './stack-utils';
+import { RouteView, getUrl } from './stack-utils';
 
 @Directive({
   selector: 'ion-router-outlet',
