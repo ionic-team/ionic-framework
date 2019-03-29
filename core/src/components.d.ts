@@ -785,6 +785,19 @@ export namespace Components {
     */
     'translucent': boolean;
   }
+  interface IonIcon {
+    'ariaLabel'?: string;
+    'color'?: string;
+    'flipRtl'?: boolean;
+    'icon'?: string;
+    'ios'?: string;
+    'lazy'?: boolean;
+    'md'?: string;
+    'mode'?: string;
+    'name'?: string;
+    'size'?: string;
+    'src'?: string;
+  }
   interface IonImg {
     /**
     * This attribute defines the alternative text describing the image. Users will see this text displayed if the image URL is wrong, the image is not in one of the supported formats, or if the image is not yet downloaded.
