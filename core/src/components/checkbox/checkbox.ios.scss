@@ -16,8 +16,8 @@
 
   // Size
   --size: #{$checkbox-ios-icon-size};
-  width: var(--size);
 
+  width: var(--size);
   height: var(--size);
 }
 
@@ -39,6 +39,7 @@
   @include margin($checkbox-ios-item-end-margin-top, $checkbox-ios-item-end-margin-end, $checkbox-ios-item-end-margin-bottom, $checkbox-ios-item-end-margin-start);
 
   display: block;
+
   position: static;
 }
 

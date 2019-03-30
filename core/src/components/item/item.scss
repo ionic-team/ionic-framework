@@ -31,6 +31,8 @@
    * @prop --padding-top: Top padding of the item
    * @prop --transition: Transition of the item
    *
+   * @prop --ripple-color: Color of the item ripple effect
+   *
    * @prop --highlight-height: The height of the highlight on the item
    * @prop --highlight-color-focused: The color of the highlight on the item when focused
    * @prop --highlight-color-valid: The color of the highlight on the item when valid
@@ -55,6 +57,7 @@
   --detail-icon-color: initial;
   --detail-icon-font-size: 20px;
   --detail-icon-opacity: 0.25;
+  --ripple-color: currentColor;
 
   @include font-smoothing();
 
@@ -365,4 +368,12 @@ button, a {
 
 ::slotted(ion-reorder[slot]) {
   @include margin(0, null);
+}
+
+
+// Item Button Ripple effect
+// --------------------------------------------------
+
+ion-ripple-effect {
+  color: var(--ripple-color);
 }
