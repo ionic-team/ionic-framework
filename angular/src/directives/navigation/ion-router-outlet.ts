@@ -175,17 +175,21 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 
       const factory = resolver.resolveComponentFactory(component);
       const childContexts = this.parentContexts.getOrCreateContext(this.name).children;
-      const activatedRouteProxy = this.createActivatedRouteProxy(activatedRoute);
+
+      // We create an activated route proxy object that will maintain future updates for this component
+      // over its lifecycle in the stack.
+      const component$ = new BehaviorSubject<any>(null);
+      const activatedRouteProxy = this.createActivatedRouteProxy(component$, activatedRoute);
 
       const injector = new OutletInjector(activatedRouteProxy, childContexts, this.location.injector);
       cmpRef = this.activated = this.location.createComponent(factory, this.location.length, injector);
 
+      // Once the component is created we can push it to our local subject supplied to the proxy
+      component$.next(cmpRef.instance);
+
       // Calling `markForCheck` to make sure we will run the change detection when the
       // `RouterOutlet` is inside a `ChangeDetectionStrategy.OnPush` component.
       enteringView = this.stackCtrl.createView(this.activated, activatedRoute);
-
-      // Once the component is created, use the component instance to setup observables
-      this.setupProxyObservables(activatedRouteProxy, cmpRef.instance);
 
       // Store references to the proxy by component
       this.proxyMap.set(cmpRef.instance, activatedRouteProxy);
@@ -232,43 +236,49 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   }
 
   /**
-   * Creates a proxy object that we can use to update activated route properties without losing reference
-   * in the component injector
+   * Since the activated route can change over the life time of a component in an ion router outlet, we create
+   * a proxy so that we can update the values over time as a user navigates back to components already in the stack.
    */
-  private createActivatedRouteProxy(activatedRoute: ActivatedRoute): ActivatedRoute {
+  private createActivatedRouteProxy(component$: Observable<any>, activatedRoute: ActivatedRoute): ActivatedRoute {
     const proxy: any = new ActivatedRoute();
+
     proxy._futureSnapshot = (activatedRoute as any)._futureSnapshot;
     proxy._routerState = (activatedRoute as any)._routerState;
     proxy.snapshot = activatedRoute.snapshot;
     proxy.outlet = activatedRoute.outlet;
     proxy.component = activatedRoute.component;
 
+    // Setup wrappers for the observables so consumers don't have to worry about switching to new observables as the state updates
+    (proxy as any)._paramMap = this.proxyObservable(component$, 'paramMap');
+    (proxy as any)._queryParamMap = this.proxyObservable(component$, 'queryParamMap');
+    proxy.url = this.proxyObservable(component$, 'url');
+    proxy.params = this.proxyObservable(component$, 'params');
+    proxy.queryParams = this.proxyObservable(component$, 'queryParams');
+    proxy.fragment = this.proxyObservable(component$, 'fragment');
+    proxy.data = this.proxyObservable(component$, 'data');
+
     return proxy as ActivatedRoute;
   }
 
-  private setupProxyObservables(proxy: ActivatedRoute, component: any): void {
-    (proxy as any)._paramMap = this.proxyObservable(component, 'paramMap');
-    (proxy as any)._queryParamMap = this.proxyObservable(component, 'queryParamMap');
-    proxy.url = this.proxyObservable(component, 'url');
-    proxy.params = this.proxyObservable(component, 'params');
-    proxy.queryParams = this.proxyObservable(component, 'queryParams');
-    proxy.fragment = this.proxyObservable(component, 'fragment');
-    proxy.data = this.proxyObservable(component, 'data');
-  }
-
   /**
-   * Create a wrapped observable that will switch to the latest activated route matched by the given view id
+   * Create a wrapped observable that will switch to the latest activated route matched by the given component
    */
-  private proxyObservable(component: any, path: string): Observable<any> {
-    return this.currentActivatedRoute$.pipe(
-      filter(current => current !== null && current.component === component),
-      switchMap(current => current && (current.activatedRoute as any)[path]),
-      distinctUntilChanged()
+  private proxyObservable(component$: Observable<any>, path: string): Observable<any> {
+    return component$.pipe(
+      // First wait until the component instance is pushed
+      filter(component => !!component),
+      switchMap(component =>
+        this.currentActivatedRoute$.pipe(
+          filter(current => current !== null && current.component === component),
+          switchMap(current => current && (current.activatedRoute as any)[path]),
+          distinctUntilChanged()
+        )
+      )
     );
   }
 
   /**
-   * Updates the given proxy route with data from the new incoming route
+   * Updates the activated route proxy for the given component to the new incoming router state
    */
   private updateActivatedRouteProxy(component: any, activatedRoute: ActivatedRoute): void {
     const proxy = this.proxyMap.get(component);
