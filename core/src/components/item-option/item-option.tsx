@@ -58,22 +58,24 @@ export class ItemOption implements ComponentInterface {
   }
 
   render() {
-    const TagType = this.href === undefined ? 'button' : 'a' as any;
+    const { color, disabled, expandable, href, mode, onClick } = this;
+    const TagType = href === undefined ? 'button' : 'a' as any;
 
     return (
       <Host
-        onClick={this.onClick}
+        onClick={onClick}
         class={{
-          ...createColorClasses(this.color),
-          'item-option-expandable': this.expandable,
+          ...createColorClasses(color),
+          'item-option-disabled': disabled,
+          'item-option-expandable': expandable,
           'ion-activatable': true,
         }}
       >
         <TagType
           type="button"
           class="button-native"
-          disabled={this.disabled}
-          href={this.href}
+          disabled={disabled}
+          href={href}
         >
           <span class="button-inner">
             <slot name="top"></slot>
@@ -85,7 +87,7 @@ export class ItemOption implements ComponentInterface {
             </div>
             <slot name="bottom"></slot>
           </span>
-          {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+          {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </TagType>
       </Host>
     );
