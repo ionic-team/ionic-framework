@@ -4715,12 +4715,24 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * The size of the toolbar title. Only applies in `ios` mode.
+    */
+    'size': string;
   }
   interface IonTitleAttributes extends StencilHTMLAttributes {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Emitted when the styles change.
+    */
+    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
+    /**
+    * The size of the toolbar title. Only applies in `ios` mode.
+    */
+    'size'?: string;
   }
 
   interface IonToastController {

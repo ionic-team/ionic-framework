@@ -63,3 +63,25 @@
   overflow: hidden;
   pointer-events: auto;
 }
+
+// Title: Large
+// --------------------------------------------------
+
+:host(.title-ios-large) {
+  @include padding(0, 21px);
+
+  padding-bottom: 10px;
+
+  letter-spacing: 0em;
+  font-weight: 700;
+
+  bottom: 0;
+
+  font-size: 34px;
+
+  align-items: flex-end;
+
+  min-width: 100%;
+
+  text-align: left;
+}

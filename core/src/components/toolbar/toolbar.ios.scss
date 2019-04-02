@@ -8,11 +8,11 @@
   --background: #{$toolbar-ios-background};
   --color: #{$toolbar-ios-color};
   --border-color: #{$toolbar-ios-border-color};
-  --padding-top: 4px;
-  --padding-bottom: 4px;
-  --padding-start: 4px;
-  --padding-end: 4px;
-  --min-height: 44px;
+  --padding-top: #{$toolbar-ios-padding-top};
+  --padding-bottom: #{$toolbar-ios-padding-bottom};
+  --padding-start: #{$toolbar-ios-padding-start};
+  --padding-end: #{$toolbar-ios-padding-end};
+  --min-height: #{$toolbar-ios-min-height};
 }
 
 // Toolbar: Content
@@ -27,6 +27,10 @@
 
 // iOS Toolbar Slot Placement
 // --------------------------------------------------
+
+::slotted(ion-buttons) {
+  min-height: 38px;
+}
 
 ::slotted([slot="start"]) {
   order: map-get($toolbar-order-ios, slot-start);
@@ -46,4 +50,23 @@
   order: map-get($toolbar-order-ios, slot-end);
 
   text-align: end;
+}
+
+
+// Toolbar: Large Title
+// --------------------------------------------------
+
+:host(.toolbar-title-large) .toolbar-container {
+  align-items: flex-start;
+
+  min-height: #{$toolbar-ios-large-min-height};
+
+  flex-wrap: wrap;
+}
+
+:host(.toolbar-title-large) .toolbar-content {
+  flex: 1;
+  order: map-get($toolbar-order-ios, title-large);
+
+  min-width: 100%;
 }
