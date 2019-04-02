@@ -62,7 +62,9 @@ export interface StyleEventDetail {
 }
 
 declare module "./components" {
-  export interface IonIcon extends IoniconsComponents.IonIcon{}
+  export namespace Components {
+    export interface IonIcon extends IoniconsComponents.IonIcon{}
+  }
 }
 
 declare module "@stencil/core" {
