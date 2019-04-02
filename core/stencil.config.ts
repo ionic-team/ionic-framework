@@ -70,6 +70,9 @@ export const config: Config = {
       type: 'docs-json',
       file: '../docs/core.json'
     },
+    apiSpecGenerator({
+      file: 'api.txt'
+    }),
     // {
     //   type: 'stats',
     //   file: 'stats.json'
