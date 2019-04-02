@@ -1,4 +1,5 @@
 // Components interfaces
+import {Components as IoniconsComponents} from 'ionicons';
 export * from './components';
 export * from './index';
 export * from './components/alert/alert-interface';
@@ -58,6 +59,10 @@ export interface BackButtonEventDetail {
 
 export interface StyleEventDetail {
   [styleName: string]: boolean;
+}
+
+declare module "./components" {
+  export interface IonIcon extends IoniconsComponents.IonIcon{}
 }
 
 declare module "@stencil/core" {

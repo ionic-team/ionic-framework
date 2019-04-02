@@ -74,52 +74,52 @@ export const config: Config = {
     //   type: 'stats',
     //   file: 'stats.json'
     // },
-    apiSpecGenerator({
-      file: 'api.txt'
-    }),
-    {
-      type: 'angular',
-      componentCorePackage: '@ionic/core',
-      directivesProxyFile: '../angular/src/directives/proxies.ts',
-      directivesUtilsFile: '../angular/src/directives/proxies-utils.ts',
-      directivesArrayFile: '../angular/src/directives/proxies-list.txt',
-      excludeComponents: [
-        // overlays
-        'ion-action-sheet',
-        'ion-action-sheet-controller',
-        'ion-alert',
-        'ion-alert-controller',
-        'ion-loading',
-        'ion-loading-controller',
-        'ion-modal',
-        'ion-modal-controller',
-        'ion-picker',
-        'ion-picker-controller',
-        'ion-popover',
-        'ion-popover-controller',
-        'ion-toast',
-        'ion-toast-controller',
-        'ion-toast',
+    // apiSpecGenerator({
+    //   file: 'api.txt'
+    // }),
+    //   {
+    //     type: 'angular',
+    //     componentCorePackage: '@ionic/core',
+    //     directivesProxyFile: '../angular/src/directives/proxies.ts',
+    //     directivesUtilsFile: '../angular/src/directives/proxies-utils.ts',
+    //     directivesArrayFile: '../angular/src/directives/proxies-list.txt',
+    //     excludeComponents: [
+    //       // overlays
+    //       'ion-action-sheet',
+    //       'ion-action-sheet-controller',
+    //       'ion-alert',
+    //       'ion-alert-controller',
+    //       'ion-loading',
+    //       'ion-loading-controller',
+    //       'ion-modal',
+    //       'ion-modal-controller',
+    //       'ion-picker',
+    //       'ion-picker-controller',
+    //       'ion-popover',
+    //       'ion-popover-controller',
+    //       'ion-toast',
+    //       'ion-toast-controller',
+    //       'ion-toast',
 
-        // controllers
-        'ion-menu-controller',
+    //       // controllers
+    //       'ion-menu-controller',
 
-        // navigation
-        'ion-router',
-        'ion-route',
-        'ion-route-redirect',
-        'ion-router-outlet',
-        'ion-anchor',
+    //       // navigation
+    //       'ion-router',
+    //       'ion-route',
+    //       'ion-route-redirect',
+    //       'ion-router-outlet',
+    //       'ion-anchor',
 
-        // tabs
-        'ion-tabs',
-        'ion-tab',
+    //       // tabs
+    //       'ion-tabs',
+    //       'ion-tab',
 
-        // auxiliar
-        'ion-picker-column',
-        'ion-virtual-scroll'
-      ]
-    }
+    //       // auxiliar
+    //       'ion-picker-column',
+    //       'ion-virtual-scroll'
+    //     ]
+    //   }
   ],
   testing: {
     allowableMismatchedPixels: 200,

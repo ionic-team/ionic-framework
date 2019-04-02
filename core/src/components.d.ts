@@ -5,8 +5,8 @@
  */
 
 
-import { JSXBase } from '@stencil/core';
-
+import { JSXBase } from '@stencil/core/internal';
+import { JSX } from '@stencil/core';
 import {
   ActionSheetButton,
   ActionSheetOptions,
@@ -784,19 +784,6 @@ export namespace Components {
     * If `true`, the header will be translucent. Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content.
     */
     'translucent': boolean;
-  }
-  interface IonIcon {
-    'ariaLabel'?: string;
-    'color'?: string;
-    'flipRtl'?: boolean;
-    'icon'?: string;
-    'ios'?: string;
-    'lazy'?: boolean;
-    'md'?: string;
-    'mode'?: string;
-    'name'?: string;
-    'size'?: string;
-    'src'?: string;
   }
   interface IonImg {
     /**
