@@ -3719,6 +3719,10 @@ export namespace Components {
     */
     'debounce': number;
     /**
+    * If `true`, the user cannot interact with the input.
+    */
+    'disabled': boolean;
+    /**
     * Returns the native `<input>` element used under the hood.
     */
     'getInputElement': () => Promise<HTMLInputElement>;
@@ -3788,6 +3792,10 @@ export namespace Components {
     * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
     */
     'debounce'?: number;
+    /**
+    * If `true`, the user cannot interact with the input.
+    */
+    'disabled'?: boolean;
     /**
     * The mode determines which platform styles to use.
     */

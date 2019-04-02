@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
-import { Color, Config, Mode, SearchbarChangeEventDetail } from '../../interface';
+import { Color, Config, Mode, SearchbarChangeEventDetail, StyleEventDetail } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
@@ -79,6 +79,16 @@ export class Searchbar implements ComponentInterface {
   }
 
   /**
+   * If `true`, the user cannot interact with the input.
+   */
+  @Prop() disabled = false;
+
+  @Watch('disabled')
+  protected disabledChanged() {
+    this.emitStyle();
+  }
+
+  /**
    * Set the input's placeholder.
    */
   @Prop() placeholder = 'Search';
@@ -147,6 +157,12 @@ export class Searchbar implements ComponentInterface {
     }
     this.ionChange.emit({ value });
   }
+
+  /**
+   * Emitted when the styles change.
+   * @internal
+   */
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   componentDidLoad() {
     this.positionElements();
@@ -346,15 +362,30 @@ export class Searchbar implements ComponentInterface {
     return this.value || '';
   }
 
+  private hasValue(): boolean {
+    return this.getValue() !== '';
+  }
+
+  private emitStyle() {
+    this.ionStyle.emit({
+      'interactive': true,
+      'input': true,
+      'searchbar-has-value': this.hasValue(),
+      'searchbar-has-focus':  this.focused,
+      'interactive-disabled': this.disabled
+    });
+  }
+
   hostData() {
     const animated = this.animated && this.config.getBoolean('animated', true);
 
     return {
+      'searchbar-disabled': this.disabled ? 'true' : null,
       class: {
         ...createColorClasses(this.color),
         'searchbar-animated': animated,
         'searchbar-no-animate': animated && this.noAnimate,
-        'searchbar-has-value': (this.getValue() !== ''),
+        'searchbar-has-value': this.hasValue(),
         'searchbar-left-aligned': this.shouldAlignLeft,
         'searchbar-has-focus': this.focused
       }
@@ -385,6 +416,7 @@ export class Searchbar implements ComponentInterface {
     return [
       <div class="searchbar-input-container">
         <input
+          disabled={this.disabled}
           ref={el => this.nativeInput = el}
           class="searchbar-input"
           onInput={this.onInput}

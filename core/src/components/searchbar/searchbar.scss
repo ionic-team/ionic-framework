@@ -143,3 +143,7 @@
 :host(.searchbar-has-value.searchbar-has-focus) .searchbar-clear-button {
   display: block;
 }
+
+.searchbar-input[disabled] {
+  opacity: .4;
+}
