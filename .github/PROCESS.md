@@ -140,6 +140,14 @@ Once the release is ready to ship, it will get merged into `stable` and `master`
 
 See the [steps for releasing](#releasing) below for detailed information on how to publish a release.
 
+### Version Branches
+
+Once a release has shipped and the release branch has been merged into `stable` and `master` it should also be merged into its corrsponding version branch. These version branches allow us to ship updates for specific versions of the framework (I.e. Lets us ship a bug fix that only affects 4.2.x).
+
+Patch releases should be merged into their corresponding version branches. For example, a `release-4.1.1` branch should be merged into the `4.1.x` version branch and a `release-5.0.1` branch should be merged into the `5.0.x` version branch.
+
+When releasing a major version such as `5.0.0 ` or a minor version such as `4.1.0` , the version branch will not exist. The version branch should be created once the release branch has been merged into `stable` and `master`. For example, when releasing `4.1.0`, the `release-4.1.0` release branch should be merged into `stable` and `master` and then the `4.1.x` version branch should be created off the latest `stable`.
+
 
 ### Hotfix Branches
 
@@ -214,19 +222,29 @@ Hotfixes bypass `master` and should only be used for urgent fixes that can't wai
 ## Releasing
 
 1. Create the release branch from `master`, for example: `release-4.1.0`.
+
 1. Submit a pull request from the release branch into `stable`. Do not merge this pull request yet.
+
 1. Verify all tests are passing, fix any bugs if needed and make sure no undesired commits are in.
+
 1. Navigate to the root of the repository while on the release branch.
+
 1. Run `npm i` if it hasn't already been done.
+
 1. Run `npm run release.prepare`
     - Select the version based on the type of commits and the [Ionic Versioning](https://ionicframework.com/docs/intro/versioning)
     - After the process completes, verify the version number in all packages (`core`, `docs`, `angular`)
     - Verify the changelog commits are accurate and follow the [proper format]((https://github.com/ionic-team/ionic/blob/master/.github/CONTRIBUTING.md#commit-message-format))
     - Commit these changes with the version number as the message, e.g. `git commit -m "4.1.0"`
+
 1. Run `npm run release`
+
 1. Click **Merge pull request**. Use the dropdown to select this option if necessary.
 
     <img width="191" alt="Merge pull request button" src="https://user-images.githubusercontent.com/236501/47032669-8be1b980-d138-11e8-9a90-d1518c223184.png">
 
 1. Rewrite the commit message to `merge release-4.1.0` with the proper release branch.
+
 1. Create a pull request and merge the release branch back into `master` using the same commit format in the last step, to ensure any changes made on the release branch get added to future releases.
+
+1. Merge the release branch into its corresponding version branch. If this is a major or minor release, create the version branch off the latest `stable`.
