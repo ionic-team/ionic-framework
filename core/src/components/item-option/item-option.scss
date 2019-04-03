@@ -112,3 +112,17 @@
   transition-property: none;
   transition-timing-function: cubic-bezier(.65, .05, .36, 1);
 }
+
+
+// Item Disabled Styling
+// --------------------------------------------------
+
+:host(.item-option-disabled) {
+  pointer-events: none;
+}
+
+:host(.item-option-disabled) .button-native {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
+}

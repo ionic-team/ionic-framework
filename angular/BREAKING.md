@@ -5,7 +5,7 @@
 
 ### Migration Guide
 
-If you aren't sure where to start in upgrading to v4, we recommend reading through our [migration guide](https://beta.ionicframework.com/docs/building/migration) first.
+If you aren't sure where to start in upgrading to v4, we recommend reading through our [migration guide](https://ionicframework.com/docs/building/migration) first.
 
 ### Migration Linter
 
@@ -1740,19 +1740,19 @@ Changes the `font-family` of the whole page based on the mode selected (iOS or M
 The following set of CSS files are optional and can safely be commented out if the application is not using any of the features.
 
 - **padding.css**
-Adds utility attributes that allow adding `padding` and `margin` attributes to any element. See [content space](https://beta.ionicframework.com/docs/layout/css-utilities#content-space) for what this includes.
+Adds utility attributes that allow adding `padding` and `margin` attributes to any element. See [content space](https://ionicframework.com/docs/layout/css-utilities#content-space) for what this includes.
 
 - **float-elements.css**
-Adds utility attributes that allow adding `float` attributes to any element. See [element placement](https://beta.ionicframework.com/docs/layout/css-utilities/#element-placement) for what this includes.
+Adds utility attributes that allow adding `float` attributes to any element. See [element placement](https://ionicframework.com/docs/layout/css-utilities/#element-placement) for what this includes.
 
 - **text-alignment.css**
-Adds utility attributes that allow adding text alignment attributes to any element. See [text alignment](https://beta.ionicframework.com/docs/layout/css-utilities/#text-alignment) for what this includes.
+Adds utility attributes that allow adding text alignment attributes to any element. See [text alignment](https://ionicframework.com/docs/layout/css-utilities/#text-alignment) for what this includes.
 
 - **text-transformation.css**
-Adds utility attributes that allow adding text transformation attributes to any element. See [text transformation](https://beta.ionicframework.com/docs/layout/css-utilities/#text-transformation) for what this includes.
+Adds utility attributes that allow adding text transformation attributes to any element. See [text transformation](https://ionicframework.com/docs/layout/css-utilities/#text-transformation) for what this includes.
 
 - **flex-utils.css**
-Adds utility attributes that allow adding flex container and item attributes to any element. See [flex properties](https://beta.ionicframework.com/docs/layout/css-utilities/#flex-properties) for what this includes.
+Adds utility attributes that allow adding flex container and item attributes to any element. See [flex properties](https://ionicframework.com/docs/layout/css-utilities/#flex-properties) for what this includes.
 
 
 #### Including the CSS Files
@@ -1831,7 +1831,7 @@ p {
 
 Sass variables should no longer be used to change Ionic components. We have built Ionic to be customizable using CSS variables, instead.
 
-For more information on theming, check out the [theming documentation](https://beta.ionicframework.com/docs/theming/basics).
+For more information on theming, check out the [theming documentation](https://ionicframework.com/docs/theming/basics).
 
 
 ## Toast
