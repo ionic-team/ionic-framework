@@ -142,7 +142,7 @@ See the [steps for releasing](#releasing) below for detailed information on how 
 
 ### Version Branches
 
-Once a release has shipped and the release branch has been merged into `stable` and `master` it should also be merged into its corrsponding version branch. These version branches allow us to ship updates for specific versions of the framework (I.e. Lets us ship a bug fix that only affects 4.2.x).
+Once a release has shipped and the release branch has been merged into `stable` and `master` it should also be merged into its corrsponding version branch. These version branches allow us to ship updates for specific versions of the framework (i.e. Lets us ship a bug fix that only affects 4.2.x).
 
 Patch releases should be merged into their corresponding version branches. For example, a `release-4.1.1` branch should be merged into the `4.1.x` version branch and a `release-5.0.1` branch should be merged into the `5.0.x` version branch.
 
