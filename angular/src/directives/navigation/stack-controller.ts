@@ -58,6 +58,25 @@ export class StackController {
       animation = undefined;
     }
     const viewsSnapshot = this.views.slice();
+
+    const currentNavigation = this.router.getCurrentNavigation();
+    /**
+     * If the navigation action
+     * sets `replaceUrl: true`
+     * then we need to make sure
+     * we remove the last item
+     * from our views stack
+     */
+    if (
+      currentNavigation &&
+      currentNavigation.extras &&
+      currentNavigation.extras.replaceUrl
+    ) {
+      if (this.views.length > 0) {
+        this.views.splice(-1, 1);
+      }
+    }
+
     const views = this.insertView(enteringView, direction);
     return this.wait(async () => {
       await this.transition(enteringView, leavingView, animation, this.canGoBack(1), false);
