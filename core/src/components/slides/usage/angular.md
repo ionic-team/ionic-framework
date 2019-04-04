@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
 })
 export class SlideExample {
   slideOpts = {
-    effect: 'flip'
+    effect: 'slide'
   };
   constructor() {}
 }
