@@ -365,17 +365,18 @@ export class Alert implements ComponentInterface, OverlayInterface {
       <div class="alert-input-group" aria-labelledby={labelledby}>
         { inputs.map(i => {
           if (i.type === 'textarea') {
-            return (<div class="alert-input-wrapper">
-                      <textarea
-                        placeholder={i.placeholder}
-                        value={i.value}
-                        onInput={e => i.value = (e.target as any).value}
-                        id={i.id}
-                        disabled={i.disabled}
-                        tabIndex={0}
-                        class="alert-input"
-                      />
-                    </div>
+            return (
+              <div class="alert-input-wrapper">
+                <textarea
+                  placeholder={i.placeholder}
+                  value={i.value}
+                  onInput={e => i.value = (e.target as any).value}
+                  id={i.id}
+                  disabled={i.disabled}
+                  tabIndex={0}
+                  class="alert-input"
+                />
+              </div>
             );
           } else {
             return (
