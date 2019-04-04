@@ -15,18 +15,19 @@ import {
   AlertInput,
   AlertOptions,
   AnimationBuilder,
-  CheckedInputChangeEvent,
+  CheckboxChangeEventDetail,
   Color,
   ComponentProps,
   ComponentRef,
+  DatetimeChangeEventDetail,
   DatetimeOptions,
   DomRenderFn,
   FrameworkDelegate,
   HeaderFn,
-  InputChangeEvent,
+  InputChangeEventDetail,
   ItemHeightFn,
   ItemRenderFn,
-  ItemReorderDetail,
+  ItemReorderEventDetail,
   LoadingOptions,
   MenuChangeEventDetail,
   MenuControllerI,
@@ -40,6 +41,9 @@ import {
   PickerColumn,
   PickerOptions,
   PopoverOptions,
+  RadioChangeEventDetail,
+  RadioGroupChangeEventDetail,
+  RangeChangeEventDetail,
   RangeValue,
   RefresherEventDetail,
   RouteID,
@@ -49,20 +53,23 @@ import {
   RouteWrite,
   ScrollBaseDetail,
   ScrollDetail,
+  SearchbarChangeEventDetail,
   SegmentButtonLayout,
-  SelectInputChangeEvent,
+  SegmentChangeEventDetail,
+  SelectChangeEventDetail,
   SelectInterface,
   SelectPopoverOption,
   Side,
   SpinnerTypes,
-  StyleEvent,
+  StyleEventDetail,
   SwipeGestureHandler,
-  TabBarChangedDetail,
-  TabButtonClickDetail,
+  TabBarChangedEventDetail,
+  TabButtonClickEventDetail,
   TabButtonLayout,
+  TextareaChangeEventDetail,
   TextFieldTypes,
-  TextInputChangeEvent,
   ToastOptions,
+  ToggleChangeEventDetail,
   TransitionDoneFn,
   TransitionInstruction,
   ViewController,
@@ -70,6 +77,9 @@ import {
 import {
   EventEmitter,
 } from '@stencil/core';
+import {
+  SelectCompareFn,
+} from './components/select/select-interface';
 
 
 export namespace Components {
@@ -149,7 +159,7 @@ export namespace Components {
     */
     'subHeader'?: string;
     /**
-    * If `true`, the action sheet will be translucent.
+    * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports backdrop-filter.
     */
     'translucent': boolean;
   }
@@ -195,17 +205,9 @@ export namespace Components {
     */
     'onIonActionSheetDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
     /**
-    * Emitted after the alert has loaded.
-    */
-    'onIonActionSheetDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
     * Emitted after the alert has presented.
     */
     'onIonActionSheetDidPresent'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted after the alert has unloaded.
-    */
-    'onIonActionSheetDidUnload'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted before the alert has dismissed.
     */
@@ -214,13 +216,12 @@ export namespace Components {
     * Emitted before the alert has presented.
     */
     'onIonActionSheetWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
     /**
     * Subtitle for the action sheet.
     */
     'subHeader'?: string;
     /**
-    * If `true`, the action sheet will be translucent.
+    * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports backdrop-filter.
     */
     'translucent'?: boolean;
   }
@@ -364,15 +365,7 @@ export namespace Components {
     /**
     * Emitted after the alert has presented.
     */
-    'onIonAlertDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted after the alert has presented.
-    */
     'onIonAlertDidPresent'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted before the alert has presented.
-    */
-    'onIonAlertDidUnload'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted before the alert has dismissed.
     */
@@ -381,7 +374,6 @@ export namespace Components {
     * Emitted before the alert has presented.
     */
     'onIonAlertWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
     /**
     * The subtitle in the heading of the alert. Displayed under the title.
     */
@@ -757,6 +749,10 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
+    * If `true`, the checkbox will visually appear as indeterminate.
+    */
+    'indeterminate': boolean;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
@@ -783,6 +779,10 @@ export namespace Components {
     */
     'disabled'?: boolean;
     /**
+    * If `true`, the checkbox will visually appear as indeterminate.
+    */
+    'indeterminate'?: boolean;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
@@ -797,15 +797,11 @@ export namespace Components {
     /**
     * Emitted when the checked property has changed.
     */
-    'onIonChange'?: (event: CustomEvent<CheckedInputChangeEvent>) => void;
+    'onIonChange'?: (event: CustomEvent<CheckboxChangeEventDetail>) => void;
     /**
     * Emitted when the toggle has focus.
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the styles change.
-    */
-    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
     /**
     * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
     */
@@ -843,75 +839,75 @@ export namespace Components {
 
   interface IonCol {
     /**
-    * The amount to offset the column, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column, in terms of how many columns it should shift to the end of the total available.
     */
     'offset'?: string;
     /**
-    * The amount to offset the column for lg screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column for lg screens, in terms of how many columns it should shift to the end of the total available.
     */
     'offsetLg'?: string;
     /**
-    * The amount to offset the column for md screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column for md screens, in terms of how many columns it should shift to the end of the total available.
     */
     'offsetMd'?: string;
     /**
-    * The amount to offset the column for sm screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column for sm screens, in terms of how many columns it should shift to the end of the total available.
     */
     'offsetSm'?: string;
     /**
-    * The amount to offset the column for xl screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column for xl screens, in terms of how many columns it should shift to the end of the total available.
     */
     'offsetXl'?: string;
     /**
-    * The amount to offset the column for xs screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column for xs screens, in terms of how many columns it should shift to the end of the total available.
     */
     'offsetXs'?: string;
     /**
-    * The amount to pull the column, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column, in terms of how many columns it should shift to the start of the total available.
     */
     'pull'?: string;
     /**
-    * The amount to pull the column for lg screens, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column for lg screens, in terms of how many columns it should shift to the start of the total available.
     */
     'pullLg'?: string;
     /**
-    * The amount to pull the column for md screens, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column for md screens, in terms of how many columns it should shift to the start of the total available.
     */
     'pullMd'?: string;
     /**
-    * The amount to pull the column for sm screens, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column for sm screens, in terms of how many columns it should shift to the start of the total available.
     */
     'pullSm'?: string;
     /**
-    * The amount to pull the column for xl screens, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column for xl screens, in terms of how many columns it should shift to the start of the total available.
     */
     'pullXl'?: string;
     /**
-    * The amount to pull the column for xs screens, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column for xs screens, in terms of how many columns it should shift to the start of the total available.
     */
     'pullXs'?: string;
     /**
-    * The amount to push the column, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column, in terms of how many columns it should shift to the end of the total available.
     */
     'push'?: string;
     /**
-    * The amount to push the column for lg screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column for lg screens, in terms of how many columns it should shift to the end of the total available.
     */
     'pushLg'?: string;
     /**
-    * The amount to push the column for md screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column for md screens, in terms of how many columns it should shift to the end of the total available.
     */
     'pushMd'?: string;
     /**
-    * The amount to push the column for sm screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column for sm screens, in terms of how many columns it should shift to the end of the total available.
     */
     'pushSm'?: string;
     /**
-    * The amount to push the column for xl screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column for xl screens, in terms of how many columns it should shift to the end of the total available.
     */
     'pushXl'?: string;
     /**
-    * The amount to push the column for xs screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column for xs screens, in terms of how many columns it should shift to the end of the total available.
     */
     'pushXs'?: string;
     /**
@@ -941,75 +937,75 @@ export namespace Components {
   }
   interface IonColAttributes extends StencilHTMLAttributes {
     /**
-    * The amount to offset the column, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column, in terms of how many columns it should shift to the end of the total available.
     */
     'offset'?: string;
     /**
-    * The amount to offset the column for lg screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column for lg screens, in terms of how many columns it should shift to the end of the total available.
     */
     'offsetLg'?: string;
     /**
-    * The amount to offset the column for md screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column for md screens, in terms of how many columns it should shift to the end of the total available.
     */
     'offsetMd'?: string;
     /**
-    * The amount to offset the column for sm screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column for sm screens, in terms of how many columns it should shift to the end of the total available.
     */
     'offsetSm'?: string;
     /**
-    * The amount to offset the column for xl screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column for xl screens, in terms of how many columns it should shift to the end of the total available.
     */
     'offsetXl'?: string;
     /**
-    * The amount to offset the column for xs screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to offset the column for xs screens, in terms of how many columns it should shift to the end of the total available.
     */
     'offsetXs'?: string;
     /**
-    * The amount to pull the column, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column, in terms of how many columns it should shift to the start of the total available.
     */
     'pull'?: string;
     /**
-    * The amount to pull the column for lg screens, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column for lg screens, in terms of how many columns it should shift to the start of the total available.
     */
     'pullLg'?: string;
     /**
-    * The amount to pull the column for md screens, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column for md screens, in terms of how many columns it should shift to the start of the total available.
     */
     'pullMd'?: string;
     /**
-    * The amount to pull the column for sm screens, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column for sm screens, in terms of how many columns it should shift to the start of the total available.
     */
     'pullSm'?: string;
     /**
-    * The amount to pull the column for xl screens, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column for xl screens, in terms of how many columns it should shift to the start of the total available.
     */
     'pullXl'?: string;
     /**
-    * The amount to pull the column for xs screens, in terms of how many columns it should shift to the left of the total available.
+    * The amount to pull the column for xs screens, in terms of how many columns it should shift to the start of the total available.
     */
     'pullXs'?: string;
     /**
-    * The amount to push the column, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column, in terms of how many columns it should shift to the end of the total available.
     */
     'push'?: string;
     /**
-    * The amount to push the column for lg screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column for lg screens, in terms of how many columns it should shift to the end of the total available.
     */
     'pushLg'?: string;
     /**
-    * The amount to push the column for md screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column for md screens, in terms of how many columns it should shift to the end of the total available.
     */
     'pushMd'?: string;
     /**
-    * The amount to push the column for sm screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column for sm screens, in terms of how many columns it should shift to the end of the total available.
     */
     'pushSm'?: string;
     /**
-    * The amount to push the column for xl screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column for xl screens, in terms of how many columns it should shift to the end of the total available.
     */
     'pushXl'?: string;
     /**
-    * The amount to push the column for xs screens, in terms of how many columns it should shift to the right of the total available.
+    * The amount to push the column for xs screens, in terms of how many columns it should shift to the end of the total available.
     */
     'pushXs'?: string;
     /**
@@ -1197,13 +1193,17 @@ export namespace Components {
     */
     'pickerFormat'?: string;
     /**
-    * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
+    * Any additional options that the picker interface can accept. See the [Picker API docs](../picker) for the picker options.
     */
     'pickerOptions'?: DatetimeOptions;
     /**
     * The text to display when there's no date selected yet. Using lowercase to match the input attribute
     */
     'placeholder'?: string | null;
+    /**
+    * If `true`, the datetime appears normal but is not interactive.
+    */
+    'readonly': boolean;
     /**
     * The value of the datetime as a valid ISO 8601 datetime string.
     */
@@ -1289,27 +1289,27 @@ export namespace Components {
     /**
     * Emitted when the value (selected date) has changed.
     */
-    'onIonChange'?: (event: CustomEvent<InputChangeEvent>) => void;
+    'onIonChange'?: (event: CustomEvent<DatetimeChangeEventDetail>) => void;
     /**
     * Emitted when the datetime has focus.
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
     /**
-    * Emitted when the styles change.
-    */
-    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
-    /**
     * The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.
     */
     'pickerFormat'?: string;
     /**
-    * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
+    * Any additional options that the picker interface can accept. See the [Picker API docs](../picker) for the picker options.
     */
     'pickerOptions'?: DatetimeOptions;
     /**
     * The text to display when there's no date selected yet. Using lowercase to match the input attribute
     */
     'placeholder'?: string | null;
+    /**
+    * If `true`, the datetime appears normal but is not interactive.
+    */
+    'readonly'?: boolean;
     /**
     * The value of the datetime as a valid ISO 8601 datetime string.
     */
@@ -1546,7 +1546,11 @@ export namespace Components {
     */
     'alt'?: string;
     /**
-    * Emitted when the img src is loaded
+    * Emitted when the img fails to load
+    */
+    'onIonError'?: (event: CustomEvent<void>) => void;
+    /**
+    * Emitted when the img src has been set
     */
     'onIonImgDidLoad'?: (event: CustomEvent<void>) => void;
     /**
@@ -1654,6 +1658,10 @@ export namespace Components {
     * If `true`, the user cannot interact with the input.
     */
     'disabled': boolean;
+    /**
+    * Returns the native `<input>` element used under the hood.
+    */
+    'getInputElement': () => Promise<HTMLInputElement>;
     /**
     * A hint to the browser for which keyboard to display. This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
     */
@@ -1807,7 +1815,7 @@ export namespace Components {
     /**
     * Emitted when the value has changed.
     */
-    'onIonChange'?: (event: CustomEvent<TextInputChangeEvent>) => void;
+    'onIonChange'?: (event: CustomEvent<InputChangeEventDetail>) => void;
     /**
     * Emitted when the input has focus.
     */
@@ -1816,18 +1824,6 @@ export namespace Components {
     * Emitted when a keyboard input ocurred.
     */
     'onIonInput'?: (event: CustomEvent<KeyboardEvent>) => void;
-    /**
-    * Emitted when the input has been created.
-    */
-    'onIonInputDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the input has been removed.
-    */
-    'onIonInputDidUnload'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the styles change.
-    */
-    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
     /**
     * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
     */
@@ -2004,7 +2000,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.
+    * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
     */
     'detail'?: boolean;
     /**
@@ -2046,7 +2042,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.
+    * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
     */
     'detail'?: boolean;
     /**
@@ -2102,10 +2098,6 @@ export namespace Components {
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
-    /**
-    * Emitted when the styles change.
-    */
-    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
     /**
     * The position determines where and how the label behaves inside an item.
     */
@@ -2291,17 +2283,9 @@ export namespace Components {
     */
     'onIonLoadingDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
     /**
-    * Emitted after the loading has loaded.
-    */
-    'onIonLoadingDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
     * Emitted after the loading has presented.
     */
     'onIonLoadingDidPresent'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted after the loading has unloaded.
-    */
-    'onIonLoadingDidUnload'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted before the loading has dismissed.
     */
@@ -2310,7 +2294,6 @@ export namespace Components {
     * Emitted before the loading has presented.
     */
     'onIonLoadingWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
     /**
     * If `true`, a backdrop will be displayed behind the loading indicator.
     */
@@ -2516,10 +2499,6 @@ export namespace Components {
     */
     'onIonDidOpen'?: (event: CustomEvent<void>) => void;
     /**
-    * Emitted when the menu state is changed.
-    */
-    'onIonMenuChange'?: (event: CustomEvent<MenuChangeEventDetail>) => void;
-    /**
     * Emitted when the menu is about to be closed.
     */
     'onIonWillClose'?: (event: CustomEvent<void>) => void;
@@ -2638,7 +2617,6 @@ export namespace Components {
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
     'cssClass'?: string | string[];
-    'delegate'?: FrameworkDelegate;
     /**
     * Animation to use when the modal is presented.
     */
@@ -2660,17 +2638,9 @@ export namespace Components {
     */
     'onIonModalDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
     /**
-    * Emitted after the modal has loaded.
-    */
-    'onIonModalDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
     * Emitted after the modal has presented.
     */
     'onIonModalDidPresent'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted after the modal has unloaded.
-    */
-    'onIonModalDidUnload'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted before the modal has dismissed.
     */
@@ -2679,7 +2649,6 @@ export namespace Components {
     * Emitted before the modal has presented.
     */
     'onIonModalWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
     /**
     * If `true`, a backdrop will be displayed behind the modal.
     */
@@ -2817,19 +2786,14 @@ export namespace Components {
     * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions.
     */
     'animation'?: AnimationBuilder;
-    'delegate'?: FrameworkDelegate;
     /**
     * Event fired when the nav has changed components
     */
     'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
     /**
-    * Event fired when the nav will components
+    * Event fired when the nav will change components
     */
     'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
-    /**
-    * Event fired when Nav will load a component
-    */
-    'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
     /**
     * Root NavComponent to load
     */
@@ -2866,9 +2830,15 @@ export namespace Components {
   }
 
   interface IonPickerColumn {
+    /**
+    * Picker column data
+    */
     'col': PickerColumn;
   }
   interface IonPickerColumnAttributes extends StencilHTMLAttributes {
+    /**
+    * Picker column data
+    */
     'col': PickerColumn;
   }
 
@@ -3001,17 +2971,9 @@ export namespace Components {
     */
     'onIonPickerDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
     /**
-    * Emitted after the picker has loaded.
-    */
-    'onIonPickerDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
     * Emitted after the picker has presented.
     */
     'onIonPickerDidPresent'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted after the picker has unloaded.
-    */
-    'onIonPickerDidUnload'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted before the picker has dismissed.
     */
@@ -3020,7 +2982,6 @@ export namespace Components {
     * Emitted before the picker has presented.
     */
     'onIonPickerWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
     /**
     * If `true`, a backdrop will be displayed behind the picker.
     */
@@ -3132,7 +3093,6 @@ export namespace Components {
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
     'cssClass'?: string | string[];
-    'delegate'?: FrameworkDelegate;
     /**
     * Animation to use when the popover is presented.
     */
@@ -3158,17 +3118,9 @@ export namespace Components {
     */
     'onIonPopoverDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
     /**
-    * Emitted after the popover has loaded.
-    */
-    'onIonPopoverDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
     * Emitted after the popover has presented.
     */
     'onIonPopoverDidPresent'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted after the popover has unloaded.
-    */
-    'onIonPopoverDidUnload'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted before the popover has dismissed.
     */
@@ -3177,7 +3129,6 @@ export namespace Components {
     * Emitted before the popover has presented.
     */
     'onIonPopoverWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
     /**
     * If `true`, a backdrop will be displayed behind the popover.
     */
@@ -3267,7 +3218,7 @@ export namespace Components {
     /**
     * Emitted when the value has changed.
     */
-    'onIonChange'?: (event: CustomEvent<InputChangeEvent>) => void;
+    'onIonChange'?: (event: CustomEvent<RadioGroupChangeEventDetail>) => void;
     /**
     * the value of the radio group.
     */
@@ -3330,21 +3281,9 @@ export namespace Components {
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
     /**
-    * Emitted when the radio loads.
-    */
-    'onIonRadioDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the radio unloads.
-    */
-    'onIonRadioDidUnload'?: (event: CustomEvent<void>) => void;
-    /**
     * Emitted when the radio button is selected.
     */
-    'onIonSelect'?: (event: CustomEvent<CheckedInputChangeEvent>) => void;
-    /**
-    * Emitted when the styles change.
-    */
-    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
+    'onIonSelect'?: (event: CustomEvent<RadioChangeEventDetail>) => void;
     /**
     * the value of the radio.
     */
@@ -3397,6 +3336,10 @@ export namespace Components {
     */
     'step': number;
     /**
+    * If `true`, tick marks are displayed based on the step value. Only applies when `snaps` is `true`.
+    */
+    'ticks': boolean;
+    /**
     * the value of the range.
     */
     'value': RangeValue;
@@ -3441,15 +3384,11 @@ export namespace Components {
     /**
     * Emitted when the value property has changed.
     */
-    'onIonChange'?: (event: CustomEvent<InputChangeEvent>) => void;
+    'onIonChange'?: (event: CustomEvent<RangeChangeEventDetail>) => void;
     /**
     * Emitted when the range has focus.
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the styles change.
-    */
-    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
     /**
     * If `true`, a pin with integer value is shown when the knob is pressed.
     */
@@ -3462,6 +3401,10 @@ export namespace Components {
     * Specifies the value granularity.
     */
     'step'?: number;
+    /**
+    * If `true`, tick marks are displayed based on the step value. Only applies when `snaps` is `true`.
+    */
+    'ticks'?: boolean;
     /**
     * the value of the range.
     */
@@ -3590,9 +3533,9 @@ export namespace Components {
     */
     'disabled'?: boolean;
     /**
-    * Event that needs to be listen to in order to respond to reorder action. `ion-reorder-group` uses this event to delegate to the user the reordering of data array.   The complete() method exposed as
+    * Event that needs to be listened to in order to complete the reorder action. Once the event has been emitted, the `complete()` method then needs to be called in order to finalize the reorder action.
     */
-    'onIonItemReorder'?: (event: CustomEvent<ItemReorderDetail>) => void;
+    'onIonItemReorder'?: (event: CustomEvent<ItemReorderEventDetail>) => void;
   }
 
   interface IonReorder {}
@@ -3698,19 +3641,13 @@ export namespace Components {
     * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions.
     */
     'animation'?: AnimationBuilder;
-    'delegate'?: FrameworkDelegate;
-    'mode'?: Mode;
-    'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
-    'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
-    'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
-    'swipeHandler'?: SwipeGestureHandler;
   }
 
   interface IonRouter {
     /**
     * Go back to previous page in the window.history.
     */
-    'goBack': () => Promise<void>;
+    'back': () => Promise<void>;
     'navChanged': (direction: RouterDirection) => Promise<boolean>;
     'printDebug': () => void;
     /**
@@ -3781,6 +3718,10 @@ export namespace Components {
     * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
     */
     'debounce': number;
+    /**
+    * Returns the native `<input>` element used under the hood.
+    */
+    'getInputElement': () => Promise<HTMLInputElement>;
     /**
     * The mode determines which platform styles to use.
     */
@@ -3862,7 +3803,7 @@ export namespace Components {
     /**
     * Emitted when the value has changed.
     */
-    'onIonChange'?: (event: CustomEvent<TextInputChangeEvent>) => void;
+    'onIonChange'?: (event: CustomEvent<SearchbarChangeEventDetail>) => void;
     /**
     * Emitted when the clear input button is clicked.
     */
@@ -3988,11 +3929,11 @@ export namespace Components {
     /**
     * Emitted when the value property has changed.
     */
-    'onIonChange'?: (event: CustomEvent<TextInputChangeEvent>) => void;
+    'onIonChange'?: (event: CustomEvent<SegmentChangeEventDetail>) => void;
     /**
     * Emitted when the styles change.
     */
-    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
+    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
     /**
     * If `true`, the segment buttons will overflow and the user can swipe to see them.
     */
@@ -4022,14 +3963,6 @@ export namespace Components {
     * If `true`, the user cannot interact with the select option.
     */
     'disabled'?: boolean;
-    /**
-    * Emitted when the select option loads.
-    */
-    'onIonSelectOptionDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the select option unloads.
-    */
-    'onIonSelectOptionDidUnload'?: (event: CustomEvent<void>) => void;
     /**
     * If `true`, the element is selected.
     */
@@ -4083,6 +4016,10 @@ export namespace Components {
     */
     'cancelText': string;
     /**
+    * A property name or function used to compare object values
+    */
+    'compareWith'?: string | SelectCompareFn | null;
+    /**
     * If `true`, the user cannot interact with the select.
     */
     'disabled': boolean;
@@ -4133,6 +4070,10 @@ export namespace Components {
     */
     'cancelText'?: string;
     /**
+    * A property name or function used to compare object values
+    */
+    'compareWith'?: string | SelectCompareFn | null;
+    /**
     * If `true`, the user cannot interact with the select.
     */
     'disabled'?: boolean;
@@ -4171,15 +4112,11 @@ export namespace Components {
     /**
     * Emitted when the value has changed.
     */
-    'onIonChange'?: (event: CustomEvent<SelectInputChangeEvent>) => void;
+    'onIonChange'?: (event: CustomEvent<SelectChangeEventDetail>) => void;
     /**
     * Emitted when the select has focus.
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the styles change.
-    */
-    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
     /**
     * The text to display when the select is empty.
     */
@@ -4196,21 +4133,21 @@ export namespace Components {
 
   interface IonSkeletonText {
     /**
-    * Width for the element to render at.
+    * If `true`, the skeleton text will animate.
     */
-    'width': string;
+    'animated': boolean;
+    'width'?: string;
   }
   interface IonSkeletonTextAttributes extends StencilHTMLAttributes {
     /**
-    * Width for the element to render at.
+    * If `true`, the skeleton text will animate.
     */
+    'animated'?: boolean;
     'width'?: string;
   }
 
   interface IonSlide {}
-  interface IonSlideAttributes extends StencilHTMLAttributes {
-    'onIonSlideChanged'?: (event: CustomEvent<void>) => void;
-  }
+  interface IonSlideAttributes extends StencilHTMLAttributes {}
 
   interface IonSlides {
     /**
@@ -4285,6 +4222,10 @@ export namespace Components {
     * Update the underlying slider implementation. Call this if you've added or removed child slides.
     */
     'update': () => Promise<void>;
+    /**
+    * Force swiper to update its height (when autoHeight enabled) for the duration equal to 'speed' parameter
+    */
+    'updateAutoHeight': (speed?: number | undefined) => Promise<void>;
   }
   interface IonSlidesAttributes extends StencilHTMLAttributes {
     /**
@@ -4430,13 +4371,9 @@ export namespace Components {
     */
     'disabled'?: boolean;
     /**
-    * Emitted when the split pane is visible.
-    */
-    'onIonChange'?: (event: CustomEvent<{visible: boolean}>) => void;
-    /**
     * Expression to be called when the split-pane visibility has changed
     */
-    'onIonSplitPaneVisible'?: (event: CustomEvent) => void;
+    'onIonSplitPaneVisible'?: (event: CustomEvent<{visible: boolean}>) => void;
     /**
     * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
     */
@@ -4470,7 +4407,6 @@ export namespace Components {
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
-    'onIonTabBarChanged'?: (event: CustomEvent<TabBarChangedDetail>) => void;
     /**
     * The selected tab component
     */
@@ -4499,9 +4435,13 @@ export namespace Components {
     */
     'mode': Mode;
     /**
+    * The selected tab component
+    */
+    'selected': boolean;
+    /**
     * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
     */
-    'tab': string;
+    'tab'?: string;
   }
   interface IonTabButtonAttributes extends StencilHTMLAttributes {
     /**
@@ -4521,13 +4461,13 @@ export namespace Components {
     */
     'mode'?: Mode;
     /**
-    * Emitted when the tab bar is clicked
+    * The selected tab component
     */
-    'onIonTabButtonClick'?: (event: CustomEvent<TabButtonClickDetail>) => void;
+    'selected'?: boolean;
     /**
     * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
     */
-    'tab': string;
+    'tab'?: string;
   }
 
   interface IonTab {
@@ -4547,12 +4487,10 @@ export namespace Components {
     'tab': string;
   }
   interface IonTabAttributes extends StencilHTMLAttributes {
-    'active'?: boolean;
     /**
     * The component to display inside of the tab.
     */
     'component'?: ComponentRef;
-    'delegate'?: FrameworkDelegate;
     /**
     * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
     */
@@ -4564,9 +4502,9 @@ export namespace Components {
     /**
     * Get the currently selected tab
     */
-    'getSelected': () => Promise<HTMLIonTabElement | undefined>;
+    'getSelected': () => Promise<string | undefined>;
     /**
-    * Get the tab at the given index
+    * Get the tab element given the tab name
     */
     'getTab': (tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>;
     /**
@@ -4578,22 +4516,13 @@ export namespace Components {
   }
   interface IonTabsAttributes extends StencilHTMLAttributes {
     /**
-    * Emitted when the tab changes.
-    */
-    'onIonChange'?: (event: CustomEvent<{tab: HTMLIonTabElement}>) => void;
-    /**
     * Emitted when the navigation has finished transitioning to a new component.
     */
-    'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
+    'onIonTabsDidChange'?: (event: CustomEvent<{tab: string}>) => void;
     /**
     * Emitted when the navigation is about to transition to a new component.
     */
-    'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the navigation will load a component.
-    */
-    'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
-    'useRouter'?: boolean;
+    'onIonTabsWillChange'?: (event: CustomEvent<{tab: string}>) => void;
   }
 
   interface IonText {
@@ -4646,6 +4575,10 @@ export namespace Components {
     * If `true`, the user cannot interact with the textarea.
     */
     'disabled': boolean;
+    /**
+    * Returns the native `<textarea>` element used under the hood.
+    */
+    'getInputElement': () => Promise<HTMLTextAreaElement>;
     /**
     * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
     */
@@ -4747,7 +4680,7 @@ export namespace Components {
     /**
     * Emitted when the input value has changed.
     */
-    'onIonChange'?: (event: CustomEvent<TextInputChangeEvent>) => void;
+    'onIonChange'?: (event: CustomEvent<TextareaChangeEventDetail>) => void;
     /**
     * Emitted when the input has focus.
     */
@@ -4756,10 +4689,6 @@ export namespace Components {
     * Emitted when a keyboard input ocurred.
     */
     'onIonInput'?: (event: CustomEvent<KeyboardEvent>) => void;
-    /**
-    * Emitted when the styles change.
-    */
-    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
     /**
     * Instructional text that shows before the input has a value.
     */
@@ -4939,17 +4868,9 @@ export namespace Components {
     */
     'onIonToastDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
     /**
-    * Emitted after the toast has loaded.
-    */
-    'onIonToastDidLoad'?: (event: CustomEvent<void>) => void;
-    /**
     * Emitted after the toast has presented.
     */
     'onIonToastDidPresent'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted after the toast has unloaded.
-    */
-    'onIonToastDidUnload'?: (event: CustomEvent<void>) => void;
     /**
     * Emitted before the toast has dismissed.
     */
@@ -4958,7 +4879,6 @@ export namespace Components {
     * Emitted before the toast has presented.
     */
     'onIonToastWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayIndex': number;
     /**
     * The position of the toast on the screen.
     */
@@ -5027,15 +4947,11 @@ export namespace Components {
     /**
     * Emitted when the value property has changed.
     */
-    'onIonChange'?: (event: CustomEvent<CheckedInputChangeEvent>) => void;
+    'onIonChange'?: (event: CustomEvent<ToggleChangeEventDetail>) => void;
     /**
     * Emitted when the toggle has focus.
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the styles change.
-    */
-    'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
     /**
     * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
     */
@@ -5135,7 +5051,6 @@ export namespace Components {
     * It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
     */
     'approxItemHeight'?: number;
-    'domRender'?: DomRenderFn;
     /**
     * Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.
     */

@@ -104,6 +104,111 @@ It is meant for text `type` inputs only, such as `"text"`, `"password"`, `"email
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonInput, IonItem, IonLabel } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+  <>
+    {/*-- Default Input --*/}
+    <IonInput></IonInput>
+
+    {/*-- Input with value --*/}
+    <IonInput value="custom"></IonInput>
+
+    {/*-- Input with placeholder --*/}
+    <IonInput placeholder="Enter Input"></IonInput>
+
+    {/*-- Input with clear button when there is a value --*/}
+    <IonInput clearInput value="clear me"></IonInput>
+
+    {/*-- Number type input --*/}
+    <IonInput type="number" value="333"></IonInput>
+
+    {/*-- Disabled input --*/}
+    <IonInput value="Disabled" disabled></IonInput>
+
+    {/*-- Readonly input --*/}
+    <IonInput value="Readonly" readonly></IonInput>
+
+    {/*-- Inputs with labels --*/}
+    <IonItem>
+      <IonLabel>Default Label</IonLabel>
+      <IonInput></IonInput>
+    </IonItem>
+
+    <IonItem>
+      <IonLabel position="floating">Floating Label</IonLabel>
+      <IonInput></IonInput>
+    </IonItem>
+
+    <IonItem>
+      <IonLabel position="fixed">Fixed Label</IonLabel>
+      <IonInput></IonInput>
+    </IonItem>
+
+    <IonItem>
+      <IonLabel position="stacked">Stacked Label</IonLabel>
+      <IonInput></IonInput>
+    </IonItem>
+  </>
+);
+
+export default Example
+
+
+### Vue
+
+```html
+<template>
+  <!-- Default Input -->
+  <ion-input></ion-input>
+
+  <!-- Input with value -->
+  <ion-input value="custom"></ion-input>
+
+  <!-- Input with placeholder -->
+  <ion-input placeholder="Enter Input"></ion-input>
+
+  <!-- Input with clear button when there is a value -->
+  <ion-input clearInput value="clear me"></ion-input>
+
+  <!-- Number type input -->
+  <ion-input type="number" value="333"></ion-input>
+
+  <!-- Disabled input -->
+  <ion-input value="Disabled" disabled></ion-input>
+
+  <!-- Readonly input -->
+  <ion-input value="Readonly" readonly></ion-input>
+
+  <!-- Inputs with labels -->
+  <ion-item>
+    <ion-label>Default Label</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Floating Label</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="fixed">Fixed Label</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Stacked Label</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+</template>
+```
+
+
 
 ## Properties
 
@@ -140,17 +245,25 @@ It is meant for text `type` inputs only, such as `"text"`, `"password"`, `"email
 
 ## Events
 
-| Event               | Description                              | Detail               |
-| ------------------- | ---------------------------------------- | -------------------- |
-| `ionBlur`           | Emitted when the input loses focus.      | void                 |
-| `ionChange`         | Emitted when the value has changed.      | TextInputChangeEvent |
-| `ionFocus`          | Emitted when the input has focus.        | void                 |
-| `ionInput`          | Emitted when a keyboard input ocurred.   | KeyboardEvent        |
-| `ionInputDidLoad`   | Emitted when the input has been created. | void                 |
-| `ionInputDidUnload` | Emitted when the input has been removed. | void                 |
+| Event       | Description                            | Type                                  |
+| ----------- | -------------------------------------- | ------------------------------------- |
+| `ionBlur`   | Emitted when the input loses focus.    | `CustomEvent<void>`                   |
+| `ionChange` | Emitted when the value has changed.    | `CustomEvent<InputChangeEventDetail>` |
+| `ionFocus`  | Emitted when the input has focus.      | `CustomEvent<void>`                   |
+| `ionInput`  | Emitted when a keyboard input ocurred. | `CustomEvent<KeyboardEvent>`          |
 
 
 ## Methods
+
+### `getInputElement() => Promise<HTMLInputElement>`
+
+Returns the native `<input>` element used under the hood.
+
+#### Returns
+
+Type: `Promise<HTMLInputElement>`
+
+
 
 ### `setFocus() => void`
 

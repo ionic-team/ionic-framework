@@ -6,6 +6,7 @@ declare module 'vue-router/types/router' {
   interface VueRouter {
     direction: number;
     directionOverride: number | null;
+    transition: Promise<void>;
     canGoBack(): boolean;
   }
 }
@@ -60,8 +61,8 @@ export interface ApiCache {
 }
 
 export interface RouterArgs extends RouterOptions {
-  direction: number;
-  viewCount: number;
+  direction?: number;
+  viewCount?: number;
 }
 
 export interface ProxyControllerInterface {

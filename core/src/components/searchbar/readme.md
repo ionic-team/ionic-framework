@@ -79,6 +79,86 @@ A Searchbar should be used instead of an input to search lists. A clear button i
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonSearchbar, IonToolbar } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+  <>
+    {/*-- Default Searchbar --*/}
+    <IonSearchbar></IonSearchbar>
+
+    {/*-- Searchbar with danger color --*/}
+    <IonSearchbar color="danger"></IonSearchbar>
+
+    {/*-- Searchbar with value --*/}
+    <IonSearchbar value="Ionic"></IonSearchbar>
+
+    {/*-- Searchbar with telephone type --*/}
+    <IonSearchbar type="tel"></IonSearchbar>
+
+    {/*-- Searchbar with a cancel button and custom cancel button text --*/}
+    <IonSearchbar showCancelButton cancelButtonText="Custom Cancel"></IonSearchbar>
+
+    {/*-- Searchbar with a custom debounce --*/}
+    <IonSearchbar debounce={500}></IonSearchbar>
+
+    {/*-- Animated Searchbar --*/}
+    <IonSearchbar animated></IonSearchbar>
+
+    {/*-- Searchbar with a placeholder --*/}
+    <IonSearchbar placeholder="Filter Schedules"></IonSearchbar>
+
+    {/*-- Searchbar in a Toolbar --*/}
+    <IonToolbar>
+      <IonSearchbar></IonSearchbar>
+    </IonToolbar>
+  </>
+);
+
+export default Example;
+```
+
+
+### Vue
+
+```html
+<template>
+  <!-- Default Searchbar -->
+  <ion-searchbar></ion-searchbar>
+
+  <!-- Searchbar with danger color -->
+  <ion-searchbar color="danger"></ion-searchbar>
+
+  <!-- Searchbar with value -->
+  <ion-searchbar value="Ionic"></ion-searchbar>
+
+  <!-- Searchbar with telephone type -->
+  <ion-searchbar type="tel"></ion-searchbar>
+
+  <!-- Searchbar with a cancel button and custom cancel button text -->
+  <ion-searchbar showCancelButton cancelButtonText="Custom Cancel"></ion-searchbar>
+
+  <!-- Searchbar with a custom debounce -->
+  <ion-searchbar debounce="500"></ion-searchbar>
+
+  <!-- Animated Searchbar -->
+  <ion-searchbar animated></ion-searchbar>
+
+  <!-- Searchbar with a placeholder -->
+  <ion-searchbar placeholder="Filter Schedules"></ion-searchbar>
+
+  <!-- Searchbar in a Toolbar -->
+  <ion-toolbar>
+    <ion-searchbar></ion-searchbar>
+  </ion-toolbar>
+</template>
+```
+
+
 
 ## Properties
 
@@ -103,17 +183,27 @@ A Searchbar should be used instead of an input to search lists. A clear button i
 
 ## Events
 
-| Event       | Description                                     | Detail               |
-| ----------- | ----------------------------------------------- | -------------------- |
-| `ionBlur`   | Emitted when the input loses focus.             | void                 |
-| `ionCancel` | Emitted when the cancel button is clicked.      | void                 |
-| `ionChange` | Emitted when the value has changed.             | TextInputChangeEvent |
-| `ionClear`  | Emitted when the clear input button is clicked. | void                 |
-| `ionFocus`  | Emitted when the input has focus.               | void                 |
-| `ionInput`  | Emitted when a keyboard input ocurred.          | KeyboardEvent        |
+| Event       | Description                                     | Type                                      |
+| ----------- | ----------------------------------------------- | ----------------------------------------- |
+| `ionBlur`   | Emitted when the input loses focus.             | `CustomEvent<void>`                       |
+| `ionCancel` | Emitted when the cancel button is clicked.      | `CustomEvent<void>`                       |
+| `ionChange` | Emitted when the value has changed.             | `CustomEvent<SearchbarChangeEventDetail>` |
+| `ionClear`  | Emitted when the clear input button is clicked. | `CustomEvent<void>`                       |
+| `ionFocus`  | Emitted when the input has focus.               | `CustomEvent<void>`                       |
+| `ionInput`  | Emitted when a keyboard input ocurred.          | `CustomEvent<KeyboardEvent>`              |
 
 
 ## Methods
+
+### `getInputElement() => Promise<HTMLInputElement>`
+
+Returns the native `<input>` element used under the hood.
+
+#### Returns
+
+Type: `Promise<HTMLInputElement>`
+
+
 
 ### `setFocus() => void`
 

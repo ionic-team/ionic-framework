@@ -6,7 +6,6 @@ const tc = require('turbocolor');
 const execa = require('execa');
 const inquirer = require('inquirer');
 const Listr = require('listr');
-const fs = require('fs-extra');
 const semver = require('semver');
 const common = require('./common');
 const path = require('path');
@@ -19,9 +18,10 @@ async function main() {
     }
 
     const version = await askVersion();
+    const install = process.argv.indexOf('--no-install') < 0;
 
     // compile and verify packages
-    await preparePackages(common.packages, version);
+    await preparePackages(common.packages, version, install);
 
     console.log(`\nionic ${version} prepared 🤖\n`);
     console.log(`Next steps:`);
@@ -90,7 +90,7 @@ async function askVersion() {
 }
 
 
-async function preparePackages(packages, version) {
+async function preparePackages(packages, version, install) {
   // execution order matters
   const tasks = [];
 
@@ -103,12 +103,12 @@ async function preparePackages(packages, version) {
   // add all the prepare scripts
   // run all these tasks before updating package.json version
   packages.forEach(package => {
-    common.preparePackage(tasks, package, version);
+    common.preparePackage(tasks, package, version, install);
   });
 
   // add update package.json of each project
   packages.forEach(package => {
-    updatePackageVersion(tasks, package, version);
+    common.updatePackageVersion(tasks, package, version);
   });
 
   // generate changelog
@@ -152,20 +152,6 @@ function validateGit(tasks, version) {
           }
         )
     },
-  );
-}
-
-function updatePackageVersion(tasks, package, version) {
-  const projectRoot = common.projectPath(package);
-  const pkg = common.readPkg(package);
-
-  tasks.push(
-    {
-      title: `${pkg.name}: update package.json ${tc.dim(`(${version})`)}`,
-      task: async () => {
-        await execa('npm', ['version', version], { cwd: projectRoot });
-      }
-    }
   );
 }
 

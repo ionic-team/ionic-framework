@@ -368,15 +368,20 @@ describe('updateVDom', () => {
   it('should initialize empty VDOM', () => {
     const vdom: VirtualNode[] = [];
     const items = [1, 2, 3, 4, 5];
-    const { heightIndex, cells } = mockVirtualScroll(items, () => 20);
-    const range: Range = { offset: 1, length: 4 };
+    const { heightIndex, cells } = mockVirtualScroll(items, () => 20,
+      (_, i) => i === 1 ? 'hola' : null,
+      (_, i) => i === 2 ? 'hola' : null
+    );
+    const range: Range = { offset: 1, length: 6 };
 
     updateVDom(vdom, heightIndex, cells, range);
     expect(vdom).toEqual([
       { cell: cells[1], change: 2, d: false, top: 20, visible: true },
-      { cell: cells[2], change: 2, d: false, top: 40, visible: true },
-      { cell: cells[3], change: 2, d: false, top: 60, visible: true },
-      { cell: cells[4], change: 2, d: false, top: 80, visible: true }
+      { cell: cells[2], change: 2, d: false, top: 30, visible: true },
+      { cell: cells[3], change: 2, d: false, top: 50, visible: true },
+      { cell: cells[4], change: 2, d: false, top: 70, visible: true },
+      { cell: cells[5], change: 2, d: false, top: 80, visible: true },
+      { cell: cells[6], change: 2, d: false, top: 100, visible: true }
     ]);
   });
 

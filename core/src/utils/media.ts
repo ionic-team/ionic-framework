@@ -14,6 +14,9 @@ export function matchBreakpoint(win: Window, breakpoint: string | undefined) {
   if (breakpoint === undefined || breakpoint === '') {
     return true;
   }
-  const mediaQuery = SIZE_TO_MEDIA[breakpoint];
-  return win.matchMedia(mediaQuery).matches;
+  if ((win as any).matchMedia) {
+    const mediaQuery = SIZE_TO_MEDIA[breakpoint];
+    return win.matchMedia(mediaQuery).matches;
+  }
+  return false;
 }

@@ -1,7 +1,7 @@
 # ion-slides
 
 The Slides component is a multi-section container. Each section can be swiped
-or dragged between. It contains any number of [Slide](../Slide) components.
+or dragged between. It contains any number of [Slide](../slide) components.
 
 
 Adopted from Swiper.js:
@@ -78,6 +78,66 @@ slides.options = {
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonSlides, IonSlide } from '@ionic/react';
+
+const slideOpts = {
+  effect: 'flip'
+};
+
+const Example: React.SFC<{}> = () => (
+  <IonSlides pager={true} options={slideOpts}>
+    <IonSlide>
+      <h1>Slide 1</h1>
+    </IonSlide>
+    <IonSlide>
+      <h1>Slide 2</h1>
+    </IonSlide>
+    <IonSlide>
+      <h1>Slide 3</h1>
+    </IonSlide>
+  </IonSlides>
+);
+
+export default Example;
+```
+
+
+### Vue
+
+```html
+<template>
+  <ion-slides pager="true" :options="slideOpts">
+    <ion-slide>
+      <h1>Slide 1</h1>
+    </ion-slide>
+    <ion-slide>
+      <h1>Slide 2</h1>
+    </ion-slide>
+    <ion-slide>
+      <h1>Slide 3</h1>
+    </ion-slide>
+  </ion-slides>
+</template>
+
+
+<script lang="ts">
+  import { Component, Vue } from 'vue-property-decorator';
+
+  @Component()
+  export default class SelectExample extends Vue {
+    slideOpts = {
+      effect: 'flip'
+    };
+  }
+</script>
+```
+
+
 
 ## Properties
 
@@ -91,24 +151,24 @@ slides.options = {
 
 ## Events
 
-| Event                     | Description                                                 | Detail |
-| ------------------------- | ----------------------------------------------------------- | ------ |
-| `ionSlideDidChange`       | Emitted after the active slide has changed.                 | void   |
-| `ionSlideDoubleTap`       | Emitted when the user double taps on the slide's container. | void   |
-| `ionSlideDrag`            | Emitted when the slider is actively being moved.            | void   |
-| `ionSlideNextEnd`         | Emitted when the next slide has ended.                      | void   |
-| `ionSlideNextStart`       | Emitted when the next slide has started.                    | void   |
-| `ionSlidePrevEnd`         | Emitted when the previous slide has ended.                  | void   |
-| `ionSlidePrevStart`       | Emitted when the previous slide has started.                | void   |
-| `ionSlideReachEnd`        | Emitted when the slider is at the last slide.               | void   |
-| `ionSlideReachStart`      | Emitted when the slider is at its initial position.         | void   |
-| `ionSlidesDidLoad`        | Emitted after Swiper initialization                         | void   |
-| `ionSlideTap`             | Emitted when the user taps/clicks on the slide's container. | void   |
-| `ionSlideTouchEnd`        | Emitted when the user releases the touch.                   | void   |
-| `ionSlideTouchStart`      | Emitted when the user first touches the slider.             | void   |
-| `ionSlideTransitionEnd`   | Emitted when the slide transition has ended.                | void   |
-| `ionSlideTransitionStart` | Emitted when the slide transition has started.              | void   |
-| `ionSlideWillChange`      | Emitted before the active slide has changed.                | void   |
+| Event                     | Description                                                 | Type                |
+| ------------------------- | ----------------------------------------------------------- | ------------------- |
+| `ionSlideDidChange`       | Emitted after the active slide has changed.                 | `CustomEvent<void>` |
+| `ionSlideDoubleTap`       | Emitted when the user double taps on the slide's container. | `CustomEvent<void>` |
+| `ionSlideDrag`            | Emitted when the slider is actively being moved.            | `CustomEvent<void>` |
+| `ionSlideNextEnd`         | Emitted when the next slide has ended.                      | `CustomEvent<void>` |
+| `ionSlideNextStart`       | Emitted when the next slide has started.                    | `CustomEvent<void>` |
+| `ionSlidePrevEnd`         | Emitted when the previous slide has ended.                  | `CustomEvent<void>` |
+| `ionSlidePrevStart`       | Emitted when the previous slide has started.                | `CustomEvent<void>` |
+| `ionSlideReachEnd`        | Emitted when the slider is at the last slide.               | `CustomEvent<void>` |
+| `ionSlideReachStart`      | Emitted when the slider is at its initial position.         | `CustomEvent<void>` |
+| `ionSlidesDidLoad`        | Emitted after Swiper initialization                         | `CustomEvent<void>` |
+| `ionSlideTap`             | Emitted when the user taps/clicks on the slide's container. | `CustomEvent<void>` |
+| `ionSlideTouchEnd`        | Emitted when the user releases the touch.                   | `CustomEvent<void>` |
+| `ionSlideTouchStart`      | Emitted when the user first touches the slider.             | `CustomEvent<void>` |
+| `ionSlideTransitionEnd`   | Emitted when the slide transition has ended.                | `CustomEvent<void>` |
+| `ionSlideTransitionStart` | Emitted when the slide transition has started.              | `CustomEvent<void>` |
+| `ionSlideWillChange`      | Emitted before the active slide has changed.                | `CustomEvent<void>` |
 
 
 ## Methods
@@ -287,6 +347,22 @@ Type: `Promise<void>`
 
 Update the underlying slider implementation. Call this if you've added or removed
 child slides.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `updateAutoHeight(speed?: number | undefined) => Promise<void>`
+
+Force swiper to update its height (when autoHeight enabled) for the duration equal to 'speed' parameter
+
+#### Parameters
+
+| Name    | Type                  | Description |
+| ------- | --------------------- | ----------- |
+| `speed` | `number \| undefined` |             |
 
 #### Returns
 

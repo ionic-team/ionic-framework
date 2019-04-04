@@ -117,11 +117,7 @@
 }
 
 .alert-tappable {
-  display: flex;
-
   height: $alert-ios-tappable-height;
-
-  contain: strict;
 }
 
 
@@ -284,7 +280,17 @@
   overflow: hidden;
 }
 
+.alert-button:first-child {
+  @include rtl() {
+    border-right: 0;
+  }
+}
+
 .alert-button:last-child {
+  @include rtl() {
+    border-right: $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color;
+  }
+
   border-right: 0;
 
   font-weight: $alert-ios-button-main-font-weight;

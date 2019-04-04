@@ -73,7 +73,6 @@
   --inner-border-width: #{0 0 $list-md-item-border-bottom-width 0};
 }
 
-
 // Remove the border from items in lists
 // if they are explicitly styled by the item
 // to be different than the list
@@ -82,5 +81,10 @@
 }
 
 .list-md .item-lines-full {
+  --inner-border-width: 0;
+}
+
+.list-md .item-lines-none {
+  --border-width: 0;
   --inner-border-width: 0;
 }

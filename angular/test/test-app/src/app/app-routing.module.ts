@@ -14,16 +14,35 @@ import { VirtualScrollDetailComponent } from './virtual-scroll-detail/virtual-sc
 import { NestedOutletComponent } from './nested-outlet/nested-outlet.component';
 import { NestedOutletPageComponent } from './nested-outlet-page/nested-outlet-page.component';
 import { NestedOutletPage2Component } from './nested-outlet-page2/nested-outlet-page2.component';
+import { ViewChildComponent } from './view-child/view-child.component';
+import { ProvidersComponent } from './providers/providers.component';
+import { SlidesComponent } from './slides/slides.component';
+import { FormComponent } from './form/form.component';
+import { NavigationPage1Component } from './navigation-page1/navigation-page1.component';
+import { NavigationPage2Component } from './navigation-page2/navigation-page2.component';
+import { NavigationPage3Component } from './navigation-page3/navigation-page3.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'inputs', component: InputsComponent },
+  { path: 'form', component: FormComponent },
   { path: 'modals', component: ModalComponent },
+  { path: 'view-child', component: ViewChildComponent },
+  { path: 'providers', component: ProvidersComponent },
   { path: 'router-link', component: RouterLinkComponent },
   { path: 'router-link-page', component: RouterLinkPageComponent },
+  { path: 'slides', component: SlidesComponent },
   { path: 'virtual-scroll', component: VirtualScrollComponent },
   { path: 'virtual-scroll-detail/:itemId', component: VirtualScrollDetailComponent },
   { path: 'tabs', redirectTo: '/tabs/account', pathMatch: 'full' },
+  {
+    path: 'navigation',
+    children: [
+      { path: 'page1', component: NavigationPage1Component },
+      { path: 'page2', component: NavigationPage2Component },
+      { path: 'page3', component: NavigationPage3Component }
+    ]
+  },
   {
     path: 'tabs',
     component: TabsComponent,
