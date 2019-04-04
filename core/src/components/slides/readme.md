@@ -15,6 +15,75 @@ http://www.idangero.us/
 
 Licensed under MIT
 
+## Custom Animations
+
+By default, Ionic ships with the slide animation effect built in. Custom animations can be provided via the `options` prop:
+
+```typescript
+  const slidesOpts = {
+    effect: 'fade',
+    on: {
+      beforeInit() {
+        const swiper = this;
+        swiper.classNames.push(`${swiper.params.containerModifierClass}fade`);
+        const overwriteParams = {
+          slidesPerView: 1,
+          slidesPerColumn: 1,
+          slidesPerGroup: 1,
+          watchSlidesProgress: true,
+          spaceBetween: 0,
+          virtualTranslate: true,
+        };
+        swiper.params = Object.assign(swiper.params, overwriteParams);
+        swiper.params = Object.assign(swiper.originalParams, overwriteParams);
+      },
+      setTranslate() {
+        const swiper = this;
+        const { slides } = swiper;
+        for (let i = 0; i < slides.length; i += 1) {
+          const $slideEl = swiper.slides.eq(i);
+          const offset$$1 = $slideEl[0].swiperSlideOffset;
+          let tx = -offset$$1;
+          if (!swiper.params.virtualTranslate) tx -= swiper.translate;
+          let ty = 0;
+          if (!swiper.isHorizontal()) {
+            ty = tx;
+            tx = 0;
+          }
+          const slideOpacity = swiper.params.fadeEffect.crossFade
+            ? Math.max(1 - Math.abs($slideEl[0].progress), 0)
+            : 1 + Math.min(Math.max($slideEl[0].progress, -1), 0);
+          $slideEl
+            .css({
+              opacity: slideOpacity,
+            })
+            .transform(`translate3d(${tx}px, ${ty}px, 0px)`);
+        }
+      },
+      setTransition(duration) {
+        const swiper = this;
+        const { slides, $wrapperEl } = swiper;
+        slides.transition(duration);
+        if (swiper.params.virtualTranslate && duration !== 0) {
+          let eventTriggered = false;
+          slides.transitionEnd(() => {
+            if (eventTriggered) return;
+            if (!swiper || swiper.destroyed) return;
+            eventTriggered = true;
+            swiper.animating = false;
+            const triggerEvents = ['webkitTransitionEnd', 'transitionend'];
+            for (let i = 0; i < triggerEvents.length; i += 1) {
+              $wrapperEl.trigger(triggerEvents[i]);
+            }
+          });
+        }
+      }
+    }
+  }    
+```
+
+There are additional examples for the [fade](https://github.com/ionic-team/ionic/tree/master/core/src/components/slides/test/custom-fade), [flip](https://github.com/ionic-team/ionic/tree/master/core/src/components/slides/test/custom-flip), [coverflow](https://github.com/ionic-team/ionic/tree/master/core/src/components/slides/test/custom-coverflow), and [cube](https://github.com/ionic-team/ionic/tree/master/core/src/components/slides/test/custom-cube) effects in the framework repository.
+
 
 <!-- Auto Generated Below -->
 
