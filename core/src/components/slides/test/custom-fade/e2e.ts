@@ -1,8 +1,8 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-test('slides: standalone', async () => {
+test('slides: custom-fade', async () => {
   const page = await newE2EPage({
-    url: '/src/components/slides/test/standalone?ionic:_testing=true'
+    url: '/src/components/slides/test/custom-fade?ionic:_testing=true'
   });
 
   await page.waitFor(500);

@@ -1,8 +1,8 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-test('slides: standalone', async () => {
+test('slides: custom-coverflow', async () => {
   const page = await newE2EPage({
-    url: '/src/components/slides/test/standalone?ionic:_testing=true'
+    url: '/src/components/slides/test/custom-coverflow?ionic:_testing=true'
   });
 
   await page.waitFor(500);
