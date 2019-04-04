@@ -438,8 +438,11 @@ export class Slides implements ComponentInterface {
       }
     };
 
+    // merge "on" event listeners, while giving our event listeners priority
+    const mergedEventOptions = { ...((this.options && this.options.on) ? this.options.on : {}), ...eventOptions.on };
+
     // Merge the base, user options, and events together then pas to swiper
-    return { ...swiperOptions, ...this.options, ...eventOptions };
+    return { ...swiperOptions, ...this.options, ...mergedEventOptions };
   }
 
   hostData() {
