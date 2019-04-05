@@ -692,6 +692,16 @@ Type: `Promise<number>`
 
 
 
+### `open() => Promise<void>`
+
+Open the sliding item.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 
 ----------------------------------------------
 

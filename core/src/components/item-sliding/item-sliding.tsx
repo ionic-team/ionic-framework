@@ -117,6 +117,21 @@ export class ItemSliding implements ComponentInterface {
   }
 
   /**
+   * Open the sliding item.
+   */
+  @Method()
+  async open() {
+    const options = this.el.querySelector('ion-item-options');
+    if (options) {
+      options.style.display = 'flex';
+      const width = options.offsetWidth;
+      openSlidingItem = this.el;
+      options.style.display = '';
+      this.setOpenAmount(width, true);
+    }
+  }
+
+  /**
    * Close the sliding item. Items can also be closed from the [List](../../list/List).
    */
   @Method()
