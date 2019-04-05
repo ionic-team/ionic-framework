@@ -38,6 +38,10 @@ test('toast: custom class', async () => {
   await testToast(DIRECTORY, '#custom-class-toast');
 });
 
+test('toast: left right position', async () => {
+  await testToast(DIRECTORY, '#toast-left-and-right');
+});
+
 /**
  * RTL Tests
  */

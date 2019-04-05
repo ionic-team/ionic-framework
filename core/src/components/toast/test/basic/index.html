@@ -29,6 +29,7 @@
         <ion-button expand="block" id="translucent-toast" onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, translucent: true})">Show Translucent Toast</ion-button>
         <ion-button expand="block" id="color-toast" onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, color: 'danger'})">Show Color Toast</ion-button>
         <ion-button expand="block" id="custom-class-toast" onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, cssClass: 'my-custom-class'})">Show Toast with Custom Class</ion-button>
+        <ion-button expand="block" id="toast-left-and-right" onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, cssClass: 'toast-left-and-right'})">Show Toast with left-right position</ion-button>
 
         <ion-toast-controller></ion-toast-controller>
 
@@ -145,6 +146,11 @@
       background-color: #f69234;
     }
 
+    .toast-left-and-right {
+      --left: 0;
+      --right: 0;
+      --max-width: 100%;
+    }
   </style>
 </body>
 
