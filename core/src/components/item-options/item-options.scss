@@ -85,4 +85,9 @@ ion-item-options {
 
     visibility: visible;
   }
+
+  &.item-sliding-active-options-end .item-options-start,
+  &.item-sliding-active-options-start .item-options-end {
+    display: none;
+  }
 }
