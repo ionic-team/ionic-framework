@@ -489,7 +489,10 @@ ion-item,css-prop,--background-activated
 ion-item,css-prop,--border-color
 ion-item,css-prop,--border-radius
 ion-item,css-prop,--border-style
-ion-item,css-prop,--border-width
+ion-item,css-prop,--border-width-bottom
+ion-item,css-prop,--border-width-left
+ion-item,css-prop,--border-width-right
+ion-item,css-prop,--border-width-top
 ion-item,css-prop,--box-shadow
 ion-item,css-prop,--color
 ion-item,css-prop,--detail-icon-color
@@ -969,7 +972,7 @@ ion-select,prop,okText,string,'OK',false,false
 ion-select,prop,placeholder,null | string | undefined,undefined,false,false
 ion-select,prop,selectedText,null | string | undefined,undefined,false,false
 ion-select,prop,value,any,undefined,false,false
-ion-select,method,open,open(ev?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>
+ion-select,method,open,open(ev?: UIEvent | undefined) => Promise<HTMLIonPopoverElement | HTMLIonActionSheetElement | HTMLIonAlertElement | undefined>
 ion-select,event,ionBlur,void,true
 ion-select,event,ionCancel,void,true
 ion-select,event,ionChange,SelectChangeEventDetail,true

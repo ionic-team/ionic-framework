@@ -1396,7 +1396,10 @@ Item Inputs
 | `--border-color`            | Color of the item border                            |
 | `--border-radius`           | Radius of the item border                           |
 | `--border-style`            | Style of the item border                            |
-| `--border-width`            | Width of the item border                            |
+| `--border-width-bottom`     | Bottom border width of the item                     |
+| `--border-width-left`       | Left border width of the item                       |
+| `--border-width-right`      | Right border width of the item                      |
+| `--border-width-top`        | Top border width of the item                        |
 | `--box-shadow`              | Box shadow of the item                              |
 | `--color`                   | Color of the item                                   |
 | `--detail-icon-color`       | Color of the item detail icon                       |
