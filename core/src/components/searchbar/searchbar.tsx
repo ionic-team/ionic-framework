@@ -377,7 +377,7 @@ export class Searchbar implements ComponentInterface {
     const animated = this.animated && this.config.getBoolean('animated', true);
 
     return {
-      'searchbar-disabled': this.disabled ? 'true' : null,
+      'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...createColorClasses(this.color),
         'searchbar-animated': animated,
