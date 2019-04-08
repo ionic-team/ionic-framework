@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
-import { Color, Config, Mode, SearchbarChangeEventDetail, StyleEventDetail } from '../../interface';
+import { Color, Config, Mode, SearchbarChangeEventDetail } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
