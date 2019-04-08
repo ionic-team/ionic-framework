@@ -380,7 +380,8 @@ export class Searchbar implements ComponentInterface {
       'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...createColorClasses(this.color),
-        'searchbar-animated': animated,
+         'searchbar-animated': animated,
+         'searchbar-disabled': this.disabled,
         'searchbar-no-animate': animated && this.noAnimate,
         'searchbar-has-value': this.hasValue(),
         'searchbar-left-aligned': this.shouldAlignLeft,
