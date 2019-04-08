@@ -155,12 +155,6 @@ export class Searchbar implements ComponentInterface {
     this.ionChange.emit({ value });
   }
 
-  /**
-   * Emitted when the styles change.
-   * @internal
-   */
-  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
-
   componentDidLoad() {
     this.positionElements();
     this.debounceChanged();
@@ -361,16 +355,6 @@ export class Searchbar implements ComponentInterface {
 
   private hasValue(): boolean {
     return this.getValue() !== '';
-  }
-
-  private emitStyle() {
-    this.ionStyle.emit({
-      'interactive': true,
-      'input': true,
-      'searchbar-has-value': this.hasValue(),
-      'searchbar-has-focus':  this.focused,
-      'interactive-disabled': this.disabled
-    });
   }
 
   hostData() {
