@@ -84,7 +84,6 @@ export class Searchbar implements ComponentInterface {
   @Prop() disabled = false;
 
   @Watch('disabled')
-  protected disabledChanged() {
     this.emitStyle();
   }
 
