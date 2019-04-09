@@ -274,12 +274,12 @@ export default Example;
 
 ## Dependency Analysys
 
-**Used by:** [ion-toast](./toast)
+**Used by:** [ion-toast](../toast)
 
 ```mermaid
 graph TD;
-  ion-button ==> ion-ripple-effect
-  ion-toast ==> ion-button
+  ion-button --> ion-ripple-effect
+  ion-toast --> ion-button
   style ion-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

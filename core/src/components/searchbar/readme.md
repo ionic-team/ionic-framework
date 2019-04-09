@@ -237,7 +237,7 @@ Type: `Promise<void>`
 
 ```mermaid
 graph TD;
-  ion-searchbar ==> ion-icon
+  ion-searchbar --> ion-icon
   style ion-searchbar fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -87,7 +87,7 @@ export default Example
 
 ```mermaid
 graph TD;
-  ion-infinite-scroll-content ==> ion-spinner
+  ion-infinite-scroll-content --> ion-spinner
   style ion-infinite-scroll-content fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

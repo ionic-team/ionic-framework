@@ -229,13 +229,13 @@ Type: `Promise<void>`
 
 ## Dependency Analysys
 
-**Used by:** [ion-toast-controller](./toast-controller)
+**Used by:** [ion-toast-controller](../toast-controller)
 
 ```mermaid
 graph TD;
-  ion-toast ==> ion-button
-  ion-button ==> ion-ripple-effect
-  ion-toast-controller ==> ion-toast
+  ion-toast --> ion-button
+  ion-button --> ion-ripple-effect
+  ion-toast-controller --> ion-toast
   style ion-toast fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

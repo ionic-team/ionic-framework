@@ -333,12 +333,12 @@ Type: `Promise<void>`
 
 ## Dependency Analysys
 
-**Used by:** [ion-modal-controller](./modal-controller)
+**Used by:** [ion-modal-controller](../modal-controller)
 
 ```mermaid
 graph TD;
-  ion-modal ==> ion-backdrop
-  ion-modal-controller ==> ion-modal
+  ion-modal --> ion-backdrop
+  ion-modal-controller --> ion-modal
   style ion-modal fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

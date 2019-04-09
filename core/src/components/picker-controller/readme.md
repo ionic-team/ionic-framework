@@ -40,14 +40,14 @@ Type: `Promise<HTMLIonPickerElement | undefined>`
 
 ## Dependency Analysys
 
-**Used by:** [ion-datetime](./datetime)
+**Used by:** [ion-datetime](../datetime)
 
 ```mermaid
 graph TD;
-  ion-picker-controller ==> ion-picker
-  ion-picker ==> ion-backdrop
-  ion-picker ==> ion-picker-column
-  ion-datetime ==> ion-picker-controller
+  ion-picker-controller --> ion-picker
+  ion-picker --> ion-backdrop
+  ion-picker --> ion-picker-column
+  ion-datetime --> ion-picker-controller
   style ion-picker-controller fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

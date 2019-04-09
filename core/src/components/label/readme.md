@@ -217,7 +217,7 @@ export default Example;
 
 ```mermaid
 graph TD;
-  ion-select-popover ==> ion-label
+  ion-select-popover --> ion-label
   style ion-label fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

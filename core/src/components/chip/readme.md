@@ -179,7 +179,7 @@ export default ChipExample;
 
 ```mermaid
 graph TD;
-  ion-chip ==> ion-ripple-effect
+  ion-chip --> ion-ripple-effect
   style ion-chip fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

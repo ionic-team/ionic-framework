@@ -282,13 +282,13 @@ Type: `Promise<void>`
 
 ## Dependency Analysys
 
-**Used by:** [ion-loading-controller](./loading-controller)
+**Used by:** [ion-loading-controller](../loading-controller)
 
 ```mermaid
 graph TD;
-  ion-loading ==> ion-backdrop
-  ion-loading ==> ion-spinner
-  ion-loading-controller ==> ion-loading
+  ion-loading --> ion-backdrop
+  ion-loading --> ion-spinner
+  ion-loading-controller --> ion-loading
   style ion-loading fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

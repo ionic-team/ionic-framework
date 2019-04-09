@@ -48,7 +48,7 @@ Unlike ItemDivider, ListHeaders are styled to be stand-out from the rest of the 
 
 ```mermaid
 graph TD;
-  ion-select-popover ==> ion-list-header
+  ion-select-popover --> ion-list-header
   style ion-list-header fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

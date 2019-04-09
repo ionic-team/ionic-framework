@@ -1140,13 +1140,13 @@ Type: `Promise<void>`
 
 ## Dependency Analysys
 
-**Used by:** [ion-alert-controller](./alert-controller)
+**Used by:** [ion-alert-controller](../alert-controller)
 
 ```mermaid
 graph TD;
-  ion-alert ==> ion-ripple-effect
-  ion-alert ==> ion-backdrop
-  ion-alert-controller ==> ion-alert
+  ion-alert --> ion-ripple-effect
+  ion-alert --> ion-backdrop
+  ion-alert-controller --> ion-alert
   style ion-alert fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

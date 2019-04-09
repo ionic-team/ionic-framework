@@ -793,18 +793,18 @@ Type: `Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverE
 
 ```mermaid
 graph TD;
-  ion-select ==> ion-action-sheet-controller
-  ion-select ==> ion-alert-controller
-  ion-select ==> ion-popover-controller
-  ion-action-sheet-controller ==> ion-action-sheet
-  ion-action-sheet ==> ion-backdrop
-  ion-action-sheet ==> ion-icon
-  ion-action-sheet ==> ion-ripple-effect
-  ion-alert-controller ==> ion-alert
-  ion-alert ==> ion-ripple-effect
-  ion-alert ==> ion-backdrop
-  ion-popover-controller ==> ion-popover
-  ion-popover ==> ion-backdrop
+  ion-select --> ion-action-sheet-controller
+  ion-select --> ion-alert-controller
+  ion-select --> ion-popover-controller
+  ion-action-sheet-controller --> ion-action-sheet
+  ion-action-sheet --> ion-backdrop
+  ion-action-sheet --> ion-icon
+  ion-action-sheet --> ion-ripple-effect
+  ion-alert-controller --> ion-alert
+  ion-alert --> ion-ripple-effect
+  ion-alert --> ion-backdrop
+  ion-popover-controller --> ion-popover
+  ion-popover --> ion-backdrop
   style ion-select fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

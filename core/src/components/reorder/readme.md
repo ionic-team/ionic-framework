@@ -21,7 +21,7 @@ Reorder is a component that allows an item to be dragged to change its order. It
 
 ```mermaid
 graph TD;
-  ion-reorder ==> ion-icon
+  ion-reorder --> ion-icon
   style ion-reorder fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

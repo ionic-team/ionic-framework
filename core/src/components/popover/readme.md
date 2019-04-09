@@ -183,12 +183,12 @@ Type: `Promise<void>`
 
 ## Dependency Analysys
 
-**Used by:** [ion-popover-controller](./popover-controller)
+**Used by:** [ion-popover-controller](../popover-controller)
 
 ```mermaid
 graph TD;
-  ion-popover ==> ion-backdrop
-  ion-popover-controller ==> ion-popover
+  ion-popover --> ion-backdrop
+  ion-popover-controller --> ion-popover
   style ion-popover fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

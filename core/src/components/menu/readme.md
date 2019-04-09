@@ -469,8 +469,8 @@ Type: `Promise<boolean>`
 
 ```mermaid
 graph TD;
-  ion-menu ==> ion-backdrop
-  ion-menu ==> ion-menu-controller
+  ion-menu --> ion-backdrop
+  ion-menu --> ion-menu-controller
   style ion-menu fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

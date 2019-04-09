@@ -19,11 +19,11 @@ In case it's desired to keep `ion-menu-toggle` always visible, the `autoHide` pr
 
 ## Dependency Analysys
 
-**Used by:** [ion-menu-button](./menu-button)
+**Used by:** [ion-menu-button](../menu-button)
 
 ```mermaid
 graph TD;
-  ion-menu-button ==> ion-menu-toggle
+  ion-menu-button --> ion-menu-toggle
   style ion-menu-toggle fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

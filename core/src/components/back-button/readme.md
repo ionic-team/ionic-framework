@@ -285,8 +285,8 @@ export default Example;
 
 ```mermaid
 graph TD;
-  ion-back-button ==> ion-icon
-  ion-back-button ==> ion-ripple-effect
+  ion-back-button --> ion-icon
+  ion-back-button --> ion-ripple-effect
   style ion-back-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

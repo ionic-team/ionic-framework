@@ -160,7 +160,7 @@ export default Example
 
 ```mermaid
 graph TD;
-  ion-select-popover ==> ion-radio-group
+  ion-select-popover --> ion-radio-group
   style ion-radio-group fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

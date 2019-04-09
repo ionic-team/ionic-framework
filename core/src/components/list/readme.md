@@ -315,7 +315,7 @@ Type: `Promise<boolean>`
 
 ```mermaid
 graph TD;
-  ion-select-popover ==> ion-list
+  ion-select-popover --> ion-list
   style ion-list fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

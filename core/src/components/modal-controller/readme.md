@@ -44,8 +44,8 @@ Type: `Promise<HTMLIonModalElement | undefined>`
 
 ```mermaid
 graph TD;
-  ion-modal-controller ==> ion-modal
-  ion-modal ==> ion-backdrop
+  ion-modal-controller --> ion-modal
+  ion-modal --> ion-backdrop
   style ion-modal-controller fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

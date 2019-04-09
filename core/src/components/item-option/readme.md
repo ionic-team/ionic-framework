@@ -43,7 +43,7 @@ action for the item.
 
 ```mermaid
 graph TD;
-  ion-item-option ==> ion-ripple-effect
+  ion-item-option --> ion-ripple-effect
   style ion-item-option fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

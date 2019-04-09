@@ -130,13 +130,13 @@ export default Example;
 
 ## Dependency Analysys
 
-**Used by:** [ion-infinite-scroll-content](./infinite-scroll-content), [ion-loading](./loading), [ion-refresher-content](./refresher-content)
+**Used by:** [ion-infinite-scroll-content](../infinite-scroll-content), [ion-loading](../loading), [ion-refresher-content](../refresher-content)
 
 ```mermaid
 graph TD;
-  ion-infinite-scroll-content ==> ion-spinner
-  ion-loading ==> ion-spinner
-  ion-refresher-content ==> ion-spinner
+  ion-infinite-scroll-content --> ion-spinner
+  ion-loading --> ion-spinner
+  ion-refresher-content --> ion-spinner
   style ion-spinner fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

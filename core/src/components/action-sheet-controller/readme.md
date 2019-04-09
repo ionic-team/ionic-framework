@@ -40,15 +40,15 @@ Type: `Promise<HTMLIonActionSheetElement | undefined>`
 
 ## Dependency Analysys
 
-**Used by:** [ion-select](./select)
+**Used by:** [ion-select](../select)
 
 ```mermaid
 graph TD;
-  ion-action-sheet-controller ==> ion-action-sheet
-  ion-action-sheet ==> ion-backdrop
-  ion-action-sheet ==> ion-icon
-  ion-action-sheet ==> ion-ripple-effect
-  ion-select ==> ion-action-sheet-controller
+  ion-action-sheet-controller --> ion-action-sheet
+  ion-action-sheet --> ion-backdrop
+  ion-action-sheet --> ion-icon
+  ion-action-sheet --> ion-ripple-effect
+  ion-select --> ion-action-sheet-controller
   style ion-action-sheet-controller fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -151,8 +151,8 @@ export default Example
 
 ```mermaid
 graph TD;
-  ion-fab-button ==> ion-icon
-  ion-fab-button ==> ion-ripple-effect
+  ion-fab-button --> ion-icon
+  ion-fab-button --> ion-ripple-effect
   style ion-fab-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

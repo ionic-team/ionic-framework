@@ -194,7 +194,7 @@ export default Example;
 
 ```mermaid
 graph TD;
-  ion-tab-button ==> ion-ripple-effect
+  ion-tab-button --> ion-ripple-effect
   style ion-tab-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

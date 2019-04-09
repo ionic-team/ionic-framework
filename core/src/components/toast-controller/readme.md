@@ -44,9 +44,9 @@ Type: `Promise<HTMLIonToastElement | undefined>`
 
 ```mermaid
 graph TD;
-  ion-toast-controller ==> ion-toast
-  ion-toast ==> ion-button
-  ion-button ==> ion-ripple-effect
+  ion-toast-controller --> ion-toast
+  ion-toast --> ion-button
+  ion-button --> ion-ripple-effect
   style ion-toast-controller fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

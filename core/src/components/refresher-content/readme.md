@@ -22,8 +22,8 @@ The refresher content contains the text, icon and spinner to display during a pu
 
 ```mermaid
 graph TD;
-  ion-refresher-content ==> ion-icon
-  ion-refresher-content ==> ion-spinner
+  ion-refresher-content --> ion-icon
+  ion-refresher-content --> ion-spinner
   style ion-refresher-content fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

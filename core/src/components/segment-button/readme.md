@@ -674,7 +674,7 @@ export default Example;
 
 ```mermaid
 graph TD;
-  ion-segment-button ==> ion-ripple-effect
+  ion-segment-button --> ion-ripple-effect
   style ion-segment-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
