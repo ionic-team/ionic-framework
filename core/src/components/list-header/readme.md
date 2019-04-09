@@ -42,7 +42,7 @@ Unlike ItemDivider, ListHeaders are styled to be stand-out from the rest of the 
 | `--color`      | Color of the list header text |
 
 
-## Dependency Analysys
+## Dependencies
 
 **Used by:** ion-select-popover
 

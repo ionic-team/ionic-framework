@@ -128,7 +128,7 @@ export default Example;
 | `--color` | Color of the spinner |
 
 
-## Dependency Analysys
+## Dependencies
 
 **Used by:** [ion-infinite-scroll-content](../infinite-scroll-content), [ion-loading](../loading), [ion-refresher-content](../refresher-content)
 

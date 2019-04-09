@@ -227,9 +227,10 @@ Type: `Promise<void>`
 | `--width`         | Width of the toast          |
 
 
-## Dependency Analysys
+## Dependencies
 
 **Used by:** [ion-toast-controller](../toast-controller)
+**Depends on:** [ion-button](../button)
 
 ```mermaid
 graph TD;

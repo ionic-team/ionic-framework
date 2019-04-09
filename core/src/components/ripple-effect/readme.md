@@ -44,7 +44,7 @@ Type: `Promise<() => void>`
 
 
 
-## Dependency Analysys
+## Dependencies
 
 **Used by:** [ion-action-sheet](../action-sheet), [ion-alert](../alert), [ion-back-button](../back-button), [ion-button](../button), [ion-chip](../chip), [ion-fab-button](../fab-button), [ion-item](../item), [ion-item-option](../item-option), [ion-menu-button](../menu-button), [ion-segment-button](../segment-button), [ion-tab-button](../tab-button)
 

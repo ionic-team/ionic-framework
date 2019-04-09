@@ -736,8 +736,9 @@ Type: `Promise<void>`
 | `--placeholder-color` | Color of the datetime placeholder |
 
 
-## Dependency Analysys
+## Dependencies
 
+**Depends on:** [ion-picker-controller](../picker-controller)
 
 ```mermaid
 graph TD;

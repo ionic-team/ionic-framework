@@ -146,8 +146,9 @@ export default Example
 | `--transition`           | Transition of the button                |
 
 
-## Dependency Analysys
+## Dependencies
 
+**Depends on:** ion-icon, [ion-ripple-effect](../ripple-effect)
 
 ```mermaid
 graph TD;

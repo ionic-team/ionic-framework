@@ -788,8 +788,9 @@ Type: `Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverE
 | `--padding-top`    | Top padding of the select    |
 
 
-## Dependency Analysys
+## Dependencies
 
+**Depends on:** [ion-action-sheet-controller](../action-sheet-controller), [ion-alert-controller](../alert-controller), [ion-popover-controller](../popover-controller)
 
 ```mermaid
 graph TD;

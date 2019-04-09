@@ -39,8 +39,9 @@ Type: `Promise<HTMLIonModalElement | undefined>`
 
 
 
-## Dependency Analysys
+## Dependencies
 
+**Depends on:** [ion-modal](../modal)
 
 ```mermaid
 graph TD;

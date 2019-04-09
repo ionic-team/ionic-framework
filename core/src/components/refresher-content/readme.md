@@ -17,8 +17,9 @@ The refresher content contains the text, icon and spinner to display during a pu
 | `refreshingText`    | `refreshing-text`    | The text you want to display when performing a refresh    | `string \| undefined`                                                                             | `undefined` |
 
 
-## Dependency Analysys
+## Dependencies
 
+**Depends on:** ion-icon, [ion-spinner](../spinner)
 
 ```mermaid
 graph TD;

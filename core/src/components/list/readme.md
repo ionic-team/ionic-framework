@@ -309,7 +309,7 @@ Type: `Promise<boolean>`
 
 
 
-## Dependency Analysys
+## Dependencies
 
 **Used by:** ion-select-popover
 

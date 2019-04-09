@@ -181,9 +181,10 @@ Type: `Promise<void>`
 | `--width`      | Width of the popover          |
 
 
-## Dependency Analysys
+## Dependencies
 
 **Used by:** [ion-popover-controller](../popover-controller)
+**Depends on:** [ion-backdrop](../backdrop)
 
 ```mermaid
 graph TD;

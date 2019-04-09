@@ -331,9 +331,10 @@ Type: `Promise<void>`
 | `--width`         | Width of the modal                 |
 
 
-## Dependency Analysys
+## Dependencies
 
 **Used by:** [ion-modal-controller](../modal-controller)
+**Depends on:** [ion-backdrop](../backdrop)
 
 ```mermaid
 graph TD;

@@ -55,9 +55,10 @@ Type: `Promise<HTMLIonAlertElement | undefined>`
 
 
 
-## Dependency Analysys
+## Dependencies
 
 **Used by:** [ion-select](../select)
+**Depends on:** [ion-alert](../alert)
 
 ```mermaid
 graph TD;

@@ -38,9 +38,10 @@ Type: `Promise<HTMLIonActionSheetElement | undefined>`
 
 
 
-## Dependency Analysys
+## Dependencies
 
 **Used by:** [ion-select](../select)
+**Depends on:** [ion-action-sheet](../action-sheet)
 
 ```mermaid
 graph TD;

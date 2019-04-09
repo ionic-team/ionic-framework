@@ -280,9 +280,10 @@ Type: `Promise<void>`
 | `--width`         | Width of the loading dialog          |
 
 
-## Dependency Analysys
+## Dependencies
 
 **Used by:** [ion-loading-controller](../loading-controller)
+**Depends on:** [ion-backdrop](../backdrop), [ion-spinner](../spinner)
 
 ```mermaid
 graph TD;

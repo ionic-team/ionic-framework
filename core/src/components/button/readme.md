@@ -272,9 +272,10 @@ export default Example;
 | `--transition`           | Transition of the button                |
 
 
-## Dependency Analysys
+## Dependencies
 
 **Used by:** [ion-toast](../toast)
+**Depends on:** [ion-ripple-effect](../ripple-effect)
 
 ```mermaid
 graph TD;

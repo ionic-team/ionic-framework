@@ -189,8 +189,9 @@ export default Example;
 | `--ripple-color`       | Color of the button ripple effect    |
 
 
-## Dependency Analysys
+## Dependencies
 
+**Depends on:** [ion-ripple-effect](../ripple-effect)
 
 ```mermaid
 graph TD;

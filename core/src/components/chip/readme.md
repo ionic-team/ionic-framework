@@ -174,8 +174,9 @@ export default ChipExample;
 | `--color`      | Color of the chip      |
 
 
-## Dependency Analysys
+## Dependencies
 
+**Depends on:** [ion-ripple-effect](../ripple-effect)
 
 ```mermaid
 graph TD;

@@ -1421,9 +1421,10 @@ Item Inputs
 | `--transition`              | Transition of the item                              |
 
 
-## Dependency Analysys
+## Dependencies
 
 **Used by:** ion-select-popover
+**Depends on:** ion-icon, [ion-ripple-effect](../ripple-effect)
 
 ```mermaid
 graph TD;

@@ -1138,9 +1138,10 @@ Type: `Promise<void>`
 | `--width`      | Width of the alert          |
 
 
-## Dependency Analysys
+## Dependencies
 
 **Used by:** [ion-alert-controller](../alert-controller)
+**Depends on:** [ion-ripple-effect](../ripple-effect), [ion-backdrop](../backdrop)
 
 ```mermaid
 graph TD;

@@ -61,8 +61,9 @@ Type: `Promise<HTMLIonLoadingElement | undefined>`
 
 
 
-## Dependency Analysys
+## Dependencies
 
+**Depends on:** [ion-loading](../loading)
 
 ```mermaid
 graph TD;

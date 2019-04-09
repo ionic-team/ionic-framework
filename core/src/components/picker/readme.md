@@ -105,9 +105,10 @@ Type: `Promise<void>`
 | `--width`          | Width of the picker                    |
 
 
-## Dependency Analysys
+## Dependencies
 
 **Used by:** [ion-picker-controller](../picker-controller)
+**Depends on:** [ion-backdrop](../backdrop), ion-picker-column
 
 ```mermaid
 graph TD;

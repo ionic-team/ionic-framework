@@ -154,7 +154,7 @@ export default Example
 | `ionChange` | Emitted when the value has changed. | `CustomEvent<RadioGroupChangeEventDetail>` |
 
 
-## Dependency Analysys
+## Dependencies
 
 **Used by:** ion-select-popover
 

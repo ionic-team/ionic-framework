@@ -232,8 +232,9 @@ Type: `Promise<void>`
 | `--placeholder-opacity`     | Opacity of the searchbar placeholder     |
 
 
-## Dependency Analysys
+## Dependencies
 
+**Depends on:** ion-icon
 
 ```mermaid
 graph TD;

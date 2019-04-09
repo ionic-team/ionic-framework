@@ -464,8 +464,9 @@ Type: `Promise<boolean>`
 | `--width`      | Width of the menu          |
 
 
-## Dependency Analysys
+## Dependencies
 
+**Depends on:** [ion-backdrop](../backdrop), [ion-menu-controller](../menu-controller)
 
 ```mermaid
 graph TD;

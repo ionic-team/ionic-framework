@@ -58,9 +58,10 @@ Type: `Promise<HTMLIonPopoverElement | undefined>`
 
 
 
-## Dependency Analysys
+## Dependencies
 
 **Used by:** [ion-select](../select)
+**Depends on:** [ion-popover](../popover)
 
 ```mermaid
 graph TD;

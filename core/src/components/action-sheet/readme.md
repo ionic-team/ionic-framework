@@ -341,9 +341,10 @@ Type: `Promise<void>`
 | `--width`                | Width of the action sheet                       |
 
 
-## Dependency Analysys
+## Dependencies
 
 **Used by:** [ion-action-sheet-controller](../action-sheet-controller)
+**Depends on:** [ion-backdrop](../backdrop), ion-icon, [ion-ripple-effect](../ripple-effect)
 
 ```mermaid
 graph TD;

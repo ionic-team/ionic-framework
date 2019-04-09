@@ -143,7 +143,7 @@ Type: `Promise<boolean>`
 
 
 
-## Dependency Analysys
+## Dependencies
 
 **Used by:** [ion-menu](../menu)
 

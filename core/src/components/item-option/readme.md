@@ -38,8 +38,9 @@ action for the item.
 | `--color`      | Color of the item option      |
 
 
-## Dependency Analysys
+## Dependencies
 
+**Depends on:** [ion-ripple-effect](../ripple-effect)
 
 ```mermaid
 graph TD;

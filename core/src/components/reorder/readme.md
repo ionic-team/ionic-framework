@@ -16,8 +16,9 @@ Reorder is a component that allows an item to be dragged to change its order. It
 <!-- Auto Generated Below -->
 
 
-## Dependency Analysys
+## Dependencies
 
+**Depends on:** ion-icon
 
 ```mermaid
 graph TD;

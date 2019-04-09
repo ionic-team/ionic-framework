@@ -211,7 +211,7 @@ export default Example;
 | `--color` | Color of the label |
 
 
-## Dependency Analysys
+## Dependencies
 
 **Used by:** ion-select-popover
 

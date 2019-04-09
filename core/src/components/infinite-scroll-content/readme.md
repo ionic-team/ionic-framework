@@ -82,8 +82,9 @@ export default Example
 | `loadingText`    | `loading-text`    | Optional text to display while loading.           | `string \| undefined`                                                                             | `undefined` |
 
 
-## Dependency Analysys
+## Dependencies
 
+**Depends on:** [ion-spinner](../spinner)
 
 ```mermaid
 graph TD;

@@ -136,7 +136,7 @@ export default Example
 | `--color-checked` | Color of the checked radio |
 
 
-## Dependency Analysys
+## Dependencies
 
 **Used by:** ion-select-popover
 
