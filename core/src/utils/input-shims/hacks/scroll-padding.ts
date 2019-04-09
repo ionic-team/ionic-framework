@@ -27,7 +27,7 @@ function setScrollPadding(input: HTMLElement, keyboardHeight: number) {
     return;
   }
   const hasfixedParent = Boolean(input.closest('[slot=fixed]'));
-  if(hasfixedParent) {
+  if (hasfixedParent) {
     return;
   }
   const el = input.closest('ion-content');
