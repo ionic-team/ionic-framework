@@ -1,20 +1,9 @@
-import {
-  apply,
-  chain,
-  mergeWith,
-  move,
-  Rule,
-  SchematicContext,
-  SchematicsException,
-  template,
-  Tree,
-  url
-} from '@angular-devkit/schematics';
 import { join, Path } from '@angular-devkit/core';
+import { apply, chain, mergeWith, move, Rule, SchematicContext, SchematicsException, template, Tree, url } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
-import { addPackageToPackageJson } from './../utils/package';
 import { addModuleImportToRootModule } from './../utils/ast';
-import { addArchitectBuilder, addStyle, getWorkspace } from './../utils/config';
+import { addArchitectBuilder, addStyle, getWorkspace, addAsset } from './../utils/config';
+import { addPackageToPackageJson } from './../utils/package';
 import { Schema as IonAddOptions } from './schema';
 
 function addIonicAngularToPackageJson(): Rule {
@@ -64,6 +53,18 @@ function addIonicStyles(): Rule {
     ].forEach(entry => {
       addStyle(host, entry);
     });
+    return host;
+  };
+}
+
+function addIonicons(): Rule {
+  return (host: Tree) => {
+    const ioniconsGlob = {
+      glob: '**/*.svg',
+      input: 'node_modules/ionicons/dist/ionicons/svg',
+      output: './svg'
+    };
+    addAsset(host, ioniconsGlob);
     return host;
   };
 }
@@ -119,7 +120,7 @@ export default function ngAdd(options: IonAddOptions): Rule {
 
     const sourcePath = join(project.root as Path, 'src');
     const rootTemplateSource = apply(url('./files/root'), [
-      template({...options}),
+      template({ ...options }),
       move(sourcePath)
     ]);
     return chain([
@@ -129,6 +130,7 @@ export default function ngAdd(options: IonAddOptions): Rule {
       addIonicAngularModuleToAppModule(sourcePath),
       addIonicBuilder(),
       addIonicStyles(),
+      addIonicons(),
       mergeWith(rootTemplateSource),
       // install freshly added dependencies
       installNodeDeps()
