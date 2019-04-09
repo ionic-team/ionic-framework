@@ -307,7 +307,11 @@ export class Input implements ComponentInterface {
     }
   }
 
-  private clearTextInput = () => {
+  private clearTextInput = (ev?: Event) => {
+    if (this.clearInput && !this.readonly && !this.disabled && ev) {
+      ev.preventDefault();
+    }
+
     this.value = '';
   }
 
