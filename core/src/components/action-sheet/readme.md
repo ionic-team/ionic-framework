@@ -341,6 +341,19 @@ Type: `Promise<void>`
 | `--width`                | Width of the action sheet                       |
 
 
+## Dependency Analysys
+
+**Used by:** [ion-action-sheet-controller](./action-sheet-controller)
+
+```mermaid
+graph TD;
+  ion-action-sheet ==> ion-backdrop
+  ion-action-sheet ==> ion-icon
+  ion-action-sheet ==> ion-ripple-effect
+  ion-action-sheet-controller ==> ion-action-sheet
+  style ion-action-sheet fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

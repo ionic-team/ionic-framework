@@ -21,6 +21,7 @@
   "es2015": "dist/esm/index.mjs.js",
   "es2017": "dist/esm/index.mjs.js",
   "jsnext:main": "dist/esm/index.mjs.js",
+  "collection:main": "dist/collection/index.js",
   "types": "dist/types/interface.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "webComponents": "dist/web-components.json",

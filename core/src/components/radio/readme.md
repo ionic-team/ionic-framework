@@ -136,6 +136,16 @@ export default Example
 | `--color-checked` | Color of the checked radio |
 
 
+## Dependency Analysys
+
+**Used by:** ion-select-popover
+
+```mermaid
+graph TD;
+  ion-select-popover ==> ion-radio
+  style ion-radio fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

@@ -154,6 +154,16 @@ export default Example
 | `ionChange` | Emitted when the value has changed. | `CustomEvent<RadioGroupChangeEventDetail>` |
 
 
+## Dependency Analysys
+
+**Used by:** ion-select-popover
+
+```mermaid
+graph TD;
+  ion-select-popover ==> ion-radio-group
+  style ion-radio-group fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

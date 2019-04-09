@@ -6,8 +6,8 @@ export interface Context {
   isServer: boolean;
 }
 
-const context = createContext<Context>();
+const { get, set } = createContext<Context>();
 
-export const getContext = context.get;
+export const getContext = get;
 
-export const setContext = context.set;
+export const setContext = set;

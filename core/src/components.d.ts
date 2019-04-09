@@ -5,7 +5,7 @@
  */
 
 
-import { JSXBase } from '@stencil/core/internal';
+import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import { JSX } from '@stencil/core';
 import {
   ActionSheetButton,
@@ -2581,11 +2581,6 @@ export namespace Components {
     */
     'renderItem'?: (item: any, index: number) => any;
   }
-}
-
-interface HTMLStencilElement extends HTMLElement {
-  componentOnReady(): Promise<this>;
-  forceUpdate(): void;
 }
 
 declare namespace LocalJSX {
@@ -5197,6 +5192,12 @@ declare module "@stencil/core" {
 }
 
 declare global {
+
+  // Adding a global JSX for backcompatibility with legacy dependencies
+  export namespace JSX {
+    export interface Element {}
+  }
+
 
   interface HTMLIonActionSheetElement extends Components.IonActionSheet, HTMLStencilElement {}
   var HTMLIonActionSheetElement: {

@@ -272,6 +272,17 @@ export default Example;
 | `--transition`           | Transition of the button                |
 
 
+## Dependency Analysys
+
+**Used by:** [ion-toast](./toast)
+
+```mermaid
+graph TD;
+  ion-button ==> ion-ripple-effect
+  ion-toast ==> ion-button
+  style ion-button fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

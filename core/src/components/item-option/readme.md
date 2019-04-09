@@ -38,6 +38,15 @@ action for the item.
 | `--color`      | Color of the item option      |
 
 
+## Dependency Analysys
+
+
+```mermaid
+graph TD;
+  ion-item-option ==> ion-ripple-effect
+  style ion-item-option fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

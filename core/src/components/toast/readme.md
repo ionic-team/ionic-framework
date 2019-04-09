@@ -227,6 +227,18 @@ Type: `Promise<void>`
 | `--width`         | Width of the toast          |
 
 
+## Dependency Analysys
+
+**Used by:** [ion-toast-controller](./toast-controller)
+
+```mermaid
+graph TD;
+  ion-toast ==> ion-button
+  ion-button ==> ion-ripple-effect
+  ion-toast-controller ==> ion-toast
+  style ion-toast fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

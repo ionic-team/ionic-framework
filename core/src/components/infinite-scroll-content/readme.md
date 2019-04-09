@@ -82,6 +82,15 @@ export default Example
 | `loadingText`    | `loading-text`    | Optional text to display while loading.           | `string \| undefined`                                                                             | `undefined` |
 
 
+## Dependency Analysys
+
+
+```mermaid
+graph TD;
+  ion-infinite-scroll-content ==> ion-spinner
+  style ion-infinite-scroll-content fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

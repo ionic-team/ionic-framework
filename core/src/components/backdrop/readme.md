@@ -161,6 +161,22 @@ export default Example;
 | `ionBackdropTap` | Emitted when the backdrop is tapped. | `CustomEvent<void>` |
 
 
+## Dependency Analysys
+
+**Used by:** [ion-action-sheet](./action-sheet), [ion-alert](./alert), [ion-loading](./loading), [ion-menu](./menu), [ion-modal](./modal), [ion-picker](./picker), [ion-popover](./popover)
+
+```mermaid
+graph TD;
+  ion-action-sheet ==> ion-backdrop
+  ion-alert ==> ion-backdrop
+  ion-loading ==> ion-backdrop
+  ion-menu ==> ion-backdrop
+  ion-modal ==> ion-backdrop
+  ion-picker ==> ion-backdrop
+  ion-popover ==> ion-backdrop
+  style ion-backdrop fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

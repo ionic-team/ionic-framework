@@ -189,6 +189,15 @@ export default Example;
 | `--ripple-color`       | Color of the button ripple effect    |
 
 
+## Dependency Analysys
+
+
+```mermaid
+graph TD;
+  ion-tab-button ==> ion-ripple-effect
+  style ion-tab-button fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

@@ -331,6 +331,17 @@ Type: `Promise<void>`
 | `--width`         | Width of the modal                 |
 
 
+## Dependency Analysys
+
+**Used by:** [ion-modal-controller](./modal-controller)
+
+```mermaid
+graph TD;
+  ion-modal ==> ion-backdrop
+  ion-modal-controller ==> ion-modal
+  style ion-modal fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

@@ -1421,6 +1421,18 @@ Item Inputs
 | `--transition`              | Transition of the item                              |
 
 
+## Dependency Analysys
+
+**Used by:** ion-select-popover
+
+```mermaid
+graph TD;
+  ion-item ==> ion-icon
+  ion-item ==> ion-ripple-effect
+  ion-select-popover ==> ion-item
+  style ion-item fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

@@ -23,6 +23,17 @@ Menu Button is component that automatically creates the icon and functionality t
 | `--color` | Color of the menu button |
 
 
+## Dependency Analysys
+
+
+```mermaid
+graph TD;
+  ion-menu-button ==> ion-menu-toggle
+  ion-menu-button ==> ion-icon
+  ion-menu-button ==> ion-ripple-effect
+  style ion-menu-button fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

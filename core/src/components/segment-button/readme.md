@@ -669,6 +669,15 @@ export default Example;
 | `--transition`              | Transition of the segment button                                    |
 
 
+## Dependency Analysys
+
+
+```mermaid
+graph TD;
+  ion-segment-button ==> ion-ripple-effect
+  style ion-segment-button fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

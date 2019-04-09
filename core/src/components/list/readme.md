@@ -309,6 +309,16 @@ Type: `Promise<boolean>`
 
 
 
+## Dependency Analysys
+
+**Used by:** ion-select-popover
+
+```mermaid
+graph TD;
+  ion-select-popover ==> ion-list
+  style ion-list fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

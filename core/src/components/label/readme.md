@@ -211,6 +211,16 @@ export default Example;
 | `--color` | Color of the label |
 
 
+## Dependency Analysys
+
+**Used by:** ion-select-popover
+
+```mermaid
+graph TD;
+  ion-select-popover ==> ion-label
+  style ion-label fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

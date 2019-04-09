@@ -105,6 +105,18 @@ Type: `Promise<void>`
 | `--width`          | Width of the picker                    |
 
 
+## Dependency Analysys
+
+**Used by:** [ion-picker-controller](./picker-controller)
+
+```mermaid
+graph TD;
+  ion-picker ==> ion-backdrop
+  ion-picker ==> ion-picker-column
+  ion-picker-controller ==> ion-picker
+  style ion-picker fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

@@ -143,6 +143,16 @@ Type: `Promise<boolean>`
 
 
 
+## Dependency Analysys
+
+**Used by:** [ion-menu](./menu)
+
+```mermaid
+graph TD;
+  ion-menu ==> ion-menu-controller
+  style ion-menu-controller fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

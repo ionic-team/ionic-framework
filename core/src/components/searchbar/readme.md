@@ -232,6 +232,15 @@ Type: `Promise<void>`
 | `--placeholder-opacity`     | Opacity of the searchbar placeholder     |
 
 
+## Dependency Analysys
+
+
+```mermaid
+graph TD;
+  ion-searchbar ==> ion-icon
+  style ion-searchbar fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

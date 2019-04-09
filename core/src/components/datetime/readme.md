@@ -736,6 +736,18 @@ Type: `Promise<void>`
 | `--placeholder-color` | Color of the datetime placeholder |
 
 
+## Dependency Analysys
+
+
+```mermaid
+graph TD;
+  ion-datetime ==> ion-picker-controller
+  ion-picker-controller ==> ion-picker
+  ion-picker ==> ion-backdrop
+  ion-picker ==> ion-picker-column
+  style ion-datetime fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
