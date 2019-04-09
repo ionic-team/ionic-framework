@@ -272,17 +272,13 @@ export class Toast implements ComponentInterface, OverlayInterface {
       'toast-wrapper': true,
       [`toast-${this.position}`]: true
     };
-    const contentClass = {
-      'toast-content': true,
-      [`toast-content-no-padding-start`]: startButtons.length > 0,
-      [`toast-content-no-padding-end`]: endButtons.length > 0
-    };
+
     return (
       <div class={wrapperClass}>
         <div class="toast-container">
           {this.renderButtons(startButtons, 'start')}
 
-          <div class={contentClass}>
+          <div class="toast-content">
             {this.header !== undefined &&
               <div class="toast-header">{this.header}</div>
             }

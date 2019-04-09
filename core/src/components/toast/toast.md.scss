@@ -27,12 +27,8 @@
   z-index: $z-index-overlay-wrapper;
 }
 
-.toast-content.toast-content-no-padding-start {
-  @include padding($toast-md-content-padding-top, $toast-md-content-padding-end, $toast-md-content-padding-bottom, 0);
-}
-
-.toast-content-no-padding-end {
-  @include padding($toast-md-content-padding-top, 0, $toast-md-content-padding-bottom, $toast-md-content-padding-start);
+.toast-content {
+  @include padding($toast-md-content-padding-top, $toast-md-content-padding-end, $toast-md-content-padding-bottom, $toast-md-content-padding-start);
 }
 
 .toast-header {

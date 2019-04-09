@@ -45,12 +45,8 @@
   bottom: 0;
 }
 
-.toast-content.toast-content-no-padding-start {
-  @include padding($toast-ios-content-padding-top, $toast-ios-content-padding-end, $toast-ios-content-padding-bottom, 0);
-}
-
-.toast-content-no-padding-end {
-  @include padding($toast-ios-content-padding-top, 0, $toast-ios-content-padding-bottom, $toast-ios-content-padding-start);
+.toast-content {
+  @include padding($toast-ios-content-padding-top, $toast-ios-content-padding-end, $toast-ios-content-padding-bottom, $toast-ios-content-padding-start);
 }
 
 .toast-header {
