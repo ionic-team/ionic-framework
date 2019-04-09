@@ -4,7 +4,7 @@
 
 Please check if your PR fulfills the following requirements:
 - [ ] Tests for the changes have been added (for bug fixes / features)
-- [ ] Docs have been added / updated (for bug fixes / features)
+- [ ] Docs have been reviewed and added / updated if needed (for bug fixes / features)
 - [ ] Build (`npm run build`) was run locally and any changes were pushed
 - [ ] Lint (`npm run lint`) has passed locally and any fixes were made for failures
 
