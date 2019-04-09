@@ -18,6 +18,14 @@ export class Slide implements ComponentInterface {
     this.ionSlideChanged.emit();
   }
 
+  render() {
+    return (
+      <div class="swiper-zoom-container">
+        <slot></slot>
+      </div>
+    );
+  }
+
   hostData() {
     return {
       class: {
