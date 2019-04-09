@@ -102,7 +102,7 @@ export class StackController {
       }
       const view = views[views.length - deep - 1];
       let url = view.url;
-      
+
       const viewSavedData = view.savedData;
       if (viewSavedData) {
         const primaryOutlet = viewSavedData.get('primary');
@@ -110,7 +110,7 @@ export class StackController {
           primaryOutlet &&
           primaryOutlet.route &&
           primaryOutlet.route._routerState &&
-          primaryOutlet.route._routerState.snapshot && 
+          primaryOutlet.route._routerState.snapshot &&
           primaryOutlet.route._routerState.snapshot.url
         ) {
           url = viewSavedData.get('primary').route._routerState.snapshot.url;
