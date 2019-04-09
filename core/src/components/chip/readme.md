@@ -176,8 +176,10 @@ export default ChipExample;
 
 ## Dependencies
 
-**Depends on:** [ion-ripple-effect](../ripple-effect)
+#### Depends on
+ - [ion-ripple-effect](../ripple-effect)
 
+#### Graph
 ```mermaid
 graph TD;
   ion-chip --> ion-ripple-effect

@@ -63,8 +63,10 @@ Type: `Promise<HTMLIonLoadingElement | undefined>`
 
 ## Dependencies
 
-**Depends on:** [ion-loading](../loading)
+#### Depends on
+ - [ion-loading](../loading)
 
+#### Graph
 ```mermaid
 graph TD;
   ion-loading-controller --> ion-loading

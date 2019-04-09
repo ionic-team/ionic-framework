@@ -234,8 +234,10 @@ Type: `Promise<void>`
 
 ## Dependencies
 
-**Depends on:** ion-icon
+#### Depends on
+ - ion-icon
 
+#### Graph
 ```mermaid
 graph TD;
   ion-searchbar --> ion-icon

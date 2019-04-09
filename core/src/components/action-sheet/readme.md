@@ -343,9 +343,15 @@ Type: `Promise<void>`
 
 ## Dependencies
 
-**Used by:** [ion-action-sheet-controller](../action-sheet-controller)
-**Depends on:** [ion-backdrop](../backdrop), ion-icon, [ion-ripple-effect](../ripple-effect)
+#### Used by
+ - [ion-action-sheet-controller](../action-sheet-controller)
 
+#### Depends on
+ - [ion-backdrop](../backdrop)
+ - ion-icon
+ - [ion-ripple-effect](../ripple-effect)
+
+#### Graph
 ```mermaid
 graph TD;
   ion-action-sheet --> ion-backdrop

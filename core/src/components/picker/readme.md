@@ -107,9 +107,14 @@ Type: `Promise<void>`
 
 ## Dependencies
 
-**Used by:** [ion-picker-controller](../picker-controller)
-**Depends on:** [ion-backdrop](../backdrop), ion-picker-column
+#### Used by
+ - [ion-picker-controller](../picker-controller)
 
+#### Depends on
+ - [ion-backdrop](../backdrop)
+ - ion-picker-column
+
+#### Graph
 ```mermaid
 graph TD;
   ion-picker --> ion-backdrop

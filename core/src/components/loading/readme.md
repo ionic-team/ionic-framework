@@ -282,9 +282,14 @@ Type: `Promise<void>`
 
 ## Dependencies
 
-**Used by:** [ion-loading-controller](../loading-controller)
-**Depends on:** [ion-backdrop](../backdrop), [ion-spinner](../spinner)
+#### Used by
+ - [ion-loading-controller](../loading-controller)
 
+#### Depends on
+ - [ion-backdrop](../backdrop)
+ - [ion-spinner](../spinner)
+
+#### Graph
 ```mermaid
 graph TD;
   ion-loading --> ion-backdrop

@@ -84,8 +84,10 @@ export default Example
 
 ## Dependencies
 
-**Depends on:** [ion-spinner](../spinner)
+#### Depends on
+ - [ion-spinner](../spinner)
 
+#### Graph
 ```mermaid
 graph TD;
   ion-infinite-scroll-content --> ion-spinner

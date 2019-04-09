@@ -183,9 +183,13 @@ Type: `Promise<void>`
 
 ## Dependencies
 
-**Used by:** [ion-popover-controller](../popover-controller)
-**Depends on:** [ion-backdrop](../backdrop)
+#### Used by
+ - [ion-popover-controller](../popover-controller)
 
+#### Depends on
+ - [ion-backdrop](../backdrop)
+
+#### Graph
 ```mermaid
 graph TD;
   ion-popover --> ion-backdrop

@@ -163,8 +163,16 @@ export default Example;
 
 ## Dependencies
 
-**Used by:** [ion-action-sheet](../action-sheet), [ion-alert](../alert), [ion-loading](../loading), [ion-menu](../menu), [ion-modal](../modal), [ion-picker](../picker), [ion-popover](../popover)
+#### Used by
+ - [ion-action-sheet](../action-sheet)
+ - [ion-alert](../alert)
+ - [ion-loading](../loading)
+ - [ion-menu](../menu)
+ - [ion-modal](../modal)
+ - [ion-picker](../picker)
+ - [ion-popover](../popover)
 
+#### Graph
 ```mermaid
 graph TD;
   ion-action-sheet --> ion-backdrop

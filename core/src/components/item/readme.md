@@ -1423,9 +1423,14 @@ Item Inputs
 
 ## Dependencies
 
-**Used by:** ion-select-popover
-**Depends on:** ion-icon, [ion-ripple-effect](../ripple-effect)
+#### Used by
+ - ion-select-popover
 
+#### Depends on
+ - ion-icon
+ - [ion-ripple-effect](../ripple-effect)
+
+#### Graph
 ```mermaid
 graph TD;
   ion-item --> ion-icon

@@ -738,8 +738,10 @@ Type: `Promise<void>`
 
 ## Dependencies
 
-**Depends on:** [ion-picker-controller](../picker-controller)
+#### Depends on
+ - [ion-picker-controller](../picker-controller)
 
+#### Graph
 ```mermaid
 graph TD;
   ion-datetime --> ion-picker-controller

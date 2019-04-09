@@ -790,8 +790,12 @@ Type: `Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverE
 
 ## Dependencies
 
-**Depends on:** [ion-action-sheet-controller](../action-sheet-controller), [ion-alert-controller](../alert-controller), [ion-popover-controller](../popover-controller)
+#### Depends on
+ - [ion-action-sheet-controller](../action-sheet-controller)
+ - [ion-alert-controller](../alert-controller)
+ - [ion-popover-controller](../popover-controller)
 
+#### Graph
 ```mermaid
 graph TD;
   ion-select --> ion-action-sheet-controller

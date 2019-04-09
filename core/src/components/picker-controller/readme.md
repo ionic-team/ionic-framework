@@ -40,9 +40,13 @@ Type: `Promise<HTMLIonPickerElement | undefined>`
 
 ## Dependencies
 
-**Used by:** [ion-datetime](../datetime)
-**Depends on:** [ion-picker](../picker)
+#### Used by
+ - [ion-datetime](../datetime)
 
+#### Depends on
+ - [ion-picker](../picker)
+
+#### Graph
 ```mermaid
 graph TD;
   ion-picker-controller --> ion-picker

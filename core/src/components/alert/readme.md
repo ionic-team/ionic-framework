@@ -1140,9 +1140,14 @@ Type: `Promise<void>`
 
 ## Dependencies
 
-**Used by:** [ion-alert-controller](../alert-controller)
-**Depends on:** [ion-ripple-effect](../ripple-effect), [ion-backdrop](../backdrop)
+#### Used by
+ - [ion-alert-controller](../alert-controller)
 
+#### Depends on
+ - [ion-ripple-effect](../ripple-effect)
+ - [ion-backdrop](../backdrop)
+
+#### Graph
 ```mermaid
 graph TD;
   ion-alert --> ion-ripple-effect

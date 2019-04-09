@@ -19,8 +19,11 @@ The refresher content contains the text, icon and spinner to display during a pu
 
 ## Dependencies
 
-**Depends on:** ion-icon, [ion-spinner](../spinner)
+#### Depends on
+ - ion-icon
+ - [ion-spinner](../spinner)
 
+#### Graph
 ```mermaid
 graph TD;
   ion-refresher-content --> ion-icon

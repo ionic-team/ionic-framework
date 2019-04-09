@@ -466,8 +466,11 @@ Type: `Promise<boolean>`
 
 ## Dependencies
 
-**Depends on:** [ion-backdrop](../backdrop), [ion-menu-controller](../menu-controller)
+#### Depends on
+ - [ion-backdrop](../backdrop)
+ - [ion-menu-controller](../menu-controller)
 
+#### Graph
 ```mermaid
 graph TD;
   ion-menu --> ion-backdrop

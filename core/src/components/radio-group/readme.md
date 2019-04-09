@@ -156,8 +156,10 @@ export default Example
 
 ## Dependencies
 
-**Used by:** ion-select-popover
+#### Used by
+ - ion-select-popover
 
+#### Graph
 ```mermaid
 graph TD;
   ion-select-popover --> ion-radio-group

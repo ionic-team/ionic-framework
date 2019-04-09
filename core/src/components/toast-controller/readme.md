@@ -41,8 +41,10 @@ Type: `Promise<HTMLIonToastElement | undefined>`
 
 ## Dependencies
 
-**Depends on:** [ion-toast](../toast)
+#### Depends on
+ - [ion-toast](../toast)
 
+#### Graph
 ```mermaid
 graph TD;
   ion-toast-controller --> ion-toast

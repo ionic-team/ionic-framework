@@ -311,8 +311,10 @@ Type: `Promise<boolean>`
 
 ## Dependencies
 
-**Used by:** ion-select-popover
+#### Used by
+ - ion-select-popover
 
+#### Graph
 ```mermaid
 graph TD;
   ion-select-popover --> ion-list
