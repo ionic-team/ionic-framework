@@ -1,4 +1,4 @@
-import { E2EPage } from '@stencil/core/testing';
+import { E2EElement, E2EPage } from '@stencil/core/testing';
 import { ElementHandle } from 'puppeteer';
 
 export function generateE2EUrl(component: string, type: string, rtl = false): string {
