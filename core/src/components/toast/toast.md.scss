@@ -47,6 +47,15 @@
 // Material Design Toast Button
 // --------------------------------------------------
 
+
+.toast-button-group-start {
+  @include margin(null, null, null, 8px);
+}
+
+.toast-button-group-end {
+  @include margin(null, 8px, null, null);
+}
+
 .toast-button {
   @include padding($toast-md-button-padding-top, $toast-md-button-padding-end, $toast-md-button-padding-bottom, $toast-md-button-padding-start);
 
