@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Toast - Buttons</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Toast - Buttons</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content id="content" padding>
+      <!-- Old way using close button properties -->
+      <ion-button id="closeProp" expand="block" onclick="presentClosePropToast()">
+        Close Button Property
+      </ion-button>
+
+      <!-- New way using array of buttons -->
+      <ion-button id="closeArray" expand="block" onclick="presentCloseArrayToast()">
+        Close Button Array
+      </ion-button>
+
+      <ion-button id="twoButtons" expand="block" onclick="presentToastWithTwoButtons()">
+        Two Buttons
+      </ion-button>
+
+      <ion-button id="multipleButtons" expand="block" onclick="presentToastWithMultipleButtons()">
+        Multiple Buttons
+      </ion-button>
+
+      <ion-button id="longButton" expand="block" onclick="presentToastWithLongButton()">
+        Really Long Button
+      </ion-button>
+
+      <ion-toast-controller></ion-toast-controller>
+    </ion-content>
+
+  </ion-app>
+
+  <script>
+    window.addEventListener('ionToastDidDismiss', function (e) { console.log('didDismiss', e) })
+    window.addEventListener('ionToastWillDismiss', function (e) { console.log('willDismiss', e) })
+
+    // Deprecated properties, use buttons array instead
+    async function presentClosePropToast() {
+      const opts = {
+        message: 'Are you sure you want to delete this?',
+        showCloseButton: true,
+        closeButtonText: 'Delete'
+      };
+
+      return await presentToastWithOptions(opts);
+    }
+
+    // New way to do the above in presentClosePropToast()
+    async function presentCloseArrayToast() {
+      const opts = {
+        message: 'Are you sure you want to delete this?',
+        buttons: [{
+          text: 'Delete',
+          role: 'cancel'
+        }]
+      };
+
+      return await presentToastWithOptions(opts);
+    }
+
+    async function presentToastWithTwoButtons() {
+      const opts = {
+        message: 'Can\'t send photo. Retry in 5 seconds.',
+        buttons: [
+          {
+            text: 'retry',
+            handler: () => {
+              console.log('retry button clicked!')
+              return false;
+            }
+          },
+          {
+            icon: 'close',
+            role: 'cancel',
+            handler: () => {
+              console.log('close button clicked!');
+            }
+          }
+        ]
+      };
+
+      return await presentToastWithOptions(opts);
+    }
+
+    async function presentToastWithMultipleButtons() {
+      const opts = {
+        message: 'Error.',
+        buttons: [
+          {
+            text: 'undo',
+            side: 'start',
+            handler: () => {
+              console.log('undo button clicked!')
+            }
+          },
+          {
+            text: 'retry',
+            handler: () => {
+              console.log('retry button clicked!')
+              return false;
+            }
+          },
+          {
+            icon: 'close',
+            role: 'cancel',
+            handler: () => {
+              console.log('close button clicked!');
+            }
+          }
+        ]
+      };
+
+      return await presentToastWithOptions(opts);
+    }
+
+    async function presentToastWithLongButton() {
+      const opts = {
+        message: 'This item already has the label "travel". You can add a new label.',
+        buttons: [
+          {
+            text: 'Add a New Label',
+            handler: () => {
+              console.log('long button clicked!')
+            }
+          }
+        ]
+      };
+
+      return await presentToastWithOptions(opts);
+    }
+
+    async function presentToastWithOptions(opts) {
+      const toastController = document.querySelector('ion-toast-controller');
+      await toastController.componentOnReady();
+      const toastElement = await toastController.create(opts);
+      return await toastElement.present();
+    }
+  </script>
+
+</body>
+
+</html>
