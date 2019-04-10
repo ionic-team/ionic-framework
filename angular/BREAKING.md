@@ -182,13 +182,14 @@ These have been renamed to the following, and moved from the button element to t
 
 In addition, several sets of mutually exclusive boolean attributes have been combined into a single string attribute.
 
-The `small` and `large` attributes are now combined under the `size` attribute. The `clear`, `outline`, and `solid` attributes have been combined under `fill`. And, lastly, the `full` and `block` attributes have been combined under `expand`.
+The `small` and `large` attributes are now combined under the `size` attribute. The `clear`, `outline`, and `solid` attributes have been combined under `fill`. The `full` and `block` attributes have been combined under `expand`. And, lastly, the `round` attribute is now used under `shape`.
 
 | Old Property                | New Property | Property Behavior           |
 | --------------------------- | ------------ | --------------------------- |
 | `small`, `large`            | `size`       | Sets the button size.       |
 | `clear`, `outline`, `solid` | `fill`       | Sets the button fill style. |
 | `full`, `block`             | `expand`     | Sets the button width.      |
+| `round`                     | `shape`      | Sets the button shape.      |
 
 
 **Old Usage Example:**
@@ -225,6 +226,10 @@ The `small` and `large` attributes are now combined under the `size` attribute. 
 <ion-button full>
   Full-width Button
 </ion-button>
+
+<ion-button round>
+  Round Button
+</ion-button>
 ```
 
 **New Usage Example:**
@@ -250,6 +255,10 @@ The `small` and `large` attributes are now combined under the `size` attribute. 
 
 <ion-button expand="full">
   Full-width Button
+</ion-button>
+
+<ion-button shape="round">
+  Round Button
 </ion-button>
 ```
 
@@ -1065,11 +1074,11 @@ async openLoading() {
   let loading = this.loadingCtrl.create({
     content: 'Loading...'
   });
-  
+
   await loading.present();
-  
+
   const { role, data } = await loading.onDidDismiss();
-    
+
   console.log('Loading dismissed!');
 }
 ```

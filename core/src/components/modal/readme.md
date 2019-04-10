@@ -8,9 +8,9 @@ A Modal is a dialog that appears on top of the app's content, and must be dismis
 Modals can be created using a [Modal Controller](../modal-controller). They can be customized by passing modal options in the modal controller's create method.
 
 
-### Passing paramaters
+### Passing parameters
 
-When a modal is created, paramaters might be passed to the newly created modal:
+When a modal is created, parameters might be passed to the newly created modal:
 
 ```ts
 // Create a modal using MyModalComponent with some initial data
@@ -53,7 +53,6 @@ modalController.dismiss({
 })
 ```
 
-
 <!-- Auto Generated Below -->
 
 
@@ -84,7 +83,7 @@ export class ModalExample {
 ```
 
 ```typescript
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavParams } from '@ionic/angular';
 
 @Component({
@@ -100,6 +99,37 @@ export class ModalExample {
   }
 
 }
+```
+
+#### Lazy Loading
+
+When lazy loading a modal, it's important to note that the modal will not be loaded when it is opened, but rather when the module that imports the modal's module is loaded.
+
+For example, say there exists a `CalendarComponent` and an `EventModal`. The modal is presented by clicking a button in the `CalendarComponent`. In Angular, the `EventModalModule` would need to be included in the `CalendarComponentModule` since the modal is created in the `CalendarComponent`:
+
+```typescript
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+
+import { CalendarComponent } from './calendar.component';
+import { EventModalModule } from '../modals/event/event.module';
+
+@NgModule({
+    declarations: [
+        CalendarComponent
+    ],
+    imports: [
+      IonicModule,
+      CommonModule,
+      EventModalModule
+    ],
+    exports: [
+      CalendarComponent
+    ]
+})
+
+export class CalendarComponentModule {}
 ```
 
 
