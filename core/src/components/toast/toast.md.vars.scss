@@ -74,3 +74,12 @@ $toast-md-button-text-transform:                   uppercase !default;
 
 /// @prop - Text color of the cancel toast button
 $toast-md-button-cancel-text-color:                $background-color-step-100 !default;
+
+/// @prop - Opacity of the toast button background on hover
+$toast-md-button-opacity-hover:                    0.08 !default;
+
+/// @prop - Background color of the toast button on hover
+$toast-md-button-background-color-hover:           ion-color(primary, base, $toast-md-button-opacity-hover) !default;
+
+/// @prop - Background color of the cancel toast button on hover
+$toast-md-button-cancel-background-color-hover:    rgba($background-color-rgb, $toast-md-button-opacity-hover) !default;

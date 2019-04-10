@@ -79,3 +79,16 @@
 .toast-button-cancel {
   color: $toast-md-button-cancel-text-color;
 }
+
+// Material Design Toast Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  .toast-button:hover {
+    background-color: $toast-md-button-background-color-hover;
+  }
+
+  .toast-button-cancel:hover {
+    background-color: $toast-md-button-cancel-background-color-hover;
+  }
+}

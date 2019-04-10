@@ -134,3 +134,12 @@
   align-items: center;
 }
 
+
+// Toast Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  .toast-button:hover {
+    cursor: pointer;
+  }
+}

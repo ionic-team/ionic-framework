@@ -80,3 +80,13 @@
 .toast-button.activated {
   opacity: $toast-ios-button-opacity-activated;
 }
+
+
+// iOS Toast Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  .toast-button:hover {
+    opacity: .6;
+  }
+}
