@@ -71,3 +71,6 @@ $toast-md-button-background-color:                 transparent !default;
 
 /// @prop - Text transform of the toast button
 $toast-md-button-text-transform:                   uppercase !default;
+
+/// @prop - Text color of the cancel toast button
+$toast-md-button-cancel-text-color:                $background-color-step-100 !default;

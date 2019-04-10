@@ -184,7 +184,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
     if (this.showCloseButton) {
       buttons.push({
         text: this.closeButtonText || 'Close',
-        side: 'end',
         handler: () => this.dismiss(undefined, 'cancel')
       });
     }
@@ -234,14 +233,14 @@ export class Toast implements ComponentInterface, OverlayInterface {
     };
   }
 
-  renderButtons(buttons: ToastButton[], slot: 'start' | 'end') {
+  renderButtons(buttons: ToastButton[], side: 'start' | 'end') {
     if (buttons.length === 0) {
       return;
     }
 
     const buttonGroupsClasses = {
       'toast-button-group': true,
-      [`toast-button-group-${slot}`]: true
+      [`toast-button-group-${side}`]: true
     };
     return (
       <div class={buttonGroupsClasses}>
@@ -266,7 +265,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   render() {
     const allButtons = this.getButtons();
     const startButtons = allButtons.filter(b => b.side === 'start');
-    const endButtons = allButtons.filter(b => b.side === 'end');
+    const endButtons = allButtons.filter(b => b.side !== 'start');
 
     const wrapperClass = {
       'toast-wrapper': true,
@@ -297,6 +296,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
 function buttonClass(button: ToastButton): CssClassMap {
   return {
     'toast-button': true,
+    [`toast-button-${button.role}`]: button.role !== undefined,
     'ion-focusable': true,
     'ion-activatable': true,
     ...getClassMap(button.cssClass)
