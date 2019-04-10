@@ -113,7 +113,7 @@ export class StackController {
           primaryOutlet.route._routerState.snapshot &&
           primaryOutlet.route._routerState.snapshot.url
         ) {
-          url = viewSavedData.get('primary').route._routerState.snapshot.url;
+          url = primaryOutlet.route._routerState.snapshot.url;
         }
       }
 
