@@ -368,13 +368,13 @@ export class Input implements ComponentInterface {
           onFocus={this.onFocus}
           onKeyDown={this.onKeydown}
         />
-        (this.clearInput && !this.readonly && !this.disabled) && <button
+        {(this.clearInput && !this.readonly && !this.disabled) && <button
           type="button"
           class="input-clear-icon"
           tabindex="-1"
           onTouchStart={this.clearTextInput}
           onMouseDown={this.clearTextInput}
-        />
+        />}
       </Host>
     );
   }
