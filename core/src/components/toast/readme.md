@@ -47,16 +47,20 @@ export class ToastExample {
     const toast = await this.toastController.create({
       header: 'Toast header',
       message: 'Click to Close',
-      showCloseButton: true,
       position: 'top',
-      closeButtonText: 'Done',
       buttons: [
         {
-          slot: 'start',
+          side: 'start',
           icon: 'star',
-          text: 'Fave',
+          text: 'Favorite',
           handler: () => {
-            console.log('favorite clicked');
+            console.log('Favorite clicked');
+          }
+        }, {
+          text: 'Done',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
           }
         }
       ]
@@ -88,21 +92,26 @@ async function presentToastWithOptions() {
 
   const toast = await toastController.create({
     header: 'Toast header',
-      message: 'Click to Close',
-      showCloseButton: true,
-      position: 'top',
-      closeButtonText: 'Done',
-      buttons: [
-        {
-          slot: 'start',
-          icon: 'star',
-          text: 'Fave',
-          handler: () => {
-            console.log('favorite clicked');
-          }
+    message: 'Click to Close',
+    position: 'top',
+    buttons: [
+      {
+        side: 'start',
+        icon: 'star',
+        text: 'Favorite',
+        handler: () => {
+          console.log('Favorite clicked');
         }
-      ]
+      }, {
+        text: 'Done',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }
+    ]
   });
+
   return await toast.present();
 }
 ```
@@ -144,9 +153,21 @@ export class Toast extends Component<Props, State> {
         isOpen={this.state.showToast2}
         onDidDismiss={() => this.setState(() => ({ showToast2: false }))}
         message='Click to Close'
-        showCloseButton={true}
         position='top'
-        closeButtonText='Done'
+        buttons={[{
+          side: 'start',
+          icon: 'star',
+          text: 'Favorite',
+          handler: () => {
+            console.log('Favorite clicked');
+          }
+        }, {
+          text: 'Done',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }]}
       >
       </IonToast>
     );

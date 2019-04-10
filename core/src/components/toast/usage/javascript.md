@@ -16,21 +16,26 @@ async function presentToastWithOptions() {
 
   const toast = await toastController.create({
     header: 'Toast header',
-      message: 'Click to Close',
-      showCloseButton: true,
-      position: 'top',
-      closeButtonText: 'Done',
-      buttons: [
-        {
-          slot: 'start',
-          icon: 'star',
-          text: 'Fave',
-          handler: () => {
-            console.log('favorite clicked');
-          }
+    message: 'Click to Close',
+    position: 'top',
+    buttons: [
+      {
+        side: 'start',
+        icon: 'star',
+        text: 'Favorite',
+        handler: () => {
+          console.log('Favorite clicked');
         }
-      ]
+      }, {
+        text: 'Done',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }
+    ]
   });
+
   return await toast.present();
 }
 ```

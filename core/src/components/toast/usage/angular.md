@@ -23,16 +23,20 @@ export class ToastExample {
     const toast = await this.toastController.create({
       header: 'Toast header',
       message: 'Click to Close',
-      showCloseButton: true,
       position: 'top',
-      closeButtonText: 'Done',
       buttons: [
         {
-          slot: 'start',
+          side: 'start',
           icon: 'star',
-          text: 'Fave',
+          text: 'Favorite',
           handler: () => {
-            console.log('favorite clicked');
+            console.log('Favorite clicked');
+          }
+        }, {
+          text: 'Done',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
           }
         }
       ]
