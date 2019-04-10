@@ -255,7 +255,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
                 />}
               {b.text}
             </div>
-            {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+            {this.mode === 'md' && <ion-ripple-effect type={b.icon !== undefined && b.text === undefined ? 'unbounded' : 'bounded'}></ion-ripple-effect>}
           </button>
         )}
       </div>
@@ -296,6 +296,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
 function buttonClass(button: ToastButton): CssClassMap {
   return {
     'toast-button': true,
+    'toast-button-icon-only': button.icon !== undefined && button.text === undefined,
     [`toast-button-${button.role}`]: button.role !== undefined,
     'ion-focusable': true,
     'ion-activatable': true,
