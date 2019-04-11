@@ -101,7 +101,23 @@ export class StackController {
         return Promise.resolve(false);
       }
       const view = views[views.length - deep - 1];
-      return this.navCtrl.navigateBack(view.url).then(() => true);
+      let url = view.url;
+
+      const viewSavedData = view.savedData;
+      if (viewSavedData) {
+        const primaryOutlet = viewSavedData.get('primary');
+        if (
+          primaryOutlet &&
+          primaryOutlet.route &&
+          primaryOutlet.route._routerState &&
+          primaryOutlet.route._routerState.snapshot &&
+          primaryOutlet.route._routerState.snapshot.url
+        ) {
+          url = primaryOutlet.route._routerState.snapshot.url;
+        }
+      }
+
+      return this.navCtrl.navigateBack(url).then(() => true);
     });
   }
 

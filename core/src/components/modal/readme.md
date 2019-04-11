@@ -8,9 +8,9 @@ A Modal is a dialog that appears on top of the app's content, and must be dismis
 Modals can be created using a [Modal Controller](../modal-controller). They can be customized by passing modal options in the modal controller's create method.
 
 
-### Passing paramaters
+### Passing parameters
 
-When a modal is created, paramaters might be passed to the newly created modal:
+When a modal is created, parameters might be passed to the newly created modal:
 
 ```ts
 // Create a modal using MyModalComponent with some initial data
@@ -83,7 +83,7 @@ export class ModalExample {
 ```
 
 ```typescript
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavParams } from '@ionic/angular';
 
 @Component({
