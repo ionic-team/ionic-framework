@@ -21,7 +21,6 @@ By default, Ionic ships with the slide animation effect built in. Custom animati
 
 ```typescript
   const slidesOpts = {
-    effect: 'fade',
     on: {
       beforeInit() {
         const swiper = this;
