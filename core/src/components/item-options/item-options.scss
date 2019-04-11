@@ -77,6 +77,8 @@ ion-item-options {
 
   ion-item-options {
     display: flex;
+
+    visibility: hidden;
   }
 
   &.item-sliding-active-options-start .item-options-start,
@@ -84,10 +86,5 @@ ion-item-options {
     width: 100%;
 
     visibility: visible;
-  }
-
-  &.item-sliding-active-options-end .item-options-start,
-  &.item-sliding-active-options-start .item-options-end {
-    display: none;
   }
 }
