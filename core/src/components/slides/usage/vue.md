@@ -20,7 +20,7 @@
   @Component()
   export default class SelectExample extends Vue {
     slideOpts = {
-      effect: 'slide'
+      initialSlide: 1
     };
   }
 </script>

@@ -18,6 +18,6 @@
 ```javascript
 var slides = document.querySelector('ion-slides');
 slides.options = {
-  effect: 'slide'
+  initialSlide: 1
 }
 ```

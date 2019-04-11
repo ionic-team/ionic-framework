@@ -113,7 +113,7 @@ import { Component } from '@angular/core';
 })
 export class SlideExample {
   slideOpts = {
-    effect: 'slide'
+    initialSlide: 1
   };
   constructor() {}
 }
@@ -142,7 +142,7 @@ export class SlideExample {
 ```javascript
 var slides = document.querySelector('ion-slides');
 slides.options = {
-  effect: 'slide'
+  initialSlide: 1
 }
 ```
 
@@ -155,7 +155,7 @@ import React from 'react';
 import { IonSlides, IonSlide } from '@ionic/react';
 
 const slideOpts = {
-  effect: 'slide'
+  initialSlide: 1
 };
 
 const Example: React.SFC<{}> = () => (
@@ -200,7 +200,7 @@ export default Example;
   @Component()
   export default class SelectExample extends Vue {
     slideOpts = {
-      effect: 'slide'
+      initialSlide: 1
     };
   }
 </script>

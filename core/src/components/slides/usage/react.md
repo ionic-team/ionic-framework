@@ -4,7 +4,7 @@ import React from 'react';
 import { IonSlides, IonSlide } from '@ionic/react';
 
 const slideOpts = {
-  effect: 'slide'
+  initialSlide: 1
 };
 
 const Example: React.SFC<{}> = () => (

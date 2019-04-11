@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
 })
 export class SlideExample {
   slideOpts = {
-    effect: 'slide'
+    initialSlide: 1
   };
   constructor() {}
 }

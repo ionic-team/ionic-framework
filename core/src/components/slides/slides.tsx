@@ -313,7 +313,7 @@ export class Slides implements ComponentInterface {
     // Base options, can be changed
     // TODO Add interface SwiperOptions
     const swiperOptions: SwiperOptions = {
-      effect: 'slide',
+      effect: undefined,
       direction: 'horizontal',
       initialSlide: 0,
       loop: false,
