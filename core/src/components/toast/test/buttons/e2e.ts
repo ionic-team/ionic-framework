@@ -2,23 +2,23 @@ import { testToast } from '../test.utils';
 
 const DIRECTORY = 'buttons';
 
-test('toast: close property', async () => {
+test('toast: buttons, close property', async () => {
   await testToast(DIRECTORY, '#closeProp');
 });
 
-test('toast: close array', async () => {
+test('toast: buttons, close array', async () => {
   await testToast(DIRECTORY, '#closeArray');
 });
 
-test('toast: two buttons', async () => {
+test('toast: buttons, two buttons', async () => {
   await testToast(DIRECTORY, '#twoButtons');
 });
 
-test('toast: multiple buttons', async () => {
+test('toast: buttons, multiple buttons', async () => {
   await testToast(DIRECTORY, '#multipleButtons');
 });
 
-test('toast: long button', async () => {
+test('toast: buttons, long button', async () => {
   await testToast(DIRECTORY, '#longButton');
 });
 
@@ -26,22 +26,22 @@ test('toast: long button', async () => {
  * RTL Tests
  */
 
-test('toast:rtl: close property', async () => {
+test('toast:rtl: buttons, close property', async () => {
   await testToast(DIRECTORY, '#closeProp', true);
 });
 
-test('toast:rtl: close array', async () => {
+test('toast:rtl: buttons, close array', async () => {
   await testToast(DIRECTORY, '#closeArray', true);
 });
 
-test('toast:rtl: two buttons', async () => {
+test('toast:rtl: buttons, two buttons', async () => {
   await testToast(DIRECTORY, '#twoButtons', true);
 });
 
-test('toast:rtl: multiple buttons', async () => {
+test('toast:rtl: buttons, multiple buttons', async () => {
   await testToast(DIRECTORY, '#multipleButtons', true);
 });
 
-test('toast:rtl: long button', async () => {
+test('toast:rtl: buttons, long button', async () => {
   await testToast(DIRECTORY, '#longButton', true);
 });
