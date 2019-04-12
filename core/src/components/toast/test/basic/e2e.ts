@@ -26,6 +26,10 @@ test('toast: custom close text', async () => {
   await testToast(DIRECTORY, '#custom-close-text-toast');
 });
 
+test('toast: custom buttons', async () => {
+  await testToast(DIRECTORY, '#custom-action-buttons-toast');
+});
+
 test('toast: translucent', async () => {
   await testToast(DIRECTORY, '#translucent-toast');
 });
@@ -64,6 +68,10 @@ test('toast:rtl: close button', async () => {
 
 test('toast:rtl: custom close text', async () => {
   await testToast(DIRECTORY, '#custom-close-text-toast', true);
+});
+
+test('toast:rtl: custom buttons', async () => {
+  await testToast(DIRECTORY, '#custom-action-buttons-toast');
 });
 
 test('toast:rtl: translucent', async () => {
