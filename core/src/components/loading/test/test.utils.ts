@@ -1,18 +1,14 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-import { cleanScreenshotName, generateE2EUrl } from '../../../utils/test/utils';
+import { generateE2EUrl } from '../../../utils/test/utils';
 
 export async function testLoading(
   type: string,
   selector: string,
-  rtl = false,
-  screenshotName: string = cleanScreenshotName(selector)
+  rtl = false
 ) {
   try {
     const pageUrl = generateE2EUrl('loading', type, rtl);
-    if (rtl) {
-      screenshotName = `${screenshotName} rtl`;
-    }
 
     const page = await newE2EPage({
       url: pageUrl
@@ -28,12 +24,12 @@ export async function testLoading(
 
     await loading.waitForVisible();
 
-    screenshotCompares.push(await page.compareScreenshot(screenshotName));
+    screenshotCompares.push(await page.compareScreenshot());
 
     await loading.callMethod('dismiss');
     await loading.waitForNotVisible();
 
-    screenshotCompares.push(await page.compareScreenshot(`dismiss ${screenshotName}`));
+    screenshotCompares.push(await page.compareScreenshot('dismiss'));
 
     loading = await page.find('ion-loading');
     expect(loading).toBeNull();
