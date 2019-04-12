@@ -121,15 +121,22 @@ export class ItemSliding implements ComponentInterface {
    */
   @Method()
   async open() {
-    if (this.openAmount === 0 && this.item !== null) {
+    if (this.optsDirty) {
+      setTimeout(() => {
+        this.open();
+      }, 1000);
+    }
+    if (this.openAmount === 0 && this.item !== null && this.optsDirty) {
       const options = this.el.querySelector('ion-item-options');
       if (options) {
+        this.optsDirty = false;
         this.item.style.transition = 'transform 500ms cubic-bezier(0.36, 0.66, 0.04, 1)';
         options.style.display = 'flex';
         const width = options.offsetWidth;
         openSlidingItem = this.el;
         options.style.display = '';
         this.setOpenAmount(width, false);
+        this.optsDirty = true;
       }
     }
   }
@@ -139,6 +146,7 @@ export class ItemSliding implements ComponentInterface {
    */
   @Method()
   async close() {
+    this.optsDirty = false;
     this.setOpenAmount(0, true);
   }
 
@@ -298,6 +306,7 @@ export class ItemSliding implements ComponentInterface {
       this.tmr = setTimeout(() => {
         this.state = SlidingState.Disabled;
         this.tmr = undefined;
+        this.optsDirty = true;
       }, 600) as any;
 
       openSlidingItem = undefined;
