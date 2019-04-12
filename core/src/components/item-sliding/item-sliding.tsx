@@ -121,7 +121,7 @@ export class ItemSliding implements ComponentInterface {
    */
   @Method()
   async open() {
-    if (this.openAmount !== 0 && this.item !== null) {
+    if (this.openAmount === 0 && this.item !== null) {
       const options = this.el.querySelector('ion-item-options');
       if (options) {
         this.item.style.transition = 'transform 500ms cubic-bezier(0.36, 0.66, 0.04, 1)';
