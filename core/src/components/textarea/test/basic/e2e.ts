@@ -5,6 +5,14 @@ test('textarea: basic', async () => {
     url: '/src/components/textarea/test/basic?ionic:_testing=true'
   });
 
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
+  const compares = [];
+
+  compares.push(await page.compareScreenshot());
+
+  page.waitFor(2000);
+  compares.push(await page.compareScreenshot('value changed'));
+
+  for (const compare of compares) {
+    expect(compare).toMatchScreenshot();
+  }
 });

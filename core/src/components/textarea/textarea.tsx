@@ -134,6 +134,7 @@ export class Textarea implements ComponentInterface {
     if (nativeInput && nativeInput.value !== value) {
       nativeInput.value = value;
     }
+    this.emitStyle();
     this.ionChange.emit({ value });
   }
 

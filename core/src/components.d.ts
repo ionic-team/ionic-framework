@@ -68,6 +68,7 @@ import {
   TabButtonLayout,
   TextareaChangeEventDetail,
   TextFieldTypes,
+  ToastButton,
   ToastOptions,
   ToggleChangeEventDetail,
   TransitionDoneFn,
@@ -4797,6 +4798,10 @@ export namespace Components {
     */
     'animated': boolean;
     /**
+    * An array of buttons for the toast.
+    */
+    'buttons'?: (ToastButton | string)[];
+    /**
     * Text to display in the close button.
     */
     'closeButtonText'?: string;
@@ -4820,6 +4825,10 @@ export namespace Components {
     * Animation to use when the toast is presented.
     */
     'enterAnimation'?: AnimationBuilder;
+    /**
+    * Header to be shown in the toast.
+    */
+    'header'?: string;
     /**
     * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
     */
@@ -4868,6 +4877,10 @@ export namespace Components {
     */
     'animated'?: boolean;
     /**
+    * An array of buttons for the toast.
+    */
+    'buttons'?: (ToastButton | string)[];
+    /**
     * Text to display in the close button.
     */
     'closeButtonText'?: string;
@@ -4887,6 +4900,10 @@ export namespace Components {
     * Animation to use when the toast is presented.
     */
     'enterAnimation'?: AnimationBuilder;
+    /**
+    * Header to be shown in the toast.
+    */
+    'header'?: string;
     /**
     * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
     */
