@@ -29,7 +29,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label color="primary" fixed>Fixed Label</ion-label>
+          <ion-label color="primary" position="fixed">Fixed Label</ion-label>
           <ion-textarea placeholder="Textarea"></ion-textarea>
         </ion-item>
 
@@ -38,13 +38,13 @@
         </ion-item>
 
         <ion-item>
-          <ion-label color="primary" stacked>Stacked Label</ion-label>
+          <ion-label color="primary" position="stacked">Stacked Label</ion-label>
           <ion-textarea placeholder="Textarea"></ion-textarea>
         </ion-item>
 
         <ion-item>
-          <ion-label color="primary" floating>Floating Label</ion-label>
-          <ion-textarea></ion-textarea>
+          <ion-label color="primary" position="floating">Floating Label</ion-label>
+          <ion-textarea id="timeout"></ion-textarea>
         </ion-item>
 
         <ion-item>
@@ -58,23 +58,13 @@
         </ion-item>
 
         <ion-item>
-          <ion-label>Dynamic Value</ion-label>
-          <ion-input id="dynamicValue" value="dynamic"></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Dynamic Value</ion-label>
-          <ion-textarea id="dynamicTextareaValue" value="dynamic"></ion-textarea>
+          <ion-label position="floating">Dynamic Value</ion-label>
+          <ion-textarea id="dynamicValue" value="dynamic"></ion-textarea>
         </ion-item>
 
         <ion-item>
           <ion-label color="primary">Clear on Edit</ion-label>
           <ion-textarea clear-on-edit="true"></ion-textarea>
-        </ion-item>
-
-        <ion-item>
-          <ion-label color="primary">Clear on Edit</ion-label>
-          <ion-input clear-on-edit="true"></ion-input>
         </ion-item>
       </ion-list>
 
@@ -87,17 +77,22 @@
           Toggle Readonly
         </ion-button>
 
-        <ion-button color="light" onclick="toggleString('dynamicValue', 'value'); toggleString('dynamicTextareaValue', 'value')">
+        <ion-button color="light" onclick="toggleString('dynamicValue', 'value');">
           Toggle Value
         </ion-button>
 
-        <ion-button color="danger" onclick="clearString('dynamicValue', 'value'); clearString('dynamicTextareaValue', 'value')">
+        <ion-button color="danger" onclick="clearString('dynamicValue', 'value');">
           Clear Value
         </ion-button>
       </div>
     </ion-content>
 
     <script>
+      var textarea = document.getElementById('timeout');
+      setTimeout(() => {
+        textarea.value = 'timeout';
+      }, 1000);
+
       function toggleBoolean(id, prop) {
         var el = document.getElementById(id);
 
