@@ -35,5 +35,8 @@ export { Config } from './providers/config';
 // ROUTER STRATEGY
 export { IonicRouteStrategy } from './util/ionic-router-reuse-strategy';
 
+// TYPES
+export * from './types/ionic-lifecycle-hooks';
+
 // PACKAGE MODULE
 export { IonicModule } from './ionic-module';
