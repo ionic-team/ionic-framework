@@ -120,7 +120,7 @@ export class ItemSliding implements ComponentInterface {
    * Open the sliding item.
    */
   @Method()
-  async open(side = 'start') {
+  async open(side = 'end') {
     if (this.openAmount === 0 && this.item !== null && this.optsDirty) {
       const options = this.el.querySelector(`.item-options-${side}`) as HTMLElement | undefined;
       if (options) {
@@ -128,15 +128,12 @@ export class ItemSliding implements ComponentInterface {
         this.item.style.transition = 'transform 500ms cubic-bezier(0.36, 0.66, 0.04, 1)';
         options.style.display = 'flex';
 
-        /**
-         * This needs to be updated to support RTL
-         */
-        const width = (side === 'start') ? -options.offsetWidth : options.offsetWidth;
+        // TODO update to work with RTL
+        const width = (side === 'end') ? options.offsetWidth : -options.offsetWidth;
         openSlidingItem = this.el;
         options.style.display = '';
 
         this.setOpenAmount(width, false);
-        this.state = SlidingState.Enabled;
         this.optsDirty = true;
       }
     }
