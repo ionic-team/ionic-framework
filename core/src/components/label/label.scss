@@ -46,6 +46,10 @@
   pointer-events: none;
 }
 
+:host-context(.item-textarea) {
+  align-self: baseline;
+}
+
 
 // Fixed Inputs
 // --------------------------------------------------

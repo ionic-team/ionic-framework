@@ -58,6 +58,8 @@
 
 :host-context(ion-item) {
   position: static;
+
+  align-self: baseline;
 }
 
 :host-context(ion-item:not(.item-label)) {
