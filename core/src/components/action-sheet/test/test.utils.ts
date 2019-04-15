@@ -1,19 +1,15 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-import { cleanScreenshotName, generateE2EUrl } from '../../../utils/test/utils';
+import { generateE2EUrl } from '../../../utils/test/utils';
 
 export async function testActionSheet(
   type: string,
   selector: string,
   rtl = false,
-  afterScreenshotHook = async (..._args: any[]): Promise<void> => {/**/},
-  screenshotName: string = cleanScreenshotName(selector)
+  afterScreenshotHook = async (..._args: any[]): Promise<void> => {/**/}
 ) {
   try {
     const pageUrl = generateE2EUrl('action-sheet', type, rtl);
-    if (rtl) {
-      screenshotName = `${screenshotName} rtl`;
-    }
 
     const page = await newE2EPage({
       url: pageUrl
@@ -27,14 +23,14 @@ export async function testActionSheet(
     let actionSheet = await page.find('ion-action-sheet');
     await actionSheet.waitForVisible();
 
-    screenshotCompares.push(await page.compareScreenshot(screenshotName));
+    screenshotCompares.push(await page.compareScreenshot());
 
-    await afterScreenshotHook(page, screenshotName, screenshotCompares, actionSheet);
+    await afterScreenshotHook(page, screenshotCompares, actionSheet);
 
     await actionSheet.callMethod('dismiss');
     await actionSheet.waitForNotVisible();
 
-    screenshotCompares.push(await page.compareScreenshot(`dismissed ${screenshotName}`));
+    screenshotCompares.push(await page.compareScreenshot('dismiss'));
 
     actionSheet = await page.find('ion-action-sheet');
     expect(actionSheet).toBe(null);
@@ -50,7 +46,6 @@ export async function testActionSheet(
 
 export async function testActionSheetBackdrop(
   page: any,
-  screenshotName: string,
   screenshotCompares: any,
   actionSheet: any
 ) {
@@ -59,7 +54,7 @@ export async function testActionSheetBackdrop(
     const backdrop = await page.find('ion-backdrop');
     await backdrop.click();
 
-    screenshotCompares.push(await page.compareScreenshot(`dismissed backdrop ${screenshotName}`));
+    screenshotCompares.push(await page.compareScreenshot(`dismiss backdrop`));
 
     const isVisible = await actionSheet.isVisible();
     expect(isVisible).toBe(true);
@@ -70,7 +65,6 @@ export async function testActionSheetBackdrop(
 
 export async function testActionSheetAlert(
   page: any,
-  screenshotName: string,
   screenshotCompares: any
 ) {
   try {
@@ -81,7 +75,7 @@ export async function testActionSheetAlert(
     await alert.waitForVisible();
     await page.waitFor(250);
 
-    screenshotCompares.push(await page.compareScreenshot(`alert open ${screenshotName}`));
+    screenshotCompares.push(await page.compareScreenshot(`alert open`));
 
     const alertOkayBtn = await page.find({ contains: 'Okay' });
     await alertOkayBtn.click();

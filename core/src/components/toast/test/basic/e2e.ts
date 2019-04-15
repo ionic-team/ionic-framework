@@ -2,43 +2,43 @@ import { testToast } from '../test.utils';
 
 const DIRECTORY = 'basic';
 
-test('toast: bottom', async () => {
+test('toast: basic, bottom', async () => {
   await testToast(DIRECTORY, '#show-bottom-toast');
 });
 
-test('toast: middle', async () => {
+test('toast: basic, middle', async () => {
   await testToast(DIRECTORY, '#show-middle-toast');
 });
 
-test('toast: top', async () => {
+test('toast: basic, top', async () => {
   await testToast(DIRECTORY, '#show-top-toast');
 });
 
-test('toast: two lines', async () => {
+test('toast: basic, two lines', async () => {
   await testToast(DIRECTORY, '#two-line-toast');
 });
 
-test('toast: close button', async () => {
+test('toast: basic, close button', async () => {
   await testToast(DIRECTORY, '#close-button-toast');
 });
 
-test('toast: custom close text', async () => {
+test('toast: basic, custom close text', async () => {
   await testToast(DIRECTORY, '#custom-close-text-toast');
 });
 
-test('toast: custom buttons', async () => {
+test('toast: basic, custom buttons', async () => {
   await testToast(DIRECTORY, '#custom-action-buttons-toast');
 });
 
-test('toast: translucent', async () => {
+test('toast: basic, translucent', async () => {
   await testToast(DIRECTORY, '#translucent-toast');
 });
 
-test('toast: color', async () => {
+test('toast: basic, color', async () => {
   await testToast(DIRECTORY, '#color-toast');
 });
 
-test('toast: custom class', async () => {
+test('toast: basic, custom class', async () => {
   await testToast(DIRECTORY, '#custom-class-toast');
 });
 
@@ -46,42 +46,42 @@ test('toast: custom class', async () => {
  * RTL Tests
  */
 
-test('toast:rtl: bottom', async () => {
+test('toast:rtl: basic, bottom', async () => {
   await testToast(DIRECTORY, '#show-bottom-toast', true);
 });
 
-test('toast:rtl: middle', async () => {
+test('toast:rtl: basic, middle', async () => {
   await testToast(DIRECTORY, '#show-middle-toast', true);
 });
 
-test('toast:rtl: top', async () => {
+test('toast:rtl: basic, top', async () => {
   await testToast(DIRECTORY, '#show-top-toast', true);
 });
 
-test('toast:rtl: two lines', async () => {
+test('toast:rtl: basic, two lines', async () => {
   await testToast(DIRECTORY, '#two-line-toast', true);
 });
 
-test('toast:rtl: close button', async () => {
+test('toast:rtl: basic, close button', async () => {
   await testToast(DIRECTORY, '#close-button-toast', true);
 });
 
-test('toast:rtl: custom close text', async () => {
+test('toast:rtl: basic, custom close text', async () => {
   await testToast(DIRECTORY, '#custom-close-text-toast', true);
 });
 
-test('toast:rtl: custom buttons', async () => {
+test('toast:rtl: basic, custom buttons', async () => {
   await testToast(DIRECTORY, '#custom-action-buttons-toast');
 });
 
-test('toast:rtl: translucent', async () => {
+test('toast:rtl: basic, translucent', async () => {
   await testToast(DIRECTORY, '#translucent-toast', true);
 });
 
-test('toast:rtl: color', async () => {
+test('toast:rtl: basic, color', async () => {
   await testToast(DIRECTORY, '#color-toast', true);
 });
 
-test('toast:rtl: custom class', async () => {
+test('toast:rtl: basic, custom class', async () => {
   await testToast(DIRECTORY, '#custom-class-toast', true);
 });
