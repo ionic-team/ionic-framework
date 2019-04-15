@@ -38,7 +38,8 @@
         <ion-button expand="block" onclick="toggleSliding()">Toggle sliding</ion-button>
         <ion-button expand="block" onclick="toggleDynamicOptions()">Toggle Dynamic Options</ion-button>
         <ion-button expand="block" onclick="closeOpened()">Close Opened Items</ion-button>
-        <ion-button expand="block" onclick="openItem()">Open Item</ion-button>
+        <ion-button expand="block" onclick="openItem('start')">Open Item Start</ion-button>
+        <ion-button expand="block" onclick="openItem('end')">Open Item End</ion-button>
       </div>
 
       <ion-list id="list">
@@ -368,9 +369,9 @@
           list.closeSlidingItems();
         }
 
-        function openItem() {
-          var item = document.getElementById('item0');
-          item.open();
+        function openItem(side) {
+          var item = document.getElementById('item2');
+          item.open(side);
         }
 
         function noclose(item) {

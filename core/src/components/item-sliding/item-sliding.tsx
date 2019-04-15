@@ -120,22 +120,23 @@ export class ItemSliding implements ComponentInterface {
    * Open the sliding item.
    */
   @Method()
-  async open() {
-    if (this.optsDirty) {
-      setTimeout(() => {
-        this.open();
-      }, 1000);
-    }
+  async open(side = 'start') {
     if (this.openAmount === 0 && this.item !== null && this.optsDirty) {
-      const options = this.el.querySelector('ion-item-options');
+      const options = this.el.querySelector(`.item-options-${side}`) as HTMLElement | undefined;
       if (options) {
         this.optsDirty = false;
         this.item.style.transition = 'transform 500ms cubic-bezier(0.36, 0.66, 0.04, 1)';
         options.style.display = 'flex';
-        const width = options.offsetWidth;
+
+        /**
+         * This needs to be updated to support RTL
+         */
+        const width = (side === 'start') ? -options.offsetWidth : options.offsetWidth;
         openSlidingItem = this.el;
         options.style.display = '';
+
         this.setOpenAmount(width, false);
+        this.state = SlidingState.Enabled;
         this.optsDirty = true;
       }
     }

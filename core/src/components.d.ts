@@ -1982,7 +1982,7 @@ export namespace Components {
     /**
     * Open the sliding item.
     */
-    'open': () => Promise<void>;
+    'open': (side?: string) => Promise<void>;
   }
   interface IonItemSlidingAttributes extends StencilHTMLAttributes {
     /**

@@ -692,9 +692,15 @@ Type: `Promise<number>`
 
 
 
-### `open() => Promise<void>`
+### `open(side?: string) => Promise<void>`
 
 Open the sliding item.
+
+#### Parameters
+
+| Name   | Type     | Description |
+| ------ | -------- | ----------- |
+| `side` | `string` |             |
 
 #### Returns
 
