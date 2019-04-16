@@ -21,7 +21,8 @@ export class Slide implements ComponentInterface {
   hostData() {
     return {
       class: {
-        'swiper-slide': true
+        'swiper-slide': true,
+        'swiper-zoom-container': true
       }
     };
   }

@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Vue specific wrappers for @ionic/core",
   "main": "dist/ionic-vue.common.js",
   "types": "dist/types/index.d.ts",
@@ -9,6 +9,7 @@
   "jsdelivr": "dist/ionic-vue.js",
   "contributors": [
     "Josh Thomas <josh@ionic.io>",
+    "Mike Hartington <mikehartington@gmail.com",
     "Michael Tintiuc <michael.tintiuc@moduscreate.com>"
   ],
   "files": [

@@ -32,9 +32,21 @@ export class Toast extends Component<Props, State> {
         isOpen={this.state.showToast2}
         onDidDismiss={() => this.setState(() => ({ showToast2: false }))}
         message='Click to Close'
-        showCloseButton={true}
         position='top'
-        closeButtonText='Done'
+        buttons={[{
+          side: 'start',
+          icon: 'star',
+          text: 'Favorite',
+          handler: () => {
+            console.log('Favorite clicked');
+          }
+        }, {
+          text: 'Done',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }]}
       >
       </IonToast>
     );

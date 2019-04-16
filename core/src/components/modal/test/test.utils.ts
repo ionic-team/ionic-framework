@@ -1,18 +1,14 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-import { cleanScreenshotName, generateE2EUrl } from '../../../utils/test/utils';
+import { generateE2EUrl } from '../../../utils/test/utils';
 
 export async function testModal(
   type: string,
   selector: string,
-  rtl = false,
-  screenshotName: string = cleanScreenshotName(selector)
+  rtl = false
 ) {
   try {
     const pageUrl = generateE2EUrl('modal', type, rtl);
-    if (rtl) {
-      screenshotName = `${screenshotName} rtl`;
-    }
 
     const page = await newE2EPage({
       url: pageUrl
@@ -26,12 +22,12 @@ export async function testModal(
     let popover = await page.find('ion-modal');
     await popover.waitForVisible();
 
-    screenshotCompares.push(await page.compareScreenshot(screenshotName));
+    screenshotCompares.push(await page.compareScreenshot());
 
     await popover.callMethod('dismiss');
     await popover.waitForNotVisible();
 
-    screenshotCompares.push(await page.compareScreenshot(`dismiss ${screenshotName}`));
+    screenshotCompares.push(await page.compareScreenshot('dismiss'));
 
     popover = await page.find('ion-modal');
     expect(popover).toBeNull();
