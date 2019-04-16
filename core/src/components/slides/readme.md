@@ -456,8 +456,10 @@ import { Component } from '@angular/core';
   `
 })
 export class SlideExample {
+  // Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
   slideOpts = {
-    initialSlide: 1
+    initialSlide: 1,
+    speed: 400
   };
   constructor() {}
 }
@@ -485,8 +487,11 @@ export class SlideExample {
 
 ```javascript
 var slides = document.querySelector('ion-slides');
+
+// Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
 slides.options = {
-  initialSlide: 1
+  initialSlide: 1,
+  speed: 400
 }
 ```
 
@@ -498,8 +503,10 @@ import React from 'react';
 
 import { IonSlides, IonSlide } from '@ionic/react';
 
+// Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
 const slideOpts = {
-  initialSlide: 1
+  initialSlide: 1,
+  speed: 400
 };
 
 const Example: React.SFC<{}> = () => (
@@ -543,8 +550,10 @@ export default Example;
 
   @Component()
   export default class SelectExample extends Vue {
+    // Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
     slideOpts = {
-      initialSlide: 1
+      initialSlide: 1,
+      speed: 400
     };
   }
 </script>
