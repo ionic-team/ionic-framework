@@ -1,9 +1,9 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { Gesture, GestureDetail, ItemReorderDetail } from '../../interface';
+import { Gesture, GestureDetail, ItemReorderEventDetail } from '../../interface';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/haptic';
 
-const enum ReordeGroupState {
+const enum ReorderGroupState {
   Idle = 0,
   Active = 1,
   Complete = 2
@@ -29,7 +29,7 @@ export class ReorderGroup implements ComponentInterface {
   private containerTop = 0;
   private containerBottom = 0;
 
-  @State() state = ReordeGroupState.Idle;
+  @State() state = ReorderGroupState.Idle;
 
   @Element() el!: HTMLElement;
 
@@ -50,13 +50,11 @@ export class ReorderGroup implements ComponentInterface {
   }
 
   /**
-   * Event that needs to be listen to in order to respond to reorder action.
-   * `ion-reorder-group` uses this event to delegate to the user the reordering of data array.
-   *
-   *
-   * The complete() method exposed as
+   * Event that needs to be listened to in order to complete the reorder action.
+   * Once the event has been emitted, the `complete()` method then needs
+   * to be called in order to finalize the reorder action.
    */
-  @Event() ionItemReorder!: EventEmitter<ItemReorderDetail>;
+  @Event() ionItemReorder!: EventEmitter<ItemReorderEventDetail>;
 
   async componentDidLoad() {
     const contentEl = this.el.closest('ion-content');
@@ -65,11 +63,11 @@ export class ReorderGroup implements ComponentInterface {
       this.scrollEl = await contentEl.getScrollElement();
     }
 
-    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
-      el: this.doc.body,
+    this.gesture = (await import('../../utils/gesture')).createGesture({
+      el: this.el,
       queue: this.queue,
       gestureName: 'reorder',
-      gesturePriority: 90,
+      gesturePriority: 110,
       threshold: 0,
       direction: 'y',
       passive: false,
@@ -84,6 +82,10 @@ export class ReorderGroup implements ComponentInterface {
 
   componentDidUnload() {
     this.onEnd();
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
   }
 
   /**
@@ -96,7 +98,7 @@ export class ReorderGroup implements ComponentInterface {
   }
 
   private canStart(ev: GestureDetail): boolean {
-    if (this.selectedItemEl || this.state !== ReordeGroupState.Idle) {
+    if (this.selectedItemEl || this.state !== ReorderGroupState.Idle) {
       return false;
     }
     const target = ev.event.target as HTMLElement;
@@ -106,7 +108,6 @@ export class ReorderGroup implements ComponentInterface {
     }
     const item = findReorderItem(reorderEl, this.el);
     if (!item) {
-      console.error('reorder node not found');
       return false;
     }
     ev.data = item;
@@ -150,7 +151,7 @@ export class ReorderGroup implements ComponentInterface {
 
     this.lastToIndex = indexForItem(item);
     this.selectedItemHeight = item.offsetHeight;
-    this.state = ReordeGroupState.Active;
+    this.state = ReorderGroupState.Active;
 
     item.classList.add(ITEM_REORDER_SELECTED);
 
@@ -186,9 +187,9 @@ export class ReorderGroup implements ComponentInterface {
 
   private onEnd() {
     const selectedItem = this.selectedItemEl;
-    this.state = ReordeGroupState.Complete;
+    this.state = ReorderGroupState.Complete;
     if (!selectedItem) {
-      this.state = ReordeGroupState.Idle;
+      this.state = ReorderGroupState.Idle;
       return;
     }
 
@@ -211,7 +212,7 @@ export class ReorderGroup implements ComponentInterface {
 
   private completeSync(listOrReorder?: boolean | any[]): any {
     const selectedItemEl = this.selectedItemEl;
-    if (selectedItemEl && this.state === ReordeGroupState.Complete) {
+    if (selectedItemEl && this.state === ReorderGroupState.Complete) {
       const children = this.el.children as any;
       const len = children.length;
       const toIndex = this.lastToIndex;
@@ -236,7 +237,7 @@ export class ReorderGroup implements ComponentInterface {
       selectedItemEl.style.transition = '';
       selectedItemEl.classList.remove(ITEM_REORDER_SELECTED);
       this.selectedItemEl = undefined;
-      this.state = ReordeGroupState.Idle;
+      this.state = ReorderGroupState.Idle;
     }
     return listOrReorder;
   }
@@ -293,7 +294,7 @@ export class ReorderGroup implements ComponentInterface {
     return {
       class: {
         'reorder-enabled': !this.disabled,
-        'reorder-list-active': this.state !== ReordeGroupState.Idle,
+        'reorder-list-active': this.state !== ReorderGroupState.Idle,
       }
     };
   }
@@ -303,16 +304,14 @@ function indexForItem(element: any): number {
   return element['$ionIndex'];
 }
 
-function findReorderItem(node: HTMLElement, container: HTMLElement): HTMLElement | undefined {
-  let nested = 0;
-  let parent;
-  while (node && nested < 6) {
-    parent = node.parentNode as HTMLElement;
+function findReorderItem(node: HTMLElement | null, container: HTMLElement): HTMLElement | undefined {
+  let parent: HTMLElement | null;
+  while (node) {
+    parent = node.parentElement;
     if (parent === container) {
       return node;
     }
     node = parent;
-    nested++;
   }
   return undefined;
 }

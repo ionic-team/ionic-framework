@@ -45,10 +45,25 @@ export class ToastExample {
 
   async presentToastWithOptions() {
     const toast = await this.toastController.create({
+      header: 'Toast header',
       message: 'Click to Close',
-      showCloseButton: true,
       position: 'top',
-      closeButtonText: 'Done'
+      buttons: [
+        {
+          side: 'start',
+          icon: 'star',
+          text: 'Favorite',
+          handler: () => {
+            console.log('Favorite clicked');
+          }
+        }, {
+          text: 'Done',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
     });
     toast.present();
   }
@@ -76,13 +91,89 @@ async function presentToastWithOptions() {
   await toastController.componentOnReady();
 
   const toast = await toastController.create({
+    header: 'Toast header',
     message: 'Click to Close',
-    showCloseButton: true,
     position: 'top',
-    closeButtonText: 'Done'
+    buttons: [
+      {
+        side: 'start',
+        icon: 'star',
+        text: 'Favorite',
+        handler: () => {
+          console.log('Favorite clicked');
+        }
+      }, {
+        text: 'Done',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }
+    ]
   });
+
   return await toast.present();
 }
+```
+
+
+### React
+
+```tsx
+import React, { Component } from 'react'
+import { IonToast } from '@ionic/react';
+
+type Props = {}
+type State = {
+  showToast1: boolean
+  showToast2: boolean
+}
+
+export class Toast extends Component<Props, State> {
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      showToast1: false
+      showToast2: false
+    };
+  }
+
+  render() {
+    return (
+      <IonToast
+        isOpen={this.state.showToast1}
+        onDidDismiss={() => this.setState(() => ({ showToast1: false }))}
+        message='Your settings have been saved.'
+        duration={200}
+      >
+      </IonToast>
+
+      <IonToast
+        isOpen={this.state.showToast2}
+        onDidDismiss={() => this.setState(() => ({ showToast2: false }))}
+        message='Click to Close'
+        position='top'
+        buttons={[{
+          side: 'start',
+          icon: 'star',
+          text: 'Favorite',
+          handler: () => {
+            console.log('Favorite clicked');
+          }
+        }, {
+          text: 'Done',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }]}
+      >
+      </IonToast>
+    );
+  }
+}
+
 ```
 
 
@@ -92,11 +183,13 @@ async function presentToastWithOptions() {
 | Property          | Attribute           | Description                                                                                                                                                                                                                                                            | Type                                                                                   | Default     |
 | ----------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ----------- |
 | `animated`        | `animated`          | If `true`, the toast will animate.                                                                                                                                                                                                                                     | `boolean`                                                                              | `true`      |
+| `buttons`         | --                  | An array of buttons for the toast.                                                                                                                                                                                                                                     | `(string \| ToastButton)[] \| undefined`                                               | `undefined` |
 | `closeButtonText` | `close-button-text` | Text to display in the close button.                                                                                                                                                                                                                                   | `string \| undefined`                                                                  | `undefined` |
 | `color`           | `color`             | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`                                                                  | `undefined` |
 | `cssClass`        | `css-class`         | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.                                                                                                                                                       | `string \| string[] \| undefined`                                                      | `undefined` |
 | `duration`        | `duration`          | How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.                                                                                                                                                           | `number`                                                                               | `0`         |
 | `enterAnimation`  | --                  | Animation to use when the toast is presented.                                                                                                                                                                                                                          | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
+| `header`          | `header`            | Header to be shown in the toast.                                                                                                                                                                                                                                       | `string \| undefined`                                                                  | `undefined` |
 | `keyboardClose`   | `keyboard-close`    | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                                                                 | `boolean`                                                                              | `false`     |
 | `leaveAnimation`  | --                  | Animation to use when the toast is dismissed.                                                                                                                                                                                                                          | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
 | `message`         | `message`           | Message to be shown in the toast.                                                                                                                                                                                                                                      | `string \| undefined`                                                                  | `undefined` |
@@ -108,14 +201,12 @@ async function presentToastWithOptions() {
 
 ## Events
 
-| Event                 | Description                             | Detail             |
-| --------------------- | --------------------------------------- | ------------------ |
-| `ionToastDidDismiss`  | Emitted after the toast has dismissed.  | OverlayEventDetail |
-| `ionToastDidLoad`     | Emitted after the toast has loaded.     | void               |
-| `ionToastDidPresent`  | Emitted after the toast has presented.  | void               |
-| `ionToastDidUnload`   | Emitted after the toast has unloaded.   | void               |
-| `ionToastWillDismiss` | Emitted before the toast has dismissed. | OverlayEventDetail |
-| `ionToastWillPresent` | Emitted before the toast has presented. | void               |
+| Event                 | Description                             | Type                              |
+| --------------------- | --------------------------------------- | --------------------------------- |
+| `ionToastDidDismiss`  | Emitted after the toast has dismissed.  | `CustomEvent<OverlayEventDetail>` |
+| `ionToastDidPresent`  | Emitted after the toast has presented.  | `CustomEvent<void>`               |
+| `ionToastWillDismiss` | Emitted before the toast has dismissed. | `CustomEvent<OverlayEventDetail>` |
+| `ionToastWillPresent` | Emitted before the toast has presented. | `CustomEvent<void>`               |
 
 
 ## Methods

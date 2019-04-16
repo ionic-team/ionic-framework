@@ -1,12 +1,12 @@
 ---
 name: Feature Request
 about: Suggest an idea for this project
-
+title: 'feat: '
+labels: ''
+assignees: ''
 ---
 
-<!-- Please make sure you are posting an feature request pertaining to the Ionic Framework. -->
-
-<!-- Before submitting an issue, please consult our docs (https://beta.ionicframework.com/docs/) and API reference (https://beta.ionicframework.com/docs/api/) -->
+<!-- Before submitting an issue, please consult our docs (https://ionicframework.com/docs/). -->
 
 <!-- Please make sure you are posting an issue pertaining to the Ionic Framework. If you are having an issue with the Ionic Appflow services (Ionic View, Ionic Deploy, etc.) please consult the Ionic Appflow support portal (https://ionic.zendesk.com/hc/en-us) -->
 

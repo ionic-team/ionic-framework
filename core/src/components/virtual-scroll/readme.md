@@ -9,8 +9,8 @@ instead a small subset of records (enough to fill the viewport) are rendered
 and reused as the user scrolls.
 
 ### The Basics
-The array of records should be passed to the `item` property on the `ion-virtual-scroll` element.
-The data given to the `item` property must be an array. An item
+The array of records should be passed to the `items` property on the `ion-virtual-scroll` element.
+The data given to the `items` property must be an array. An item
 template with the `*virtualItem` property is required in the `ion-virtual-scroll`.
 The `*virtualItem` property can be added to any element.
 
@@ -83,7 +83,7 @@ scrolling. In order to better control images, Ionic provides `<ion-img>`
 to manage HTTP requests and image rendering. While scrolling through items
 quickly, `<ion-img>` knows when and when not to make requests, when and
 when not to render images, and only loads the images that are viewable
-after scrolling. [Read more about `ion-img`.](../../img/Img/)
+after scrolling. [Read more about `ion-img`.](../img)
 
 It's also important for app developers to ensure image sizes are locked in,
 and after images have fully loaded they do not change size and affect any
@@ -132,7 +132,7 @@ dimensions are measured correctly.
 #### iOS Cordova WKWebView
 
 When deploying to iOS with Cordova, it's highly recommended to use the
-[WKWebView plugin](http://blog.ionic.io/cordova-ios-performance-improvements-drop-in-speed-with-wkwebview/)
+[WKWebView plugin](https://blog.ionicframework.com/cordova-ios-performance-improvements-drop-in-speed-with-wkwebview/)
 in order to take advantage of iOS's higher performing webview. Additionally,
 WKWebView is superior at scrolling efficiently in comparison to the older
 UIWebView.
@@ -251,13 +251,83 @@ let rotateImg = 0;
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonVirtualScroll } from '@ionic/react';
+
+let rotateImg = 0;
+const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, seddo eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+
+const images = [
+  'bandit',
+  'batmobile',
+  'blues-brothers',
+  'bueller',
+  'delorean',
+  'eleanor',
+  'general-lee',
+  'ghostbusters',
+  'knight-rider',
+  'mirth-mobile'
+];
+
+function getImgSrc() {
+  const src = 'https://dummyimage.com/600x400/${Math.round( Math.random() * 99999)}/fff.png';
+  rotateImg++;
+  if (rotateImg === images.length) {
+    rotateImg = 0;
+  }
+  return src;
+}
+
+const items: any[] = [];
+
+for (let i = 0; i < 1000; i++) {
+  items.push({
+    name: i + ' - ' + images[rotateImg],
+    imgSrc: getImgSrc(),
+    avatarSrc: getImgSrc(),
+    imgHeight: Math.floor(Math.random() * 50 + 150),
+    content: lorem.substring(0, Math.random() * (lorem.length - 100) + 100)
+  });
+
+  rotateImg++;
+  if (rotateImg === images.length) {
+    rotateImg = 0;
+  }
+}
+
+const Example: React.SFC<{}> = () => (
+
+  <IonContent>
+    <IonVirtualScroll items="items" approxItemHeight="320px">
+      <IonCard virtualItem="let item; let itemBounds = bounds;">
+        <div>
+          <img src="item.imgSrc" height="item.imgHeight" alt="item.name" />
+        </div>
+        <IonCardHeader>
+          <IonCardTitle>{{ name }}</IonCardTitle>
+        </IonCardHeader>
+        <IonCardContent>{{ content }}</IonCardContent>
+      </IonCard>
+    </IonVirtualScroll>
+  </IonContent>
+);
+
+export default Example;
+```
+
+
 
 ## Properties
 
 | Property             | Attribute              | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Type                                                                                     | Default     |
 | -------------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- | ----------- |
-| `approxFooterHeight` | `approx-footer-height` | The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This value can use either `px` or `%` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.                                                                                                           | `number`                                                                                 | `40`        |
-| `approxHeaderHeight` | `approx-header-height` | The approximate height of each header template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.                                                                                                            | `number`                                                                                 | `40`        |
+| `approxFooterHeight` | `approx-footer-height` | The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.                                                                                                             | `number`                                                                                 | `30`        |
+| `approxHeaderHeight` | `approx-header-height` | The approximate height of each header template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.                                                                                                            | `number`                                                                                 | `30`        |
 | `approxItemHeight`   | `approx-item-height`   | It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered. | `number`                                                                                 | `45`        |
 | `footerFn`           | --                     | Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.                                                                                                                                                                                                                | `((item: any, index: number, items: any[]) => string \| null \| undefined) \| undefined` | `undefined` |
 | `headerFn`           | --                     | Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.             | `((item: any, index: number, items: any[]) => string \| null \| undefined) \| undefined` | `undefined` |
@@ -271,7 +341,23 @@ let rotateImg = 0;
 
 ## Methods
 
-### `markDirty(offset: number, len?: number) => void`
+### `checkEnd() => void`
+
+This method marks the tail the items array as dirty, so they can be re-rendered.
+
+It's equivalent to calling:
+
+```js
+   * virtualScroll.checkRange(lastItemLen);
+   * ```
+
+#### Returns
+
+Type: `void`
+
+
+
+### `checkRange(offset: number, len?: number) => void`
 
 This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as
 dirty any time the content or their style changes.
@@ -284,22 +370,6 @@ The subset of items to be updated can are specifing by an offset and a length.
 | -------- | -------- | ----------- |
 | `offset` | `number` |             |
 | `len`    | `number` |             |
-
-#### Returns
-
-Type: `void`
-
-
-
-### `markDirtyTail() => void`
-
-This method marks the tail the items array as dirty, so they can be re-rendered.
-
-It's equivalent to calling:
-
-```
-   * virtualScroll.markDirty(lastItemLen, items.length - lastItemLen);
-   * ```
 
 #### Returns
 

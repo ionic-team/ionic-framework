@@ -35,11 +35,6 @@ export interface MenuControllerI {
   getOpenSync(): HTMLIonMenuElement | undefined;
 }
 
-export interface MenuChangeEvent {
-  target: HTMLIonMenuElement;
-  detail: MenuChangeEventDetail;
-}
-
 export interface MenuChangeEventDetail {
   disabled: boolean;
   open: boolean;

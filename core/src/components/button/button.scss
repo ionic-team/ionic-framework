@@ -63,6 +63,11 @@
   pointer-events: none;
 }
 
+:host(.button-disabled) .button-native {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
+}
 
 // Solid Button
 // --------------------------------------------------
@@ -83,7 +88,7 @@
 }
 
 // Focused/Activated Solid Button with Color
-:host(.button-solid.ion-color.focused) .button-native {
+:host(.button-solid.ion-color.ion-focused) .button-native {
   background: #{current-color(shade)};
 }
 
@@ -107,7 +112,7 @@
   color: current-color(base);
 }
 
-:host(.button-outline.focused.ion-color) .button-native {
+:host(.button-outline.ion-focused.ion-color) .button-native {
   background: current-color(base, .1);
   color: current-color(base);
 }
@@ -130,7 +135,7 @@
 }
 
 // Focused Clear Button with Color
-:host(.button-clear.focused.ion-color) .button-native {
+:host(.button-clear.ion-focused.ion-color) .button-native {
   background: current-color(base, .1);
   color: current-color(base);
 }
@@ -225,13 +230,11 @@
   appearance: none;
 }
 
-.button-native[disabled] {
-  cursor: default;
-  opacity: .5;
-  pointer-events: none;
+.button-native::-moz-focus-inner {
+  border: 0;
 }
 
-:host(.focused) .button-native {
+:host(.ion-focused) .button-native {
   background: var(--background-focused);
   color: var(--color-focused);
 }
