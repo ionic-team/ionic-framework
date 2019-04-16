@@ -1,19 +1,15 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-import { cleanScreenshotName, generateE2EUrl } from '../../../utils/test/utils';
+import { generateE2EUrl } from '../../../utils/test/utils';
 
 export async function testMenu(
   type: string,
   selector: string,
   menuId = '',
-  rtl = false,
-  screenshotName: string = cleanScreenshotName(selector)
+  rtl = false
 ) {
   try {
     const pageUrl = generateE2EUrl('menu', type, rtl);
-    if (rtl) {
-      screenshotName = `${screenshotName} rtl`;
-    }
 
     const page = await newE2EPage({
       url: pageUrl
@@ -32,12 +28,12 @@ export async function testMenu(
     await menu.callMethod('open');
     await page.waitFor(250);
 
-    screenshotCompares.push(await page.compareScreenshot(screenshotName));
+    screenshotCompares.push(await page.compareScreenshot());
 
     await menu.callMethod('close');
     await page.waitFor(250);
 
-    screenshotCompares.push(await page.compareScreenshot(`dismiss ${screenshotName}`));
+    screenshotCompares.push(await page.compareScreenshot('dismiss'));
 
     for (const screenshotCompare of screenshotCompares) {
       expect(screenshotCompare).toMatchScreenshot();
