@@ -11,6 +11,8 @@
   --button-color: #{ion-color(primary, base)};
   --color: #{$toast-md-color};
   --max-width: #{$toast-max-width};
+  --start: 8px;
+  --end: 8px;
 
   font-size: #{$toast-md-font-size};
 }
