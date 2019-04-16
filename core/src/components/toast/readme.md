@@ -271,13 +271,13 @@ Type: `Promise<void>`
 | `--box-shadow`    | Box shadow of the toast     |
 | `--button-color`  | Color of the button text    |
 | `--color`         | Color of the toast text     |
+| `--end`           | Position from the end       |
 | `--height`        | Height of the toast         |
-| `--left`          | Position from left          |
 | `--max-height`    | Maximum height of the toast |
 | `--max-width`     | Maximum width of the toast  |
 | `--min-height`    | Minimum height of the toast |
 | `--min-width`     | Minimum width of the toast  |
-| `--right`         | Position from right         |
+| `--start`         | Position from the start     |
 | `--width`         | Width of the toast          |
 
 
