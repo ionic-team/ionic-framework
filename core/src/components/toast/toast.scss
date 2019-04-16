@@ -95,12 +95,51 @@
   contain: content;
 }
 
-.toast-button {
-  color: var(--button-color);
+.toast-content {
+  display: flex;
+
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
 }
+
 
 .toast-message {
   flex: 1;
 
   white-space: pre-wrap;
+}
+
+.toast-button-group {
+  display: flex;
+}
+
+.toast-button {
+  border: 0;
+
+  outline: none;
+
+  color: var(--button-color);
+
+  z-index: 0;
+}
+
+.toast-icon {
+  font-size: 1.4em;
+}
+
+.toast-button-inner {
+  display: flex;
+
+  align-items: center;
+}
+
+
+// Toast Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  .toast-button:hover {
+    cursor: pointer;
+  }
 }

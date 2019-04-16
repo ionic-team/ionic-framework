@@ -38,34 +38,34 @@ test('action-sheet: basic, scroll without cancel', async () => {
  * RTL Tests
  */
 
-test('action-sheet: basic', async () => {
+test('action-sheet:rtl: basic', async () => {
   await testActionSheet(DIRECTORY, '#basic', true);
 });
 
-test('action-sheet: basic, alert from action sheet', async () => {
+test('action-sheet:rtl: basic, alert from action sheet', async () => {
   await testActionSheet(DIRECTORY, '#alertFromActionSheet', true, testActionSheetAlert);
 });
 
-test('action-sheet: basic, cancel only', async () => {
+test('action-sheet:rtl: basic, cancel only', async () => {
   await testActionSheet(DIRECTORY, '#cancelOnly', true);
 });
 
-test('action-sheet: basic, custom', async () => {
+test('action-sheet:rtl: basic, custom', async () => {
   await testActionSheet(DIRECTORY, '#custom', true);
 });
 
-test('action-sheet: basic, icons', async () => {
+test('action-sheet:rtl: basic, icons', async () => {
   await testActionSheet(DIRECTORY, '#icons', true);
 });
 
-test('action-sheet: basic, no backdrop dismiss', async () => {
+test('action-sheet:rtl: basic, no backdrop dismiss', async () => {
   await testActionSheet(DIRECTORY, '#noBackdropDismiss', true, testActionSheetBackdrop);
 });
 
-test('action-sheet: basic, scrollable options', async () => {
+test('action-sheet:rtl: basic, scrollable options', async () => {
   await testActionSheet(DIRECTORY, '#scrollableOptions', true);
 });
 
-test('action-sheet: basic, scroll without cancel', async () => {
+test('action-sheet:rtl: basic, scroll without cancel', async () => {
   await testActionSheet(DIRECTORY, '#scrollWithoutCancel', true);
 });

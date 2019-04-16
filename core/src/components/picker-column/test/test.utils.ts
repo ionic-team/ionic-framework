@@ -1,18 +1,14 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-import { cleanScreenshotName, dragElementBy, generateE2EUrl, listenForEvent, waitForFunctionTestContext } from '../../../utils/test/utils';
+import { dragElementBy, generateE2EUrl, listenForEvent, waitForFunctionTestContext } from '../../../utils/test/utils';
 
 export async function testPickerColumn(
   type: string,
   selector: string,
-  rtl = false,
-  screenshotName: string = cleanScreenshotName(selector)
+  rtl = false
 ) {
   try {
     const pageUrl = generateE2EUrl('picker-column', type, rtl);
-    if (rtl) {
-      screenshotName = `${screenshotName} rtl`;
-    }
 
     const page = await newE2EPage({
       url: pageUrl
@@ -24,7 +20,7 @@ export async function testPickerColumn(
     await openButton.click();
     await page.waitFor(250);
 
-    screenshotCompares.push(await page.compareScreenshot(`${screenshotName}`));
+    screenshotCompares.push(await page.compareScreenshot());
 
     // Setup counter
     let colChangeCounter: any;
