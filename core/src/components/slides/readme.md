@@ -17,7 +17,7 @@ Licensed under MIT
 
 ### Custom Animations
 
-By default, Ionic ships with the `slide` animation effect built in. Custom animations can be provided via the `options` prop. Examples for other animations can be found below.
+By default, Ionic slides use the built-in `slide` animation effect. Custom animations can be provided via the `options` property. Examples of other animations can be found below.
 
 
 #### Coverflow
