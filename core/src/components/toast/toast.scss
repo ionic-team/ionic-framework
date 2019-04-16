@@ -70,6 +70,7 @@
 
 .toast-wrapper {
   @include border-radius(var(--border-radius));
+  @include position-horizontal(var(--start), var(--end));
 
   width: var(--width);
   min-width: var(--min-width);
