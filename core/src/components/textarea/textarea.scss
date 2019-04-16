@@ -58,6 +58,8 @@
 
 :host-context(ion-item) {
   position: static;
+
+  align-self: baseline;
 }
 
 :host-context(ion-item:not(.item-label)) {
@@ -69,10 +71,10 @@
 // --------------------------------------------------
 
 .native-textarea {
-  @include text-inherit();
   @include border-radius(var(--border-radius));
   @include margin(0);
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include text-inherit();
 
   display: block;
 
