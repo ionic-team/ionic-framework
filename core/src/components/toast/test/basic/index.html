@@ -69,8 +69,8 @@
         Custom Class
       </ion-button>
   
-      <ion-button expand="block" id="toast-left-and-right" onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, cssClass: 'toast-left-and-right'})">
-        Show Toast with left-right position
+      <ion-button expand="block" id="toast-start-and-end" onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, cssClass: 'toast-start-and-end'})">
+        Show Toast with start-end position
       </ion-button>
   
       <ion-toast-controller></ion-toast-controller>
@@ -215,9 +215,9 @@
       background-color: #f69234;
     }
   
-    .toast-left-and-right {
-      --left: 0;
-      --right: 0;
+    .toast-start-and-end {
+      --start: 0;
+      --end: 0;
       --max-width: 100%;
     }
   </style>

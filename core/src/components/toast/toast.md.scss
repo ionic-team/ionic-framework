@@ -16,7 +16,7 @@
 }
 
 .toast-wrapper {
-  @include position-horizontal(var(--left), var(--right));
+  @include position-horizontal(var(--start), var(--end));
   @include margin(auto);
 
   display: block;
