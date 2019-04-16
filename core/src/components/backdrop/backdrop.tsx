@@ -1,5 +1,6 @@
 import { Component, ComponentInterface, Event, EventEmitter, Listen, Prop } from '@stencil/core';
 
+import { Mode } from '../../interface';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { now } from '../../utils/helpers';
 
@@ -12,6 +13,7 @@ import { now } from '../../utils/helpers';
   shadow: true
 })
 export class Backdrop implements ComponentInterface {
+  mode!: Mode;
 
   private lastClick = -10000;
   private blocker = GESTURE_CONTROLLER.createBlocker({
@@ -78,6 +80,7 @@ export class Backdrop implements ComponentInterface {
     return {
       tabindex: '-1',
       class: {
+        [`${this.mode}`]: true,
         'backdrop-hide': !this.visible,
         'backdrop-no-tappable': !this.tappable,
       }

@@ -43,6 +43,14 @@ export class RefresherContent implements ComponentInterface {
     }
   }
 
+  hostData() {
+    return {
+      class: {
+        [`${this.mode}`]: true,
+      }
+    };
+  }
+
   render() {
     return [
       <div class="refresher-pulling">

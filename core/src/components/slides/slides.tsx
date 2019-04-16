@@ -2,7 +2,6 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Me
 
 import { Mode } from '../../interface';
 import { rIC } from '../../utils/helpers.js';
-import { createThemedClasses } from '../../utils/theme.js';
 
 import { SwiperInterface, SwiperOptions } from './swiper/swiper-interface';
 
@@ -450,7 +449,11 @@ export class Slides implements ComponentInterface {
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, 'slides'),
+        [`${this.mode}`]: true,
+
+        // Used internally for styling
+        [`slides-${this.mode}`]: true,
+
         'swiper-container': true
       }
     };
