@@ -122,19 +122,21 @@ export class ItemSliding implements ComponentInterface {
   @Method()
   async open(side = 'end') {
     if (this.openAmount === 0 && this.item !== null && this.optsDirty) {
-      const options = this.el.querySelector(`.item-options-${side}`) as HTMLElement | undefined;
+
+      const options = (side === 'end') ? this.rightOptions : this.leftOptions;
       if (options) {
-        this.optsDirty = false;
-        this.item.style.transition = 'transform 500ms cubic-bezier(0.36, 0.66, 0.04, 1)';
-        options.style.display = 'flex';
+        this.state = SlidingState.Enabled;
 
-        // TODO update to work with RTL
-        const width = (side === 'end') ? options.offsetWidth : -options.offsetWidth;
-        openSlidingItem = this.el;
-        options.style.display = '';
+        requestAnimationFrame(() => {
+          this.calculateOptsWidth();
 
-        this.setOpenAmount(width, false);
-        this.optsDirty = true;
+          // TODO update to work with RTL
+          const width = (side === 'end') ? this.optsWidthRightSide : -this.optsWidthLeftSide;
+          openSlidingItem = this.el;
+
+          this.setOpenAmount(width, false);
+          this.state = (side === 'end') ? SlidingState.End : SlidingState.Start;
+        });
       }
     }
   }
@@ -267,13 +269,18 @@ export class ItemSliding implements ComponentInterface {
   private calculateOptsWidth() {
     this.optsWidthRightSide = 0;
     if (this.rightOptions) {
+      this.rightOptions.style.display = 'flex';
       this.optsWidthRightSide = this.rightOptions.offsetWidth;
+      this.rightOptions.style.display = '';
     }
 
     this.optsWidthLeftSide = 0;
     if (this.leftOptions) {
+      this.leftOptions.style.display = 'flex';
       this.optsWidthLeftSide = this.leftOptions.offsetWidth;
+      this.leftOptions.style.display = '';
     }
+
     this.optsDirty = false;
   }
 
