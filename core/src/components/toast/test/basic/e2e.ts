@@ -89,3 +89,7 @@ test('toast:rtl: basic, color', async () => {
 test('toast:rtl: basic, custom class', async () => {
   await testToast(DIRECTORY, '#custom-class-toast', true);
 });
+
+test('toast:rtl: left right position', async () => {
+  await testToast(DIRECTORY, '#toast-left-and-right', true);
+});
