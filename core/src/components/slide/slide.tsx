@@ -25,7 +25,7 @@ export class Slide implements ComponentInterface {
     return {
       class: {
         [`${this.mode}`]: true,
-        'swiper-slide': true
+        'swiper-slide': true,
         'swiper-zoom-container': true
       }
     };
