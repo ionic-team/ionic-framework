@@ -20,6 +20,14 @@ export class Reorder implements ComponentInterface {
     ev.stopImmediatePropagation();
   }
 
+  hostData() {
+    return {
+      class: {
+        [`${this.mode}`]: true,
+      }
+    };
+  }
+
   render() {
     return (
       <slot>

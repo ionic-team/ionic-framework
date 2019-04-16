@@ -332,6 +332,7 @@ export class Input implements ComponentInterface {
       'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...createColorClasses(this.color),
+        [`${this.mode}`]: true,
         'has-value': this.hasValue(),
         'has-focus': this.hasFocus
       }

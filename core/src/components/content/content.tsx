@@ -293,6 +293,7 @@ export class Content implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
+        [`${this.mode}`]: true,
         'content-sizing': hostContext('ion-popover', this.el),
         'overscroll': !!this.forceOverscroll,
       },
