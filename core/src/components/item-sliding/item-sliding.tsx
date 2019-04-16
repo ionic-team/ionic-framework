@@ -118,6 +118,8 @@ export class ItemSliding implements ComponentInterface {
 
   /**
    * Open the sliding item.
+   *
+   * @param side The side of the options to open. If a side is not provided, it will open the options on the `"end"` side.
    */
   @Method()
   async open(side = 'end') {
