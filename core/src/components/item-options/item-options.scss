@@ -77,6 +77,8 @@ ion-item-options {
 
   ion-item-options {
     display: flex;
+
+    visibility: hidden;
   }
 
   &.item-sliding-active-options-start .item-options-start,
