@@ -320,7 +320,7 @@ const AUTO_SCROLL_MARGIN = 60;
 const SCROLL_JUMP = 10;
 const ITEM_REORDER_SELECTED = 'reorder-selected';
 
-export function reorderArray(array: any[], from: number, to: number): any[] {
+function reorderArray(array: any[], from: number, to: number): any[] {
   const element = array[from];
   array.splice(from, 1);
   array.splice(to, 0, element);
