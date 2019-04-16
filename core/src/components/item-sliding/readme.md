@@ -698,9 +698,9 @@ Open the sliding item.
 
 #### Parameters
 
-| Name   | Type     | Description |
-| ------ | -------- | ----------- |
-| `side` | `string` |             |
+| Name   | Type     | Description                                                                                               |
+| ------ | -------- | --------------------------------------------------------------------------------------------------------- |
+| `side` | `string` | The side of the options to open. If a side is not provided, it will open the options on the `"end"` side. |
 
 #### Returns
 
