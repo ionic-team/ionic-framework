@@ -26,7 +26,10 @@ export class Note implements ComponentInterface {
 
   hostData() {
     return {
-      class: createColorClasses(this.color)
+      class: {
+        ...createColorClasses(this.color),
+        [`${this.mode}`]: true,
+      }
     };
   }
 
