@@ -45,9 +45,18 @@
   bottom: 0;
 }
 
-.toast-message {
+.toast-content {
   @include padding($toast-ios-content-padding-top, $toast-ios-content-padding-end, $toast-ios-content-padding-bottom, $toast-ios-content-padding-start);
 }
+
+.toast-header {
+  margin-bottom: $toast-ios-header-margin-bottom;
+
+  font-weight: $toast-ios-header-font-weight;
+}
+
+// iOS Toast Button
+// --------------------------------------------------
 
 .toast-button {
   @include padding($toast-ios-button-padding-top, $toast-ios-button-padding-end, $toast-ios-button-padding-bottom, $toast-ios-button-padding-start);
