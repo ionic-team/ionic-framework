@@ -42,8 +42,8 @@ test('toast: basic, custom class', async () => {
   await testToast(DIRECTORY, '#custom-class-toast');
 });
 
-test('toast: left right position', async () => {
-  await testToast(DIRECTORY, '#toast-left-and-right');
+test('toast: start end position', async () => {
+  await testToast(DIRECTORY, '#toast-start-and-end');
 });
 
 /**
@@ -90,6 +90,6 @@ test('toast:rtl: basic, custom class', async () => {
   await testToast(DIRECTORY, '#custom-class-toast', true);
 });
 
-test('toast:rtl: left right position', async () => {
-  await testToast(DIRECTORY, '#toast-left-and-right', true);
+test('toast:rtl: start end position', async () => {
+  await testToast(DIRECTORY, '#toast-start-and-end', true);
 });
