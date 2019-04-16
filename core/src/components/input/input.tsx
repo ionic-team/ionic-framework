@@ -310,6 +310,7 @@ export class Input implements ComponentInterface {
   private clearTextInput = (ev?: Event) => {
     if (this.clearInput && !this.readonly && !this.disabled && ev) {
       ev.preventDefault();
+      ev.stopPropagation();
     }
 
     this.value = '';
