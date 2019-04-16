@@ -3,6 +3,26 @@ triage:
   removeLabelWhenProjectAssigned: true
   dryRun: false
 
+comment:
+  labels:
+    - label: "help wanted"
+      message: >
+        This issue has been labeled as `help wanted`. This label is added to issues
+        that we believe would be good for contributors.
+
+
+        If you'd like to work on this issue, please comment here letting us know that
+        you would like to submit a pull request for it. This helps us to keep track of
+        the pull request and make sure there isn't duplicated effort.
+
+
+        For a guide on how to create a pull request and test this project locally to see
+        your changes, see our [contributing documentation](https://ionicframework.com/docs/building/contributing).
+
+
+        Thank you!
+  dryRun: false
+
 closeAndLock:
   labels:
     - label: "ionitron: support"
@@ -98,6 +118,15 @@ labelPullRequest:
 
 wrongRepo:
   repos:
+    - label: "ionitron: capacitor"
+      repo: capacitor
+      message: >
+        Thanks for the issue! We use this issue tracker exclusively for bug reports and feature requests
+        associated with the Ionic Framework. It appears that this issue is associated with Capacitor.
+        I am moving this issue to the Capacitor repository. Please track this issue over there.
+
+
+        Thank you for using Ionic!
     - label: "ionitron: v3"
       repo: ionic-v3
       message: >

@@ -1,24 +1,20 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-import { cleanScreenshotName, generateE2EUrl } from '../../../utils/test/utils';
+import { generateE2EUrl } from '../../../utils/test/utils';
 
 export async function testPopover(
   type: string,
   selector: string,
-  rtl = false,
-  screenshotName: string = cleanScreenshotName(selector)
+  rtl = false
 ) {
   try {
     const pageUrl = generateE2EUrl('popover', type, rtl);
-    if (rtl) {
-      screenshotName = `${screenshotName} rtl`;
-    }
 
     const page = await newE2EPage({
       url: pageUrl
     });
 
-    const screenShotCompares = [];
+    const screenshotCompares = [];
 
     await page.click(selector);
     await page.waitForSelector(selector);
@@ -26,18 +22,18 @@ export async function testPopover(
     let popover = await page.find('ion-popover');
     await popover.waitForVisible();
 
-    screenShotCompares.push(await page.compareScreenshot(screenshotName));
+    screenshotCompares.push(await page.compareScreenshot());
 
     await popover.callMethod('dismiss');
     await popover.waitForNotVisible();
 
-    screenShotCompares.push(await page.compareScreenshot(`dismiss ${screenshotName}`));
+    screenshotCompares.push(await page.compareScreenshot('dismiss'));
 
     popover = await page.find('ion-popover');
     expect(popover).toBeNull();
 
-    for (const screenShotCompare of screenShotCompares) {
-      expect(screenShotCompare).toMatchScreenshot();
+    for (const screenshotCompare of screenshotCompares) {
+      expect(screenshotCompare).toMatchScreenshot();
     }
 
   } catch (err) {

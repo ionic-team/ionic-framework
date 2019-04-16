@@ -134,6 +134,7 @@ export class Textarea implements ComponentInterface {
     if (nativeInput && nativeInput.value !== value) {
       nativeInput.value = value;
     }
+    this.emitStyle();
     this.ionChange.emit({ value });
   }
 
@@ -265,7 +266,10 @@ export class Textarea implements ComponentInterface {
   hostData() {
     return {
       'aria-disabled': this.disabled ? 'true' : null,
-      class: createColorClasses(this.color)
+      class: {
+        ...createColorClasses(this.color),
+        [`${this.mode}`]: true,
+      }
     };
   }
 
