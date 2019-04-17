@@ -146,7 +146,6 @@
 
 :host(.searchbar-disabled) {
   cursor: default;
-  pointer-events: none;
-
   opacity: .4;
+  pointer-events: none;
 }
