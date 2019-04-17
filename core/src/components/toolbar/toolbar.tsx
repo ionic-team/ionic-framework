@@ -72,8 +72,10 @@ export class Toolbar implements ComponentInterface {
 
     return {
       class: {
+        [`${this.mode}`]: true,
+
         ...childStyles,
-        ...createColorClasses(this.color)
+        ...createColorClasses(this.color),
       }
     };
   }

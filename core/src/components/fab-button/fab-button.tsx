@@ -95,6 +95,7 @@ export class FabButton implements ComponentInterface {
       'aria-disabled': disabled ? 'true' : null,
       class: {
         ...createColorClasses(color),
+        [`${this.mode}`]: true,
         'fab-button-in-list': inList,
         'fab-button-translucent-in-list': inList && translucent,
         'fab-button-close-active': activated,

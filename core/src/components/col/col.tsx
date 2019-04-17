@@ -1,5 +1,6 @@
 import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
 
+import { Mode } from '../../interface';
 import { matchBreakpoint } from '../../utils/media';
 
 const win = window as any;
@@ -12,6 +13,8 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
   shadow: true
 })
 export class Col implements ComponentInterface {
+  mode!: Mode;
+
   @Prop({ context: 'window' }) win!: Window;
 
   @Element() el!: HTMLStencilElement;
@@ -247,6 +250,9 @@ export class Col implements ComponentInterface {
   hostData() {
     const isRTL = this.win.document.dir === 'rtl';
     return {
+      class: {
+        [`${this.mode}`]: true
+      },
       style: {
         ...this.calculateOffset(isRTL),
         ...this.calculatePull(isRTL),

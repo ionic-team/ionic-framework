@@ -1,11 +1,15 @@
 import { Component, ComponentInterface, Element, Prop, Watch } from '@stencil/core';
 
+import { Mode } from '../../interface';
+
 @Component({
   tag: 'ion-fab-list',
   styleUrl: 'fab-list.scss',
   shadow: true
 })
 export class FabList implements ComponentInterface {
+  mode!: Mode;
+
   @Element() el!: HTMLIonFabElement;
 
   /**
@@ -32,6 +36,7 @@ export class FabList implements ComponentInterface {
   hostData() {
     return {
       class: {
+        [`${this.mode}`]: true,
         'fab-list-active': this.activated,
         [`fab-list-side-${this.side}`]: true
       }

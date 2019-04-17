@@ -176,7 +176,7 @@ export namespace Components {
     /**
     * An array of buttons for the action sheet.
     */
-    'buttons': (ActionSheetButton | string)[];
+    'buttons'?: (ActionSheetButton | string)[];
     /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
