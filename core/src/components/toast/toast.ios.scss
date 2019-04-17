@@ -10,12 +10,13 @@
   --button-color: #{$toast-ios-button-color};
   --color: #{$toast-ios-title-color};
   --max-width: #{$toast-max-width};
+  --start: 10px;
+  --end: 10px;
 
   font-size: $toast-ios-content-font-size;
 }
 
 .toast-wrapper {
-  @include position-horizontal(10px, 10px);
   @include margin(auto);
 
   display: block;
