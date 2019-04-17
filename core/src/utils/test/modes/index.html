@@ -113,6 +113,7 @@
   <script>
     async function load() {
       const actionSheet = document.querySelector('ion-action-sheet');
+      await actionSheet.componentOnReady();
 
       actionSheet.buttons = [{
         text: 'Delete',
@@ -135,6 +136,8 @@
           console.log('Cancel clicked');
         }
       }];
+
+      await actionSheet.present();
 
       const picker = document.querySelector('ion-picker');
       await picker.componentOnReady();
