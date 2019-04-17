@@ -62,6 +62,7 @@ export class BackButton implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
+        [`${this.mode}`]: true,
 
         'button': true, // ion-buttons target .button
         'ion-activatable': true,

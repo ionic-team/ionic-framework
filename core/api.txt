@@ -7,7 +7,7 @@ ion-action-sheet-controller,method,getTop,getTop() => Promise<HTMLIonActionSheet
 ion-action-sheet,scoped
 ion-action-sheet,prop,animated,boolean,true,false,false
 ion-action-sheet,prop,backdropDismiss,boolean,true,false,false
-ion-action-sheet,prop,buttons,(string | ActionSheetButton)[],undefined,true,false
+ion-action-sheet,prop,buttons,(string | ActionSheetButton)[],[],false,false
 ion-action-sheet,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-action-sheet,prop,enterAnimation,((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) | undefined,undefined,false,false
 ion-action-sheet,prop,header,string | undefined,undefined,false,false
@@ -1135,11 +1135,13 @@ ion-toast-controller,method,getTop,getTop() => Promise<HTMLIonToastElement | und
 
 ion-toast,shadow
 ion-toast,prop,animated,boolean,true,false,false
+ion-toast,prop,buttons,(string | ToastButton)[] | undefined,undefined,false,false
 ion-toast,prop,closeButtonText,string | undefined,undefined,false,false
 ion-toast,prop,color,string | undefined,undefined,false,false
 ion-toast,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-toast,prop,duration,number,0,false,false
 ion-toast,prop,enterAnimation,((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) | undefined,undefined,false,false
+ion-toast,prop,header,string | undefined,undefined,false,false
 ion-toast,prop,keyboardClose,boolean,false,false,false
 ion-toast,prop,leaveAnimation,((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) | undefined,undefined,false,false
 ion-toast,prop,message,string | undefined,undefined,false,false
@@ -1163,11 +1165,13 @@ ion-toast,css-prop,--border-width
 ion-toast,css-prop,--box-shadow
 ion-toast,css-prop,--button-color
 ion-toast,css-prop,--color
+ion-toast,css-prop,--end
 ion-toast,css-prop,--height
 ion-toast,css-prop,--max-height
 ion-toast,css-prop,--max-width
 ion-toast,css-prop,--min-height
 ion-toast,css-prop,--min-width
+ion-toast,css-prop,--start
 ion-toast,css-prop,--width
 
 ion-toggle,shadow

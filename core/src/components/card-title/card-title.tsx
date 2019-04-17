@@ -26,7 +26,10 @@ export class CardTitle implements ComponentInterface {
 
   hostData() {
     return {
-      class: createColorClasses(this.color),
+      class: {
+        ...createColorClasses(this.color),
+        [`${this.mode}`]: true
+      },
       'role': 'heading',
       'aria-level': '2'
     };

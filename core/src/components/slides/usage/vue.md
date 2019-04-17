@@ -19,8 +19,10 @@
 
   @Component()
   export default class SelectExample extends Vue {
+    // Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
     slideOpts = {
-      effect: 'flip'
+      initialSlide: 1,
+      speed: 400
     };
   }
 </script>

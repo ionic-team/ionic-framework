@@ -1,11 +1,14 @@
 import { Component, ComponentInterface, Element, Method, Prop, QueueApi } from '@stencil/core';
 
+import { Mode } from '../../interface';
+
 @Component({
   tag: 'ion-ripple-effect',
   styleUrl: 'ripple-effect.scss',
   shadow: true
 })
 export class RippleEffect implements ComponentInterface {
+  mode!: Mode;
 
   @Element() el!: HTMLElement;
 
@@ -79,6 +82,7 @@ export class RippleEffect implements ComponentInterface {
     return {
       role: 'presentation',
       class: {
+        [`${this.mode}`]: true,
         'unbounded': this.unbounded
       }
     };

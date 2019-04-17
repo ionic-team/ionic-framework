@@ -205,6 +205,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
       },
       class: {
         ...getClassMap(this.cssClass),
+        [`${this.mode}`]: true,
         'popover-translucent': this.translucent
       }
     };
