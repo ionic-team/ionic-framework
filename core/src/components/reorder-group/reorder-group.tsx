@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { Gesture, GestureDetail, ItemReorderEventDetail } from '../../interface';
+import { Gesture, GestureDetail, ItemReorderEventDetail, Mode } from '../../interface';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/haptic';
 
 const enum ReorderGroupState {
@@ -14,6 +14,7 @@ const enum ReorderGroupState {
   styleUrl: 'reorder-group.scss'
 })
 export class ReorderGroup implements ComponentInterface {
+  mode!: Mode;
 
   private selectedItemEl?: HTMLElement;
   private selectedItemHeight!: number;
@@ -293,6 +294,7 @@ export class ReorderGroup implements ComponentInterface {
   hostData() {
     return {
       class: {
+        [`${this.mode}`]: true,
         'reorder-enabled': !this.disabled,
         'reorder-list-active': this.state !== ReorderGroupState.Idle,
       }

@@ -11,12 +11,13 @@
   --button-color: #{ion-color(primary, base)};
   --color: #{$toast-md-color};
   --max-width: #{$toast-max-width};
+  --start: 8px;
+  --end: 8px;
 
   font-size: #{$toast-md-font-size};
 }
 
 .toast-wrapper {
-  @include position-horizontal(8px, 8px);
   @include margin(auto);
 
   display: block;

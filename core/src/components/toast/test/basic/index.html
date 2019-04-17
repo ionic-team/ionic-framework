@@ -68,6 +68,10 @@
         Custom Class
       </ion-button>
 
+      <ion-button expand="block" id="toast-start-and-end" onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, cssClass: 'toast-start-and-end'})">
+        Show Toast with start-end position
+      </ion-button>
+
       <ion-toast-controller></ion-toast-controller>
 
       <ion-grid>
@@ -209,6 +213,12 @@
 
     .orange {
       background-color: #f69234;
+    }
+
+    .toast-start-and-end {
+      --start: 0;
+      --end: 0;
+      --max-width: 100%;
     }
   </style>
 </body>

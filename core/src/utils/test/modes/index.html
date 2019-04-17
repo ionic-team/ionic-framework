@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Components - Modes</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body onLoad="load()">
+  <ion-app>
+    <ion-split-pane>
+      <ion-menu>
+
+      </ion-menu>
+
+      <div class="ion-page" main>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Components: Modes</ion-title>
+            <ion-buttons slot="start">
+              <ion-back-button></ion-back-button>
+              <ion-button></ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content>
+          <ion-action-sheet></ion-action-sheet>
+          <ion-alert></ion-alert>
+          <ion-anchor></ion-anchor>
+          <ion-avatar></ion-avatar>
+          <ion-backdrop></ion-backdrop>
+          <ion-badge></ion-badge>
+          <ion-button></ion-button>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-subtitle></ion-card-subtitle>
+              <ion-card-title></ion-card-title>
+            </ion-card-header>
+            <ion-card-content></ion-card-content>
+          </ion-card>
+
+          <ion-checkbox></ion-checkbox>
+          <ion-chip></ion-chip>
+          <ion-col></ion-col>
+          <ion-datetime></ion-datetime>
+          <ion-fab-button></ion-fab-button>
+          <ion-fab-list></ion-fab-list>
+          <ion-fab></ion-fab>
+          <ion-footer></ion-footer>
+          <ion-grid></ion-grid>
+          <ion-icon name="star"></ion-icon>
+          <ion-img></ion-img>
+          <ion-infinite-scroll></ion-infinite-scroll>
+          <ion-infinite-scroll-content></ion-infinite-scroll-content>
+          <ion-input></ion-input>
+          <ion-item-divider></ion-item-divider>
+          <ion-item-group></ion-item-group>
+          <ion-item-option></ion-item-option>
+          <ion-item-options></ion-item-options>
+          <ion-item-sliding></ion-item-sliding>
+          <ion-item></ion-item>
+          <ion-label></ion-label>
+          <ion-list></ion-list>
+          <ion-list-header></ion-list-header>
+          <ion-loading></ion-loading>
+          <ion-menu-button></ion-menu-button>
+          <ion-menu-toggle></ion-menu-toggle>
+          <ion-modal></ion-modal>
+          <ion-note></ion-note>
+          <ion-picker></ion-picker>
+          <ion-popover></ion-popover>
+          <ion-progress-bar></ion-progress-bar>
+          <ion-radio-group></ion-radio-group>
+          <ion-radio></ion-radio>
+          <ion-range></ion-range>
+          <ion-refresher></ion-refresher>
+          <ion-refresher-content></ion-refresher-content>
+          <ion-reorder-group></ion-reorder-group>
+          <ion-reorder></ion-reorder>
+          <ion-ripple-effect></ion-ripple-effect>
+          <ion-row></ion-row>
+          <ion-searchbar></ion-searchbar>
+          <ion-segment-button></ion-segment-button>
+          <ion-segment></ion-segment>
+          <ion-select-option></ion-select-option>
+          <ion-select-popover></ion-select-popover>
+          <ion-select></ion-select>
+          <ion-skeleton-text></ion-skeleton-text>
+          <ion-slide></ion-slide>
+          <ion-slides></ion-slides>
+          <ion-spinner></ion-spinner>
+          <ion-tab-bar></ion-tab-bar>
+          <ion-tab-button></ion-tab-button>
+          <ion-text></ion-text>
+          <ion-textarea></ion-textarea>
+          <ion-thumbnail></ion-thumbnail>
+          <ion-title></ion-title>
+          <ion-toast></ion-toast>
+          <ion-toggle></ion-toggle>
+          <ion-toolbar></ion-toolbar>
+        </ion-content>
+      </div>
+    </ion-split-pane>
+  </ion-app>
+
+  <script>
+    async function load() {
+      const actionSheet = document.querySelector('ion-action-sheet');
+
+      actionSheet.buttons = [{
+        text: 'Delete',
+        role: 'destructive',
+        icon: 'trash',
+        handler: () => {
+          console.log('Delete clicked');
+        }
+      }, {
+        text: 'Share',
+        icon: 'share',
+        handler: () => {
+          console.log('Share clicked');
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }];
+
+      const picker = document.querySelector('ion-picker');
+      await picker.componentOnReady();
+
+      picker.buttons = [
+        { text: "Cancel", role: "cancel" },
+        { text: "Done" }
+      ];
+
+      picker.columns = [{
+        name: 'month',
+        align: 'left',
+        selectedIndex: 0,
+        options: [
+          {
+            text: "June",
+            value: 0
+          }, {
+            text: "July",
+            value: 1
+          }
+        ],
+        prevSelected: 0,
+        selectedIndex: 0,
+        optionsWidth: "68px",
+        columnWidth: '200px',
+        prefixWidth: '100px',
+        suffixWidth: '100px',
+        prefix: undefined,
+        suffix: undefined,
+      }];
+
+      await picker.present();
+    }
+
+  </script>
+</body>
+
+</html>

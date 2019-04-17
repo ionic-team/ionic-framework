@@ -1165,11 +1165,13 @@ ion-toast,css-prop,--border-width
 ion-toast,css-prop,--box-shadow
 ion-toast,css-prop,--button-color
 ion-toast,css-prop,--color
+ion-toast,css-prop,--end
 ion-toast,css-prop,--height
 ion-toast,css-prop,--max-height
 ion-toast,css-prop,--max-width
 ion-toast,css-prop,--min-height
 ion-toast,css-prop,--min-width
+ion-toast,css-prop,--start
 ion-toast,css-prop,--width
 
 ion-toggle,shadow
