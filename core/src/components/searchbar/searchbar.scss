@@ -144,6 +144,9 @@
   display: block;
 }
 
-.searchbar-input[disabled] {
+:host(.searchbar-disabled) {
+  cursor: default;
+  pointer-events: none;
+
   opacity: .4;
 }
