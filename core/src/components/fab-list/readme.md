@@ -82,7 +82,7 @@ export default Example
 
 | Property    | Attribute   | Description                                                         | Type                                    | Default    |
 | ----------- | ----------- | ------------------------------------------------------------------- | --------------------------------------- | ---------- |
-| `activated` | `activated` | If `true`, the fab list will be show all fab buttons in the list.   | `boolean`                               | `false`    |
+| `activated` | `activated` | If `true`, the fab list will show all fab buttons in the list.      | `boolean`                               | `false`    |
 | `side`      | `side`      | The side the fab list will show on relative to the main fab button. | `"bottom" \| "end" \| "start" \| "top"` | `'bottom'` |
 
 

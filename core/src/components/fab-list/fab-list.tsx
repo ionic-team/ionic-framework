@@ -13,7 +13,7 @@ export class FabList implements ComponentInterface {
   @Element() el!: HTMLIonFabElement;
 
   /**
-   * If `true`, the fab list will be show all fab buttons in the list.
+   * If `true`, the fab list will show all fab buttons in the list.
    */
   @Prop() activated = false;
 
