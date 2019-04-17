@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Me
 
 import { Animation, AnimationBuilder, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
 import { dismiss, eventMethod, present } from '../../utils/overlays';
-import { createThemedClasses, getClassMap } from '../../utils/theme';
+import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
@@ -204,7 +204,11 @@ export class Picker implements ComponentInterface, OverlayInterface {
     return {
       'aria-modal': 'true',
       class: {
-        ...createThemedClasses(this.mode, 'picker'),
+        [`${this.mode}`]: true,
+
+        // Used internally for styling
+        [`picker-${this.mode}`]: true,
+
         ...getClassMap(this.cssClass)
       },
       style: {

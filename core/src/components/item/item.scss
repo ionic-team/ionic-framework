@@ -181,6 +181,9 @@ button, a {
 
   display: flex;
 
+  /* This is required to work with an inset highlight */
+  position: relative;
+
   flex: 1;
   flex-direction: inherit;
   align-items: inherit;

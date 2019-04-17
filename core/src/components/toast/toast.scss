@@ -24,6 +24,9 @@
    * @prop --max-height: Maximum height of the toast
    *
    * @prop --button-color: Color of the button text
+   *
+   * @prop --start: Position from the start
+   * @prop --end: Position from the end
    */
   --border-width: 0;
   --border-style: none;
@@ -68,6 +71,7 @@
 
 .toast-wrapper {
   @include border-radius(var(--border-radius));
+  @include position-horizontal(var(--start), var(--end));
 
   width: var(--width);
   min-width: var(--min-width);
