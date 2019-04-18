@@ -122,6 +122,7 @@ export class ItemSliding implements ComponentInterface {
    *
    * @param side The side of the options to open. If a side is not provided, it will open the first set of options it finds within the item.
    */
+   // TODO update to work with RTL
   @Method()
   async open(side: string | undefined) {
     if (this.item === null) { return; }
@@ -133,7 +134,7 @@ export class ItemSliding implements ComponentInterface {
      * If side is not set, we need to infer the side
      * so we know which direction to move the options
      */
-    if (!side) {
+    if (side === undefined) {
       side = (optionsToOpen === this.leftOptions) ? 'start' : 'end';
     }
 
@@ -154,7 +155,6 @@ export class ItemSliding implements ComponentInterface {
     requestAnimationFrame(() => {
       this.calculateOptsWidth();
 
-      // TODO update to work with RTL
       const width = (side === 'end') ? this.optsWidthRightSide : -this.optsWidthLeftSide;
       openSlidingItem = this.el;
 
@@ -186,10 +186,11 @@ export class ItemSliding implements ComponentInterface {
 
    /**
     * Given a side, attempt to return the ion-item-options element
+    *
     * @param side This side of the options to get. If a side is not provide,
     * it will return the first one available
-    * TODO update to work with RTL
     */
+  // TODO update to work with RTL
   private getOptions(side?: string): HTMLIonItemOptionsElement | undefined {
       if (side === undefined) {
         return this.leftOptions || this.rightOptions;
