@@ -147,6 +147,9 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
   /**
    * Dismiss the toast overlay after it has been presented.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the toast. For example, 'cancel' or 'backdrop'.
    */
   @Method()
   dismiss(data?: any, role?: string): Promise<boolean> {
