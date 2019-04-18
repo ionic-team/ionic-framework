@@ -124,7 +124,7 @@ export class ItemSliding implements ComponentInterface {
    */
   @Method()
   async open(side = 'end') {
-    if (this.openAmount === 0 && this.item !== null && this.optsDirty) {
+    if (this.openAmount === 0 && this.item !== null) {
 
       const options = (side === 'end') ? this.rightOptions : this.leftOptions;
       if (options) {
@@ -149,7 +149,6 @@ export class ItemSliding implements ComponentInterface {
    */
   @Method()
   async close() {
-    this.optsDirty = false;
     this.setOpenAmount(0, true);
   }
 
@@ -314,7 +313,6 @@ export class ItemSliding implements ComponentInterface {
       this.tmr = setTimeout(() => {
         this.state = SlidingState.Disabled;
         this.tmr = undefined;
-        this.optsDirty = true;
       }, 600) as any;
 
       openSlidingItem = undefined;
