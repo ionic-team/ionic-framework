@@ -360,15 +360,15 @@ export default Example;
 
 ## Properties
 
-| Property       | Attribute        | Description                                                                                                        | Type                  | Default     |
-| -------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------ | --------------------- | ----------- |
-| `contentId`    | `content-id`     | The content's id the menu should use.                                                                              | `string \| undefined` | `undefined` |
-| `disabled`     | `disabled`       | If `true`, the menu is disabled.                                                                                   | `boolean`             | `false`     |
-| `maxEdgeStart` | `max-edge-start` | The edge threshold for dragging the menu open. If a drag/swipe happens over this value, the menu is not triggered. | `number`              | `50`        |
-| `menuId`       | `menu-id`        | An id for the menu.                                                                                                | `string \| undefined` | `undefined` |
-| `side`         | `side`           | Which side of the view the menu should be placed.                                                                  | `"end" \| "start"`    | `'start'`   |
-| `swipeGesture` | `swipe-gesture`  | If `true`, swiping the menu is enabled.                                                                            | `boolean`             | `true`      |
-| `type`         | `type`           | The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.                                | `string \| undefined` | `undefined` |
+| Property       | Attribute        | Description                                                                                                                                       | Type                  | Default     |
+| -------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
+| `contentId`    | `content-id`     | The content's id the menu should use.                                                                                                             | `string \| undefined` | `undefined` |
+| `disabled`     | `disabled`       | If `true`, the menu is disabled.                                                                                                                  | `boolean`             | `false`     |
+| `maxEdgeStart` | `max-edge-start` | The edge threshold for dragging the menu open. If a drag/swipe happens over this value, the menu is not triggered.                                | `number`              | `50`        |
+| `menuId`       | `menu-id`        | An id for the menu.                                                                                                                               | `string \| undefined` | `undefined` |
+| `side`         | `side`           | Which side of the view the menu should be placed.                                                                                                 | `"end" \| "start"`    | `'start'`   |
+| `swipeGesture` | `swipe-gesture`  | If `true`, swiping the menu is enabled.                                                                                                           | `boolean`             | `true`      |
+| `type`         | `type`           | The animation type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`. Custom animations can be registered by the menu controller. | `string \| undefined` | `undefined` |
 
 
 ## Events
@@ -385,14 +385,13 @@ export default Example;
 
 ### `close(animated?: boolean) => Promise<boolean>`
 
-Closes the menu. If the menu is already closed or it can't be closed,
-it returns `false`.
+Close the menu. Returns `false` if the menu is already closed or it can't be closed.
 
 #### Parameters
 
-| Name       | Type      | Description |
-| ---------- | --------- | ----------- |
-| `animated` | `boolean` |             |
+| Name       | Type      | Description                                |
+| ---------- | --------- | ------------------------------------------ |
+| `animated` | `boolean` | If `true`, the menu will animate on close. |
 
 #### Returns
 
@@ -402,10 +401,10 @@ Type: `Promise<boolean>`
 
 ### `isActive() => Promise<boolean>`
 
-Returns `true` is the menu is active.
+Get whether or not the menu is active. Returns `true` if the menu is active.
 
 A menu is active when it can be opened or closed, meaning it's enabled
-and it's not part of a `ion-split-pane`.
+and it's not part of an `ion-split-pane`.
 
 #### Returns
 
@@ -415,7 +414,7 @@ Type: `Promise<boolean>`
 
 ### `isOpen() => Promise<boolean>`
 
-Returns `true` is the menu is open.
+Get whether or not the menu is open. Returns `true` if the menu is open.
 
 #### Returns
 
@@ -425,14 +424,13 @@ Type: `Promise<boolean>`
 
 ### `open(animated?: boolean) => Promise<boolean>`
 
-Opens the menu. If the menu is already open or it can't be opened,
-it returns `false`.
+Open the menu. Returns `false` if the menu is already open or it can't be opened.
 
 #### Parameters
 
-| Name       | Type      | Description |
-| ---------- | --------- | ----------- |
-| `animated` | `boolean` |             |
+| Name       | Type      | Description                               |
+| ---------- | --------- | ----------------------------------------- |
+| `animated` | `boolean` | If `true`, the menu will animate on open. |
 
 #### Returns
 
@@ -442,15 +440,15 @@ Type: `Promise<boolean>`
 
 ### `setOpen(shouldOpen: boolean, animated?: boolean) => Promise<boolean>`
 
-Opens or closes the button.
-If the operation can't be completed successfully, it returns `false`.
+Sets the menu to open or closed.
+Returns `false` if the operation can't be completed successfully.
 
 #### Parameters
 
-| Name         | Type      | Description |
-| ------------ | --------- | ----------- |
-| `shouldOpen` | `boolean` |             |
-| `animated`   | `boolean` |             |
+| Name         | Type      | Description                                         |
+| ------------ | --------- | --------------------------------------------------- |
+| `shouldOpen` | `boolean` | If `true`, the menu should open.                    |
+| `animated`   | `boolean` | If `true`, the menu will animate on open and close. |
 
 #### Returns
 
@@ -460,14 +458,15 @@ Type: `Promise<boolean>`
 
 ### `toggle(animated?: boolean) => Promise<boolean>`
 
-Toggles the menu. If the menu is already open, it will try to close, otherwise it will try to open it.
-If the operation can't be completed successfully, it returns `false`.
+Toggle the menu open or closed. If the menu is already open, it will try to
+close the menu, otherwise it will try to open it. Returns `false` if
+the operation can't be completed successfully.
 
 #### Parameters
 
-| Name       | Type      | Description |
-| ---------- | --------- | ----------- |
-| `animated` | `boolean` |             |
+| Name       | Type      | Description                                         |
+| ---------- | --------- | --------------------------------------------------- |
+| `animated` | `boolean` | If `true`, the menu will animate on open and close. |
 
 #### Returns
 

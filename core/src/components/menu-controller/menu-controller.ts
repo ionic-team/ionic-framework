@@ -25,7 +25,13 @@ export class MenuController implements MenuControllerI {
   }
 
   /**
-   * Open the menu.
+   * Open the menu. If a menu is not provided then it will open the first
+   * menu found. If the specified menu is `start` or `end`, then it will open
+   * the enabled menu on that side. Otherwise, it will try to find the menu
+   * using the menu's `id` property. If a menu is not found then it will
+   * return `false`.
+   *
+   * @param menuId The id or side of the menu to open.
    */
   @Method()
   async open(menuId?: string | null): Promise<boolean> {
@@ -37,8 +43,11 @@ export class MenuController implements MenuControllerI {
   }
 
   /**
-   * Close the menu. If no menu is specified, then it will close any menu
-   * that is open. If a menu is specified, it will close that menu.
+   * Close the menu. If a menu is specified, it will close that menu.
+   * If no menu is specified, then it will close any menu that is open.
+   * If it does not find any open menus, it will return `false`.
+   *
+   * @param menuId The id or side of the menu to close.
    */
   @Method()
   async close(menuId?: string | null): Promise<boolean> {
@@ -50,8 +59,11 @@ export class MenuController implements MenuControllerI {
   }
 
   /**
-   * Toggle the menu. If it's closed, it will open, and if opened, it
-   * will close.
+   * Toggle the menu open or closed. If the menu is already open, it will try to
+   * close the menu, otherwise it will try to open it. Returns `false` if
+   * a menu is not found.
+   *
+   * @param menuId The id or side of the menu to toggle.
    */
   @Method()
   async toggle(menuId?: string | null): Promise<boolean> {
@@ -63,35 +75,44 @@ export class MenuController implements MenuControllerI {
   }
 
   /**
-   * Used to enable or disable a menu. For example, there could be multiple
-   * left menus, but only one of them should be able to be opened at the same
-   * time. If there are multiple menus on the same side, then enabling one menu
-   * will also automatically disable all the others that are on the same side.
+   * Enable or disable a menu. This is useful when there are multiple
+   * menus on the same side and only one of them should be allowed to
+   * open. Enabling a menu will automatically disable all other menus
+   * on that side.
+   *
+   * @param enable If `true`, the menu should be enabled.
+   * @param menuId The id or side of the menu to enable or disable.
    */
   @Method()
-  async enable(shouldEnable: boolean, menuId?: string | null): Promise<HTMLIonMenuElement | undefined> {
+  async enable(enable: boolean, menuId?: string | null): Promise<HTMLIonMenuElement | undefined> {
     const menu = await this.get(menuId);
     if (menu) {
-      menu.disabled = !shouldEnable;
+      menu.disabled = !enable;
     }
     return menu;
   }
 
   /**
-   * Used to enable or disable the ability to swipe open the menu.
+   * Enable or disable the ability to swipe open the menu.
+   *
+   * @param enable If `true`, the menu swipe gesture should be enabled.
+   * @param menuId The id or side of the menu to enable or disable the swipe gesture on.
    */
   @Method()
-  async swipeGesture(shouldEnable: boolean, menuId?: string | null): Promise<HTMLIonMenuElement | undefined> {
+  async swipeGesture(enable: boolean, menuId?: string | null): Promise<HTMLIonMenuElement | undefined> {
     const menu = await this.get(menuId);
     if (menu) {
-      menu.swipeGesture = shouldEnable;
+      menu.swipeGesture = enable;
     }
     return menu;
   }
 
   /**
-   * Returns `true` if the specified menu is open. If the menu is not specified, it
-   * will return `true` if any menu is currently open.
+   * Get whether or not the menu is open. Returns `true` if the specified
+   * menu is open. If a menu is not specified, it will return `true` if
+   * any menu is currently open.
+   *
+   * @param menuId The id or side of the menu that is being checked.
    */
   @Method()
   async isOpen(menuId?: string | null): Promise<boolean> {
@@ -105,7 +126,10 @@ export class MenuController implements MenuControllerI {
   }
 
   /**
-   * Returns `true` if the specified menu is enabled.
+   * Get whether or not the menu is enabled. Returns `true` if the
+   * specified menu is enabled. Returns `false` if a menu is not found.
+   *
+   * @param menuId The id or side of the menu that is being checked.
    */
   @Method()
   async isEnabled(menuId?: string | null): Promise<boolean> {
@@ -117,11 +141,12 @@ export class MenuController implements MenuControllerI {
   }
 
   /**
-   * Used to get a menu instance. If a menu is not provided then it will
-   * return the first menu found. If the specified menu is `start` or `end`, then
-   * it will return the enabled menu on that side. Otherwise, it will try to find
-   * the menu using the menu's `id` property. If a menu is not found then it will
-   * return `null`.
+   * Get a menu instance. If a menu is not provided then it will return the first
+   * menu found. If the specified menu is `start` or `end`, then it will return the
+   * enabled menu on that side. Otherwise, it will try to find the menu using the menu's
+   * `id` property. If a menu is not found then it will return `null`.
+   *
+   * @param menuId The id or side of the menu.
    */
   @Method()
   async get(menuId?: string | null): Promise<HTMLIonMenuElement | undefined> {
@@ -166,7 +191,7 @@ export class MenuController implements MenuControllerI {
   }
 
   /**
-   * Returns the instance of the menu already opened, otherwise `null`.
+   * Get the instance of the opened menu. Returns `null` if a menu is not found.
    */
   @Method()
   async getOpen(): Promise<HTMLIonMenuElement | undefined> {
@@ -175,7 +200,7 @@ export class MenuController implements MenuControllerI {
   }
 
   /**
-   * Returns an array of all menu instances.
+   * Get all menu instances.
    */
   @Method()
   async getMenus(): Promise<HTMLIonMenuElement[]> {
@@ -184,7 +209,8 @@ export class MenuController implements MenuControllerI {
   }
 
   /**
-   * Returns `true` if any menu is currently animating.
+   * Get whether or not a menu is animating. Returns `true` if any
+   * menu is currently animating.
    */
   @Method()
   async isAnimating(): Promise<boolean> {
@@ -193,11 +219,11 @@ export class MenuController implements MenuControllerI {
   }
 
   /**
-   * Registers a new animation that can be used in any `ion-menu`.
+   * Registers a new animation that can be used with any `ion-menu` by
+   * passing the name of the animation in its `type` property.
    *
-   * ```
-   * <ion-menu type="my-animation">
-   * ```
+   * @param name The name of the animation to register.
+   * @param animation The animation function to register.
    */
   @Method()
   registerAnimation(name: string, animation: AnimationBuilder) {
