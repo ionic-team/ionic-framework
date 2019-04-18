@@ -129,6 +129,9 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
   /**
    * Dismiss the picker overlay after it has been presented.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the picker. For example, 'cancel' or 'backdrop'.
    */
   @Method()
   dismiss(data?: any, role?: string): Promise<boolean> {
@@ -155,7 +158,9 @@ export class Picker implements ComponentInterface, OverlayInterface {
   }
 
   /**
-   * Returns the column the matches the specified name
+   * Get the column that matches the specified name.
+   *
+   * @param name The name of the column.
    */
   @Method()
   getColumn(name: string): Promise<PickerColumn | undefined> {
