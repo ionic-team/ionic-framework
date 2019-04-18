@@ -12,14 +12,20 @@ export class ActionSheetController implements ComponentInterface, OverlayControl
 
   /**
    * Create an action sheet overlay with action sheet options.
+   *
+   * @param options The options to use to create the action sheet.
    */
   @Method()
-  create(opts: ActionSheetOptions): Promise<HTMLIonActionSheetElement> {
-    return createOverlay(this.doc.createElement('ion-action-sheet'), opts);
+  create(options: ActionSheetOptions): Promise<HTMLIonActionSheetElement> {
+    return createOverlay(this.doc.createElement('ion-action-sheet'), options);
   }
 
   /**
    * Dismiss the open action sheet overlay.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the action sheet. For example, 'cancel' or 'backdrop'.
+   * @param id The id of the action sheet to dismiss. If an id is not provided, it will dismiss the most recently opened action sheet.
    */
   @Method()
   dismiss(data?: any, role?: string, id?: string) {
