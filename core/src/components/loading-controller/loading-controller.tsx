@@ -12,14 +12,20 @@ export class LoadingController implements ComponentInterface, OverlayController 
 
   /**
    * Create a loading overlay with loading options.
+   *
+   * @param options The options to use to create the loading.
    */
   @Method()
-  create(opts?: LoadingOptions): Promise<HTMLIonLoadingElement> {
-    return createOverlay(this.doc.createElement('ion-loading'), opts);
+  create(options?: LoadingOptions): Promise<HTMLIonLoadingElement> {
+    return createOverlay(this.doc.createElement('ion-loading'), options);
   }
 
   /**
    * Dismiss the open loading overlay.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the loading. For example, 'cancel' or 'backdrop'.
+   * @param id The id of the loading to dismiss. If an id is not provided, it will dismiss the most recently opened loading.
    */
   @Method()
   dismiss(data?: any, role?: string, id?: string) {

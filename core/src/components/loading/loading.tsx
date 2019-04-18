@@ -142,6 +142,9 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   /**
    * Dismiss the loading overlay after it has been presented.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the loading. For example, 'cancel' or 'backdrop'.
    */
   @Method()
   dismiss(data?: any, role?: string): Promise<boolean> {
