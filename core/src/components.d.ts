@@ -4350,7 +4350,7 @@ export namespace Components {
 
   interface IonSplitPane {
     /**
-    * The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane.  ```html    * <ion-split-pane content-id="my-content">    *   <ion-menu></ion-menu>    *   <div id="my-content">    * </ion-split-pane>    * ```
+    * The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane.
     */
     'contentId'?: string;
     /**
@@ -4364,7 +4364,7 @@ export namespace Components {
   }
   interface IonSplitPaneAttributes extends StencilHTMLAttributes {
     /**
-    * The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane.  ```html    * <ion-split-pane content-id="my-content">    *   <ion-menu></ion-menu>    *   <div id="my-content">    * </ion-split-pane>    * ```
+    * The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane.
     */
     'contentId'?: string;
     /**
@@ -5010,7 +5010,7 @@ export namespace Components {
     */
     'approxItemHeight': number;
     /**
-    * This method marks the tail the items array as dirty, so they can be re-rendered.  It's equivalent to calling:  ```js    * virtualScroll.checkRange(lastItemLen);    * ```
+    * Marks the tail of the items array as dirty, so they can be re-rendered. It's equivalent to calling `checkRange(length)` where `length` is the total length of the items.
     */
     'checkEnd': () => void;
     /**

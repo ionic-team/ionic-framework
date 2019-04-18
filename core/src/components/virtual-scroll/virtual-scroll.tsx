@@ -227,13 +227,9 @@ export class VirtualScroll implements ComponentInterface {
   }
 
   /**
-   * This method marks the tail the items array as dirty, so they can be re-rendered.
-   *
-   * It's equivalent to calling:
-   *
-   * ```js
-   * virtualScroll.checkRange(lastItemLen);
-   * ```
+   * Marks the tail of the items array as dirty, so they can be re-rendered.
+   * It's equivalent to calling `checkRange(length)` where `length` is the
+   * total length of the items.
    */
   @Method()
   checkEnd() {
