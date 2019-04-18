@@ -7,7 +7,7 @@ ion-action-sheet-controller,method,getTop,getTop() => Promise<HTMLIonActionSheet
 ion-action-sheet,scoped
 ion-action-sheet,prop,animated,boolean,true,false,false
 ion-action-sheet,prop,backdropDismiss,boolean,true,false,false
-ion-action-sheet,prop,buttons,(string | ActionSheetButton)[],undefined,true,false
+ion-action-sheet,prop,buttons,(string | ActionSheetButton)[],[],false,false
 ion-action-sheet,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-action-sheet,prop,enterAnimation,((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) | undefined,undefined,false,false
 ion-action-sheet,prop,header,string | undefined,undefined,false,false
