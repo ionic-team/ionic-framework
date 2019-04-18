@@ -129,9 +129,21 @@ export class ItemSliding implements ComponentInterface {
     const optionsToOpen = this.getOptions(side);
     if (!optionsToOpen) { return; }
 
+    /**
+     * If side is not set, we need to infer the side
+     * so we know which direction to move the options
+     */
+    if (!side) {
+      side = (optionsToOpen === this.leftOptions) ? 'start' : 'end';
+    }
+
     const isStartOpen = this.openAmount < 0;
     const isEndOpen = this.openAmount > 0;
 
+    /**
+     * If a side is open and a user tries to
+     * re-open the same side, we should not do anything
+     */
     if (isStartOpen && optionsToOpen === this.leftOptions) { return; }
     if (isEndOpen && optionsToOpen === this.rightOptions) { return; }
 
@@ -149,22 +161,6 @@ export class ItemSliding implements ComponentInterface {
       this.setOpenAmount(width, false);
       this.state = (side === 'end') ? SlidingState.End : SlidingState.Start;
     });
-  }
-
-  /**
-   * Given a side, attempt to return the ion-item-options element
-   * @param side This side of the options to get. If a side is not provide,
-   * it will return the first one available
-   * TODO update to work with RTL
-   */
-  private getOptions(side?: string): HTMLIonItemOptionsElement | undefined {
-    if (side === undefined) {
-      return this.leftOptions || this.rightOptions;
-    } else if (side === 'start') {
-      return this.leftOptions;
-    } else {
-      return this.rightOptions;
-    }
   }
 
   /**
@@ -187,6 +183,22 @@ export class ItemSliding implements ComponentInterface {
     }
     return false;
   }
+
+   /**
+    * Given a side, attempt to return the ion-item-options element
+    * @param side This side of the options to get. If a side is not provide,
+    * it will return the first one available
+    * TODO update to work with RTL
+    */
+  private getOptions(side?: string): HTMLIonItemOptionsElement | undefined {
+      if (side === undefined) {
+        return this.leftOptions || this.rightOptions;
+      } else if (side === 'start') {
+        return this.leftOptions;
+      } else {
+        return this.rightOptions;
+      }
+    }
 
   private async updateOptions() {
     const options = this.el.querySelectorAll('ion-item-options');
