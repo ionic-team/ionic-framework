@@ -123,24 +123,32 @@ export class ItemSliding implements ComponentInterface {
    * @param side The side of the options to open. If a side is not provided, it will open the options on the `"end"` side.
    */
   @Method()
-  async open(side = 'end') {
+  async open(side: string | undefined) {
+    this.closeOpened();
+
     if (this.openAmount === 0 && this.item !== null) {
 
-      const options = (side === 'end') ? this.rightOptions : this.leftOptions;
-      if (options) {
-        this.state = SlidingState.Enabled;
-
-        requestAnimationFrame(() => {
-          this.calculateOptsWidth();
-
-          // TODO update to work with RTL
-          const width = (side === 'end') ? this.optsWidthRightSide : -this.optsWidthLeftSide;
-          openSlidingItem = this.el;
-
-          this.setOpenAmount(width, false);
-          this.state = (side === 'end') ? SlidingState.End : SlidingState.Start;
-        });
+      let options;
+      if (!side) {
+        options = this.leftOptions || this.rightOptions;
+      } else {
+        options = (side === 'end') ? this.rightOptions : this.leftOptions;
       }
+
+      if (!options) { return; }
+
+      this.state = SlidingState.Enabled;
+
+      requestAnimationFrame(() => {
+        this.calculateOptsWidth();
+
+        // TODO update to work with RTL
+        const width = (side === 'end') ? this.optsWidthRightSide : -this.optsWidthLeftSide;
+        openSlidingItem = this.el;
+
+        this.setOpenAmount(width, false);
+        this.state = (side === 'end') ? SlidingState.End : SlidingState.Start;
+      });
     }
   }
 
