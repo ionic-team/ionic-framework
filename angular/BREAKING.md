@@ -783,6 +783,26 @@ The option component should now be written as an `ion-item-option`. Previously i
 
 The `getSlidingPercent` method has been renamed to `getSlidingRatio` since the function is returning a ratio of the open amount of the item compared to the width of the options.
 
+### Arguments Changed
+
+The `ionDrag` event no longer gets the sliding item as an argument. It now takes an event with a property `details` which contains two properties `amount` and `ratio` reflecting the absolute and ratio values of the sliding action respectively.
+
+**Old Usage Example:**
+
+```typescript
+dragged(item: ItemSliding) {
+  console.log(item.getSlidingPercent());
+  console.log(item.getOpenAmount());
+}
+```
+
+**New Usage Example:**
+```typescript
+dragged(ev: { details: { amount: number, ratio: number } }) {
+  console.log(ev.details.ratio);
+  console.log(ev.details.amount);
+}
+```
 
 ## Label
 
