@@ -33,6 +33,7 @@ export class Chip implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
+        [`${this.mode}`]: true,
         'chip-outline': this.outline,
         'ion-activatable': true,
       }

@@ -352,6 +352,7 @@ export class Searchbar implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
+        [`${this.mode}`]: true,
         'searchbar-animated': animated,
         'searchbar-no-animate': animated && this.noAnimate,
         'searchbar-has-value': (this.getValue() !== ''),

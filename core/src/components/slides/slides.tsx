@@ -2,7 +2,6 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Me
 
 import { Mode } from '../../interface';
 import { rIC } from '../../utils/helpers.js';
-import { createThemedClasses } from '../../utils/theme.js';
 
 import { SwiperInterface, SwiperOptions } from './swiper/swiper-interface';
 
@@ -313,7 +312,7 @@ export class Slides implements ComponentInterface {
     // Base options, can be changed
     // TODO Add interface SwiperOptions
     const swiperOptions: SwiperOptions = {
-      effect: 'slide',
+      effect: undefined,
       direction: 'horizontal',
       initialSlide: 0,
       loop: false,
@@ -438,14 +437,23 @@ export class Slides implements ComponentInterface {
       }
     };
 
+    const customEvents = (!!this.options && !!this.options.on) ? this.options.on : {};
+
+    // merge "on" event listeners, while giving our event listeners priority
+    const mergedEventOptions = { on: { ...customEvents, ...eventOptions.on } };
+
     // Merge the base, user options, and events together then pas to swiper
-    return { ...swiperOptions, ...this.options, ...eventOptions };
+    return { ...swiperOptions, ...this.options, ...mergedEventOptions };
   }
 
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, 'slides'),
+        [`${this.mode}`]: true,
+
+        // Used internally for styling
+        [`slides-${this.mode}`]: true,
+
         'swiper-container': true
       }
     };
