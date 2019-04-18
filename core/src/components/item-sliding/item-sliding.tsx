@@ -124,31 +124,46 @@ export class ItemSliding implements ComponentInterface {
    */
   @Method()
   async open(side: string | undefined) {
+    if (this.item === null) { return; }
+
+    const optionsToOpen = this.getOptions(side);
+    if (!optionsToOpen) { return; }
+
+    const isStartOpen = this.openAmount < 0;
+    const isEndOpen = this.openAmount > 0;
+
+    if (isStartOpen && optionsToOpen === this.leftOptions) { return; }
+    if (isEndOpen && optionsToOpen === this.rightOptions) { return; }
+
     this.closeOpened();
 
-    if (this.openAmount === 0 && this.item !== null) {
+    this.state = SlidingState.Enabled;
 
-      let options;
-      if (!side) {
-        options = this.leftOptions || this.rightOptions;
-      } else {
-        options = (side === 'end') ? this.rightOptions : this.leftOptions;
-      }
+    requestAnimationFrame(() => {
+      this.calculateOptsWidth();
 
-      if (!options) { return; }
+      // TODO update to work with RTL
+      const width = (side === 'end') ? this.optsWidthRightSide : -this.optsWidthLeftSide;
+      openSlidingItem = this.el;
 
-      this.state = SlidingState.Enabled;
+      this.setOpenAmount(width, false);
+      this.state = (side === 'end') ? SlidingState.End : SlidingState.Start;
+    });
+  }
 
-      requestAnimationFrame(() => {
-        this.calculateOptsWidth();
-
-        // TODO update to work with RTL
-        const width = (side === 'end') ? this.optsWidthRightSide : -this.optsWidthLeftSide;
-        openSlidingItem = this.el;
-
-        this.setOpenAmount(width, false);
-        this.state = (side === 'end') ? SlidingState.End : SlidingState.Start;
-      });
+  /**
+   * Given a side, attempt to return the ion-item-options element
+   * @param side This side of the options to get. If a side is not provide,
+   * it will return the first one available
+   * TODO update to work with RTL
+   */
+  private getOptions(side?: string): HTMLIonItemOptionsElement | undefined {
+    if (side === undefined) {
+      return this.leftOptions || this.rightOptions;
+    } else if (side === 'start') {
+      return this.leftOptions;
+    } else {
+      return this.rightOptions;
     }
   }
 
