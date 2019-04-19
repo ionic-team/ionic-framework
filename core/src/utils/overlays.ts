@@ -1,4 +1,4 @@
-import { getContext } from '../global/context';
+import { config } from '../global/ionic-global';
 import { AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, OverlayInterface } from '../interface';
 
 let lastId = 1;
@@ -98,7 +98,6 @@ export const present = async (
   overlay.willPresent.emit();
 
   // get the user's animation fn if one was provided
-  const config = getContext(overlay, 'config');
   const animationBuilder = (overlay.enterAnimation)
     ? overlay.enterAnimation
     : config.get(name, overlay.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
@@ -126,7 +125,6 @@ export const dismiss = async (
   try {
     overlay.willDismiss.emit({ data, role });
 
-    const config = getContext(overlay, 'config');
     const animationBuilder = (overlay.leaveAnimation)
       ? overlay.leaveAnimation
       : config.get(name, overlay.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
@@ -163,7 +161,6 @@ const overlayAnimation = async (
   const animation = await import('./animation').then(mod => mod.create(animationBuilder, aniRoot, opts));
   overlay.animation = animation;
 
-  const config = getContext(overlay, 'config');
   if (!overlay.animated || !config.getBoolean('animated', true)) {
     animation.duration(0);
   }

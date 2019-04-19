@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Prop, h } from '@stencil/core';
 
-import { getContext } from '../../global/context';
+import { config } from '../../global/ionic-global';
 import { hostContext } from '../../utils/theme';
 
 @Component({
@@ -9,8 +9,6 @@ import { hostContext } from '../../utils/theme';
   shadow: true
 })
 export class SkeletonText implements ComponentInterface {
-
-  private config = getContext(this, 'config');
 
   @Element() el!: HTMLElement;
 
@@ -45,7 +43,7 @@ export class SkeletonText implements ComponentInterface {
   }
 
   hostData() {
-    const animated = this.animated && this.config.getBoolean('animated', true);
+    const animated = this.animated && config.getBoolean('animated', true);
     const inMedia = hostContext('ion-avatar', this.el) || hostContext('ion-thumbnail', this.el);
 
     return {

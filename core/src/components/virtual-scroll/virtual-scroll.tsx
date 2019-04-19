@@ -31,7 +31,6 @@ export class VirtualScroll implements ComponentInterface {
   @State() totalHeight = 0;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * It is important to provide this
@@ -308,7 +307,7 @@ export class VirtualScroll implements ComponentInterface {
   private updateCellHeight(cell: Cell, node: any) {
     const update = () => {
       if ((node as any)['$ionCell'] === cell) {
-        const style = this.win.getComputedStyle(node);
+        const style = window.getComputedStyle(node);
         const height = node.offsetHeight + parseFloat(style.getPropertyValue('margin-bottom'));
         this.setCellHeight(cell, height);
       }

@@ -1,16 +1,12 @@
+import { Build } from "@stencil/core";
 
 class GestureController {
 
-  private doc?: Document;
   private gestureId = 0;
   private requestedStart = new Map<number, number>();
   private disabledGestures = new Map<string, Set<number>>();
   private disabledScroll = new Set<number>();
   private capturedId?: number;
-
-  constructor() {
-    this.doc = typeof document !== 'undefined' ? document : null as any;
-  }
 
   /**
    * Creates a gesture delegate based on the GestureConfig passed
@@ -61,12 +57,10 @@ class GestureController {
       this.capturedId = id;
       requestedStart.clear();
 
-      if (this.doc) {
-        const win = this.doc.defaultView as any;
-        const event = new win.CustomEvent('ionGestureCaptured', { detail: { gestureName } });
-        this.doc.dispatchEvent(event);
+      if (!Build.isServer) {
+        const event = new CustomEvent('ionGestureCaptured', { detail: { gestureName } });
+        document.dispatchEvent(event);
       }
-
       return true;
     }
     requestedStart.delete(id);
@@ -100,15 +94,15 @@ class GestureController {
 
   disableScroll(id: number) {
     this.disabledScroll.add(id);
-    if (this.disabledScroll.size === 1 && this.doc) {
-      this.doc.body.classList.add(BACKDROP_NO_SCROLL);
+    if (this.disabledScroll.size === 1 && document) {
+      document.body.classList.add(BACKDROP_NO_SCROLL);
     }
   }
 
   enableScroll(id: number) {
     this.disabledScroll.delete(id);
-    if (this.disabledScroll.size === 0 && this.doc) {
-      this.doc.body.classList.remove(BACKDROP_NO_SCROLL);
+    if (this.disabledScroll.size === 0 && document) {
+      document.body.classList.remove(BACKDROP_NO_SCROLL);
     }
   }
 

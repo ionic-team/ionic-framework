@@ -13,8 +13,6 @@ import { isEndSide } from '../../utils/helpers';
 export class ItemOptions implements ComponentInterface {
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'window' }) win!: Window;
-
   /**
    * The side the option button should be on. Possible values: `"start"` and `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
    *
@@ -35,7 +33,7 @@ export class ItemOptions implements ComponentInterface {
   }
 
   hostData() {
-    const isEnd = isEndSide(this.win, this.side);
+    const isEnd = isEndSide(window, this.side);
     return {
       class: {
         'item-options-start': !isEnd,

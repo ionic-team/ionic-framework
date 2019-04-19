@@ -20,8 +20,6 @@ export class FabButton implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'window' }) win!: Window;
-
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -122,7 +120,7 @@ export class FabButton implements ComponentInterface {
         disabled={this.disabled}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
-        onClick={(ev: Event) => openURL(this.win, this.href, ev, this.routerDirection)}
+        onClick={(ev: Event) => openURL(this.href, ev, this.routerDirection)}
       >
         <span class="close-icon">
           <ion-icon name="close" lazy={false}></ion-icon>

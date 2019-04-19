@@ -27,8 +27,6 @@ export class Button implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'window' }) win!: Window;
-
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -107,7 +105,7 @@ export class Button implements ComponentInterface {
 
   private onClick = (ev: Event) => {
     if (this.type === 'button') {
-      openURL(this.win, this.href, ev, this.routerDirection);
+      openURL(this.href, ev, this.routerDirection);
 
     } else if (hasShadowDom(this.el)) {
       // this button wants to specifically submit a form
@@ -117,7 +115,7 @@ export class Button implements ComponentInterface {
       if (form) {
         ev.preventDefault();
 
-        const fakeButton = this.win.document.createElement('button');
+        const fakeButton = document.createElement('button');
         fakeButton.type = this.type;
         fakeButton.style.display = 'none';
         form.appendChild(fakeButton);

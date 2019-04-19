@@ -22,8 +22,6 @@ export class Tabs implements NavOutlet {
   @State() tabs: HTMLIonTabElement[] = [];
   @State() selectedTab?: HTMLIonTabElement;
 
-  @Prop({ context: 'document' }) doc!: Document;
-
   /** @internal */
   @Prop({ mutable: true }) useRouter = false;
 
@@ -45,7 +43,7 @@ export class Tabs implements NavOutlet {
 
   async componentWillLoad() {
     if (!this.useRouter) {
-      this.useRouter = !!this.doc.querySelector('ion-router') && !this.el.closest('[no-router]');
+      this.useRouter = !!document.querySelector('ion-router') && !this.el.closest('[no-router]');
     }
     this.tabs = Array.from(this.el.querySelectorAll('ion-tab'));
     this.ionNavWillLoad.emit();
@@ -74,7 +72,7 @@ export class Tabs implements NavOutlet {
     const { href, tab } = ev.detail;
     const selectedTab = this.tabs.find(t => t.tab === tab);
     if (this.useRouter && href !== undefined) {
-      const router = this.doc.querySelector('ion-router');
+      const router = document.querySelector('ion-router');
       if (router) {
         router.push(href);
       }
@@ -186,7 +184,7 @@ export class Tabs implements NavOutlet {
 
   private notifyRouter() {
     if (this.useRouter) {
-      const router = this.doc.querySelector('ion-router');
+      const router = document.querySelector('ion-router');
       if (router) {
         return router.navChanged('forward');
       }

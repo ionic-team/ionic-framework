@@ -18,8 +18,6 @@ export class Backdrop implements ComponentInterface {
     disableScroll: true
   });
 
-  @Prop({ context: 'document' }) doc!: Document;
-
   /**
    * If `true`, the backdrop will be visible.
    */

@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Host, Prop, getMode, h } from '@stencil/core';
 
-import { getContext } from '../../global/context';
+import { config } from '../../global/ionic-global';
 import { SpinnerTypes } from '../../interface';
 
 @Component({
@@ -9,7 +9,6 @@ import { SpinnerTypes } from '../../interface';
 export class RefresherContent implements ComponentInterface {
 
   private mode = getMode(this);
-  private config = getContext(this, 'config');
 
   /**
    * A static icon to display when you begin to pull down
@@ -33,12 +32,12 @@ export class RefresherContent implements ComponentInterface {
 
   componentWillLoad() {
     if (this.pullingIcon === undefined) {
-      this.pullingIcon = this.config.get('refreshingIcon', 'arrow-down');
+      this.pullingIcon = config.get('refreshingIcon', 'arrow-down');
     }
     if (this.refreshingSpinner === undefined) {
-      this.refreshingSpinner = this.config.get(
+      this.refreshingSpinner = config.get(
         'refreshingSpinner',
-        this.config.get('spinner', this.mode === 'ios' ? 'lines' : 'crescent')
+        config.get('spinner', this.mode === 'ios' ? 'lines' : 'crescent')
       );
     }
   }

@@ -10,7 +10,8 @@ const SCROLL_ASSIST = true;
 const SCROLL_PADDING = true;
 const HIDE_CARET = true;
 
-export function startInputShims(config: Config, doc: Document) {
+export function startInputShims(config: Config) {
+  const doc = document;
   const keyboardHeight = config.getNumber('keyboardHeight', 290);
   const scrollAssist = config.getBoolean('scrollAssist', true);
   const hideCaret = config.getBoolean('hideCaretOnScroll', true);

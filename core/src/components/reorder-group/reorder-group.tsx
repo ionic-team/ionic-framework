@@ -34,8 +34,6 @@ export class ReorderGroup implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'document' }) doc!: Document;
-  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * If `true`, the reorder will be hidden.
@@ -156,7 +154,7 @@ export class ReorderGroup implements ComponentInterface {
 
     item.classList.add(ITEM_REORDER_SELECTED);
 
-    hapticSelectionStart(this.win);
+    hapticSelectionStart(window);
   }
 
   private onMove(ev: GestureDetail) {
@@ -178,7 +176,7 @@ export class ReorderGroup implements ComponentInterface {
       const fromIndex = indexForItem(selectedItem);
       this.lastToIndex = toIndex;
 
-      hapticSelectionChanged(this.win);
+      hapticSelectionChanged(window);
       this.reorderMove(fromIndex, toIndex);
     }
 
@@ -208,7 +206,7 @@ export class ReorderGroup implements ComponentInterface {
       });
     }
 
-    hapticSelectionEnd(this.win);
+    hapticSelectionEnd(window);
   }
 
   private completeSync(listOrReorder?: boolean | any[]): any {

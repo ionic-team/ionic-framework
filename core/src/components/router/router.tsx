@@ -23,7 +23,6 @@ export class Router implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * By default `ion-router` will match the routes at the root path ("/").
@@ -60,15 +59,15 @@ export class Router implements ComponentInterface {
 
   async componentWillLoad() {
     console.debug('[ion-router] router will load');
-    await waitUntilNavNode(this.win);
+    await waitUntilNavNode(window);
     console.debug('[ion-router] found nav');
 
     await this.onRoutesChanged();
   }
 
   componentDidLoad() {
-    this.win.addEventListener('ionRouteRedirectChanged', debounce(this.onRedirectChanged.bind(this), 10));
-    this.win.addEventListener('ionRouteDataChanged', debounce(this.onRoutesChanged.bind(this), 100));
+    window.addEventListener('ionRouteRedirectChanged', debounce(this.onRedirectChanged.bind(this), 10));
+    window.addEventListener('ionRouteDataChanged', debounce(this.onRoutesChanged.bind(this), 100));
   }
 
   @Listen('popstate', { target: 'window' })
@@ -90,7 +89,7 @@ export class Router implements ComponentInterface {
   @Method()
   push(url: string, direction: RouterDirection = 'forward') {
     if (url.startsWith('.')) {
-      url = (new URL(url, this.win.location.href)).pathname;
+      url = (new URL(url, window.location.href)).pathname;
     }
     console.debug('[ion-router] URL pushed -> updating nav', url, direction);
 
@@ -104,7 +103,7 @@ export class Router implements ComponentInterface {
    */
   @Method()
   back() {
-    this.win.history.back();
+    window.history.back();
     return Promise.resolve(this.waitPromise);
   }
 
@@ -115,7 +114,7 @@ export class Router implements ComponentInterface {
       console.warn('[ion-router] router is busy, navChanged was cancelled');
       return false;
     }
-    const { ids, outlet } = await readNavState(this.win.document.body);
+    const { ids, outlet } = await readNavState(window.document.body);
     const routes = readRoutes(this.el);
     const chain = routerIDsToChain(ids, routes);
     if (!chain) {
@@ -148,7 +147,7 @@ export class Router implements ComponentInterface {
   }
 
   private historyDirection() {
-    const win = this.win;
+    const win = window;
 
     if (win.history.state === null) {
       this.state++;
@@ -193,7 +192,7 @@ export class Router implements ComponentInterface {
     }
 
     // write DOM give
-    return this.safeWriteNavState(this.win.document.body, chain, direction, path, redirectFrom);
+    return this.safeWriteNavState(window.document.body, chain, direction, path, redirectFrom);
   }
 
   private async safeWriteNavState(
@@ -256,11 +255,11 @@ export class Router implements ComponentInterface {
 
   private setPath(path: string[], direction: RouterDirection) {
     this.state++;
-    writePath(this.win.history, this.root, this.useHash, path, direction, this.state);
+    writePath(window.history, this.root, this.useHash, path, direction, this.state);
   }
 
   private getPath(): string[] | null {
-    return readPath(this.win.location, this.root, this.useHash);
+    return readPath(window.location, this.root, this.useHash);
   }
 
   private routeChangeEvent(path: string[], redirectFromPath: string[] | null): RouterEventDetail | null {

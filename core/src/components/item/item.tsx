@@ -27,8 +27,6 @@ export class Item implements ComponentInterface {
 
   @State() multipleInputs = false;
 
-  @Prop({ context: 'window' }) win!: Window;
-
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -126,7 +124,7 @@ export class Item implements ComponentInterface {
 
   render() {
     const childStyles = {};
-    const { href, detail, mode, win, disabled, detailIcon, routerDirection, type } = this;
+    const { href, detail, mode, disabled, detailIcon, routerDirection, type } = this;
     const clickable = this.isClickable();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
     const attrs = TagType === 'button' ? { type } : { href };
@@ -154,7 +152,7 @@ export class Item implements ComponentInterface {
           {...attrs}
           class="item-native"
           disabled={disabled}
-          onClick={(ev: Event) => openURL(win, href, ev, routerDirection)}
+          onClick={(ev: Event) => openURL(href, ev, routerDirection)}
         >
           <slot name="start"></slot>
           <div class="item-inner">

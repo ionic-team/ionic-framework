@@ -50,7 +50,6 @@ export class Content implements ComponentInterface {
   @Element() el!: HTMLIonContentElement;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * The color to use from your application's color palette.
@@ -107,7 +106,7 @@ export class Content implements ComponentInterface {
 
   componentWillLoad() {
     if (this.forceOverscroll === undefined) {
-      this.forceOverscroll = this.mode === 'ios' && isPlatform(this.win, 'mobile');
+      this.forceOverscroll = this.mode === 'ios' && isPlatform(window, 'mobile');
     }
   }
 

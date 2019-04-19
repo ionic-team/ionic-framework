@@ -10,8 +10,6 @@ import { createColorClasses, openURL } from '../../utils/theme';
 })
 export class Anchor implements ComponentInterface {
 
-  @Prop({ context: 'window' }) win!: Window;
-
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -32,7 +30,7 @@ export class Anchor implements ComponentInterface {
   @Prop() routerDirection: RouterDirection = 'forward';
 
   private onClick = (ev: Event) => {
-    openURL(this.win, this.href, ev, this.routerDirection);
+    openURL(this.href, ev, this.routerDirection);
   }
 
   render() {

@@ -7,8 +7,6 @@ import { Component, ComponentInterface, Host, Listen, Prop, State, h } from '@st
 })
 export class MenuToggle implements ComponentInterface {
 
-  @Prop({ context: 'document' }) doc!: Document;
-
   @State() visible = false;
 
   /**
@@ -36,7 +34,7 @@ export class MenuToggle implements ComponentInterface {
   @Listen('ionMenuChange', { target: 'body' })
   @Listen('ionSplitPaneVisible', { target: 'body' })
   async updateVisibility() {
-    const menuCtrl = await getMenuController(this.doc);
+    const menuCtrl = await getMenuController(document);
     if (menuCtrl) {
       const menu = await menuCtrl.get(this.menu);
       if (menu && await menu.isActive()) {
@@ -48,7 +46,7 @@ export class MenuToggle implements ComponentInterface {
   }
 
   private onClick = async () => {
-    const menuCtrl = await getMenuController(this.doc);
+    const menuCtrl = await getMenuController(document);
     if (menuCtrl) {
       const menu = await menuCtrl.get(this.menu);
       if (menu) {

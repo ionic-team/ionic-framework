@@ -7,7 +7,8 @@ interface HandlerRegister {
   handler: Handler;
 }
 
-export function startHardwareBackButton(win: Window) {
+export function startHardwareBackButton() {
+  const win = window;
   let busy = false;
   win.document.addEventListener('backbutton', () => {
     if (busy) {

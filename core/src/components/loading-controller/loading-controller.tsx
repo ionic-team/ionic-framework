@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Method } from '@stencil/core';
 
 import { LoadingOptions, OverlayController } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
@@ -8,14 +8,12 @@ import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays'
 })
 export class LoadingController implements ComponentInterface, OverlayController {
 
-  @Prop({ context: 'document' }) doc!: Document;
-
   /**
    * Create a loading overlay with loading options.
    */
   @Method()
   create(opts?: LoadingOptions): Promise<HTMLIonLoadingElement> {
-    return createOverlay(this.doc.createElement('ion-loading'), opts);
+    return createOverlay(document.createElement('ion-loading'), opts);
   }
 
   /**
@@ -23,7 +21,7 @@ export class LoadingController implements ComponentInterface, OverlayController 
    */
   @Method()
   dismiss(data?: any, role?: string, id?: string) {
-    return dismissOverlay(this.doc, data, role, 'ion-loading', id);
+    return dismissOverlay(document, data, role, 'ion-loading', id);
   }
 
   /**
@@ -31,6 +29,6 @@ export class LoadingController implements ComponentInterface, OverlayController 
    */
   @Method()
   async getTop(): Promise<HTMLIonLoadingElement | undefined> {
-    return getOverlay(this.doc, 'ion-loading') as HTMLIonLoadingElement;
+    return getOverlay(document, 'ion-loading') as HTMLIonLoadingElement;
   }
 }

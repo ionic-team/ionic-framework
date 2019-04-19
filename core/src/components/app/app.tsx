@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Element, Host, Prop, QueueApi, h } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Host, Prop, QueueApi, h } from '@stencil/core';
 
-import { getContext } from '../../global/context';
+import { config } from '../../global/ionic-global';
 import { rIC } from '../../utils/helpers';
 import { isPlatform } from '../../utils/platform';
 
@@ -10,41 +10,37 @@ import { isPlatform } from '../../utils/platform';
 })
 export class App implements ComponentInterface {
 
-  private config = getContext(this, 'config');
-  private isServer = getContext(this, 'isServer');
-
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'window' }) win!: Window;
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
   componentDidLoad() {
-    if (!this.isServer) {
+    if (!Build.isServer) {
       rIC(() => {
-        const { win, queue, config } = this;
-        const doc = win.document;
+        const { queue } = this;
+        const win = window;
         const needInputShims = isPlatform(win, 'ios') && isPlatform(win, 'mobile');
         const inputShims = config.getBoolean('inputShims', needInputShims);
         const statusTap = config.getBoolean('statusTap', isPlatform(win, 'hybrid'));
         const hardwareBackConfig = config.getBoolean('hardwareBackButton', isPlatform(win, 'hybrid'));
 
         if (!config.getBoolean('_testing')) {
-          import('../../utils/tap-click').then(module => module.startTapClick(config, doc));
+          import('../../utils/tap-click').then(module => module.startTapClick(config));
         }
 
         if (inputShims) {
-          import('../../utils/input-shims/input-shims').then(module => module.startInputShims(config, doc));
+          import('../../utils/input-shims/input-shims').then(module => module.startInputShims(config));
         }
 
         if (statusTap) {
-          import('../../utils/status-tap').then(module => module.startStatusTap(win, queue));
+          import('../../utils/status-tap').then(module => module.startStatusTap(queue));
         }
 
         if (hardwareBackConfig) {
-          import('../../utils/hardware-back-button').then(module => module.startHardwareBackButton(win));
+          import('../../utils/hardware-back-button').then(module => module.startHardwareBackButton());
         }
 
-        import('../../utils/focus-visible').then(module => module.startFocusVisible(doc));
+        import('../../utils/focus-visible').then(module => module.startFocusVisible());
       });
     }
   }
@@ -54,7 +50,7 @@ export class App implements ComponentInterface {
       <Host
         class={{
           'ion-page': true,
-          'force-statusbar-padding': this.config.getBoolean('_forceStatusbarPadding') }}
+          'force-statusbar-padding': config.getBoolean('_forceStatusbarPadding') }}
       >
       </Host>
     );

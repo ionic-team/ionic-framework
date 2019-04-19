@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Method } from '@stencil/core';
 
 import { OverlayController, PickerOptions } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
@@ -8,14 +8,12 @@ import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays'
 })
 export class PickerController implements ComponentInterface, OverlayController {
 
-  @Prop({ context: 'document' }) doc!: Document;
-
   /**
    * Create a picker overlay with picker options.
    */
   @Method()
   create(opts: PickerOptions): Promise<HTMLIonPickerElement> {
-    return createOverlay(this.doc.createElement('ion-picker'), opts);
+    return createOverlay(document.createElement('ion-picker'), opts);
   }
 
   /**
@@ -23,7 +21,7 @@ export class PickerController implements ComponentInterface, OverlayController {
    */
   @Method()
   dismiss(data?: any, role?: string, id?: string) {
-    return dismissOverlay(this.doc, data, role, 'ion-picker', id);
+    return dismissOverlay(document, data, role, 'ion-picker', id);
   }
 
   /**
@@ -31,6 +29,6 @@ export class PickerController implements ComponentInterface, OverlayController {
    */
   @Method()
   async getTop(): Promise<HTMLIonPickerElement | undefined> {
-    return getOverlay(this.doc, 'ion-picker') as HTMLIonPickerElement;
+    return getOverlay(document, 'ion-picker') as HTMLIonPickerElement;
   }
 }

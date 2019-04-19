@@ -2,7 +2,7 @@ import { Config } from '../global/config';
 
 import { now, pointerCoord } from './helpers';
 
-export const startTapClick = (config: Config, doc: Document) => {
+export const startTapClick = (config: Config) => {
   let lastTouch = -MOUSE_WAIT * 10;
   let lastActivated = 0;
   let scrollingEl: HTMLElement | undefined;
@@ -11,6 +11,7 @@ export const startTapClick = (config: Config, doc: Document) => {
   let activeRipple: Promise<() => void> | undefined;
   let activeDefer: any;
 
+  const doc = document;
   const useRippleEffect = config.getBoolean('animated', true) && config.getBoolean('rippleEffect', true);
   const clearDefers = new WeakMap<HTMLElement, any>();
 

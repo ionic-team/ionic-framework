@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, getMode, h } from '@stencil/core';
 
-import { getContext } from '../../global/context';
+import { config } from '../../global/ionic-global';
 import { Color, Mode, SearchbarChangeEventDetail } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
@@ -21,12 +21,9 @@ export class Searchbar implements ComponentInterface {
   private nativeInput?: HTMLInputElement;
   private isCancelVisible = false;
   private shouldAlignLeft = true;
-  private config = getContext(this, 'config');
   private mode = getMode<Mode>(this);
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'document' }) doc!: Document;
 
   @State() focused = false;
   @State() noAnimate = true;
@@ -277,7 +274,7 @@ export class Searchbar implements ComponentInterface {
     if (!inputEl) {
       return;
     }
-    const isRTL = this.doc.dir === 'rtl';
+    const isRTL = document.dir === 'rtl';
     const iconEl = (this.el.shadowRoot || this.el).querySelector('.searchbar-search-icon') as HTMLElement;
 
     if (this.shouldAlignLeft) {
@@ -286,7 +283,7 @@ export class Searchbar implements ComponentInterface {
 
     } else {
       // Create a dummy span to get the placeholder width
-      const doc = this.doc;
+      const doc = document;
       const tempSpan = doc.createElement('span');
       tempSpan.innerHTML = this.placeholder;
       doc.body.appendChild(tempSpan);
@@ -316,7 +313,7 @@ export class Searchbar implements ComponentInterface {
    * Show the iOS Cancel button on focus, hide it offscreen otherwise
    */
   private positionCancelButton() {
-    const isRTL = this.doc.dir === 'rtl';
+    const isRTL = document.dir === 'rtl';
     const cancelButton = (this.el.shadowRoot || this.el).querySelector('.searchbar-cancel-button') as HTMLElement;
     const shouldShowCancel = this.focused;
 
@@ -349,7 +346,7 @@ export class Searchbar implements ComponentInterface {
   render() {
     const clearIcon = this.clearIcon || (this.mode === 'ios' ? 'ios-close-circle' : 'md-close');
     const searchIcon = this.searchIcon;
-    const animated = this.animated && this.config.getBoolean('animated', true);
+    const animated = this.animated && config.getBoolean('animated', true);
     const cancelButton = this.showCancelButton && (
       <button
         type="button"

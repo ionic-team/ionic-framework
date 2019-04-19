@@ -98,7 +98,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   @Event({ eventName: 'ionActionSheetWillDismiss' }) willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
-   * Emitted after the alert has dismissed. zdfkjhsdfk
+   * Emitted after the alert has dismissed.
    */
   @Event({ eventName: 'ionActionSheetDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 

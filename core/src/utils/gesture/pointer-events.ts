@@ -44,10 +44,10 @@ export function createPointerEvents(
       return;
     }
     if (!rmMouseMove && pointerMove) {
-      rmMouseMove = addEventListener(getDocument(el), 'mousemove', pointerMove, options);
+      rmMouseMove = addEventListener(document, 'mousemove', pointerMove, options);
     }
     if (!rmMouseUp) {
-      rmMouseUp = addEventListener(getDocument(el), 'mouseup', handleMouseUp, options);
+      rmMouseUp = addEventListener(document, 'mouseup', handleMouseUp, options);
     }
   }
 
@@ -124,10 +124,6 @@ export function createPointerEvents(
     stop,
     destroy
   };
-}
-
-function getDocument(node: Node) {
-  return node instanceof Document ? node : node.ownerDocument;
 }
 
 export interface PointerEventsConfig {

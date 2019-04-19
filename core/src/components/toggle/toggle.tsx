@@ -26,8 +26,6 @@ export class Toggle implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'document' }) doc!: Document;
-  @Prop({ context: 'window' }) win!: Window;
 
   @State() activated = false;
 
@@ -139,9 +137,9 @@ export class Toggle implements ComponentInterface {
   }
 
   private onMove(detail: GestureDetail) {
-    if (shouldToggle(this.doc, this.checked, detail.deltaX, -10)) {
+    if (shouldToggle(document, this.checked, detail.deltaX, -10)) {
       this.checked = !this.checked;
-      hapticSelection(this.win);
+      hapticSelection(window);
     }
   }
 

@@ -1,8 +1,8 @@
-import { Component, ComponentInterface, Element, Listen, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop, h, Build } from '@stencil/core';
 
 import { matchBreakpoint } from '../../utils/media';
 
-const SUPPORTS_VARS = typeof window !== 'undefined' ? !!((window as any).CSS && (window as any).CSS.supports && (window as any).CSS.supports('--a: 0')) : false;
+const SUPPORTS_VARS = Build.isServer ? false : !!((window as any).CSS && (window as any).CSS.supports && (window as any).CSS.supports('--a: 0'));
 const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 
 @Component({
@@ -11,7 +11,6 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
   shadow: true
 })
 export class Col implements ComponentInterface {
-  @Prop({ context: 'window' }) win!: Window;
 
   @Element() el!: HTMLIonColElement;
 
@@ -166,7 +165,7 @@ export class Col implements ComponentInterface {
     let matched;
 
     for (const breakpoint of BREAKPOINTS) {
-      const matches = matchBreakpoint(this.win, breakpoint);
+      const matches = matchBreakpoint(window, breakpoint);
 
       // Grab the value of the property, if it exists and our
       // media query matches we return the value
@@ -244,7 +243,7 @@ export class Col implements ComponentInterface {
   }
 
   hostData() {
-    const isRTL = this.win.document.dir === 'rtl';
+    const isRTL = window.document.dir === 'rtl';
     return {
       style: {
         ...this.calculateOffset(isRTL),

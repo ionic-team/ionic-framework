@@ -19,7 +19,6 @@ export class TabBar implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'document' }) doc!: Document;
 
   @State() keyboardVisible = false;
 

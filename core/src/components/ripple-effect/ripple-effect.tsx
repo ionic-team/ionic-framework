@@ -10,7 +10,6 @@ export class RippleEffect implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * Sets the type of ripple-effect:
@@ -50,7 +49,7 @@ export class RippleEffect implements ComponentInterface {
         const moveY = height * 0.5 - posY;
 
         this.queue.write(() => {
-          const div = this.win.document.createElement('div');
+          const div = window.document.createElement('div');
           div.classList.add('ripple-effect');
           const style = div.style;
           style.top = y + 'px';

@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, QueueApi, State, Watch, getMode, h } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, QueueApi, State, Watch, getMode, h } from '@stencil/core';
 
-import { getContext } from '../../global/context';
+import { config } from '../../global/ionic-global';
 import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuControllerI, MenuI, Mode, Side } from '../../interface';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { assert, isEndSide as isEnd } from '../../utils/helpers';
@@ -20,9 +20,7 @@ export class Menu implements ComponentInterface, MenuI {
   private gesture?: Gesture;
   private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
 
-  private config = getContext(this, 'config');
   private mode = getMode<Mode>(this);
-  private isServer = getContext(this, 'isServer');
 
   isAnimating = false;
   width!: number; // TODO
@@ -39,9 +37,7 @@ export class Menu implements ComponentInterface, MenuI {
   @State() isEndSide = false;
 
   @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl!: HTMLIonMenuControllerElement;
-  @Prop({ context: 'window' }) win!: Window;
   @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'document' }) doc!: Document;
 
   /**
    * The content's id the menu should use.
@@ -98,7 +94,7 @@ export class Menu implements ComponentInterface, MenuI {
 
   @Watch('side')
   protected sideChanged() {
-    this.isEndSide = isEnd(this.win, this.side);
+    this.isEndSide = isEnd(window, this.side);
   }
 
   /**
@@ -143,10 +139,10 @@ export class Menu implements ComponentInterface, MenuI {
 
   async componentWillLoad() {
     if (this.type === undefined) {
-      this.type = this.config.get('menuType', this.mode === 'ios' ? 'reveal' : 'overlay');
+      this.type = config.get('menuType', this.mode === 'ios' ? 'reveal' : 'overlay');
     }
 
-    if (this.isServer) {
+    if (Build.isServer) {
       this.disabled = true;
       return;
     }
@@ -155,7 +151,7 @@ export class Menu implements ComponentInterface, MenuI {
     const el = this.el;
     const parent = el.parentNode as any;
     const content = this.contentId !== undefined
-      ? this.doc.getElementById(this.contentId)
+      ? document.getElementById(this.contentId)
       : parent && parent.querySelector && parent.querySelector('[main]');
 
     if (!content || !content.tagName) {
@@ -175,7 +171,7 @@ export class Menu implements ComponentInterface, MenuI {
     menuCtrl!._register(this);
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
-      el: this.doc,
+      el: document,
       queue: this.queue,
       gestureName: 'menu-swipe',
       gesturePriority: 30,
@@ -344,7 +340,7 @@ export class Menu implements ComponentInterface, MenuI {
       return false;
     }
     return checkEdgeSide(
-      this.win,
+      window,
       detail.currentX,
       this.isEndSide,
       this.maxEdgeStart

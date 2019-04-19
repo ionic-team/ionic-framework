@@ -30,7 +30,6 @@ export class Range implements ComponentInterface {
   @Element() el!: HTMLIonRangeElement;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'document' }) doc!: Document;
 
   @State() private ratioA = 0;
   @State() private ratioB = 0;
@@ -263,7 +262,7 @@ export class Range implements ComponentInterface {
 
     // figure out which knob they started closer to
     let ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
-    if (this.doc.dir === 'rtl') {
+    if (document.dir === 'rtl') {
       ratio = 1 - ratio;
     }
 
@@ -293,7 +292,7 @@ export class Range implements ComponentInterface {
     // update the knob being interacted with
     const rect = this.rect;
     let ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
-    if (this.doc.dir === 'rtl') {
+    if (document.dir === 'rtl') {
       ratio = 1 - ratio;
     }
 
@@ -391,7 +390,7 @@ export class Range implements ComponentInterface {
     const barStart = `${ratioLower * 100}%`;
     const barEnd = `${100 - ratioUpper * 100}%`;
 
-    const doc = this.doc;
+    const doc = document;
     const isRTL = doc.dir === 'rtl';
     const start = isRTL ? 'right' : 'left';
     const end = isRTL ? 'left' : 'right';

@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Method } from '@stencil/core';
 
 import { ComponentRef, OverlayController, PopoverOptions } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
@@ -8,14 +8,12 @@ import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays'
 })
 export class PopoverController implements ComponentInterface, OverlayController {
 
-  @Prop({ context: 'document' }) doc!: Document;
-
   /**
    * Create a popover overlay with popover options.
    */
   @Method()
   create<T extends ComponentRef>(opts: PopoverOptions<T>): Promise<HTMLIonPopoverElement> {
-    return createOverlay(this.doc.createElement('ion-popover'), opts);
+    return createOverlay(document.createElement('ion-popover'), opts);
   }
 
   /**
@@ -23,7 +21,7 @@ export class PopoverController implements ComponentInterface, OverlayController 
    */
   @Method()
   dismiss(data?: any, role?: string, id?: string) {
-    return dismissOverlay(this.doc, data, role, 'ion-popover', id);
+    return dismissOverlay(document, data, role, 'ion-popover', id);
   }
 
   /**
@@ -31,6 +29,6 @@ export class PopoverController implements ComponentInterface, OverlayController 
    */
   @Method()
   async getTop(): Promise<HTMLIonPopoverElement | undefined> {
-    return getOverlay(this.doc, 'ion-popover') as HTMLIonPopoverElement;
+    return getOverlay(document, 'ion-popover') as HTMLIonPopoverElement;
   }
 }
