@@ -2,6 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Me
 
 import { AlertButton, AlertInput, Animation, AnimationBuilder, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
+import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -440,7 +441,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
           {this.subHeader && <h2 id={subHdrId} class="alert-sub-title">{this.subHeader}</h2>}
         </div>
 
-        <div id={msgId} class="alert-message" innerHTML={this.message}></div>
+        <div id={msgId} class="alert-message" innerHTML={sanitizeDOMString(this.message)}></div>
 
         {this.renderAlertInputs(labelledById)}
         {this.renderAlertButtons()}

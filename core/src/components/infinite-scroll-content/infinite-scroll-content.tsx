@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Config, Mode, SpinnerTypes } from '../../interface';
+import { sanitizeDOMString } from '../../utils/sanitization';
 
 @Component({
   tag: 'ion-infinite-scroll-content',
@@ -54,7 +55,7 @@ export class InfiniteScrollContent implements ComponentInterface {
           </div>
         )}
         {this.loadingText && (
-          <div class="infinite-loading-text" innerHTML={this.loadingText} />
+          <div class="infinite-loading-text" innerHTML={sanitizeDOMString(this.loadingText)} />
         )}
       </div>
     );

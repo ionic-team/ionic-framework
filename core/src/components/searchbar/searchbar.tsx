@@ -2,6 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Pr
 
 import { Color, Config, Mode, SearchbarChangeEventDetail } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
+import { sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -288,7 +289,7 @@ export class Searchbar implements ComponentInterface {
       // Create a dummy span to get the placeholder width
       const doc = this.doc;
       const tempSpan = doc.createElement('span');
-      tempSpan.innerHTML = this.placeholder;
+      tempSpan.innerHTML = sanitizeDOMString(this.placeholder) || '';
       doc.body.appendChild(tempSpan);
 
       // Get the width of the span then remove it

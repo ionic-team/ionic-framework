@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Config, Mode, SpinnerTypes } from '../../interface';
+import { sanitizeDOMString } from '../../utils/sanitization';
 
 @Component({
   tag: 'ion-refresher-content'
@@ -60,7 +61,7 @@ export class RefresherContent implements ComponentInterface {
           </div>
         }
         {this.pullingText &&
-          <div class="refresher-pulling-text" innerHTML={this.pullingText}></div>
+          <div class="refresher-pulling-text" innerHTML={sanitizeDOMString(this.pullingText)}></div>
         }
       </div>,
       <div class="refresher-refreshing">
@@ -70,7 +71,7 @@ export class RefresherContent implements ComponentInterface {
           </div>
         }
         {this.refreshingText &&
-          <div class="refresher-refreshing-text" innerHTML={this.refreshingText}></div>
+          <div class="refresher-refreshing-text" innerHTML={sanitizeDOMString(this.refreshingText)}></div>
         }
       </div>
     ];

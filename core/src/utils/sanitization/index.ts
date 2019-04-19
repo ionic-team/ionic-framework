@@ -1,13 +1,16 @@
 /**
- * Removes any 'on' event handlers
- * strips javascript from 'href' props
+ * Does a simple sanitization of all elements
+ * in an untrusted string
  */
-export const sanitizeDOMString = (untrustedString: string): string => {
+
+export const sanitizeDOMString = (untrustedString: string | undefined): string | undefined => {
+  if (untrustedString === undefined) { return untrustedString; }
+
   const whitelistedAttribs = ['class', 'id', 'href', 'src'];
   const range = document.createRange();
   const documentFragment = range.createContextualFragment(untrustedString);
 
-  Array.from(documentFragment.children).forEach(childEl => {
+  for (const childEl of (documentFragment.children as any)) {
     for (const attributeName of childEl.getAttributeNames()) {
 
       // remove non-whitelisted attribs
@@ -25,7 +28,7 @@ export const sanitizeDOMString = (untrustedString: string): string => {
         childEl.removeAttribute(attributeName);
       }
     }
-  });
+  }
 
   return new XMLSerializer().serializeToString(documentFragment);
 };
