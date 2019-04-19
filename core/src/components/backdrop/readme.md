@@ -163,7 +163,8 @@ export default Example;
 
 ## Dependencies
 
-#### Used by
+### Used by
+
  - [ion-action-sheet](../action-sheet)
  - [ion-alert](../alert)
  - [ion-loading](../loading)
@@ -172,7 +173,7 @@ export default Example;
  - [ion-picker](../picker)
  - [ion-popover](../popover)
 
-#### Graph
+### Graph
 ```mermaid
 graph TD;
   ion-action-sheet --> ion-backdrop

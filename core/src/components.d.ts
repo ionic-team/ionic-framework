@@ -2622,7 +2622,7 @@ declare namespace LocalJSX {
     */
     'mode'?: "ios" | "md";
     /**
-    * Emitted after the alert has dismissed.
+    * Emitted after the alert has dismissed. zdfkjhsdfk
     */
     'onIonActionSheetDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
     /**

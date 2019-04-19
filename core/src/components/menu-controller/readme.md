@@ -145,10 +145,11 @@ Type: `Promise<boolean>`
 
 ## Dependencies
 
-#### Used by
+### Used by
+
  - [ion-menu](../menu)
 
-#### Graph
+### Graph
 ```mermaid
 graph TD;
   ion-menu --> ion-menu-controller

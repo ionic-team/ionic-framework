@@ -57,13 +57,15 @@ Type: `Promise<HTMLIonAlertElement | undefined>`
 
 ## Dependencies
 
-#### Used by
+### Used by
+
  - [ion-select](../select)
 
-#### Depends on
- - [ion-alert](../alert)
+### Depends on
 
-#### Graph
+- [ion-alert](../alert)
+
+### Graph
 ```mermaid
 graph TD;
   ion-alert-controller --> ion-alert

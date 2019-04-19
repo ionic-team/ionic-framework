@@ -46,7 +46,8 @@ Type: `Promise<() => void>`
 
 ## Dependencies
 
-#### Used by
+### Used by
+
  - [ion-action-sheet](../action-sheet)
  - [ion-alert](../alert)
  - [ion-back-button](../back-button)
@@ -59,7 +60,7 @@ Type: `Promise<() => void>`
  - [ion-segment-button](../segment-button)
  - [ion-tab-button](../tab-button)
 
-#### Graph
+### Graph
 ```mermaid
 graph TD;
   ion-action-sheet --> ion-ripple-effect

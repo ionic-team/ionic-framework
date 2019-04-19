@@ -41,10 +41,11 @@ Type: `Promise<HTMLIonModalElement | undefined>`
 
 ## Dependencies
 
-#### Depends on
- - [ion-modal](../modal)
+### Depends on
 
-#### Graph
+- [ion-modal](../modal)
+
+### Graph
 ```mermaid
 graph TD;
   ion-modal-controller --> ion-modal

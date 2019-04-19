@@ -60,7 +60,7 @@ export const config: Config = {
       esmLoaderPath: '../loader'
     },
     {
-      type: 'hydrate'
+      type: 'dist-hydrate-script'
     },
     {
       type: 'docs',

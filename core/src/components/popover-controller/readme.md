@@ -60,13 +60,15 @@ Type: `Promise<HTMLIonPopoverElement | undefined>`
 
 ## Dependencies
 
-#### Used by
+### Used by
+
  - [ion-select](../select)
 
-#### Depends on
- - [ion-popover](../popover)
+### Depends on
 
-#### Graph
+- [ion-popover](../popover)
+
+### Graph
 ```mermaid
 graph TD;
   ion-popover-controller --> ion-popover

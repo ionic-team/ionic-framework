@@ -25,12 +25,13 @@ Menu Button is component that automatically creates the icon and functionality t
 
 ## Dependencies
 
-#### Depends on
- - [ion-menu-toggle](../menu-toggle)
- - ion-icon
- - [ion-ripple-effect](../ripple-effect)
+### Depends on
 
-#### Graph
+- [ion-menu-toggle](../menu-toggle)
+- ion-icon
+- [ion-ripple-effect](../ripple-effect)
+
+### Graph
 ```mermaid
 graph TD;
   ion-menu-button --> ion-menu-toggle

@@ -40,13 +40,15 @@ Type: `Promise<HTMLIonActionSheetElement | undefined>`
 
 ## Dependencies
 
-#### Used by
+### Used by
+
  - [ion-select](../select)
 
-#### Depends on
- - [ion-action-sheet](../action-sheet)
+### Depends on
 
-#### Graph
+- [ion-action-sheet](../action-sheet)
+
+### Graph
 ```mermaid
 graph TD;
   ion-action-sheet-controller --> ion-action-sheet

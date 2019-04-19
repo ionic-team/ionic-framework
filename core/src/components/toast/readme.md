@@ -229,13 +229,15 @@ Type: `Promise<void>`
 
 ## Dependencies
 
-#### Used by
+### Used by
+
  - [ion-toast-controller](../toast-controller)
 
-#### Depends on
- - [ion-button](../button)
+### Depends on
 
-#### Graph
+- [ion-button](../button)
+
+### Graph
 ```mermaid
 graph TD;
   ion-toast --> ion-button

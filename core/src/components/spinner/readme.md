@@ -130,12 +130,13 @@ export default Example;
 
 ## Dependencies
 
-#### Used by
+### Used by
+
  - [ion-infinite-scroll-content](../infinite-scroll-content)
  - [ion-loading](../loading)
  - [ion-refresher-content](../refresher-content)
 
-#### Graph
+### Graph
 ```mermaid
 graph TD;
   ion-infinite-scroll-content --> ion-spinner

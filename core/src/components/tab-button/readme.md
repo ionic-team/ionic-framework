@@ -191,10 +191,11 @@ export default Example;
 
 ## Dependencies
 
-#### Depends on
- - [ion-ripple-effect](../ripple-effect)
+### Depends on
 
-#### Graph
+- [ion-ripple-effect](../ripple-effect)
+
+### Graph
 ```mermaid
 graph TD;
   ion-tab-button --> ion-ripple-effect
