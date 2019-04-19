@@ -6,15 +6,15 @@
 export const sanitizeDOMString = (untrustedString: string | undefined): string | undefined => {
   if (untrustedString === undefined) { return untrustedString; }
 
-  const whitelistedAttribs = ['class', 'id', 'href', 'src'];
+  const whitelistedAttributes = ['class', 'id', 'href', 'src'];
   const range = document.createRange();
   const documentFragment = range.createContextualFragment(untrustedString);
 
-  for (const childEl of (documentFragment.children as any)) {
-    for (const attributeName of childEl.getAttributeNames()) {
+  for (let childEl of (documentFragment.children as any)) {
+    for (let attributeName of childEl.getAttributeNames()) {
 
       // remove non-whitelisted attribs
-      if (!whitelistedAttribs.includes(attributeName.toLowerCase())) {
+      if (!whitelistedAttributes.includes(attributeName.toLowerCase())) {
         childEl.removeAttribute(attributeName);
         continue;
       }
