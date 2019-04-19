@@ -1,8 +1,8 @@
 # ion-reorder-group
 
-The reorder group is a wrapper component for items with the `ion-reorder` component, Check [Reorder documentation](../reorder/) for further information about the anchor component that is used to drag items within the `ion-reorder-group` list.
+The reorder group is a wrapper component for items with the `ion-reorder` component, Check the [Reorder documentation](../reorder/) for further information about the anchor component that is used to drag items within the `ion-reorder-group`.
 
-Once the user drags an item and drops it in a new position, the `ionItemReorder` event is dispatched. A handler for it must be implemented by the developer to commit changes.
+Once the user drags an item and drops it in a new position, the `ionItemReorder` event is dispatched. A handler for it must be implemented by the developer to keep the item's new position.
 
 ```js
 reorderGroup.addEventListener('ionItemReorder', (ev) => {
@@ -299,14 +299,20 @@ export default Example
 
 ### `complete(listOrReorder?: boolean | any[] | undefined) => Promise<any>`
 
-This method must be called once the `ionItemReorder` event is handled in order
-to complete the reorder operation.
+Completes the reorder operation. Must be called by the `ionItemReorder` event.
+
+If a list of items is passed, the list will be reordered and returned in the
+proper order.
+
+If no parameters are passed or if `true` is passed in, the reorder will complete
+and the item will remain in the position it was dragged to. If `false` is passed,
+the reorder will complete and the item will bounce back to its original position.
 
 #### Parameters
 
-| Name            | Type                            | Description |
-| --------------- | ------------------------------- | ----------- |
-| `listOrReorder` | `any[] \| boolean \| undefined` |             |
+| Name            | Type                            | Description                                                                                                                       |
+| --------------- | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `listOrReorder` | `any[] \| boolean \| undefined` | A list of items to be sorted and returned in the new order or a boolean of whether or not the reorder should reposition the item. |
 
 #### Returns
 
