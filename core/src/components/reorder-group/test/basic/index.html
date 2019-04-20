@@ -129,8 +129,11 @@
     function toggleEdit() {
       const reorderGroup = document.getElementById('reorder');
       reorderGroup.disabled = !reorderGroup.disabled;
+
       reorderGroup.addEventListener('ionItemReorder', ({detail}) => {
-        detail.complete(true);
+        console.log('Dragged from index', detail.from, 'to', detail.to);
+
+        detail.complete();
       });
     }
   </script>
