@@ -83,3 +83,24 @@ reorderGroup.addEventListener('ionItemReorder', ({detail}) => {
   detail.complete();
 });
 ```
+
+#### Updating Data
+
+```javascript
+const items = [1, 2, 3, 4, 5];
+const reorderGroup = document.querySelector('ion-reorder-group');
+
+reorderGroup.addEventListener('ionItemReorder', ({detail}) => {
+  // Before complete is called with the items they will remain in the
+  // order before the drag
+  console.log('Before complete', items);
+
+  // Finish the reorder and position the item in the DOM based on
+  // where the gesture ended. Update the items variable to the
+  // new order of items
+  items = detail.complete(items);
+
+  // After complete is called the items will be in the new order
+  console.log('After complete', items);
+});
+```

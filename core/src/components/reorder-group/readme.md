@@ -6,23 +6,6 @@ Once the user drags an item and drops it in a new position, the `ionItemReorder`
 
 The `detail` property of the `ionItemReorder` event includes all of the relevant information about the reorder operation, including the `from` and `to` indexes. In the context of reordering, an item moves `from` an index `to` a new index.
 
-```js
-reorderGroup.addEventListener('ionItemReorder', (ev) => {
-  console.log(`Moving item from ${ev.detail.from} to ${ev.detail.to}`);
-
-  this.dataList = reorderArray(this.dataList, ev.detail.from, ev.detail.to);
-  ev.detail.complete();
-});
-```
-
-Once the data structure has been updated to reflect the reorder change, the `complete()` method must be called.
-This method finishes the reorder operation and resets all the CSS transforms applied by the `ion-reorder-group` component.
-
-Fortunately this `complete()` method can optionally accept an array as input and it will return a reordered copy, based in `detail.from` and `detail.to`.
-
-```ts
-this.dataList = reorderGroup.complete(this.dataList);
-```
 
 <!-- Auto Generated Below -->
 
@@ -133,6 +116,40 @@ export class ReorderGroupExample {
 }
 ```
 
+#### Updating Data
+
+```javascript
+import { Component, ViewChild } from '@angular/core';
+import { IonReorderGroup } from '@ionic/angular';
+
+@Component({
+  selector: 'reorder-group-example',
+  templateUrl: 'reorder-group-example.html',
+  styleUrls: ['./reorder-group-example.css']
+})
+export class ReorderGroupExample {
+  items = [1, 2, 3, 4, 5];
+
+  @ViewChild(IonReorderGroup) reorderGroup: IonReorderGroup;
+
+  constructor() {}
+
+  doReorder(ev: any) => {
+    // Before complete is called with the items they will remain in the
+    // order before the drag
+    console.log('Before complete', this.items);
+
+    // Finish the reorder and position the item in the DOM based on
+    // where the gesture ended. Update the items variable to the
+    // new order of items
+    this.items = ev.detail.complete(this.items);
+
+    // After complete is called the items will be in the new order
+    console.log('After complete', this.items);
+  });
+}
+```
+
 
 ### Javascript
 
@@ -219,6 +236,27 @@ reorderGroup.addEventListener('ionItemReorder', ({detail}) => {
   // where the gesture ended. This method can also be called directly
   // by the reorder group
   detail.complete();
+});
+```
+
+#### Updating Data
+
+```javascript
+const items = [1, 2, 3, 4, 5];
+const reorderGroup = document.querySelector('ion-reorder-group');
+
+reorderGroup.addEventListener('ionItemReorder', ({detail}) => {
+  // Before complete is called with the items they will remain in the
+  // order before the drag
+  console.log('Before complete', items);
+
+  // Finish the reorder and position the item in the DOM based on
+  // where the gesture ended. Update the items variable to the
+  // new order of items
+  items = detail.complete(items);
+
+  // After complete is called the items will be in the new order
+  console.log('After complete', items);
 });
 ```
 
@@ -316,6 +354,27 @@ const Example: React.SFC<{}> = () => (
 );
 
 export default Example
+```
+
+#### Updating Data
+
+```tsx
+const items = [1, 2, 3, 4, 5];
+
+function doReorder(event: CustomEvent) {
+  // Before complete is called with the items they will remain in the
+  // order before the drag
+  console.log('Before complete', this.items);
+
+  // Finish the reorder and position the item in the DOM based on
+  // where the gesture ended. Update the items variable to the
+  // new order of items
+  this.items = event.detail.complete(this.items);
+
+  // After complete is called the items will be in the new order
+  console.log('After complete', this.items);
+}
+```
 
 
 ### Vue
@@ -407,6 +466,33 @@ export default Example
       // where the gesture ended. This method can also be called directly
       // by the reorder group
       event.detail.complete();
+    }
+  }
+</script>
+```
+
+#### Updating Data
+
+```html
+<script lang="ts">
+  import { Component, Vue } from 'vue-property-decorator';
+
+  @Component()
+  export default class Example extends Vue {
+    items = [1, 2, 3, 4, 5];
+
+    doReorder(event) {
+      // Before complete is called with the items they will remain in the
+      // order before the drag
+      console.log('Before complete', this.items);
+
+      // Finish the reorder and position the item in the DOM based on
+      // where the gesture ended. Update the items variable to the
+      // new order of items
+      this.items = event.detail.complete(this.items);
+
+      // After complete is called the items will be in the new order
+      console.log('After complete', this.items);
     }
   }
 </script>
