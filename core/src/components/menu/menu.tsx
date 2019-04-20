@@ -142,7 +142,7 @@ export class Menu implements ComponentInterface, MenuI {
       this.type = config.get('menuType', this.mode === 'ios' ? 'reveal' : 'overlay');
     }
 
-    if (Build.isServer) {
+    if (!Build.isBrowser) {
       this.disabled = true;
       return;
     }

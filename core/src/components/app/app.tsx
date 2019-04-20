@@ -15,7 +15,7 @@ export class App implements ComponentInterface {
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
   componentDidLoad() {
-    if (!Build.isServer) {
+    if (Build.isBrowser) {
       rIC(() => {
         const { queue } = this;
         const win = window;

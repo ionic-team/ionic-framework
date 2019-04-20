@@ -83,7 +83,7 @@ export class SplitPane implements ComponentInterface {
   @Watch('disabled')
   @Watch('when')
   protected updateState() {
-    if (Build.isServer) {
+    if (!Build.isBrowser) {
       return;
     }
     if (this.rmL) {
@@ -135,7 +135,7 @@ export class SplitPane implements ComponentInterface {
   }
 
   private styleChildren() {
-    if (Build.isServer) {
+    if (!Build.isBrowser) {
       return;
     }
     const contentId = this.contentId;

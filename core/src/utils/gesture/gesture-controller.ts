@@ -57,7 +57,7 @@ class GestureController {
       this.capturedId = id;
       requestedStart.clear();
 
-      if (!Build.isServer) {
+      if (Build.isBrowser) {
         const event = new CustomEvent('ionGestureCaptured', { detail: { gestureName } });
         document.dispatchEvent(event);
       }

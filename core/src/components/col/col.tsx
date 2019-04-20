@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Listen, Prop, h, Build } from '
 
 import { matchBreakpoint } from '../../utils/media';
 
-const SUPPORTS_VARS = Build.isServer ? false : !!((window as any).CSS && (window as any).CSS.supports && (window as any).CSS.supports('--a: 0'));
+const SUPPORTS_VARS = !Build.isBrowser ? false : !!((window as any).CSS && (window as any).CSS.supports && (window as any).CSS.supports('--a: 0'));
 const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 
 @Component({
