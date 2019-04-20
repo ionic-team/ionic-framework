@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, Watch, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, Watch, getMode, h } from '@stencil/core';
 
 import { config } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, Mode, NavOutlet, RouteID, RouteWrite, RouterDirection, RouterOutletOptions, SwipeGestureHandler } from '../../interface';
@@ -20,8 +20,6 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   private mode = getMode<Mode>(this);
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /** @internal */
   @Prop() delegate?: FrameworkDelegate;
@@ -62,7 +60,6 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   async componentDidLoad() {
     this.gesture = (await import('../../utils/gesture/swipe-back')).createSwipeBackGesture(
       this.el,
-      this.queue,
       () => !!this.swipeHandler && this.swipeHandler.canStart(),
       () => this.swipeHandler && this.swipeHandler.onStart(),
       step => this.ani && this.ani.progressStep(step),
@@ -150,13 +147,12 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     // emit nav will change event
     this.ionNavWillChange.emit();
 
-    const { mode, queue, el } = this;
+    const { mode, el } = this;
     const animated = this.animated && config.getBoolean('animated', true);
     const animationBuilder = this.animation || opts.animationBuilder || config.get('navAnimation');
 
     await transition({
       mode,
-      queue,
       animated,
       animationBuilder,
       window,

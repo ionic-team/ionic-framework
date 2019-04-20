@@ -1,4 +1,4 @@
-import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, QueueApi, State, Watch, getMode, h } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, State, Watch, getMode, h } from '@stencil/core';
 
 import { config } from '../../global/ionic-global';
 import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuControllerI, MenuI, Mode, Side } from '../../interface';
@@ -37,7 +37,6 @@ export class Menu implements ComponentInterface, MenuI {
   @State() isEndSide = false;
 
   @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl!: HTMLIonMenuControllerElement;
-  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
    * The content's id the menu should use.
@@ -172,7 +171,6 @@ export class Menu implements ComponentInterface, MenuI {
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: document,
-      queue: this.queue,
       gestureName: 'menu-swipe',
       gesturePriority: 30,
       threshold: 10,

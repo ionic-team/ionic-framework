@@ -1,4 +1,4 @@
-import { Build, Component, Element, Event, EventEmitter, Method, Prop, QueueApi, Watch, getMode, h } from '@stencil/core';
+import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch, getMode, h } from '@stencil/core';
 
 import { config } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture, Mode, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, RouterDirection, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
@@ -27,7 +27,6 @@ export class Nav implements NavOutlet {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /** @internal */
   @Prop() delegate?: FrameworkDelegate;
@@ -112,7 +111,6 @@ export class Nav implements NavOutlet {
 
     this.gesture = (await import('../../utils/gesture/swipe-back')).createSwipeBackGesture(
       this.el,
-      this.queue,
       this.canStart.bind(this),
       this.onStart.bind(this),
       this.onMove.bind(this),
@@ -779,7 +777,6 @@ export class Nav implements NavOutlet {
     const animationOpts: TransitionOptions = {
       mode: this.mode,
       showGoBack: this.canGoBackSync(enteringView),
-      queue: this.queue,
       window,
       baseEl: this.el,
       animationBuilder: this.animation || opts.animationBuilder || config.get('navAnimation'),

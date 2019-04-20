@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, QueueApi, Watch, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, Watch, getMode, h } from '@stencil/core';
 
 import { Gesture, GestureDetail, Mode, PickerColumn } from '../../interface';
 import { hapticSelectionChanged } from '../../utils/haptic';
@@ -33,8 +33,6 @@ export class PickerColumnCmp implements ComponentInterface {
   private noAnimate = true;
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
    * Emitted when the selected value has changed
@@ -73,7 +71,6 @@ export class PickerColumnCmp implements ComponentInterface {
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
-      queue: this.queue,
       gestureName: 'picker-swipe',
       gesturePriority: 100,
       threshold: 0,

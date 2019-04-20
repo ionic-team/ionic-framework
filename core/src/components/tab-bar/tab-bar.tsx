@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, QueueApi, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, State, Watch, h } from '@stencil/core';
 
 import { Color, TabBarChangedEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -17,8 +17,6 @@ import { createColorClasses } from '../../utils/theme';
 export class TabBar implements ComponentInterface {
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   @State() keyboardVisible = false;
 

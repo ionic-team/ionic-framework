@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, FunctionalComponent, Listen, Method, Prop, QueueApi, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, FunctionalComponent, Listen, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
 
 import { Cell, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 
@@ -29,8 +29,6 @@ export class VirtualScroll implements ComponentInterface {
   @Element() el!: HTMLIonVirtualScrollElement;
 
   @State() totalHeight = 0;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
    * It is important to provide this
@@ -246,8 +244,8 @@ export class VirtualScroll implements ComponentInterface {
     }
 
     // schedule DOM operations into the stencil queue
-    this.queue.read(this.readVS.bind(this));
-    this.queue.write(this.writeVS.bind(this));
+    readTask(this.readVS.bind(this));
+    writeTask(this.writeVS.bind(this));
   }
 
   private readVS() {

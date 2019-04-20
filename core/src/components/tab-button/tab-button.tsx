@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, QueueApi, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, getMode, h } from '@stencil/core';
 
 import { config } from '../../global/ionic-global';
 import { Mode, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
@@ -19,8 +19,6 @@ export class TabButton implements ComponentInterface {
   private mode = getMode<Mode>(this);
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
    * The selected tab component

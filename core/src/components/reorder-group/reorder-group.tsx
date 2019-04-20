@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 import { Gesture, GestureDetail, ItemReorderEventDetail } from '../../interface';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/haptic';
@@ -33,8 +33,6 @@ export class ReorderGroup implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-
   /**
    * If `true`, the reorder will be hidden.
    */
@@ -64,7 +62,6 @@ export class ReorderGroup implements ComponentInterface {
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
-      queue: this.queue,
       gestureName: 'reorder',
       gesturePriority: 110,
       threshold: 0,

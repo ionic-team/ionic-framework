@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Host, Method, Prop, QueueApi, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Method, Prop, h, readTask, writeTask } from '@stencil/core';
 
 @Component({
   tag: 'ion-ripple-effect',
@@ -8,8 +8,6 @@ import { Component, ComponentInterface, Element, Host, Method, Prop, QueueApi, h
 export class RippleEffect implements ComponentInterface {
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
    * Sets the type of ripple-effect:
@@ -28,7 +26,7 @@ export class RippleEffect implements ComponentInterface {
   @Method()
   async addRipple(pageX: number, pageY: number) {
     return new Promise<() => void>(resolve => {
-      this.queue.read(() => {
+      readTask(() => {
         const rect = this.el.getBoundingClientRect();
         const width = rect.width;
         const height = rect.height;
@@ -48,7 +46,7 @@ export class RippleEffect implements ComponentInterface {
         const moveX = width * 0.5 - posX;
         const moveY = height * 0.5 - posY;
 
-        this.queue.write(() => {
+        writeTask(() => {
           const div = window.document.createElement('div');
           div.classList.add('ripple-effect');
           const style = div.style;

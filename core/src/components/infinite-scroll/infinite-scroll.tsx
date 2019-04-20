@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, QueueApi, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, writeTask, readTask } from '@stencil/core';
 
 @Component({
   tag: 'ion-infinite-scroll',
@@ -14,8 +14,6 @@ export class InfiniteScroll implements ComponentInterface {
 
   @Element() el!: HTMLElement;
   @State() isLoading = false;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
    * The threshold distance from the bottom
@@ -81,7 +79,7 @@ export class InfiniteScroll implements ComponentInterface {
     }
     this.thresholdChanged(this.threshold);
     if (this.position === 'top') {
-      this.queue.write(() => {
+      writeTask(() => {
         if (this.scrollEl) {
           this.scrollEl.scrollTop = this.scrollEl.scrollHeight - this.scrollEl.clientHeight;
         }
@@ -172,7 +170,7 @@ export class InfiniteScroll implements ComponentInterface {
 
       // ******** DOM READ ****************
       requestAnimationFrame(() => {
-        this.queue.read(() => {
+        readTask(() => {
           // UI has updated, save the new content dimensions
           const scrollHeight = scrollEl.scrollHeight;
           // New content was added on top, so the scroll position should be changed immediately to prevent it from jumping around
@@ -180,7 +178,7 @@ export class InfiniteScroll implements ComponentInterface {
 
           // ******** DOM WRITE ****************
           requestAnimationFrame(() => {
-            this.queue.write(() => {
+            writeTask(() => {
               scrollEl.scrollTop = newScrollTop;
               this.isBusy = false;
             });

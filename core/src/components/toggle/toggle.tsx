@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, QueueApi, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { Color, Gesture, GestureDetail, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
 import { hapticSelection } from '../../utils/haptic';
@@ -24,8 +24,6 @@ export class Toggle implements ComponentInterface {
   private lastDrag = 0;
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   @State() activated = false;
 
@@ -104,7 +102,6 @@ export class Toggle implements ComponentInterface {
   async componentDidLoad() {
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
-      queue: this.queue,
       gestureName: 'toggle',
       gesturePriority: 100,
       threshold: 5,

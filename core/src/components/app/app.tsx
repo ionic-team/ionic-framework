@@ -1,4 +1,4 @@
-import { Build, Component, ComponentInterface, Element, Host, Prop, QueueApi, h } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Host, h } from '@stencil/core';
 
 import { config } from '../../global/ionic-global';
 import { rIC } from '../../utils/helpers';
@@ -12,12 +12,9 @@ export class App implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-
   componentDidLoad() {
     if (Build.isBrowser) {
       rIC(() => {
-        const { queue } = this;
         const win = window;
         const needInputShims = isPlatform(win, 'ios') && isPlatform(win, 'mobile');
         const inputShims = config.getBoolean('inputShims', needInputShims);
@@ -33,7 +30,7 @@ export class App implements ComponentInterface {
         }
 
         if (statusTap) {
-          import('../../utils/status-tap').then(module => module.startStatusTap(queue));
+          import('../../utils/status-tap').then(module => module.startStatusTap());
         }
 
         if (hardwareBackConfig) {

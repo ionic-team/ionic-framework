@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, State, Watch, h } from '@stencil/core';
 
 import { Color, Gesture, GestureDetail, KnobName, RangeChangeEventDetail, RangeValue, StyleEventDetail } from '../../interface';
 import { clamp, debounceEvent } from '../../utils/helpers';
@@ -28,8 +28,6 @@ export class Range implements ComponentInterface {
   private gesture?: Gesture;
 
   @Element() el!: HTMLIonRangeElement;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   @State() private ratioA = 0;
   @State() private ratioB = 0;
@@ -198,7 +196,6 @@ export class Range implements ComponentInterface {
   async componentDidLoad() {
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.rangeSlider!,
-      queue: this.queue,
       gestureName: 'range',
       gesturePriority: 100,
       threshold: 0,

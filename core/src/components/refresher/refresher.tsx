@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch, getMode } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch, getMode, writeTask } from '@stencil/core';
 
 import { Gesture, GestureDetail, Mode, RefresherEventDetail } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
@@ -21,8 +21,6 @@ export class Refresher implements ComponentInterface {
   private mode = getMode<Mode>(this);
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
    * The current state which the refresher is in. The refresher's states include:
@@ -103,7 +101,6 @@ export class Refresher implements ComponentInterface {
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el.closest('ion-content') as any,
-      queue: this.queue,
       gestureName: 'refresher',
       gesturePriority: 10,
       direction: 'y',
@@ -335,7 +332,7 @@ export class Refresher implements ComponentInterface {
 
   private setCss(y: number, duration: string, overflowVisible: boolean, delay: string) {
     this.appliedStyles = (y > 0);
-    this.queue.write(() => {
+    writeTask(() => {
       if (this.scrollEl) {
         const style = this.scrollEl.style;
         style.transform = ((y > 0) ? `translateY(${y}px) translateZ(0px)` : 'translateZ(0px)');

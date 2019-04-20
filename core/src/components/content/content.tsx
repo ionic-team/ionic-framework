@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, QueueApi, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, getMode, h, readTask } from '@stencil/core';
 
 import { Color, Mode, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { isPlatform } from '../../utils/platform';
@@ -48,8 +48,6 @@ export class Content implements ComponentInterface {
   private mode = getMode<Mode>(this);
 
   @Element() el!: HTMLIonContentElement;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
    * The color to use from your application's color palette.
@@ -128,7 +126,7 @@ export class Content implements ComponentInterface {
 
   private resize() {
     if (this.fullscreen) {
-      this.queue.read(this.readDimensions.bind(this));
+      readTask(this.readDimensions.bind(this));
     } else if (this.cTop !== 0 || this.cBottom !== 0) {
       this.cTop = this.cBottom = 0;
       this.el.forceUpdate();
@@ -157,7 +155,7 @@ export class Content implements ComponentInterface {
     }
     if (!this.queued && this.scrollEvents) {
       this.queued = true;
-      this.queue.read(ts => {
+      readTask(ts => {
         this.queued = false;
         this.detail.event = ev;
         updateScrollDetail(this.detail, this.scrollEl, ts, shouldStart);
