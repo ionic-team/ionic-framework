@@ -138,7 +138,6 @@ export class LoadingExample extends Component<Props, State> {
     );
   }
 }
-
 ```
 
 
