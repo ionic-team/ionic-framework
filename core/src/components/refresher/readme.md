@@ -154,11 +154,12 @@ export default Example
     </ion-refresher>
   </ion-content>
 </template>
+
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
 
   @Component()
-  export default class Menu extends Vue {
+  export default class Example extends Vue {
 
     doRefresh(event) {
       console.log('Begin async operation');
