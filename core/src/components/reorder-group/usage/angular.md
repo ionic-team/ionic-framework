@@ -1,6 +1,6 @@
 ```html
 <!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
-<ion-reorder-group (ionItemReorder)="completeReorder($event)" disabled="false">
+<ion-reorder-group (ionItemReorder)="doReorder($event)" disabled="false">
   <!-- Default reorder icon, end aligned items -->
   <ion-item>
     <ion-label>
@@ -83,7 +83,7 @@ export class ReorderGroupExample {
 
   constructor() {}
 
-  completeReorder(ev: any) => {
+  doReorder(ev: any) => {
     // The `from` and `to` properties contain the index of the item
     // when the drag started and ended, respectively
     console.log('Dragged from index', ev.detail.from, 'to', ev.detail.to);

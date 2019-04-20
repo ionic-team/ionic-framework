@@ -1,7 +1,7 @@
 ```html
 <template>
   <!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
-  <ion-reorder-group disabled="false">
+  <ion-reorder-group @ionItemReorder="doReorder($event)" disabled="false">
     <!-- Default reorder icon, end aligned items -->
     <ion-item>
       <ion-label>
@@ -69,4 +69,23 @@
     </ion-reorder>
   </ion-reorder-group>
 </template>
+
+<script lang="ts">
+  import { Component, Vue } from 'vue-property-decorator';
+
+  @Component()
+  export default class Example extends Vue {
+
+    doReorder(event) {
+      // The `from` and `to` properties contain the index of the item
+      // when the drag started and ended, respectively
+      console.log('Dragged from index', event.detail.from, 'to', event.detail.to);
+
+      // Finish the reorder and position the item in the DOM based on
+      // where the gesture ended. This method can also be called directly
+      // by the reorder group
+      event.detail.complete();
+    }
+  }
+</script>
 ```
