@@ -611,7 +611,7 @@ export default Example;
   import { Component, Vue } from 'vue-property-decorator';
 
   @Component()
-  export default class MenuExample extends Vue {
+  export default class Example extends Vue {
     segmentButtonClicked(ev: any) {
       console.log('Segment button clicked', ev);
     }
