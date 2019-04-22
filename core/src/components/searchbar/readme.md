@@ -26,6 +26,9 @@ A Searchbar should be used instead of an input to search lists. A clear button i
 <!-- Searchbar with telephone type -->
 <ion-searchbar type="tel"></ion-searchbar>
 
+<!-- Searchbar disabled -->
+<ion-searchbar disabled="true"></ion-searchbar>
+
 <!-- Searchbar with a cancel button and custom cancel button text -->
 <ion-searchbar showCancelButton cancelButtonText="Custom Cancel"></ion-searchbar>
 
@@ -59,6 +62,9 @@ A Searchbar should be used instead of an input to search lists. A clear button i
 
 <!-- Searchbar with telephone type -->
 <ion-searchbar type="tel"></ion-searchbar>
+
+<!-- Searchbar disabled -->
+<ion-searchbar disabled="true"></ion-searchbar>
 
 <!-- Searchbar with a cancel button and custom cancel button text -->
 <ion-searchbar show-cancel-button cancel-button-text="Custom Cancel"></ion-searchbar>
@@ -100,6 +106,9 @@ const Example: React.SFC<{}> = () => (
     {/*-- Searchbar with telephone type --*/}
     <IonSearchbar type="tel"></IonSearchbar>
 
+    {/*-- Searchbar disabled  --*/}
+    <IonSearchbar disabled="true"></IonSearchbar>
+
     {/*-- Searchbar with a cancel button and custom cancel button text --*/}
     <IonSearchbar showCancelButton cancelButtonText="Custom Cancel"></IonSearchbar>
 
@@ -139,6 +148,9 @@ export default Example;
   <!-- Searchbar with telephone type -->
   <ion-searchbar type="tel"></ion-searchbar>
 
+  <!-- Searchbar disabled -->
+  <ion-searchbar disabled="true"></ion-searchbar>
+
   <!-- Searchbar with a cancel button and custom cancel button text -->
   <ion-searchbar showCancelButton cancelButtonText="Custom Cancel"></ion-searchbar>
 
@@ -172,6 +184,7 @@ export default Example;
 | `clearIcon`        | `clear-icon`         | Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md`.                                                                                                                                                                                     | `string \| undefined`                                                       | `undefined`       |
 | `color`            | `color`              | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`                                                       | `undefined`       |
 | `debounce`         | `debounce`           | Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.                                                                                                                                                                | `number`                                                                    | `250`             |
+| `disabled`         | `disabled`           | If `true`, the user cannot interact with the input.                                                                                                                                                                                                                    | `boolean`                                                                   | `false`           |
 | `mode`             | `mode`               | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                                                             | `undefined`       |
 | `placeholder`      | `placeholder`        | Set the input's placeholder.                                                                                                                                                                                                                                           | `string`                                                                    | `'Search'`        |
 | `searchIcon`       | `search-icon`        | The icon to use as the search icon.                                                                                                                                                                                                                                    | `string`                                                                    | `'search'`        |

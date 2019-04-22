@@ -2,7 +2,7 @@ import { convertDataToISO, parseDate } from './datetime-util';
 
 describe('datetime-util', () => {
   describe('convertDataToISO', () => {
-    it('prints an emptry string for an empty datetime', () => {
+    it('prints an empty string for an empty datetime', () => {
       expect(convertDataToISO({})).toEqual('');
     });
 

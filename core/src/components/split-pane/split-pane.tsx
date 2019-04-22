@@ -1,7 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
 import { Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
 
 const SPLIT_PANE_MAIN = 'split-pane-main';
 const SPLIT_PANE_SIDE = 'split-pane-side';
@@ -165,7 +164,11 @@ export class SplitPane implements ComponentInterface {
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, 'split-pane'),
+        [`${this.mode}`]: true,
+
+        // Used internally for styling
+        [`split-pane-${this.mode}`]: true,
+
         'split-pane-visible': this.visible
       }
     };

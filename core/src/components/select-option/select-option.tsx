@@ -1,11 +1,14 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Prop } from '@stencil/core';
 
+import { Mode } from '../../interface';
+
 @Component({
   tag: 'ion-select-option',
   shadow: true,
   styleUrl: 'select-option.scss'
 })
 export class SelectOption implements ComponentInterface {
+  mode!: Mode;
 
   private inputId = `ion-selopt-${selectOptionIds++}`;
 
@@ -55,7 +58,10 @@ export class SelectOption implements ComponentInterface {
   hostData() {
     return {
       'role': 'option',
-      'id': this.inputId
+      'id': this.inputId,
+      class: {
+        [`${this.mode}`]: true,
+      }
     };
   }
 }

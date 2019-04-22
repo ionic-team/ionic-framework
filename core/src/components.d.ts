@@ -176,7 +176,7 @@ export namespace Components {
     /**
     * An array of buttons for the action sheet.
     */
-    'buttons': (ActionSheetButton | string)[];
+    'buttons'?: (ActionSheetButton | string)[];
     /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
@@ -1416,7 +1416,7 @@ export namespace Components {
 
   interface IonFabList {
     /**
-    * If `true`, the fab list will be show all fab buttons in the list.
+    * If `true`, the fab list will show all fab buttons in the list.
     */
     'activated': boolean;
     /**
@@ -1426,7 +1426,7 @@ export namespace Components {
   }
   interface IonFabListAttributes extends StencilHTMLAttributes {
     /**
-    * If `true`, the fab list will be show all fab buttons in the list.
+    * If `true`, the fab list will show all fab buttons in the list.
     */
     'activated'?: boolean;
     /**
@@ -3720,6 +3720,10 @@ export namespace Components {
     */
     'debounce': number;
     /**
+    * If `true`, the user cannot interact with the input.
+    */
+    'disabled': boolean;
+    /**
     * Returns the native `<input>` element used under the hood.
     */
     'getInputElement': () => Promise<HTMLInputElement>;
@@ -3789,6 +3793,10 @@ export namespace Components {
     * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
     */
     'debounce'?: number;
+    /**
+    * If `true`, the user cannot interact with the input.
+    */
+    'disabled'?: boolean;
     /**
     * The mode determines which platform styles to use.
     */
