@@ -133,9 +133,9 @@ Scroll to the bottom of the component.
 
 #### Parameters
 
-| Name       | Type     | Description                                         |
-| ---------- | -------- | --------------------------------------------------- |
-| `duration` | `number` | The amount of time to take scrolling to the bottom. |
+| Name       | Type     | Description                                                          |
+| ---------- | -------- | -------------------------------------------------------------------- |
+| `duration` | `number` | The amount of time to take scrolling to the bottom. Defaults to `0`. |
 
 #### Returns
 
@@ -149,11 +149,11 @@ Scroll to a specified X/Y location in the component.
 
 #### Parameters
 
-| Name       | Type                          | Description                                         |
-| ---------- | ----------------------------- | --------------------------------------------------- |
-| `x`        | `null \| number \| undefined` | The point to scroll to on the horizontal axis.      |
-| `y`        | `null \| number \| undefined` | The point to scroll to on the vertical axis.        |
-| `duration` | `number`                      | The amount of time to take scrolling to that point. |
+| Name       | Type                          | Description                                                          |
+| ---------- | ----------------------------- | -------------------------------------------------------------------- |
+| `x`        | `null \| number \| undefined` | The point to scroll to on the horizontal axis.                       |
+| `y`        | `null \| number \| undefined` | The point to scroll to on the vertical axis.                         |
+| `duration` | `number`                      | The amount of time to take scrolling to that point. Defaults to `0`. |
 
 #### Returns
 
@@ -167,9 +167,9 @@ Scroll to the top of the component.
 
 #### Parameters
 
-| Name       | Type     | Description                                      |
-| ---------- | -------- | ------------------------------------------------ |
-| `duration` | `number` | The amount of time to take scrolling to the top. |
+| Name       | Type     | Description                                                       |
+| ---------- | -------- | ----------------------------------------------------------------- |
+| `duration` | `number` | The amount of time to take scrolling to the top. Defaults to `0`. |
 
 #### Returns
 

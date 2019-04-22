@@ -184,7 +184,7 @@ export class Content implements ComponentInterface {
   /**
    * Scroll to the top of the component.
    *
-   * @param duration The amount of time to take scrolling to the top.
+   * @param duration The amount of time to take scrolling to the top. Defaults to `0`.
    */
   @Method()
   scrollToTop(duration = 0): Promise<void> {
@@ -194,7 +194,7 @@ export class Content implements ComponentInterface {
   /**
    * Scroll to the bottom of the component.
    *
-   * @param duration The amount of time to take scrolling to the bottom.
+   * @param duration The amount of time to take scrolling to the bottom. Defaults to `0`.
    */
   @Method()
   scrollToBottom(duration = 0): Promise<void> {
@@ -219,7 +219,7 @@ export class Content implements ComponentInterface {
    *
    * @param x The point to scroll to on the horizontal axis.
    * @param y The point to scroll to on the vertical axis.
-   * @param duration The amount of time to take scrolling to that point.
+   * @param duration The amount of time to take scrolling to that point. Defaults to `0`.
    */
   @Method()
   async scrollToPoint(x: number | undefined | null, y: number | undefined | null, duration = 0): Promise<void> {
