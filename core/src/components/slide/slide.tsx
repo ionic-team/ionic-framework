@@ -1,11 +1,14 @@
 import { Component, ComponentInterface, Event } from '@stencil/core';
 import { EventEmitter } from 'ionicons/dist/types/stencil.core';
 
+import { Mode } from '../../interface';
+
 @Component({
   tag: 'ion-slide',
   styleUrl: 'slide.scss'
 })
 export class Slide implements ComponentInterface {
+  mode!: Mode;
 
   /** @internal */
   @Event() ionSlideChanged!: EventEmitter<void>;
@@ -21,7 +24,9 @@ export class Slide implements ComponentInterface {
   hostData() {
     return {
       class: {
-        'swiper-slide': true
+        [`${this.mode}`]: true,
+        'swiper-slide': true,
+        'swiper-zoom-container': true
       }
     };
   }

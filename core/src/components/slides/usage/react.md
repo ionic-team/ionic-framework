@@ -3,8 +3,10 @@ import React from 'react';
 
 import { IonSlides, IonSlide } from '@ionic/react';
 
+// Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
 const slideOpts = {
-  effect: 'flip'
+  initialSlide: 1,
+  speed: 400
 };
 
 const Example: React.SFC<{}> = () => (

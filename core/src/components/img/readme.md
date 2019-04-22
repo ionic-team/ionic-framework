@@ -79,9 +79,10 @@ export default Example
 
 ## Events
 
-| Event           | Description                        | Type                |
-| --------------- | ---------------------------------- | ------------------- |
-| `ionImgDidLoad` | Emitted when the img src is loaded | `CustomEvent<void>` |
+| Event           | Description                           | Type                |
+| --------------- | ------------------------------------- | ------------------- |
+| `ionError`      | Emitted when the img fails to load    | `CustomEvent<void>` |
+| `ionImgDidLoad` | Emitted when the img src has been set | `CustomEvent<void>` |
 
 
 ----------------------------------------------

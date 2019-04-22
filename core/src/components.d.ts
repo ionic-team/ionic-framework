@@ -68,6 +68,7 @@ import {
   TabButtonLayout,
   TextareaChangeEventDetail,
   TextFieldTypes,
+  ToastButton,
   ToastOptions,
   ToggleChangeEventDetail,
   TransitionDoneFn,
@@ -175,7 +176,7 @@ export namespace Components {
     /**
     * An array of buttons for the action sheet.
     */
-    'buttons': (ActionSheetButton | string)[];
+    'buttons'?: (ActionSheetButton | string)[];
     /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
@@ -1415,7 +1416,7 @@ export namespace Components {
 
   interface IonFabList {
     /**
-    * If `true`, the fab list will be show all fab buttons in the list.
+    * If `true`, the fab list will show all fab buttons in the list.
     */
     'activated': boolean;
     /**
@@ -1425,7 +1426,7 @@ export namespace Components {
   }
   interface IonFabListAttributes extends StencilHTMLAttributes {
     /**
-    * If `true`, the fab list will be show all fab buttons in the list.
+    * If `true`, the fab list will show all fab buttons in the list.
     */
     'activated'?: boolean;
     /**
@@ -1546,7 +1547,11 @@ export namespace Components {
     */
     'alt'?: string;
     /**
-    * Emitted when the img src is loaded
+    * Emitted when the img fails to load
+    */
+    'onIonError'?: (event: CustomEvent<void>) => void;
+    /**
+    * Emitted when the img src has been set
     */
     'onIonImgDidLoad'?: (event: CustomEvent<void>) => void;
     /**
@@ -3340,6 +3345,10 @@ export namespace Components {
     */
     'step': number;
     /**
+    * If `true`, tick marks are displayed based on the step value. Only applies when `snaps` is `true`.
+    */
+    'ticks': boolean;
+    /**
     * the value of the range.
     */
     'value': RangeValue;
@@ -3401,6 +3410,10 @@ export namespace Components {
     * Specifies the value granularity.
     */
     'step'?: number;
+    /**
+    * If `true`, tick marks are displayed based on the step value. Only applies when `snaps` is `true`.
+    */
+    'ticks'?: boolean;
     /**
     * the value of the range.
     */
@@ -3715,6 +3728,10 @@ export namespace Components {
     */
     'debounce': number;
     /**
+    * If `true`, the user cannot interact with the input.
+    */
+    'disabled': boolean;
+    /**
     * Returns the native `<input>` element used under the hood.
     */
     'getInputElement': () => Promise<HTMLInputElement>;
@@ -3784,6 +3801,10 @@ export namespace Components {
     * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
     */
     'debounce'?: number;
+    /**
+    * If `true`, the user cannot interact with the input.
+    */
+    'disabled'?: boolean;
     /**
     * The mode determines which platform styles to use.
     */
@@ -4753,6 +4774,10 @@ export namespace Components {
     */
     'animated': boolean;
     /**
+    * An array of buttons for the toast.
+    */
+    'buttons'?: (ToastButton | string)[];
+    /**
     * Text to display in the close button.
     */
     'closeButtonText'?: string;
@@ -4776,6 +4801,10 @@ export namespace Components {
     * Animation to use when the toast is presented.
     */
     'enterAnimation'?: AnimationBuilder;
+    /**
+    * Header to be shown in the toast.
+    */
+    'header'?: string;
     /**
     * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
     */
@@ -4824,6 +4853,10 @@ export namespace Components {
     */
     'animated'?: boolean;
     /**
+    * An array of buttons for the toast.
+    */
+    'buttons'?: (ToastButton | string)[];
+    /**
     * Text to display in the close button.
     */
     'closeButtonText'?: string;
@@ -4843,6 +4876,10 @@ export namespace Components {
     * Animation to use when the toast is presented.
     */
     'enterAnimation'?: AnimationBuilder;
+    /**
+    * Header to be shown in the toast.
+    */
+    'header'?: string;
     /**
     * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
     */

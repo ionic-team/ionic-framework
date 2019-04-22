@@ -136,10 +136,11 @@ export class Item implements ComponentInterface {
       class: {
         ...childStyles,
         ...createColorClasses(this.color),
+        'item': true,
+        [`${this.mode}`]: true,
         [`item-lines-${this.lines}`]: this.lines !== undefined,
         'item-disabled': this.disabled,
         'in-list': hostContext('ion-list', this.el),
-        'item': true,
         'item-multiple-inputs': this.multipleInputs,
         'ion-activatable': this.isClickable(),
         'ion-focusable': true,

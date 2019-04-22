@@ -7,7 +7,7 @@ ion-action-sheet-controller,method,getTop,getTop() => Promise<HTMLIonActionSheet
 ion-action-sheet,scoped
 ion-action-sheet,prop,animated,boolean,true,false,false
 ion-action-sheet,prop,backdropDismiss,boolean,true,false,false
-ion-action-sheet,prop,buttons,(string | ActionSheetButton)[],undefined,true,false
+ion-action-sheet,prop,buttons,(string | ActionSheetButton)[],[],false,false
 ion-action-sheet,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-action-sheet,prop,enterAnimation,((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) | undefined,undefined,false,false
 ion-action-sheet,prop,header,string | undefined,undefined,false,false
@@ -380,6 +380,7 @@ ion-header,prop,translucent,boolean,false,false,false
 ion-img,shadow
 ion-img,prop,alt,string | undefined,undefined,false,false
 ion-img,prop,src,string | undefined,undefined,false,false
+ion-img,event,ionError,void,true
 ion-img,event,ionImgDidLoad,void,true
 
 ion-infinite-scroll-content,none
@@ -806,6 +807,7 @@ ion-range,prop,name,string,'',false,false
 ion-range,prop,pin,boolean,false,false,false
 ion-range,prop,snaps,boolean,false,false,false
 ion-range,prop,step,number,1,false,false
+ion-range,prop,ticks,boolean,true,false,false
 ion-range,prop,value,number | { lower: number; upper: number; },0,false,false
 ion-range,event,ionBlur,void,true
 ion-range,event,ionChange,RangeChangeEventDetail,true
@@ -884,6 +886,7 @@ ion-searchbar,prop,cancelButtonText,string,'Cancel',false,false
 ion-searchbar,prop,clearIcon,string | undefined,undefined,false,false
 ion-searchbar,prop,color,string | undefined,undefined,false,false
 ion-searchbar,prop,debounce,number,250,false,false
+ion-searchbar,prop,disabled,boolean,false,false,false
 ion-searchbar,prop,mode,"ios" | "md",undefined,false,false
 ion-searchbar,prop,placeholder,string,'Search',false,false
 ion-searchbar,prop,searchIcon,string,'search',false,false
@@ -1134,11 +1137,13 @@ ion-toast-controller,method,getTop,getTop() => Promise<HTMLIonToastElement | und
 
 ion-toast,shadow
 ion-toast,prop,animated,boolean,true,false,false
+ion-toast,prop,buttons,(string | ToastButton)[] | undefined,undefined,false,false
 ion-toast,prop,closeButtonText,string | undefined,undefined,false,false
 ion-toast,prop,color,string | undefined,undefined,false,false
 ion-toast,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-toast,prop,duration,number,0,false,false
 ion-toast,prop,enterAnimation,((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) | undefined,undefined,false,false
+ion-toast,prop,header,string | undefined,undefined,false,false
 ion-toast,prop,keyboardClose,boolean,false,false,false
 ion-toast,prop,leaveAnimation,((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) | undefined,undefined,false,false
 ion-toast,prop,message,string | undefined,undefined,false,false
@@ -1162,11 +1167,13 @@ ion-toast,css-prop,--border-width
 ion-toast,css-prop,--box-shadow
 ion-toast,css-prop,--button-color
 ion-toast,css-prop,--color
+ion-toast,css-prop,--end
 ion-toast,css-prop,--height
 ion-toast,css-prop,--max-height
 ion-toast,css-prop,--max-width
 ion-toast,css-prop,--min-height
 ion-toast,css-prop,--min-width
+ion-toast,css-prop,--start
 ion-toast,css-prop,--width
 
 ion-toggle,shadow

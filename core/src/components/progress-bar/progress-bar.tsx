@@ -62,6 +62,7 @@ export class ProgressBar implements ComponentInterface {
       'aria-valuemax': 1,
       class: {
         ...createColorClasses(color),
+        [`${this.mode}`]: true,
         [`progress-bar-${type}`]: true,
         'progress-paused': paused,
         'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed
