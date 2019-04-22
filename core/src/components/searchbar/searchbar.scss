@@ -143,3 +143,9 @@
 :host(.searchbar-has-value.searchbar-has-focus) .searchbar-clear-button {
   display: block;
 }
+
+:host(.searchbar-disabled) {
+  cursor: default;
+  opacity: .4;
+  pointer-events: none;
+}

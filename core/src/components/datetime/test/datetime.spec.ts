@@ -52,6 +52,23 @@ describe('Datetime', () => {
         expect(convertToLocal.toISOString()).toEqual(expectedDateString);
       });
     });
+    
+    it('should format a date string and not get affected by the timezone offset', () => {
+
+      const dateStringTests = [
+        { input: '2019-03-20', expectedOutput: '2019-03-20' },
+        { input: '1994-04-15', expectedOutput: '1994-04-15' },
+        { input: '2008-09-02', expectedOutput: '2008-09-02' },
+        { input: '1995-02', expectedOutput: '1995-02' },
+        { input: '1994-03-14', expectedOutput: '1994-03-14' },
+        { input: '9 01:47', expectedOutput: '09-01T01:47' }
+      ];
+
+      dateStringTests.forEach(test => {
+        const convertToLocal = getLocalDateTime(test.input);
+        expect(convertToLocal.toISOString()).toContain(test.expectedOutput);
+      });
+    });
   });
 
   describe('daysInMonth()', () => {

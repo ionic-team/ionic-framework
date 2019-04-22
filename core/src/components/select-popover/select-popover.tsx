@@ -34,6 +34,14 @@ export class SelectPopover implements ComponentInterface {
     }
   }
 
+  hostData() {
+    return {
+      class: {
+        [`${this.mode}`]: true,
+      }
+    };
+  }
+
   render() {
     return (
       <ion-list>

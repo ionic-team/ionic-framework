@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Prop, QueueApi } from '@stencil/core';
 
-import { Config } from '../../interface';
+import { Config, Mode } from '../../interface';
 import { rIC } from '../../utils/helpers';
 import { isPlatform } from '../../utils/platform';
 
@@ -9,6 +9,7 @@ import { isPlatform } from '../../utils/platform';
   styleUrl: 'app.scss'
 })
 export class App implements ComponentInterface {
+  mode!: Mode;
 
   @Element() el!: HTMLElement;
 
@@ -34,6 +35,7 @@ export class App implements ComponentInterface {
   hostData() {
     return {
       class: {
+        [`${this.mode}`]: true,
         'ion-page': true,
         'force-statusbar-padding': this.config.getBoolean('_forceStatusbarPadding')
       }

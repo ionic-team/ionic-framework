@@ -51,7 +51,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   /**
    * An array of buttons for the action sheet.
    */
-  @Prop() buttons!: (ActionSheetButton | string)[];
+  @Prop() buttons: (ActionSheetButton | string)[] = [];
 
   /**
    * Additional classes to apply for custom CSS. If multiple classes are
@@ -196,6 +196,8 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         zIndex: 20000 + this.overlayIndex,
       },
       class: {
+        [`${this.mode}`]: true,
+
         ...getClassMap(this.cssClass),
         'action-sheet-translucent': this.translucent
       }

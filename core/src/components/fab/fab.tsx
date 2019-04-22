@@ -1,11 +1,14 @@
 import { Component, ComponentInterface, Element, Listen, Method, Prop, Watch } from '@stencil/core';
 
+import { Mode } from '../../interface';
+
 @Component({
   tag: 'ion-fab',
   styleUrl: 'fab.scss',
   shadow: true
 })
 export class Fab implements ComponentInterface {
+  mode!: Mode;
 
   @Element() el!: HTMLElement;
 
@@ -75,6 +78,7 @@ export class Fab implements ComponentInterface {
   hostData() {
     return {
       class: {
+        [`${this.mode}`]: true,
         [`fab-horizontal-${this.horizontal}`]: this.horizontal !== undefined,
         [`fab-vertical-${this.vertical}`]: this.vertical !== undefined,
         'fab-edge': this.edge

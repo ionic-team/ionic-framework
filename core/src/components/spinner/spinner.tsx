@@ -50,7 +50,7 @@ export class Spinner implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
-
+        [`${this.mode}`]: true,
         [`spinner-${this.getName()}`]: true,
         'spinner-paused': !!this.paused || this.config.getBoolean('_testing')
       }
