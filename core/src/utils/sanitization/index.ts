@@ -10,8 +10,8 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
   const range = document.createRange();
   const documentFragment = range.createContextualFragment(untrustedString);
 
-  for (let childEl of (documentFragment.children as any)) {
-    for (let attributeName of childEl.getAttributeNames()) {
+  for (const childEl of (documentFragment.children as any)) {
+    for (const attributeName of childEl.getAttributeNames()) {
 
       // remove non-whitelisted attribs
       if (!whitelistedAttributes.includes(attributeName.toLowerCase())) {
