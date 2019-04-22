@@ -59,8 +59,12 @@ export const config: Config = {
       type: 'dist',
       esmLoaderPath: '../loader'
     },
+    // {
+    //   type: 'dist-hydrate-script'
+    // },
     {
-      type: 'dist-hydrate-script'
+      type: 'experimental-dist-module',
+      externalRuntime: true,
     },
     {
       type: 'docs',
@@ -77,9 +81,6 @@ export const config: Config = {
     //   type: 'stats',
     //   file: 'stats.json'
     // },
-    // apiSpecGenerator({
-    //   file: 'api.txt'
-    // }),
     //   {
     //     type: 'angular',
     //     componentCorePackage: '@ionic/core',
