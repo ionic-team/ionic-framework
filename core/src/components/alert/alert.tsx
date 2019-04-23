@@ -73,6 +73,10 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   /**
    * The main message to be displayed in the alert.
+   * `message` can accept either plaintext or HTML as a string.
+   * To display characters normally reserved for HTML, they
+   * must be escaped. For example `<Ionic>` would become
+   * `&lt;Ionic&gt;`
    */
   @Prop() message?: string;
 

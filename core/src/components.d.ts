@@ -285,7 +285,7 @@ export namespace Components {
     */
     'leaveAnimation'?: AnimationBuilder;
     /**
-    * The main message to be displayed in the alert.
+    * The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`
     */
     'message'?: string;
     /**
@@ -352,7 +352,7 @@ export namespace Components {
     */
     'leaveAnimation'?: AnimationBuilder;
     /**
-    * The main message to be displayed in the alert.
+    * The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`
     */
     'message'?: string;
     /**
@@ -1566,7 +1566,7 @@ export namespace Components {
     */
     'loadingSpinner'?: SpinnerTypes | null;
     /**
-    * Optional text to display while loading.
+    * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`
     */
     'loadingText'?: string;
   }
@@ -1576,7 +1576,7 @@ export namespace Components {
     */
     'loadingSpinner'?: SpinnerTypes | null;
     /**
-    * Optional text to display while loading.
+    * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`
     */
     'loadingText'?: string;
   }
@@ -3418,7 +3418,7 @@ export namespace Components {
     */
     'pullingIcon'?: string | null;
     /**
-    * The text you want to display when you begin to pull down
+    * The text you want to display when you begin to pull down Optional text to display while loading. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`
     */
     'pullingText'?: string;
     /**
@@ -3426,7 +3426,7 @@ export namespace Components {
     */
     'refreshingSpinner'?: SpinnerTypes | null;
     /**
-    * The text you want to display when performing a refresh
+    * The text you want to display when performing a refresh Optional text to display while loading. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`
     */
     'refreshingText'?: string;
   }
@@ -3436,7 +3436,7 @@ export namespace Components {
     */
     'pullingIcon'?: string | null;
     /**
-    * The text you want to display when you begin to pull down
+    * The text you want to display when you begin to pull down Optional text to display while loading. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`
     */
     'pullingText'?: string;
     /**
@@ -3444,7 +3444,7 @@ export namespace Components {
     */
     'refreshingSpinner'?: SpinnerTypes | null;
     /**
-    * The text you want to display when performing a refresh
+    * The text you want to display when performing a refresh Optional text to display while loading. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`
     */
     'refreshingText'?: string;
   }
@@ -3732,7 +3732,7 @@ export namespace Components {
     */
     'mode': Mode;
     /**
-    * Set the input's placeholder.
+    * Set the input's placeholder. `placeholder` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`
     */
     'placeholder': string;
     /**
@@ -3826,7 +3826,7 @@ export namespace Components {
     */
     'onIonInput'?: (event: CustomEvent<KeyboardEvent>) => void;
     /**
-    * Set the input's placeholder.
+    * Set the input's placeholder. `placeholder` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`
     */
     'placeholder'?: string;
     /**
