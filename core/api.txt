@@ -1,6 +1,6 @@
 
 ion-action-sheet-controller,none
-ion-action-sheet-controller,method,create,create(opts: ActionSheetOptions) => Promise<HTMLIonActionSheetElement>
+ion-action-sheet-controller,method,create,create(options: ActionSheetOptions) => Promise<HTMLIonActionSheetElement>
 ion-action-sheet-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
 ion-action-sheet-controller,method,getTop,getTop() => Promise<HTMLIonActionSheetElement | undefined>
 
@@ -36,7 +36,7 @@ ion-action-sheet,css-prop,--min-width
 ion-action-sheet,css-prop,--width
 
 ion-alert-controller,none
-ion-alert-controller,method,create,create(opts: AlertOptions) => Promise<HTMLIonAlertElement>
+ion-alert-controller,method,create,create(options: AlertOptions) => Promise<HTMLIonAlertElement>
 ion-alert-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
 ion-alert-controller,method,getTop,getTop() => Promise<HTMLIonAlertElement | undefined>
 
@@ -532,7 +532,7 @@ ion-list,prop,mode,"ios" | "md",undefined,false,false
 ion-list,method,closeSlidingItems,closeSlidingItems() => Promise<boolean>
 
 ion-loading-controller,none
-ion-loading-controller,method,create,create(opts?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>
+ion-loading-controller,method,create,create(options?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>
 ion-loading-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
 ion-loading-controller,method,getTop,getTop() => Promise<HTMLIonLoadingElement | undefined>
 
@@ -574,18 +574,18 @@ ion-menu-button,prop,mode,"ios" | "md",undefined,false,false
 ion-menu-button,css-prop,--color
 
 ion-menu-controller,none
-ion-menu-controller,method,close,close(menuId?: string | null | undefined) => Promise<boolean>
-ion-menu-controller,method,enable,enable(shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
-ion-menu-controller,method,get,get(menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
+ion-menu-controller,method,close,close(menu?: string | null | undefined) => Promise<boolean>
+ion-menu-controller,method,enable,enable(enable: boolean, menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
+ion-menu-controller,method,get,get(menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
 ion-menu-controller,method,getMenus,getMenus() => Promise<HTMLIonMenuElement[]>
 ion-menu-controller,method,getOpen,getOpen() => Promise<HTMLIonMenuElement | undefined>
 ion-menu-controller,method,isAnimating,isAnimating() => Promise<boolean>
-ion-menu-controller,method,isEnabled,isEnabled(menuId?: string | null | undefined) => Promise<boolean>
-ion-menu-controller,method,isOpen,isOpen(menuId?: string | null | undefined) => Promise<boolean>
-ion-menu-controller,method,open,open(menuId?: string | null | undefined) => Promise<boolean>
+ion-menu-controller,method,isEnabled,isEnabled(menu?: string | null | undefined) => Promise<boolean>
+ion-menu-controller,method,isOpen,isOpen(menu?: string | null | undefined) => Promise<boolean>
+ion-menu-controller,method,open,open(menu?: string | null | undefined) => Promise<boolean>
 ion-menu-controller,method,registerAnimation,registerAnimation(name: string, animation: AnimationBuilder) => void
-ion-menu-controller,method,swipeGesture,swipeGesture(shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
-ion-menu-controller,method,toggle,toggle(menuId?: string | null | undefined) => Promise<boolean>
+ion-menu-controller,method,swipeGesture,swipeGesture(enable: boolean, menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
+ion-menu-controller,method,toggle,toggle(menu?: string | null | undefined) => Promise<boolean>
 
 ion-menu-toggle,shadow
 ion-menu-toggle,prop,autoHide,boolean,true,false,false
@@ -618,7 +618,7 @@ ion-menu,css-prop,--min-width
 ion-menu,css-prop,--width
 
 ion-modal-controller,none
-ion-modal-controller,method,create,create<T extends ComponentRef>(opts: ModalOptions<T>) => Promise<HTMLIonModalElement>
+ion-modal-controller,method,create,create<T extends ComponentRef>(options: ModalOptions<T>) => Promise<HTMLIonModalElement>
 ion-modal-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
 ion-modal-controller,method,getTop,getTop() => Promise<HTMLIonModalElement | undefined>
 
@@ -691,7 +691,7 @@ ion-note,prop,mode,"ios" | "md",undefined,false,false
 ion-note,css-prop,--color
 
 ion-picker-controller,none
-ion-picker-controller,method,create,create(opts: PickerOptions) => Promise<HTMLIonPickerElement>
+ion-picker-controller,method,create,create(options: PickerOptions) => Promise<HTMLIonPickerElement>
 ion-picker-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
 ion-picker-controller,method,getTop,getTop() => Promise<HTMLIonPickerElement | undefined>
 
@@ -730,7 +730,7 @@ ion-picker,css-prop,--min-width
 ion-picker,css-prop,--width
 
 ion-popover-controller,none
-ion-popover-controller,method,create,create<T extends ComponentRef>(opts: PopoverOptions<T>) => Promise<HTMLIonPopoverElement>
+ion-popover-controller,method,create,create<T extends ComponentRef>(options: PopoverOptions<T>) => Promise<HTMLIonPopoverElement>
 ion-popover-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
 ion-popover-controller,method,getTop,getTop() => Promise<HTMLIonPopoverElement | undefined>
 
@@ -849,7 +849,7 @@ ion-reorder,shadow
 
 ion-ripple-effect,shadow
 ion-ripple-effect,prop,type,"bounded" | "unbounded",'bounded',false,false
-ion-ripple-effect,method,addRipple,addRipple(pageX: number, pageY: number) => Promise<() => void>
+ion-ripple-effect,method,addRipple,addRipple(x: number, y: number) => Promise<() => void>
 
 ion-route-redirect,none
 ion-route-redirect,prop,from,string,undefined,true,false
@@ -970,7 +970,7 @@ ion-select,prop,okText,string,'OK',false,false
 ion-select,prop,placeholder,null | string | undefined,undefined,false,false
 ion-select,prop,selectedText,null | string | undefined,undefined,false,false
 ion-select,prop,value,any,undefined,false,false
-ion-select,method,open,open(ev?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>
+ion-select,method,open,open(event?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>
 ion-select,event,ionBlur,void,true
 ion-select,event,ionCancel,void,true
 ion-select,event,ionChange,SelectChangeEventDetail,true
@@ -999,9 +999,9 @@ ion-slides,method,getPreviousIndex,getPreviousIndex() => Promise<number>
 ion-slides,method,isBeginning,isBeginning() => Promise<boolean>
 ion-slides,method,isEnd,isEnd() => Promise<boolean>
 ion-slides,method,length,length() => Promise<number>
-ion-slides,method,lockSwipeToNext,lockSwipeToNext(shouldLockSwipeToNext: boolean) => Promise<void>
-ion-slides,method,lockSwipeToPrev,lockSwipeToPrev(shouldLockSwipeToPrev: boolean) => Promise<void>
-ion-slides,method,lockSwipes,lockSwipes(shouldLockSwipes: boolean) => Promise<void>
+ion-slides,method,lockSwipeToNext,lockSwipeToNext(lock: boolean) => Promise<void>
+ion-slides,method,lockSwipeToPrev,lockSwipeToPrev(lock: boolean) => Promise<void>
+ion-slides,method,lockSwipes,lockSwipes(lock: boolean) => Promise<void>
 ion-slides,method,slideNext,slideNext(speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>
 ion-slides,method,slidePrev,slidePrev(speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>
 ion-slides,method,slideTo,slideTo(index: number, speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>
@@ -1130,7 +1130,7 @@ ion-title,prop,color,string | undefined,undefined,false,false
 ion-title,css-prop,--color
 
 ion-toast-controller,none
-ion-toast-controller,method,create,create(opts?: ToastOptions | undefined) => Promise<HTMLIonToastElement>
+ion-toast-controller,method,create,create(options?: ToastOptions | undefined) => Promise<HTMLIonToastElement>
 ion-toast-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
 ion-toast-controller,method,getTop,getTop() => Promise<HTMLIonToastElement | undefined>
 
@@ -1218,5 +1218,5 @@ ion-virtual-scroll,prop,renderFooter,((item: any, index: number) => any) | undef
 ion-virtual-scroll,prop,renderHeader,((item: any, index: number) => any) | undefined,undefined,false,false
 ion-virtual-scroll,prop,renderItem,((item: any, index: number) => any) | undefined,undefined,false,false
 ion-virtual-scroll,method,checkEnd,checkEnd() => void
-ion-virtual-scroll,method,checkRange,checkRange(offset: number, len?: number) => void
+ion-virtual-scroll,method,checkRange,checkRange(offset: number, length?: number) => void
 ion-virtual-scroll,method,positionForItem,positionForItem(index: number) => Promise<number>
