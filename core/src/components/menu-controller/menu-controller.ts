@@ -31,13 +31,13 @@ export class MenuController implements MenuControllerI {
    * using the menu's `id` property. If a menu is not found then it will
    * return `false`.
    *
-   * @param menuId The id or side of the menu to open.
+   * @param menu The menuId or side of the menu to open.
    */
   @Method()
-  async open(menuId?: string | null): Promise<boolean> {
-    const menu = await this.get(menuId);
-    if (menu) {
-      return menu.open();
+  async open(menu?: string | null): Promise<boolean> {
+    const menuEl = await this.get(menu);
+    if (menuEl) {
+      return menuEl.open();
     }
     return false;
   }
@@ -47,13 +47,13 @@ export class MenuController implements MenuControllerI {
    * If no menu is specified, then it will close any menu that is open.
    * If it does not find any open menus, it will return `false`.
    *
-   * @param menuId The id or side of the menu to close.
+   * @param menu The menuId or side of the menu to close.
    */
   @Method()
-  async close(menuId?: string | null): Promise<boolean> {
-    const menu = await (menuId !== undefined ? this.get(menuId) : this.getOpen());
-    if (menu !== undefined) {
-      return menu.close();
+  async close(menu?: string | null): Promise<boolean> {
+    const menuEl = await (menu !== undefined ? this.get(menu) : this.getOpen());
+    if (menuEl !== undefined) {
+      return menuEl.close();
     }
     return false;
   }
@@ -63,13 +63,13 @@ export class MenuController implements MenuControllerI {
    * close the menu, otherwise it will try to open it. Returns `false` if
    * a menu is not found.
    *
-   * @param menuId The id or side of the menu to toggle.
+   * @param menu The menuId or side of the menu to toggle.
    */
   @Method()
-  async toggle(menuId?: string | null): Promise<boolean> {
-    const menu = await this.get(menuId);
-    if (menu) {
-      return menu.toggle();
+  async toggle(menu?: string | null): Promise<boolean> {
+    const menuEl = await this.get(menu);
+    if (menuEl) {
+      return menuEl.toggle();
     }
     return false;
   }
@@ -82,30 +82,30 @@ export class MenuController implements MenuControllerI {
    * on that side.
    *
    * @param enable If `true`, the menu should be enabled.
-   * @param menuId The id or side of the menu to enable or disable.
+   * @param menu The menuId or side of the menu to enable or disable.
    */
   @Method()
-  async enable(enable: boolean, menuId?: string | null): Promise<HTMLIonMenuElement | undefined> {
-    const menu = await this.get(menuId);
-    if (menu) {
-      menu.disabled = !enable;
+  async enable(enable: boolean, menu?: string | null): Promise<HTMLIonMenuElement | undefined> {
+    const menuEl = await this.get(menu);
+    if (menuEl) {
+      menuEl.disabled = !enable;
     }
-    return menu;
+    return menuEl;
   }
 
   /**
    * Enable or disable the ability to swipe open the menu.
    *
    * @param enable If `true`, the menu swipe gesture should be enabled.
-   * @param menuId The id or side of the menu to enable or disable the swipe gesture on.
+   * @param menu The menuId or side of the menu to enable or disable the swipe gesture on.
    */
   @Method()
-  async swipeGesture(enable: boolean, menuId?: string | null): Promise<HTMLIonMenuElement | undefined> {
-    const menu = await this.get(menuId);
-    if (menu) {
-      menu.swipeGesture = enable;
+  async swipeGesture(enable: boolean, menu?: string | null): Promise<HTMLIonMenuElement | undefined> {
+    const menuEl = await this.get(menu);
+    if (menuEl) {
+      menuEl.swipeGesture = enable;
     }
-    return menu;
+    return menuEl;
   }
 
   /**
@@ -113,30 +113,31 @@ export class MenuController implements MenuControllerI {
    * menu is open. If a menu is not specified, it will return `true` if
    * any menu is currently open.
    *
-   * @param menuId The id or side of the menu that is being checked.
+   * @param menu The menuId or side of the menu that is being checked.
    */
   @Method()
-  async isOpen(menuId?: string | null): Promise<boolean> {
-    if (menuId != null) {
-      const menu = await this.get(menuId);
-      return (menu !== undefined && menu.isOpen());
+  async isOpen(menu?: string | null): Promise<boolean> {
+    if (menu != null) {
+      const menuEl = await this.get(menu);
+      return (menuEl !== undefined && menuEl.isOpen());
     } else {
-      const menu = await this.getOpen();
-      return menu !== undefined;
+      const menuEl = await this.getOpen();
+      return menuEl !== undefined;
     }
   }
 
   /**
    * Get whether or not the menu is enabled. Returns `true` if the
-   * specified menu is enabled. Returns `false` if a menu is not found.
+   * specified menu is enabled. Returns `false` if a menu is disabled
+   * or not found.
    *
-   * @param menuId The id or side of the menu that is being checked.
+   * @param menu The menuId or side of the menu that is being checked.
    */
   @Method()
-  async isEnabled(menuId?: string | null): Promise<boolean> {
-    const menu = await this.get(menuId);
-    if (menu) {
-      return !menu.disabled;
+  async isEnabled(menu?: string | null): Promise<boolean> {
+    const menuEl = await this.get(menu);
+    if (menuEl) {
+      return !menuEl.disabled;
     }
     return false;
   }
@@ -147,44 +148,44 @@ export class MenuController implements MenuControllerI {
    * enabled menu on that side. Otherwise, it will try to find the menu using the menu's
    * `id` property. If a menu is not found then it will return `null`.
    *
-   * @param menuId The id or side of the menu.
+   * @param menu The menuId or side of the menu.
    */
   @Method()
-  async get(menuId?: string | null): Promise<HTMLIonMenuElement | undefined> {
+  async get(menu?: string | null): Promise<HTMLIonMenuElement | undefined> {
     if (Build.isDev) {
-      if (menuId === 'left') {
+      if (menu === 'left') {
         console.error('menu.side=left is deprecated, use "start" instead');
         return undefined;
       }
-      if (menuId === 'right') {
+      if (menu === 'right') {
         console.error('menu.side=right is deprecated, use "end" instead');
         return undefined;
       }
     }
     await this.waitUntilReady();
 
-    if (menuId === 'start' || menuId === 'end') {
+    if (menu === 'start' || menu === 'end') {
       // there could be more than one menu on the same side
       // so first try to get the enabled one
-      const menuRef = this.find(m => m.side === menuId && !m.disabled);
+      const menuRef = this.find(m => m.side === menu && !m.disabled);
       if (menuRef) {
         return menuRef;
       }
 
       // didn't find a menu side that is enabled
       // so try to get the first menu side found
-      return this.find(m => m.side === menuId);
+      return this.find(m => m.side === menu);
 
-    } else if (menuId != null) {
+    } else if (menu != null) {
       // the menuId was not left or right
       // so try to get the menu by its "id"
-      return this.find(m => m.menuId === menuId);
+      return this.find(m => m.menuId === menu);
     }
 
     // return the first enabled menu
-    const menu = this.find(m => !m.disabled);
-    if (menu) {
-      return menu;
+    const menuEl = this.find(m => !m.disabled);
+    if (menuEl) {
+      return menuEl;
     }
 
     // get the first menu in the array, if one exists

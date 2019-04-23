@@ -574,18 +574,18 @@ ion-menu-button,prop,mode,"ios" | "md",undefined,false,false
 ion-menu-button,css-prop,--color
 
 ion-menu-controller,none
-ion-menu-controller,method,close,close(menuId?: string | null | undefined) => Promise<boolean>
-ion-menu-controller,method,enable,enable(enable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
-ion-menu-controller,method,get,get(menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
+ion-menu-controller,method,close,close(menu?: string | null | undefined) => Promise<boolean>
+ion-menu-controller,method,enable,enable(enable: boolean, menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
+ion-menu-controller,method,get,get(menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
 ion-menu-controller,method,getMenus,getMenus() => Promise<HTMLIonMenuElement[]>
 ion-menu-controller,method,getOpen,getOpen() => Promise<HTMLIonMenuElement | undefined>
 ion-menu-controller,method,isAnimating,isAnimating() => Promise<boolean>
-ion-menu-controller,method,isEnabled,isEnabled(menuId?: string | null | undefined) => Promise<boolean>
-ion-menu-controller,method,isOpen,isOpen(menuId?: string | null | undefined) => Promise<boolean>
-ion-menu-controller,method,open,open(menuId?: string | null | undefined) => Promise<boolean>
+ion-menu-controller,method,isEnabled,isEnabled(menu?: string | null | undefined) => Promise<boolean>
+ion-menu-controller,method,isOpen,isOpen(menu?: string | null | undefined) => Promise<boolean>
+ion-menu-controller,method,open,open(menu?: string | null | undefined) => Promise<boolean>
 ion-menu-controller,method,registerAnimation,registerAnimation(name: string, animation: AnimationBuilder) => void
-ion-menu-controller,method,swipeGesture,swipeGesture(enable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
-ion-menu-controller,method,toggle,toggle(menuId?: string | null | undefined) => Promise<boolean>
+ion-menu-controller,method,swipeGesture,swipeGesture(enable: boolean, menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
+ion-menu-controller,method,toggle,toggle(menu?: string | null | undefined) => Promise<boolean>
 
 ion-menu-toggle,shadow
 ion-menu-toggle,prop,autoHide,boolean,true,false,false

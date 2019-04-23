@@ -8,7 +8,7 @@ The Menu Controller makes it easy to control a Menu. The methods provided can be
 
 ## Methods
 
-### `close(menuId?: string | null | undefined) => Promise<boolean>`
+### `close(menu?: string | null | undefined) => Promise<boolean>`
 
 Close the menu. If a menu is specified, it will close that menu.
 If no menu is specified, then it will close any menu that is open.
@@ -16,9 +16,9 @@ If it does not find any open menus, it will return `false`.
 
 #### Parameters
 
-| Name     | Type                          | Description                          |
-| -------- | ----------------------------- | ------------------------------------ |
-| `menuId` | `null \| string \| undefined` | The id or side of the menu to close. |
+| Name   | Type                          | Description                              |
+| ------ | ----------------------------- | ---------------------------------------- |
+| `menu` | `null \| string \| undefined` | The menuId or side of the menu to close. |
 
 #### Returns
 
@@ -26,7 +26,7 @@ Type: `Promise<boolean>`
 
 
 
-### `enable(enable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>`
+### `enable(enable: boolean, menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>`
 
 Enable or disable a menu. Disabling a menu will not allow gestures
 for that menu or any calls to open it. This is useful when there are
@@ -36,10 +36,10 @@ on that side.
 
 #### Parameters
 
-| Name     | Type                          | Description                                      |
-| -------- | ----------------------------- | ------------------------------------------------ |
-| `enable` | `boolean`                     | If `true`, the menu should be enabled.           |
-| `menuId` | `null \| string \| undefined` | The id or side of the menu to enable or disable. |
+| Name     | Type                          | Description                                          |
+| -------- | ----------------------------- | ---------------------------------------------------- |
+| `enable` | `boolean`                     | If `true`, the menu should be enabled.               |
+| `menu`   | `null \| string \| undefined` | The menuId or side of the menu to enable or disable. |
 
 #### Returns
 
@@ -47,7 +47,7 @@ Type: `Promise<HTMLIonMenuElement | undefined>`
 
 
 
-### `get(menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>`
+### `get(menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>`
 
 Get a menu instance. If a menu is not provided then it will return the first
 menu found. If the specified menu is `start` or `end`, then it will return the
@@ -56,9 +56,9 @@ enabled menu on that side. Otherwise, it will try to find the menu using the men
 
 #### Parameters
 
-| Name     | Type                          | Description                 |
-| -------- | ----------------------------- | --------------------------- |
-| `menuId` | `null \| string \| undefined` | The id or side of the menu. |
+| Name   | Type                          | Description                     |
+| ------ | ----------------------------- | ------------------------------- |
+| `menu` | `null \| string \| undefined` | The menuId or side of the menu. |
 
 #### Returns
 
@@ -97,16 +97,17 @@ Type: `Promise<boolean>`
 
 
 
-### `isEnabled(menuId?: string | null | undefined) => Promise<boolean>`
+### `isEnabled(menu?: string | null | undefined) => Promise<boolean>`
 
 Get whether or not the menu is enabled. Returns `true` if the
-specified menu is enabled. Returns `false` if a menu is not found.
+specified menu is enabled. Returns `false` if a menu is disabled
+or not found.
 
 #### Parameters
 
-| Name     | Type                          | Description                                       |
-| -------- | ----------------------------- | ------------------------------------------------- |
-| `menuId` | `null \| string \| undefined` | The id or side of the menu that is being checked. |
+| Name   | Type                          | Description                                           |
+| ------ | ----------------------------- | ----------------------------------------------------- |
+| `menu` | `null \| string \| undefined` | The menuId or side of the menu that is being checked. |
 
 #### Returns
 
@@ -114,7 +115,7 @@ Type: `Promise<boolean>`
 
 
 
-### `isOpen(menuId?: string | null | undefined) => Promise<boolean>`
+### `isOpen(menu?: string | null | undefined) => Promise<boolean>`
 
 Get whether or not the menu is open. Returns `true` if the specified
 menu is open. If a menu is not specified, it will return `true` if
@@ -122,9 +123,9 @@ any menu is currently open.
 
 #### Parameters
 
-| Name     | Type                          | Description                                       |
-| -------- | ----------------------------- | ------------------------------------------------- |
-| `menuId` | `null \| string \| undefined` | The id or side of the menu that is being checked. |
+| Name   | Type                          | Description                                           |
+| ------ | ----------------------------- | ----------------------------------------------------- |
+| `menu` | `null \| string \| undefined` | The menuId or side of the menu that is being checked. |
 
 #### Returns
 
@@ -132,7 +133,7 @@ Type: `Promise<boolean>`
 
 
 
-### `open(menuId?: string | null | undefined) => Promise<boolean>`
+### `open(menu?: string | null | undefined) => Promise<boolean>`
 
 Open the menu. If a menu is not provided then it will open the first
 menu found. If the specified menu is `start` or `end`, then it will open
@@ -142,9 +143,9 @@ return `false`.
 
 #### Parameters
 
-| Name     | Type                          | Description                         |
-| -------- | ----------------------------- | ----------------------------------- |
-| `menuId` | `null \| string \| undefined` | The id or side of the menu to open. |
+| Name   | Type                          | Description                             |
+| ------ | ----------------------------- | --------------------------------------- |
+| `menu` | `null \| string \| undefined` | The menuId or side of the menu to open. |
 
 #### Returns
 
@@ -170,16 +171,16 @@ Type: `void`
 
 
 
-### `swipeGesture(enable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>`
+### `swipeGesture(enable: boolean, menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>`
 
 Enable or disable the ability to swipe open the menu.
 
 #### Parameters
 
-| Name     | Type                          | Description                                                           |
-| -------- | ----------------------------- | --------------------------------------------------------------------- |
-| `enable` | `boolean`                     | If `true`, the menu swipe gesture should be enabled.                  |
-| `menuId` | `null \| string \| undefined` | The id or side of the menu to enable or disable the swipe gesture on. |
+| Name     | Type                          | Description                                                               |
+| -------- | ----------------------------- | ------------------------------------------------------------------------- |
+| `enable` | `boolean`                     | If `true`, the menu swipe gesture should be enabled.                      |
+| `menu`   | `null \| string \| undefined` | The menuId or side of the menu to enable or disable the swipe gesture on. |
 
 #### Returns
 
@@ -187,7 +188,7 @@ Type: `Promise<HTMLIonMenuElement | undefined>`
 
 
 
-### `toggle(menuId?: string | null | undefined) => Promise<boolean>`
+### `toggle(menu?: string | null | undefined) => Promise<boolean>`
 
 Toggle the menu open or closed. If the menu is already open, it will try to
 close the menu, otherwise it will try to open it. Returns `false` if
@@ -195,9 +196,9 @@ a menu is not found.
 
 #### Parameters
 
-| Name     | Type                          | Description                           |
-| -------- | ----------------------------- | ------------------------------------- |
-| `menuId` | `null \| string \| undefined` | The id or side of the menu to toggle. |
+| Name   | Type                          | Description                               |
+| ------ | ----------------------------- | ----------------------------------------- |
+| `menu` | `null \| string \| undefined` | The menuId or side of the menu to toggle. |
 
 #### Returns
 
