@@ -33,6 +33,6 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
 
     return new XMLSerializer().serializeToString(documentFragment);
   } catch (err) {
-    throw err;
+    console.error(err);
   }
 };
