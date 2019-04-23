@@ -187,7 +187,10 @@ export class Alert implements ComponentInterface, OverlayInterface {
    * Dismiss the alert overlay after it has been presented.
    *
    * @param data Any data to emit in the dismiss events.
-   * @param role The role of the element that is dismissing the alert. For example, 'cancel' or 'backdrop'.
+   * @param role The role of the element that is dismissing the alert.
+   * This can be useful in a button handler for determining which button was
+   * clicked to dismiss the alert.
+   * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
    */
   @Method()
   dismiss(data?: any, role?: string): Promise<boolean> {

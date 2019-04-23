@@ -52,11 +52,11 @@ Dismiss the open loading overlay.
 
 #### Parameters
 
-| Name   | Type                  | Description                                                                                                   |
-| ------ | --------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `data` | `any`                 | Any data to emit in the dismiss events.                                                                       |
-| `role` | `string \| undefined` | The role of the element that is dismissing the loading. For example, 'cancel' or 'backdrop'.                  |
-| `id`   | `string \| undefined` | The id of the loading to dismiss. If an id is not provided, it will dismiss the most recently opened loading. |
+| Name   | Type                  | Description                                                                                                                                                                                                                                         |
+| ------ | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data` | `any`                 | Any data to emit in the dismiss events.                                                                                                                                                                                                             |
+| `role` | `string \| undefined` | The role of the element that is dismissing the loading. This can be useful in a button handler for determining which button was clicked to dismiss the loading. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`. |
+| `id`   | `string \| undefined` | The id of the loading to dismiss. If an id is not provided, it will dismiss the most recently opened loading.                                                                                                                                       |
 
 #### Returns
 

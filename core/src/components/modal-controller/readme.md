@@ -30,11 +30,11 @@ Dismiss the open modal overlay.
 
 #### Parameters
 
-| Name   | Type                  | Description                                                                                               |
-| ------ | --------------------- | --------------------------------------------------------------------------------------------------------- |
-| `data` | `any`                 | Any data to emit in the dismiss events.                                                                   |
-| `role` | `string \| undefined` | The role of the element that is dismissing the modal. For example, 'cancel' or 'backdrop'.                |
-| `id`   | `string \| undefined` | The id of the modal to dismiss. If an id is not provided, it will dismiss the most recently opened modal. |
+| Name   | Type                  | Description                                                                                                                                                                                                                                     |
+| ------ | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data` | `any`                 | Any data to emit in the dismiss events.                                                                                                                                                                                                         |
+| `role` | `string \| undefined` | The role of the element that is dismissing the modal. This can be useful in a button handler for determining which button was clicked to dismiss the modal. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`. |
+| `id`   | `string \| undefined` | The id of the modal to dismiss. If an id is not provided, it will dismiss the most recently opened modal.                                                                                                                                       |
 
 #### Returns
 

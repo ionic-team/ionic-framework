@@ -42,10 +42,10 @@ Dismiss the picker overlay after it has been presented.
 
 #### Parameters
 
-| Name   | Type                  | Description                                                                                 |
-| ------ | --------------------- | ------------------------------------------------------------------------------------------- |
-| `data` | `any`                 | Any data to emit in the dismiss events.                                                     |
-| `role` | `string \| undefined` | The role of the element that is dismissing the picker. For example, 'cancel' or 'backdrop'. |
+| Name   | Type                  | Description                                                                                                                                                                                                                                       |
+| ------ | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data` | `any`                 | Any data to emit in the dismiss events.                                                                                                                                                                                                           |
+| `role` | `string \| undefined` | The role of the element that is dismissing the picker. This can be useful in a button handler for determining which button was clicked to dismiss the picker. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`. |
 
 #### Returns
 
