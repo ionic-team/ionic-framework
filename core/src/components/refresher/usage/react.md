@@ -33,10 +33,7 @@ const Example: React.SFC<{}> = () => (
       </IonRefresher>
     </IonContent>
   </>
-
   }
-
-
 );
 
 export default Example
