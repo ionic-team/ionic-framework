@@ -308,10 +308,10 @@ Dismiss the modal overlay after it has been presented.
 
 #### Parameters
 
-| Name   | Type                  | Description |
-| ------ | --------------------- | ----------- |
-| `data` | `any`                 |             |
-| `role` | `string \| undefined` |             |
+| Name   | Type                  | Description                                                                                |
+| ------ | --------------------- | ------------------------------------------------------------------------------------------ |
+| `data` | `any`                 | Any data to emit in the dismiss events.                                                    |
+| `role` | `string \| undefined` | The role of the element that is dismissing the modal. For example, 'cancel' or 'backdrop'. |
 
 #### Returns
 

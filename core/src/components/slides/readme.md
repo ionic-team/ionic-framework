@@ -645,15 +645,15 @@ Type: `Promise<number>`
 
 
 
-### `lockSwipeToNext(shouldLockSwipeToNext: boolean) => Promise<void>`
+### `lockSwipeToNext(lock: boolean) => Promise<void>`
 
-Lock or unlock the ability to slide to the next slides.
+Lock or unlock the ability to slide to the next slide.
 
 #### Parameters
 
-| Name                    | Type      | Description |
-| ----------------------- | --------- | ----------- |
-| `shouldLockSwipeToNext` | `boolean` |             |
+| Name   | Type      | Description                                   |
+| ------ | --------- | --------------------------------------------- |
+| `lock` | `boolean` | If `true`, disable swiping to the next slide. |
 
 #### Returns
 
@@ -661,15 +661,15 @@ Type: `Promise<void>`
 
 
 
-### `lockSwipeToPrev(shouldLockSwipeToPrev: boolean) => Promise<void>`
+### `lockSwipeToPrev(lock: boolean) => Promise<void>`
 
-Lock or unlock the ability to slide to the previous slides.
+Lock or unlock the ability to slide to the previous slide.
 
 #### Parameters
 
-| Name                    | Type      | Description |
-| ----------------------- | --------- | ----------- |
-| `shouldLockSwipeToPrev` | `boolean` |             |
+| Name   | Type      | Description                                       |
+| ------ | --------- | ------------------------------------------------- |
+| `lock` | `boolean` | If `true`, disable swiping to the previous slide. |
 
 #### Returns
 
@@ -677,15 +677,15 @@ Type: `Promise<void>`
 
 
 
-### `lockSwipes(shouldLockSwipes: boolean) => Promise<void>`
+### `lockSwipes(lock: boolean) => Promise<void>`
 
-Lock or unlock the ability to slide to change slides.
+Lock or unlock the ability to slide to the next or previous slide.
 
 #### Parameters
 
-| Name               | Type      | Description |
-| ------------------ | --------- | ----------- |
-| `shouldLockSwipes` | `boolean` |             |
+| Name   | Type      | Description                                                |
+| ------ | --------- | ---------------------------------------------------------- |
+| `lock` | `boolean` | If `true`, disable swiping to the next and previous slide. |
 
 #### Returns
 
@@ -699,10 +699,10 @@ Transition to the next slide.
 
 #### Parameters
 
-| Name           | Type                   | Description |
-| -------------- | ---------------------- | ----------- |
-| `speed`        | `number \| undefined`  |             |
-| `runCallbacks` | `boolean \| undefined` |             |
+| Name           | Type                   | Description                                                                                 |
+| -------------- | ---------------------- | ------------------------------------------------------------------------------------------- |
+| `speed`        | `number \| undefined`  | The transition duration (in ms).                                                            |
+| `runCallbacks` | `boolean \| undefined` | If true, the transition will produce [Transition/SlideChange][Start/End] transition events. |
 
 #### Returns
 
@@ -716,10 +716,10 @@ Transition to the previous slide.
 
 #### Parameters
 
-| Name           | Type                   | Description |
-| -------------- | ---------------------- | ----------- |
-| `speed`        | `number \| undefined`  |             |
-| `runCallbacks` | `boolean \| undefined` |             |
+| Name           | Type                   | Description                                                                                     |
+| -------------- | ---------------------- | ----------------------------------------------------------------------------------------------- |
+| `speed`        | `number \| undefined`  | The transition duration (in ms).                                                                |
+| `runCallbacks` | `boolean \| undefined` | If true, the transition will produce the [Transition/SlideChange][Start/End] transition events. |
 
 #### Returns
 
@@ -733,11 +733,11 @@ Transition to the specified slide.
 
 #### Parameters
 
-| Name           | Type                   | Description |
-| -------------- | ---------------------- | ----------- |
-| `index`        | `number`               |             |
-| `speed`        | `number \| undefined`  |             |
-| `runCallbacks` | `boolean \| undefined` |             |
+| Name           | Type                   | Description                                                                                 |
+| -------------- | ---------------------- | ------------------------------------------------------------------------------------------- |
+| `index`        | `number`               | The index of the slide to transition to.                                                    |
+| `speed`        | `number \| undefined`  | The transition duration (in ms).                                                            |
+| `runCallbacks` | `boolean \| undefined` | If true, the transition will produce [Transition/SlideChange][Start/End] transition events. |
 
 #### Returns
 
@@ -778,13 +778,14 @@ Type: `Promise<void>`
 
 ### `updateAutoHeight(speed?: number | undefined) => Promise<void>`
 
-Force swiper to update its height (when autoHeight enabled) for the duration equal to 'speed' parameter
+Force swiper to update its height (when autoHeight is enabled) for the duration
+equal to 'speed' parameter.
 
 #### Parameters
 
-| Name    | Type                  | Description |
-| ------- | --------------------- | ----------- |
-| `speed` | `number \| undefined` |             |
+| Name    | Type                  | Description                      |
+| ------- | --------------------- | -------------------------------- |
+| `speed` | `number \| undefined` | The transition duration (in ms). |
 
 #### Returns
 
