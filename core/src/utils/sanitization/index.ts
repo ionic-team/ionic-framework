@@ -24,7 +24,7 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
       const attributeValue = childEl.getAttribute(attributeName);
 
       /* tslint:disable-next-line */
-      if (attributeValue !== null && attributeValue.toLowerCase().includes('javascript:')) {
+      if (attributeValue != null && attributeValue.toLowerCase().includes('javascript:')) {
         childEl.removeAttribute(attributeName);
       }
     }
