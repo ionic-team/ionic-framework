@@ -177,7 +177,7 @@ export class Slides implements ComponentInterface {
    *
    * @param index The index of the slide to transition to.
    * @param speed The transition duration (in ms).
-   * @param runCallbacks If true, the transition will produce transition events.
+   * @param runCallbacks If true, the transition will produce [Transition/SlideChange][Start/End] transition events.
    */
   @Method()
   async slideTo(index: number, speed?: number, runCallbacks?: boolean) {
@@ -189,7 +189,7 @@ export class Slides implements ComponentInterface {
    * Transition to the next slide.
    *
    * @param speed The transition duration (in ms).
-   * @param runCallbacks If true, the transition will produce transition events.
+   * @param runCallbacks If true, the transition will produce [Transition/SlideChange][Start/End] transition events.
    */
   @Method()
   async slideNext(speed?: number, runCallbacks?: boolean) {
@@ -201,7 +201,7 @@ export class Slides implements ComponentInterface {
    * Transition to the previous slide.
    *
    * @param speed The transition duration (in ms).
-   * @param runCallbacks If true, the transition will produce transition events.
+   * @param runCallbacks If true, the transition will produce the [Transition/SlideChange][Start/End] transition events.
    */
   @Method()
   async slidePrev(speed?: number, runCallbacks?: boolean) {

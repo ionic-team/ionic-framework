@@ -699,10 +699,10 @@ Transition to the next slide.
 
 #### Parameters
 
-| Name           | Type                   | Description                                             |
-| -------------- | ---------------------- | ------------------------------------------------------- |
-| `speed`        | `number \| undefined`  | The transition duration (in ms).                        |
-| `runCallbacks` | `boolean \| undefined` | If true, the transition will produce transition events. |
+| Name           | Type                   | Description                                                                                 |
+| -------------- | ---------------------- | ------------------------------------------------------------------------------------------- |
+| `speed`        | `number \| undefined`  | The transition duration (in ms).                                                            |
+| `runCallbacks` | `boolean \| undefined` | If true, the transition will produce [Transition/SlideChange][Start/End] transition events. |
 
 #### Returns
 
@@ -716,10 +716,10 @@ Transition to the previous slide.
 
 #### Parameters
 
-| Name           | Type                   | Description                                             |
-| -------------- | ---------------------- | ------------------------------------------------------- |
-| `speed`        | `number \| undefined`  | The transition duration (in ms).                        |
-| `runCallbacks` | `boolean \| undefined` | If true, the transition will produce transition events. |
+| Name           | Type                   | Description                                                                                     |
+| -------------- | ---------------------- | ----------------------------------------------------------------------------------------------- |
+| `speed`        | `number \| undefined`  | The transition duration (in ms).                                                                |
+| `runCallbacks` | `boolean \| undefined` | If true, the transition will produce the [Transition/SlideChange][Start/End] transition events. |
 
 #### Returns
 
@@ -733,11 +733,11 @@ Transition to the specified slide.
 
 #### Parameters
 
-| Name           | Type                   | Description                                             |
-| -------------- | ---------------------- | ------------------------------------------------------- |
-| `index`        | `number`               | The index of the slide to transition to.                |
-| `speed`        | `number \| undefined`  | The transition duration (in ms).                        |
-| `runCallbacks` | `boolean \| undefined` | If true, the transition will produce transition events. |
+| Name           | Type                   | Description                                                                                 |
+| -------------- | ---------------------- | ------------------------------------------------------------------------------------------- |
+| `index`        | `number`               | The index of the slide to transition to.                                                    |
+| `speed`        | `number \| undefined`  | The transition duration (in ms).                                                            |
+| `runCallbacks` | `boolean \| undefined` | If true, the transition will produce [Transition/SlideChange][Start/End] transition events. |
 
 #### Returns
 
