@@ -1,4 +1,4 @@
-import { DatetimeData, daysInMonth, getDateValue, getLocalDateTime } from '../datetime-util';
+import { DatetimeData, daysInMonth, getDateValue, getLocalDateTime, renderDatetime } from '../datetime-util';
 
 describe('Datetime', () => {
   describe('getDateValue()', () => {
@@ -68,6 +68,17 @@ describe('Datetime', () => {
         const convertToLocal = getLocalDateTime(test.input);
         expect(convertToLocal.toISOString()).toContain(test.expectedOutput);
       });
+    });
+    
+    it('should default to today for null and undefined cases', () => {
+      const today = new Date();
+      const todayString = renderDatetime('YYYY-MM-DD', { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() } )
+      
+      const convertToLocalUndefined = getLocalDateTime(undefined);
+      expect(convertToLocalUndefined.toISOString()).toContain(todayString);
+      
+      const convertToLocalNull = getLocalDateTime(null);
+      expect(convertToLocalNull.toISOString()).toContain(todayString);
     });
   });
 
