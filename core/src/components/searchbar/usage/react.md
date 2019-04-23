@@ -17,6 +17,9 @@ const Example: React.SFC<{}> = () => (
     {/*-- Searchbar with telephone type --*/}
     <IonSearchbar type="tel"></IonSearchbar>
 
+    {/*-- Searchbar disabled  --*/}
+    <IonSearchbar disabled="true"></IonSearchbar>
+
     {/*-- Searchbar with a cancel button and custom cancel button text --*/}
     <IonSearchbar showCancelButton cancelButtonText="Custom Cancel"></IonSearchbar>
 

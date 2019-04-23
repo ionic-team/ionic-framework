@@ -173,7 +173,6 @@ export class Toast extends Component<Props, State> {
     );
   }
 }
-
 ```
 
 
