@@ -28,9 +28,10 @@ Type: `Promise<boolean>`
 
 ### `enable(enable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>`
 
-Enable or disable a menu. This is useful when there are multiple
-menus on the same side and only one of them should be allowed to
-open. Enabling a menu will automatically disable all other menus
+Enable or disable a menu. Disabling a menu will not allow gestures
+for that menu or any calls to open it. This is useful when there are
+multiple menus on the same side and only one of them should be allowed
+to open. Enabling a menu will automatically disable all other menus
 on that side.
 
 #### Parameters
