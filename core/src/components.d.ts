@@ -3418,7 +3418,7 @@ export namespace Components {
     */
     'pullingIcon'?: string | null;
     /**
-    * The text you want to display when you begin to pull down Optional text to display while loading. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`
+    * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`
     */
     'pullingText'?: string;
     /**
@@ -3426,7 +3426,7 @@ export namespace Components {
     */
     'refreshingSpinner'?: SpinnerTypes | null;
     /**
-    * The text you want to display when performing a refresh Optional text to display while loading. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`
+    * The text you want to display when performing a refresh. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`
     */
     'refreshingText'?: string;
   }
@@ -3436,7 +3436,7 @@ export namespace Components {
     */
     'pullingIcon'?: string | null;
     /**
-    * The text you want to display when you begin to pull down Optional text to display while loading. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`
+    * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`
     */
     'pullingText'?: string;
     /**
@@ -3444,7 +3444,7 @@ export namespace Components {
     */
     'refreshingSpinner'?: SpinnerTypes | null;
     /**
-    * The text you want to display when performing a refresh Optional text to display while loading. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`
+    * The text you want to display when performing a refresh. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`
     */
     'refreshingText'?: string;
   }

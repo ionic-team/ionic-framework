@@ -18,8 +18,7 @@ export class RefresherContent implements ComponentInterface {
   @Prop({ mutable: true }) pullingIcon?: string | null;
 
   /**
-   * The text you want to display when you begin to pull down
-   * Optional text to display while loading.
+   * The text you want to display when you begin to pull down.
    * `pullingText` can accept either plaintext or HTML as a string.
    * To display characters normally reserved for HTML, they
    * must be escaped. For example `<Ionic>` would become
@@ -33,8 +32,7 @@ export class RefresherContent implements ComponentInterface {
   @Prop({ mutable: true }) refreshingSpinner?: SpinnerTypes | null;
 
   /**
-   * The text you want to display when performing a refresh
-   * Optional text to display while loading.
+   * The text you want to display when performing a refresh.
    * `refreshingText` can accept either plaintext or HTML as a string.
    * To display characters normally reserved for HTML, they
    * must be escaped. For example `<Ionic>` would become
