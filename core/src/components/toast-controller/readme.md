@@ -8,15 +8,15 @@ ToastController is a component use to create Toast components. Please see the do
 
 ## Methods
 
-### `create(opts?: ToastOptions | undefined) => Promise<HTMLIonToastElement>`
+### `create(options?: ToastOptions | undefined) => Promise<HTMLIonToastElement>`
 
 Create a toast overlay with toast options.
 
 #### Parameters
 
-| Name   | Type                        | Description |
-| ------ | --------------------------- | ----------- |
-| `opts` | `ToastOptions \| undefined` |             |
+| Name      | Type                        | Description                             |
+| --------- | --------------------------- | --------------------------------------- |
+| `options` | `ToastOptions \| undefined` | The options to use to create the toast. |
 
 #### Returns
 
@@ -30,11 +30,11 @@ Dismiss the open toast overlay.
 
 #### Parameters
 
-| Name   | Type                  | Description |
-| ------ | --------------------- | ----------- |
-| `data` | `any`                 |             |
-| `role` | `string \| undefined` |             |
-| `id`   | `string \| undefined` |             |
+| Name   | Type                  | Description                                                                                               |
+| ------ | --------------------- | --------------------------------------------------------------------------------------------------------- |
+| `data` | `any`                 | Any data to emit in the dismiss events.                                                                   |
+| `role` | `string \| undefined` | The role of the element that is dismissing the toast. For example, 'cancel' or 'backdrop'.                |
+| `id`   | `string \| undefined` | The id of the toast to dismiss. If an id is not provided, it will dismiss the most recently opened toast. |
 
 #### Returns
 
