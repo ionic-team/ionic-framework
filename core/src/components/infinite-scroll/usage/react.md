@@ -1,59 +1,52 @@
 ```tsx
-import React from 'react';
+import React, { Component } from 'react';
 
-import { IonAvatar } from '@ionic/react';
+import { IonButton, IonContent, IonInfiniteScroll, IonInfiniteScrollContent, IonList } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+export default class Example extends Component<Props, State> {
 
-  <IonContent>
-    <IonButton onClick="toggleInfiniteScroll()" expand="block">
-      Toggle Infinite Scroll
-    </IonButton>
+  ionInfiniteScrollRef: React.RefObject<HTMLionInfiniteScrollElement>
 
-    <IonList></IonList>
-
-    <IonInfinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-      <IonInfinite-scrollContent
-        loadingSpinner="bubbles"
-        loadingText="Loading more data...">
-      </IonInfinite-scrollContent>
-    </IonInfinite-scroll>
-  </IonContent>
-
-
-
-  import { Component, ViewChild } from '@angular/core';
-  import { IonInfiniteScroll } from '@ionic/angular';
-
-  @Component({
-    selector: 'infinite-scroll-example',
-    templateUrl: 'infinite-scroll-example.html',
-    styleUrls: ['./infinite-scroll-example.css']
-  })
-  export class InfiniteScrollExample {
-    @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-
-    constructor() {}
-
-    loadData(event) {
-      setTimeout(() => {
-        console.log('Done');
-        event.target.complete();
-
-        // App logic to determine if all data is loaded
-        // and disable the infinite scroll
-        if (data.length == 1000) {
-          event.target.disabled = true;
-        }
-      }, 500);
-    }
-
-    toggleInfiniteScroll() {
-      this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
-    }
+  constructor() {
+    this.ionInfiniteScrollRef = React.createRef<HTMLionInfiniteScrollElement>();
   }
 
+  loadData = (ev: MouseEvent) => {
+    setTimeout(() => {
+      console.log('Done');
+      ev.target.complete();
 
-);
+      // App logic to determine if all data is loaded
+      // and disable the infinite scroll
+      if (data.length == 1000) {
+        ev.target.disabled = true;
+      }
+    }, 500);
+  }
 
-export default Example
+  toggleInfiniteScroll = () => {
+    this.ionInfiniteScrollRef.disabled = !this.ionInfiniteScrollRef.disabled;
+  }
+
+  render() {
+    return (
+      <>
+        <IonContent>
+          <IonButton onClick="toggleInfiniteScroll()" expand="block">
+            Toggle Infinite Scroll
+          </IonButton>
+
+          <IonList></IonList>
+
+          <IonInfiniteScroll threshold="100px" onIonInfinite={(ev) => this.loadData(ev)}>
+            <IonInfiniteScrollContent
+              loadingSpinner="bubbles"
+              loadingText="Loading more data...">
+            </IonInfiniteScrollContent>
+          </IonInfiniteScroll>
+        </IonContent>
+      </>
+    );
+  }
+}
+```

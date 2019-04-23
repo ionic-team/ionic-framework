@@ -3520,7 +3520,7 @@ export namespace Components {
 
   interface IonReorderGroup {
     /**
-    * This method must be called once the `ionItemReorder` event is handled in order to complete the reorder operation.
+    * Completes the reorder operation. Must be called by the `ionItemReorder` event.  If a list of items is passed, the list will be reordered and returned in the proper order.  If no parameters are passed or if `true` is passed in, the reorder will complete and the item will remain in the position it was dragged to. If `false` is passed, the reorder will complete and the item will bounce back to its original position.
     */
     'complete': (listOrReorder?: boolean | any[] | undefined) => Promise<any>;
     /**
@@ -3720,6 +3720,10 @@ export namespace Components {
     */
     'debounce': number;
     /**
+    * If `true`, the user cannot interact with the input.
+    */
+    'disabled': boolean;
+    /**
     * Returns the native `<input>` element used under the hood.
     */
     'getInputElement': () => Promise<HTMLInputElement>;
@@ -3789,6 +3793,10 @@ export namespace Components {
     * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
     */
     'debounce'?: number;
+    /**
+    * If `true`, the user cannot interact with the input.
+    */
+    'disabled'?: boolean;
     /**
     * The mode determines which platform styles to use.
     */

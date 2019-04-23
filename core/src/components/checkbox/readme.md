@@ -174,7 +174,7 @@ export default CheckboxExample;
   import { Component, Vue } from 'vue-property-decorator';
 
   @Component()
-  export default class Menu extends Vue {
+  export default class Example extends Vue {
     form = [
       { val: 'Pepperoni', isChecked: true },
       { val: 'Sausage', isChecked: false },
