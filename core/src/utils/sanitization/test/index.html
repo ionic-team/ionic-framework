@@ -38,6 +38,7 @@
       <ion-button onclick="testB()" id="testB">Test B</ion-button>
       <ion-button onclick="testC()" id="testC">Test C</ion-button>
       <ion-button onclick="testD()" id="testD">Test D</ion-button>
+      <ion-button onclick="testE()" id="testE">Test E</ion-button>
     </ion-content>
 
   </ion-app>
@@ -80,6 +81,10 @@
       
       const link = results.querySelector('a');
       link.click();
+    }
+    
+    function testE() {
+      runTest('<iframe src="javascript:alert(document.cookie`)"></iframe>');
     }
   </script>
 </body>
