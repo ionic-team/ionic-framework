@@ -16,7 +16,7 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
 
     /**
      * Older version of Chrome require that we
-     * explicitly create and select a context node
+     * explicitly select a context node
      */
     range.selectNode(div);
 
@@ -26,10 +26,9 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
      * Remove any elements
      * that are blocked
      */
+    blockedTags.forEach(blockedTag => {
 
-    /* tslint:disable-next-line */
-    for (let i = 0; i < blockedTags.length; i++) {
-      const getElementsToRemove = documentFragment.querySelectorAll(blockedTags[i]);
+      const getElementsToRemove = documentFragment.querySelectorAll(blockedTag);
       for (let elementIndex = getElementsToRemove.length - 1; elementIndex >= 0; elementIndex--) {
         const element = getElementsToRemove[elementIndex];
         if (element.parentNode) {
@@ -43,23 +42,25 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
          * the children of this element
          * as they are left behind
          */
-        for (let childIndex = element.children.length - 1; childIndex >= 0; childIndex--) {
+        /* tslint:disable-next-line */
+        for (let childIndex = 0; childIndex < element.children.length; childIndex++) {
           sanitizeElement(element.children[childIndex]);
         }
       }
-    }
+    });
 
     /**
-     * Go through remaining
-     * elements and remove
+     * Go through remaining elements and remove
      * non-allowed attribs
      */
 
     // IE does not support .children on document fragments, only .childNodes
     /* tslint:disable-next-line */
     const documentFragmentChildren = (documentFragment.children != null) ? documentFragment.children : documentFragment.childNodes;
-    for (const childEl of (documentFragmentChildren as any)) {
-      sanitizeElement(childEl);
+
+    /* tslint:disable-next-line */
+    for (let childIndex = 0; childIndex < documentFragmentChildren.length; childIndex++) {
+      sanitizeElement(documentFragmentChildren[childIndex]);
     }
 
     // Remove context node from DOM
@@ -114,7 +115,8 @@ const sanitizeElement = (element: any) => {
   /**
    * Sanitize any nested children
    */
-  for (let i = element.children.length - 1; i >= 0; i--) {
+  /* tslint:disable-next-line */
+  for (let i = 0; i < element.children.length; i++) {
     sanitizeElement(element.children[i]);
   }
 };
