@@ -11,7 +11,7 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
   try {
     if (typeof untrustedString !== 'string') { return untrustedString; }
 
-    const blacklistedTags = ['script', 'style', 'iframe', 'meta', 'link', 'object', 'embed'];
+    const blockedTags = ['script', 'style', 'iframe', 'meta', 'link', 'object', 'embed'];
     const range = document.createRange();
 
     /**
@@ -24,12 +24,12 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
 
     /**
      * Remove any elements
-     * that are blacklisted
+     * that are blocked
      */
 
     /* tslint:disable-next-line */
-    for (let i = 0; i < blacklistedTags.length; i++) {
-      const getElementsToRemove = documentFragment.querySelectorAll(blacklistedTags[i]);
+    for (let i = 0; i < blockedTags.length; i++) {
+      const getElementsToRemove = documentFragment.querySelectorAll(blockedTags[i]);
 
       for (let elementIndex = getElementsToRemove.length - 1; elementIndex >= 0; elementIndex--) {
         const element = getElementsToRemove[elementIndex];
@@ -53,7 +53,7 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
     /**
      * Go through remaining
      * elements and remove
-     * non-whitelisted attribs
+     * non-allowed attribs
      */
     for (const childEl of (documentFragment.children as any)) {
       sanitizeElement(childEl);
@@ -75,24 +75,24 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
 };
 
 /**
- * Clean up current element based on whitelisted attributes
+ * Clean up current element based on allowed attributes
  * and then recursively dig down into any child elements to
  * clean those up as well
  */
 const sanitizeElement = (element: any) => {
-  const whitelistedAttributes = ['class', 'id', 'href', 'src'];
+  const allowedAttributes = ['class', 'id', 'href', 'src'];
 
   for (let i = element.attributes.length - 1; i >= 0; i--) {
     const attribute = element.attributes[i];
     const attributeName = attribute.name;
 
-    // remove non-whitelisted attribs
-    if (!whitelistedAttributes.includes(attributeName.toLowerCase())) {
+    // remove non-allowed attribs
+    if (!allowedAttributes.includes(attributeName.toLowerCase())) {
       element.removeAttribute(attributeName);
       continue;
     }
 
-    // clean up any whitelisted attribs
+    // clean up any allowed attribs
     // that attempt to do any JS funny-business
     const attributeValue = attribute.value;
 
