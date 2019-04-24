@@ -30,7 +30,6 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
     /* tslint:disable-next-line */
     for (let i = 0; i < blockedTags.length; i++) {
       const getElementsToRemove = documentFragment.querySelectorAll(blockedTags[i]);
-
       for (let elementIndex = getElementsToRemove.length - 1; elementIndex >= 0; elementIndex--) {
         const element = getElementsToRemove[elementIndex];
         if (element.parentNode) {
@@ -55,14 +54,21 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
      * elements and remove
      * non-allowed attribs
      */
-    for (const childEl of (documentFragment.children as any)) {
+
+    // IE does not support .children on document fragments, only .childNodes
+    /* tslint:disable-next-line */
+    const documentFragmentChildren = (documentFragment.children != null) ? documentFragment.children : documentFragment.childNodes;
+    for (const childEl of (documentFragmentChildren as any)) {
       sanitizeElement(childEl);
     }
 
     // Remove context node from DOM
     document.body.removeChild(div);
 
-    return new XMLSerializer().serializeToString(documentFragment);
+    // Append document fragment to div
+    div.appendChild(documentFragment);
+
+    return div.innerHTML;
 
   } catch (err) {
     console.error(err);
@@ -80,6 +86,9 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
  * clean those up as well
  */
 const sanitizeElement = (element: any) => {
+  // IE uses childNodes, so ignore nodes that are not elements
+  if (element.nodeType && element.nodeType !== 1) { return; }
+
   const allowedAttributes = ['class', 'id', 'href', 'src'];
 
   for (let i = element.attributes.length - 1; i >= 0; i--) {
