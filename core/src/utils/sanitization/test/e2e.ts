@@ -17,6 +17,9 @@ test('sanitization:', async done => {
   await page.click('#testC');
   await page.click('#testD');
   await page.click('#testE');
+  await page.click('#testF');
+  await page.click('#testG');
+  await page.click('#testH');
 
   done();
 

@@ -39,6 +39,9 @@
       <ion-button onclick="testC()" id="testC">Test C</ion-button>
       <ion-button onclick="testD()" id="testD">Test D</ion-button>
       <ion-button onclick="testE()" id="testE">Test E</ion-button>
+      <ion-button onclick="testF()" id="testF">Test F</ion-button>
+      <ion-button onclick="testG()" id="testG">Test G</ion-button>
+      <ion-button onclick="testH()" id="testH">Test H</ion-button>
     </ion-content>
 
   </ion-app>
@@ -85,6 +88,24 @@
     
     function testE() {
       runTest('<iframe src="javascript:alert(document.cookie)"></iframe>');
+    }
+    
+    function testF() {
+      runTest('<div><button><a href="javascript:alert(document.cookie)">click me</a></button></div>');
+      
+      const link = results.querySelector('a');
+      link.click();
+    }
+    
+    function testG() {
+      runTest('<object><img src="x" onerror="alert(document.cookie);"></object>');
+    }
+    
+    function testH() {
+      runTest('<ion-item><ion-label>Hello!</ion-label><ion-button onclick="alert(document.cookie);">Click me</ion-button>');
+      
+      const button = results.querySelector('ion-button');
+      button.click();
     }
   </script>
 </body>

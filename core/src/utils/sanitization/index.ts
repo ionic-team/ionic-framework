@@ -11,7 +11,6 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
   try {
     if (typeof untrustedString !== 'string') { return untrustedString; }
 
-    const whitelistedAttributes = ['class', 'id', 'href', 'src'];
     const blacklistedTags = ['script', 'style', 'iframe', 'meta', 'link', 'object', 'embed'];
     const range = document.createRange();
 
@@ -27,46 +26,37 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
      * Remove any elements
      * that are blacklisted
      */
-    for (const blacklistedTag of blacklistedTags) {
-      const getElementsToRemove = documentFragment.querySelectorAll(blacklistedTag);
-      getElementsToRemove.forEach(element => {
-        documentFragment.removeChild(element);
-      });
+
+    /* tslint:disable-next-line */
+    for (let i = 0; i < blacklistedTags.length; i++) {
+      const getElementsToRemove = documentFragment.querySelectorAll(blacklistedTags[i]);
+
+      for (let elementIndex = getElementsToRemove.length - 1; elementIndex >= 0; elementIndex--) {
+        const element = getElementsToRemove[elementIndex];
+        if (element.parentNode) {
+          element.parentNode.removeChild(element);
+        } else {
+          documentFragment.removeChild(element);
+        }
+
+        /**
+         * We still need to sanitize
+         * the children of this element
+         * as they are left behind
+         */
+        for (let childIndex = element.children.length - 1; childIndex >= 0; childIndex--) {
+          sanitizeElement(element.children[childIndex]);
+        }
+      }
     }
 
+    /**
+     * Go through remaining
+     * elements and remove
+     * non-whitelisted attribs
+     */
     for (const childEl of (documentFragment.children as any)) {
-
-      /**
-       * Since childEl.attributes is a live object
-       * we need to process all attributes before
-       * we can remove any of them
-       */
-      const attributesToRemove = [];
-      for (const attribute of childEl.attributes) {
-        const attributeName = attribute.name;
-
-        // remove non-whitelisted attribs
-        if (!whitelistedAttributes.includes(attributeName.toLowerCase())) {
-          attributesToRemove.push(attributeName);
-          continue;
-        }
-
-        // clean up any whitelisted attribs
-        // that attempt to do any JS funny-business
-        const attributeValue = attribute.value;
-
-        /* tslint:disable-next-line */
-        if (attributeValue != null && attributeValue.toLowerCase().includes('javascript:')) {
-          attributesToRemove.push(attributeName);
-        }
-      }
-
-      /**
-       * Finally, remove all marked attributes from element
-       */
-      for (const attributeName of attributesToRemove) {
-        childEl.removeAttribute(attributeName);
-      }
+      sanitizeElement(childEl);
     }
 
     // Remove context node from DOM
@@ -81,5 +71,41 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
     document.body.removeChild(div);
 
     return '';
+  }
+};
+
+/**
+ * Clean up current element based on whitelisted attributes
+ * and then recursively dig down into any child elements to
+ * clean those up as well
+ */
+const sanitizeElement = (element: any) => {
+  const whitelistedAttributes = ['class', 'id', 'href', 'src'];
+
+  for (let i = element.attributes.length - 1; i >= 0; i--) {
+    const attribute = element.attributes[i];
+    const attributeName = attribute.name;
+
+    // remove non-whitelisted attribs
+    if (!whitelistedAttributes.includes(attributeName.toLowerCase())) {
+      element.removeAttribute(attributeName);
+      continue;
+    }
+
+    // clean up any whitelisted attribs
+    // that attempt to do any JS funny-business
+    const attributeValue = attribute.value;
+
+    /* tslint:disable-next-line */
+    if (attributeValue != null && attributeValue.toLowerCase().includes('javascript:')) {
+      element.removeAttribute(attributeName);
+    }
+  }
+
+  /**
+   * Sanitize any nested children
+   */
+  for (let i = element.children.length - 1; i >= 0; i--) {
+    sanitizeElement(element.children[i]);
   }
 };
