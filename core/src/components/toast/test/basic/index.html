@@ -68,6 +68,10 @@
         Custom Class
       </ion-button>
 
+      <ion-button expand="block" id="toast-start-and-end" onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, cssClass: 'toast-start-and-end'})">
+        Show Toast with start-end position
+      </ion-button>
+
       <ion-toast-controller></ion-toast-controller>
 
       <ion-grid>
@@ -153,11 +157,6 @@
   </script>
 
   <style>
-    :root {
-      --ion-safe-area-top: 20px;
-      --ion-safe-area-bottom: 40px;
-    }
-
     .my-custom-class {
       --border-radius: 20px;
       --border-width: 5px;
@@ -209,6 +208,12 @@
 
     .orange {
       background-color: #f69234;
+    }
+
+    .toast-start-and-end {
+      --start: 0;
+      --end: 0;
+      --max-width: 100%;
     }
   </style>
 </body>

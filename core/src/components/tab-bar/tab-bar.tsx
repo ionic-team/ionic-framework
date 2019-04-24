@@ -74,6 +74,7 @@ export class TabBar implements ComponentInterface {
       'aria-hidden': keyboardVisible ? 'true' : null,
       class: {
         ...createColorClasses(color),
+        [`${this.mode}`]: true,
         'tab-bar-translucent': translucent,
         'tab-bar-hidden': keyboardVisible,
       }
