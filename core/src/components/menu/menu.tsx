@@ -54,8 +54,9 @@ export class Menu implements ComponentInterface, MenuI {
   @Prop() menuId?: string;
 
   /**
-   * The display type of the menu.
+   * The animation type of the menu.
    * Available options: `"overlay"`, `"reveal"`, `"push"`.
+   * Custom animations can be registered by the menu controller.
    */
   @Prop({ mutable: true }) type?: string;
 
@@ -230,7 +231,7 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   /**
-   * Returns `true` is the menu is open.
+   * Get whether or not the menu is open. Returns `true` if the menu is open.
    */
   @Method()
   isOpen(): Promise<boolean> {
@@ -238,10 +239,10 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   /**
-   * Returns `true` is the menu is active.
+   * Get whether or not the menu is active. Returns `true` if the menu is active.
    *
    * A menu is active when it can be opened or closed, meaning it's enabled
-   * and it's not part of a `ion-split-pane`.
+   * and it's not part of an `ion-split-pane`.
    */
   @Method()
   isActive(): Promise<boolean> {
@@ -249,8 +250,9 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   /**
-   * Opens the menu. If the menu is already open or it can't be opened,
-   * it returns `false`.
+   * Open the menu. Returns `false` if the menu is already open or it can't be opened.
+   *
+   * @param animated If `true`, the menu will animate on open.
    */
   @Method()
   open(animated = true): Promise<boolean> {
@@ -258,8 +260,9 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   /**
-   * Closes the menu. If the menu is already closed or it can't be closed,
-   * it returns `false`.
+   * Close the menu. Returns `false` if the menu is already closed or it can't be closed.
+   *
+   * @param animated If `true`, the menu will animate on close.
    */
   @Method()
   close(animated = true): Promise<boolean> {
@@ -267,8 +270,11 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   /**
-   * Toggles the menu. If the menu is already open, it will try to close, otherwise it will try to open it.
-   * If the operation can't be completed successfully, it returns `false`.
+   * Toggle the menu open or closed. If the menu is already open, it will try to
+   * close the menu, otherwise it will try to open it. Returns `false` if
+   * the operation can't be completed successfully.
+   *
+   * @param animated If `true`, the menu will animate on open and close.
    */
   @Method()
   toggle(animated = true): Promise<boolean> {
@@ -276,8 +282,11 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   /**
-   * Opens or closes the button.
-   * If the operation can't be completed successfully, it returns `false`.
+   * Sets the menu to open or closed.
+   * Returns `false` if the operation can't be completed successfully.
+   *
+   * @param shouldOpen If `true`, the menu should open.
+   * @param animated If `true`, the menu will animate on open and close.
    */
   @Method()
   setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {

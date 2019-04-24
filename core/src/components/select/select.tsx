@@ -189,15 +189,17 @@ export class Select implements ComponentInterface {
   }
 
   /**
-   * Opens the select overlay, it could be an alert, action-sheet or popover,
-   * based in `ion-select` settings.
+   * Open the select overlay. The overlay is either an alert, action sheet, or popover,
+   * depending on the `interface` property on the `ion-select`.
+   *
+   * @param event The user interface event that called the open.
    */
   @Method()
-  async open(ev?: UIEvent): Promise<OverlaySelect | undefined> {
+  async open(event?: UIEvent): Promise<OverlaySelect | undefined> {
     if (this.disabled || this.isExpanded) {
       return undefined;
     }
-    const overlay = this.overlay = await this.createOverlay(ev);
+    const overlay = this.overlay = await this.createOverlay(event);
     this.isExpanded = true;
     overlay.onDidDismiss().then(() => {
       this.overlay = undefined;
