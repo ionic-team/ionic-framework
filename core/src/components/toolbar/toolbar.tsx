@@ -8,7 +8,7 @@ import { createColorClasses } from '../../utils/theme';
  * @slot start - Content is placed to the left of the toolbar text in LTR, and to the right in RTL.
  * @slot secondary - Content is placed to the left of the toolbar text in `ios` mode, and directly to the right in `md` mode.
  * @slot primary - Content is placed to the right of the toolbar text in `ios` mode, and to the far right in `md` mode.
- * @slot end - Content is placed to the left of the toolbar text in LTR, and to the right in RTL.
+ * @slot end - Content is placed to the right of the toolbar text in LTR, and to the left in RTL.
  */
 @Component({
   tag: 'ion-toolbar',
