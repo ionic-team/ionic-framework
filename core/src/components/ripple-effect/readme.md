@@ -33,16 +33,16 @@ The ripple effect component adds the [Material Design ink ripple interaction eff
 
 ## Methods
 
-### `addRipple(pageX: number, pageY: number) => Promise<() => void>`
+### `addRipple(x: number, y: number) => Promise<() => void>`
 
-Adds the ripple effect to the parent element
+Adds the ripple effect to the parent element.
 
 #### Parameters
 
-| Name    | Type     | Description |
-| ------- | -------- | ----------- |
-| `pageX` | `number` |             |
-| `pageY` | `number` |             |
+| Name | Type     | Description                                                 |
+| ---- | -------- | ----------------------------------------------------------- |
+| `x`  | `number` | The horizontal coordinate of where the ripple should start. |
+| `y`  | `number` | The vertical coordinate of where the ripple should start.   |
 
 #### Returns
 
