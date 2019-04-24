@@ -4,23 +4,20 @@
  */
 
 export const sanitizeDOMString = (untrustedString: string | undefined): string | undefined => {
-
-  const div = document.createElement('div');
-  document.body.appendChild(div);
-
   try {
     if (typeof untrustedString !== 'string') { return untrustedString; }
 
     const blockedTags = ['script', 'style', 'iframe', 'meta', 'link', 'object', 'embed'];
-    const range = document.createRange();
 
     /**
-     * Older version of Chrome require that we
-     * explicitly select a context node
+     * Create a document fragment
+     * separate from the main DOM,
+     * create a div to do our work in
      */
-    range.selectNode(div);
-
-    const documentFragment = range.createContextualFragment(untrustedString);
+    const documentFragment = document.createDocumentFragment();
+    const workingDiv = document.createElement('div');
+    documentFragment.appendChild(workingDiv);
+    workingDiv.innerHTML = untrustedString;
 
     /**
      * Remove any elements
@@ -43,8 +40,11 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
          * as they are left behind
          */
         /* tslint:disable-next-line */
-        for (let childIndex = 0; childIndex < element.children.length; childIndex++) {
-          sanitizeElement(element.children[childIndex]);
+        const childElements = getElementChildren(element);
+
+        /* tslint:disable-next-line */
+        for (let childIndex = 0; childIndex < childElements.length; childIndex++) {
+          sanitizeElement(childElements[childIndex]);
         }
       }
     });
@@ -56,26 +56,23 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
 
     // IE does not support .children on document fragments, only .childNodes
     /* tslint:disable-next-line */
-    const documentFragmentChildren = (documentFragment.children != null) ? documentFragment.children : documentFragment.childNodes;
+    const documentFragmentChildren = getElementChildren(documentFragment);
 
     /* tslint:disable-next-line */
     for (let childIndex = 0; childIndex < documentFragmentChildren.length; childIndex++) {
       sanitizeElement(documentFragmentChildren[childIndex]);
     }
 
-    // Remove context node from DOM
-    document.body.removeChild(div);
-
     // Append document fragment to div
-    div.appendChild(documentFragment);
+    const fragmentDiv = document.createElement('div');
+    fragmentDiv.appendChild(documentFragment);
 
-    return div.innerHTML;
+    // First child is always the div we did our work in
+    const getInnerDiv = fragmentDiv.querySelector('div');
+    return (getInnerDiv !== null) ? getInnerDiv.innerHTML : fragmentDiv.innerHTML;
 
   } catch (err) {
     console.error(err);
-
-    // Remove context node from DOM
-    document.body.removeChild(div);
 
     return '';
   }
@@ -115,8 +112,18 @@ const sanitizeElement = (element: any) => {
   /**
    * Sanitize any nested children
    */
+  const childElements = getElementChildren(element);
+
   /* tslint:disable-next-line */
-  for (let i = 0; i < element.children.length; i++) {
-    sanitizeElement(element.children[i]);
+  for (let i = 0; i < childElements.length; i++) {
+    sanitizeElement(childElements[i]);
   }
+};
+
+/**
+ * IE doesn't always support .children
+ * so we revert to .childNodes instead
+ */
+const getElementChildren = (element: any) => {
+  return (element.children != null) ? element.children : element.childNodes;
 };
