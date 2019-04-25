@@ -1,39 +1,39 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-import { cleanScreenshotName, generateE2EUrl } from '../../../utils/test/utils';
+import { generateE2EUrl } from '../../../utils/test/utils';
 
 export async function testFab(
   type: string,
   selector: string,
-  rtl = false,
-  screenshotName: string = cleanScreenshotName(selector)
+  rtl = false
 ) {
   try {
     const pageUrl = generateE2EUrl('fab', type, rtl);
-    if (rtl) {
-      screenshotName = `${screenshotName} rtl`;
-    }
 
     const page = await newE2EPage({
       url: pageUrl
     });
 
     const screenshotCompares = [];
-    screenshotCompares.push(await page.compareScreenshot(`${screenshotName}`));
+    screenshotCompares.push(await page.compareScreenshot());
 
     const fab = await getFabComponent(page, selector);
     await fab.click();
 
+    await page.waitFor(250);
+
     await ensureFabState(fab, 'active');
 
-    screenshotCompares.push(await page.compareScreenshot(`${screenshotName} open`));
+    screenshotCompares.push(await page.compareScreenshot('open'));
 
     const fabButton = await getFabButton(fab);
     await fabButton.click();
 
+    await page.waitFor(250);
+
     await ensureFabState(fab, 'inactive');
 
-    screenshotCompares.push(await page.compareScreenshot(`${screenshotName} close`));
+    screenshotCompares.push(await page.compareScreenshot('close'));
 
     for (const screenshotCompare of screenshotCompares) {
       expect(screenshotCompare).toMatchScreenshot();
@@ -46,28 +46,24 @@ export async function testFab(
 export async function testDisabledFab(
   type: string,
   selector: string,
-  rtl = false,
-  screenshotName: string = cleanScreenshotName(selector)
+  rtl = false
 ) {
   try {
     const pageUrl = generateE2EUrl('fab', type, rtl);
-    if (rtl) {
-      screenshotName = `${screenshotName} rtl`;
-    }
 
     const page = await newE2EPage({
       url: pageUrl
     });
 
     const screenshotCompares = [];
-    screenshotCompares.push(await page.compareScreenshot(`disabled ${screenshotName}`));
+    screenshotCompares.push(await page.compareScreenshot('disabled'));
 
     const fab = await getFabComponent(page, selector);
     await fab.click();
 
     await ensureFabState(fab, 'inactive');
 
-    screenshotCompares.push(await page.compareScreenshot(`disabled ${screenshotName} attempt open`));
+    screenshotCompares.push(await page.compareScreenshot('disabled, attempt open'));
 
     for (const screenshotCompare of screenshotCompares) {
       expect(screenshotCompare).toMatchScreenshot();

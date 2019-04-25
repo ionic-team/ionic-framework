@@ -1,4 +1,5 @@
 import Vue, { CreateElement, RenderContext, VNodeData } from 'vue';
+import { NavDirection } from '@ionic/core';
 
 type TransitionDone = () => void;
 interface Props {
@@ -56,6 +57,9 @@ export default {
 };
 
 function catchIonicGoBack(parent: Vue, event: Event): void {
+  // In case of nested ion-vue-routers run only once
+  event.stopImmediatePropagation();
+
   if (!event.target) return;
 
   // We only care for the event coming from Ionic's back button
@@ -66,7 +70,7 @@ function catchIonicGoBack(parent: Vue, event: Event): void {
   let defaultHref: string;
 
   // Explicitly override router direction to always trigger a back transition
-  $router.directionOverride = -1;
+  $router.directionOverride = 'back';
 
   // If we can go back - do so
   if ($router.canGoBack()) {
@@ -124,8 +128,8 @@ function transition(parent: Vue, props: Props, leavingEl: HTMLElement) {
   return ionRouterOutlet.componentOnReady().then((el: HTMLIonRouterOutletElement) => {
     return el.commit(enteringEl, leavingEl, {
       deepWait: true,
-      duration: !props.animated ? 0 : undefined,
-      direction: parent.$router.direction === 1 ? 'forward' : 'back',
+      duration: !props.animated || parent.$router.direction === 'root' ? 0 : undefined,
+      direction: parent.$router.direction as NavDirection,
       showGoBack: parent.$router.canGoBack(),
     });
   }).catch(console.error);

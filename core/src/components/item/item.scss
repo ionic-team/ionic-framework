@@ -57,7 +57,7 @@
   --detail-icon-color: initial;
   --detail-icon-font-size: 20px;
   --detail-icon-opacity: 0.25;
-  --ripple-color: currentColor;
+  --ripple-color: var(--ion-item-background-activated, currentColor);
 
   @include font-smoothing();
 
@@ -180,6 +180,9 @@ button, a {
   );
 
   display: flex;
+
+  /* This is required to work with an inset highlight */
+  position: relative;
 
   flex: 1;
   flex-direction: inherit;

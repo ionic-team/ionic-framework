@@ -64,6 +64,18 @@ export function addStyle(host: Tree, stylePath: string) {
   }
 }
 
+export function addAsset(host: Tree, asset: string | {glob: string; input: string; output: string}) {
+  const config = readConfig(host);
+  const appConfig = getAngularAppConfig(config);
+
+  if (appConfig) {
+    appConfig.architect.build.options.assets.push(asset);
+    writeConfig(host, config);
+  } else {
+    throw new SchematicsException(`Cannot find valid app`);
+  }
+}
+
 export function addArchitectBuilder(host: Tree, builderName: string, builderOpts: any){
   const config = readConfig(host);
   const appConfig = getAngularAppConfig(config);

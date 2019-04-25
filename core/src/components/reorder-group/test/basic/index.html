@@ -26,7 +26,6 @@
     <ion-content id="content">
       <ion-list>
         <ion-reorder-group id="reorder">
-
           <ion-item button onclick="openAlert()">
             <ion-label>
               Item 1 (default ion-reorder)
@@ -126,11 +125,15 @@
     function openAlert() {
       alert('click');
     }
+
     function toggleEdit() {
       const reorderGroup = document.getElementById('reorder');
       reorderGroup.disabled = !reorderGroup.disabled;
+
       reorderGroup.addEventListener('ionItemReorder', ({detail}) => {
-        detail.complete(true);
+        console.log('Dragged from index', detail.from, 'to', detail.to);
+
+        detail.complete();
       });
     }
   </script>

@@ -30,15 +30,15 @@ async function presentLoading() {
 
 ## Methods
 
-### `create(opts?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>`
+### `create(options?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>`
 
 Create a loading overlay with loading options.
 
 #### Parameters
 
-| Name   | Type                          | Description |
-| ------ | ----------------------------- | ----------- |
-| `opts` | `LoadingOptions \| undefined` |             |
+| Name      | Type                          | Description                               |
+| --------- | ----------------------------- | ----------------------------------------- |
+| `options` | `LoadingOptions \| undefined` | The options to use to create the loading. |
 
 #### Returns
 
@@ -52,11 +52,11 @@ Dismiss the open loading overlay.
 
 #### Parameters
 
-| Name   | Type                  | Description |
-| ------ | --------------------- | ----------- |
-| `data` | `any`                 |             |
-| `role` | `string \| undefined` |             |
-| `id`   | `string \| undefined` |             |
+| Name   | Type                  | Description                                                                                                                                                                                                                                         |
+| ------ | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data` | `any`                 | Any data to emit in the dismiss events.                                                                                                                                                                                                             |
+| `role` | `string \| undefined` | The role of the element that is dismissing the loading. This can be useful in a button handler for determining which button was clicked to dismiss the loading. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`. |
+| `id`   | `string \| undefined` | The id of the loading to dismiss. If an id is not provided, it will dismiss the most recently opened loading.                                                                                                                                       |
 
 #### Returns
 
