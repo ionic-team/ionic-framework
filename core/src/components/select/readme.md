@@ -766,16 +766,16 @@ export default Example;
 
 ## Methods
 
-### `open(ev?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>`
+### `open(event?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>`
 
-Opens the select overlay, it could be an alert, action-sheet or popover,
-based in `ion-select` settings.
+Open the select overlay. The overlay is either an alert, action sheet, or popover,
+depending on the `interface` property on the `ion-select`.
 
 #### Parameters
 
-| Name | Type                   | Description |
-| ---- | ---------------------- | ----------- |
-| `ev` | `UIEvent \| undefined` |             |
+| Name    | Type                   | Description                                    |
+| ------- | ---------------------- | ---------------------------------------------- |
+| `event` | `UIEvent \| undefined` | The user interface event that called the open. |
 
 #### Returns
 
