@@ -39,6 +39,9 @@ $toast-ios-content-padding-bottom:                $toast-ios-content-padding-top
 /// @prop - Padding start of the toast content
 $toast-ios-content-padding-start:                 $toast-ios-content-padding-end !default;
 
+/// @prop - Color of the toast button	
+$toast-ios-button-color:                          #{ion-color(primary, base)} !default;
+
 /// @prop - Filter of the translucent toast
 $toast-ios-translucent-filter:                    saturate(180%) blur(20px) !default;
 

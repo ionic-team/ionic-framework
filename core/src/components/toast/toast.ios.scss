@@ -7,7 +7,7 @@
 :host {
   --background: #{$toast-ios-background-color};
   --border-radius: #{$toast-ios-border-radius};
-  --button-color: #{ion-color(primary, base)};
+  --button-color: #{$toast-ios-button-color};
   --color: #{$toast-ios-title-color};
   --max-width: #{$toast-max-width};
   --start: 10px;
