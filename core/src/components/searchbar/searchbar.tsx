@@ -90,6 +90,8 @@ export class Searchbar implements ComponentInterface {
    * To display characters normally reserved for HTML, they
    * must be escaped. For example `<Ionic>` would become
    * `&lt;Ionic&gt;`
+   *
+   * For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
    */
   @Prop() placeholder = 'Search';
 

@@ -23,6 +23,8 @@ export class RefresherContent implements ComponentInterface {
    * To display characters normally reserved for HTML, they
    * must be escaped. For example `<Ionic>` would become
    * `&lt;Ionic&gt;`
+   *
+   * For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
    */
   @Prop() pullingText?: string;
 
@@ -37,6 +39,8 @@ export class RefresherContent implements ComponentInterface {
    * To display characters normally reserved for HTML, they
    * must be escaped. For example `<Ionic>` would become
    * `&lt;Ionic&gt;`
+   *
+   * For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
    */
   @Prop() refreshingText?: string;
 
