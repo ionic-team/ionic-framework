@@ -11,6 +11,7 @@ export const PLATFORMS_MAP = {
   'electron': isElectron,
   'pwa': isPWA,
   'mobile': isMobile,
+  'mobileweb': isMobileWeb,
   'desktop': isDesktop,
   'hybrid': isHybrid
 };
@@ -35,6 +36,10 @@ export function setupPlatforms(win: any) {
     platforms.forEach(p => classList.add(`plt-${p}`));
   }
   return platforms;
+}
+
+function isMobileWeb(win: Window): boolean {
+  return isMobile(win) && !isHybrid(win);
 }
 
 function detectPlatforms(win: Window): string[] {
@@ -104,10 +109,10 @@ function isElectron(win: Window): boolean {
 }
 
 function isPWA(win: Window): boolean {
-  return win.matchMedia('(display-mode: standalone)').matches;
+  return win.matchMedia('(display-mode: standalone)').matches || (win.navigator as any).standalone;
 }
 
-function testUserAgent(win: Window, expr: RegExp) {
+export function testUserAgent(win: Window, expr: RegExp) {
   return expr.test(win.navigator.userAgent);
 }
 
