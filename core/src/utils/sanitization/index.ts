@@ -39,7 +39,6 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
          * the children of this element
          * as they are left behind
          */
-        /* tslint:disable-next-line */
         const childElements = getElementChildren(element);
 
         /* tslint:disable-next-line */
@@ -55,7 +54,6 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
      */
 
     // IE does not support .children on document fragments, only .childNodes
-    /* tslint:disable-next-line */
     const documentFragmentChildren = getElementChildren(documentFragment);
 
     /* tslint:disable-next-line */
