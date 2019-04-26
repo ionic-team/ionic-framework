@@ -1,3 +1,12 @@
+## [4.1.3](https://github.com/ionic-team/ionic/compare/v4.1.2...v4.1.3) (2019-04-26)
+
+
+### Bug Fixes
+
+* sanitize components using innerHTML ([#18144](https://github.com/ionic-team/ionic/issues/18144)) ([f95facf](https://github.com/ionic-team/ionic/commit/f95facf))
+
+
+
 ## [4.1.2](https://github.com/ionic-team/ionic/compare/v4.1.1...v4.1.2) (2019-03-20)
 
 
