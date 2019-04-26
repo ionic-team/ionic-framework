@@ -5,9 +5,7 @@
 
 export const sanitizeDOMString = (untrustedString: string | undefined): string | undefined => {
   try {
-    if (typeof untrustedString !== 'string') { return untrustedString; }
-
-    const blockedTags = ['script', 'style', 'iframe', 'meta', 'link', 'object', 'embed'];
+    if (typeof untrustedString !== 'string' || untrustedString === '') { return untrustedString; }
 
     /**
      * Create a document fragment
@@ -85,8 +83,6 @@ const sanitizeElement = (element: any) => {
   // IE uses childNodes, so ignore nodes that are not elements
   if (element.nodeType && element.nodeType !== 1) { return; }
 
-  const allowedAttributes = ['class', 'id', 'href', 'src'];
-
   for (let i = element.attributes.length - 1; i >= 0; i--) {
     const attribute = element.attributes[i];
     const attributeName = attribute.name;
@@ -125,3 +121,6 @@ const sanitizeElement = (element: any) => {
 const getElementChildren = (element: any) => {
   return (element.children != null) ? element.children : element.childNodes;
 };
+
+const allowedAttributes = ['class', 'id', 'href', 'src'];
+const blockedTags = ['script', 'style', 'iframe', 'meta', 'link', 'object', 'embed'];
