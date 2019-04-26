@@ -284,7 +284,7 @@ export namespace Components {
     */
     'leaveAnimation'?: AnimationBuilder;
     /**
-    * The main message to be displayed in the alert.
+    * The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
     'message'?: string;
     /**
@@ -351,7 +351,7 @@ export namespace Components {
     */
     'leaveAnimation'?: AnimationBuilder;
     /**
-    * The main message to be displayed in the alert.
+    * The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
     'message'?: string;
     /**
@@ -1561,7 +1561,7 @@ export namespace Components {
     */
     'loadingSpinner'?: SpinnerTypes | null;
     /**
-    * Optional text to display while loading.
+    * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
     'loadingText'?: string;
   }
@@ -1571,7 +1571,7 @@ export namespace Components {
     */
     'loadingSpinner'?: SpinnerTypes | null;
     /**
-    * Optional text to display while loading.
+    * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
     'loadingText'?: string;
   }
@@ -3405,7 +3405,7 @@ export namespace Components {
     */
     'pullingIcon'?: string | null;
     /**
-    * The text you want to display when you begin to pull down
+    * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
     'pullingText'?: string;
     /**
@@ -3413,7 +3413,7 @@ export namespace Components {
     */
     'refreshingSpinner'?: SpinnerTypes | null;
     /**
-    * The text you want to display when performing a refresh
+    * The text you want to display when performing a refresh. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
     'refreshingText'?: string;
   }
@@ -3423,7 +3423,7 @@ export namespace Components {
     */
     'pullingIcon'?: string | null;
     /**
-    * The text you want to display when you begin to pull down
+    * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
     'pullingText'?: string;
     /**
@@ -3431,7 +3431,7 @@ export namespace Components {
     */
     'refreshingSpinner'?: SpinnerTypes | null;
     /**
-    * The text you want to display when performing a refresh
+    * The text you want to display when performing a refresh. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
     'refreshingText'?: string;
   }
@@ -3715,7 +3715,7 @@ export namespace Components {
     */
     'mode': Mode;
     /**
-    * Set the input's placeholder.
+    * Set the input's placeholder. `placeholder` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
     'placeholder': string;
     /**
@@ -3805,7 +3805,7 @@ export namespace Components {
     */
     'onIonInput'?: (event: CustomEvent<KeyboardEvent>) => void;
     /**
-    * Set the input's placeholder.
+    * Set the input's placeholder. `placeholder` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
     'placeholder'?: string;
     /**
