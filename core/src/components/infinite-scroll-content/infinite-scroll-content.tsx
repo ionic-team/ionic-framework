@@ -1,8 +1,8 @@
 import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Config, Mode, SpinnerTypes } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
 import { sanitizeDOMString } from '../../utils/sanitization';
+import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-infinite-scroll-content',
