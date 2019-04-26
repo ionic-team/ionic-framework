@@ -173,7 +173,6 @@ export class Toast extends Component<Props, State> {
     );
   }
 }
-
 ```
 
 
@@ -217,10 +216,10 @@ Dismiss the toast overlay after it has been presented.
 
 #### Parameters
 
-| Name   | Type                  | Description |
-| ------ | --------------------- | ----------- |
-| `data` | `any`                 |             |
-| `role` | `string \| undefined` |             |
+| Name   | Type                  | Description                                                                                                                                                                                                                                     |
+| ------ | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data` | `any`                 | Any data to emit in the dismiss events.                                                                                                                                                                                                         |
+| `role` | `string \| undefined` | The role of the element that is dismissing the toast. This can be useful in a button handler for determining which button was clicked to dismiss the toast. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`. |
 
 #### Returns
 
@@ -271,11 +270,13 @@ Type: `Promise<void>`
 | `--box-shadow`    | Box shadow of the toast     |
 | `--button-color`  | Color of the button text    |
 | `--color`         | Color of the toast text     |
+| `--end`           | Position from the end       |
 | `--height`        | Height of the toast         |
 | `--max-height`    | Maximum height of the toast |
 | `--max-width`     | Maximum width of the toast  |
 | `--min-height`    | Minimum height of the toast |
 | `--min-width`     | Minimum width of the toast  |
+| `--start`         | Position from the start     |
 | `--width`         | Width of the toast          |
 
 

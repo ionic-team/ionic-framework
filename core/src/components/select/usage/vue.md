@@ -114,7 +114,7 @@
   import { Component, Vue } from 'vue-property-decorator';
 
   @Component()
-  export default class SelectExample extends Vue {
+  export default class Example extends Vue {
     customAlertOptions: any = {
       header: 'Pizza Toppings',
       subHeader: 'Select your toppings',

@@ -148,6 +148,7 @@ export class Button implements ComponentInterface {
       'aria-disabled': disabled ? 'true' : null,
       class: {
         ...createColorClasses(color),
+        [`${this.mode}`]: true,
         [buttonType]: true,
         [`${buttonType}-${expand}`]: expand !== undefined,
         [`${buttonType}-${size}`]: size !== undefined,

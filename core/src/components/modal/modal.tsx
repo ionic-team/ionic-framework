@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Me
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
-import { createThemedClasses, getClassMap } from '../../utils/theme';
+import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -160,6 +160,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * Dismiss the modal overlay after it has been presented.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the modal. For example, 'cancel' or 'backdrop'.
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
@@ -172,7 +175,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * Returns a promise that resolves when the modal did dismiss.
-   *
    */
   @Method()
   onDidDismiss(): Promise<OverlayEventDetail> {
@@ -181,7 +183,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * Returns a promise that resolves when the modal will dismiss.
-   *
    */
   @Method()
   onWillDismiss(): Promise<OverlayEventDetail> {
@@ -193,7 +194,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       'no-router': true,
       'aria-modal': 'true',
       class: {
-        ...createThemedClasses(this.mode, 'modal'),
+        [`${this.mode}`]: true,
         ...getClassMap(this.cssClass)
       },
       style: {
@@ -203,7 +204,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const dialogClasses = createThemedClasses(this.mode, 'modal-wrapper');
+    const dialogClasses = {
+      [`modal-wrapper`]: true,
+      [`${this.mode}`]: true,
+    };
 
     return [
       <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss}/>,
