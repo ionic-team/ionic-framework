@@ -1,3 +1,13 @@
+## [4.2.1](https://github.com/ionic-team/ionic/compare/v4.2.0...v4.2.1) (2019-04-26)
+
+
+### Bug Fixes
+
+* **angular:** support replaceUrl with angular <7.2 ([#18107](https://github.com/ionic-team/ionic/issues/18107)) ([26ca72c](https://github.com/ionic-team/ionic/commit/26ca72c))
+* sanitize components using innerHTML ([#18145](https://github.com/ionic-team/ionic/issues/18145)) ([96d7fdd](https://github.com/ionic-team/ionic/commit/96d7fdd))
+
+
+
 # [4.2.0](https://github.com/ionic-team/ionic/compare/v4.1.2...v4.2.0) (2019-04-03)
 
 
