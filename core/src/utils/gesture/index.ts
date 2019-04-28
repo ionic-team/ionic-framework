@@ -1,8 +1,9 @@
 
+import { writeTask } from '@stencil/core';
+
 import { GESTURE_CONTROLLER } from './gesture-controller';
 import { createPointerEvents } from './pointer-events';
 import { createPanRecognizer } from './recognizers';
-import { writeTask } from '@stencil/core';
 
 export const createGesture = (config: GestureConfig): Gesture => {
 

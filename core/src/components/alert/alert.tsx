@@ -417,7 +417,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
         role="dialog"
         aria-modal="true"
         style={{
-          zIndex: 20000 + this.overlayIndex,
+          zIndex: `${20000 + this.overlayIndex}`,
         }}
         class={{
           ...getClassMap(this.cssClass),

@@ -91,7 +91,7 @@ export class TabButton implements ComponentInterface {
       <Host
         role="tab"
         aria-selected={selected ? 'true' : null}
-        id={tab !== undefined ? `tab-button-${tab}` : null}
+        id={tab !== undefined ? `tab-button-${tab}` : undefined}
         onClick={this.onClick}
         class={{
           'tab-selected': selected,

@@ -206,7 +206,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
           ...getClassMap(this.cssClass)
         }}
         style={{
-          zIndex: 20000 + this.overlayIndex
+          zIndex: `${20000 + this.overlayIndex}`
         }}
       >
         <ion-backdrop

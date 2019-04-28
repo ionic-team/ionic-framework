@@ -169,7 +169,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
       <Host
         onIonBackdropTap={this.onBackdropTap}
         style={{
-          zIndex: 40000 + this.overlayIndex
+          zIndex: `${40000 + this.overlayIndex}`
         }}
         class={{
           ...getClassMap(this.cssClass),
