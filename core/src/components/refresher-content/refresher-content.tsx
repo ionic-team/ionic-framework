@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Config, Mode, SpinnerTypes } from '../../interface';
+import { sanitizeDOMString } from '../../utils/sanitization';
 
 @Component({
   tag: 'ion-refresher-content'
@@ -17,7 +18,13 @@ export class RefresherContent implements ComponentInterface {
   @Prop({ mutable: true }) pullingIcon?: string | null;
 
   /**
-   * The text you want to display when you begin to pull down
+   * The text you want to display when you begin to pull down.
+   * `pullingText` can accept either plaintext or HTML as a string.
+   * To display characters normally reserved for HTML, they
+   * must be escaped. For example `<Ionic>` would become
+   * `&lt;Ionic&gt;`
+   *
+   * For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
    */
   @Prop() pullingText?: string;
 
@@ -27,7 +34,13 @@ export class RefresherContent implements ComponentInterface {
   @Prop({ mutable: true }) refreshingSpinner?: SpinnerTypes | null;
 
   /**
-   * The text you want to display when performing a refresh
+   * The text you want to display when performing a refresh.
+   * `refreshingText` can accept either plaintext or HTML as a string.
+   * To display characters normally reserved for HTML, they
+   * must be escaped. For example `<Ionic>` would become
+   * `&lt;Ionic&gt;`
+   *
+   * For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
    */
   @Prop() refreshingText?: string;
 
@@ -60,7 +73,7 @@ export class RefresherContent implements ComponentInterface {
           </div>
         }
         {this.pullingText &&
-          <div class="refresher-pulling-text" innerHTML={this.pullingText}></div>
+          <div class="refresher-pulling-text" innerHTML={sanitizeDOMString(this.pullingText)}></div>
         }
       </div>,
       <div class="refresher-refreshing">
@@ -70,7 +83,7 @@ export class RefresherContent implements ComponentInterface {
           </div>
         }
         {this.refreshingText &&
-          <div class="refresher-refreshing-text" innerHTML={this.refreshingText}></div>
+          <div class="refresher-refreshing-text" innerHTML={sanitizeDOMString(this.refreshingText)}></div>
         }
       </div>
     ];
