@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Method, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Method, Prop, QueueApi, getMode } from '@stencil/core';
 
 import { Mode } from '../../interface';
 
@@ -8,7 +8,6 @@ import { Mode } from '../../interface';
   shadow: true
 })
 export class RippleEffect implements ComponentInterface {
-  mode!: Mode;
 
   @Element() el!: HTMLElement;
 
@@ -82,10 +81,11 @@ export class RippleEffect implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getMode<Mode>(this);
     return {
       role: 'presentation',
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         'unbounded': this.unbounded
       }
     };

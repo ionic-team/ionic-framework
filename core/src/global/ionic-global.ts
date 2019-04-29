@@ -1,34 +1,29 @@
+import { setMode } from '@stencil/core';
 import 'ionicons';
+
+declare const Context: any;
 
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
 import { Config, configFromSession, configFromURL, saveConfig } from './config';
 
-declare const Context: any;
-
-const win = typeof (window as any) !== 'undefined' ? window : {} as Window;
-
-const Ionic = (win as any)['Ionic'] = (win as any)['Ionic'] || {};
-
-// queue used to coordinate DOM reads and
-// write in order to avoid layout thrashing
-Object.defineProperty(Ionic, 'queue', {
-  get: () => Context['queue']
-});
+const doc = document;
+const win = window;
+const Ionic = (win as any).Ionic = (win as any).Ionic || {};
 
 // Setup platforms
 setupPlatforms(win);
-Context.isPlatform = isPlatform;
 
 // create the Ionic.config from raw config object (if it exists)
 // and convert Ionic.config into a ConfigApi that has a get() fn
 const configObj = {
   ...configFromSession(win),
   persistConfig: false,
-  ...Ionic['config'],
+  ...Ionic.config,
   ...configFromURL(win)
 };
-const config = Ionic['config'] = Context['config'] = new Config(configObj);
+
+const config = Context.config = Ionic.config = new Config(configObj);
 if (config.getBoolean('persistConfig')) {
   saveConfig(win, configObj);
 }
@@ -36,14 +31,16 @@ if (config.getBoolean('persistConfig')) {
 // first see if the mode was set as an attribute on <html>
 // which could have been set by the user, or by prerendering
 // otherwise get the mode via config settings, and fallback to md
-const documentElement = (win as any).document ? win.document.documentElement : null;
-const mode = config.get('mode', (documentElement && documentElement.getAttribute('mode')) || (isPlatform(win, 'ios') ? 'ios' : 'md'));
-Ionic.mode = Context.mode = mode;
+const mode = config.get('mode', (doc.documentElement.getAttribute('mode')) || (isPlatform(win, 'ios') ? 'ios' : 'md'));
+Ionic.mode = mode;
 config.set('mode', mode);
-if (documentElement) {
-  documentElement.setAttribute('mode', mode);
-  documentElement.classList.add(mode);
-}
+doc.documentElement.setAttribute('mode', mode);
+doc.documentElement.classList.add(mode);
+
 if (config.getBoolean('_testing')) {
   config.set('animated', false);
 }
+
+setMode((elm: any) => (elm as any).mode || elm.getAttribute('mode') || mode);
+
+export { config };

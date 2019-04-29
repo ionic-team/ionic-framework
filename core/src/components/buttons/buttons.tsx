@@ -1,4 +1,4 @@
-import { Component, ComponentInterface } from '@stencil/core';
+import { Component, ComponentInterface, getMode } from '@stencil/core';
 
 import { Mode } from '../../interface';
 
@@ -11,12 +11,12 @@ import { Mode } from '../../interface';
   scoped: true,
 })
 export class Buttons implements ComponentInterface {
-  mode!: Mode;
 
   hostData() {
+    const mode = getMode<Mode>(this);
     return {
       class: {
-        [`${this.mode}`]: true
+        [`${mode}`]: true
       }
     };
   }

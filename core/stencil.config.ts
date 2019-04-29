@@ -59,6 +59,13 @@ export const config: Config = {
       type: 'dist',
       esmLoaderPath: '../loader'
     },
+    // {
+    //   type: 'dist-hydrate-script'
+    // },
+    {
+      type: 'experimental-dist-module',
+      externalRuntime: true,
+    },
     {
       type: 'docs',
       strict: true
@@ -67,59 +74,56 @@ export const config: Config = {
       type: 'docs-json',
       file: '../docs/core.json'
     },
-    {
-      type: 'stats',
-      file: 'stats.json'
-    },
-    {
-      type: 'docs-custom',
-      generator: apiSpecGenerator({
-        file: 'api.txt'
-      })
-    },
-    {
-      type: 'angular',
-      componentCorePackage: '@ionic/core',
-      directivesProxyFile: '../angular/src/directives/proxies.ts',
-      directivesUtilsFile: '../angular/src/directives/proxies-utils.ts',
-      directivesArrayFile: '../angular/src/directives/proxies-list.txt',
-      excludeComponents: [
-        // overlays
-        'ion-action-sheet',
-        'ion-action-sheet-controller',
-        'ion-alert',
-        'ion-alert-controller',
-        'ion-loading',
-        'ion-loading-controller',
-        'ion-modal',
-        'ion-modal-controller',
-        'ion-picker',
-        'ion-picker-controller',
-        'ion-popover',
-        'ion-popover-controller',
-        'ion-toast',
-        'ion-toast-controller',
-        'ion-toast',
+    apiSpecGenerator({
+      file: 'api.txt'
+    }),
+    // {
+    //   type: 'stats',
+    //   file: 'stats.json'
+    // },
+    //   {
+    //     type: 'angular',
+    //     componentCorePackage: '@ionic/core',
+    //     directivesProxyFile: '../angular/src/directives/proxies.ts',
+    //     directivesUtilsFile: '../angular/src/directives/proxies-utils.ts',
+    //     directivesArrayFile: '../angular/src/directives/proxies-list.txt',
+    //     excludeComponents: [
+    //       // overlays
+    //       'ion-action-sheet',
+    //       'ion-action-sheet-controller',
+    //       'ion-alert',
+    //       'ion-alert-controller',
+    //       'ion-loading',
+    //       'ion-loading-controller',
+    //       'ion-modal',
+    //       'ion-modal-controller',
+    //       'ion-picker',
+    //       'ion-picker-controller',
+    //       'ion-popover',
+    //       'ion-popover-controller',
+    //       'ion-toast',
+    //       'ion-toast-controller',
+    //       'ion-toast',
 
-        // controllers
-        'ion-menu-controller',
+    //       // controllers
+    //       'ion-menu-controller',
 
-        // navigation
-        'ion-router',
-        'ion-route',
-        'ion-route-redirect',
-        'ion-router-outlet',
-        'ion-anchor',
+    //       // navigation
+    //       'ion-router',
+    //       'ion-route',
+    //       'ion-route-redirect',
+    //       'ion-router-outlet',
+    //       'ion-anchor',
 
-        // tabs
-        'ion-tabs',
-        'ion-tab',
+    //       // tabs
+    //       'ion-tabs',
+    //       'ion-tab',
 
-        // auxiliar
-        'ion-picker-column',
-        'ion-virtual-scroll'
-      ]
-    }
+    //       // auxiliar
+    //       'ion-picker-column',
+    //       'ion-virtual-scroll'
+    //     ]
+    //   }
   ],
   testing: {
     allowableMismatchedPixels: 200,
@@ -149,7 +153,6 @@ export const config: Config = {
       }
     ]
   },
-  copy: [{ src: '**/*.scss' }],
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   globalScript: 'src/global/ionic-global.ts',
   enableCache: true,

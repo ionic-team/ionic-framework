@@ -1,8 +1,11 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch, getMode, h } from '@stencil/core';
 
 import { Color, Mode, TabBarChangedEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-tab-bar',
   styleUrls: {
@@ -19,11 +22,6 @@ export class TabBar implements ComponentInterface {
   @Prop({ context: 'document' }) doc!: Document;
 
   @State() keyboardVisible = false;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The color to use from your application's color palette.
@@ -51,12 +49,12 @@ export class TabBar implements ComponentInterface {
   /** @internal */
   @Event() ionTabBarChanged!: EventEmitter<TabBarChangedEventDetail>;
 
-  @Listen('window:keyboardWillHide')
+  @Listen('keyboardWillHide', { target: 'window' })
   protected onKeyboardWillHide() {
     setTimeout(() => this.keyboardVisible = false, 50);
   }
 
-  @Listen('window:keyboardWillShow')
+  @Listen('keyboardWillShow', { target: 'window' })
   protected onKeyboardWillShow() {
     if (this.el.getAttribute('slot') !== 'top') {
       this.keyboardVisible = true;
@@ -69,12 +67,13 @@ export class TabBar implements ComponentInterface {
 
   hostData() {
     const { color, translucent, keyboardVisible } = this;
+    const mode = getMode<Mode>(this);
     return {
       'role': 'tablist',
       'aria-hidden': keyboardVisible ? 'true' : null,
       class: {
         ...createColorClasses(color),
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         'tab-bar-translucent': translucent,
         'tab-bar-hidden': keyboardVisible,
       }

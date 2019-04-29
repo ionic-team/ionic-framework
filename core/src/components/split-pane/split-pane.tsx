@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch, getMode } from '@stencil/core';
 
 import { Mode } from '../../interface';
 
@@ -23,8 +23,6 @@ const QUERY: { [key: string]: string } = {
 export class SplitPane implements ComponentInterface {
 
   private rmL: any;
-
-  mode!: Mode;
 
   @Element() el!: HTMLElement;
   @State() visible = false;
@@ -154,12 +152,14 @@ export class SplitPane implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getMode<Mode>(this);
+
     return {
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
 
         // Used internally for styling
-        [`split-pane-${this.mode}`]: true,
+        [`split-pane-${mode}`]: true,
 
         'split-pane-visible': this.visible
       }

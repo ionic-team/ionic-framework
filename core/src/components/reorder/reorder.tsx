@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Listen } from '@stencil/core';
+import { Component, ComponentInterface, Listen, getMode, h } from '@stencil/core';
 
 import { Mode } from '../../interface';
 
@@ -12,8 +12,6 @@ import { Mode } from '../../interface';
 })
 export class Reorder implements ComponentInterface {
 
-  mode!: Mode;
-
   @Listen('click', { capture: true })
   onClick(ev: Event) {
     ev.preventDefault();
@@ -21,9 +19,10 @@ export class Reorder implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getMode<Mode>(this);
     return {
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
       }
     };
   }

@@ -1,9 +1,12 @@
-import { Component, ComponentInterface, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop, getMode, h } from '@stencil/core';
 
 import { Color, Config, Mode } from '../../interface';
 import { clamp } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-progress-bar',
   styleUrls: {
@@ -15,11 +18,6 @@ import { createColorClasses } from '../../utils/theme';
 export class ProgressBar implements ComponentInterface {
 
   @Prop({ context: 'config' }) config!: Config;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The state of the progress bar, based on if the time the process takes is known or not.
@@ -55,6 +53,7 @@ export class ProgressBar implements ComponentInterface {
   hostData() {
     const { color, type, reversed, value } = this;
     const paused = this.config.getBoolean('_testing');
+    const mode = getMode<Mode>(this);
     return {
       'role': 'progressbar',
       'aria-valuenow': type === 'determinate' ? value : null,
@@ -62,7 +61,7 @@ export class ProgressBar implements ComponentInterface {
       'aria-valuemax': 1,
       class: {
         ...createColorClasses(color),
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         [`progress-bar-${type}`]: true,
         'progress-paused': paused,
         'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed

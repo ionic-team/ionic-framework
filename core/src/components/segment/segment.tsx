@@ -1,8 +1,11 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch, getMode } from '@stencil/core';
 
 import { Color, Mode, SegmentChangeEventDetail, StyleEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-segment',
   styleUrls: {
@@ -21,11 +24,6 @@ export class Segment implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, the user cannot interact with the segment.
@@ -96,10 +94,11 @@ export class Segment implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getMode<Mode>(this);
     return {
       class: {
         ...createColorClasses(this.color),
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         'segment-disabled': this.disabled,
         'segment-scrollable': this.scrollable
       }

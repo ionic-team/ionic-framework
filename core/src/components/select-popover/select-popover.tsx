@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Listen, Prop, getMode, h } from '@stencil/core';
 
 import { Mode, SelectPopoverOption } from '../../interface';
 
@@ -11,8 +11,6 @@ import { Mode, SelectPopoverOption } from '../../interface';
   scoped: true
 })
 export class SelectPopover implements ComponentInterface {
-
-  mode!: Mode;
 
   /** Header text for the popover */
   @Prop() header?: string;
@@ -35,9 +33,10 @@ export class SelectPopover implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getMode<Mode>(this);
     return {
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
       }
     };
   }

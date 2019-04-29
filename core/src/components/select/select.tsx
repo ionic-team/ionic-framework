@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch, getMode, h } from '@stencil/core';
 
 import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, Mode, OverlaySelect, PopoverOptions, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, StyleEventDetail } from '../../interface';
 import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
@@ -6,6 +6,9 @@ import { hostContext } from '../../utils/theme';
 
 import { SelectCompareFn } from './select-interface';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-select',
   styleUrls: {
@@ -29,11 +32,6 @@ export class Select implements ComponentInterface {
   @Prop({ connect: 'ion-popover-controller' }) popoverCtrl!: HTMLIonPopoverControllerElement;
 
   @State() isExpanded = false;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, the user cannot interact with the select.
@@ -304,9 +302,10 @@ export class Select implements ComponentInterface {
 
   private async openPopover(ev: UIEvent) {
     const interfaceOptions = this.interfaceOptions;
+    const mode = getMode<Mode>(this);
 
     const popoverOpts: PopoverOptions = {
-      mode: this.mode,
+      mode,
       ...interfaceOptions,
 
       component: 'ion-select-popover',
@@ -325,9 +324,10 @@ export class Select implements ComponentInterface {
 
   private async openActionSheet() {
 
+    const mode = getMode<Mode>(this);
     const interfaceOptions = this.interfaceOptions;
     const actionSheetOpts: ActionSheetOptions = {
-      mode: this.mode,
+      mode,
       ...interfaceOptions,
 
       buttons: this.createActionSheetButtons(this.childOpts),
@@ -342,9 +342,10 @@ export class Select implements ComponentInterface {
 
     const interfaceOptions = this.interfaceOptions;
     const inputType = (this.multiple ? 'checkbox' : 'radio');
+    const mode = getMode<Mode>(this);
 
     const alertOpts: AlertOptions = {
-      mode: this.mode,
+      mode,
       ...interfaceOptions,
 
       header: interfaceOptions.header ? interfaceOptions.header : labelText,
@@ -444,6 +445,7 @@ export class Select implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getMode<Mode>(this);
     const labelId = this.inputId + '-lbl';
     const label = findItemLabel(this.el);
     if (label) {
@@ -457,7 +459,7 @@ export class Select implements ComponentInterface {
       'aria-haspopup': 'dialog',
       'aria-labelledby': labelId,
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         'in-item': hostContext('ion-item', this.el),
         'select-disabled': this.disabled,
       }

@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop, getMode, h } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -10,8 +10,6 @@ import { createColorClasses } from '../../utils/theme';
 })
 export class ToolbarTitle implements ComponentInterface {
 
-  mode!: Mode;
-
   @Element() el!: HTMLElement;
 
   /**
@@ -22,8 +20,9 @@ export class ToolbarTitle implements ComponentInterface {
   @Prop() color?: Color;
 
   private getMode() {
+    const mode = getMode<Mode>(this);
     const toolbar = this.el.closest('ion-toolbar');
-    return (toolbar && toolbar.mode) || this.mode;
+    return (toolbar && toolbar.mode) || mode;
   }
 
   hostData() {

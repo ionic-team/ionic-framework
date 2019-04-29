@@ -1,8 +1,11 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch, getMode } from '@stencil/core';
 
 import { Color, Mode, StyleEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-label',
   styleUrls: {
@@ -20,11 +23,6 @@ export class Label implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The position determines where and how the label behaves inside an item.
@@ -67,10 +65,11 @@ export class Label implements ComponentInterface {
 
   hostData() {
     const position = this.position;
+    const mode = getMode<Mode>(this);
     return {
       class: {
         ...createColorClasses(this.color),
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         [`label-${position}`]: position !== undefined,
         [`label-no-animate`]: (this.noAnimate)
       }

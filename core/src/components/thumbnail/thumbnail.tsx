@@ -1,4 +1,4 @@
-import { Component, ComponentInterface } from '@stencil/core';
+import { Component, ComponentInterface, getMode, h } from '@stencil/core';
 
 import { Mode } from '../../interface';
 
@@ -8,12 +8,12 @@ import { Mode } from '../../interface';
   shadow: true
 })
 export class Thumbnail implements ComponentInterface {
-  mode!: Mode;
 
   hostData() {
+    const mode = getMode<Mode>(this);
     return {
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
       }
     };
   }

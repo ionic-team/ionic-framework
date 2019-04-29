@@ -1,7 +1,10 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, getMode, h } from '@stencil/core';
 
 import { Config, Mode, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-tab-button',
   styleUrls: {
@@ -22,11 +25,6 @@ export class TabButton implements ComponentInterface {
    * The selected tab component
    */
   @Prop({ mutable: true }) selected = false;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * Set the layout of the text and icon in the tab bar.
@@ -56,7 +54,7 @@ export class TabButton implements ComponentInterface {
    */
   @Event() ionTabButtonClick!: EventEmitter<TabButtonClickEventDetail>;
 
-  @Listen('parent:ionTabBarChanged')
+  @Listen('ionTabBarChanged', { target: 'parent' })
   onTabBarChanged(ev: CustomEvent<TabBarChangedEventDetail>) {
     this.selected = this.tab === ev.detail.tab;
   }
@@ -90,13 +88,14 @@ export class TabButton implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getMode<Mode>(this);
     const { disabled, hasIcon, hasLabel, layout, selected, tab } = this;
     return {
       'role': 'tab',
       'aria-selected': selected ? 'true' : null,
       'id': tab !== undefined ? `tab-button-${tab}` : null,
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         'tab-selected': selected,
         'tab-disabled': disabled,
         'tab-has-label': hasLabel,
@@ -110,7 +109,8 @@ export class TabButton implements ComponentInterface {
   }
 
   render() {
-    const { mode, href } = this;
+    const mode = getMode<Mode>(this);
+    const { href } = this;
     return (
       <a href={href}>
         <slot></slot>

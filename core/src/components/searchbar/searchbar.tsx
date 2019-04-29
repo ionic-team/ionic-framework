@@ -1,10 +1,13 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch, getMode, h } from '@stencil/core';
 
 import { Color, Config, Mode, SearchbarChangeEventDetail } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-searchbar',
   styleUrls: {
@@ -33,11 +36,6 @@ export class Searchbar implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, enable searchbar animation.
@@ -174,7 +172,7 @@ export class Searchbar implements ComponentInterface {
    * `input.focus()`.
    */
   @Method()
-  setFocus() {
+  async setFocus() {
     if (this.nativeInput) {
       this.nativeInput.focus();
     }
@@ -265,10 +263,11 @@ export class Searchbar implements ComponentInterface {
   private positionElements() {
     const value = this.getValue();
     const prevAlignLeft = this.shouldAlignLeft;
+    const mode = getMode<Mode>(this);
     const shouldAlignLeft = (!this.animated || value.trim() !== '' || !!this.focused);
     this.shouldAlignLeft = shouldAlignLeft;
 
-    if (this.mode !== 'ios') {
+    if (mode !== 'ios') {
       return;
     }
 
@@ -289,7 +288,7 @@ export class Searchbar implements ComponentInterface {
     if (!inputEl) {
       return;
     }
-    const isRTL = this.doc.dir === 'rtl';
+    const isRTL = document.dir === 'rtl';
     const iconEl = (this.el.shadowRoot || this.el).querySelector('.searchbar-search-icon') as HTMLElement;
 
     if (this.shouldAlignLeft) {
@@ -298,7 +297,7 @@ export class Searchbar implements ComponentInterface {
 
     } else {
       // Create a dummy span to get the placeholder width
-      const doc = this.doc;
+      const doc = document;
       const tempSpan = doc.createElement('span');
       tempSpan.innerHTML = sanitizeDOMString(this.placeholder) || '';
       doc.body.appendChild(tempSpan);
@@ -328,7 +327,7 @@ export class Searchbar implements ComponentInterface {
    * Show the iOS Cancel button on focus, hide it offscreen otherwise
    */
   private positionCancelButton() {
-    const isRTL = this.doc.dir === 'rtl';
+    const isRTL = document.dir === 'rtl';
     const cancelButton = (this.el.shadowRoot || this.el).querySelector('.searchbar-cancel-button') as HTMLElement;
     const shouldShowCancel = this.focused;
 
@@ -364,12 +363,13 @@ export class Searchbar implements ComponentInterface {
 
   hostData() {
     const animated = this.animated && this.config.getBoolean('animated', true);
+    const mode = getMode<Mode>(this);
 
     return {
       'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...createColorClasses(this.color),
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         'searchbar-animated': animated,
         'searchbar-disabled': this.disabled,
         'searchbar-no-animate': animated && this.noAnimate,
@@ -381,20 +381,20 @@ export class Searchbar implements ComponentInterface {
   }
 
   render() {
-    const clearIcon = this.clearIcon || (this.mode === 'ios' ? 'ios-close-circle' : 'md-close');
+    const mode = getMode<Mode>(this);
+    const clearIcon = this.clearIcon || (mode === 'ios' ? 'ios-close-circle' : 'md-close');
     const searchIcon = this.searchIcon;
-
     const cancelButton = this.showCancelButton && (
       <button
         type="button"
-        tabIndex={this.mode === 'ios' && !this.focused ? -1 : undefined}
+        tabIndex={mode === 'ios' && !this.focused ? -1 : undefined}
         onMouseDown={this.onCancelSearchbar}
         onTouchStart={this.onCancelSearchbar}
         class="searchbar-cancel-button"
       >
         <div>
-          { this.mode === 'md'
-            ? <ion-icon mode={this.mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
+          { mode === 'md'
+            ? <ion-icon mode={mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
             : this.cancelButtonText
           }
         </div>
@@ -418,9 +418,9 @@ export class Searchbar implements ComponentInterface {
           spellCheck={this.spellcheck}
         />
 
-        {this.mode === 'md' && cancelButton}
+        {mode === 'md' && cancelButton}
 
-        <ion-icon mode={this.mode} icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
+        <ion-icon mode={mode} icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
 
         <button
           type="button"
@@ -429,10 +429,10 @@ export class Searchbar implements ComponentInterface {
           onMouseDown={this.onClearInput}
           onTouchStart={this.onClearInput}
         >
-          <ion-icon mode={this.mode} icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
+          <ion-icon mode={mode} icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
         </button>
       </div>,
-      this.mode === 'ios' && cancelButton
+      mode === 'ios' && cancelButton
     ];
   }
 }

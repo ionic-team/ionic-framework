@@ -17,10 +17,11 @@
   ],
   "main": "dist/index.js",
   "unpkg": "dist/ionic.js",
-  "module": "dist/esm/index.js",
-  "es2015": "dist/esm/es2017/index.js",
-  "es2017": "dist/esm/es2017/index.js",
-  "jsnext:main": "dist/esm/es2017/index.js",
+  "module": "dist/index.mjs",
+  "es2015": "dist/esm/index.mjs.js",
+  "es2017": "dist/esm/index.mjs.js",
+  "jsnext:main": "dist/esm/index.mjs.js",
+  "collection:main": "dist/collection/index.js",
   "types": "dist/types/interface.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "webComponents": "dist/web-components.json",
@@ -30,11 +31,12 @@
     "loader/"
   ],
   "dependencies": {
-    "ionicons": "4.5.6"
+    "ionicons": "4.5.6",
+    "tslib": "^1.9.3"
   },
   "devDependencies": {
-    "@stencil/core": "0.17.3-0",
-    "@stencil/sass": "0.1.1",
+    "@stencil/core": "one",
+    "@stencil/sass": "0.2.1",
     "@stencil/utils": "latest",
     "@types/jest": "^23.3.13",
     "@types/node": "10.12.18",
@@ -69,7 +71,7 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "clean": "node scripts/clean.js",
     "css.minify": "cleancss -O2 -o ./css/ionic.bundle.css ./css/ionic.bundle.css",
-    "css.sass": "node-sass --output ./css src/css --output-style compressed",
+    "css.sass": "sass ./css:src/css",
     "lint": "npm run lint.ts && npm run lint.sass",
     "lint.fix": "npm run lint.ts.fix && npm run lint.sass.fix",
     "lint.sass": "stylelint 'src/**/*.scss'",
@@ -77,6 +79,7 @@
     "lint.ts": "tslint --project .",
     "lint.ts.fix": "tslint --project . --fix",
     "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
+    "prerender.e2e": "node scripts/testing/prerender-e2e.js",
     "start": "npm run build.css && stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
     "test.spec": "stencil test --spec",

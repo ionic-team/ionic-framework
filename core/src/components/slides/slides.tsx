@@ -1,10 +1,13 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, Watch, getMode, h } from '@stencil/core';
 
 import { Mode } from '../../interface';
 import { rIC } from '../../utils/helpers.js';
 
 import { SwiperInterface, SwiperOptions } from './swiper/swiper-interface';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-slides',
   styleUrls: {
@@ -22,12 +25,7 @@ export class Slides implements ComponentInterface {
   private readySwiper!: (swiper: SwiperInterface) => void;
   private swiper: Promise<SwiperInterface> = new Promise(resolve => { this.readySwiper = resolve; });
 
-  @Element() el!: HTMLStencilElement;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
+  @Element() el!: HTMLIonSlidesElement;
 
   /**
    * Options to pass to the swiper instance.
@@ -465,12 +463,14 @@ export class Slides implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getMode<Mode>(this);
+
     return {
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
 
         // Used internally for styling
-        [`slides-${this.mode}`]: true,
+        [`slides-${mode}`]: true,
 
         'swiper-container': true
       }

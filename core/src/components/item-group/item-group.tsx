@@ -1,4 +1,4 @@
-import { Component, ComponentInterface } from '@stencil/core';
+import { Component, ComponentInterface, getMode } from '@stencil/core';
 
 import { Mode } from '../../interface';
 
@@ -11,16 +11,15 @@ import { Mode } from '../../interface';
 })
 export class ItemGroup implements ComponentInterface {
 
-  mode!: Mode;
-
   hostData() {
+    const mode = getMode<Mode>(this);
     return {
       'role': 'group',
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
 
         // Used internally for styling
-        [`item-group-${this.mode}`]: true,
+        [`item-group-${mode}`]: true,
 
         'item': true
       }

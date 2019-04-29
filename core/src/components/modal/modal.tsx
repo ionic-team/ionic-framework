@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, getMode, h } from '@stencil/core';
 
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
@@ -11,6 +11,9 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-modal',
   styleUrls: {
@@ -25,6 +28,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   presented = false;
   animation: Animation | undefined;
+  mode = getMode<Mode>(this);
 
   @Element() el!: HTMLElement;
 
@@ -35,11 +39,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /** @internal */
   @Prop() delegate?: FrameworkDelegate;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
@@ -190,11 +189,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   hostData() {
+    const mode = getMode<Mode>(this);
     return {
       'no-router': true,
       'aria-modal': 'true',
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         ...getClassMap(this.cssClass)
       },
       style: {
@@ -204,9 +204,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   render() {
+    const mode = getMode<Mode>(this);
     const dialogClasses = {
       [`modal-wrapper`]: true,
-      [`${this.mode}`]: true,
+      [`${mode}`]: true,
     };
 
     return [

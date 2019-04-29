@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch, getMode, h } from '@stencil/core';
 
 import { Mode } from '../../interface';
 
@@ -8,7 +8,6 @@ import { Mode } from '../../interface';
   shadow: true
 })
 export class Img implements ComponentInterface {
-  mode!: Mode;
 
   private io?: IntersectionObserver;
 
@@ -85,9 +84,10 @@ export class Img implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getMode<Mode>(this);
     return {
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
       }
     };
   }

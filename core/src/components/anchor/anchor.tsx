@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Listen, Prop, getMode, h } from '@stencil/core';
 
 import { Color, Mode, RouterDirection } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
@@ -9,7 +9,6 @@ import { createColorClasses, openURL } from '../../utils/theme';
   shadow: true
 })
 export class Anchor implements ComponentInterface {
-  mode!: Mode;
 
   @Prop({ context: 'window' }) win!: Window;
 
@@ -38,10 +37,12 @@ export class Anchor implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getMode<Mode>(this);
+
     return {
       class: {
         ...createColorClasses(this.color),
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         'ion-activatable': true
       }
     };

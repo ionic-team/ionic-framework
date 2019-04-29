@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch, getMode } from '@stencil/core';
 
 import { Gesture, GestureDetail, Mode } from '../../interface';
 
@@ -29,7 +29,6 @@ let openSlidingItem: HTMLIonItemSlidingElement | undefined;
   styleUrl: 'item-sliding.scss'
 })
 export class ItemSliding implements ComponentInterface {
-  mode!: Mode;
 
   private item: HTMLIonItemElement | null = null;
   private openAmount = 0;
@@ -71,7 +70,6 @@ export class ItemSliding implements ComponentInterface {
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
-      queue: this.queue,
       gestureName: 'item-swipe',
       gesturePriority: 100,
       threshold: 5,
@@ -306,9 +304,10 @@ export class ItemSliding implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getMode<Mode>(this);
     return {
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         'item-sliding-active-slide': (this.state !== SlidingState.Disabled),
         'item-sliding-active-options-end': (this.state & SlidingState.End) !== 0,
         'item-sliding-active-options-start': (this.state & SlidingState.Start) !== 0,

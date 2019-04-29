@@ -157,7 +157,7 @@ async function overlayAnimation(
   baseEl.classList.remove('overlay-hidden');
 
   const aniRoot = baseEl.shadowRoot || overlay.el;
-  const animation = overlay.animation = await import('./animation').then(mod => mod.create(animationBuilder, aniRoot, opts));
+  const animation = await import('./animation').then(mod => mod.create(animationBuilder, aniRoot, opts));
   overlay.animation = animation;
   if (!overlay.animated || !overlay.config.getBoolean('animated', true)) {
     animation.duration(0);

@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop, getMode } from '@stencil/core';
 
 import { Config, Mode } from '../../interface';
 import { rIC } from '../../utils/helpers';
@@ -9,33 +9,33 @@ import { isPlatform } from '../../utils/platform';
   styleUrl: 'app.scss'
 })
 export class App implements ComponentInterface {
-  mode!: Mode;
 
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'window' }) win!: Window;
   @Prop({ context: 'config' }) config!: Config;
-  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   componentDidLoad() {
     rIC(() => {
-      const { win, config, queue } = this;
+      const { win, config } = this;
 
       if (!config.getBoolean('_testing')) {
         importTapClick(win, config);
       }
 
       importInputShims(win, config);
-      importStatusTap(win, config, queue);
+      importStatusTap(win, config);
       importHardwareBackButton(win, config);
       importFocusVisible(win);
     });
   }
 
   hostData() {
+    const mode = getMode<Mode>(this);
+
     return {
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         'ion-page': true,
         'force-statusbar-padding': this.config.getBoolean('_forceStatusbarPadding')
       }
@@ -50,10 +50,10 @@ function importHardwareBackButton(win: Window, config: Config) {
   }
 }
 
-function importStatusTap(win: Window, config: Config, queue: QueueApi) {
+function importStatusTap(win: Window, config: Config) {
   const statusTap = config.getBoolean('statusTap', isPlatform(win, 'hybrid'));
   if (statusTap) {
-    import('../../utils/status-tap').then(module => module.startStatusTap(win, queue));
+    import('../../utils/status-tap').then(module => module.startStatusTap(win));
   }
 }
 
