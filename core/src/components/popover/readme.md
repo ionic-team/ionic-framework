@@ -115,12 +115,12 @@ export class PopoverExample extends Component<Props, State> {
 
 ## Events
 
-| Event                   | Description                               | Type                              |
-| ----------------------- | ----------------------------------------- | --------------------------------- |
-| `ionPopoverDidDismiss`  | Emitted after the popover has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionPopoverDidPresent`  | Emitted after the popover has presented.  | `CustomEvent<void>`               |
-| `ionPopoverWillDismiss` | Emitted before the popover has dismissed. | `CustomEvent<OverlayEventDetail>` |
-| `ionPopoverWillPresent` | Emitted before the popover has presented. | `CustomEvent<void>`               |
+| Event                   | Description                               | Type                                   |
+| ----------------------- | ----------------------------------------- | -------------------------------------- |
+| `ionPopoverDidDismiss`  | Emitted after the popover has dismissed.  | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionPopoverDidPresent`  | Emitted after the popover has presented.  | `CustomEvent<void>`                    |
+| `ionPopoverWillDismiss` | Emitted before the popover has dismissed. | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionPopoverWillPresent` | Emitted before the popover has presented. | `CustomEvent<void>`                    |
 
 
 ## Methods
@@ -128,13 +128,6 @@ export class PopoverExample extends Component<Props, State> {
 ### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
 
 Dismiss the popover overlay after it has been presented.
-
-#### Parameters
-
-| Name   | Type                  | Description                                                                                  |
-| ------ | --------------------- | -------------------------------------------------------------------------------------------- |
-| `data` | `any`                 | Any data to emit in the dismiss events.                                                      |
-| `role` | `string \| undefined` | The role of the element that is dismissing the popover. For example, 'cancel' or 'backdrop'. |
 
 #### Returns
 
@@ -186,6 +179,24 @@ Type: `Promise<void>`
 | `--min-width`  | Minimum width of the popover  |
 | `--width`      | Width of the popover          |
 
+
+## Dependencies
+
+### Used by
+
+ - [ion-popover-controller](../popover-controller)
+
+### Depends on
+
+- [ion-backdrop](../backdrop)
+
+### Graph
+```mermaid
+graph TD;
+  ion-popover --> ion-backdrop
+  ion-popover-controller --> ion-popover
+  style ion-popover fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

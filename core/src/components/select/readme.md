@@ -771,12 +771,6 @@ export default Example;
 Open the select overlay. The overlay is either an alert, action sheet, or popover,
 depending on the `interface` property on the `ion-select`.
 
-#### Parameters
-
-| Name    | Type                   | Description                                    |
-| ------- | ---------------------- | ---------------------------------------------- |
-| `event` | `UIEvent \| undefined` | The user interface event that called the open. |
-
 #### Returns
 
 Type: `Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>`
@@ -793,6 +787,32 @@ Type: `Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverE
 | `--padding-start`  | Start padding of the select  |
 | `--padding-top`    | Top padding of the select    |
 
+
+## Dependencies
+
+### Depends on
+
+- [ion-action-sheet-controller](../action-sheet-controller)
+- [ion-alert-controller](../alert-controller)
+- [ion-popover-controller](../popover-controller)
+
+### Graph
+```mermaid
+graph TD;
+  ion-select --> ion-action-sheet-controller
+  ion-select --> ion-alert-controller
+  ion-select --> ion-popover-controller
+  ion-action-sheet-controller --> ion-action-sheet
+  ion-action-sheet --> ion-backdrop
+  ion-action-sheet --> ion-icon
+  ion-action-sheet --> ion-ripple-effect
+  ion-alert-controller --> ion-alert
+  ion-alert --> ion-ripple-effect
+  ion-alert --> ion-backdrop
+  ion-popover-controller --> ion-popover
+  ion-popover --> ion-backdrop
+  style ion-select fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

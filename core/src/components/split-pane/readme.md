@@ -143,9 +143,9 @@ export default Example;
 
 ## Events
 
-| Event                 | Description                                                        | Type                              |
-| --------------------- | ------------------------------------------------------------------ | --------------------------------- |
-| `ionSplitPaneVisible` | Expression to be called when the split-pane visibility has changed | `CustomEvent<{visible: boolean}>` |
+| Event                 | Description                                                        | Type                                 |
+| --------------------- | ------------------------------------------------------------------ | ------------------------------------ |
+| `ionSplitPaneVisible` | Expression to be called when the split-pane visibility has changed | `CustomEvent<{ visible: boolean; }>` |
 
 
 ## CSS Custom Properties

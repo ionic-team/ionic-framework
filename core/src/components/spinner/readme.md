@@ -128,6 +128,23 @@ export default Example;
 | `--color` | Color of the spinner |
 
 
+## Dependencies
+
+### Used by
+
+ - [ion-infinite-scroll-content](../infinite-scroll-content)
+ - [ion-loading](../loading)
+ - [ion-refresher-content](../refresher-content)
+
+### Graph
+```mermaid
+graph TD;
+  ion-infinite-scroll-content --> ion-spinner
+  ion-loading --> ion-spinner
+  ion-refresher-content --> ion-spinner
+  style ion-spinner fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

@@ -272,6 +272,19 @@ export default Example;
 | `--transition`           | Transition of the button                |
 
 
+## Dependencies
+
+### Depends on
+
+- [ion-ripple-effect](../ripple-effect)
+
+### Graph
+```mermaid
+graph TD;
+  ion-button --> ion-ripple-effect
+  style ion-button fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

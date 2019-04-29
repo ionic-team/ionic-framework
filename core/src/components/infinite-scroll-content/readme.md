@@ -82,6 +82,19 @@ export default Example
 | `loadingText`    | `loading-text`    | Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security) | `string \| undefined`                                                                             | `undefined` |
 
 
+## Dependencies
+
+### Depends on
+
+- [ion-spinner](../spinner)
+
+### Graph
+```mermaid
+graph TD;
+  ion-infinite-scroll-content --> ion-spinner
+  style ion-infinite-scroll-content fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

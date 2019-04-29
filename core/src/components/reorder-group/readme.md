@@ -527,12 +527,6 @@ If no parameters are passed or if `true` is passed in, the reorder will complete
 and the item will remain in the position it was dragged to. If `false` is passed,
 the reorder will complete and the item will bounce back to its original position.
 
-#### Parameters
-
-| Name            | Type                            | Description                                                                                                                       |
-| --------------- | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `listOrReorder` | `any[] \| boolean \| undefined` | A list of items to be sorted and returned in the new order or a boolean of whether or not the reorder should reposition the item. |
-
 #### Returns
 
 Type: `Promise<any>`

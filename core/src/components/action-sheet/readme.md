@@ -273,12 +273,12 @@ export default {
 
 ## Events
 
-| Event                       | Description                             | Type                              |
-| --------------------------- | --------------------------------------- | --------------------------------- |
-| `ionActionSheetDidDismiss`  | Emitted after the alert has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionActionSheetDidPresent`  | Emitted after the alert has presented.  | `CustomEvent<void>`               |
-| `ionActionSheetWillDismiss` | Emitted before the alert has dismissed. | `CustomEvent<OverlayEventDetail>` |
-| `ionActionSheetWillPresent` | Emitted before the alert has presented. | `CustomEvent<void>`               |
+| Event                       | Description                             | Type                                   |
+| --------------------------- | --------------------------------------- | -------------------------------------- |
+| `ionActionSheetDidDismiss`  | Emitted after the alert has dismissed.  | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionActionSheetDidPresent`  | Emitted after the alert has presented.  | `CustomEvent<void>`                    |
+| `ionActionSheetWillDismiss` | Emitted before the alert has dismissed. | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionActionSheetWillPresent` | Emitted before the alert has presented. | `CustomEvent<void>`                    |
 
 
 ## Methods
@@ -286,13 +286,6 @@ export default {
 ### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
 
 Dismiss the action sheet overlay after it has been presented.
-
-#### Parameters
-
-| Name   | Type                  | Description                                                                                                                                                                                                                                                   |
-| ------ | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data` | `any`                 | Any data to emit in the dismiss events.                                                                                                                                                                                                                       |
-| `role` | `string \| undefined` | The role of the element that is dismissing the action sheet. This can be useful in a button handler for determining which button was clicked to dismiss the action sheet. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`. |
 
 #### Returns
 
@@ -346,6 +339,28 @@ Type: `Promise<void>`
 | `--min-width`            | Minimum width of the action sheet               |
 | `--width`                | Width of the action sheet                       |
 
+
+## Dependencies
+
+### Used by
+
+ - [ion-action-sheet-controller](../action-sheet-controller)
+
+### Depends on
+
+- [ion-backdrop](../backdrop)
+- ion-icon
+- [ion-ripple-effect](../ripple-effect)
+
+### Graph
+```mermaid
+graph TD;
+  ion-action-sheet --> ion-backdrop
+  ion-action-sheet --> ion-icon
+  ion-action-sheet --> ion-ripple-effect
+  ion-action-sheet-controller --> ion-action-sheet
+  style ion-action-sheet fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

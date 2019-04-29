@@ -214,12 +214,12 @@ export default {
 
 ## Events
 
-| Event                   | Description                               | Type                              |
-| ----------------------- | ----------------------------------------- | --------------------------------- |
-| `ionLoadingDidDismiss`  | Emitted after the loading has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionLoadingDidPresent`  | Emitted after the loading has presented.  | `CustomEvent<void>`               |
-| `ionLoadingWillDismiss` | Emitted before the loading has dismissed. | `CustomEvent<OverlayEventDetail>` |
-| `ionLoadingWillPresent` | Emitted before the loading has presented. | `CustomEvent<void>`               |
+| Event                   | Description                               | Type                                   |
+| ----------------------- | ----------------------------------------- | -------------------------------------- |
+| `ionLoadingDidDismiss`  | Emitted after the loading has dismissed.  | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionLoadingDidPresent`  | Emitted after the loading has presented.  | `CustomEvent<void>`                    |
+| `ionLoadingWillDismiss` | Emitted before the loading has dismissed. | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionLoadingWillPresent` | Emitted before the loading has presented. | `CustomEvent<void>`                    |
 
 
 ## Methods
@@ -227,13 +227,6 @@ export default {
 ### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
 
 Dismiss the loading overlay after it has been presented.
-
-#### Parameters
-
-| Name   | Type                  | Description                                                                                                                                                                                                                                         |
-| ------ | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data` | `any`                 | Any data to emit in the dismiss events.                                                                                                                                                                                                             |
-| `role` | `string \| undefined` | The role of the element that is dismissing the loading. This can be useful in a button handler for determining which button was clicked to dismiss the loading. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`. |
 
 #### Returns
 
@@ -285,6 +278,26 @@ Type: `Promise<void>`
 | `--spinner-color` | Color of the loading spinner         |
 | `--width`         | Width of the loading dialog          |
 
+
+## Dependencies
+
+### Used by
+
+ - [ion-loading-controller](../loading-controller)
+
+### Depends on
+
+- [ion-backdrop](../backdrop)
+- [ion-spinner](../spinner)
+
+### Graph
+```mermaid
+graph TD;
+  ion-loading --> ion-backdrop
+  ion-loading --> ion-spinner
+  ion-loading-controller --> ion-loading
+  style ion-loading fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

@@ -71,7 +71,7 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "clean": "node scripts/clean.js",
     "css.minify": "cleancss -O2 -o ./css/ionic.bundle.css ./css/ionic.bundle.css",
-    "css.sass": "sass ./css:src/css",
+    "css.sass": "sass src/css:./css",
     "lint": "npm run lint.ts && npm run lint.sass",
     "lint.fix": "npm run lint.ts.fix && npm run lint.sass.fix",
     "lint.sass": "stylelint 'src/**/*.scss'",

@@ -186,7 +186,7 @@ export default class Example extends Component<Props, State> {
 
 ## Methods
 
-### `complete() => void`
+### `complete() => Promise<void>`
 
 Call `complete()` within the `ionInfinite` output event handler when
 your async operation has completed. For example, the `loading`
@@ -199,7 +199,7 @@ to `enabled`.
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 

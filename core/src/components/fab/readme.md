@@ -286,13 +286,13 @@ export default Example;
 
 ## Methods
 
-### `close() => void`
+### `close() => Promise<void>`
 
 Close an active FAB list container.
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 
