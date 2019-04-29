@@ -1,95 +1,70 @@
-import { newE2EPage } from '@stencil/core/testing';
+import { testAlert } from '../test.utils';
 
-async function openAlert(selector: string, rtl = false) {
-  const pageUrl = rtl
-   ? '/src/components/alert/test/basic?ionic:_testing=true&rtl=true'
-   : '/src/components/alert/test/basic?ionic:_testing=true';
-  const page = await newE2EPage({
-    url: pageUrl
-  });
-
-  await page.click(selector);
-
-  let alert = await page.find('ion-alert');
-  expect(alert).not.toBe(null);
-  await alert.waitForVisible();
-  await page.waitFor(250);
-
-  const compare = rtl
-    ? await page.compareScreenshot('rtl')
-    : await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
-
-  await alert.callMethod('dismiss');
-  await alert.waitForNotVisible();
-
-  alert = await page.find('ion-alert');
-  expect(alert).toBe(null);
-}
+const DIRECTORY = 'basic';
 
 test(`alert: basic`, async () => {
-  await openAlert('#basic');
+  await testAlert(DIRECTORY, '#basic');
 });
 
 test(`alert: basic, long message`, async () => {
-  await openAlert('#longMessage');
+  await testAlert(DIRECTORY, '#longMessage');
 });
 
 test(`alert: basic, multiple buttons`, async () => {
-  await openAlert('#multipleButtons');
+  await testAlert(DIRECTORY, '#multipleButtons');
 });
 
 test(`alert: basic, no message`, async () => {
-  await openAlert('#noMessage');
+  await testAlert(DIRECTORY, '#noMessage');
 });
 
 test(`alert: basic, confirm`, async () => {
-  await openAlert('#confirm');
+  await testAlert(DIRECTORY, '#confirm');
 });
 
 test(`alert: basic, prompt`, async () => {
-  await openAlert('#prompt');
+  await testAlert(DIRECTORY, '#prompt');
 });
 
 test(`alert: basic, radio`, async () => {
-  await openAlert('#radio');
+  await testAlert(DIRECTORY, '#radio');
 });
 
 test(`alert: basic, checkbox`, async () => {
-  await openAlert('#checkbox');
+  await testAlert(DIRECTORY, '#checkbox');
 });
 
 // Right to Left tests
 // ------------------------------------------------------
 
-test(`alert: basic`, async () => {
-  await openAlert('#basic', true);
+test(`alert:rtl: basic`, async () => {
+  await testAlert(DIRECTORY, '#basic', true);
 });
 
-test(`alert: basic, long message`, async () => {
-  await openAlert('#longMessage', true);
+test(`alert:rtl: basic, long message`, async () => {
+  await testAlert(DIRECTORY, '#longMessage', true);
 });
 
-test(`alert: basic, multiple buttons`, async () => {
-  await openAlert('#multipleButtons', true);
+test(`alert:rtl: basic, multiple buttons`, async () => {
+  await testAlert(DIRECTORY, '#multipleButtons', true);
 });
 
-test(`alert: basic, no message`, async () => {
-  await openAlert('#noMessage', true);
+test(`alert:rtl: basic, no message`, async () => {
+  await testAlert(DIRECTORY, '#noMessage', true);
 });
 
-test(`alert: basic, confirm`, async () => {
-  await openAlert('#confirm', true);
+test(`alert:rtl: basic, confirm`, async () => {
+  await testAlert(DIRECTORY, '#confirm', true);
 });
 
-test(`alert: basic, prompt`, async () => {
-  await openAlert('#prompt', true);
+test(`alert:rtl: basic, prompt`, async () => {
+  await testAlert(DIRECTORY, '#prompt', true);
 });
 
-test(`alert: basic, radio`, async () => {
-  await openAlert('#radio', true);
+test(`alert:rtl: basic, radio`, async () => {
+  await testAlert(DIRECTORY, '#radio', true);
 });
 
-test(`alert: basic, checkbox`, async () => {
-  await openAlert('#checkbox', true);
+test(`alert:rtl: basic, checkbox`, async () => {
+  await testAlert(DIRECTORY, '#checkbox', true);
 });

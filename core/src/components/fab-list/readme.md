@@ -27,12 +27,62 @@ The `ion-fab-list` element is a container for multiple fab buttons. This collect
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonFab, IonFabButton, IonFabList } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+
+  <IonFab vertical="bottom" horizontal="end">
+    <IonFabButton>Share</IonFabButton>
+
+    <IonFabList side="top">
+      <IonFabButton>Facebook</IonFabButton>
+      <IonFabButton>Twitter</IonFabButton>
+      <IonFabButton>Youtube</IonFabButton>
+    </IonFabList>
+
+    <IonFabList side="start">
+      <IonFabButton>Vimeo</IonFabButton>
+    </IonFabList>
+
+  </IonFab>
+);
+
+export default Example
+
+
+### Vue
+
+```html
+<template>
+  <ion-fab vertical="bottom" horizontal="end">
+    <ion-fab-button>Share</ion-fab-button>
+
+    <ion-fab-list side="top">
+      <ion-fab-button>Facebook</ion-fab-button>
+      <ion-fab-button>Twitter</ion-fab-button>
+      <ion-fab-button>Youtube</ion-fab-button>
+    </ion-fab-list>
+
+    <ion-fab-list side="start">
+      <ion-fab-button>Vimeo</ion-fab-button>
+    </ion-fab-list>
+
+  </ion-fab>
+</template>
+```
+
+
 
 ## Properties
 
 | Property    | Attribute   | Description                                                         | Type                                    | Default    |
 | ----------- | ----------- | ------------------------------------------------------------------- | --------------------------------------- | ---------- |
-| `activated` | `activated` | If `true`, the fab list will be show all fab buttons in the list.   | `boolean`                               | `false`    |
+| `activated` | `activated` | If `true`, the fab list will show all fab buttons in the list.      | `boolean`                               | `false`    |
 | `side`      | `side`      | The side the fab list will show on relative to the main fab button. | `"bottom" \| "end" \| "start" \| "top"` | `'bottom'` |
 
 

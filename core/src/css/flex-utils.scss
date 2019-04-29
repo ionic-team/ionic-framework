@@ -1,31 +1,37 @@
 // Flex Utilities
 // --------------------------------------------------
-// Creates flex attributes to align flex containers
+// Creates flex classes to align flex containers
 // and items
 
 // Align Self
 // --------------------------------------------------
 
+.ion-align-self-start,
 [align-self-start] {
   align-self: flex-start !important;
 }
 
+.ion-align-self-end,
 [align-self-end] {
   align-self: flex-end !important;
 }
 
+.ion-align-self-center,
 [align-self-center] {
   align-self: center !important;
 }
 
+.ion-align-self-stretch,
 [align-self-stretch] {
   align-self: stretch !important;
 }
 
+.ion-align-self-baseline,
 [align-self-baseline] {
   align-self: baseline !important;
 }
 
+.ion-align-self-auto,
 [align-self-auto] {
   align-self: auto !important;
 }
@@ -34,14 +40,17 @@
 // Flex Wrap
 // --------------------------------------------------
 
+.ion-wrap,
 [wrap] {
   flex-wrap: wrap !important;
 }
 
+.ion-nowrap,
 [nowrap] {
   flex-wrap: nowrap !important;
 }
 
+.ion-wrap-reverse,
 [wrap-reverse] {
   flex-wrap: wrap-reverse !important;
 }
@@ -50,26 +59,32 @@
 // Justify Content
 // --------------------------------------------------
 
+.ion-justify-content-start,
 [justify-content-start] {
   justify-content: flex-start !important;
 }
 
+.ion-justify-content-center,
 [justify-content-center] {
   justify-content: center !important;
 }
 
+.ion-justify-content-end,
 [justify-content-end] {
   justify-content: flex-end !important;
 }
 
+.ion-justify-content-around,
 [justify-content-around] {
   justify-content: space-around !important;
 }
 
+.ion-justify-content-between,
 [justify-content-between] {
   justify-content: space-between !important;
 }
 
+.ion-justify-content-evenly,
 [justify-content-evenly] {
   justify-content: space-evenly !important;
 }
@@ -78,22 +93,27 @@
 // Align Items
 // --------------------------------------------------
 
+.ion-align-items-start,
 [align-items-start] {
   align-items: flex-start !important;
 }
 
+.ion-align-items-center,
 [align-items-center] {
   align-items: center !important;
 }
 
+.ion-align-items-end,
 [align-items-end] {
   align-items: flex-end !important;
 }
 
+.ion-align-items-stretch,
 [align-items-stretch] {
   align-items: stretch !important;
 }
 
+.ion-align-items-baseline,
 [align-items-baseline] {
   align-items: baseline !important;
 }

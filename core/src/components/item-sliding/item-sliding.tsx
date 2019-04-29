@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { Gesture, GestureDetail } from '../../interface';
+import { Gesture, GestureDetail, Mode } from '../../interface';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
@@ -29,6 +29,7 @@ let openSlidingItem: HTMLIonItemSlidingElement | undefined;
   styleUrl: 'item-sliding.scss'
 })
 export class ItemSliding implements ComponentInterface {
+  mode!: Mode;
 
   private item: HTMLIonItemElement | null = null;
   private openAmount = 0;
@@ -66,7 +67,6 @@ export class ItemSliding implements ComponentInterface {
 
   async componentDidLoad() {
     this.item = this.el.querySelector('ion-item');
-
     await this.updateOptions();
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
@@ -91,6 +91,10 @@ export class ItemSliding implements ComponentInterface {
 
     this.item = null;
     this.leftOptions = this.rightOptions = undefined;
+
+    if (openSlidingItem === this.el) {
+      openSlidingItem = undefined;
+    }
   }
 
   /**
@@ -128,6 +132,7 @@ export class ItemSliding implements ComponentInterface {
   async closeOpened(): Promise<boolean> {
     if (openSlidingItem !== undefined) {
       openSlidingItem.close();
+      openSlidingItem = undefined;
       return true;
     }
     return false;
@@ -162,6 +167,7 @@ export class ItemSliding implements ComponentInterface {
       this.closeOpened();
       return false;
     }
+
     return !!(this.rightOptions || this.leftOptions);
   }
 
@@ -272,10 +278,10 @@ export class ItemSliding implements ComponentInterface {
         ? SlidingState.Start | SlidingState.SwipeStart
         : SlidingState.Start;
     } else {
-      this.tmr = window.setTimeout(() => {
+      this.tmr = setTimeout(() => {
         this.state = SlidingState.Disabled;
         this.tmr = undefined;
-      }, 600);
+      }, 600) as any;
 
       openSlidingItem = undefined;
       style.transform = '';
@@ -302,6 +308,7 @@ export class ItemSliding implements ComponentInterface {
   hostData() {
     return {
       class: {
+        [`${this.mode}`]: true,
         'item-sliding-active-slide': (this.state !== SlidingState.Disabled),
         'item-sliding-active-options-end': (this.state & SlidingState.End) !== 0,
         'item-sliding-active-options-start': (this.state & SlidingState.Start) !== 0,
@@ -314,10 +321,10 @@ export class ItemSliding implements ComponentInterface {
 
 function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolean, isOnResetZone: boolean): boolean {
   // The logic required to know when the sliding item should close (openAmount=0)
-  // depends on three booleans (isCloseDirection, isMovingFast, isOnCloseZone)
+  // depends on three booleans (isResetDirection, isMovingFast, isOnResetZone)
   // and it ended up being too complicated to be written manually without errors
   // so the truth table is attached below: (0=false, 1=true)
-  // isCloseDirection | isMovingFast | isOnCloseZone || shouldClose
+  // isResetDirection | isMovingFast | isOnResetZone || shouldClose
   //         0        |       0      |       0       ||    0
   //         0        |       0      |       1       ||    1
   //         0        |       1      |       0       ||    0

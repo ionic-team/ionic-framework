@@ -25,6 +25,7 @@
 
 svg {
   @include position(0, null, null, 0);
+  @include transform-origin(center);
 
   position: absolute;
 
@@ -94,8 +95,6 @@ svg {
 }
 
 :host(.spinner-dots) svg {
-  @include transform-origin(center);
-
   animation: spinner-dots 1s linear infinite;
 }
 

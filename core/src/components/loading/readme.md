@@ -5,7 +5,7 @@ An overlay that can be used to indicate activity while blocking user interaction
 
 ### Creating
 
-Loading indicators can be created using a [Loading Controller](../loading-controller). They can be customized by passing loading options in the loading controller's create method. The spinner name should be passed in the `spinner` property, and any optional HTML can be passed in the `content` property. If a value is not passed to `spinner` the loading indicator will use the spinner specified by the platform.
+Loading indicators can be created using a [Loading Controller](../loading-controller). They can be customized by passing loading options in the loading controller's create method. The spinner name should be passed in the `spinner` property. If a value is not passed to `spinner` the loading indicator will use the spinner specified by the platform.
 
 
 ### Dismissing
@@ -93,6 +93,106 @@ async function presentLoadingWithOptions() {
 ```
 
 
+### React
+
+```tsx
+import React, { Component } from 'react'
+import { IonLoading } from '@ionic/react';
+
+type Props = {}
+type State = {
+  showLoading1: boolean
+  showLoading2: boolean
+}
+
+export class LoadingExample extends Component<Props, State> {
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      showLoading1: false
+      showLoading2: false
+    };
+  }
+
+  render() {
+    return (
+      <IonLoading
+        isOpen={this.state.showLoading1}
+        onDidDismiss={() => this.setState(() => ({ showLoading1: false }))}
+        message={'Hellooo'}
+        duration={200}
+      >
+      </IonLoading>
+
+      <IonLoading
+        isOpen={this.state.showLoading2}
+        onDidDismiss={() => this.setState(() => ({ showLoading2: false }))}
+        spinner={null}
+        duration={5000}
+        message='Please wait...'}
+        translucent={true}
+        cssClass='custom-class custom-loading'
+      >
+      </IonLoading>
+    );
+  }
+}
+```
+
+
+### Vue
+
+```html
+<template>
+  <IonVuePage :title="'Loading'">
+    <ion-button @click="presentLoading">Show Loading</ion-button>
+    <br />
+    <ion-button @click="presentLoadingWithOptions">Show Loading</ion-button>
+  </IonVuePage>
+</template>
+
+<script>
+export default {
+  props: {
+    timeout: { type: Number, default: 1000 },
+  },
+  methods: {
+    presentLoading() {
+      return this.$ionic.loadingController
+        .create({
+          message: 'Loading',
+          duration: this.timeout,
+        })
+        .then(l => {
+          setTimeout(function() {
+            l.dismiss()
+          }, this.timeout)
+          return l.present()
+        })
+    },
+    presentLoadingWithOptions() {
+      return this.$ionic.loadingController
+        .create({
+          spinner: null,
+          duration: this.timeout,
+          message: 'Please wait...',
+          translucent: true,
+          cssClass: 'custom-class custom-loading',
+        })
+        .then(l => {
+          setTimeout(function() {
+            l.dismiss()
+          }, this.timeout)
+          return l.present()
+        })
+    },
+  },
+}
+</script>
+```
+
+
 
 ## Properties
 
@@ -130,10 +230,10 @@ Dismiss the loading overlay after it has been presented.
 
 #### Parameters
 
-| Name   | Type                  | Description |
-| ------ | --------------------- | ----------- |
-| `data` | `any`                 |             |
-| `role` | `string \| undefined` |             |
+| Name   | Type                  | Description                                                                                                                                                                                                                                         |
+| ------ | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data` | `any`                 | Any data to emit in the dismiss events.                                                                                                                                                                                                             |
+| `role` | `string \| undefined` | The role of the element that is dismissing the loading. This can be useful in a button handler for determining which button was clicked to dismiss the loading. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`. |
 
 #### Returns
 

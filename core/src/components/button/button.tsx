@@ -120,7 +120,7 @@ export class Button implements ComponentInterface {
       if (form) {
         ev.preventDefault();
 
-        const fakeButton = document.createElement('button');
+        const fakeButton = this.win.document.createElement('button');
         fakeButton.type = this.type;
         fakeButton.style.display = 'none';
         form.appendChild(fakeButton);
@@ -148,6 +148,7 @@ export class Button implements ComponentInterface {
       'aria-disabled': disabled ? 'true' : null,
       class: {
         ...createColorClasses(color),
+        [`${this.mode}`]: true,
         [buttonType]: true,
         [`${buttonType}-${expand}`]: expand !== undefined,
         [`${buttonType}-${size}`]: size !== undefined,

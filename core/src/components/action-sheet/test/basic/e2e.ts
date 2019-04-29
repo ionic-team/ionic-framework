@@ -1,91 +1,71 @@
-import { newE2EPage } from '@stencil/core/testing';
+import { testActionSheet, testActionSheetAlert, testActionSheetBackdrop } from '../test.utils';
+
+const DIRECTORY = 'basic';
 
 test('action-sheet: basic', async () => {
-  await openActionSheet('#basic');
+  await testActionSheet(DIRECTORY, '#basic');
 });
 
 test('action-sheet: basic, alert from action sheet', async () => {
-  await openActionSheet('#alertFromActionSheet');
+  await testActionSheet(DIRECTORY, '#alertFromActionSheet', false, testActionSheetAlert);
 });
 
 test('action-sheet: basic, cancel only', async () => {
-  await openActionSheet('#cancelOnly');
+  await testActionSheet(DIRECTORY, '#cancelOnly');
 });
 
 test('action-sheet: basic, custom', async () => {
-  await openActionSheet('#custom');
+  await testActionSheet(DIRECTORY, '#custom');
 });
 
 test('action-sheet: basic, icons', async () => {
-  await openActionSheet('#icons');
+  await testActionSheet(DIRECTORY, '#icons');
 });
 
 test('action-sheet: basic, no backdrop dismiss', async () => {
-  await openActionSheet('#noBackdropDismiss');
+  await testActionSheet(DIRECTORY, '#noBackdropDismiss', false, testActionSheetBackdrop);
 });
 
 test('action-sheet: basic, scrollable options', async () => {
-  await openActionSheet('#scrollableOptions');
+  await testActionSheet(DIRECTORY, '#scrollableOptions');
 });
 
 test('action-sheet: basic, scroll without cancel', async () => {
-  await openActionSheet('#scrollWithoutCancel');
+  await testActionSheet(DIRECTORY, '#scrollWithoutCancel');
 });
 
-// Opens an action sheet on button click
-async function openActionSheet(selector: string) {
-  const page = await newE2EPage({
-    url: `/src/components/action-sheet/test/basic?ionic:_testing=true`
-  });
+/**
+ * RTL Tests
+ */
 
-  const compares = [];
+test('action-sheet:rtl: basic', async () => {
+  await testActionSheet(DIRECTORY, '#basic', true);
+});
 
-  await page.click(selector);
+test('action-sheet:rtl: basic, alert from action sheet', async () => {
+  await testActionSheet(DIRECTORY, '#alertFromActionSheet', true, testActionSheetAlert);
+});
 
-  let actionSheet = await page.find('ion-action-sheet');
-  expect(actionSheet).not.toBe(null);
-  await actionSheet.waitForVisible();
+test('action-sheet:rtl: basic, cancel only', async () => {
+  await testActionSheet(DIRECTORY, '#cancelOnly', true);
+});
 
-  compares.push(await page.compareScreenshot());
+test('action-sheet:rtl: basic, custom', async () => {
+  await testActionSheet(DIRECTORY, '#custom', true);
+});
 
-  if (selector === '#alertFromActionSheet') {
-    const openAlertBtn = await page.find({ text: 'Open Alert' });
-    await openAlertBtn.click();
+test('action-sheet:rtl: basic, icons', async () => {
+  await testActionSheet(DIRECTORY, '#icons', true);
+});
 
-    const alert = await page.find('ion-alert');
-    await alert.waitForVisible();
-    await page.waitFor(250);
+test('action-sheet:rtl: basic, no backdrop dismiss', async () => {
+  await testActionSheet(DIRECTORY, '#noBackdropDismiss', true, testActionSheetBackdrop);
+});
 
-    compares.push(await page.compareScreenshot(`alert open`));
+test('action-sheet:rtl: basic, scrollable options', async () => {
+  await testActionSheet(DIRECTORY, '#scrollableOptions', true);
+});
 
-    const alertOkayBtn = await page.find({ contains: 'Okay' });
-    await alertOkayBtn.click();
-  }
-
-  if (selector === '#noBackdropDismiss') {
-    const backdrop = await page.find('ion-backdrop');
-    await backdrop.click();
-
-    compares.push(await page.compareScreenshot(`dismissed`));
-
-    const isVisible = await actionSheet.isVisible();
-    expect(isVisible).toBe(true);
-
-    const cancel = await page.find('.action-sheet-cancel');
-    await cancel.click();
-
-    await actionSheet.waitForNotVisible();
-  } else {
-    await actionSheet.callMethod('dismiss');
-    await actionSheet.waitForNotVisible();
-
-    compares.push(await page.compareScreenshot(`dismissed`));
-  }
-
-  actionSheet = await page.find('ion-action-sheet');
-  expect(actionSheet).toBe(null);
-
-  for (const compare of compares) {
-    expect(compare).toMatchScreenshot();
-  }
-}
+test('action-sheet:rtl: basic, scroll without cancel', async () => {
+  await testActionSheet(DIRECTORY, '#scrollWithoutCancel', true);
+});

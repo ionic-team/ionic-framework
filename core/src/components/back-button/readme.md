@@ -115,6 +115,127 @@ To change what is displayed in the back button, use the `text` and `icon` proper
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonBackButton, IonHeader, IonToolbar, IonButtons, IonMenuButton } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+  <>
+    {/*-- Default back button --*/}
+    <IonHeader>
+      <IonToolbar>
+        <IonButtons slot="start">
+          <IonBackButton goBack={() => {}} />
+        </IonButtons>
+      </IonToolbar>
+    </IonHeader>
+
+    {/*-- Back button with a default href --*/}
+    <IonHeader>
+      <IonToolbar>
+        <IonButtons slot="start">
+          <IonBackButton goBack={() => {}} defaultHref="home" />
+        </IonButtons>
+      </IonToolbar>
+    </IonHeader>
+
+    {/*-- Back button with custom text and icon --*/}
+    <IonHeader>
+      <IonToolbar>
+        <IonButtons slot="start">
+          <IonBackButton
+            goBack={() => {}}
+            text="buttonText"
+            icon="buttonIcon"
+          />
+        </IonButtons>
+      </IonToolbar>
+    </IonHeader>
+
+    {/*-- Back button with no text and custom icon --*/}
+    <IonHeader>
+      <IonToolbar>
+        <IonButtons slot="start">
+          <IonBackButton goBack={() => {}} text="" icon="add" />
+        </IonButtons>
+      </IonToolbar>
+    </IonHeader>
+
+    {/*-- Danger back button next to a menu button --*/}
+    <IonHeader>
+      <IonToolbar>
+        <IonButtons slot="start">
+          <IonMenuButton />
+          <IonBackButton goBack={() => {}} color="danger" />
+        </IonButtons>
+      </IonToolbar>
+    </IonHeader>
+  </>
+);
+
+export default Example;
+```
+
+
+### Vue
+
+```html
+<template>
+  <!-- Default back button -->
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Back button with a default href -->
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="home"></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Back button with custom text and icon -->
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button
+            :text="buttonText"
+            :icon="buttonIcon">
+        </ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Back button with no text and custom icon -->
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button text="" icon="add"></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Danger back button next to a menu button -->
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+        <ion-back-button color="danger"></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+</template>
+```
+
+
 
 ## Properties
 

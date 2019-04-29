@@ -36,6 +36,68 @@ If the FAB button is not wrapped with `<ion-fab>`, it will scroll with the conte
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonContent, IonFab, IonFabButton } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+  <IonContent>
+
+    {/*-- Fixed Floating Action Button that does not scroll with the content --*/}
+    <IonFab>
+      <IonFabButton>Button</IonFabButton>
+    </IonFab>
+
+    {/*-- Default Floating Action Button that scrolls with the content.--*/}
+    <IonFabButton>Default</IonFabButton>
+
+    {/*-- Mini --*/}
+    <IonFabButton size="small">Mini</IonFabButton>
+
+    {/*-- Colors --*/}
+    <IonFabButton color="primary">Primary</IonFabButton>
+    <IonFabButton color="secondary">Secondary</IonFabButton>
+    <IonFabButton color="danger">Danger</IonFabButton>
+    <IonFabButton color="light">Light</IonFabButton>
+    <IonFabButton color="dark">Dark</IonFabButton>
+  </IonContent>
+);
+
+export default Example
+
+
+### Vue
+
+```html
+<template>
+  <ion-content>
+
+    <!-- Fixed Floating Action Button that does not scroll with the content -->
+    <ion-fab>
+      <ion-fab-button>Button</ion-fab-button>
+    </ion-fab>
+
+    <!-- Default Floating Action Button that scrolls with the content.-->
+    <ion-fab-button>Default</ion-fab-button>
+
+    <!-- Mini -->
+    <ion-fab-button size="small">Mini</ion-fab-button>
+
+    <!-- Colors -->
+    <ion-fab-button color="primary">Primary</ion-fab-button>
+    <ion-fab-button color="secondary">Secondary</ion-fab-button>
+    <ion-fab-button color="danger">Danger</ion-fab-button>
+    <ion-fab-button color="light">Light</ion-fab-button>
+    <ion-fab-button color="dark">Dark</ion-fab-button>
+
+  </ion-content>
+</template>
+```
+
+
 
 ## Properties
 

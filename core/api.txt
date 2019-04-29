@@ -1,13 +1,13 @@
 
 ion-action-sheet-controller,none
-ion-action-sheet-controller,method,create,create(opts: ActionSheetOptions) => Promise<HTMLIonActionSheetElement>
+ion-action-sheet-controller,method,create,create(options: ActionSheetOptions) => Promise<HTMLIonActionSheetElement>
 ion-action-sheet-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
 ion-action-sheet-controller,method,getTop,getTop() => Promise<HTMLIonActionSheetElement | undefined>
 
 ion-action-sheet,scoped
 ion-action-sheet,prop,animated,boolean,true,false,false
 ion-action-sheet,prop,backdropDismiss,boolean,true,false,false
-ion-action-sheet,prop,buttons,(string | ActionSheetButton)[],undefined,true,false
+ion-action-sheet,prop,buttons,(string | ActionSheetButton)[],[],false,false
 ion-action-sheet,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-action-sheet,prop,enterAnimation,((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) | undefined,undefined,false,false
 ion-action-sheet,prop,header,string | undefined,undefined,false,false
@@ -36,7 +36,7 @@ ion-action-sheet,css-prop,--min-width
 ion-action-sheet,css-prop,--width
 
 ion-alert-controller,none
-ion-alert-controller,method,create,create(opts: AlertOptions) => Promise<HTMLIonAlertElement>
+ion-alert-controller,method,create,create(options: AlertOptions) => Promise<HTMLIonAlertElement>
 ion-alert-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
 ion-alert-controller,method,getTop,getTop() => Promise<HTMLIonAlertElement | undefined>
 
@@ -195,6 +195,7 @@ ion-checkbox,shadow
 ion-checkbox,prop,checked,boolean,false,false,false
 ion-checkbox,prop,color,string | undefined,undefined,false,false
 ion-checkbox,prop,disabled,boolean,false,false,false
+ion-checkbox,prop,indeterminate,boolean,false,false,false
 ion-checkbox,prop,mode,"ios" | "md",undefined,false,false
 ion-checkbox,prop,name,string,this.inputId,false,false
 ion-checkbox,prop,value,string,'on',false,false
@@ -379,6 +380,7 @@ ion-header,prop,translucent,boolean,false,false,false
 ion-img,shadow
 ion-img,prop,alt,string | undefined,undefined,false,false
 ion-img,prop,src,string | undefined,undefined,false,false
+ion-img,event,ionError,void,true
 ion-img,event,ionImgDidLoad,void,true
 
 ion-infinite-scroll-content,none
@@ -508,6 +510,7 @@ ion-item,css-prop,--padding-bottom
 ion-item,css-prop,--padding-end
 ion-item,css-prop,--padding-start
 ion-item,css-prop,--padding-top
+ion-item,css-prop,--ripple-color
 ion-item,css-prop,--transition
 
 ion-label,scoped
@@ -529,7 +532,7 @@ ion-list,prop,mode,"ios" | "md",undefined,false,false
 ion-list,method,closeSlidingItems,closeSlidingItems() => Promise<boolean>
 
 ion-loading-controller,none
-ion-loading-controller,method,create,create(opts?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>
+ion-loading-controller,method,create,create(options?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>
 ion-loading-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
 ion-loading-controller,method,getTop,getTop() => Promise<HTMLIonLoadingElement | undefined>
 
@@ -571,18 +574,18 @@ ion-menu-button,prop,mode,"ios" | "md",undefined,false,false
 ion-menu-button,css-prop,--color
 
 ion-menu-controller,none
-ion-menu-controller,method,close,close(menuId?: string | null | undefined) => Promise<boolean>
-ion-menu-controller,method,enable,enable(shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
-ion-menu-controller,method,get,get(menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
+ion-menu-controller,method,close,close(menu?: string | null | undefined) => Promise<boolean>
+ion-menu-controller,method,enable,enable(enable: boolean, menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
+ion-menu-controller,method,get,get(menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
 ion-menu-controller,method,getMenus,getMenus() => Promise<HTMLIonMenuElement[]>
 ion-menu-controller,method,getOpen,getOpen() => Promise<HTMLIonMenuElement | undefined>
 ion-menu-controller,method,isAnimating,isAnimating() => Promise<boolean>
-ion-menu-controller,method,isEnabled,isEnabled(menuId?: string | null | undefined) => Promise<boolean>
-ion-menu-controller,method,isOpen,isOpen(menuId?: string | null | undefined) => Promise<boolean>
-ion-menu-controller,method,open,open(menuId?: string | null | undefined) => Promise<boolean>
+ion-menu-controller,method,isEnabled,isEnabled(menu?: string | null | undefined) => Promise<boolean>
+ion-menu-controller,method,isOpen,isOpen(menu?: string | null | undefined) => Promise<boolean>
+ion-menu-controller,method,open,open(menu?: string | null | undefined) => Promise<boolean>
 ion-menu-controller,method,registerAnimation,registerAnimation(name: string, animation: AnimationBuilder) => void
-ion-menu-controller,method,swipeGesture,swipeGesture(shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
-ion-menu-controller,method,toggle,toggle(menuId?: string | null | undefined) => Promise<boolean>
+ion-menu-controller,method,swipeGesture,swipeGesture(enable: boolean, menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
+ion-menu-controller,method,toggle,toggle(menu?: string | null | undefined) => Promise<boolean>
 
 ion-menu-toggle,shadow
 ion-menu-toggle,prop,autoHide,boolean,true,false,false
@@ -615,7 +618,7 @@ ion-menu,css-prop,--min-width
 ion-menu,css-prop,--width
 
 ion-modal-controller,none
-ion-modal-controller,method,create,create<T extends ComponentRef>(opts: ModalOptions<T>) => Promise<HTMLIonModalElement>
+ion-modal-controller,method,create,create<T extends ComponentRef>(options: ModalOptions<T>) => Promise<HTMLIonModalElement>
 ion-modal-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
 ion-modal-controller,method,getTop,getTop() => Promise<HTMLIonModalElement | undefined>
 
@@ -688,7 +691,7 @@ ion-note,prop,mode,"ios" | "md",undefined,false,false
 ion-note,css-prop,--color
 
 ion-picker-controller,none
-ion-picker-controller,method,create,create(opts: PickerOptions) => Promise<HTMLIonPickerElement>
+ion-picker-controller,method,create,create(options: PickerOptions) => Promise<HTMLIonPickerElement>
 ion-picker-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
 ion-picker-controller,method,getTop,getTop() => Promise<HTMLIonPickerElement | undefined>
 
@@ -727,7 +730,7 @@ ion-picker,css-prop,--min-width
 ion-picker,css-prop,--width
 
 ion-popover-controller,none
-ion-popover-controller,method,create,create<T extends ComponentRef>(opts: PopoverOptions<T>) => Promise<HTMLIonPopoverElement>
+ion-popover-controller,method,create,create<T extends ComponentRef>(options: PopoverOptions<T>) => Promise<HTMLIonPopoverElement>
 ion-popover-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
 ion-popover-controller,method,getTop,getTop() => Promise<HTMLIonPopoverElement | undefined>
 
@@ -800,11 +803,11 @@ ion-range,prop,max,number,100,false,false
 ion-range,prop,min,number,0,false,false
 ion-range,prop,mode,"ios" | "md",undefined,false,false
 ion-range,prop,name,string,'',false,false
-ion-range,prop,neutralPoint,number,0,false,false
 ion-range,prop,pin,boolean,false,false,false
 ion-range,prop,snaps,boolean,false,false,false
 ion-range,prop,step,number,1,false,false
-ion-range,prop,value,null | number | { lower: number; upper: number; },null,false,false
+ion-range,prop,ticks,boolean,true,false,false
+ion-range,prop,value,number | { lower: number; upper: number; },0,false,false
 ion-range,event,ionBlur,void,true
 ion-range,event,ionChange,RangeChangeEventDetail,true
 ion-range,event,ionFocus,void,true
@@ -846,7 +849,7 @@ ion-reorder,shadow
 
 ion-ripple-effect,shadow
 ion-ripple-effect,prop,type,"bounded" | "unbounded",'bounded',false,false
-ion-ripple-effect,method,addRipple,addRipple(pageX: number, pageY: number) => Promise<() => void>
+ion-ripple-effect,method,addRipple,addRipple(x: number, y: number) => Promise<() => void>
 
 ion-route-redirect,none
 ion-route-redirect,prop,from,string,undefined,true,false
@@ -882,6 +885,7 @@ ion-searchbar,prop,cancelButtonText,string,'Cancel',false,false
 ion-searchbar,prop,clearIcon,string | undefined,undefined,false,false
 ion-searchbar,prop,color,string | undefined,undefined,false,false
 ion-searchbar,prop,debounce,number,250,false,false
+ion-searchbar,prop,disabled,boolean,false,false,false
 ion-searchbar,prop,mode,"ios" | "md",undefined,false,false
 ion-searchbar,prop,placeholder,string,'Search',false,false
 ion-searchbar,prop,searchIcon,string,'search',false,false
@@ -955,6 +959,7 @@ ion-select-option,prop,value,any,undefined,false,false
 
 ion-select,shadow
 ion-select,prop,cancelText,string,'Cancel',false,false
+ion-select,prop,compareWith,((currentValue: any, compareValue: any) => boolean) | null | string | undefined,undefined,false,false
 ion-select,prop,disabled,boolean,false,false,false
 ion-select,prop,interface,"action-sheet" | "alert" | "popover",'alert',false,false
 ion-select,prop,interfaceOptions,any,{},false,false
@@ -965,7 +970,7 @@ ion-select,prop,okText,string,'OK',false,false
 ion-select,prop,placeholder,null | string | undefined,undefined,false,false
 ion-select,prop,selectedText,null | string | undefined,undefined,false,false
 ion-select,prop,value,any,undefined,false,false
-ion-select,method,open,open(ev?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>
+ion-select,method,open,open(event?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>
 ion-select,event,ionBlur,void,true
 ion-select,event,ionCancel,void,true
 ion-select,event,ionChange,SelectChangeEventDetail,true
@@ -976,8 +981,11 @@ ion-select,css-prop,--padding-start
 ion-select,css-prop,--padding-top
 
 ion-skeleton-text,shadow
-ion-skeleton-text,prop,width,string,'100%',false,false
+ion-skeleton-text,prop,animated,boolean,false,false,false
+ion-skeleton-text,prop,width,string | undefined,undefined,false,false
 ion-skeleton-text,css-prop,--background
+ion-skeleton-text,css-prop,--background-rgb
+ion-skeleton-text,css-prop,--border-radius
 
 ion-slide,none
 
@@ -991,9 +999,9 @@ ion-slides,method,getPreviousIndex,getPreviousIndex() => Promise<number>
 ion-slides,method,isBeginning,isBeginning() => Promise<boolean>
 ion-slides,method,isEnd,isEnd() => Promise<boolean>
 ion-slides,method,length,length() => Promise<number>
-ion-slides,method,lockSwipeToNext,lockSwipeToNext(shouldLockSwipeToNext: boolean) => Promise<void>
-ion-slides,method,lockSwipeToPrev,lockSwipeToPrev(shouldLockSwipeToPrev: boolean) => Promise<void>
-ion-slides,method,lockSwipes,lockSwipes(shouldLockSwipes: boolean) => Promise<void>
+ion-slides,method,lockSwipeToNext,lockSwipeToNext(lock: boolean) => Promise<void>
+ion-slides,method,lockSwipeToPrev,lockSwipeToPrev(lock: boolean) => Promise<void>
+ion-slides,method,lockSwipes,lockSwipes(lock: boolean) => Promise<void>
 ion-slides,method,slideNext,slideNext(speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>
 ion-slides,method,slidePrev,slidePrev(speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>
 ion-slides,method,slideTo,slideTo(index: number, speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>
@@ -1122,17 +1130,19 @@ ion-title,prop,color,string | undefined,undefined,false,false
 ion-title,css-prop,--color
 
 ion-toast-controller,none
-ion-toast-controller,method,create,create(opts?: ToastOptions | undefined) => Promise<HTMLIonToastElement>
+ion-toast-controller,method,create,create(options?: ToastOptions | undefined) => Promise<HTMLIonToastElement>
 ion-toast-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
 ion-toast-controller,method,getTop,getTop() => Promise<HTMLIonToastElement | undefined>
 
 ion-toast,shadow
 ion-toast,prop,animated,boolean,true,false,false
+ion-toast,prop,buttons,(string | ToastButton)[] | undefined,undefined,false,false
 ion-toast,prop,closeButtonText,string | undefined,undefined,false,false
 ion-toast,prop,color,string | undefined,undefined,false,false
 ion-toast,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-toast,prop,duration,number,0,false,false
 ion-toast,prop,enterAnimation,((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) | undefined,undefined,false,false
+ion-toast,prop,header,string | undefined,undefined,false,false
 ion-toast,prop,keyboardClose,boolean,false,false,false
 ion-toast,prop,leaveAnimation,((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) | undefined,undefined,false,false
 ion-toast,prop,message,string | undefined,undefined,false,false
@@ -1156,11 +1166,13 @@ ion-toast,css-prop,--border-width
 ion-toast,css-prop,--box-shadow
 ion-toast,css-prop,--button-color
 ion-toast,css-prop,--color
+ion-toast,css-prop,--end
 ion-toast,css-prop,--height
 ion-toast,css-prop,--max-height
 ion-toast,css-prop,--max-width
 ion-toast,css-prop,--min-height
 ion-toast,css-prop,--min-width
+ion-toast,css-prop,--start
 ion-toast,css-prop,--width
 
 ion-toggle,shadow
@@ -1206,5 +1218,5 @@ ion-virtual-scroll,prop,renderFooter,((item: any, index: number) => any) | undef
 ion-virtual-scroll,prop,renderHeader,((item: any, index: number) => any) | undefined,undefined,false,false
 ion-virtual-scroll,prop,renderItem,((item: any, index: number) => any) | undefined,undefined,false,false
 ion-virtual-scroll,method,checkEnd,checkEnd() => void
-ion-virtual-scroll,method,checkRange,checkRange(offset: number, len?: number) => void
+ion-virtual-scroll,method,checkRange,checkRange(offset: number, length?: number) => void
 ion-virtual-scroll,method,positionForItem,positionForItem(index: number) => Promise<number>
