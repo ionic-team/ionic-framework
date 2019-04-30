@@ -67,8 +67,8 @@
     </style>
   </ion-app>
   <script>
-    document.body.addEventListener('ionImgIsLoading', (event) => {
-      console.log('image is loading', event.target);
+    document.body.addEventListener('ionImgWillLoad', (event) => {
+      console.log('image will load', event.target);
     });
 
     document.body.addEventListener('ionImgDidLoad', (event) => {
