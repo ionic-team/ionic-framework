@@ -12,7 +12,7 @@
 }
 
 button {
-  @include padding(0, 5px);
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 }
 
 ion-icon {
