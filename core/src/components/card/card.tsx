@@ -61,9 +61,11 @@ export class Card implements ComponentInterface {
   hostData() {
     return {
       class: {
+        [`${this.mode}`]: true,
+        
         ...createColorClasses(this.color),
         'card-disabled': this.disabled,
-        'ion-activatable': this.isClickable(),
+        'ion-activatable': this.isClickable()
       }
     };
   }

@@ -147,6 +147,12 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
   /**
    * Dismiss the toast overlay after it has been presented.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the toast.
+   * This can be useful in a button handler for determining which button was
+   * clicked to dismiss the toast.
+   * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
    */
   @Method()
   dismiss(data?: any, role?: string): Promise<boolean> {
@@ -226,6 +232,8 @@ export class Toast implements ComponentInterface, OverlayInterface {
         zIndex: 60000 + this.overlayIndex,
       },
       class: {
+        [`${this.mode}`]: true,
+
         ...createColorClasses(this.color),
         ...getClassMap(this.cssClass),
         'toast-translucent': this.translucent

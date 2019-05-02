@@ -288,7 +288,7 @@ export default Example;
 
 ### `close() => void`
 
-Close an active FAB list container
+Close an active FAB list container.
 
 #### Returns
 
