@@ -55,7 +55,7 @@ import { RootNode } from '../split-pane/split-pane';
  * There are several ways to open or close a menu. The menu can be **toggled** open or closed
  * from the template using the [MenuToggle](../MenuToggle) directive. It can also be
  * **closed** from the template using the [MenuClose](../MenuClose) directive. To display a menu
- * programmatically, inject the [MenuController](../MenuController) provider and call any of the
+ * programmatically, inject the [MenuController](../../app/MenuController) provider and call any of the
  * `MenuController` methods.
  *
  *
