@@ -382,6 +382,7 @@ ion-img,prop,alt,string | undefined,undefined,false,false
 ion-img,prop,src,string | undefined,undefined,false,false
 ion-img,event,ionError,void,true
 ion-img,event,ionImgDidLoad,void,true
+ion-img,event,ionImgWillLoad,void,true
 
 ion-infinite-scroll,none
 ion-infinite-scroll,prop,disabled,boolean,false,false,false

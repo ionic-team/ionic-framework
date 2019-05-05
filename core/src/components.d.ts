@@ -3316,9 +3316,13 @@ declare namespace LocalJSX {
     */
     'onIonError'?: (event: CustomEvent<void>) => void;
     /**
-    * Emitted when the img src has been set
+    * Emitted when the image has finished loading
     */
     'onIonImgDidLoad'?: (event: CustomEvent<void>) => void;
+    /**
+    * Emitted when the img src has been set
+    */
+    'onIonImgWillLoad'?: (event: CustomEvent<void>) => void;
     /**
     * The image URL. This attribute is mandatory for the <img> element.
     */

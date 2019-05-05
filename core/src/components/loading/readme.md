@@ -5,7 +5,7 @@ An overlay that can be used to indicate activity while blocking user interaction
 
 ### Creating
 
-Loading indicators can be created using a [Loading Controller](../loading-controller). They can be customized by passing loading options in the loading controller's create method. The spinner name should be passed in the `spinner` property, and any optional HTML can be passed in the `content` property. If a value is not passed to `spinner` the loading indicator will use the spinner specified by the platform.
+Loading indicators can be created using a [Loading Controller](../loading-controller). They can be customized by passing loading options in the loading controller's create method. The spinner name should be passed in the `spinner` property. If a value is not passed to `spinner` the loading indicator will use the spinner specified by the platform.
 
 
 ### Dismissing
