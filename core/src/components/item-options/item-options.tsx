@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, getMode } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
 
-import { Mode, Side } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Side } from '../../interface';
 import { isEndSide } from '../../utils/helpers';
 
 @Component({
@@ -36,7 +37,7 @@ export class ItemOptions implements ComponentInterface {
   }
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     const isEnd = isEndSide(this.win, this.side);
     return {
       class: {

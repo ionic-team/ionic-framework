@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, QueueApi, Watch, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, QueueApi, Watch, h } from '@stencil/core';
 
-import { Gesture, GestureDetail, Mode, PickerColumn } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Gesture, GestureDetail, PickerColumn } from '../../interface';
 import { hapticSelectionChanged } from '../../utils/haptic';
 import { clamp } from '../../utils/helpers';
 
@@ -52,7 +53,7 @@ export class PickerColumnCmp implements ComponentInterface {
     let pickerRotateFactor = 0;
     let pickerScaleFactor = 0.81;
 
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
 
     if (mode === 'ios') {
       pickerRotateFactor = -0.46;
@@ -347,7 +348,7 @@ export class PickerColumnCmp implements ComponentInterface {
   }
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     return {
       class: {
         [`${mode}`]: true,

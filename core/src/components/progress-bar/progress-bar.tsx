@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Prop, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 
-import { Color, Config, Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, Config } from '../../interface';
 import { clamp } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
@@ -53,7 +54,7 @@ export class ProgressBar implements ComponentInterface {
   hostData() {
     const { color, type, reversed, value } = this;
     const paused = this.config.getBoolean('_testing');
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     return {
       'role': 'progressbar',
       'aria-valuenow': type === 'determinate' ? value : null,

@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, h } from '@stencil/core';
 
-import { ActionSheetButton, Animation, AnimationBuilder, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { ActionSheetButton, Animation, AnimationBuilder, Config, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
@@ -24,7 +25,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   presented = false;
   animation?: Animation;
-  mode = getMode<Mode>(this);
+  mode = getIonMode(this);
 
   @Element() el!: HTMLElement;
 
@@ -194,7 +195,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   }
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
 
     return {
       'role': 'dialog',
@@ -212,7 +213,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     const allButtons = this.getButtons();
     const cancelButton = allButtons.find(b => b.role === 'cancel');
     const buttons = allButtons.filter(b => b.role !== 'cancel');

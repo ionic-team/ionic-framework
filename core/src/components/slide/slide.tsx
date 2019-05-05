@@ -1,7 +1,7 @@
-import { Component, ComponentInterface, Event, getMode } from '@stencil/core';
+import { Component, ComponentInterface, Event } from '@stencil/core';
 import { EventEmitter } from 'ionicons/dist/types/stencil.core';
 
-import { Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-slide',
@@ -21,7 +21,7 @@ export class Slide implements ComponentInterface {
   }
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
 
     return {
       class: {

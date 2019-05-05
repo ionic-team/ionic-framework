@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, getMode } from '@stencil/core';
+import { Component, ComponentInterface } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-item-group',
@@ -12,7 +12,7 @@ import { Mode } from '../../interface';
 export class ItemGroup implements ComponentInterface {
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     return {
       'role': 'group',
       class: {

@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, h } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-avatar',
@@ -13,7 +13,7 @@ import { Mode } from '../../interface';
 export class Avatar implements ComponentInterface {
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
 
     return {
       class: {

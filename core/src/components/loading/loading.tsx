@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, h } from '@stencil/core';
 
-import { Animation, AnimationBuilder, Config, Mode, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Animation, AnimationBuilder, Config, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
@@ -25,7 +26,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   presented = false;
   animation?: Animation;
-  mode = getMode<Mode>(this);
+  mode = getIonMode(this);
 
   @Element() el!: HTMLElement;
 
@@ -112,7 +113,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   componentWillLoad() {
     if (this.spinner === undefined) {
-      const mode = getMode<Mode>(this);
+      const mode = getIonMode(this);
       this.spinner = this.config.get(
         'loadingSpinner',
         this.config.get('spinner', mode === 'ios' ? 'lines' : 'crescent')
@@ -174,7 +175,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
   }
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     return {
       style: {
         zIndex: 40000 + this.overlayIndex

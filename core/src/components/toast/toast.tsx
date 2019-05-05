@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, h } from '@stencil/core';
 
-import { Animation, AnimationBuilder, Color, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface, ToastButton } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Animation, AnimationBuilder, Color, Config, CssClassMap, OverlayEventDetail, OverlayInterface, ToastButton } from '../../interface';
 import { dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
 import { createColorClasses, getClassMap } from '../../utils/theme';
 
@@ -26,10 +27,9 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
   presented = false;
   animation?: Animation;
-  mode = getMode<Mode>(this);
+  mode = getIonMode(this);
 
   @Element() el!: HTMLElement;
-
 
   @Prop({ context: 'config' }) config!: Config;
 
@@ -226,7 +226,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   }
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     return {
       style: {
         zIndex: 60000 + this.overlayIndex,
@@ -246,7 +246,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
       return;
     }
 
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     const buttonGroupsClasses = {
       'toast-button-group': true,
       [`toast-button-group-${side}`]: true

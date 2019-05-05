@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { DatetimeChangeEventDetail, DatetimeOptions, Mode, PickerColumn, PickerColumnOption, PickerOptions, StyleEventDetail } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { DatetimeChangeEventDetail, DatetimeOptions, PickerColumn, PickerColumnOption, PickerOptions, StyleEventDetail } from '../../interface';
 import { clamp, findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
@@ -308,7 +309,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private generatePickerOptions(): PickerOptions {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     const pickerOptions: PickerOptions = {
       mode,
       ...this.pickerOptions,
@@ -597,7 +598,7 @@ export class Datetime implements ComponentInterface {
 
   hostData() {
     const { inputId, disabled, readonly, isExpanded, el, placeholder } = this;
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     const addPlaceholderClass =
       (this.getText() === undefined && placeholder != null) ? true : false;
 

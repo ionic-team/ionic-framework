@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Prop, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop, h } from '@stencil/core';
 
-import { Config, Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Config } from '../../interface';
 import { hostContext } from '../../utils/theme';
 
 @Component({
@@ -46,7 +47,7 @@ export class SkeletonText implements ComponentInterface {
   hostData() {
     const animated = this.animated && this.config.getBoolean('animated', true);
     const inMedia = hostContext('ion-avatar', this.el) || hostContext('ion-thumbnail', this.el);
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
 
     return {
       class: {

@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Prop, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 
-import { Color, Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -24,7 +25,7 @@ export class ListHeader implements ComponentInterface {
   @Prop() color?: Color;
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     return {
       class: {
         ...createColorClasses(this.color),

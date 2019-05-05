@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Listen, Prop, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Listen, Prop, h } from '@stencil/core';
 
-import { Color, Mode, RouterDirection } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, RouterDirection } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
 @Component({
@@ -37,7 +38,7 @@ export class Anchor implements ComponentInterface {
   }
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
 
     return {
       class: {

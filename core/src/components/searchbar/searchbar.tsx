@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { Color, Config, Mode, SearchbarChangeEventDetail } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, Config, SearchbarChangeEventDetail } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses } from '../../utils/theme';
@@ -263,7 +264,7 @@ export class Searchbar implements ComponentInterface {
   private positionElements() {
     const value = this.getValue();
     const prevAlignLeft = this.shouldAlignLeft;
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     const shouldAlignLeft = (!this.animated || value.trim() !== '' || !!this.focused);
     this.shouldAlignLeft = shouldAlignLeft;
 
@@ -363,7 +364,7 @@ export class Searchbar implements ComponentInterface {
 
   hostData() {
     const animated = this.animated && this.config.getBoolean('animated', true);
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
 
     return {
       'aria-disabled': this.disabled ? 'true' : null,
@@ -381,7 +382,7 @@ export class Searchbar implements ComponentInterface {
   }
 
   render() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     const clearIcon = this.clearIcon || (mode === 'ios' ? 'ios-close-circle' : 'md-close');
     const searchIcon = this.searchIcon;
     const cancelButton = this.showCancelButton && (

@@ -1,11 +1,12 @@
-import { setMode } from '@stencil/core';
+import { getMode, setMode } from '@stencil/core';
 import 'ionicons';
 
-declare const Context: any;
-
+import { Mode } from '../interface';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
 import { Config, configFromSession, configFromURL, saveConfig } from './config';
+
+declare const Context: any;
 
 const doc = document;
 const win = window;
@@ -42,5 +43,9 @@ if (config.getBoolean('_testing')) {
 }
 
 setMode((elm: any) => (elm as any).mode || elm.getAttribute('mode') || mode);
+
+export function getIonMode(ref: any): Mode {
+  return getMode(ref) || mode;
+}
 
 export { config };

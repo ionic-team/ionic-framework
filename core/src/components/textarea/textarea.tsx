@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { Color, Mode, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
 import { debounceEvent, findItemLabel } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
@@ -280,7 +281,7 @@ export class Textarea implements ComponentInterface {
   }
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     return {
       'aria-disabled': this.disabled ? 'true' : null,
       class: {

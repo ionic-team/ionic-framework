@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Listen, Prop, State, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop, State, h } from '@stencil/core';
 
-import { Color, CssClassMap, Mode, RouterDirection, StyleEventDetail } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
@@ -123,7 +124,7 @@ export class Item implements ComponentInterface {
   }
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     const childStyles = {};
     this.itemStyles.forEach(value => {
       Object.assign(childStyles, value);
@@ -147,7 +148,7 @@ export class Item implements ComponentInterface {
   }
 
   render() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     const { href, detail, win, detailIcon, routerDirection, type } = this;
 
     const clickable = this.isClickable();

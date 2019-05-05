@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Element, Listen, Prop, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop, h } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 import { matchBreakpoint } from '../../utils/media';
 
 const win = window as any;
@@ -248,7 +248,7 @@ export class Col implements ComponentInterface {
 
   hostData() {
     const isRTL = this.win.document.dir === 'rtl';
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     return {
       class: {
         [`${mode}`]: true

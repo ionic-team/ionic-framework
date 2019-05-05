@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch, h } from '@stencil/core';
 
-import { Color, Mode, RadioChangeEventDetail, StyleEventDetail } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, RadioChangeEventDetail, StyleEventDetail } from '../../interface';
 import { findItemLabel } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -149,7 +150,7 @@ export class Radio implements ComponentInterface {
 
   hostData() {
     const { inputId, disabled, checked, color, el } = this;
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     const labelId = inputId + '-lbl';
     const label = findItemLabel(el);
     if (label) {

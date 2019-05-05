@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch, h } from '@stencil/core';
 
-import { Color, Gesture, GestureDetail, Mode, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, Gesture, GestureDetail, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
 import { hapticSelection } from '../../utils/haptic';
 import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
@@ -178,7 +179,7 @@ export class Toggle implements ComponentInterface {
 
   hostData() {
     const { inputId, disabled, checked, activated, color, el } = this;
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     const labelId = inputId + '-lbl';
     const label = findItemLabel(el);
     if (label) {

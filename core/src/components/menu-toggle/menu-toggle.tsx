@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Listen, Prop, State, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Listen, Prop, State, h } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-menu-toggle',
@@ -61,7 +61,7 @@ export class MenuToggle implements ComponentInterface {
   }
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     const hidden = this.autoHide && !this.visible;
     return {
       'aria-hidden': hidden ? 'true' : null,

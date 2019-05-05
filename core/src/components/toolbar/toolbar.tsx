@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Listen, Prop, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop, h } from '@stencil/core';
 
-import { Color, Config, CssClassMap, Mode, StyleEventDetail } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, Config, CssClassMap, StyleEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -62,7 +63,7 @@ export class Toolbar implements ComponentInterface {
   }
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     const childStyles = {};
     this.childrenStyles.forEach(value => {
       Object.assign(childStyles, value);

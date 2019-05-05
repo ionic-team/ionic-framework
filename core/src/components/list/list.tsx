@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Element, Method, Prop, getMode } from '@stencil/core';
+import { Component, ComponentInterface, Element, Method, Prop } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -42,7 +42,7 @@ export class List implements ComponentInterface {
   }
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     return {
       class: {
         [`${mode}`]: true,

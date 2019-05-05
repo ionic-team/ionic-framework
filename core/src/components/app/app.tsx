@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Prop, getMode } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
 
-import { Config, Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Config } from '../../interface';
 import { rIC } from '../../utils/helpers';
 import { isPlatform } from '../../utils/platform';
 
@@ -31,7 +32,7 @@ export class App implements ComponentInterface {
   }
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
 
     return {
       class: {

@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Prop, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 
-import { Config, Mode, SpinnerTypes } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Config, SpinnerTypes } from '../../interface';
 import { sanitizeDOMString } from '../../utils/sanitization';
 
 @Component({
@@ -32,7 +33,7 @@ export class InfiniteScrollContent implements ComponentInterface {
 
   componentDidLoad() {
     if (this.loadingSpinner === undefined) {
-      const mode = getMode<Mode>(this);
+      const mode = getIonMode(this);
       this.loadingSpinner = this.config.get(
         'infiniteLoadingSpinner',
         this.config.get('spinner', mode === 'ios' ? 'lines' : 'crescent')
@@ -41,7 +42,7 @@ export class InfiniteScrollContent implements ComponentInterface {
   }
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     return {
       class: {
         [`${mode}`]: true,

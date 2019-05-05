@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, h } from '@stencil/core';
 
-import { Config, Mode, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Config, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -88,7 +89,7 @@ export class TabButton implements ComponentInterface {
   }
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     const { disabled, hasIcon, hasLabel, layout, selected, tab } = this;
     return {
       'role': 'tab',
@@ -109,7 +110,7 @@ export class TabButton implements ComponentInterface {
   }
 
   render() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     const { href } = this;
     return (
       <a href={href}>

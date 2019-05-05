@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Listen, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Listen, h } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-reorder',
@@ -19,7 +19,7 @@ export class Reorder implements ComponentInterface {
   }
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     return {
       class: {
         [`${mode}`]: true,

@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Element, Prop, Watch, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop, Watch, h } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-fab-list',
@@ -33,7 +33,7 @@ export class FabList implements ComponentInterface {
   @Prop() side: 'start' | 'end' | 'top' | 'bottom' = 'bottom';
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     return {
       class: {
         [`${mode}`]: true,

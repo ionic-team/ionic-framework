@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, h } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-thumbnail',
@@ -10,7 +10,7 @@ import { Mode } from '../../interface';
 export class Thumbnail implements ComponentInterface {
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     return {
       class: {
         [`${mode}`]: true,

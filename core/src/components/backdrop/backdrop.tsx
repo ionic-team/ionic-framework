@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Event, EventEmitter, Listen, Prop, getMode } from '@stencil/core';
+import { Component, ComponentInterface, Event, EventEmitter, Listen, Prop } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { now } from '../../utils/helpers';
 
@@ -76,7 +76,7 @@ export class Backdrop implements ComponentInterface {
   }
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
 
     return {
       tabindex: '-1',

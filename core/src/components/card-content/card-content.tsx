@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, getMode } from '@stencil/core';
+import { Component, ComponentInterface } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -15,7 +15,7 @@ import { Mode } from '../../interface';
 export class CardContent implements ComponentInterface {
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     return {
       class: {
         [`${mode}`]: true,

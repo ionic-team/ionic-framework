@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Prop, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 
-import { Color, Config, Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, Config } from '../../interface';
 
 @Component({
   tag: 'ion-menu-button',
@@ -32,7 +33,7 @@ export class MenuButton implements ComponentInterface {
   @Prop() autoHide = true;
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     return {
       class: {
         [`${mode}`]: true,
@@ -43,7 +44,7 @@ export class MenuButton implements ComponentInterface {
   }
 
   render() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     const menuIcon = this.config.get('menuIcon', 'menu');
     return (
       <ion-menu-toggle menu={this.menu} autoHide={this.autoHide}>

@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi, h } from '@stencil/core';
 
-import { Color, Config, Mode, ScrollBaseDetail, ScrollDetail } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, Config, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { isPlatform } from '../../utils/platform';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -106,7 +107,7 @@ export class Content implements ComponentInterface {
 
   componentWillLoad() {
     if (this.forceOverscroll === undefined) {
-      const mode = getMode<Mode>(this);
+      const mode = getIonMode(this);
       this.forceOverscroll = mode === 'ios' && isPlatform(this.win, 'mobile');
     }
   }
@@ -301,7 +302,7 @@ export class Content implements ComponentInterface {
   }
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     return {
       class: {
         ...createColorClasses(this.color),

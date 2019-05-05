@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, h } from '@stencil/core';
 
-import { Color, Mode, RouterDirection } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, RouterDirection } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
@@ -89,7 +90,7 @@ export class FabButton implements ComponentInterface {
   hostData() {
     const { el, disabled, color, activated, show, translucent, size } = this;
     const inList = hostContext('ion-fab-list', el);
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     return {
       'aria-disabled': disabled ? 'true' : null,
       class: {
@@ -109,7 +110,7 @@ export class FabButton implements ComponentInterface {
   }
 
   render() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     const TagType = this.href === undefined ? 'button' : 'a' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }

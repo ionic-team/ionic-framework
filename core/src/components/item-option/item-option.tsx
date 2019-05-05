@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Listen, Prop, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop, h } from '@stencil/core';
 
-import { Color, Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -57,7 +58,7 @@ export class ItemOption implements ComponentInterface {
   }
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     const { disabled, expandable } = this;
     return {
       class: {
@@ -73,7 +74,7 @@ export class ItemOption implements ComponentInterface {
 
   render() {
     const TagType = this.href === undefined ? 'button' : 'a' as any;
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
 
     return (
       <TagType

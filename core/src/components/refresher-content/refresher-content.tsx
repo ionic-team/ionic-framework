@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Prop, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 
-import { Config, Mode, SpinnerTypes } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Config, SpinnerTypes } from '../../interface';
 import { sanitizeDOMString } from '../../utils/sanitization';
 
 @Component({
@@ -47,7 +48,7 @@ export class RefresherContent implements ComponentInterface {
       this.pullingIcon = this.config.get('refreshingIcon', 'arrow-down');
     }
     if (this.refreshingSpinner === undefined) {
-      const mode = getMode<Mode>(this);
+      const mode = getIonMode(this);
       this.refreshingSpinner = this.config.get(
         'refreshingSpinner',
         this.config.get('spinner', mode === 'ios' ? 'lines' : 'crescent')
@@ -56,7 +57,7 @@ export class RefresherContent implements ComponentInterface {
   }
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     return {
       class: {
         [`${mode}`]: true,

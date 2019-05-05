@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch, getMode, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, Mode, OverlaySelect, PopoverOptions, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, StyleEventDetail } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, OverlaySelect, PopoverOptions, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, StyleEventDetail } from '../../interface';
 import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
@@ -302,7 +303,7 @@ export class Select implements ComponentInterface {
 
   private async openPopover(ev: UIEvent) {
     const interfaceOptions = this.interfaceOptions;
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
 
     const popoverOpts: PopoverOptions = {
       mode,
@@ -324,7 +325,7 @@ export class Select implements ComponentInterface {
 
   private async openActionSheet() {
 
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     const interfaceOptions = this.interfaceOptions;
     const actionSheetOpts: ActionSheetOptions = {
       mode,
@@ -342,7 +343,7 @@ export class Select implements ComponentInterface {
 
     const interfaceOptions = this.interfaceOptions;
     const inputType = (this.multiple ? 'checkbox' : 'radio');
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
 
     const alertOpts: AlertOptions = {
       mode,
@@ -445,7 +446,7 @@ export class Select implements ComponentInterface {
   }
 
   hostData() {
-    const mode = getMode<Mode>(this);
+    const mode = getIonMode(this);
     const labelId = this.inputId + '-lbl';
     const label = findItemLabel(this.el);
     if (label) {
