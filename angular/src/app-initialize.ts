@@ -1,4 +1,4 @@
-import { defineCustomElements } from '@ionic/core/loader';
+import { applyPolyfills, defineCustomElements } from '@ionic/core/loader';
 
 import { Config } from './providers/config';
 import { IonicWindow } from './types/interfaces';
@@ -28,9 +28,8 @@ export function appInitialize(config: Config, doc: Document) {
         }
       };
 
-      return defineCustomElements(win, {
-        exclude: ['ion-tabs', 'ion-tab']
-      });
+      return applyPolyfills()
+        .then(() => defineCustomElements(win, { exclude: ['ion-tabs', 'ion-tab'] }));
     }
   };
 }
