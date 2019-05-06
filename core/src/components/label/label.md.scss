@@ -16,7 +16,7 @@
   @include transform-origin(start, top);
   @include transform(translate3d(0, 50%, 0), scale(.75));
 
-  transition: color 150ms cubic-bezier(.4,0,.2,1);
+  transition: color 150ms $label-md-transition-timing-function;
 }
 
 :host(.label-floating) {
@@ -24,8 +24,8 @@
   @include transform-origin(start, top);
 
   transition:
-    color 150ms cubic-bezier(.4,0,.2,1),
-    transform 150ms cubic-bezier(.4,0,.2,1);
+    color 150ms $label-md-transition-timing-function,
+    transform 150ms $label-md-transition-timing-function;
 }
 
 :host(.label-stacked),
