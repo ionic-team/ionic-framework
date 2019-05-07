@@ -190,14 +190,14 @@ export class Textarea implements ComponentInterface {
     this.debounceChanged();
 
     this.runAutoGrow();
-    
+
     this.ionInputDidLoad.emit();
   }
 
   private runAutoGrow() {
     if (this.nativeInput && this.autoGrow) {
-      this.nativeInput.style.height = '1px';
-      this.nativeInput.style.height = (4 + this.nativeInput.scrollHeight) + 'px';
+      this.nativeInput.style.height = 'inherit';
+      this.nativeInput.style.height = this.nativeInput.scrollHeight + 'px';
     }
   }
 
