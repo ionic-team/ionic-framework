@@ -717,23 +717,63 @@ export namespace Components {
 
   interface IonCard {
     /**
+    * If `true`, a button tag will be rendered and the card will be tappable.
+    */
+    'button': boolean;
+    /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * If `true`, the user cannot interact with the card.
+    */
+    'disabled': boolean;
+    /**
+    * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+    */
+    'href'?: string;
     /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
+    /**
+    * When using a router, it specifies the transition direction when navigating to another page using `href`.
+    */
+    'routerDirection': RouterDirection;
+    /**
+    * The type of the button. Only used when an `onclick` or `button` property is present.
+    */
+    'type': 'submit' | 'reset' | 'button';
   }
   interface IonCardAttributes extends StencilHTMLAttributes {
+    /**
+    * If `true`, a button tag will be rendered and the card will be tappable.
+    */
+    'button'?: boolean;
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
     /**
+    * If `true`, the user cannot interact with the card.
+    */
+    'disabled'?: boolean;
+    /**
+    * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+    */
+    'href'?: string;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
+    /**
+    * When using a router, it specifies the transition direction when navigating to another page using `href`.
+    */
+    'routerDirection'?: RouterDirection;
+    /**
+    * The type of the button. Only used when an `onclick` or `button` property is present.
+    */
+    'type'?: 'submit' | 'reset' | 'button';
   }
 
   interface IonCheckbox {
