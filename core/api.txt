@@ -472,6 +472,7 @@ ion-item-sliding,method,close,close() => Promise<void>
 ion-item-sliding,method,closeOpened,closeOpened() => Promise<boolean>
 ion-item-sliding,method,getOpenAmount,getOpenAmount() => Promise<number>
 ion-item-sliding,method,getSlidingRatio,getSlidingRatio() => Promise<number>
+ion-item-sliding,method,open,open(side: string | undefined) => Promise<void>
 ion-item-sliding,event,ionDrag,void,true
 
 ion-item,shadow
