@@ -7,12 +7,11 @@
 :host {
   --color: #{$radio-md-color-off};
   --color-checked: #{ion-color(primary, base)};
-  --width: #{$radio-md-icon-width};
-  --height: #{$radio-md-icon-height};
   --border-width: #{$radio-md-icon-border-width};
   --border-style: #{$radio-md-icon-border-style};
-  --inner-width: calc(var(--width) / 2);
-  --inner-height: calc(var(--height) / 2);
+
+  width: $radio-md-icon-width;
+  height: $radio-md-icon-height;
 }
 
 :host(.ion-color) .radio-inner {
@@ -41,6 +40,9 @@
 
 .radio-inner {
   @include border-radius(50%);
+
+  width: calc(50% + var(--border-width));
+  height: calc(50% + var(--border-width));
 
   transform: scale3d(0, 0, 0);
 
@@ -78,7 +80,7 @@
 // Material Design Radio: Keyboard Focus
 // -----------------------------------------
 
-:host(.radio-key) .radio-icon::after {
+:host(.ion-focused) .radio-icon::after {
   @include border-radius(50%);
   @include position(-12px, null, null, -12px);
 

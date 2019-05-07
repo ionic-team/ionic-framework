@@ -6,21 +6,34 @@
 :host {
   /**
    * @prop --background: Background of the modal content
+   *
    * @prop --border-color: Border color of the modal content
    * @prop --border-radius: Border radius of the modal content
    * @prop --border-width: Border width of the modal content
    * @prop --border-style: Border style of the modal content
-   * @prop --height: Height of the modal content
-   * @prop --width: Width of the modal content
+   *
+   * @prop --min-width: Minimum width of the modal
+   * @prop --width: Width of the modal
+   * @prop --max-width: Maximum width of the modal
+   *
+   * @prop --min-height: Minimum height of the modal
+   * @prop --height: Height of the modal
+   * @prop --max-height: Maximum height of the modal
+   *
    */
   --width: 100%;
+  --min-width: auto;
+  --max-width: auto;
   --height: 100%;
+  --min-height: auto;
+  --max-height: auto;
   --overflow: hidden;
   --border-radius: 0;
   --border-width: 0;
   --border-style: none;
   --border-color: transparent;
   --background: #{$background-color};
+  --box-shadow: none;
 
   @include position(0, 0, 0, 0);
 
@@ -33,11 +46,20 @@
   contain: strict;
 }
 
+:host(.overlay-hidden) {
+  display: none;
+}
+
 .modal-wrapper {
   @include border-radius(var(--border-radius));
 
   width: var(--width);
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+
   height: var(--height);
+  min-height: var(--min-height);
+  max-height: var(--max-height);
 
   border-width: var(--border-width);
   border-style: var(--border-style);
@@ -45,6 +67,7 @@
 
   background: var(--background);
 
+  box-shadow: var(--box-shadow);
   overflow: var(--overflow);
   z-index: 10;
 }

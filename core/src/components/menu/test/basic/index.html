@@ -7,14 +7,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
   <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
   <ion-app>
-    <ion-menu side="start">
+    <ion-menu side="start" menu-id="first" id="start-menu">
       <ion-header>
-        <ion-toolbar>
+        <ion-toolbar color="primary">
           <ion-title>Start Menu</ion-title>
         </ion-toolbar>
       </ion-header>
@@ -29,9 +30,26 @@
       </ion-content>
     </ion-menu>
 
-    <ion-menu side="end" type="push">
+    <ion-menu side="start" menu-id="custom" class="my-custom-menu" id="custom-menu">
       <ion-header>
-        <ion-toolbar>
+        <ion-toolbar color="tertiary">
+          <ion-title>Custom Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-item>Menu Item</ion-item>
+          <ion-item>Menu Item</ion-item>
+          <ion-item>Menu Item</ion-item>
+          <ion-item>Menu Item</ion-item>
+          <ion-item>Menu Item</ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+
+    <ion-menu side="end" type="push" id="end-menu"> 
+      <ion-header>
+        <ion-toolbar color="danger">
           <ion-title>End Menu</ion-title>
         </ion-toolbar>
       </ion-header>
@@ -53,23 +71,36 @@
         </ion-toolbar>
       </ion-header>
       <ion-content padding>
-        <ion-button expand="block" onclick="openStart()">Open Start Menu</ion-button>
+        <ion-button expand="block" onclick="openFirst()">Open Start Menu</ion-button>
         <ion-button expand="block" onclick="openEnd()">Open End Menu</ion-button>
+        <ion-button expand="block" onclick="openCustom()">Open Custom Menu</ion-button>
       </ion-content>
     </div>
 
   </ion-app>
   <ion-menu-controller></ion-menu-controller>
 
+  <style>
+    .my-custom-menu {
+      --width: 500px;
+    }
+  </style>
+
   <script>
-    function openStart() {
-      document.querySelector('ion-menu-controller')
-        .open('start');
+    const menuCtrl = document.querySelector('ion-menu-controller');
+
+    function openFirst() {
+      menuCtrl.enable(true, 'first');
+      menuCtrl.open('first');
     }
 
     function openEnd() {
-      document.querySelector('ion-menu-controller')
-        .open('end');
+      menuCtrl.open('end');
+    }
+
+    function openCustom() {
+      menuCtrl.enable(true, 'custom');
+      menuCtrl.open('custom');
     }
   </script>
 </body>

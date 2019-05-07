@@ -5,9 +5,6 @@
 // --------------------------------------------------
 
 :host {
-  --height: #{$checkbox-ios-icon-size};
-  --width: #{$checkbox-ios-icon-size};
-
   // Border
   --border-radius: #{$checkbox-ios-icon-border-radius};
   --border-width: #{$checkbox-ios-icon-border-width};
@@ -16,6 +13,12 @@
 
   // Background
   --background: #{$checkbox-ios-background-color-off};
+
+  // Size
+  --size: #{$checkbox-ios-icon-size};
+
+  width: var(--size);
+  height: var(--size);
 }
 
 
@@ -28,26 +31,6 @@
 }
 
 
-// iOS Checkbox Keyboard Focus
-// -----------------------------------------
-
-:host(.checkbox-key) .checkbox-icon::after {
-  @include border-radius(50%);
-  @include position(-9px, null, null, -9px);
-
-  display: block;
-  position: absolute;
-
-  width: 36px;
-  height: 36px;
-
-  background: $checkbox-ios-background-color-focused;
-
-  content: "";
-  opacity: .2;
-}
-
-
 // iOS Checkbox Within An Item
 // -----------------------------------------
 
@@ -56,6 +39,7 @@
   @include margin($checkbox-ios-item-end-margin-top, $checkbox-ios-item-end-margin-end, $checkbox-ios-item-end-margin-bottom, $checkbox-ios-item-end-margin-start);
 
   display: block;
+
   position: static;
 }
 

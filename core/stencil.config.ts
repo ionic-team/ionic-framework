@@ -10,7 +10,6 @@ export const config: Config = {
     { components: ['ion-action-sheet', 'ion-action-sheet-controller'] },
     { components: ['ion-alert', 'ion-alert-controller'] },
     { components: ['ion-anchor', 'ion-back-button'] },
-    { components: ['ion-animation-controller'] },
     { components: ['ion-app', 'ion-buttons', 'ion-content', 'ion-footer', 'ion-header', 'ion-title', 'ion-toolbar'] },
     { components: ['ion-avatar', 'ion-badge', 'ion-thumbnail'] },
     { components: ['ion-backdrop'] },
@@ -80,9 +79,9 @@ export const config: Config = {
     },
     {
       type: 'angular',
-      useDirectives: false,
       componentCorePackage: '@ionic/core',
       directivesProxyFile: '../angular/src/directives/proxies.ts',
+      directivesUtilsFile: '../angular/src/directives/proxies-utils.ts',
       directivesArrayFile: '../angular/src/directives/proxies-list.txt',
       excludeComponents: [
         // overlays
@@ -104,7 +103,6 @@ export const config: Config = {
 
         // controllers
         'ion-menu-controller',
-        'ion-animation-controller',
 
         // navigation
         'ion-router',

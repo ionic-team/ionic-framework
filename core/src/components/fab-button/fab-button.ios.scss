@@ -48,20 +48,23 @@
 // Translucent FAB buttons
 // --------------------------------------------------
 
-:host(.fab-translucent) {
+:host(.fab-button-translucent) {
   --background: #{$fab-ios-translucent-background-color};
   --backdrop-filter: #{$fab-ios-translucent-filter};
 }
 
-:host(.fab-translucent-in-list) {
+:host(.fab-button-translucent-in-list) {
   --background: #{$fab-ios-list-button-translucent-background-color};
 }
 
-// .fab-translucent-ios-#{$color-name} {
-//   background-color: ion-color($color-name, base, $fab-ios-translucent-background-color-alpha);
-//   opacity: .8;
-// }
+// Translucent FAB buttons with color
+// --------------------------------------------------
 
-// .fab-translucent-ios-#{$color-name}.activated {
-//   opacity: 1;
-// }
+:host(.ion-color.fab-button-translucent) .button-native {
+  background: #{current-color(base, $fab-ios-translucent-background-color-alpha)};
+}
+
+:host(.ion-color.ion-focused.fab-button-translucent) .button-native,
+:host(.ion-color.activated.fab-button-translucent) .button-native {
+  background: #{current-color(base)};
+}

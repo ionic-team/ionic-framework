@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
   <script src="../../../../../dist/ionic.js"></script>
   <style>
     .custom-bar-background {
@@ -17,7 +18,7 @@
       --buffer-background: none;
     }
 
-    ion-progress-bar {
+    ion-content ion-progress-bar {
       margin: 10px 0;
     }
   </style>
@@ -28,6 +29,7 @@
     <ion-header>
       <ion-toolbar>
         <ion-title>Progress Bar - Basic</ion-title>
+        <ion-progress-bar type="indeterminate"></ion-progress-bar>
       </ion-toolbar>
     </ion-header>
 

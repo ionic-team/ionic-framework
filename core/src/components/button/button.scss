@@ -13,9 +13,6 @@
    * @prop --color-activated: Text color of the button when activated
    * @prop --color-focused: Text color of the button when focused
    *
-   * @prop --width: Width of the button
-   * @prop --height: Height of the button
-   *
    * @prop --transition: Transition of the button
    *
    * @prop --border-radius: Border radius of the button
@@ -28,17 +25,11 @@
    * @prop --box-shadow: Box shadow of the button
    * @prop --opacity: Opacity of the button
    *
-   * @prop --margin-top: Margin top of the button
-   * @prop --margin-end: Margin end of the button
-   * @prop --margin-bottom: Margin bottom of the button
-   * @prop --margin-start: Margin start of the button
-   *
    * @prop --padding-top: Padding top of the button
    * @prop --padding-end: Padding end of the button
    * @prop --padding-bottom: Padding bottom of the button
    * @prop --padding-start: Padding start of the button
    */
-  --width: auto;
   --overflow: hidden;
   --ripple-color: currentColor;
   --border-width: initial;
@@ -48,10 +39,11 @@
 
   display: inline-block;
 
+  width: auto;
+
   color: var(--color);
 
   font-family: $font-family-base;
-  pointer-events: auto;
 
   text-align: center;
   text-decoration: none;
@@ -62,6 +54,7 @@
   user-select: none;
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
+  pointer-events: auto;
 
   font-kerning: none;
 }
@@ -70,6 +63,11 @@
   pointer-events: none;
 }
 
+:host(.button-disabled) .button-native {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
+}
 
 // Solid Button
 // --------------------------------------------------
@@ -90,7 +88,7 @@
 }
 
 // Focused/Activated Solid Button with Color
-:host(.button-solid.ion-color.focused) .button-native {
+:host(.button-solid.ion-color.ion-focused) .button-native {
   background: #{current-color(shade)};
 }
 
@@ -114,7 +112,7 @@
   color: current-color(base);
 }
 
-:host(.button-outline.focused.ion-color) .button-native {
+:host(.button-outline.ion-focused.ion-color) .button-native {
   background: current-color(base, .1);
   color: current-color(base);
 }
@@ -137,7 +135,7 @@
 }
 
 // Focused Clear Button with Color
-:host(.button-clear.focused.ion-color) .button-native {
+:host(.button-clear.ion-focused.ion-color) .button-native {
   background: current-color(base, .1);
   color: current-color(base);
 }
@@ -199,15 +197,15 @@
 .button-native {
   @include border-radius(var(--border-radius));
   @include font-smoothing();
-  @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
+  @include margin(0);
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include text-inherit();
 
   display: block;
   position: relative;
 
-  width: var(--width);
-  height: var(--height);
+  width: 100%;
+  height: 100%;
 
   transition: var(--transition);
 
@@ -232,13 +230,11 @@
   appearance: none;
 }
 
-.button-native[disabled] {
-  cursor: default;
-  opacity: .5;
-  pointer-events: none;
+.button-native::-moz-focus-inner {
+  border: 0;
 }
 
-:host(.focused) .button-native {
+:host(.ion-focused) .button-native {
   background: var(--background-focused);
   color: var(--color-focused);
 }

@@ -26,14 +26,12 @@ A Picker is a dialog that displays a row of buttons and columns underneath. It a
 
 ## Events
 
-| Event                  | Description                              | Detail             |
-| ---------------------- | ---------------------------------------- | ------------------ |
-| `ionPickerDidDismiss`  | Emitted after the picker has dismissed.  | OverlayEventDetail |
-| `ionPickerDidLoad`     | Emitted after the picker has loaded.     | void               |
-| `ionPickerDidPresent`  | Emitted after the picker has presented.  | void               |
-| `ionPickerDidUnload`   | Emitted after the picker has unloaded.   | void               |
-| `ionPickerWillDismiss` | Emitted before the picker has dismissed. | OverlayEventDetail |
-| `ionPickerWillPresent` | Emitted before the picker has presented. | void               |
+| Event                  | Description                              | Type                              |
+| ---------------------- | ---------------------------------------- | --------------------------------- |
+| `ionPickerDidDismiss`  | Emitted after the picker has dismissed.  | `CustomEvent<OverlayEventDetail>` |
+| `ionPickerDidPresent`  | Emitted after the picker has presented.  | `CustomEvent<void>`               |
+| `ionPickerWillDismiss` | Emitted before the picker has dismissed. | `CustomEvent<OverlayEventDetail>` |
+| `ionPickerWillPresent` | Emitted before the picker has presented. | `CustomEvent<void>`               |
 
 
 ## Methods
@@ -44,10 +42,10 @@ Dismiss the picker overlay after it has been presented.
 
 #### Parameters
 
-| Name   | Type                  | Description |
-| ------ | --------------------- | ----------- |
-| `data` | `any`                 |             |
-| `role` | `string \| undefined` |             |
+| Name   | Type                  | Description                                                                                                                                                                                                                                       |
+| ------ | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data` | `any`                 | Any data to emit in the dismiss events.                                                                                                                                                                                                           |
+| `role` | `string \| undefined` | The role of the element that is dismissing the picker. This can be useful in a button handler for determining which button was clicked to dismiss the picker. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`. |
 
 #### Returns
 
@@ -57,13 +55,13 @@ Type: `Promise<boolean>`
 
 ### `getColumn(name: string) => Promise<PickerColumn | undefined>`
 
-Returns the column the matches the specified name
+Get the column that matches the specified name.
 
 #### Parameters
 
-| Name   | Type     | Description |
-| ------ | -------- | ----------- |
-| `name` | `string` |             |
+| Name   | Type     | Description             |
+| ------ | -------- | ----------------------- |
+| `name` | `string` | The name of the column. |
 
 #### Returns
 
@@ -100,6 +98,24 @@ Present the picker overlay after it has been created.
 Type: `Promise<void>`
 
 
+
+
+## CSS Custom Properties
+
+| Name               | Description                            |
+| ------------------ | -------------------------------------- |
+| `--background`     | Background of the picker               |
+| `--background-rgb` | Background of the picker in rgb format |
+| `--border-color`   | Border color of the picker             |
+| `--border-radius`  | Border radius of the picker            |
+| `--border-style`   | Border style of the picker             |
+| `--border-width`   | Border width of the picker             |
+| `--height`         | Height of the picker                   |
+| `--max-height`     | Maximum height of the picker           |
+| `--max-width`      | Maximum width of the picker            |
+| `--min-height`     | Minimum height of the picker           |
+| `--min-width`      | Minimum width of the picker            |
+| `--width`          | Width of the picker                    |
 
 
 ----------------------------------------------

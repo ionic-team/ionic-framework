@@ -46,7 +46,7 @@ export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: 
 
   for (const cell of toMutate) {
     const node = pool.find(n => n.d && n.cell.type === cell.type);
-    const index = cell.index;
+    const index = cell.i;
     if (node) {
       node.d = false;
       node.change = NODE_CHANGE_CELL;
@@ -181,10 +181,14 @@ export function getShouldUpdate(dirtyIndex: number, currentRange: Range, range: 
 }
 
 export function findCellIndex(cells: Cell[], index: number): number {
+  const max = cells[cells.length - 1].index || 0;
   if (index === 0) {
     return 0;
+  } else if (index === max + 1) {
+    return cells.length;
+  } else {
+    return cells.findIndex(c => c.index === index);
   }
-  return cells.findIndex(c => c.index === index);
 }
 
 export function inplaceUpdate(dst: Cell[], src: Cell[], offset: number) {

@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
   <script src="../../../../../dist/ionic.js"></script>
 </head>
 
@@ -31,6 +32,7 @@
         <ion-button expand="block" onclick="toggleSliding()">Toggle sliding</ion-button>
         <ion-button expand="block" onclick="toggleDynamicOptions()">Toggle Dynamic Options</ion-button>
         <ion-button expand="block" onclick="closeOpened()">Close Opened Items</ion-button>
+        <ion-button expand="block" onclick="openItem()">Open Item</ion-button>
       </div>
 
       <ion-list id="list">
@@ -353,6 +355,11 @@
       function closeOpened() {
         var list = document.getElementById('list');
         list.closeSlidingItems();
+      }
+
+      function openItem() {
+        var item = document.getElementById('item0');
+        item.open();
       }
 
       function noclose(item) {

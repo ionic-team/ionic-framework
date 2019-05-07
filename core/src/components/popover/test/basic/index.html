@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
   <script src="../../../../../dist/ionic.js"></script>
 </head>
 
@@ -25,10 +26,11 @@
     </ion-header>
 
     <ion-content id="content" padding>
-      <ion-button class="e2eShowPopover" expand="block" onclick="presentPopover({ component: 'profile-page', event: event })">Show Popover</ion-button>
-      <ion-button expand="block" onclick="presentPopover({ component: 'translucent-page', event: event, translucent: true })">Show Translucent Popover</ion-button>
-      <ion-button expand="block" color="secondary" onclick="presentPopover({ component: 'list-page', event: event })">Show Long List Popover</ion-button>
-      <ion-button expand="block" color="danger" onclick="presentPopover({ component: 'profile-page' })">No Event Popover</ion-button>
+      <ion-button id="basic-popover" expand="block" onclick="presentPopover({ component: 'profile-page', event: event })">Show Popover</ion-button>
+      <ion-button id="translucent-popover" expand="block" onclick="presentPopover({ component: 'translucent-page', event: event, translucent: true })">Show Translucent Popover</ion-button>
+      <ion-button id="long-list-popover" expand="block" color="secondary" onclick="presentPopover({ component: 'list-page', event: event })">Show Long List Popover</ion-button>
+      <ion-button id="no-event-popover" expand="block" color="danger" onclick="presentPopover({ component: 'profile-page' })">No Event Popover</ion-button>
+      <ion-button id="custom-class-popover" expand="block" color="tertiary" onclick="presentPopover({ component: 'translucent-page', event: event, cssClass: 'my-custom-class' })">Custom Class Popover</ion-button>
 
       <ion-popover-controller></ion-popover-controller>
     </ion-content>
@@ -45,11 +47,18 @@
     </ion-footer>
 
   </ion-app>
+
+  <style>
+    .my-custom-class {
+      --background: rgba(40, 173, 218, .6);
+      --width: 300px;
+      --box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .6);
+
+      color: white;
+    }
+  </style>
+
   <script>
-
-
-    // window.addEventListener('ionPopoverDidDismiss', function(e){console.log('didDismiss', e)})
-    // window.addEventListener('ionPopoverWillDismiss', function(e){console.log('willDismiss', e)})
     async function presentPopover(opts) {
       const popoverController = document.querySelector('ion-popover-controller');
       await popoverController.componentOnReady();

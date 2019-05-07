@@ -1,7 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
 import { Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
 
 const SPLIT_PANE_MAIN = 'split-pane-main';
 const SPLIT_PANE_SIDE = 'split-pane-side';
@@ -37,14 +36,6 @@ export class SplitPane implements ComponentInterface {
    * The content `id` of the split-pane's main content.
    * This property can be used instead of the `[main]` attribute to select the `main`
    * content of the split-pane.
-   *
-   * ```html
-   * <ion-split-pane content-id="my-content">
-   *   <ion-menu></ion-menu>
-   *   <div id="my-content">
-   * </ion-split-pane>
-   * ```
-   *
    */
   @Prop() contentId?: string;
 
@@ -61,19 +52,13 @@ export class SplitPane implements ComponentInterface {
   @Prop() when: string | boolean = QUERY['lg'];
 
   /**
-   * Emitted when the split pane is visible.
-   */
-  @Event({ bubbles: false }) ionChange!: EventEmitter<{visible: boolean}>;
-
-  /**
    * Expression to be called when the split-pane visibility has changed
    */
-  @Event() ionSplitPaneVisible!: EventEmitter;
+  @Event() ionSplitPaneVisible!: EventEmitter<{visible: boolean}>;
 
   @Watch('visible')
   visibleChanged(visible: boolean) {
     const detail = { visible, isPane: this.isPane.bind(this) };
-    this.ionChange.emit(detail);
     this.ionSplitPaneVisible.emit(detail);
   }
 
@@ -122,14 +107,17 @@ export class SplitPane implements ComponentInterface {
       return;
     }
 
-    // Listen on media query
-    const callback = (q: MediaQueryList) => {
-      this.visible = q.matches;
-    };
-    const mediaList = this.win.matchMedia(mediaQuery);
-    mediaList.addListener(callback as any);
-    this.rmL = () => mediaList.removeListener(callback as any);
-    this.visible = mediaList.matches;
+    if ((this.win as any).matchMedia) {
+      // Listen on media query
+      const callback = (q: MediaQueryList) => {
+        this.visible = q.matches;
+      };
+
+      const mediaList = this.win.matchMedia(mediaQuery);
+      (mediaList as any).addListener(callback as any);
+      this.rmL = () => (mediaList as any).removeListener(callback as any);
+      this.visible = mediaList.matches;
+    }
   }
 
   private isPane(element: HTMLElement): boolean {
@@ -153,7 +141,7 @@ export class SplitPane implements ComponentInterface {
       const isMain = contentId !== undefined ? child.id === contentId : child.hasAttribute('main');
       if (isMain) {
         if (foundMain) {
-          console.warn('split pane can not have more than one main node');
+          console.warn('split pane cannot have more than one main node');
           return;
         }
         foundMain = true;
@@ -161,14 +149,18 @@ export class SplitPane implements ComponentInterface {
       setPaneClass(child, isMain);
     }
     if (!foundMain) {
-      console.warn('split pane could not found any main node');
+      console.warn('split pane does not have a specified main node');
     }
   }
 
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, 'split-pane'),
+        [`${this.mode}`]: true,
+
+        // Used internally for styling
+        [`split-pane-${this.mode}`]: true,
+
         'split-pane-visible': this.visible
       }
     };

@@ -7,58 +7,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
   <script src="../../../../../dist/ionic.js"></script>
 </head>
 
 <body>
   <ion-app>
 
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Loading - Basic</ion-title>
-        </ion-toolbar>
-      </ion-header>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Loading - Basic</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-      <ion-content padding>
-        <ion-button id="basic" expand="block" onclick="presentLoading()">Show Loading</ion-button>
-        <ion-button id="default" expand="block" onclick="presentLoadingWithOptions({duration: 2000, content: 'Please wait...'})">Show Default Loading</ion-button>
-        <ion-button expand="block" onclick="presentLoadingWithOptions({duration: 2000, content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.'})">Show Loading with long content</ion-button>
-        <ion-button expand="block" onclick="presentLoadingWithOptions({duration: 2000, content: 'Please wait...', spinner: null})">Show Loading with no spinner</ion-button>
-        <ion-button expand="block" onclick="presentLoadingWithOptions({duration: 5000, content: 'Please wait...', translucent: true})">Show Loading with translucent</ion-button>
-        <ion-button expand="block" onclick="presentLoadingWithOptions({duration: 5000, content: 'Please wait...', translucent: true, cssClass: 'custom-class custom-loading'})">Show Loading with cssClass</ion-button>
-        <ion-button expand="block" onclick="presentLoadingWithOptions({backdropDismiss: true})">Show Backdrop Click Loading</ion-button>
+    <ion-content padding>
+      <ion-button id="basic-loading" expand="block" onclick="presentLoading()">Show Loading</ion-button>
+      <ion-button id="default" expand="block" onclick="presentLoadingWithOptions({duration: 2000, content: 'Please wait...'})">Show Default Loading</ion-button>
+      <ion-button id="long-content-loading" expand="block" onclick="presentLoadingWithOptions({duration: 2000, message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.'})">Show Loading with long message</ion-button>
+      <ion-button id="no-spinner-loading" expand="block" onclick="presentLoadingWithOptions({duration: 2000, message: 'Please wait...', spinner: null})">Show Loading with no spinner</ion-button>
+      <ion-button id="translucent-loading" expand="block" onclick="presentLoadingWithOptions({duration: 5000, message: 'Please wait...', translucent: true})">Show Loading with translucent</ion-button>
+      <ion-button id="custom-class-loading" expand="block" onclick="presentLoadingWithOptions({duration: 5000,message: 'Please wait...', cssClass: 'custom-class custom-loading'})">Show Loading with cssClass</ion-button>
+      <ion-button id="backdrop-loading" expand="block" onclick="presentLoadingWithOptions({backdropDismiss: true})">Show Backdrop Click Loading</ion-button>
 
-        <ion-loading-controller></ion-loading-controller>
+      <ion-loading-controller></ion-loading-controller>
 
-        <ion-grid>
-          <ion-row>
-            <ion-col size="6">
-              <f class="red"></f>
-            </ion-col>
-            <ion-col size="6">
-              <f class="green"></f>
-            </ion-col>
-            <ion-col size="6">
-              <f class="blue"></f>
-            </ion-col>
-            <ion-col size="6">
-              <f class="yellow"></f>
-            </ion-col>
-            <ion-col size="6">
-              <f class="pink"></f>
-            </ion-col>
-            <ion-col size="6">
-              <f class="purple"></f>
-            </ion-col>
-            <ion-col size="6">
-              <f class="black"></f>
-            </ion-col>
-            <ion-col size="6">
-              <f class="orange"></f>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <f class="red"></f>
+          </ion-col>
+          <ion-col size="6">
+            <f class="green"></f>
+          </ion-col>
+          <ion-col size="6">
+            <f class="blue"></f>
+          </ion-col>
+          <ion-col size="6">
+            <f class="yellow"></f>
+          </ion-col>
+          <ion-col size="6">
+            <f class="pink"></f>
+          </ion-col>
+          <ion-col size="6">
+            <f class="purple"></f>
+          </ion-col>
+          <ion-col size="6">
+            <f class="black"></f>
+          </ion-col>
+          <ion-col size="6">
+            <f class="orange"></f>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-content>
 
   </ion-app>
   <script>
@@ -81,8 +82,16 @@
   </script>
 
   <style>
-    .custom-loading .loading-wrapper {
-      background: rgb(155, 221, 226);
+    .custom-loading {
+      --background: rgba(37, 210, 223, 0.8);
+      --spinner-color: white;
+
+      --height: 100%;
+      --max-height: auto;
+      --width: 100%;
+      --max-width: auto;
+
+      color: white;
     }
 
     f {

@@ -1,0 +1,31 @@
+@import "../themes/ionic.globals";
+@import "../themes/ionic.mixins";
+
+// Display
+// --------------------------------------------------
+// Modifies display of a particular element based on the given classes
+
+.ion-hide {
+  display: none !important;
+}
+
+// Adds hidden attributes
+@each $breakpoint in map-keys($screen-breakpoints) {
+  $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
+
+  @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+    // Provide `ion-hide-{bp}-up` classes for hiding the element based
+    // on the breakpoint
+    .ion-hide#{$infix}-up {
+      display: none !important;
+    }
+  }
+
+  @include media-breakpoint-down($breakpoint, $screen-breakpoints) {
+    // Provide `ion-hide-{bp}-down` classes for hiding the element based
+    // on the breakpoint
+    .ion-hide#{$infix}-down {
+      display: none !important;
+    }
+  }
+}

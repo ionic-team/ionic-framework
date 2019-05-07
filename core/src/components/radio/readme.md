@@ -40,6 +40,72 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonList, IonRadioGroup, IonListHeader, IonLabel, IonItem, IonRadio } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+
+  <IonList>
+    <IonRadioGroup>
+      <IonListHeader>
+        <IonLabel>Name</IonLabel>
+      </IonListHeader>
+
+      <IonItem>
+        <IonLabel>Biff</IonLabel>
+        <IonRadio slot="start" value="biff" checked></IonRadio>
+      </IonItem>
+
+      <IonItem>
+        <IonLabel>Griff</IonLabel>
+        <IonRadio slot="start" value="griff"></IonRadio>
+      </IonItem>
+
+      <IonItem>
+        <IonLabel>Buford</IonLabel>
+        <IonRadio slot="start" value="buford"></IonRadio>
+      </IonItem>
+    </IonRadioGroup>
+  </IonList>
+);
+
+export default Example
+
+
+### Vue
+
+```html
+<template>
+  <ion-list>
+    <ion-radio-group>
+      <ion-list-header>
+        <ion-label>Name</ion-label>
+      </ion-list-header>
+
+      <ion-item>
+        <ion-label>Biff</ion-label>
+        <ion-radio slot="start" value="biff" checked></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Griff</ion-label>
+        <ion-radio slot="start" value="griff"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Buford</ion-label>
+        <ion-radio slot="start" value="buford"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+</template>
+```
+
+
 
 ## Properties
 
@@ -55,25 +121,19 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 
 ## Events
 
-| Event               | Description                                | Detail                  |
-| ------------------- | ------------------------------------------ | ----------------------- |
-| `ionBlur`           | Emitted when the radio button loses focus. | void                    |
-| `ionFocus`          | Emitted when the radio button has focus.   | void                    |
-| `ionRadioDidLoad`   | Emitted when the radio loads.              | void                    |
-| `ionRadioDidUnload` | Emitted when the radio unloads.            | void                    |
-| `ionSelect`         | Emitted when the radio button is selected. | CheckedInputChangeEvent |
+| Event       | Description                                | Type                                  |
+| ----------- | ------------------------------------------ | ------------------------------------- |
+| `ionBlur`   | Emitted when the radio button loses focus. | `CustomEvent<void>`                   |
+| `ionFocus`  | Emitted when the radio button has focus.   | `CustomEvent<void>`                   |
+| `ionSelect` | Emitted when the radio button is selected. | `CustomEvent<RadioChangeEventDetail>` |
 
 
 ## CSS Custom Properties
 
-| Name              | Description                    |
-| ----------------- | ------------------------------ |
-| `--color`         | Color of the radio             |
-| `--color-checked` | Color of the checked radio     |
-| `--height`        | Height of the radio button     |
-| `--inner-height`  | Height of the dot or checkmark |
-| `--inner-width`   | Width of the dot or checkmark  |
-| `--width`         | Width of the radio button      |
+| Name              | Description                |
+| ----------------- | -------------------------- |
+| `--color`         | Color of the radio         |
+| `--color-checked` | Color of the checked radio |
 
 
 ----------------------------------------------

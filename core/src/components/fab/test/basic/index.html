@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
   <script src="../../../../../dist/ionic.js"></script>
 </head>
 
@@ -25,10 +26,10 @@
 
       <pre id="log" style="right:10px; bottom:50px; text-shadow: 0 0 2px rgba(0, 0, 0, 0.24);" slot="fixed">log</pre>
       <ion-button>Test</ion-button>
-      <ion-fab-button disabled onclick="throw 'no clickable'">FAB</ion-fab-button>
+      <ion-fab-button disabled href="#path" onclick="throw 'no clickable'">FAB</ion-fab-button>
 
       <ion-fab vertical="top" horizontal="end" edge id="fab1" slot="fixed">
-        <ion-fab-button onclick="clickMainFAB('fab1')" mini class="e2eFabTopRight">
+        <ion-fab-button onclick="clickMainFAB('fab1')" size="small" class="e2eFabTopRight">
           <ion-icon name="add"></ion-icon>
         </ion-fab-button>
         <ion-fab-list>
@@ -48,7 +49,7 @@
       </ion-fab>
 
       <ion-fab vertical="bottom" horizontal="end" edge id="fab2" slot="fixed">
-        <ion-fab-button onclick="clickMainFAB('fab2')" color="dark" class="e2eFabBottomRight">
+        <ion-fab-button onclick="clickMainFAB('fab2')" color="dark" class="e2eFabBottomRight" disabled>
           <ion-icon name="arrow-dropleft"></ion-icon>
         </ion-fab-button>
         <ion-fab-list side="start">

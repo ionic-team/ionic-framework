@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop } from '@stencil/core';
 
 import { Color, Mode, RouterDirection } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
@@ -13,8 +13,6 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 })
 export class FabButton implements ComponentInterface {
   @Element() el!: HTMLElement;
-
-  @State() keyFocus = false;
 
   @Prop({ context: 'window' }) win!: Window;
 
@@ -68,6 +66,11 @@ export class FabButton implements ComponentInterface {
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   /**
+   * The size of the button. Set this to `small` in order to have a mini fab.
+   */
+  @Prop() size?: 'small';
+
+  /**
    * Emitted when the button has focus.
    */
   @Event() ionFocus!: EventEmitter<void>;
@@ -81,35 +84,33 @@ export class FabButton implements ComponentInterface {
     this.ionFocus.emit();
   }
 
-  private onKeyUp = () => {
-    this.keyFocus = true;
-  }
-
   private onBlur = () => {
-    this.keyFocus = false;
     this.ionBlur.emit();
   }
 
   hostData() {
-    const inList = hostContext('ion-fab-list', this.el);
+    const { el, disabled, color, activated, show, translucent, size } = this;
+    const inList = hostContext('ion-fab-list', el);
     return {
-      'aria-disabled': this.disabled ? 'true' : null,
+      'aria-disabled': disabled ? 'true' : null,
       class: {
-        ...createColorClasses(this.color),
+        ...createColorClasses(color),
+        [`${this.mode}`]: true,
         'fab-button-in-list': inList,
-        'fab-button-translucent-in-list': inList && this.translucent,
-        'fab-button-close-active': this.activated,
-        'fab-button-show': this.show,
-        'fab-button-disabled': this.disabled,
-        'fab-button-translucent': this.translucent,
+        'fab-button-translucent-in-list': inList && translucent,
+        'fab-button-close-active': activated,
+        'fab-button-show': show,
+        'fab-button-disabled': disabled,
+        'fab-button-translucent': translucent,
         'ion-activatable': true,
-        'focused': this.keyFocus,
+        'ion-focusable': true,
+        [`fab-button-${size}`]: size !== undefined,
       }
     };
   }
 
   render() {
-    const TagType = this.href === undefined ? 'button' : 'a';
+    const TagType = this.href === undefined ? 'button' : 'a' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
       : { href: this.href };
@@ -120,7 +121,6 @@ export class FabButton implements ComponentInterface {
         class="button-native"
         disabled={this.disabled}
         onFocus={this.onFocus}
-        onKeyUp={this.onKeyUp}
         onBlur={this.onBlur}
         onClick={(ev: Event) => openURL(this.win, this.href, ev, this.routerDirection)}
       >

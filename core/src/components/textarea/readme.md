@@ -95,6 +95,100 @@ The textarea component accepts the [native textarea attributes](https://develope
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonTextarea, IonItem, IonLabel } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+  <>
+    {/*-- Default textarea --*/}
+    <IonTextarea></IonTextarea>
+
+    {/*-- Textarea in an item with a placeholder --*/}
+    <IonItem>
+      <IonTextarea placeholder="Enter more information here..."></IonTextarea>
+    </IonItem>
+
+    {/*-- Textarea in an item with a floating label --*/}
+    <IonItem>
+      <IonLabel position="floating">Description</IonLabel>
+      <IonTextarea></IonTextarea>
+    </IonItem>
+
+    {/*-- Disabled and readonly textarea in an item with a stacked label --*/}
+    <IonItem>
+      <IonLabel position="stacked">Summary</IonLabel>
+      <IonTextarea
+        disabled
+        readonly
+        value="Ionic enables developers to build performant, high-quality mobile apps.">
+      </IonTextarea>
+    </IonItem>
+
+    {/*-- Textarea that clears the value on edit --*/}
+    <IonItem>
+      <IonLabel>Comment</IonLabel>
+      <IonTextarea clearOnEdit={true}></IonTextarea>
+    </IonItem>
+
+    {/*-- Textarea with custom number of rows and cols --*/}
+    <IonItem>
+      <IonLabel>Notes</IonLabel>
+      <IonTextarea rows={6} cols={20} placeholder="Enter any notes here..."></IonTextarea>
+    </IonItem>
+  </>
+);
+
+export default Example;
+```
+
+
+### Vue
+
+```html
+<template>
+  <!-- Default textarea -->
+  <ion-textarea></ion-textarea>
+
+  <!-- Textarea in an item with a placeholder -->
+  <ion-item>
+    <ion-textarea placeholder="Enter more information here..."></ion-textarea>
+  </ion-item>
+
+  <!-- Textarea in an item with a floating label -->
+  <ion-item>
+    <ion-label position="floating">Description</ion-label>
+    <ion-textarea></ion-textarea>
+  </ion-item>
+
+  <!-- Disabled and readonly textarea in an item with a stacked label -->
+  <ion-item>
+    <ion-label position="stacked">Summary</ion-label>
+    <ion-textarea
+      disabled
+      readonly
+      value="Ionic enables developers to build performant, high-quality mobile apps.">
+    </ion-textarea>
+  </ion-item>
+
+  <!-- Textarea that clears the value on edit -->
+  <ion-item>
+    <ion-label>Comment</ion-label>
+    <ion-textarea clearOnEdit="true"></ion-textarea>
+  </ion-item>
+
+  <!-- Textarea with custom number of rows and cols -->
+  <ion-item>
+    <ion-label>Notes</ion-label>
+    <ion-textarea rows="6" cols="20" placeholder="Enter any notes here..."></ion-textarea>
+  </ion-item>
+</template>
+```
+
+
 
 ## Properties
 
@@ -122,15 +216,25 @@ The textarea component accepts the [native textarea attributes](https://develope
 
 ## Events
 
-| Event       | Description                               | Detail               |
-| ----------- | ----------------------------------------- | -------------------- |
-| `ionBlur`   | Emitted when the input loses focus.       | void                 |
-| `ionChange` | Emitted when the input value has changed. | TextInputChangeEvent |
-| `ionFocus`  | Emitted when the input has focus.         | void                 |
-| `ionInput`  | Emitted when a keyboard input ocurred.    | KeyboardEvent        |
+| Event       | Description                               | Type                                     |
+| ----------- | ----------------------------------------- | ---------------------------------------- |
+| `ionBlur`   | Emitted when the input loses focus.       | `CustomEvent<void>`                      |
+| `ionChange` | Emitted when the input value has changed. | `CustomEvent<TextareaChangeEventDetail>` |
+| `ionFocus`  | Emitted when the input has focus.         | `CustomEvent<void>`                      |
+| `ionInput`  | Emitted when a keyboard input ocurred.    | `CustomEvent<KeyboardEvent>`             |
 
 
 ## Methods
+
+### `getInputElement() => Promise<HTMLTextAreaElement>`
+
+Returns the native `<textarea>` element used under the hood.
+
+#### Returns
+
+Type: `Promise<HTMLTextAreaElement>`
+
+
 
 ### `setFocus() => void`
 

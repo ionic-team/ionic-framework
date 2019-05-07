@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
-import { Color, Mode, StyleEvent, TextInputChangeEvent } from '../../interface';
-import { debounceEvent, findItemLabel, renderHiddenInput } from '../../utils/helpers';
+import { Color, Mode, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
+import { debounceEvent, findItemLabel } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -10,7 +10,7 @@ import { createColorClasses } from '../../utils/theme';
     ios: 'textarea.ios.scss',
     md: 'textarea.md.scss'
   },
-  shadow: true
+  scoped: true
 })
 export class Textarea implements ComponentInterface {
 
@@ -134,13 +134,14 @@ export class Textarea implements ComponentInterface {
     if (nativeInput && nativeInput.value !== value) {
       nativeInput.value = value;
     }
+    this.emitStyle();
     this.ionChange.emit({ value });
   }
 
   /**
    * Emitted when the input value has changed.
    */
-  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<TextareaChangeEventDetail>;
 
   /**
    * Emitted when a keyboard input ocurred.
@@ -151,7 +152,7 @@ export class Textarea implements ComponentInterface {
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   /**
    * Emitted when the input loses focus.
@@ -163,12 +164,30 @@ export class Textarea implements ComponentInterface {
    */
   @Event() ionFocus!: EventEmitter<void>;
 
+  /**
+   * Emitted when the input has been created.
+   * @internal
+   */
+  @Event() ionInputDidLoad!: EventEmitter<void>;
+
+  /**
+   * Emitted when the input has been removed.
+   * @internal
+   */
+  @Event() ionInputDidUnload!: EventEmitter<void>;
+
   componentWillLoad() {
     this.emitStyle();
   }
 
   componentDidLoad() {
     this.debounceChanged();
+
+    this.ionInputDidLoad.emit();
+  }
+
+  componentDidUnload() {
+    this.ionInputDidUnload.emit();
   }
 
   /**
@@ -180,6 +199,14 @@ export class Textarea implements ComponentInterface {
     if (this.nativeInput) {
       this.nativeInput.focus();
     }
+  }
+
+  /**
+   * Returns the native `<textarea>` element used under the hood.
+   */
+  @Method()
+  getInputElement(): Promise<HTMLTextAreaElement> {
+    return Promise.resolve(this.nativeInput!);
   }
 
   private emitStyle() {
@@ -257,14 +284,15 @@ export class Textarea implements ComponentInterface {
   hostData() {
     return {
       'aria-disabled': this.disabled ? 'true' : null,
-      class: createColorClasses(this.color)
+      class: {
+        ...createColorClasses(this.color),
+        [`${this.mode}`]: true,
+      }
     };
   }
 
   render() {
     const value = this.getValue();
-    renderHiddenInput(false, this.el, this.name, value, this.disabled);
-
     const labelId = this.inputId + '-lbl';
     const label = findItemLabel(this.el);
     if (label) {

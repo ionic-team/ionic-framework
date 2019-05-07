@@ -9,7 +9,7 @@ export function createOverlay<T extends HTMLIonOverlayElement>(element: T, opts:
   // convert the passed in overlay options into props
   // that get passed down into the new overlay
   Object.assign(element, opts);
-  element.classList.add('ion-page-invisible');
+  element.classList.add('overlay-hidden');
   const overlayIndex = lastId++;
   element.overlayIndex = overlayIndex;
   if (!element.hasAttribute('id')) {
@@ -25,6 +25,18 @@ export function createOverlay<T extends HTMLIonOverlayElement>(element: T, opts:
 export function connectListeners(doc: Document) {
   if (lastId === 0) {
     lastId = 1;
+    // trap focus inside overlays
+    doc.addEventListener('focusin', ev => {
+      const lastOverlay = getOverlay(doc);
+      if (lastOverlay && lastOverlay.backdropDismiss && !isDescendant(lastOverlay, ev.target as HTMLElement)) {
+        const firstInput = lastOverlay.querySelector('input,button') as HTMLElement | null;
+        if (firstInput) {
+          firstInput.focus();
+        }
+      }
+    });
+
+    // handle back-button click
     doc.addEventListener('ionBackButton', ev => {
       const lastOverlay = getOverlay(doc);
       if (lastOverlay && lastOverlay.backdropDismiss) {
@@ -34,6 +46,7 @@ export function connectListeners(doc: Document) {
       }
     });
 
+    // handle ESC to close overlay
     doc.addEventListener('keyup', ev => {
       if (ev.key === 'Escape') {
         const lastOverlay = getOverlay(doc);
@@ -139,31 +152,29 @@ async function overlayAnimation(
     overlay.animation.destroy();
     overlay.animation = undefined;
     return false;
-
-  } else {
-    // Make overlay visible in case it's hidden
-    baseEl.classList.remove('ion-page-invisible');
-
-    const aniRoot = baseEl.shadowRoot || overlay.el;
-    const animation = overlay.animation = await overlay.animationCtrl.create(animationBuilder, aniRoot, opts);
-    overlay.animation = animation;
-    if (!overlay.animated) {
-      animation.duration(0);
-    }
-    if (overlay.keyboardClose) {
-      animation.beforeAddWrite(() => {
-        const activeElement = baseEl.ownerDocument!.activeElement as HTMLElement;
-        if (activeElement && activeElement.matches('input, ion-input, ion-textarea')) {
-          activeElement.blur();
-        }
-      });
-    }
-    await animation.playAsync();
-    const hasCompleted = animation.hasCompleted;
-    animation.destroy();
-    overlay.animation = undefined;
-    return hasCompleted;
   }
+  // Make overlay visible in case it's hidden
+  baseEl.classList.remove('overlay-hidden');
+
+  const aniRoot = baseEl.shadowRoot || overlay.el;
+  const animation = overlay.animation = await import('./animation').then(mod => mod.create(animationBuilder, aniRoot, opts));
+  overlay.animation = animation;
+  if (!overlay.animated || !overlay.config.getBoolean('animated', true)) {
+    animation.duration(0);
+  }
+  if (overlay.keyboardClose) {
+    animation.beforeAddWrite(() => {
+      const activeElement = baseEl.ownerDocument!.activeElement as HTMLElement;
+      if (activeElement && activeElement.matches('input, ion-input, ion-textarea')) {
+        activeElement.blur();
+      }
+    });
+  }
+  await animation.playAsync();
+  const hasCompleted = animation.hasCompleted;
+  animation.destroy();
+  overlay.animation = undefined;
+  return hasCompleted;
 }
 
 export function autoFocus(containerEl: HTMLElement): HTMLElement | undefined {
@@ -195,6 +206,16 @@ export function onceEvent(element: HTMLElement, eventName: string, callback: (ev
 
 export function isCancel(role: string | undefined): boolean {
   return role === 'cancel' || role === BACKDROP;
+}
+
+function isDescendant(parent: HTMLElement, child: HTMLElement | null) {
+  while (child) {
+    if (child === parent) {
+      return true;
+    }
+    child = child.parentElement;
+  }
+  return false;
 }
 
 export const BACKDROP = 'backdrop';

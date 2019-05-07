@@ -18,6 +18,10 @@
   box-shadow: $menu-ios-box-shadow-reveal;
 }
 
+[dir=rtl].ios .menu-content-reveal {
+  box-shadow: $menu-ios-box-shadow-reveal-rtl;
+}
+
 .ios .menu-content-push {
   box-shadow: $menu-ios-box-shadow-push;
 }

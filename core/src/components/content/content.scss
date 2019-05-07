@@ -42,7 +42,7 @@
 
   font-family: $font-family-base;
 
-  contain: layout size style;
+  contain: size style;
 }
 
 :host(.ion-color) .inner-scroll {
@@ -77,11 +77,17 @@
 }
 
 .scroll-y {
+  touch-action: pan-y;
   overflow-y: var(--overflow);
 }
 
 .scroll-x {
+  touch-action: pan-x;
   overflow-x: var(--overflow);
+}
+
+.scroll-x.scroll-y {
+  touch-action: auto;
 }
 
 .overscroll::before,
