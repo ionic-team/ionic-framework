@@ -62,6 +62,7 @@ export class BackButton implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
+        [`${this.mode}`]: true,
 
         'button': true, // ion-buttons target .button
         'ion-activatable': true,
@@ -72,12 +73,8 @@ export class BackButton implements ComponentInterface {
 
   render() {
     const defaultBackButtonText = this.mode === 'ios' ? 'Back' : null;
+    const backButtonIcon = this.icon != null ? this.icon : this.config.get('backButtonIcon', 'arrow-back');
     const backButtonText = this.text != null ? this.text : this.config.get('backButtonText', defaultBackButtonText);
-
-    let backButtonIcon = this.icon != null ? this.icon : this.config.get('backButtonIcon', 'arrow-back');
-    if (backButtonIcon === 'arrow-back' && document.dir === 'rtl') {
-      backButtonIcon = 'arrow-forward';
-    }
 
     return (
       <button

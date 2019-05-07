@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { Gesture, GestureDetail } from '../../interface';
+import { Gesture, GestureDetail, Mode } from '../../interface';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
@@ -29,6 +29,7 @@ let openSlidingItem: HTMLIonItemSlidingElement | undefined;
   styleUrl: 'item-sliding.scss'
 })
 export class ItemSliding implements ComponentInterface {
+  mode!: Mode;
 
   private item: HTMLIonItemElement | null = null;
   private openAmount = 0;
@@ -66,7 +67,6 @@ export class ItemSliding implements ComponentInterface {
 
   async componentDidLoad() {
     this.item = this.el.querySelector('ion-item');
-
     await this.updateOptions();
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
@@ -86,10 +86,15 @@ export class ItemSliding implements ComponentInterface {
   componentDidUnload() {
     if (this.gesture) {
       this.gesture.destroy();
+      this.gesture = undefined;
     }
 
     this.item = null;
     this.leftOptions = this.rightOptions = undefined;
+
+    if (openSlidingItem === this.el) {
+      openSlidingItem = undefined;
+    }
   }
 
   /**
@@ -113,6 +118,52 @@ export class ItemSliding implements ComponentInterface {
   }
 
   /**
+   * Open the sliding item.
+   *
+   * @param side The side of the options to open. If a side is not provided, it will open the first set of options it finds within the item.
+   */
+   // TODO update to work with RTL
+  @Method()
+  async open(side: string | undefined) {
+    if (this.item === null) { return; }
+
+    const optionsToOpen = this.getOptions(side);
+    if (!optionsToOpen) { return; }
+
+    /**
+     * If side is not set, we need to infer the side
+     * so we know which direction to move the options
+     */
+    if (side === undefined) {
+      side = (optionsToOpen === this.leftOptions) ? 'start' : 'end';
+    }
+
+    const isStartOpen = this.openAmount < 0;
+    const isEndOpen = this.openAmount > 0;
+
+    /**
+     * If a side is open and a user tries to
+     * re-open the same side, we should not do anything
+     */
+    if (isStartOpen && optionsToOpen === this.leftOptions) { return; }
+    if (isEndOpen && optionsToOpen === this.rightOptions) { return; }
+
+    this.closeOpened();
+
+    this.state = SlidingState.Enabled;
+
+    requestAnimationFrame(() => {
+      this.calculateOptsWidth();
+
+      const width = (side === 'end') ? this.optsWidthRightSide : -this.optsWidthLeftSide;
+      openSlidingItem = this.el;
+
+      this.setOpenAmount(width, false);
+      this.state = (side === 'end') ? SlidingState.End : SlidingState.Start;
+    });
+  }
+
+  /**
    * Close the sliding item. Items can also be closed from the [List](../../list/List).
    */
   @Method()
@@ -127,10 +178,27 @@ export class ItemSliding implements ComponentInterface {
   async closeOpened(): Promise<boolean> {
     if (openSlidingItem !== undefined) {
       openSlidingItem.close();
+      openSlidingItem = undefined;
       return true;
     }
     return false;
   }
+
+   /**
+    * Given a side, attempt to return the ion-item-options element
+    *
+    * @param side This side of the options to get. If a side is not provided it will return the first one available
+    */
+    // TODO update to work with RTL
+  private getOptions(side?: string): HTMLIonItemOptionsElement | undefined {
+      if (side === undefined) {
+        return this.leftOptions || this.rightOptions;
+      } else if (side === 'start') {
+        return this.leftOptions;
+      } else {
+        return this.rightOptions;
+      }
+    }
 
   private async updateOptions() {
     const options = this.el.querySelectorAll('ion-item-options');
@@ -161,6 +229,7 @@ export class ItemSliding implements ComponentInterface {
       this.closeOpened();
       return false;
     }
+
     return !!(this.rightOptions || this.leftOptions);
   }
 
@@ -237,13 +306,18 @@ export class ItemSliding implements ComponentInterface {
   private calculateOptsWidth() {
     this.optsWidthRightSide = 0;
     if (this.rightOptions) {
+      this.rightOptions.style.display = 'flex';
       this.optsWidthRightSide = this.rightOptions.offsetWidth;
+      this.rightOptions.style.display = '';
     }
 
     this.optsWidthLeftSide = 0;
     if (this.leftOptions) {
+      this.leftOptions.style.display = 'flex';
       this.optsWidthLeftSide = this.leftOptions.offsetWidth;
+      this.leftOptions.style.display = '';
     }
+
     this.optsDirty = false;
   }
 
@@ -271,10 +345,10 @@ export class ItemSliding implements ComponentInterface {
         ? SlidingState.Start | SlidingState.SwipeStart
         : SlidingState.Start;
     } else {
-      this.tmr = window.setTimeout(() => {
+      this.tmr = setTimeout(() => {
         this.state = SlidingState.Disabled;
         this.tmr = undefined;
-      }, 600);
+      }, 600) as any;
 
       openSlidingItem = undefined;
       style.transform = '';
@@ -301,6 +375,7 @@ export class ItemSliding implements ComponentInterface {
   hostData() {
     return {
       class: {
+        [`${this.mode}`]: true,
         'item-sliding-active-slide': (this.state !== SlidingState.Disabled),
         'item-sliding-active-options-end': (this.state & SlidingState.End) !== 0,
         'item-sliding-active-options-start': (this.state & SlidingState.Start) !== 0,
@@ -313,10 +388,10 @@ export class ItemSliding implements ComponentInterface {
 
 function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolean, isOnResetZone: boolean): boolean {
   // The logic required to know when the sliding item should close (openAmount=0)
-  // depends on three booleans (isCloseDirection, isMovingFast, isOnCloseZone)
+  // depends on three booleans (isResetDirection, isMovingFast, isOnResetZone)
   // and it ended up being too complicated to be written manually without errors
   // so the truth table is attached below: (0=false, 1=true)
-  // isCloseDirection | isMovingFast | isOnCloseZone || shouldClose
+  // isResetDirection | isMovingFast | isOnResetZone || shouldClose
   //         0        |       0      |       0       ||    0
   //         0        |       0      |       1       ||    1
   //         0        |       1      |       0       ||    0

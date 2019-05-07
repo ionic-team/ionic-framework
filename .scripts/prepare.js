@@ -18,9 +18,10 @@ async function main() {
     }
 
     const version = await askVersion();
+    const install = process.argv.indexOf('--no-install') < 0;
 
     // compile and verify packages
-    await preparePackages(common.packages, version);
+    await preparePackages(common.packages, version, install);
 
     console.log(`\nionic ${version} prepared 🤖\n`);
     console.log(`Next steps:`);
@@ -89,7 +90,7 @@ async function askVersion() {
 }
 
 
-async function preparePackages(packages, version) {
+async function preparePackages(packages, version, install) {
   // execution order matters
   const tasks = [];
 
@@ -102,7 +103,7 @@ async function preparePackages(packages, version) {
   // add all the prepare scripts
   // run all these tasks before updating package.json version
   packages.forEach(package => {
-    common.preparePackage(tasks, package, version);
+    common.preparePackage(tasks, package, version, install);
   });
 
   // add update package.json of each project

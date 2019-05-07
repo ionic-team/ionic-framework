@@ -2,6 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Pr
 
 import { Color, Config, Mode, SearchbarChangeEventDetail } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
+import { sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -79,7 +80,18 @@ export class Searchbar implements ComponentInterface {
   }
 
   /**
+   * If `true`, the user cannot interact with the input.
+   */
+  @Prop() disabled = false;
+
+  /**
    * Set the input's placeholder.
+   * `placeholder` can accept either plaintext or HTML as a string.
+   * To display characters normally reserved for HTML, they
+   * must be escaped. For example `<Ionic>` would become
+   * `&lt;Ionic&gt;`
+   *
+   * For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
    */
   @Prop() placeholder = 'Search';
 
@@ -166,6 +178,14 @@ export class Searchbar implements ComponentInterface {
     if (this.nativeInput) {
       this.nativeInput.focus();
     }
+  }
+
+  /**
+   * Returns the native `<input>` element used under the hood.
+   */
+  @Method()
+  getInputElement(): Promise<HTMLInputElement> {
+    return Promise.resolve(this.nativeInput!);
   }
 
   /**
@@ -280,7 +300,7 @@ export class Searchbar implements ComponentInterface {
       // Create a dummy span to get the placeholder width
       const doc = this.doc;
       const tempSpan = doc.createElement('span');
-      tempSpan.innerHTML = this.placeholder;
+      tempSpan.innerHTML = sanitizeDOMString(this.placeholder) || '';
       doc.body.appendChild(tempSpan);
 
       // Get the width of the span then remove it
@@ -338,15 +358,22 @@ export class Searchbar implements ComponentInterface {
     return this.value || '';
   }
 
+  private hasValue(): boolean {
+    return this.getValue() !== '';
+  }
+
   hostData() {
     const animated = this.animated && this.config.getBoolean('animated', true);
 
     return {
+      'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...createColorClasses(this.color),
+        [`${this.mode}`]: true,
         'searchbar-animated': animated,
+        'searchbar-disabled': this.disabled,
         'searchbar-no-animate': animated && this.noAnimate,
-        'searchbar-has-value': (this.getValue() !== ''),
+        'searchbar-has-value': this.hasValue(),
         'searchbar-left-aligned': this.shouldAlignLeft,
         'searchbar-has-focus': this.focused
       }
@@ -377,6 +404,7 @@ export class Searchbar implements ComponentInterface {
     return [
       <div class="searchbar-input-container">
         <input
+          disabled={this.disabled}
           ref={el => this.nativeInput = el}
           class="searchbar-input"
           onInput={this.onInput}

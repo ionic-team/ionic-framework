@@ -4,6 +4,12 @@ import { Color, Mode, RouterDirection } from '../../interface';
 import { hasShadowDom } from '../../utils/helpers';
 import { createColorClasses, openURL } from '../../utils/theme';
 
+/**
+ * @slot - Content is placed between the named slots if provided without a slot.
+ * @slot icon-only - Should be used on an icon in a button that has no text.
+ * @slot start - Content is placed to the left of the button text in LTR, and to the right in RTL.
+ * @slot end - Content is placed to the right of the button text in LTR, and to the left in RTL.
+ */
 @Component({
   tag: 'ion-button',
   styleUrls: {
@@ -104,7 +110,7 @@ export class Button implements ComponentInterface {
   @Listen('click')
   onClick(ev: Event) {
     if (this.type === 'button') {
-      return openURL(this.win, this.href, ev, this.routerDirection);
+      openURL(this.win, this.href, ev, this.routerDirection);
 
     } else if (hasShadowDom(this.el)) {
       // this button wants to specifically submit a form
@@ -114,7 +120,7 @@ export class Button implements ComponentInterface {
       if (form) {
         ev.preventDefault();
 
-        const fakeButton = document.createElement('button');
+        const fakeButton = this.win.document.createElement('button');
         fakeButton.type = this.type;
         fakeButton.style.display = 'none';
         form.appendChild(fakeButton);
@@ -122,7 +128,6 @@ export class Button implements ComponentInterface {
         fakeButton.remove();
       }
     }
-    return Promise.resolve(false);
   }
 
   private onFocus = () => {
@@ -143,6 +148,7 @@ export class Button implements ComponentInterface {
       'aria-disabled': disabled ? 'true' : null,
       class: {
         ...createColorClasses(color),
+        [`${this.mode}`]: true,
         [buttonType]: true,
         [`${buttonType}-${expand}`]: expand !== undefined,
         [`${buttonType}-${size}`]: size !== undefined,

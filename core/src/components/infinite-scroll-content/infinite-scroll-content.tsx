@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Config, Mode, SpinnerTypes } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
+import { sanitizeDOMString } from '../../utils/sanitization';
 
 @Component({
   tag: 'ion-infinite-scroll-content',
@@ -23,6 +23,12 @@ export class InfiniteScrollContent implements ComponentInterface {
 
   /**
    * Optional text to display while loading.
+   * `loadingText` can accept either plaintext or HTML as a string.
+   * To display characters normally reserved for HTML, they
+   * must be escaped. For example `<Ionic>` would become
+   * `&lt;Ionic&gt;`
+   *
+   * For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
    */
   @Prop() loadingText?: string;
 
@@ -30,14 +36,19 @@ export class InfiniteScrollContent implements ComponentInterface {
     if (this.loadingSpinner === undefined) {
       this.loadingSpinner = this.config.get(
         'infiniteLoadingSpinner',
-        this.config.get('spinner', 'lines')
+        this.config.get('spinner', this.mode === 'ios' ? 'lines' : 'crescent')
       );
     }
   }
 
   hostData() {
     return {
-      class: createThemedClasses(this.mode, 'infinite-scroll-content')
+      class: {
+        [`${this.mode}`]: true,
+
+        // Used internally for styling
+        [`infinite-scroll-content-${this.mode}`]: true
+      }
     };
   }
 
@@ -50,7 +61,7 @@ export class InfiniteScrollContent implements ComponentInterface {
           </div>
         )}
         {this.loadingText && (
-          <div class="infinite-loading-text" innerHTML={this.loadingText} />
+          <div class="infinite-loading-text" innerHTML={sanitizeDOMString(this.loadingText)} />
         )}
       </div>
     );

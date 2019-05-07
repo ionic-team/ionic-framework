@@ -83,16 +83,19 @@ export class Router implements ComponentInterface {
 
   @Listen('document:ionBackButton')
   protected onBackButton(ev: BackButtonEvent) {
-    ev.detail.register(0, () => this.goBack());
+    ev.detail.register(0, () => this.back());
   }
 
   /**
    * Navigate to the specified URL.
+   *
+   * @param url The url to navigate to.
+   * @param direction The direction of the animation. Defaults to `"forward"`.
    */
   @Method()
   push(url: string, direction: RouterDirection = 'forward') {
     if (url.startsWith('.')) {
-      url = (new URL(url, window.location.href)).pathname;
+      url = (new URL(url, this.win.location.href)).pathname;
     }
     console.debug('[ion-router] URL pushed -> updating nav', url, direction);
 
@@ -105,7 +108,7 @@ export class Router implements ComponentInterface {
    * Go back to previous page in the window.history.
    */
   @Method()
-  goBack() {
+  back() {
     this.win.history.back();
     return Promise.resolve(this.waitPromise);
   }

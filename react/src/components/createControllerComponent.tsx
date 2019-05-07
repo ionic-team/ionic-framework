@@ -1,44 +1,56 @@
 import React from 'react';
-import { attachEventProps } from './utils'
-import { ensureElementInBody, dashToPascalCase } from './utils';
+import { OverlayEventDetail } from '@ionic/core';
+import { attachEventProps, ensureElementInBody, dashToPascalCase, generateUniqueId } from './utils'
+import { OverlayComponentElement, OverlayControllerComponentElement } from '../types';
 
-export function createControllerComponent<T, E extends HTMLElement, C extends HTMLElement>(tagName: string, controllerTagName: string) {
+export function createControllerComponent<T extends object, E extends OverlayComponentElement, C extends OverlayControllerComponentElement<E>>(tagName: string, controllerTagName: string) {
   const displayName = dashToPascalCase(tagName);
+  const dismissEventName = `on${displayName}DidDismiss`;
 
-  type IonicReactInternalProps = {
-    forwardedRef?: React.RefObject<E>;
-    children?: React.ReactNode;
-    show: boolean
+  type ReactProps = {
+    isOpen: boolean;
+    onDidDismiss: (event: CustomEvent<OverlayEventDetail>) => void;
   }
+  type Props = T & ReactProps;
 
-  return class ReactControllerComponent extends React.Component<T & IonicReactInternalProps> {
+  return class ReactControllerComponent extends React.Component<Props> {
     element: E;
     controllerElement: C;
+    id: string;
 
-    constructor(props: T & IonicReactInternalProps) {
+    constructor(props: Props) {
       super(props);
+
+      this.id = generateUniqueId();
     }
 
     static get displayName() {
       return displayName;
     }
 
-    async componentDidMount() {
+    componentDidMount() {
       this.controllerElement = ensureElementInBody<C>(controllerTagName);
-      await (this.controllerElement as any).componentOnReady();
     }
 
-    async componentDidUpdate(prevProps: T & IonicReactInternalProps) {
-      if (prevProps.show !== this.props.show && this.props.show === true) {
-        const { children, show, ...cProps} = this.props as any;
+    async componentDidUpdate(prevProps: Props) {
+      if (prevProps.isOpen !== this.props.isOpen && this.props.isOpen === true) {
+        const { isOpen, onDidDismiss, ...cProps} = this.props;
+        const elementProps = {
+          ...cProps,
+          [dismissEventName]: onDidDismiss
+        };
 
-        this.element = await (this.controllerElement as any).create(cProps);
-        await (this.element as any).present();
+        if (this.controllerElement.componentOnReady) {
+          await this.controllerElement.componentOnReady();
+        }
 
-        attachEventProps(this.element, cProps);
+        this.element = await this.controllerElement.create(elementProps);
+        attachEventProps(this.element, elementProps);
+
+        await this.element.present();
       }
-      if (prevProps.show !== this.props.show && this.props.show === false) {
-        return await (this.element as any).dismiss();
+      if (prevProps.isOpen !== this.props.isOpen && this.props.isOpen === false) {
+        await this.element.dismiss();
       }
     }
 

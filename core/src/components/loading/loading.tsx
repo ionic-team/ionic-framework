@@ -113,7 +113,10 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   componentWillLoad() {
     if (this.spinner === undefined) {
-      this.spinner = this.config.get('loadingSpinner', this.mode === 'ios' ? 'lines' : 'crescent');
+      this.spinner = this.config.get(
+        'loadingSpinner',
+        this.config.get('spinner', this.mode === 'ios' ? 'lines' : 'crescent')
+      );
     }
   }
 
@@ -139,6 +142,12 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   /**
    * Dismiss the loading overlay after it has been presented.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the loading.
+   * This can be useful in a button handler for determining which button was
+   * clicked to dismiss the loading.
+   * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
    */
   @Method()
   dismiss(data?: any, role?: string): Promise<boolean> {
@@ -171,6 +180,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
       },
       class: {
         ...getClassMap(this.cssClass),
+        [`${this.mode}`]: true,
         'loading-translucent': this.translucent
       }
     };
