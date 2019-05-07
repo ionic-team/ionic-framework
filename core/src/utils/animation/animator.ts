@@ -168,7 +168,7 @@ export class Animator {
     if (clearProperyAfterTransition) {
       // if this effect is a transform then clear the transform effect
       // otherwise just clear the actual property
-      this.afterClearStyles([ fx.trans ? 'transform' : prop]);
+      this.afterClearStyles(fx.trans ? ['transform', '-webkit-transform'] : [prop]);
     }
 
     return this;
@@ -725,6 +725,7 @@ export class Animator {
       for (i = 0; i < elements.length; i++) {
         // ******** DOM WRITE ****************
         elements[i].style.setProperty('transform', finalTransform);
+        elements[i].style.setProperty('-webkit-transform', finalTransform);
       }
     }
   }
