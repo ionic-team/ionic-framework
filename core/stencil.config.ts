@@ -59,15 +59,12 @@ export const config: Config = {
       type: 'dist',
       esmLoaderPath: '../loader'
     },
-    // {
-    //   type: 'dist-hydrate-script'
-    // },
     {
       type: 'experimental-dist-module',
       externalRuntime: true,
     },
     {
-      type: 'docs',
+      type: 'docs-readme',
       strict: true
     },
     {

@@ -89,16 +89,17 @@ export class Item implements ComponentInterface {
 
     let hasStyleChange = false;
     Object.keys(updatedStyles).forEach(key => {
-      const itemKey = `item-${key}`;
-      const newValue = updatedStyles[key];
-      if (newValue !== childStyles[itemKey]) {
-        hasStyleChange = true;
-      }
-      if (newValue) {
+      if (updatedStyles[key]) {
+        const itemKey = `item-${key}`;
+        if (!childStyles[itemKey]) {
+          hasStyleChange = true;
+        }
         newStyles[itemKey] = true;
       }
     });
-
+    if (!hasStyleChange && Object.keys(newStyles).length !== Object.keys(childStyles).length) {
+      hasStyleChange = true;
+    }
     if (hasStyleChange) {
       this.itemStyles.set(tagName, newStyles);
       this.el.forceUpdate();

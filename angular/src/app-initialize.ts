@@ -12,24 +12,26 @@ export function appInitialize(config: Config, doc: Document) {
       Ionic.config = config;
       Ionic.asyncQueue = false;
 
-      Ionic.ael = (elm, eventName, cb, opts) => {
-        if (elm.__zone_symbol__addEventListener && skipZone(eventName)) {
-          elm.__zone_symbol__addEventListener(eventName, cb, opts);
-        } else {
-          elm.addEventListener(eventName, cb, opts);
-        }
-      };
-
-      Ionic.rel = (elm, eventName, cb, opts) => {
-        if (elm.__zone_symbol__removeEventListener && skipZone(eventName)) {
-          elm.__zone_symbol__removeEventListener(eventName, cb, opts);
-        } else {
-          elm.removeEventListener(eventName, cb, opts);
-        }
-      };
-
-      return applyPolyfills()
-        .then(() => defineCustomElements(win, { exclude: ['ion-tabs', 'ion-tab'] }));
+      return applyPolyfills().then(() => {
+        return defineCustomElements(win, {
+          exclude: ['ion-tabs', 'ion-tab'],
+          raf: h => (win.__zone_symbol__requestAnimationFrame) ? win.__zone_symbol__requestAnimationFrame(h) : requestAnimationFrame(h),
+          ael(elm, eventName, cb, opts) {
+            if ((elm as any).__zone_symbol__addEventListener && skipZone(eventName)) {
+              (elm as any).__zone_symbol__addEventListener(eventName, cb, opts);
+            } else {
+              elm.addEventListener(eventName, cb, opts);
+            }
+          },
+          rel(elm, eventName, cb, opts) {
+            if ((elm as any).__zone_symbol__removeEventListener && skipZone(eventName)) {
+              (elm as any).__zone_symbol__removeEventListener(eventName, cb, opts);
+            } else {
+              elm.removeEventListener(eventName, cb, opts);
+            }
+          }
+        });
+      });
     }
   };
 }
