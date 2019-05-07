@@ -59,10 +59,10 @@ export class Refresher implements ComponentInterface {
   @Prop() snapbackDuration = '280ms';
 
   /**
-   * A number representing how much to multiply the pull speed by. To slow
-   * the pull animation down, pass a number less than `1`. To speed up the
-   * pull, pass a number greater than `1`. The default factor is `1` which is
-   * equal to the speed of the cursor.
+   * How much to multiply the pull speed by. To slow the pull animation down,
+   * pass a number less than `1`. To speed up the pull, pass a number greater
+   * than `1`. The default value is `1` which is equal to the speed of the cursor.
+   * If a negative value is passed in, the factor will be `1` instead.
    *
    * For example: If the value passed is `1.2` and the content is dragged by
    * `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels
@@ -214,7 +214,8 @@ export class Refresher implements ComponentInterface {
       return;
     }
 
-    const deltaY = detail.deltaY * this.pullFactor;
+    const pullFactor = this.pullFactor < 0 ? 1 : this.pullFactor;
+    const deltaY = detail.deltaY * pullFactor;
     // don't bother if they're scrolling up
     // and have not already started dragging
     if (deltaY <= 0) {
