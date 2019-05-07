@@ -4613,6 +4613,10 @@ export namespace Components {
 
   interface IonTextarea {
     /**
+    * If `true`, the element height will increase based on the value.
+    */
+    'autoGrow': boolean;
+    /**
     * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
     */
     'autocapitalize': string;
@@ -4694,6 +4698,10 @@ export namespace Components {
     'wrap'?: 'hard' | 'soft' | 'off';
   }
   interface IonTextareaAttributes extends StencilHTMLAttributes {
+    /**
+    * If `true`, the element height will increase based on the value.
+    */
+    'autoGrow'?: boolean;
     /**
     * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
     */
