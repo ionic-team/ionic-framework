@@ -3528,9 +3528,9 @@ export namespace Components {
     */
     'getProgress': () => Promise<number>;
     /**
-    * Increase or decrease the pixels who are moved by cursor on pull down Defaults to `100`, the pulled down pixels are equal to the cursor  Example: If you increase this value to `120`, instead of 10 Pixel it will be 12 pixel pulled down (increase of 20 percent) If you decrease to `80`, the pull down will be less than the moved pixels of the cursor
+    * A number representing how much to multiply the pull speed by. To slow the pull animation down, pass a number less than `1`. To speed up the pull, pass a number greater than `1`. The default factor is `1` which is equal to the speed of the cursor.  For example: If the value passed is `1.2` and the content is dragged by `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels (an increase of 20 percent). If the value passed is `0.8`, the dragged amount will be `8` pixels, less than the amount the cursor has moved.
     */
-    'pullDownFactor': number;
+    'pullFactor': number;
     /**
     * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`.
     */
@@ -3566,9 +3566,9 @@ export namespace Components {
     */
     'onIonStart'?: (event: CustomEvent<void>) => void;
     /**
-    * Increase or decrease the pixels who are moved by cursor on pull down Defaults to `100`, the pulled down pixels are equal to the cursor  Example: If you increase this value to `120`, instead of 10 Pixel it will be 12 pixel pulled down (increase of 20 percent) If you decrease to `80`, the pull down will be less than the moved pixels of the cursor
+    * A number representing how much to multiply the pull speed by. To slow the pull animation down, pass a number less than `1`. To speed up the pull, pass a number greater than `1`. The default factor is `1` which is equal to the speed of the cursor.  For example: If the value passed is `1.2` and the content is dragged by `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels (an increase of 20 percent). If the value passed is `0.8`, the dragged amount will be `8` pixels, less than the amount the cursor has moved.
     */
-    'pullDownFactor'?: number;
+    'pullFactor'?: number;
     /**
     * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`.
     */

@@ -60,13 +60,17 @@ export class Refresher implements ComponentInterface {
   @Prop() snapbackDuration = '280ms';
 
   /**
-   * Increase or decrease the pixels who are moved by cursor on pull down
-   * Defaults to `100`, the pulled down pixels are equal to the cursor
+   * A number representing how much to multiply the pull speed by. To slow
+   * the pull animation down, pass a number less than `1`. To speed up the
+   * pull, pass a number greater than `1`. The default factor is `1` which is
+   * equal to the speed of the cursor.
    *
-   * Example: If you increase this value to `120`, instead of 10 Pixel it will be 12 pixel pulled down (increase of 20 percent)
-   * If you decrease to `80`, the pull down will be less than the moved pixels of the cursor
+   * For example: If the value passed is `1.2` and the content is dragged by
+   * `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels
+   * (an increase of 20 percent). If the value passed is `0.8`, the dragged amount
+   * will be `8` pixels, less than the amount the cursor has moved.
    */
-  @Prop() pullDownFactor = 100;
+  @Prop() pullFactor = 1;
 
   /**
    * If `true`, the refresher will be hidden.
@@ -194,7 +198,7 @@ export class Refresher implements ComponentInterface {
     // this method can get called like a bazillion times per second,
     // so it's built to be as efficient as possible, and does its
     // best to do any DOM read/writes only when absolutely necessary
-    // if multitouch then get out immediately
+    // if multi-touch then get out immediately
     const ev = detail.event as TouchEvent;
     if (ev.touches && ev.touches.length > 1) {
       return;
@@ -207,7 +211,7 @@ export class Refresher implements ComponentInterface {
       return;
     }
 
-    const deltaY = detail.deltaY * (this.pullDownFactor / 100);
+    const deltaY = detail.deltaY * this.pullFactor;
     // don't bother if they're scrolling up
     // and have not already started dragging
     if (deltaY <= 0) {

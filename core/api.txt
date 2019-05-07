@@ -814,7 +814,7 @@ ion-refresher-content,prop,refreshingText,string | undefined,undefined,false
 ion-refresher
 ion-refresher,prop,closeDuration,string,'280ms',false
 ion-refresher,prop,disabled,boolean,false,false
-ion-refresher,prop,pullDownFactor,number,100,false
+ion-refresher,prop,pullFactor,number,1,false
 ion-refresher,prop,pullMax,number,this.pullMin + 60,false
 ion-refresher,prop,pullMin,number,60,false
 ion-refresher,prop,snapbackDuration,string,'280ms',false
