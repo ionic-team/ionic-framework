@@ -574,6 +574,10 @@ ion-menu-button,prop,color,string | undefined,undefined,false,false
 ion-menu-button,prop,menu,string | undefined,undefined,false,false
 ion-menu-button,prop,mode,"ios" | "md",undefined,false,false
 ion-menu-button,css-prop,--color
+ion-menu-button,css-prop,--padding-bottom
+ion-menu-button,css-prop,--padding-end
+ion-menu-button,css-prop,--padding-start
+ion-menu-button,css-prop,--padding-top
 
 ion-menu-controller,none
 ion-menu-controller,method,close,close(menu?: string | null | undefined) => Promise<boolean>
