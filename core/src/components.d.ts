@@ -1983,6 +1983,10 @@ export namespace Components {
     * Get the ratio of the open amount of the item compared to the width of the options. If the number returned is positive, then the options on the right side are open. If the number returned is negative, then the options on the left side are open. If the absolute value of the number is greater than 1, the item is open more than the width of the options.
     */
     'getSlidingRatio': () => Promise<number>;
+    /**
+    * Open the sliding item.
+    */
+    'open': (side: string | undefined) => Promise<void>;
   }
   interface IonItemSlidingAttributes extends StencilHTMLAttributes {
     /**
