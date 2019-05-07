@@ -214,7 +214,7 @@ export class Refresher implements ComponentInterface {
       return;
     }
 
-    const pullFactor = this.pullFactor < 0 ? 1 : this.pullFactor;
+    const pullFactor = (Number.isNaN(this.pullFactor) || this.pullFactor < 0) ? 1 : this.pullFactor;
     const deltaY = detail.deltaY * pullFactor;
     // don't bother if they're scrolling up
     // and have not already started dragging
