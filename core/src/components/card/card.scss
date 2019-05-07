@@ -67,6 +67,8 @@
 
 .card-native {
   @include text-inherit();
+  @include padding(0);
+  @include margin(0);
 
   width: 100%;
   min-height: var(--min-height);
@@ -76,7 +78,7 @@
   border-width: var(--border-width);
   border-style: var(--border-style);
   border-color: var(--border-color);
-  
+
   outline: none;
 
   background: var(--background);

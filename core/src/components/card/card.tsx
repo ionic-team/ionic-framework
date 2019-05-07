@@ -83,7 +83,7 @@ export class Card implements ComponentInterface {
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
     const attrs = TagType === 'button' ? { type } : { href };
 
-    return [
+    return (
       <TagType
         {...attrs}
         class="card-native"
@@ -93,6 +93,6 @@ export class Card implements ComponentInterface {
         <slot></slot>
         {clickable && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </TagType>
-    ];
+    );
   }
 }
