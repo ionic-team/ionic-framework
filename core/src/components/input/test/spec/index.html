@@ -15,36 +15,40 @@
   <ion-app>
     <ion-content class="ion-padding">
       <ion-item>
-        <ion-label position="floating">Standard</ion-label>
+        <ion-label position="floating">Floating: input</ion-label>
         <ion-input></ion-input>
       </ion-item>
-      <ion-item>
-        <ion-label position="floating">Standard</ion-label>
+      <ion-item class="item-has-focus">
+        <ion-label position="floating">Floating: input focused value</ion-label>
         <ion-input value="value"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked">Stacked</ion-label>
+        <ion-label position="stacked">Stacked: input</ion-label>
         <ion-input></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked">Stacked</ion-label>
+        <ion-label position="stacked">Stacked: input value</ion-label>
         <ion-input value="value"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Floating</ion-label>
+        <ion-label position="floating">Floating: textarea</ion-label>
         <ion-textarea></ion-textarea>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Floating</ion-label>
+        <ion-label position="floating">Floating: textarea value</ion-label>
         <ion-textarea value="value"></ion-textarea>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked">Stacked</ion-label>
+        <ion-label position="stacked">Stacked: textarea</ion-label>
         <ion-textarea></ion-textarea>
       </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Stacked</ion-label>
+      <ion-item class="item-has-focus">
+        <ion-label position="stacked">Stacked: textarea focused value</ion-label>
         <ion-textarea value="value"></ion-textarea>
+      </ion-item>
+      <ion-item class="custom item-has-focus">
+        <ion-label position="stacked">Stacked: textarea focus</ion-label>
+        <ion-textarea></ion-textarea>
       </ion-item>
 
     </ion-content>
@@ -54,6 +58,17 @@
         --background: #f5f5f5;
       }
 
+      .custom {
+        --background: lightblue;
+      }
+
+      .custom ion-label {
+        color: white !important;
+      }
+
+      .custom.item-has-focus ion-label {
+        color: purple !important;
+      }
     </style>
   </ion-app>
 </body>
