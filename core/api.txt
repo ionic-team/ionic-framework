@@ -1096,6 +1096,7 @@ ion-text,prop,color,string | undefined,undefined,false,false
 ion-text,prop,mode,"ios" | "md",undefined,false,false
 
 ion-textarea,scoped
+ion-textarea,prop,autoGrow,boolean,false,false,false
 ion-textarea,prop,autocapitalize,string,'none',false,false
 ion-textarea,prop,autofocus,boolean,false,false,false
 ion-textarea,prop,clearOnEdit,boolean,false,false,false
