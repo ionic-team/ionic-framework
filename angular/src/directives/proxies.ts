@@ -414,7 +414,7 @@ export class IonItemSliding {
     proxyOutputs(this, this.el, ['ionDrag']);
   }
 }
-proxyMethods(IonItemSliding, ['getOpenAmount', 'getSlidingRatio', 'close', 'closeOpened']);
+proxyMethods(IonItemSliding, ['getOpenAmount', 'getSlidingRatio', 'open', 'close', 'closeOpened']);
 proxyInputs(IonItemSliding, ['disabled']);
 
 export declare interface IonLabel extends StencilComponents<'IonLabel'> {}
