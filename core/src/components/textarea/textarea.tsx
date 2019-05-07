@@ -140,6 +140,7 @@ export class Textarea implements ComponentInterface {
       nativeInput.value = value;
     }
     this.runAutoGrow();
+    this.emitStyle();
     this.ionChange.emit({ value });
   }
 
@@ -169,13 +170,28 @@ export class Textarea implements ComponentInterface {
    */
   @Event() ionFocus!: EventEmitter<void>;
 
+  /**
+   * Emitted when the input has been created.
+   * @internal
+   */
+  @Event() ionInputDidLoad!: EventEmitter<void>;
+
+  /**
+   * Emitted when the input has been removed.
+   * @internal
+   */
+  @Event() ionInputDidUnload!: EventEmitter<void>;
+
   componentWillLoad() {
     this.emitStyle();
   }
 
   componentDidLoad() {
     this.debounceChanged();
+
     this.runAutoGrow();
+    
+    this.ionInputDidLoad.emit();
   }
 
   private runAutoGrow() {
@@ -183,6 +199,10 @@ export class Textarea implements ComponentInterface {
       this.nativeInput.style.height = '1px';
       this.nativeInput.style.height = (4 + this.nativeInput.scrollHeight) + 'px';
     }
+  }
+
+  componentDidUnload() {
+    this.ionInputDidUnload.emit();
   }
 
   /**
@@ -279,7 +299,10 @@ export class Textarea implements ComponentInterface {
   hostData() {
     return {
       'aria-disabled': this.disabled ? 'true' : null,
-      class: createColorClasses(this.color)
+      class: {
+        ...createColorClasses(this.color),
+        [`${this.mode}`]: true,
+      }
     };
   }
 

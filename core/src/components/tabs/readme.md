@@ -55,7 +55,7 @@ When the ionic's router (`ion-router`) is used, the `tab` property matches the "
 The following route within the scope of a `ion-tabs` outlet:
 
 ```html
-<ion-route path="/settings-page" component="settings"></ion-route>
+<ion-route url="/settings-page" component="settings"></ion-route>
 ```
 
 Would match the following tab:
@@ -206,29 +206,55 @@ export default Example;
 
 ```html
 <template>
-  <ion-tabs>
-    <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="schedule">
-        <ion-icon name="calendar"></ion-icon>
-        <ion-label>Schedule</ion-label>
-        <ion-badge>6</ion-badge>
-      </ion-tab-button>
+  <!-- Listen to before and after tab change events -->
+  <ion-tabs @IonTabsWillChange="beforeTabChange" @IonTabsDidChange="afterTabChange">
+    <ion-tab tab="schedule">
+      <Schedule />
+    </ion-tab>
 
-      <ion-tab-button tab="speakers">
-        <ion-icon name="contacts"></ion-icon>
-        <ion-label>Speakers</ion-label>
-      </ion-tab-button>
+    <!-- Match by "app.speakers" route name -->
+    <ion-tab tab="speakers" :routes="'app.speakers'">
+      <Speakers />
+    </ion-tab>
 
-      <ion-tab-button tab="map">
-        <ion-icon name="map"></ion-icon>
-        <ion-label>Map</ion-label>
-      </ion-tab-button>
+    <!-- Match by an array of route names -->
+    <ion-tab tab="map" :routes="['app.map', 'app.other.route']">
+      <Map />
+    </ion-tab>
 
-      <ion-tab-button tab="about">
-        <ion-icon name="information-circle"></ion-icon>
-        <ion-label>About</ion-label>
-      </ion-tab-button>
-    </ion-tab-bar>
+    <!-- Get matched routes with a helper method -->
+    <ion-tab tab="about" :routes="getMatchedRoutes">
+      <About />
+    </ion-tab>
+
+    <!-- Use v-slot:bottom with Vue ^2.6.0 -->
+    <template slot="bottom">
+      <ion-tab-bar>
+        <ion-tab-button tab="schedule">
+          <ion-icon name="calendar"></ion-icon>
+          <ion-label>Schedule</ion-label>
+          <ion-badge>6</ion-badge>
+        </ion-tab-button>
+
+        <!-- Provide a custom route to navigate to -->
+        <ion-tab-button tab="speakers" :to="{ name: 'app.speakers' }">
+          <ion-icon name="contacts"></ion-icon>
+          <ion-label>Speakers</ion-label>
+        </ion-tab-button>
+
+        <!-- Provide extra data to route -->
+        <ion-tab-button tab="map" :to="{ name: 'app.map', params: { mode: 'dark' } }">
+          <ion-icon name="map"></ion-icon>
+          <ion-label>Map</ion-label>
+        </ion-tab-button>
+
+        <!-- Provide custom click handler -->
+        <ion-tab-button tab="about" @click="goToAboutTab">
+          <ion-icon name="information-circle"></ion-icon>
+          <ion-label>About</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </template>
   </ion-tabs>
 </template>
 ```
@@ -247,7 +273,7 @@ export default Example;
 
 ### `getSelected() => Promise<string | undefined>`
 
-Get the currently selected tab
+Get the currently selected tab.
 
 #### Returns
 
@@ -257,13 +283,13 @@ Type: `Promise<string | undefined>`
 
 ### `getTab(tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>`
 
-Get the tab element given the tab name
+Get a specific tab by the value of its `tab` property or an element reference.
 
 #### Parameters
 
-| Name  | Type                          | Description |
-| ----- | ----------------------------- | ----------- |
-| `tab` | `HTMLIonTabElement \| string` |             |
+| Name  | Type                          | Description                                                                                         |
+| ----- | ----------------------------- | --------------------------------------------------------------------------------------------------- |
+| `tab` | `HTMLIonTabElement \| string` | The tab instance to select. If passed a string, it should be the value of the tab's `tab` property. |
 
 #### Returns
 
@@ -273,13 +299,13 @@ Type: `Promise<HTMLIonTabElement | undefined>`
 
 ### `select(tab: string | HTMLIonTabElement) => Promise<boolean>`
 
-Index or the Tab instance, of the tab to select.
+Select a tab by the value of its `tab` property or an element reference.
 
 #### Parameters
 
-| Name  | Type                          | Description |
-| ----- | ----------------------------- | ----------- |
-| `tab` | `HTMLIonTabElement \| string` |             |
+| Name  | Type                          | Description                                                                                         |
+| ----- | ----------------------------- | --------------------------------------------------------------------------------------------------- |
+| `tab` | `HTMLIonTabElement \| string` | The tab instance to select. If passed a string, it should be the value of the tab's `tab` property. |
 
 #### Returns
 

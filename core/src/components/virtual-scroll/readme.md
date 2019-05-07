@@ -343,13 +343,9 @@ export default Example;
 
 ### `checkEnd() => void`
 
-This method marks the tail the items array as dirty, so they can be re-rendered.
-
-It's equivalent to calling:
-
-```js
-   * virtualScroll.checkRange(lastItemLen);
-   * ```
+Marks the tail of the items array as dirty, so they can be re-rendered.
+It's equivalent to calling `checkRange(length)` where `length` is the
+total length of the items.
 
 #### Returns
 
@@ -357,19 +353,21 @@ Type: `void`
 
 
 
-### `checkRange(offset: number, len?: number) => void`
+### `checkRange(offset: number, length?: number) => void`
 
-This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as
-dirty any time the content or their style changes.
+Marks a subset of the items as dirty so they can be re-rendered.
+Items should be marked as dirty any time the content or their style changes.
 
-The subset of items to be updated can are specifing by an offset and a length.
+The subset of items to be updated are specified by an offset and a length.
+If a length is not provided it will check all of the items beginning at
+the offset.
 
 #### Parameters
 
-| Name     | Type     | Description |
-| -------- | -------- | ----------- |
-| `offset` | `number` |             |
-| `len`    | `number` |             |
+| Name     | Type     | Description                                   |
+| -------- | -------- | --------------------------------------------- |
+| `offset` | `number` | The index of the item to start marking dirty. |
+| `length` | `number` | The number of items to mark dirty.            |
 
 #### Returns
 
@@ -383,9 +381,9 @@ Returns the position of the virtual item at the given index.
 
 #### Parameters
 
-| Name    | Type     | Description |
-| ------- | -------- | ----------- |
-| `index` | `number` |             |
+| Name    | Type     | Description            |
+| ------- | -------- | ---------------------- |
+| `index` | `number` | The index of the item. |
 
 #### Returns
 

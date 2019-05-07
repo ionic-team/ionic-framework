@@ -1,7 +1,6 @@
 import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-footer',
@@ -25,13 +24,15 @@ export class Footer implements ComponentInterface {
   @Prop() translucent = false;
 
   hostData() {
-    const themedClasses = createThemedClasses(this.mode, 'footer');
-    const translucentClasses = this.translucent ? createThemedClasses(this.mode, 'footer-translucent') : null;
-
     return {
       class: {
-        ...themedClasses,
-        ...translucentClasses
+        [`${this.mode}`]: true,
+
+        // Used internally for styling
+        [`footer-${this.mode}`]: true,
+
+        [`footer-translucent`]: this.translucent,
+        [`footer-translucent-${this.mode}`]: this.translucent,
       }
     };
   }

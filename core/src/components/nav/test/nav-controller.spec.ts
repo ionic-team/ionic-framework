@@ -945,7 +945,6 @@ describe('NavController', () => {
     navI.config = new Config({ animated: false });
     navI._viewInit = (enteringView: ViewController) => {
       if (!enteringView.element) {
-        console.log(enteringView.component);
         enteringView.element = (typeof enteringView.component === 'string')
           ? win.document.createElement(enteringView.component)
           : enteringView.element = enteringView.component as HTMLElement;

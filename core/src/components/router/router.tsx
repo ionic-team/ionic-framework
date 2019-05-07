@@ -88,6 +88,9 @@ export class Router implements ComponentInterface {
 
   /**
    * Navigate to the specified URL.
+   *
+   * @param url The url to navigate to.
+   * @param direction The direction of the animation. Defaults to `"forward"`.
    */
   @Method()
   push(url: string, direction: RouterDirection = 'forward') {

@@ -170,6 +170,9 @@ export class Popover implements ComponentInterface, OverlayInterface {
 
   /**
    * Dismiss the popover overlay after it has been presented.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the popover. For example, 'cancel' or 'backdrop'.
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
@@ -205,6 +208,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
       },
       class: {
         ...getClassMap(this.cssClass),
+        [`${this.mode}`]: true,
         'popover-translucent': this.translucent
       }
     };

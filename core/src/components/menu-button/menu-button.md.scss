@@ -5,10 +5,8 @@
 
 :host {
   --color: initial;
-}
-
-button {
-  @include padding(0, 8px);
+  --padding-start: 8px;
+  --padding-end: 8px;
 }
 
 ion-icon {

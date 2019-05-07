@@ -1,39 +1,42 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-import { cleanScreenshotName, generateE2EUrl } from '../../../utils/test/utils';
+import { generateE2EUrl } from '../../../utils/test/utils';
 
 export async function testMenu(
   type: string,
   selector: string,
-  rtl = false,
-  screenshotName: string = cleanScreenshotName(selector)
+  menuId = '',
+  rtl = false
 ) {
   try {
     const pageUrl = generateE2EUrl('menu', type, rtl);
-    if (rtl) {
-      screenshotName = `${screenshotName} rtl`;
-    }
 
     const page = await newE2EPage({
       url: pageUrl
     });
 
-    const screenShotCompares = [];
+    const screenshotCompares = [];
+
+    if (menuId.length > 0) {
+      const menuCtrl = await page.find('ion-menu-controller');
+      await page.waitFor(250);
+      await menuCtrl.callMethod('enable', true, menuId);
+    }
 
     const menu = await page.find(selector);
 
     await menu.callMethod('open');
     await page.waitFor(250);
 
-    screenShotCompares.push(await page.compareScreenshot(screenshotName));
+    screenshotCompares.push(await page.compareScreenshot());
 
     await menu.callMethod('close');
     await page.waitFor(250);
 
-    screenShotCompares.push(await page.compareScreenshot(`dismiss ${screenshotName}`));
+    screenshotCompares.push(await page.compareScreenshot('dismiss'));
 
-    for (const screenShotCompare of screenShotCompares) {
-      expect(screenShotCompare).toMatchScreenshot();
+    for (const screenshotCompare of screenshotCompares) {
+      expect(screenshotCompare).toMatchScreenshot();
     }
   } catch (err) {
     throw err;
