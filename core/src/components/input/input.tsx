@@ -70,11 +70,6 @@ export class Input implements ComponentInterface {
   @Prop({ mutable: true }) clearOnEdit?: boolean;
 
   /**
-   * If `true`, the value will be cleared after focus.
-   */
-  @Prop() clearOnFocus = false;
-
-  /**
    * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
    */
   @Prop() debounce = 0;
@@ -292,9 +287,6 @@ export class Input implements ComponentInterface {
   }
 
   private onFocus = () => {
-    if (this.clearOnFocus && !this.hasFocus && this.hasValue()) {
-      this.clearTextInput();
-    }
     this.hasFocus = true;
     this.focusChanged();
     this.emitStyle();

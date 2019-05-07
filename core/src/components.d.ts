@@ -1692,10 +1692,6 @@ export namespace Components {
     */
     'clearOnEdit'?: boolean;
     /**
-    * If `true`, the value will be cleared after focus.
-    */
-    'clearOnFocus': boolean;
-    /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
@@ -1813,10 +1809,6 @@ export namespace Components {
     * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
     */
     'clearOnEdit'?: boolean;
-    /**
-    * If `true`, the value will be cleared after focus.
-    */
-    'clearOnFocus'?: boolean;
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
