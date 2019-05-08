@@ -4,6 +4,7 @@ import { defineCustomElements } from '@ionic/core/loader';
 import { Components as IoniconsComponents } from 'ionicons';
 import { Components } from '@ionic/core';
 import { createReactComponent } from './createComponent';
+import { ReactProps } from './ReactProps';
 export { AlertButton, AlertInput } from '@ionic/core';
 
 // createControllerComponent
@@ -24,10 +25,6 @@ export { IonRouterOutlet, IonBackButton } from './navigation/IonRouterOutlet';
 
 addIcons(ICON_PATHS);
 defineCustomElements(window);
-
-interface ReactProps {
-  className?: string;
-}
 
 // ionicons
 export const IonIcon = createReactComponent<IoniconsComponents.IonIconAttributes & ReactProps, HTMLIonIconElement>('ion-icon');
