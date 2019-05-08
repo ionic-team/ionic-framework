@@ -6,7 +6,14 @@
 :host {
   /**
    * @prop --color: Color of the menu button
+   *
+   * @prop --padding-top: Padding top of the button
+   * @prop --padding-end: Padding end of the button
+   * @prop --padding-bottom: Padding bottom of the button
+   * @prop --padding-start: Padding start of the button
    */
+  --padding-top: 0;
+  --padding-bottom: 0;
 
   color: var(--color);
 
@@ -22,7 +29,7 @@
 button {
   @include text-inherit();
   @include margin(0);
-  @include padding(0);
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include font-smoothing();
 
   display: flex;

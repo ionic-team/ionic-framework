@@ -314,6 +314,15 @@ export class Input implements ComponentInterface {
     }
 
     this.value = '';
+
+    /**
+     * This is needed for clearOnEdit
+     * Otherwise the value will not be cleared
+     * if user is inside the input
+     */
+    if (this.nativeInput) {
+      this.nativeInput.value = '';
+    }
   }
 
   private focusChanged() {
