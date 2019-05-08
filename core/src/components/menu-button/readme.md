@@ -18,9 +18,13 @@ Menu Button is component that automatically creates the icon and functionality t
 
 ## CSS Custom Properties
 
-| Name      | Description              |
-| --------- | ------------------------ |
-| `--color` | Color of the menu button |
+| Name               | Description                  |
+| ------------------ | ---------------------------- |
+| `--color`          | Color of the menu button     |
+| `--padding-bottom` | Padding bottom of the button |
+| `--padding-end`    | Padding end of the button    |
+| `--padding-start`  | Padding start of the button  |
+| `--padding-top`    | Padding top of the button    |
 
 
 ----------------------------------------------

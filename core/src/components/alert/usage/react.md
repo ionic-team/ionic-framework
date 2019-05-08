@@ -267,5 +267,4 @@ export default class AlertExample extends Component<Props, State> {
     );
   }
 }
-
 ```

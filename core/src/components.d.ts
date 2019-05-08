@@ -89,7 +89,7 @@ export namespace Components {
     /**
     * Create an action sheet overlay with action sheet options.
     */
-    'create': (opts: ActionSheetOptions) => Promise<HTMLIonActionSheetElement>;
+    'create': (options: ActionSheetOptions) => Promise<HTMLIonActionSheetElement>;
     /**
     * Dismiss the open action sheet overlay.
     */
@@ -143,11 +143,11 @@ export namespace Components {
     */
     'mode': Mode;
     /**
-    * Returns a promise that resolves when the action-sheet did dismiss.
+    * Returns a promise that resolves when the action sheet did dismiss.
     */
     'onDidDismiss': () => Promise<OverlayEventDetail<any>>;
     /**
-    * Returns a promise that resolves when the action-sheet will dismiss.
+    * Returns a promise that resolves when the action sheet will dismiss.
     */
     'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
     'overlayIndex': number;
@@ -229,9 +229,9 @@ export namespace Components {
 
   interface IonAlertController {
     /**
-    * Create an alert overlay with alert options
+    * Create an alert overlay with alert options.
     */
-    'create': (opts: AlertOptions) => Promise<HTMLIonAlertElement>;
+    'create': (options: AlertOptions) => Promise<HTMLIonAlertElement>;
     /**
     * Dismiss the open alert overlay.
     */
@@ -717,23 +717,63 @@ export namespace Components {
 
   interface IonCard {
     /**
+    * If `true`, a button tag will be rendered and the card will be tappable.
+    */
+    'button': boolean;
+    /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * If `true`, the user cannot interact with the card.
+    */
+    'disabled': boolean;
+    /**
+    * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+    */
+    'href'?: string;
     /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
+    /**
+    * When using a router, it specifies the transition direction when navigating to another page using `href`.
+    */
+    'routerDirection': RouterDirection;
+    /**
+    * The type of the button. Only used when an `onclick` or `button` property is present.
+    */
+    'type': 'submit' | 'reset' | 'button';
   }
   interface IonCardAttributes extends StencilHTMLAttributes {
+    /**
+    * If `true`, a button tag will be rendered and the card will be tappable.
+    */
+    'button'?: boolean;
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
     /**
+    * If `true`, the user cannot interact with the card.
+    */
+    'disabled'?: boolean;
+    /**
+    * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+    */
+    'href'?: string;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
+    /**
+    * When using a router, it specifies the transition direction when navigating to another page using `href`.
+    */
+    'routerDirection'?: RouterDirection;
+    /**
+    * The type of the button. Only used when an `onclick` or `button` property is present.
+    */
+    'type'?: 'submit' | 'reset' | 'button';
   }
 
   interface IonCheckbox {
@@ -1049,11 +1089,11 @@ export namespace Components {
     */
     'fullscreen': boolean;
     /**
-    * Returns the element where the actual scrolling takes places. This element is the one you could subscribe to `scroll` events or manually modify `scrollTop`, however, it's recommended to use the API provided by `ion-content`:  Ie. Using `ionScroll`, `ionScrollStart`, `ionScrollEnd` for scrolling events and scrollToPoint() to scroll the content into a certain point.
+    * Get the element where the actual scrolling takes place. This element can be used to subscribe to `scroll` events or manually modify `scrollTop`. However, it's recommended to use the API provided by `ion-content`:  i.e. Using `ionScroll`, `ionScrollStart`, `ionScrollEnd` for scrolling events and `scrollToPoint()` to scroll the content into a certain point.
     */
     'getScrollElement': () => Promise<HTMLElement>;
     /**
-    * Scroll by a specified X/Y distance in the component
+    * Scroll by a specified X/Y distance in the component.
     */
     'scrollByPoint': (x: number, y: number, duration: number) => Promise<void>;
     /**
@@ -1061,15 +1101,15 @@ export namespace Components {
     */
     'scrollEvents': boolean;
     /**
-    * Scroll to the bottom of the component
+    * Scroll to the bottom of the component.
     */
     'scrollToBottom': (duration?: number) => Promise<void>;
     /**
-    * Scroll to a specified X/Y location in the component
+    * Scroll to a specified X/Y location in the component.
     */
     'scrollToPoint': (x: number | null | undefined, y: number | null | undefined, duration?: number) => Promise<void>;
     /**
-    * Scroll to the top of the component
+    * Scroll to the top of the component.
     */
     'scrollToTop': (duration?: number) => Promise<void>;
     /**
@@ -1416,7 +1456,7 @@ export namespace Components {
 
   interface IonFabList {
     /**
-    * If `true`, the fab list will be show all fab buttons in the list.
+    * If `true`, the fab list will show all fab buttons in the list.
     */
     'activated': boolean;
     /**
@@ -1426,7 +1466,7 @@ export namespace Components {
   }
   interface IonFabListAttributes extends StencilHTMLAttributes {
     /**
-    * If `true`, the fab list will be show all fab buttons in the list.
+    * If `true`, the fab list will show all fab buttons in the list.
     */
     'activated'?: boolean;
     /**
@@ -1441,7 +1481,7 @@ export namespace Components {
     */
     'activated': boolean;
     /**
-    * Close an active FAB list container
+    * Close an active FAB list container.
     */
     'close': () => void;
     /**
@@ -1551,9 +1591,13 @@ export namespace Components {
     */
     'onIonError'?: (event: CustomEvent<void>) => void;
     /**
-    * Emitted when the img src has been set
+    * Emitted when the image has finished loading
     */
     'onIonImgDidLoad'?: (event: CustomEvent<void>) => void;
+    /**
+    * Emitted when the img src has been set
+    */
+    'onIonImgWillLoad'?: (event: CustomEvent<void>) => void;
     /**
     * The image URL. This attribute is mandatory for the <img> element.
     */
@@ -1979,6 +2023,10 @@ export namespace Components {
     * Get the ratio of the open amount of the item compared to the width of the options. If the number returned is positive, then the options on the right side are open. If the number returned is negative, then the options on the left side are open. If the absolute value of the number is greater than 1, the item is open more than the width of the options.
     */
     'getSlidingRatio': () => Promise<number>;
+    /**
+    * Open the sliding item.
+    */
+    'open': (side: string | undefined) => Promise<void>;
   }
   interface IonItemSlidingAttributes extends StencilHTMLAttributes {
     /**
@@ -2163,7 +2211,7 @@ export namespace Components {
     /**
     * Create a loading overlay with loading options.
     */
-    'create': (opts?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>;
+    'create': (options?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>;
     /**
     * Dismiss the open loading overlay.
     */
@@ -2349,53 +2397,53 @@ export namespace Components {
   interface IonMenuController {
     '_getInstance': () => Promise<MenuControllerI>;
     /**
-    * Close the menu. If no menu is specified, then it will close any menu that is open. If a menu is specified, it will close that menu.
+    * Close the menu. If a menu is specified, it will close that menu. If no menu is specified, then it will close any menu that is open. If it does not find any open menus, it will return `false`.
     */
-    'close': (menuId?: string | null | undefined) => Promise<boolean>;
+    'close': (menu?: string | null | undefined) => Promise<boolean>;
     /**
-    * Used to enable or disable a menu. For example, there could be multiple left menus, but only one of them should be able to be opened at the same time. If there are multiple menus on the same side, then enabling one menu will also automatically disable all the others that are on the same side.
+    * Enable or disable a menu. Disabling a menu will not allow gestures for that menu or any calls to open it. This is useful when there are multiple menus on the same side and only one of them should be allowed to open. Enabling a menu will automatically disable all other menus on that side.
     */
-    'enable': (shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
+    'enable': (enable: boolean, menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
     /**
-    * Used to get a menu instance. If a menu is not provided then it will return the first menu found. If the specified menu is `start` or `end`, then it will return the enabled menu on that side. Otherwise, it will try to find the menu using the menu's `id` property. If a menu is not found then it will return `null`.
+    * Get a menu instance. If a menu is not provided then it will return the first menu found. If the specified menu is `start` or `end`, then it will return the enabled menu on that side. Otherwise, it will try to find the menu using the menu's `id` property. If a menu is not found then it will return `null`.
     */
-    'get': (menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
+    'get': (menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
     /**
-    * Returns an array of all menu instances.
+    * Get all menu instances.
     */
     'getMenus': () => Promise<HTMLIonMenuElement[]>;
     /**
-    * Returns the instance of the menu already opened, otherwise `null`.
+    * Get the instance of the opened menu. Returns `null` if a menu is not found.
     */
     'getOpen': () => Promise<HTMLIonMenuElement | undefined>;
     /**
-    * Returns `true` if any menu is currently animating.
+    * Get whether or not a menu is animating. Returns `true` if any menu is currently animating.
     */
     'isAnimating': () => Promise<boolean>;
     /**
-    * Returns `true` if the specified menu is enabled.
+    * Get whether or not the menu is enabled. Returns `true` if the specified menu is enabled. Returns `false` if a menu is disabled or not found.
     */
-    'isEnabled': (menuId?: string | null | undefined) => Promise<boolean>;
+    'isEnabled': (menu?: string | null | undefined) => Promise<boolean>;
     /**
-    * Returns `true` if the specified menu is open. If the menu is not specified, it will return `true` if any menu is currently open.
+    * Get whether or not the menu is open. Returns `true` if the specified menu is open. If a menu is not specified, it will return `true` if any menu is currently open.
     */
-    'isOpen': (menuId?: string | null | undefined) => Promise<boolean>;
+    'isOpen': (menu?: string | null | undefined) => Promise<boolean>;
     /**
-    * Open the menu.
+    * Open the menu. If a menu is not provided then it will open the first menu found. If the specified menu is `start` or `end`, then it will open the enabled menu on that side. Otherwise, it will try to find the menu using the menu's `id` property. If a menu is not found then it will return `false`.
     */
-    'open': (menuId?: string | null | undefined) => Promise<boolean>;
+    'open': (menu?: string | null | undefined) => Promise<boolean>;
     /**
-    * Registers a new animation that can be used in any `ion-menu`.  ```    * <ion-menu type="my-animation">    * ```
+    * Registers a new animation that can be used with any `ion-menu` by passing the name of the animation in its `type` property.
     */
     'registerAnimation': (name: string, animation: AnimationBuilder) => void;
     /**
-    * Used to enable or disable the ability to swipe open the menu.
+    * Enable or disable the ability to swipe open the menu.
     */
-    'swipeGesture': (shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
+    'swipeGesture': (enable: boolean, menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
     /**
-    * Toggle the menu. If it's closed, it will open, and if opened, it will close.
+    * Toggle the menu open or closed. If the menu is already open, it will try to close the menu, otherwise it will try to open it. Returns `false` if a menu is not found.
     */
-    'toggle': (menuId?: string | null | undefined) => Promise<boolean>;
+    'toggle': (menu?: string | null | undefined) => Promise<boolean>;
   }
   interface IonMenuControllerAttributes extends StencilHTMLAttributes {}
 
@@ -2422,7 +2470,7 @@ export namespace Components {
 
   interface IonMenu {
     /**
-    * Closes the menu. If the menu is already closed or it can't be closed, it returns `false`.
+    * Close the menu. Returns `false` if the menu is already closed or it can't be closed.
     */
     'close': (animated?: boolean) => Promise<boolean>;
     /**
@@ -2434,11 +2482,11 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
-    * Returns `true` is the menu is active.  A menu is active when it can be opened or closed, meaning it's enabled and it's not part of a `ion-split-pane`.
+    * Get whether or not the menu is active. Returns `true` if the menu is active.  A menu is active when it can be opened or closed, meaning it's enabled and it's not part of an `ion-split-pane`.
     */
     'isActive': () => Promise<boolean>;
     /**
-    * Returns `true` is the menu is open.
+    * Get whether or not the menu is open. Returns `true` if the menu is open.
     */
     'isOpen': () => Promise<boolean>;
     /**
@@ -2450,11 +2498,11 @@ export namespace Components {
     */
     'menuId'?: string;
     /**
-    * Opens the menu. If the menu is already open or it can't be opened, it returns `false`.
+    * Open the menu. Returns `false` if the menu is already open or it can't be opened.
     */
     'open': (animated?: boolean) => Promise<boolean>;
     /**
-    * Opens or closes the button. If the operation can't be completed successfully, it returns `false`.
+    * Sets the menu to open or closed. Returns `false` if the operation can't be completed successfully.
     */
     'setOpen': (shouldOpen: boolean, animated?: boolean) => Promise<boolean>;
     /**
@@ -2466,11 +2514,11 @@ export namespace Components {
     */
     'swipeGesture': boolean;
     /**
-    * Toggles the menu. If the menu is already open, it will try to close, otherwise it will try to open it. If the operation can't be completed successfully, it returns `false`.
+    * Toggle the menu open or closed. If the menu is already open, it will try to close the menu, otherwise it will try to open it. Returns `false` if the operation can't be completed successfully.
     */
     'toggle': (animated?: boolean) => Promise<boolean>;
     /**
-    * The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.
+    * The animation type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`. Custom animations can be registered by the menu controller.
     */
     'type'?: string;
   }
@@ -2516,7 +2564,7 @@ export namespace Components {
     */
     'swipeGesture'?: boolean;
     /**
-    * The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.
+    * The animation type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`. Custom animations can be registered by the menu controller.
     */
     'type'?: string;
   }
@@ -2525,7 +2573,7 @@ export namespace Components {
     /**
     * Create a modal overlay with modal options.
     */
-    'create': <T extends ComponentRef>(opts: ModalOptions<T>) => Promise<HTMLIonModalElement>;
+    'create': <T extends ComponentRef>(options: ModalOptions<T>) => Promise<HTMLIonModalElement>;
     /**
     * Dismiss the open modal overlay.
     */
@@ -2711,37 +2759,37 @@ export namespace Components {
     */
     'animation'?: AnimationBuilder;
     /**
-    * Returns `true` or false if the current view can go back
+    * Returns `true` if the current view can go back.
     */
     'canGoBack': (view?: ViewController | undefined) => Promise<boolean>;
     'delegate'?: FrameworkDelegate;
     /**
-    * Gets the active view
+    * Get the active view.
     */
     'getActive': () => Promise<ViewController | undefined>;
     /**
-    * Returns the view at the index
+    * Get the view at the specified index.
     */
     'getByIndex': (index: number) => Promise<ViewController | undefined>;
     /**
-    * Gets the previous view
+    * Get the previous view.
     */
     'getPrevious': (view?: ViewController | undefined) => Promise<ViewController | undefined>;
     'getRouteId': () => Promise<RouteID | undefined>;
     /**
-    * Inserts a component into the nav stack at the specified index. This is useful if you need to add a component at any point in your navigation stack.
+    * Inserts a component into the navigation stack at the specified index. This is useful to add a component at any point in the navigation stack.
     */
     'insert': <T extends NavComponent>(insertIndex: number, component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     /**
-    * Inserts an array of components into the nav stack at the specified index. The last component in the array will become instantiated as a view, and animate in to become the active view.
+    * Inserts an array of components into the navigation stack at the specified index. The last component in the array will become instantiated as a view, and animate in to become the active view.
     */
     'insertPages': (insertIndex: number, insertComponents: NavComponent[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     /**
-    * Call to navigate back from a current component. Similar to push(), you can also pass navigation options.
+    * Pop a component off of the navigation stack. Navigates back from the current component.
     */
     'pop': (opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     /**
-    * Pop to a specific index in the navigation stack
+    * Pop to a specific index in the navigation stack.
     */
     'popTo': (indexOrViewCtrl: number | ViewController, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     /**
@@ -2749,11 +2797,11 @@ export namespace Components {
     */
     'popToRoot': (opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     /**
-    * Push a new component onto the current navigation stack. Pass any additional information along as an object. This additional information is accessible through NavParams
+    * Push a new component onto the current navigation stack. Pass any additional information along as an object. This additional information is accessible through NavParams.
     */
     'push': <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     /**
-    * Removes a page from the nav stack at the specified index.
+    * Removes a component from the navigation stack at the specified index.
     */
     'removeIndex': (startIndex: number, removeCount?: number, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     /**
@@ -2765,11 +2813,11 @@ export namespace Components {
     */
     'rootParams'?: ComponentProps;
     /**
-    * Set the views of the current navigation stack and navigate to the last view. By default animations are disabled, but they can be enabled by passing options to the navigation controller.You can also pass any navigation params to the individual pages in the array.
+    * Set the views of the current navigation stack and navigate to the last view. By default animations are disabled, but they can be enabled by passing options to the navigation controller. Navigation parameters can also be passed to the individual pages in the array.
     */
     'setPages': (views: any[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     /**
-    * Set the root for the current navigation stack.
+    * Set the root for the current navigation stack to a component.
     */
     'setRoot': <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     'setRouteId': (id: string, params: { [key: string]: any; } | undefined, direction: RouterDirection) => Promise<RouteWrite>;
@@ -2847,7 +2895,7 @@ export namespace Components {
     /**
     * Create a picker overlay with picker options.
     */
-    'create': (opts: PickerOptions) => Promise<HTMLIonPickerElement>;
+    'create': (options: PickerOptions) => Promise<HTMLIonPickerElement>;
     /**
     * Dismiss the open picker overlay.
     */
@@ -2893,7 +2941,7 @@ export namespace Components {
     */
     'enterAnimation'?: AnimationBuilder;
     /**
-    * Returns the column the matches the specified name
+    * Get the column that matches the specified name.
     */
     'getColumn': (name: string) => Promise<PickerColumn | undefined>;
     /**
@@ -2993,7 +3041,7 @@ export namespace Components {
     /**
     * Create a popover overlay with popover options.
     */
-    'create': <T extends ComponentRef>(opts: PopoverOptions<T>) => Promise<HTMLIonPopoverElement>;
+    'create': <T extends ComponentRef>(options: PopoverOptions<T>) => Promise<HTMLIonPopoverElement>;
     /**
     * Dismiss the open popover overlay.
     */
@@ -3471,6 +3519,10 @@ export namespace Components {
     */
     'getProgress': () => Promise<number>;
     /**
+    * How much to multiply the pull speed by. To slow the pull animation down, pass a number less than `1`. To speed up the pull, pass a number greater than `1`. The default value is `1` which is equal to the speed of the cursor. If a negative value is passed in, the factor will be `1` instead.  For example: If the value passed is `1.2` and the content is dragged by `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels (an increase of 20 percent). If the value passed is `0.8`, the dragged amount will be `8` pixels, less than the amount the cursor has moved.
+    */
+    'pullFactor': number;
+    /**
     * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`.
     */
     'pullMax': number;
@@ -3505,6 +3557,10 @@ export namespace Components {
     */
     'onIonStart'?: (event: CustomEvent<void>) => void;
     /**
+    * How much to multiply the pull speed by. To slow the pull animation down, pass a number less than `1`. To speed up the pull, pass a number greater than `1`. The default value is `1` which is equal to the speed of the cursor. If a negative value is passed in, the factor will be `1` instead.  For example: If the value passed is `1.2` and the content is dragged by `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels (an increase of 20 percent). If the value passed is `0.8`, the dragged amount will be `8` pixels, less than the amount the cursor has moved.
+    */
+    'pullFactor'?: number;
+    /**
     * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`.
     */
     'pullMax'?: number;
@@ -3520,7 +3576,7 @@ export namespace Components {
 
   interface IonReorderGroup {
     /**
-    * This method must be called once the `ionItemReorder` event is handled in order to complete the reorder operation.
+    * Completes the reorder operation. Must be called by the `ionItemReorder` event.  If a list of items is passed, the list will be reordered and returned in the proper order.  If no parameters are passed or if `true` is passed in, the reorder will complete and the item will remain in the position it was dragged to. If `false` is passed, the reorder will complete and the item will bounce back to its original position.
     */
     'complete': (listOrReorder?: boolean | any[] | undefined) => Promise<any>;
     /**
@@ -3544,9 +3600,9 @@ export namespace Components {
 
   interface IonRippleEffect {
     /**
-    * Adds the ripple effect to the parent element
+    * Adds the ripple effect to the parent element.
     */
-    'addRipple': (pageX: number, pageY: number) => Promise<() => void>;
+    'addRipple': (x: number, y: number) => Promise<() => void>;
     /**
     * Sets the type of ripple-effect:  - `bounded`: the ripple effect expands from the user's click position - `unbounded`: the ripple effect expands from the center of the button and overflows the container.  NOTE: Surfaces for bounded ripples should have the overflow property set to hidden, while surfaces for unbounded ripples should have it set to visible.
     */
@@ -3720,6 +3776,10 @@ export namespace Components {
     */
     'debounce': number;
     /**
+    * If `true`, the user cannot interact with the input.
+    */
+    'disabled': boolean;
+    /**
     * Returns the native `<input>` element used under the hood.
     */
     'getInputElement': () => Promise<HTMLInputElement>;
@@ -3789,6 +3849,10 @@ export namespace Components {
     * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
     */
     'debounce'?: number;
+    /**
+    * If `true`, the user cannot interact with the input.
+    */
+    'disabled'?: boolean;
     /**
     * The mode determines which platform styles to use.
     */
@@ -4049,9 +4113,9 @@ export namespace Components {
     */
     'okText': string;
     /**
-    * Opens the select overlay, it could be an alert, action-sheet or popover, based in `ion-select` settings.
+    * Open the select overlay. The overlay is either an alert, action sheet, or popover, depending on the `interface` property on the `ion-select`.
     */
-    'open': (ev?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>;
+    'open': (event?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>;
     /**
     * The text to display when the select is empty.
     */
@@ -4172,17 +4236,17 @@ export namespace Components {
     */
     'length': () => Promise<number>;
     /**
-    * Lock or unlock the ability to slide to the next slides.
+    * Lock or unlock the ability to slide to the next slide.
     */
-    'lockSwipeToNext': (shouldLockSwipeToNext: boolean) => Promise<void>;
+    'lockSwipeToNext': (lock: boolean) => Promise<void>;
     /**
-    * Lock or unlock the ability to slide to the previous slides.
+    * Lock or unlock the ability to slide to the previous slide.
     */
-    'lockSwipeToPrev': (shouldLockSwipeToPrev: boolean) => Promise<void>;
+    'lockSwipeToPrev': (lock: boolean) => Promise<void>;
     /**
-    * Lock or unlock the ability to slide to change slides.
+    * Lock or unlock the ability to slide to the next or previous slide.
     */
-    'lockSwipes': (shouldLockSwipes: boolean) => Promise<void>;
+    'lockSwipes': (lock: boolean) => Promise<void>;
     /**
     * The mode determines which platform styles to use.
     */
@@ -4224,7 +4288,7 @@ export namespace Components {
     */
     'update': () => Promise<void>;
     /**
-    * Force swiper to update its height (when autoHeight enabled) for the duration equal to 'speed' parameter
+    * Force swiper to update its height (when autoHeight is enabled) for the duration equal to 'speed' parameter.
     */
     'updateAutoHeight': (speed?: number | undefined) => Promise<void>;
   }
@@ -4350,7 +4414,7 @@ export namespace Components {
 
   interface IonSplitPane {
     /**
-    * The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane.  ```html    * <ion-split-pane content-id="my-content">    *   <ion-menu></ion-menu>    *   <div id="my-content">    * </ion-split-pane>    * ```
+    * The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane.
     */
     'contentId'?: string;
     /**
@@ -4364,7 +4428,7 @@ export namespace Components {
   }
   interface IonSplitPaneAttributes extends StencilHTMLAttributes {
     /**
-    * The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane.  ```html    * <ion-split-pane content-id="my-content">    *   <ion-menu></ion-menu>    *   <div id="my-content">    * </ion-split-pane>    * ```
+    * The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane.
     */
     'contentId'?: string;
     /**
@@ -4501,15 +4565,15 @@ export namespace Components {
   interface IonTabs {
     'getRouteId': () => Promise<RouteID | undefined>;
     /**
-    * Get the currently selected tab
+    * Get the currently selected tab.
     */
     'getSelected': () => Promise<string | undefined>;
     /**
-    * Get the tab element given the tab name
+    * Get a specific tab by the value of its `tab` property or an element reference.
     */
     'getTab': (tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>;
     /**
-    * Index or the Tab instance, of the tab to select.
+    * Select a tab by the value of its `tab` property or an element reference.
     */
     'select': (tab: string | HTMLIonTabElement) => Promise<boolean>;
     'setRouteId': (id: string) => Promise<RouteWrite>;
@@ -4548,6 +4612,10 @@ export namespace Components {
   }
 
   interface IonTextarea {
+    /**
+    * If `true`, the element height will increase based on the value.
+    */
+    'autoGrow': boolean;
     /**
     * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
     */
@@ -4630,6 +4698,10 @@ export namespace Components {
     'wrap'?: 'hard' | 'soft' | 'off';
   }
   interface IonTextareaAttributes extends StencilHTMLAttributes {
+    /**
+    * If `true`, the element height will increase based on the value.
+    */
+    'autoGrow'?: boolean;
     /**
     * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
     */
@@ -4740,7 +4812,7 @@ export namespace Components {
     /**
     * Create a toast overlay with toast options.
     */
-    'create': (opts?: ToastOptions | undefined) => Promise<HTMLIonToastElement>;
+    'create': (options?: ToastOptions | undefined) => Promise<HTMLIonToastElement>;
     /**
     * Dismiss the open toast overlay.
     */
@@ -5010,13 +5082,13 @@ export namespace Components {
     */
     'approxItemHeight': number;
     /**
-    * This method marks the tail the items array as dirty, so they can be re-rendered.  It's equivalent to calling:  ```js    * virtualScroll.checkRange(lastItemLen);    * ```
+    * Marks the tail of the items array as dirty, so they can be re-rendered. It's equivalent to calling `checkRange(length)` where `length` is the total length of the items.
     */
     'checkEnd': () => void;
     /**
-    * This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as dirty any time the content or their style changes.  The subset of items to be updated can are specifing by an offset and a length.
+    * Marks a subset of the items as dirty so they can be re-rendered. Items should be marked as dirty any time the content or their style changes.  The subset of items to be updated are specified by an offset and a length. If a length is not provided it will check all of the items beginning at the offset.
     */
-    'checkRange': (offset: number, len?: number) => void;
+    'checkRange': (offset: number, length?: number) => void;
     'domRender'?: DomRenderFn;
     /**
     * Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.
