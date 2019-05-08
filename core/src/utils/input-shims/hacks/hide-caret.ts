@@ -1,6 +1,6 @@
 import { isFocused, relocateInput } from './common';
 
-export function enableHideCaretOnScroll(componentEl: HTMLElement, inputEl: HTMLInputElement | undefined, scrollEl: HTMLIonContentElement | undefined) {
+export function enableHideCaretOnScroll(componentEl: HTMLElement, inputEl: HTMLInputElement | HTMLTextAreaElement | undefined, scrollEl: HTMLIonContentElement | undefined) {
   if (!scrollEl || !inputEl) {
     return () => { return; };
   }

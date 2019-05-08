@@ -96,12 +96,12 @@ export default Example;
 
 ### `getScrollElement() => Promise<HTMLElement>`
 
-Returns the element where the actual scrolling takes places.
-This element is the one you could subscribe to `scroll` events or manually modify
-`scrollTop`, however, it's recommended to use the API provided by `ion-content`:
+Get the element where the actual scrolling takes place.
+This element can be used to subscribe to `scroll` events or manually modify
+`scrollTop`. However, it's recommended to use the API provided by `ion-content`:
 
-Ie. Using `ionScroll`, `ionScrollStart`, `ionScrollEnd` for scrolling events
-and scrollToPoint() to scroll the content into a certain point.
+i.e. Using `ionScroll`, `ionScrollStart`, `ionScrollEnd` for scrolling events
+and `scrollToPoint()` to scroll the content into a certain point.
 
 #### Returns
 
@@ -111,15 +111,15 @@ Type: `Promise<HTMLElement>`
 
 ### `scrollByPoint(x: number, y: number, duration: number) => Promise<void>`
 
-Scroll by a specified X/Y distance in the component
+Scroll by a specified X/Y distance in the component.
 
 #### Parameters
 
-| Name       | Type     | Description |
-| ---------- | -------- | ----------- |
-| `x`        | `number` |             |
-| `y`        | `number` |             |
-| `duration` | `number` |             |
+| Name       | Type     | Description                                          |
+| ---------- | -------- | ---------------------------------------------------- |
+| `x`        | `number` | The amount to scroll by on the horizontal axis.      |
+| `y`        | `number` | The amount to scroll by on the vertical axis.        |
+| `duration` | `number` | The amount of time to take scrolling by that amount. |
 
 #### Returns
 
@@ -129,13 +129,13 @@ Type: `Promise<void>`
 
 ### `scrollToBottom(duration?: number) => Promise<void>`
 
-Scroll to the bottom of the component
+Scroll to the bottom of the component.
 
 #### Parameters
 
-| Name       | Type     | Description |
-| ---------- | -------- | ----------- |
-| `duration` | `number` |             |
+| Name       | Type     | Description                                                          |
+| ---------- | -------- | -------------------------------------------------------------------- |
+| `duration` | `number` | The amount of time to take scrolling to the bottom. Defaults to `0`. |
 
 #### Returns
 
@@ -145,15 +145,15 @@ Type: `Promise<void>`
 
 ### `scrollToPoint(x: number | null | undefined, y: number | null | undefined, duration?: number) => Promise<void>`
 
-Scroll to a specified X/Y location in the component
+Scroll to a specified X/Y location in the component.
 
 #### Parameters
 
-| Name       | Type                          | Description |
-| ---------- | ----------------------------- | ----------- |
-| `x`        | `null \| number \| undefined` |             |
-| `y`        | `null \| number \| undefined` |             |
-| `duration` | `number`                      |             |
+| Name       | Type                          | Description                                                          |
+| ---------- | ----------------------------- | -------------------------------------------------------------------- |
+| `x`        | `null \| number \| undefined` | The point to scroll to on the horizontal axis.                       |
+| `y`        | `null \| number \| undefined` | The point to scroll to on the vertical axis.                         |
+| `duration` | `number`                      | The amount of time to take scrolling to that point. Defaults to `0`. |
 
 #### Returns
 
@@ -163,13 +163,13 @@ Type: `Promise<void>`
 
 ### `scrollToTop(duration?: number) => Promise<void>`
 
-Scroll to the top of the component
+Scroll to the top of the component.
 
 #### Parameters
 
-| Name       | Type     | Description |
-| ---------- | -------- | ----------- |
-| `duration` | `number` |             |
+| Name       | Type     | Description                                                       |
+| ---------- | -------- | ----------------------------------------------------------------- |
+| `duration` | `number` | The amount of time to take scrolling to the top. Defaults to `0`. |
 
 #### Returns
 

@@ -50,7 +50,6 @@ export async function testActionSheetBackdrop(
   actionSheet: any
 ) {
   try {
-    console.log('backdrop hook');
     const backdrop = await page.find('ion-backdrop');
     await backdrop.click();
 
