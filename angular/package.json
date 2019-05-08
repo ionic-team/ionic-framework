@@ -45,11 +45,7 @@
     "css/"
   ],
   "dependencies": {
-<<<<<<< HEAD
     "@ionic/core": "4.4.0",
-=======
-    "@ionic/core": "4.3.1",
->>>>>>> origin
     "tslib": "^1.9.3"
   },
   "peerDependencies": {
