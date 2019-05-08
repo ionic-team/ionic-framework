@@ -6,6 +6,13 @@
   </ion-refresher>
 </ion-content>
 
+<!-- Custom Refresher Properties -->
+<ion-content>
+  <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+</ion-content>
+
 <!-- Custom Refresher Content -->
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
