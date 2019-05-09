@@ -40,7 +40,7 @@
     "@stencil/utils": "latest",
     "@types/jest": "^23.3.13",
     "@types/node": "10.12.18",
-    "@types/puppeteer": "1.11.2",
+    "@types/puppeteer": "1.12.4",
     "@types/swiper": "4.4.1",
     "agadoo": "^1.0.0",
     "autoprefixer": "9.4.6",
@@ -52,7 +52,7 @@
     "jest-cli": "23.6.0",
     "np": "^3.0.4",
     "pixelmatch": "4.0.2",
-    "puppeteer": "1.11.0",
+    "puppeteer": "1.14.0",
     "rollup": "1.1.2",
     "rollup-plugin-node-resolve": "4.0.0",
     "sass": "^1.20.1",
@@ -84,6 +84,8 @@
     "start": "npm run build.css && stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
     "test.spec": "stencil test --spec",
+    "test.spec.debug": "npx --node-arg=\"--inspect-brk\" stencil test --spec",
+
     "test.e2e": "stencil test --e2e",
     "test.screenshot": "stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/dev.js",
     "test.screenshot.ci": "stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci",
@@ -100,5 +102,8 @@
   "bugs": {
     "url": "https://github.com/ionic-team/ionic/issues"
   },
-  "homepage": "https://github.com/ionic-team/ionic#readme"
+  "homepage": "https://github.com/ionic-team/ionic#readme",
+  "jest": {
+    "preset": "@stencil/core/testing"
+  }
 }

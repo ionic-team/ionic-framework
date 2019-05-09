@@ -59,5 +59,6 @@ angular/css/
 core/css/
 core/hydrated/
 core/loader/
+core/www/
 .stencil/
 angular/build/
