@@ -39,6 +39,13 @@
   }
 }
 
+// iOS Toolbar Clear Button
+// --------------------------------------------------
+::slotted(*) .button-clear {
+  --color: initial;
+  --color-activated: currentColor;
+  --background: transparent;
+}
 
 // iOS Toolbar Button Icon
 // --------------------------------------------------

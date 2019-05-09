@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <link href="./preview/toolbar.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script src="../../../../../dist/ionic.js"></script>
 </head>
@@ -164,6 +165,18 @@
           </ion-button>
         </ion-buttons>
         <ion-title>Dark Toolbar</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar class="custom-toolbar-colors">
+        <ion-buttons slot="secondary">
+          <ion-back-button class="show-back-button"></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button>
+            <ion-icon slot="icon-only" name="more"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Custom colors</ion-title>
       </ion-toolbar>
     </ion-content>
   </ion-app>
