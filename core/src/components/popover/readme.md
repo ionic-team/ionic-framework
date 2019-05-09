@@ -4,7 +4,7 @@ A Popover is a dialog that appears on top of the current page. It can be used fo
 
 ### Creating
 
-Popovers can be created using a [Popover Controller](https://beta.ionicframework.com/docs/api/popover-controller). They can be customized by passing popover options in the popover controller's create method.
+Popovers can be created using a [Popover Controller](../popover-controller). They can be customized by passing popover options in the popover controller's create method.
 
 ### Presenting
 
@@ -52,10 +52,44 @@ async function presentPopover(ev) {
 
   const popover = await popoverController.create({
     component: 'popover-example-page',
-    translucent: true
     event: ev,
+    translucent: true
   });
   return await popover.present();
+}
+```
+
+
+### React
+
+```tsx
+import React, { Component } from 'react'
+import { IonPopover } from '@ionic/react';
+
+type Props = {}
+type State = {
+  showPopover: boolean
+}
+
+export class PopoverExample extends Component<Props, State> {
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      showPopover: false
+    };
+  }
+
+  render() {
+    return (
+      <IonPopover
+        isOpen={this.state.showPopover}
+        onDidDismiss={() => this.setState(() => ({ showPopover: false }))}
+      >
+        <p>This is popover content</p>
+      </IonPopover>
+    );
+  }
 }
 ```
 
@@ -97,10 +131,10 @@ Dismiss the popover overlay after it has been presented.
 
 #### Parameters
 
-| Name   | Type                  | Description |
-| ------ | --------------------- | ----------- |
-| `data` | `any`                 |             |
-| `role` | `string \| undefined` |             |
+| Name   | Type                  | Description                                                                                  |
+| ------ | --------------------- | -------------------------------------------------------------------------------------------- |
+| `data` | `any`                 | Any data to emit in the dismiss events.                                                      |
+| `role` | `string \| undefined` | The role of the element that is dismissing the popover. For example, 'cancel' or 'backdrop'. |
 
 #### Returns
 

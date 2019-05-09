@@ -1,5 +1,6 @@
 import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
 
+import { Mode } from '../../interface';
 import { matchBreakpoint } from '../../utils/media';
 
 const win = window as any;
@@ -12,6 +13,8 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
   shadow: true
 })
 export class Col implements ComponentInterface {
+  mode!: Mode;
+
   @Prop({ context: 'window' }) win!: Window;
 
   @Element() el!: HTMLStencilElement;
@@ -232,30 +235,28 @@ export class Col implements ComponentInterface {
     };
   }
 
-  private calculateOffset() {
-    const isRTL = document.dir === 'rtl';
-
+  private calculateOffset(isRTL: boolean) {
     return this.calculatePosition('offset', isRTL ? 'margin-right' : 'margin-left');
   }
 
-  private calculatePull() {
-    const isRTL = document.dir === 'rtl';
-
+  private calculatePull(isRTL: boolean) {
     return this.calculatePosition('pull', isRTL ? 'left' : 'right');
   }
 
-  private calculatePush() {
-    const isRTL = document.dir === 'rtl';
-
+  private calculatePush(isRTL: boolean) {
     return this.calculatePosition('push', isRTL ? 'right' : 'left');
   }
 
   hostData() {
+    const isRTL = this.win.document.dir === 'rtl';
     return {
+      class: {
+        [`${this.mode}`]: true
+      },
       style: {
-        ...this.calculateOffset(),
-        ...this.calculatePull(),
-        ...this.calculatePush(),
+        ...this.calculateOffset(isRTL),
+        ...this.calculatePull(isRTL),
+        ...this.calculatePush(isRTL),
         ...this.calculateSize(),
       }
     };

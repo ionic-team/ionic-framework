@@ -1,3 +1,16 @@
+/**
+ * Gets a date value given a format
+ * Defaults to the current date if
+ * no date given
+ */
+export function getDateValue(date: DatetimeData, format: string): number {
+  const getValue = getValueFromFormat(date, format);
+
+  if (getValue !== undefined) { return getValue; }
+
+  const defaultDate = parseDate(new Date().toISOString());
+  return getValueFromFormat((defaultDate as DatetimeData), format);
+}
 
 export function renderDatetime(template: string, value: DatetimeData | undefined, locale: LocaleData): string | undefined {
   if (value === undefined) {
@@ -228,7 +241,60 @@ export function parseDate(val: string | undefined | null): DatetimeData | undefi
   };
 }
 
+/**
+ * Converts a valid UTC datetime string
+ * To the user's local timezone
+ * Note: This is not meant for time strings
+ * such as "01:47"
+ */
+export const getLocalDateTime = (dateString: any = ''): Date => {
+  /**
+   * If user passed in undefined
+   * or null, convert it to the
+   * empty string since the rest
+   * of this functions expects
+   * a string
+   */
+  if (dateString === undefined || dateString === null) {
+    dateString = '';
+  }
+
+  /**
+   * Ensures that YYYY-MM-DD, YYYY-MM,
+   * YYYY-DD, etc does not get affected
+   * by timezones and stays on the day/month
+   * that the user provided
+   */
+  if (
+    dateString.length === 10 ||
+    dateString.length === 7
+  ) {
+    dateString += ' ';
+  }
+
+  const date = (typeof dateString === 'string' && dateString.length > 0) ? new Date(dateString) : new Date();
+  return new Date(
+    Date.UTC(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      date.getHours(),
+      date.getMinutes(),
+      date.getSeconds(),
+      date.getMilliseconds()
+    )
+  );
+};
+
 export function updateDate(existingData: DatetimeData, newData: any): boolean {
+
+  if (!newData || typeof newData === 'string') {
+    const localDateTime = getLocalDateTime(newData);
+    if (!Number.isNaN(localDateTime.getTime())) {
+      newData = localDateTime.toISOString();
+    }
+  }
+
   if (newData && newData !== '') {
 
     if (typeof newData === 'string') {
@@ -355,6 +421,7 @@ export function convertDataToISO(data: DatetimeData): string {
             rtn += 'Z';
 
           } else {
+
             // YYYY-MM-DDTHH:mm:SS+/-HH:mm
             rtn += (data.tzOffset > 0 ? '+' : '-') + twoDigit(Math.floor(Math.abs(data.tzOffset / 60))) + ':' + twoDigit(data.tzOffset % 60);
           }

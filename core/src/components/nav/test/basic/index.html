@@ -37,6 +37,12 @@
   --ion-background-color-rgb: 0,0,0;
   --ion-text-color-rgb: 255,255,255;
 }
+
+[f] {
+  background: green;
+  width: 100px;
+  height: 100px;
+}
 </style>
   <script>
     class PageOne extends HTMLElement {
@@ -66,6 +72,19 @@
               </ion-buttons>
               <ion-title>Page Two</ion-title>
             </ion-toolbar>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-button>
+                  <ion-icon slot="icon-only" name="star"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+              <ion-searchbar></ion-searchbar>
+              <ion-buttons slot="end">
+                <ion-button>
+                  <ion-icon slot="icon-only" name="star"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
           </ion-header>
           <ion-content padding>
             <h1>Page Two</h1>
@@ -74,6 +93,15 @@
                 <ion-button class="next">Go to Page Three</ion-button>
               </ion-nav-push>
             </div>
+            <div f></div>
+            <div f></div>
+            <div f></div>
+            <div f></div>
+            <div f></div>
+            <div f></div>
+            <div f></div>
+            <div f></div>
+
           </ion-content>
         `;
       }

@@ -2,23 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { dashToPascalCase, attachEventProps } from './utils';
 
-export function createReactComponent<T, E>(tagName: string) {
+export function createReactComponent<PropType, ElementType>(tagName: string) {
   const displayName = dashToPascalCase(tagName);
 
   type IonicReactInternalProps = {
-    forwardedRef?: React.RefObject<E>;
+    forwardedRef?: React.RefObject<ElementType>;
     children?: React.ReactNode;
   }
+  type InternalProps = PropType & IonicReactInternalProps;
 
   type IonicReactExternalProps = {
-    ref?: React.RefObject<E>;
+    ref?: React.RefObject<ElementType>;
     children?: React.ReactNode;
   }
 
-  class ReactComponent extends React.Component<T & IonicReactInternalProps> {
-    componentRef: React.RefObject<E>;
+  class ReactComponent extends React.Component<InternalProps> {
+    componentRef: React.RefObject<ElementType>;
 
-    constructor(props: T & IonicReactInternalProps) {
+    constructor(props: PropType & IonicReactInternalProps) {
       super(props);
       this.componentRef = React.createRef();
     }
@@ -31,28 +32,29 @@ export function createReactComponent<T, E>(tagName: string) {
       this.componentWillReceiveProps(this.props);
     }
 
-    componentWillReceiveProps(props: any) {
-      const node = ReactDOM.findDOMNode(this);
-
-      if (!(node instanceof HTMLElement)) {
-        return;
-      }
-
-      attachEventProps(node, props);
+    componentWillReceiveProps(props: InternalProps) {
+      const node = ReactDOM.findDOMNode(this) as HTMLElement;
+      attachEventProps(node, props, this.props);
     }
 
     render() {
-      const { children, forwardedRef, ...cProps } = this.props as any;
-      cProps.ref = forwardedRef;
+      const { children, forwardedRef, ...cProps } = this.props;
 
-      return React.createElement(tagName, cProps, children);
+      return React.createElement(
+        tagName,
+        {
+          ...cProps,
+          ref: forwardedRef
+        },
+        children
+      );
     }
   }
 
-  function forwardRef(props: T & IonicReactInternalProps, ref: React.RefObject<E>) {
+  function forwardRef(props: InternalProps, ref: React.RefObject<ElementType>) {
     return <ReactComponent {...props} forwardedRef={ref} />;
   }
   forwardRef.displayName = displayName;
 
-  return React.forwardRef<E, T & IonicReactExternalProps>(forwardRef);
+  return React.forwardRef<ElementType, PropType & IonicReactExternalProps>(forwardRef);
 }

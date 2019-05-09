@@ -10,12 +10,13 @@
   --button-color: #{$toast-ios-button-color};
   --color: #{$toast-ios-title-color};
   --max-width: #{$toast-max-width};
+  --start: 10px;
+  --end: 10px;
 
-  font-size: $toast-ios-title-font-size;
+  font-size: $toast-ios-content-font-size;
 }
 
 .toast-wrapper {
-  @include position-horizontal(10px, 10px);
   @include margin(auto);
 
   display: block;
@@ -45,10 +46,47 @@
   bottom: 0;
 }
 
-.toast-message {
-  @include padding($toast-ios-title-padding-top, $toast-ios-title-padding-end, $toast-ios-title-padding-bottom, $toast-ios-title-padding-start);
+.toast-content {
+  @include padding($toast-ios-content-padding-top, $toast-ios-content-padding-end, $toast-ios-content-padding-bottom, $toast-ios-content-padding-start);
 }
 
+.toast-header {
+  margin-bottom: $toast-ios-header-margin-bottom;
+
+  font-weight: $toast-ios-header-font-weight;
+}
+
+// iOS Toast Button
+// --------------------------------------------------
+
 .toast-button {
-  font-size: $toast-button-font-size;
+  @include padding($toast-ios-button-padding-top, $toast-ios-button-padding-end, $toast-ios-button-padding-bottom, $toast-ios-button-padding-start);
+
+  height: $toast-ios-button-min-height;
+
+  transition: background-color, opacity 100ms linear;
+
+  border: 0;
+
+  background-color: $toast-ios-button-background-color;
+
+  font-family: var(--ion-font-family);
+  font-size: $toast-ios-button-font-size;
+  font-weight: $toast-ios-button-font-weight;
+
+  overflow: hidden;
+}
+
+.toast-button.activated {
+  opacity: $toast-ios-button-opacity-activated;
+}
+
+
+// iOS Toast Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  .toast-button:hover {
+    opacity: .6;
+  }
 }

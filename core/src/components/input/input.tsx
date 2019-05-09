@@ -247,6 +247,14 @@ export class Input implements ComponentInterface {
     }
   }
 
+  /**
+   * Returns the native `<input>` element used under the hood.
+   */
+  @Method()
+  getInputElement(): Promise<HTMLInputElement> {
+    return Promise.resolve(this.nativeInput!);
+  }
+
   private getValue(): string {
     return this.value || '';
   }
@@ -299,8 +307,22 @@ export class Input implements ComponentInterface {
     }
   }
 
-  private clearTextInput = () => {
+  private clearTextInput = (ev?: Event) => {
+    if (this.clearInput && !this.readonly && !this.disabled && ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+    }
+
     this.value = '';
+
+    /**
+     * This is needed for clearOnEdit
+     * Otherwise the value will not be cleared
+     * if user is inside the input
+     */
+    if (this.nativeInput) {
+      this.nativeInput.value = '';
+    }
   }
 
   private focusChanged() {
@@ -319,6 +341,7 @@ export class Input implements ComponentInterface {
       'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...createColorClasses(this.color),
+        [`${this.mode}`]: true,
         'has-value': this.hasValue(),
         'has-focus': this.hasFocus
       }

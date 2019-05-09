@@ -1,34 +1,31 @@
-import { newE2EPage } from '@stencil/core/testing';
+import { testMenu } from '../test.utils';
 
-test('menu: basic', async () => {
+const DIRECTORY = 'basic';
 
-  const page = await newE2EPage({
-    url: '/src/components/menu/test/basic?ionic:_testing=true'
-  });
+test('menu: start menu', async () => {
+  await testMenu(DIRECTORY, '#start-menu', 'first');
+});
 
-  const start = await page.find('ion-menu[side="start"]');
-  expect(start).toHaveClasses([
-    'menu-type-overlay',
-    'menu-side-start'
-  ]);
+test('menu: start custom menu', async () => {
+  await testMenu(DIRECTORY, '#custom-menu', 'custom');
+});
 
-  await start.callMethod('open');
-  await start.waitForVisible();
-  await page.waitFor(250);
-  expect(await page.compareScreenshot('start menu')).toMatchScreenshot();
+test('menu: end menu', async () => {
+  await testMenu(DIRECTORY, '#end-menu');
+});
 
-  await start.callMethod('close');
-  await page.waitFor(250);
+/**
+ * RTL Tests
+ */
 
-  const end = await page.find('ion-menu[side="end"]');
-  expect(end).toHaveClasses([
-    'menu-type-push',
-    'menu-enabled',
-    'menu-side-end'
-  ]);
+test('menu:rtl: start menu', async () => {
+  await testMenu(DIRECTORY, '#start-menu', 'first', true);
+});
 
-  await end.callMethod('open');
-  await end.waitForVisible();
-  await page.waitFor(250);
-  expect(await page.compareScreenshot('end menu')).toMatchScreenshot();
+test('menu:rtl: start custom menu', async () => {
+  await testMenu(DIRECTORY, '#custom-menu', 'custom', true);
+});
+
+test('menu:rtl: end menu', async () => {
+  await testMenu(DIRECTORY, '#end-menu', '', true);
 });

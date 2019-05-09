@@ -1,8 +1,8 @@
 import { Components } from '@ionic/core';
 import { createControllerComponent } from './createControllerComponent';
-import { Omit } from './types';
+import { ReactProps } from './ReactProps';
 
-export type LoadingOptions = Omit<Components.IonLoadingAttributes, 'overlayIndex'>;
+export type LoadingOptions = Components.IonLoadingAttributes;
 
-const IonActionSheet = createControllerComponent<LoadingOptions, HTMLIonLoadingElement, HTMLIonLoadingControllerElement>('ion-loading', 'ion-loading-controller')
-export default IonActionSheet;
+const IonLoading = createControllerComponent<LoadingOptions & ReactProps, HTMLIonLoadingElement, HTMLIonLoadingControllerElement>('ion-loading', 'ion-loading-controller')
+export default IonLoading;

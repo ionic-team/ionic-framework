@@ -86,11 +86,11 @@
 // Material Design Item Slots
 // --------------------------------------------------
 
-::slotted(:not(.interactive)[slot="start"]) {
+::slotted([slot="start"]) {
   @include margin-horizontal($item-md-start-slot-margin-start, $item-md-start-slot-margin-end);
 }
 
-::slotted(:not(.interactive)[slot="end"]) {
+::slotted([slot="end"]) {
   @include margin-horizontal($item-md-end-slot-margin-start, $item-md-end-slot-margin-end);
 }
 
@@ -99,10 +99,13 @@
 // --------------------------------------------------
 
 ::slotted(ion-icon) {
-
   color: $item-md-icon-slot-color;
 
   font-size: $item-md-icon-slot-font-size;
+}
+
+:host(.ion-color) ::slotted(ion-icon) {
+  color: current-color(contrast);
 }
 
 ::slotted(ion-icon[slot]) {
@@ -115,6 +118,15 @@
 
 ::slotted(ion-icon[slot="end"]) {
   @include margin-horizontal($item-md-icon-end-slot-margin-start, $item-md-icon-end-slot-margin-end);
+}
+
+
+// Material Design Slotted Toggle
+// --------------------------------------------------
+
+::slotted(ion-toggle[slot="start"]),
+::slotted(ion-toggle[slot="end"]) {
+  @include margin(0);
 }
 
 
@@ -233,7 +245,7 @@
 
 :host(.item-label-floating),
 :host(.item-label-stacked) {
-  --min-height: 65px;
+  --min-height: 55px;
 }
 
 // TODO: refactor, ion-item and ion-textarea have the same CSS

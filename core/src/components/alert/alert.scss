@@ -87,6 +87,8 @@
   overscroll-behavior-y: contain;
 }
 
+.alert-checkbox-group::-webkit-scrollbar,
+.alert-radio-group::-webkit-scrollbar,
 .alert-message::-webkit-scrollbar {
   display: none;
 }

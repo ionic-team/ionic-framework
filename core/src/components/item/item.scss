@@ -31,6 +31,8 @@
    * @prop --padding-top: Top padding of the item
    * @prop --transition: Transition of the item
    *
+   * @prop --ripple-color: Color of the item ripple effect
+   *
    * @prop --highlight-height: The height of the highlight on the item
    * @prop --highlight-color-focused: The color of the highlight on the item when focused
    * @prop --highlight-color-valid: The color of the highlight on the item when valid
@@ -55,6 +57,7 @@
   --detail-icon-color: initial;
   --detail-icon-font-size: 20px;
   --detail-icon-opacity: 0.25;
+  --ripple-color: var(--ion-item-background-activated, currentColor);
 
   @include font-smoothing();
 
@@ -178,6 +181,9 @@ button, a {
 
   display: flex;
 
+  // This is required to work with an inset highlight
+  position: relative;
+
   flex: 1;
   flex-direction: inherit;
   align-items: inherit;
@@ -255,11 +261,6 @@ button, a {
   flex-direction: column;
 }
 
-// :host(.item-input-has-focus) a,
-// :host(.item-input-has-focus) button,
-// :host(.item-input-has-focus) textarea {
-//   pointer-events: auto;
-// }
 
 // Item Input Highlight
 // --------------------------------------------------
@@ -281,12 +282,12 @@ button, a {
   height: var(--inset-highlight-height);
 }
 
+
 // Item Input Focused
 // --------------------------------------------------
 
-:host(.item-interactive.item-has-focus) {
-  --highlight-background: var(--highlight-color-focused);
-
+:host(.item-interactive.item-has-focus),
+:host(.item-interactive.ion-touched.ion-invalid) {
   // If the item has a full border and highlight is enabled, show the full item highlight
   --full-highlight-height: #{calc(var(--highlight-height) * var(--show-full-highlight))};
 
@@ -294,6 +295,12 @@ button, a {
   --inset-highlight-height: #{calc(var(--highlight-height) * var(--show-inset-highlight))};
 }
 
+// Item Input Focus
+// --------------------------------------------------
+
+:host(.item-interactive.item-has-focus) {
+  --highlight-background: var(--highlight-color-focused);
+}
 
 // Item Input Valid
 // --------------------------------------------------
@@ -301,7 +308,6 @@ button, a {
 :host(.item-interactive.ion-valid) {
   --highlight-background: var(--highlight-color-valid);
 }
-
 
 // Item Input Invalid
 // --------------------------------------------------
@@ -361,4 +367,12 @@ button, a {
 
 ::slotted(ion-reorder[slot]) {
   @include margin(0, null);
+}
+
+
+// Item Button Ripple effect
+// --------------------------------------------------
+
+ion-ripple-effect {
+  color: var(--ripple-color);
 }

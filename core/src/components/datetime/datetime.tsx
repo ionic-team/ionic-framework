@@ -4,7 +4,7 @@ import { DatetimeChangeEventDetail, DatetimeOptions, Mode, PickerColumn, PickerC
 import { clamp, findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
-import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getValueFromFormat, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
+import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getDateValue, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
 
 @Component({
   tag: 'ion-datetime',
@@ -43,6 +43,11 @@ export class Datetime implements ComponentInterface {
    * If `true`, the user cannot interact with the datetime.
    */
   @Prop() disabled = false;
+
+  /**
+   * If `true`, the datetime appears normal but is not interactive.
+   */
+  @Prop() readonly = false;
 
   @Watch('disabled')
   protected disabledChanged() {
@@ -170,7 +175,7 @@ export class Datetime implements ComponentInterface {
 
   /**
    * Any additional options that the picker interface can accept.
-   * See the [Picker API docs](../../picker/Picker) for the picker options.
+   * See the [Picker API docs](../picker) for the picker options.
    */
   @Prop() pickerOptions?: DatetimeOptions;
 
@@ -241,6 +246,7 @@ export class Datetime implements ComponentInterface {
 
   @Listen('click')
   onClick() {
+    this.setFocus();
     this.open();
   }
 
@@ -255,10 +261,35 @@ export class Datetime implements ComponentInterface {
 
     const pickerOptions = this.generatePickerOptions();
     const picker = await this.pickerCtrl.create(pickerOptions);
+
     this.isExpanded = true;
     picker.onDidDismiss().then(() => {
       this.isExpanded = false;
       this.setFocus();
+    });
+    picker.addEventListener('ionPickerColChange', async (event: any) => {
+      const data = event.detail;
+
+      /**
+       * Don't bother checking for non-dates as things like hours or minutes
+       * are always going to have the same number of column options
+       */
+      if (data.name !== 'month' && data.name !== 'day' && data.name !== 'year') { return; }
+
+      const colSelectedIndex = data.selectedIndex;
+      const colOptions = data.options;
+
+      const changeData: any = {};
+      changeData[data.name] = {
+        value: colOptions[colSelectedIndex].value
+      };
+
+      this.updateDatetimeValue(changeData);
+      const columns = this.generateColumns();
+
+      picker.columns = columns;
+
+      await this.validate(picker);
     });
     await this.validate(picker);
     await picker.present();
@@ -294,6 +325,7 @@ export class Datetime implements ComponentInterface {
           text: this.cancelText,
           role: 'cancel',
           handler: () => {
+            this.updateDatetimeValue(this.value);
             this.ionCancel.emit();
           }
         },
@@ -301,6 +333,19 @@ export class Datetime implements ComponentInterface {
           text: this.doneText,
           handler: (data: any) => {
             this.updateDatetimeValue(data);
+
+            /**
+             * Prevent convertDataToISO from doing any
+             * kind of transformation based on timezone
+             * This cancels out any change it attempts to make
+             *
+             * Important: Take the timezone offset based on
+             * the date that is currently selected, otherwise
+             * there can be 1 hr difference when dealing w/ DST
+             */
+            const date = new Date(convertDataToISO(this.datetimeValue));
+            this.datetimeValue.tzOffset = date.getTimezoneOffset() * -1;
+
             this.value = convertDataToISO(this.datetimeValue);
           }
         }
@@ -353,7 +398,8 @@ export class Datetime implements ComponentInterface {
 
       // cool, we've loaded up the columns with options
       // preselect the option for this column
-      const optValue = getValueFromFormat(this.datetimeValue, format);
+      const optValue = getDateValue(this.datetimeValue, format);
+
       const selectedIndex = colOptions.findIndex(opt => opt.value === optValue);
 
       return {
@@ -521,6 +567,13 @@ export class Datetime implements ComponentInterface {
   private getText() {
     // create the text of the formatted data
     const template = this.displayFormat || this.pickerFormat || DEFAULT_FORMAT;
+
+    if (
+      this.value === undefined ||
+      this.value === null ||
+      this.value.length === 0
+    ) { return; }
+
     return renderDatetime(template, this.datetimeValue, this.locale);
   }
 
@@ -544,7 +597,7 @@ export class Datetime implements ComponentInterface {
   }
 
   hostData() {
-    const { inputId, disabled, isExpanded, el, placeholder } = this;
+    const { inputId, disabled, readonly, isExpanded, el, placeholder } = this;
 
     const addPlaceholderClass =
       (this.getText() === undefined && placeholder != null) ? true : false;
@@ -562,7 +615,9 @@ export class Datetime implements ComponentInterface {
       'aria-haspopup': 'true',
       'aria-labelledby': labelId,
       class: {
+        [`${this.mode}`]: true,
         'datetime-disabled': disabled,
+        'datetime-readonly': readonly,
         'datetime-placeholder': addPlaceholderClass,
         'in-item': hostContext('ion-item', el)
       }

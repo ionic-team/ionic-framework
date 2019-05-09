@@ -92,6 +92,16 @@ Their functionality is similar to tabs, where selecting one will deselect all ot
     </ion-segment-button>
   </ion-segment>
 </ion-toolbar>
+
+<!-- Segment with default selection -->
+<ion-segment (ionChange)="segmentChanged($event)" value="javascript">
+  <ion-segment-button value="python">
+    <ion-label>Python</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="javascript">
+    <ion-label>Javascript</ion-label>
+  </ion-segment-button>
+</ion-segment>
 ```
 
 ```typescript
@@ -192,6 +202,16 @@ export class SegmentExample {
     </ion-segment-button>
   </ion-segment>
 </ion-toolbar>
+
+<!-- Segment with default selection -->
+<ion-segment value="javascript">
+  <ion-segment-button value="python">
+    <ion-label>Python</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="javascript">
+    <ion-label>Javascript</ion-label>
+  </ion-segment-button>
+</ion-segment>
 ```
 
 ```javascript
@@ -202,6 +222,219 @@ for (let i = 0; i < segments.length; i++) {
     console.log('Segment changed', ev);
   })
 }
+```
+
+
+### React
+
+```tsx
+import React from 'react';
+
+import { IonSegment, IonSegmentButton, IonLabel, IonIcon, IonToolbar } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+  <>
+    {/*-- Default Segment --*/}
+    <IonSegment onIonChange={(e) => console.log('Segment selected', e.detail.value)}>
+      <IonSegmentButton value="friends">
+        <IonLabel>Friends</IonLabel>
+      </IonSegmentButton>
+      <IonSegmentButton value="enemies">
+        <IonLabel>Enemies</IonLabel>
+      </IonSegmentButton>
+    </IonSegment>
+
+    {/*-- Disabled Segment --*/}
+    <IonSegment onIonChange={(e) => console.log('Segment selected', e.detail.value)} disabled>
+      <IonSegmentButton value="sunny" checked>
+        <IonLabel>Sunny</IonLabel>
+      </IonSegmentButton>
+      <IonSegmentButton value="rainy">
+        <IonLabel>Rainy</IonLabel>
+      </IonSegmentButton>
+    </IonSegment>
+
+    {/*-- Segment with anchors --*/}
+    <IonSegment onIonChange={(e) => console.log('Segment selected', e.detail.value)}>
+      <IonSegmentButton value="dogs">
+        <IonLabel>Dogs</IonLabel>
+      </IonSegmentButton>
+      <IonSegmentButton value="cats">
+        <IonLabel>Cats</IonLabel>
+      </IonSegmentButton>
+    </IonSegment>
+
+    {/*-- Scrollable Segment --*/}
+    <IonSegment scrollable>
+      <IonSegmentButton>
+        <IonIcon name="home" />
+      </IonSegmentButton>
+      <IonSegmentButton checked>
+        <IonIcon name="heart" />
+      </IonSegmentButton>
+      <IonSegmentButton>
+        <IonIcon name="pin" />
+      </IonSegmentButton>
+      <IonSegmentButton>
+        <IonIcon name="star" />
+      </IonSegmentButton>
+      <IonSegmentButton>
+        <IonIcon name="call" />
+      </IonSegmentButton>
+      <IonSegmentButton>
+        <IonIcon name="globe" />
+      </IonSegmentButton>
+      <IonSegmentButton>
+        <IonIcon name="basket" />
+      </IonSegmentButton>
+    </IonSegment>
+
+    {/*-- Segment with secondary color --*/}
+    <IonSegment onIonChange={(e) => console.log('Segment selected', e.detail.value)} color="secondary">
+      <IonSegmentButton value="standard">
+        <IonLabel>Standard</IonLabel>
+      </IonSegmentButton>
+      <IonSegmentButton value="hybrid">
+        <IonLabel>Hybrid</IonLabel>
+      </IonSegmentButton>
+      <IonSegmentButton value="sat">
+        <IonLabel>Satellite</IonLabel>
+      </IonSegmentButton>
+    </IonSegment>
+
+    {/*-- Segment in a toolbar --*/}
+    <IonToolbar>
+      <IonSegment  onIonChange={(e) => console.log('Segment selected', e.detail.value)}>
+        <IonSegmentButton value="camera">
+          <IonIcon name="camera" />
+        </IonSegmentButton>
+        <IonSegmentButton value="bookmark">
+          <IonIcon name="bookmark" />
+        </IonSegmentButton>
+      </IonSegment>
+    </IonToolbar>
+
+    {/*-- Segment with default selection --*/}
+    <IonSegment onIonChange={(e) => console.log('Segment selected', e.detail.value)} value="javascript">
+      <IonSegmentButton value="python">
+        <IonLabel>Python</IonLabel>
+      </IonSegmentButton>
+      <IonSegmentButton value="javascript">
+        <IonLabel>Javascript</IonLabel>
+      </IonSegmentButton>
+    </IonSegment>
+  </>
+);
+
+export default Example;
+```
+
+
+### Vue
+
+```html
+<template>
+  <!-- Default Segment -->
+  <ion-segment @ionChange="segmentChanged($event)">
+    <ion-segment-button value="friends">
+      <ion-label>Friends</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="enemies">
+      <ion-label>Enemies</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Disabled Segment -->
+  <ion-segment @ionChange="segmentChanged($event)" disabled>
+    <ion-segment-button value="sunny" checked>
+      <ion-label>Sunny</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="rainy">
+      <ion-label>Rainy</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Segment with anchors -->
+  <ion-segment @ionChange="segmentChanged($event)">
+    <ion-segment-button href="#dogs" value="dogs">
+      <ion-label>Dogs</ion-label>
+    </ion-segment-button>
+    <ion-segment-button href="#cats" value="cats">
+      <ion-label>Cats</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Scrollable Segment -->
+  <ion-segment scrollable>
+    <ion-segment-button>
+      <ion-icon name="home"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button checked>
+      <ion-icon name="heart"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button>
+      <ion-icon name="pin"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button>
+      <ion-icon name="star"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button>
+      <ion-icon name="call"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button>
+      <ion-icon name="globe"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button>
+      <ion-icon name="basket"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Segment with secondary color -->
+  <ion-segment @ionChange="segmentChanged($event)" color="secondary">
+    <ion-segment-button value="standard">
+      <ion-label>Standard</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="hybrid">
+      <ion-label>Hybrid</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="sat">
+      <ion-label>Satellite</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Segment in a toolbar -->
+  <ion-toolbar>
+    <ion-segment @ionChange="segmentChanged($event)">
+      <ion-segment-button value="camera">
+        <ion-icon name="camera"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="bookmark">
+        <ion-icon name="bookmark"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <!-- Segment with default selection -->
+  <ion-segment @ionChange="segmentChanged($event)" value="javascript">
+    <ion-segment-button value="python">
+      <ion-label>Python</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="javascript">
+      <ion-label>Javascript</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</template>
+
+<script lang="ts">
+  import { Component, Vue } from 'vue-property-decorator';
+
+  @Component()
+  export default class Example extends Vue {
+    segmentChanged(ev: any) {
+      console.log('Segment changed', ev);
+    }
+  }
+</script>
 ```
 
 
