@@ -13,13 +13,13 @@
 
   position: relative;
 
+  min-height: $item-divider-ios-min-height;
+
   border-width: $item-divider-ios-border-width;
   border-style: solid;
   border-color: $item-divider-ios-border-color;
 
   font-size: $item-divider-ios-font-size;
-
-  min-height: $item-divider-ios-min-height;
 
   text-transform: uppercase;
 }

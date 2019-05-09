@@ -9,9 +9,9 @@
   --color: #{$item-divider-md-color};
   --padding-start: #{$item-divider-md-padding-start};
 
-  border-bottom: $item-divider-md-border-bottom;
-
   min-height: $item-divider-md-min-height;
+
+  border-bottom: $item-divider-md-border-bottom;
 
   font-size: $item-divider-md-font-size;
 }
