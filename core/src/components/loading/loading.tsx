@@ -2,6 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Me
 
 import { Animation, AnimationBuilder, Config, Mode, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
+import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -196,7 +197,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
           </div>
         )}
 
-        {this.message && <div class="loading-content">{this.message}</div>}
+        {this.message && <div class="loading-content" innerHTML={sanitizeDOMString(this.message)}></div>}
       </div>
     ];
   }
