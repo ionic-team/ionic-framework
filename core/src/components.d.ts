@@ -3706,7 +3706,6 @@ export namespace Components {
     */
     'back': () => Promise<void>;
     'navChanged': (direction: RouterDirection) => Promise<boolean>;
-    'printDebug': () => void;
     /**
     * Navigate to the specified URL.
     */
