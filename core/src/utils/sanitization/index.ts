@@ -122,5 +122,5 @@ const getElementChildren = (element: any) => {
   return (element.children != null) ? element.children : element.childNodes;
 };
 
-const allowedAttributes = ['class', 'id', 'href', 'src'];
+const allowedAttributes = ['class', 'id', 'href', 'src', 'name'];
 const blockedTags = ['script', 'style', 'iframe', 'meta', 'link', 'object', 'embed'];
