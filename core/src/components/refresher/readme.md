@@ -25,6 +25,13 @@ refresher.
   </ion-refresher>
 </ion-content>
 
+<!-- Custom Refresher Properties -->
+<ion-content>
+  <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+</ion-content>
+
 <!-- Custom Refresher Content -->
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
@@ -71,6 +78,13 @@ export class RefresherExample {
   </ion-refresher>
 </ion-content>
 
+<!-- Custom Refresher Properties -->
+<ion-content>
+  <ion-refresher slot="fixed" pull-factor="0.5" pull-min="100" pull-max="200">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+</ion-content>
+
 <!-- Custom Refresher Content -->
 <ion-content>
   <ion-refresher slot="fixed">
@@ -110,6 +124,13 @@ const Example: React.SFC<{}> = () => (
       </IonRefresher>
     </IonContent>
 
+    {/*-- Custom Refresher Properties --*/}
+    <IonContent>
+      <IonRefresher slot="fixed" onIonRefresh={doRefresh} pullFactor={0.5} pullMin={100} pullMax={200}>
+        <IonRefresherContent></IonRefresherContent>
+      </IonRefresher>
+    </IonContent>
+
     {/*-- Custom Refresher Content --*/}
     <IonContent>
       <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
@@ -139,14 +160,21 @@ export default Example
     </ion-refresher>
   </ion-content>
 
+  <!-- Custom Refresher Properties -->
+  <ion-content>
+    <ion-refresher slot="fixed" pull-factor="0.5" pull-min="100" pull-max="200">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+  </ion-content>
+
   <!-- Custom Refresher Content -->
   <ion-content>
     <ion-refresher slot="fixed" @ionRefresh="doRefresh($event)">
       <ion-refresher-content
-        pullingIcon="arrow-dropdown"
-        pullingText="Pull to refresh"
-        refreshingSpinner="circles"
-        refreshingText="Refreshing...">
+        pulling-icon="arrow-dropdown"
+        pulling-text="Pull to refresh"
+        refreshing-spinner="circles"
+        refreshing-text="Refreshing...">
       </ion-refresher-content>
     </ion-refresher>
   </ion-content>
@@ -174,13 +202,14 @@ export default Example
 
 ## Properties
 
-| Property           | Attribute           | Description                                                                                                                                       | Type      | Default             |
-| ------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------------------- |
-| `closeDuration`    | `close-duration`    | Time it takes to close the refresher.                                                                                                             | `string`  | `'280ms'`           |
-| `disabled`         | `disabled`          | If `true`, the refresher will be hidden.                                                                                                          | `boolean` | `false`             |
-| `pullMax`          | `pull-max`          | The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`. | `number`  | `this.pullMin + 60` |
-| `pullMin`          | `pull-min`          | The minimum distance the user must pull down until the refresher will go into the `refreshing` state.                                             | `number`  | `60`                |
-| `snapbackDuration` | `snapback-duration` | Time it takes the refresher to to snap back to the `refreshing` state.                                                                            | `string`  | `'280ms'`           |
+| Property           | Attribute           | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | Type      | Default             |
+| ------------------ | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------------------- |
+| `closeDuration`    | `close-duration`    | Time it takes to close the refresher.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | `string`  | `'280ms'`           |
+| `disabled`         | `disabled`          | If `true`, the refresher will be hidden.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | `boolean` | `false`             |
+| `pullFactor`       | `pull-factor`       | How much to multiply the pull speed by. To slow the pull animation down, pass a number less than `1`. To speed up the pull, pass a number greater than `1`. The default value is `1` which is equal to the speed of the cursor. If a negative value is passed in, the factor will be `1` instead.  For example: If the value passed is `1.2` and the content is dragged by `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels (an increase of 20 percent). If the value passed is `0.8`, the dragged amount will be `8` pixels, less than the amount the cursor has moved. | `number`  | `1`                 |
+| `pullMax`          | `pull-max`          | The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`.                                                                                                                                                                                                                                                                                                                                                                                                                                                     | `number`  | `this.pullMin + 60` |
+| `pullMin`          | `pull-min`          | The minimum distance the user must pull down until the refresher will go into the `refreshing` state.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | `number`  | `60`                |
+| `snapbackDuration` | `snapback-duration` | Time it takes the refresher to to snap back to the `refreshing` state.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | `string`  | `'280ms'`           |
 
 
 ## Events
