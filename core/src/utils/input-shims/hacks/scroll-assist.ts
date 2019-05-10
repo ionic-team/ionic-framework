@@ -12,12 +12,10 @@ export function enableScrollAssist(
   let coord: any;
   const touchStart = (ev: Event) => {
     coord = pointerCoord(ev);
-    console.debug(`input-base, pointerStart, type: ${ev.type}`);
   };
 
   const touchEnd = (ev: Event) => {
     // input cover touchend/mouseup
-    console.debug(`input-base, pointerEnd, type: ${ev.type}`);
     if (!coord) {
       return;
     }
