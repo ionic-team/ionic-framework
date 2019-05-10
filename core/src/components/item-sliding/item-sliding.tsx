@@ -118,6 +118,52 @@ export class ItemSliding implements ComponentInterface {
   }
 
   /**
+   * Open the sliding item.
+   *
+   * @param side The side of the options to open. If a side is not provided, it will open the first set of options it finds within the item.
+   */
+   // TODO update to work with RTL
+  @Method()
+  async open(side: string | undefined) {
+    if (this.item === null) { return; }
+
+    const optionsToOpen = this.getOptions(side);
+    if (!optionsToOpen) { return; }
+
+    /**
+     * If side is not set, we need to infer the side
+     * so we know which direction to move the options
+     */
+    if (side === undefined) {
+      side = (optionsToOpen === this.leftOptions) ? 'start' : 'end';
+    }
+
+    const isStartOpen = this.openAmount < 0;
+    const isEndOpen = this.openAmount > 0;
+
+    /**
+     * If a side is open and a user tries to
+     * re-open the same side, we should not do anything
+     */
+    if (isStartOpen && optionsToOpen === this.leftOptions) { return; }
+    if (isEndOpen && optionsToOpen === this.rightOptions) { return; }
+
+    this.closeOpened();
+
+    this.state = SlidingState.Enabled;
+
+    requestAnimationFrame(() => {
+      this.calculateOptsWidth();
+
+      const width = (side === 'end') ? this.optsWidthRightSide : -this.optsWidthLeftSide;
+      openSlidingItem = this.el;
+
+      this.setOpenAmount(width, false);
+      this.state = (side === 'end') ? SlidingState.End : SlidingState.Start;
+    });
+  }
+
+  /**
    * Close the sliding item. Items can also be closed from the [List](../../list/List).
    */
   @Method()
@@ -137,6 +183,22 @@ export class ItemSliding implements ComponentInterface {
     }
     return false;
   }
+
+   /**
+    * Given a side, attempt to return the ion-item-options element
+    *
+    * @param side This side of the options to get. If a side is not provided it will return the first one available
+    */
+    // TODO update to work with RTL
+  private getOptions(side?: string): HTMLIonItemOptionsElement | undefined {
+      if (side === undefined) {
+        return this.leftOptions || this.rightOptions;
+      } else if (side === 'start') {
+        return this.leftOptions;
+      } else {
+        return this.rightOptions;
+      }
+    }
 
   private async updateOptions() {
     const options = this.el.querySelectorAll('ion-item-options');
@@ -244,13 +306,18 @@ export class ItemSliding implements ComponentInterface {
   private calculateOptsWidth() {
     this.optsWidthRightSide = 0;
     if (this.rightOptions) {
+      this.rightOptions.style.display = 'flex';
       this.optsWidthRightSide = this.rightOptions.offsetWidth;
+      this.rightOptions.style.display = '';
     }
 
     this.optsWidthLeftSide = 0;
     if (this.leftOptions) {
+      this.leftOptions.style.display = 'flex';
       this.optsWidthLeftSide = this.leftOptions.offsetWidth;
+      this.leftOptions.style.display = '';
     }
+
     this.optsDirty = false;
   }
 

@@ -130,22 +130,22 @@ describe('tabs', () => {
       expect(await tab.$('ion-back-button').isDisplayed()).toBe(false);
     });
   });
-  
+
   describe('enter url - /tabs/contact/one', () => {
     beforeEach(async () => {
       await browser.get('/tabs/contact/one');
     });
-    
-    it('should return to correct tab after going to page in different outlet', async () => {      
+
+    it('should return to correct tab after going to page in different outlet', async () => {
       const tab = await getSelectedTab();
       await tab.$('#goto-nested-page1').click();
-            
+
       await testStack('app-nested-outlet ion-router-outlet', ['app-nested-outlet-page']);
-      
+
       const nestedOutlet = await element(by.css('app-nested-outlet'));
       const backButton = await nestedOutlet.$('ion-back-button');
       await backButton.click();
-            
+
       await testTabTitle('Tab 2 - Page 1');
     });
   })
@@ -156,7 +156,7 @@ async function testState(count: number, tab: string) {
 }
 
 async function testTabTitle(title: string) {
-  await waitTime(600);
+  await waitTime(1000);
   const tab = await getSelectedTab();
   expect(await tab.$('ion-title').getText()).toEqual(title);
   return tab;
