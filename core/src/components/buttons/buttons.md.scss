@@ -44,6 +44,28 @@
 }
 
 
+// Material Design Toolbar Outline Button
+// --------------------------------------------------
+
+::slotted(*) .button-outline {
+  --color: initial;
+  --color-activated: currentColor;
+  --background: transparent;
+  --background-activated: transparent;
+  --border-color: currentColor;
+}
+
+
+// Material Design Toolbar Clear Button
+// --------------------------------------------------
+
+::slotted(*) .button-clear {
+  --color: initial;
+  --color-activated: currentColor;
+  --background: transparent;
+}
+
+
 // Material Design Toolbar Button Icon
 // --------------------------------------------------
 ::slotted(*) ion-icon[slot="start"] {
