@@ -127,7 +127,7 @@ export class TabButton implements ComponentInterface {
   render() {
     const { mode, href } = this;
     return (
-      <a href={href}>
+      <a href={href} tabIndex={-1}>
         <slot></slot>
         {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
       </a>
