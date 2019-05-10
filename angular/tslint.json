@@ -13,7 +13,7 @@
     "no-import-side-effect": false,
     "trailing-comma": false,
     "no-null-keyword": false,
-    "no-console": [true, "debug", "log"],
+    "no-console": false,
     "no-unbound-method": true,
     "no-floating-promises": false,
     "no-invalid-template-strings": true,
