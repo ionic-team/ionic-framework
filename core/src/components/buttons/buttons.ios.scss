@@ -30,15 +30,43 @@
 }
 
 
+// iOS Toolbar Button Clear
+// --------------------------------------------------
+
+::slotted(*) .button-clear {
+  --color: #{var(--ion-toolbar-color, ion-color(primary, base))};
+  --color-activated: #{$toolbar-ios-color-activated};
+  --color-focused: #{var(--ion-toolbar-color, ion-color(primary, base))};
+}
+
+
+// iOS Toolbar Button Outline
+// --------------------------------------------------
+
+::slotted(*) .button-outline {
+  --color: #{var(--ion-toolbar-color, ion-color(primary, base))};
+  --color-activated: #{var(--ion-toolbar-background, ion-color(primary, contrast))};
+  --border-color: #{var(--ion-toolbar-color, ion-color(primary, base))};
+  --background-activated: #{var(--ion-toolbar-color, ion-color(primary, base))};
+}
+
+
 // iOS Toolbar Button Solid
 // --------------------------------------------------
+
+::slotted(*) .button-solid {
+  --color: #{$toolbar-ios-background};
+  --color-activated: #{$toolbar-ios-background};
+  --color-focused: #{$toolbar-ios-background};
+  --background: #{var(--ion-toolbar-color, ion-color(primary, base))};
+  --background-activated: #{var(--ion-toolbar-color-activated, ion-color(primary, shade))};
+}
 
 @media (any-hover: hover) {
   ::slotted(*) .button-solid-ios:hover {
     opacity: .4;
   }
 }
-
 
 // iOS Toolbar Button Icon
 // --------------------------------------------------

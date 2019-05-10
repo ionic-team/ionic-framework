@@ -68,8 +68,19 @@
 
       <ion-tab tab="list">
         <ion-header>
-          <ion-toolbar color="primary">
+          <ion-toolbar>
+            <ion-buttons slot="start">
+              <ion-button>Default</ion-button>
+              <ion-button fill="solid">Solid</ion-button>
+              <ion-button fill="clear">Clear</ion-button>
+              <ion-button fill="outline">Outline</ion-button>
+            </ion-buttons>
+
             <ion-title>Lists</ion-title>
+
+            <ion-buttons slot="primary">
+              <ion-button color="secondary" fill="outline">Secondary Outline</ion-button>
+            </ion-buttons>
 
             <div slot="end" class="right-container">
               <ion-label>Select a Theme:</ion-label>
