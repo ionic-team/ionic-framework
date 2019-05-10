@@ -154,6 +154,16 @@ export class Range implements ComponentInterface {
   }
 
   /**
+   * Emitted before the range changes.
+   */
+  @Event() ionStart!: EventEmitter<RangeChangeEventDetail>;
+
+  /**
+   * Emitted after the range has changed.
+   */
+  @Event() ionEnd!: EventEmitter<RangeChangeEventDetail>;
+
+  /**
    * Emitted when the value property has changed.
    */
   @Event() ionChange!: EventEmitter<RangeChangeEventDetail>;
@@ -277,6 +287,8 @@ export class Range implements ComponentInterface {
 
     this.setFocus(this.pressedKnob);
 
+    this.ionStart.emit({ value: this.value });
+
     // update the active knob's position
     this.update(currentX);
   }
@@ -287,6 +299,7 @@ export class Range implements ComponentInterface {
 
   private onEnd(detail: GestureDetail) {
     this.update(detail.currentX);
+    this.ionEnd.emit({ value: this.value });
     this.pressedKnob = undefined;
   }
 
