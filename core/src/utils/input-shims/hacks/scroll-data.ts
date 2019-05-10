@@ -46,10 +46,10 @@ function calcScrollData(
     : (distanceToTop > 0)
     ? -distanceToTop
     : 0);
-  
+
   // our calculations make some assumptions that aren't always true, like the keyboard being closed when an input
   // gets focus, so make sure we don't scroll the input above the visible area
-  const scrollAmount = Math.min(desiredScrollAmount, inputTop-visibleAreaTop)
+  const scrollAmount = Math.min(desiredScrollAmount, inputTop - visibleAreaTop);
 
   const distance = Math.abs(scrollAmount);
   const duration = distance / SCROLL_ASSIST_SPEED;
