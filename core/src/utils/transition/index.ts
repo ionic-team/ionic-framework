@@ -147,12 +147,33 @@ function playTransition(trans: Animation, opts: TransitionOptions): Promise<Anim
   return promise;
 }
 
-function fireWillEvents(enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined) {
+const fireTabEventsIfNecessary = (el: HTMLElement | undefined, eventName: string) => {
+  if (!el) { return }
+  
+  const tabs = el.querySelector('ion-tabs');
+  if (!tabs || tabs === undefined || tabs === null) { return }
+  console.log(tabs);
+  const outlet = el.querySelector('ion-router-outlet');
+  if (!outlet) { return }
+  
+  const activePage = outlet.querySelector('.ion-page') as HTMLElement;
+  if (!activePage) { return }
+  
+  lifecycle(activePage, eventName);
+}
+
+function fireWillEvents(enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined) { 
+  fireTabEventsIfNecessary(leavingEl, LIFECYCLE_WILL_LEAVE); 
+  fireTabEventsIfNecessary(enteringEl, LIFECYCLE_WILL_ENTER);
+
   lifecycle(leavingEl, LIFECYCLE_WILL_LEAVE);
   lifecycle(enteringEl, LIFECYCLE_WILL_ENTER);
 }
 
 function fireDidEvents(enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined) {
+  fireTabEventsIfNecessary(enteringEl, LIFECYCLE_DID_ENTER);
+  fireTabEventsIfNecessary(leavingEl, LIFECYCLE_DID_LEAVE);
+  
   lifecycle(enteringEl, LIFECYCLE_DID_ENTER);
   lifecycle(leavingEl, LIFECYCLE_DID_LEAVE);
 }
