@@ -241,7 +241,9 @@ export class Range implements ComponentInterface {
     } else {
       this.ratioB = clamp(0, this.ratioB + step, 1);
     }
+    this.ionStart.emit({ value: this.value });
     this.updateValue();
+    this.ionEnd.emit({ value: this.value });
   }
 
   private getValue(): RangeValue {
