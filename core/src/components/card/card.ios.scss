@@ -13,7 +13,13 @@
 
   transform: translateZ(0);
 
+  transition: transform 500ms $card-ios-transition-timing-function;
+
   font-size: $card-ios-font-size;
 
   box-shadow: $card-ios-box-shadow;
+}
+
+:host(.activated) {
+  transform: #{$card-ios-transform-activated};
 }
