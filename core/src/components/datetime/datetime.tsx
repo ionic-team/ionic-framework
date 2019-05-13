@@ -198,7 +198,9 @@ export class Datetime implements ComponentInterface {
     this.updateDatetimeValue(this.value);
     this.emitStyle();
     this.ionChange.emit({
-      value: this.value
+      value: this.value,
+      valueDisplayFormat: renderDatetime(this.displayFormat || DEFAULT_FORMAT, this.value, this.locale),
+      valuePickerFormat: renderDatetime(this.pickerFormat || DEFAULT_FORMAT, this.value, this.locale)
     });
   }
 
