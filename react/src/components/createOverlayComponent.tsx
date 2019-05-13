@@ -52,7 +52,7 @@ export function createOverlayComponent<T extends object, E extends OverlayCompon
           component: this.el,
           componentProps: {}
         });
-        attachEventProps(this.element, elementProps);
+        attachEventProps(this.element, elementProps, prevProps);
 
         await this.element.present();
       }

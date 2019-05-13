@@ -45,7 +45,7 @@ export function createControllerComponent<T extends object, E extends OverlayCom
         }
 
         this.element = await this.controllerElement.create(elementProps);
-        attachEventProps(this.element, elementProps);
+        attachEventProps(this.element, elementProps, prevProps);
 
         await this.element.present();
       }
