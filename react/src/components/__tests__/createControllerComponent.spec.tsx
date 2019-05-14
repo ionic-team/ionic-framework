@@ -68,7 +68,7 @@ describe('createControllerComponent - events', () => {
       duration: 2000,
       children: 'ButtonNameA',
       onIonLoadingDidDismiss: onDidDismiss
-    });
+    }, expect.any(Object));
   });
 
   test('should dismiss component on hiding', async () => {
