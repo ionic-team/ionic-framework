@@ -32,7 +32,7 @@ interface State {
 }
 
 interface ContextInterface {
-  goBack: () => void
+  goBack: (defaultHref?: string) => void
 }
 
 const Context = React.createContext<ContextInterface>({
@@ -152,11 +152,11 @@ class RouterOutlet extends Component<Props, State> {
     });
   }
 
-  goBack = () => {
+  goBack = (defaultHref?: string) => {
     const prevView = this.state.views.find(v => v.id === this.state.activeId);
     const newView = this.state.views.find(v => v.id === prevView.prevId);
-
-    this.props.history.replace(newView.location.pathname);
+    const newPath = newView ? newView.location.pathname : defaultHref;
+    this.props.history.replace(newPath);
   }
 
   componentDidUpdate() {
@@ -232,8 +232,7 @@ export class IonBackButton extends Component<ButtonProps> {
 
   clickButton = (e: MouseEvent) => {
     e.stopPropagation();
-
-    this.context.goBack();
+    this.context.goBack(this.props.defaultHref);
   }
 
   render() {
