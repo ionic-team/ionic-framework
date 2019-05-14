@@ -148,3 +148,10 @@ ion-icon {
 
   pointer-events: none;
 }
+
+// Toolbar Back Button
+// --------------------------------------------------
+
+:host-context(ion-toolbar) {
+  color: #{var(--ion-toolbar-color, var(--color))};
+}
