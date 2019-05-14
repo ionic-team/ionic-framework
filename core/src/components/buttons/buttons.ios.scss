@@ -68,6 +68,7 @@
 :host-context(ion-toolbar:not(.ion-color))::slotted(*) .button-outline {
   --color: #{var(--ion-toolbar-color, ion-color(primary, base))};
   --color-activated: #{var(--ion-toolbar-background, ion-color(primary, contrast))};
+  --color-focused: #{var(--ion-toolbar-color, ion-color(primary, base))};
   --border-color: #{var(--ion-toolbar-color, ion-color(primary, base))};
   --background-activated: #{var(--ion-toolbar-color, ion-color(primary, base))};
 }
@@ -82,6 +83,7 @@
   --color-focused: #{$toolbar-ios-background};
   --background: #{var(--ion-toolbar-color, ion-color(primary, base))};
   --background-activated: #{var(--ion-toolbar-color-activated, ion-color(primary, shade))};
+  --background-focused: #{var(--ion-toolbar-color-activated, ion-color(primary, shade))};
 }
 
 
