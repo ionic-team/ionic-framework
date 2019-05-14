@@ -22,14 +22,35 @@
 }
 
 
-// Material Design Toolbar w/ Color Default Button
+// Material Design Toolbar w/ Color: Default Buttons
 // --------------------------------------------------
 
 :host-context(.ion-color)::slotted(*) .button {
   --color: initial;
   --color-activated: initial;
   --color-focused: initial;
-  --background-focused: #{ion-color(primary, contrast, 0.1)};
+  --background-focused: #{current-color(contrast, .1)};
+}
+
+:host-context(.ion-color)::slotted(*) .button-solid {
+  --background: #{current-color(contrast)};
+  --background-activated: #{current-color(contrast)};
+  --background-focused: #{current-color(contrast, .9)};
+  --color: #{current-color(base)};
+  --color-focused: #{current-color(base)};
+}
+
+:host-context(.ion-color)::slotted(*) .button-outline {
+  --border-color: #{current-color(contrast)};
+}
+
+
+// Material Design Toolbar Default Button
+// --------------------------------------------------
+
+::slotted(*) .button {
+  --color-focused: #{$toolbar-md-color};
+  --background-focused: rgba(66, 66, 66, 0.1);
 }
 
 
@@ -39,8 +60,10 @@
 ::slotted(*) .button-solid {
   --color: #{$toolbar-md-background};
   --color-activated: #{$toolbar-md-background};
+  --color-focused: #{$toolbar-md-background};
   --background: #{$toolbar-md-color};
   --background-activated: #{$toolbar-md-color};
+  --background-focused: #{$toolbar-md-color-activated};
 }
 
 
@@ -50,9 +73,11 @@
 ::slotted(*) .button-outline {
   --color: initial;
   --color-activated: currentColor;
+  --color-focused: #{$toolbar-md-color};
   --background: transparent;
   --background-activated: transparent;
-  --border-color: currentColor;
+  --border-color: #{$toolbar-md-color};
+  --background-focused: rgba(66, 66, 66, 0.1);
 }
 
 
