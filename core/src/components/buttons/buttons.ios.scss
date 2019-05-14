@@ -21,19 +21,41 @@
   --border-radius: #{$toolbar-ios-button-border-radius};
 }
 
-// iOS Toolbar with Color Default Button
+// iOS Toolbar with Color: Default Buttons
 // --------------------------------------------------
 
 :host-context(.ion-color)::slotted(*) .button {
   --color: initial;
+  --border-color: initial;
   --color-activated: initial;
+}
+
+:host-context(.ion-color)::slotted(*) .button-solid {
+  --background: #{current-color(contrast)};
+  --background-activated: #{current-color(contrast, .8)};
+  --background-focused: #{current-color(contrast, .6)};
+  --color: #{current-color(base)};
+  --color-focused: #{current-color(base)};
+}
+
+:host-context(.ion-color)::slotted(*) .button-clear {
+  --background-focused: #{current-color(contrast, .1)};
+  --color-activated: #{current-color(contrast)};
+  --color-focused: #{current-color(contrast)};
+}
+
+:host-context(.ion-color)::slotted(*) .button-outline {
+  --background-activated: #{current-color(contrast)};
+  --background-focused: #{current-color(contrast, .1)};
+  --color-activated: #{current-color(base)};
+  --color-focused: #{current-color(contrast)};
 }
 
 
 // iOS Toolbar Button Clear
 // --------------------------------------------------
 
-::slotted(*) .button-clear {
+:host-context(ion-toolbar:not(.ion-color))::slotted(*) .button-clear {
   --color: #{var(--ion-toolbar-color, ion-color(primary, base))};
   --color-activated: #{$toolbar-ios-color-activated};
   --color-focused: #{var(--ion-toolbar-color, ion-color(primary, base))};
@@ -43,7 +65,7 @@
 // iOS Toolbar Button Outline
 // --------------------------------------------------
 
-::slotted(*) .button-outline {
+:host-context(ion-toolbar:not(.ion-color))::slotted(*) .button-outline {
   --color: #{var(--ion-toolbar-color, ion-color(primary, base))};
   --color-activated: #{var(--ion-toolbar-background, ion-color(primary, contrast))};
   --border-color: #{var(--ion-toolbar-color, ion-color(primary, base))};
@@ -54,7 +76,7 @@
 // iOS Toolbar Button Solid
 // --------------------------------------------------
 
-::slotted(*) .button-solid {
+:host-context(ion-toolbar:not(.ion-color))::slotted(*) .button-solid {
   --color: #{$toolbar-ios-background};
   --color-activated: #{$toolbar-ios-background};
   --color-focused: #{$toolbar-ios-background};
@@ -62,14 +84,10 @@
   --background-activated: #{var(--ion-toolbar-color-activated, ion-color(primary, shade))};
 }
 
-@media (any-hover: hover) {
-  ::slotted(*) .button-solid-ios:hover {
-    opacity: .4;
-  }
-}
 
 // iOS Toolbar Button Icon
 // --------------------------------------------------
+
 ::slotted(*) ion-icon[slot="start"] {
   @include margin(0);
   @include margin-horizontal(null, .3em);

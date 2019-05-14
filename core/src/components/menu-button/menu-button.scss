@@ -70,3 +70,10 @@ ion-icon {
 :host(.ion-color) .button-native {
   color: current-color(base);
 }
+
+// Menu Button in Toolbar: Global Theming
+// --------------------------------------------------
+
+:host-context(ion-toolbar:not(.ion-color)) {
+  color: #{var(--ion-toolbar-color, var(--color))};
+}
