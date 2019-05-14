@@ -152,11 +152,10 @@ const fireTabEventsIfNecessary = (el: HTMLElement | undefined, eventName: string
   
   const tabs = el.querySelector('ion-tabs');
   if (!tabs || tabs === undefined || tabs === null) { return }
-  console.log(tabs);
   const outlet = el.querySelector('ion-router-outlet');
   if (!outlet) { return }
-  
-  const activePage = outlet.querySelector('.ion-page') as HTMLElement;
+  console.log(outlet)
+  const activePage = outlet.querySelector('.ion-page:not([ion-page-hidden])') as HTMLElement;
   if (!activePage) { return }
   
   lifecycle(activePage, eventName);
@@ -171,7 +170,7 @@ function fireWillEvents(enteringEl: HTMLElement | undefined, leavingEl: HTMLElem
 }
 
 function fireDidEvents(enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined) {
-  fireTabEventsIfNecessary(enteringEl, LIFECYCLE_DID_ENTER);
+  fireTabEventsIfNecessary(enteringEl, LIFECYCLE_DID_ENTER); 
   fireTabEventsIfNecessary(leavingEl, LIFECYCLE_DID_LEAVE);
   
   lifecycle(enteringEl, LIFECYCLE_DID_ENTER);
