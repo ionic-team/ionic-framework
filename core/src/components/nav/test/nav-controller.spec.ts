@@ -909,7 +909,7 @@ describe('NavController', () => {
     const page = await newSpecPage({
       components: [Nav],
       html: `<ion-nav></ion-nav>`,
-      continuosFlush: true,
+      autoApplyChanges: true,
       context: {
         config
       }
