@@ -21,6 +21,13 @@ const Example: React.SFC<{}> = () => (
       </IonRefresher>
     </IonContent>
 
+    {/*-- Custom Refresher Properties --*/}
+    <IonContent>
+      <IonRefresher slot="fixed" onIonRefresh={doRefresh} pullFactor={0.5} pullMin={100} pullMax={200}>
+        <IonRefresherContent></IonRefresherContent>
+      </IonRefresher>
+    </IonContent>
+
     {/*-- Custom Refresher Content --*/}
     <IonContent>
       <IonRefresher slot="fixed" onIonRefresh={doRefresh}>

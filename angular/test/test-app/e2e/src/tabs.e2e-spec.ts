@@ -157,7 +157,7 @@ async function testState(count: number, tab: string) {
 }
 
 async function testTabTitle(title: string) {
-  await waitTime(600);
+  await waitTime(1000);
   const tab = await getSelectedTab();
   expect(await tab.$('ion-title').getText()).toEqual(title);
   return tab;

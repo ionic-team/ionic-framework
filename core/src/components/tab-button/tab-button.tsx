@@ -88,10 +88,23 @@ export class TabButton implements ComponentInterface {
     return !!this.el.querySelector('ion-icon');
   }
 
+  private get tabIndex() {
+    if (this.disabled) { return -1; }
+
+    const hasTabIndex = this.el.hasAttribute('tabindex');
+
+    if (hasTabIndex) {
+      return this.el.getAttribute('tabindex');
+    }
+
+    return 0;
+  }
+
   hostData() {
+    const { disabled, hasIcon, hasLabel, tabIndex, layout, selected, tab } = this;
     const mode = getIonMode(this);
-    const { disabled, hasIcon, hasLabel, layout, selected, tab } = this;
     return {
+      'tabindex': tabIndex,
       'role': 'tab',
       'aria-selected': selected ? 'true' : null,
       'id': tab !== undefined ? `tab-button-${tab}` : null,
@@ -105,6 +118,8 @@ export class TabButton implements ComponentInterface {
         'tab-has-icon-only': hasIcon && !hasLabel,
         [`tab-layout-${layout}`]: true,
         'ion-activatable': true,
+        'ion-selectable': true,
+        'ion-focusable': true
       }
     };
   }
@@ -113,7 +128,7 @@ export class TabButton implements ComponentInterface {
     const mode = getIonMode(this);
     const { href } = this;
     return (
-      <a href={href}>
+      <a href={href} tabIndex={-1}>
         <slot></slot>
         {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
       </a>

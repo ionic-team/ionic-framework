@@ -119,6 +119,11 @@ export class Textarea implements ComponentInterface {
   @Prop() wrap?: 'hard' | 'soft' | 'off';
 
   /**
+   * If `true`, the element height will increase based on the value.
+   */
+  @Prop() autoGrow = false;
+
+  /**
    * The value of the textarea.
    */
   @Prop({ mutable: true }) value?: string | null = '';
@@ -133,6 +138,7 @@ export class Textarea implements ComponentInterface {
     if (nativeInput && nativeInput.value !== value) {
       nativeInput.value = value;
     }
+    this.runAutoGrow();
     this.emitStyle();
     this.ionChange.emit({ value });
   }
@@ -182,7 +188,16 @@ export class Textarea implements ComponentInterface {
   componentDidLoad() {
     this.debounceChanged();
 
+    this.runAutoGrow();
+
     this.ionInputDidLoad.emit();
+  }
+
+  private runAutoGrow() {
+    if (this.nativeInput && this.autoGrow) {
+      this.nativeInput.style.height = 'inherit';
+      this.nativeInput.style.height = this.nativeInput.scrollHeight + 'px';
+    }
   }
 
   componentDidUnload() {

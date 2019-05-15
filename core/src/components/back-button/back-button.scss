@@ -148,3 +148,10 @@ ion-icon {
 
   pointer-events: none;
 }
+
+// Back Button in Toolbar: Global Theming
+// --------------------------------------------------
+
+:host-context(ion-toolbar:not(.ion-color)):not(.ion-color) {
+  color: #{var(--ion-toolbar-color, var(--color))};
+}

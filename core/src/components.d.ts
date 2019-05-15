@@ -356,13 +356,33 @@ export namespace Components {
   interface IonButtons {}
   interface IonCard {
     /**
+    * If `true`, a button tag will be rendered and the card will be tappable.
+    */
+    'button': boolean;
+    /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
     /**
+    * If `true`, the user cannot interact with the card.
+    */
+    'disabled': boolean;
+    /**
+    * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+    */
+    'href'?: string;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode'?: "ios" | "md";
+    /**
+    * When using a router, it specifies the transition direction when navigating to another page using `href`.
+    */
+    'routerDirection': RouterDirection;
+    /**
+    * The type of the button. Only used when an `onclick` or `button` property is present.
+    */
+    'type': 'submit' | 'reset' | 'button';
   }
   interface IonCardContent {
     /**
@@ -1049,6 +1069,10 @@ export namespace Components {
     * Get the ratio of the open amount of the item compared to the width of the options. If the number returned is positive, then the options on the right side are open. If the number returned is negative, then the options on the left side are open. If the absolute value of the number is greater than 1, the item is open more than the width of the options.
     */
     'getSlidingRatio': () => Promise<number>;
+    /**
+    * Open the sliding item.
+    */
+    'open': (side: string | undefined) => Promise<void>;
   }
   interface IonLabel {
     /**
@@ -1795,6 +1819,10 @@ export namespace Components {
     */
     'getProgress': () => Promise<number>;
     /**
+    * How much to multiply the pull speed by. To slow the pull animation down, pass a number less than `1`. To speed up the pull, pass a number greater than `1`. The default value is `1` which is equal to the speed of the cursor. If a negative value is passed in, the factor will be `1` instead.  For example: If the value passed is `1.2` and the content is dragged by `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels (an increase of 20 percent). If the value passed is `0.8`, the dragged amount will be `8` pixels, less than the amount the cursor has moved.
+    */
+    'pullFactor': number;
+    /**
     * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`.
     */
     'pullMax': number;
@@ -2316,6 +2344,10 @@ export namespace Components {
     'mode'?: "ios" | "md";
   }
   interface IonTextarea {
+    /**
+    * If `true`, the element height will increase based on the value.
+    */
+    'autoGrow': boolean;
     /**
     * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
     */
@@ -2856,13 +2888,33 @@ declare namespace LocalJSX {
   interface IonButtons extends JSXBase.HTMLAttributes {}
   interface IonCard extends JSXBase.HTMLAttributes {
     /**
+    * If `true`, a button tag will be rendered and the card will be tappable.
+    */
+    'button'?: boolean;
+    /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
     /**
+    * If `true`, the user cannot interact with the card.
+    */
+    'disabled'?: boolean;
+    /**
+    * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+    */
+    'href'?: string;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode'?: "ios" | "md";
+    /**
+    * When using a router, it specifies the transition direction when navigating to another page using `href`.
+    */
+    'routerDirection'?: RouterDirection;
+    /**
+    * The type of the button. Only used when an `onclick` or `button` property is present.
+    */
+    'type'?: 'submit' | 'reset' | 'button';
   }
   interface IonCardContent extends JSXBase.HTMLAttributes {
     /**
@@ -4183,6 +4235,10 @@ declare namespace LocalJSX {
     */
     'onIonStart'?: (event: CustomEvent<void>) => void;
     /**
+    * How much to multiply the pull speed by. To slow the pull animation down, pass a number less than `1`. To speed up the pull, pass a number greater than `1`. The default value is `1` which is equal to the speed of the cursor. If a negative value is passed in, the factor will be `1` instead.  For example: If the value passed is `1.2` and the content is dragged by `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels (an increase of 20 percent). If the value passed is `0.8`, the dragged amount will be `8` pixels, less than the amount the cursor has moved.
+    */
+    'pullFactor'?: number;
+    /**
     * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`.
     */
     'pullMax'?: number;
@@ -4736,6 +4792,10 @@ declare namespace LocalJSX {
     'mode'?: "ios" | "md";
   }
   interface IonTextarea extends JSXBase.HTMLAttributes {
+    /**
+    * If `true`, the element height will increase based on the value.
+    */
+    'autoGrow'?: boolean;
     /**
     * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
     */
