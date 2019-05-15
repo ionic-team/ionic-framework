@@ -131,7 +131,7 @@ export class Button implements ComponentInterface {
   }
 
   private get hasLabel() {
-    return this.el.textContent && this.el.textContent.trim() !== '';
+    return this.el.textContent !== null && this.el.textContent.trim() !== '';
   }
 
   private get hasIcon() {
@@ -143,7 +143,7 @@ export class Button implements ComponentInterface {
   }
 
   private get rippleType() {
-    const hasClearFill = !this.fill || this.fill === 'clear';
+    const hasClearFill = this.fill === undefined || this.fill === 'clear';
 
     // If the button is in a toolbar, has a clear fill (which is the default)
     // and only has an icon we use the unbounded "circular" ripple effect
