@@ -186,8 +186,13 @@ ion-card-title,prop,mode,"ios" | "md",undefined,false,false
 ion-card-title,css-prop,--color
 
 ion-card,scoped
+ion-card,prop,button,boolean,false,false,false
 ion-card,prop,color,string | undefined,undefined,false,false
+ion-card,prop,disabled,boolean,false,false,false
+ion-card,prop,href,string | undefined,undefined,false,false
 ion-card,prop,mode,"ios" | "md",undefined,false,false
+ion-card,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
+ion-card,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-card,css-prop,--background
 ion-card,css-prop,--color
 
@@ -382,6 +387,7 @@ ion-img,prop,alt,string | undefined,undefined,false,false
 ion-img,prop,src,string | undefined,undefined,false,false
 ion-img,event,ionError,void,true
 ion-img,event,ionImgDidLoad,void,true
+ion-img,event,ionImgWillLoad,void,true
 
 ion-infinite-scroll-content,none
 ion-infinite-scroll-content,prop,loadingSpinner,"bubbles" | "circles" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
@@ -471,6 +477,7 @@ ion-item-sliding,method,close,close() => Promise<void>
 ion-item-sliding,method,closeOpened,closeOpened() => Promise<boolean>
 ion-item-sliding,method,getOpenAmount,getOpenAmount() => Promise<number>
 ion-item-sliding,method,getSlidingRatio,getSlidingRatio() => Promise<number>
+ion-item-sliding,method,open,open(side: string | undefined) => Promise<void>
 ion-item-sliding,event,ionDrag,void,true
 
 ion-item,shadow
@@ -572,6 +579,10 @@ ion-menu-button,prop,color,string | undefined,undefined,false,false
 ion-menu-button,prop,menu,string | undefined,undefined,false,false
 ion-menu-button,prop,mode,"ios" | "md",undefined,false,false
 ion-menu-button,css-prop,--color
+ion-menu-button,css-prop,--padding-bottom
+ion-menu-button,css-prop,--padding-end
+ion-menu-button,css-prop,--padding-start
+ion-menu-button,css-prop,--padding-top
 
 ion-menu-controller,none
 ion-menu-controller,method,close,close(menu?: string | null | undefined) => Promise<boolean>
@@ -830,6 +841,7 @@ ion-refresher-content,prop,refreshingText,string | undefined,undefined,false,fal
 ion-refresher,none
 ion-refresher,prop,closeDuration,string,'280ms',false,false
 ion-refresher,prop,disabled,boolean,false,false,false
+ion-refresher,prop,pullFactor,number,1,false,false
 ion-refresher,prop,pullMax,number,this.pullMin + 60,false,false
 ion-refresher,prop,pullMin,number,60,false,false
 ion-refresher,prop,snapbackDuration,string,'280ms',false,false
@@ -1085,6 +1097,7 @@ ion-text,prop,color,string | undefined,undefined,false,false
 ion-text,prop,mode,"ios" | "md",undefined,false,false
 
 ion-textarea,scoped
+ion-textarea,prop,autoGrow,boolean,false,false,false
 ion-textarea,prop,autocapitalize,string,'none',false,false
 ion-textarea,prop,autofocus,boolean,false,false,false
 ion-textarea,prop,clearOnEdit,boolean,false,false,false

@@ -181,7 +181,7 @@ button, a {
 
   display: flex;
 
-  /* This is required to work with an inset highlight */
+  // This is required to work with an inset highlight
   position: relative;
 
   flex: 1;
@@ -261,11 +261,6 @@ button, a {
   flex-direction: column;
 }
 
-// :host(.item-input-has-focus) a,
-// :host(.item-input-has-focus) button,
-// :host(.item-input-has-focus) textarea {
-//   pointer-events: auto;
-// }
 
 // Item Input Highlight
 // --------------------------------------------------
@@ -286,6 +281,7 @@ button, a {
 .item-inner-highlight {
   height: var(--inset-highlight-height);
 }
+
 
 // Item Input Focused
 // --------------------------------------------------
