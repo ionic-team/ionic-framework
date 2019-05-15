@@ -8,6 +8,8 @@ test('slides: prevent-default', async () => {
 
   const screenshotCompares = [];
 
+  screenshotCompares.push(await page.compareScreenshot());
+
   const scroller = await page.find('#scrollDownButton');
   const button = await page.find('#changeBackgroundButton');
   const contentWithBackground = await page.find('#contentWithBackground');
@@ -17,11 +19,11 @@ test('slides: prevent-default', async () => {
   await scroller.click();
   await page.waitFor(500);
 
-  screenshotCompares.push(await page.compareScreenshot());
+  screenshotCompares.push(await page.compareScreenshot('scroll down button'));
 
   await button.click();
 
-  screenshotCompares.push(await page.compareScreenshot());
+  screenshotCompares.push(await page.compareScreenshot('change background'));
 
   expect(contentWithBackground).toHaveClasses(['blueBackground']);
 
