@@ -85,10 +85,10 @@ Navigate to the specified URL.
 
 #### Parameters
 
-| Name        | Type                            | Description |
-| ----------- | ------------------------------- | ----------- |
-| `url`       | `string`                        |             |
-| `direction` | `"back" \| "forward" \| "root"` |             |
+| Name        | Type                            | Description                                              |
+| ----------- | ------------------------------- | -------------------------------------------------------- |
+| `url`       | `string`                        | The url to navigate to.                                  |
+| `direction` | `"back" \| "forward" \| "root"` | The direction of the animation. Defaults to `"forward"`. |
 
 #### Returns
 

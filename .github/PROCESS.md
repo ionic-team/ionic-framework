@@ -243,8 +243,10 @@ Hotfixes bypass `master` and should only be used for urgent fixes that can't wai
 
     <img width="191" alt="Merge pull request button" src="https://user-images.githubusercontent.com/236501/47032669-8be1b980-d138-11e8-9a90-d1518c223184.png">
 
-1. Rewrite the commit message to `merge release-4.1.0` with the proper release branch.
+1. Rewrite the commit message to `merge release-4.1.0` with the proper release branch. For example, if this release is for `4.3.1`, the message would be `merge release-4.3.1`.
 
-1. Create a pull request and merge the release branch back into `master` using the same commit format in the last step, to ensure any changes made on the release branch get added to future releases.
+1. Submit a pull request from the `stable` branch into `master`. Merge this pull request using the same commit format in the last step, to ensure any changes made on the release branch get added to future releases.
 
-1. Merge the release branch into its corresponding version branch. If this is a major or minor release, create the version branch off the latest `stable`.
+1. Merge the release branch into its corresponding version branch.
+    - If this is a major or minor release, create the version branch off the latest `stable`. For example, if this release was `4.2.0`, create a branch called `4.2.x` off of `stable`.
+    - If this is a patch release, merge the release branch into the version branch. For example, if this release is `4.2.1`, merge the release branch into the `4.2.x` branch.

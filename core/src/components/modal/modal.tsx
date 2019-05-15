@@ -160,6 +160,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * Dismiss the modal overlay after it has been presented.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the modal. For example, 'cancel' or 'backdrop'.
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
@@ -172,7 +175,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * Returns a promise that resolves when the modal did dismiss.
-   *
    */
   @Method()
   onDidDismiss(): Promise<OverlayEventDetail> {
@@ -181,7 +183,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * Returns a promise that resolves when the modal will dismiss.
-   *
    */
   @Method()
   onWillDismiss(): Promise<OverlayEventDetail> {

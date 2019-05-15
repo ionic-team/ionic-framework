@@ -4,17 +4,6 @@
 // --------------------------------------------------
 
 :host {
-  --transition: background-color, opacity 100ms linear;
-  --ripple-color: currentColor;
-  --border-radius: #{$fab-border-radius};
-  --border-width: 0;
-  --border-style: none;
-  --border-color: initial;
-  --padding-top: 0;
-  --padding-end: 0;
-  --padding-bottom: 0;
-  --padding-start: 0;
-
   /**
    * @prop --background: Background of the button
    * @prop --background-activated: Background of the button when activated
@@ -40,6 +29,17 @@
    * @prop --padding-bottom: Padding bottom of the button
    * @prop --padding-start: Padding start of the button
    */
+  --transition: background-color, opacity 100ms linear;
+  --ripple-color: currentColor;
+  --border-radius: #{$fab-border-radius};
+  --border-width: 0;
+  --border-style: none;
+  --border-color: initial;
+  --padding-top: 0;
+  --padding-end: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  
   @include margin(0);
   display: block;
 
