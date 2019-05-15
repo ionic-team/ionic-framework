@@ -1,6 +1,6 @@
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { BackButtonEventDetail, Platforms, getPlatforms, isPlatform } from '@ionic/core';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Subject, Subscription } from 'rxjs';
 
 export interface BackButtonEmitter extends Subject<BackButtonEventDetail> {
@@ -44,26 +44,26 @@ export class Platform {
 
   constructor(@Inject(DOCUMENT) private doc: any, @Inject(PLATFORM_ID) platformId: string) {
     this.win = doc.defaultView;
-    
+
     this.backButton.subscribeWithPriority = function(priority, callback) {
       return this.subscribe(ev => {
         ev.register(priority, callback);
       });
     };
-    
+
     let readyResolve: (value: string) => void;
-    this._readyPromise = new Promise(res => { readyResolve = res; } );
-    
+    this._readyPromise = new Promise(res => { readyResolve = res; });
+
     if (isPlatformBrowser(platformId)) {
       proxyEvent(this.pause, doc, 'pause');
       proxyEvent(this.resume, doc, 'resume');
       proxyEvent(this.backButton, doc, 'ionBackButton');
       proxyEvent(this.resize, this.win, 'resize');
-          
+
       if (this.win && this.win['cordova']) {
         document.addEventListener('deviceready', () => {
           readyResolve('cordova');
-        }, {once: true});
+        }, { once: true });
       } else {
         readyResolve!('dom');
       }
