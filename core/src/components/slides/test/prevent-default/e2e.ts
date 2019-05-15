@@ -5,6 +5,9 @@ test('slides: prevent-default', async () => {
   const page = await newE2EPage({
     url: '/src/components/slides/test/prevent-default?ionic:_testing=false'
   });
+
+  const screenshotCompares = [];
+
   const scroller = await page.find('#scrollDownButton');
   const button = await page.find('#changeBackgroundButton');
   const contentWithBackground = await page.find('#contentWithBackground');
@@ -14,7 +17,15 @@ test('slides: prevent-default', async () => {
   await scroller.click();
   await page.waitFor(500);
 
+  screenshotCompares.push(await page.compareScreenshot());
+
   await button.click();
 
+  screenshotCompares.push(await page.compareScreenshot());
+
   expect(contentWithBackground).toHaveClasses(['blueBackground']);
+
+  for (const screenshotCompare of screenshotCompares) {
+    expect(screenshotCompare).toMatchScreenshot();
+  }
 });
