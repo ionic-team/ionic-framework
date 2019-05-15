@@ -1,22 +1,11 @@
 @import "./note.md.vars";
+@import "./note";
 
 // Material Design Note
 // --------------------------------------------------
 
-.note-md {
-  font-family: $note-md-font-family;
+:host {
+  --color: #{$note-md-color};
 
-  color: $note-md-color;
-}
-
-
-// Generate Material Design Note Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-md {
-  $color-base: ion-color($colors-md, $color-name, base, md);
-
-  .note-md-#{$color-name} {
-    color: $color-base;
-  }
+  font-size: $note-md-font-size;
 }

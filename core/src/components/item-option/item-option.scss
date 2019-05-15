@@ -3,29 +3,64 @@
 // Item Option
 // --------------------------------------------------
 
-.item-option-button {
+:host {
+  /**
+   * @prop --background: Background of the item option
+   * @prop --color: Color of the item option
+   */
+  --background: #{ion-color(primary, base)};
+  --color: #{ion-color(primary, contrast)};
+
+  background: var(--background);
+  color: var(--color);
+
+  font-family: $font-family-base;
+}
+
+:host(.in-list.item-options-end:last-child) {
+  @include padding-horizontal(
+    null, calc(.7em + var(--ion-safe-area-right))
+  );
+}
+
+:host(.in-list.item-options-start:first-child) {
+  @include padding-horizontal(
+    calc(.7em + var(--ion-safe-area-left)), null
+  );
+}
+
+:host(.ion-color) {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+.button-native {
+  @include text-inherit();
   @include padding(0, .7em);
+
+  display: inline-block;
+
+  position: relative;
 
   width: 100%;
   height: 100%;
 
   border: 0;
-  font-size: 1em;
 
-  color: inherit;
-  background: none;
+  outline: none;
 
-  &:active,
-  &:focus {
-    outline: none;
-  }
+  background: transparent;
+
+  cursor: pointer;
+  appearance: none;
+
+  box-sizing: border-box;
 }
 
-.item-option-button-inner {
+.button-inner {
   display: flex;
 
-  flex-direction: column;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
@@ -34,8 +69,32 @@
   height: 100%;
 }
 
-.item-option-button [slot="icon-only"] {
+.horizontal-wrapper {
+  display: flex;
+
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+}
+
+::slotted(*) {
+  flex-shrink: 0;
+}
+
+::slotted([slot="start"]) {
+  @include margin(0, 5px, 0, 0);
+}
+
+::slotted([slot="end"]) {
+  @include margin(0, 0, 0, 5px);
+}
+
+::slotted([slot="icon-only"]) {
   @include padding(0);
+  @include margin(0, 10px);
 
   min-width: .9em;
 
@@ -46,7 +105,7 @@
 // Item Expandable Animation
 // --------------------------------------------------
 
-.item-option-expandable {
+:host(.item-option-expandable) {
   flex-shrink: 0;
 
   transition-duration: 0;
@@ -54,38 +113,16 @@
   transition-timing-function: cubic-bezier(.65, .05, .36, 1);
 }
 
-.item-sliding-active-swipe-right .item-options-end .item-option-expandable {
-  transition-duration: .6s;
-  transition-property: padding-left;
 
-  @include multi-dir() {
-    // scss-lint:disable PropertySpelling
-    padding-left: 90%;
-  }
+// Item Disabled Styling
+// --------------------------------------------------
 
-  @include ltr() {
-    order: 1;
-  }
-
-  @include rtl() {
-    order: -1;
-  }
+:host(.item-option-disabled) {
+  pointer-events: none;
 }
 
-.item-sliding-active-swipe-left .item-options-start .item-option-expandable {
-  transition-duration: .6s;
-  transition-property: padding-right;
-
-  @include multi-dir() {
-    // scss-lint:disable PropertySpelling
-    padding-right: 90%;
-  }
-
-  @include ltr() {
-    order: -1;
-  }
-
-  @include rtl() {
-    order: 1;
-  }
+:host(.item-option-disabled) .button-native {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
 }

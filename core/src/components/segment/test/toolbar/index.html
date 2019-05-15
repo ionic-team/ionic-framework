@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Segment - Toolbar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Segment - Colors</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar>
+        <ion-segment value="Top">
+          <ion-segment-button value="Paid">
+            <ion-label>Paid</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="Free">
+            <ion-label>Free</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="Top">
+            <ion-label>Top</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar class="themed">
+        <ion-segment value="Top">
+          <ion-segment-button value="Paid">
+            <ion-label>Paid</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="Free">
+            <ion-label>Free</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="Top">
+            <ion-label>Top</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar color="primary">
+        <ion-segment value="Free">
+          <ion-segment-button value="Paid">
+            <ion-label>Paid</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="Free">
+            <ion-label>Free</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="Top">
+            <ion-label>Top</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar color="secondary">
+        <ion-segment value="Top">
+          <ion-segment-button value="Paid">
+            <ion-label>Paid</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="Free">
+            <ion-label>Free</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="Top">
+            <ion-label>Top</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar color="danger">
+        <ion-segment name="dynamicPropDisable" disabled>
+          <ion-segment-button value="Bookmarks">
+            <ion-label>Bookmarks</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="Reading List">
+            <ion-label>Reading List</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="Shared Links">
+            <ion-label>Shared Links</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar color="dark">
+        <ion-segment name="dynamicAttrElem" value="active">
+          <ion-segment-button value="active">
+            <ion-label>Active</ion-label>
+          </ion-segment-button>
+          <ion-segment-button name="dynamicAttrDisable" value="disabled" disabled="true">
+            <ion-label>Disabled</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="inactive" disabled="false">
+            <ion-label>Inactive</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar>
+        <ion-segment>
+          <ion-segment-button value="sunny">
+            <ion-label>Sunny</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="rainy" checked>
+            <ion-label>Rainy</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <!-- Label only -->
+      <ion-toolbar color="primary">
+        <ion-segment>
+          <ion-segment-button checked>
+            <ion-label>Item One</ion-label>
+          </ion-segment-button>
+          <ion-segment-button>
+            <ion-label>Item Two</ion-label>
+          </ion-segment-button>
+          <ion-segment-button>
+            <ion-label>Item Three</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <!-- Icon only -->
+      <ion-toolbar color="secondary">
+        <ion-segment>
+          <ion-segment-button>
+            <ion-icon name="call"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button checked>
+            <ion-icon name="heart"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button>
+            <ion-icon name="pin"></ion-icon>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <!-- Icon top -->
+      <ion-toolbar color="danger">
+        <ion-segment>
+          <ion-segment-button>
+            <ion-label>Item One</ion-label>
+            <ion-icon name="call"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button checked>
+            <ion-label>Item Two</ion-label>
+            <ion-icon name="heart"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button>
+            <ion-label>Item Three</ion-label>
+            <ion-icon name="pin"></ion-icon>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <!-- Icon bottom -->
+      <ion-toolbar color="tertiary">
+        <ion-segment>
+          <ion-segment-button checked layout="icon-bottom">
+            <ion-icon name="call"></ion-icon>
+            <ion-label>Item One</ion-label>
+          </ion-segment-button>
+          <ion-segment-button layout="icon-bottom">
+            <ion-icon name="heart"></ion-icon>
+            <ion-label>Item Two</ion-label>
+          </ion-segment-button>
+          <ion-segment-button layout="icon-bottom">
+            <ion-icon name="pin"></ion-icon>
+            <ion-label>Item Three</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <!-- Icon start -->
+      <ion-toolbar color="dark">
+        <ion-segment>
+          <ion-segment-button checked layout="icon-start">
+            <ion-label>Item One</ion-label>
+            <ion-icon name="call"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button layout="icon-start">
+            <ion-label>Item Two</ion-label>
+            <ion-icon name="heart"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button layout="icon-start">
+            <ion-label>Item Three</ion-label>
+            <ion-icon name="pin"></ion-icon>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <!-- Icon end -->
+      <ion-toolbar color="medium">
+        <ion-segment>
+          <ion-segment-button checked layout="icon-end">
+            <ion-icon name="call"></ion-icon>
+            <ion-label>Item One</ion-label>
+          </ion-segment-button>
+          <ion-segment-button layout="icon-end">
+            <ion-icon name="heart"></ion-icon>
+            <ion-label>Item Two</ion-label>
+          </ion-segment-button>
+          <ion-segment-button layout="icon-end">
+            <ion-icon name="pin"></ion-icon>
+            <ion-label>Item Three</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <!-- Disabled -->
+      <ion-toolbar color="success">
+        <ion-segment disabled>
+          <ion-segment-button checked layout="icon-end">
+            <ion-icon name="call"></ion-icon>
+            <ion-label>Item One</ion-label>
+          </ion-segment-button>
+          <ion-segment-button layout="icon-end">
+            <ion-icon name="heart"></ion-icon>
+            <ion-label>Item Two</ion-label>
+          </ion-segment-button>
+          <ion-segment-button layout="icon-end">
+            <ion-icon name="pin"></ion-icon>
+            <ion-label>Item Three</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <!-- Color -->
+      <ion-toolbar color="light">
+        <ion-segment color="secondary">
+          <ion-segment-button checked layout="icon-end">
+            <ion-icon name="call"></ion-icon>
+            <ion-label>Item One</ion-label>
+          </ion-segment-button>
+          <ion-segment-button layout="icon-end">
+            <ion-icon name="heart"></ion-icon>
+            <ion-label>Item Two</ion-label>
+          </ion-segment-button>
+          <ion-segment-button layout="icon-end">
+            <ion-icon name="pin"></ion-icon>
+            <ion-label>Item Three</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+    </ion-header>
+
+    <ion-content padding>
+      Segment in Toolbar
+    </ion-content>
+
+    <style>
+      .themed {
+        --ion-toolbar-background: #3880ff;
+      }
+
+      .ios .themed {
+        --ion-toolbar-color-unchecked: #fff;
+        --ion-toolbar-color-checked: #3880ff;
+      }
+
+      .md .themed {
+        --ion-toolbar-color-unchecked: rgba(255, 255, 255, 0.6);
+        --ion-toolbar-color-checked: #fff;
+      }
+    </style>
+
+  </ion-app>
+</body>
+
+</html>

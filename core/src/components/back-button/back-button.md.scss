@@ -4,49 +4,39 @@
 // MD Back Button
 // --------------------------------------------------
 
-.back-button-md {
-  @include margin(1px, 6px, 0, 0);
-  @include padding(0, 5px);
+:host {
+  --color: #{$back-button-md-color};
+  --margin-top: 1px;
+  --margin-end: 6px;
+  --margin-bottom: 0;
+  --margin-start: 0;
+  --padding-top: 0;
+  --padding-end: 5px;
+  --padding-bottom: 0;
+  --padding-start: 5px;
+  --min-height: 32px;
+  --min-width: 44px;
+  --icon-padding-end: .3em;
+  --icon-padding-start: .3em;
+  --icon-margin-top: 0;
+  --icon-margin-end: 6px;
+  --icon-margin-bottom: 0;
+  --icon-margin-start: 6px;
+  --icon-font-size: 24px;
+  --icon-font-weight: normal;
 
-  min-width: 44px;
-  height: 32px;
-
-  border: 0;
   font-size: 14px;
   font-weight: 500;
+
   text-transform: uppercase;
-
-  color: $back-button-md-color;
-  background-color: transparent;
-
-  box-shadow: none;
-
-  &.activated {
-    opacity: .4;
-  }
 }
 
-.back-button-md ion-icon {
-  @include padding-horizontal(null, .3em);
-  @include margin(0);
-  @include padding(0, 6px);
-  @include text-align(start);
+.button-native {
+  box-shadow: none;
+}
 
-  font-size: 24px;
-  font-weight: normal;
+ion-icon {
   line-height: .67;
 
-  pointer-events: none;
-}
-
-
-// Generate Material Design Back Button Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-md {
-  $base-color: ion-color($colors-md, $color-name, base, md);
-
-  .back-button-md-#{$color-name} {
-    color: $base-color;
-  }
+  text-align: start;
 }

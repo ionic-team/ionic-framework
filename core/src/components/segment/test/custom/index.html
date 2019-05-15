@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Segment - Custom</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-segment value="Free">
+          <ion-segment-button value="Paid">
+            <ion-label>Paid</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="Free">
+            <ion-label>Free</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="Top">
+            <ion-label>Top</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar>
+        <ion-segment class="custom-icon" value="instagram">
+          <ion-segment-button class="segment-facebook" value="facebook">
+            <ion-label>Facebook</ion-label>
+            <ion-icon name="logo-facebook"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button class="segment-instagram" value="instagram">
+            <ion-label>Instagram</ion-label>
+            <ion-icon name="logo-instagram"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button class="segment-slack" value="slack">
+            <ion-label>Slack</ion-label>
+            <ion-icon name="logo-slack"></ion-icon>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar class="themed">
+        <ion-segment value="delete">
+          <ion-segment-button value="create">
+            <ion-label>Create</ion-label>
+            <ion-icon name="create"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button value="delete">
+            <ion-label>Delete</ion-label>
+            <ion-icon name="trash"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button value="upload">
+            <ion-label>Upload</ion-label>
+            <ion-icon name="cloud-upload"></ion-icon>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+
+      <ion-segment class="custom" value="active">
+        <ion-segment-button value="active">
+          <ion-label>Active</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="disabled" disabled="true">
+          <ion-label>Disabled</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="inactive" disabled="false">
+          <ion-label>Inactive</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <ion-segment class="custom-icon" value="instagram">
+        <ion-segment-button class="segment-facebook" value="facebook">
+          <ion-label>Facebook</ion-label>
+          <ion-icon name="logo-facebook"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button class="segment-instagram" value="instagram">
+          <ion-label>Instagram</ion-label>
+          <ion-icon name="logo-instagram"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button class="segment-slack" value="slack">
+          <ion-label>Slack</ion-label>
+          <ion-icon name="logo-slack"></ion-icon>
+        </ion-segment-button>
+      </ion-segment>
+
+      <ion-segment class="custom-color" color="danger" value="dining">
+        <ion-segment-button value="dining">
+          <ion-label>Dining</ion-label>
+          <ion-icon name="cafe"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="travel">
+          <ion-label>Travel</ion-label>
+          <ion-icon name="airplane"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="entertainment">
+          <ion-label>Entertainment</ion-label>
+          <ion-icon name="radio"></ion-icon>
+        </ion-segment-button>
+      </ion-segment>
+
+      <h2>Activated</h2>
+
+      <ion-segment>
+        <ion-segment-button class="activated" value="Paid">
+          <ion-label>Paid</ion-label>
+        </ion-segment-button>
+        <ion-segment-button class="activated" value="Free">
+          <ion-label>Free</ion-label>
+        </ion-segment-button>
+        <ion-segment-button class="activated" value="Top">
+          <ion-label>Top</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <ion-segment class="custom-icon">
+        <ion-segment-button class="activated segment-facebook" value="facebook">
+          <ion-label>Facebook</ion-label>
+          <ion-icon name="logo-facebook"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button class="activated segment-instagram" value="instagram">
+          <ion-label>Instagram</ion-label>
+          <ion-icon name="logo-instagram"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button class="activated segment-slack" value="slack">
+          <ion-label>Slack</ion-label>
+          <ion-icon name="logo-slack"></ion-icon>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-content>
+  </ion-app>
+
+</body>
+
+<style>
+  body {
+    margin: 0;
+  }
+
+  ion-segment {
+    margin-bottom: 10px;
+  }
+
+  ion-toolbar ion-segment {
+    margin-bottom: 0;
+  }
+
+  pre {
+    border: 1px solid #e6e9ee;
+    background: white;
+    margin: 10px;
+    padding: 4px;
+    line-height: 24px;
+  }
+
+  code {
+    display: block;
+    padding: 0.5em;
+    background: #ffffff;
+    word-wrap: normal;
+    white-space: pre;
+    color: #314361;
+  }
+
+  .themed {
+    --ion-toolbar-background: #3880ff;
+    --ion-toolbar-color: #fff;
+    --ion-toolbar-color-activated: #fff;
+    --ion-toolbar-color-unchecked: rgba(255, 255, 255, .6);
+    --ion-toolbar-color-checked: #fff;
+  }
+
+  .custom {
+    --background: papayawhip;
+    --background-checked: navy;
+
+    --border-color: navy;
+    --border-color-checked: navy;
+    --border-color-disabled: navy;
+
+    --color: navy;
+    --color-activated: purple;
+    --color-checked: papayawhip;
+    --color-disabled: rgba(0, 0, 0, 0.3);
+  }
+
+  /* Custom Icon Segment MD */
+  .md .custom-icon {
+    --indicator-color: lightgray;
+  }
+
+  .md .segment-facebook {
+    --background-hover: rgba(59, 89, 153, .04);
+    --color-activated: #3b5999;
+    --color-checked: #3b5999;
+  }
+
+  .md .segment-instagram {
+    --background-hover: rgba(228, 64, 95, .04);
+    --color-activated: #e4405f;
+    --color-checked: #e4405f;
+  }
+
+  .md .segment-slack {
+    --background-hover: rgba(58, 175, 133, .04);
+    --color-activated: #3aaf85;
+    --color-checked: #3aaf85;
+  }
+
+  /* Custom Icon Segment iOS */
+  .ios .custom-icon ion-segment-button {
+    --border-width: 0;
+  }
+
+  .ios .segment-facebook {
+    --color: #3b5999;
+    --color-checked: #ffffff;
+    --background-hover: rgba(59, 89, 153, .1);
+    --background-activated: rgba(59, 89, 153, .16);
+    --background-checked: #3b5999;
+  }
+
+  .ios .segment-instagram {
+    --color: #e4405f;
+    --color-checked: #ffffff;
+    --background-hover: rgba(228, 64, 95, .1);
+    --background-activated: rgba(228, 64, 95, .16);
+    --background-checked: #e4405f;
+  }
+
+  .ios .segment-slack {
+    --color: #3aaf85;
+    --color-checked: #ffffff;
+    --background-hover: rgba(58, 175, 133, .1);
+    --background-activated: rgba(58, 175, 133, .16);
+    --background-checked: #3aaf85;
+  }
+
+  .custom-icon ion-icon {
+    font-size: 44px;
+  }
+
+  /* This CSS should not apply */
+  .custom-color {
+    --background: purple;
+    --color: blue;
+  }
+
+</style>
+
+</html>

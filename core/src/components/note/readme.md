@@ -1,6 +1,14 @@
 # ion-note
 
-Notes are text elements generally used as subtitles that provide more information. Notes are styled to appear grey by default.
+Notes are text elements generally used as subtitles that provide more information. Notes are styled to appear grey by default. Notes can be used in an item as metadata text.
+
+
+<!-- Auto Generated Below -->
+
+
+## Usage
+
+### Angular / javascript
 
 ```html
 <!-- Default Note -->
@@ -28,48 +36,87 @@ Notes are text elements generally used as subtitles that provide more informatio
 ```
 
 
-<!-- Auto Generated Below -->
+### React
+
+```tsx
+import React from 'react';
+
+import { IonNote, IonList, IonItem, IonLabel } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+  <>
+    {/*-- Default Note --*/}
+    <IonNote>Default Note</IonNote>
+
+    {/*-- Note Colors --*/}
+    <IonNote color="primary">Primary Note</IonNote>
+    <IonNote color="secondary">Secondary Note</IonNote>
+    <IonNote color="danger">Danger Note</IonNote>
+    <IonNote color="light">Light Note</IonNote>
+    <IonNote color="dark">Dark Note</IonNote>
+
+    {/*-- Notes in a List --*/}
+    <IonList>
+      <IonItem>
+        <IonLabel>Note (End)</IonLabel>
+        <IonNote slot="end">On</IonNote>
+      </IonItem>
+
+      <IonItem>
+        <IonNote slot="start">Off</IonNote>
+        <IonLabel>Note (Start)</IonLabel>
+      </IonItem>
+    </IonList>
+  </>
+);
+
+export default Example
+
+
+### Vue
+
+```html
+<template>
+  <!-- Default Note -->
+  <ion-note>Default Note</ion-note>
+
+  <!-- Note Colors -->
+  <ion-note color="primary">Primary Note</ion-note>
+  <ion-note color="secondary">Secondary Note</ion-note>
+  <ion-note color="danger">Danger Note</ion-note>
+  <ion-note color="light">Light Note</ion-note>
+  <ion-note color="dark">Dark Note</ion-note>
+
+  <!-- Notes in a List -->
+  <ion-list>
+    <ion-item>
+      <ion-label>Note (End)</ion-label>
+      <ion-note slot="end">On</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-note slot="start">Off</ion-note>
+      <ion-label>Note (Start)</ion-label>
+    </ion-item>
+  </ion-list>
+</template>
+```
+
 
 
 ## Properties
 
-#### color
-
-string
-
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
+| Property | Attribute | Description                                                                                                                                                                                                                                                            | Type                  | Default     |
+| -------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
+| `color`  | `color`   | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` | `undefined` |
+| `mode`   | `mode`    | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined` |
 
 
-#### mode
+## CSS Custom Properties
 
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-
-
-## Attributes
-
-#### color
-
-string
-
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-
+| Name      | Description       |
+| --------- | ----------------- |
+| `--color` | Color of the note |
 
 
 ----------------------------------------------

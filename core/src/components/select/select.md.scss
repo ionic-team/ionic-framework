@@ -4,66 +4,14 @@
 // Material Design Select
 // --------------------------------------------------
 
-.select-md {
-  @include padding($select-md-padding-top, $select-md-padding-end, $select-md-padding-bottom, $select-md-padding-start);
-
-  font-family: $select-md-font-family;
-  color: $select-md-text-color;
+:host {
+  --padding-top: #{$select-md-padding-top};
+  --padding-end: #{$select-md-padding-end};
+  --padding-bottom: #{$select-md-padding-bottom};
+  --padding-start: #{$select-md-padding-start};
 }
 
-.select-md .select-placeholder {
-  color: $select-md-placeholder-color;
-}
-
-.select-md .item-select ion-label {
-  @include margin-horizontal(0, null);
-}
-
-.select-md .select-icon {
-  position: relative;
-
-  width: 12px;
+.select-icon {
+  width: 19px;
   height: 19px;
-}
-
-.select-md .select-icon .select-icon-inner {
-  @include position(50%, null, null, 5px);
-  @include margin(-3px, null, null, null);
-
-  position: absolute;
-
-  width: 0;
-  height: 0;
-
-  border-top: 5px solid;
-  border-right: 5px solid transparent;
-  border-left: 5px solid transparent;
-  color: $select-md-icon-color;
-
-  pointer-events: none;
-}
-
-
-// Stacked & Floating Select
-// --------------------------------------------------
-
-.item-label-stacked .select-md,
-.item-label-floating .select-md {
-  @include padding(8px, null, 8px, 0);
-}
-
-
-// Select Popover Interface
-// --------------------------------------------------
-
-.select-popover-md .radio-icon {
-  display: none;
-}
-
-.select-popover-md .item-radio-checked {
-  background-color: $background-md-color-step-150;
-}
-
-.select-popover-md .item-radio-checked ion-label {
-  color: initial;
 }

@@ -3,15 +3,63 @@
 // Toolbar
 // --------------------------------------------------
 
-ion-toolbar {
+:host {
+  /**
+   * @prop --background: Background of the toolbar
+   * @prop --border-color: Color of the toolbar border
+   * @prop --border-style: Style of the toolbar border
+   * @prop --border-width: Width of the toolbar border
+   * @prop --color: Color of the toolbar text
+   * @prop --min-height: Minimum height of the toolbar
+   * @prop --opacity: Opacity of the toolbar background
+   * @prop --padding-bottom: Bottom padding of the toolbar
+   * @prop --padding-end: End padding of the toolbar
+   * @prop --padding-start: Start padding of the toolbar
+   * @prop --padding-top: Top padding of the toolbar
+   */
+  --border-width: 0;
+  --border-style: solid;
+  --opacity: 1;
+
   @include font-smoothing();
+  @include padding-horizontal(
+    var(--ion-safe-area-left),
+    var(--ion-safe-area-right)
+  );
 
-  box-sizing: border-box;
+  display: block;
+
   position: relative;
-  z-index: $z-index-toolbar;
 
+  width: 100%;
+
+  color: var(--color);
+
+  font-family: $font-family-base;
+
+  contain: content;
+
+  z-index: $z-index-toolbar;
+  box-sizing: border-box;
+}
+
+:host(.ion-color) {
+  color: current-color(contrast);
+}
+
+:host(.ion-color) .toolbar-background {
+  background: current-color(base);
+}
+
+.toolbar-container {
+  @include padding(
+    var(--padding-top),
+    var(--padding-end),
+    var(--padding-bottom),
+    var(--padding-start)
+  );
   display: flex;
-  overflow: hidden;
+  position: relative;
 
   flex-direction: row;
   align-items: center;
@@ -19,109 +67,47 @@ ion-toolbar {
 
   width: 100%;
 
-  contain: content;
-}
+  min-height: var(--min-height);
 
-ion-toolbar ion-title {
+  contain: content;
+  overflow: hidden;
+  z-index: $z-index-toolbar;
+
   box-sizing: border-box;
 }
+
+// Toolbar: Transparent
+// --------------------------------------------------
 
 .toolbar-background {
   @include position(0, 0, 0, 0);
 
   position: absolute;
-  z-index: $z-index-toolbar-background;
 
-  border: 0;
   transform: translateZ(0);
 
-  pointer-events: none;
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  background: var(--background);
 
   contain: strict;
-}
-
-ion-buttons {
-  display: block;
-
-  transform: translateZ(0);
-
+  opacity: var(--opacity);
+  z-index: $z-index-toolbar-background;
   pointer-events: none;
 }
 
-ion-buttons button,
-ion-buttons a,
-ion-buttons input,
-ion-buttons textarea,
-ion-buttons div {
-  pointer-events: auto;
-}
 
-
-// Transparent Toolbar
+// Toolbar: Segment
 // --------------------------------------------------
 
-.toolbar[transparent] .toolbar-background {
-  border-color: transparent;
-  background: transparent;
+:host(.toolbar-segment) {
+  --min-height: auto;
 }
 
+::slotted(ion-progress-bar) {
+  @include position(null, 0, 0, 0);
 
-// TODO this is a temp hack to fix segment overlapping ion-nav-item
-ion-buttons,
-.bar-button-menutoggle {
-  z-index: $z-index-toolbar-buttons;
-
-  transform: translateZ(0);
-}
-
-
-// Toolbar Buttons
-// --------------------------------------------------
-
-.bar-button {
-  @include margin(0);
-  @include padding(0);
-  @include text-align(center);
-  @include appearance(none);
-
-  position: relative;
-  display: inline-block;
-
-  line-height: 1;
-  text-decoration: none;
-  text-overflow: ellipsis;
-  text-transform: none;
-  white-space: nowrap;
-
-  cursor: pointer;
-
-  vertical-align: top; // the better option for most scenarios
-  vertical-align: -webkit-baseline-middle; // the best for those that support it
-
-  user-select: none;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
-}
-
-.bar-button::after {
-  @include position(-7px, -2px, -6px, -2px);
-
-  // used to make the button's hit area larger
   position: absolute;
-
-  content: "";
 }
-
-
-// Menu Toggle
-// --------------------------------------------------
-
-.bar-button-menutoggle {
-  display: flex;
-
-  align-items: center;
-}
-

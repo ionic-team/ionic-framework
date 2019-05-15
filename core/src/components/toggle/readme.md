@@ -3,6 +3,53 @@
 Toggles change the state of a single option. Toggles can be switched on or off by pressing or swiping them. They can also be checked programmatically by setting the `checked` property.
 
 
+
+<!-- Auto Generated Below -->
+
+
+## Usage
+
+### Angular
+
+```html
+<!-- Default Toggle -->
+<ion-toggle></ion-toggle>
+
+<!-- Disabled Toggle -->
+<ion-toggle disabled></ion-toggle>
+
+<!-- Checked Toggle -->
+<ion-toggle checked></ion-toggle>
+
+<!-- Toggle Colors -->
+<ion-toggle color="primary"></ion-toggle>
+<ion-toggle color="secondary"></ion-toggle>
+<ion-toggle color="danger"></ion-toggle>
+<ion-toggle color="light"></ion-toggle>
+<ion-toggle color="dark"></ion-toggle>
+
+<!-- Toggles in a List -->
+<ion-list>
+  <ion-item>
+    <ion-label>Pepperoni</ion-label>
+    <ion-toggle [(ngModel)]="pepperoni"></ion-toggle>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Sausage</ion-label>
+    <ion-toggle [(ngModel)]="sausage" disabled="true"></ion-toggle>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Mushrooms</ion-label>
+    <ion-toggle [(ngModel)]="mushrooms"></ion-toggle>
+  </ion-item>
+</ion-list>
+```
+
+
+### Javascript
+
 ```html
 <!-- Default Toggle -->
 <ion-toggle></ion-toggle>
@@ -40,126 +87,126 @@ Toggles change the state of a single option. Toggles can be switched on or off b
 ```
 
 
-<!-- Auto Generated Below -->
+### React
+
+```tsx
+import React from 'react';
+
+import { IonToggle, IonList, IonItem, IonLabel } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+  <>
+    {/*-- Default Toggle --*/}
+    <IonToggle></IonToggle>
+
+    {/*-- Disabled Toggle --*/}
+    <IonToggle disabled></IonToggle>
+
+    {/*-- Checked Toggle --*/}
+    <IonToggle checked></IonToggle>
+
+    {/*-- Toggle Colors --*/}
+    <IonToggle color="primary"></IonToggle>
+    <IonToggle color="secondary"></IonToggle>
+    <IonToggle color="danger"></IonToggle>
+    <IonToggle color="light"></IonToggle>
+    <IonToggle color="dark"></IonToggle>
+
+    {/*-- Toggles in a List --*/}
+    <IonList>
+      <IonItem>
+        <IonLabel>Pepperoni</IonLabel>
+        <IonToggle value="pepperoni" onChange={() => {}}></IonToggle>
+      </IonItem>
+
+      <IonItem>
+        <IonLabel>Sausage</IonLabel>
+        <IonToggle value="sausage" onChange={() => {}} disabled={true}></IonToggle>
+      </IonItem>
+
+      <IonItem>
+        <IonLabel>Mushrooms</IonLabel>
+        <IonToggle value="mushrooms" onChange={() => {}}></IonToggle>
+      </IonItem>
+    </IonList>
+  </>
+);
+
+export default Example;
+```
+
+
+### Vue
+
+```html
+<template>
+  <!-- Default Toggle -->
+  <ion-toggle></ion-toggle>
+
+  <!-- Disabled Toggle -->
+  <ion-toggle disabled></ion-toggle>
+
+  <!-- Checked Toggle -->
+  <ion-toggle checked></ion-toggle>
+
+  <!-- Toggle Colors -->
+  <ion-toggle color="primary"></ion-toggle>
+  <ion-toggle color="secondary"></ion-toggle>
+  <ion-toggle color="danger"></ion-toggle>
+  <ion-toggle color="light"></ion-toggle>
+  <ion-toggle color="dark"></ion-toggle>
+
+  <!-- Toggles in a List -->
+  <ion-list>
+    <ion-item>
+      <ion-label>Pepperoni</ion-label>
+      <ion-toggle @ionChange="toppings.push($event.target.value)" value="pepperoni" v-bind:checked="toppings.indexOf('pepperoni') !== -1"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Sausage</ion-label>
+      <ion-toggle @ionChange="toppings.push($event.target.value)" value="sausage" v-bind:checked="toppings.indexOf('pepperoni') !== -1" disabled="true"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Mushrooms</ion-label>
+      <ion-toggle @ionChange="toppings.push($event.target.value)" value="mushrooms" v-bind:checked="toppings.indexOf('pepperoni') !== -1"></ion-toggle>
+    </ion-item>
+  </ion-list>
+</template>
+```
+
 
 
 ## Properties
 
-#### checked
-
-boolean
-
-If true, the toggle is selected. Defaults to `false`.
-
-
-#### color
-
-string
-
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
-
-
-#### disabled
-
-boolean
-
-Indicates that the user cannot interact with the control.
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-
-
-#### name
-
-string
-
-The name of the control, which is submitted with the form data.
-
-
-#### value
-
-string
-
-the value of the toggle.
-
-
-## Attributes
-
-#### checked
-
-boolean
-
-If true, the toggle is selected. Defaults to `false`.
-
-
-#### color
-
-string
-
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
-
-
-#### disabled
-
-boolean
-
-Indicates that the user cannot interact with the control.
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-
-
-#### name
-
-string
-
-The name of the control, which is submitted with the form data.
-
-
-#### value
-
-string
-
-the value of the toggle.
+| Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                          | Default        |
+| ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | -------------- |
+| `checked`  | `checked`  | If `true`, the toggle is selected.                                                                                                                                                                                                                                     | `boolean`                     | `false`        |
+| `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`         | `undefined`    |
+| `disabled` | `disabled` | If `true`, the user cannot interact with the toggle.                                                                                                                                                                                                                   | `boolean`                     | `false`        |
+| `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`               | `undefined`    |
+| `name`     | `name`     | The name of the control, which is submitted with the form data.                                                                                                                                                                                                        | `string`                      | `this.inputId` |
+| `value`    | `value`    | The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.                  | `null \| string \| undefined` | `'on'`         |
 
 
 ## Events
 
-#### ionBlur
-
-Emitted when the toggle loses focus.
-
-
-#### ionChange
-
-Emitted when the value property has changed.
+| Event       | Description                                  | Type                                   |
+| ----------- | -------------------------------------------- | -------------------------------------- |
+| `ionBlur`   | Emitted when the toggle loses focus.         | `CustomEvent<void>`                    |
+| `ionChange` | Emitted when the value property has changed. | `CustomEvent<ToggleChangeEventDetail>` |
+| `ionFocus`  | Emitted when the toggle has focus.           | `CustomEvent<void>`                    |
 
 
-#### ionFocus
+## CSS Custom Properties
 
-Emitted when the toggle has focus.
-
-
-#### ionStyle
-
-Emitted when the styles change.
-
+| Name                          | Description                                  |
+| ----------------------------- | -------------------------------------------- |
+| `--background`                | Background of the toggle                     |
+| `--background-checked`        | Background of the toggle when checked        |
+| `--handle-background`         | Background of the toggle handle              |
+| `--handle-background-checked` | Background of the toggle handle when checked |
 
 
 ----------------------------------------------

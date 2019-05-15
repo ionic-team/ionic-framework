@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <title>Datetime</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <script src="/dist/ionic.js"></script>
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
 </head>
+
 <body>
   <ion-app>
 
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Datetime</ion-title>
-          <ion-buttons slot="primary">
-            <ion-button onclick="toggleBoolean('dynamicDisabled', 'disabled')">
+    <ion-header translucent>
+      <ion-toolbar>
+        <ion-title>Datetime</ion-title>
+        <ion-buttons slot="primary">
+          <ion-button onclick="toggleBoolean('dynamicDisabled', 'disabled')">
             (disabled)
             </ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
 
-      <ion-content id="content" class="outer-content test-content">
+      <ion-content id="content" fullscreen class="outer-content test-content">
         <ion-list>
           <ion-item>
             <ion-label>MMMM</ion-label>
@@ -35,6 +40,11 @@
           <ion-item>
             <ion-label>Disabled</ion-label>
             <ion-datetime id="dynamicDisabled" display-format="MM DD YY" disabled value="1994-12-15"></ion-datetime>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Readonly</ion-label>
+            <ion-datetime display-format="MM DD YY" readonly value="1994-12-15"></ion-datetime>
           </ion-item>
 
           <ion-item>
@@ -91,7 +101,7 @@
 
           <ion-item>
             <ion-label>Leap years, summer months</ion-label>
-            <ion-datetime id="customYearValues" display-format="MM/YYYY" pickerFormat="MMMM YYYY" month-values="6,7,8"></ion-datetime>
+            <ion-datetime id="customYearValues" display-format="MM/YYYY" picker-format="MMMM YYYY" month-values="6,7,8"></ion-datetime>
           </ion-item>
 
           <ion-item>
@@ -121,6 +131,12 @@
         </ion-list>
 
       </ion-content>
+
+    <style>
+      .outer-content {
+        --background: #f2f2f2;
+      }
+    </style>
 
     <script>
       var yearValuesArray = [2020, 2016, 2008, 2004, 2000, 1996];
@@ -163,8 +179,7 @@
       }
     </script>
   </ion-app>
+
 </body>
+
 </html>
-
-
-

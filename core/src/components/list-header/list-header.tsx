@@ -1,5 +1,7 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
+
 import { Color, Mode } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-list-header',
@@ -7,19 +9,32 @@ import { Color, Mode } from '../../interface';
     ios: 'list-header.ios.scss',
     md: 'list-header.md.scss'
   },
-  host: {
-    theme: 'list-header'
-  }
+  shadow: true
 })
-export class ListHeader {
-  /**
-   * The color to use for the background.
-   */
-  @Prop() color?: Color;
+export class ListHeader implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
+
+  /**
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
+   */
+  @Prop() color?: Color;
+
+  hostData() {
+    return {
+      class: {
+        ...createColorClasses(this.color),
+        [`${this.mode}`]: true,
+      }
+    };
+  }
+
+  render() {
+    return <slot></slot>;
+  }
 }

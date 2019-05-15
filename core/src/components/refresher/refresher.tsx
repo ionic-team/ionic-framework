@@ -1,35 +1,27 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, State } from '@stencil/core';
-import { GestureDetail, QueueController } from '../../interface';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-const enum RefresherState {
-  Inactive = 1 << 0,
-  Pulling = 1 << 1,
-  Ready = 1 << 2,
-  Refreshing = 1 << 3,
-  Cancelling = 1 << 4,
-  Completing = 1 << 5,
-
-  _BUSY_ = Refreshing | Cancelling | Completing,
-}
+import { Gesture, GestureDetail, Mode, RefresherEventDetail } from '../../interface';
 
 @Component({
   tag: 'ion-refresher',
   styleUrls: {
     ios: 'refresher.ios.scss',
     md: 'refresher.md.scss'
-  },
-  host: {
-    theme: 'refresher'
   }
 })
-export class Refresher {
+export class Refresher implements ComponentInterface {
 
   private appliedStyles = false;
   private didStart = false;
   private progress = 0;
-  private scrollEl: HTMLElement | null = null;
+  private scrollEl?: HTMLElement;
+  private gesture?: Gesture;
 
-  @Prop({ context: 'queue' }) queue!: QueueController;
+  mode!: Mode;
+
+  @Element() el!: HTMLElement;
+
+  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
    * The current state which the refresher is in. The refresher's states include:
@@ -39,16 +31,13 @@ export class Refresher {
    * - `cancelling` - The user pulled down the refresher and let go, but did not pull down far enough to kick off the `refreshing` state. After letting go, the refresher is in the `cancelling` state while it is closing, and will go back to the `inactive` state once closed.
    * - `ready` - The user has pulled down the refresher far enough that if they let go, it'll begin the `refreshing` state.
    * - `refreshing` - The refresher is actively waiting on the async operation to end. Once the refresh handler calls `complete()` it will begin the `completing` state.
-   * - `completing` - The `refreshing` state has finished and the refresher is in the process of closing itself. Once closed, the refresher will go back to the `inactive` state.
+   * - `completing` - The `refreshing` state has finished and the refresher is in the way of closing itself. Once closed, the refresher will go back to the `inactive` state.
    */
   @State() private state: RefresherState = RefresherState.Inactive;
 
-
-  @Element() el!: HTMLElement;
-
   /**
    * The minimum distance the user must pull down until the
-   * refresher will go into the `refreshing` state. Defaults to `60`.
+   * refresher will go into the `refreshing` state.
    */
   @Prop() pullMin = 60;
 
@@ -59,21 +48,39 @@ export class Refresher {
    */
   @Prop() pullMax: number = this.pullMin + 60;
 
-  // TODO: NEVER USED
   /**
-   * Time it takes to close the refresher. Defaults to `280ms`.
+   * Time it takes to close the refresher.
    */
   @Prop() closeDuration = '280ms';
 
   /**
-   * Time it takes the refresher to to snap back to the `refreshing` state. Defaults to `280ms`.
+   * Time it takes the refresher to to snap back to the `refreshing` state.
    */
   @Prop() snapbackDuration = '280ms';
 
   /**
-   * If true, the refresher will be hidden. Defaults to `true`.
+   * How much to multiply the pull speed by. To slow the pull animation down,
+   * pass a number less than `1`. To speed up the pull, pass a number greater
+   * than `1`. The default value is `1` which is equal to the speed of the cursor.
+   * If a negative value is passed in, the factor will be `1` instead.
+   *
+   * For example: If the value passed is `1.2` and the content is dragged by
+   * `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels
+   * (an increase of 20 percent). If the value passed is `0.8`, the dragged amount
+   * will be `8` pixels, less than the amount the cursor has moved.
    */
-  @Prop() disabled = true;
+  @Prop() pullFactor = 1;
+
+  /**
+   * If `true`, the refresher will be hidden.
+   */
+  @Prop() disabled = false;
+  @Watch('disabled')
+  disabledChanged() {
+    if (this.gesture) {
+      this.gesture.setDisabled(this.disabled);
+    }
+  }
 
   /**
    * Emitted when the user lets go of the content and has pulled down
@@ -81,7 +88,7 @@ export class Refresher {
    * Updates the refresher state to `refreshing`. The `complete()` method should be
    * called when the async operation has completed.
    */
-  @Event() ionRefresh!: EventEmitter<void>;
+  @Event() ionRefresh!: EventEmitter<RefresherEventDetail>;
 
   /**
    * Emitted while the user is pulling down the content and exposing the refresher.
@@ -93,24 +100,42 @@ export class Refresher {
    */
   @Event() ionStart!: EventEmitter<void>;
 
-  componentDidLoad() {
+  async componentDidLoad() {
     if (this.el.getAttribute('slot') !== 'fixed') {
       console.error('Make sure you use: <ion-refresher slot="fixed">');
       return;
     }
-    const parentElement = this.el.parentElement;
-    if (!parentElement) {
-      console.error('ion-refresher is not attached');
-      return;
+    const contentEl = this.el.closest('ion-content');
+    if (contentEl) {
+      await contentEl.componentOnReady();
+      this.scrollEl = await contentEl.getScrollElement();
+    } else {
+      console.error('ion-refresher did not attach, make sure the parent is an ion-content.');
     }
-    this.scrollEl = parentElement.querySelector('ion-scroll') as HTMLElement;
-    if (!this.scrollEl) {
-      console.error('ion-refresher didn\'t attached, make sure if parent is a ion-content');
-    }
+
+    this.gesture = (await import('../../utils/gesture')).createGesture({
+      el: this.el.closest('ion-content') as any,
+      queue: this.queue,
+      gestureName: 'refresher',
+      gesturePriority: 10,
+      direction: 'y',
+      threshold: 20,
+      passive: false,
+      canStart: () => this.canStart(),
+      onStart: () => this.onStart(),
+      onMove: ev => this.onMove(ev),
+      onEnd: () => this.onEnd(),
+    });
+
+    this.disabledChanged();
   }
 
   componentDidUnload() {
-    this.scrollEl = null;
+    this.scrollEl = undefined;
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
   }
 
   /**
@@ -146,7 +171,7 @@ export class Refresher {
    */
   @Method()
   getProgress() {
-    return this.progress;
+    return Promise.resolve(this.progress);
   }
 
   private canStart(): boolean {
@@ -171,25 +196,26 @@ export class Refresher {
 
   private onMove(detail: GestureDetail) {
     if (!this.scrollEl) {
-      return 0;
+      return;
     }
     // this method can get called like a bazillion times per second,
     // so it's built to be as efficient as possible, and does its
     // best to do any DOM read/writes only when absolutely necessary
-    // if multitouch then get out immediately
+    // if multi-touch then get out immediately
     const ev = detail.event as TouchEvent;
     if (ev.touches && ev.touches.length > 1) {
-      return 1;
+      return;
     }
 
     // do nothing if it's actively refreshing
-    // or it's in the process of closing
+    // or it's in the way of closing
     // or this was never a startY
-    if (this.state & RefresherState._BUSY_) {
-      return 2;
+    if ((this.state & RefresherState._BUSY_) !== 0) {
+      return;
     }
 
-    const deltaY = detail.deltaY;
+    const pullFactor = (Number.isNaN(this.pullFactor) || this.pullFactor < 0) ? 1 : this.pullFactor;
+    const deltaY = detail.deltaY * pullFactor;
     // don't bother if they're scrolling up
     // and have not already started dragging
     if (deltaY <= 0) {
@@ -201,10 +227,10 @@ export class Refresher {
       if (this.appliedStyles) {
         // reset the styles only if they were applied
         this.setCss(0, '', false, '');
-        return 5;
+        return;
       }
 
-      return 6;
+      return;
     }
 
     if (this.state === RefresherState.Inactive) {
@@ -216,7 +242,7 @@ export class Refresher {
       // not possible to pull the content down yet
       if (scrollHostScrollTop > 0) {
         this.progress = 0;
-        return 7;
+        return;
       }
 
       // content scrolled all the way to the top, and dragging down
@@ -224,17 +250,18 @@ export class Refresher {
     }
 
     // prevent native scroll events
-    console.log('preventDefault');
-    ev.preventDefault();
+    if (ev.cancelable) {
+      ev.preventDefault();
+    }
 
     // the refresher is actively pulling at this point
     // move the scroll element within the content element
     this.setCss(deltaY, '0ms', true, '');
 
-    if (!deltaY) {
+    if (deltaY === 0) {
       // don't continue if there's no delta yet
       this.progress = 0;
-      return 8;
+      return;
     }
 
     const pullMin = this.pullMin;
@@ -254,13 +281,13 @@ export class Refresher {
     if (deltaY < pullMin) {
       // ensure it stays in the pulling state, cuz its not ready yet
       this.state = RefresherState.Pulling;
-      return 2;
+      return;
     }
 
     if (deltaY > this.pullMax) {
       // they pulled farther than the max, so kick off the refresh
       this.beginRefresh();
-      return 3;
+      return;
     }
 
     // pulled farther than the pull min!!
@@ -268,7 +295,7 @@ export class Refresher {
     // if they let go then it'll refresh, kerpow!!
     this.state = RefresherState.Ready;
 
-    return 4;
+    return;
   }
 
   private onEnd() {
@@ -296,7 +323,9 @@ export class Refresher {
 
     // emit "refresh" because it was pulled down far enough
     // and they let go to begin refreshing
-    this.ionRefresh.emit();
+    this.ionRefresh.emit({
+      complete: this.complete.bind(this)
+    });
   }
 
   private close(state: RefresherState, delay: string) {
@@ -312,7 +341,7 @@ export class Refresher {
     // reset set the styles on the scroll element
     // set that the refresh is actively cancelling/completing
     this.state = state;
-    this.setCss(0, '', true, delay);
+    this.setCss(0, this.closeDuration, true, delay);
 
     // TODO: stop gesture
   }
@@ -322,7 +351,7 @@ export class Refresher {
     this.queue.write(() => {
       if (this.scrollEl) {
         const style = this.scrollEl.style;
-        style.transform = ((y > 0) ? 'translateY(' + y + 'px) translateZ(0px)' : 'translateZ(0px)');
+        style.transform = ((y > 0) ? `translateY(${y}px) translateZ(0px)` : 'translateZ(0px)');
         style.transitionDuration = duration;
         style.transitionDelay = delay;
         style.overflow = (overflowVisible ? 'hidden' : '');
@@ -332,7 +361,13 @@ export class Refresher {
 
   hostData() {
     return {
+      slot: 'fixed',
       class: {
+        [`${this.mode}`]: true,
+
+        // Used internally for styling
+        [`refresher-${this.mode}`]: true,
+
         'refresher-active': this.state !== RefresherState.Inactive,
         'refresher-pulling': this.state === RefresherState.Pulling,
         'refresher-ready': this.state === RefresherState.Ready,
@@ -342,21 +377,15 @@ export class Refresher {
       }
     };
   }
+}
 
-  render() {
-    return <ion-gesture
-      canStart={this.canStart.bind(this)}
-      onStart={this.onStart.bind(this)}
-      onMove={this.onMove.bind(this)}
-      onEnd={this.onEnd.bind(this)}
-      gestureName="refresher"
-      gesturePriority={10}
-      passive={false}
-      direction="y"
-      threshold={5}
-      attachTo={this.el.closest('ion-content') as any}
-      disabled={this.disabled}>
-      <slot></slot>
-    </ion-gesture>;
-  }
+const enum RefresherState {
+  Inactive = 1 << 0,
+  Pulling = 1 << 1,
+  Ready = 1 << 2,
+  Refreshing = 1 << 3,
+  Cancelling = 1 << 4,
+  Completing = 1 << 5,
+
+  _BUSY_ = Refreshing | Cancelling | Completing,
 }

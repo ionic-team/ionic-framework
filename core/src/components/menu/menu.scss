@@ -3,17 +3,35 @@
 // Menu
 // --------------------------------------------------
 
-ion-menu {
+:host {
+  /**
+   * @prop --background: Background of the menu
+   *
+   * @prop --min-width: Minimum width of the menu
+   * @prop --width: Width of the menu
+   * @prop --max-width: Maximum width of the menu
+   *
+   * @prop --min-height: Minimum height of the menu
+   * @prop --height: Height of the menu
+   * @prop --max-height: Maximum height of the menu
+   */
+  --width: #{$menu-width};
+  --min-width: auto;
+  --max-width: auto;
+  --height: 100%;
+  --min-height: auto;
+  --max-height: auto;
+  --background: #{$background-color};
+
   @include position(0, 0, 0, 0);
 
-  position: absolute;
-
   display: none;
+  position: absolute;
 
   contain: strict;
 }
 
-ion-menu.show-menu {
+:host(.show-menu) {
   display: block;
 }
 
@@ -22,68 +40,56 @@ ion-menu.show-menu {
   @include position(0, auto, 0, 0);
   @include transform(translate3d(-9999px, 0, 0));
 
-  position: absolute;
-
   display: flex;
+  position: absolute;
 
   flex-direction: column;
   justify-content: space-between;
 
-  width: $menu-width;
-  height: 100%;
+  width: var(--width);
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+
+  height: var(--height);
+  min-height: var(--min-height);
+  max-height: var(--max-height);
+
+  background: var(--background);
 
   contain: strict;
 }
 
-.menu-side-left > .menu-inner {
+:host(.menu-side-start) .menu-inner {
+  --ion-safe-area-right: 0px;
+
   @include multi-dir() {
-    // scss-lint:disable PropertySpelling
+    /* stylelint-disable property-blacklist */
     right: auto;
     left: 0;
   }
 }
 
-.menu-side-right > .menu-inner {
+:host(.menu-side-end) .menu-inner {
+  --ion-safe-area-left: 0px;
+
   @include multi-dir() {
-    // scss-lint:disable PropertySpelling
     right: 0;
     left: auto;
+    /* stylelint-enable property-blacklist */
   }
 }
 
-ion-menu ion-backdrop {
-  z-index: -1;
+ion-backdrop {
   display: none;
 
   opacity: .01;
+  z-index: -1;
 }
-
-.menu-content {
-  @include transform(translate3d(0, 0, 0));
-}
-
-.menu-content-open {
-  cursor: pointer;
-
-  touch-action: manipulation;
-}
-
-.menu-content-open ion-pane,
-.menu-content-open .ion-pane,
-.menu-content-open ion-content,
-.menu-content-open .toolbar {
-  // the containing element itself should be clickable but
-  // everything inside of it should not clickable when menu is open
-  pointer-events: none;
-}
-
 
 @media (max-width: 340px) {
-
   .menu-inner {
-    width: $menu-small-width;
+    --width: #{$menu-small-width};
   }
-
 }
 
 
@@ -92,11 +98,11 @@ ion-menu ion-backdrop {
 // The content slides over to reveal the menu underneath.
 // The menu itself, which is under the content, does not move.
 
-ion-menu.menu-type-reveal {
+:host(.menu-type-reveal) {
   z-index: 0;
 }
 
-ion-menu.menu-type-reveal.show-menu .menu-inner {
+:host(.menu-type-reveal.show-menu) .menu-inner {
   @include transform(translate3d(0, 0, 0));
 }
 
@@ -106,12 +112,32 @@ ion-menu.menu-type-reveal.show-menu .menu-inner {
 // The menu slides over the content. The content
 // itself, which is under the menu, does not move.
 
-ion-menu.menu-type-overlay {
+:host(.menu-type-overlay) {
   z-index: $z-index-menu-overlay;
 }
 
-ion-menu.menu-type-overlay .show-backdrop {
+:host(.menu-type-overlay) .show-backdrop {
   display: block;
 
   cursor: pointer;
+}
+
+
+// Menu Split Pane
+// --------------------------------------------------
+
+:host(.menu-pane-visible) .menu-inner {
+  @include position-horizontal(0, 0);
+
+  width: auto;
+
+  /* stylelint-disable declaration-no-important */
+  transform: none !important;
+
+  box-shadow: none !important;
+}
+
+:host(.menu-pane-visible) ion-backdrop {
+  display: hidden !important;
+  /* stylelint-enable declaration-no-important */
 }

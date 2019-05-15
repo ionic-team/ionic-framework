@@ -4,42 +4,14 @@
 // Material Design Card Title
 // --------------------------------------------------
 
-.card-title-md {
-  @include margin($card-md-title-margin-top, $card-md-title-margin-end, $card-md-title-margin-bottom, $card-md-title-margin-start);
+:host {
+  --color: #{$card-md-title-text-color};
 
+  @include margin($card-md-title-margin-top, $card-md-title-margin-end, $card-md-title-margin-bottom, $card-md-title-margin-start);
   @include padding($card-md-title-padding-top, $card-md-title-padding-end, $card-md-title-padding-bottom, $card-md-title-padding-start);
 
-  display: block;
-
   font-size: $card-md-title-font-size;
+  font-weight: 500;
+
   line-height: 1.2;
-  color: $card-md-title-text-color;
-}
-
-
-// Generate Material Design Card Title Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-md {
-  $color-base: ion-color($colors-md, $color-name, base, md);
-  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
-
-  .card-md-#{$color-name} {
-
-    .card-title-md {
-      color: $color-contrast;
-    }
-
-    @each $color-name, $color-value in $colors-md {
-      $color-base: ion-color($colors-md, $color-name, base, md);
-
-      .card-title-md-#{$color-name} {
-        color: $color-base;
-      }
-    }
-  }
-
-  .card-title-md-#{$color-name} {
-    color: $color-base;
-  }
 }

@@ -4,38 +4,12 @@
 // Material Design Card Subtitle
 // --------------------------------------------------
 
-.card-subtitle-md {
+:host {
+  --color: #{$card-md-subtitle-color};
+
   @include margin($card-md-subtitle-margin-top, $card-md-subtitle-margin-end, $card-md-subtitle-margin-bottom, $card-md-subtitle-margin-start);
   @include padding($card-md-subtitle-padding-top, $card-md-subtitle-padding-end, $card-md-subtitle-padding-bottom, $card-md-subtitle-padding-start);
 
   font-size: $card-md-subtitle-font-size;
-  color: $card-md-subtitle-color;
-}
-
-
-// Generate Material Design Card subtitle Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-md {
-  $color-base: ion-color($colors-md, $color-name, base, md);
-  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
-
-  .card-md-#{$color-name} {
-
-    .card-subtitle-md {
-      color: $color-contrast;
-    }
-
-    @each $color-name, $color-value in $colors-md {
-      $color-base: ion-color($colors-md, $color-name, base, md);
-
-      .card-subtitle-md-#{$color-name} {
-        color: $color-base;
-      }
-    }
-  }
-
-  .card-subtitle-md-#{$color-name} {
-    color: $color-base;
-  }
+  font-weight: 500;
 }

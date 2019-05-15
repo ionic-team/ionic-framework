@@ -1,24 +1,23 @@
 @import "../../themes/ionic.globals.md";
-
 @import "../item/item.md.vars";
 
 // Material Design Radio
 // --------------------------------------------------
 
 /// @prop - Color of the checked radio
-$radio-md-color-on:                  ion-color($colors-md, primary, base, md) !default;
+$radio-md-color-on:                  current-color(base) !default;
 
 /// @prop - Background color of focus indicator for radio when focused
-$radio-md-background-color-focused:  ion-color($colors-md, primary, tint, md) !default;
+$radio-md-background-color-focused:  ion-color(primary, tint) !default;
 
 /// @prop - Color of the unchecked radio
-$radio-md-color-off:                 $text-md-color-step-600 !default;
+$radio-md-color-off:                 $text-color-step-600 !default;
 
 /// @prop - Width of the radio icon
-$radio-md-icon-width:                16px !default;
+$radio-md-icon-width:                20px !default;
 
 /// @prop - Height of the radio icon
-$radio-md-icon-height:               16px !default;
+$radio-md-icon-height:               20px !default;
 
 /// @prop - Border width of the radio icon
 $radio-md-icon-border-width:         2px !default;
@@ -54,7 +53,7 @@ $radio-md-item-start-margin-start:   4px !default;
 $radio-md-item-end-margin-top:       9px !default;
 
 /// @prop - Margin end of the item-end in a radio
-$radio-md-item-end-margin-end:       10px !default;
+$radio-md-item-end-margin-end:       0 !default;
 
 /// @prop - Margin bottom of the item-end in a radio
 $radio-md-item-end-margin-bottom:    $radio-md-item-end-margin-top !default;

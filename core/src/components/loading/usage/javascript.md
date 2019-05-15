@@ -7,7 +7,12 @@ async function presentLoading() {
     message: 'Hellooo',
     duration: 2000
   });
-  return await loading.present();
+  
+  await loading.present();
+    
+  const { role, data } = await loading.onDidDismiss();
+  
+  console.log('Loading dismissed!');
 }
 
 async function presentLoadingWithOptions() {
@@ -15,9 +20,9 @@ async function presentLoadingWithOptions() {
   await loadingController.componentOnReady();
 
   const loading = await loadingController.create({
-    spinner: 'hide',
+    spinner: null,
     duration: 5000,
-    content: 'Please wait...',
+    message: 'Please wait...',
     translucent: true,
     cssClass: 'custom-class custom-loading'
   });

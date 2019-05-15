@@ -4,29 +4,18 @@
 // iOS List Header
 // --------------------------------------------------
 
-.list-header-ios {
-  @include padding-horizontal($list-ios-header-padding-start, null);
+:host {
+  --background: #{$list-ios-header-background-color};
+  --color: #{$list-ios-header-color};
+
+  @include padding-horizontal(calc(var(--ion-safe-area-left, 0px) + #{$list-ios-header-padding-start}), null);
 
   position: relative;
 
   font-size: $list-ios-header-font-size;
   font-weight: $list-ios-header-font-weight;
+
   letter-spacing: $list-ios-header-letter-spacing;
+
   text-transform: $list-ios-header-text-transform;
-  color: $list-ios-header-color;
-  background: $list-ios-header-background-color;
-}
-
-
-// Generate iOS List Header Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-ios {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-
-  .list-header-ios-#{$color-name} {
-    color: $color-contrast;
-    background-color: $color-base;
-  }
 }

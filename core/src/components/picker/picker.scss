@@ -3,178 +3,125 @@
 // Picker
 // --------------------------------------------------
 
-ion-picker {
+:host {
+  /**
+   * @prop --background: Background of the picker
+   * @prop --background-rgb: Background of the picker in rgb format
+   *
+   * @prop --border-radius: Border radius of the picker
+   * @prop --border-color: Border color of the picker
+   * @prop --border-width: Border width of the picker
+   * @prop --border-style: Border style of the picker
+   *
+   * @prop --min-width: Minimum width of the picker
+   * @prop --width: Width of the picker
+   * @prop --max-width: Maximum width of the picker
+   *
+   * @prop --min-height: Minimum height of the picker
+   * @prop --height: Height of the picker
+   * @prop --max-height: Maximum height of the picker
+   */
+  --border-radius: 0;
+  --border-style: solid;
+  --min-width: auto;
+  --width: #{$picker-width};
+  --max-width: #{$picker-max-width};
+  --min-height: auto;
+  --max-height: auto;
+
   @include font-smoothing();
   @include position(0, null, null, 0);
 
-  position: absolute;
-  z-index: $z-index-overlay;
   display: block;
-
-  width: $picker-width;
-  height: $picker-width;
-
-  contain: strict;
-}
-
-.picker-toolbar {
-  z-index: 1;
+  position: absolute;
 
   width: 100%;
+  height: 100%;
+
+  font-family: $font-family-base;
 
   contain: strict;
+  user-select: none;
+  z-index: $z-index-overlay;
+}
+
+:host(.overlay-hidden) {
+  display: none;
 }
 
 .picker-wrapper {
+  @include border-radius(var(--border-radius));
   @include position(null, 0, 0, 0);
   @include margin(auto);
   @include transform(translate3d(0, 100%, 0));
 
-  position: absolute;
-  z-index: $z-index-overlay-wrapper;
   display: flex;
-
-  overflow: hidden;
+  position: absolute;
 
   flex-direction: column;
 
-  width: $picker-width;
-  max-width: $picker-max-width;
+  width: var(--width);
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+
+  height: var(--height);
+  min-height: var(--min-height);
+  max-height: var(--max-height);
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  background: var(--background);
 
   contain: strict;
-}
-
-.picker-columns {
-  @include margin(null, null, constant(safe-area-inset-bottom), null);
-  @include margin(null, null, env(safe-area-inset-bottom), null);
-
-  position: relative;
-  display: flex;
-
   overflow: hidden;
-
-  justify-content: center;
-
-  contain: strict;
-
-  @include rtl() {
-    // Date is the same format in both directions
-    flex-direction: row-reverse;
-  }
+  z-index: $z-index-overlay-wrapper;
 }
 
-.picker-col {
-  box-sizing: content-box;
-  position: relative;
-  display: flex;
+// Picker Toolbar and Buttons
+// --------------------------------------------------
 
-  flex: 1;
-  justify-content: center;
-
-  height: 100%;
-
-  contain: content;
-}
-
-.picker-opts {
-  position: relative;
-
-  flex: 1;
-
-  max-width: 100%;
-}
-
-.picker-prefix {
-  @include text-align(end);
-
-  position: relative;
-
-  flex: 2;
-
-  min-width: 45%;
-  max-width: 50%;
-
-  white-space: nowrap;
-}
-
-.picker-suffix {
-  @include text-align(start);
-
-  position: relative;
-
-  flex: 2;
-
-  min-width: 45%;
-  max-width: 50%;
-
-  white-space: nowrap;
-}
-
-// contain property is supported by Chrome
-.picker-opt {
-  @include position(0, null, null, 0);
-  @include text-align(center);
-
-  position: absolute;
-
-  display: block;
-  overflow: hidden;
-
+.picker-toolbar {
   width: 100%;
 
-  border: 0;
+  background: transparent;
 
-  text-overflow: ellipsis;
-  white-space: nowrap;
-
-  will-change: transform;
   contain: strict;
-}
-
-.picker-opt.picker-opt-disabled {
-  pointer-events: none;
-}
-
-.picker-opt-disabled {
-  opacity: 0;
-}
-
-.picker-opts-left {
-  @include ltr() {
-    justify-content: flex-start;
-  }
-
-  @include rtl() {
-    justify-content: flex-end;
-  }
-}
-
-.picker-opts-right {
-  @include ltr() {
-    justify-content: flex-end;
-  }
-
-  @include rtl() {
-    justify-content: flex-start;
-  }
-}
-
-.picker-above-highlight,
-.picker-below-highlight {
-  display: none;
-
-  pointer-events: none;
+  z-index: 1;
 }
 
 .picker-button {
   border: 0;
+
   font-family: inherit;
 }
 
-.picker-opt,
 .picker-button {
   &:active,
   &:focus {
     outline: none;
   }
+}
+
+// Picker Columns and Highlight
+// --------------------------------------------------
+
+.picker-columns {
+  display: flex;
+  position: relative;
+
+  justify-content: center;
+
+  margin-bottom: var(--ion-safe-area-bottom, 0);
+
+  contain: strict;
+  direction: ltr;
+  overflow: hidden;
+}
+
+.picker-above-highlight,
+.picker-below-highlight {
+  display: none;
+  pointer-events: none;
 }

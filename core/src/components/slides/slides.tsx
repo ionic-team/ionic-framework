@@ -1,127 +1,153 @@
-import {
-  Component,
-  Element,
-  Event,
-  EventEmitter,
-  Method,
-  Prop,
-  Watch
-} from '@stencil/core';
-import { Swiper }  from './vendor/swiper.js';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, Watch } from '@stencil/core';
+
+import { Mode } from '../../interface';
+import { rIC } from '../../utils/helpers.js';
+
+import { SwiperInterface, SwiperOptions } from './swiper/swiper-interface';
+
 @Component({
   tag: 'ion-slides',
   styleUrls: {
     ios: 'slides.ios.scss',
     md: 'slides.md.scss'
   },
-  host: {
-    theme: 'slides'
-  },
-  assetsDir: 'vendor'
+  assetsDir: 'swiper',
 })
-export class Slides {
-  private container!: HTMLElement;
-  private swiper: any;
+export class Slides implements ComponentInterface {
 
-  @Element() el!: HTMLElement;
+  private scrollbarEl?: HTMLElement;
+  private paginationEl?: HTMLElement;
+  private didInit = false;
 
-  /**
-   * Emitted before the active slide has changed.
-   */
-  @Event() ionSlideWillChange!: EventEmitter;
+  private readySwiper!: (swiper: SwiperInterface) => void;
+  private swiper: Promise<SwiperInterface> = new Promise(resolve => { this.readySwiper = resolve; });
 
-  /**
-   * Emitted after the active slide has changed.
-   */
-  @Event() ionSlideDidChange!: EventEmitter;
+  @Element() el!: HTMLStencilElement;
 
   /**
-   * Emitted when the next slide has started.
+   * The mode determines which platform styles to use.
    */
-  @Event() ionSlideNextStart!: EventEmitter;
-
-  /**
-   * Emitted when the previous slide has started.
-   */
-  @Event() ionSlidePrevStart!: EventEmitter;
-
-  /**
-   * Emitted when the next slide has ended.
-   */
-  @Event() ionSlideNextEnd!: EventEmitter;
-
-  /**
-   * Emitted when the previous slide has ended.
-   */
-  @Event() ionSlidePrevEnd!: EventEmitter;
-
-  /**
-   * Emitted when the slide transition has started.
-   */
-  @Event() ionSlideTransitionStart!: EventEmitter;
-
-  /**
-   * Emitted when the slide transition has ended.
-   */
-  @Event() ionSlideTransitionEnd!: EventEmitter;
-
-  /**
-   * Emitted when the slider is actively being moved.
-   */
-  @Event() ionSlideDrag!: EventEmitter;
-
-  /**
-   * Emitted when the slider is at its initial position.
-   */
-  @Event() ionSlideReachStart!: EventEmitter;
-
-  /**
-   * Emitted when the slider is at the last slide.
-   */
-  @Event() ionSlideReachEnd!: EventEmitter;
-
-  /**
-   * Emitted when the user first touches the slider.
-   */
-  @Event() ionSlideTouchStart!: EventEmitter;
-
-  /**
-   * Emitted when the user releases the touch.
-   */
-  @Event() ionSlideTouchEnd!: EventEmitter;
+  @Prop() mode!: Mode;
 
   /**
    * Options to pass to the swiper instance.
    * See http://idangero.us/swiper/api/ for valid options
    */
-  @Prop() options: any; // SwiperOptions;  // TODO
+  @Prop() options: any = {}; // SwiperOptions;  // TODO
 
   @Watch('options')
-  updateSwiperOptions() {
-    const newOptions = this.normalizeOptions();
-    this.swiper.params = Object.assign({}, this.swiper.params, newOptions);
-    this.update();
+  async optionsChanged() {
+    if (this.didInit) {
+      const swiper = await this.getSwiper();
+      Object.assign(swiper.params, this.options);
+      await this.update();
+    }
   }
 
   /**
-   * Show or hide the pager
+   * If `true`, show the pagination.
    */
-  @Prop() pager = true;
+  @Prop() pager = false;
+
+  /**
+   * If `true`, show the scrollbar.
+   */
+  @Prop() scrollbar = false;
+
+  /**
+   * Emitted after Swiper initialization
+   */
+  @Event() ionSlidesDidLoad!: EventEmitter<void>;
+
+  /**
+   * Emitted when the user taps/clicks on the slide's container.
+   */
+  @Event() ionSlideTap!: EventEmitter<void>;
+
+  /**
+   * Emitted when the user double taps on the slide's container.
+   */
+  @Event() ionSlideDoubleTap!: EventEmitter<void>;
+
+  /**
+   * Emitted before the active slide has changed.
+   */
+  @Event() ionSlideWillChange!: EventEmitter<void>;
+
+  /**
+   * Emitted after the active slide has changed.
+   */
+  @Event() ionSlideDidChange!: EventEmitter<void>;
+
+  /**
+   * Emitted when the next slide has started.
+   */
+  @Event() ionSlideNextStart!: EventEmitter<void>;
+
+  /**
+   * Emitted when the previous slide has started.
+   */
+  @Event() ionSlidePrevStart!: EventEmitter<void>;
+
+  /**
+   * Emitted when the next slide has ended.
+   */
+  @Event() ionSlideNextEnd!: EventEmitter<void>;
+
+  /**
+   * Emitted when the previous slide has ended.
+   */
+  @Event() ionSlidePrevEnd!: EventEmitter<void>;
+
+  /**
+   * Emitted when the slide transition has started.
+   */
+  @Event() ionSlideTransitionStart!: EventEmitter<void>;
+
+  /**
+   * Emitted when the slide transition has ended.
+   */
+  @Event() ionSlideTransitionEnd!: EventEmitter<void>;
+
+  /**
+   * Emitted when the slider is actively being moved.
+   */
+  @Event() ionSlideDrag!: EventEmitter<void>;
+
+  /**
+   * Emitted when the slider is at its initial position.
+   */
+  @Event() ionSlideReachStart!: EventEmitter<void>;
+
+  /**
+   * Emitted when the slider is at the last slide.
+   */
+  @Event() ionSlideReachEnd!: EventEmitter<void>;
+
+  /**
+   * Emitted when the user first touches the slider.
+   */
+  @Event() ionSlideTouchStart!: EventEmitter<void>;
+
+  /**
+   * Emitted when the user releases the touch.
+   */
+  @Event() ionSlideTouchEnd!: EventEmitter<void>;
 
   componentDidLoad() {
-    setTimeout(this.initSlides.bind(this), 10);
+    rIC(() => this.initSwiper());
   }
 
-  componentDidUnload() {
-    this.swiper.destroy(true, true);
+  async componentDidUnload() {
+    const swiper = await this.getSwiper();
+    swiper.destroy(true, true);
   }
 
-  private initSlides() {
-    console.debug(`ion-slides, init`);
-    this.container = this.el.children[0] as HTMLElement;
-    const finalOptions = this.normalizeOptions();
-    // init swiper core
-    this.swiper = new Swiper(this.container, finalOptions);
+  @Listen('ionSlideChanged')
+  onSlideChanged() {
+    if (this.didInit) {
+      this.update();
+    }
   }
 
   /**
@@ -129,139 +155,189 @@ export class Slides {
    * child slides.
    */
   @Method()
-  update() {
-    this.swiper.update();
+  async update() {
+    const swiper = await this.getSwiper();
+    swiper.update();
+  }
+
+  /**
+   * Force swiper to update its height (when autoHeight is enabled) for the duration
+   * equal to 'speed' parameter.
+   *
+   * @param speed The transition duration (in ms).
+   */
+  @Method()
+  async updateAutoHeight(speed?: number) {
+    const swiper = await this.getSwiper();
+    swiper.updateAutoHeight(speed);
   }
 
   /**
    * Transition to the specified slide.
+   *
+   * @param index The index of the slide to transition to.
+   * @param speed The transition duration (in ms).
+   * @param runCallbacks If true, the transition will produce [Transition/SlideChange][Start/End] transition events.
    */
   @Method()
-  slideTo(index: number, speed?: number, runCallbacks?: boolean) {
-    this.swiper.slideTo(index, speed, runCallbacks);
+  async slideTo(index: number, speed?: number, runCallbacks?: boolean) {
+    const swiper = await this.getSwiper();
+    swiper.slideTo(index, speed, runCallbacks);
   }
 
   /**
    * Transition to the next slide.
+   *
+   * @param speed The transition duration (in ms).
+   * @param runCallbacks If true, the transition will produce [Transition/SlideChange][Start/End] transition events.
    */
   @Method()
-  slideNext(speed?: number, runCallbacks?: boolean) {
-    this.swiper.slideNext(runCallbacks, speed);
+  async slideNext(speed?: number, runCallbacks?: boolean) {
+    const swiper = await this.getSwiper();
+    swiper.slideNext(speed!, runCallbacks!);
   }
 
   /**
    * Transition to the previous slide.
+   *
+   * @param speed The transition duration (in ms).
+   * @param runCallbacks If true, the transition will produce the [Transition/SlideChange][Start/End] transition events.
    */
   @Method()
-  slidePrev(speed?: number, runCallbacks?: boolean) {
-    this.swiper.slidePrev(runCallbacks, speed);
+  async slidePrev(speed?: number, runCallbacks?: boolean) {
+    const swiper = await this.getSwiper();
+    swiper.slidePrev(speed, runCallbacks);
   }
 
   /**
    * Get the index of the active slide.
    */
   @Method()
-  getActiveIndex(): number {
-    return this.swiper.activeIndex;
+  async getActiveIndex(): Promise<number> {
+    const swiper = await this.getSwiper();
+    return swiper.activeIndex;
   }
 
   /**
    * Get the index of the previous slide.
    */
   @Method()
-  getPreviousIndex(): number {
-    return this.swiper.previousIndex;
+  async getPreviousIndex(): Promise<number> {
+    const swiper = await this.getSwiper();
+    return swiper.previousIndex;
   }
 
   /**
    * Get the total number of slides.
    */
   @Method()
-  length(): number {
-    return this.swiper.slides.length;
+  async length(): Promise<number> {
+    const swiper = await this.getSwiper();
+    return swiper.slides.length;
   }
 
   /**
    * Get whether or not the current slide is the last slide.
-   *
    */
   @Method()
-  isEnd(): boolean {
-    return this.swiper.isEnd;
+  async isEnd(): Promise<boolean> {
+    const swiper = await this.getSwiper();
+    return swiper.isEnd;
   }
 
   /**
    * Get whether or not the current slide is the first slide.
    */
   @Method()
-  isBeginning(): boolean {
-    return this.swiper.isBeginning;
+  async isBeginning(): Promise<boolean> {
+    const swiper = await this.getSwiper();
+    return swiper.isBeginning;
   }
 
   /**
    * Start auto play.
    */
   @Method()
-  startAutoplay(): void {
-    this.swiper.autoplay.start();
+  async startAutoplay() {
+    const swiper = await this.getSwiper();
+    if (swiper.autoplay) {
+      swiper.autoplay.start();
+    }
   }
 
   /**
    * Stop auto play.
    */
   @Method()
-  stopAutoplay(): void {
-    this.swiper.autoplay.stop();
+  async stopAutoplay() {
+    const swiper = await this.getSwiper();
+    if (swiper.autoplay) {
+      swiper.autoplay.stop();
+    }
   }
 
   /**
-   * Lock or unlock the ability to slide to the next slides.
+   * Lock or unlock the ability to slide to the next slide.
+   *
+   * @param lock If `true`, disable swiping to the next slide.
    */
   @Method()
-  lockSwipeToNext(shouldLockSwipeToNext: boolean) {
-    if (shouldLockSwipeToNext) {
-      return this.swiper.lockSwipeToNext();
-    }
-    this.swiper.unlockSwipeToNext();
+  async lockSwipeToNext(lock: boolean) {
+    const swiper = await this.getSwiper();
+    swiper.allowSlideNext = !lock;
   }
 
   /**
-   * Lock or unlock the ability to slide to the previous slides.
+   * Lock or unlock the ability to slide to the previous slide.
+   *
+   * @param lock If `true`, disable swiping to the previous slide.
    */
   @Method()
-  lockSwipeToPrev(shouldLockSwipeToPrev: boolean) {
-    if (shouldLockSwipeToPrev) {
-      return this.swiper.lockSwipeToPrev();
-    }
-    this.swiper.unlockSwipeToPrev();
+  async lockSwipeToPrev(lock: boolean) {
+    const swiper = await this.getSwiper();
+    swiper.allowSlidePrev = !lock;
   }
 
   /**
-   * Lock or unlock the ability to slide to change slides.
+   * Lock or unlock the ability to slide to the next or previous slide.
+   *
+   * @param lock If `true`, disable swiping to the next and previous slide.
    */
   @Method()
-  lockSwipes(shouldLockSwipes: boolean) {
-    if (shouldLockSwipes) {
-      return this.swiper.lockSwipes();
-    }
-    this.swiper.unlockSwipes();
+  async lockSwipes(lock: boolean) {
+    const swiper = await this.getSwiper();
+    swiper.allowSlideNext = !lock;
+    swiper.allowSlidePrev = !lock;
+    swiper.allowTouchMove = !lock;
   }
 
-  private normalizeOptions() {
+  private async initSwiper() {
+    const finalOptions = this.normalizeOptions();
+
+    // init swiper core
+    // @ts-ignore
+    const { Swiper } = await import('./swiper/swiper.bundle.js');
+    const swiper = new Swiper(this.el, finalOptions);
+    this.didInit = true;
+    this.readySwiper(swiper);
+  }
+
+  private getSwiper() {
+    return this.swiper;
+  }
+
+  private normalizeOptions(): SwiperOptions {
     // Base options, can be changed
-    const swiperOptions = {
-      effect: 'slide',
+    // TODO Add interface SwiperOptions
+    const swiperOptions: SwiperOptions = {
+      effect: undefined,
       direction: 'horizontal',
       initialSlide: 0,
       loop: false,
-      pager: false,
-      pagination: '.swiper-pagination',
-      paginationType: 'bullets',
       parallax: false,
       slidesPerView: 1,
       spaceBetween: 0,
       speed: 300,
-      zoom: false,
       slidesPerColumn: 1,
       slidesPerColumnFill: 'column',
       slidesPerGroup: 1,
@@ -269,8 +345,7 @@ export class Slides {
       slidesOffsetBefore: 0,
       slidesOffsetAfter: 0,
       touchEventsTarget: 'container',
-      autoplayDisableOnInteraction: true,
-      autoplayStopOnLast: false,
+      autoplay: false,
       freeMode: false,
       freeModeMomentum: true,
       freeModeMomentumRatio: 1,
@@ -281,9 +356,11 @@ export class Slides {
       freeModeMinimumVelocity: 0.02,
       autoHeight: false,
       setWrapperSize: false,
-      zoomMax: 3,
-      zoomMin: 1,
-      zoomToggle: true,
+      zoom: {
+        maxRatio: 3,
+        minRatio: 1,
+        toggle: true,
+      },
       touchRatio: 1,
       touchAngle: 45,
       simulateTouch: true,
@@ -292,14 +369,11 @@ export class Slides {
       longSwipesRatio: 0.5,
       longSwipesMs: 300,
       followFinger: true,
-      onlyExternal: false,
       threshold: 0,
       touchMoveStopPropagation: true,
       touchReleaseOnEdges: false,
       iOSEdgeSwipeDetection: false,
       iOSEdgeSwipeThreshold: 20,
-      paginationClickable: false,
-      paginationHide: false,
       resistance: true,
       resistanceRatio: 0.85,
       watchSlidesProgress: false,
@@ -310,69 +384,106 @@ export class Slides {
       loopAdditionalSlides: 0,
       noSwiping: true,
       runCallbacksOnInit: true,
-      controlBy: 'slide',
-      controlInverse: false,
-      coverflow: {
+      coverflowEffect: {
         rotate: 50,
         stretch: 0,
         depth: 100,
         modifier: 1,
         slideShadows: true
       },
-      flip: {
+      flipEffect: {
         slideShadows: true,
         limitRotation: true
       },
-      cube: {
+      cubeEffect: {
         slideShadows: true,
         shadow: true,
         shadowOffset: 20,
         shadowScale: 0.94
       },
-      fade: {
-        crossFade: false
+      fadeEffect: {
+        crossfade: false
       },
-      prevSlideMessage: 'Previous slide',
-      nextSlideMessage: 'Next slide',
-      firstSlideMessage: 'This is the first slide',
-      lastSlideMessage: 'This is the last slide'
+      a11y: {
+        prevSlideMessage: 'Previous slide',
+        nextSlideMessage: 'Next slide',
+        firstSlideMessage: 'This is the first slide',
+        lastSlideMessage: 'This is the last slide'
+      }
     };
+
+    if (this.pager) {
+      swiperOptions.pagination = {
+        el: this.paginationEl!,
+        type: 'bullets',
+        clickable: false,
+        hideOnClick: false,
+      };
+    }
+
+    if (this.scrollbar) {
+      swiperOptions.scrollbar = {
+        el: this.scrollbarEl!,
+        hide: true,
+      };
+    }
 
     // Keep the event options separate, we dont want users
     // overwriting these
-    const eventOptions = {
-      onSlideChangeStart: this.ionSlideWillChange.emit,
-      onSlideChangeEnd: this.ionSlideDidChange.emit,
-      onSlideNextStart: this.ionSlideNextStart.emit,
-      onSlidePrevStart: this.ionSlidePrevStart.emit,
-      onSlideNextEnd: this.ionSlideNextEnd.emit,
-      onSlidePrevEnd: this.ionSlidePrevEnd.emit,
-      onTransitionStart: this.ionSlideTransitionStart.emit,
-      onTransitionEnd: this.ionSlideTransitionEnd.emit,
-      onSliderMove: this.ionSlideDrag.emit,
-      onReachBeginning: this.ionSlideReachStart.emit,
-      onReachEnd: this.ionSlideReachEnd.emit,
-      onTouchStart: this.ionSlideTouchStart.emit,
-      onTouchEnd: this.ionSlideTouchEnd.emit
+    const eventOptions: SwiperOptions = {
+      on: {
+        init: () => {
+          setTimeout(() => {
+            this.ionSlidesDidLoad.emit();
+          }, 20);
+        },
+        slideChangeTransitionStart: this.ionSlideWillChange.emit,
+        slideChangeTransitionEnd: this.ionSlideDidChange.emit,
+        slideNextTransitionStart: this.ionSlideNextStart.emit,
+        slidePrevTransitionStart: this.ionSlidePrevStart.emit,
+        slideNextTransitionEnd: this.ionSlideNextEnd.emit,
+        slidePrevTransitionEnd: this.ionSlidePrevEnd.emit,
+        transitionStart: this.ionSlideTransitionStart.emit,
+        transitionEnd: this.ionSlideTransitionEnd.emit,
+        sliderMove: this.ionSlideDrag.emit,
+        reachBeginning: this.ionSlideReachStart.emit,
+        reachEnd: this.ionSlideReachEnd.emit,
+        touchStart: this.ionSlideTouchStart.emit,
+        touchEnd: this.ionSlideTouchEnd.emit,
+        tap: this.ionSlideTap.emit,
+        doubleTap: this.ionSlideDoubleTap.emit
+      }
     };
 
+    const customEvents = (!!this.options && !!this.options.on) ? this.options.on : {};
+
+    // merge "on" event listeners, while giving our event listeners priority
+    const mergedEventOptions = { on: { ...customEvents, ...eventOptions.on } };
+
     // Merge the base, user options, and events together then pas to swiper
-    return Object.assign({}, swiperOptions, this.options, eventOptions);
+    return { ...swiperOptions, ...this.options, ...mergedEventOptions };
+  }
+
+  hostData() {
+    return {
+      class: {
+        [`${this.mode}`]: true,
+
+        // Used internally for styling
+        [`slides-${this.mode}`]: true,
+
+        'swiper-container': true
+      }
+    };
   }
 
   render() {
-    return (
-      <div class="swiper-container">
-        <div class="swiper-wrapper">
-          <slot />
-        </div>
-        <div
-          class={{
-            'swiper-pagination': true,
-            hide: !this.pager
-          }}
-        />
-      </div>
-    );
+    return [
+      <div class="swiper-wrapper">
+        <slot></slot>
+      </div>,
+      this.pager && <div class="swiper-pagination" ref={el => this.paginationEl = el}></div>,
+      this.scrollbar && <div class="swiper-scrollbar" ref={el => this.scrollbarEl = el}></div>
+    ];
   }
 }

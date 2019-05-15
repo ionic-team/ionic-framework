@@ -1,23 +1,27 @@
-import { Component, Element, Prop, State, Watch } from '@stencil/core';
-import { GestureDetail, QueueController } from '../../interface';
-import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart} from '../../utils/haptic';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
+import { Gesture, GestureDetail, ItemReorderEventDetail, Mode } from '../../interface';
+import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/haptic';
+
+const enum ReorderGroupState {
+  Idle = 0,
+  Active = 1,
+  Complete = 2
+}
 
 @Component({
   tag: 'ion-reorder-group',
-  styleUrl: 'reorder-group.scss',
-  host: {
-    theme: 'reorder-group'
-  }
+  styleUrl: 'reorder-group.scss'
 })
-export class ReorderGroup {
+export class ReorderGroup implements ComponentInterface {
+  mode!: Mode;
 
-  private selectedItemEl: HTMLElement|undefined;
+  private selectedItemEl?: HTMLElement;
   private selectedItemHeight!: number;
-  private lastToIndex!: number;
+  private lastToIndex = -1;
   private cachedHeights: number[] = [];
-  private containerEl!: HTMLElement;
-  private scrollEl: HTMLElement|null = null;
+  private scrollEl?: HTMLElement;
+  private gesture?: Gesture;
 
   private scrollElTop = 0;
   private scrollElBottom = 0;
@@ -26,46 +30,85 @@ export class ReorderGroup {
   private containerTop = 0;
   private containerBottom = 0;
 
-  @State() enabled = false;
-  @State() iconVisible = false;
-  @State() activated = false;
+  @State() state = ReorderGroupState.Idle;
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
+  @Prop({ context: 'document' }) doc!: Document;
 
   /**
-   * If true, the reorder will be hidden. Defaults to `true`.
+   * If `true`, the reorder will be hidden.
    */
   @Prop() disabled = true;
-
   @Watch('disabled')
-  protected disabledChanged(disabled: boolean) {
-    if (!disabled) {
-      this.enabled = true;
-      this.queue.read(() => {
-        this.iconVisible = true;
-      });
-    } else {
-      this.iconVisible = false;
-      setTimeout(() => this.enabled = false, 400);
+  disabledChanged() {
+    if (this.gesture) {
+      this.gesture.setDisabled(this.disabled);
     }
+    const a = { a: 2 };
+    delete a.a;
   }
 
-  componentDidLoad() {
-    this.containerEl = this.el.querySelector('ion-gesture')!;
-    this.scrollEl = this.el.closest('ion-scroll');
-    if (!this.disabled) {
-      this.disabledChanged(false);
+  /**
+   * Event that needs to be listened to in order to complete the reorder action.
+   * Once the event has been emitted, the `complete()` method then needs
+   * to be called in order to finalize the reorder action.
+   */
+  @Event() ionItemReorder!: EventEmitter<ItemReorderEventDetail>;
+
+  async componentDidLoad() {
+    const contentEl = this.el.closest('ion-content');
+    if (contentEl) {
+      await contentEl.componentOnReady();
+      this.scrollEl = await contentEl.getScrollElement();
     }
+
+    this.gesture = (await import('../../utils/gesture')).createGesture({
+      el: this.el,
+      queue: this.queue,
+      gestureName: 'reorder',
+      gesturePriority: 110,
+      threshold: 0,
+      direction: 'y',
+      passive: false,
+      canStart: detail => this.canStart(detail),
+      onStart: ev => this.onStart(ev),
+      onMove: ev => this.onMove(ev),
+      onEnd: () => this.onEnd(),
+    });
+
+    this.disabledChanged();
   }
 
   componentDidUnload() {
-    this.onDragEnd();
+    this.onEnd();
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
+  }
+
+  /**
+   * Completes the reorder operation. Must be called by the `ionItemReorder` event.
+   *
+   * If a list of items is passed, the list will be reordered and returned in the
+   * proper order.
+   *
+   * If no parameters are passed or if `true` is passed in, the reorder will complete
+   * and the item will remain in the position it was dragged to. If `false` is passed,
+   * the reorder will complete and the item will bounce back to its original position.
+   *
+   * @param listOrReorder A list of items to be sorted and returned in the new order or a
+   * boolean of whether or not the reorder should reposition the item.
+   */
+  @Method()
+  complete(listOrReorder?: boolean | any[]): Promise<any> {
+    return Promise.resolve(this.completeSync(listOrReorder));
   }
 
   private canStart(ev: GestureDetail): boolean {
-    if (this.selectedItemEl) {
+    if (this.selectedItemEl || this.state !== ReorderGroupState.Idle) {
       return false;
     }
     const target = ev.event.target as HTMLElement;
@@ -73,20 +116,21 @@ export class ReorderGroup {
     if (!reorderEl) {
       return false;
     }
-    const item = findReorderItem(reorderEl, this.containerEl);
+    const item = findReorderItem(reorderEl, this.el);
     if (!item) {
-      console.error('reorder node not found');
       return false;
     }
     ev.data = item;
     return true;
   }
 
-  private onDragStart(ev: GestureDetail) {
+  private onStart(ev: GestureDetail) {
+    ev.event.preventDefault();
+
     const item = this.selectedItemEl = ev.data;
     const heights = this.cachedHeights;
     heights.length = 0;
-    const el = this.containerEl;
+    const el = this.el;
     const children: any = el.children;
     if (!children || children.length === 0) {
       return;
@@ -100,7 +144,7 @@ export class ReorderGroup {
       child.$ionIndex = i;
     }
 
-    const box = this.containerEl.getBoundingClientRect();
+    const box = el.getBoundingClientRect();
     this.containerTop = box.top;
     this.containerBottom = box.bottom;
 
@@ -117,14 +161,14 @@ export class ReorderGroup {
 
     this.lastToIndex = indexForItem(item);
     this.selectedItemHeight = item.offsetHeight;
-    this.activated = true;
+    this.state = ReorderGroupState.Active;
 
     item.classList.add(ITEM_REORDER_SELECTED);
 
     hapticSelectionStart();
   }
 
-  private onDragMove(ev: GestureDetail) {
+  private onMove(ev: GestureDetail) {
     const selectedItem = this.selectedItemEl;
     if (!selectedItem) {
       return;
@@ -139,7 +183,7 @@ export class ReorderGroup {
     const deltaY = scroll + currentY - ev.startY;
     const normalizedY = currentY - top;
     const toIndex = this.itemIndexForTop(normalizedY);
-    if (toIndex !== undefined && (toIndex !== this.lastToIndex)) {
+    if (toIndex !== this.lastToIndex) {
       const fromIndex = indexForItem(selectedItem);
       this.lastToIndex = toIndex;
 
@@ -151,43 +195,61 @@ export class ReorderGroup {
     selectedItem.style.transform = `translateY(${deltaY}px)`;
   }
 
-  private onDragEnd() {
-    this.activated = false;
+  private onEnd() {
     const selectedItem = this.selectedItemEl;
+    this.state = ReorderGroupState.Complete;
     if (!selectedItem) {
+      this.state = ReorderGroupState.Idle;
       return;
     }
 
-    const children = this.containerEl.children as any;
     const toIndex = this.lastToIndex;
     const fromIndex = indexForItem(selectedItem);
 
-    const ref = (fromIndex < toIndex)
-      ? children[toIndex + 1]
-      : children[toIndex];
-
-    this.containerEl.insertBefore(selectedItem, ref);
-
-    const len = children.length;
-    for (let i = 0; i < len; i++) {
-      children[i].style['transform'] = '';
-    }
-
-    const reorderInactive = () => {
-      if (this.selectedItemEl) {
-        this.selectedItemEl.style.transition = '';
-        this.selectedItemEl.classList.remove(ITEM_REORDER_SELECTED);
-        this.selectedItemEl = undefined;
-      }
-    };
     if (toIndex === fromIndex) {
       selectedItem.style.transition = 'transform 200ms ease-in-out';
-      setTimeout(reorderInactive, 200);
+      setTimeout(() => this.completeSync(), 200);
     } else {
-      reorderInactive();
+      this.ionItemReorder.emit({
+        from: fromIndex,
+        to: toIndex,
+        complete: this.completeSync.bind(this)
+      });
     }
 
     hapticSelectionEnd();
+  }
+
+  private completeSync(listOrReorder?: boolean | any[]): any {
+    const selectedItemEl = this.selectedItemEl;
+    if (selectedItemEl && this.state === ReorderGroupState.Complete) {
+      const children = this.el.children as any;
+      const len = children.length;
+      const toIndex = this.lastToIndex;
+      const fromIndex = indexForItem(selectedItemEl);
+
+      if (!listOrReorder || listOrReorder === true) {
+        const ref = (fromIndex < toIndex)
+          ? children[toIndex + 1]
+          : children[toIndex];
+
+        this.el.insertBefore(selectedItemEl, ref);
+      }
+
+      if (Array.isArray(listOrReorder)) {
+        listOrReorder = reorderArray(listOrReorder, fromIndex, toIndex);
+      }
+
+      for (let i = 0; i < len; i++) {
+        children[i].style['transform'] = '';
+      }
+
+      selectedItemEl.style.transition = '';
+      selectedItemEl.classList.remove(ITEM_REORDER_SELECTED);
+      this.selectedItemEl = undefined;
+      this.state = ReorderGroupState.Idle;
+    }
+    return listOrReorder;
   }
 
   private itemIndexForTop(deltaY: number): number {
@@ -208,7 +270,7 @@ export class ReorderGroup {
   /********* DOM WRITE ********* */
   private reorderMove(fromIndex: number, toIndex: number) {
     const itemHeight = this.selectedItemHeight;
-    const children = this.containerEl.children;
+    const children = this.el.children;
     for (let i = 0; i < children.length; i++) {
       const style = (children[i] as any).style;
       let value = '';
@@ -241,32 +303,11 @@ export class ReorderGroup {
   hostData() {
     return {
       class: {
-        'reorder-enabled': this.enabled,
-        'reorder-list-active': this.activated,
-        'reorder-visible': this.iconVisible
+        [`${this.mode}`]: true,
+        'reorder-enabled': !this.disabled,
+        'reorder-list-active': this.state !== ReorderGroupState.Idle,
       }
     };
-  }
-
-  render() {
-    return (
-      <ion-gesture {...{
-        canStart: this.canStart.bind(this),
-        onStart: this.onDragStart.bind(this),
-        onMove: this.onDragMove.bind(this),
-        onEnd: this.onDragEnd.bind(this),
-        disabled: this.disabled,
-        disableScroll: true,
-        gestureName: 'reorder',
-        gesturePriority: 30,
-        type: 'pan',
-        direction: 'y',
-        threshold: 0,
-        attachTo: 'window'
-      }}>
-        <slot></slot>
-      </ion-gesture>
-    );
   }
 }
 
@@ -274,20 +315,25 @@ function indexForItem(element: any): number {
   return element['$ionIndex'];
 }
 
-function findReorderItem(node: HTMLElement, container: HTMLElement): HTMLElement|null {
-  let nested = 0;
-  let parent;
-  while (node && nested < 6) {
-    parent = node.parentNode as HTMLElement;
+function findReorderItem(node: HTMLElement | null, container: HTMLElement): HTMLElement | undefined {
+  let parent: HTMLElement | null;
+  while (node) {
+    parent = node.parentElement;
     if (parent === container) {
       return node;
     }
     node = parent;
-    nested++;
   }
-  return null;
+  return undefined;
 }
 
 const AUTO_SCROLL_MARGIN = 60;
 const SCROLL_JUMP = 10;
 const ITEM_REORDER_SELECTED = 'reorder-selected';
+
+function reorderArray(array: any[], from: number, to: number): any[] {
+  const element = array[from];
+  array.splice(from, 1);
+  array.splice(to, 0, element);
+  return array.slice();
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Menu Button - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <h1>Default</h1>
+  <ion-menu-button auto-hide="false"></ion-menu-button>
+
+  <h1>Custom</h1>
+  <ion-menu-button auto-hide="false" class="custom"></ion-menu-button>
+  <ion-menu-button auto-hide="false" color="secondary" class="custom"></ion-menu-button>
+
+  <h1>Colors</h1>
+  <ion-menu-button auto-hide="false" color="primary"></ion-menu-button>
+  <ion-menu-button auto-hide="false" color="secondary"></ion-menu-button>
+  <ion-menu-button auto-hide="false" color="tertiary"></ion-menu-button>
+  <ion-menu-button auto-hide="false" color="success"></ion-menu-button>
+  <ion-menu-button auto-hide="false" color="warning"></ion-menu-button>
+  <ion-menu-button auto-hide="false" color="danger"></ion-menu-button>
+  <ion-menu-button auto-hide="false" color="light"></ion-menu-button>
+  <ion-menu-button auto-hide="false" color="medium"></ion-menu-button>
+  <ion-menu-button auto-hide="false" color="dark"></ion-menu-button>
+
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Default</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Primary</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Light</ion-title>
+  </ion-toolbar>
+
+  <style>
+    ion-menu-button {
+      display: inline-block;
+    }
+
+    .custom {
+      --color: hotpink;
+    }
+  </style>
+</body>
+</html>

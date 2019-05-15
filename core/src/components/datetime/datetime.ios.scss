@@ -4,12 +4,11 @@
 // iOS Datetime
 // --------------------------------------------------
 
-.datetime-ios {
-  @include padding($datetime-ios-padding-top, $datetime-ios-padding-end, $datetime-ios-padding-bottom, $datetime-ios-padding-start);
-
-  font-family: $datetime-ios-font-family;
+:host {
+  --placeholder-color: #{$datetime-ios-placeholder-color};
+  --padding-top: #{$datetime-ios-padding-top};
+  --padding-end: #{$datetime-ios-padding-end};
+  --padding-bottom: #{$datetime-ios-padding-bottom};
+  --padding-start: #{$datetime-ios-padding-start};
 }
 
-.datetime-ios .datetime-placeholder {
-  color: $datetime-ios-placeholder-color;
-}

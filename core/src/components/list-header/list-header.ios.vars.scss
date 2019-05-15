@@ -1,5 +1,4 @@
 @import "../../themes/ionic.globals.ios";
-
 @import "../item/item.ios.vars";
 
 // iOS List Header
@@ -21,7 +20,7 @@ $list-ios-header-letter-spacing:      1px !default;
 $list-ios-header-text-transform:      uppercase !default;
 
 /// @prop - Text color of the header in a list
-$list-ios-header-color:               $text-ios-color-step-150 !default;
+$list-ios-header-color:               $text-color-step-150 !default;
 
 /// @prop - Background color of the header in a list
 $list-ios-header-background-color:    transparent !default;

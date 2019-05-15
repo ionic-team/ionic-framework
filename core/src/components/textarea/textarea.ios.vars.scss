@@ -1,5 +1,4 @@
 @import "../../themes/ionic.globals.ios";
-
 @import "../item/item.ios.vars";
 
 // iOS Textarea
@@ -8,23 +7,20 @@
 /// @prop - Margin start of the textarea when it is after a label
 $textarea-ios-by-label-margin-start:         $item-ios-padding-start !default;
 
-/// @prop - Font family of the textarea
-$textarea-ios-font-family:                   $font-family-ios-base !default;
-
 /// @prop - Font size of the textarea
 $textarea-ios-font-size:                     inherit !default;
 
 /// @prop - Margin top of the textarea
-$textarea-ios-margin-top:                    $item-ios-padding-top !default;
+$textarea-ios-padding-top:                    $item-ios-padding-top !default;
 
 /// @prop - Margin end of the textarea
-$textarea-ios-margin-end:                    ($item-ios-padding-end / 2) !default;
+$textarea-ios-padding-end:                    ($item-ios-padding-end / 2) !default;
 
 /// @prop - Margin bottom of the textarea
-$textarea-ios-margin-bottom:                 $item-ios-padding-bottom !default;
+$textarea-ios-padding-bottom:                 $item-ios-padding-bottom !default;
 
 /// @prop - Margin start of the textarea
-$textarea-ios-margin-start:                  0 !default;
+$textarea-ios-padding-start:                  0 !default;
 
 /// @prop - Placeholder text color of the textarea
-$textarea-ios-placeholder-color:            $placeholder-text-ios-color !default;
+$textarea-ios-placeholder-color:            $placeholder-text-color !default;

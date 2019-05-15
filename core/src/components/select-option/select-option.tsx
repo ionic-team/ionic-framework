@@ -1,40 +1,43 @@
-import { Component, Element, Event, EventEmitter, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop } from '@stencil/core';
 
+import { Mode } from '../../interface';
 
 @Component({
   tag: 'ion-select-option',
-  host: {
-    theme: 'select-option'
-  }
+  shadow: true,
+  styleUrl: 'select-option.scss'
 })
-export class SelectOption {
+export class SelectOption implements ComponentInterface {
+  mode!: Mode;
 
   private inputId = `ion-selopt-${selectOptionIds++}`;
 
   @Element() el!: HTMLElement;
 
   /**
-   * If true, the user cannot interact with the select option. Defaults to `false`.
+   * If `true`, the user cannot interact with the select option.
    */
   @Prop() disabled = false;
 
   /**
-   * If true, the element is selected.
+   * If `true`, the element is selected.
    */
   @Prop() selected = false;
 
   /**
    * The text value of the option.
    */
-  @Prop({ mutable: true }) value!: string;
+  @Prop({ mutable: true }) value?: any | null;
 
   /**
    * Emitted when the select option loads.
+   * @internal
    */
   @Event() ionSelectOptionDidLoad!: EventEmitter<void>;
 
   /**
    * Emitted when the select option unloads.
+   * @internal
    */
   @Event() ionSelectOptionDidUnload!: EventEmitter<void>;
 
@@ -55,7 +58,10 @@ export class SelectOption {
   hostData() {
     return {
       'role': 'option',
-      'id': this.inputId
+      'id': this.inputId,
+      class: {
+        [`${this.mode}`]: true,
+      }
     };
   }
 }

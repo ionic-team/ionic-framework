@@ -1,75 +1,108 @@
-import { Component, Element, Event, EventEmitter, Method, State } from '@stencil/core';
-import { GestureDetail } from '../../interface';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
+import { Gesture, GestureDetail, Mode } from '../../interface';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
 
 const enum ItemSide {
   None = 0,
-  Left = 1 << 0,
-  Right = 1 << 1,
-  Both = Left | Right
+  Start = 1 << 0,
+  End = 1 << 1,
+  Both = Start | End
 }
 
 const enum SlidingState {
   Disabled = 1 << 1,
   Enabled = 1 << 2,
-  Right = 1 << 3,
-  Left = 1 << 4,
+  End = 1 << 3,
+  Start = 1 << 4,
 
-  SwipeRight = 1 << 5,
-  SwipeLeft = 1 << 6,
+  SwipeEnd = 1 << 5,
+  SwipeStart = 1 << 6,
 }
 
+let openSlidingItem: HTMLIonItemSlidingElement | undefined;
 
 @Component({
   tag: 'ion-item-sliding',
-  styleUrls: {
-    ios: 'item-sliding.ios.scss',
-    md: 'item-sliding.md.scss'
-  }
+  styleUrl: 'item-sliding.scss'
 })
-export class ItemSliding {
-  private item: HTMLIonItemElement|null = null;
-  private list: HTMLIonListElement|null = null;
+export class ItemSliding implements ComponentInterface {
+  mode!: Mode;
+
+  private item: HTMLIonItemElement | null = null;
   private openAmount = 0;
   private initialOpenAmount = 0;
   private optsWidthRightSide = 0;
   private optsWidthLeftSide = 0;
   private sides = ItemSide.None;
-  private tmr: number|undefined;
+  private tmr: number | undefined;
   private leftOptions?: HTMLIonItemOptionsElement;
   private rightOptions?: HTMLIonItemOptionsElement;
   private optsDirty = true;
+  private gesture?: Gesture;
 
   @Element() el!: HTMLIonItemSlidingElement;
 
-  @State() private state: SlidingState = SlidingState.Disabled;
+  @State() state: SlidingState = SlidingState.Disabled;
+
+  @Prop({ context: 'queue' }) queue!: QueueApi;
+
+  /**
+   * If `true`, the user cannot interact with the sliding-item.
+   */
+  @Prop() disabled = false;
+  @Watch('disabled')
+  disabledChanged() {
+    if (this.gesture) {
+      this.gesture.setDisabled(this.disabled);
+    }
+  }
 
   /**
    * Emitted when the sliding position changes.
    */
   @Event() ionDrag!: EventEmitter;
 
-  componentDidLoad() {
+  async componentDidLoad() {
     this.item = this.el.querySelector('ion-item');
-    this.list = this.el.closest('ion-list');
+    await this.updateOptions();
 
-    this.updateOptions();
+    this.gesture = (await import('../../utils/gesture')).createGesture({
+      el: this.el,
+      queue: this.queue,
+      gestureName: 'item-swipe',
+      gesturePriority: 100,
+      threshold: 5,
+      canStart: () => this.canStart(),
+      onStart: () => this.onStart(),
+      onMove: ev => this.onMove(ev),
+      onEnd: ev => this.onEnd(ev),
+    });
+    this.disabledChanged();
   }
 
   componentDidUnload() {
-    this.item = this.list = null;
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
+
+    this.item = null;
     this.leftOptions = this.rightOptions = undefined;
+
+    if (openSlidingItem === this.el) {
+      openSlidingItem = undefined;
+    }
   }
 
   /**
    * Get the amount the item is open in pixels.
    */
   @Method()
-  getOpenAmount(): number {
-    return this.openAmount;
+  getOpenAmount(): Promise<number> {
+    return Promise.resolve(this.openAmount);
   }
 
   /**
@@ -80,22 +113,61 @@ export class ItemSliding {
    * the width of the options.
    */
   @Method()
-  getSlidingRatio(): number {
-    if (this.openAmount > 0) {
-      return this.openAmount / this.optsWidthRightSide;
-    } else if (this.openAmount < 0) {
-      return this.openAmount / this.optsWidthLeftSide;
-    } else {
-      return 0;
-    }
+  getSlidingRatio(): Promise<number> {
+    return Promise.resolve(this.getSlidingRatioSync());
   }
 
+  /**
+   * Open the sliding item.
+   *
+   * @param side The side of the options to open. If a side is not provided, it will open the first set of options it finds within the item.
+   */
+   // TODO update to work with RTL
+  @Method()
+  async open(side: string | undefined) {
+    if (this.item === null) { return; }
+
+    const optionsToOpen = this.getOptions(side);
+    if (!optionsToOpen) { return; }
+
+    /**
+     * If side is not set, we need to infer the side
+     * so we know which direction to move the options
+     */
+    if (side === undefined) {
+      side = (optionsToOpen === this.leftOptions) ? 'start' : 'end';
+    }
+
+    const isStartOpen = this.openAmount < 0;
+    const isEndOpen = this.openAmount > 0;
+
+    /**
+     * If a side is open and a user tries to
+     * re-open the same side, we should not do anything
+     */
+    if (isStartOpen && optionsToOpen === this.leftOptions) { return; }
+    if (isEndOpen && optionsToOpen === this.rightOptions) { return; }
+
+    this.closeOpened();
+
+    this.state = SlidingState.Enabled;
+
+    requestAnimationFrame(() => {
+      this.calculateOptsWidth();
+
+      const width = (side === 'end') ? this.optsWidthRightSide : -this.optsWidthLeftSide;
+      openSlidingItem = this.el;
+
+      this.setOpenAmount(width, false);
+      this.state = (side === 'end') ? SlidingState.End : SlidingState.Start;
+    });
+  }
 
   /**
    * Close the sliding item. Items can also be closed from the [List](../../list/List).
    */
   @Method()
-  close() {
+  async close() {
     this.setOpenAmount(0, true);
   }
 
@@ -103,11 +175,32 @@ export class ItemSliding {
    * Close all of the sliding items in the list. Items can also be closed from the [List](../../list/List).
    */
   @Method()
-  closeOpened(): boolean {
-    return !!(this.list && this.list.closeSlidingItems());
+  async closeOpened(): Promise<boolean> {
+    if (openSlidingItem !== undefined) {
+      openSlidingItem.close();
+      openSlidingItem = undefined;
+      return true;
+    }
+    return false;
   }
 
-  private updateOptions() {
+   /**
+    * Given a side, attempt to return the ion-item-options element
+    *
+    * @param side This side of the options to get. If a side is not provided it will return the first one available
+    */
+    // TODO update to work with RTL
+  private getOptions(side?: string): HTMLIonItemOptionsElement | undefined {
+      if (side === undefined) {
+        return this.leftOptions || this.rightOptions;
+      } else if (side === 'start') {
+        return this.leftOptions;
+      } else {
+        return this.rightOptions;
+      }
+    }
+
+  private async updateOptions() {
     const options = this.el.querySelectorAll('ion-item-options');
 
     let sides = 0;
@@ -116,14 +209,14 @@ export class ItemSliding {
     this.leftOptions = this.rightOptions = undefined;
 
     for (let i = 0; i < options.length; i++) {
-      const option = options.item(i);
+      const option = await options.item(i).componentOnReady();
 
-      if (option.isEndSide()) {
-        this.rightOptions = option;
-        sides |= ItemSide.Right;
-      } else {
+      if (option.side === 'start') {
         this.leftOptions = option;
-        sides |= ItemSide.Left;
+        sides |= ItemSide.Start;
+      } else {
+        this.rightOptions = option;
+        sides |= ItemSide.End;
       }
     }
     this.optsDirty = true;
@@ -131,18 +224,19 @@ export class ItemSliding {
   }
 
   private canStart(): boolean {
-    const selected = this.list && this.list.getOpenItem();
+    const selected = openSlidingItem;
     if (selected && selected !== this.el) {
       this.closeOpened();
       return false;
     }
-    return true;
+
+    return !!(this.rightOptions || this.leftOptions);
   }
 
-  private onDragStart() {
-    this.list && this.list.setOpenItem(this.el);
+  private onStart() {
+    openSlidingItem = this.el;
 
-    if (this.tmr) {
+    if (this.tmr !== undefined) {
       clearTimeout(this.tmr);
       this.tmr = undefined;
     }
@@ -156,15 +250,15 @@ export class ItemSliding {
     }
   }
 
-  private onDragMove(gesture: GestureDetail) {
+  private onMove(gesture: GestureDetail) {
     if (this.optsDirty) {
       this.calculateOptsWidth();
     }
     let openAmount = this.initialOpenAmount - gesture.deltaX;
 
     switch (this.sides) {
-      case ItemSide.Right: openAmount = Math.max(0, openAmount); break;
-      case ItemSide.Left: openAmount = Math.min(0, openAmount); break;
+      case ItemSide.End: openAmount = Math.max(0, openAmount); break;
+      case ItemSide.Start: openAmount = Math.min(0, openAmount); break;
       case ItemSide.Both: break;
       case ItemSide.None: return;
       default: console.warn('invalid ItemSideFlags value', this.sides); break;
@@ -183,7 +277,7 @@ export class ItemSliding {
     this.setOpenAmount(openAmount, false);
   }
 
-  private onDragEnd(gesture: GestureDetail) {
+  private onEnd(gesture: GestureDetail) {
     const velocity = gesture.velocityX;
 
     let restingPoint = (this.openAmount > 0)
@@ -199,11 +293,12 @@ export class ItemSliding {
       restingPoint = 0;
     }
 
+    const state = this.state;
     this.setOpenAmount(restingPoint, true);
 
-    if (this.state & SlidingState.SwipeRight && this.rightOptions) {
+    if ((state & SlidingState.SwipeEnd) !== 0 && this.rightOptions) {
       this.rightOptions.fireSwipeEvent();
-    } else if (this.state & SlidingState.SwipeLeft && this.leftOptions) {
+    } else if ((state & SlidingState.SwipeStart) !== 0 && this.leftOptions) {
       this.leftOptions.fireSwipeEvent();
     }
   }
@@ -211,18 +306,23 @@ export class ItemSliding {
   private calculateOptsWidth() {
     this.optsWidthRightSide = 0;
     if (this.rightOptions) {
-      this.optsWidthRightSide = this.rightOptions.width();
+      this.rightOptions.style.display = 'flex';
+      this.optsWidthRightSide = this.rightOptions.offsetWidth;
+      this.rightOptions.style.display = '';
     }
 
     this.optsWidthLeftSide = 0;
     if (this.leftOptions) {
-      this.optsWidthLeftSide = this.leftOptions.width();
+      this.leftOptions.style.display = 'flex';
+      this.optsWidthLeftSide = this.leftOptions.offsetWidth;
+      this.leftOptions.style.display = '';
     }
+
     this.optsDirty = false;
   }
 
   private setOpenAmount(openAmount: number, isFinal: boolean) {
-    if (this.tmr) {
+    if (this.tmr !== undefined) {
       clearTimeout(this.tmr);
       this.tmr = undefined;
     }
@@ -238,69 +338,60 @@ export class ItemSliding {
 
     if (openAmount > 0) {
       this.state = (openAmount >= (this.optsWidthRightSide + SWIPE_MARGIN))
-        ? SlidingState.Right | SlidingState.SwipeRight
-        : SlidingState.Right;
+        ? SlidingState.End | SlidingState.SwipeEnd
+        : SlidingState.End;
     } else if (openAmount < 0) {
       this.state = (openAmount <= (-this.optsWidthLeftSide - SWIPE_MARGIN))
-        ? SlidingState.Left | SlidingState.SwipeLeft
-        : SlidingState.Left;
+        ? SlidingState.Start | SlidingState.SwipeStart
+        : SlidingState.Start;
     } else {
-      this.tmr = window.setTimeout(() => {
+      this.tmr = setTimeout(() => {
         this.state = SlidingState.Disabled;
         this.tmr = undefined;
-      }, 600);
-      this.list && this.list.setOpenItem(undefined);
+      }, 600) as any;
+
+      openSlidingItem = undefined;
       style.transform = '';
       return;
     }
 
     style.transform = `translate3d(${-openAmount}px,0,0)`;
     this.ionDrag.emit({
-      amount: openAmount
+      amount: openAmount,
+      ratio: this.getSlidingRatioSync()
     });
+  }
+
+  private getSlidingRatioSync(): number {
+    if (this.openAmount > 0) {
+      return this.openAmount / this.optsWidthRightSide;
+    } else if (this.openAmount < 0) {
+      return this.openAmount / this.optsWidthLeftSide;
+    } else {
+      return 0;
+    }
   }
 
   hostData() {
     return {
       class: {
-        'item-sliding': true,
+        [`${this.mode}`]: true,
         'item-sliding-active-slide': (this.state !== SlidingState.Disabled),
-        'item-sliding-active-options-right': !!(this.state & SlidingState.Right),
-        'item-sliding-active-options-left': !!(this.state & SlidingState.Left),
-        'item-sliding-active-swipe-right': !!(this.state & SlidingState.SwipeRight),
-        'item-sliding-active-swipe-left': !!(this.state & SlidingState.SwipeLeft)
+        'item-sliding-active-options-end': (this.state & SlidingState.End) !== 0,
+        'item-sliding-active-options-start': (this.state & SlidingState.Start) !== 0,
+        'item-sliding-active-swipe-end': (this.state & SlidingState.SwipeEnd) !== 0,
+        'item-sliding-active-swipe-start': (this.state & SlidingState.SwipeStart) !== 0
       }
     };
   }
-
-  render() {
-    return (
-      <ion-gesture {...{
-        'canStart': this.canStart.bind(this),
-        'onStart': this.onDragStart.bind(this),
-        'onMove': this.onDragMove.bind(this),
-        'onEnd': this.onDragEnd.bind(this),
-        'gestureName': 'item-swipe',
-        'gesturePriority': -10,
-        'type': 'pan',
-        'direction': 'x',
-        'maxAngle': 20,
-        'threshold': 5,
-        'attachTo': 'parent'
-      }}>
-        <slot></slot>
-      </ion-gesture>
-    );
-  }
 }
 
-/** @hidden */
-export function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolean, isOnResetZone: boolean): boolean {
+function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolean, isOnResetZone: boolean): boolean {
   // The logic required to know when the sliding item should close (openAmount=0)
-  // depends on three booleans (isCloseDirection, isMovingFast, isOnCloseZone)
+  // depends on three booleans (isResetDirection, isMovingFast, isOnResetZone)
   // and it ended up being too complicated to be written manually without errors
   // so the truth table is attached below: (0=false, 1=true)
-  // isCloseDirection | isMovingFast | isOnCloseZone || shouldClose
+  // isResetDirection | isMovingFast | isOnResetZone || shouldClose
   //         0        |       0      |       0       ||    0
   //         0        |       0      |       1       ||    1
   //         0        |       1      |       0       ||    0

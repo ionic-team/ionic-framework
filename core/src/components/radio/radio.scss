@@ -3,35 +3,43 @@
 // Radio
 // --------------------------------------------------
 
-ion-radio {
+:host {
+  /**
+   * @prop --color: Color of the radio
+   * @prop --color-checked: Color of the checked radio
+   */
+
+  display: inline-block;
+  position: relative;
   box-sizing: border-box;
 
-  position: relative;
-  display: inline-block;
+  user-select: none;
+
+  z-index: $z-index-item-input;
 }
 
-ion-radio input {
-  @include position(0, null, null, 0);
-  @include margin(0);
+:host(.radio-disabled) {
+  pointer-events: none;
+}
 
-  position: absolute;
+
+.radio-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
 
   width: 100%;
   height: 100%;
 
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-
-
-  appearance: none;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
+  contain: layout size style;
 }
 
-ion-radio .radio-icon {
+button {
+  @include input-cover();
+}
+
+.radio-icon,
+.radio-inner {
   box-sizing: border-box;
 }

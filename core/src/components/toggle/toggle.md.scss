@@ -4,7 +4,12 @@
 // Material Design Toggle
 // -----------------------------------------
 
-.toggle-md {
+:host {
+  --background: #{$toggle-md-track-background-color-off};
+  --background-checked: #{ion-color(primary, base, $toggle-md-track-background-color-alpha-on)};
+  --handle-background: #{$toggle-md-handle-background-color-off};
+  --handle-background-checked: #{ion-color(primary, base)};
+
   @include padding($toggle-md-padding-top, $toggle-md-padding-end, $toggle-md-padding-bottom, $toggle-md-padding-start);
 
   box-sizing: content-box;
@@ -17,23 +22,29 @@
   contain: strict;
 }
 
+:host(.ion-color.toggle-checked) .toggle-icon {
+  background: current-color(base, $toggle-md-track-background-color-alpha-on);
+}
+
+:host(.ion-color.toggle-checked) .toggle-inner {
+  background: current-color(base);
+}
 
 // Material Design Toggle Background Track: Unchecked
 // -----------------------------------------
 
-.toggle-md .toggle-icon {
+.toggle-icon {
   @include border-radius($toggle-md-track-height);
 
-  position: relative;
   display: block;
+  position: relative;
 
   width: 100%;
   height: 100%;
 
-  background-color: $toggle-md-track-background-color-off;
-
   transition: background-color $toggle-md-transition-duration;
 
+  background: var(--background);
   pointer-events: none;
 }
 
@@ -41,7 +52,7 @@
 // Material Design Toggle Inner Knob: Unchecked
 // -----------------------------------------
 
-.toggle-md .toggle-inner {
+.toggle-inner {
   @include position(($toggle-md-handle-height - $toggle-md-track-height) / -2, null, null, 0);
   @include border-radius($toggle-md-handle-border-radius);
 
@@ -50,15 +61,14 @@
   width: $toggle-md-handle-width;
   height: $toggle-md-handle-height;
 
-  background-color: $toggle-md-handle-background-color-off;
-
-  box-shadow: $toggle-md-handle-box-shadow;
-
   transition-duration: $toggle-md-transition-duration;
   transition-property: transform, background-color;
+  transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
 
+  background: var(--handle-background);
+
+  box-shadow: $toggle-md-handle-box-shadow;
   will-change: transform, background-color;
-
   contain: strict;
 }
 
@@ -66,75 +76,50 @@
 // Material Design Toggle Background Track: Checked
 // -----------------------------------------
 
-.toggle-md.toggle-checked .toggle-icon {
-  background-color: $toggle-md-track-background-color-on;
+:host(.toggle-checked) .toggle-icon {
+  background: var(--background-checked);
 }
-
 
 // Material Design Toggle Inner Knob: Checked
 // -----------------------------------------
 
-.toggle-md.toggle-checked .toggle-inner {
+:host(.toggle-checked) .toggle-inner {
   @include transform(translate3d($toggle-md-track-width - $toggle-md-handle-width, 0, 0));
 
-  background-color: $toggle-md-handle-background-color-on;
+  background: var(--handle-background-checked);
 }
 
 
 // Material Design Toggle: Disabled
 // -----------------------------------------
 
-.toggle-md.toggle-disabled,
-.item-md.item-toggle-disabled ion-label {
-  opacity: $toggle-md-disabled-opacity;
-
-  pointer-events: none;
-}
-
-.toggle-md.toggle-disabled ion-radio {
+:host(.toggle-disabled) {
   opacity: $toggle-md-disabled-opacity;
 }
+
+
+// TODO: move to item
+// .item-md.item-toggle-disabled ion-label {
+//   opacity: $toggle-md-disabled-opacity;
+
+//   pointer-events: none;
+// }
+
+// .toggle-md.toggle-disabled ion-radio {
+//   opacity: $toggle-md-disabled-opacity;
+// }
 
 
 // Material Design Toggle Within An Item
 // -----------------------------------------
 
-.item-md .toggle-md[slot] {
+:host(.in-item[slot]) {
   @include margin($toggle-md-media-margin-top, $toggle-md-media-margin-end, $toggle-md-media-margin-bottom, $toggle-md-media-margin-start);
   @include padding($toggle-md-item-end-padding-top, $toggle-md-item-end-padding-end, $toggle-md-item-end-padding-bottom, $toggle-md-item-end-padding-start);
 
   cursor: pointer;
 }
 
-.item-md .toggle-md[slot="start"] {
+:host(.in-item[slot="start"]) {
   @include padding($toggle-md-item-start-padding-top, $toggle-md-item-start-padding-end, $toggle-md-item-start-padding-bottom, $toggle-md-item-start-padding-start);
-}
-
-.item-md.item-toggle ion-label {
-  @include margin-horizontal(0, null);
-}
-
-
-// Material Design Color Mixin
-// --------------------------------------------------
-
-@mixin toggle-theme-md($color-name) {
-  $color-base: ion-color($colors-md, $color-name, base, md);
-  $color-tint: ion-color($colors-md, $color-name, tint, md);
-
-  .toggle-md-#{$color-name}.toggle-checked .toggle-icon {
-    background-color: $color-tint;
-  }
-
-  .toggle-md-#{$color-name}.toggle-checked .toggle-inner {
-    background-color: $color-base;
-  }
-}
-
-
-// Generate Material Design Toggle Auxiliary Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-md {
-  @include toggle-theme-md($color-name);
 }

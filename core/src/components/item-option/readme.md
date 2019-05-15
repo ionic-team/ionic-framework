@@ -9,81 +9,33 @@ action for the item.
 
 ## Properties
 
-#### color
-
-string
-
-The color to use for the option
-
-
-#### disabled
-
-boolean
-
-If true, the user cannot interact with the item option. Defaults to `false`.
+| Property     | Attribute    | Description                                                                                                                                                                                                                                                            | Type                  | Default     |
+| ------------ | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
+| `color`      | `color`      | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` | `undefined` |
+| `disabled`   | `disabled`   | If `true`, the user cannot interact with the item option.                                                                                                                                                                                                              | `boolean`             | `false`     |
+| `expandable` | `expandable` | If `true`, the option will expand to take up the available width and cover any other options.                                                                                                                                                                          | `boolean`             | `false`     |
+| `href`       | `href`       | Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.                                                                                                                                                | `string \| undefined` | `undefined` |
+| `mode`       | `mode`       | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined` |
 
 
-#### expandable
+## Slots
 
-boolean
-
-If true, the option will expand to take up the available width and cover any other options. Defaults to `false`.
-
-
-#### href
-
-string
-
-Contains a URL or a URL fragment that the hyperlink points to.
-If this property is set, an anchor tag will be rendered.
+| Slot          | Description                                                                       |
+| ------------- | --------------------------------------------------------------------------------- |
+|               | Content is placed between the named slots if provided without a slot.             |
+| `"bottom"`    | Content is placed below the option text.                                          |
+| `"end"`       | Content is placed to the right of the option text in LTR, and to the left in RTL. |
+| `"icon-only"` | Should be used on an icon in an option that has no text.                          |
+| `"start"`     | Content is placed to the left of the option text in LTR, and to the right in RTL. |
+| `"top"`       | Content is placed above the option text.                                          |
 
 
-#### mode
+## CSS Custom Properties
 
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
-
-## Attributes
-
-#### color
-
-string
-
-The color to use for the option
-
-
-#### disabled
-
-boolean
-
-If true, the user cannot interact with the item option. Defaults to `false`.
-
-
-#### expandable
-
-boolean
-
-If true, the option will expand to take up the available width and cover any other options. Defaults to `false`.
-
-
-#### href
-
-string
-
-Contains a URL or a URL fragment that the hyperlink points to.
-If this property is set, an anchor tag will be rendered.
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
+| Name           | Description                   |
+| -------------- | ----------------------------- |
+| `--background` | Background of the item option |
+| `--color`      | Color of the item option      |
 
 
 ----------------------------------------------

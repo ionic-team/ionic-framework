@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Grid - Offsets</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Grid - Offsets</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content id="content" class="grid-demo">
+      <h2 padding-start>Push</h2>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="auto" push="1">
+            <div>
+              ion-col push 1
+            </div>
+          </ion-col>
+          <ion-col size="auto" push="1">
+            <div>
+              ion-col push 1
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <h2 padding-start>Push and Pull</h2>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="9" push="3">
+            <div>
+              ion-col push 3
+            </div>
+          </ion-col>
+          <ion-col size="3" pull="9">
+            <div>
+              ion-col pull 9
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="3" size-md="6" push="9" push-md="6">
+            <div>
+              ion-col size="3" size-md="6" push="9" push-md="6"
+            </div>
+          </ion-col>
+          <ion-col size="9" size-md="6" pull="3" pull-md="6">
+            <div>
+              ion-col size="9" size-md="6" pull="3" pull-md="6"
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <h2 padding-start>Offset</h2>
+      <ion-grid>
+        <ion-row>
+          <ion-col offset="5">
+            <div>
+              ion-col offset=5
+            </div>
+          </ion-col>
+          <ion-col offset="2">
+            <div>
+              ion-col offset="2"
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col id="dynamicOffsetCol" offset="2" offset-md="5">
+            <div>
+              ion-col offset="2" offset-md="5"
+            </div>
+          </ion-col>
+          <ion-col offset="2" offset-md="5">
+            <div>
+              ion-col offset="2" offset-md="5"
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-button onclick="updateOffset()">Update Offset</ion-button>
+    </ion-content>
+
+    <script>
+      function updateOffset() {
+        var dynamicOffsetCol = document.getElementById('dynamicOffsetCol');
+        var currentOffset = dynamicOffsetCol.offset;
+        dynamicOffsetCol.offset = currentOffset === '2' ? '4' : '2';
+        console.log('Updating offset from ' + currentOffset + ' to ' + dynamicOffsetCol.offset);
+      }
+    </script>
+
+    <style>
+      .grid-demo ion-col div {
+        background-color: #f7f7f7;
+        border: 1px solid #ddd;
+        padding: 10px 5px;
+      }
+    </style>
+  </ion-app>
+</body>
+
+</html>

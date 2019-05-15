@@ -1,22 +1,21 @@
 import { Animation } from '../../../interface';
 
-
 /**
  * iOS Modal Leave Animation
  */
-export function iosLeaveAnimation(Animation: Animation, baseEl: HTMLElement): Promise<Animation> {
-  const baseAnimation = new Animation();
+export function iosLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+  const baseAnimation = new AnimationC();
 
-  const backdropAnimation = new Animation();
+  const backdropAnimation = new AnimationC();
   backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
 
-  const wrapperAnimation = new Animation();
+  const wrapperAnimation = new AnimationC();
   const wrapperEl = baseEl.querySelector('.modal-wrapper');
   wrapperAnimation.addElement(wrapperEl);
   const wrapperElRect = wrapperEl!.getBoundingClientRect();
 
   wrapperAnimation.beforeStyles({ 'opacity': 1 })
-                  .fromTo('translateY', '0%', `${window.innerHeight - wrapperElRect.top}px`);
+                  .fromTo('translateY', '0%', `${(baseEl.ownerDocument as any).defaultView.innerHeight - wrapperElRect.top}px`);
 
   backdropAnimation.fromTo('opacity', 0.4, 0.0);
 

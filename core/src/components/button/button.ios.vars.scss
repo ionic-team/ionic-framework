@@ -3,9 +3,6 @@
 // iOS Button
 // --------------------------------------------------
 
-/// @prop - Font family of the button
-$button-ios-font-family:                              $font-family-ios-base !default;
-
 /// @prop - Margin top of the button
 $button-ios-margin-top:                               4px !default;
 
@@ -34,7 +31,7 @@ $button-ios-padding-start:                            $button-ios-padding-end !d
 $button-ios-height:                                   2.8em !default;
 
 /// @prop - Border radius of the button
-$button-ios-border-radius:                            8px !default;
+$button-ios-border-radius:                            10px !default;
 
 /// @prop - Font size of the button text
 $button-ios-font-size:                                16px !default;
@@ -46,13 +43,13 @@ $button-ios-font-weight:                              500 !default;
 $button-ios-letter-spacing:                           -.03em !default;
 
 /// @prop - Background color of the button
-$button-ios-background-color:                         ion-color($colors-ios, primary, base, ios) !default;
+$button-ios-background-color:                         ion-color(primary, base) !default;
 
 /// @prop - Text color of the button
-$button-ios-text-color:                               ion-color($colors-ios, $button-ios-background-color, contrast, ios) !default;
+$button-ios-text-color:                               ion-color(primary, contrast) !default;
 
 /// @prop - Background color of the activated button
-$button-ios-background-color-activated:               ion-color($colors-ios, $button-ios-background-color, shade, ios) !default;
+$button-ios-background-color-activated:               ion-color(primary, shade) !default;
 
 /// @prop - Opacity of the activated button
 $button-ios-opacity-activated:                        1 !default;
@@ -61,10 +58,10 @@ $button-ios-opacity-activated:                        1 !default;
 $button-ios-opacity-hover:                            .8 !default;
 
 /// @prop - Background color of the focused button
-$button-ios-background-color-focused:                 ion-color($colors-ios, $button-ios-background-color, shade, ios) !default;
+$button-ios-background-color-focused:                 ion-color(primary, shade) !default;
 
 /// @prop - Opacity of the button when disabled
-$button-ios-opacity-disabled:                         $button-opacity-disabled !default;
+$button-ios-opacity-disabled:                         .5 !default;
 
 
 // iOS Large Button
@@ -84,6 +81,9 @@ $button-ios-large-padding-start:                      $button-ios-large-padding-
 
 /// @prop - Height of the large button
 $button-ios-large-height:                             2.8em !default;
+
+/// @prop - Border radius of the large button
+$button-ios-large-border-radius:                      12px !default;
 
 /// @prop - Font size of the large button
 $button-ios-large-font-size:                          20px !default;
@@ -106,6 +106,9 @@ $button-ios-small-padding-start:                      $button-ios-small-padding-
 
 /// @prop - Height of the small button
 $button-ios-small-height:                             2.1em !default;
+
+/// @prop - Border radius of the small button
+$button-ios-small-border-radius:                      6px !default;
 
 /// @prop - Font size of the small button
 $button-ios-small-font-size:                          13px !default;
@@ -133,7 +136,7 @@ $button-ios-outline-text-color:                       $button-ios-background-col
 $button-ios-outline-background-color:                 transparent !default;
 
 /// @prop - Text color of the activated outline button
-$button-ios-outline-text-color-activated:             ion-color($colors-ios, $button-ios-background-color, contrast, ios) !default;
+$button-ios-outline-text-color-activated:             ion-color(primary, contrast) !default;
 
 /// @prop - Background color of the activated outline button
 $button-ios-outline-background-color-activated:       $button-ios-background-color !default;
@@ -145,7 +148,7 @@ $button-ios-outline-opacity-activated:                1 !default;
 $button-ios-outline-background-color-alpha-focused:   .25 !default;
 
 /// @prop - Background color of the focused outline button
-$button-ios-outline-background-color-focused:         ion-color($colors-ios, primary, base, ios, $button-ios-outline-background-color-alpha-focused) !default;
+$button-ios-outline-background-color-focused:         ion-color(primary, base, $button-ios-outline-background-color-alpha-focused) !default;
 
 // iOS Clear Button
 // --------------------------------------------------
@@ -172,7 +175,7 @@ $button-ios-clear-opacity-hover:                      .6 !default;
 $button-ios-clear-background-color-alpha-focused:     .25 !default;
 
 /// @prop - Background color of the focused clear button
-$button-ios-clear-background-color-focused:           ion-color($colors-ios, primary, base, ios, $button-ios-clear-background-color-alpha-focused) !default;
+$button-ios-clear-background-color-focused:           ion-color(primary, base, $button-ios-clear-background-color-alpha-focused) !default;
 
 // iOS Round Button
 // --------------------------------------------------

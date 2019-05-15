@@ -1,22 +1,9 @@
 @import "./note.ios.vars";
+@import "./note";
 
 // iOS Note
 // --------------------------------------------------
 
-.note-ios {
-  font-family: $note-ios-font-family;
-
-  color: $note-ios-color;
-}
-
-
-// Generate iOS Note Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-ios {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-
-  .note-ios-#{$color-name} {
-    color: $color-base;
-  }
+:host {
+  --color: #{$note-ios-color};
 }

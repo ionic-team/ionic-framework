@@ -3,75 +3,83 @@
 // Select
 // --------------------------------------------------
 
-ion-select {
-  display: flex;
-  overflow: hidden;
+:host {
+  /**
+   * @prop --padding-top: Top padding of the select
+   * @prop --padding-end: End padding of the select
+   * @prop --padding-bottom: Bottom padding of the select
+   * @prop --padding-start: Start padding of the select
+   */
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
+  display: flex;
+  position: relative;
+
+  font-family: $font-family-base;
+
+  overflow: hidden;
+  z-index: $z-index-item-input;
 }
 
-.item .select {
+:host(.in-item) {
+  position: static;
+
   max-width: 45%;
 }
 
-.select-cover {
-  @include position(0, null, null, 0);
+:host(.select-disabled) {
+  opacity: .4;
+  pointer-events: none;
+}
 
-  position: absolute;
+:host(.ion-focused) button {
+  border: 2px solid #5e9ed6;
+}
 
-  width: 100%;
-  height: 100%;
+.select-placeholder {
+  color: currentColor;
 
-  border: 0;
+  opacity: .33;
+}
 
-  background: transparent;
-  cursor: pointer;
+button {
+  @include input-cover();
+}
+
+.select-icon {
+  position: relative;
 }
 
 .select-text {
-  overflow: hidden;
-
   flex: 1;
 
   min-width: 16px;
 
   font-size: inherit;
+
   text-overflow: ellipsis;
+
   white-space: nowrap;
+
+  overflow: hidden;
 }
 
-// TODO item needs this class
-.item-multiple-inputs ion-select {
-  position: relative;
-}
+.select-icon-inner {
+  @include position(50%, null, null, 5px);
+  @include margin(-3px, null, null, null);
 
-.select-disabled,
-.item-select-disabled ion-label {
-  opacity: .4;
+  position: absolute;
+
+  width: 0;
+  height: 0;
+
+  border-top: 5px solid;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+
+  color: currentColor;
+
+  opacity: .33;
 
   pointer-events: none;
-}
-
-.select-popover ion-list {
-  @include margin($select-popover-list-margin-top, $select-popover-list-margin-end, $select-popover-list-margin-bottom, $select-popover-list-margin-start);
-}
-
-.select-option {
-  display: none;
-}
-
-.select button:focus {
-  outline: none;
-}
-
-.select-key button {
-  border: 2px solid #5e9ed6;
-}
-
-
-// Stacked & Floating Select
-// --------------------------------------------------
-
-.item-label-stacked .select,
-.item-label-floating .select {
-  max-width: 100%;
 }

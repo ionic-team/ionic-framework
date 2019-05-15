@@ -1,54 +1,45 @@
-import { Component, Listen, Method, Prop } from '@stencil/core';
-import { PickerOptions } from '../../interface';
-import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
+import { Component, ComponentInterface, Method, Prop } from '@stencil/core';
 
+import { OverlayController, PickerOptions } from '../../interface';
+import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
 @Component({
   tag: 'ion-picker-controller'
 })
-export class PickerController implements OverlayController {
-
-  private pickers = new Map<number, HTMLIonPickerElement>();
+export class PickerController implements ComponentInterface, OverlayController {
 
   @Prop({ context: 'document' }) doc!: Document;
 
-  @Listen('body:ionPickerWillPresent')
-  protected pickerWillPresent(ev: any) {
-    this.pickers.set(ev.target.overlayId, ev.target);
-  }
-
-  @Listen('body:ionPickerWillDismiss')
-  @Listen('body:ionPickerDidUnload')
-  protected pickerWillDismiss(ev: any) {
-    this.pickers.delete(ev.target.overlayId);
-  }
-
-  @Listen('body:keyup.escape')
-  protected escapeKeyUp() {
-    removeLastOverlay(this.pickers);
-  }
-
-  /*
+  /**
    * Create a picker overlay with picker options.
+   *
+   * @param options The options to use to create the picker.
    */
   @Method()
-  create(opts?: PickerOptions): Promise<HTMLIonPickerElement | null> {
-    return createOverlay(this.doc.createElement('ion-picker'), opts);
+  create(options: PickerOptions): Promise<HTMLIonPickerElement> {
+    return createOverlay(this.doc.createElement('ion-picker'), options);
   }
 
-  /*
+  /**
    * Dismiss the open picker overlay.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the picker.
+   * This can be useful in a button handler for determining which button was
+   * clicked to dismiss the picker.
+   * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
+   * @param id The id of the picker to dismiss. If an id is not provided, it will dismiss the most recently opened picker.
    */
   @Method()
-  dismiss(data?: any, role?: string, pickerId = -1) {
-    return dismissOverlay(data, role, this.pickers, pickerId);
+  dismiss(data?: any, role?: string, id?: string) {
+    return dismissOverlay(this.doc, data, role, 'ion-picker', id);
   }
 
-  /*
+  /**
    * Get the most recently opened picker overlay.
    */
   @Method()
-  getTop(): HTMLIonPickerElement {
-    return getTopOverlay(this.pickers);
+  async getTop(): Promise<HTMLIonPickerElement | undefined> {
+    return getOverlay(this.doc, 'ion-picker') as HTMLIonPickerElement;
   }
 }

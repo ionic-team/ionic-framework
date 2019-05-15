@@ -1,31 +1,24 @@
-import {
-  Component,
-  Element,
-  Event,
-  EventEmitter,
-  Method,
-  Prop
-} from '@stencil/core';
-import { Side, isEndSide } from '../../utils/helpers';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
+
+import { Mode, Side } from '../../interface';
+import { isEndSide } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-item-options',
   styleUrls: {
     ios: 'item-options.ios.scss',
     md: 'item-options.md.scss'
-  },
-  host: {
-    theme: 'item-options'
   }
 })
-export class ItemOptions {
+export class ItemOptions implements ComponentInterface {
+  mode!: Mode;
+
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'window' })
-  win!: Window;
+  @Prop({ context: 'window' }) win!: Window;
 
   /**
-   * The side the option button should be on. Possible values: `"start"` and `"end"`. Defaults to `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
+   * The side the option button should be on. Possible values: `"start"` and `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
    *
    */
   @Prop() side: Side = 'end';
@@ -33,28 +26,27 @@ export class ItemOptions {
   /**
    * Emitted when the item has been fully swiped.
    */
-  @Event() ionSwipe!: EventEmitter<void>;
+  @Event() ionSwipe!: EventEmitter<any>;
 
-  @Method()
-  isEndSide() {
-    return isEndSide(this.win, this.side);
-  }
-
-  @Method()
-  width(): number {
-    return this.el.offsetWidth;
-  }
-
+  /** @internal */
   @Method()
   fireSwipeEvent() {
-    this.ionSwipe.emit();
+    this.ionSwipe.emit({
+      side: this.side
+    });
   }
 
   hostData() {
+    const isEnd = isEndSide(this.win, this.side);
     return {
       class: {
-        'item-options-start': !this.isEndSide(),
-        'item-options-end': this.isEndSide()
+        [`${this.mode}`]: true,
+
+        // Used internally for styling
+        [`item-options-${this.mode}`]: true,
+
+        'item-options-start': !isEnd,
+        'item-options-end': isEnd
       }
     };
   }

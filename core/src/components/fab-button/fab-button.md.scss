@@ -4,82 +4,45 @@
 // Material Design FAB Button
 // --------------------------------------------------
 
-.fab-button-md {
-  color: $fab-md-text-color;
-  background-color: $fab-md-background-color;
-
-  box-shadow: $fab-md-box-shadow;
-
-  transition: box-shadow $fab-button-md-transition-duration $fab-button-md-transition-timing-function,
-              background-color $fab-button-md-transition-duration $fab-button-md-transition-timing-function,
-              color $fab-button-md-transition-duration $fab-button-md-transition-timing-function;
+:host {
+  --background: #{$fab-md-background-color};
+  --background-activated: var(--background);
+  --background-focused: var(--background-activated);
+  --color: #{$fab-md-text-color};
+  --color-activated: #{$fab-md-text-color};
+  --color-focused: var(--color-activated);
+  --box-shadow: #{$fab-md-box-shadow};
+  --transition: #{
+    box-shadow 280ms cubic-bezier(.4, 0, .2, 1),
+    background-color 280ms cubic-bezier(.4, 0, .2, 1),
+    color 280ms cubic-bezier(.4, 0, .2, 1),
+    opacity 15ms linear 30ms,
+    transform 270ms cubic-bezier(0, 0, .2, 1) 0ms
+  };
 }
 
-.fab-button-md.activated {
-  background-color: $fab-md-background-color-activated;
-  box-shadow: $fab-md-box-shadow-activated;
+:host(.activated) {
+  --box-shadow: #{$fab-md-box-shadow-activated};
 }
 
-.fab-button-md .icon {
-  fill: $fab-md-icon-fill-color;
+::slotted(ion-icon),
+.close-icon {
+  font-size: $fab-md-icon-font-size;
 }
 
 
 // FAB buttons in a list
 // --------------------------------------------------
 
-.fab-button-md-in-list {
-  color: $fab-md-list-button-text-color;
-  background-color: $fab-md-list-button-background-color;
-
-  transition: transform $fab-md-list-button-transition-duration $fab-md-list-button-transition-timing-function $fab-md-list-button-transition-delay,
-              opacity $fab-md-list-button-transition-duration $fab-md-list-button-transition-timing-function $fab-md-list-button-transition-delay,
-              box-shadow $fab-button-md-transition-duration $fab-button-md-transition-timing-function,
-              background-color $fab-button-md-transition-duration $fab-button-md-transition-timing-function,
-              color $fab-button-md-transition-duration $fab-button-md-transition-timing-function;
+:host(.fab-button-in-list) {
+  --color: #{$fab-md-list-button-text-color};
+  --color-activated: #{$fab-md-list-button-text-color};
+  --color-focused: var(--color-activated);
+  --background: #{$fab-md-list-button-background-color};
+  --background-activated: #{$fab-md-list-button-background-color-activated};
+  --background-focused: var(--background-activated);
 }
 
-.fab-button-md-in-list.activated {
-  background-color: $fab-md-list-button-background-color-activated;
+:host(.fab-button-in-list) ::slotted(ion-icon) {
+  font-size: $fab-md-list-button-icon-font-size;
 }
-
-.fab-button-md-in-list .icon {
-  fill: $fab-md-list-button-icon-fill-color;
-}
-
-
-// Material Design FAB Ripple
-// --------------------------------------------------
-
-.fab-button-md .button-effect {
-  background-color: ion-color($colors-md, $fab-md-background-color, contrast, md);
-}
-
-
-// Generate MD FAB colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-md {
-
-  $bg-color: ion-color($colors-md, $color-name, base, md);
-  $bg-color-activated: ion-color($colors-md, $bg-color, tint, md);
-  $fg-color: ion-color($colors-md, $color-name, contrast, md);
-
-  .fab-button-md-#{$color-name} {
-    color: $fg-color;
-    background-color: $bg-color;
-  }
-
-  .fab-button-md-#{$color-name} .icon {
-    fill: $fg-color;
-  }
-
-  .fab-button-md-#{$color-name}.activated {
-    background-color: $bg-color-activated;
-  }
-
-  .fab-button-md-#{$color-name} .ripple-effect {
-    background-color: $fg-color;
-  }
-}
-

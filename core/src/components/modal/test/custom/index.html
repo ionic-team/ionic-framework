@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Modal - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+
+  <style>
+  .custom-modal {
+    --height: 70%;
+    --border-style: solid;
+    --border-width: 7px 0 0 0;
+    --border-color: #0d51aa;
+    --border-radius: 20px 20px 0 0;
+
+    align-items: flex-end;
+  }
+
+  @media (max-width: 400px) {
+    .custom-modal {
+      --max-width: 98%;
+      --height: 98%;
+    }
+  }
+  </style>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Modal - Basic</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content padding>
+      <p>
+        <ion-button id="custom-modal" class="e2ePresentModal" onclick="presentModal()">Present modal</ion-button>
+      </p>
+    </ion-content>
+    <ion-modal-controller></ion-modal-controller>
+
+  </ion-app>
+
+  <script>
+
+    async function createModal() {
+      // initialize controller
+      const modalController = document.querySelector('ion-modal-controller');
+      await modalController.componentOnReady();
+
+      // create component to open
+      const element = document.createElement('div');
+      element.innerHTML = `
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Super Modal</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <h1>Content of doom</h1>
+        <div>Here's some more content</div>
+        <ion-button class="dismiss">Dismiss Modal</ion-button>
+      </ion-content>
+      `;
+
+      // listen for close event
+      const button = element.querySelector('ion-button');
+      button.addEventListener('click', () => {
+        modalController.dismiss();
+      });
+
+      // present the modal
+      const modalElement = await modalController.create({
+        component: element,
+        cssClass: 'custom-modal',
+      });
+      return modalElement;
+    }
+
+    async function presentModal() {
+      const modal = await createModal();
+      await modal.present();
+    }
+    async function presentCloseModal() {
+      const modal = await createModal();
+      await modal.present();
+      await modal.dismiss();
+    }
+
+    async function presentCloseModal2() {
+      const modal = await createModal();
+      modal.present();
+      setTimeout(() => {
+        modal.dismiss();
+      }, 20);
+    }
+  </script>
+</body>
+
+</html>

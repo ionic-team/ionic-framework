@@ -4,45 +4,100 @@
 // Material Design Toast
 // --------------------------------------------------
 
-.toast-md {
-  font-family: $toast-md-font-family;
+:host {
+  --background: #{$toast-md-background};
+  --border-radius: #{$toast-md-border-radius};
+  --box-shadow: #{$toast-md-box-shadow};
+  --button-color: #{ion-color(primary, base)};
+  --color: #{$toast-md-color};
+  --max-width: #{$toast-max-width};
+  --start: 8px;
+  --end: 8px;
+
+  font-size: #{$toast-md-font-size};
 }
 
-.toast-md .toast-wrapper {
-  @include position-horizontal(0, 0);
+.toast-wrapper {
   @include margin(auto);
 
+  display: block;
   position: absolute;
 
-  z-index: $z-index-overlay-wrapper;
-  display: block;
-
-  width: $toast-width;
-  max-width: $toast-max-width;
-
-  background: $toast-md-background;
-}
-
-.toast-md .toast-wrapper.toast-top {
-  @include transform(translate3d(0, -100%, 0));
-
-  top: 0;
-}
-
-.toast-md .toast-wrapper.toast-bottom {
-  @include transform(translate3d(0, 100%, 0));
-
-  bottom: 0;
-}
-
-.toast-md .toast-wrapper.toast-middle {
   opacity: .01;
+
+  z-index: $z-index-overlay-wrapper;
 }
 
-.toast-md .toast-message {
-  @include padding($toast-md-title-padding-top, $toast-md-title-padding-end, $toast-md-title-padding-bottom, $toast-md-title-padding-start);
+.toast-content {
+  @include padding($toast-md-content-padding-top, $toast-md-content-padding-end, $toast-md-content-padding-bottom, $toast-md-content-padding-start);
+}
 
-  font-size: $toast-md-title-font-size;
+.toast-header {
+  margin-bottom: $toast-md-header-margin-bottom;
 
-  color: $toast-md-title-color;
+  font-weight: $toast-md-header-font-weight;
+
+  line-height: $toast-md-header-line-height;
+}
+
+.toast-message {
+  line-height: $toast-md-message-line-height;
+}
+
+
+// Material Design Toast Button
+// --------------------------------------------------
+
+
+.toast-button-group-start {
+  @include margin(null, null, null, 8px);
+}
+
+.toast-button-group-end {
+  @include margin(null, 8px, null, null);
+}
+
+.toast-button {
+  @include padding($toast-md-button-padding-top, $toast-md-button-padding-end, $toast-md-button-padding-bottom, $toast-md-button-padding-start);
+
+  // necessary for ripple to work properly
+  position: relative;
+
+  background-color: $toast-md-button-background-color;
+
+  font-family: var(--ion-font-family);
+  font-size: $toast-md-button-font-size;
+  font-weight: $toast-md-button-font-weight;
+
+  letter-spacing: $toast-md-button-letter-spacing;
+
+  text-transform: $toast-md-button-text-transform;
+
+  overflow: hidden;
+}
+
+.toast-button-cancel {
+  color: $toast-md-button-cancel-text-color;
+}
+
+.toast-button-icon-only {
+  @include border-radius($toast-md-button-icon-only-border-radius);
+  @include padding($toast-md-button-icon-only-padding);
+
+  width: $toast-md-button-icon-only-width;
+  height: $toast-md-button-icon-only-height;
+}
+
+
+// Material Design Toast Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  .toast-button:hover {
+    background-color: $toast-md-button-background-color-hover;
+  }
+
+  .toast-button-cancel:hover {
+    background-color: $toast-md-button-cancel-background-color-hover;
+  }
 }

@@ -1,7 +1,7 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-card-header',
@@ -9,38 +9,37 @@ import { createThemedClasses } from '../../utils/theme';
     ios: 'card-header.ios.scss',
     md: 'card-header.md.scss'
   },
-  host: {
-    theme: 'card-header'
-  }
+  shadow: true
 })
-export class CardHeader {
+export class CardHeader implements ComponentInterface {
   /**
-   * The color to use for the background.
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
-   * If true, the card header will be translucent. Defaults to `false`.
+   * If `true`, the card header will be translucent.
    */
   @Prop() translucent = false;
 
   hostData() {
-    const themedClasses = this.translucent
-      ? createThemedClasses(this.mode, this.color, 'card-header-translucent')
-      : {};
-
-    const hostClasses = {
-      ...themedClasses
-    };
-
     return {
-      class: hostClasses
+      class: {
+        ...createColorClasses(this.color),
+        'card-header-translucent': this.translucent,
+        [`${this.mode}`]: true
+      }
     };
+  }
+
+  render() {
+    return <slot></slot>;
   }
 }

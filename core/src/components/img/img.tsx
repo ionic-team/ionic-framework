@@ -1,17 +1,22 @@
-import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
+import { Mode } from '../../interface';
 
 @Component({
   tag: 'ion-img',
-  styleUrl: 'img.scss'
+  styleUrl: 'img.scss',
+  shadow: true
 })
-export class Img {
+export class Img implements ComponentInterface {
+  mode!: Mode;
 
   private io?: IntersectionObserver;
 
   @Element() el!: HTMLElement;
 
   @State() loadSrc?: string;
+
+  @State() loadError?: () => void;
 
   /**
    * This attribute defines the alternative text describing the image.
@@ -29,34 +34,54 @@ export class Img {
     this.addIO();
   }
 
+  /** Emitted when the img src has been set */
+  @Event() ionImgWillLoad!: EventEmitter<void>;
+
+  /** Emitted when the image has finished loading */
   @Event() ionImgDidLoad!: EventEmitter<void>;
+
+  /** Emitted when the img fails to load */
+  @Event() ionError!: EventEmitter<void>;
 
   componentDidLoad() {
     this.addIO();
   }
 
   private addIO() {
-    if (!this.src) {
+    if (this.src === undefined) {
       return;
     }
     if ('IntersectionObserver' in window) {
       this.removeIO();
-      this.io = new IntersectionObserver((data) => {
+      this.io = new IntersectionObserver(data => {
         // because there will only ever be one instance
         // of the element we are observing
         // we can just use data[0]
         if (data[0].isIntersecting) {
-          this.loadSrc = this.src;
+          this.load();
           this.removeIO();
-          this.ionImgDidLoad.emit();
         }
       });
 
       this.io.observe(this.el);
     } else {
       // fall back to setTimeout for Safari and IE
-      setTimeout(() => this.loadSrc = this.src, 200);
+      setTimeout(() => this.load(), 200);
     }
+  }
+
+  private load() {
+    this.loadError = this.onError;
+    this.loadSrc = this.src;
+    this.ionImgWillLoad.emit();
+  }
+
+  private onLoad = () => {
+    this.ionImgDidLoad.emit();
+  }
+
+  private onError = () => {
+    this.ionError.emit();
   }
 
   private removeIO() {
@@ -66,12 +91,23 @@ export class Img {
     }
   }
 
+  hostData() {
+    return {
+      class: {
+        [`${this.mode}`]: true,
+      }
+    };
+  }
+
   render() {
     return (
       <img
         src={this.loadSrc}
         alt={this.alt}
-        decoding="async"></img>
+        decoding="async"
+        onLoad={this.onLoad}
+        onError={this.loadError}
+      />
     );
   }
 }

@@ -1,5 +1,5 @@
 
-const SKIP_BLURRING = ['INPUT', 'TEXTAREA', 'ION-INPUT', 'ION-TEXTAREA'];
+const SKIP_SELECTOR = 'input, textarea, [no-blur]';
 
 export function enableInputBlurring(doc: Document) {
   console.debug('Input: enableInputBlurring');
@@ -21,26 +21,22 @@ export function enableInputBlurring(doc: Document) {
       didScroll = false;
       return;
     }
-    const active = doc.activeElement as HTMLElement;
+    const active = doc.activeElement as HTMLElement | null;
     if (!active) {
       return;
     }
+
     // only blur if the active element is a text-input or a textarea
-    if (SKIP_BLURRING.indexOf(active.tagName) === -1) {
+    if (active.matches(SKIP_SELECTOR)) {
       return;
     }
 
     // if the selected target is the active element, do not blur
-    const tapped = ev.target;
+    const tapped = ev.target as HTMLElement;
     if (tapped === active) {
       return;
     }
-    if (SKIP_BLURRING.indexOf(tapped.tagName) >= 0) {
-      return;
-    }
-
-    // skip if div is a cover
-    if (tapped.classList.contains('input-cover')) {
+    if (tapped.matches(SKIP_SELECTOR) || tapped.closest(SKIP_SELECTOR)) {
       return;
     }
 

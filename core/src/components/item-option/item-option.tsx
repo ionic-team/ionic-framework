@@ -1,35 +1,47 @@
-import { Component, Prop } from '@stencil/core';
-import { Color, Mode } from '../../interface';
+import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
 
+import { Color, Mode } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
+
+/**
+ * @slot - Content is placed between the named slots if provided without a slot.
+ * @slot start - Content is placed to the left of the option text in LTR, and to the right in RTL.
+ * @slot top - Content is placed above the option text.
+ * @slot icon-only - Should be used on an icon in an option that has no text.
+ * @slot bottom - Content is placed below the option text.
+ * @slot end - Content is placed to the right of the option text in LTR, and to the left in RTL.
+ */
 @Component({
   tag: 'ion-item-option',
-  host: {
-    theme: 'item-option'
-  },
   styleUrls: {
     ios: 'item-option.ios.scss',
     md: 'item-option.md.scss'
-  }
+  },
+  shadow: true
 })
-export class ItemOption {
+export class ItemOption implements ComponentInterface {
+
+  @Element() el!: HTMLElement;
+
   /**
-   * The color to use for the option
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
-   * If true, the user cannot interact with the item option. Defaults to `false`.
+   * If `true`, the user cannot interact with the item option.
    */
   @Prop() disabled = false;
 
   /**
-   * If true, the option will expand to take up the available width and cover any other options. Defaults to `false`.
+   * If `true`, the option will expand to take up the available width and cover any other options.
    */
   @Prop() expandable = false;
 
@@ -39,37 +51,49 @@ export class ItemOption {
    */
   @Prop() href?: string;
 
-  private clickedOptionButton(ev: Event): boolean {
+  @Listen('click')
+  onClick(ev: Event) {
     const el = (ev.target as HTMLElement).closest('ion-item-option');
-    return !!el;
+    if (el) {
+      ev.preventDefault();
+    }
   }
 
   hostData() {
+    const { disabled, expandable } = this;
     return {
       class: {
-        'item-option-expandable': this.expandable
+        ...createColorClasses(this.color),
+        [`${this.mode}`]: true,
+
+        'item-option-disabled': disabled,
+        'item-option-expandable': expandable,
+        'ion-activatable': true,
       }
     };
   }
 
   render() {
-    const TagType = this.href ? 'a' : 'button';
+    const TagType = this.href === undefined ? 'button' : 'a' as any;
 
     return (
       <TagType
-        class="item-option-button"
+        type="button"
+        class="button-native"
         disabled={this.disabled}
         href={this.href}
-        onClick={this.clickedOptionButton.bind(this)}
       >
-        <span class="item-option-button-inner">
-          <slot name="start" />
-          <slot name="top" />
-          <slot name="icon-only" />
-          <slot />
-          <slot name="bottom" />
-          <slot name="end" />
+        <span class="button-inner">
+          <slot name="top"></slot>
+          <div class="horizontal-wrapper">
+            <slot name="start"></slot>
+            <slot name="icon-only"></slot>
+            <slot></slot>
+            <slot name="end"></slot>
+          </div>
+          <slot name="bottom"></slot>
         </span>
+        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </TagType>
     );
   }

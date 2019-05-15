@@ -3,11 +3,20 @@
 // Card Header
 // --------------------------------------------------
 
-ion-card-header {
-  position: relative;
+:host {
   display: block;
-  overflow: hidden;
+  position: relative;
 
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  background: var(--background);
+  color: var(--color);
+}
+
+:host(.ion-color) {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+:host(.ion-color) ::slotted(ion-card-title),
+:host(.ion-color) ::slotted(ion-card-subtitle) {
+  color: currentColor;
 }

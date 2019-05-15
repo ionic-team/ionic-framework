@@ -1,6 +1,6 @@
 @import "./backdrop";
 @import "./backdrop.ios.vars";
 
-.backdrop-ios {
+:host {
   background-color: $backdrop-ios-color;
 }

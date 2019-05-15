@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>App - Safe Area</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+  <style>
+    .safe-area {
+      --ion-safe-area-top: 40px;
+      --ion-safe-area-right: 40px;
+      --ion-safe-area-bottom: 40px;
+      --ion-safe-area-left: 40px;
+    }
+  </style>
+  <script>
+    async function showActionSheet() {
+      const actionSheet = await document.querySelector('ion-action-sheet-controller')
+        .create({
+          header: 'Action Sheet',
+          buttons: [
+            'First',
+            'Second',
+            'Third'
+          ]
+        });
+      await actionSheet.present();
+    }
+
+    async function showMenu() {
+      const menu = document.querySelector('ion-menu');
+      await menu.open();
+    }
+
+    async function showPicker() {
+      const picker = await document.querySelector('ion-picker-controller')
+        .create({
+          columns: [
+            {
+              name: 'Picker',
+              selectedIndex: 2,
+              options: [
+                { text: 'First' },
+                { text: 'Second' },
+                { text: 'Third' },
+                { text: 'Fourth' },
+                { text: 'Fifth' },
+              ]
+            }
+          ]
+        });
+      await picker.present();
+    }
+
+    async function showToast() {
+      const toast = await document.querySelector('ion-toast-controller')
+        .create({
+          message: 'Hello world!',
+          showCloseButton: true
+        });
+      await toast.present();
+    }
+  </script>
+</head>
+
+<body>
+  <ion-app class="safe-area">
+    <ion-menu>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-item>First</ion-item>
+          <ion-item>Second</ion-item>
+          <ion-item>Third</ion-item>
+          <ion-item>Fourth</ion-item>
+          <ion-item>Fifth</ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>App - Safe Area</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content main>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Card</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-button expand="block" id="show-action-sheet" onclick="showActionSheet()">Show Action Sheet</ion-button>
+          <ion-button expand="block" id="show-menu" onclick="showMenu()">Show Menu</ion-button>
+          <ion-button expand="block" id="show-picker" onclick="showPicker()">Show Picker</ion-button>
+          <ion-button expand="block" id="show-toast" onclick="showToast()">Show Toast</ion-button>
+        </ion-card-content>
+      </ion-card>
+
+
+      <ion-list>
+        <ion-list-header>
+          <ion-label>List Header</ion-label>
+        </ion-list-header>
+        <ion-item>
+          <ion-label>Item</ion-label>
+        </ion-item>
+        <ion-item-divider>
+          <ion-label>Item Divider</ion-label>
+        </ion-item-divider>
+        <ion-item-sliding>
+          <ion-item>
+            <ion-label>Item Sliding</ion-label>
+          </ion-item>
+          <ion-item-options side="start">
+            <ion-item-option>Start</ion-item-option>
+          </ion-item-options>
+          <ion-item-options side="end">
+            <ion-item-option>End</ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+
+      <ion-fab vertical="bottom" horizontal="end">
+        <ion-fab-button color="danger">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </ion-content>
+
+    <ion-footer>
+      <ion-toolbar>
+        <ion-title>Footer</ion-title>
+      </ion-toolbar>
+    </ion-footer>
+
+    <ion-action-sheet-controller></ion-action-sheet-controller>
+    <ion-picker-controller></ion-picker-controller>
+    <ion-toast-controller></ion-toast-controller>
+  </ion-app>
+
+</body>
+</html>

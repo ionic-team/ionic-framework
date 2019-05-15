@@ -1,17 +1,15 @@
-import * as c from './constants';
+import { ComponentProps } from '../../../interface';
 
 export interface NavOutlet {
-  setRouteId(id: string, data: any, direction: c.RouterIntent): Promise<RouteWrite>;
-  getRouteId(): RouteID|undefined;
+  setRouteId(id: string, params: ComponentProps | undefined, direction: RouterDirection): Promise<RouteWrite>;
+  getRouteId(): Promise<RouteID | undefined>;
 }
 
 export interface RouterEventDetail {
-  from: string|null;
-  redirectedFrom: string|null;
+  from: string | null;
+  redirectedFrom: string | null;
   to: string;
 }
-
-export type RouterDirection = 'forward' | 'back' | 'root';
 
 export interface RouteRedirect {
   from: string[];
@@ -21,26 +19,26 @@ export interface RouteRedirect {
 export interface RouteWrite {
   changed: boolean;
   element: HTMLElement | undefined;
-  markVisible?: () => void|Promise<void>;
+  markVisible?: () => void | Promise<void>;
 }
 
 export interface RouteID {
   id: string;
   element: HTMLElement | undefined;
-  params?: any;
+  params?: {[key: string]: any};
 }
-
-export type NavOutletElement = NavOutlet & HTMLStencilElement;
 
 export interface RouteEntry {
   id: string;
   path: string[];
-  params: any|undefined;
+  params: {[key: string]: any} | undefined;
 }
 
 export interface RouteNode extends RouteEntry {
   children: RouteTree;
 }
 
+export type RouterDirection = 'forward' | 'back' | 'root';
+export type NavOutletElement = NavOutlet & HTMLStencilElement;
 export type RouteChain = RouteEntry[];
 export type RouteTree = RouteNode[];

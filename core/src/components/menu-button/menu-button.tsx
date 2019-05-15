@@ -1,5 +1,6 @@
-import { Component, Prop } from '@stencil/core';
-import { Config } from '../../interface';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
+
+import { Color, Config, Mode } from '../../interface';
 
 @Component({
   tag: 'ion-menu-button',
@@ -7,16 +8,26 @@ import { Config } from '../../interface';
     ios: 'menu-button.ios.scss',
     md: 'menu-button.md.scss'
   },
-  host: {
-    theme: 'menu-button'
-  }
+  shadow: true
 })
-export class MenuButton {
-  @Prop({ context: 'config' })
-  config!: Config;
+export class MenuButton implements ComponentInterface {
+
+  @Prop({ context: 'config' }) config!: Config;
 
   /**
-   * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
+   */
+  @Prop() color?: Color;
+
+  /**
+   * The mode determines which platform styles to use.
+   */
+  @Prop() mode!: Mode;
+
+  /**
+   * Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle
    */
   @Prop() menu?: string;
 
@@ -25,15 +36,26 @@ export class MenuButton {
    */
   @Prop() autoHide = true;
 
+  hostData() {
+    return {
+      class: {
+        [`${this.mode}`]: true,
+        'button': true,  // ion-buttons target .button
+        'ion-activatable': true,
+      }
+    };
+  }
+
   render() {
     const menuIcon = this.config.get('menuIcon', 'menu');
     return (
       <ion-menu-toggle menu={this.menu} autoHide={this.autoHide}>
-        <ion-button>
+        <button type="button">
           <slot>
-            <ion-icon icon={menuIcon} slot="icon-only" />
+            <ion-icon icon={menuIcon} mode={this.mode} color={this.color} lazy={false} />
           </slot>
-        </ion-button>
+          {this.mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
+        </button>
       </ion-menu-toggle>
     );
   }

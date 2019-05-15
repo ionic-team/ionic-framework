@@ -2,7 +2,7 @@
  * Deploy script adopted from https://github.com/sindresorhus/np
  * MIT License (c) Sindre Sorhus (sindresorhus.com)
  */
-const chalk = require('chalk');
+const tc = require('turbocolor');
 const execa = require('execa');
 const Listr = require('listr');
 const octokit = require('@octokit/rest')()
@@ -24,7 +24,7 @@ async function main() {
     common.checkGit(tasks);
 
     // publish each package in NPM
-    publishPackages(tasks, common.packages, version);
+    common.publishPackages(tasks, common.packages, version);
 
     // push tag to git remote
     publishGit(tasks, version, changelog);
@@ -34,48 +34,18 @@ async function main() {
     console.log(`\nionic ${version} published!! 🎉\n`);
 
   } catch (err) {
-    console.log('\n', chalk.red(err), '\n');
+    console.log('\n', tc.red(err), '\n');
     process.exit(1);
   }
 }
 
-
-async function publishPackages(tasks, packages, version) {
-  // first verify version
-  packages.forEach(package => {
-    if (package === 'core') {
-      return;
-    }
-
-    const pkg = common.readPkg(package);
-    tasks.push({
-      title: `${pkg.name}: check version (must match: ${version})`,
-      task: () => {
-        if (version !== pkg.version) {
-          throw new Error(`${pkg.name} version ${pkg.version} must match ${version}`);
-        }
-      }
-    });
-  });
-
-  // next publish
-  packages.forEach(package => {
-    const pkg = common.readPkg(package);
-    const projectRoot = common.projectPath(package);
-
-    tasks.push({
-      title: `${pkg.name}: publish ${pkg.version}`,
-      task: () => execa('npm', ['publish', '--tag', 'latest'], { cwd: projectRoot })
-    });
-  });
-}
 
 function publishGit(tasks, version, changelog) {
   const tag = `v${version}`;
 
   tasks.push(
     {
-      title: `Tag latest commit ${chalk.dim(`(${tag})`)}`,
+      title: `Tag latest commit ${tc.dim(`(${tag})`)}`,
       task: () => execa('git', ['tag', `${tag}`], { cwd: common.rootDir })
     },
     {

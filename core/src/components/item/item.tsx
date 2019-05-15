@@ -1,50 +1,60 @@
-import { Component, Element, Listen, Prop } from '@stencil/core';
-import { Color, CssClassMap, Mode, RouterDirection } from '../../interface';
-import {
-  createThemedClasses,
-  getElementClassMap,
-  openURL
-} from '../../utils/theme';
+import { Component, ComponentInterface, Element, Listen, Prop, State } from '@stencil/core';
 
+import { Color, CssClassMap, Mode, RouterDirection, StyleEventDetail } from '../../interface';
+import { createColorClasses, hostContext, openURL } from '../../utils/theme';
+
+/**
+ * @slot - Content is placed between the named slots if provided without a slot.
+ * @slot start - Content is placed to the left of the item text in LTR, and to the right in RTL.
+ * @slot end - Content is placed to the right of the item text in LTR, and to the left in RTL.
+ */
 @Component({
   tag: 'ion-item',
   styleUrls: {
     ios: 'item.ios.scss',
     md: 'item.md.scss'
-  }
+  },
+  shadow: true
 })
-export class Item {
-  private itemStyles: { [key: string]: CssClassMap } = {};
+export class Item implements ComponentInterface {
+  private itemStyles = new Map<string, CssClassMap>();
 
   @Element() el!: HTMLStencilElement;
 
-  @Prop({ context: 'window' })
-  win!: Window;
+  @State() multipleInputs = false;
+
+  @Prop({ context: 'window' }) win!: Window;
 
   /**
-   * The color to use for the background of the item.
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
 
   /**
-   * If true, a button tag will be rendered and the item will be tappable. Defaults to `false`.
+   * If `true`, a button tag will be rendered and the item will be tappable.
    */
   @Prop() button = false;
 
   /**
-   * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
-   * is `ios` and an `href`, `onclick` or `button` property is present.
+   * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
+   * is `ios` and an `href` or `button` property is present.
    */
   @Prop() detail?: boolean;
 
   /**
-   * If true, the user cannot interact with the item. Defaults to `false`.
+   * The icon to use when `detail` is set to `true`.
+   */
+  @Prop() detailIcon = 'ios-arrow-forward';
+
+  /**
+   * If `true`, the user cannot interact with the item.
    */
   @Prop() disabled = false;
 
@@ -63,29 +73,36 @@ export class Item {
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
-  @Prop() routerDirection?: RouterDirection;
+  @Prop() routerDirection: RouterDirection = 'forward';
+
+  /**
+   * The type of the button. Only used when an `onclick` or `button` property is present.
+   */
+  @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   @Listen('ionStyle')
-  itemStyle(ev: UIEvent) {
+  itemStyle(ev: CustomEvent<StyleEventDetail>) {
     ev.stopPropagation();
 
-    const tagName: string = (ev.target as HTMLElement).tagName;
-    const updatedStyles = ev.detail as any;
-    const updatedKeys = Object.keys(ev.detail);
+    const tagName = (ev.target as HTMLElement).tagName;
+    const updatedStyles = ev.detail;
     const newStyles = {} as any;
-    const childStyles = this.itemStyles[tagName] || {};
+    const childStyles = this.itemStyles.get(tagName) || {};
+
     let hasStyleChange = false;
-    for (const key of updatedKeys) {
+    Object.keys(updatedStyles).forEach(key => {
       const itemKey = `item-${key}`;
       const newValue = updatedStyles[key];
       if (newValue !== childStyles[itemKey]) {
         hasStyleChange = true;
       }
-      newStyles[itemKey] = newValue;
-    }
+      if (newValue) {
+        newStyles[itemKey] = true;
+      }
+    });
 
     if (hasStyleChange) {
-      this.itemStyles[tagName] = newStyles;
+      this.itemStyles.set(tagName, newStyles);
       this.el.forceUpdate();
     }
   }
@@ -93,56 +110,71 @@ export class Item {
   componentDidLoad() {
     // Change the button size to small for each ion-button in the item
     // unless the size is explicitly set
-    const buttons = this.el.querySelectorAll('ion-button');
-    for (let i = 0; i < buttons.length; i++) {
-      if (!buttons[i].size) {
-        buttons[i].size = 'small';
+    Array.from(this.el.querySelectorAll('ion-button')).forEach(button => {
+      if (button.size === undefined) {
+        button.size = 'small';
       }
-    }
+    });
+
+    // Check for multiple inputs to change the position to relative
+    const inputs = this.el.querySelectorAll('ion-select, ion-datetime');
+    this.multipleInputs = inputs.length > 1 ? true : false;
+  }
+
+  private isClickable(): boolean {
+    return (this.href !== undefined || this.button);
+  }
+
+  hostData() {
+    const childStyles = {};
+    this.itemStyles.forEach(value => {
+      Object.assign(childStyles, value);
+    });
+
+    return {
+      'aria-disabled': this.disabled ? 'true' : null,
+      class: {
+        ...childStyles,
+        ...createColorClasses(this.color),
+        'item': true,
+        [`${this.mode}`]: true,
+        [`item-lines-${this.lines}`]: this.lines !== undefined,
+        'item-disabled': this.disabled,
+        'in-list': hostContext('ion-list', this.el),
+        'item-multiple-inputs': this.multipleInputs,
+        'ion-activatable': this.isClickable(),
+        'ion-focusable': true,
+      }
+    };
   }
 
   render() {
-    const childStyles = {};
-    for (const key in this.itemStyles) {
-      Object.assign(childStyles, this.itemStyles[key]);
-    }
+    const { href, detail, mode, win, detailIcon, routerDirection, type } = this;
 
-    const clickable = !!(this.href || this.el.onclick || this.button);
+    const clickable = this.isClickable();
+    const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
+    const attrs = TagType === 'button' ? { type } : { href };
+    const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
 
-    const TagType = clickable ? (this.href ? 'a' : 'button') : 'div';
-
-    const attrs =
-      TagType === 'button' ? { type: 'button' } : { href: this.href };
-
-    const showDetail =
-      this.detail != null ? this.detail : this.mode === 'ios' && clickable;
-
-    const themedClasses = {
-      ...childStyles,
-      ...createThemedClasses(this.mode, this.color, 'item'),
-      ...getElementClassMap(this.el.classList),
-      'item-disabled': this.disabled,
-      'item-detail-push': showDetail,
-      [`item-lines-${this.lines}`]: !!this.lines,
-      [`item-${this.mode}-lines-${this.lines}`]: !!this.lines
-    };
-
-    return (
+    return [
       <TagType
         {...attrs}
-        class={themedClasses}
-        onClick={ev => openURL(this.win, this.href, ev, this.routerDirection)}
+        class="item-native"
+        disabled={this.disabled}
+        onClick={(ev: Event) => openURL(win, href, ev, routerDirection)}
       >
-        <slot name="start" />
+        <slot name="start"></slot>
         <div class="item-inner">
           <div class="input-wrapper">
-            <slot />
+            <slot></slot>
           </div>
-          <slot name="end" />
+          <slot name="end"></slot>
+          {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon"></ion-icon>}
+          <div class="item-inner-highlight"></div>
         </div>
-        {clickable &&
-          this.mode === 'md' && <ion-ripple-effect tapClick={true} />}
-      </TagType>
-    );
+        {clickable && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+      </TagType>,
+      <div class="item-highlight"></div>
+    ];
   }
 }

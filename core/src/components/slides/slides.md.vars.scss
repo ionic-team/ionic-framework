@@ -1,28 +1,28 @@
 @import "../../themes/ionic.globals.md";
 
-/// @prop - Slides Bullet Background color
-$slides-md-bullet-background-color:                   $text-md-color-step-400 !default;
+/// @prop - Background color of the bullet
+$slides-md-bullet-background:                   $text-color-step-800 !default;
 
-/// @prop - Slides Bullet Background color when Active
-$slides-md-bullet-background-color-active:            ion-color($colors-md, primary, base, md) !default;
+/// @prop - Background color of the active bullet
+$slides-md-bullet-background-active:            ion-color(primary, base) !default;
 
-/// @prop - Slides Progress indicator Background color alpha
-$slides-md-progress-background-color-alpha:           .25 !default;
+/// @prop - Alpha to use for the background color of the progress bar
+$slides-md-progress-bar-background-alpha:       .25 !default;
 
-/// @prop - Slides Progress indicator Background color
-$slides-md-progress-background-color:                 css-var($text-md-color-value, text-md-color, $slides-md-progress-background-color-alpha) !default;
+/// @prop - Background color of the progress
+$slides-md-progress-bar-background:             rgba(var(--ion-text-color-rgb, $text-color-rgb), $slides-md-progress-bar-background-alpha) !default;
 
-/// @prop - Slides Progress indicator bar Background color
-$slides-md-progress-bar-background-color:             ion-color($colors-md, primary, shade, md) !default;
+/// @prop - Background color of the progress bar
+$slides-md-progress-bar-background-active:      ion-color(primary, shade) !default;
 
-/// @prop - Slides Scroll bar Background color alpha
-$slides-md-scroll-bar-background-color-alpha:         .25 !default;
+/// @prop - Alpha to use for the background color of the scroll bar
+$slides-md-scroll-bar-background-alpha:         .1 !default;
 
-/// @prop - Slides Scroll bar Background color
-$slides-md-scroll-bar-background-color:               css-var($text-md-color-value, text-md-color, $slides-md-scroll-bar-background-color-alpha) !default;
+/// @prop - Background color of the scroll bar
+$slides-md-scroll-bar-background:               rgba(var(--ion-text-color-rgb, $text-color-rgb), $slides-md-scroll-bar-background-alpha) !default;
 
-/// @prop - Slides Scroll bar drag handle Background color alpha
-$slides-md-scroll-bar-drag-background-color-alpha:    .5 !default;
+/// @prop - Alpha to use for the background color of the scroll bar while dragging
+$slides-md-scroll-bar-drag-background-alpha:    .5 !default;
 
-/// @prop - Slides Scroll bar drag handle Background color
-$slides-md-scroll-bar-drag-background-color:          css-var($text-md-color-value, text-md-color, $slides-md-scroll-bar-drag-background-color-alpha) !default;
+/// @prop - Background color of the scroll bar drag handle
+$slides-md-scroll-bar-drag-background:          rgba(var(--ion-text-color-rgb, $text-color-rgb), $slides-md-scroll-bar-drag-background-alpha) !default;

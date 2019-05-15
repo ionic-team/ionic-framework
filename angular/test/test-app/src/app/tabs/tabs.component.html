@@ -1,0 +1,22 @@
+<ion-tabs (ionTabsDidChange)="tabChanged($event)">
+  <ion-tab-bar>
+    <ion-tab-button tab="account">
+      <ion-label>Tab One</ion-label>
+      <ion-icon name="add"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="contact">
+      <ion-label>Tab Two</ion-label>
+      <ion-icon name="logo-ionic"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="lazy">
+      <ion-label>Tab Three</ion-label>
+      <ion-icon name="save"></ion-icon>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+</ion-tabs>
+<ion-fab horizontal="end" vertical="top">
+  <ion-fab-button id="tabs-state" style="width: 100px;">{{tabCounter}}.{{tabEvent}}</ion-fab-button>
+</ion-fab>

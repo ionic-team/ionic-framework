@@ -3,11 +3,8 @@
 // Material Design Button
 // --------------------------------------------------
 
-/// @prop - Font family of the button
-$button-md-font-family:                                 $font-family-md-base !default;
-
 /// @prop - Margin top of the button
-$button-md-margin-top:                                  4px !default;
+$button-md-margin-top:                                  4px;
 
 /// @prop - Margin end of the button
 $button-md-margin-end:                                  2px !default;
@@ -25,16 +22,16 @@ $button-md-padding-top:                                 0 !default;
 $button-md-padding-end:                                 1.1em !default;
 
 /// @prop - Padding bottom of the button
-$button-md-padding-bottom:                              $button-md-padding-top !default;
+$button-md-padding-bottom:                              0 !default;
 
 /// @prop - Padding start of the button
-$button-md-padding-start:                               $button-md-padding-end !default;
+$button-md-padding-start:                               1.1em !default;
 
 /// @prop - Height of the button
 $button-md-height:                                      36px !default;
 
 /// @prop - Border radius of the button
-$button-md-border-radius:                               2px !default;
+$button-md-border-radius:                               4px !default;
 
 /// @prop - Font size of the button text
 $button-md-font-size:                                   14px !default;
@@ -45,41 +42,22 @@ $button-md-font-weight:                                 500 !default;
 /// @prop - Capitalization of the button text
 $button-md-text-transform:                              uppercase !default;
 
-/// @prop - Background color of the button
-$button-md-background-color:                            ion-color($colors-md, primary, base, md) !default;
-
-/// @prop - Text color of the button
-$button-md-text-color:                                  ion-color($colors-md, $button-md-background-color, contrast, md) !default;
+$button-md-letter-spacing:                              0.06em;
 
 /// @prop - Box shadow of the button
-$button-md-box-shadow:                                  0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12) !default;
-
-/// @prop - Duration of the transition of the button
-$button-md-transition-duration:                         300ms !default;
-
-/// @prop - Speed curve of the transition of the button
-$button-md-transition-timing-function:                  cubic-bezier(.4, 0, .2, 1) !default;
-
-/// @prop - Background color of the button on hover
-$button-md-background-color-hover:                      $button-md-background-color !default;
-
-/// @prop - Background color of the activated button
-$button-md-background-color-activated:                  ion-color($colors-md, $button-md-background-color, shade, md) !default;
+$button-md-box-shadow:                                  0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12) !default;
 
 /// @prop - Opacity of the activated button
 $button-md-opacity-activated:                           1 !default;
 
 /// @prop - Box shadow of the activated button
-$button-md-box-shadow-activated:                        0 3px 5px rgba(0, 0, 0, .14), 0 3px 5px rgba(0, 0, 0, .21) !default;
+$button-md-box-shadow-activated:                        0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12) !default;
 
 /// @prop - Background color of the ripple on the button
-$button-md-ripple-background-color:                     $text-md-color-step-400 !default;
-
-/// @prop - Background color of the focused button
-$button-md-background-color-focused:                    ion-color($colors-md, $button-md-background-color, shade, md) !default;
+$button-md-ripple-background-color:                     $text-color-step-400 !default;
 
 /// @prop - Opacity of the button when disabled
-$button-md-opacity-disabled:                            $button-opacity-disabled !default;
+$button-md-opacity-disabled:                           .5 !default;
 
 // Material Design Large Button
 // --------------------------------------------------
@@ -134,12 +112,6 @@ $button-md-outline-border-width:                        1px !default;
 /// @prop - Border style of the outline button
 $button-md-outline-border-style:                        solid !default;
 
-/// @prop - Border color of the outline button
-$button-md-outline-border-color:                        $button-md-background-color !default;
-
-/// @prop - Text color of the outline button
-$button-md-outline-text-color:                          $button-md-background-color !default;
-
 /// @prop - Background color of the outline button
 $button-md-outline-background-color:                    transparent !default;
 
@@ -150,7 +122,7 @@ $button-md-outline-box-shadow:                          none !default;
 $button-md-outline-background-color-alpha-hover:        .1 !default;
 
 /// @prop - Background color of the outline button on hover
-$button-md-outline-background-color-hover:              css-var($text-md-color-value, text-md-color, $button-md-outline-background-color-alpha-hover) !default;
+$button-md-outline-background-color-hover:              rgba(var(--ion-text-color-rgb, $text-color-rgb), $button-md-outline-background-color-alpha-hover) !default;
 
 /// @prop - Background color of the activated outline button
 $button-md-outline-background-color-activated:          transparent !default;
@@ -161,23 +133,17 @@ $button-md-outline-box-shadow-activated:                none !default;
 /// @prop - Opacity of the activated outline button
 $button-md-outline-opacity-activated:                   1 !default;
 
-/// @prop - Background color of the ripple on the outline button
-$button-md-outline-ripple-background-color:             $button-md-background-color !default;
-
 /// @prop - Background color alpha of the focused outline button
 $button-md-outline-background-color-alpha-focused:      .1 !default;
 
 /// @prop - Background color of the focused outline button
-$button-md-outline-background-color-focused:            ion-color($colors-md, primary, base, md, $button-md-outline-background-color-alpha-focused) !default;
+$button-md-outline-background-color-focused:            ion-color(primary, base, $button-md-outline-background-color-alpha-focused) !default;
 
 // Material Design Clear Button
 // --------------------------------------------------
 
 /// @prop - Border color of the clear button
 $button-md-clear-border-color:                          transparent !default;
-
-/// @prop - Text color of the clear button
-$button-md-clear-text-color:                            $button-md-background-color !default;
 
 /// @prop - Background color of the clear button
 $button-md-clear-background-color:                      transparent !default;
@@ -192,7 +158,7 @@ $button-md-clear-opacity:                               1 !default;
 $button-md-clear-background-color-alpha-activated:      .1 !default;
 
 /// @prop - Background color of the activated clear button
-$button-md-clear-background-color-activated:            css-var($text-md-color-value, text-md-color, $button-md-clear-background-color-alpha-activated) !default;
+$button-md-clear-background-color-activated:            rgba(var(--ion-text-color-rgb, $text-color-rgb), $button-md-clear-background-color-alpha-activated) !default;
 
 /// @prop - Box shadow of the activated clear button
 $button-md-clear-box-shadow-activated:                  $button-md-clear-box-shadow !default;
@@ -201,16 +167,16 @@ $button-md-clear-box-shadow-activated:                  $button-md-clear-box-sha
 $button-md-clear-background-color-alpha-hover:          .1 !default;
 
 /// @prop - Background color of the clear button on hover
-$button-md-clear-background-color-hover:                css-var($text-md-color-value, text-md-color, $button-md-clear-background-color-alpha-hover) !default;
+$button-md-clear-background-color-hover:                rgba(var(--ion-text-color-rgb, $text-color-rgb), $button-md-clear-background-color-alpha-hover) !default;
 
 /// @prop - Background color of the ripple on the clear button
-$button-md-clear-ripple-background-color:               $text-md-color-step-600 !default;
+$button-md-clear-ripple-background-color:               $text-color-step-600 !default;
 
 /// @props - Background color of the focused clear button
 $button-md-clear-background-color-alpha-focused:        .1 !default;
 
 /// @props - Background color of the focused clear button
-$button-md-clear-background-color-focused:              ion-color($colors-md, primary, base, md, $button-md-clear-background-color-alpha-focused) !default;
+$button-md-clear-background-color-focused:              ion-color(primary, base, $button-md-clear-background-color-alpha-focused) !default;
 
 // Material Design Round Button
 // --------------------------------------------------

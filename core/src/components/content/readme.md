@@ -7,89 +7,198 @@ view component.
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Angular
+
+```html
+<ion-content
+  [scrollEvents]="true"
+  (ionScrollStart)="logScrollStart()"
+  (ionScroll)="logScrolling($event)"
+  (ionScrollEnd)="logScrollEnd()">
+</ion-content>
+```
+
+
+### Javascript
+
+```html
+<ion-content></ion-content>
+```
+
+```javascript
+var content = document.querySelector('ion-content');
+content.scrollEvents = true;
+content.addEventListener('ionScrollStart', () => console.log('scroll start'));
+content.addEventListener('ionScroll', (ev) => console.log('scroll', ev.detail));
+content.addEventListener('ionScrollEnd', () => console.log('scroll end'));
+```
+
+
+### React
+
+```tsx
+import React from 'react';
+
+import { IonContent } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+  <IonContent
+    scrollEvents={true}
+    onIonScrollStart={() => {}}
+    onIonScroll={() => {}}
+    onIonScrollEnd={() => {}}>
+  </IonContent>
+);
+
+export default Example;
+```
+
+
+### Vue
+
+```html
+<template>
+  <ion-content
+    :scrollEvents="true"
+    @ionScrollStart="logScrollStart()"
+    @ionScroll="logScrolling($event)"
+    @ionScrollEnd="logScrollEnd()">
+  </ion-content>
+</template>
+```
+
+
+
 ## Properties
 
-#### forceOverscroll
-
-boolean
-
-If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce.
-If the content exceeds the bounds of ionContent, nothing will change.
-Note, the does not disable the system bounce on iOS. That is an OS level setting.
-
-
-#### fullscreen
-
-boolean
-
-If true, the content will scroll behind the headers
-and footers. This effect can easily be seen by setting the toolbar
-to transparent.
+| Property          | Attribute          | Description                                                                                                                                                                                                                                                            | Type                   | Default     |
+| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ----------- |
+| `color`           | `color`            | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`  | `undefined` |
+| `forceOverscroll` | `force-overscroll` | If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.       | `boolean \| undefined` | `undefined` |
+| `fullscreen`      | `fullscreen`       | If `true`, the content will scroll behind the headers and footers. This effect can easily be seen by setting the toolbar to transparent.                                                                                                                               | `boolean`              | `false`     |
+| `scrollEvents`    | `scroll-events`    | Because of performance reasons, ionScroll events are disabled by default, in order to enable them and start listening from (ionScroll), set this property to `true`.                                                                                                   | `boolean`              | `false`     |
+| `scrollX`         | `scroll-x`         | If you want to enable the content scrolling in the X axis, set this property to `true`.                                                                                                                                                                                | `boolean`              | `false`     |
+| `scrollY`         | `scroll-y`         | If you want to disable the content scrolling in the Y axis, set this property to `false`.                                                                                                                                                                              | `boolean`              | `true`      |
 
 
-#### scrollEnabled
+## Events
 
-boolean
-
-
-#### scrollEvents
-
-boolean
-
-
-## Attributes
-
-#### force-overscroll
-
-boolean
-
-If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce.
-If the content exceeds the bounds of ionContent, nothing will change.
-Note, the does not disable the system bounce on iOS. That is an OS level setting.
-
-
-#### fullscreen
-
-boolean
-
-If true, the content will scroll behind the headers
-and footers. This effect can easily be seen by setting the toolbar
-to transparent.
-
-
-#### scroll-enabled
-
-boolean
-
-
-#### scroll-events
-
-boolean
+| Event            | Description                                                                                      | Type                            |
+| ---------------- | ------------------------------------------------------------------------------------------------ | ------------------------------- |
+| `ionScroll`      | Emitted while scrolling. This event is disabled by default. Look at the property: `scrollEvents` | `CustomEvent<ScrollDetail>`     |
+| `ionScrollEnd`   | Emitted when the scroll has ended.                                                               | `CustomEvent<ScrollBaseDetail>` |
+| `ionScrollStart` | Emitted when the scroll has started.                                                             | `CustomEvent<ScrollBaseDetail>` |
 
 
 ## Methods
 
-#### scrollByPoint()
+### `getScrollElement() => Promise<HTMLElement>`
+
+Get the element where the actual scrolling takes place.
+This element can be used to subscribe to `scroll` events or manually modify
+`scrollTop`. However, it's recommended to use the API provided by `ion-content`:
+
+i.e. Using `ionScroll`, `ionScrollStart`, `ionScrollEnd` for scrolling events
+and `scrollToPoint()` to scroll the content into a certain point.
+
+#### Returns
+
+Type: `Promise<HTMLElement>`
 
 
-#### scrollToBottom()
 
-Scroll to the bottom of the content component.
+### `scrollByPoint(x: number, y: number, duration: number) => Promise<void>`
 
-Duration of the scroll animation in milliseconds. Defaults to `300`.
-Returns a promise which is resolved when the scroll has completed.
+Scroll by a specified X/Y distance in the component.
+
+#### Parameters
+
+| Name       | Type     | Description                                          |
+| ---------- | -------- | ---------------------------------------------------- |
+| `x`        | `number` | The amount to scroll by on the horizontal axis.      |
+| `y`        | `number` | The amount to scroll by on the vertical axis.        |
+| `duration` | `number` | The amount of time to take scrolling by that amount. |
+
+#### Returns
+
+Type: `Promise<void>`
 
 
-#### scrollToPoint()
+
+### `scrollToBottom(duration?: number) => Promise<void>`
+
+Scroll to the bottom of the component.
+
+#### Parameters
+
+| Name       | Type     | Description                                                          |
+| ---------- | -------- | -------------------------------------------------------------------- |
+| `duration` | `number` | The amount of time to take scrolling to the bottom. Defaults to `0`. |
+
+#### Returns
+
+Type: `Promise<void>`
 
 
-#### scrollToTop()
 
-Scroll to the top of the content component.
+### `scrollToPoint(x: number | null | undefined, y: number | null | undefined, duration?: number) => Promise<void>`
 
-Duration of the scroll animation in milliseconds. Defaults to `300`.
-Returns a promise which is resolved when the scroll has completed.
+Scroll to a specified X/Y location in the component.
 
+#### Parameters
+
+| Name       | Type                          | Description                                                          |
+| ---------- | ----------------------------- | -------------------------------------------------------------------- |
+| `x`        | `null \| number \| undefined` | The point to scroll to on the horizontal axis.                       |
+| `y`        | `null \| number \| undefined` | The point to scroll to on the vertical axis.                         |
+| `duration` | `number`                      | The amount of time to take scrolling to that point. Defaults to `0`. |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `scrollToTop(duration?: number) => Promise<void>`
+
+Scroll to the top of the component.
+
+#### Parameters
+
+| Name       | Type     | Description                                                       |
+| ---------- | -------- | ----------------------------------------------------------------- |
+| `duration` | `number` | The amount of time to take scrolling to the top. Defaults to `0`. |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+
+## Slots
+
+| Slot      | Description                                                          |
+| --------- | -------------------------------------------------------------------- |
+|           | Content is placed in the scrollable area if provided without a slot. |
+| `"fixed"` | Should be used for fixed content that should not scroll.             |
+
+
+## CSS Custom Properties
+
+| Name                | Description                    |
+| ------------------- | ------------------------------ |
+| `--background`      | Background of the Content      |
+| `--color`           | Color of the Content           |
+| `--keyboard-offset` | Keyboard offset of the Content |
+| `--offset-bottom`   | Offset bottom of the Content   |
+| `--offset-top`      | Offset top of the Content      |
+| `--padding-bottom`  | Padding bottom of the Content  |
+| `--padding-end`     | Padding end of the Content     |
+| `--padding-start`   | Padding start of the Content   |
+| `--padding-top`     | Padding top of the Content     |
 
 
 ----------------------------------------------

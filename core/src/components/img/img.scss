@@ -1,9 +1,13 @@
 
-ion-img {
+:host {
   display: block;
+
+  object-fit: contain;
 }
 
-ion-img > img {
+img {
+  display: block;
+  
   width: 100%;
   height: 100%;
 

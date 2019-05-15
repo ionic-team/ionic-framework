@@ -2,11 +2,10 @@
  * Deploy script adopted from https://github.com/sindresorhus/np
  * MIT License (c) Sindre Sorhus (sindresorhus.com)
  */
-const chalk = require('chalk');
+const tc = require('turbocolor');
 const execa = require('execa');
 const inquirer = require('inquirer');
 const Listr = require('listr');
-const fs = require('fs-extra');
 const semver = require('semver');
 const common = require('./common');
 const path = require('path');
@@ -19,9 +18,10 @@ async function main() {
     }
 
     const version = await askVersion();
+    const install = process.argv.indexOf('--no-install') < 0;
 
     // compile and verify packages
-    await preparePackages(common.packages, version);
+    await preparePackages(common.packages, version, install);
 
     console.log(`\nionic ${version} prepared 🤖\n`);
     console.log(`Next steps:`);
@@ -30,7 +30,7 @@ async function main() {
     console.log(`  npm run release\n`);
 
   } catch(err) {
-    console.log('\n', chalk.red(err), '\n');
+    console.log('\n', tc.red(err), '\n');
     process.exit(1);
   }
 }
@@ -69,7 +69,7 @@ async function askVersion() {
       validate: input => {
         if (!isValidVersionInput(input)) {
           return 'Please specify a valid semver, for example, `1.2.3`. See http://semver.org';
-        } else if (!isVersionGreater(oldVersion, input)) {
+        } else if (!common.isVersionGreater(oldVersion, input)) {
           return `Version must be greater than ${oldVersion}`;
         }
 
@@ -80,7 +80,7 @@ async function askVersion() {
       type: 'confirm',
       name: 'confirm',
       message: answers => {
-        return `Will bump from ${chalk.cyan(oldVersion)} to ${chalk.cyan(answers.version)}. Continue?`;
+        return `Will bump from ${tc.cyan(oldVersion)} to ${tc.cyan(answers.version)}. Continue?`;
       }
     }
   ];
@@ -90,7 +90,7 @@ async function askVersion() {
 }
 
 
-async function preparePackages(packages, version) {
+async function preparePackages(packages, version, install) {
   // execution order matters
   const tasks = [];
 
@@ -103,12 +103,12 @@ async function preparePackages(packages, version) {
   // add all the prepare scripts
   // run all these tasks before updating package.json version
   packages.forEach(package => {
-    preparePackage(tasks, package, version);
+    common.preparePackage(tasks, package, version, install);
   });
 
   // add update package.json of each project
   packages.forEach(package => {
-    updatePackageVersion(tasks, package, version);
+    common.updatePackageVersion(tasks, package, version);
   });
 
   // generate changelog
@@ -125,7 +125,7 @@ async function preparePackages(packages, version) {
 function validateGit(tasks, version) {
   tasks.push(
     {
-      title: `Validate git tag ${chalk.dim(`(v${version})`)}`,
+      title: `Validate git tag ${tc.dim(`(v${version})`)}`,
       task: () => execa('git', ['fetch'])
         .then(() => {
           return execa.stdout('npm', ['config', 'get', 'tag-version-prefix']);
@@ -156,106 +156,6 @@ function validateGit(tasks, version) {
 }
 
 
-function preparePackage(tasks, package, version) {
-  const projectRoot = common.projectPath(package);
-  const pkg = common.readPkg(package);
-
-  const projectTasks = [
-    {
-      title: `${pkg.name}: validate new version`,
-      task: () => {
-        if (!isVersionGreater(pkg.version, version)) {
-          throw new Error(`New version \`${version}\` should be higher than current version \`${pkg.version}\``);
-        }
-      }
-    },
-    {
-      title: `${pkg.name}: install npm dependencies`,
-      task: async () => {
-        await fs.remove(path.join(projectRoot, 'node_modules'))
-        await execa('npm', ['ci'], { cwd: projectRoot });
-      }
-    }
-  ];
-
-  if (package !== 'core') {
-    projectTasks.push(
-      {
-        title: `${pkg.name}: npm link @ionic/core`,
-        task: () => execa('npm', ['link', '@ionic/core'], { cwd: projectRoot })
-      },
-      {
-        title: `${pkg.name}: update ionic/core dep to ${version}`,
-        task: () => {
-          updateDependency(pkg, "@ionic/core", version);
-          common.writePkg(package, pkg);
-        }
-      }
-    );
-  }
-
-  projectTasks.push(
-    {
-      title: `${pkg.name}: lint`,
-      task: () => execa('npm', ['run', 'lint'], { cwd: projectRoot })
-    },
-    {
-      title: `${pkg.name}: build`,
-      task: () => execa('npm', ['run', 'build'], { cwd: projectRoot })
-    },
-    {
-      title: `${pkg.name}: test`,
-      task: () => execa('npm', ['test'], { cwd: projectRoot })
-    }
-  );
-
-  if (package === 'core') {
-    projectTasks.push(
-      {
-        title: `${pkg.name}: npm link`,
-        task: () => execa('npm', ['link'], { cwd: projectRoot })
-      }
-    );
-  }
-
-  // Add project tasks
-  tasks.push({
-    title: `Prepare ${chalk.bold(pkg.name)}`,
-    task: () => new Listr(projectTasks)
-  });
-}
-
-function updateDependency(pkg, dependency, version) {
-  if (pkg.dependencies && pkg.dependencies[dependency]) {
-    pkg.dependencies[dependency] = version;
-  }
-  if (pkg.devDependencies && pkg.devDependencies[dependency]) {
-    pkg.devDependencies[dependency] = version;
-  }
-}
-
-
-function updatePackageVersion(tasks, package, version) {
-  const projectRoot = common.projectPath(package);
-  const pkg = common.readPkg(package);
-
-  tasks.push(
-    {
-      title: `${pkg.name}: update package.json ${chalk.dim(`(${version})`)}`,
-      task: async () => {
-        await execa('npm', ['version', version], { cwd: projectRoot });
-
-        const pkgLock = path.join(projectRoot, 'package-lock.json');
-        const pkgLockData = JSON.parse(fs.readFileSync(pkgLock, 'utf-8'));
-        pkgLockData.version = version;
-
-        fs.writeFileSync(pkgLock, JSON.stringify(pkgLockData, null, 2));
-      }
-    }
-  );
-}
-
-
 function generateChangeLog(tasks) {
   tasks.push({
     title: `Generate CHANGELOG.md`,
@@ -274,8 +174,6 @@ function updateCoreReadme(tasks, version) {
 
 const SEMVER_INCREMENTS = ['patch', 'minor', 'major'];
 
-const isValidVersion = input => Boolean(semver.valid(input));
-
 const isValidVersionInput = input => SEMVER_INCREMENTS.indexOf(input) !== -1 || common.isValidVersion(input);
 
 function getNewVersion(oldVersion, input) {
@@ -284,14 +182,6 @@ function getNewVersion(oldVersion, input) {
   }
 
   return SEMVER_INCREMENTS.indexOf(input) === -1 ? input : semver.inc(oldVersion, input);
-};
-
-const isVersionGreater = (oldVersion, newVersion) => {
-  if (!common.isValidVersion(newVersion)) {
-    throw new Error('Version should be a valid semver version.');
-  }
-
-  return semver.gt(newVersion, oldVersion);
 };
 
 
@@ -303,17 +193,17 @@ function prettyVersionDiff(oldVersion, inc) {
 
   for (let i = 0; i < newVersion.length; i++) {
     if ((newVersion[i] !== oldVersion[i] && !firstVersionChange)) {
-      output.push(`${chalk.dim.cyan(newVersion[i])}`);
+      output.push(`${tc.dim.cyan(newVersion[i])}`);
       firstVersionChange = true;
     } else if (newVersion[i].indexOf('-') >= 1) {
       let preVersion = [];
       preVersion = newVersion[i].split('-');
-      output.push(`${chalk.dim.cyan(`${preVersion[0]}-${preVersion[1]}`)}`);
+      output.push(`${tc.dim.cyan(`${preVersion[0]}-${preVersion[1]}`)}`);
     } else {
-      output.push(chalk.reset.dim(newVersion[i]));
+      output.push(tc.reset.dim(newVersion[i]));
     }
   }
-  return output.join(chalk.reset.dim('.'));
+  return output.join(tc.reset.dim('.'));
 }
 
 main();

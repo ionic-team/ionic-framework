@@ -1,4 +1,5 @@
-import { Component, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Method, Prop } from '@stencil/core';
+
 import { Mode } from '../../interface';
 
 @Component({
@@ -6,14 +7,16 @@ import { Mode } from '../../interface';
   styleUrls: {
     ios: 'list.ios.scss',
     md: 'list.md.scss'
-  },
-  host: {
-    theme: 'list'
   }
 })
-export class List {
-  private mode!: Mode;
-  private openItem?: HTMLIonItemSlidingElement;
+export class List implements ComponentInterface {
+
+  @Element() el!: HTMLElement;
+
+  /**
+   * The mode determines which platform styles to use.
+   */
+  @Prop() mode!: Mode;
 
   /**
    * How the bottom border should be displayed on all items.
@@ -21,31 +24,21 @@ export class List {
   @Prop() lines?: 'full' | 'inset' | 'none';
 
   /**
-   * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently opene.
+   * If `true`, the list will have margin around it and rounded corners.
    */
-  @Method()
-  getOpenItem() {
-    return this.openItem;
-  }
+  @Prop() inset = false;
 
   /**
-   * Set an [Item Sliding](../../item-sliding/ItemSliding) as the open item.
+   * If `ion-item-sliding` are used inside the list, this method closes
+   * any open sliding item.
+   *
+   * Returns `true` if an actual `ion-item-sliding` is closed.
    */
   @Method()
-  setOpenItem(itemSliding: HTMLIonItemSlidingElement | undefined) {
-    this.openItem = itemSliding;
-  }
-
-  /**
-   * Close the sliding items. Items can also be closed from the [Item Sliding](../../item-sliding/ItemSliding).
-   * Returns a boolean value of whether it closed an item or not.
-   */
-  @Method()
-  closeSlidingItems(): boolean {
-    if (this.openItem) {
-      this.openItem.close();
-      this.openItem = undefined;
-      return true;
+  async closeSlidingItems(): Promise<boolean> {
+    const item = this.el.querySelector('ion-item-sliding');
+    if (item && item.closeOpened) {
+      return item.closeOpened();
     }
     return false;
   }
@@ -53,8 +46,14 @@ export class List {
   hostData() {
     return {
       class: {
-        [`list-lines-${this.lines}`]: !!this.lines,
-        [`list-${this.mode}-lines-${this.lines}`]: !!this.lines
+        [`${this.mode}`]: true,
+
+        // Used internally for styling
+        [`list-${this.mode}`]: true,
+
+        'list-inset': this.inset,
+        [`list-lines-${this.lines}`]: this.lines !== undefined,
+        [`list-${this.mode}-lines-${this.lines}`]: this.lines !== undefined
       }
     };
   }

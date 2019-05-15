@@ -3,42 +3,69 @@
 // Alert
 // --------------------------------------------------
 
-ion-alert {
+:host {
+  /**
+   * @prop --background: Background of the alert
+   *
+   * @prop --min-width: Minimum width of the alert
+   * @prop --width: Width of the alert
+   * @prop --max-width: Maximum width of the alert
+   *
+   * @prop --min-height: Minimum height of the alert
+   * @prop --height: Height of the alert
+   * @prop --max-height: Maximum height of the alert
+   */
+  --min-width: #{$alert-min-width};
+  --width: auto;
+  --min-height: auto;
+  --height: auto;
+  --max-height: #{$alert-max-height};
+
   @include font-smoothing();
   @include position(0, 0, 0, 0);
 
-  position: fixed;
-
-  z-index: $z-index-overlay;
-
   display: flex;
+  position: fixed;
 
   align-items: center;
   justify-content: center;
 
-  touch-action: none;
+  font-family: $font-family-base;
 
   contain: strict;
+  touch-action: none;
+  user-select: none;
+  z-index: $z-index-overlay;
 }
 
-ion-alert.alert-top {
+:host(.overlay-hidden) {
+  display: none;
+}
+
+:host(.alert-top) {
   @include padding(50px, null, null, null);
 
   align-items: flex-start;
 }
 
 .alert-wrapper {
-  z-index: $z-index-overlay-wrapper;
   display: flex;
 
   flex-direction: column;
 
-  min-width: $alert-min-width;
-  max-height: $alert-max-height;
+  width: var(--width);
+  min-width: var(--min-width);
+  max-width: var(--max-width);
 
-  opacity: 0;
+  height: var(--height);
+  min-height: var(--min-height);
+  max-height: var(--max-height);
+
+  background: var(--background);
 
   contain: content;
+  opacity: 0;
+  z-index: $z-index-overlay-wrapper;
 }
 
 .alert-title {
@@ -55,25 +82,28 @@ ion-alert.alert-top {
 
 .alert-message {
   box-sizing: border-box;
-
   -webkit-overflow-scrolling: touch;
-
-  overflow-y: scroll;
-
+  overflow-y: auto;
   overscroll-behavior-y: contain;
+}
+
+.alert-checkbox-group::-webkit-scrollbar,
+.alert-radio-group::-webkit-scrollbar,
+.alert-message::-webkit-scrollbar {
+  display: none;
 }
 
 .alert-input {
   @include padding(10px, 0);
 
-  box-sizing: border-box;
-
   width: 100%;
 
   border: 0;
-  font: inherit;
 
   background: inherit;
+
+  font: inherit;
+  box-sizing: border-box;
 }
 
 .alert-button-group {
@@ -92,13 +122,20 @@ ion-alert.alert-top {
 .alert-button {
   @include margin(0);
 
-  z-index: 0;
   display: block;
 
   border: 0;
 
   font-size: $alert-button-font-size;
+
   line-height: $alert-button-line-height;
+
+  z-index: 0;
+}
+
+.alert-button.ion-focused,
+.alert-tappable.ion-focused {
+  background: $background-color-step-100;
 }
 
 .alert-button-inner {
@@ -114,28 +151,32 @@ ion-alert.alert-top {
 }
 
 .alert-tappable {
-  @include text-align(start);
-  @include appearance(none);
   @include margin(0);
   @include padding(0);
+
+  display: flex;
 
   width: 100%;
 
   border: 0;
 
-  font-size: inherit;
-  line-height: initial;
   background: transparent;
+
+  font-size: inherit;
+
+  line-height: initial;
+
+  text-align: start;
+  appearance: none;
+
+  contain: strict;
 }
 
 .alert-button,
 .alert-checkbox,
 .alert-input,
 .alert-radio {
-  &:active,
-  &:focus {
-    outline: none;
-  }
+  outline: none;
 }
 
 .alert-radio-icon,

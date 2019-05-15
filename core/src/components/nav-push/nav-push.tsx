@@ -1,24 +1,29 @@
-import { Component, Element, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
+
 import { ComponentProps, NavComponent } from '../../interface';
 
 @Component({
-  tag: 'ion-nav-push',
+  tag: 'ion-nav-push'
 })
-export class NavPush {
-
+export class NavPush implements ComponentInterface {
   @Element() el!: HTMLElement;
 
+  /**
+   * Component to navigate to
+   */
   @Prop() component?: NavComponent;
+
+  /**
+   * Data you want to pass to the component as props
+   */
   @Prop() componentProps?: ComponentProps;
 
   @Listen('child:click')
-  push(): Promise<any> {
+  push() {
     const nav = this.el.closest('ion-nav');
     const toPush = this.component;
-    if (nav && toPush) {
-      return nav.push(toPush, this.componentProps);
+    if (nav && toPush !== undefined) {
+      nav.push(toPush, this.componentProps, { skipIfBusy: true });
     }
-    return Promise.resolve(null);
   }
-
 }

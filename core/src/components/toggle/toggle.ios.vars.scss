@@ -1,5 +1,4 @@
 @import "../../themes/ionic.globals.ios";
-
 @import "../item/item.ios.vars";
 
 // iOS Toggle
@@ -18,13 +17,13 @@ $toggle-ios-border-width:              2px !default;
 $toggle-ios-border-radius:             $toggle-ios-height / 2 !default;
 
 /// @prop - Background color of the unchecked toggle
-$toggle-ios-background-color-off:      $item-ios-background-color !default;
+$toggle-ios-background-color-off:      $item-ios-background !default;
 
 /// @prop - Border color of the unchecked toggle
-$toggle-ios-border-color-off:          $background-ios-color-step-50 !default;
+$toggle-ios-border-color-off:          $background-color-step-50 !default;
 
 /// @prop - Background color of the checked toggle
-$toggle-ios-background-color-on:       ion-color($colors-ios, primary, base, ios) !default;
+$toggle-ios-background-color-on:       ion-color(primary, base) !default;
 
 /// @prop - Width of the toggle handle
 $toggle-ios-handle-width:              $toggle-ios-height - ($toggle-ios-border-width * 2) !default;

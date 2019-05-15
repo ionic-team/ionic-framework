@@ -1,3 +1,7 @@
+
+// String Util Functions
+// --------------------------------------------------
+
 // String Replace Function
 // --------------------------------------------------
 
@@ -36,24 +40,8 @@
   @return $split-arr;
 }
 
-@function str-last-index($str, $search) {
-  $split: str-split($str, $search);
-  $len: length($split);
 
-  @if ($len > 1) {
-    $count: 0;
-    @for $i from 1 through ($len - 1) {
-      $item: nth($split, $i);
-      $count: $count + str-length($item);
-    }
-
-    @return $count + $len;
-  } @else {
-    @error "str-last-index was unable to find any instances of '#{$search}' inside '#{$str}'";
-  }
-}
-
-// Str extract between start and end
+// Str Extract Function
 // --------------------------------------------------
 
 @function str-extract($string, $start, $end) {
@@ -71,10 +59,54 @@
   @return null;
 }
 
+
+// Str Contains Function
+// --------------------------------------------------
+
 @function str-contains($string, $needle) {
   @if (type-of($string) == string) {
     @return str-index($string, $needle) != null;
   }
 
   @return false;
+}
+
+
+// URL Encode Function
+// --------------------------------------------------
+
+@function url-encode($val) {
+  $spaces: str-replace($val, " ", "%20");
+  $encoded: str-replace($spaces, "#", "%23");
+  @return $encoded;
+}
+
+
+// Add Selector
+// --------------------------------------------------
+// Used to cleanly add selectors to :host and :host()
+
+@function add-root-selector($root, $addHostSelector, $shadowDom: false) {
+  $selectors: str-split($root, ",");
+
+  $list: ();
+
+  @each $selector in $selectors {
+    @if str-contains($selector, ":host(") {
+      $updated-host: str-replace($selector, ":host(", ":host(#{$addHostSelector}");
+      $list: append($list, $updated-host, comma);
+
+    } @else if str-contains($selector, ":host") {
+      $list: append($list, ":host(#{$addHostSelector}) + b", comma);
+
+    } @else if $shadowDom == true {
+      $list: append($list, ":host(#{$addHostSelector}) #{$selector}", comma);
+
+    } @else {
+      // TODO host-context should be for scoped only
+      $list: append($list, ":host-context(#{$addHostSelector}) #{$selector}", comma);
+    }
+  }
+
+  @return $list;
 }

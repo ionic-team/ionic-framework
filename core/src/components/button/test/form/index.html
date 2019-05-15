@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Button - Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Button - Form Submit</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content id="content" padding no-bounce text-center>
+
+      <form onsubmit="return validate(event)" action="http://httpbin.org/get" method="GET">
+
+        <div>
+          <input name="name" required>
+        </div>
+
+        <ion-button type="submit">
+          Submit Form
+        </ion-button>
+
+      </form>
+
+    </ion-content>
+
+  </ion-app>
+
+  <script>
+    document.querySelector('form').addEventListener('submit', (event) => {
+      console.log('SUBMIT from event', event);
+    });
+    function validate(event) {
+      console.log('SUBMIT from attribute', event);
+      if (event.target.elements[0].value === 'admin') {
+        return true;
+      } else {
+        console.log('INCORRECT USER, use "admin"')
+        return false;
+      }
+    }
+  </script>
+
+</body>
+
+</html>

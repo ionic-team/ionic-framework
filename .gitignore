@@ -20,6 +20,8 @@ tmp/
 temp/
 core/theme-builder/
 core/test-components/
+core/css/
+angular/css/
 $RECYCLE.BIN/
 
 .DS_Store
@@ -47,3 +49,10 @@ demos/src/**/*.ngfactory.ts
 demos/src/**/*.d.ts
 demos/src/**/*.metadata.json
 demos/src/**/*.css.shim.ts
+
+# stencil
+angular/css/
+core/css/
+core/loader/
+.stencil/
+angular/build/

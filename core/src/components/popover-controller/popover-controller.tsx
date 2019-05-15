@@ -1,53 +1,45 @@
-import { Component, Listen, Method, Prop } from '@stencil/core';
-import { PopoverOptions } from '../../interface';
-import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
+import { Component, ComponentInterface, Method, Prop } from '@stencil/core';
+
+import { ComponentRef, OverlayController, PopoverOptions } from '../../interface';
+import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
 @Component({
-  tag: 'ion-popover-controller'
+  tag: 'ion-popover-controller',
 })
-export class PopoverController implements OverlayController {
-
-  private popovers = new Map<number, HTMLIonPopoverElement>();
+export class PopoverController implements ComponentInterface, OverlayController {
 
   @Prop({ context: 'document' }) doc!: Document;
 
-  @Listen('body:ionPopoverWillPresent')
-  protected popoverWillPresent(ev: any) {
-    this.popovers.set(ev.target.overlayId, ev.target);
-  }
-
-  @Listen('body:ionPopoverWillDismiss')
-  @Listen('body:ionPopoverDidUnload')
-  protected popoverWillDismiss(ev: any) {
-    this.popovers.delete(ev.target.overlayId);
-  }
-
-  @Listen('body:keyup.escape')
-  protected escapeKeyUp() {
-    removeLastOverlay(this.popovers);
-  }
-
-  /*
+  /**
    * Create a popover overlay with popover options.
+   *
+   * @param options The options to use to create the popover.
    */
   @Method()
-  create(opts?: PopoverOptions): Promise<HTMLIonPopoverElement | null> {
-    return createOverlay(this.doc.createElement('ion-popover'), opts);
+  create<T extends ComponentRef>(options: PopoverOptions<T>): Promise<HTMLIonPopoverElement> {
+    return createOverlay(this.doc.createElement('ion-popover'), options);
   }
 
-  /*
+  /**
    * Dismiss the open popover overlay.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the popover.
+   * This can be useful in a button handler for determining which button was
+   * clicked to dismiss the popover.
+   * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
+   * @param id The id of the popover to dismiss. If an id is not provided, it will dismiss the most recently opened popover.
    */
   @Method()
-  dismiss(data?: any, role?: string, popoverId = -1) {
-    return dismissOverlay(data, role, this.popovers, popoverId);
+  dismiss(data?: any, role?: string, id?: string) {
+    return dismissOverlay(this.doc, data, role, 'ion-popover', id);
   }
 
-  /*
+  /**
    * Get the most recently opened popover overlay.
    */
   @Method()
-  getTop(): HTMLIonPopoverElement {
-    return getTopOverlay(this.popovers);
+  async getTop(): Promise<HTMLIonPopoverElement | undefined> {
+    return getOverlay(this.doc, 'ion-popover') as HTMLIonPopoverElement;
   }
 }

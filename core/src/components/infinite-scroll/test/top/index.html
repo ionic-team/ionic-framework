@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Infinite Scroll - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Infinite Scroll - Basic</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content id="content" padding>
+
+      <ion-infinite-scroll threshold="100px" id="infinite-scroll" position="top">
+        <ion-infinite-scroll-content loading-spinner="bubbles" loading-text="Loading more data...">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+
+      <ion-button onclick="toggleInfiniteScroll()" expand="block">
+        Toggle InfiniteScroll
+      </ion-button>
+
+      <ion-list id="list"></ion-list>
+
+    </ion-content>
+
+  </ion-app>
+
+  <script>
+    const list = document.getElementById('list');
+    const infiniteScroll = document.getElementById('infinite-scroll');
+
+    function toggleInfiniteScroll() {
+      infiniteScroll.disabled = !infiniteScroll.disabled;
+    }
+
+    infiniteScroll.addEventListener('ionInfinite', async function () {
+      console.log('Loading data...');
+      await wait(500);
+      infiniteScroll.complete();
+      appendItems();
+
+      console.log('Done');
+    });
+
+    function appendItems() {
+      for (var i = 0; i < 30; i++) {
+        const el = document.createElement('ion-item');
+        el.textContent = `${1 + i}`;
+        list.prepend(el);
+      }
+    }
+
+    function wait(time) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve();
+        }, time);
+      });
+    }
+
+    appendItems();
+
+  </script>
+</body>
+
+</html>

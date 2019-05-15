@@ -3,30 +3,27 @@
 // Backdrop
 // --------------------------------------------------
 
-ion-backdrop {
+:host {
   @include position(0, 0, 0, 0);
 
-  position: absolute;
-  z-index: $z-index-backdrop;
   display: block;
+  position: absolute;
 
-  cursor: pointer;
-  opacity: .01;
   transform: translateZ(0);
 
-  touch-action: none;
-
   contain: strict;
-
-  &.backdrop-hide {
-    background: transparent;
-  }
-
-  &.backdrop-no-tappable {
-    cursor: auto;
-  }
+  cursor: pointer;
+  opacity: .01;
+  touch-action: none;
+  z-index: $z-index-backdrop;
 }
 
-body.backdrop-no-scroll {
-  overflow: hidden;
+
+:host(.backdrop-hide) {
+  background: transparent;
 }
+
+:host(.backdrop-no-tappable) {
+  cursor: auto;
+}
+

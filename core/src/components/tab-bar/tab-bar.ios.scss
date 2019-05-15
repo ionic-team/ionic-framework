@@ -1,0 +1,33 @@
+@import "./tab-bar";
+@import "./tab-bar.ios.vars";
+
+// iOS Tabs
+// --------------------------------------------------
+
+:host {
+  // default color / background
+  --background: #{$tabbar-ios-background};
+  --background-focused: #{$tabbar-ios-background-focused};
+  --border: #{$hairlines-width solid $tabbar-ios-border-color};
+  --color: #{$tab-button-ios-text-color};
+  --color-selected: #{$tabbar-ios-color-activated};
+
+  height: 50px;
+}
+
+// iOS Translucent Tab bar
+// --------------------------------------------------
+
+:host(.tab-bar-translucent) {
+  --background: #{$tab-bar-ios-translucent-background-color};
+  backdrop-filter: $tab-bar-ios-translucent-filter;
+}
+
+// iOS Translucent Tab bar with Color
+:host(.ion-color.tab-bar-translucent) {
+  background: #{current-color(base, $tab-bar-ios-translucent-background-color-alpha)};
+}
+
+:host(.tab-bar-translucent) ::slotted(ion-tab-button.ion-focused) {
+  background: rgba($background-color-rgb, .6);
+}

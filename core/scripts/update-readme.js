@@ -3,7 +3,7 @@
 // so this script is to keep the link updated
 // with the latest
 
-const fs = require('fs-extra');
+const fs = require('fs');
 const path = require('path');
 
 const version = process.argv[2];
@@ -18,8 +18,8 @@ let readmeContent = fs.readFileSync(readmePath, 'utf-8');
 // https://unpkg.com/@ionic/core@latest/dist/ionic.js
 
 readmeContent = readmeContent.replace(
-  /https\:\/\/unpkg.com\/@ionic\/core@(.+?)\/dist\/ionic\.js/,
-  'https://unpkg.com/@ionic/core@' + version + '/dist/ionic.js'
+  /https\:\/\/unpkg.com\/@ionic\/core@(.+?)\//g,
+  'https://unpkg.com/@ionic/core@' + version + '/'
 );
 
 fs.writeFileSync(readmePath, readmeContent);

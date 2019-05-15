@@ -4,46 +4,14 @@
 // iOS Select
 // --------------------------------------------------
 
-.select-ios {
-  @include padding($select-ios-padding-top, $select-ios-padding-end, $select-ios-padding-bottom, $select-ios-padding-start);
-
-  font-family: $select-ios-font-family;
-  color: $select-ios-text-color;
+:host {
+  --padding-top: #{$select-ios-padding-top};
+  --padding-end: #{$select-ios-padding-end};
+  --padding-bottom: #{$select-ios-padding-bottom};
+  --padding-start: #{$select-ios-padding-start};
 }
 
-.select-ios .select-placeholder {
-  color: $select-ios-placeholder-color;
-}
-
-.select-ios .select-icon {
-  position: relative;
-
+.select-icon {
   width: 12px;
   height: 18px;
-}
-
-.select-ios .select-icon .select-icon-inner {
-  @include position(50%, null, null, 5px);
-  @include margin(-2px, null, null, null);
-
-  position: absolute;
-
-  width: 0;
-  height: 0;
-
-  border-top: 5px solid;
-  border-right: 5px solid transparent;
-  border-left: 5px solid transparent;
-  color: $select-ios-icon-color;
-
-  pointer-events: none;
-}
-
-
-// Stacked & Floating Select
-// --------------------------------------------------
-
-.item-label-stacked .select-ios,
-.item-label-floating .select-ios {
-  @include padding(8px, null, 8px, 0);
 }

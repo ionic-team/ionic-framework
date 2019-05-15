@@ -1,6 +1,14 @@
 # ion-popover-controller
 
-Popover controllers programmatically control the popover component. Popovers can be created and dismissed from the popover controller. View the [Popover](../../popover/Popover) documentation for a full list of options to pass upon creation.
+Popover controllers programmatically control the popover component. Popovers can be created and dismissed from the popover controller. View the [Popover](../popover) documentation for a full list of options to pass upon creation.
+
+
+<!-- Auto Generated Below -->
+
+
+## Usage
+
+### Javascript
 
 ```javascript
 async function presentPopover() {
@@ -9,24 +17,58 @@ async function presentPopover() {
 
   const popoverElement = await popoverController.create({
     component: 'profile-page',
-    ev: event
+    event: event
   });
   return await popoverElement.present();
 }
 ```
 
-<!-- Auto Generated Below -->
 
 
 ## Methods
 
-#### create()
+### `create<T extends ComponentRef>(options: PopoverOptions<T>) => Promise<HTMLIonPopoverElement>`
+
+Create a popover overlay with popover options.
+
+#### Parameters
+
+| Name      | Type                | Description                               |
+| --------- | ------------------- | ----------------------------------------- |
+| `options` | `PopoverOptions<T>` | The options to use to create the popover. |
+
+#### Returns
+
+Type: `Promise<HTMLIonPopoverElement>`
 
 
-#### dismiss()
+
+### `dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>`
+
+Dismiss the open popover overlay.
+
+#### Parameters
+
+| Name   | Type                  | Description                                                                                                                                                                                                                                         |
+| ------ | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data` | `any`                 | Any data to emit in the dismiss events.                                                                                                                                                                                                             |
+| `role` | `string \| undefined` | The role of the element that is dismissing the popover. This can be useful in a button handler for determining which button was clicked to dismiss the popover. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`. |
+| `id`   | `string \| undefined` | The id of the popover to dismiss. If an id is not provided, it will dismiss the most recently opened popover.                                                                                                                                       |
+
+#### Returns
+
+Type: `Promise<boolean>`
 
 
-#### getTop()
+
+### `getTop() => Promise<HTMLIonPopoverElement | undefined>`
+
+Get the most recently opened popover overlay.
+
+#### Returns
+
+Type: `Promise<HTMLIonPopoverElement | undefined>`
+
 
 
 

@@ -1,5 +1,6 @@
-import { Component } from '@stencil/core';
+import { Component, ComponentInterface } from '@stencil/core';
 
+import { Mode } from '../../interface';
 
 @Component({
   tag: 'ion-avatar',
@@ -7,8 +8,21 @@ import { Component } from '@stencil/core';
     ios: 'avatar.ios.scss',
     md: 'avatar.md.scss'
   },
-  host: {
-    theme: 'avatar'
-  }
+  shadow: true
 })
-export class Avatar {}
+export class Avatar implements ComponentInterface {
+  mode!: Mode;
+
+  hostData() {
+    return {
+      class: {
+        [`${this.mode}`]: true,
+      }
+    };
+  }
+
+  render() {
+    return <slot></slot>;
+  }
+
+}

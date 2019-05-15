@@ -1,26 +1,14 @@
-@import "./slides-vendor";
+@import "./slides";
 @import "./slides.ios.vars";
 
-.slides-ios .swiper-pagination-bullet {
-  background-color: $slides-ios-bullet-background-color;
-}
+// iOS Slides
+// --------------------------------------------------
 
-.slides-ios .swiper-pagination-bullet-active {
-  background-color: $slides-ios-bullet-background-color-active;
-}
-
-.slides-ios .swiper-pagination-progress {
-  background-color: $slides-ios-progress-background-color;
-}
-
-.slides-ios .swiper-pagination-progress .swiper-pagination-progressbar {
-  background-color: $slides-ios-progress-bar-background-color;
-}
-
-.slides-ios .swiper-scrollbar {
-  background-color: $slides-ios-scroll-bar-background-color;
-}
-
-.slides-ios .swiper-scrollbar-drag {
-  background-color: $slides-ios-scroll-bar-drag-background-color;
+.slides-ios {
+  --bullet-background: #{$slides-ios-bullet-background};
+  --bullet-background-active: #{$slides-ios-bullet-background-active};
+  --progress-bar-background: #{$slides-ios-progress-bar-background};
+  --progress-bar-background-active: #{$slides-ios-progress-bar-background-active};
+  --scroll-bar-background: #{$slides-ios-scroll-bar-background};
+  --scroll-bar-background-active: #{$slides-ios-scroll-bar-drag-background};
 }

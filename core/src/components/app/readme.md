@@ -5,7 +5,6 @@ App is a container element for an Ionic application. There should only be one `<
 <!-- Auto Generated Below -->
 
 
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

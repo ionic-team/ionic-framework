@@ -1,12 +1,11 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Color, Config, Mode } from '../../interface';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
 
-import { OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
-import { createThemedClasses, getClassMap } from '../../utils/theme';
+import { Animation, AnimationBuilder, Color, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface, ToastButton } from '../../interface';
+import { dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
+import { createColorClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
-
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
@@ -16,11 +15,9 @@ import { mdLeaveAnimation } from './animations/md.leave';
     ios: 'toast.ios.scss',
     md: 'toast.md.scss'
   },
-  host: {
-    theme: 'toast'
-  }
+  shadow: true
 })
-export class Toast implements OverlayInterface {
+export class Toast implements ComponentInterface, OverlayInterface {
 
   private durationTimeout: any;
 
@@ -28,14 +25,26 @@ export class Toast implements OverlayInterface {
 
   @Element() el!: HTMLElement;
 
-  mode!: Mode;
-  color?: Color;
   animation: Animation | undefined;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
-  @Prop() overlayId!: number;
-  @Prop() keyboardClose = false;
+
+  /**
+   * @internal
+   */
+  @Prop() overlayIndex!: number;
+
+  /**
+   * The mode determines which platform styles to use.
+   */
+  @Prop() mode!: Mode;
+
+  /**
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
+   */
+  @Prop() color?: Color;
 
   /**
    * Animation to use when the toast is presented.
@@ -48,11 +57,6 @@ export class Toast implements OverlayInterface {
   @Prop() leaveAnimation?: AnimationBuilder;
 
   /**
-   * Text to display in the close button.
-   */
-  @Prop() closeButtonText?: string;
-
-  /**
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
    */
@@ -62,7 +66,12 @@ export class Toast implements OverlayInterface {
    * How many milliseconds to wait before hiding the toast. By default, it will show
    * until `dismiss()` is called.
    */
-  @Prop() duration?: number;
+  @Prop() duration = 0;
+
+  /**
+   * Header to be shown in the toast.
+   */
+  @Prop() header?: string;
 
   /**
    * Message to be shown in the toast.
@@ -70,70 +79,59 @@ export class Toast implements OverlayInterface {
   @Prop() message?: string;
 
   /**
-   * The position of the toast on the screen. Possible values: "top", "middle", "bottom".
+   * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
    */
-  @Prop() position?: string;
+  @Prop() keyboardClose = false;
 
   /**
-   * If true, the close button will be displayed. Defaults to `false`.
+   * The position of the toast on the screen.
+   */
+  @Prop() position: 'top' | 'bottom' | 'middle' = 'bottom';
+
+  /**
+   * If `true`, the close button will be displayed.
    */
   @Prop() showCloseButton = false;
 
   /**
-   * If true, the toast will be translucent. Defaults to `false`.
+   * Text to display in the close button.
+   */
+  @Prop() closeButtonText?: string;
+
+  /**
+   * An array of buttons for the toast.
+   */
+  @Prop() buttons?: (ToastButton | string)[];
+
+  /**
+   * If `true`, the toast will be translucent.
    */
   @Prop() translucent = false;
 
   /**
-   * If true, the toast will animate. Defaults to `true`.
+   * If `true`, the toast will animate.
    */
-  @Prop() willAnimate = true;
-
-  /**
-   * Emitted after the toast has loaded.
-   */
-  @Event() ionToastDidLoad!: EventEmitter<void>;
+  @Prop() animated = true;
 
   /**
    * Emitted after the toast has presented.
    */
-  @Event({eventName: 'ionToastDidPresent'}) didPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionToastDidPresent' }) didPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the toast has presented.
    */
-  @Event({eventName: 'ionToastWillPresent'}) willPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionToastWillPresent' }) willPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the toast has dismissed.
    */
-  @Event({eventName: 'ionToastWillDismiss'}) willDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionToastWillDismiss' }) willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the toast has dismissed.
    */
-  @Event({eventName: 'ionToastDidDismiss'}) didDismiss!: EventEmitter<OverlayEventDetail>;
-
-  /**
-   * Emitted after the toast has unloaded.
-   */
-  @Event() ionToastDidUnload!: EventEmitter<void>;
-
-  componentDidLoad() {
-    this.ionToastDidLoad.emit();
-  }
-
-  componentDidUnload() {
-    this.ionToastDidUnload.emit();
-  }
-
-  @Listen('ionDismiss')
-  protected onDismiss(ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.dismiss();
-  }
+  @Event({ eventName: 'ionToastDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Present the toast overlay after it has been created.
@@ -142,16 +140,22 @@ export class Toast implements OverlayInterface {
   async present(): Promise<void> {
     await present(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, this.position);
 
-    if (this.duration) {
-      this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
+    if (this.duration > 0) {
+      this.durationTimeout = setTimeout(() => this.dismiss(undefined, 'timeout'), this.duration);
     }
   }
 
   /**
    * Dismiss the toast overlay after it has been presented.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the toast.
+   * This can be useful in a button handler for determining which button was
+   * clicked to dismiss the toast.
+   * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
    */
   @Method()
-  dismiss(data?: any, role?: string): Promise<void> {
+  dismiss(data?: any, role?: string): Promise<boolean> {
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
@@ -159,55 +163,151 @@ export class Toast implements OverlayInterface {
   }
 
   /**
-   * Returns a promise that resolves when the toast did dismiss. It also accepts a callback
-   * that is called in the same circustances.
-   *
+   * Returns a promise that resolves when the toast did dismiss.
    */
   @Method()
-  onDidDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionToastDidDismiss', callback);
+  onDidDismiss(): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionToastDidDismiss');
   }
 
   /**
-   * Returns a promise that resolves when the toast will dismiss. It also accepts a callback
-   * that is called in the same circustances.
-   *
+   * Returns a promise that resolves when the toast will dismiss.
    */
   @Method()
-  onWillDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionToastWillDismiss', callback);
+  onWillDismiss(): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionToastWillDismiss');
+  }
+
+  private getButtons(): ToastButton[] {
+    const buttons = this.buttons
+      ? this.buttons.map(b => {
+        return (typeof b === 'string')
+          ? { text: b }
+          : b;
+      })
+      : [];
+
+    if (this.showCloseButton) {
+      buttons.push({
+        text: this.closeButtonText || 'Close',
+        handler: () => this.dismiss(undefined, 'cancel')
+      });
+    }
+
+    return buttons;
+  }
+
+  private async buttonClick(button: ToastButton) {
+    const role = button.role;
+    if (isCancel(role)) {
+      return this.dismiss(undefined, role);
+    }
+    const shouldDismiss = await this.callButtonHandler(button);
+    if (shouldDismiss) {
+      return this.dismiss(undefined, button.role);
+    }
+    return Promise.resolve();
+  }
+
+  private async callButtonHandler(button: ToastButton | undefined) {
+    if (button && button.handler) {
+      // a handler has been provided, execute it
+      // pass the handler the values from the inputs
+      try {
+        const rtn = await button.handler();
+        if (rtn === false) {
+          // if the return value of the handler is false then do not dismiss
+          return false;
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    return true;
   }
 
   hostData() {
-    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'toast-translucent') : {};
-
     return {
+      style: {
+        zIndex: 60000 + this.overlayIndex,
+      },
       class: {
-        ...themedClasses,
-        ...getClassMap(this.cssClass)
+        [`${this.mode}`]: true,
+
+        ...createColorClasses(this.color),
+        ...getClassMap(this.cssClass),
+        'toast-translucent': this.translucent
       }
     };
   }
 
+  renderButtons(buttons: ToastButton[], side: 'start' | 'end') {
+    if (buttons.length === 0) {
+      return;
+    }
+
+    const buttonGroupsClasses = {
+      'toast-button-group': true,
+      [`toast-button-group-${side}`]: true
+    };
+    return (
+      <div class={buttonGroupsClasses}>
+        {buttons.map(b =>
+          <button type="button" class={buttonClass(b)} tabIndex={0} onClick={() => this.buttonClick(b)}>
+            <div class="toast-button-inner">
+              {b.icon &&
+                <ion-icon
+                  name={b.icon}
+                  slot={b.text === undefined ? 'icon-only' : undefined}
+                  class="toast-icon"
+                />}
+              {b.text}
+            </div>
+            {this.mode === 'md' && <ion-ripple-effect type={b.icon !== undefined && b.text === undefined ? 'unbounded' : 'bounded'}></ion-ripple-effect>}
+          </button>
+        )}
+      </div>
+    );
+  }
+
   render() {
-    const position = this.position ? this.position : 'bottom';
+    const allButtons = this.getButtons();
+    const startButtons = allButtons.filter(b => b.side === 'start');
+    const endButtons = allButtons.filter(b => b.side !== 'start');
+
     const wrapperClass = {
       'toast-wrapper': true,
-      [`toast-${position}`]: true
+      [`toast-${this.position}`]: true
     };
+
     return (
       <div class={wrapperClass}>
         <div class="toast-container">
-          {this.message
-            ? <div class="toast-message">{this.message}</div>
-            : null}
-          {this.showCloseButton
-            ? <ion-button fill="clear" color="light" class="toast-button" onClick={() => this.dismiss()}>
-                {this.closeButtonText || 'Close'}
-              </ion-button>
-            : null}
+          {this.renderButtons(startButtons, 'start')}
+
+          <div class="toast-content">
+            {this.header !== undefined &&
+              <div class="toast-header">{this.header}</div>
+            }
+            {this.message !== undefined &&
+              <div class="toast-message">{this.message}</div>
+            }
+          </div>
+
+          {this.renderButtons(endButtons, 'end')}
         </div>
       </div>
     );
   }
+}
+
+function buttonClass(button: ToastButton): CssClassMap {
+  return {
+    'toast-button': true,
+    'toast-button-icon-only': button.icon !== undefined && button.text === undefined,
+    [`toast-button-${button.role}`]: button.role !== undefined,
+    'ion-focusable': true,
+    'ion-activatable': true,
+    ...getClassMap(button.cssClass)
+  };
 }
