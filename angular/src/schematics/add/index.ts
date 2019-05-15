@@ -1,20 +1,9 @@
-import {
-  Rule,
-  SchematicContext,
-  SchematicsException,
-  Tree,
-  apply,
-  chain,
-  mergeWith,
-  move,
-  template,
-  url
-} from '@angular-devkit/schematics';
-import { Path, join } from '@angular-devkit/core';
+import { join, Path } from '@angular-devkit/core';
+import { apply, chain, mergeWith, move, Rule, SchematicContext, SchematicsException, template, Tree, url } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
-import { addPackageToPackageJson } from './../utils/package';
 import { addModuleImportToRootModule } from './../utils/ast';
-import { addStyle, getWorkspace, addArchitectBuilder } from './../utils/config';
+import { addArchitectBuilder, addStyle, getWorkspace, addAsset } from './../utils/config';
+import { addPackageToPackageJson } from './../utils/package';
 import { Schema as IonAddOptions } from './schema';
 
 function addIonicAngularToPackageJson(): Rule {
@@ -36,10 +25,11 @@ function addIonicAngularToolkitToPackageJson(): Rule {
   };
 }
 
-function addIonicAngularModuleToAppModule(): Rule {
+function addIonicAngularModuleToAppModule(projectSourceRoot): Rule {
   return (host: Tree) => {
     addModuleImportToRootModule(
       host,
+      projectSourceRoot,
       'IonicModule.forRoot()',
       '@ionic/angular'
     );
@@ -63,6 +53,18 @@ function addIonicStyles(): Rule {
     ].forEach(entry => {
       addStyle(host, entry);
     });
+    return host;
+  };
+}
+
+function addIonicons(): Rule {
+  return (host: Tree) => {
+    const ioniconsGlob = {
+      glob: '**/*.svg',
+      input: 'node_modules/ionicons/dist/ionicons/svg',
+      output: './svg'
+    };
+    addAsset(host, ioniconsGlob);
     return host;
   };
 }
@@ -125,9 +127,10 @@ export default function ngAdd(options: IonAddOptions): Rule {
       // @ionic/angular
       addIonicAngularToPackageJson(),
       addIonicAngularToolkitToPackageJson(),
-      addIonicAngularModuleToAppModule(),
+      addIonicAngularModuleToAppModule(sourcePath),
       addIonicBuilder(),
       addIonicStyles(),
+      addIonicons(),
       mergeWith(rootTemplateSource),
       // install freshly added dependencies
       installNodeDeps()

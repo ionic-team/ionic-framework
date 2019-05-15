@@ -82,22 +82,70 @@ SplitPane also provides some predefined media queries that can be used.
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+
+import { IonSplitPane, IonMenu, IonHeader, IonToolbar, IonTitle, IonRouterOutlet } from '@ionic/react';
+
+const Example: React.SFC<{}> = () => (
+
+  <IonSplitPane contentId="menuContent">
+    {/*--  our side menu  --*/}
+    <IonMenu contentId="menuContent">
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Menu</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+    </IonMenu>
+
+    {/*-- the main content --*/}
+    <IonRouterOutlet></IonRouterOutlet>
+  </IonSplitPane>
+);
+
+export default Example;
+```
+
+
+### Vue
+
+```html
+<template>
+  <ion-split-pane contentId="menu-content">
+    <!--  our side menu  -->
+    <ion-menu contentId="menu-content">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+    </ion-menu>
+
+    <!-- the main content -->
+    <ion-router-outlet id="menu-content"></ion-router-outlet>
+  </ion-split-pane>
+</template>
+```
+
+
 
 ## Properties
 
-| Property    | Attribute    | Description                                                                                                                                                                                                                                                                                                     | Type                  | Default       |
-| ----------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ------------- |
-| `contentId` | `content-id` | The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane.  ```html    * <ion-split-pane content-id="my-content">    *   <ion-menu></ion-menu>    *   <div id="my-content">    * </ion-split-pane>    * ``` | `string \| undefined` | `undefined`   |
-| `disabled`  | `disabled`   | If `true`, the split pane will be hidden.                                                                                                                                                                                                                                                                       | `boolean`             | `false`       |
-| `when`      | `when`       | When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.                                                                                                                                                                           | `boolean \| string`   | `QUERY['lg']` |
+| Property    | Attribute    | Description                                                                                                                                                    | Type                  | Default       |
+| ----------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ------------- |
+| `contentId` | `content-id` | The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane. | `string \| undefined` | `undefined`   |
+| `disabled`  | `disabled`   | If `true`, the split pane will be hidden.                                                                                                                      | `boolean`             | `false`       |
+| `when`      | `when`       | When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.                          | `boolean \| string`   | `QUERY['lg']` |
 
 
 ## Events
 
 | Event                 | Description                                                        | Type                              |
 | --------------------- | ------------------------------------------------------------------ | --------------------------------- |
-| `ionChange`           | Emitted when the split pane is visible.                            | `CustomEvent<{visible: boolean}>` |
-| `ionSplitPaneVisible` | Expression to be called when the split-pane visibility has changed | `CustomEvent<void>`               |
+| `ionSplitPaneVisible` | Expression to be called when the split-pane visibility has changed | `CustomEvent<{visible: boolean}>` |
 
 
 ## CSS Custom Properties

@@ -4,6 +4,10 @@ import { Color, Config, Mode, ScrollBaseDetail, ScrollDetail } from '../../inter
 import { isPlatform } from '../../utils/platform';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
+/**
+ * @slot - Content is placed in the scrollable area if provided without a slot.
+ * @slot fixed - Should be used for fixed content that should not scroll.
+ */
 @Component({
   tag: 'ion-content',
   styleUrl: 'content.scss',
@@ -102,11 +106,6 @@ export class Content implements ComponentInterface {
    */
   @Event() ionScrollEnd!: EventEmitter<ScrollBaseDetail>;
 
-  @Listen('body:ionNavDidChange')
-  onNavChanged() {
-    this.resize();
-  }
-
   componentWillLoad() {
     if (this.forceOverscroll === undefined) {
       this.forceOverscroll = this.mode === 'ios' && isPlatform(this.win, 'mobile');
@@ -118,8 +117,14 @@ export class Content implements ComponentInterface {
   }
 
   componentDidUnload() {
-    if (this.watchDog) {
-      clearInterval(this.watchDog);
+    this.onScrollEnd();
+  }
+
+  @Listen('click', { capture: true })
+  onClick(ev: Event) {
+    if (this.isScrolling) {
+      ev.preventDefault();
+      ev.stopPropagation();
     }
   }
 
@@ -164,12 +169,12 @@ export class Content implements ComponentInterface {
   }
 
   /**
-   * Returns the element where the actual scrolling takes places.
-   * This element is the one you could subscribe to `scroll` events or manually modify
-   * `scrollTop`, however, it's recommended to use the API provided by `ion-content`:
+   * Get the element where the actual scrolling takes place.
+   * This element can be used to subscribe to `scroll` events or manually modify
+   * `scrollTop`. However, it's recommended to use the API provided by `ion-content`:
    *
-   * Ie. Using `ionScroll`, `ionScrollStart`, `ionScrollEnd` for scrolling events
-   * and scrollToPoint() to scroll the content into a certain point.
+   * i.e. Using `ionScroll`, `ionScrollStart`, `ionScrollEnd` for scrolling events
+   * and `scrollToPoint()` to scroll the content into a certain point.
    */
   @Method()
   getScrollElement(): Promise<HTMLElement> {
@@ -177,7 +182,9 @@ export class Content implements ComponentInterface {
   }
 
   /**
-   * Scroll to the top of the component
+   * Scroll to the top of the component.
+   *
+   * @param duration The amount of time to take scrolling to the top. Defaults to `0`.
    */
   @Method()
   scrollToTop(duration = 0): Promise<void> {
@@ -185,7 +192,9 @@ export class Content implements ComponentInterface {
   }
 
   /**
-   * Scroll to the bottom of the component
+   * Scroll to the bottom of the component.
+   *
+   * @param duration The amount of time to take scrolling to the bottom. Defaults to `0`.
    */
   @Method()
   scrollToBottom(duration = 0): Promise<void> {
@@ -194,7 +203,11 @@ export class Content implements ComponentInterface {
   }
 
   /**
-   * Scroll by a specified X/Y distance in the component
+   * Scroll by a specified X/Y distance in the component.
+   *
+   * @param x The amount to scroll by on the horizontal axis.
+   * @param y The amount to scroll by on the vertical axis.
+   * @param duration The amount of time to take scrolling by that amount.
    */
   @Method()
   scrollByPoint(x: number, y: number, duration: number): Promise<void> {
@@ -202,7 +215,11 @@ export class Content implements ComponentInterface {
   }
 
   /**
-   * Scroll to a specified X/Y location in the component
+   * Scroll to a specified X/Y location in the component.
+   *
+   * @param x The point to scroll to on the horizontal axis.
+   * @param y The point to scroll to on the vertical axis.
+   * @param duration The amount of time to take scrolling to that point. Defaults to `0`.
    */
   @Method()
   async scrollToPoint(x: number | undefined | null, y: number | undefined | null, duration = 0): Promise<void> {
@@ -274,19 +291,21 @@ export class Content implements ComponentInterface {
   }
 
   private onScrollEnd() {
-
     clearInterval(this.watchDog);
     this.watchDog = null;
-    this.isScrolling = false;
-    this.ionScrollEnd.emit({
-      isScrolling: false
-    });
+    if (this.isScrolling) {
+      this.isScrolling = false;
+      this.ionScrollEnd.emit({
+        isScrolling: false
+      });
+    }
   }
 
   hostData() {
     return {
       class: {
         ...createColorClasses(this.color),
+        [`${this.mode}`]: true,
         'content-sizing': hostContext('ion-popover', this.el),
         'overscroll': !!this.forceOverscroll,
       },

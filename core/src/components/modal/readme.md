@@ -5,12 +5,12 @@ A Modal is a dialog that appears on top of the app's content, and must be dismis
 
 ### Creating
 
-Modals can be created using a [Modal Controller](../../modal-controller/ModalController). They can be customized by passing modal options in the modal controller's create method.
+Modals can be created using a [Modal Controller](../modal-controller). They can be customized by passing modal options in the modal controller's create method.
 
 
-### Passing paramaters
+### Passing parameters
 
-When a modal is created, paramaters might be passed to the newly created modal:
+When a modal is created, parameters might be passed to the newly created modal:
 
 ```ts
 // Create a modal using MyModalComponent with some initial data
@@ -36,7 +36,7 @@ instance.prop2 = value2;
 This way, your component can access the passed params, check the "Usage" section for further code example for each frameworks.
 
 
-### Retuning data
+### Returning data
 
 Modals can also return data back to the controller when they are dismissed.
 
@@ -52,7 +52,6 @@ modalController.dismiss({
   'result': value
 })
 ```
-
 
 <!-- Auto Generated Below -->
 
@@ -84,7 +83,7 @@ export class ModalExample {
 ```
 
 ```typescript
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavParams } from '@ionic/angular';
 
 @Component({
@@ -100,6 +99,37 @@ export class ModalExample {
   }
 
 }
+```
+
+#### Lazy Loading
+
+When lazy loading a modal, it's important to note that the modal will not be loaded when it is opened, but rather when the module that imports the modal's module is loaded.
+
+For example, say there exists a `CalendarComponent` and an `EventModal`. The modal is presented by clicking a button in the `CalendarComponent`. In Angular, the `EventModalModule` would need to be included in the `CalendarComponentModule` since the modal is created in the `CalendarComponent`:
+
+```typescript
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+
+import { CalendarComponent } from './calendar.component';
+import { EventModalModule } from '../modals/event/event.module';
+
+@NgModule({
+    declarations: [
+        CalendarComponent
+    ],
+    imports: [
+      IonicModule,
+      CommonModule,
+      EventModalModule
+    ],
+    exports: [
+      CalendarComponent
+    ]
+})
+
+export class CalendarComponentModule {}
 ```
 
 
@@ -140,6 +170,109 @@ async function presentModal() {
 ```
 
 
+### React
+
+```tsx
+import React, { Component } from 'react'
+import { IonModal } from '@ionic/react';
+
+type Props = {}
+type State = {
+  showModal: boolean
+}
+
+export class ModalExample extends Component<Props, State> {
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      showModal: false
+    };
+  }
+
+  render() {
+    return (
+      <IonModal
+        isOpen={this.state.showModal}
+        onDidDismiss={() => this.setState(() => ({ showModal: false }))}
+      >
+        <p>This is modal content</p>
+        <IonButton onClick={() => this.setState(() => ({ showModal: false }))}>
+          Close Modal
+        </IonButton>
+      </IonModal>
+    );
+  }
+}
+```
+
+
+### Vue
+
+```html
+<template>
+  <div>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{ title }}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content padding>
+      {{ content }}
+    </ion-content>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Modal',
+  props: {
+    title: { type: String, default: 'Super Modal' },
+  },
+  data() {
+    return {
+      content: 'Content',
+    }
+  },
+}
+</script>
+```
+
+```html
+<template>
+  <ion-page class="ion-page" main>
+    <ion-content class="ion-content" padding>
+      <ion-button @click="openModal">Open Modal</ion-button>
+    </ion-content>
+  </ion-page>
+</template>
+
+<script>
+import Modal from './modal.vue'
+
+export default {
+  methods: {
+    openModal() {
+      return this.$ionic.modalController
+        .create({
+          component: Modal,
+          componentProps: {
+            data: {
+              content: 'New Content',
+            },
+            propsData: {
+              title: 'New title',
+            },
+          },
+        })
+        .then(m => m.present())
+    },
+  },
+}
+</script>
+```
+
+
 
 ## Properties
 
@@ -175,10 +308,10 @@ Dismiss the modal overlay after it has been presented.
 
 #### Parameters
 
-| Name   | Type                  | Description |
-| ------ | --------------------- | ----------- |
-| `data` | `any`                 |             |
-| `role` | `string \| undefined` |             |
+| Name   | Type                  | Description                                                                                |
+| ------ | --------------------- | ------------------------------------------------------------------------------------------ |
+| `data` | `any`                 | Any data to emit in the dismiss events.                                                    |
+| `role` | `string \| undefined` | The role of the element that is dismissing the modal. For example, 'cancel' or 'backdrop'. |
 
 #### Returns
 

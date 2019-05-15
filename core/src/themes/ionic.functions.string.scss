@@ -71,6 +71,7 @@
   @return false;
 }
 
+
 // URL Encode Function
 // --------------------------------------------------
 
@@ -78,4 +79,34 @@
   $spaces: str-replace($val, " ", "%20");
   $encoded: str-replace($spaces, "#", "%23");
   @return $encoded;
+}
+
+
+// Add Selector
+// --------------------------------------------------
+// Used to cleanly add selectors to :host and :host()
+
+@function add-root-selector($root, $addHostSelector, $shadowDom: false) {
+  $selectors: str-split($root, ",");
+
+  $list: ();
+
+  @each $selector in $selectors {
+    @if str-contains($selector, ":host(") {
+      $updated-host: str-replace($selector, ":host(", ":host(#{$addHostSelector}");
+      $list: append($list, $updated-host, comma);
+
+    } @else if str-contains($selector, ":host") {
+      $list: append($list, ":host(#{$addHostSelector}) + b", comma);
+
+    } @else if $shadowDom == true {
+      $list: append($list, ":host(#{$addHostSelector}) #{$selector}", comma);
+
+    } @else {
+      // TODO host-context should be for scoped only
+      $list: append($list, ":host-context(#{$addHostSelector}) #{$selector}", comma);
+    }
+  }
+
+  @return $list;
 }

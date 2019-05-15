@@ -33,13 +33,6 @@
 
 .searchbar-cancel-button {
   @include position(0, null, null, 5px);
-  @include margin(0);
-
-  display: none;
-
-  height: 100%;
-
-  border: 0;
 
   background-color: $searchbar-md-cancel-button-background-color;
 
@@ -108,12 +101,16 @@
 // Searchbar Focused
 // -----------------------------------------
 
-:host(.searchbar-has-focus.searchbar-show-cancel) .searchbar-search-icon {
-  display: none;
+:host(.searchbar-has-focus) .searchbar-search-icon {
+  display: block;
 }
 
-:host(.searchbar-has-focus.searchbar-show-cancel) .searchbar-cancel-button {
-  display: inline-flex;
+:host(.searchbar-has-focus) .searchbar-cancel-button {
+  display: block;
+}
+
+:host(.searchbar-has-focus) .searchbar-cancel-button + .searchbar-search-icon {
+  display: none;
 }
 
 

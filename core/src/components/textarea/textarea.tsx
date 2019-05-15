@@ -120,6 +120,11 @@ export class Textarea implements ComponentInterface {
   @Prop() wrap?: 'hard' | 'soft' | 'off';
 
   /**
+   * If `true`, the element height will increase based on the value.
+   */
+  @Prop() autoGrow = false;
+
+  /**
    * The value of the textarea.
    */
   @Prop({ mutable: true }) value?: string | null = '';
@@ -134,6 +139,8 @@ export class Textarea implements ComponentInterface {
     if (nativeInput && nativeInput.value !== value) {
       nativeInput.value = value;
     }
+    this.runAutoGrow();
+    this.emitStyle();
     this.ionChange.emit({ value });
   }
 
@@ -163,12 +170,39 @@ export class Textarea implements ComponentInterface {
    */
   @Event() ionFocus!: EventEmitter<void>;
 
+  /**
+   * Emitted when the input has been created.
+   * @internal
+   */
+  @Event() ionInputDidLoad!: EventEmitter<void>;
+
+  /**
+   * Emitted when the input has been removed.
+   * @internal
+   */
+  @Event() ionInputDidUnload!: EventEmitter<void>;
+
   componentWillLoad() {
     this.emitStyle();
   }
 
   componentDidLoad() {
     this.debounceChanged();
+
+    this.runAutoGrow();
+
+    this.ionInputDidLoad.emit();
+  }
+
+  private runAutoGrow() {
+    if (this.nativeInput && this.autoGrow) {
+      this.nativeInput.style.height = 'inherit';
+      this.nativeInput.style.height = this.nativeInput.scrollHeight + 'px';
+    }
+  }
+
+  componentDidUnload() {
+    this.ionInputDidUnload.emit();
   }
 
   /**
@@ -180,6 +214,14 @@ export class Textarea implements ComponentInterface {
     if (this.nativeInput) {
       this.nativeInput.focus();
     }
+  }
+
+  /**
+   * Returns the native `<textarea>` element used under the hood.
+   */
+  @Method()
+  getInputElement(): Promise<HTMLTextAreaElement> {
+    return Promise.resolve(this.nativeInput!);
   }
 
   private emitStyle() {
@@ -257,7 +299,10 @@ export class Textarea implements ComponentInterface {
   hostData() {
     return {
       'aria-disabled': this.disabled ? 'true' : null,
-      class: createColorClasses(this.color)
+      class: {
+        ...createColorClasses(this.color),
+        [`${this.mode}`]: true,
+      }
     };
   }
 

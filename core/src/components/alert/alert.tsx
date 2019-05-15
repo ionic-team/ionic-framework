@@ -2,6 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Me
 
 import { AlertButton, AlertInput, Animation, AnimationBuilder, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
+import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -72,6 +73,12 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   /**
    * The main message to be displayed in the alert.
+   * `message` can accept either plaintext or HTML as a string.
+   * To display characters normally reserved for HTML, they
+   * must be escaped. For example `<Ionic>` would become
+   * `&lt;Ionic&gt;`
+   *
+   * For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
    */
   @Prop() message?: string;
 
@@ -185,6 +192,12 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   /**
    * Dismiss the alert overlay after it has been presented.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the alert.
+   * This can be useful in a button handler for determining which button was
+   * clicked to dismiss the alert.
+   * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
    */
   @Method()
   dismiss(data?: any, role?: string): Promise<boolean> {
@@ -193,7 +206,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   /**
    * Returns a promise that resolves when the alert did dismiss.
-   *
    */
   @Method()
   onDidDismiss(): Promise<OverlayEventDetail> {
@@ -202,7 +214,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   /**
    * Returns a promise that resolves when the alert will dismiss.
-   *
    */
   @Method()
   onWillDismiss(): Promise<OverlayEventDetail> {
@@ -309,7 +320,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
             disabled={i.disabled}
             tabIndex={0}
             role="checkbox"
-            class="alert-tappable alert-checkbox alert-checkbox-button"
+            class="alert-tappable alert-checkbox alert-checkbox-button ion-focusable"
           >
             <div class="alert-button-inner">
               <div class="alert-checkbox-icon">
@@ -341,7 +352,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
             disabled={i.disabled}
             id={i.id}
             tabIndex={0}
-            class="alert-radio-button alert-tappable alert-radio"
+            class="alert-radio-button alert-tappable alert-radio ion-focusable"
             role="radio"
           >
             <div class="alert-button-inner">
@@ -385,12 +396,14 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   hostData() {
     return {
-      role: 'alertdialog',
+      'role': 'dialog',
+      'aria-modal': 'true',
       style: {
         zIndex: 20000 + this.overlayIndex,
       },
       class: {
         ...getClassMap(this.cssClass),
+        [`${this.mode}`]: true,
         'alert-translucent': this.translucent
       }
     };
@@ -438,7 +451,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
           {this.subHeader && <h2 id={subHdrId} class="alert-sub-title">{this.subHeader}</h2>}
         </div>
 
-        <div id={msgId} class="alert-message" innerHTML={this.message}></div>
+        <div id={msgId} class="alert-message" innerHTML={sanitizeDOMString(this.message)}></div>
 
         {this.renderAlertInputs(labelledById)}
         {this.renderAlertButtons()}
@@ -451,6 +464,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 function buttonClass(button: AlertButton): CssClassMap {
   return {
     'alert-button': true,
+    'ion-focusable': true,
     'ion-activatable': true,
     ...getClassMap(button.cssClass)
   };

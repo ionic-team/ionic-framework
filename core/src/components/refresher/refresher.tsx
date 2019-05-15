@@ -1,7 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { Gesture, GestureDetail, Mode, RefresherEventDetail } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-refresher',
@@ -58,6 +57,19 @@ export class Refresher implements ComponentInterface {
    * Time it takes the refresher to to snap back to the `refreshing` state.
    */
   @Prop() snapbackDuration = '280ms';
+
+  /**
+   * How much to multiply the pull speed by. To slow the pull animation down,
+   * pass a number less than `1`. To speed up the pull, pass a number greater
+   * than `1`. The default value is `1` which is equal to the speed of the cursor.
+   * If a negative value is passed in, the factor will be `1` instead.
+   *
+   * For example: If the value passed is `1.2` and the content is dragged by
+   * `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels
+   * (an increase of 20 percent). If the value passed is `0.8`, the dragged amount
+   * will be `8` pixels, less than the amount the cursor has moved.
+   */
+  @Prop() pullFactor = 1;
 
   /**
    * If `true`, the refresher will be hidden.
@@ -120,6 +132,10 @@ export class Refresher implements ComponentInterface {
 
   componentDidUnload() {
     this.scrollEl = undefined;
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
   }
 
   /**
@@ -185,7 +201,7 @@ export class Refresher implements ComponentInterface {
     // this method can get called like a bazillion times per second,
     // so it's built to be as efficient as possible, and does its
     // best to do any DOM read/writes only when absolutely necessary
-    // if multitouch then get out immediately
+    // if multi-touch then get out immediately
     const ev = detail.event as TouchEvent;
     if (ev.touches && ev.touches.length > 1) {
       return;
@@ -198,7 +214,8 @@ export class Refresher implements ComponentInterface {
       return;
     }
 
-    const deltaY = detail.deltaY;
+    const pullFactor = (Number.isNaN(this.pullFactor) || this.pullFactor < 0) ? 1 : this.pullFactor;
+    const deltaY = detail.deltaY * pullFactor;
     // don't bother if they're scrolling up
     // and have not already started dragging
     if (deltaY <= 0) {
@@ -233,7 +250,9 @@ export class Refresher implements ComponentInterface {
     }
 
     // prevent native scroll events
-    ev.preventDefault();
+    if (ev.cancelable) {
+      ev.preventDefault();
+    }
 
     // the refresher is actively pulling at this point
     // move the scroll element within the content element
@@ -344,7 +363,10 @@ export class Refresher implements ComponentInterface {
     return {
       slot: 'fixed',
       class: {
-        ...createThemedClasses(this.mode, 'refresher'),
+        [`${this.mode}`]: true,
+
+        // Used internally for styling
+        [`refresher-${this.mode}`]: true,
 
         'refresher-active': this.state !== RefresherState.Inactive,
         'refresher-pulling': this.state === RefresherState.Pulling,
