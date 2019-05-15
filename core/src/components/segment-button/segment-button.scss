@@ -42,6 +42,8 @@
   --padding-top: 0;
   --padding-bottom: 0;
 
+  display: flex;
+
   flex: 1 0 auto;
   flex-direction: column;
 
@@ -86,15 +88,16 @@
   position: relative;
 
   flex-direction: inherit;
+
+  flex-grow: 1;
   align-items: center;
   justify-content: center;
 
   width: 100%;
-
   min-width: inherit;
   max-width: inherit;
-  height: auto;
 
+  height: auto;
   min-height: inherit;
   max-height: inherit;
 
@@ -192,17 +195,17 @@
 // --------------------------------------------------
 
 // Layout: icon start
-:host(.segment-button-layout-icon-start) {
+:host(.segment-button-layout-icon-start) .button-native {
   flex-direction: row;
 }
 
 // Layout: icon end
-:host(.segment-button-layout-icon-end) {
+:host(.segment-button-layout-icon-end) .button-native {
   flex-direction: row-reverse;
 }
 
 // Layout: icon bottom
-:host(.segment-button-layout-icon-bottom) {
+:host(.segment-button-layout-icon-bottom) .button-native {
   flex-direction: column-reverse;
 }
 

@@ -273,7 +273,7 @@ export default Example;
 
 ### `getSelected() => Promise<string | undefined>`
 
-Get the currently selected tab
+Get the currently selected tab.
 
 #### Returns
 
@@ -283,13 +283,13 @@ Type: `Promise<string | undefined>`
 
 ### `getTab(tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>`
 
-Get the tab element given the tab name
+Get a specific tab by the value of its `tab` property or an element reference.
 
 #### Parameters
 
-| Name  | Type                          | Description |
-| ----- | ----------------------------- | ----------- |
-| `tab` | `HTMLIonTabElement \| string` |             |
+| Name  | Type                          | Description                                                                                         |
+| ----- | ----------------------------- | --------------------------------------------------------------------------------------------------- |
+| `tab` | `HTMLIonTabElement \| string` | The tab instance to select. If passed a string, it should be the value of the tab's `tab` property. |
 
 #### Returns
 
@@ -299,13 +299,13 @@ Type: `Promise<HTMLIonTabElement | undefined>`
 
 ### `select(tab: string | HTMLIonTabElement) => Promise<boolean>`
 
-Index or the Tab instance, of the tab to select.
+Select a tab by the value of its `tab` property or an element reference.
 
 #### Parameters
 
-| Name  | Type                          | Description |
-| ----- | ----------------------------- | ----------- |
-| `tab` | `HTMLIonTabElement \| string` |             |
+| Name  | Type                          | Description                                                                                         |
+| ----- | ----------------------------- | --------------------------------------------------------------------------------------------------- |
+| `tab` | `HTMLIonTabElement \| string` | The tab instance to select. If passed a string, it should be the value of the tab's `tab` property. |
 
 #### Returns
 

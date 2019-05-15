@@ -1,4 +1,69 @@
-# [4.2.0](https://github.com/ionic-team/ionic/compare/v4.1.2...v4.2.0) (2019-04-03)
+# [4.4.0 Beryllium](https://github.com/ionic-team/ionic/compare/v4.3.1...v4.4.0) (2019-05-08)
+
+
+### Bug Fixes
+
+* **button:** apply round property to button sizes in iOS ([#18125](https://github.com/ionic-team/ionic/issues/18125)) ([ae0eccc](https://github.com/ionic-team/ionic/commit/ae0eccc)), closes [#18108](https://github.com/ionic-team/ionic/issues/18108)
+* **datetime:** default to current date when value is null ([#18105](https://github.com/ionic-team/ionic/issues/18105)) ([ca233b5](https://github.com/ionic-team/ionic/commit/ca233b5)), closes [#18099](https://github.com/ionic-team/ionic/issues/18099)
+* **input:** clear on edit from inside native input ([#17115](https://github.com/ionic-team/ionic/issues/17115)) ([85093d6](https://github.com/ionic-team/ionic/commit/85093d6)), closes [#17055](https://github.com/ionic-team/ionic/issues/17055)
+* **item:** use the global activated background for md ripple color ([#16752](https://github.com/ionic-team/ionic/issues/16752)) ([95945c0](https://github.com/ionic-team/ionic/commit/95945c0)), closes [#16585](https://github.com/ionic-team/ionic/issues/16585)
+* **label:** use primary color on focus for md input labels ([#18183](https://github.com/ionic-team/ionic/issues/18183)) ([ddb8ef8](https://github.com/ionic-team/ionic/commit/ddb8ef8)), closes [#15602](https://github.com/ionic-team/ionic/issues/15602)
+* **menu** add prefixed transform for side menu animation ([#18128](https://github.com/ionic-team/ionic/issues/18128)) ([2457a23](https://github.com/ionic-team/ionic/commit/2457a23)), closes [#17729](https://github.com/ionic-team/ionic/issues/17729)
+* **reorder-group:** remove required parameter for the complete method ([#18084](https://github.com/ionic-team/ionic/issues/18084)) ([bd96491](https://github.com/ionic-team/ionic/commit/bd96491)), closes [#16302](https://github.com/ionic-team/ionic/issues/16302)
+* **segment:** decrease icon size on ios and stretch segment buttons to fill height ([#17751](https://github.com/ionic-team/ionic/issues/17751)) ([0fa645b](https://github.com/ionic-team/ionic/commit/0fa645b)), closes [#17069](https://github.com/ionic-team/ionic/issues/17069)
+* **textarea:** reposition textarea when keyboard appears ([#18098](https://github.com/ionic-team/ionic/issues/18098)) ([3cdab10](https://github.com/ionic-team/ionic/commit/3cdab10)), closes [#17847](https://github.com/ionic-team/ionic/issues/17847)
+* **toast:** allow button-color CSS variable to be overridden ([#18133](https://github.com/ionic-team/ionic/issues/18133)) ([0c83fd3](https://github.com/ionic-team/ionic/commit/0c83fd3)), closes [#18127](https://github.com/ionic-team/ionic/issues/18127)
+
+
+### Features
+
+* **card:** add button functionality ([#17997](https://github.com/ionic-team/ionic/issues/17997)) ([669ec0d](https://github.com/ionic-team/ionic/commit/669ec0d)), closes [#17773](https://github.com/ionic-team/ionic/issues/17773)
+* **img:** add ionImgWillLoad event and emit ionImgDidLoad when image is loaded ([#18159](https://github.com/ionic-team/ionic/issues/18159)) ([38ffb98](https://github.com/ionic-team/ionic/commit/38ffb98)), closes [#17652](https://github.com/ionic-team/ionic/issues/17652) [#18161](https://github.com/ionic-team/ionic/issues/18161)
+* **item-sliding:** add open method ([#17964](https://github.com/ionic-team/ionic/issues/17964)) ([f912206](https://github.com/ionic-team/ionic/commit/f912206)), closes [#17899](https://github.com/ionic-team/ionic/issues/17899)
+* **menu-button:** add css variables for padding ([#18188](https://github.com/ionic-team/ionic/issues/18188)) ([ef98977](https://github.com/ionic-team/ionic/commit/ef98977)), closes [#18187](https://github.com/ionic-team/ionic/issues/18187)
+* **refresher:** add pullFactor property to control speed ([#16697](https://github.com/ionic-team/ionic/issues/16697)) ([9030dcc](https://github.com/ionic-team/ionic/commit/9030dcc)), closes [#15425](https://github.com/ionic-team/ionic/issues/15425)
+* **searchbar:** add disabled property ([#17935](https://github.com/ionic-team/ionic/issues/17935)) ([a5b9066](https://github.com/ionic-team/ionic/commit/a5b9066)), closes [#17921](https://github.com/ionic-team/ionic/issues/17921)
+* **textarea:** add option to expand textarea as value changes ([#16916](https://github.com/ionic-team/ionic/issues/16916)) ([cc8678a](https://github.com/ionic-team/ionic/commit/cc8678a))
+
+
+
+## [4.3.1](https://github.com/ionic-team/ionic/compare/v4.3.0...v4.3.1) (2019-04-26)
+
+
+### Bug Fixes
+
+* **angular:** support replaceUrl with angular <7.2 ([#18106](https://github.com/ionic-team/ionic/issues/18106)) ([eb3cbe4](https://github.com/ionic-team/ionic/commit/eb3cbe4))
+* **security:** sanitize components using innerHTML ([#18146](https://github.com/ionic-team/ionic/issues/18146)) ([b839e6f](https://github.com/ionic-team/ionic/commit/b839e6f))
+
+
+
+# [4.3.0 Lithium](https://github.com/ionic-team/ionic/compare/v4.2.0...v4.3.0) (2019-04-17)
+
+
+### Bug Fixes
+
+* **action-sheet:** default buttons to empty array ([9e63947](https://github.com/ionic-team/ionic/commit/9e63947))
+* **angular:** back button correctly goes back to proper tab ([#18005](https://github.com/ionic-team/ionic/issues/18005)) ([52e5a8d](https://github.com/ionic-team/ionic/commit/52e5a8d)), closes [#17278](https://github.com/ionic-team/ionic/issues/17278) [#15216](https://github.com/ionic-team/ionic/issues/15216)
+* **components:** add mode classes to components for use in shadow elements ([#17838](https://github.com/ionic-team/ionic/issues/17838)) ([e5c8c10](https://github.com/ionic-team/ionic/commit/e5c8c10)), closes [#17608](https://github.com/ionic-team/ionic/issues/17608)
+* **datetime:** date strings no longer revert to previous day ([#18018](https://github.com/ionic-team/ionic/issues/18018)) ([cc60b60](https://github.com/ionic-team/ionic/commit/cc60b60)), closes [#17977](https://github.com/ionic-team/ionic/issues/17977)
+* **input:** prevent input from losing focus when tapping clear button ([#18004](https://github.com/ionic-team/ionic/issues/18004)) ([29bb4fc](https://github.com/ionic-team/ionic/commit/29bb4fc)), closes [#18002](https://github.com/ionic-team/ionic/issues/18002)
+* **item:** use the correct input highlight for an inset line item ([#18052](https://github.com/ionic-team/ionic/issues/18052)) ([72be80c](https://github.com/ionic-team/ionic/commit/72be80c)), closes [#18051](https://github.com/ionic-team/ionic/issues/18051)
+* **item-sliding:** hide closed side options while dragging side options open ([#17986](https://github.com/ionic-team/ionic/issues/17986)) ([f13722c](https://github.com/ionic-team/ionic/commit/f13722c)), closes [#17822](https://github.com/ionic-team/ionic/issues/17822)
+* **slides:** allow zoom to work ([18b347b](https://github.com/ionic-team/ionic/commit/18b347b)), closes [#17981](https://github.com/ionic-team/ionic/issues/17981)
+* **slides:** expose interface to provide custom animations ([#17959](https://github.com/ionic-team/ionic/issues/17959)) ([4474974](https://github.com/ionic-team/ionic/commit/4474974)), closes [#16616](https://github.com/ionic-team/ionic/issues/16616)
+* **textarea:** float label when a value is changed async ([#18024](https://github.com/ionic-team/ionic/issues/18024)) ([494991e](https://github.com/ionic-team/ionic/commit/494991e)), closes [#17555](https://github.com/ionic-team/ionic/issues/17555) [#17559](https://github.com/ionic-team/ionic/issues/17559)
+* **textarea:** update label alignment for inputs and textareas ([#18042](https://github.com/ionic-team/ionic/issues/18042)) ([38ae362](https://github.com/ionic-team/ionic/commit/38ae362)), closes [#16187](https://github.com/ionic-team/ionic/issues/16187)
+* **vue:** use direction type from core ([#17901](https://github.com/ionic-team/ionic/issues/17901)) ([fa13173](https://github.com/ionic-team/ionic/commit/fa13173))
+
+
+### Features
+
+* **toast:** add header and additional custom toast buttons ([#17147](https://github.com/ionic-team/ionic/issues/17147)) ([6e1a8f1](https://github.com/ionic-team/ionic/commit/6e1a8f1)), closes [#16791](https://github.com/ionic-team/ionic/issues/16791) [#16237](https://github.com/ionic-team/ionic/issues/16237) [#17611](https://github.com/ionic-team/ionic/issues/17611)
+* **toast:** add variables to change position start/end of toast ([#17961](https://github.com/ionic-team/ionic/issues/17961)) ([07e739a](https://github.com/ionic-team/ionic/commit/07e739a)), closes [#17854](https://github.com/ionic-team/ionic/issues/17854)
+
+
+
+# [4.2.0 Helium](https://github.com/ionic-team/ionic/compare/v4.1.2...v4.2.0) (2019-04-03)
 
 
 ### Bug Fixes

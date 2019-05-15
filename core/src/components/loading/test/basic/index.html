@@ -28,6 +28,7 @@
       <ion-button id="translucent-loading" expand="block" onclick="presentLoadingWithOptions({duration: 5000, message: 'Please wait...', translucent: true})">Show Loading with translucent</ion-button>
       <ion-button id="custom-class-loading" expand="block" onclick="presentLoadingWithOptions({duration: 5000,message: 'Please wait...', cssClass: 'custom-class custom-loading'})">Show Loading with cssClass</ion-button>
       <ion-button id="backdrop-loading" expand="block" onclick="presentLoadingWithOptions({backdropDismiss: true})">Show Backdrop Click Loading</ion-button>
+      <ion-button id="html-content-loading" expand="block" onclick="presentLoadingWithOptions({cssClass: 'html-loading', duration: 5000, message: '<ion-button>Click impatiently to load faster</ion-button>'})">Show Loading with HTML content</ion-button>
 
       <ion-loading-controller></ion-loading-controller>
 
@@ -82,6 +83,10 @@
   </script>
 
   <style>
+    .html-loading {
+      --max-width: auto;
+    }
+    
     .custom-loading {
       --background: rgba(37, 210, 223, 0.8);
       --spinner-color: white;
