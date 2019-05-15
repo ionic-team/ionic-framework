@@ -39,7 +39,7 @@
     "@types/jest": "^23.3.13",
     "@types/node": "10.12.18",
     "@types/puppeteer": "1.11.2",
-    "@types/swiper": "4.4.1",
+    "@types/swiper": "^4.4.2",
     "agadoo": "^1.0.0",
     "autoprefixer": "9.4.6",
     "aws-sdk": "^2.320.0",
