@@ -5,13 +5,13 @@
 // --------------------------------------------------
 
 ::slotted(*) ion-button {
-  --padding-top: 0;
-  --padding-bottom: 0;
-  --padding-start: 8px;
-  --padding-end: 8px;
+  --padding-top: 12px;
+  --padding-end: 12px;
+  --padding-bottom: 12px;
+  --padding-start: 12px;
   --box-shadow: none;
 
-  height: 32px;
+  @include margin-horizontal(2px, 2px);
 
   font-size: #{$toolbar-md-button-font-size};
   font-weight: 500;
@@ -51,6 +51,19 @@
 ::slotted(*) .button {
   --color-focused: #{$toolbar-md-color};
   --background-focused: rgba(66, 66, 66, 0.1);
+}
+
+
+// Material Design Toolbar Icon Only Clear Button
+// --------------------------------------------------
+
+::slotted(*) .button-has-icon-only.button-clear {
+  @include margin(0);
+
+  --border-radius: 50%;
+
+  width: 48px;
+  height: 48px;
 }
 
 
