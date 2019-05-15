@@ -8,10 +8,10 @@
   --background: #{$toolbar-md-background};
   --color: #{$toolbar-md-color};
   --border-color: #{$toolbar-md-border-color};
-  --padding-top: 4px;
-  --padding-bottom: 4px;
-  --padding-start: 4px;
-  --padding-end: 4px;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
   --min-height: 56px;
 }
 
@@ -27,34 +27,33 @@
   max-width: 100%;
 }
 
-// Toolbar: Segment
-// --------------------------------------------------
-
-:host(.toolbar-segment) {
-  --padding-top: 0;
-  --padding-bottom: 0;
-  --padding-start: 0;
-  --padding-end: 0;
-}
 
 // Material Design Toolbar Slot Placement
 // --------------------------------------------------
 
 ::slotted([slot="start"]) {
+  @include margin-horizontal(4px, 0);
+
   order: map-get($toolbar-order-md, slot-start);
 }
 
 ::slotted([slot="secondary"]) {
+  @include margin-horizontal(0, 4px);
+
   order: map-get($toolbar-order-md, slot-secondary);
 }
 
 ::slotted([slot="primary"]) {
+  @include margin-horizontal(0, 4px);
+
   order: map-get($toolbar-order-md, slot-primary);
 
   text-align: end;
 }
 
 ::slotted([slot="end"]) {
+  @include margin-horizontal(0, 4px);
+
   order: map-get($toolbar-order-md, slot-end);
 
   text-align: end;

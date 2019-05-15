@@ -22,10 +22,7 @@
   --opacity: 1;
 
   @include font-smoothing();
-  @include padding-horizontal(
-    var(--ion-safe-area-left),
-    var(--ion-safe-area-right)
-  );
+  @include padding-horizontal(var(--ion-safe-area-left), var(--ion-safe-area-right));
 
   display: block;
 
@@ -52,12 +49,8 @@
 }
 
 .toolbar-container {
-  @include padding(
-    var(--padding-top),
-    var(--padding-end),
-    var(--padding-bottom),
-    var(--padding-start)
-  );
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
   display: flex;
   position: relative;
 
@@ -102,9 +95,12 @@
 // Toolbar: Segment
 // --------------------------------------------------
 
-:host(.toolbar-segment) {
-  --min-height: auto;
+::slotted(ion-segment) {
+  min-height: var(--min-height);
 }
+
+// Toolbar: Progress Bar
+// --------------------------------------------------
 
 ::slotted(ion-progress-bar) {
   @include position(null, 0, 0, 0);
