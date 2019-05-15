@@ -83,7 +83,7 @@
   import { Component, Vue } from 'vue-property-decorator';
 
   @Component()
-  export default class Menu extends Vue {
+  export default class Example extends Vue {
     customYearValues = [2020, 2016, 2008, 2004, 2000, 1996];
 
     customDayShortNames = [

@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { Gesture, GestureDetail, ItemReorderEventDetail } from '../../interface';
+import { Gesture, GestureDetail, ItemReorderEventDetail, Mode } from '../../interface';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/haptic';
 
 const enum ReorderGroupState {
@@ -14,6 +14,7 @@ const enum ReorderGroupState {
   styleUrl: 'reorder-group.scss'
 })
 export class ReorderGroup implements ComponentInterface {
+  mode!: Mode;
 
   private selectedItemEl?: HTMLElement;
   private selectedItemHeight!: number;
@@ -89,8 +90,17 @@ export class ReorderGroup implements ComponentInterface {
   }
 
   /**
-   * This method must be called once the `ionItemReorder` event is handled in order
-   * to complete the reorder operation.
+   * Completes the reorder operation. Must be called by the `ionItemReorder` event.
+   *
+   * If a list of items is passed, the list will be reordered and returned in the
+   * proper order.
+   *
+   * If no parameters are passed or if `true` is passed in, the reorder will complete
+   * and the item will remain in the position it was dragged to. If `false` is passed,
+   * the reorder will complete and the item will bounce back to its original position.
+   *
+   * @param listOrReorder A list of items to be sorted and returned in the new order or a
+   * boolean of whether or not the reorder should reposition the item.
    */
   @Method()
   complete(listOrReorder?: boolean | any[]): Promise<any> {
@@ -218,7 +228,7 @@ export class ReorderGroup implements ComponentInterface {
       const toIndex = this.lastToIndex;
       const fromIndex = indexForItem(selectedItemEl);
 
-      if (listOrReorder === true) {
+      if (!listOrReorder || listOrReorder === true) {
         const ref = (fromIndex < toIndex)
           ? children[toIndex + 1]
           : children[toIndex];
@@ -293,6 +303,7 @@ export class ReorderGroup implements ComponentInterface {
   hostData() {
     return {
       class: {
+        [`${this.mode}`]: true,
         'reorder-enabled': !this.disabled,
         'reorder-list-active': this.state !== ReorderGroupState.Idle,
       }

@@ -84,11 +84,11 @@ const slidesOpts = {
           let $shadowBeforeEl = isHorizontal ? $slideEl.find('.swiper-slide-shadow-left') : $slideEl.find('.swiper-slide-shadow-top');
           let $shadowAfterEl = isHorizontal ? $slideEl.find('.swiper-slide-shadow-right') : $slideEl.find('.swiper-slide-shadow-bottom');
           if ($shadowBeforeEl.length === 0) {
-            $shadowBeforeEl = $(`<div class="swiper-slide-shadow-${isHorizontal ? 'left' : 'top'}"></div>`);
+            $shadowBeforeEl = swiper.$(`<div class="swiper-slide-shadow-${isHorizontal ? 'left' : 'top'}"></div>`);
             $slideEl.append($shadowBeforeEl);
           }
           if ($shadowAfterEl.length === 0) {
-            $shadowAfterEl = $(`<div class="swiper-slide-shadow-${isHorizontal ? 'right' : 'bottom'}"></div>`);
+            $shadowAfterEl = swiper.$(`<div class="swiper-slide-shadow-${isHorizontal ? 'right' : 'bottom'}"></div>`);
             $slideEl.append($shadowAfterEl);
           }
           if ($shadowBeforeEl.length) $shadowBeforeEl[0].style.opacity = offsetMultiplier > 0 ? offsetMultiplier : 0;
@@ -165,7 +165,7 @@ const slidesOpts = {
         } else {
           $cubeShadowEl = $el.find('.swiper-cube-shadow');
           if ($cubeShadowEl.length === 0) {
-            $cubeShadowEl = $('<div class="swiper-cube-shadow"></div>');
+            $cubeShadowEl = swiper.$('<div class="swiper-cube-shadow"></div>');
             $el.append($cubeShadowEl);
           }
         }
@@ -388,11 +388,11 @@ const slideOpts = {
           let shadowBefore = swiper.isHorizontal() ? $slideEl.find('.swiper-slide-shadow-left') : $slideEl.find('.swiper-slide-shadow-top');
           let shadowAfter = swiper.isHorizontal() ? $slideEl.find('.swiper-slide-shadow-right') : $slideEl.find('.swiper-slide-shadow-bottom');
           if (shadowBefore.length === 0) {
-            shadowBefore = $(`<div class="swiper-slide-shadow-${swiper.isHorizontal() ? 'left' : 'top'}"></div>`);
+            shadowBefore = swiper.$(`<div class="swiper-slide-shadow-${swiper.isHorizontal() ? 'left' : 'top'}"></div>`);
             $slideEl.append(shadowBefore);
           }
           if (shadowAfter.length === 0) {
-            shadowAfter = $(`<div class="swiper-slide-shadow-${swiper.isHorizontal() ? 'right' : 'bottom'}"></div>`);
+            shadowAfter = swiper.$(`<div class="swiper-slide-shadow-${swiper.isHorizontal() ? 'right' : 'bottom'}"></div>`);
             $slideEl.append(shadowAfter);
           }
           if (shadowBefore.length) shadowBefore[0].style.opacity = Math.max(-progress, 0);
@@ -549,7 +549,7 @@ export default Example;
   import { Component, Vue } from 'vue-property-decorator';
 
   @Component()
-  export default class SelectExample extends Vue {
+  export default class Example extends Vue {
     // Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
     slideOpts = {
       initialSlide: 1,
@@ -645,15 +645,15 @@ Type: `Promise<number>`
 
 
 
-### `lockSwipeToNext(shouldLockSwipeToNext: boolean) => Promise<void>`
+### `lockSwipeToNext(lock: boolean) => Promise<void>`
 
-Lock or unlock the ability to slide to the next slides.
+Lock or unlock the ability to slide to the next slide.
 
 #### Parameters
 
-| Name                    | Type      | Description |
-| ----------------------- | --------- | ----------- |
-| `shouldLockSwipeToNext` | `boolean` |             |
+| Name   | Type      | Description                                   |
+| ------ | --------- | --------------------------------------------- |
+| `lock` | `boolean` | If `true`, disable swiping to the next slide. |
 
 #### Returns
 
@@ -661,15 +661,15 @@ Type: `Promise<void>`
 
 
 
-### `lockSwipeToPrev(shouldLockSwipeToPrev: boolean) => Promise<void>`
+### `lockSwipeToPrev(lock: boolean) => Promise<void>`
 
-Lock or unlock the ability to slide to the previous slides.
+Lock or unlock the ability to slide to the previous slide.
 
 #### Parameters
 
-| Name                    | Type      | Description |
-| ----------------------- | --------- | ----------- |
-| `shouldLockSwipeToPrev` | `boolean` |             |
+| Name   | Type      | Description                                       |
+| ------ | --------- | ------------------------------------------------- |
+| `lock` | `boolean` | If `true`, disable swiping to the previous slide. |
 
 #### Returns
 
@@ -677,15 +677,15 @@ Type: `Promise<void>`
 
 
 
-### `lockSwipes(shouldLockSwipes: boolean) => Promise<void>`
+### `lockSwipes(lock: boolean) => Promise<void>`
 
-Lock or unlock the ability to slide to change slides.
+Lock or unlock the ability to slide to the next or previous slide.
 
 #### Parameters
 
-| Name               | Type      | Description |
-| ------------------ | --------- | ----------- |
-| `shouldLockSwipes` | `boolean` |             |
+| Name   | Type      | Description                                                |
+| ------ | --------- | ---------------------------------------------------------- |
+| `lock` | `boolean` | If `true`, disable swiping to the next and previous slide. |
 
 #### Returns
 
@@ -699,10 +699,10 @@ Transition to the next slide.
 
 #### Parameters
 
-| Name           | Type                   | Description |
-| -------------- | ---------------------- | ----------- |
-| `speed`        | `number \| undefined`  |             |
-| `runCallbacks` | `boolean \| undefined` |             |
+| Name           | Type                   | Description                                                                                 |
+| -------------- | ---------------------- | ------------------------------------------------------------------------------------------- |
+| `speed`        | `number \| undefined`  | The transition duration (in ms).                                                            |
+| `runCallbacks` | `boolean \| undefined` | If true, the transition will produce [Transition/SlideChange][Start/End] transition events. |
 
 #### Returns
 
@@ -716,10 +716,10 @@ Transition to the previous slide.
 
 #### Parameters
 
-| Name           | Type                   | Description |
-| -------------- | ---------------------- | ----------- |
-| `speed`        | `number \| undefined`  |             |
-| `runCallbacks` | `boolean \| undefined` |             |
+| Name           | Type                   | Description                                                                                     |
+| -------------- | ---------------------- | ----------------------------------------------------------------------------------------------- |
+| `speed`        | `number \| undefined`  | The transition duration (in ms).                                                                |
+| `runCallbacks` | `boolean \| undefined` | If true, the transition will produce the [Transition/SlideChange][Start/End] transition events. |
 
 #### Returns
 
@@ -733,11 +733,11 @@ Transition to the specified slide.
 
 #### Parameters
 
-| Name           | Type                   | Description |
-| -------------- | ---------------------- | ----------- |
-| `index`        | `number`               |             |
-| `speed`        | `number \| undefined`  |             |
-| `runCallbacks` | `boolean \| undefined` |             |
+| Name           | Type                   | Description                                                                                 |
+| -------------- | ---------------------- | ------------------------------------------------------------------------------------------- |
+| `index`        | `number`               | The index of the slide to transition to.                                                    |
+| `speed`        | `number \| undefined`  | The transition duration (in ms).                                                            |
+| `runCallbacks` | `boolean \| undefined` | If true, the transition will produce [Transition/SlideChange][Start/End] transition events. |
 
 #### Returns
 
@@ -778,13 +778,14 @@ Type: `Promise<void>`
 
 ### `updateAutoHeight(speed?: number | undefined) => Promise<void>`
 
-Force swiper to update its height (when autoHeight enabled) for the duration equal to 'speed' parameter
+Force swiper to update its height (when autoHeight is enabled) for the duration
+equal to 'speed' parameter.
 
 #### Parameters
 
-| Name    | Type                  | Description |
-| ------- | --------------------- | ----------- |
-| `speed` | `number \| undefined` |             |
+| Name    | Type                  | Description                      |
+| ------- | --------------------- | -------------------------------- |
+| `speed` | `number \| undefined` | The transition duration (in ms). |
 
 #### Returns
 
