@@ -2092,7 +2092,7 @@ export namespace Components {
     /**
     * Open the select overlay. The overlay is either an alert, action sheet, or popover, depending on the `interface` property on the `ion-select`.
     */
-    'open': (event?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>;
+    'open': (event?: UIEvent | undefined) => Promise<HTMLIonPopoverElement | HTMLIonActionSheetElement | HTMLIonAlertElement | undefined>;
     /**
     * The text to display when the select is empty.
     */
@@ -5066,214 +5066,116 @@ declare namespace LocalJSX {
     'renderItem'?: (item: any, index: number) => any;
   }
 
-  interface ElementInterfaces {
-    'IonActionSheet': Components.IonActionSheet;
-    'IonActionSheetController': Components.IonActionSheetController;
-    'IonAlert': Components.IonAlert;
-    'IonAlertController': Components.IonAlertController;
-    'IonAnchor': Components.IonAnchor;
-    'IonApp': Components.IonApp;
-    'IonAvatar': Components.IonAvatar;
-    'IonBackButton': Components.IonBackButton;
-    'IonBackdrop': Components.IonBackdrop;
-    'IonBadge': Components.IonBadge;
-    'IonButton': Components.IonButton;
-    'IonButtons': Components.IonButtons;
-    'IonCard': Components.IonCard;
-    'IonCardContent': Components.IonCardContent;
-    'IonCardHeader': Components.IonCardHeader;
-    'IonCardSubtitle': Components.IonCardSubtitle;
-    'IonCardTitle': Components.IonCardTitle;
-    'IonCheckbox': Components.IonCheckbox;
-    'IonChip': Components.IonChip;
-    'IonCol': Components.IonCol;
-    'IonContent': Components.IonContent;
-    'IonDatetime': Components.IonDatetime;
-    'IonFab': Components.IonFab;
-    'IonFabButton': Components.IonFabButton;
-    'IonFabList': Components.IonFabList;
-    'IonFooter': Components.IonFooter;
-    'IonGrid': Components.IonGrid;
-    'IonHeader': Components.IonHeader;
-    'IonImg': Components.IonImg;
-    'IonInfiniteScroll': Components.IonInfiniteScroll;
-    'IonInfiniteScrollContent': Components.IonInfiniteScrollContent;
-    'IonInput': Components.IonInput;
-    'IonItem': Components.IonItem;
-    'IonItemDivider': Components.IonItemDivider;
-    'IonItemGroup': Components.IonItemGroup;
-    'IonItemOption': Components.IonItemOption;
-    'IonItemOptions': Components.IonItemOptions;
-    'IonItemSliding': Components.IonItemSliding;
-    'IonLabel': Components.IonLabel;
-    'IonList': Components.IonList;
-    'IonListHeader': Components.IonListHeader;
-    'IonLoading': Components.IonLoading;
-    'IonLoadingController': Components.IonLoadingController;
-    'IonMenu': Components.IonMenu;
-    'IonMenuButton': Components.IonMenuButton;
-    'IonMenuController': Components.IonMenuController;
-    'IonMenuToggle': Components.IonMenuToggle;
-    'IonModal': Components.IonModal;
-    'IonModalController': Components.IonModalController;
-    'IonNav': Components.IonNav;
-    'IonNavPop': Components.IonNavPop;
-    'IonNavPush': Components.IonNavPush;
-    'IonNavSetRoot': Components.IonNavSetRoot;
-    'IonNote': Components.IonNote;
-    'IonPicker': Components.IonPicker;
-    'IonPickerColumn': Components.IonPickerColumn;
-    'IonPickerController': Components.IonPickerController;
-    'IonPopover': Components.IonPopover;
-    'IonPopoverController': Components.IonPopoverController;
-    'IonProgressBar': Components.IonProgressBar;
-    'IonRadio': Components.IonRadio;
-    'IonRadioGroup': Components.IonRadioGroup;
-    'IonRange': Components.IonRange;
-    'IonRefresher': Components.IonRefresher;
-    'IonRefresherContent': Components.IonRefresherContent;
-    'IonReorder': Components.IonReorder;
-    'IonReorderGroup': Components.IonReorderGroup;
-    'IonRippleEffect': Components.IonRippleEffect;
-    'IonRoute': Components.IonRoute;
-    'IonRouteRedirect': Components.IonRouteRedirect;
-    'IonRouter': Components.IonRouter;
-    'IonRouterOutlet': Components.IonRouterOutlet;
-    'IonRow': Components.IonRow;
-    'IonSearchbar': Components.IonSearchbar;
-    'IonSegment': Components.IonSegment;
-    'IonSegmentButton': Components.IonSegmentButton;
-    'IonSelect': Components.IonSelect;
-    'IonSelectOption': Components.IonSelectOption;
-    'IonSelectPopover': Components.IonSelectPopover;
-    'IonSkeletonText': Components.IonSkeletonText;
-    'IonSlide': Components.IonSlide;
-    'IonSlides': Components.IonSlides;
-    'IonSpinner': Components.IonSpinner;
-    'IonSplitPane': Components.IonSplitPane;
-    'IonTab': Components.IonTab;
-    'IonTabBar': Components.IonTabBar;
-    'IonTabButton': Components.IonTabButton;
-    'IonTabs': Components.IonTabs;
-    'IonText': Components.IonText;
-    'IonTextarea': Components.IonTextarea;
-    'IonThumbnail': Components.IonThumbnail;
-    'IonTitle': Components.IonTitle;
-    'IonToast': Components.IonToast;
-    'IonToastController': Components.IonToastController;
-    'IonToggle': Components.IonToggle;
-    'IonToolbar': Components.IonToolbar;
-    'IonVirtualScroll': Components.IonVirtualScroll;
-  }
-
   interface IntrinsicElements {
-    'IonActionSheet': LocalJSX.IonActionSheet;
-    'IonActionSheetController': LocalJSX.IonActionSheetController;
-    'IonAlert': LocalJSX.IonAlert;
-    'IonAlertController': LocalJSX.IonAlertController;
-    'IonAnchor': LocalJSX.IonAnchor;
-    'IonApp': LocalJSX.IonApp;
-    'IonAvatar': LocalJSX.IonAvatar;
-    'IonBackButton': LocalJSX.IonBackButton;
-    'IonBackdrop': LocalJSX.IonBackdrop;
-    'IonBadge': LocalJSX.IonBadge;
-    'IonButton': LocalJSX.IonButton;
-    'IonButtons': LocalJSX.IonButtons;
-    'IonCard': LocalJSX.IonCard;
-    'IonCardContent': LocalJSX.IonCardContent;
-    'IonCardHeader': LocalJSX.IonCardHeader;
-    'IonCardSubtitle': LocalJSX.IonCardSubtitle;
-    'IonCardTitle': LocalJSX.IonCardTitle;
-    'IonCheckbox': LocalJSX.IonCheckbox;
-    'IonChip': LocalJSX.IonChip;
-    'IonCol': LocalJSX.IonCol;
-    'IonContent': LocalJSX.IonContent;
-    'IonDatetime': LocalJSX.IonDatetime;
-    'IonFab': LocalJSX.IonFab;
-    'IonFabButton': LocalJSX.IonFabButton;
-    'IonFabList': LocalJSX.IonFabList;
-    'IonFooter': LocalJSX.IonFooter;
-    'IonGrid': LocalJSX.IonGrid;
-    'IonHeader': LocalJSX.IonHeader;
-    'IonImg': LocalJSX.IonImg;
-    'IonInfiniteScroll': LocalJSX.IonInfiniteScroll;
-    'IonInfiniteScrollContent': LocalJSX.IonInfiniteScrollContent;
-    'IonInput': LocalJSX.IonInput;
-    'IonItem': LocalJSX.IonItem;
-    'IonItemDivider': LocalJSX.IonItemDivider;
-    'IonItemGroup': LocalJSX.IonItemGroup;
-    'IonItemOption': LocalJSX.IonItemOption;
-    'IonItemOptions': LocalJSX.IonItemOptions;
-    'IonItemSliding': LocalJSX.IonItemSliding;
-    'IonLabel': LocalJSX.IonLabel;
-    'IonList': LocalJSX.IonList;
-    'IonListHeader': LocalJSX.IonListHeader;
-    'IonLoading': LocalJSX.IonLoading;
-    'IonLoadingController': LocalJSX.IonLoadingController;
-    'IonMenu': LocalJSX.IonMenu;
-    'IonMenuButton': LocalJSX.IonMenuButton;
-    'IonMenuController': LocalJSX.IonMenuController;
-    'IonMenuToggle': LocalJSX.IonMenuToggle;
-    'IonModal': LocalJSX.IonModal;
-    'IonModalController': LocalJSX.IonModalController;
-    'IonNav': LocalJSX.IonNav;
-    'IonNavPop': LocalJSX.IonNavPop;
-    'IonNavPush': LocalJSX.IonNavPush;
-    'IonNavSetRoot': LocalJSX.IonNavSetRoot;
-    'IonNote': LocalJSX.IonNote;
-    'IonPicker': LocalJSX.IonPicker;
-    'IonPickerColumn': LocalJSX.IonPickerColumn;
-    'IonPickerController': LocalJSX.IonPickerController;
-    'IonPopover': LocalJSX.IonPopover;
-    'IonPopoverController': LocalJSX.IonPopoverController;
-    'IonProgressBar': LocalJSX.IonProgressBar;
-    'IonRadio': LocalJSX.IonRadio;
-    'IonRadioGroup': LocalJSX.IonRadioGroup;
-    'IonRange': LocalJSX.IonRange;
-    'IonRefresher': LocalJSX.IonRefresher;
-    'IonRefresherContent': LocalJSX.IonRefresherContent;
-    'IonReorder': LocalJSX.IonReorder;
-    'IonReorderGroup': LocalJSX.IonReorderGroup;
-    'IonRippleEffect': LocalJSX.IonRippleEffect;
-    'IonRoute': LocalJSX.IonRoute;
-    'IonRouteRedirect': LocalJSX.IonRouteRedirect;
-    'IonRouter': LocalJSX.IonRouter;
-    'IonRouterOutlet': LocalJSX.IonRouterOutlet;
-    'IonRow': LocalJSX.IonRow;
-    'IonSearchbar': LocalJSX.IonSearchbar;
-    'IonSegment': LocalJSX.IonSegment;
-    'IonSegmentButton': LocalJSX.IonSegmentButton;
-    'IonSelect': LocalJSX.IonSelect;
-    'IonSelectOption': LocalJSX.IonSelectOption;
-    'IonSelectPopover': LocalJSX.IonSelectPopover;
-    'IonSkeletonText': LocalJSX.IonSkeletonText;
-    'IonSlide': LocalJSX.IonSlide;
-    'IonSlides': LocalJSX.IonSlides;
-    'IonSpinner': LocalJSX.IonSpinner;
-    'IonSplitPane': LocalJSX.IonSplitPane;
-    'IonTab': LocalJSX.IonTab;
-    'IonTabBar': LocalJSX.IonTabBar;
-    'IonTabButton': LocalJSX.IonTabButton;
-    'IonTabs': LocalJSX.IonTabs;
-    'IonText': LocalJSX.IonText;
-    'IonTextarea': LocalJSX.IonTextarea;
-    'IonThumbnail': LocalJSX.IonThumbnail;
-    'IonTitle': LocalJSX.IonTitle;
-    'IonToast': LocalJSX.IonToast;
-    'IonToastController': LocalJSX.IonToastController;
-    'IonToggle': LocalJSX.IonToggle;
-    'IonToolbar': LocalJSX.IonToolbar;
-    'IonVirtualScroll': LocalJSX.IonVirtualScroll;
+    'ion-action-sheet': IonActionSheet;
+    'ion-action-sheet-controller': IonActionSheetController;
+    'ion-alert': IonAlert;
+    'ion-alert-controller': IonAlertController;
+    'ion-anchor': IonAnchor;
+    'ion-app': IonApp;
+    'ion-avatar': IonAvatar;
+    'ion-back-button': IonBackButton;
+    'ion-backdrop': IonBackdrop;
+    'ion-badge': IonBadge;
+    'ion-button': IonButton;
+    'ion-buttons': IonButtons;
+    'ion-card': IonCard;
+    'ion-card-content': IonCardContent;
+    'ion-card-header': IonCardHeader;
+    'ion-card-subtitle': IonCardSubtitle;
+    'ion-card-title': IonCardTitle;
+    'ion-checkbox': IonCheckbox;
+    'ion-chip': IonChip;
+    'ion-col': IonCol;
+    'ion-content': IonContent;
+    'ion-datetime': IonDatetime;
+    'ion-fab': IonFab;
+    'ion-fab-button': IonFabButton;
+    'ion-fab-list': IonFabList;
+    'ion-footer': IonFooter;
+    'ion-grid': IonGrid;
+    'ion-header': IonHeader;
+    'ion-img': IonImg;
+    'ion-infinite-scroll': IonInfiniteScroll;
+    'ion-infinite-scroll-content': IonInfiniteScrollContent;
+    'ion-input': IonInput;
+    'ion-item': IonItem;
+    'ion-item-divider': IonItemDivider;
+    'ion-item-group': IonItemGroup;
+    'ion-item-option': IonItemOption;
+    'ion-item-options': IonItemOptions;
+    'ion-item-sliding': IonItemSliding;
+    'ion-label': IonLabel;
+    'ion-list': IonList;
+    'ion-list-header': IonListHeader;
+    'ion-loading': IonLoading;
+    'ion-loading-controller': IonLoadingController;
+    'ion-menu': IonMenu;
+    'ion-menu-button': IonMenuButton;
+    'ion-menu-controller': IonMenuController;
+    'ion-menu-toggle': IonMenuToggle;
+    'ion-modal': IonModal;
+    'ion-modal-controller': IonModalController;
+    'ion-nav': IonNav;
+    'ion-nav-pop': IonNavPop;
+    'ion-nav-push': IonNavPush;
+    'ion-nav-set-root': IonNavSetRoot;
+    'ion-note': IonNote;
+    'ion-picker': IonPicker;
+    'ion-picker-column': IonPickerColumn;
+    'ion-picker-controller': IonPickerController;
+    'ion-popover': IonPopover;
+    'ion-popover-controller': IonPopoverController;
+    'ion-progress-bar': IonProgressBar;
+    'ion-radio': IonRadio;
+    'ion-radio-group': IonRadioGroup;
+    'ion-range': IonRange;
+    'ion-refresher': IonRefresher;
+    'ion-refresher-content': IonRefresherContent;
+    'ion-reorder': IonReorder;
+    'ion-reorder-group': IonReorderGroup;
+    'ion-ripple-effect': IonRippleEffect;
+    'ion-route': IonRoute;
+    'ion-route-redirect': IonRouteRedirect;
+    'ion-router': IonRouter;
+    'ion-router-outlet': IonRouterOutlet;
+    'ion-row': IonRow;
+    'ion-searchbar': IonSearchbar;
+    'ion-segment': IonSegment;
+    'ion-segment-button': IonSegmentButton;
+    'ion-select': IonSelect;
+    'ion-select-option': IonSelectOption;
+    'ion-select-popover': IonSelectPopover;
+    'ion-skeleton-text': IonSkeletonText;
+    'ion-slide': IonSlide;
+    'ion-slides': IonSlides;
+    'ion-spinner': IonSpinner;
+    'ion-split-pane': IonSplitPane;
+    'ion-tab': IonTab;
+    'ion-tab-bar': IonTabBar;
+    'ion-tab-button': IonTabButton;
+    'ion-tabs': IonTabs;
+    'ion-text': IonText;
+    'ion-textarea': IonTextarea;
+    'ion-thumbnail': IonThumbnail;
+    'ion-title': IonTitle;
+    'ion-toast': IonToast;
+    'ion-toast-controller': IonToastController;
+    'ion-toggle': IonToggle;
+    'ion-toolbar': IonToolbar;
+    'ion-virtual-scroll': IonVirtualScroll;
   }
 }
+
 export { LocalJSX as JSX };
+
 
 declare module "@stencil/core" {
   export namespace JSX {
-    interface ElementInterfaces extends LocalJSX.ElementInterfaces {}
     interface IntrinsicElements extends LocalJSX.IntrinsicElements {}
   }
 }
+
 
 declare global {
 
@@ -5281,6 +5183,7 @@ declare global {
   export namespace JSX {
     export interface Element {}
   }
+
 
 
   interface HTMLIonActionSheetElement extends Components.IonActionSheet, HTMLStencilElement {}
@@ -5864,107 +5767,8 @@ declare global {
     prototype: HTMLIonVirtualScrollElement;
     new (): HTMLIonVirtualScrollElement;
   };
-  interface HTMLElementTagNameMap {
-    'ion-action-sheet': HTMLIonActionSheetElement
-    'ion-action-sheet-controller': HTMLIonActionSheetControllerElement
-    'ion-alert': HTMLIonAlertElement
-    'ion-alert-controller': HTMLIonAlertControllerElement
-    'ion-anchor': HTMLIonAnchorElement
-    'ion-app': HTMLIonAppElement
-    'ion-avatar': HTMLIonAvatarElement
-    'ion-back-button': HTMLIonBackButtonElement
-    'ion-backdrop': HTMLIonBackdropElement
-    'ion-badge': HTMLIonBadgeElement
-    'ion-button': HTMLIonButtonElement
-    'ion-buttons': HTMLIonButtonsElement
-    'ion-card': HTMLIonCardElement
-    'ion-card-content': HTMLIonCardContentElement
-    'ion-card-header': HTMLIonCardHeaderElement
-    'ion-card-subtitle': HTMLIonCardSubtitleElement
-    'ion-card-title': HTMLIonCardTitleElement
-    'ion-checkbox': HTMLIonCheckboxElement
-    'ion-chip': HTMLIonChipElement
-    'ion-col': HTMLIonColElement
-    'ion-content': HTMLIonContentElement
-    'ion-datetime': HTMLIonDatetimeElement
-    'ion-fab': HTMLIonFabElement
-    'ion-fab-button': HTMLIonFabButtonElement
-    'ion-fab-list': HTMLIonFabListElement
-    'ion-footer': HTMLIonFooterElement
-    'ion-grid': HTMLIonGridElement
-    'ion-header': HTMLIonHeaderElement
-    'ion-img': HTMLIonImgElement
-    'ion-infinite-scroll': HTMLIonInfiniteScrollElement
-    'ion-infinite-scroll-content': HTMLIonInfiniteScrollContentElement
-    'ion-input': HTMLIonInputElement
-    'ion-item': HTMLIonItemElement
-    'ion-item-divider': HTMLIonItemDividerElement
-    'ion-item-group': HTMLIonItemGroupElement
-    'ion-item-option': HTMLIonItemOptionElement
-    'ion-item-options': HTMLIonItemOptionsElement
-    'ion-item-sliding': HTMLIonItemSlidingElement
-    'ion-label': HTMLIonLabelElement
-    'ion-list': HTMLIonListElement
-    'ion-list-header': HTMLIonListHeaderElement
-    'ion-loading': HTMLIonLoadingElement
-    'ion-loading-controller': HTMLIonLoadingControllerElement
-    'ion-menu': HTMLIonMenuElement
-    'ion-menu-button': HTMLIonMenuButtonElement
-    'ion-menu-controller': HTMLIonMenuControllerElement
-    'ion-menu-toggle': HTMLIonMenuToggleElement
-    'ion-modal': HTMLIonModalElement
-    'ion-modal-controller': HTMLIonModalControllerElement
-    'ion-nav': HTMLIonNavElement
-    'ion-nav-pop': HTMLIonNavPopElement
-    'ion-nav-push': HTMLIonNavPushElement
-    'ion-nav-set-root': HTMLIonNavSetRootElement
-    'ion-note': HTMLIonNoteElement
-    'ion-picker': HTMLIonPickerElement
-    'ion-picker-column': HTMLIonPickerColumnElement
-    'ion-picker-controller': HTMLIonPickerControllerElement
-    'ion-popover': HTMLIonPopoverElement
-    'ion-popover-controller': HTMLIonPopoverControllerElement
-    'ion-progress-bar': HTMLIonProgressBarElement
-    'ion-radio': HTMLIonRadioElement
-    'ion-radio-group': HTMLIonRadioGroupElement
-    'ion-range': HTMLIonRangeElement
-    'ion-refresher': HTMLIonRefresherElement
-    'ion-refresher-content': HTMLIonRefresherContentElement
-    'ion-reorder': HTMLIonReorderElement
-    'ion-reorder-group': HTMLIonReorderGroupElement
-    'ion-ripple-effect': HTMLIonRippleEffectElement
-    'ion-route': HTMLIonRouteElement
-    'ion-route-redirect': HTMLIonRouteRedirectElement
-    'ion-router': HTMLIonRouterElement
-    'ion-router-outlet': HTMLIonRouterOutletElement
-    'ion-row': HTMLIonRowElement
-    'ion-searchbar': HTMLIonSearchbarElement
-    'ion-segment': HTMLIonSegmentElement
-    'ion-segment-button': HTMLIonSegmentButtonElement
-    'ion-select': HTMLIonSelectElement
-    'ion-select-option': HTMLIonSelectOptionElement
-    'ion-select-popover': HTMLIonSelectPopoverElement
-    'ion-skeleton-text': HTMLIonSkeletonTextElement
-    'ion-slide': HTMLIonSlideElement
-    'ion-slides': HTMLIonSlidesElement
-    'ion-spinner': HTMLIonSpinnerElement
-    'ion-split-pane': HTMLIonSplitPaneElement
-    'ion-tab': HTMLIonTabElement
-    'ion-tab-bar': HTMLIonTabBarElement
-    'ion-tab-button': HTMLIonTabButtonElement
-    'ion-tabs': HTMLIonTabsElement
-    'ion-text': HTMLIonTextElement
-    'ion-textarea': HTMLIonTextareaElement
-    'ion-thumbnail': HTMLIonThumbnailElement
-    'ion-title': HTMLIonTitleElement
-    'ion-toast': HTMLIonToastElement
-    'ion-toast-controller': HTMLIonToastControllerElement
-    'ion-toggle': HTMLIonToggleElement
-    'ion-toolbar': HTMLIonToolbarElement
-    'ion-virtual-scroll': HTMLIonVirtualScrollElement
-  }
 
-  interface ElementTagNameMap {
+  interface HTMLElementTagNameMap {
     'ion-action-sheet': HTMLIonActionSheetElement;
     'ion-action-sheet-controller': HTMLIonActionSheetControllerElement;
     'ion-alert': HTMLIonAlertElement;
@@ -6063,5 +5867,7 @@ declare global {
     'ion-toolbar': HTMLIonToolbarElement;
     'ion-virtual-scroll': HTMLIonVirtualScrollElement;
   }
+
+  interface ElementTagNameMap extends HTMLElementTagNameMap {}
 }
 
