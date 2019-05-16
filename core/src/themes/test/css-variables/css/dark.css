@@ -27,4 +27,21 @@
 
   --ion-item-background: #1b2025;
   --ion-item-background-activated: #051b35;
+
+  /* Custom Toolbar CSS (optional) */
+  --ion-toolbar-background: #000;
+  --ion-toolbar-border-color: #333;
+  --ion-toolbar-color: limegreen;
+  --ion-toolbar-color-activated: rgb(35, 156, 35);
+}
+
+/* Customize the Toolbar Segment by Mode */
+.ios {
+  --ion-toolbar-color-unchecked: limegreen;
+  --ion-toolbar-color-checked: limegreen;
+}
+
+.md {
+  --ion-toolbar-color-unchecked: rgba(255, 255, 255, .6);
+  --ion-toolbar-color-checked: #fff;
 }
