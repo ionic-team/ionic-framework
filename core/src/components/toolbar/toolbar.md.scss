@@ -36,32 +36,40 @@
 }
 
 
+// Material Design Toolbar Buttons
+// --------------------------------------------------
+
+// If the buttons are in the start slot & the first child
+// add additional margin start
+::slotted(ion-buttons[slot="start"]:first-of-type) {
+  @include margin-horizontal(4px, null);
+}
+
+::slotted(ion-buttons[slot="secondary"]:last-of-type),
+::slotted(ion-buttons[slot="primary"]:last-of-type),
+::slotted(ion-buttons[slot="end"]:last-of-type) {
+  @include margin-horizontal(null, 4px);
+}
+
+
 // Material Design Toolbar Slot Placement
 // --------------------------------------------------
 
 ::slotted([slot="start"]) {
-  @include margin-horizontal(4px, 0);
-
   order: map-get($toolbar-order-md, slot-start);
 }
 
 ::slotted([slot="secondary"]) {
-  @include margin-horizontal(0, 4px);
-
   order: map-get($toolbar-order-md, slot-secondary);
 }
 
 ::slotted([slot="primary"]) {
-  @include margin-horizontal(0, 4px);
-
   order: map-get($toolbar-order-md, slot-primary);
 
   text-align: end;
 }
 
 ::slotted([slot="end"]) {
-  @include margin-horizontal(0, 4px);
-
   order: map-get($toolbar-order-md, slot-end);
 
   text-align: end;
