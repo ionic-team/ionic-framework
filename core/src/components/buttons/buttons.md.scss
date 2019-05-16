@@ -5,13 +5,15 @@
 // --------------------------------------------------
 
 ::slotted(*) ion-button {
-  --padding-top: 12px;
-  --padding-end: 12px;
-  --padding-bottom: 12px;
-  --padding-start: 12px;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 8px;
+  --padding-end: 8px;
   --box-shadow: none;
 
   @include margin-horizontal(2px, 2px);
+
+  height: 32px;
 
   font-size: #{$toolbar-md-button-font-size};
   font-weight: 500;
@@ -58,6 +60,10 @@
 // --------------------------------------------------
 
 ::slotted(*) .button-has-icon-only.button-clear {
+  --padding-top: 12px;
+  --padding-end: 12px;
+  --padding-bottom: 12px;
+  --padding-start: 12px;
   --border-radius: 50%;
 
   @include margin(0);
