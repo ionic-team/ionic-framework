@@ -28,6 +28,14 @@
 }
 
 
+// Toolbar: Segment
+// --------------------------------------------------
+
+::slotted(ion-segment) {
+  min-height: var(--min-height);
+}
+
+
 // Material Design Toolbar Slot Placement
 // --------------------------------------------------
 
