@@ -5,10 +5,7 @@ import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-title',
-  styleUrls: {
-    ios: 'title.ios.scss',
-    md: 'title.md.scss'
-  },
+  styleUrl: 'title.scss',
   shadow: true
 })
 export class ToolbarTitle implements ComponentInterface {
