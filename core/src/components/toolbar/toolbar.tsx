@@ -47,10 +47,11 @@ export class Toolbar implements ComponentInterface {
       firstButtons.classList.add('buttons-first-slot');
     }
 
+    const buttonsReversed = buttons.reverse();
     const lastButtons =
-      buttons.reverse().find(button => button.slot === 'end') ||
-      buttons.reverse().find(button => button.slot === 'primary') ||
-      buttons.reverse().find(button => button.slot === 'secondary');
+      buttonsReversed.find(button => button.slot === 'end') ||
+      buttonsReversed.find(button => button.slot === 'primary') ||
+      buttonsReversed.find(button => button.slot === 'secondary');
     if (lastButtons) {
       lastButtons.classList.add('buttons-last-slot');
     }
