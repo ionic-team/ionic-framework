@@ -94,5 +94,6 @@ export interface RouteView {
   element: HTMLElement;
   ref: ComponentRef<any>;
   savedData?: any;
+  savedExtras?: any;
   unlistenEvents: () => void;
 }
