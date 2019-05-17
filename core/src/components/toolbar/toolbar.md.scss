@@ -39,12 +39,16 @@
 // Material Design Toolbar Buttons
 // --------------------------------------------------
 
-// If the buttons are in the start slot & the first child
-// add additional margin start
+// Style the first slot with additional margin start
+// this only ever gets added to the first start slot buttons
 ::slotted(.buttons-first-slot) {
   @include margin-horizontal(4px, null);
 }
 
+// Style the last slot with additional margin end
+// this is added to the end, primary, or secondary slot
+// whichever it finds first, and the first one it finds
+// if multiple of the same name are found
 ::slotted(.buttons-last-slot) {
   @include margin-horizontal(null, 4px);
 }
