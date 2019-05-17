@@ -77,10 +77,7 @@ export class BackButton implements ComponentInterface {
     const backButtonText = this.text != null ? this.text : this.config.get('backButtonText', defaultBackButtonText);
 
     return (
-      <button
-        type="button"
-        class="button-native"
-      >
+      <button type="button" class="button-native">
         <span class="button-inner">
           {backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false}></ion-icon>}
           {backButtonText && <span class="button-text">{backButtonText}</span>}
