@@ -153,7 +153,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
           const contextSnapshot = context.route.snapshot;
 
           this.activatedView.savedExtras.queryParams = contextSnapshot.queryParams;
-          this.activatedView.savedExtras.queryParams = contextSnapshot.fragment;
+          this.activatedView.savedExtras.fragment = contextSnapshot.fragment;
         }
       }
       const c = this.component;
