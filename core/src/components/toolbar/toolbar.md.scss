@@ -41,13 +41,11 @@
 
 // If the buttons are in the start slot & the first child
 // add additional margin start
-::slotted(ion-buttons[slot="start"]:first-of-type) {
+::slotted(.buttons-first-slot) {
   @include margin-horizontal(4px, null);
 }
 
-::slotted(ion-buttons[slot="secondary"]:last-of-type),
-::slotted(ion-buttons[slot="primary"]:last-of-type),
-::slotted(ion-buttons[slot="end"]:last-of-type) {
+::slotted(.buttons-last-slot) {
   @include margin-horizontal(null, 4px);
 }
 
