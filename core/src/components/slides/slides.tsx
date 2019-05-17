@@ -364,6 +364,7 @@ export class Slides implements ComponentInterface {
       touchRatio: 1,
       touchAngle: 45,
       simulateTouch: true,
+      touchStartPreventDefault: false,
       shortSwipes: true,
       longSwipes: true,
       longSwipesRatio: 0.5,
