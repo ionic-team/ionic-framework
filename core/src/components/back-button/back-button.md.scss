@@ -6,22 +6,24 @@
 
 :host {
   --color: #{$back-button-md-color};
-  --margin-top: 1px;
-  --margin-end: 6px;
+  --margin-top: 0;
+  --margin-end: 0;
   --margin-bottom: 0;
   --margin-start: 0;
   --padding-top: 0;
-  --padding-end: 5px;
+  --padding-end: 0;
   --padding-bottom: 0;
-  --padding-start: 5px;
+  --padding-start: 0;
   --min-height: 32px;
   --min-width: 44px;
-  --icon-padding-end: .3em;
-  --icon-padding-start: .3em;
+  --icon-padding-top: 0;
+  --icon-padding-end: 0;
+  --icon-padding-start: 0;
+  --icon-padding-bottom: 0;
   --icon-margin-top: 0;
-  --icon-margin-end: 6px;
+  --icon-margin-end: 0;
   --icon-margin-bottom: 0;
-  --icon-margin-start: 6px;
+  --icon-margin-start: 0;
   --icon-font-size: 24px;
   --icon-font-weight: normal;
 
@@ -32,6 +34,9 @@
 }
 
 .button-native {
+  width: 48px;
+  height: 48px;
+
   box-shadow: none;
 }
 
