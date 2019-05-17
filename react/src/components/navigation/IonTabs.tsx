@@ -35,12 +35,23 @@ export default class IonTabs extends Component<Props> {
       if (child == null || typeof child !== 'object' || !child.hasOwnProperty('type')) {
         return;
       }
-      if (child.type === IonRouterOutlet) {
-        outlet = child;
+
+      if(outlet === undefined && child.type.hasOwnProperty('displayName')) {
+        const childType = child.type as any;
+        const displayName = childType.displayName as string;
+        if(displayName === IonRouterOutlet.displayName){
+          outlet = child;
+        }
       }
-      if (child.type === IonTabBar) {
-        tabBar = child;
+
+      if(tabBar === undefined && child.type.hasOwnProperty('displayName')) {
+        const childType = child.type as any;
+        const displayName = childType.displayName as string;
+        if(displayName === IonTabBar.displayName){
+          tabBar = child;
+        }
       }
+
     });
 
     return (
