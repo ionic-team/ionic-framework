@@ -21,7 +21,7 @@ export class SkeletonText implements ComponentInterface {
   @Prop() animated = false;
 
   /**
-   * @deprecated - Use CSS instead. The width of the skeleton text. If supplied, it will override the CSS style.
+   * @deprecated Use CSS instead. The width of the skeleton text. If supplied, it will override the CSS style.
    */
   @Prop() width?: string;
 

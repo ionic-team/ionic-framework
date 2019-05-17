@@ -67,28 +67,46 @@ declare module "./components" {
   }
 }
 
-declare module "@stencil/core" {
+declare module "@stencil/core/internal" {
   namespace JSXBase {
     export interface HTMLAttributes {
-      // for ion-menu and ion-split-pane
+      /** @deprecated */
       main?: boolean;
+
+      /** @deprecated Use .ion-padding class instead */
       padding?: boolean;
+      /** @deprecated Use .ion-padding-top class instead */
       ['padding-top']?: boolean;
+
+      /** @deprecated Use .ion-padding-bottom class instead */
       ['padding-bottom']?: boolean;
+      /** @deprecated Use .ion-padding-start class instead */
       ['padding-left']?: boolean;
+      /** @deprecated Use .ion-padding-end class instead */
       ['padding-right']?: boolean;
+      /** @deprecated Use .ion-padding-horizontal class instead */
       ['padding-horizontal']?: boolean;
+      /** @deprecated Use .ion-padding-horizontal class instead */
       ['padding-vertical']?: boolean;
 
+      /** @deprecated Use .ion-margin class instead */
       margin?: boolean;
+      /** @deprecated Use .ion-margin-top class instead */
       ['margin-top']?: boolean;
+      /** @deprecated Use .ion-margin-bottom class instead */
       ['margin-bottom']?: boolean;
+      /** @deprecated Use .ion-margin-start class instead */
       ['margin-left']?: boolean;
+      /** @deprecated Use .ion-margin-end class instead */
       ['margin-right']?: boolean;
+      /** @deprecated Use .ion-margin-horizontal class instead */
       ['margin-horizontal']?: boolean;
+      /** @deprecated Use .ion-margin-vertical class instead */
       ['margin-vertical']?: boolean;
 
+      /** @deprecated Use .ion-no-padding class instead */
       ['no-padding']?: boolean;
+      /** @deprecated Use .ion-no-margin class instead */
       ['no-margin']?: boolean;
     }
   }
