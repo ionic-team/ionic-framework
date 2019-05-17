@@ -253,11 +253,12 @@ function cleanup(activeRoute: RouteView, views: RouteView[], viewsSnapshot: Rout
      * it is in mid-transition.
      *
      * In this instance we also do not care about query
-     * params as it will be the same view regardless
+     * params or fragments as it will be the same view regardless
      */
     const locationWithoutParams = location.path().split('?')[0];
+    const locationWithoutFragment = locationWithoutParams.split('#')[0];
 
-    if (view !== activeRoute && view.url !== locationWithoutParams) {
+    if (view !== activeRoute && view.url !== locationWithoutFragment) {
       const element = view.element;
       element.setAttribute('aria-hidden', 'true');
       element.classList.add('ion-page-hidden');
