@@ -118,5 +118,5 @@
 // -----------------------------------------
 
 :host-context(ion-toolbar) {
-  @include padding(3px);
+  @include padding(3px, 7px);
 }
