@@ -59,7 +59,22 @@ export class StackController {
     }
     const viewsSnapshot = this.views.slice();
 
-    const currentNavigation = this.router.getCurrentNavigation();
+    let currentNavigation;
+
+    const router = (this.router as any);
+
+    // Angular >= 7.2.0
+    if (router.getCurrentNavigation) {
+      currentNavigation = router.getCurrentNavigation();
+
+    // Angular < 7.2.0
+    } else if (
+      router.navigations &&
+      router.navigations.value
+    ) {
+      currentNavigation = router.navigations.value;
+    }
+
     /**
      * If the navigation action
      * sets `replaceUrl: true`
@@ -101,7 +116,23 @@ export class StackController {
         return Promise.resolve(false);
       }
       const view = views[views.length - deep - 1];
-      return this.navCtrl.navigateBack(view.url).then(() => true);
+      let url = view.url;
+
+      const viewSavedData = view.savedData;
+      if (viewSavedData) {
+        const primaryOutlet = viewSavedData.get('primary');
+        if (
+          primaryOutlet &&
+          primaryOutlet.route &&
+          primaryOutlet.route._routerState &&
+          primaryOutlet.route._routerState.snapshot &&
+          primaryOutlet.route._routerState.snapshot.url
+        ) {
+          url = primaryOutlet.route._routerState.snapshot.url;
+        }
+      }
+
+      return this.navCtrl.navigateBack(url).then(() => true);
     });
   }
 

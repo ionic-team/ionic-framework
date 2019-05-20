@@ -71,18 +71,6 @@
 }
 
 
-// iOS Round Button
-// --------------------------------------------------
-
-:host(.button-round) {
-  --border-radius: #{$button-ios-round-border-radius};
-  --padding-top: #{$button-ios-round-padding-top};
-  --padding-start: #{$button-ios-round-padding-start};
-  --padding-end: #{$button-ios-round-padding-end};
-  --padding-bottom: #{$button-ios-round-padding-bottom};
-}
-
-
 // iOS Button Sizes
 // --------------------------------------------------
 
@@ -108,6 +96,18 @@
   height: #{$button-ios-small-height};
 
   font-size: #{$button-ios-small-font-size};
+}
+
+
+// iOS Round Button
+// --------------------------------------------------
+
+:host(.button-round) {
+  --border-radius: #{$button-ios-round-border-radius};
+  --padding-top: #{$button-ios-round-padding-top};
+  --padding-start: #{$button-ios-round-padding-start};
+  --padding-end: #{$button-ios-round-padding-end};
+  --padding-bottom: #{$button-ios-round-padding-bottom};
 }
 
 

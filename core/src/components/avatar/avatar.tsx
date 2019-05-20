@@ -1,5 +1,7 @@
 import { Component, ComponentInterface } from '@stencil/core';
 
+import { Mode } from '../../interface';
+
 @Component({
   tag: 'ion-avatar',
   styleUrls: {
@@ -9,6 +11,15 @@ import { Component, ComponentInterface } from '@stencil/core';
   shadow: true
 })
 export class Avatar implements ComponentInterface {
+  mode!: Mode;
+
+  hostData() {
+    return {
+      class: {
+        [`${this.mode}`]: true,
+      }
+    };
+  }
 
   render() {
     return <slot></slot>;

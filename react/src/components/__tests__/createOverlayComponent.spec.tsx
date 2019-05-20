@@ -65,7 +65,7 @@ describe('createOverlayComponent - events', () => {
     expect(attachEventPropsSpy).toHaveBeenCalledWith(element, {
       buttons: [],
       onIonActionSheetDidDismiss: onDidDismiss
-    });
+    }, expect.any(Object));
   });
 
   test('should dismiss component on hiding', async () => {

@@ -70,6 +70,7 @@ export class Label implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
+        [`${this.mode}`]: true,
         [`label-${position}`]: position !== undefined,
         [`label-no-animate`]: (this.noAnimate)
       }

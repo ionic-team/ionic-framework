@@ -5,12 +5,15 @@
 
 :host {
   --color: initial;
+  --padding-start: 8px;
+  --padding-end: 8px;
 }
 
 button {
-  @include padding(0, 8px);
+  width: 48px;
+  height: 48px;
 }
 
 ion-icon {
-  font-size: 26px;
+  font-size: 24px;
 }

@@ -7,11 +7,11 @@ export function createControllerComponent<T extends object, E extends OverlayCom
   const displayName = dashToPascalCase(tagName);
   const dismissEventName = `on${displayName}DidDismiss`;
 
-  type ReactProps = {
+  type ReactControllerProps = {
     isOpen: boolean;
     onDidDismiss: (event: CustomEvent<OverlayEventDetail>) => void;
   }
-  type Props = T & ReactProps;
+  type Props = T & ReactControllerProps;
 
   return class ReactControllerComponent extends React.Component<Props> {
     element: E;
@@ -45,7 +45,7 @@ export function createControllerComponent<T extends object, E extends OverlayCom
         }
 
         this.element = await this.controllerElement.create(elementProps);
-        attachEventProps(this.element, elementProps);
+        attachEventProps(this.element, elementProps, prevProps);
 
         await this.element.present();
       }
