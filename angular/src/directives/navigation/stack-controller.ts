@@ -134,7 +134,7 @@ export class StackController {
         }
       }
 
-      return this.navCtrl.navigateBack(url).then(() => true);
+      return this.navCtrl.navigateBack(url, view.savedExtras).then(() => true);
     });
   }
 
