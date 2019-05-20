@@ -61,7 +61,6 @@
     "tslint-react": "^3.6.0"
   },
   "scripts": {
-    "build.dev": "npm run clean && npm run build.css && stencil build --dev --es5 --debug --watch",
     "build": "npm run clean && npm run build.css && npm run build.vendor && stencil build --docs",
     "build.vendor": "rollup --config ./scripts/swiper.rollup.config.js",
     "build.css": "npm run css.sass && npm run css.minify",
