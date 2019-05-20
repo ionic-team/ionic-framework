@@ -147,33 +147,74 @@ function playTransition(trans: Animation, opts: TransitionOptions): Promise<Anim
   return promise;
 }
 
+/**
+ * When transitioning ion-tabs away, the selected tab is not cleared
+ * so lifecycle events will not fire by default. Detect if the
+ * element in question is ion-tabs, and if so manually fire the
+ * lifecycle events for the selected tab
+ */
 const fireTabEventsIfNecessary = (el: HTMLElement | undefined, eventName: string) => {
-  if (!el) { return }
-  
-  const tabs = el.querySelector('ion-tabs');
-  if (!tabs || tabs === undefined || tabs === null) { return }
-  const outlet = el.querySelector('ion-router-outlet');
-  if (!outlet) { return }
-  console.log(outlet)
-  const activePage = outlet.querySelector('.ion-page:not([ion-page-hidden])') as HTMLElement;
-  if (!activePage) { return }
-  
-  lifecycle(activePage, eventName);
-}
+  if (!el) { return; }
 
-function fireWillEvents(enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined) { 
-  fireTabEventsIfNecessary(leavingEl, LIFECYCLE_WILL_LEAVE); 
+  const tabs = el.querySelector('ion-tabs');
+  if (!tabs || tabs === undefined || tabs === null) { return; }
+
+  const outlet = el.querySelector('ion-router-outlet');
+  if (!outlet) { return; }
+
+  const activePage = outlet.querySelector('.ion-page:not([ion-page-hidden])') as HTMLElement;
+  if (!activePage) { return; }
+
+  lifecycle(activePage, eventName);
+};
+
+/**
+ * Since we are manually firing lifecycle for the selected tab,
+ * we need to ensure that it is not automatically fired
+ * when selecting a tab for the first time otherwise
+ * there will be duplicate events fired.
+ */
+const isFirstTabSelect = (enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined) => {
+  if (leavingEl || !enteringEl) { return false; }
+
+  const parentElement = enteringEl.parentElement;
+  if (
+    !parentElement ||
+    parentElement.tagName !== 'ION-ROUTER-OUTLET'
+  ) {
+    return false;
+  }
+
+  const isTabs = parentElement.getAttribute('tabs');
+  if (
+    !isTabs ||
+    isTabs === 'false'
+  ) {
+    return false;
+  }
+
+  return true;
+};
+
+function fireWillEvents(enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined) {
+  fireTabEventsIfNecessary(leavingEl, LIFECYCLE_WILL_LEAVE);
   fireTabEventsIfNecessary(enteringEl, LIFECYCLE_WILL_ENTER);
 
   lifecycle(leavingEl, LIFECYCLE_WILL_LEAVE);
-  lifecycle(enteringEl, LIFECYCLE_WILL_ENTER);
+
+  if (!isFirstTabSelect(enteringEl, leavingEl)) {
+    lifecycle(enteringEl, LIFECYCLE_WILL_ENTER);
+  }
 }
 
 function fireDidEvents(enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined) {
-  fireTabEventsIfNecessary(enteringEl, LIFECYCLE_DID_ENTER); 
+  fireTabEventsIfNecessary(enteringEl, LIFECYCLE_DID_ENTER);
   fireTabEventsIfNecessary(leavingEl, LIFECYCLE_DID_LEAVE);
-  
-  lifecycle(enteringEl, LIFECYCLE_DID_ENTER);
+
+  if (!isFirstTabSelect(enteringEl, leavingEl)) {
+    lifecycle(enteringEl, LIFECYCLE_DID_ENTER);
+  }
+
   lifecycle(leavingEl, LIFECYCLE_DID_LEAVE);
 }
 
