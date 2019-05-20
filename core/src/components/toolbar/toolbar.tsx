@@ -37,6 +37,26 @@ export class Toolbar implements ComponentInterface {
    */
   @Prop() mode!: Mode;
 
+  componentWillLoad() {
+    const buttons = Array.from(this.el.querySelectorAll('ion-buttons'));
+
+    const firstButtons = buttons.find(button => {
+      return button.slot === 'start';
+    });
+    if (firstButtons) {
+      firstButtons.classList.add('buttons-first-slot');
+    }
+
+    const buttonsReversed = buttons.reverse();
+    const lastButtons =
+      buttonsReversed.find(button => button.slot === 'end') ||
+      buttonsReversed.find(button => button.slot === 'primary') ||
+      buttonsReversed.find(button => button.slot === 'secondary');
+    if (lastButtons) {
+      lastButtons.classList.add('buttons-last-slot');
+    }
+  }
+
   @Listen('ionStyle')
   childrenStyle(ev: CustomEvent<StyleEventDetail>) {
     ev.stopPropagation();
