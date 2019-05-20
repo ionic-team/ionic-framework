@@ -184,7 +184,16 @@ export class NavController {
     if (Array.isArray(url)) {
       return this.router!.navigate(url, options);
     } else {
-      return this.router!.navigateByUrl(url, options);
+
+      /**
+       * navigateByUrl ignores any properties that
+       * would change the url, so things like queryParams
+       * would be ignored unless we create a url tree
+       * More Info: https://github.com/angular/angular/issues/18798
+       */
+      return this.router!.navigateByUrl(
+        this.router!.createUrlTree([url], options)
+      );
     }
   }
 }
