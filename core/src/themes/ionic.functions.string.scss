@@ -82,26 +82,6 @@
   @return $encoded;
 }
 
-// String to List Function
-// --------------------------------------------------------------------------------
-
-@function str-to-list($string, $separator: ',', $startAt: 1) {
-  $workStr: str-slice($string, $startAt);
-
-  $list: ();
-
-  $indexOfFirstSpace: str-index($workStr, $separator);
-
-  @if $indexOfFirstSpace == null {
-    $list: ($workStr);
-  } @else {
-    $list: (str-slice($workStr, 1, $indexOfFirstSpace - 1));
-    $list: join($list,str-to-list($workStr, $startAt: $indexOfFirstSpace + 1));
-  }
-
-  @return $list;
-}
-
 
 // Add Root Selector
 // --------------------------------------------------------------------------------
