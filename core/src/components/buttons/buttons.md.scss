@@ -11,6 +11,8 @@
   --padding-end: 8px;
   --box-shadow: none;
 
+  @include margin-horizontal(2px, 2px);
+
   height: 32px;
 
   font-size: #{$toolbar-md-button-font-size};
@@ -51,6 +53,23 @@
 ::slotted(*) .button {
   --color-focused: #{$toolbar-md-color};
   --background-focused: rgba(66, 66, 66, 0.1);
+}
+
+
+// Material Design Toolbar Icon Only Clear Button
+// --------------------------------------------------
+
+::slotted(*) .button-has-icon-only.button-clear {
+  --padding-top: 12px;
+  --padding-end: 12px;
+  --padding-bottom: 12px;
+  --padding-start: 12px;
+  --border-radius: 50%;
+
+  @include margin(0);
+
+  width: 48px;
+  height: 48px;
 }
 
 
