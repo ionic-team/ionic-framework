@@ -157,15 +157,15 @@ const fireTabEventsIfNecessary = (el: HTMLElement | undefined, eventName: string
   if (!el) { return; }
 
   const tabs = el.querySelector('ion-tabs');
-  if (!tabs || tabs === undefined || tabs === null) { return; }
+  if (!tabs) { return; }
 
   const outlet = el.querySelector('ion-router-outlet');
   if (!outlet) { return; }
 
-  const activePage = outlet.querySelector('.ion-page:not([ion-page-hidden])') as HTMLElement;
+  const activePage = outlet.querySelector('.ion-page:not([ion-page-hidden])');
   if (!activePage) { return; }
 
-  lifecycle(activePage, eventName);
+  lifecycle(activePage as HTMLElement, eventName);
 };
 
 /**
@@ -185,10 +185,9 @@ const isFirstTabSelect = (enteringEl: HTMLElement | undefined, leavingEl: HTMLEl
     return false;
   }
 
-  const isTabs = parentElement.getAttribute('tabs');
   if (
-    !isTabs ||
-    isTabs === 'false'
+    !parentElement.hasAttribute('tabs') ||
+    parentElement.getAttribute('tabs') === 'false'
   ) {
     return false;
   }
