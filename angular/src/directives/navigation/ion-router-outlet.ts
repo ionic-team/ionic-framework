@@ -141,6 +141,20 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     if (this.activated) {
       if (this.activatedView) {
         this.activatedView.savedData = new Map(this.getContext()!.children['contexts']);
+
+        /**
+         * Ensure we are saving the NavigationExtras
+         * data otherwise it will be lost
+         */
+        this.activatedView.savedExtras = {};
+        const context = this.getContext()!;
+
+        if (context.route) {
+          const contextSnapshot = context.route.snapshot;
+
+          this.activatedView.savedExtras.queryParams = contextSnapshot.queryParams;
+          this.activatedView.savedExtras.fragment = contextSnapshot.fragment;
+        }
       }
       const c = this.component;
       this.activatedView = null;
