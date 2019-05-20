@@ -9,14 +9,14 @@ export function createOverlayComponent<T extends object, E extends OverlayCompon
   const displayName = dashToPascalCase(tagName);
   const dismissEventName = `on${displayName}DidDismiss`;
 
-  type ReactProps = {
-    children: React.ReactNode;
+  type ReactOverlayProps = {
+    children?: React.ReactNode;
     isOpen: boolean;
     onDidDismiss: (event: CustomEvent<OverlayEventDetail>) => void;
   }
-  type Props = T & ReactProps;
+  type Props = T & ReactOverlayProps;
 
-  return class ReactControllerComponent extends React.Component<Props> {
+  return class ReactOverlayComponent extends React.Component<Props> {
     element: E;
     controllerElement: C;
     el: HTMLDivElement;
