@@ -52,6 +52,22 @@ const Example: React.SFC<{}> = () => (
 export default Example
 
 
+### Vue
+
+```html
+<template>
+  <ion-list>
+    <ion-item v-for="item in items" :key="item.src">
+      <ion-thumbnail slot="start">
+        <ion-img :src="item.src"></ion-img>
+      </ion-thumbnail>
+      <ion-label>{{item.text}}</ion-label>
+    </ion-item>
+  </ion-list>
+</template>
+```
+
+
 
 ## Properties
 
@@ -63,9 +79,11 @@ export default Example
 
 ## Events
 
-| Event           | Description                        | Type                |
-| --------------- | ---------------------------------- | ------------------- |
-| `ionImgDidLoad` | Emitted when the img src is loaded | `CustomEvent<void>` |
+| Event            | Description                                 | Type                |
+| ---------------- | ------------------------------------------- | ------------------- |
+| `ionError`       | Emitted when the img fails to load          | `CustomEvent<void>` |
+| `ionImgDidLoad`  | Emitted when the image has finished loading | `CustomEvent<void>` |
+| `ionImgWillLoad` | Emitted when the img src has been set       | `CustomEvent<void>` |
 
 
 ----------------------------------------------

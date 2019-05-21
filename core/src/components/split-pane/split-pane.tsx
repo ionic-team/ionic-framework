@@ -1,7 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
 import { Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
 
 const SPLIT_PANE_MAIN = 'split-pane-main';
 const SPLIT_PANE_SIDE = 'split-pane-side';
@@ -37,14 +36,6 @@ export class SplitPane implements ComponentInterface {
    * The content `id` of the split-pane's main content.
    * This property can be used instead of the `[main]` attribute to select the `main`
    * content of the split-pane.
-   *
-   * ```html
-   * <ion-split-pane content-id="my-content">
-   *   <ion-menu></ion-menu>
-   *   <div id="my-content">
-   * </ion-split-pane>
-   * ```
-   *
    */
   @Prop() contentId?: string;
 
@@ -150,7 +141,7 @@ export class SplitPane implements ComponentInterface {
       const isMain = contentId !== undefined ? child.id === contentId : child.hasAttribute('main');
       if (isMain) {
         if (foundMain) {
-          console.warn('split pane can not have more than one main node');
+          console.warn('split pane cannot have more than one main node');
           return;
         }
         foundMain = true;
@@ -158,14 +149,18 @@ export class SplitPane implements ComponentInterface {
       setPaneClass(child, isMain);
     }
     if (!foundMain) {
-      console.warn('split pane could not found any main node');
+      console.warn('split pane does not have a specified main node');
     }
   }
 
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, 'split-pane'),
+        [`${this.mode}`]: true,
+
+        // Used internally for styling
+        [`split-pane-${this.mode}`]: true,
+
         'split-pane-visible': this.visible
       }
     };

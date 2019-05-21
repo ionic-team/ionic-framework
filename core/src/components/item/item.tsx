@@ -44,7 +44,7 @@ export class Item implements ComponentInterface {
 
   /**
    * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
-   * is `ios` and an `href`, `onclick` or `button` property is present.
+   * is `ios` and an `href` or `button` property is present.
    */
   @Prop() detail?: boolean;
 
@@ -136,10 +136,11 @@ export class Item implements ComponentInterface {
       class: {
         ...childStyles,
         ...createColorClasses(this.color),
+        'item': true,
+        [`${this.mode}`]: true,
         [`item-lines-${this.lines}`]: this.lines !== undefined,
         'item-disabled': this.disabled,
         'in-list': hostContext('ion-list', this.el),
-        'item': true,
         'item-multiple-inputs': this.multipleInputs,
         'ion-activatable': this.isClickable(),
         'ion-focusable': true,

@@ -2,6 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Me
 
 import { Animation, AnimationBuilder, Config, Mode, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
+import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -113,7 +114,10 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   componentWillLoad() {
     if (this.spinner === undefined) {
-      this.spinner = this.config.get('loadingSpinner', this.mode === 'ios' ? 'lines' : 'crescent');
+      this.spinner = this.config.get(
+        'loadingSpinner',
+        this.config.get('spinner', this.mode === 'ios' ? 'lines' : 'crescent')
+      );
     }
   }
 
@@ -139,6 +143,12 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   /**
    * Dismiss the loading overlay after it has been presented.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the loading.
+   * This can be useful in a button handler for determining which button was
+   * clicked to dismiss the loading.
+   * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
    */
   @Method()
   dismiss(data?: any, role?: string): Promise<boolean> {
@@ -171,6 +181,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
       },
       class: {
         ...getClassMap(this.cssClass),
+        [`${this.mode}`]: true,
         'loading-translucent': this.translucent
       }
     };
@@ -186,7 +197,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
           </div>
         )}
 
-        {this.message && <div class="loading-content">{this.message}</div>}
+        {this.message && <div class="loading-content" innerHTML={sanitizeDOMString(this.message)}></div>}
       </div>
     ];
   }
