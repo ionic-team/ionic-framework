@@ -39,21 +39,6 @@ Type: `Promise<HTMLIonToastElement | undefined>`
 
 
 
-## Dependencies
-
-### Depends on
-
-- [ion-toast](../toast)
-
-### Graph
-```mermaid
-graph TD;
-  ion-toast-controller --> ion-toast
-  ion-toast --> ion-icon
-  ion-toast --> ion-ripple-effect
-  style ion-toast-controller fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

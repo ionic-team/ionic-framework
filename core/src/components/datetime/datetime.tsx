@@ -3,6 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Me
 import { getIonMode } from '../../global/ionic-global';
 import { DatetimeChangeEventDetail, DatetimeOptions, PickerColumn, PickerColumnOption, PickerOptions, StyleEventDetail } from '../../interface';
 import { clamp, findItemLabel, renderHiddenInput } from '../../utils/helpers';
+import { pickerController } from '../../utils/overlays';
 import { hostContext } from '../../utils/theme';
 
 import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getDateValue, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
@@ -30,8 +31,6 @@ export class Datetime implements ComponentInterface {
   @Element() el!: HTMLIonDatetimeElement;
 
   @State() isExpanded = false;
-
-  @Prop({ connect: 'ion-picker-controller' }) pickerCtrl!: HTMLIonPickerControllerElement;
 
   /**
    * The name of the control, which is submitted with the form data.
@@ -259,7 +258,7 @@ export class Datetime implements ComponentInterface {
     }
 
     const pickerOptions = this.generatePickerOptions();
-    const picker = await this.pickerCtrl.create(pickerOptions);
+    const picker = await pickerController.create(pickerOptions);
 
     this.isExpanded = true;
     picker.onDidDismiss().then(() => {

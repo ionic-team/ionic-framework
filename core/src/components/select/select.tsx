@@ -6,6 +6,9 @@ import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
 import { SelectCompareFn } from './select-interface';
+import { actionSheetController } from '../../utils/overlays';
+import { alertController } from '../../utils/overlays';
+import { popoverController } from '../../utils/overlays';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -27,10 +30,6 @@ export class Select implements ComponentInterface {
   private buttonEl?: HTMLButtonElement;
 
   @Element() el!: HTMLIonSelectElement;
-
-  @Prop({ connect: 'ion-action-sheet-controller' }) actionSheetCtrl!: HTMLIonActionSheetControllerElement;
-  @Prop({ connect: 'ion-alert-controller' }) alertCtrl!: HTMLIonAlertControllerElement;
-  @Prop({ connect: 'ion-popover-controller' }) popoverCtrl!: HTMLIonPopoverControllerElement;
 
   @State() isExpanded = false;
 
@@ -320,7 +319,7 @@ export class Select implements ComponentInterface {
         options: this.createPopoverOptions(this.childOpts)
       }
     };
-    return this.popoverCtrl.create(popoverOpts);
+    return popoverController.create(popoverOpts);
   }
 
   private async openActionSheet() {
@@ -334,7 +333,7 @@ export class Select implements ComponentInterface {
       buttons: this.createActionSheetButtons(this.childOpts),
       cssClass: ['select-action-sheet', interfaceOptions.cssClass]
     };
-    return this.actionSheetCtrl.create(actionSheetOpts);
+    return actionSheetController.create(actionSheetOpts);
   }
 
   private async openAlert() {
@@ -369,7 +368,7 @@ export class Select implements ComponentInterface {
       cssClass: ['select-alert', interfaceOptions.cssClass,
                  (this.multiple ? 'multiple-select-alert' : 'single-select-alert')]
     };
-    return this.alertCtrl.create(alertOpts);
+    return alertController.create(alertOpts);
   }
 
   /**

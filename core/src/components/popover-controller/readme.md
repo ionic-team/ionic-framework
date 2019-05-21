@@ -58,25 +58,6 @@ Type: `Promise<HTMLIonPopoverElement | undefined>`
 
 
 
-## Dependencies
-
-### Used by
-
- - [ion-select](../select)
-
-### Depends on
-
-- [ion-popover](../popover)
-
-### Graph
-```mermaid
-graph TD;
-  ion-popover-controller --> ion-popover
-  ion-popover --> ion-backdrop
-  ion-select --> ion-popover-controller
-  style ion-popover-controller fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

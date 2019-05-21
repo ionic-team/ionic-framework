@@ -17,7 +17,7 @@ export class AlertController implements ComponentInterface, OverlayController {
    */
   @Method()
   create(options: AlertOptions): Promise<HTMLIonAlertElement> {
-    return createOverlay(document.createElement('ion-alert'), options);
+    return createOverlay('ion-alert', options);
   }
 
   /**

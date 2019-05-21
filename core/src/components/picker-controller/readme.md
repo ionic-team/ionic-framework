@@ -38,26 +38,6 @@ Type: `Promise<HTMLIonPickerElement | undefined>`
 
 
 
-## Dependencies
-
-### Used by
-
- - [ion-datetime](../datetime)
-
-### Depends on
-
-- [ion-picker](../picker)
-
-### Graph
-```mermaid
-graph TD;
-  ion-picker-controller --> ion-picker
-  ion-picker --> ion-backdrop
-  ion-picker --> ion-picker-column
-  ion-datetime --> ion-picker-controller
-  style ion-picker-controller fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

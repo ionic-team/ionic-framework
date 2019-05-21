@@ -12,8 +12,8 @@ const config = Context.config = new Config();
 
 let mode: Mode;
 
-export function getIonMode(ref: any): Mode {
-  return getMode(ref) || mode;
+export function getIonMode(ref?: any): Mode {
+  return (ref && getMode(ref)) || mode;
 }
 
 export default function() {

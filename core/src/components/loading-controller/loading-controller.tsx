@@ -17,7 +17,7 @@ export class LoadingController implements ComponentInterface, OverlayController 
    */
   @Method()
   create(options?: LoadingOptions): Promise<HTMLIonLoadingElement> {
-    return createOverlay(document.createElement('ion-loading'), options);
+    return createOverlay('ion-loading', options);
   }
 
   /**

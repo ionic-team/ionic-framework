@@ -275,10 +275,6 @@ Type: `Promise<void>`
 
 ## Dependencies
 
-### Used by
-
- - [ion-toast-controller](../toast-controller)
-
 ### Depends on
 
 - ion-icon
@@ -289,7 +285,6 @@ Type: `Promise<void>`
 graph TD;
   ion-toast --> ion-icon
   ion-toast --> ion-ripple-effect
-  ion-toast-controller --> ion-toast
   style ion-toast fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

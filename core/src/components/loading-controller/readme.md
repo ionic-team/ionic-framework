@@ -61,21 +61,6 @@ Type: `Promise<HTMLIonLoadingElement | undefined>`
 
 
 
-## Dependencies
-
-### Depends on
-
-- [ion-loading](../loading)
-
-### Graph
-```mermaid
-graph TD;
-  ion-loading-controller --> ion-loading
-  ion-loading --> ion-backdrop
-  ion-loading --> ion-spinner
-  style ion-loading-controller fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

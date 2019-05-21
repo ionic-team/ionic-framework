@@ -17,7 +17,7 @@ export class ModalController implements ComponentInterface, OverlayController {
    */
   @Method()
   create<T extends ComponentRef>(options: ModalOptions<T>): Promise<HTMLIonModalElement> {
-    return createOverlay(document.createElement('ion-modal'), options);
+    return createOverlay('ion-modal', options);
   }
 
   /**

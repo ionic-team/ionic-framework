@@ -17,7 +17,7 @@ export class PopoverController implements ComponentInterface, OverlayController 
    */
   @Method()
   create<T extends ComponentRef>(options: PopoverOptions<T>): Promise<HTMLIonPopoverElement> {
-    return createOverlay(document.createElement('ion-popover'), options);
+    return createOverlay('ion-popover', options);
   }
 
   /**

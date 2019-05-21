@@ -17,7 +17,7 @@ export class ActionSheetController implements ComponentInterface, OverlayControl
    */
   @Method()
   create(options: ActionSheetOptions): Promise<HTMLIonActionSheetElement> {
-    return createOverlay(document.createElement('ion-action-sheet'), options);
+    return createOverlay('ion-action-sheet', options);
   }
 
   /**

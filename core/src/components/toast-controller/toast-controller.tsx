@@ -17,7 +17,7 @@ export class ToastController implements ComponentInterface, OverlayController {
    */
   @Method()
   create(options?: ToastOptions): Promise<HTMLIonToastElement> {
-    return createOverlay(document.createElement('ion-toast'), options);
+    return createOverlay('ion-toast', options);
   }
 
   /**

@@ -55,26 +55,6 @@ Type: `Promise<HTMLIonAlertElement | undefined>`
 
 
 
-## Dependencies
-
-### Used by
-
- - [ion-select](../select)
-
-### Depends on
-
-- [ion-alert](../alert)
-
-### Graph
-```mermaid
-graph TD;
-  ion-alert-controller --> ion-alert
-  ion-alert --> ion-ripple-effect
-  ion-alert --> ion-backdrop
-  ion-select --> ion-alert-controller
-  style ion-alert-controller fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

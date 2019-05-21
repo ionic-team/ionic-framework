@@ -17,7 +17,7 @@ export class PickerController implements ComponentInterface, OverlayController {
    */
   @Method()
   create(options: PickerOptions): Promise<HTMLIonPickerElement> {
-    return createOverlay(document.createElement('ion-picker'), options);
+    return createOverlay('ion-picker', options);
   }
 
   /**
