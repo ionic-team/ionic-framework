@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-test.skip('select: basic', async () => {
+test('select: basic', async () => {
   const page = await newE2EPage({
     url: '/src/components/select/test/basic?ionic:_testing=true'
   });
@@ -65,6 +65,19 @@ test.skip('select: basic', async () => {
   compares.push(await page.compareScreenshot('should open custom action sheet select'));
 
   await actionSheet.callMethod('dismiss');
+
+  for (const compare of compares) {
+    expect(compare).toMatchScreenshot();
+  }
+});
+
+test('select:rtl: basic', async () => {
+  const page = await newE2EPage({
+    url: '/src/components/select/test/basic?ionic:_testing=true&rtl=true'
+  });
+
+  const compares = [];
+  compares.push(await page.compareScreenshot());
 
   for (const compare of compares) {
     expect(compare).toMatchScreenshot();
