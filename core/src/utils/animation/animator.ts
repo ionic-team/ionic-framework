@@ -528,7 +528,6 @@ export class Animator {
     }
 
     function onTransitionFallback() {
-      console.debug('Animation onTransitionFallback, CSS onTransitionEnd did not fire!');
       // oh noz! the transition end event didn't fire in time!
       // instead the fallback timer when first
       // if all goes well this fallback should never fire
