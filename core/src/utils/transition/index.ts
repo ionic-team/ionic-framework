@@ -148,21 +148,35 @@ function playTransition(trans: Animation, opts: TransitionOptions): Promise<Anim
 }
 
 /**
+ * Returns true is element is an ion-router-outlet
+ * for ion-tabs. Returns false otherwise.
+ */
+const isTabsRouterOutlet = (routerOutlet: HTMLElement | null): boolean => {
+  if (
+    !routerOutlet ||
+    routerOutlet.tagName !== 'ION-ROUTER-OUTLET' ||
+    !routerOutlet.hasAttribute('tabs') ||
+    routerOutlet.getAttribute('tabs') === 'false'
+  ) {
+    return false;
+  }
+
+  return true;
+};
+
+/**
  * When transitioning ion-tabs away, the selected tab is not cleared
  * so lifecycle events will not fire by default. Detect if the
  * element in question is ion-tabs, and if so manually fire the
- * lifecycle events for the selected tab
+ * lifecycle events for the selected tab.
  */
 const fireTabEventsIfNecessary = (el: HTMLElement | undefined, eventName: string) => {
   if (!el) { return; }
 
-  const tabs = el.querySelector('ion-tabs');
-  if (!tabs) { return; }
-
   const outlet = el.querySelector('ion-router-outlet');
-  if (!outlet) { return; }
+  if (!isTabsRouterOutlet(outlet)) { return; }
 
-  const activePage = outlet.querySelector('.ion-page:not([ion-page-hidden])');
+  const activePage = outlet!.querySelector('.ion-page:not(.ion-page-hidden)');
   if (!activePage) { return; }
 
   lifecycle(activePage as HTMLElement, eventName);
@@ -174,25 +188,10 @@ const fireTabEventsIfNecessary = (el: HTMLElement | undefined, eventName: string
  * when selecting a tab for the first time otherwise
  * there will be duplicate events fired.
  */
-const isFirstTabSelect = (enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined) => {
+const isFirstTabSelect = (enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined): boolean => {
   if (leavingEl || !enteringEl) { return false; }
 
-  const parentElement = enteringEl.parentElement;
-  if (
-    !parentElement ||
-    parentElement.tagName !== 'ION-ROUTER-OUTLET'
-  ) {
-    return false;
-  }
-
-  if (
-    !parentElement.hasAttribute('tabs') ||
-    parentElement.getAttribute('tabs') === 'false'
-  ) {
-    return false;
-  }
-
-  return true;
+  return isTabsRouterOutlet(enteringEl.parentElement);
 };
 
 function fireWillEvents(enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined) {
