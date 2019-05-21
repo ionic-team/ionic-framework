@@ -72,6 +72,11 @@
 
 :host(:not(:first-of-type)) {
   border-left-width: 0;
+
+  @include rtl() {
+    border-right-width: 0;
+    border-left-width: var(--border-width);
+  }
 }
 
 :host(:last-of-type) {

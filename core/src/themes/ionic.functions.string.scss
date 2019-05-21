@@ -121,10 +121,16 @@
 
       @each $element in $elements {
         @if str-contains($element, ":host(") {
-          $updated-element: str-replace($element, ")", "");
-          $updated-element: str-replace($updated-element, ":host(", ":host-context(#{$addHostSelector})");
+          $scoped-element: $element;
 
-          $new-element: append($new-element, $updated-element, space);
+          @if str-contains($element, "))") {
+            $scoped-element: str-replace($scoped-element, "))", ")");
+          } @else {
+            $scoped-element: str-replace($scoped-element, ")", "");
+          }
+          $scoped-element: str-replace($scoped-element, ":host(", ":host-context(#{$addHostSelector})");
+
+          $new-element: append($new-element, $scoped-element, space);
         } @else {
           $new-element: append($new-element, $element, space);
         }
