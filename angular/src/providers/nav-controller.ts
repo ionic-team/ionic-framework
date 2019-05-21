@@ -190,9 +190,12 @@ export class NavController {
        * would change the url, so things like queryParams
        * would be ignored unless we create a url tree
        * More Info: https://github.com/angular/angular/issues/18798
+       *
+       * Additionally, the router does some encoding under the hood,
+       * so make sure we are not encoding special characters more than once
        */
       return this.router!.navigateByUrl(
-        this.router!.createUrlTree([url], options)
+        this.router!.createUrlTree([decodeURIComponent(url.toString())], options)
       );
     }
   }
