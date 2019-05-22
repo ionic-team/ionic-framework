@@ -16,6 +16,7 @@ test('item: inputs', async () => {
 
   // Disable everything
   await page.click('#btnDisabled');
+  await page.waitFor(500);
 
   // check form
   await page.click('#submit');
