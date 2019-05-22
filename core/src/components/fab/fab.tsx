@@ -68,7 +68,7 @@ export class Fab implements ComponentInterface {
   }
 
   /**
-   * Close an active FAB list container
+   * Close an active FAB list container.
    */
   @Method()
   close() {

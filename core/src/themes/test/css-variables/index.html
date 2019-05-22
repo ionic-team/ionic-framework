@@ -11,6 +11,8 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script src="../../../../../dist/ionic.js"></script>
 
+  <link id="theme" href="/src/themes/test/css-variables/css/default.css" rel="stylesheet">
+
   <style>
     .wrapper {
       display: flex;
@@ -68,8 +70,21 @@
 
       <ion-tab tab="list">
         <ion-header>
-          <ion-toolbar color="primary">
+          <ion-toolbar>
+            <ion-buttons slot="start">
+              <ion-back-button default-href="/"></ion-back-button>
+              <ion-menu-button auto-hide="false"></ion-menu-button>
+              <ion-button>Default</ion-button>
+              <ion-button fill="solid">Solid</ion-button>
+              <ion-button fill="clear">Clear</ion-button>
+              <ion-button fill="outline">Outline</ion-button>
+            </ion-buttons>
+
             <ion-title>Lists</ion-title>
+
+            <ion-buttons slot="primary">
+              <ion-button color="secondary" fill="outline">Secondary Outline</ion-button>
+            </ion-buttons>
 
             <div slot="end" class="right-container">
               <ion-label>Select a Theme:</ion-label>
@@ -80,6 +95,14 @@
                 <ion-select-option value="dark">Dark</ion-select-option>
               </ion-select>
             </div>
+          </ion-toolbar>
+          <ion-toolbar>
+            <ion-segment>
+              <ion-segment-button><ion-label>Favorites</ion-label></ion-segment-button>
+              <ion-segment-button><ion-label>All</ion-label></ion-segment-button>
+              <ion-segment-button disabled><ion-label>Disabled</ion-label></ion-segment-button>
+              <ion-segment-button checked><ion-label>Active</ion-label></ion-segment-button>
+            </ion-segment>
           </ion-toolbar>
         </ion-header>
 
@@ -141,11 +164,11 @@
                   <ion-label>Super Metroid</ion-label>
                   <ion-note slot="end">Note</ion-note>
                 </ion-item>
-                <ion-item>
+                <ion-item href="#">
                   <ion-label>Mega Man X</ion-label>
                   <ion-note slot="end">Note</ion-note>
                 </ion-item>
-                <ion-item>
+                <ion-item href="#" class="activated">
                   <ion-label>The Legend of Zelda</ion-label>
                   <ion-note slot="end">Note</ion-note>
                 </ion-item>
@@ -702,7 +725,6 @@
   </ion-app>
 
   <script>
-    const cssCache = new Map();
     const selects = document.querySelectorAll('.theme-picker');
 
     for (let i = 0; i < selects.length; i++) {
@@ -713,21 +735,18 @@
     }
 
     function toggleTheme(theme) {
-      const styleTarget = document.documentElement.style;
-      if (theme === 'default') {
-        styleTarget.cssText = '';
-      } else {
-        if (cssCache.has(theme)) {
-          styleTarget.cssText = cssCache.get(theme);
-        } else {
-          fetch(`/src/themes/test/css-variables/css/${theme}.css`)
-            .then(result => result.text())
-            .then(css => {
-              cssCache.set(theme, css.replace(/(:root ?{)|}|\/\*\*.*\*\*\/|\s/g, '').trim());
-              toggleTheme(theme);
-            });
-        }
-      }
+      var cssFile = `/src/themes/test/css-variables/css/${theme}.css`;
+
+      var oldLink = document.getElementById('theme');
+
+      var newLink = document.createElement('link');
+      newLink.setAttribute('id', 'theme');
+      newLink.setAttribute('rel', 'stylesheet');
+      newLink.setAttribute('type', 'text/css');
+      newLink.setAttribute('href', cssFile);
+
+      document.getElementsByTagName('head').item(0).replaceChild(newLink, oldLink);
+
 
       for (let i = 0; i < selects.length; i++) {
         selects[i].value = theme;

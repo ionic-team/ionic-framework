@@ -12,14 +12,20 @@ export class ToastController implements ComponentInterface, OverlayController {
 
   /**
    * Create a toast overlay with toast options.
+   *
+   * @param options The options to use to create the toast.
    */
   @Method()
-  create(opts?: ToastOptions): Promise<HTMLIonToastElement> {
-    return createOverlay(this.doc.createElement('ion-toast'), opts);
+  create(options?: ToastOptions): Promise<HTMLIonToastElement> {
+    return createOverlay(this.doc.createElement('ion-toast'), options);
   }
 
   /**
    * Dismiss the open toast overlay.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the toast. For example, 'cancel' or 'backdrop'.
+   * @param id The id of the toast to dismiss. If an id is not provided, it will dismiss the most recently opened toast.
    */
   @Method()
   dismiss(data?: any, role?: string, id?: string) {

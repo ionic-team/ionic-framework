@@ -77,10 +77,6 @@
 // Back Button States
 // --------------------------------------------------
 
-:host(.activated) .button-native {
-  opacity: .4;
-}
-
 :host-context(.can-go-back > ion-header),
 :host(.show-back-button) {
   display: block;
@@ -147,4 +143,11 @@ ion-icon {
   font-weight: var(--icon-font-weight);
 
   pointer-events: none;
+}
+
+// Back Button in Toolbar: Global Theming
+// --------------------------------------------------
+
+:host-context(ion-toolbar:not(.ion-color)):not(.ion-color) {
+  color: #{var(--ion-toolbar-color, var(--color))};
 }

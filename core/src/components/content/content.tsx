@@ -169,12 +169,12 @@ export class Content implements ComponentInterface {
   }
 
   /**
-   * Returns the element where the actual scrolling takes places.
-   * This element is the one you could subscribe to `scroll` events or manually modify
-   * `scrollTop`, however, it's recommended to use the API provided by `ion-content`:
+   * Get the element where the actual scrolling takes place.
+   * This element can be used to subscribe to `scroll` events or manually modify
+   * `scrollTop`. However, it's recommended to use the API provided by `ion-content`:
    *
-   * Ie. Using `ionScroll`, `ionScrollStart`, `ionScrollEnd` for scrolling events
-   * and scrollToPoint() to scroll the content into a certain point.
+   * i.e. Using `ionScroll`, `ionScrollStart`, `ionScrollEnd` for scrolling events
+   * and `scrollToPoint()` to scroll the content into a certain point.
    */
   @Method()
   getScrollElement(): Promise<HTMLElement> {
@@ -182,7 +182,9 @@ export class Content implements ComponentInterface {
   }
 
   /**
-   * Scroll to the top of the component
+   * Scroll to the top of the component.
+   *
+   * @param duration The amount of time to take scrolling to the top. Defaults to `0`.
    */
   @Method()
   scrollToTop(duration = 0): Promise<void> {
@@ -190,7 +192,9 @@ export class Content implements ComponentInterface {
   }
 
   /**
-   * Scroll to the bottom of the component
+   * Scroll to the bottom of the component.
+   *
+   * @param duration The amount of time to take scrolling to the bottom. Defaults to `0`.
    */
   @Method()
   scrollToBottom(duration = 0): Promise<void> {
@@ -199,7 +203,11 @@ export class Content implements ComponentInterface {
   }
 
   /**
-   * Scroll by a specified X/Y distance in the component
+   * Scroll by a specified X/Y distance in the component.
+   *
+   * @param x The amount to scroll by on the horizontal axis.
+   * @param y The amount to scroll by on the vertical axis.
+   * @param duration The amount of time to take scrolling by that amount.
    */
   @Method()
   scrollByPoint(x: number, y: number, duration: number): Promise<void> {
@@ -207,7 +215,11 @@ export class Content implements ComponentInterface {
   }
 
   /**
-   * Scroll to a specified X/Y location in the component
+   * Scroll to a specified X/Y location in the component.
+   *
+   * @param x The point to scroll to on the horizontal axis.
+   * @param y The point to scroll to on the vertical axis.
+   * @param duration The amount of time to take scrolling to that point. Defaults to `0`.
    */
   @Method()
   async scrollToPoint(x: number | undefined | null, y: number | undefined | null, duration = 0): Promise<void> {

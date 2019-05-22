@@ -25,7 +25,7 @@ export function startInputShims(
   const scrollAssistMap = new WeakMap<HTMLElement, () => void>();
 
   function registerInput(componentEl: HTMLElement) {
-    const inputEl = (componentEl.shadowRoot || componentEl).querySelector('input');
+    const inputEl = (componentEl.shadowRoot || componentEl).querySelector('input') || (componentEl.shadowRoot || componentEl).querySelector('textarea');
     const scrollEl = componentEl.closest('ion-content');
 
     if (!inputEl) {
@@ -70,9 +70,9 @@ export function startInputShims(
   }
 
   // Input might be already loaded in the DOM before ion-device-hacks did.
-  // At this point we need to look for all the ion-inputs not registered yet
+  // At this point we need to look for all of the inputs not registered yet
   // and register them.
-  const inputs = Array.from(doc.querySelectorAll('ion-input'));
+  const inputs = Array.from(doc.querySelectorAll('ion-input, ion-textarea')) as HTMLElement[];
   for (const input of inputs) {
     registerInput(input);
   }

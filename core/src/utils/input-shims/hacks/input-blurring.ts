@@ -2,8 +2,6 @@
 const SKIP_SELECTOR = 'input, textarea, [no-blur]';
 
 export function enableInputBlurring(doc: Document) {
-  console.debug('Input: enableInputBlurring');
-
   let focused = true;
   let didScroll = false;
 

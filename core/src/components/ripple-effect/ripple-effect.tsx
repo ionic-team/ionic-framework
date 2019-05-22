@@ -27,10 +27,13 @@ export class RippleEffect implements ComponentInterface {
   @Prop() type: 'bounded' | 'unbounded' = 'bounded';
 
   /**
-   * Adds the ripple effect to the parent element
+   * Adds the ripple effect to the parent element.
+   *
+   * @param x The horizontal coordinate of where the ripple should start.
+   * @param y The vertical coordinate of where the ripple should start.
    */
   @Method()
-  async addRipple(pageX: number, pageY: number) {
+  async addRipple(x: number, y: number) {
     return new Promise<() => void>(resolve => {
       this.queue.read(() => {
         const rect = this.el.getBoundingClientRect();
@@ -41,14 +44,14 @@ export class RippleEffect implements ComponentInterface {
         const maxRadius = this.unbounded ? maxDim : hypotenuse + PADDING;
         const initialSize = Math.floor(maxDim * INITIAL_ORIGIN_SCALE);
         const finalScale = maxRadius / initialSize;
-        let posX = pageX - rect.left;
-        let posY = pageY - rect.top;
+        let posX = x - rect.left;
+        let posY = y - rect.top;
         if (this.unbounded) {
           posX = width * 0.5;
           posY = height * 0.5;
         }
-        const x = posX - initialSize * 0.5;
-        const y = posY - initialSize * 0.5;
+        const styleX = posX - initialSize * 0.5;
+        const styleY = posY - initialSize * 0.5;
         const moveX = width * 0.5 - posX;
         const moveY = height * 0.5 - posY;
 
@@ -56,8 +59,8 @@ export class RippleEffect implements ComponentInterface {
           const div = this.win.document.createElement('div');
           div.classList.add('ripple-effect');
           const style = div.style;
-          style.top = y + 'px';
-          style.left = x + 'px';
+          style.top = styleY + 'px';
+          style.left = styleX + 'px';
           style.width = style.height = initialSize + 'px';
           style.setProperty('--final-scale', `${finalScale}`);
           style.setProperty('--translate-end', `${moveX}px, ${moveY}px`);
