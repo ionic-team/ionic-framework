@@ -135,7 +135,7 @@ export class Button implements ComponentInterface {
   }
 
   private get hasIcon() {
-    return !!this.el.querySelector('ion-icon');
+    return !!this.el.querySelector('ion-icon[slot="icon-only"]');
   }
 
   private get hasIconOnly() {
