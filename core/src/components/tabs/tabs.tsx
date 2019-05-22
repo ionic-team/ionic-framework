@@ -49,12 +49,9 @@ export class Tabs implements NavOutlet {
       this.useRouter = !!this.doc.querySelector('ion-router') && !this.el.closest('[no-router]');
     }
     this.tabs = Array.from(this.el.querySelectorAll('ion-tab'));
+    await this.initSelect();
     this.ionNavWillLoad.emit();
     this.componentWillUpdate();
-  }
-
-  componentDidLoad() {
-    this.initSelect();
   }
 
   componentDidUnload() {
@@ -156,6 +153,7 @@ export class Tabs implements NavOutlet {
     }
     // wait for all tabs to be ready
     await Promise.all(this.tabs.map(tab => tab.componentOnReady()));
+
     await this.select(this.tabs[0]);
   }
 
