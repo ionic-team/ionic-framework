@@ -634,9 +634,10 @@ export default Example;
 
 ## Properties
 
-| Property   | Attribute  | Description                                                | Type      | Default |
-| ---------- | ---------- | ---------------------------------------------------------- | --------- | ------- |
-| `disabled` | `disabled` | If `true`, the user cannot interact with the sliding-item. | `boolean` | `false` |
+| Property   | Attribute  | Description                                                            | Type      | Default |
+| ---------- | ---------- | ---------------------------------------------------------------------- | --------- | ------- |
+| `disabled` | `disabled` | If `true`, the user cannot interact with the sliding-item.             | `boolean` | `false` |
+| `noClose`  | `no-close` | If `true`, the user can have multiple slidiing-items open at one time. | `boolean` | `false` |
 
 
 ## Events

@@ -404,7 +404,7 @@ export class IonItemOptions {
 proxyInputs(IonItemOptions, ['side']);
 
 export declare interface IonItemSliding extends StencilComponents<'IonItemSliding'> {}
-@Component({ selector: 'ion-item-sliding', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['disabled'] })
+@Component({ selector: 'ion-item-sliding', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['disabled', 'noClose'] })
 export class IonItemSliding {
   ionDrag!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
@@ -415,7 +415,7 @@ export class IonItemSliding {
   }
 }
 proxyMethods(IonItemSliding, ['getOpenAmount', 'getSlidingRatio', 'open', 'close', 'closeOpened']);
-proxyInputs(IonItemSliding, ['disabled']);
+proxyInputs(IonItemSliding, ['disabled', 'noClose']);
 
 export declare interface IonLabel extends StencilComponents<'IonLabel'> {}
 @Component({ selector: 'ion-label', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'position'] })

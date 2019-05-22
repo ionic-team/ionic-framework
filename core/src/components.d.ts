@@ -2024,6 +2024,10 @@ export namespace Components {
     */
     'getSlidingRatio': () => Promise<number>;
     /**
+    * If `true`, the user can have multiple slidiing-items open at one time.
+    */
+    'noClose': boolean;
+    /**
     * Open the sliding item.
     */
     'open': (side: string | undefined) => Promise<void>;
@@ -2033,6 +2037,10 @@ export namespace Components {
     * If `true`, the user cannot interact with the sliding-item.
     */
     'disabled'?: boolean;
+    /**
+    * If `true`, the user can have multiple slidiing-items open at one time.
+    */
+    'noClose'?: boolean;
     /**
     * Emitted when the sliding position changes.
     */

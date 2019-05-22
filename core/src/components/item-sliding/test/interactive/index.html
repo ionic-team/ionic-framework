@@ -12,12 +12,14 @@
 </head>
 
 <body>
+  <ion-button onclick="openAll()">Open select</ion-button>
+  <ion-button onclick="closeAll()">Close select</ion-button>
   <ion-list></ion-list>
   
   <script>
     let lists = document.getElementsByTagName('ion-list');
       for (var i = 0; i < lists.length; i++) {
-        for (var j = 0; j < 3; j++) {
+        for (var j = 0; j < 14; j++) {
           addSlidingItem(lists[i]);
         }
       }
@@ -36,11 +38,15 @@
               <ion-icon name="trash"></ion-icon>
               Delete
             </ion-item-option>
+            <ion-item-option color="danger" expandable onclick="">
+                <ion-checkbox mode="ios" checked={topic.selected}></ion-checkbox>
+            </ion-item-option>
           </ion-item-options>
         `;
         
         
         slidingItem.id = `item-${list.childElementCount}`;
+        slidingItem.noClose = true;
 
         list.appendChild(slidingItem);
       }
@@ -48,6 +54,24 @@
       function remove(optionElement) {
         const slidingElement = optionElement.parentNode.parentNode;
         lists[0].removeChild(slidingElement);
+      }
+
+      function openAll(optionElement) {
+        let lists = document.getElementsByTagName('ion-list');
+        for (var i = 0; i < lists.length; i++) {
+          for (var j = 0; j < 14; j++) {
+            lists[i].children[j].open();
+          }
+        }
+      }
+
+      function closeAll(optionElement) {
+        let lists = document.getElementsByTagName('ion-list');
+        for (var i = 0; i < lists.length; i++) {
+          for (var j = 0; j < 14; j++) {
+            lists[i].children[j].close();
+          }
+        }
       }
   </script>
 </body>

@@ -61,6 +61,11 @@ export class ItemSliding implements ComponentInterface {
   }
 
   /**
+   * If `true`, the user can have multiple slidiing-items open at one time.
+   */
+  @Prop() noClose = false;
+
+  /**
    * Emitted when the sliding position changes.
    */
   @Event() ionDrag!: EventEmitter;
@@ -176,11 +181,11 @@ export class ItemSliding implements ComponentInterface {
    */
   @Method()
   async closeOpened(): Promise<boolean> {
-    if (openSlidingItem !== undefined) {
+    if (openSlidingItem !== undefined && !this.noClose) {
       openSlidingItem.close();
       openSlidingItem = undefined;
       return true;
-    }
+    } else {console.log('no closed'); }
     return false;
   }
 
