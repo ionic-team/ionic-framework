@@ -9,7 +9,7 @@ export function relocateInput(
   if (cloneMap.has(componentEl) === shouldRelocate) {
     return;
   }
-  console.debug(`native-input, hideCaret, shouldHideCaret: ${shouldRelocate}, input value: ${inputEl.value}`);
+
   if (shouldRelocate) {
     addClone(componentEl, inputEl, inputRelativeY);
   } else {
