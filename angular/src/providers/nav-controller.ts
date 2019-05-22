@@ -192,9 +192,17 @@ export class NavController {
        * would be ignored unless we create a url tree
        * More Info: https://github.com/angular/angular/issues/18798
        */
-      return this.router!.navigateByUrl(
-        this.serializer.parse(url.toString())
-      );
+      const urlTree = this.serializer.parse(url.toString());
+
+      if (options.queryParams !== undefined) {
+        urlTree.queryParams = { ...options.queryParams };
+      }
+
+      if (options.fragment !== undefined) {
+        urlTree.fragment = options.fragment;
+      }
+
+      return this.router!.navigateByUrl(urlTree);
     }
   }
 }
