@@ -59,6 +59,10 @@ separator. An example display using this format is: `Jun 17, 2005 11:06`.
 </ion-item>
 ```
 
+**Important**: `ion-datetime` will always display values relative to the user's timezone.
+Given a value of `09:00:00+01:00`, the datetime component will
+display it as `04:00:00-04:00` for users in a `-04:00` timezone offset.
+
 ### Picker Format
 
 The `pickerFormat` input property determines which columns should be shown in
@@ -186,7 +190,7 @@ either configured at the app level, or individual `ion-datetime` level.
 The datetime picker provides the simplicity of selecting an exact format, and
 persists the datetime values as a string using the standardized [ISO 8601
 datetime format](https://www.w3.org/TR/NOTE-datetime). However, it's important
-to note that `ion-datetime` does not attempt to solve all situtations when
+to note that `ion-datetime` does not attempt to solve all situations when
 validating and manipulating datetime values. If datetime values need to be
 parsed from a certain format, or manipulated (such as adding 5 days to a date,
 subtracting 30 minutes, etc.), or even formatting data to a specific locale,
