@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Listen, Prop, State } from '@stencil/core';
-
 import { Color, CssClassMap, Mode, RouterDirection, StyleEventDetail } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
+
 
 /**
  * @slot - Content is placed between the named slots if provided without a slot.
@@ -116,9 +116,10 @@ export class Item implements ComponentInterface {
       }
     });
 
-    // Check for multiple inputs to change the position to relative
-    const inputs = this.el.querySelectorAll('ion-select, ion-datetime');
-    this.multipleInputs = inputs.length > 1 ? true : false;
+    // Check for multiple inputs/clickables to change the position to relative
+    const inputs = this.el.querySelectorAll('ion-select, ion-datetime, ion-checkbox, ion-radio, ion-toggle, ion-range');
+    const clickables = this.el.querySelectorAll('ion-button, a');
+    this.multipleInputs = inputs.length + clickables.length > 1 ? true : false;
   }
 
   private isClickable(): boolean {

@@ -347,12 +347,27 @@ button, a {
 // -----------------------------------------
 // Multiple inputs in an item should have the input cover
 // relative to them instead of the item
+// We do not want to do this for the start slot so a click
+// on the label keeps triggering the first input for certain
+// inputs (e.g. checkbox)
 
-:host(.item-multiple-inputs) ::slotted(ion-datetime),
-:host(.item-multiple-inputs) ::slotted(ion-select) {
+:host(.item-multiple-inputs) ::slotted(ion-select[slot="end"]),
+:host(.item-multiple-inputs) ::slotted(ion-datetime[slot="end"]),
+:host(.item-multiple-inputs) ::slotted(ion-checkbox[slot="end"]),
+:host(.item-multiple-inputs) ::slotted(ion-radio[slot="end"]),
+:host(.item-multiple-inputs) ::slotted(ion-toggle[slot="end"]),
+:host(.item-multiple-inputs) ::slotted(ion-range[slot="end"]) {
   position: relative;
 }
 
+// Place clickable elements above inputs to keep them
+// clickable (input-cover() mixin adds z-index: 2 for
+// inputs)
+
+:host(.item-multiple-inputs) ::slotted(ion-button),
+:host(.item-multiple-inputs) ::slotted(a) {
+  z-index: 3;
+}
 
 // Item Textarea
 // -----------------------------------------
