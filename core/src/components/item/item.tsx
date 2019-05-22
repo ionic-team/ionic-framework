@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Listen, Prop, State } from '@stencil/core';
+
 import { Color, CssClassMap, Mode, RouterDirection, StyleEventDetail } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
-
 
 /**
  * @slot - Content is placed between the named slots if provided without a slot.
