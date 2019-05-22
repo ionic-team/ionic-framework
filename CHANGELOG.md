@@ -1,3 +1,12 @@
+## [4.4.2](https://github.com/ionic-team/ionic/compare/v4.4.1...v4.4.2) (2019-05-22)
+
+
+### Bug Fixes
+
+* **angular:** account for query params and fragments within a string when navigating ([#18356](https://github.com/ionic-team/ionic/issues/18356)) ([b79f68a](https://github.com/ionic-team/ionic/commit/b79f68a))
+
+
+
 ## [4.4.1](https://github.com/ionic-team/ionic/compare/v4.4.0...v4.4.1) (2019-05-22)
 
 
