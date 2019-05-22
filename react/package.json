@@ -53,7 +53,8 @@
     "typescript": "^3.2.2"
   },
   "dependencies": {
-    "@ionic/core": "^4.0.2"
+    "@ionic/core": "^4.0.2",
+    "react-transition-group": "^4.0.1"
   },
   "peerDependencies": {
     "react": "^16.7.0",

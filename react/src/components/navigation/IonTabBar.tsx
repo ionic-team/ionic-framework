@@ -24,7 +24,7 @@ class IonTabBar extends Component<Props, State> {
 
     const tabActiveUrls: { [key: string]: Tab } = {};
 
-    React.Children.forEach(this.props.children, (child) => {
+    React.Children.forEach(this.props.children, (child: any) => {
       if (child != null && typeof child === 'object' && child.props && child.type === IonTabButton) {
         tabActiveUrls[child.props.tab] = {
           originalHref: child.props.href,

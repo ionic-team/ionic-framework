@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { LifeCycleContext } from './navigation/LifeCycleContext';
 
 
@@ -12,19 +12,23 @@ type ExternalProps = Props & {
   ref?: React.RefObject<HTMLDivElement>
 };
 
-class IonPage extends Component<InternalProps> {
+interface StackItemState {
+  ref: any;
+}
+
+class StackItem extends React.Component<InternalProps, StackItemState> {
   context!: React.ContextType<typeof LifeCycleContext>;
 
   constructor(props: InternalProps) {
     super(props);
+    this.state = {
+      ref: null
+    }
   }
 
   componentDidMount() {
     const { forwardedRef } = this.props;
-    this.context.parent = forwardedRef;
-    // if(forwardedRef && forwardedRef.current) {
-    //   forwardedRef.current.addEventListener('ionViewWillEnter', this.ionViewWillEnterHandler.bind(this));
-    // }
+    this.setState({ref: forwardedRef});
   }
 
   // componentWillUnmount() {
@@ -40,14 +44,15 @@ class IonPage extends Component<InternalProps> {
 
   render() {
     const { className, children, forwardedRef, ...rest } = this.props;
+    const { ref } = this.state;
     return (
-      <LifeCycleContext.Provider value={{parent: forwardedRef}}>
+      <LifeCycleContext.Provider value={{parent: ref}}>
       <div
         className={className ? `ion-page ${className}` : 'ion-page'}
         ref={forwardedRef}
         {...rest}
       >
-        {children}
+        {ref && children}
       </div>
       </LifeCycleContext.Provider>
     )
@@ -55,11 +60,11 @@ class IonPage extends Component<InternalProps> {
 }
 
 function forwardRef(props: InternalProps, ref: React.RefObject<HTMLDivElement>) {
-  return <IonPage forwardedRef={ref} {...props}  />;
+  return <StackItem forwardedRef={ref} {...props}  />;
 }
 forwardRef.displayName = 'IonPage';
 
-IonPage.contextType = LifeCycleContext;
+StackItem.contextType = LifeCycleContext;
 
 export default React.forwardRef<HTMLDivElement, ExternalProps>(forwardRef);
 

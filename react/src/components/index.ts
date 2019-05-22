@@ -21,7 +21,10 @@ export { default as IonPopover } from './IonPopover';
 export { default as IonPage } from './IonPage';
 export { default as IonTabs } from './navigation/IonTabs';
 export { default as IonTabBar } from './navigation/IonTabBar';
-export { IonRouterOutlet, IonBackButton } from './navigation/IonRouterOutlet';
+export { IonRouterOutlet } from './navigation/IonRouterOutlet';
+export { IonBackButton } from './navigation/IonBackButton';
+export { IonComponent } from './navigation/IonComponent';
+export { LifeCycleContext, LifeCycleContextInterface } from './navigation/LifeCycleContext';
 
 addIcons(ICON_PATHS);
 defineCustomElements(window);

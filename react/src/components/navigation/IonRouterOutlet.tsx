@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { Transition } from 'react-transition-group';
 import { withRouter, RouteComponentProps, matchPath, match, RouteProps } from 'react-router';
-import { Components } from '@ionic/core';
 import { generateUniqueId } from '../utils';
 import { Location } from 'history';
-import { IonBackButtonInner, IonRouterOutletInner } from '../index';
-import IonPage from '../IonPage';
+import { IonRouterOutletInner } from '../index';
+import StackManager from '../StackManager';
+import { NavContext } from './NavContext';
 
 type ChildProps = RouteProps & {
   computedMatch: match<any>
@@ -20,6 +21,8 @@ interface StackItem {
   match: match<{ tab: string }>;
   element: React.ReactElement<any>;
   prevId: string;
+  mount: boolean;
+  parentRef: React.RefObject<HTMLElement>;
 }
 
 interface State {
@@ -30,15 +33,6 @@ interface State {
   tabActiveIds: { [tab: string]: string };
   views: StackItem[];
 }
-
-interface ContextInterface {
-  goBack: (defaultHref?: string) => void
-}
-
-const Context = React.createContext<ContextInterface>({
-  goBack: () => {}
-});
-
 
 class RouterOutlet extends Component<Props, State> {
 
@@ -121,6 +115,16 @@ class RouterOutlet extends Component<Props, State> {
             ...state.tabActiveIds,
             [match.params.tab]: prevActiveView.id,
           },
+          // views: state.views.filter(x => x.id !== activeView.id)
+          views: state.views.map(x => {
+            if (x.id === activeView.id) {
+              return {
+                ...x,
+                mount: false
+              }
+            }
+            return x;
+          })
         }
       }
     }
@@ -140,16 +144,20 @@ class RouterOutlet extends Component<Props, State> {
         location,
         match,
         element,
-        prevId: state.tabActiveIds[match.params.tab]
+        prevId: state.tabActiveIds[match.params.tab],
+        mount: true,
+        parentRef: React.createRef<HTMLElement>()
       })
     };
   }
 
   renderChild(item: StackItem) {
-    return React.cloneElement(item.element, {
+    const component = React.cloneElement(item.element, {
       location: item.location,
-      computedMatch: item.match
+      computedMatch: item.match,
+      parentRef: item.parentRef
     });
+    return component;
   }
 
   goBack = (defaultHref?: string) => {
@@ -167,7 +175,7 @@ class RouterOutlet extends Component<Props, State> {
       this.setState({ inTransition: true });
       this.containerEl.current.commit(enteringEl, leavingEl, {
         deepWait: true,
-        duration: this.state.direction === undefined ? 0: undefined,
+        duration: this.state.direction === undefined ? 0 : undefined,
         direction: this.state.direction,
         showGoBack: true,
         progressAnimation: false
@@ -180,10 +188,16 @@ class RouterOutlet extends Component<Props, State> {
     }
   }
 
+  removeView(view: StackItem) {
+    this.setState({
+      views: this.state.views.filter(x => x.id !== view.id)
+    })
+  }
+
   render() {
     return (
       <IonRouterOutletInner ref={this.containerEl}>
-        <Context.Provider value={{ goBack: this.goBack }}>
+        <NavContext.Provider value={{ goBack: this.goBack }}>
           {this.state.views.map((item) => {
             let props: any = {};
 
@@ -206,40 +220,27 @@ class RouterOutlet extends Component<Props, State> {
             }
 
             return (
-              <IonPage
-                {...props}
-                key={item.id}
-              >
-                { this.renderChild(item) }
-              </IonPage>
+                <Transition
+                  key={item.id}
+                  in={item.mount}
+                  timeout={1000}
+                  unmountOnExit={true}
+                  onExited={() => this.removeView(item)}>
+                  {(state: string) => {
+                    return (
+                      <StackManager ref={item.parentRef} className={state}
+                        {...props}
+                      >
+                        {this.renderChild(item)}
+                      </StackManager>);
+                  }}
+                </Transition>
             );
           })}
-        </Context.Provider>
+        </NavContext.Provider>
       </IonRouterOutletInner>
     );
   }
 }
 
 export const IonRouterOutlet = withRouter(RouterOutlet);
-
-
-type ButtonProps = Components.IonBackButtonAttributes & {
-  goBack: () => void;
-};
-
-export class IonBackButton extends Component<ButtonProps> {
-  context!: React.ContextType<typeof Context>;
-
-  clickButton = (e: MouseEvent) => {
-    e.stopPropagation();
-    this.context.goBack(this.props.defaultHref);
-  }
-
-  render() {
-    return (
-      <IonBackButtonInner onClick={this.clickButton} {...this.props}></IonBackButtonInner>
-    );
-  }
-}
-
-IonBackButton.contextType = Context;
