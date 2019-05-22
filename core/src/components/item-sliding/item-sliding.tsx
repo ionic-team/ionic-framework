@@ -185,7 +185,7 @@ export class ItemSliding implements ComponentInterface {
       openSlidingItem.close();
       openSlidingItem = undefined;
       return true;
-    } else {console.log('no closed'); }
+    }
     return false;
   }
 
