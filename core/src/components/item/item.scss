@@ -356,7 +356,9 @@ button, a {
 :host(.item-multiple-inputs) ::slotted(ion-checkbox[slot="end"]),
 :host(.item-multiple-inputs) ::slotted(ion-radio[slot="end"]),
 :host(.item-multiple-inputs) ::slotted(ion-toggle[slot="end"]),
-:host(.item-multiple-inputs) ::slotted(ion-range[slot="end"]) {
+:host(.item-multiple-inputs) ::slotted(ion-range[slot="end"]),
+:host(.item-multiple-inputs) ::slotted(ion-input[slot="end"]),
+:host(.item-multiple-inputs) ::slotted(ion-textarea[slot="end"]) {
   position: relative;
 }
 

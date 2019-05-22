@@ -117,7 +117,7 @@ export class Item implements ComponentInterface {
     });
 
     // Check for multiple inputs/clickables to change the position to relative
-    const inputs = this.el.querySelectorAll('ion-select, ion-datetime, ion-checkbox, ion-radio, ion-toggle, ion-range');
+    const inputs = this.el.querySelectorAll('ion-select, ion-datetime, ion-checkbox, ion-radio, ion-toggle, ion-range, ion-input, ion-textarea');
     const clickables = this.el.querySelectorAll('ion-button, a');
     this.multipleInputs = inputs.length + clickables.length > 1 ? true : false;
   }
