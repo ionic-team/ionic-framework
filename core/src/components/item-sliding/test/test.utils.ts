@@ -1,5 +1,5 @@
 // Opens a sliding item by simulating a drag event
-export async function openItemSliding(id: string, page: any) {
+export async function openItemSliding(id: string, page: any, rtl = false) {
   try {
     const slidingItem = await page.$(id);
 
@@ -8,10 +8,15 @@ export async function openItemSliding(id: string, page: any) {
     const centerX = parseFloat(boundingBox.x + boundingBox.width / 2);
     const centerY = parseFloat(boundingBox.y + boundingBox.height / 2);
 
+    let endX = 0;
+    if (rtl) {
+      endX = boundingBox.width;
+    }
+
     await page.mouse.move(centerX, centerY);
     await page.mouse.down();
     await page.mouse.move(centerX / 2, centerY);
-    await page.mouse.move(0, centerY);
+    await page.mouse.move(endX, centerY);
     await page.mouse.up();
 
     // Add a timeout to make sure the item is open
