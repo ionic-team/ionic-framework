@@ -77,10 +77,6 @@
 // Back Button States
 // --------------------------------------------------
 
-:host(.activated) .button-native {
-  opacity: .4;
-}
-
 :host-context(.can-go-back > ion-header),
 :host(.show-back-button) {
   display: block;

@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, NgZone, OnDestroy, OnInit, Optional, Output, SkipSelf, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ChildrenOutletContexts, OutletContext, PRIMARY_OUTLET, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -59,6 +60,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     private changeDetector: ChangeDetectorRef,
     private config: Config,
     private navCtrl: NavController,
+    commonLocation: Location,
     elementRef: ElementRef,
     router: Router,
     zone: NgZone,
@@ -68,7 +70,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     this.nativeEl = elementRef.nativeElement;
     this.name = name || PRIMARY_OUTLET;
     this.tabsPrefix = tabs === 'true' ? getUrl(router, activatedRoute) : undefined;
-    this.stackCtrl = new StackController(this.tabsPrefix, this.nativeEl, router, navCtrl, zone);
+    this.stackCtrl = new StackController(this.tabsPrefix, this.nativeEl, router, navCtrl, zone, commonLocation);
     parentContexts.onChildOutletCreated(this.name, this as any);
   }
 
@@ -141,6 +143,20 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     if (this.activated) {
       if (this.activatedView) {
         this.activatedView.savedData = new Map(this.getContext()!.children['contexts']);
+
+        /**
+         * Ensure we are saving the NavigationExtras
+         * data otherwise it will be lost
+         */
+        this.activatedView.savedExtras = {};
+        const context = this.getContext()!;
+
+        if (context.route) {
+          const contextSnapshot = context.route.snapshot;
+
+          this.activatedView.savedExtras.queryParams = contextSnapshot.queryParams;
+          this.activatedView.savedExtras.fragment = contextSnapshot.fragment;
+        }
       }
       const c = this.component;
       this.activatedView = null;

@@ -35,3 +35,10 @@
   overflow: visible;
   z-index: $back-button-ios-button-z-index;
 }
+
+// Back Button States
+// --------------------------------------------------
+
+:host(.activated) .button-native {
+  opacity: .4;
+}

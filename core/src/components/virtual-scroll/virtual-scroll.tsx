@@ -203,7 +203,6 @@ export class VirtualScroll implements ComponentInterface {
       this.approxItemHeight,
       cellIndex, offset, length
     );
-    console.debug('[virtual] cells recalculated', cells.length);
     this.cells = inplaceUpdate(this.cells, cells, cellIndex);
     this.lastItemLen = this.items.length;
     this.indexDirty = Math.max(offset - 1, 0);
@@ -324,7 +323,6 @@ export class VirtualScroll implements ComponentInterface {
       return;
     }
     if (cell.height !== height || cell.visible !== true) {
-      console.debug(`[virtual] cell height or visibility changed ${cell.height}px -> ${height}px`);
       cell.visible = true;
       cell.height = height;
       this.indexDirty = Math.min(this.indexDirty, index);
@@ -365,7 +363,6 @@ export class VirtualScroll implements ComponentInterface {
       this.approxItemHeight,
       0, 0, this.lastItemLen
     );
-    console.debug('[virtual] cells recalculated', this.cells.length);
     this.indexDirty = 0;
   }
 
@@ -381,7 +378,6 @@ export class VirtualScroll implements ComponentInterface {
     this.heightIndex = resizeBuffer(this.heightIndex, this.cells.length);
     this.totalHeight = calcHeightIndex(this.heightIndex, this.cells, index);
 
-    console.debug('[virtual] height index recalculated', this.heightIndex.length - index);
     this.indexDirty = Infinity;
   }
 

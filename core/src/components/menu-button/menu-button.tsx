@@ -37,8 +37,10 @@ export class MenuButton implements ComponentInterface {
     return {
       class: {
         [`${mode}`]: true,
+
         'button': true,  // ion-buttons target .button
         'ion-activatable': true,
+        'ion-focusable': true
       }
     };
   }
