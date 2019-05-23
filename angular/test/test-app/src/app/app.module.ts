@@ -11,6 +11,7 @@ import { ModalComponent } from './modal/modal.component';
 import { ModalExampleComponent } from './modal-example/modal-example.component';
 import { RouterLinkComponent } from './router-link/router-link.component';
 import { RouterLinkPageComponent } from './router-link-page/router-link-page.component';
+import { RouterLinkPage2Component } from './router-link-page2/router-link-page2.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { TabsComponent } from './tabs/tabs.component';
 import { TabsTab1Component } from './tabs-tab1/tabs-tab1.component';
@@ -30,6 +31,7 @@ import { FormComponent } from './form/form.component';
 import { NavigationPage1Component } from './navigation-page1/navigation-page1.component';
 import { NavigationPage2Component } from './navigation-page2/navigation-page2.component';
 import { NavigationPage3Component } from './navigation-page3/navigation-page3.component';
+import { RouterLinkPage3Component } from './router-link-page3/router-link-page3.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { NavigationPage3Component } from './navigation-page3/navigation-page3.co
     ModalExampleComponent,
     RouterLinkComponent,
     RouterLinkPageComponent,
+    RouterLinkPage2Component,
     HomePageComponent,
     TabsComponent,
     TabsTab1Component,
@@ -57,7 +60,8 @@ import { NavigationPage3Component } from './navigation-page3/navigation-page3.co
     FormComponent,
     NavigationPage1Component,
     NavigationPage2Component,
-    NavigationPage3Component
+    NavigationPage3Component,
+    RouterLinkPage3Component
   ],
   imports: [
     BrowserModule,
