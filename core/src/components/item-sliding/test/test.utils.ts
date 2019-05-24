@@ -8,14 +8,21 @@ export async function openItemSliding(id: string, page: any, rtl = false) {
     const centerX = parseFloat(boundingBox.x + boundingBox.width / 2);
     const centerY = parseFloat(boundingBox.y + boundingBox.height / 2);
 
+    let halfX = centerX / 2;
     let endX = 0;
     if (rtl) {
       endX = boundingBox.width;
+      halfX = endX / 2;
     }
 
+    // Start in the center of the item
     await page.mouse.move(centerX, centerY);
     await page.mouse.down();
-    await page.mouse.move(centerX / 2, centerY);
+
+    // Move halfway first
+    await page.mouse.move(halfX, centerY);
+
+    // Move all of the way to the end
     await page.mouse.move(endX, centerY);
     await page.mouse.up();
 
