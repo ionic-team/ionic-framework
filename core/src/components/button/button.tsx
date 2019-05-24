@@ -130,6 +130,22 @@ export class Button implements ComponentInterface {
     }
   }
 
+  private get hasIconOnly() {
+    return !!this.el.querySelector('ion-icon[slot="icon-only"]');
+  }
+
+  private get rippleType() {
+    const hasClearFill = this.fill === undefined || this.fill === 'clear';
+
+    // If the button is in a toolbar, has a clear fill (which is the default)
+    // and only has an icon we use the unbounded "circular" ripple effect
+    if (hasClearFill && this.hasIconOnly && this.inToolbar) {
+      return 'unbounded';
+    }
+
+    return 'bounded';
+  }
+
   private onFocus = () => {
     this.ionFocus.emit();
   }
@@ -139,7 +155,7 @@ export class Button implements ComponentInterface {
   }
 
   hostData() {
-    const { buttonType, disabled, color, expand, shape, size, strong } = this;
+    const { buttonType, disabled, color, expand, hasIconOnly, shape, size, strong } = this;
     let fill = this.fill;
     if (fill === undefined) {
       fill = this.inToolbar ? 'clear' : 'solid';
@@ -156,6 +172,7 @@ export class Button implements ComponentInterface {
         [`${buttonType}-${fill}`]: true,
         [`${buttonType}-strong`]: strong,
 
+        'button-has-icon-only': hasIconOnly,
         'button-disabled': disabled,
         'ion-activatable': true,
         'ion-focusable': true,
@@ -183,7 +200,7 @@ export class Button implements ComponentInterface {
           <slot></slot>
           <slot name="end"></slot>
         </span>
-        {this.mode === 'md' && <ion-ripple-effect type={this.inToolbar ? 'unbounded' : 'bounded'}></ion-ripple-effect>}
+        {this.mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
       </TagType>
     );
   }

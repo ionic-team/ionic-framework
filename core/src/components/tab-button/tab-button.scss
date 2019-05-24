@@ -24,6 +24,8 @@
   justify-content: center;
 
   height: 100%;
+  
+  outline: none;
 
   background: var(--background);
   color: var(--color);
@@ -61,7 +63,7 @@ a {
   -webkit-user-drag: none;
 }
 
-a:focus-visible {
+:host(.ion-focused) {
   background: var(--background-focused);
 }
 
