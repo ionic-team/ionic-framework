@@ -130,16 +130,8 @@ export class Button implements ComponentInterface {
     }
   }
 
-  private get hasLabel() {
-    return this.el.textContent !== null && this.el.textContent.trim() !== '';
-  }
-
-  private get hasIcon() {
-    return !!this.el.querySelector('ion-icon');
-  }
-
   private get hasIconOnly() {
-    return this.hasIcon && !this.hasLabel;
+    return !!this.el.querySelector('ion-icon[slot="icon-only"]');
   }
 
   private get rippleType() {
