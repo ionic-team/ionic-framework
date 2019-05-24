@@ -22,12 +22,10 @@ interface StackItem {
   element: React.ReactElement<any>;
   prevId: string;
   mount: boolean;
-  ref: React.RefObject<any>;
 }
 
 interface State {
   direction: 'forward' | 'back' | undefined,
-  inTransition: boolean;
   activeId: string | undefined;
   prevActiveId: string | undefined;
   tabActiveIds: { [tab: string]: string };
@@ -47,7 +45,6 @@ class RouterOutlet extends Component<Props, State> {
 
     this.state = {
       direction: undefined,
-      inTransition: false,
       activeId: undefined,
       prevActiveId: undefined,
       tabActiveIds: {},
@@ -62,8 +59,9 @@ class RouterOutlet extends Component<Props, State> {
     let match: StackItem['match'] = null;
     let element: StackItem['element'];
 
-
-    //LEFTOFF - Precleanup views that when bye bye (mount: false)
+    /**
+     * Remove any views that have been unmounted previously
+     */
     const views = state.views.filter(x => x.mount === true);
 
     /**
@@ -110,10 +108,8 @@ class RouterOutlet extends Component<Props, State> {
       };
     }
 
-
-
     /**
-     * If the new active view is a previous view
+     * If the new active view is a previous view, then animate it back in
      */
     if (activeView) {
       const prevActiveView = views.find(v => v.id === activeView.prevId);
@@ -126,7 +122,6 @@ class RouterOutlet extends Component<Props, State> {
             ...state.tabActiveIds,
             [match.params.tab]: prevActiveView.id,
           },
-          // views: views.filter(x => x.id !== activeView.id)
           views: views.map(x => {
             if (x.id === activeView.id) {
               return {
@@ -139,6 +134,10 @@ class RouterOutlet extends Component<Props, State> {
         }
       }
     }
+
+    /**
+     * Else add this new view to the stack
+     */
 
     const viewId = generateUniqueId();
 
@@ -156,8 +155,7 @@ class RouterOutlet extends Component<Props, State> {
         match,
         element,
         prevId: state.tabActiveIds[match.params.tab],
-        mount: true,
-        ref: React.createRef()
+        mount: true
       })
     };
   }
@@ -165,8 +163,7 @@ class RouterOutlet extends Component<Props, State> {
   renderChild(item: StackItem) {
     const component = React.cloneElement(item.element, {
       location: item.location,
-      computedMatch: item.match,
-      ref: item.ref
+      computedMatch: item.match
     });
     return component;
   }
@@ -178,27 +175,25 @@ class RouterOutlet extends Component<Props, State> {
     this.props.history.replace(newPath);
   }
 
-  // async componentDidMount() {
-  //   const activeView = this.state.views.find(v => v.id === this.state.activeId);
-  //   if(activeView) {
-  //     this.activateView(activeView.ref.current);
-  //   }
-  // }
-
-  async activateView(el: any) {
-    const leavingEl = (this.leavingEl.current != null) ? this.leavingEl.current : undefined;
-    // await (this.containerEl.current as any).componentOnReady();
-    if (this.containerEl.current && this.containerEl.current.commit) {
-      this.commitView(el, leavingEl);
-    } else {
-      setTimeout(() => {
+  activateView(el: HTMLElement) {
+    if (!this.state.direction) {
+      const leavingEl = (this.leavingEl.current != null) ? this.leavingEl.current : undefined;
+      /**
+       * Super hacky workaround to make sure commit() is available
+       * since this.containerEl.current.componentOnReady() is throwing errors
+       */
+      if (this.containerEl.current && this.containerEl.current.commit) {
         this.commitView(el, leavingEl);
-      }, 500);
+      } else {
+        setTimeout(() => {
+          this.activateView(el);
+        }, 500);
+      }
     }
   }
 
   commitView(el: HTMLElement, leavingEl: HTMLElement) {
-    if (!this.state.direction && !this.inTransition) {
+    if (!this.inTransition) {
       this.inTransition = true;
       this.containerEl.current.commit(el, leavingEl, {
         deepWait: true,
@@ -215,31 +210,20 @@ class RouterOutlet extends Component<Props, State> {
   componentDidUpdate() {
     const enteringEl = (this.enteringEl.current != null) ? this.enteringEl.current : undefined;
     const leavingEl = (this.leavingEl.current != null) ? this.leavingEl.current : undefined;
+    this.commitView(enteringEl, leavingEl);
 
-    if (!this.inTransition) {
-      // this.setState({ inTransition: true });
-      this.inTransition = true;
-      this.containerEl.current.commit(enteringEl, leavingEl, {
-        deepWait: true,
-        duration: this.state.direction === undefined ? 0 : undefined,
-        direction: this.state.direction,
-        showGoBack: !!leavingEl,
-        progressAnimation: false
-      }).then(() => {
-        // this.setState(() => ({
-        //   // inTransition: false,
-        //   direction: undefined
-        // }));
-        this.inTransition = false;
-      });
-    }
-  }
-
-  removeView(view: StackItem) {
-    console.log(view);
-    // this.setState({
-    //   views: this.state.views.filter(x => x.id !== view.id)
-    // })
+    // if (!this.inTransition) {
+    //   this.inTransition = true;
+    //   this.containerEl.current.commit(enteringEl, leavingEl, {
+    //     deepWait: true,
+    //     duration: this.state.direction === undefined ? 0 : undefined,
+    //     direction: this.state.direction,
+    //     showGoBack: !!leavingEl,
+    //     progressAnimation: false
+    //   }).then(() => {
+    //     this.inTransition = false;
+    //   });
+    // }
   }
 
   render() {
@@ -272,8 +256,7 @@ class RouterOutlet extends Component<Props, State> {
                 key={item.id}
                 in={item.mount}
                 timeout={1000}
-                unmountOnExit={true}
-                onExited={() => this.removeView(item)}>
+                unmountOnExit={true}>
                 {(state: string) => {
                   return (
                     <StackItem
