@@ -8,11 +8,28 @@ export async function openItemSliding(id: string, page: any, rtl = false) {
     const centerX = parseFloat(boundingBox.x + boundingBox.width / 2);
     const centerY = parseFloat(boundingBox.y + boundingBox.height / 2);
 
+    console.log(boundingBox.x, boundingBox.width);
+
+    // In LTR start the drag at the center, move halfway in between the
+    // center and 0, then end at 0
+    //
+    //  0                                boundingBox.width
+    //  |---------|---------|---------|---------|
+    // endX     halfX    centerX
+
     let halfX = centerX / 2;
     let endX = 0;
+
+    // In RTL start at the center, move halfway in between the center and
+    // the total width, then end at the total width
+    //
+    //  0                                boundingBox.width
+    //  |---------|---------|---------|---------|
+    //                   centerX    halfX      endX
+
     if (rtl) {
+      halfX = centerX + (centerX / 2);
       endX = boundingBox.width;
-      halfX = endX / 2;
     }
 
     // Start in the center of the item
