@@ -270,12 +270,6 @@ export class Datetime implements ComponentInterface {
     picker.addEventListener('ionPickerColChange', async (event: any) => {
       const data = event.detail;
 
-      /**
-       * Don't bother checking for non-dates as things like hours or minutes
-       * are always going to have the same number of column options
-       */
-      if (data.name !== 'month' && data.name !== 'day' && data.name !== 'year') { return; }
-
       const colSelectedIndex = data.selectedIndex;
       const colOptions = data.options;
 
