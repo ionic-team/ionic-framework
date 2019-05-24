@@ -4,6 +4,8 @@ import { InputsComponent } from './inputs/inputs.component';
 import { ModalComponent } from './modal/modal.component';
 import { RouterLinkComponent } from './router-link/router-link.component';
 import { RouterLinkPageComponent } from './router-link-page/router-link-page.component';
+import { RouterLinkPage2Component } from './router-link-page2/router-link-page2.component';
+import { RouterLinkPage3Component } from './router-link-page3/router-link-page3.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { TabsComponent } from './tabs/tabs.component';
 import { TabsTab1Component } from './tabs-tab1/tabs-tab1.component';
@@ -31,6 +33,8 @@ const routes: Routes = [
   { path: 'providers', component: ProvidersComponent },
   { path: 'router-link', component: RouterLinkComponent },
   { path: 'router-link-page', component: RouterLinkPageComponent },
+  { path: 'router-link-page2/:id', component: RouterLinkPage2Component },
+  { path: 'router-link-page3', component: RouterLinkPage3Component },
   { path: 'slides', component: SlidesComponent },
   { path: 'virtual-scroll', component: VirtualScrollComponent },
   { path: 'virtual-scroll-detail/:itemId', component: VirtualScrollDetailComponent },
