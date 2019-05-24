@@ -164,6 +164,7 @@ export function lifecycle(el: HTMLElement | undefined, eventName: string) {
       cancelable: false,
     });
     el.dispatchEvent(ev);
+    console.log('event:', ev);
   }
 }
 

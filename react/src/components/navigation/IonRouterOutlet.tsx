@@ -4,7 +4,7 @@ import { withRouter, RouteComponentProps, matchPath, match, RouteProps } from 'r
 import { generateUniqueId } from '../utils';
 import { Location } from 'history';
 import { IonRouterOutletInner } from '../index';
-import StackManager from '../StackManager';
+import StackItem from '../StackItem';
 import { NavContext } from './NavContext';
 
 type ChildProps = RouteProps & {
@@ -22,7 +22,7 @@ interface StackItem {
   element: React.ReactElement<any>;
   prevId: string;
   mount: boolean;
-  parentRef: React.RefObject<HTMLElement>;
+  ref: React.RefObject<any>;
 }
 
 interface State {
@@ -35,10 +35,12 @@ interface State {
 }
 
 class RouterOutlet extends Component<Props, State> {
-
+  enteringItem: StackItem;
+  leavingItem: StackItem;
   enteringEl: React.RefObject<HTMLDivElement> = React.createRef();
   leavingEl: React.RefObject<HTMLDivElement> = React.createRef();
   containerEl: React.RefObject<HTMLIonRouterOutletElement> = React.createRef();
+  inTransition = false;
 
   constructor(props: Props) {
     super(props);
@@ -51,6 +53,8 @@ class RouterOutlet extends Component<Props, State> {
       tabActiveIds: {},
       views: []
     };
+
+    this.activateView = this.activateView.bind(this);
   }
 
   static getDerivedStateFromProps(props: Props, state: State): Partial<State> {
@@ -58,10 +62,14 @@ class RouterOutlet extends Component<Props, State> {
     let match: StackItem['match'] = null;
     let element: StackItem['element'];
 
+
+    //LEFTOFF - Precleanup views that when bye bye (mount: false)
+    const views = state.views.filter(x => x.mount === true);
+
     /**
      * Get the current active view and if the path is the same then do nothing
      */
-    const activeView = state.views.find(v => v.id === state.activeId);
+    const activeView = views.find(v => v.id === state.activeId);
 
     /**
      * Look at all available paths and find the one that matches
@@ -89,7 +97,7 @@ class RouterOutlet extends Component<Props, State> {
      * If the location matches the existing tab path then set that view as active
      */
     const id = state.tabActiveIds[match.params.tab];
-    const currentActiveTabView = state.views.find(v => v.id === id);
+    const currentActiveTabView = views.find(v => v.id === id);
     if (currentActiveTabView && currentActiveTabView.location.pathname === props.location.pathname) {
       if (currentActiveTabView.id === state.activeId) {
         return null;
@@ -97,15 +105,18 @@ class RouterOutlet extends Component<Props, State> {
       return {
         direction: undefined,
         activeId: currentActiveTabView.id,
-        prevActiveId: undefined
+        prevActiveId: undefined,
+        views: views
       };
     }
+
+
 
     /**
      * If the new active view is a previous view
      */
     if (activeView) {
-      const prevActiveView = state.views.find(v => v.id === activeView.prevId);
+      const prevActiveView = views.find(v => v.id === activeView.prevId);
       if (prevActiveView && activeView.match.params.tab === match.params.tab && prevActiveView.match.url === match.url) {
         return {
           direction: 'back',
@@ -115,8 +126,8 @@ class RouterOutlet extends Component<Props, State> {
             ...state.tabActiveIds,
             [match.params.tab]: prevActiveView.id,
           },
-          // views: state.views.filter(x => x.id !== activeView.id)
-          views: state.views.map(x => {
+          // views: views.filter(x => x.id !== activeView.id)
+          views: views.map(x => {
             if (x.id === activeView.id) {
               return {
                 ...x,
@@ -139,14 +150,14 @@ class RouterOutlet extends Component<Props, State> {
         ...state.tabActiveIds,
         [match.params.tab]: viewId
       },
-      views: state.views.concat({
+      views: views.concat({
         id: viewId,
         location,
         match,
         element,
         prevId: state.tabActiveIds[match.params.tab],
         mount: true,
-        parentRef: React.createRef<HTMLElement>()
+        ref: React.createRef()
       })
     };
   }
@@ -155,7 +166,7 @@ class RouterOutlet extends Component<Props, State> {
     const component = React.cloneElement(item.element, {
       location: item.location,
       computedMatch: item.match,
-      parentRef: item.parentRef
+      ref: item.ref
     });
     return component;
   }
@@ -167,31 +178,68 @@ class RouterOutlet extends Component<Props, State> {
     this.props.history.replace(newPath);
   }
 
+  // async componentDidMount() {
+  //   const activeView = this.state.views.find(v => v.id === this.state.activeId);
+  //   if(activeView) {
+  //     this.activateView(activeView.ref.current);
+  //   }
+  // }
+
+  async activateView(el: any) {
+    const leavingEl = (this.leavingEl.current != null) ? this.leavingEl.current : undefined;
+    // await (this.containerEl.current as any).componentOnReady();
+    if (this.containerEl.current && this.containerEl.current.commit) {
+      this.commitView(el, leavingEl);
+    } else {
+      setTimeout(() => {
+        this.commitView(el, leavingEl);
+      }, 500);
+    }
+  }
+
+  commitView(el: HTMLElement, leavingEl: HTMLElement) {
+    if (!this.state.direction && !this.inTransition) {
+      this.inTransition = true;
+      this.containerEl.current.commit(el, leavingEl, {
+        deepWait: true,
+        duration: this.state.direction === undefined ? 0 : undefined,
+        direction: this.state.direction,
+        showGoBack: !!leavingEl,
+        progressAnimation: false
+      }).then(() => {
+        this.inTransition = false;
+      });
+    }
+  }
+
   componentDidUpdate() {
     const enteringEl = (this.enteringEl.current != null) ? this.enteringEl.current : undefined;
     const leavingEl = (this.leavingEl.current != null) ? this.leavingEl.current : undefined;
 
-    if (this.state.direction && !this.state.inTransition) {
-      this.setState({ inTransition: true });
+    if (!this.inTransition) {
+      // this.setState({ inTransition: true });
+      this.inTransition = true;
       this.containerEl.current.commit(enteringEl, leavingEl, {
         deepWait: true,
         duration: this.state.direction === undefined ? 0 : undefined,
         direction: this.state.direction,
-        showGoBack: true,
+        showGoBack: !!leavingEl,
         progressAnimation: false
       }).then(() => {
-        this.setState(() => ({
-          inTransition: false,
-          direction: undefined
-        }));
+        // this.setState(() => ({
+        //   // inTransition: false,
+        //   direction: undefined
+        // }));
+        this.inTransition = false;
       });
     }
   }
 
   removeView(view: StackItem) {
-    this.setState({
-      views: this.state.views.filter(x => x.id !== view.id)
-    })
+    console.log(view);
+    // this.setState({
+    //   views: this.state.views.filter(x => x.id !== view.id)
+    // })
   }
 
   render() {
@@ -220,21 +268,23 @@ class RouterOutlet extends Component<Props, State> {
             }
 
             return (
-                <Transition
-                  key={item.id}
-                  in={item.mount}
-                  timeout={1000}
-                  unmountOnExit={true}
-                  onExited={() => this.removeView(item)}>
-                  {(state: string) => {
-                    return (
-                      <StackManager ref={item.parentRef} className={state}
-                        {...props}
-                      >
-                        {this.renderChild(item)}
-                      </StackManager>);
-                  }}
-                </Transition>
+              <Transition
+                key={item.id}
+                in={item.mount}
+                timeout={1000}
+                unmountOnExit={true}
+                onExited={() => this.removeView(item)}>
+                {(state: string) => {
+                  return (
+                    <StackItem
+                      className={state}
+                      activateView={this.activateView}
+                      {...props}
+                    >
+                      {this.renderChild(item)}
+                    </StackItem>);
+                }}
+              </Transition>
             );
           })}
         </NavContext.Provider>

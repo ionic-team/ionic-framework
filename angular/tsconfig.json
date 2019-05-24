@@ -29,7 +29,8 @@
     "importHelpers": true,
     "rootDir": "src",
     "strictPropertyInitialization": false,
-    "target": "es2015"
+    "target": "es2015",
+    "sourceMap": true
   },
   "exclude": ["node_modules", "src/schematics"],
   "files": ["src/index.ts"]
