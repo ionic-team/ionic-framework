@@ -62,11 +62,11 @@
             </ion-item>
             <ion-item-options class="show-options">
               <ion-item-option color="primary">
-                <ion-icon name="more"></ion-icon>
+                <ion-icon slot="start" name="more"></ion-icon>
                 <span class="more-text"></span>
               </ion-item-option>
               <ion-item-option color="secondary" onclick="archive('item6')">
-                <ion-icon name="archive"></ion-icon>
+                <ion-icon slot="start" name="archive"></ion-icon>
                 <span class="archive-text"></span>
               </ion-item-option>
             </ion-item-options>
@@ -85,11 +85,11 @@
             </ion-item-options>
             <ion-item-options side="end" class="show-options">
               <ion-item-option color="primary">
-                <ion-icon name="more"></ion-icon>
+                <ion-icon slot="start" name="more"></ion-icon>
                 <span class="more-text"></span>
               </ion-item-option>
               <ion-item-option color="secondary" onclick="archive('item6')">
-                <ion-icon name="archive"></ion-icon>
+                <ion-icon slot="start" name="archive"></ion-icon>
                 <span class="archive-text"></span>
               </ion-item-option>
             </ion-item-options>
@@ -183,16 +183,19 @@
             </ion-item>
             <ion-item-options side="start" class="sliding-enabled">
               <ion-item-option color="secondary" expandable onclick="unread('item2')">
-                <ion-icon name="ios-checkmark"></ion-icon>Unread
+                <ion-icon slot="start" name="ios-checkmark"></ion-icon>
+                Unread
               </ion-item-option>
             </ion-item-options>
 
             <ion-item-options side="end" class="sliding-enabled">
               <ion-item-option color="primary" onclick="archive('item2')">
-                <ion-icon name="mail"></ion-icon>Archive
+                <ion-icon slot="start" name="mail"></ion-icon>
+                Archive
               </ion-item-option>
               <ion-item-option color="danger" onclick="del('item2')" expandable>
-                <ion-icon name="trash"></ion-icon>Delete
+                <ion-icon slot="start" name="trash"></ion-icon>
+                Delete
               </ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
@@ -206,16 +209,19 @@
             </ion-item>
             <ion-item-options side="start" icon-start class="sliding-enabled">
               <ion-item-option color="secondary" expandable onclick="unread('item3')">
-                <ion-icon name="ios-checkmark"></ion-icon>Unread
+                <ion-icon slot="start" name="ios-checkmark"></ion-icon>
+                Unread
               </ion-item-option>
             </ion-item-options>
 
             <ion-item-options icon-start>
               <ion-item-option color="primary" onclick="archive('item3')">
-                <ion-icon name="mail"></ion-icon>Archive
+                <ion-icon slot="start" name="mail"></ion-icon>
+                Archive
               </ion-item-option>
               <ion-item-option color="danger" onclick="del('item3')" expandable class="sliding-enabled">
-                <ion-icon name="trash"></ion-icon>Delete
+                <ion-icon slot="start" name="trash"></ion-icon>
+                Delete
               </ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
@@ -230,7 +236,8 @@
             </ion-item>
             <ion-item-options icon-start>
               <ion-item-option color="primary" onclick="archive('item4')" expandable class="sliding-enabled">
-                <ion-icon name="archive"></ion-icon>Archive
+                <ion-icon slot="start" name="archive"></ion-icon>
+                Archive
               </ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
@@ -247,13 +254,16 @@
             </ion-item>
             <ion-item-options>
               <ion-item-option color="primary" expandable>
-                <ion-icon name="more"></ion-icon>More
+                <ion-icon slot="start" name="more"></ion-icon>
+                More
               </ion-item-option>
               <ion-item-option color="secondary" onclick="archive('item5')">
-                <ion-icon name="archive"></ion-icon>Archive
+                <ion-icon slot="start" name="archive"></ion-icon>
+                Archive
               </ion-item-option>
               <ion-item-option color="light" onclick="del('item5')">
-                <ion-icon name="trash"></ion-icon>Delete
+                <ion-icon slot="start" name="trash"></ion-icon>
+                Delete
               </ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
@@ -267,11 +277,11 @@
             </ion-item>
             <ion-item-options icon-start>
               <ion-item-option color="primary">
-                <ion-icon name="more"></ion-icon>
+                <ion-icon slot="start" name="more"></ion-icon>
                 <span class="more-text"></span>
               </ion-item-option>
               <ion-item-option color="secondary" onclick="archive('item7')">
-                <ion-icon name="archive"></ion-icon>
+                <ion-icon slot="start" name="archive"></ion-icon>
                 <span class="archive-text"></span>
               </ion-item-option>
             </ion-item-options>
@@ -292,10 +302,10 @@
                 <ion-icon name="archive"></ion-icon>Archive
               </ion-item-option>
               <ion-item-option color="secondary" expandable onclick="download('item8')">
-                <ion-icon name="download" class="download-hide"></ion-icon>
+                <ion-icon slot="start" name="download" class="download-hide"></ion-icon>
                 <div class="download-hide">Download</div>
 
-                <ion-icon class="download-spinner" name="refresh"></ion-icon>
+                <ion-icon slot="start" class="download-spinner" name="refresh"></ion-icon>
                 <div class="download-spinner">Loading...</div>
               </ion-item-option>
             </ion-item-options>
@@ -322,31 +332,39 @@
             </ion-item>
             <ion-item-options side="start" class="sliding-enabled">
               <ion-item-option color="primary" expandable>
-                <ion-icon name="ios-checkmark"></ion-icon>Btn 1
+                <ion-icon slot="start" name="ios-checkmark"></ion-icon>
+                Btn 1
               </ion-item-option>
               <ion-item-option color="secondary" expandable>
-                <ion-icon name="ios-checkmark"></ion-icon>Btn 2
+                <ion-icon slot="start" name="ios-checkmark"></ion-icon>
+                Btn 2
               </ion-item-option>
               <ion-item-option color="danger" expandable>
-                <ion-icon name="ios-checkmark"></ion-icon>Btn 3
+                <ion-icon slot="start" name="ios-checkmark"></ion-icon>
+                Btn 3
               </ion-item-option>
               <ion-item-option color="tertiary" expandable>
-                <ion-icon name="ios-checkmark"></ion-icon>Btn 4
+                <ion-icon slot="start" name="ios-checkmark"></ion-icon>
+                Btn 4
               </ion-item-option>
             </ion-item-options>
 
             <ion-item-options side="end" class="sliding-enabled">
               <ion-item-option color="primary" expandable>
-                <ion-icon name="mail"></ion-icon>Btn 5
+                <ion-icon slot="start" name="mail"></ion-icon>
+                Btn 5
               </ion-item-option>
               <ion-item-option color="secondary" expandable>
-                <ion-icon name="mail"></ion-icon>Btn 6
+                <ion-icon slot="start" name="mail"></ion-icon>
+                Btn 6
               </ion-item-option>
               <ion-item-option color="danger" expandable>
-                <ion-icon name="mail"></ion-icon>Btn 7
+                <ion-icon slot="start" name="mail"></ion-icon>
+                Btn 7
               </ion-item-option>
               <ion-item-option color="tertiary" expandable>
-                <ion-icon name="mail"></ion-icon>Btn 8
+                <ion-icon slot="start" name="mail"></ion-icon>
+                Btn 8
               </ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
@@ -412,7 +430,7 @@
           var item = document.getElementById('item2');
           item.open(side);
         }
-        
+
         function openItemOneSide() {
           var item = document.getElementById('item1');
           item.open();
