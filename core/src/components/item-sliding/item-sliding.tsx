@@ -43,6 +43,7 @@ export class ItemSliding implements ComponentInterface {
   private rightOptions?: HTMLIonItemOptionsElement;
   private optsDirty = true;
   private gesture?: Gesture;
+  private contentEl?: Element | null;
 
   @Element() el!: HTMLIonItemSlidingElement;
 
@@ -69,6 +70,8 @@ export class ItemSliding implements ComponentInterface {
   async componentDidLoad() {
     this.item = this.el.querySelector('ion-item');
     await this.updateOptions();
+
+    this.contentEl = this.el.closest('ion-content');
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
@@ -240,6 +243,9 @@ export class ItemSliding implements ComponentInterface {
 
   private onStart() {
     openSlidingItem = this.el;
+    if (this.contentEl) {
+      this.contentEl.classList.add('no-slide');
+    }
 
     if (this.tmr !== undefined) {
       clearTimeout(this.tmr);
@@ -283,6 +289,10 @@ export class ItemSliding implements ComponentInterface {
   }
 
   private onEnd(gesture: GestureDetail) {
+    if (this.contentEl) {
+      this.contentEl.classList.remove('no-slide');
+    }
+
     const velocity = gesture.velocityX;
 
     let restingPoint = (this.openAmount > 0)
