@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Button - Clear</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Button - Dynamic</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding" id="content" no-bounce>
+      <ion-item id="dynamicItem">
+        <ion-label>Dynamic Button</ion-label>
+      </ion-item>
+      <ion-button onClick="addButton('dynamicItem')">
+        Add a Button
+      </ion-button>
+
+      <ion-item-divider id="dynamicItemDivider">
+        <ion-label>Dynamic Button</ion-label>
+      </ion-item-divider>
+      <ion-button onClick="addButton('dynamicItemDivider')">
+        Add a Button
+      </ion-button>
+    </ion-content>
+
+  </ion-app>
+
+  <script>
+    function addButton(dynamicId) {
+      var item = document.querySelector('#' + dynamicId);
+      var button = document.createElement("ion-button");
+      button.textContent = "Button";
+      button.slot = "start";
+      item.appendChild(button);
+    }
+  </script>
+</body>
+
+</html>

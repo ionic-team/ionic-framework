@@ -41,16 +41,6 @@ export class ItemDivider implements ComponentInterface {
    */
   @Prop() sticky = false;
 
-  componentDidLoad() {
-    // Change the button size to small for each ion-button in the item
-    // unless the size is explicitly set
-    Array.from(this.el.querySelectorAll('ion-button')).forEach(button => {
-      if (button.size === undefined) {
-        button.size = 'small';
-      }
-    });
-  }
-
   hostData() {
     return {
       class: {

@@ -81,7 +81,7 @@ export class Button implements ComponentInterface {
   /**
    * The button size.
    */
-  @Prop({ reflectToAttr: true }) size?: 'small' | 'default' | 'large';
+  @Prop({ reflectToAttr: true, mutable: true }) size?: 'small' | 'default' | 'large';
 
   /**
    * If `true`, activates a button with a heavier font weight.
@@ -105,6 +105,10 @@ export class Button implements ComponentInterface {
 
   componentWillLoad() {
     this.inToolbar = !!this.el.closest('ion-buttons');
+    if (this.size === undefined && this.el.parentElement
+      && (this.el.parentElement.localName === 'ion-item' || this.el.parentElement.localName === 'ion-item-divider')) {
+      this.size = 'small';
+    }
   }
 
   @Listen('click')
