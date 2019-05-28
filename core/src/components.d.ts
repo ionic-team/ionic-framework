@@ -2030,7 +2030,7 @@ export namespace Components {
     /**
     * Open the sliding item.
     */
-    'open': (side: string | undefined) => Promise<void>;
+    'open': (side: "start" | "end" | undefined) => Promise<void>;
   }
   interface IonItemSlidingAttributes extends StencilHTMLAttributes {
     /**

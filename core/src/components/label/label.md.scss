@@ -4,6 +4,7 @@
 // Material Design Label
 // --------------------------------------------------
 
+:host(.ion-text-wrap),
 :host([text-wrap]) {
   line-height: $label-md-text-wrap-line-height;
 }

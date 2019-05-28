@@ -117,12 +117,12 @@
         </ion-buttons>
         <ion-buttons slot="primary">
           <ion-button>
-            <ion-icon name="star"></ion-icon>
+            <ion-icon slot="icon-only" name="star"></ion-icon>
           </ion-button>
         </ion-buttons>
         <ion-buttons slot="secondary">
           <ion-button>
-            <ion-icon name="call"></ion-icon>
+            <ion-icon slot="icon-only" name="call"></ion-icon>
           </ion-button>
         </ion-buttons>
         <ion-buttons slot="start">
@@ -138,12 +138,12 @@
         </ion-buttons>
         <ion-buttons slot="primary">
           <ion-button>
-            <ion-icon name="star"></ion-icon>
+            <ion-icon slot="icon-only" name="star"></ion-icon>
           </ion-button>
         </ion-buttons>
         <ion-buttons slot="secondary">
           <ion-button>
-            <ion-icon name="call"></ion-icon>
+            <ion-icon slot="icon-only" name="call"></ion-icon>
           </ion-button>
         </ion-buttons>
         <ion-buttons slot="start">
@@ -241,6 +241,36 @@
       </ion-toolbar>
 
     </ion-content>
+
+    <ion-footer>
+      <ion-toolbar>
+        <ion-title>
+          Click to Add Text
+        </ion-title>
+        <ion-buttons slot="end">
+          <ion-button id="changeText" onClick="toggleText()">
+            <ion-icon slot="start" name="refresh"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>
+
+    <script>
+      const button = document.getElementById('changeText');
+
+      function toggleText() {
+        const hasText = button.querySelector('#childText');
+
+        if (hasText) {
+          button.removeChild(hasText);
+        } else {
+          var text = document.createElement('span');
+          text.innerHTML = 'Toggle';
+          text.id = 'childText';
+          button.appendChild(text, button);
+        }
+      }
+    </script>
 
     <style>
       ion-toolbar {
