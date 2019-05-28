@@ -106,22 +106,16 @@
 }
 
 
-// Searchbar Has Focus & Animated
+// Searchbar Has Focus & Animated & Permanent Cancel
 // -----------------------------------------
 
-:host(.searchbar-has-focus) .searchbar-cancel-button,
-:host(.searchbar-animated) .searchbar-cancel-button {
+:host(.searchbar-has-focus, .searchbar-animated, .searchbar-has-permanent-cancel) .searchbar-cancel-button {
   display: block;
 }
 
 :host(.searchbar-animated) .searchbar-search-icon,
 :host(.searchbar-animated) .searchbar-input {
   transition: $searchbar-ios-input-transition;
-}
-
-:host(.searchbar-animated.searchbar-has-focus) .searchbar-cancel-button {
-  opacity: 1;
-  pointer-events: auto;
 }
 
 :host(.searchbar-animated) .searchbar-cancel-button {
@@ -132,6 +126,12 @@
 
   opacity: 0;
   pointer-events: none;
+}
+
+:host(.searchbar-animated.searchbar-has-focus) .searchbar-cancel-button,
+:host(.searchbar-has-permanent-cancel) .searchbar-cancel-button {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 :host(.searchbar-no-animate) .searchbar-search-icon,

@@ -29,6 +29,10 @@
       <ion-searchbar id="noCancel" value="after view" autocorrect="off" autocomplete="off" spellcheck="true" type="text" show-cancel-button="false">
       </ion-searchbar>
 
+      <h5 class="ion-padding-start ion-padding-top"> Search - Permanent Cancel Button </h5>
+      <ion-searchbar id="permanentCancel" show-cancel-button="true" permanent-cancel-button="true">
+      </ion-searchbar>
+
       <h5 class="ion-padding-start ion-padding-top"> Search - Disabled </h5>
       <ion-searchbar id="disabled" value="disabled" type="text" disabled="true">
       </ion-searchbar>
@@ -101,6 +105,10 @@
           // Toggle show-cancel-button attribute
           const attrShowCancel = dynamicAttr.getAttribute('show-cancel-button') === 'true' ? false : true;
           dynamicAttr.setAttribute('show-cancel-button', attrShowCancel);
+
+          // Toggle permanent-cancel-button attribute
+          const attrPermanentCancel = dynamicAttr.getAttribute('permanent-cancel-button') === 'true' ? false : true;
+          dynamicAttr.setAttribute('permanent-cancel-button', attrPermanentCancel);
 
           // Toggle placeholder attribute
           const attrPlaceholder = dynamicAttr.getAttribute('placeholder') === 'Search' ? 'Enter a Search Term' : 'Search';

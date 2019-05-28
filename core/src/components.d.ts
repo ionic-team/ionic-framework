@@ -3788,6 +3788,10 @@ export namespace Components {
     */
     'mode': Mode;
     /**
+    * If `true`, show the cancel button even when the searchbar is not focused.
+    */
+    'permanentCancelButton': boolean;
+    /**
     * Set the input's placeholder. `placeholder` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
     'placeholder': string;
@@ -3881,6 +3885,10 @@ export namespace Components {
     * Emitted when a keyboard input ocurred.
     */
     'onIonInput'?: (event: CustomEvent<KeyboardEvent>) => void;
+    /**
+    * If `true`, show the cancel button even when the searchbar is not focused.
+    */
+    'permanentCancelButton'?: boolean;
     /**
     * Set the input's placeholder. `placeholder` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */

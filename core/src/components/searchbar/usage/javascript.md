@@ -17,6 +17,9 @@
 <!-- Searchbar with a cancel button and custom cancel button text -->
 <ion-searchbar show-cancel-button cancel-button-text="Custom Cancel"></ion-searchbar>
 
+<!-- Searchbar with a permanent cancel button -->
+<ion-searchbar show-cancel-button permanent-cancel-button></ion-searchbar>
+
 <!-- Searchbar with a custom debounce -->
 <ion-searchbar debounce="500"></ion-searchbar>
 
