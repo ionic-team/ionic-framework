@@ -41,10 +41,6 @@ class StackItem extends React.Component<InternalProps, StackItemState> {
     }
   }
 
-  componentWillUpdate() {
-
-  }
-
   componentWillUnmount() {
     const { forwardedRef } = this.props;
     if (forwardedRef && forwardedRef.current) {

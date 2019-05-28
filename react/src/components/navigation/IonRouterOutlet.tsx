@@ -7,11 +7,11 @@ import { IonRouterOutletInner } from '../index';
 import StackItem from '../StackItem';
 import { NavContext } from './NavContext';
 
-type ChildProps = RouteProps & {
+interface ChildProps extends RouteProps {
   computedMatch: match<any>
 }
 
-type IonRouterOutletProps = RouteComponentProps & {
+interface IonRouterOutletProps extends RouteComponentProps {
   children?: React.ReactElement<ChildProps>[] | React.ReactElement<ChildProps>;
 };
 
@@ -25,7 +25,7 @@ interface StackItem {
 }
 
 interface IonRouterOutletState {
-  direction: 'forward' | 'back' | undefined,
+  direction?: 'forward' | 'back',
   activeId: string | undefined;
   prevActiveId: string | undefined;
   tabActiveIds: { [tab: string]: string };
@@ -81,6 +81,7 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
 
     /**
      * If there are no matches then set the active view to null and exit
+     * Note: shouldn't ever happen
      */
     if (!match) {
       return {
@@ -106,8 +107,7 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
       return {
         direction: undefined,
         activeId: currentActiveTabView.id,
-        prevActiveId: undefined,
-        // prevActiveId: state.activeId,
+        prevActiveId: state.activeId,
         views: views
       };
     }
@@ -121,8 +121,7 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
         return {
           direction: 'back',
           activeId: prevActiveView.id,
-          prevActiveId: undefined,
-          // prevActiveId: activeView.id,
+          prevActiveId: activeView.id,
           tabActiveIds: {
             ...state.tabActiveIds,
             [match.params.tab]: prevActiveView.id,
@@ -143,16 +142,11 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
     /**
      * Else add this new view to the stack
      */
-
     const viewId = generateUniqueId();
-
-    // const direction = state.direction ? state.direction : (state.tabActiveIds[match.params.tab]) ? 'forward' : undefined;
-    const direction = (state.tabActiveIds[match.params.tab]) ? 'forward' : undefined;
-
     const newState: IonRouterOutletState = {
-      direction: direction,
+      direction: (state.tabActiveIds[match.params.tab]) ? 'forward' : undefined,
       activeId: viewId,
-      prevActiveId: state.tabActiveIds[match.params.tab], // || state.activeId,
+      prevActiveId: state.tabActiveIds[match.params.tab] || state.activeId,
       tabActiveIds: {
         ...state.tabActiveIds,
         [match.params.tab]: viewId
@@ -181,11 +175,41 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
   goBack = (defaultHref?: string) => {
     const prevView = this.state.views.find(v => v.id === this.state.activeId);
     const newView = this.state.views.find(v => v.id === prevView.prevId);
-    const newPath = newView ? newView.location.pathname : defaultHref;
-    // this.setState({
-    //   direction: 'back'
-    // });
-    this.props.history.replace(newPath);
+    if (newView) {
+      this.props.history.replace(newView.location.pathname || defaultHref);
+    } else {
+      /**
+       * find the parent view based on the defaultHref and add it
+       * to the views collection so that navigation works properly
+       */
+      let element: StackItem['element'];
+      let match: StackItem['match'];
+      React.Children.forEach(this.props.children, (child: React.ReactElement<ChildProps>) => {
+        if (match == null) {
+          element = child;
+          match = matchPath(defaultHref, child.props);
+        }
+      });
+
+      if (element && match) {
+        const viewId = generateUniqueId();
+        const parentView: StackItem = {
+          id: viewId,
+          location: {
+            pathname: defaultHref
+          } as any,
+          element: element,
+          match: match,
+          prevId: undefined,
+          mount: true
+        };
+        prevView.prevId = viewId;
+        this.setState({
+          views: [parentView, prevView]
+        });
+      }
+      this.props.history.replace(defaultHref);
+    }
   }
 
   activateView(el: HTMLElement) {
@@ -212,15 +236,21 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
     if (!this.inTransition) {
       this.inTransition = true;
       await this.containerEl.current.componentOnReady();
-      this.containerEl.current.commit(el, leavingEl, {
+      await this.containerEl.current.commit(el, leavingEl, {
         deepWait: true,
         duration: this.state.direction === undefined ? 0 : undefined,
         direction: this.state.direction,
         showGoBack: !!leavingEl,
         progressAnimation: false
-      }).then(() => {
-        this.inTransition = false;
       });
+
+      if (leavingEl) {
+        /**
+         *  add hidden class back since core seems to remove it
+        */
+        leavingEl.classList.add('ion-page-hidden');
+      }
+      this.inTransition = false;
     }
   }
 
