@@ -1,6 +1,5 @@
 import React from 'react';
-import { LifeCycleContext, LifeCycleContextInterface } from './navigation/LifeCycleContext';
-
+import { IonLifeCycleContext, DefaultIonLifeCycleContext } from './navigation/IonLifeCycleContext';
 
 type Props = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 
@@ -19,8 +18,7 @@ interface StackItemState {
 }
 
 class StackItem extends React.Component<InternalProps, StackItemState> {
-  // context!: React.ContextType<typeof LifeCycleContext>;
-  lifeCycleContext = new DefaultLifeCycleContext();
+  ionLifeCycleContext = new DefaultIonLifeCycleContext();
 
   constructor(props: InternalProps) {
     super(props);
@@ -29,34 +27,27 @@ class StackItem extends React.Component<InternalProps, StackItemState> {
     }
   }
 
-  componentWillMount() {
-    // this.lifeCycleContext.ionViewWillEnter();
-  }
-
   componentDidMount() {
     const { forwardedRef, activateView } = this.props;
-    this.setState({ref: forwardedRef});
-    if(forwardedRef && forwardedRef.current) {
+    this.setState({ ref: forwardedRef });
+    if (forwardedRef && forwardedRef.current) {
       forwardedRef.current.addEventListener('ionViewWillEnter', this.ionViewWillEnterHandler.bind(this));
       forwardedRef.current.addEventListener('ionViewDidEnter', this.ionViewDidEnterHandler.bind(this));
       forwardedRef.current.addEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler.bind(this));
       forwardedRef.current.addEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler.bind(this));
-      if(activateView) {
+      if (activateView) {
         activateView(forwardedRef.current);
       }
     }
   }
 
-  componentDidUpdate() {
-    // const { forwardedRef, activateView } = this.props;
-    // if(activateView && forwardedRef) {
-    //   activateView(forwardedRef.current);
-    // }
+  componentWillUpdate() {
+
   }
 
   componentWillUnmount() {
     const { forwardedRef } = this.props;
-    if(forwardedRef && forwardedRef.current) {
+    if (forwardedRef && forwardedRef.current) {
       forwardedRef.current.removeEventListener('ionViewWillEnter', this.ionViewWillEnterHandler.bind(this));
       forwardedRef.current.removeEventListener('ionViewDidEnter', this.ionViewDidEnterHandler.bind(this));
       forwardedRef.current.removeEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler.bind(this));
@@ -65,112 +56,42 @@ class StackItem extends React.Component<InternalProps, StackItemState> {
   }
 
   ionViewWillEnterHandler() {
-    this.lifeCycleContext.ionViewWillEnter();
+    this.ionLifeCycleContext.ionViewWillEnter();
   }
 
   ionViewDidEnterHandler() {
-    this.lifeCycleContext.ionViewDidEnter();
+    this.ionLifeCycleContext.ionViewDidEnter();
   }
 
   ionViewWillLeaveHandler() {
-    this.lifeCycleContext.ionViewWillLeave();
+    this.ionLifeCycleContext.ionViewWillLeave();
   }
 
   ionViewDidLeaveHandler() {
-    this.lifeCycleContext.ionViewDidLeave();
+    this.ionLifeCycleContext.ionViewDidLeave();
   }
 
   render() {
     const { className, children, forwardedRef, activateView, ...rest } = this.props;
     const { ref } = this.state;
     return (
-      <LifeCycleContext.Provider value={this.lifeCycleContext}>
-      <div
-        className={className ? `ion-page ${className}` : 'ion-page'}
-        ref={forwardedRef}
-        {...rest}
-      >
-        {ref && children}
-      </div>
-      </LifeCycleContext.Provider>
+      <IonLifeCycleContext.Provider value={this.ionLifeCycleContext}>
+        <div
+          className={className ? `ion-page ${className}` : 'ion-page'}
+          ref={forwardedRef}
+          {...rest}
+        >
+          {ref && children}
+        </div>
+      </IonLifeCycleContext.Provider>
     )
   }
 }
+StackItem.contextType = IonLifeCycleContext;
 
 function forwardRef(props: InternalProps, ref: React.RefObject<HTMLDivElement>) {
-  return <StackItem forwardedRef={ref} {...props}  />;
+  return <StackItem forwardedRef={ref} {...props} />;
 }
 forwardRef.displayName = 'StackItem';
 
-StackItem.contextType = LifeCycleContext;
-
 export default React.forwardRef<HTMLDivElement, ExternalProps>(forwardRef);
-
-class DefaultLifeCycleContext implements LifeCycleContextInterface {
-
-  stackItemRef: null;
-
-  ionViewWillEnterCallback: Function;
-  ionViewDidEnterCallback: Function;
-  ionViewWillLeaveCallback: Function;
-  ionViewDidLeaveCallback: Function;
-
-  queueIonViewWillEnter = false;
-  queueIonViewDidEnter = false;
-
-  constructor() {
-    console.log('dlcc ctor');
-  }
-
-  onIonViewWillEnter(callback: Function) {
-    this.ionViewWillEnterCallback = callback;
-    if(this.queueIonViewWillEnter) {
-      callback();
-      this.queueIonViewWillEnter = false;
-    }
-  }
-
-  ionViewWillEnter() {
-    if (this.ionViewWillEnterCallback) {
-      this.ionViewWillEnterCallback();
-    } else {
-      this.queueIonViewWillEnter = true;
-    }
-  }
-
-  onIonViewDidEnter(callback: Function) {
-    this.ionViewDidEnterCallback = callback;
-    if(this.queueIonViewDidEnter) {
-      callback();
-      this.queueIonViewDidEnter = false;
-    }
-  }
-
-  ionViewDidEnter() {
-    if (this.ionViewDidEnterCallback) {
-      this.ionViewDidEnterCallback();
-    } else {
-      this.queueIonViewDidEnter = true;
-    }
-  }
-
-  onIonViewWillLeave(callback: Function) {
-    this.ionViewWillLeaveCallback = callback;
-  }
-
-  ionViewWillLeave() {
-    if (this.ionViewWillLeaveCallback) {
-      this.ionViewWillLeaveCallback();
-    }
-  }
-
-  onIonViewDidLeave(callback: Function) {
-    this.ionViewDidLeaveCallback = callback;
-  }
-
-  ionViewDidLeave() {
-    if (this.ionViewDidLeaveCallback) {
-      this.ionViewDidLeaveCallback();
-    }
-  }
-}

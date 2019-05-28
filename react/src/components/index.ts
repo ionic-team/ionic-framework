@@ -24,7 +24,9 @@ export { default as IonTabBar } from './navigation/IonTabBar';
 export { IonRouterOutlet } from './navigation/IonRouterOutlet';
 export { IonBackButton } from './navigation/IonBackButton';
 export { IonComponent } from './navigation/IonComponent';
-export { LifeCycleContext, LifeCycleContextInterface } from './navigation/LifeCycleContext';
+export { useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter, useIonViewWillLeave, withIonLifeCycle} from './navigation/IonLifeCycle';
+export { IonLifeCycleContext, IonLifeCycleContextInterface } from './navigation/IonLifeCycleContext';
+
 
 addIcons(ICON_PATHS);
 defineCustomElements(window);

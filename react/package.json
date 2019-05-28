@@ -44,10 +44,6 @@
     "jest": "^23.0.0",
     "jest-dom": "^3.0.2",
     "np": "^3.1.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-router": "^4.3.1",
-    "react-router-dom": "^4.3.1",
     "react-testing-library": "^7.0.0",
     "ts-jest": "^23.10.5",
     "typescript": "^3.2.2"
@@ -57,8 +53,8 @@
     "react-transition-group": "^4.0.1"
   },
   "peerDependencies": {
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1"
   },
