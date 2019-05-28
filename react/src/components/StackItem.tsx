@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonLifeCycleContext, DefaultIonLifeCycleContext } from './navigation/IonLifeCycleContext';
+import { IonLifeCycleContext, DefaultIonLifeCycleContext } from '../lifecycle/IonLifeCycleContext';
 
 type Props = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 
