@@ -49,7 +49,7 @@ export function createControllerComponent<T extends object, E extends OverlayCom
 
         await this.element.present();
       }
-      if (prevProps.isOpen !== this.props.isOpen && this.props.isOpen === false) {
+      if (this.element && prevProps.isOpen !== this.props.isOpen && this.props.isOpen === false) {
         await this.element.dismiss();
       }
     }
