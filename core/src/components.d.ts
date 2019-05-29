@@ -1071,7 +1071,7 @@ export namespace Components {
     /**
     * Open the sliding item.
     */
-    'open': (side: string | undefined) => Promise<void>;
+    'open': (side: "start" | "end" | undefined) => Promise<void>;
   }
   interface IonLabel {
     /**
@@ -1619,9 +1619,7 @@ export namespace Components {
     /**
     * Dismiss the popover overlay after it has been presented.
     */
-    'open': (side: "start" | "end" | undefined) => Promise<void>;
-  }
-  interface IonItemSlidingAttributes extends StencilHTMLAttributes {
+    'dismiss': (data?: any, role?: string | undefined) => Promise<boolean>;
     /**
     * Animation to use when the popover is presented.
     */
@@ -2093,7 +2091,7 @@ export namespace Components {
     /**
     * Open the select overlay. The overlay is either an alert, action sheet, or popover, depending on the `interface` property on the `ion-select`.
     */
-    'open': (event?: UIEvent | undefined) => Promise<HTMLIonPopoverElement | HTMLIonActionSheetElement | HTMLIonAlertElement | undefined>;
+    'open': (event?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>;
     /**
     * The text to display when the select is empty.
     */
