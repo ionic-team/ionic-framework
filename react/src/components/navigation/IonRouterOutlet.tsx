@@ -217,24 +217,29 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
      */
     if (!this.state.direction) {
       const leavingEl = (this.leavingEl.current != null) ? this.leavingEl.current : undefined;
-      /**
-       * Super hacky workaround to make sure containerEL is available
-       * since activateView might be called from StackItem before IonRouterOutlet is mounted
-       */
-      if (this.containerEl.current) {
-        this.commitView(el, leavingEl);
-      } else {
-        setTimeout(() => {
-          this.activateView(el);
-        }, 10);
-      }
+      this.transitionView(el, leavingEl);
+    }
+  }
+
+  transitionView(enteringEl: HTMLElement, leavingEl: HTMLElement) {
+    //
+    /**
+     * Super hacky workaround to make sure containerEL is available
+     * since activateView might be called from StackItem before IonRouterOutlet is mounted
+     */
+    if (this.containerEl && this.containerEl.current && this.containerEl.current.componentOnReady) {
+      this.commitView(enteringEl, leavingEl);
+    } else {
+      setTimeout(() => {
+        this.transitionView(enteringEl, leavingEl);
+      }, 10);
     }
   }
 
   async commitView(el: HTMLElement, leavingEl: HTMLElement) {
     if (!this.inTransition) {
       this.inTransition = true;
-      await this.ensureComponentIsReady();
+      await this.containerEl.current.componentOnReady();
       await this.containerEl.current.commit(el, leavingEl, {
         deepWait: true,
         duration: this.state.direction === undefined ? 0 : undefined,
@@ -253,21 +258,10 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
     }
   }
 
-  ensureComponentIsReady() {
-    return new Promise(async (resolve) => {
-      if(this.containerEl.current && this.containerEl.current.componentOnReady) {
-        await this.containerEl.current.componentOnReady()
-        resolve();
-      } else {
-        setTimeout(this.ensureComponentIsReady, 100);
-      }
-    });
-  }
-
   componentDidUpdate() {
     const enteringEl = (this.enteringEl.current != null) ? this.enteringEl.current : undefined;
     const leavingEl = (this.leavingEl.current != null) ? this.leavingEl.current : undefined;
-    this.commitView(enteringEl, leavingEl);
+    this.transitionView(enteringEl, leavingEl);
   }
 
   render() {
