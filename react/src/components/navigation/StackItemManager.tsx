@@ -19,7 +19,7 @@ export default class StackItemManager extends React.Component<StackItemManagerPr
       show: true
     };
 
-    this.ionLifeCycleContext.onIonViewDidLeave(() => {
+    this.ionLifeCycleContext.onComponentCanBeDestroyed(() => {
       if (!this.props.mount) {
         /**
          * Give child component 1 sec to finish calling its

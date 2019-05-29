@@ -81,7 +81,6 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
 
     /**
      * If there are no matches then set the active view to null and exit
-     * Note: shouldn't ever happen
      */
     if (!match) {
       return {
@@ -235,7 +234,7 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
   async commitView(el: HTMLElement, leavingEl: HTMLElement) {
     if (!this.inTransition) {
       this.inTransition = true;
-      await this.containerEl.current.componentOnReady();
+      await this.ensureComponentIsReady();
       await this.containerEl.current.commit(el, leavingEl, {
         deepWait: true,
         duration: this.state.direction === undefined ? 0 : undefined,
@@ -252,6 +251,17 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
       }
       this.inTransition = false;
     }
+  }
+
+  ensureComponentIsReady() {
+    return new Promise(async (resolve) => {
+      if(this.containerEl.current && this.containerEl.current.componentOnReady) {
+        await this.containerEl.current.componentOnReady()
+        resolve();
+      } else {
+        setTimeout(this.ensureComponentIsReady, 100);
+      }
+    });
   }
 
   componentDidUpdate() {
