@@ -9,8 +9,8 @@
 
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   <link id="theme" href="/src/themes/test/css-variables/css/default.css" rel="stylesheet">
 
   <style>
@@ -106,7 +106,7 @@
           </ion-toolbar>
         </ion-header>
 
-        <ion-content padding>
+        <ion-content class="ion-padding">
           <div class="wrapper">
             <section>
               <ion-card>
@@ -359,7 +359,7 @@
           </ion-toolbar>
         </ion-header>
 
-        <ion-content padding>
+        <ion-content class="ion-padding">
           <div class="wrapper">
             <section>
               <p>

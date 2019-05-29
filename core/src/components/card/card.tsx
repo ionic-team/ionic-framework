@@ -1,8 +1,12 @@
-import { Component, ComponentInterface, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 
-import { Color, Mode, RouterDirection } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, RouterDirection } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-card',
   styleUrls: {
@@ -21,11 +25,6 @@ export class Card implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, a button tag will be rendered and the card will be tappable.
@@ -59,9 +58,10 @@ export class Card implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getIonMode(this);
     return {
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
 
         ...createColorClasses(this.color),
         'card-disabled': this.disabled,
@@ -79,7 +79,8 @@ export class Card implements ComponentInterface {
       ];
     }
 
-    const { href, mode, win, routerDirection, type } = this;
+    const { href, win, routerDirection, type } = this;
+    const mode = getIonMode(this);
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
     const attrs = TagType === 'button' ? { type } : { href };
 

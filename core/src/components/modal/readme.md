@@ -292,12 +292,12 @@ export default {
 
 ## Events
 
-| Event                 | Description                             | Type                              |
-| --------------------- | --------------------------------------- | --------------------------------- |
-| `ionModalDidDismiss`  | Emitted after the modal has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionModalDidPresent`  | Emitted after the modal has presented.  | `CustomEvent<void>`               |
-| `ionModalWillDismiss` | Emitted before the modal has dismissed. | `CustomEvent<OverlayEventDetail>` |
-| `ionModalWillPresent` | Emitted before the modal has presented. | `CustomEvent<void>`               |
+| Event                 | Description                             | Type                                   |
+| --------------------- | --------------------------------------- | -------------------------------------- |
+| `ionModalDidDismiss`  | Emitted after the modal has dismissed.  | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionModalDidPresent`  | Emitted after the modal has presented.  | `CustomEvent<void>`                    |
+| `ionModalWillDismiss` | Emitted before the modal has dismissed. | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionModalWillPresent` | Emitted before the modal has presented. | `CustomEvent<void>`                    |
 
 
 ## Methods
@@ -305,13 +305,6 @@ export default {
 ### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
 
 Dismiss the modal overlay after it has been presented.
-
-#### Parameters
-
-| Name   | Type                  | Description                                                                                |
-| ------ | --------------------- | ------------------------------------------------------------------------------------------ |
-| `data` | `any`                 | Any data to emit in the dismiss events.                                                    |
-| `role` | `string \| undefined` | The role of the element that is dismissing the modal. For example, 'cancel' or 'backdrop'. |
 
 #### Returns
 
@@ -366,6 +359,19 @@ Type: `Promise<void>`
 | `--min-width`     | Minimum width of the modal         |
 | `--width`         | Width of the modal                 |
 
+
+## Dependencies
+
+### Depends on
+
+- [ion-backdrop](../backdrop)
+
+### Graph
+```mermaid
+graph TD;
+  ion-modal --> ion-backdrop
+  style ion-modal fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

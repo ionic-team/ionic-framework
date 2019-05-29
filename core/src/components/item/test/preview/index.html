@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -116,7 +116,7 @@
 
         <!-- Multiline text Item -->
         <ion-item>
-          <ion-label text-wrap>
+          <ion-label class="ion-text-wrap">
           Multiline text that should wrap when it is too long
           to fit on one line in the item.
           </ion-label>
@@ -124,7 +124,7 @@
 
         <!-- Title and paragraph-->
         <ion-item>
-          <ion-label text-wrap>
+          <ion-label class="ion-text-wrap">
             <ion-text color="primary">
               <h3>H3 Primary Title</h3>
             </ion-text>

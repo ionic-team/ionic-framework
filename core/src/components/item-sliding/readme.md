@@ -641,9 +641,9 @@ export default Example;
 
 ## Events
 
-| Event     | Description                                | Type                |
-| --------- | ------------------------------------------ | ------------------- |
-| `ionDrag` | Emitted when the sliding position changes. | `CustomEvent<void>` |
+| Event     | Description                                | Type               |
+| --------- | ------------------------------------------ | ------------------ |
+| `ionDrag` | Emitted when the sliding position changes. | `CustomEvent<any>` |
 
 
 ## Methods
@@ -692,15 +692,9 @@ Type: `Promise<number>`
 
 
 
-### `open(side: string | undefined) => Promise<void>`
+### `open(side: "start" | "end" | undefined) => Promise<void>`
 
 Open the sliding item.
-
-#### Parameters
-
-| Name   | Type                  | Description                                                                                                                 |
-| ------ | --------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `side` | `string \| undefined` | The side of the options to open. If a side is not provided, it will open the first set of options it finds within the item. |
 
 #### Returns
 

@@ -1,3 +1,5 @@
+import { HTMLStencilElement } from '@stencil/core/internal';
+
 import { ComponentProps } from '../../../interface';
 
 export interface NavOutlet {

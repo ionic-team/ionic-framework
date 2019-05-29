@@ -1,8 +1,12 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, h } from '@stencil/core';
 
-import { Color, Mode, RouterDirection } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, RouterDirection } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-fab-button',
   styleUrls: {
@@ -15,11 +19,6 @@ export class FabButton implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'window' }) win!: Window;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The color to use from your application's color palette.
@@ -91,11 +90,12 @@ export class FabButton implements ComponentInterface {
   hostData() {
     const { el, disabled, color, activated, show, translucent, size } = this;
     const inList = hostContext('ion-fab-list', el);
+    const mode = getIonMode(this);
     return {
       'aria-disabled': disabled ? 'true' : null,
       class: {
         ...createColorClasses(color),
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         'fab-button-in-list': inList,
         'fab-button-translucent-in-list': inList && translucent,
         'fab-button-close-active': activated,
@@ -110,6 +110,7 @@ export class FabButton implements ComponentInterface {
   }
 
   render() {
+    const mode = getIonMode(this);
     const TagType = this.href === undefined ? 'button' : 'a' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
@@ -130,7 +131,7 @@ export class FabButton implements ComponentInterface {
         <span class="button-inner">
           <slot></slot>
         </span>
-        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+        {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </TagType>
     );
   }

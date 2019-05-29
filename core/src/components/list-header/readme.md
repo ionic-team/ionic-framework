@@ -42,6 +42,19 @@ Unlike ItemDivider, ListHeaders are styled to be stand-out from the rest of the 
 | `--color`      | Color of the list header text |
 
 
+## Dependencies
+
+### Used by
+
+ - ion-select-popover
+
+### Graph
+```mermaid
+graph TD;
+  ion-select-popover --> ion-list-header
+  style ion-list-header fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

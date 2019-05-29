@@ -263,10 +263,10 @@ export default Example;
 
 ## Events
 
-| Event               | Description                                                                | Type                         |
-| ------------------- | -------------------------------------------------------------------------- | ---------------------------- |
-| `ionTabsDidChange`  | Emitted when the navigation has finished transitioning to a new component. | `CustomEvent<{tab: string}>` |
-| `ionTabsWillChange` | Emitted when the navigation is about to transition to a new component.     | `CustomEvent<{tab: string}>` |
+| Event               | Description                                                                | Type                            |
+| ------------------- | -------------------------------------------------------------------------- | ------------------------------- |
+| `ionTabsDidChange`  | Emitted when the navigation has finished transitioning to a new component. | `CustomEvent<{ tab: string; }>` |
+| `ionTabsWillChange` | Emitted when the navigation is about to transition to a new component.     | `CustomEvent<{ tab: string; }>` |
 
 
 ## Methods
@@ -285,12 +285,6 @@ Type: `Promise<string | undefined>`
 
 Get a specific tab by the value of its `tab` property or an element reference.
 
-#### Parameters
-
-| Name  | Type                          | Description                                                                                         |
-| ----- | ----------------------------- | --------------------------------------------------------------------------------------------------- |
-| `tab` | `HTMLIonTabElement \| string` | The tab instance to select. If passed a string, it should be the value of the tab's `tab` property. |
-
 #### Returns
 
 Type: `Promise<HTMLIonTabElement | undefined>`
@@ -300,12 +294,6 @@ Type: `Promise<HTMLIonTabElement | undefined>`
 ### `select(tab: string | HTMLIonTabElement) => Promise<boolean>`
 
 Select a tab by the value of its `tab` property or an element reference.
-
-#### Parameters
-
-| Name  | Type                          | Description                                                                                         |
-| ----- | ----------------------------- | --------------------------------------------------------------------------------------------------- |
-| `tab` | `HTMLIonTabElement \| string` | The tab instance to select. If passed a string, it should be the value of the tab's `tab` property. |
 
 #### Returns
 

@@ -771,12 +771,6 @@ export default Example;
 Open the select overlay. The overlay is either an alert, action sheet, or popover,
 depending on the `interface` property on the `ion-select`.
 
-#### Parameters
-
-| Name    | Type                   | Description                                    |
-| ------- | ---------------------- | ---------------------------------------------- |
-| `event` | `UIEvent \| undefined` | The user interface event that called the open. |
-
 #### Returns
 
 Type: `Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>`

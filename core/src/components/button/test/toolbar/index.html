@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -21,7 +21,7 @@
     </ion-header>
 
     <ion-content id="content">
-      <ion-toolbar no-padding>
+      <ion-toolbar class="ion-no-padding">
         <ion-title>This should have no padding</ion-title>
       </ion-toolbar>
 

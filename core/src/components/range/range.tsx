@@ -1,10 +1,13 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch, h } from '@stencil/core';
 
-import { Color, Gesture, GestureDetail, KnobName, Mode, RangeChangeEventDetail, RangeValue, StyleEventDetail } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, Gesture, GestureDetail, KnobName, RangeChangeEventDetail, RangeValue, StyleEventDetail } from '../../interface';
 import { clamp, debounceEvent } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
  * @slot start - Content is placed to the left of the range slider in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the range slider in LTR, and to the left in RTL.
  */
@@ -24,7 +27,7 @@ export class Range implements ComponentInterface {
   private rangeSlider?: HTMLElement;
   private gesture?: Gesture;
 
-  @Element() el!: HTMLStencilElement;
+  @Element() el!: HTMLIonRangeElement;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'document' }) doc!: Document;
@@ -39,11 +42,6 @@ export class Range implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * How long, in milliseconds, to wait to trigger the
@@ -201,7 +199,6 @@ export class Range implements ComponentInterface {
   async componentDidLoad() {
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.rangeSlider!,
-      queue: this.queue,
       gestureName: 'range',
       gesturePriority: 100,
       threshold: 0,
@@ -265,7 +262,7 @@ export class Range implements ComponentInterface {
 
     // figure out which knob they started closer to
     let ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
-    if (this.doc.dir === 'rtl') {
+    if (document.dir === 'rtl') {
       ratio = 1 - ratio;
     }
 
@@ -295,7 +292,7 @@ export class Range implements ComponentInterface {
     // update the knob being interacted with
     const rect = this.rect;
     let ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
-    if (this.doc.dir === 'rtl') {
+    if (document.dir === 'rtl') {
       ratio = 1 - ratio;
     }
 
@@ -376,10 +373,11 @@ export class Range implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getIonMode(this);
     return {
       class: {
         ...createColorClasses(this.color),
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         'in-item': hostContext('ion-item', this.el),
         'range-disabled': this.disabled,
         'range-pressed': this.pressedKnob !== undefined,
@@ -394,7 +392,7 @@ export class Range implements ComponentInterface {
     const barStart = `${ratioLower * 100}%`;
     const barEnd = `${100 - ratioUpper * 100}%`;
 
-    const doc = this.doc;
+    const doc = document;
     const isRTL = doc.dir === 'rtl';
     const start = isRTL ? 'right' : 'left';
     const end = isRTL ? 'left' : 'right';

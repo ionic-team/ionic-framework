@@ -223,17 +223,17 @@ export default Example
 
 ## Methods
 
-### `cancel() => void`
+### `cancel() => Promise<void>`
 
 Changes the refresher's state from `refreshing` to `cancelling`.
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 
-### `complete() => void`
+### `complete() => Promise<void>`
 
 Call `complete()` when your async operation has completed.
 For example, the `refreshing` state is while the app is performing
@@ -245,7 +245,7 @@ the refresher. This method also changes the refresher's state from
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 

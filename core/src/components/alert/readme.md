@@ -1073,12 +1073,12 @@ export default {
 
 ## Events
 
-| Event                 | Description                             | Type                              |
-| --------------------- | --------------------------------------- | --------------------------------- |
-| `ionAlertDidDismiss`  | Emitted after the alert has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionAlertDidPresent`  | Emitted after the alert has presented.  | `CustomEvent<void>`               |
-| `ionAlertWillDismiss` | Emitted before the alert has dismissed. | `CustomEvent<OverlayEventDetail>` |
-| `ionAlertWillPresent` | Emitted before the alert has presented. | `CustomEvent<void>`               |
+| Event                 | Description                             | Type                                   |
+| --------------------- | --------------------------------------- | -------------------------------------- |
+| `ionAlertDidDismiss`  | Emitted after the alert has dismissed.  | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionAlertDidPresent`  | Emitted after the alert has presented.  | `CustomEvent<void>`                    |
+| `ionAlertWillDismiss` | Emitted before the alert has dismissed. | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionAlertWillPresent` | Emitted before the alert has presented. | `CustomEvent<void>`                    |
 
 
 ## Methods
@@ -1086,13 +1086,6 @@ export default {
 ### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
 
 Dismiss the alert overlay after it has been presented.
-
-#### Parameters
-
-| Name   | Type                  | Description                                                                                                                                                                                                                                     |
-| ------ | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data` | `any`                 | Any data to emit in the dismiss events.                                                                                                                                                                                                         |
-| `role` | `string \| undefined` | The role of the element that is dismissing the alert. This can be useful in a button handler for determining which button was clicked to dismiss the alert. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`. |
 
 #### Returns
 
@@ -1143,6 +1136,21 @@ Type: `Promise<void>`
 | `--min-width`  | Minimum width of the alert  |
 | `--width`      | Width of the alert          |
 
+
+## Dependencies
+
+### Depends on
+
+- [ion-ripple-effect](../ripple-effect)
+- [ion-backdrop](../backdrop)
+
+### Graph
+```mermaid
+graph TD;
+  ion-alert --> ion-ripple-effect
+  ion-alert --> ion-backdrop
+  style ion-alert fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

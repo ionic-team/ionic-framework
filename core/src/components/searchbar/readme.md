@@ -218,14 +218,14 @@ Type: `Promise<HTMLInputElement>`
 
 
 
-### `setFocus() => void`
+### `setFocus() => Promise<void>`
 
 Sets focus on the specified `ion-searchbar`. Use this method instead of the global
 `input.focus()`.
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 
@@ -244,6 +244,19 @@ Type: `void`
 | `--placeholder-font-weight` | Font weight of the searchbar placeholder |
 | `--placeholder-opacity`     | Opacity of the searchbar placeholder     |
 
+
+## Dependencies
+
+### Depends on
+
+- ion-icon
+
+### Graph
+```mermaid
+graph TD;
+  ion-searchbar --> ion-icon
+  style ion-searchbar fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

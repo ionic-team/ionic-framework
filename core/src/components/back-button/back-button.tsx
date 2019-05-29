@@ -1,8 +1,12 @@
-import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop, h } from '@stencil/core';
 
-import { Color, Config, Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, Config } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-back-button',
   styleUrls: {
@@ -24,11 +28,6 @@ export class BackButton implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The url to navigate back to by default when there is no history.
@@ -58,11 +57,12 @@ export class BackButton implements ComponentInterface {
 
   hostData() {
     const showBackButton = this.defaultHref !== undefined;
+    const mode = getIonMode(this);
 
     return {
       class: {
         ...createColorClasses(this.color),
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
 
         'button': true, // ion-buttons target .button
         'ion-activatable': true,
@@ -72,7 +72,8 @@ export class BackButton implements ComponentInterface {
   }
 
   render() {
-    const defaultBackButtonText = this.mode === 'ios' ? 'Back' : null;
+    const mode = getIonMode(this);
+    const defaultBackButtonText = mode === 'ios' ? 'Back' : null;
     const backButtonIcon = this.icon != null ? this.icon : this.config.get('backButtonIcon', 'arrow-back');
     const backButtonText = this.text != null ? this.text : this.config.get('backButtonText', defaultBackButtonText);
 
@@ -82,7 +83,7 @@ export class BackButton implements ComponentInterface {
           {backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false}></ion-icon>}
           {backButtonText && <span class="button-text">{backButtonText}</span>}
         </span>
-        {this.mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
+        {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
       </button>
     );
   }

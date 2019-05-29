@@ -1,9 +1,12 @@
-import { Component, ComponentInterface, Element, Listen, Prop, State } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop, State, h } from '@stencil/core';
 
-import { Color, CssClassMap, Mode, RouterDirection, StyleEventDetail } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the item text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the item text in LTR, and to the left in RTL.
@@ -19,7 +22,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 export class Item implements ComponentInterface {
   private itemStyles = new Map<string, CssClassMap>();
 
-  @Element() el!: HTMLStencilElement;
+  @Element() el!: HTMLIonItemElement;
 
   @State() multipleInputs = false;
 
@@ -31,11 +34,6 @@ export class Item implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, a button tag will be rendered and the item will be tappable.
@@ -91,16 +89,17 @@ export class Item implements ComponentInterface {
 
     let hasStyleChange = false;
     Object.keys(updatedStyles).forEach(key => {
-      const itemKey = `item-${key}`;
-      const newValue = updatedStyles[key];
-      if (newValue !== childStyles[itemKey]) {
-        hasStyleChange = true;
-      }
-      if (newValue) {
+      if (updatedStyles[key]) {
+        const itemKey = `item-${key}`;
+        if (!childStyles[itemKey]) {
+          hasStyleChange = true;
+        }
         newStyles[itemKey] = true;
       }
     });
-
+    if (!hasStyleChange && Object.keys(newStyles).length !== Object.keys(childStyles).length) {
+      hasStyleChange = true;
+    }
     if (hasStyleChange) {
       this.itemStyles.set(tagName, newStyles);
       this.el.forceUpdate();
@@ -126,6 +125,7 @@ export class Item implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getIonMode(this);
     const childStyles = {};
     this.itemStyles.forEach(value => {
       Object.assign(childStyles, value);
@@ -137,7 +137,7 @@ export class Item implements ComponentInterface {
         ...childStyles,
         ...createColorClasses(this.color),
         'item': true,
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         [`item-lines-${this.lines}`]: this.lines !== undefined,
         'item-disabled': this.disabled,
         'in-list': hostContext('ion-list', this.el),
@@ -149,7 +149,8 @@ export class Item implements ComponentInterface {
   }
 
   render() {
-    const { href, detail, mode, win, detailIcon, routerDirection, type } = this;
+    const mode = getIonMode(this);
+    const { href, detail, win, detailIcon, routerDirection, type } = this;
 
     const clickable = this.isClickable();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;

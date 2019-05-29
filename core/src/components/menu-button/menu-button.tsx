@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 
-import { Color, Config, Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, Config } from '../../interface';
 
 @Component({
   tag: 'ion-menu-button',
@@ -22,11 +23,6 @@ export class MenuButton implements ComponentInterface {
   @Prop() color?: Color;
 
   /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
-
-  /**
    * Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle
    */
   @Prop() menu?: string;
@@ -37,9 +33,10 @@ export class MenuButton implements ComponentInterface {
   @Prop() autoHide = true;
 
   hostData() {
+    const mode = getIonMode(this);
     return {
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
 
         'button': true,  // ion-buttons target .button
         'ion-activatable': true,
@@ -49,14 +46,15 @@ export class MenuButton implements ComponentInterface {
   }
 
   render() {
+    const mode = getIonMode(this);
     const menuIcon = this.config.get('menuIcon', 'menu');
     return (
       <ion-menu-toggle menu={this.menu} autoHide={this.autoHide}>
         <button type="button">
           <slot>
-            <ion-icon icon={menuIcon} mode={this.mode} color={this.color} lazy={false} />
+            <ion-icon icon={menuIcon} mode={mode} color={this.color} lazy={false} />
           </slot>
-          {this.mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
+          {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
         </button>
       </ion-menu-toggle>
     );

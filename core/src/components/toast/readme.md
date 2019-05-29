@@ -200,12 +200,12 @@ export class Toast extends Component<Props, State> {
 
 ## Events
 
-| Event                 | Description                             | Type                              |
-| --------------------- | --------------------------------------- | --------------------------------- |
-| `ionToastDidDismiss`  | Emitted after the toast has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionToastDidPresent`  | Emitted after the toast has presented.  | `CustomEvent<void>`               |
-| `ionToastWillDismiss` | Emitted before the toast has dismissed. | `CustomEvent<OverlayEventDetail>` |
-| `ionToastWillPresent` | Emitted before the toast has presented. | `CustomEvent<void>`               |
+| Event                 | Description                             | Type                                   |
+| --------------------- | --------------------------------------- | -------------------------------------- |
+| `ionToastDidDismiss`  | Emitted after the toast has dismissed.  | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionToastDidPresent`  | Emitted after the toast has presented.  | `CustomEvent<void>`                    |
+| `ionToastWillDismiss` | Emitted before the toast has dismissed. | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionToastWillPresent` | Emitted before the toast has presented. | `CustomEvent<void>`                    |
 
 
 ## Methods
@@ -213,13 +213,6 @@ export class Toast extends Component<Props, State> {
 ### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
 
 Dismiss the toast overlay after it has been presented.
-
-#### Parameters
-
-| Name   | Type                  | Description                                                                                                                                                                                                                                     |
-| ------ | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data` | `any`                 | Any data to emit in the dismiss events.                                                                                                                                                                                                         |
-| `role` | `string \| undefined` | The role of the element that is dismissing the toast. This can be useful in a button handler for determining which button was clicked to dismiss the toast. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`. |
 
 #### Returns
 
@@ -279,6 +272,21 @@ Type: `Promise<void>`
 | `--start`         | Position from the start     |
 | `--width`         | Width of the toast          |
 
+
+## Dependencies
+
+### Depends on
+
+- ion-icon
+- [ion-ripple-effect](../ripple-effect)
+
+### Graph
+```mermaid
+graph TD;
+  ion-toast --> ion-icon
+  ion-toast --> ion-ripple-effect
+  style ion-toast fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

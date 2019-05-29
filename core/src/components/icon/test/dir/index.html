@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -26,7 +26,7 @@
       <h1>Flip RTL</h1>
 
       <ion-grid>
-        <ion-row align-items-center>
+        <ion-row class="ion-align-items-center">
           <ion-col size="auto"><code>null</code></ion-col>
           <ion-col><ion-icon name="call" color="primary"></ion-icon></ion-col>
           <ion-col><ion-icon name="cut" color="secondary"></ion-icon></ion-col>
@@ -36,7 +36,7 @@
           <ion-col><ion-icon name="brush" color="danger"></ion-icon></ion-col>
           <ion-col><ion-icon name="bicycle" color="medium"></ion-icon></ion-col>
         </ion-row>
-        <ion-row align-items-center>
+        <ion-row class="ion-align-items-center">
           <ion-col size="auto"><code>true</code></ion-col>
           <ion-col><ion-icon name="call" color="primary" flip-rtl></ion-icon></ion-col>
           <ion-col><ion-icon name="cut" color="secondary" flip-rtl></ion-icon></ion-col>
@@ -49,7 +49,7 @@
       </ion-grid>
 
       <ion-grid>
-        <ion-row align-items-center>
+        <ion-row class="ion-align-items-center">
           <ion-col size="auto"><code>null</code></ion-col>
           <ion-col><ion-icon name="arrow-dropright"></ion-icon></ion-col>
           <ion-col><ion-icon name="arrow-dropright-circle"></ion-icon></ion-col>
@@ -60,7 +60,7 @@
           <ion-col><ion-icon name="arrow-back"></ion-icon></ion-col>
           <ion-col><ion-icon name="arrow-round-back"></ion-icon></ion-col>
         </ion-row>
-        <ion-row align-items-center>
+        <ion-row class="ion-align-items-center">
           <ion-col size="auto"><code>false</code></ion-col>
           <ion-col><ion-icon name="arrow-dropright" flip-rtl="false"></ion-icon></ion-col>
           <ion-col><ion-icon name="arrow-dropright-circle" flip-rtl="false"></ion-icon></ion-col>

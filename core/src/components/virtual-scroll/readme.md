@@ -341,49 +341,38 @@ export default Example;
 
 ## Methods
 
-### `checkEnd() => void`
+### `checkEnd() => Promise<void>`
 
-Marks the tail of the items array as dirty, so they can be re-rendered.
-It's equivalent to calling `checkRange(length)` where `length` is the
-total length of the items.
+This method marks the tail the items array as dirty, so they can be re-rendered.
 
-#### Returns
+It's equivalent to calling:
 
-Type: `void`
-
-
-
-### `checkRange(offset: number, length?: number) => void`
-
-Marks a subset of the items as dirty so they can be re-rendered.
-Items should be marked as dirty any time the content or their style changes.
-
-The subset of items to be updated are specified by an offset and a length.
-If a length is not provided it will check all of the items beginning at
-the offset.
-
-#### Parameters
-
-| Name     | Type     | Description                                   |
-| -------- | -------- | --------------------------------------------- |
-| `offset` | `number` | The index of the item to start marking dirty. |
-| `length` | `number` | The number of items to mark dirty.            |
+```js
+   * virtualScroll.checkRange(lastItemLen);
+   * ```
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
+
+
+
+### `checkRange(offset: number, len?: number) => Promise<void>`
+
+This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as
+dirty any time the content or their style changes.
+
+The subset of items to be updated can are specifing by an offset and a length.
+
+#### Returns
+
+Type: `Promise<void>`
 
 
 
 ### `positionForItem(index: number) => Promise<number>`
 
 Returns the position of the virtual item at the given index.
-
-#### Parameters
-
-| Name    | Type     | Description            |
-| ------- | -------- | ---------------------- |
-| `index` | `number` | The index of the item. |
 
 #### Returns
 

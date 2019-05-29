@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -21,12 +21,12 @@
     </ion-header>
 
     <ion-content id="content" class="grid-demo">
-      <h2 padding-start>10 Column Layout</h2>
+      <h2 class="ion-padding-start">10 Column Layout</h2>
       <ion-grid class="grid-10">
         <ion-row id="row10"></ion-row>
       </ion-grid>
 
-      <h2 padding-start>Responsive sm</h2>
+      <h2 class="ion-padding-start">Responsive sm</h2>
       <ion-grid>
         <ion-row>
           <ion-col size="12" size-sm>
@@ -52,7 +52,7 @@
         </ion-row>
       </ion-grid>
 
-      <h2 padding-start>Size auto</h2>
+      <h2 class="ion-padding-start">Size auto</h2>
       <ion-grid>
         <ion-row>
           <ion-col>
@@ -78,7 +78,7 @@
         </ion-row>
       </ion-grid>
 
-      <h2 padding-start>Breakpoint Sizes</h2>
+      <h2 class="ion-padding-start">Breakpoint Sizes</h2>
       <ion-grid>
         <ion-row>
           <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="1">

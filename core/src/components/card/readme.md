@@ -201,6 +201,19 @@ export default Example;
 | `--color`      | Color of the card      |
 
 
+## Dependencies
+
+### Depends on
+
+- [ion-ripple-effect](../ripple-effect)
+
+### Graph
+```mermaid
+graph TD;
+  ion-card --> ion-ripple-effect
+  style ion-card fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
