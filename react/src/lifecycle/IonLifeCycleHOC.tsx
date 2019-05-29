@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { IonLifeCycleContext } from './IonLifeCycleContext';
 
 export const withIonLifeCycle = (WrappedComponent: React.ComponentType<any>) => {

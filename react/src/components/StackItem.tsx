@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonLifeCycleContext, DefaultIonLifeCycleContext } from '../lifecycle/IonLifeCycleContext';
+import { IonLifeCycleContext } from '../lifecycle/IonLifeCycleContext';
 
 type Props = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 
@@ -18,7 +18,7 @@ interface StackItemState {
 }
 
 class StackItem extends React.Component<InternalProps, StackItemState> {
-  ionLifeCycleContext = new DefaultIonLifeCycleContext();
+  context!: React.ContextType<typeof IonLifeCycleContext>;
 
   constructor(props: InternalProps) {
     super(props);
@@ -52,26 +52,25 @@ class StackItem extends React.Component<InternalProps, StackItemState> {
   }
 
   ionViewWillEnterHandler() {
-    this.ionLifeCycleContext.ionViewWillEnter();
+    this.context.ionViewWillEnter();
   }
 
   ionViewDidEnterHandler() {
-    this.ionLifeCycleContext.ionViewDidEnter();
+    this.context.ionViewDidEnter();
   }
 
   ionViewWillLeaveHandler() {
-    this.ionLifeCycleContext.ionViewWillLeave();
+    this.context.ionViewWillLeave();
   }
 
   ionViewDidLeaveHandler() {
-    this.ionLifeCycleContext.ionViewDidLeave();
+    this.context.ionViewDidLeave();
   }
 
   render() {
     const { className, children, forwardedRef, activateView, ...rest } = this.props;
     const { ref } = this.state;
     return (
-      <IonLifeCycleContext.Provider value={this.ionLifeCycleContext}>
         <div
           className={className ? `ion-page ${className}` : 'ion-page'}
           ref={forwardedRef}
@@ -79,7 +78,6 @@ class StackItem extends React.Component<InternalProps, StackItemState> {
         >
           {ref && children}
         </div>
-      </IonLifeCycleContext.Provider>
     )
   }
 }

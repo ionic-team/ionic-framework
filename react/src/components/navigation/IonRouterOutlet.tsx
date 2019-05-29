@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Transition } from 'react-transition-group';
 import { withRouter, RouteComponentProps, matchPath, match, RouteProps } from 'react-router';
 import { generateUniqueId } from '../utils';
 import { Location } from 'history';
 import { IonRouterOutletInner } from '../index';
 import StackItem from '../StackItem';
 import { NavContext } from './NavContext';
+import StackItemManager from './StackItemManager';
 
 interface ChildProps extends RouteProps {
   computedMatch: match<any>
@@ -286,21 +286,17 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
             }
 
             return (
-              <Transition
+              <StackItemManager
                 key={item.id}
-                in={item.mount}
-                timeout={1000}
-                unmountOnExit={true}>
-                {() => {
-                  return (
-                    <StackItem
-                      activateView={this.activateView}
-                      {...props}
-                    >
-                      {this.renderChild(item)}
-                    </StackItem>);
-                }}
-              </Transition>
+                mount={item.mount}
+              >
+                <StackItem
+                  activateView={this.activateView}
+                  {...props}
+                >
+                  {this.renderChild(item)}
+                </StackItem>
+              </StackItemManager>
             );
           })}
         </NavContext.Provider>
