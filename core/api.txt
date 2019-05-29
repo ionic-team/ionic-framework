@@ -513,6 +513,7 @@ ion-item,css-prop,--inner-padding-end
 ion-item,css-prop,--inner-padding-start
 ion-item,css-prop,--inner-padding-top
 ion-item,css-prop,--min-height
+ion-item,css-prop,--overflow
 ion-item,css-prop,--padding-bottom
 ion-item,css-prop,--padding-end
 ion-item,css-prop,--padding-start

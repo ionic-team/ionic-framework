@@ -1413,6 +1413,7 @@ Item Inputs
 | `--inner-padding-start`     | Start padding of the item inner                     |
 | `--inner-padding-top`       | Top padding of the item inner                       |
 | `--min-height`              | Minimum height of the item                          |
+| `--overflow`                | Overflow of the item                                |
 | `--padding-bottom`          | Bottom padding of the item                          |
 | `--padding-end`             | End padding of the item                             |
 | `--padding-start`           | Start padding of the item                           |

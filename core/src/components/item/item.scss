@@ -37,6 +37,7 @@
    * @prop --highlight-color-focused: The color of the highlight on the item when focused
    * @prop --highlight-color-valid: The color of the highlight on the item when valid
    * @prop --highlight-color-invalid: The color of the highlight on the item when invalid
+   * @prop --overflow: Overflow of the item
    */
   --border-radius: 0px;
   --border-width: 0px;
@@ -58,6 +59,7 @@
   --detail-icon-font-size: 20px;
   --detail-icon-opacity: 0.25;
   --ripple-color: var(--ion-item-background-activated, currentColor);
+  --overflow: hidden;
 
   @include font-smoothing();
 
@@ -151,7 +153,7 @@
   background: var(--background);
 
   box-shadow: var(--box-shadow);
-  overflow: hidden;
+  overflow: var(--overflow);
   box-sizing: border-box;
 }
 
@@ -196,7 +198,7 @@ button, a {
   border-color: var(--border-color);
 
   box-shadow: var(--inner-box-shadow);
-  overflow: hidden;
+  overflow: var(--overflow);
   box-sizing: border-box;
 }
 
@@ -251,7 +253,7 @@ button, a {
 
   text-overflow: ellipsis;
 
-  overflow: hidden;
+  overflow: var(--overflow);
   box-sizing: border-box;
 }
 
