@@ -445,6 +445,41 @@ ion-input,css-prop,--placeholder-font-style
 ion-input,css-prop,--placeholder-font-weight
 ion-input,css-prop,--placeholder-opacity
 
+ion-item-divider,shadow
+ion-item-divider,prop,color,string | undefined,undefined,false,false
+ion-item-divider,prop,mode,"ios" | "md",undefined,false,false
+ion-item-divider,prop,sticky,boolean,false,false,false
+ion-item-divider,css-prop,--background
+ion-item-divider,css-prop,--color
+ion-item-divider,css-prop,--padding-bottom
+ion-item-divider,css-prop,--padding-end
+ion-item-divider,css-prop,--padding-start
+ion-item-divider,css-prop,--padding-top
+
+ion-item-group,none
+
+ion-item-option,shadow
+ion-item-option,prop,color,string | undefined,undefined,false,false
+ion-item-option,prop,disabled,boolean,false,false,false
+ion-item-option,prop,expandable,boolean,false,false,false
+ion-item-option,prop,href,string | undefined,undefined,false,false
+ion-item-option,prop,mode,"ios" | "md",undefined,false,false
+ion-item-option,css-prop,--background
+ion-item-option,css-prop,--color
+
+ion-item-options,none
+ion-item-options,prop,side,"end" | "start",'end',false,false
+ion-item-options,event,ionSwipe,any,true
+
+ion-item-sliding,none
+ion-item-sliding,prop,disabled,boolean,false,false,false
+ion-item-sliding,method,close,close() => Promise<void>
+ion-item-sliding,method,closeOpened,closeOpened() => Promise<boolean>
+ion-item-sliding,method,getOpenAmount,getOpenAmount() => Promise<number>
+ion-item-sliding,method,getSlidingRatio,getSlidingRatio() => Promise<number>
+ion-item-sliding,method,open,open(side: "start" | "end" | undefined) => Promise<void>
+ion-item-sliding,event,ionDrag,void,true
+
 ion-item,shadow
 ion-item,prop,button,boolean,false,false,false
 ion-item,prop,color,string | undefined,undefined,false,false

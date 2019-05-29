@@ -25,7 +25,7 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content id="content" padding>
+    <ion-content class="ion-padding" id="content">
       <ion-button class="e2eShowPopover" expand="block" onclick="presentPopover({ component: 'profile-page', event: event })">Show Popover</ion-button>
       <ion-button expand="block" onclick="presentPopover({ component: 'translucent-page', event: event, translucent: true })">Show Translucent Popover</ion-button>
       <ion-button expand="block" color="secondary" onclick="presentPopover({ component: 'list-page', event: event })">Show Long List Popover</ion-button>
@@ -111,7 +111,7 @@
 
       connectedCallback() {
         this.innerHTML = `
-          <div padding>
+          <div class="ion-padding">
             <h1>Translucent Popover</h1>
           </div>
         `;

@@ -1,7 +1,8 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Gesture, GestureDetail } from '../../interface';
+import { Gesture, GestureDetail, Side } from '../../interface';
+import { isEndSide } from '../../utils/helpers';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
@@ -121,9 +122,8 @@ export class ItemSliding implements ComponentInterface {
    *
    * @param side The side of the options to open. If a side is not provided, it will open the first set of options it finds within the item.
    */
-   // TODO update to work with RTL
   @Method()
-  async open(side: string | undefined) {
+  async open(side: Side | undefined) {
     if (this.item === null) { return; }
 
     const optionsToOpen = this.getOptions(side);
@@ -136,6 +136,9 @@ export class ItemSliding implements ComponentInterface {
     if (side === undefined) {
       side = (optionsToOpen === this.leftOptions) ? 'start' : 'end';
     }
+
+    // In RTL we want to switch the sides
+    side = isEndSide(window, side) ? 'end' : 'start';
 
     const isStartOpen = this.openAmount < 0;
     const isEndOpen = this.openAmount > 0;
@@ -184,20 +187,20 @@ export class ItemSliding implements ComponentInterface {
   }
 
    /**
-    * Given a side, attempt to return the ion-item-options element
+    * Given an optional side, return the ion-item-options element.
     *
-    * @param side This side of the options to get. If a side is not provided it will return the first one available
+    * @param side This side of the options to get. If a side is not provided it will
+    * return the first one available.
     */
-    // TODO update to work with RTL
   private getOptions(side?: string): HTMLIonItemOptionsElement | undefined {
-      if (side === undefined) {
-        return this.leftOptions || this.rightOptions;
-      } else if (side === 'start') {
-        return this.leftOptions;
-      } else {
-        return this.rightOptions;
-      }
+    if (side === undefined) {
+      return this.leftOptions || this.rightOptions;
+    } else if (side === 'start') {
+      return this.leftOptions;
+    } else {
+      return this.rightOptions;
     }
+  }
 
   private async updateOptions() {
     const options = this.el.querySelectorAll('ion-item-options');
@@ -210,7 +213,9 @@ export class ItemSliding implements ComponentInterface {
     for (let i = 0; i < options.length; i++) {
       const option = await options.item(i).componentOnReady();
 
-      if (option.side === 'start') {
+      const side = isEndSide(window, option.side) ? 'end' : 'start';
+
+      if (side === 'start') {
         this.leftOptions = option;
         sides |= ItemSide.Start;
       } else {

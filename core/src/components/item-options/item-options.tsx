@@ -39,6 +39,7 @@ export class ItemOptions implements ComponentInterface {
   hostData() {
     const mode = getIonMode(this);
     const isEnd = isEndSide(this.win, this.side);
+
     return {
       class: {
         [`${mode}`]: true,

@@ -1619,7 +1619,9 @@ export namespace Components {
     /**
     * Dismiss the popover overlay after it has been presented.
     */
-    'dismiss': (data?: any, role?: string | undefined) => Promise<boolean>;
+    'open': (side: "start" | "end" | undefined) => Promise<void>;
+  }
+  interface IonItemSlidingAttributes extends StencilHTMLAttributes {
     /**
     * Animation to use when the popover is presented.
     */
