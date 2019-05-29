@@ -1,6 +1,11 @@
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
+export interface HTMLStencilElement extends HTMLElement {
+  componentOnReady(): Promise<this>;
+  forceUpdate(): void;
+}
+
 export interface OverlayComponentElement extends HTMLStencilElement {
   'present': () => Promise<void>;
   'dismiss': (data?: any, role?: string | undefined) => Promise<boolean>;

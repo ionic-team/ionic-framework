@@ -1,9 +1,9 @@
-import { Components } from '@ionic/core';
+import { JSX as LocalJSX} from '@ionic/core';
 import React, { Component } from 'react';
 import { NavContext } from './NavContext';
 import { IonBackButtonInner, } from '../index';
 
-type BackButtonProps = Components.IonBackButtonAttributes & {
+type BackButtonProps = LocalJSX.IonBackButton & {
   goBack: () => void;
 };
 
