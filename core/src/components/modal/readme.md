@@ -5,53 +5,13 @@ A Modal is a dialog that appears on top of the app's content, and must be dismis
 
 ### Creating
 
-Modals can be created using a [Modal Controller](../modal-controller). They can be customized by passing modal options in the modal controller's create method.
+Modals can be created using a [Modal Controller](../modal-controller). They can be customized by passing modal options in the modal controller's `create()` method.
 
 
-### Passing parameters
+### Dismissing
 
-When a modal is created, parameters might be passed to the newly created modal:
+The modal can be dismissed after creation by calling the `dismiss()` method on the modal controller. The `onDidDismiss` function can be called to perform an action after the modal is dismissed.
 
-```ts
-// Create a modal using MyModalComponent with some initial data
-const modal = await modalController.create({
-  component: MyModalComponent,
-  componentProps: {
-    'prop1': value,
-    'prop2': value2
-  }
-});
-```
-
-Under the hood, the controller creates a new `ion-modal` and attaches the specified component to it.
-It also assigns the specified `componentProps` to the component's instance:
-
-```js
-// pseudo-code
-const instance = create(MyModalComponent);
-instance.prop1 = value;
-instance.prop2 = value2;
-```
-
-This way, your component can access the passed params, check the "Usage" section for further code example for each frameworks.
-
-
-### Returning data
-
-Modals can also return data back to the controller when they are dismissed.
-
-```js
-const modal = await modalController.create({...});
-const { data } = await modal.onDidDismiss();
-console.log(data);
-```
-
-```js
-// Dismiss the top modal returning some data object
-modalController.dismiss({
-  'result': value
-})
-```
 
 <!-- Auto Generated Below -->
 
@@ -64,18 +24,20 @@ modalController.dismiss({
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ModalPage } from '../modal/modal.page';
+
 @Component({
   selector: 'modal-example',
   templateUrl: 'modal-example.html',
   styleUrls: ['./modal-example.css']
 })
 export class ModalExample {
-  constructor(public modalController: ModalController) {}
+  constructor(public modalController: ModalController) {
+
+  }
 
   async presentModal() {
     const modal = await this.modalController.create({
-      component: ModalPage,
-      componentProps: { value: 123 }
+      component: ModalPage
     });
     return await modal.present();
   }
@@ -89,17 +51,76 @@ import { NavParams } from '@ionic/angular';
 @Component({
   selector: 'modal-page',
 })
-export class ModalExample {
+export class ModalPage {
 
-  // "value" passed in componentProps
-  @Input() value: number;
+  constructor() {
 
-  constructor(navParams: NavParams) {
-    // componentProps can also be accessed at construction time using NavParams
   }
 
 }
 ```
+
+### Passing Data
+
+During creation of a modal, data can be passed in through the `componentProps`. The previous example can be written to include data:
+
+```typescript
+async presentModal() {
+  const modal = await this.modalController.create({
+    component: ModalPage,
+    componentProps: {
+      'firstName': 'Douglas',
+      'lastName': 'Adams',
+      'middleInitial': 'N'
+    }
+  });
+  return await modal.present();
+}
+```
+
+To get the data passed into the `componentProps`, either set it as an `@Input` or access it via `NavParams` on the `ModalPage`:
+
+```typescript
+export class ModalPage {
+
+  // Data passed in by componentProps
+  @Input() firstName: string;
+  @Input() lastName: string;
+  @Input() middleInitial: string;
+
+  constructor(navParams: NavParams) {
+    // componentProps can also be accessed at construction time using NavParams
+    console.log(navParams.get('firstName');
+  }
+
+}
+```
+
+### Dismissing a Modal
+
+A modal can be dismissed by calling the dismiss method on the modal controller and optionally passing any data from the modal.
+
+```javascript
+export class ModalPage {
+  ...
+
+  dismiss() {
+    // using the injected ModalController this page
+    // can "dismiss" itself and optionally pass back data
+    this.modalCtrl.dismiss({
+      'dismissed': true
+    });
+  }
+}
+```
+
+After being dismissed, the data can be read in through the `onWillDismiss` or `onDidDismiss` attached to the modal after creation:
+
+```javascript
+const { data } = await modal.onWillDismiss();
+console.log(data);
+```
+
 
 #### Lazy Loading
 
@@ -116,17 +137,17 @@ import { CalendarComponent } from './calendar.component';
 import { EventModalModule } from '../modals/event/event.module';
 
 @NgModule({
-    declarations: [
-        CalendarComponent
-    ],
-    imports: [
-      IonicModule,
-      CommonModule,
-      EventModalModule
-    ],
-    exports: [
-      CalendarComponent
-    ]
+  declarations: [
+    CalendarComponent
+  ],
+  imports: [
+    IonicModule,
+    CommonModule,
+    EventModalModule
+  ],
+  exports: [
+    CalendarComponent
+  ]
 })
 
 export class CalendarComponentModule {}
@@ -147,11 +168,16 @@ customElements.define('modal-page', class extends HTMLElement {
     this.innerHTML = `
 <ion-header>
   <ion-toolbar>
-    <ion-title>Super Modal</ion-title>
+    <ion-title>Modal Header</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button onClick="dismissModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content>
-  Content
+<ion-content class="ion-padding">
+  Modal Content
 </ion-content>`;
   }
 });
@@ -161,12 +187,62 @@ async function presentModal() {
   const modalController = document.querySelector('ion-modal-controller');
   await modalController.componentOnReady();
 
-  // present the modal
+  // create the modal with the `modal-page` component
   const modalElement = await modalController.create({
     component: 'modal-page'
   });
+
+  // present the modal
   await modalElement.present();
 }
+```
+
+### Passing Data
+
+During creation of a modal, data can be passed in through the `componentProps`. The previous example can be written to include data:
+
+```javascript
+const modalElement = await modalController.create({
+  component: 'modal-page',
+  componentProps: {
+    'firstName': 'Douglas',
+    'lastName': 'Adams',
+    'middleInitial': 'N'
+  }
+});
+```
+
+To get the data passed into the `componentProps`, query for the modal in the `modal-page`:
+
+```js
+customElements.define('modal-page', class extends HTMLElement {
+  connectedCallback() {
+    const modalElement = document.querySelector('ion-modal');
+    console.log(modalElement.componentProps.firstName);
+
+    ...
+  }
+}
+```
+
+
+### Dismissing a Modal
+
+A modal can be dismissed by calling the dismiss method on the modal controller and optionally passing any data from the modal.
+
+```javascript
+async function dismissModal() {
+  await modalController.dismiss({
+    'dismissed': true
+  });
+}
+```
+
+After being dismissed, the data can be read in through the `onWillDismiss` or `onDidDismiss` attached to the modal after creation:
+
+```javascript
+const { data } = await modalElement.onWillDismiss();
+console.log(data);
 ```
 
 
