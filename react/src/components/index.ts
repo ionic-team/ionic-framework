@@ -1,11 +1,11 @@
 import { addIcons } from 'ionicons';
 import { ICON_PATHS } from 'ionicons/icons';
 import { defineCustomElements } from '@ionic/core/loader';
-import { Components as IoniconsComponents } from 'ionicons';
 import { JSX } from '@ionic/core';
 import { createReactComponent } from './createComponent';
 import { ReactProps } from './ReactProps';
 export { AlertButton, AlertInput } from '@ionic/core';
+import { JSX as IoniconsJSX } from 'ionicons';
 
 // createControllerComponent
 export { default as IonAlert } from './IonAlert';
@@ -23,13 +23,12 @@ export { default as IonTabs } from './navigation/IonTabs';
 export { default as IonTabBar } from './navigation/IonTabBar';
 export { IonRouterOutlet } from './navigation/IonRouterOutlet';
 export { IonBackButton } from './navigation/IonBackButton';
-export { IonComponent } from './navigation/IonComponent';
 
 addIcons(ICON_PATHS);
 defineCustomElements(window);
 
 // ionicons
-export const IonIcon = createReactComponent<IoniconsComponents.IonIcon & ReactProps, HTMLIonIconElement>('ion-icon');
+export const IonIcon = createReactComponent<IoniconsJSX.IonIcon & ReactProps, HTMLIonIconElement>('ion-icon');
 
 // createReactComponent
 export const IonTabBarInner = createReactComponent<JSX.IonTabBar & ReactProps, HTMLIonTabBarElement>('ion-tab-bar');
