@@ -692,15 +692,15 @@ Type: `Promise<number>`
 
 
 
-### `open(side: string | undefined) => Promise<void>`
+### `open(side: "start" | "end" | undefined) => Promise<void>`
 
 Open the sliding item.
 
 #### Parameters
 
-| Name   | Type                  | Description                                                                                                                 |
-| ------ | --------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `side` | `string \| undefined` | The side of the options to open. If a side is not provided, it will open the first set of options it finds within the item. |
+| Name   | Type                            | Description                                                                                                                 |
+| ------ | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `side` | `"end" \| "start" \| undefined` | The side of the options to open. If a side is not provided, it will open the first set of options it finds within the item. |
 
 #### Returns
 
