@@ -24,6 +24,14 @@ function setScrollPadding(input: HTMLElement, keyboardHeight: number) {
   if (input.parentElement && input.parentElement.tagName === 'ION-INPUT') {
     return;
   }
+  if (
+    input.parentElement &&
+    input.parentElement.parentElement &&
+    input.parentElement.parentElement.tagName === 'ION-SEARCHBAR'
+  ) {
+    return;
+  }
+
   const el = input.closest('ion-content');
   if (el === null) {
     return;
