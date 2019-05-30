@@ -12,6 +12,7 @@ interface StackItemManagerState {
 
 export default class StackItemManager extends React.Component<StackItemManagerProps, StackItemManagerState> {
   ionLifeCycleContext = new DefaultIonLifeCycleContext();
+  _isMounted = false;
 
   constructor(props: StackItemManagerProps) {
     super(props)
@@ -22,17 +23,26 @@ export default class StackItemManager extends React.Component<StackItemManagerPr
     this.ionLifeCycleContext.onComponentCanBeDestroyed(() => {
       if (!this.props.mount) {
         /**
-         * Give child component 1 sec to finish calling its
+         * Give child component time to finish calling its
          * own onViewDidLeave before destroying it
          */
         setTimeout(() => {
-          this.setState({
-            show: false
-          });
+          if (this._isMounted) {
+            this.setState({
+              show: false
+            });
+          }
         }, 1000);
-
       }
     });
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {

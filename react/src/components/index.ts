@@ -1,9 +1,9 @@
 import { addIcons } from 'ionicons';
 import { ICON_PATHS } from 'ionicons/icons';
-import { defineCustomElements } from '@ionic/core/loader';
 import { JSX } from '@ionic/core';
 import { createReactComponent } from './createComponent';
 import { ReactProps } from './ReactProps';
+import { defineCustomElements } from '@ionic/core/loader';
 export { AlertButton, AlertInput } from '@ionic/core';
 import { JSX as IoniconsJSX } from 'ionicons';
 
@@ -25,6 +25,7 @@ export { IonRouterOutlet } from './navigation/IonRouterOutlet';
 export { IonBackButton } from './navigation/IonBackButton';
 
 addIcons(ICON_PATHS);
+
 defineCustomElements(window);
 
 // ionicons
