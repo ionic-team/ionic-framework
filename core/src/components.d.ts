@@ -3792,7 +3792,7 @@ export namespace Components {
     */
     'mode': Mode;
     /**
-    * If `true`, show the cancel button even when the searchbar is not focused.
+    * If `true`, the cancel button persists through defocus.
     */
     'persistCancelButton': boolean;
     /**
@@ -3824,7 +3824,7 @@ export namespace Components {
     */
     'type': 'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url';
     /**
-    * the value of the searchbar.
+    * The value of the searchbar.
     */
     'value'?: string | null;
   }
@@ -3894,7 +3894,7 @@ export namespace Components {
     */
     'onIonInput'?: (event: CustomEvent<KeyboardEvent>) => void;
     /**
-    * If `true`, show the cancel button even when the searchbar is not focused.
+    * If `true`, the cancel button persists through defocus.
     */
     'persistCancelButton'?: boolean;
     /**
@@ -3918,7 +3918,7 @@ export namespace Components {
     */
     'type'?: 'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url';
     /**
-    * the value of the searchbar.
+    * The value of the searchbar.
     */
     'value'?: string | null;
   }

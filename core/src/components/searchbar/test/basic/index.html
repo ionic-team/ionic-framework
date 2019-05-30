@@ -29,8 +29,8 @@
       <ion-searchbar id="noCancel" value="after view" autocorrect="off" autocomplete="off" spellcheck="true" type="text" show-cancel-button="false">
       </ion-searchbar>
 
-      <h5 class="ion-padding-start ion-padding-top"> Search - Permanent Cancel Button </h5>
-      <ion-searchbar id="permanentCancel" show-cancel-button="true" animated="true" permanent-cancel-button="true">
+      <h5 class="ion-padding-start ion-padding-top"> Search - Persistent Cancel Button </h5>
+      <ion-searchbar id="persistCancel" mode="ios" show-cancel-button="true" animated="true" persist-cancel-button="true">
       </ion-searchbar>
 
       <h5 class="ion-padding-start ion-padding-top"> Search - Disabled </h5>
@@ -93,15 +93,15 @@
       <div class="ion-padding-horizontal">
         <ion-button expand="block" color="secondary" onClick="toggleDisabled()">Toggle disabled</ion-button>
       </div>
-      
+
       <h5 class="ion-padding-start ion-padding-top"> Search - Cancel Button Programatic Toggle</h5>
       <ion-searchbar id="toggleCancel" placeholder="Search" animated="true" show-cancel-button="true">
       </ion-searchbar>
-      
+
       <div class="ion-padding ion-padding-top">
         <ion-button expand="block" color="secondary" onClick="showCancel()">Show Cancel Button</ion-button>
       </div>
-      
+
       <div class="ion-padding">
         <ion-button expand="block" color="secondary" onClick="hideCancel()">Hide Cancel Button</ion-button>
       </div>
@@ -111,7 +111,7 @@
           const toggleCancel = document.querySelector('#toggleCancel');
           toggleCancel.showCancel();
         }
-        
+
         function hideCancel() {
           const toggleCancel = document.querySelector('#toggleCancel');
           toggleCancel.hideCancel();
@@ -128,9 +128,9 @@
           const attrShowCancel = dynamicAttr.getAttribute('show-cancel-button') === 'true' ? false : true;
           dynamicAttr.setAttribute('show-cancel-button', attrShowCancel);
 
-          // Toggle permanent-cancel-button attribute
-          const attrPermanentCancel = dynamicAttr.getAttribute('permanent-cancel-button') === 'true' ? false : true;
-          dynamicAttr.setAttribute('permanent-cancel-button', attrPermanentCancel);
+          // Toggle persist-cancel-button attribute
+          const attrPersistCancel = dynamicAttr.getAttribute('persist-cancel-button') === 'true' ? false : true;
+          dynamicAttr.setAttribute('persist-cancel-button', attrPersistCancel);
 
           // Toggle placeholder attribute
           const attrPlaceholder = dynamicAttr.getAttribute('placeholder') === 'Search' ? 'Enter a Search Term' : 'Search';

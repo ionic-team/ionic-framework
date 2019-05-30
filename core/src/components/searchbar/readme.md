@@ -32,8 +32,8 @@ A Searchbar should be used instead of an input to search lists. A clear button i
 <!-- Searchbar with a cancel button and custom cancel button text -->
 <ion-searchbar showCancelButton cancelButtonText="Custom Cancel"></ion-searchbar>
 
-<!-- Searchbar with a permanent cancel button -->
-<ion-searchbar showCancelButton permanentCancelButton></ion-searchbar>
+<!-- Searchbar with a persistent cancel button -->
+<ion-searchbar showCancelButton persistCancelButton></ion-searchbar>
 
 <!-- Searchbar with a custom debounce -->
 <ion-searchbar debounce="500"></ion-searchbar>
@@ -72,8 +72,8 @@ A Searchbar should be used instead of an input to search lists. A clear button i
 <!-- Searchbar with a cancel button and custom cancel button text -->
 <ion-searchbar show-cancel-button cancel-button-text="Custom Cancel"></ion-searchbar>
 
-<!-- Searchbar with a permanent cancel button -->
-<ion-searchbar show-cancel-button permanent-cancel-button></ion-searchbar>
+<!-- Searchbar with a persistent cancel button -->
+<ion-searchbar show-cancel-button persist-cancel-button></ion-searchbar>
 
 <!-- Searchbar with a custom debounce -->
 <ion-searchbar debounce="500"></ion-searchbar>
@@ -118,8 +118,8 @@ const Example: React.SFC<{}> = () => (
     {/*-- Searchbar with a cancel button and custom cancel button text --*/}
     <IonSearchbar showCancelButton cancelButtonText="Custom Cancel"></IonSearchbar>
 
-    {/*-- Searchbar with a permanent cancel button --*/}
-    <IonSearchbar showCancelButton permanentCancelButton></IonSearchbar>
+    {/*-- Searchbar with a persistent cancel button --*/}
+    <IonSearchbar showCancelButton persistCancelButton></IonSearchbar>
 
     {/*-- Searchbar with a custom debounce --*/}
     <IonSearchbar debounce={500}></IonSearchbar>
@@ -163,8 +163,8 @@ export default Example;
   <!-- Searchbar with a cancel button and custom cancel button text -->
   <ion-searchbar showCancelButton cancelButtonText="Custom Cancel"></ion-searchbar>
 
-  <!-- Searchbar with a permanent cancel button -->
-  <ion-searchbar showCancelButton permanentCancelButton></ion-searchbar>
+  <!-- Searchbar with a persistent cancel button -->
+  <ion-searchbar showCancelButton persistCancelButton></ion-searchbar>
 
   <!-- Searchbar with a custom debounce -->
   <ion-searchbar debounce="500"></ion-searchbar>
@@ -198,13 +198,13 @@ export default Example;
 | `debounce`            | `debounce`              | Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.                                                                                                                                                                                                              | `number`                                                                    | `250`             |
 | `disabled`            | `disabled`              | If `true`, the user cannot interact with the input.                                                                                                                                                                                                                                                                  | `boolean`                                                                   | `false`           |
 | `mode`                | `mode`                  | The mode determines which platform styles to use.                                                                                                                                                                                                                                                                    | `"ios" \| "md"`                                                             | `undefined`       |
-| `persistCancelButton` | `persist-cancel-button` | If `true`, show the cancel button even when the searchbar is not focused.                                                                                                                                                                                                                                            | `boolean`                                                                   | `false`           |
+| `persistCancelButton` | `persist-cancel-button` | If `true`, the cancel button persists through defocus.                                                                                                                                                                                                                                                               | `boolean`                                                                   | `false`           |
 | `placeholder`         | `placeholder`           | Set the input's placeholder. `placeholder` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security) | `string`                                                                    | `'Search'`        |
 | `searchIcon`          | `search-icon`           | The icon to use as the search icon.                                                                                                                                                                                                                                                                                  | `string`                                                                    | `'search'`        |
 | `showCancelButton`    | `show-cancel-button`    | If `true`, show the cancel button.                                                                                                                                                                                                                                                                                   | `boolean`                                                                   | `false`           |
 | `spellcheck`          | `spellcheck`            | If `true`, enable spellcheck on the input.                                                                                                                                                                                                                                                                           | `boolean`                                                                   | `false`           |
 | `type`                | `type`                  | Set the type of the input.                                                                                                                                                                                                                                                                                           | `"email" \| "number" \| "password" \| "search" \| "tel" \| "text" \| "url"` | `'search'`        |
-| `value`               | `value`                 | the value of the searchbar.                                                                                                                                                                                                                                                                                          | `null \| string \| undefined`                                               | `''`              |
+| `value`               | `value`                 | The value of the searchbar.                                                                                                                                                                                                                                                                                          | `null \| string \| undefined`                                               | `''`              |
 
 
 ## Events

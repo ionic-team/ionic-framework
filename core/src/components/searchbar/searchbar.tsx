@@ -108,7 +108,7 @@ export class Searchbar implements ComponentInterface {
   @Prop() showCancelButton = false;
 
   /**
-   * If `true`, show the cancel button even when the searchbar is not focused.
+   * If `true`, the cancel button persists through defocus.
    */
   @Prop() persistCancelButton = false;
 
@@ -123,7 +123,7 @@ export class Searchbar implements ComponentInterface {
   @Prop() type: 'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url' = 'search';
 
   /**
-   * the value of the searchbar.
+   * The value of the searchbar.
    */
   @Prop({ mutable: true }) value?: string | null = '';
 

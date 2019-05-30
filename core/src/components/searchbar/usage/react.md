@@ -23,8 +23,8 @@ const Example: React.SFC<{}> = () => (
     {/*-- Searchbar with a cancel button and custom cancel button text --*/}
     <IonSearchbar showCancelButton cancelButtonText="Custom Cancel"></IonSearchbar>
 
-    {/*-- Searchbar with a permanent cancel button --*/}
-    <IonSearchbar showCancelButton permanentCancelButton></IonSearchbar>
+    {/*-- Searchbar with a persistent cancel button --*/}
+    <IonSearchbar showCancelButton persistCancelButton></IonSearchbar>
 
     {/*-- Searchbar with a custom debounce --*/}
     <IonSearchbar debounce={500}></IonSearchbar>
