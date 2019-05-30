@@ -899,7 +899,7 @@ ion-searchbar,prop,color,string | undefined,undefined,false,false
 ion-searchbar,prop,debounce,number,250,false,false
 ion-searchbar,prop,disabled,boolean,false,false,false
 ion-searchbar,prop,mode,"ios" | "md",undefined,false,false
-ion-searchbar,prop,permanentCancelButton,boolean,false,false,false
+ion-searchbar,prop,persistCancelButton,boolean,false,false,false
 ion-searchbar,prop,placeholder,string,'Search',false,false
 ion-searchbar,prop,searchIcon,string,'search',false,false
 ion-searchbar,prop,showCancelButton,boolean,false,false,false
@@ -907,7 +907,9 @@ ion-searchbar,prop,spellcheck,boolean,false,false,false
 ion-searchbar,prop,type,"email" | "number" | "password" | "search" | "tel" | "text" | "url",'search',false,false
 ion-searchbar,prop,value,null | string | undefined,'',false,false
 ion-searchbar,method,getInputElement,getInputElement() => Promise<HTMLInputElement>
+ion-searchbar,method,hideCancel,hideCancel() => void
 ion-searchbar,method,setFocus,setFocus() => void
+ion-searchbar,method,showCancel,showCancel() => void
 ion-searchbar,event,ionBlur,void,true
 ion-searchbar,event,ionCancel,void,true
 ion-searchbar,event,ionChange,SearchbarChangeEventDetail,true

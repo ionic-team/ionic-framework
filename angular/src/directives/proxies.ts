@@ -676,7 +676,7 @@ export class IonRow {
 }
 
 export declare interface IonSearchbar extends StencilComponents<'IonSearchbar'> {}
-@Component({ selector: 'ion-searchbar', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'debounce', 'disabled', 'placeholder', 'searchIcon', 'showCancelButton', 'permanentCancelButton', 'spellcheck', 'type', 'value'] })
+@Component({ selector: 'ion-searchbar', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'debounce', 'disabled', 'placeholder', 'searchIcon', 'showCancelButton', 'persistCancelButton', 'spellcheck', 'type', 'value'] })
 export class IonSearchbar {
   ionInput!: EventEmitter<CustomEvent>;
   ionChange!: EventEmitter<CustomEvent>;
@@ -691,8 +691,8 @@ export class IonSearchbar {
     proxyOutputs(this, this.el, ['ionInput', 'ionChange', 'ionCancel', 'ionClear', 'ionBlur', 'ionFocus']);
   }
 }
-proxyMethods(IonSearchbar, ['setFocus', 'getInputElement']);
-proxyInputs(IonSearchbar, ['color', 'mode', 'animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'debounce', 'disabled', 'placeholder', 'searchIcon', 'showCancelButton', 'permanentCancelButton', 'spellcheck', 'type', 'value']);
+proxyMethods(IonSearchbar, ['setFocus', 'getInputElement', 'showCancel', 'hideCancel']);
+proxyInputs(IonSearchbar, ['color', 'mode', 'animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'debounce', 'disabled', 'placeholder', 'searchIcon', 'showCancelButton', 'persistCancelButton', 'spellcheck', 'type', 'value']);
 
 export declare interface IonSegment extends StencilComponents<'IonSegment'> {}
 @Component({ selector: 'ion-segment', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'disabled', 'scrollable', 'value'] })

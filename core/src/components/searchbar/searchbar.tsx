@@ -25,6 +25,8 @@ export class Searchbar implements ComponentInterface {
   @Prop({ context: 'document' }) doc!: Document;
 
   @State() focused = false;
+  @State() forceShowCancel = false;
+  @State() hadInitialFocus = false;
   @State() noAnimate = true;
 
   /**
@@ -108,7 +110,7 @@ export class Searchbar implements ComponentInterface {
   /**
    * If `true`, show the cancel button even when the searchbar is not focused.
    */
-  @Prop() permanentCancelButton = false;
+  @Prop() persistCancelButton = false;
 
   /**
    * If `true`, enable spellcheck on the input.
@@ -194,6 +196,25 @@ export class Searchbar implements ComponentInterface {
   }
 
   /**
+   * Shows the cancel button even if the searchbar is not focused
+   */
+  @Method()
+  showCancel() {
+    this.forceShowCancel = true;
+    this.positionElements();
+  }
+
+  /**
+   * Hides the cancel button
+   */
+  @Method()
+  hideCancel() {
+    this.forceShowCancel = false;
+    this.hadInitialFocus = false;
+    this.positionElements();
+  }
+
+  /**
    * Clears the input field and triggers the control change.
    */
   private onClearInput = (ev?: Event) => {
@@ -231,6 +252,8 @@ export class Searchbar implements ComponentInterface {
     if (this.nativeInput) {
       this.nativeInput.blur();
     }
+
+    this.hideCancel();
   }
 
   /**
@@ -258,6 +281,10 @@ export class Searchbar implements ComponentInterface {
    * Sets the Searchbar to focused and active on input focus.
    */
   private onFocus = () => {
+    if (!this.hadInitialFocus) {
+      this.hadInitialFocus = true;
+    }
+
     this.focused = true;
     this.ionFocus.emit();
     this.positionElements();
@@ -281,7 +308,7 @@ export class Searchbar implements ComponentInterface {
       this.positionPlaceholder();
     }
 
-    if (this.animated || this.permanentCancelButton) {
+    if (this.animated) {
       this.positionCancelButton();
     }
   }
@@ -330,13 +357,12 @@ export class Searchbar implements ComponentInterface {
   }
 
   /**
-   * Show the iOS Cancel button on focus or if the permanent cancel button attribute is set,
-   * hide it offscreen otherwise
+   * Show the iOS Cancel button on focus or persist cancel button is enabled, hide it offscreen otherwise
    */
   private positionCancelButton() {
     const isRTL = this.doc.dir === 'rtl';
     const cancelButton = (this.el.shadowRoot || this.el).querySelector('.searchbar-cancel-button') as HTMLElement;
-    const shouldShowCancel = this.focused || this.permanentCancelButton;
+    const shouldShowCancel = this.shouldShowCancelButton();
 
     if (cancelButton && shouldShowCancel !== this.isCancelVisible) {
       const cancelStyle = cancelButton.style;
@@ -368,6 +394,26 @@ export class Searchbar implements ComponentInterface {
     return this.getValue() !== '';
   }
 
+  /**
+   * Determines whether or not the cancel button should visible onscreen
+   * Cancel button should be shown if one of the three conditions applies:
+   * 1. The user has called showCancel(), setting forceShowCancel = true
+   * 2. The user has focused the searchbar
+   * 3. The user has persistCancelButton enabled and the searchbar has
+   * already been focused at least once
+   */
+  private shouldShowCancelButton(): boolean {
+    if (
+      this.forceShowCancel ||
+      this.focused ||
+      (this.persistCancelButton && this.hadInitialFocus)
+    ) {
+      return true;
+    }
+
+    return false;
+  }
+
   hostData() {
     const animated = this.animated && this.config.getBoolean('animated', true);
 
@@ -382,7 +428,7 @@ export class Searchbar implements ComponentInterface {
         'searchbar-has-value': this.hasValue(),
         'searchbar-left-aligned': this.shouldAlignLeft,
         'searchbar-has-focus': this.focused,
-        'searchbar-has-permanent-cancel': this.permanentCancelButton
+        'searchbar-should-show-cancel': this.shouldShowCancelButton()
       }
     };
   }
@@ -391,10 +437,10 @@ export class Searchbar implements ComponentInterface {
     const clearIcon = this.clearIcon || (this.mode === 'ios' ? 'ios-close-circle' : 'md-close');
     const searchIcon = this.searchIcon;
 
-    const cancelButton = (this.showCancelButton || (this.showCancelButton && this.permanentCancelButton)) && (
+    const cancelButton = (this.showCancelButton) && (
       <button
         type="button"
-        tabIndex={this.mode === 'ios' && !this.focused && !this.permanentCancelButton ? -1 : undefined}
+        tabIndex={this.mode === 'ios' && !this.shouldShowCancelButton() ? -1 : undefined}
         onMouseDown={this.onCancelSearchbar}
         onTouchStart={this.onCancelSearchbar}
         class="searchbar-cancel-button"

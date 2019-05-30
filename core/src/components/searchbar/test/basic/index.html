@@ -30,7 +30,7 @@
       </ion-searchbar>
 
       <h5 class="ion-padding-start ion-padding-top"> Search - Permanent Cancel Button </h5>
-      <ion-searchbar id="permanentCancel" show-cancel-button="true" permanent-cancel-button="true">
+      <ion-searchbar id="permanentCancel" show-cancel-button="true" animated="true" permanent-cancel-button="true">
       </ion-searchbar>
 
       <h5 class="ion-padding-start ion-padding-top"> Search - Disabled </h5>
@@ -93,8 +93,30 @@
       <div class="ion-padding-horizontal">
         <ion-button expand="block" color="secondary" onClick="toggleDisabled()">Toggle disabled</ion-button>
       </div>
+      
+      <h5 class="ion-padding-start ion-padding-top"> Search - Cancel Button Programatic Toggle</h5>
+      <ion-searchbar id="toggleCancel" placeholder="Search" animated="true" show-cancel-button="true">
+      </ion-searchbar>
+      
+      <div class="ion-padding ion-padding-top">
+        <ion-button expand="block" color="secondary" onClick="showCancel()">Show Cancel Button</ion-button>
+      </div>
+      
+      <div class="ion-padding">
+        <ion-button expand="block" color="secondary" onClick="hideCancel()">Hide Cancel Button</ion-button>
+      </div>
 
       <script>
+        function showCancel() {
+          const toggleCancel = document.querySelector('#toggleCancel');
+          toggleCancel.showCancel();
+        }
+        
+        function hideCancel() {
+          const toggleCancel = document.querySelector('#toggleCancel');
+          toggleCancel.hideCancel();
+        }
+
         function toggleAttr() {
           var dynamicAttr = document.getElementById('dynamicAttr');
 

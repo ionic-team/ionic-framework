@@ -3784,13 +3784,17 @@ export namespace Components {
     */
     'getInputElement': () => Promise<HTMLInputElement>;
     /**
+    * Hides the cancel button
+    */
+    'hideCancel': () => void;
+    /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
     * If `true`, show the cancel button even when the searchbar is not focused.
     */
-    'permanentCancelButton': boolean;
+    'persistCancelButton': boolean;
     /**
     * Set the input's placeholder. `placeholder` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
@@ -3803,6 +3807,10 @@ export namespace Components {
     * Sets focus on the specified `ion-searchbar`. Use this method instead of the global `input.focus()`.
     */
     'setFocus': () => void;
+    /**
+    * Shows the cancel button even if the searchbar is not focused
+    */
+    'showCancel': () => void;
     /**
     * If `true`, show the cancel button.
     */
@@ -3888,7 +3896,7 @@ export namespace Components {
     /**
     * If `true`, show the cancel button even when the searchbar is not focused.
     */
-    'permanentCancelButton'?: boolean;
+    'persistCancelButton'?: boolean;
     /**
     * Set the input's placeholder. `placeholder` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */

@@ -106,10 +106,10 @@
 }
 
 
-// Searchbar Has Focus & Animated & Permanent Cancel
+// Searchbar Has Focus & Animated & Should Show Cancel
 // -----------------------------------------
 
-:host(.searchbar-has-focus, .searchbar-animated, .searchbar-has-permanent-cancel) .searchbar-cancel-button {
+:host(.searchbar-has-focus, .searchbar-should-show-cancel, .searchbar-animated) .searchbar-cancel-button {
   display: block;
 }
 
@@ -129,7 +129,7 @@
 }
 
 :host(.searchbar-animated.searchbar-has-focus) .searchbar-cancel-button,
-:host(.searchbar-has-permanent-cancel) .searchbar-cancel-button {
+:host(.searchbar-should-show-cancel) .searchbar-cancel-button {
   opacity: 1;
   pointer-events: auto;
 }
