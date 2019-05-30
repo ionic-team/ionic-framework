@@ -54,6 +54,10 @@ button {
 .datetime-text {
   @include text-inherit();
 
+  @include rtl() {
+    direction: rtl;
+  }
+
   flex: 1;
 
   min-height: inherit;
