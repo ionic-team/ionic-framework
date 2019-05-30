@@ -54,6 +54,8 @@ test('select: basic', async () => {
 
   compares.push(await page.compareScreenshot('should open custom popover select'));
 
+  await popover.callMethod('dismiss');
+
   // Custom Action Sheet Select
   select = await page.find('#customActionSheetSelect');
   await select.click();

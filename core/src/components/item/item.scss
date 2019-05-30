@@ -255,6 +255,11 @@ button, a {
   box-sizing: border-box;
 }
 
+:host(.item-label-stacked) .item-native,
+:host(.item-label-floating) .item-native {
+  align-items: start;
+}
+
 :host(.item-label-stacked) .input-wrapper,
 :host(.item-label-floating) .input-wrapper {
   flex: 1;
