@@ -1,6 +1,9 @@
-import { HTMLStencilElement } from '@stencil/core/internal';
-
 import { ComponentProps } from '../../../interface';
+
+export interface HTMLStencilElement extends HTMLElement {
+  componentOnReady(): Promise<this>;
+  forceUpdate(): void;
+}
 
 export interface NavOutlet {
   setRouteId(id: string, params: ComponentProps | undefined, direction: RouterDirection): Promise<RouteWrite>;
