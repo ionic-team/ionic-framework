@@ -63,6 +63,23 @@ export class TabButton implements ComponentInterface {
 
   @Listen('click')
   onClick(ev: Event) {
+    this.selectTab(ev);
+  }
+
+  @Listen('keyup')
+  onKeyUp(ev: KeyboardEvent) {
+    if (ev.key === 'Enter' || ev.key === ' ') {
+      this.selectTab(ev);
+    }
+  }
+
+  componentWillLoad() {
+    if (this.layout === undefined) {
+      this.layout = this.config.get('tabButtonLayout', 'icon-top');
+    }
+  }
+
+  private selectTab(ev: Event | KeyboardEvent) {
     if (this.tab !== undefined) {
       if (!this.disabled) {
         this.ionTabButtonClick.emit({
@@ -72,12 +89,6 @@ export class TabButton implements ComponentInterface {
         });
       }
       ev.preventDefault();
-    }
-  }
-
-  componentWillLoad() {
-    if (this.layout === undefined) {
-      this.layout = this.config.get('tabButtonLayout', 'icon-top');
     }
   }
 
