@@ -7,6 +7,8 @@
   --color: #{ion-color(primary, base)};
   --padding-start: 5px;
   --padding-end: 5px;
+
+  height: 32px;
 }
 
 :host(.activated) {
