@@ -63,6 +63,23 @@ export class TabButton implements ComponentInterface {
 
   @Listen('click')
   onClick(ev: Event) {
+    this.selectTab(ev);
+  }
+
+  @Listen('keyup')
+  onKeyUp(ev: KeyboardEvent) {
+    if (ev.key === 'Enter' || ev.key === ' ') {
+      this.selectTab(ev);
+    }
+  }
+
+  componentWillLoad() {
+    if (this.layout === undefined) {
+      this.layout = this.config.get('tabButtonLayout', 'icon-top');
+    }
+  }
+
+  private selectTab(ev: Event | KeyboardEvent) {
     if (this.tab !== undefined) {
       if (!this.disabled) {
         this.ionTabButtonClick.emit({
@@ -75,12 +92,6 @@ export class TabButton implements ComponentInterface {
     }
   }
 
-  componentWillLoad() {
-    if (this.layout === undefined) {
-      this.layout = this.config.get('tabButtonLayout', 'icon-top');
-    }
-  }
-
   private get hasLabel() {
     return !!this.el.querySelector('ion-label');
   }
@@ -89,13 +100,27 @@ export class TabButton implements ComponentInterface {
     return !!this.el.querySelector('ion-icon');
   }
 
+  private get tabIndex() {
+    if (this.disabled) { return -1; }
+
+    const hasTabIndex = this.el.hasAttribute('tabindex');
+
+    if (hasTabIndex) {
+      return this.el.getAttribute('tabindex');
+    }
+
+    return 0;
+  }
+
   hostData() {
-    const { disabled, hasIcon, hasLabel, layout, selected, tab } = this;
+    const { disabled, hasIcon, hasLabel, tabIndex, layout, selected, tab } = this;
     return {
+      'tabindex': tabIndex,
       'role': 'tab',
       'aria-selected': selected ? 'true' : null,
       'id': tab !== undefined ? `tab-button-${tab}` : null,
       class: {
+        [`${this.mode}`]: true,
         'tab-selected': selected,
         'tab-disabled': disabled,
         'tab-has-label': hasLabel,
@@ -104,6 +129,8 @@ export class TabButton implements ComponentInterface {
         'tab-has-icon-only': hasIcon && !hasLabel,
         [`tab-layout-${layout}`]: true,
         'ion-activatable': true,
+        'ion-selectable': true,
+        'ion-focusable': true
       }
     };
   }
@@ -111,7 +138,7 @@ export class TabButton implements ComponentInterface {
   render() {
     const { mode, href } = this;
     return (
-      <a href={href}>
+      <a href={href} tabIndex={-1}>
         <slot></slot>
         {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
       </a>

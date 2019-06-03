@@ -59,5 +59,4 @@ export default class ActionSheetExample extends Component<Props, State> {
     );
   }
 }
-
 ```

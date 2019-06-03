@@ -139,7 +139,14 @@ export class Nav implements NavOutlet {
   }
 
   /**
-   * Push a new component onto the current navigation stack. Pass any additional information along as an object. This additional information is accessible through NavParams
+   * Push a new component onto the current navigation stack. Pass any additional
+   * information along as an object. This additional information is accessible
+   * through NavParams.
+   *
+   * @param component The component to push onto the navigation stack.
+   * @param componentProps Any properties of the component.
+   * @param opts The navigation options.
+   * @param done The transition complete function.
    */
   @Method()
   push<T extends NavComponent>(
@@ -159,7 +166,14 @@ export class Nav implements NavOutlet {
   }
 
   /**
-   * Inserts a component into the nav stack at the specified index. This is useful if you need to add a component at any point in your navigation stack.
+   * Inserts a component into the navigation stack at the specified index.
+   * This is useful to add a component at any point in the navigation stack.
+   *
+   * @param insertIndex The index to insert the component at in the stack.
+   * @param component The component to insert into the navigation stack.
+   * @param componentProps Any properties of the component.
+   * @param opts The navigation options.
+   * @param done The transition complete function.
    */
   @Method()
   insert<T extends NavComponent>(
@@ -180,7 +194,14 @@ export class Nav implements NavOutlet {
   }
 
   /**
-   * Inserts an array of components into the nav stack at the specified index. The last component in the array will become instantiated as a view, and animate in to become the active view.
+   * Inserts an array of components into the navigation stack at the specified index.
+   * The last component in the array will become instantiated as a view, and animate
+   * in to become the active view.
+   *
+   * @param insertIndex The index to insert the components at in the stack.
+   * @param insertComponents The components to insert into the navigation stack.
+   * @param opts The navigation options.
+   * @param done The transition complete function.
    */
   @Method()
   insertPages(
@@ -200,7 +221,11 @@ export class Nav implements NavOutlet {
   }
 
   /**
-   * Call to navigate back from a current component. Similar to push(), you can also pass navigation options.
+   * Pop a component off of the navigation stack. Navigates back from the current
+   * component.
+   *
+   * @param opts The navigation options.
+   * @param done The transition complete function.
    */
   @Method()
   pop(opts?: NavOptions | null, done?: TransitionDoneFn): Promise<boolean> {
@@ -215,7 +240,11 @@ export class Nav implements NavOutlet {
   }
 
   /**
-   * Pop to a specific index in the navigation stack
+   * Pop to a specific index in the navigation stack.
+   *
+   * @param indexOrViewCtrl The index or view controller to pop to.
+   * @param opts The navigation options.
+   * @param done The transition complete function.
    */
   @Method()
   popTo(
@@ -239,6 +268,9 @@ export class Nav implements NavOutlet {
 
   /**
    * Navigate back to the root of the stack, no matter how far back that is.
+   *
+   * @param opts The navigation options.
+   * @param done The transition complete function.
    */
   @Method()
   popToRoot(
@@ -256,7 +288,12 @@ export class Nav implements NavOutlet {
   }
 
   /**
-   * Removes a page from the nav stack at the specified index.
+   * Removes a component from the navigation stack at the specified index.
+   *
+   * @param startIndex The number to begin removal at.
+   * @param removeCount The number of components to remove.
+   * @param opts The navigation options.
+   * @param done The transition complete function.
    */
   @Method()
   removeIndex(
@@ -276,7 +313,12 @@ export class Nav implements NavOutlet {
   }
 
   /**
-   * Set the root for the current navigation stack.
+   * Set the root for the current navigation stack to a component.
+   *
+   * @param component The component to set as the root of the navigation stack.
+   * @param componentProps Any properties of the component.
+   * @param opts The navigation options.
+   * @param done The transition complete function.
    */
   @Method()
   setRoot<T extends NavComponent>(
@@ -293,7 +335,14 @@ export class Nav implements NavOutlet {
   }
 
   /**
-   * Set the views of the current navigation stack and navigate to the last view. By default animations are disabled, but they can be enabled by passing options to the navigation controller.You can also pass any navigation params to the individual pages in the array.
+   * Set the views of the current navigation stack and navigate to the last view.
+   * By default animations are disabled, but they can be enabled by passing options
+   * to the navigation controller. Navigation parameters can also be passed to the
+   * individual pages in the array.
+   *
+   * @param views The list of views to set as the navigation stack.
+   * @param opts The navigation options.
+   * @param done The transition complete function.
    */
   @Method()
   setPages(
@@ -392,7 +441,7 @@ export class Nav implements NavOutlet {
   }
 
   /**
-   * Gets the active view
+   * Get the active view.
    */
   @Method()
   getActive(): Promise<ViewController | undefined> {
@@ -400,7 +449,9 @@ export class Nav implements NavOutlet {
   }
 
   /**
-   * Returns the view at the index
+   * Get the view at the specified index.
+   *
+   * @param index The index of the view.
    */
   @Method()
   getByIndex(index: number): Promise<ViewController | undefined> {
@@ -408,7 +459,9 @@ export class Nav implements NavOutlet {
   }
 
   /**
-   * Returns `true` or false if the current view can go back
+   * Returns `true` if the current view can go back.
+   *
+   * @param view The view to check.
    */
   @Method()
   canGoBack(view?: ViewController): Promise<boolean> {
@@ -416,7 +469,9 @@ export class Nav implements NavOutlet {
   }
 
   /**
-   * Gets the previous view
+   * Get the previous view.
+   *
+   * @param view The view to get.
    */
   @Method()
   getPrevious(view?: ViewController): Promise<ViewController | undefined> {

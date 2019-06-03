@@ -1,3 +1,6 @@
+import { E2EElement, E2EPage } from '@stencil/core/testing';
+import { ElementHandle } from 'puppeteer';
+
 export function generateE2EUrl(component: string, type: string, rtl = false): string {
   let url = `/src/components/${component}/test/${type}?ionic:_testing=true`;
   if (rtl) {
@@ -7,12 +10,15 @@ export function generateE2EUrl(component: string, type: string, rtl = false): st
   return url;
 }
 
-export function cleanScreenshotName(screenshotName: string): string {
-  return screenshotName
-    .replace(/([-])/g, ' ')
-    .replace(/[^0-9a-zA-Z\s]/gi, '')
-    .toLowerCase();
-}
+/**
+ * Gets the value of a property on an element
+ */
+export const getElementProperty = async (element: any, property: string): Promise<string> => {
+  const getProperty = await element.getProperty(property);
+  if (!getProperty) { return ''; }
+
+  return getProperty.jsonValue();
+};
 
 /**
  * Listens for an event and fires a callback
@@ -87,3 +93,58 @@ export const waitForFunctionTestContext = async (fn: any, params: any, interval 
     }, interval);
   });
 };
+
+/**
+ * Pierce through shadow roots
+ * https://github.com/GoogleChrome/puppeteer/issues/858#issuecomment-359763824
+ */
+export async function queryDeep(page: E2EPage, ...selectors: string[]): Promise<ElementHandle> {
+  const shadowSelectorFn = (el: Element, selector: string): Element | null => (el && el.shadowRoot) && el.shadowRoot.querySelector(selector);
+
+  return new Promise(async resolve => {
+    const [ firstSelector, ...restSelectors ] = selectors;
+    let parentElement = await page.$(firstSelector);
+
+    for (const selector of restSelectors) {
+      parentElement = await page.evaluateHandle(shadowSelectorFn, parentElement, selector) as any;
+    }
+
+    if (parentElement) { resolve(parentElement); }
+  });
+}
+
+/**
+ * Given an element and optional selector, use the selector if
+ * it exists or get the node name of that element if not. Combine
+ * with the current mode to verify the correct classes exist.
+ *
+ * @param el: E2EElement - The element to verify classes on
+ * @param selector: string - A selector to use instead of the element tag name
+ *
+ * Examples:
+ * await checkComponentModeClasses(await page.find('ion-card-content'))
+ * => expect(el).toHaveClass(`card-content-{mode}`);
+ *
+ * await checkComponentModeClasses(await page.find('ion-card-content'), 'some-class')
+ * => expect(el).toHaveClass(`some-class-{mode}`);
+ */
+export async function checkComponentModeClasses(el: E2EElement, selector?: string) {
+  // If passed a selector to use, use that, else grab the nodeName
+  // of the element and remove the ion prefix to get the class selector
+  const component = selector !== undefined ? selector : el.nodeName.toLowerCase().replace('ion-', '');
+
+  const mode = await el.getProperty('mode');
+
+  expect(el).toHaveClass(`${component}-${mode}`);
+}
+
+/**
+ * Given an element, get the mode and verify it exists as a class
+ *
+ * @param el: E2EElement - the element to verify the mode class on
+ */
+export async function checkModeClasses(el: E2EElement) {
+  const mode = await el.getProperty('mode');
+
+  expect(el).toHaveClass(`${mode}`);
+}

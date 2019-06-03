@@ -1,7 +1,6 @@
 import { Component, ComponentInterface, Element, Method, Prop } from '@stencil/core';
 
 import { Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-list',
@@ -47,9 +46,13 @@ export class List implements ComponentInterface {
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, 'list'),
-        [`list-lines-${this.lines}`]: this.lines !== undefined,
+        [`${this.mode}`]: true,
+
+        // Used internally for styling
+        [`list-${this.mode}`]: true,
+
         'list-inset': this.inset,
+        [`list-lines-${this.lines}`]: this.lines !== undefined,
         [`list-${this.mode}-lines-${this.lines}`]: this.lines !== undefined
       }
     };

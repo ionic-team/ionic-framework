@@ -46,7 +46,7 @@ export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: 
 
   for (const cell of toMutate) {
     const node = pool.find(n => n.d && n.cell.type === cell.type);
-    const index = cell.index;
+    const index = cell.i;
     if (node) {
       node.d = false;
       node.change = NODE_CHANGE_CELL;

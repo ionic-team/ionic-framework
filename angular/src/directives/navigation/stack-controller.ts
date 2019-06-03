@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { ComponentRef, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterDirection } from '@ionic/core';
@@ -22,6 +23,7 @@ export class StackController {
     private router: Router,
     private navCtrl: NavController,
     private zone: NgZone,
+    private location: Location
   ) {
     this.tabsPrefix = tabsPrefix !== undefined ? toSegments(tabsPrefix) : undefined;
   }
@@ -58,10 +60,44 @@ export class StackController {
       animation = undefined;
     }
     const viewsSnapshot = this.views.slice();
+
+    let currentNavigation;
+
+    const router = (this.router as any);
+
+    // Angular >= 7.2.0
+    if (router.getCurrentNavigation) {
+      currentNavigation = router.getCurrentNavigation();
+
+    // Angular < 7.2.0
+    } else if (
+      router.navigations &&
+      router.navigations.value
+    ) {
+      currentNavigation = router.navigations.value;
+    }
+
+    /**
+     * If the navigation action
+     * sets `replaceUrl: true`
+     * then we need to make sure
+     * we remove the last item
+     * from our views stack
+     */
+    if (
+      currentNavigation &&
+      currentNavigation.extras &&
+      currentNavigation.extras.replaceUrl
+    ) {
+      if (this.views.length > 0) {
+        this.views.splice(-1, 1);
+      }
+    }
+
     const views = this.insertView(enteringView, direction);
     return this.wait(async () => {
       await this.transition(enteringView, leavingView, animation, this.canGoBack(1), false);
-      await cleanupAsync(enteringView, views, viewsSnapshot);
+      await cleanupAsync(enteringView, views, viewsSnapshot, this.location);
       return {
         enteringView,
         direction,
@@ -82,7 +118,23 @@ export class StackController {
         return Promise.resolve(false);
       }
       const view = views[views.length - deep - 1];
-      return this.navCtrl.navigateBack(view.url).then(() => true);
+      let url = view.url;
+
+      const viewSavedData = view.savedData;
+      if (viewSavedData) {
+        const primaryOutlet = viewSavedData.get('primary');
+        if (
+          primaryOutlet &&
+          primaryOutlet.route &&
+          primaryOutlet.route._routerState &&
+          primaryOutlet.route._routerState.snapshot &&
+          primaryOutlet.route._routerState.snapshot.url
+        ) {
+          url = primaryOutlet.route._routerState.snapshot.url;
+        }
+      }
+
+      return this.navCtrl.navigateBack(url, view.savedExtras).then(() => true);
     });
   }
 
@@ -178,22 +230,35 @@ export class StackController {
   }
 }
 
-function cleanupAsync(activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[]) {
+function cleanupAsync(activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) {
   return new Promise(resolve => {
     requestAnimationFrame(() => {
-      cleanup(activeRoute, views, viewsSnapshot);
+      cleanup(activeRoute, views, viewsSnapshot, location);
       resolve();
     });
   });
 }
 
-function cleanup(activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[]) {
+function cleanup(activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) {
   viewsSnapshot
     .filter(view => !views.includes(view))
     .forEach(destroyView);
 
   views.forEach(view => {
-    if (view !== activeRoute) {
+
+    /**
+     * In the event that a user navigated multiple
+     * times in rapid succession, we want to make sure
+     * we don't pre-emptively detach a view while
+     * it is in mid-transition.
+     *
+     * In this instance we also do not care about query
+     * params or fragments as it will be the same view regardless
+     */
+    const locationWithoutParams = location.path().split('?')[0];
+    const locationWithoutFragment = locationWithoutParams.split('#')[0];
+
+    if (view !== activeRoute && view.url !== locationWithoutFragment) {
       const element = view.element;
       element.setAttribute('aria-hidden', 'true');
       element.classList.add('ion-page-hidden');

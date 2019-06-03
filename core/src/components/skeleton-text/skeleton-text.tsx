@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
 
-import { Config } from '../../interface';
+import { Config, Mode } from '../../interface';
 import { hostContext } from '../../utils/theme';
 
 @Component({
@@ -9,6 +9,7 @@ import { hostContext } from '../../utils/theme';
   shadow: true
 })
 export class SkeletonText implements ComponentInterface {
+  mode!: Mode;
 
   @Element() el!: HTMLElement;
 
@@ -49,6 +50,7 @@ export class SkeletonText implements ComponentInterface {
 
     return {
       class: {
+        [`${this.mode}`]: true,
         'skeleton-text-animated': animated,
         'in-media': inMedia
       },

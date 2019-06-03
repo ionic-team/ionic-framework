@@ -54,11 +54,14 @@ export class ToolbarTitle implements ComponentInterface {
 
   hostData() {
     const mode = this.getMode();
+
     return {
       class: {
-        ...createColorClasses(this.color),
+        [`${mode}`]: true,
         [`title-${mode}`]: true,
         [`title-${mode}-${this.size}`]: true,
+        
+        ...createColorClasses(this.color),
       }
     };
   }

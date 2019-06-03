@@ -25,6 +25,15 @@
   min-width: 0;
 }
 
+
+// Toolbar: Segment
+// --------------------------------------------------
+
+:host(.toolbar-segment) {
+  --min-height: auto;
+}
+
+
 // iOS Toolbar Slot Placement
 // --------------------------------------------------
 
