@@ -89,8 +89,12 @@ ion-back-button,prop,icon,null | string | undefined,undefined,false,false
 ion-back-button,prop,mode,"ios" | "md",undefined,false,false
 ion-back-button,prop,text,null | string | undefined,undefined,false,false
 ion-back-button,css-prop,--background
+ion-back-button,css-prop,--background-focused
+ion-back-button,css-prop,--background-hover
 ion-back-button,css-prop,--border-radius
 ion-back-button,css-prop,--color
+ion-back-button,css-prop,--color-focused
+ion-back-button,css-prop,--color-hover
 ion-back-button,css-prop,--icon-font-size
 ion-back-button,css-prop,--icon-font-weight
 ion-back-button,css-prop,--icon-margin-bottom
