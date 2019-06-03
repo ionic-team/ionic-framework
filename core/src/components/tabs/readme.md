@@ -3,82 +3,12 @@
 Tabs are a top level navigation component to implement a tab-based navigation.
 The component is a container of individual [Tab](../tab/) components.
 
-`ion-tabs` is a styleless component that works as a router outlet in order to handle navigation.
-This component does not provide any UI feedback or mechanism to switch between tabs.
-In order to do so, an `ion-tab-bar` should be provided as a direct child of `ion-tabs`:
+The `ion-tabs` component does not have any styling and works as a router outlet in order to handle navigation. It does not provide any UI feedback or mechanism to switch between tabs. In order to do so, an `ion-tab-bar` should be provided as a direct child of `ion-tabs`.
 
-```html
-<ion-tabs>
-  <ion-tab tab="home">Home Content</ion-tab>
-  <ion-tab tab="settings">Settings Content</ion-tab>
+Both `ion-tabs` and `ion-tab-bar` can be used as standalone elements. They don’t depend on each other to work, but they are usually used together in order to implement a tab-based navigation that behaves like a native app.
 
-  <ion-tab-bar slot="bottom">
+The `ion-tab-bar` needs a slot defined in order to be projected to the right place in an `ion-tabs` component.
 
-    <ion-tab-button tab="home">
-      <ion-label>Home</ion-label>
-      <ion-icon name="home"></ion-icon>
-      <ion-badge>6</ion-badge>
-    </ion-tab-button>
-
-    <ion-tab-button tab="settings">
-      <ion-label>Settings</ion-label>
-      <ion-icon name="settings"></ion-icon>
-    </ion-tab-button>
-
-  </ion-tab-bar>
-</ion-tabs>
-```
-
-Note that both `ion-tabs` and `ion-tab-bar` can be used as standalone elements. They don’t depend on each other to work, but they are usually used together in order to implement a tab-based navigation that feels like a native app.
-
-`ion-tab-bar` always needs `slot="bottom"` in order to be projected into `ion-tabs` at the right place.
-
-## The "tab" property
-
-Each `ion-tab-button` will activate one of the tabs when tapped.
-In order to link the button to the `ion-tab` container, a matching `tab` property must be used.
-
-```html
-<ion-tab tab="settings">
-[...]
-<ion-tab-button tab="settings">
-```
-
-This `ion-tab-button` and `ion-tab` are now linked by the common `tab` property.
-
-The `tab` property identifies each tab, and it has to be unique within the scope of the same `ion-tabs`. It's important to set the same property to `ion-tab` and `ion-tab-button`, even if you are only using one. e.g. You could use the `ion-tab-bar` without using `ion-tabs`. In this case you should still give each `ion-tab` the property of `tab="something"`.
-
-### Router integration
-
-When the ionic's router (`ion-router`) is used, the `tab` property matches the "component" of `ion-route`:
-
-The following route within the scope of a `ion-tabs` outlet:
-
-```html
-<ion-route url="/settings-page" component="settings"></ion-route>
-```
-
-Would match the following tab:
-
-```html
-<ion-tab tab="settings" component="settings-component"></ion-tab>
-```
-
-### Angular Router integration
-
-Using tabs with Angular's router is fairly straight forward. Here you only need to define tab which is the reference to the route.
-
-```html
-
-<ion-tabs>
-  <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="schedule">
-      <ion-icon name="calendar"></ion-icon>
-      <ion-label>Schedule</ion-label>
-    </ion-tab-button>
-  </ion-tab-bar>
-</ion-tabs>
-```
 
 <!-- Auto Generated Below -->
 
@@ -112,6 +42,50 @@ Using tabs with Angular's router is fairly straight forward. Here you only need 
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
+```
+
+
+### Router integration
+
+When used with Angular's router the `tab` property of the `ion-tab-button` should be a reference to the route path.
+
+```html
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="schedule">
+      <ion-icon name="calendar"></ion-icon>
+      <ion-label>Schedule</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
+```
+
+```typescript
+import { Routes } from '@angular/router';
+import { TabsPage } from './tabs-page';
+
+const routes: Routes = [
+  {
+    path: 'tabs',
+    component: TabsPage,
+    children: [
+      {
+        path: 'schedule',
+        children: [
+          {
+            path: '',
+            loadChildren: '../schedule/schedule.module#ScheduleModule'
+          }
+        ]
+      },
+      {
+        path: '',
+        redirectTo: '/app/tabs/schedule',
+        pathMatch: 'full'
+      }
+    ]
+  }
+];
 ```
 
 
@@ -160,6 +134,42 @@ Using tabs with Angular's router is fairly straight forward. Here you only need 
   </ion-tab-bar>
 
 </ion-tabs>
+```
+
+
+## Activating Tabs
+
+Each `ion-tab-button` will activate one of the tabs when pressed. In order to link the `ion-tab-button` to the `ion-tab` container, a matching `tab` property should be set on each component.
+
+```html
+<ion-tab tab="settings">
+  ...
+</ion-tab>
+
+<ion-tab-button tab="settings">
+  ...
+</ion-tab-button>
+```
+
+The `ion-tab-button` and `ion-tab` above are linked by the common `tab` property.
+
+The `tab` property identifies each tab, and it has to be unique within the `ion-tabs`. It's important to always set the `tab` property on the `ion-tab` and `ion-tab-button`, even if one component is not used.
+
+
+### Router integration
+
+When used with Ionic's router (`ion-router`) the `tab` property of the `ion-tab` matches the `component` property of an `ion-route`.
+
+The following route within the scope of an `ion-tabs` outlet:
+
+```html
+<ion-route url="/settings-page" component="settings"></ion-route>
+```
+
+will match the following tab:
+
+```html
+<ion-tab tab="settings" component="settings-component"></ion-tab>
 ```
 
 
