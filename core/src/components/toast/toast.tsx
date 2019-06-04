@@ -3,6 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Pr
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, Color, Config, CssClassMap, OverlayEventDetail, OverlayInterface, ToastButton } from '../../interface';
 import { dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
+import { sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -291,7 +292,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
               <div class="toast-header">{this.header}</div>
             }
             {this.message !== undefined &&
-              <div class="toast-message">{this.message}</div>
+              <div class="toast-message" innerHTML={sanitizeDOMString(this.message)}></div>
             }
           </div>
 
