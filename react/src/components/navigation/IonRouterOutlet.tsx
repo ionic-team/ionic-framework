@@ -238,23 +238,25 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
 
   }
 
-  async commitView(el: HTMLElement, leavingEl: HTMLElement) {
+  async commitView(enteringEl: HTMLElement, leavingEl: HTMLElement) {
     if (!this.inTransition) {
       this.inTransition = true;
+
       await this.containerEl.current.componentOnReady();
-      await this.containerEl.current.commit(el, leavingEl, {
+      await this.containerEl.current.commit(enteringEl, leavingEl, {
         deepWait: true,
         duration: this.state.direction === undefined ? 0 : undefined,
         direction: this.state.direction,
-        showGoBack: !!leavingEl,
+        showGoBack: this.state.direction === 'forward',
         progressAnimation: false
       });
 
       if (leavingEl) {
         /**
-         *  add hidden class back since core seems to remove it
+         *  add hidden attributes
         */
         leavingEl.classList.add('ion-page-hidden');
+        leavingEl.setAttribute('aria-hidden', 'true');
       }
       this.inTransition = false;
     }
@@ -281,9 +283,7 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
 
             if (item.id === this.state.prevActiveId) {
               props = {
-                'ref': this.leavingEl,
-                'hidden': this.state.direction === 'forward',
-                'className': (this.state.direction === 'forward' ? ' ion-page-hidden' : '')
+                'ref': this.leavingEl
               };
             } else if (item.id === this.state.activeId) {
               props = {
