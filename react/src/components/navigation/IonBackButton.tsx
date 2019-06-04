@@ -4,7 +4,7 @@ import { NavContext } from './NavContext';
 import { IonBackButtonInner, } from '../index';
 
 type BackButtonProps = Components.IonBackButtonAttributes & {
-  goBack: () => void;
+
 };
 
 export class IonBackButton extends Component<BackButtonProps> {

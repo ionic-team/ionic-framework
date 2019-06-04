@@ -234,6 +234,8 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
         this.transitionView(enteringEl, leavingEl);
       }, 10);
     }
+
+
   }
 
   async commitView(el: HTMLElement, leavingEl: HTMLElement) {
@@ -258,10 +260,16 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
     }
   }
 
-  componentDidUpdate() {
-    const enteringEl = (this.enteringEl.current != null) ? this.enteringEl.current : undefined;
-    const leavingEl = (this.leavingEl.current != null) ? this.leavingEl.current : undefined;
-    this.transitionView(enteringEl, leavingEl);
+  componentDidUpdate(_prevProps: IonRouterOutletProps, prevState: IonRouterOutletState) {
+    /**
+     * Don't transition the view if the state didn't change
+     * Probably means we are still on the same view
+     */
+    if (prevState !== this.state) {
+      const enteringEl = (this.enteringEl.current != null) ? this.enteringEl.current : undefined;
+      const leavingEl = (this.leavingEl.current != null) ? this.leavingEl.current : undefined;
+      this.transitionView(enteringEl, leavingEl);
+    }
   }
 
   render() {
