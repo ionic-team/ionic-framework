@@ -18,13 +18,19 @@ Menu Button is component that automatically creates the icon and functionality t
 
 ## CSS Custom Properties
 
-| Name               | Description                  |
-| ------------------ | ---------------------------- |
-| `--color`          | Color of the menu button     |
-| `--padding-bottom` | Padding bottom of the button |
-| `--padding-end`    | Padding end of the button    |
-| `--padding-start`  | Padding start of the button  |
-| `--padding-top`    | Padding top of the button    |
+| Name                   | Description                                |
+| ---------------------- | ------------------------------------------ |
+| `--background`         | Background of the menu button              |
+| `--background-focused` | Background of the menu button when focused |
+| `--background-hover`   | Background of the menu button on hover     |
+| `--border-radius`      | Border radius of the menu button           |
+| `--color`              | Color of the menu button                   |
+| `--color-focused`      | Color of the menu button when focused      |
+| `--color-hover`        | Color of the menu button on hover          |
+| `--padding-bottom`     | Padding bottom of the button               |
+| `--padding-end`        | Padding end of the button                  |
+| `--padding-start`      | Padding start of the button                |
+| `--padding-top`        | Padding top of the button                  |
 
 
 ----------------------------------------------
