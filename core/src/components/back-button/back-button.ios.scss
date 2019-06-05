@@ -5,7 +5,11 @@
 // --------------------------------------------------
 
 :host {
+  --background-focused: #{ion-color(primary, base, .1)};
+  --border-radius: 10px;
   --color: #{$back-button-ios-color};
+  --color-hover: var(--color);
+  --color-focused: var(--color);
   --icon-margin-end: -5px;
   --icon-margin-start: -4px;
   --icon-font-size: 1.85em;
@@ -26,4 +30,19 @@
 
 :host(.activated) .button-native {
   opacity: .4;
+}
+
+@media (any-hover: hover) {
+  :host(:hover) {
+    --opacity: #{$button-ios-clear-opacity-hover};
+  }
+}
+
+
+
+// Back Button Color: Focused
+// --------------------------------------------------
+
+:host(.ion-color.ion-focused) .button-native {
+  background: #{current-color(base, .1)};
 }

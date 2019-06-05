@@ -191,6 +191,24 @@ ion-icon {
 }
 
 
+// Back Button Color: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(.ion-color:hover) .button-native {
+    color: #{current-color(base)};
+  }
+}
+
+
+// Back Button Color: Focused
+// --------------------------------------------------
+
+:host(.ion-color.ion-focused) .button-native {
+  color: #{current-color(base)};
+}
+
+
 // Back Button in Toolbar: Global Theming
 // --------------------------------------------------
 

@@ -46,13 +46,12 @@ ion-icon {
 }
 
 
-// Menu Button Color: Hover
+// Back Button Color: Hover
 // --------------------------------------------------
 
 @media (any-hover: hover) {
   :host(.ion-color:hover) .button-native {
     background: #{current-color(base, .08)};
-    color: #{current-color(base)};
   }
 }
 
@@ -62,5 +61,4 @@ ion-icon {
 
 :host(.ion-color.ion-focused) .button-native {
   background: #{current-color(base, .24)};
-  color: #{current-color(base)};
 }

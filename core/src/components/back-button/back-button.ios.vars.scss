@@ -1,5 +1,9 @@
 @import "../../themes/ionic.globals.ios";
 
+// TODO this is needed for the ios vars to import
+@import "../button/button.vars";
+@import "../button/button.ios.vars";
+
 // iOS Back Button
 // --------------------------------------------------
 

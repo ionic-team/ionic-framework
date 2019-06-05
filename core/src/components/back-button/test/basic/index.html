@@ -24,7 +24,7 @@
         <ion-back-button icon="heart" text="Love" color="danger"></ion-back-button>
       </p>
       <p>
-        <ion-back-button></ion-back-button>
+        <ion-back-button class="ion-focused"></ion-back-button>
         <ion-back-button class="ion-focused" text="Back"></ion-back-button>
         <ion-back-button class="ion-focused" icon="add"></ion-back-button>
         <ion-back-button class="ion-focused" text="Text Only" icon=""></ion-back-button>
@@ -97,11 +97,18 @@
   </script>
 
   <style>
-    ion-back-button {
-      display: inline-block !important;
+    h3 {
+      padding-left: 16px;
     }
 
+    p {
+      padding-left: 8px;
+    }
 
+    ion-back-button {
+      display: inline-block !important;
+      vertical-align: middle;
+    }
 
     .wide {
       --background: #d1f3ff;
