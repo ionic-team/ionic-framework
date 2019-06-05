@@ -90,9 +90,6 @@
   --ion-toolbar-color: #a7adba;
   --ion-toolbar-color-activated: var(--ion-color-primary);
 
-  --ion-item-background: #343d46;
-  --ion-item-background-activated: #232b34;
-
   /* Background, Text, Step Colors */
   --ion-background-color: #1b2b34;
   --ion-background-color-rgb: 27,43,52;

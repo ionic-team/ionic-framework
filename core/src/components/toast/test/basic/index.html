@@ -71,6 +71,10 @@
       <ion-button expand="block" id="toast-start-and-end" onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, cssClass: 'toast-start-and-end'})">
         Show Toast with start-end position
       </ion-button>
+      
+      <ion-button expand="block" id="toast-html" onclick="presentToastWithOptions({message: '<ion-button>Button in a Toast!</ion-button>', showCloseButton: true})">
+        Show HTML Toast
+      </ion-button>
 
       <ion-toast-controller></ion-toast-controller>
 
