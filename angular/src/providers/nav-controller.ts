@@ -202,7 +202,7 @@ export class NavController {
         urlTree.fragment = options.fragment;
       }
 
-      return this.router!.navigateByUrl(urlTree);
+      return this.router!.navigateByUrl(urlTree, options);
     }
   }
 }
