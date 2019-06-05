@@ -29,6 +29,7 @@ export class App implements ComponentInterface {
       importStatusTap(win, config, queue);
       importHardwareBackButton(win, config);
       importFocusVisible(win);
+      importKeyboardHelper(win, config);
     });
   }
 
@@ -69,6 +70,13 @@ function importInputShims(win: Window, config: Config) {
   const inputShims = config.getBoolean('inputShims', needInputShims(win));
   if (inputShims) {
     import('../../utils/input-shims/input-shims').then(module => module.startInputShims(win.document, config));
+  }
+}
+
+function importKeyboardHelper(win: Window, config: Config) {
+  const keyboardHelper = config.getBoolean('keyboardHelper', true);
+  if (keyboardHelper) {
+    import('../../utils/keyboard-helper').then(module => module.startKeyboardHelper(win));
   }
 }
 
