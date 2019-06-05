@@ -49,17 +49,23 @@
     "typescript": "3.2.2"
   },
   "dependencies": {
-    "@ionic/core": "^4.4.2"
+    "@ionic/core": "^4.4.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1"
   },
   "peerDependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-router": "^4.3.1",
-    "react-router-dom": "^4.3.1"
+    "react-router": "^5.01",
+    "react-router-dom": "^5.01"
   },
   "jest": {
     "preset": "ts-jest",
-    "setupTestFrameworkScriptFile": "<rootDir>/jest.setup.js",
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ],
     "testPathIgnorePatterns": [
       "node_modules",
       "dist"
