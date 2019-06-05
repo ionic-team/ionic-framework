@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import { NavContext } from './NavContext';
 import { IonBackButtonInner, } from '../index';
 
-type BackButtonProps = LocalJSX.IonBackButton & {
-  goBack: () => void;
+type BackButtonProps = LocalJSX.IonBackButtonAttributes & {
+
 };
 
 export class IonBackButton extends Component<BackButtonProps> {

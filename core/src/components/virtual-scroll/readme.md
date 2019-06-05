@@ -3,68 +3,16 @@
 Virtual Scroll displays a virtual, "infinite" list. An array of records
 is passed to the virtual scroll containing the data to create templates
 for. The template created for each record, referred to as a cell, can
-consist of items, headers, and footers.
-For performance reasons, not every record in the list is rendered at once;
-instead a small subset of records (enough to fill the viewport) are rendered
-and reused as the user scrolls.
+consist of items, headers, and footers. For performance reasons, not every record
+in the list is rendered at once; instead a small subset of records (enough to fill the viewport)
+are rendered and reused as the user scrolls.
 
-### The Basics
-The array of records should be passed to the `items` property on the `ion-virtual-scroll` element.
-The data given to the `items` property must be an array. An item
-template with the `*virtualItem` property is required in the `ion-virtual-scroll`.
-The `*virtualItem` property can be added to any element.
-
-```html
-<ion-virtual-scroll [items]="items">
-  <ion-item *virtualItem="let item">
-    {{ item }}
-  </ion-item>
-</ion-virtual-scroll>
-```
-
-### Section Headers and Footers
-
-Section headers and footers are optional. They can be dynamically created
-from developer-defined functions. For example, a large list of contacts
-usually has a divider for each letter in the alphabet. Developers provide
-their own custom function to be called on each record. The logic in the
-custom function should determine whether to create the section template
-and what data to provide to the template. The custom function should
-return `null` if a template shouldn't be created.
-
-```html
-<ion-virtual-scroll [items]="items" [headerFn]="myHeaderFn">
-  <ion-item-divider *virtualHeader="let header">
-    {{ header }}
-  </ion-item-divider>
-  <ion-item *virtualItem="let item">
-    Item: {{ item }}
-  </ion-item>
-</ion-virtual-scroll>
-```
-
-Below is an example of a custom function called on every record. It
-gets passed the individual record, the record's index number,
-and the entire array of records. In this example, after every 20
-records a header will be inserted. So between the 19th and 20th records,
-between the 39th and 40th, and so on, a `<ion-item-divider>` will
-be created and the template's data will come from the function's
-returned data.
-
-```ts
-myHeaderFn(record, recordIndex, records) {
-  if (recordIndex % 20 === 0) {
-    return 'Header ' + recordIndex;
-  }
-  return null;
-}
-```
 
 ### Approximate Widths and Heights
 
 If the height of items in the virtual scroll are not close to the
-default size of 40px, it is extremely important to provide a value for
-approxItemHeight height. An exact pixel-perfect size is not necessary,
+default size of `40px`, it is extremely important to provide a value for
+the `approxItemHeight` property. An exact pixel-perfect size is not necessary,
 but without an estimate the virtual scroll will not render correctly.
 
 The approximate width and height of each template is used to help
@@ -98,34 +46,6 @@ renders whenever it wants which could be while the user is scrolling. However,
 `<ion-img>` is governed by the containing `ion-content` and does not render
 images while scrolling quickly.
 
-```html
-<ion-virtual-scroll [items]="items">
-  <ion-item *virtualItem="let item">
-    <ion-avatar item-start>
-      <ion-img [src]="item.avatarUrl"></ion-img>
-    </ion-avatar>
-    {{ item.firstName }} {{ item.lastName }}
-  </ion-item>
-</ion-virtual-scroll>
-```
-
-### Custom Components
-
-If a custom component is going to be used within Virtual Scroll, it's best
-to wrap it with a good old `<div>` to ensure the component is rendered
-correctly. Since each custom component's implementation and internals can be
-quite different, wrapping within a `<div>` is a safe way to make sure
-dimensions are measured correctly.
-
-```html
-<ion-virtual-scroll [items]="items">
-  <div *virtualItem="let item">
-    <my-custom-item [item]="item">
-      {{ item }}
-    </my-custom-item>
-  </div>
-</ion-virtual-scroll>
-```
 
 ## Virtual Scroll Performance Tips
 
@@ -190,7 +110,7 @@ dataset, so please make sure they're performant.
   <ion-virtual-scroll [items]="items" approxItemHeight="320px">
     <ion-card *virtualItem="let item; let itemBounds = bounds;">
       <div>
-        <img [src]="item.imgSrc" [height]="item.imgHeight" [alt]="item.name">
+        <ion-img [src]="item.imgSrc" [height]="item.imgHeight" [alt]="item.name"></ion-img>
       </div>
     <ion-card-header>
       <ion-card-title>{{ item.name }}</ion-card-title>
@@ -248,6 +168,75 @@ function getImgSrc() {
 }
 
 let rotateImg = 0;
+```
+
+### Basic
+
+The array of records should be passed to the `items` property on the `ion-virtual-scroll` element.
+The data given to the `items` property must be an array. An item template with the `*virtualItem` property is required in the `ion-virtual-scroll`. The `*virtualItem` property can be added to any element.
+
+```html
+<ion-virtual-scroll [items]="items">
+  <ion-item *virtualItem="let item">
+    {{ item }}
+  </ion-item>
+</ion-virtual-scroll>
+```
+
+### Section Headers and Footers
+
+Section headers and footers are optional. They can be dynamically created
+from developer-defined functions. For example, a large list of contacts
+usually has a divider for each letter in the alphabet. Developers provide
+their own custom function to be called on each record. The logic in the
+custom function should determine whether to create the section template
+and what data to provide to the template. The custom function should
+return `null` if a template shouldn't be created.
+
+```html
+<ion-virtual-scroll [items]="items" [headerFn]="myHeaderFn">
+  <ion-item-divider *virtualHeader="let header">
+    {{ header }}
+  </ion-item-divider>
+  <ion-item *virtualItem="let item">
+    Item: {{ item }}
+  </ion-item>
+</ion-virtual-scroll>
+```
+
+Below is an example of a custom function called on every record. It
+gets passed the individual record, the record's index number,
+and the entire array of records. In this example, after every 20
+records a header will be inserted. So between the 19th and 20th records,
+between the 39th and 40th, and so on, a `<ion-item-divider>` will
+be created and the template's data will come from the function's
+returned data.
+
+```ts
+myHeaderFn(record, recordIndex, records) {
+  if (recordIndex % 20 === 0) {
+    return 'Header ' + recordIndex;
+  }
+  return null;
+}
+```
+
+
+### Custom Components
+
+If a custom component is going to be used within Virtual Scroll, it's best
+to wrap it with a `<div>` to ensure the component is rendered correctly. Since
+each custom component's implementation and internals can be quite different, wrapping
+within a `<div>` is a safe way to make sure dimensions are measured correctly.
+
+```html
+<ion-virtual-scroll [items]="items">
+  <div *virtualItem="let item">
+    <my-custom-item [item]="item">
+      {{ item }}
+    </my-custom-item>
+  </div>
+</ion-virtual-scroll>
 ```
 
 

@@ -29,6 +29,6 @@ $toolbar-ios-color-activated:               var(--ion-toolbar-color-activated, i
 // iOS List & List Items
 // --------------------------------------------------
 $item-ios-background:                       var(--ion-item-background, $background-color) !default;
-$item-ios-background-activated:             var(--ion-item-background-activated, #d9d9d9) !default;
+$item-ios-background-activated:             var(--ion-item-background-activated, var(--ion-color-step-150, #d9d9d9)) !default;
 $item-ios-border-color:                     var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, #c8c7cc))) !default;
 $item-ios-color:                            var(--ion-item-color, $text-color) !default;

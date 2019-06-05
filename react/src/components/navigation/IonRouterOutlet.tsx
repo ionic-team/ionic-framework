@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter, RouteComponentProps, matchPath, match, RouteProps } from 'react-router';
 import { generateUniqueId } from '../utils';
 import { Location } from 'history';
@@ -32,7 +32,7 @@ interface IonRouterOutletState {
   views: StackItem[];
 }
 
-class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState> {
+class RouterOutlet extends React.Component<IonRouterOutletProps, IonRouterOutletState> {
   enteringItem: StackItem;
   leavingItem: StackItem;
   enteringEl: React.RefObject<HTMLDivElement> = React.createRef();
@@ -99,10 +99,13 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
     if (currentActiveTabView && currentActiveTabView.location.pathname === props.location.pathname) {
       if (currentActiveTabView.id === state.activeId) {
         /**
-         * If the same tab was already clicked
+         * The current tab was clicked, so do nothing
          */
         return null;
       }
+      /**
+       * Activate a tab that is already in views
+       */
       return {
         direction: undefined,
         activeId: currentActiveTabView.id,
@@ -135,6 +138,26 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
             return x;
           })
         }
+      }
+    }
+
+    /**
+       * If the current view does not match the url, see if the view that matches the url is currently in the stack.
+       * If so, show the view that matches the url and remove the current view.
+       */
+    if (currentActiveTabView && currentActiveTabView.location.pathname !== props.location.pathname) {
+      const view = views.find(x => x.location.pathname == props.location.pathname);
+      if (view && view.id === currentActiveTabView.prevId) {
+        return {
+          direction: undefined,
+          activeId: view.id,
+          prevActiveId: undefined,
+          views: views.filter(x => x.id !== currentActiveTabView.id),
+          tabActiveIds: {
+            ...state.tabActiveIds,
+            [match.params.tab]: view.id
+          },
+        };
       }
     }
 
@@ -236,32 +259,40 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
     }
   }
 
-  async commitView(el: HTMLElement, leavingEl: HTMLElement) {
+  async commitView(enteringEl: HTMLElement, leavingEl: HTMLElement) {
     if (!this.inTransition) {
       this.inTransition = true;
+
       await this.containerEl.current.componentOnReady();
-      await this.containerEl.current.commit(el, leavingEl, {
+      await this.containerEl.current.commit(enteringEl, leavingEl, {
         deepWait: true,
         duration: this.state.direction === undefined ? 0 : undefined,
         direction: this.state.direction,
-        showGoBack: !!leavingEl,
+        showGoBack: this.state.direction === 'forward',
         progressAnimation: false
       });
 
       if (leavingEl) {
         /**
-         *  add hidden class back since core seems to remove it
+         *  add hidden attributes
         */
         leavingEl.classList.add('ion-page-hidden');
+        leavingEl.setAttribute('aria-hidden', 'true');
       }
       this.inTransition = false;
     }
   }
 
-  componentDidUpdate() {
-    const enteringEl = (this.enteringEl.current != null) ? this.enteringEl.current : undefined;
-    const leavingEl = (this.leavingEl.current != null) ? this.leavingEl.current : undefined;
-    this.transitionView(enteringEl, leavingEl);
+  componentDidUpdate(_prevProps: IonRouterOutletProps, prevState: IonRouterOutletState) {
+    /**
+     * Don't transition the view if the state didn't change
+     * Probably means we are still on the same view
+     */
+    if (prevState !== this.state) {
+      const enteringEl = (this.enteringEl.current != null) ? this.enteringEl.current : undefined;
+      const leavingEl = (this.leavingEl.current != null) ? this.leavingEl.current : undefined;
+      this.transitionView(enteringEl, leavingEl);
+    }
   }
 
   render() {
@@ -273,9 +304,7 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
 
             if (item.id === this.state.prevActiveId) {
               props = {
-                'ref': this.leavingEl,
-                'hidden': this.state.direction === 'forward',
-                'className': (this.state.direction === 'forward' ? ' ion-page-hidden' : '')
+                'ref': this.leavingEl
               };
             } else if (item.id === this.state.activeId) {
               props = {

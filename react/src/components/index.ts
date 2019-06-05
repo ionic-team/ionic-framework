@@ -26,7 +26,8 @@ export { IonBackButton } from './navigation/IonBackButton';
 
 addIcons(ICON_PATHS);
 
-defineCustomElements(window);
+// defineCustomElements(window);
+export const bootStrapIonic = defineCustomElements;
 
 // ionicons
 export const IonIcon = createReactComponent<IoniconsJSX.IonIcon & ReactProps, HTMLIonIconElement>('ion-icon');

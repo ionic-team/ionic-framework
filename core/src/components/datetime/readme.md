@@ -1,10 +1,11 @@
 # ion-datetime
 
-Datetimes present a picker interface from the bottom of a page, making it easy for users to select
-dates and times. The picker displays scrollable columns that can be used to individually select years,
-months, days, hours and minute values. Datetimes are similar to the native `input` elements of type
-`datetime-local`, however, Ionic's Datetime component makes it easy to display the date and time in a
-preferred format, and manage the datetime values.
+Datetimes present a picker interface from the bottom of a page, making it easy for
+users to select dates and times. The picker displays scrollable columns that can be
+used to individually select years, months, days, hours and minute values. Datetimes
+are similar to the native `input` elements of type `datetime-local`, however, Ionic's
+Datetime component makes it easy to display the date and time in a preferred format,
+and manage the datetime values.
 
 
 ## Display and Picker Formats
@@ -43,43 +44,33 @@ different names for the month and day.
 
 ### Display Format
 
-The `displayFormat` input property specifies how a datetime's value should be
+The `displayFormat` property specifies how a datetime's value should be
 printed, as formatted text, within the datetime component.
 
-In the following example, the display in the `<ion-datetime>` will use the
-month's short name, the numerical day with a leading zero, a comma and the
-four-digit year. In addition to the date, it will display the time with the
-hours in the 24-hour format and the minutes. Any character can be used as a
-separator. An example display using this format is: `Jun 17, 2005 11:06`.
+A few examples are provided in the chart below. The formats mentioned
+above can be passed in to the display format in any combination.
 
-```html
-<ion-item>
-  <ion-label>Date</ion-label>
-  <ion-datetime display-format="MMM DD, YYYY HH:mm"></ion-datetime>
-</ion-item>
-```
+| Display Format        | Example                 |
+| ----------------------| ----------------------- |
+| `M-YYYY`              | `6-2005`                |
+| `MM/YY`               | `06/05`                 |
+| `MMM YYYY`            | `Jun 2005`              |
+| `YYYY, MMMM`          | `2005, June`            |
+| `MMM DD, YYYY HH:mm`  | `Jun 17, 2005 11:06`    |
 
 **Important**: `ion-datetime` will always display values relative to the user's timezone.
 Given a value of `09:00:00+01:00`, the datetime component will
 display it as `04:00:00-04:00` for users in a `-04:00` timezone offset.
 
+
 ### Picker Format
 
-The `pickerFormat` input property determines which columns should be shown in
-the interface, the order of the columns, and which format to use within each
-column. If the `pickerFormat` input is not provided then it will default to the
-`displayFormat`.
+The `pickerFormat` property determines which columns should be shown in the picker
+interface, the order of the columns, and which format to use within each
+column. If `pickerFormat` is not provided then it will use the value of
+`displayFormat`. Refer to the chart in the [Display Format](#display-format) section
+for some formatting examples.
 
-In the following example, the display in the `<ion-datetime>` will use the
-`MM/YYYY` format, such as `06/2020`. However, the picker interface will display
-two columns with the month's long name, and the four-digit year.
-
-```html
-<ion-item>
-  <ion-label>Date</ion-label>
-  <ion-datetime display-format="MM/YYYY" picker-format="MMMM YYYY"></ion-datetime>
-</ion-item>
-```
 
 ### Datetime Data
 
@@ -138,52 +129,33 @@ the maximum date is to the end of the current year, and the minimum date is from
 the beginning of the year that was 100 years ago.
 
 To customize the minimum and maximum datetime values, the `min` and `max`
-component inputs can be provided which may make more sense for the app's
+component properties can be provided which may make more sense for the app's
 use-case, rather than the default of the last 100 years. Following the same IS0
 8601 format listed in the table above, each component can restrict which dates
-can be selected by the user. Below is an example of restricting the date
-selection between the beginning of 2016, and October 31st of 2020:
+can be selected by the user. By passing `2016` to the `min` property and `2020-10-31`
+to the `max` property, the datetime will restrict the date selection between the
+beginning of 2016, and October 31st of 2020.
 
-```html
-<ion-item>
-  <ion-label>Date</ion-label>
-  <ion-datetime display-format="MMMM YYYY" min="2016" max="2020-10-31"></ion-datetime>
-</ion-item>
-```
 
 ## Month Names and Day of the Week Names
 
 At this time, there is no one-size-fits-all standard to automatically choose the
 correct language/spelling for a month name, or day of the week name, depending
-on the language or locale. 
+on the language or locale.
 
 The good news is that there is an [Intl.DatetimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DatetimeFormat)
 standard which [most browsers](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DatetimeFormat#Browser_compatibility) have adopted.
 
 However, at this time the standard has not been fully implemented by all popular browsers
-so Ionic is unavailable to take advantage of it yet. 
+so Ionic is unavailable to take advantage of it yet.
 
 Additionally, Angular also provides an internationalization service, but it is still
 under heavy development so Ionic does not depend on it at this time.
 
-The current best practice is to provide an array of names if the app needs to use names other 
-than the default English version of month and day names. The month names and day names can be 
+The current best practice is to provide an array of names if the app needs to use names other
+than the default English version of month and day names. The month names and day names can be
 either configured at the app level, or individual `ion-datetime` level.
 
-### Component Input Level
-
-```html
-<ion-item>
-  <ion-label>Período</ion-label>
-  <ion-datetime
-    display-format="DDDD MMM D, YYYY"
-    month-names="janeiro, fevereiro, mar\u00e7o, ..."
-    month-short-names="jan, fev, mar, ..."
-    day-names="domingo, segunda-feira, ter\u00e7a-feira, ..."
-    day-short-names="dom, seg, ter, ...">
-  </ion-datetime>
-</ion-item>
-```
 
 ### Advanced Datetime Validation and Manipulation
 
@@ -197,12 +169,6 @@ subtracting 30 minutes, etc.), or even formatting data to a specific locale,
 then we highly recommend using [date-fns](https://date-fns.org) to work with
 dates in JavaScript.
 
-```html
-<ion-item>
-  <ion-label>Date</ion-label>
-  <ion-datetime display-format="MM/DD/YYYY"></ion-datetime>
-</ion-item>
-```
 
 <!-- Auto Generated Below -->
 
