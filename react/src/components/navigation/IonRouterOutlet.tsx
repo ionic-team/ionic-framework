@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter, RouteComponentProps, matchPath, match, RouteProps } from 'react-router';
 import { generateUniqueId } from '../utils';
 import { Location } from 'history';
@@ -32,7 +32,7 @@ interface IonRouterOutletState {
   views: StackItem[];
 }
 
-class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState> {
+class RouterOutlet extends React.Component<IonRouterOutletProps, IonRouterOutletState> {
   enteringItem: StackItem;
   leavingItem: StackItem;
   enteringEl: React.RefObject<HTMLDivElement> = React.createRef();
@@ -99,10 +99,13 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
     if (currentActiveTabView && currentActiveTabView.location.pathname === props.location.pathname) {
       if (currentActiveTabView.id === state.activeId) {
         /**
-         * If the same tab was already clicked
+         * The current tab was clicked, so do nothing
          */
         return null;
       }
+      /**
+       * Activate a tab that is already in views
+       */
       return {
         direction: undefined,
         activeId: currentActiveTabView.id,
@@ -135,6 +138,26 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
             return x;
           })
         }
+      }
+    }
+
+    /**
+       * If the current view does not match the url, see if the view that matches the url is currently in the stack.
+       * If so, show the view that matches the url and remove the current view.
+       */
+    if (currentActiveTabView && currentActiveTabView.location.pathname !== props.location.pathname) {
+      const view = views.find(x => x.location.pathname == props.location.pathname);
+      if (view && view.id === currentActiveTabView.prevId) {
+        return {
+          direction: undefined,
+          activeId: view.id,
+          prevActiveId: undefined,
+          views: views.filter(x => x.id !== currentActiveTabView.id),
+          tabActiveIds: {
+            ...state.tabActiveIds,
+            [match.params.tab]: view.id
+          },
+        };
       }
     }
 
@@ -234,8 +257,6 @@ class RouterOutlet extends Component<IonRouterOutletProps, IonRouterOutletState>
         this.transitionView(enteringEl, leavingEl);
       }, 10);
     }
-
-
   }
 
   async commitView(enteringEl: HTMLElement, leavingEl: HTMLElement) {
