@@ -5,6 +5,7 @@
 // --------------------------------------------------
 
 :host {
+  --border-radius: 4px;
   --background-focused: rgba(66, 66, 66, 0.24);
   --background-hover: rgba(66, 66, 66, 0.08);
   --color: #{$back-button-md-color};
@@ -14,6 +15,8 @@
   --icon-font-weight: normal;
   --min-height: 32px;
   --min-width: 44px;
+  --padding-start: 12px;
+  --padding-end: 12px;
 
   font-size: 14px;
   font-weight: 500;
@@ -30,6 +33,10 @@
 
 .button-native {
   box-shadow: none;
+}
+
+.button-text {
+  @include padding(0, 4px);
 }
 
 ion-icon {
