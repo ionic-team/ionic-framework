@@ -49,7 +49,7 @@
     "typescript": "3.2.2"
   },
   "dependencies": {
-    "@ionic/core": "^4.4.2"
+    "@ionic/core": "^4.5.0-dev.201905311531.e014c6a"
   },
   "peerDependencies": {
     "react": "^16.8.6",
