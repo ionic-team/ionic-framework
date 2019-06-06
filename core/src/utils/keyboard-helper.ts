@@ -5,17 +5,22 @@ enum KeyboardLifecycle {
 
 const KEYBOARD_THRESHOLD = 150;
 
-let previousViewport: any = {};
-let currentViewport: any = {};
+let previousVisualViewport: any = {};
+let currentVisualViewport: any = {};
+
+let previousLayoutViewport: any = {};
+let currentLayoutViewport: any = {};
+
 let keyboardOpen = false;
 
 export const startKeyboardHelper = (win: Window) => {
   if (!(win as any).visualViewport) { return; }
 
-  currentViewport = copyVisualViewport((win as any).visualViewport);
+  currentVisualViewport = copyVisualViewport((win as any).visualViewport);
+  currentLayoutViewport = copyLayoutViewport(win);
 
   (win as any).visualViewport.addEventListener('resize', () => {
-    trackVisualViewportChanges(win);
+    trackViewportChanges(win);
 
     if (keyboardDidOpen() || keyboardDidResize(win)) {
       fireKeyboardOpenEvent(win);
@@ -40,11 +45,12 @@ export const startKeyboardHelper = (win: Window) => {
  * scale value.
  */
 const keyboardDidOpen = (): boolean => {
-  const scaledHeightDifference = (previousViewport.height - currentViewport.height) * currentViewport.scale;
+  const scaledHeightDifference = (previousVisualViewport.height - currentVisualViewport.height) * currentVisualViewport.scale;
   return (
     !keyboardOpen &&
-    previousViewport.width === currentViewport.width &&
-    scaledHeightDifference > KEYBOARD_THRESHOLD
+    previousVisualViewport.width === currentVisualViewport.width &&
+    scaledHeightDifference > KEYBOARD_THRESHOLD &&
+    !layoutViewportDidChange()
   );
 };
 
@@ -63,7 +69,21 @@ const keyboardDidResize = (win: Window): boolean => {
  * layout viewport height.
  */
 const keyboardDidClose = (win: Window): boolean => {
-  return keyboardOpen && currentViewport.height === win.innerHeight;
+  return keyboardOpen && currentVisualViewport.height === win.innerHeight;
+};
+
+/**
+ * Determine if the layout viewport has
+ * changed since the last visual viewport change.
+ * It is rare that a layout viewport change is not
+ * associated with a visual viewport change so we
+ * want to make sure we don't get an false positives
+ */
+const layoutViewportDidChange = (): boolean => {
+  return (
+    currentLayoutViewport.width !== previousLayoutViewport.width ||
+    currentLayoutViewport.height !== previousLayoutViewport.height
+  );
 };
 
 /**
@@ -71,7 +91,7 @@ const keyboardDidClose = (win: Window): boolean => {
  */
 const fireKeyboardOpenEvent = (win: Window): void => {
   const ev = new CustomEvent(KeyboardLifecycle.Open, {
-    detail: { keyboardHeight: win.innerHeight - currentViewport.height }
+    detail: { keyboardHeight: win.innerHeight - currentVisualViewport.height }
   });
 
   win.dispatchEvent(ev);
@@ -87,12 +107,16 @@ const fireKeyboardCloseEvent = (win: Window): void => {
 
 /**
  * Given a window object, create a copy of
- * the current visual viewport state, while also preserve
- * the previous visual viewport state
+ * the current visual and layout viewport states
+ * while also preserving the previous visual and
+ * layout viewport states
  */
-const trackVisualViewportChanges = (win: Window) => {
-  previousViewport = { ...currentViewport };
-  currentViewport = copyVisualViewport((win as any).visualViewport);
+const trackViewportChanges = (win: Window) => {
+  previousVisualViewport = { ...currentVisualViewport };
+  currentVisualViewport = copyVisualViewport((win as any).visualViewport);
+
+  previousLayoutViewport = { ...currentLayoutViewport };
+  currentLayoutViewport = copyLayoutViewport(win);
 };
 
 /**
@@ -108,5 +132,16 @@ const copyVisualViewport = (visualViewport: any): any => {
     pageTop: visualViewport.pageTop,
     pageLeft: visualViewport.pageLeft,
     scale: visualViewport.scale
+  };
+};
+
+/**
+ * Creates a deep copy of the layout viewport
+ * at a given state
+ */
+const copyLayoutViewport = (win: Window): any => {
+  return {
+    width: win.innerWidth,
+    height: win.innerHeight
   };
 };
