@@ -13,7 +13,7 @@ let currentLayoutViewport: any = {};
 
 let keyboardOpen = false;
 
-export const startKeyboardHelper = (win: Window) => {
+export const startKeyboardAssist = (win: Window) => {
   if (!(win as any).visualViewport) { return; }
 
   currentVisualViewport = copyVisualViewport((win as any).visualViewport);
