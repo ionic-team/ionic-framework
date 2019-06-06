@@ -1,4 +1,4 @@
-enum KeyboardLifecycle {
+export enum KeyboardLifeCycle {
   Open = 'ionKeyboardDidOpen',
   Close = 'ionKeyboardDidClose'
 }
@@ -13,23 +13,42 @@ let currentLayoutViewport: any = {};
 
 let keyboardOpen = false;
 
+/**
+ * This is mostly just used for tests
+ */
+export const resetKeyboardAssist = () => {
+  previousVisualViewport = {};
+  currentVisualViewport = {};
+  previousLayoutViewport = {};
+  currentLayoutViewport = {};
+  keyboardOpen = false;
+};
+
 export const startKeyboardAssist = (win: Window) => {
   if (!(win as any).visualViewport) { return; }
 
   currentVisualViewport = copyVisualViewport((win as any).visualViewport);
   currentLayoutViewport = copyLayoutViewport(win);
 
-  (win as any).visualViewport.addEventListener('resize', () => {
+  (win as any).visualViewport.onresize = () => {
     trackViewportChanges(win);
 
     if (keyboardDidOpen() || keyboardDidResize(win)) {
-      fireKeyboardOpenEvent(win);
-      keyboardOpen = true;
+      setKeyboardOpen(win);
     } else if (keyboardDidClose(win)) {
-      fireKeyboardCloseEvent(win);
-      keyboardOpen = false;
+      setKeyboardClose(win);
     }
-  });
+  };
+};
+
+export const setKeyboardOpen = (win: Window) => {
+  fireKeyboardOpenEvent(win);
+  keyboardOpen = true;
+};
+
+export const setKeyboardClose = (win: Window) => {
+  fireKeyboardCloseEvent(win);
+  keyboardOpen = false;
 };
 
 /**
@@ -44,7 +63,7 @@ export const startKeyboardAssist = (win: Window) => {
  * is why we take into account the current visual viewport's
  * scale value.
  */
-const keyboardDidOpen = (): boolean => {
+export const keyboardDidOpen = (): boolean => {
   const scaledHeightDifference = (previousVisualViewport.height - currentVisualViewport.height) * currentVisualViewport.scale;
   return (
     !keyboardOpen &&
@@ -58,7 +77,7 @@ const keyboardDidOpen = (): boolean => {
  * Returns `true` if the keyboard is open,
  * but the keyboard did not close
  */
-const keyboardDidResize = (win: Window): boolean => {
+export const keyboardDidResize = (win: Window): boolean => {
   return keyboardOpen && !keyboardDidClose(win);
 };
 
@@ -68,7 +87,7 @@ const keyboardDidResize = (win: Window): boolean => {
  * the current visual viewport height equals the
  * layout viewport height.
  */
-const keyboardDidClose = (win: Window): boolean => {
+export const keyboardDidClose = (win: Window): boolean => {
   return keyboardOpen && currentVisualViewport.height === win.innerHeight;
 };
 
@@ -90,7 +109,7 @@ const layoutViewportDidChange = (): boolean => {
  * Dispatch a keyboard open event
  */
 const fireKeyboardOpenEvent = (win: Window): void => {
-  const ev = new CustomEvent(KeyboardLifecycle.Open, {
+  const ev = new CustomEvent(KeyboardLifeCycle.Open, {
     detail: { keyboardHeight: win.innerHeight - currentVisualViewport.height }
   });
 
@@ -101,7 +120,7 @@ const fireKeyboardOpenEvent = (win: Window): void => {
  * Dispatch a keyboard close event
  */
 const fireKeyboardCloseEvent = (win: Window): void => {
-  const ev = new CustomEvent(KeyboardLifecycle.Close);
+  const ev = new CustomEvent(KeyboardLifeCycle.Close, { bubbles: true });
   win.dispatchEvent(ev);
 };
 
@@ -111,7 +130,7 @@ const fireKeyboardCloseEvent = (win: Window): void => {
  * while also preserving the previous visual and
  * layout viewport states
  */
-const trackViewportChanges = (win: Window) => {
+export const trackViewportChanges = (win: Window) => {
   previousVisualViewport = { ...currentVisualViewport };
   currentVisualViewport = copyVisualViewport((win as any).visualViewport);
 
@@ -123,7 +142,7 @@ const trackViewportChanges = (win: Window) => {
  * Creates a deep copy of the visual viewport
  * at a given state
  */
-const copyVisualViewport = (visualViewport: any): any => {
+export const copyVisualViewport = (visualViewport: any): any => {
   return {
     width: Math.round(visualViewport.width),
     height: Math.round(visualViewport.height),
@@ -139,7 +158,7 @@ const copyVisualViewport = (visualViewport: any): any => {
  * Creates a deep copy of the layout viewport
  * at a given state
  */
-const copyLayoutViewport = (win: Window): any => {
+export const copyLayoutViewport = (win: Window): any => {
   return {
     width: win.innerWidth,
     height: win.innerHeight
