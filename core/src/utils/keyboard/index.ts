@@ -120,7 +120,7 @@ const fireKeyboardOpenEvent = (win: Window): void => {
  * Dispatch a keyboard close event
  */
 const fireKeyboardCloseEvent = (win: Window): void => {
-  const ev = new CustomEvent(KeyboardLifeCycle.Close, { bubbles: true });
+  const ev = new CustomEvent(KeyboardLifeCycle.Close);
   win.dispatchEvent(ev);
 };
 
