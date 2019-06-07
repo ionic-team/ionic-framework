@@ -47,8 +47,9 @@
    * @prop --icon-font-size: Font size of the button icon
    * @prop --icon-font-weight: Font weight of the button icon
    */
-  --color-focused: var(--color);
   --background: transparent;
+  --color-focused: var(--color);
+  --color-hover: var(--color);
   --icon-margin-top: 0;
   --icon-margin-bottom: 0;
   --icon-padding-top: 0;
