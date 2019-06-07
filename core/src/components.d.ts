@@ -76,7 +76,6 @@ import {
   SelectCompareFn,
 } from './components/select/select-interface';
 
-
 export namespace Components {
   interface IonActionSheet {
     /**
