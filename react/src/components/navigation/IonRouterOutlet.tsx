@@ -7,29 +7,29 @@ import StackItem from '../StackItem';
 import { NavContext } from './NavContext';
 import StackItemManager from './StackItemManager';
 
-interface ChildProps extends RouteProps {
+type ChildProps = RouteProps & {
   computedMatch: match<any>
 }
 
-interface IonRouterOutletProps extends RouteComponentProps {
+type IonRouterOutletProps = RouteComponentProps & {
   children?: React.ReactElement<ChildProps>[] | React.ReactElement<ChildProps>;
 };
 
-interface StackItem {
+type IonRouterOutletState = {
+  direction?: 'forward' | 'back',
+  activeId: string | undefined;
+  prevActiveId: string | undefined;
+  tabActiveIds: { [tab: string]: string };
+  views: StackItem[];
+}
+
+type StackItem = {
   id: string;
   location: Location;
   match: match<{ tab: string }>;
   element: React.ReactElement<any>;
   prevId: string;
   mount: boolean;
-}
-
-interface IonRouterOutletState {
-  direction?: 'forward' | 'back',
-  activeId: string | undefined;
-  prevActiveId: string | undefined;
-  tabActiveIds: { [tab: string]: string };
-  views: StackItem[];
 }
 
 class RouterOutlet extends React.Component<IonRouterOutletProps, IonRouterOutletState> {
