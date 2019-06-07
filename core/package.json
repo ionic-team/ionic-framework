@@ -30,11 +30,11 @@
     "loader/"
   ],
   "dependencies": {
-    "ionicons": "one",
+    "ionicons": "4.5.9-1",
     "tslib": "^1.9.3"
   },
   "devDependencies": {
-    "@stencil/core": "one",
+    "@stencil/core": "1.0.1",
     "@stencil/sass": "latest",
     "@stencil/utils": "latest",
     "@types/jest": "^23.3.13",

@@ -1,3 +1,5 @@
+import { HTMLStencilElement } from '../types/interfaces';
+
 
 export function proxyMethod(ctrlName: string, doc: Document, methodName: string, ...args: any[]) {
   const controller = ensureElementInBody(ctrlName, doc);

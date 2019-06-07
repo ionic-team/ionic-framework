@@ -249,26 +249,37 @@ console.log(data);
 ### React
 
 ```tsx
-import React, { useState } from 'react';
-import { IonModal, IonButton } from '@ionic/react';
+import React, { Component } from 'react'
+import { IonModal } from '@ionic/react';
 
-const ModalExample: React.SFC = () => {
-  const [showModal, setShowModal] = useState(false);
+type Props = {}
+type State = {
+  showModal: boolean
+}
 
-  return (
-    <>
+export class ModalExample extends Component<Props, State> {
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      showModal: false
+    };
+  }
+
+  render() {
+    return (
       <IonModal
-        isOpen={showModal}
+        isOpen={this.state.showModal}
+        onDidDismiss={() => this.setState(() => ({ showModal: false }))}
       >
         <p>This is modal content</p>
-        <IonButton onClick={() => setShowModal(false)}>Close Modal</IonButton>
+        <IonButton onClick={() => this.setState(() => ({ showModal: false }))}>
+          Close Modal
+        </IonButton>
       </IonModal>
-      <IonButton onClick={() => setShowModal(true)}>Show Modal</IonButton>
-    </>
-  );
-};
-
-export default ModalExample;
+    );
+  }
+}
 ```
 
 
