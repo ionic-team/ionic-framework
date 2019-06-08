@@ -4013,7 +4013,7 @@ export namespace Components {
     /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
-    'class'?: string | { [className: string]: boolean; } | undefined;
+    'customCssClass'?: string | { [className: string]: boolean; } | undefined;
     /**
     * If `true`, the user cannot interact with the select option.
     */
@@ -4031,7 +4031,7 @@ export namespace Components {
     /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
-    'class'?: string | { [className: string]: boolean; } | undefined;
+    'customCssClass'?: string | { [className: string]: boolean; } | undefined;
     /**
     * If `true`, the user cannot interact with the select option.
     */
