@@ -57,7 +57,12 @@
 
 .item-divider-inner {
   @include margin(0);
-  @include padding(0);
+  @include padding(
+    var(--inner-padding-top),
+    calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end)),
+    var(--inner-padding-bottom),
+    var(--inner-padding-start)
+  );
 
   display: flex;
 
