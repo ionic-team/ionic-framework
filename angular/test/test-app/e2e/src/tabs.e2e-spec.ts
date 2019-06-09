@@ -1,5 +1,5 @@
-import { browser, element, by, ElementFinder } from 'protractor';
-import { waitTime, testStack, handleErrorMessages } from './utils';
+import { browser, by, element, ElementFinder, ExpectedConditions } from 'protractor';
+import { handleErrorMessages, testStack, waitTime } from './utils';
 
 describe('tabs', () => {
   afterEach(() => {
@@ -94,6 +94,21 @@ describe('tabs', () => {
       await testTabTitle('Tab 3 - Page 1');
       await testStack('ion-tabs ion-router-outlet', ['app-tabs-tab1', 'app-tabs-tab3']);
     });
+
+    it('should preserve navigation extras when switching tabs', async () => {
+      const expectUrlToContain = 'search=hello#fragment';
+      let tab = await getSelectedTab() as ElementFinder;
+      await tab.$('#goto-nested-page1-with-query-params').click();
+      await testTabTitle('Tab 1 - Page 2');
+      await testUrlContains(expectUrlToContain);
+
+      await element(by.css('#tab-button-contact')).click();
+      await testTabTitle('Tab 2 - Page 1');
+
+      await element(by.css('#tab-button-account')).click();
+      tab = await testTabTitle('Tab 1 - Page 2');
+      await testUrlContains(expectUrlToContain);
+    });
   });
 
   describe('entry url - /tabs/account/nested/12', () => {
@@ -160,6 +175,12 @@ async function testTabTitle(title: string) {
   const tab = await getSelectedTab();
   expect(await tab.$('ion-title').getText()).toEqual(title);
   return tab;
+}
+
+async function testUrlContains(urlFragment: string) {
+  await browser.wait(ExpectedConditions.urlContains(urlFragment),
+    5000,
+    `expected ${browser.getCurrentUrl()} to contain ${urlFragment}`);
 }
 
 async function getSelectedTab(): Promise<ElementFinder> {

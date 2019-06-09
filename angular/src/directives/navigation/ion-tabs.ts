@@ -70,13 +70,14 @@ export class IonTabs {
   select(tab: string) {
     const alreadySelected = this.outlet.getActiveStackId() === tab;
     const href = `${this.outlet.tabsPrefix}/${tab}`;
-    const url = alreadySelected
-      ? href
-      : this.outlet.getLastUrl(tab) || href;
+    const lastRoute = this.outlet.getLastUrl(tab);
+    const lastUrl = lastRoute && lastRoute.url || href;
+    const url = alreadySelected ? href : lastUrl;
 
     return this.navCtrl.navigateRoot(url, {
+      ...(lastRoute && lastRoute.savedExtras),
       animated: true,
-      animationDirection: 'back'
+      animationDirection: 'back',
     });
   }
 
