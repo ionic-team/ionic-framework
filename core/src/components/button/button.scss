@@ -292,19 +292,14 @@ ion-ripple-effect {
   color: var(--color-focused);
 }
 
+:host(.activated) .button-native {
+  background: var(--background-activated);
+  color: var(--color-activated);
+}
+
 @media (any-hover: hover) {
   :host(:hover) .button-native {
     background: var(--background-hover);
     color: var(--color-hover);
   }
-
-  :host(.ion-focused:hover) .button-native {
-    background: var(--background-focused);
-    color: var(--color-focused);
-  }
-}
-
-:host(.activated) .button-native {
-  background: var(--background-activated);
-  color: var(--color-activated);
 }
