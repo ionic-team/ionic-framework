@@ -471,7 +471,7 @@ export class Searchbar implements ComponentInterface {
     const clearIcon = this.clearIcon || (this.mode === 'ios' ? 'ios-close-circle' : 'md-close');
     const searchIcon = this.searchIcon;
 
-    const cancelButton = (this.showCancelButton) && (
+    const cancelButton = this.showCancelButton && (
       <button
         type="button"
         tabIndex={this.mode === 'ios' && !this.shouldShowCancelButton() ? -1 : undefined}
