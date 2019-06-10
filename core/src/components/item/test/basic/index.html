@@ -113,8 +113,8 @@
       <ion-item class="custom">
         <ion-label position="fixed">PIN:</ion-label>
         <ion-input type="number" pattern="[0-9]*" inputmode="numeric" formControlName="acct_no"
-          placeholder="Please input 7 digits"></ion-input>
-        <span class="error">Please you need to enter 7 digits!</span>
+          placeholder="Enter 7 digits"></ion-input>
+        <span class="error">Must enter 7 digits</span>
       </ion-item>
     </ion-content>
 
@@ -128,10 +128,10 @@
 
   <style>
     .custom {
-      /* this not work */
+      --highlight-color-focused: transparent;
+      --border-color: red;
+
       overflow: visible;
-      --border-color: #bdcbd8;
-      --border-color: var(--ion-color-danger);
     }
 
     .error {
