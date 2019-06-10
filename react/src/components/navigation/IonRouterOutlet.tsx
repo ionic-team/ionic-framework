@@ -3,9 +3,9 @@ import { withRouter, RouteComponentProps, matchPath, match, RouteProps } from 'r
 import { generateUniqueId } from '../utils';
 import { Location } from 'history';
 import { IonRouterOutletInner } from '../proxies';
-import StackItem from '../StackItem';
+import { StackItem } from '../StackItem';
 import { NavContext } from './NavContext';
-import StackItemManager from './StackItemManager';
+import { StackItemManager } from './StackItemManager';
 
 type ChildProps = RouteProps & {
   computedMatch: match<any>
@@ -338,4 +338,4 @@ class RouterOutlet extends React.Component<IonRouterOutletProps, IonRouterOutlet
   }
 }
 
-export const IonRouterOutlet = withRouter(RouterOutlet);
+export const IonRouterOutlet = /*@__PURE__*/withRouter(RouterOutlet);

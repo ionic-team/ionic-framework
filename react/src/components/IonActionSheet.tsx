@@ -4,5 +4,4 @@ import { ReactProps } from './ReactProps';
 
 export type ActionSheetOptions = JSX.IonActionSheet;
 
-const IonActionSheet = createOverlayComponent<ActionSheetOptions & ReactProps, HTMLIonActionSheetElement, HTMLIonActionSheetControllerElement>('ion-action-sheet', 'ion-action-sheet-controller')
-export default IonActionSheet;
+export const IonActionSheet = /*@__PURE__*/createOverlayComponent<ActionSheetOptions & ReactProps, HTMLIonActionSheetElement, HTMLIonActionSheetControllerElement>('ion-action-sheet', 'ion-action-sheet-controller')

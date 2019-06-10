@@ -1,5 +1,5 @@
 import React from 'react';
-import { Components } from '@ionic/core';
+import { LoadingOptions } from '@ionic/core';
 import { createControllerComponent } from '../createControllerComponent';
 import { render, waitForElement, wait } from 'react-testing-library';
 import * as utils from '../utils';
@@ -8,7 +8,6 @@ import 'jest-dom/extend-expect';
 
 describe('createControllerComponent - events', () => {
   const { cleanupAfterController, createControllerElement, augmentController } = createControllerUtils('ion-loading');
-  type LoadingOptions = Components.IonLoadingAttributes;
   const IonLoading = createControllerComponent<LoadingOptions, HTMLIonLoadingElement, HTMLIonLoadingControllerElement>('ion-loading', 'ion-loading-controller')
 
   afterEach(cleanupAfterController);

@@ -4,5 +4,4 @@ import { ReactProps } from './ReactProps';
 
 export type LoadingOptions = JSX.IonLoading;
 
-const IonLoading = createControllerComponent<LoadingOptions & ReactProps, HTMLIonLoadingElement, HTMLIonLoadingControllerElement>('ion-loading', 'ion-loading-controller')
-export default IonLoading;
+export const IonLoading = /*@__PURE__*/createControllerComponent<LoadingOptions & ReactProps, HTMLIonLoadingElement, HTMLIonLoadingControllerElement>('ion-loading', 'ion-loading-controller')

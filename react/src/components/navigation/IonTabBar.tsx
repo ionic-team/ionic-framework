@@ -17,7 +17,7 @@ type State = {
   tabs: { [key: string]: Tab }
 }
 
-class IonTabBar extends Component<Props, State> {
+class TabBar extends Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
@@ -92,4 +92,4 @@ class IonTabBar extends Component<Props, State> {
   }
 }
 
-export default withRouter(IonTabBar);
+export const IonTabBar = /*@__PURE__*/withRouter(TabBar);

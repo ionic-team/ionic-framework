@@ -7,5 +7,4 @@ export type PopoverOptions = Omit<JSX.IonPopover, 'component' | 'componentProps'
   children: React.ReactNode;
 };
 
-const IonPopover = createOverlayComponent<PopoverOptions & ReactProps, HTMLIonPopoverElement, HTMLIonPopoverControllerElement>('ion-popover', 'ion-popover-controller')
-export default IonPopover;
+export const IonPopover = /*@__PURE__*/createOverlayComponent<PopoverOptions & ReactProps, HTMLIonPopoverElement, HTMLIonPopoverControllerElement>('ion-popover', 'ion-popover-controller')

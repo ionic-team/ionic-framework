@@ -10,7 +10,7 @@ interface StackItemManagerState {
   show: boolean;
 }
 
-export default class StackItemManager extends React.Component<StackItemManagerProps, StackItemManagerState> {
+export class StackItemManager extends React.Component<StackItemManagerProps, StackItemManagerState> {
   ionLifeCycleContext = new DefaultIonLifeCycleContext();
   _isMounted = false;
 
@@ -54,4 +54,5 @@ export default class StackItemManager extends React.Component<StackItemManagerPr
     )
   }
 }
+// TODO: treeshake
 StackItemManager.contextType = IonLifeCycleContext;

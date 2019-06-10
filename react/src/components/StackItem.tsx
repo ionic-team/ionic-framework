@@ -17,7 +17,7 @@ interface StackItemState {
   ref: any;
 }
 
-class StackItem extends React.Component<InternalProps, StackItemState> {
+class StackItemInternal extends React.Component<InternalProps, StackItemState> {
   context!: React.ContextType<typeof IonLifeCycleContext>;
 
   constructor(props: InternalProps) {
@@ -81,11 +81,11 @@ class StackItem extends React.Component<InternalProps, StackItemState> {
     )
   }
 }
-StackItem.contextType = IonLifeCycleContext;
+StackItemInternal.contextType = IonLifeCycleContext;
 
 function forwardRef(props: InternalProps, ref: React.RefObject<HTMLDivElement>) {
-  return <StackItem forwardedRef={ref} {...props} />;
+  return <StackItemInternal forwardedRef={ref} {...props} />;
 }
 forwardRef.displayName = 'StackItem';
 
-export default React.forwardRef<HTMLDivElement, ExternalProps>(forwardRef);
+export const StackItem = /*@__PURE__*/React.forwardRef<HTMLDivElement, ExternalProps>(forwardRef);

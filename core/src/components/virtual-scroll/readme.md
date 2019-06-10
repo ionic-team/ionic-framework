@@ -337,8 +337,8 @@ This method marks the tail the items array as dirty, so they can be re-rendered.
 It's equivalent to calling:
 
 ```js
-   * virtualScroll.checkRange(lastItemLen);
-   * ```
+virtualScroll.checkRange(lastItemLen);
+```
 
 #### Returns
 

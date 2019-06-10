@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { Component, ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { OverlayEventDetail } from '@ionic/core';
 import { attachEventProps } from './utils'
 import { ensureElementInBody, dashToPascalCase } from './utils';
@@ -10,13 +10,13 @@ export function createOverlayComponent<T extends object, E extends OverlayCompon
   const dismissEventName = `on${displayName}DidDismiss`;
 
   type ReactOverlayProps = {
-    children?: React.ReactNode;
+    children?: ReactNode;
     isOpen: boolean;
     onDidDismiss?: (event: CustomEvent<OverlayEventDetail>) => void;
   }
   type Props = T & ReactOverlayProps;
 
-  return class ReactOverlayComponent extends React.Component<Props> {
+  return class ReactOverlayComponent extends Component<Props> {
     element: E;
     controllerElement: C;
     el: HTMLDivElement;
@@ -62,7 +62,7 @@ export function createOverlayComponent<T extends object, E extends OverlayCompon
     }
 
     render() {
-      return ReactDOM.createPortal(
+      return createPortal(
         this.props.children,
         this.el,
       );
