@@ -6,7 +6,7 @@
 
 :host {
   --background-focused: #{ion-color(primary, base, .1)};
-  --border-radius: 10px;
+  --border-radius: 4px;
   --color: #{$back-button-ios-color};
   --icon-margin-end: -5px;
   --icon-margin-start: -4px;
@@ -32,7 +32,7 @@
 
 @media (any-hover: hover) {
   :host(:hover) {
-    --opacity: #{$button-ios-clear-opacity-hover};
+    --opacity: .6;
   }
 }
 
