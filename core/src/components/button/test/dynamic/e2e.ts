@@ -11,11 +11,19 @@ test('button: dynamic', async () => {
 
   await page.click('#add-item-button');
 
-  compares.push(await page.compareScreenshot('item button'));
+  compares.push(await page.compareScreenshot('add item button'));
 
   await page.click('#add-item-divider-button');
 
-  compares.push(await page.compareScreenshot('item divider button'));
+  compares.push(await page.compareScreenshot('add item divider button'));
+
+  await page.click('#change-item-button');
+
+  compares.push(await page.compareScreenshot('change item button size'));
+
+  await page.click('#change-item-divider-button');
+
+  compares.push(await page.compareScreenshot('change item divider button size'));
 
   for (const compare of compares) {
     expect(compare).toMatchScreenshot();
