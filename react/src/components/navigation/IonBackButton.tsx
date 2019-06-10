@@ -1,5 +1,5 @@
 import { JSX as LocalJSX } from '@ionic/core';
-import React, { Component } from 'react';
+import React from 'react';
 import { NavContext } from './NavContext';
 import { IonBackButtonInner } from '../proxies';
 
@@ -7,7 +7,7 @@ type BackButtonProps = LocalJSX.IonBackButton & {
 
 };
 
-export class IonBackButton extends Component<BackButtonProps> {
+export class IonBackButton extends React.Component<BackButtonProps> {
   context!: React.ContextType<typeof NavContext>;
 
   clickButton = (e: MouseEvent) => {

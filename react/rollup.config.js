@@ -4,7 +4,7 @@ export default {
   input: 'dist-transpiled/index.js',
   output: [
     {
-      file: 'dist/index.mjs',
+      file: 'dist/index.esm.js',
       format: 'es',
     },
     {

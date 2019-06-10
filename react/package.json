@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "0.0.6-0",
+  "version": "0.0.6-1",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -28,7 +28,7 @@
     "test": "jest"
   },
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "module": "dist/index.esm.mjs",
   "types": "dist/types/index.d.ts",
   "files": [
     "dist/"

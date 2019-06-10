@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { IonTabBar } from './IonTabBar';
 import { IonRouterOutlet } from './IonRouterOutlet';
 
@@ -26,7 +26,7 @@ const tabsInner: React.CSSProperties = {
 };
 
 
-export class IonTabs extends Component<Props> {
+export class IonTabs extends React.Component<Props> {
 
   render() {
     let outlet: React.ReactElement<{}>;

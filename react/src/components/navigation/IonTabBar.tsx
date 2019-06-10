@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { IonTabBarInner, IonTabButton } from '../proxies';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { JSX } from '@ionic/core';
@@ -17,7 +17,7 @@ type State = {
   tabs: { [key: string]: Tab }
 }
 
-class TabBar extends Component<Props, State> {
+class TabBar extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
