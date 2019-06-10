@@ -135,13 +135,11 @@
   // Since iOS changes the opacity on hover,
   // we want to keep the background if focused
   // or activated
-  :host(.ion-focused:hover) .button-native {
-    background: var(--background-focused);
-    color: var(--color-focused);
+  :host(.ion-focused:hover) {
+    --background-hover: var(--background-focused);
   }
 
-  :host(.activated:hover) .button-native {
-    background: var(--background-activated);
-    color: var(--color-activated);
+  :host(.activated:hover) {
+    --background-hover: var(--background-activated);
   }
 }
