@@ -21,6 +21,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
 export class Button implements ComponentInterface {
 
   private inToolbar = false;
+  private inItem = false;
 
   @Element() el!: HTMLElement;
 
@@ -105,6 +106,7 @@ export class Button implements ComponentInterface {
 
   componentWillLoad() {
     this.inToolbar = !!this.el.closest('ion-buttons');
+    this.inItem = !!this.el.closest('ion-item') || !!this.el.closest('ion-item-divider');
   }
 
   @Listen('click')
@@ -155,11 +157,12 @@ export class Button implements ComponentInterface {
   }
 
   hostData() {
-    const { buttonType, disabled, color, expand, hasIconOnly, shape, size, strong } = this;
+    const { buttonType, disabled, color, expand, hasIconOnly, shape, strong } = this;
     let fill = this.fill;
     if (fill === undefined) {
       fill = this.inToolbar ? 'clear' : 'solid';
     }
+    const size = this.size === undefined && this.inItem ? 'small' : this.size;
     return {
       'aria-disabled': disabled ? 'true' : null,
       class: {
