@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { IonTabBarInner, IonTabButton } from '../index';
+import { IonTabBarInner, IonTabButton } from '../proxies';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { JSX } from '@ionic/core';
 

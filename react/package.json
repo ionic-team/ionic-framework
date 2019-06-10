@@ -22,17 +22,27 @@
   "scripts": {
     "build": "npm run clean && npm run compile",
     "clean": "rm -rf dist",
-    "compile": "npm run tsc",
+    "compile": "npm run tsc && rollup -c",
     "deploy": "np --any-branch",
     "tsc": "tsc -p .",
     "test": "jest"
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/types/index.d.ts",
   "files": [
     "dist/"
   ],
+  "dependencies": {
+    "@ionic/core": "one",
+    "tslib": "^1.9.3"
+  },
+  "peerDependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router": "^5.01",
+    "react-router-dom": "^5.01"
+  },
   "devDependencies": {
     "@trust/webcrypto": "^0.9.2",
     "@types/jest": "^23.3.9",
@@ -44,22 +54,15 @@
     "jest": "^24.8.0",
     "jest-dom": "^3.4.0",
     "np": "^3.1.0",
-    "react-testing-library": "^7.0.0",
-    "ts-jest": "^24.0.2",
-    "typescript": "3.2.2"
-  },
-  "dependencies": {
-    "@ionic/core": "^4.5.0-dev.201905311531.e014c6a",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.1",
-    "react-router-dom": "^5.0.1"
-  },
-  "peerDependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-router": "^5.01",
-    "react-router-dom": "^5.01"
+    "react-router-dom": "^5.0.1",
+    "react-testing-library": "^7.0.0",
+    "rollup": "^1.14.6",
+    "rollup-plugin-node-resolve": "^5.0.1",
+    "ts-jest": "^24.0.2",
+    "typescript": "3.2.2"
   },
   "jest": {
     "preset": "ts-jest",
@@ -68,6 +71,7 @@
     ],
     "testPathIgnorePatterns": [
       "node_modules",
+      "dist-transpiled",
       "dist"
     ],
     "modulePaths": [

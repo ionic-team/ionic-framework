@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter, RouteComponentProps, matchPath, match, RouteProps } from 'react-router';
 import { generateUniqueId } from '../utils';
 import { Location } from 'history';
-import { IonRouterOutletInner } from '../index';
+import { IonRouterOutletInner } from '../proxies';
 import StackItem from '../StackItem';
 import { NavContext } from './NavContext';
 import StackItemManager from './StackItemManager';

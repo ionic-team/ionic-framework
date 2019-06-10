@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { IonTabBar, IonRouterOutlet } from '../index';
+import IonTabBar from './IonTabBar';
+import { IonRouterOutlet } from './IonRouterOutlet';
 
 type Props = {
   children: React.ReactNode;
