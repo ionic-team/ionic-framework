@@ -23,7 +23,7 @@
     "build": "npm run clean && npm run compile",
     "clean": "rm -rf dist",
     "compile": "npm run tsc && rollup -c",
-    "deploy": "np --any-branch",
+    "release": "np --any-branch",
     "tsc": "tsc -p .",
     "test": "jest"
   },
