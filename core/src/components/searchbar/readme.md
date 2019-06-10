@@ -33,7 +33,7 @@ A Searchbar should be used instead of an input to search lists. A clear button i
 <ion-searchbar showCancelButton cancelButtonText="Custom Cancel"></ion-searchbar>
 
 <!-- Searchbar with a persistent cancel button -->
-<ion-searchbar showCancelButton persistCancelButton></ion-searchbar>
+<ion-searchbar showCancelButton="persist"></ion-searchbar>
 
 <!-- Searchbar with a custom debounce -->
 <ion-searchbar debounce="500"></ion-searchbar>
@@ -73,7 +73,7 @@ A Searchbar should be used instead of an input to search lists. A clear button i
 <ion-searchbar show-cancel-button cancel-button-text="Custom Cancel"></ion-searchbar>
 
 <!-- Searchbar with a persistent cancel button -->
-<ion-searchbar show-cancel-button persist-cancel-button></ion-searchbar>
+<ion-searchbar show-cancel-button="persist"></ion-searchbar>
 
 <!-- Searchbar with a custom debounce -->
 <ion-searchbar debounce="500"></ion-searchbar>
@@ -119,7 +119,7 @@ const Example: React.SFC<{}> = () => (
     <IonSearchbar showCancelButton cancelButtonText="Custom Cancel"></IonSearchbar>
 
     {/*-- Searchbar with a persistent cancel button --*/}
-    <IonSearchbar showCancelButton persistCancelButton></IonSearchbar>
+    <IonSearchbar showCancelButton="persist"></IonSearchbar>
 
     {/*-- Searchbar with a custom debounce --*/}
     <IonSearchbar debounce={500}></IonSearchbar>
@@ -164,7 +164,7 @@ export default Example;
   <ion-searchbar showCancelButton cancelButtonText="Custom Cancel"></ion-searchbar>
 
   <!-- Searchbar with a persistent cancel button -->
-  <ion-searchbar showCancelButton persistCancelButton></ion-searchbar>
+  <ion-searchbar showCancelButton="persist"></ion-searchbar>
 
   <!-- Searchbar with a custom debounce -->
   <ion-searchbar debounce="500"></ion-searchbar>

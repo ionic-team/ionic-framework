@@ -24,7 +24,7 @@ const Example: React.SFC<{}> = () => (
     <IonSearchbar showCancelButton cancelButtonText="Custom Cancel"></IonSearchbar>
 
     {/*-- Searchbar with a persistent cancel button --*/}
-    <IonSearchbar showCancelButton persistCancelButton></IonSearchbar>
+    <IonSearchbar showCancelButton="persist"></IonSearchbar>
 
     {/*-- Searchbar with a custom debounce --*/}
     <IonSearchbar debounce={500}></IonSearchbar>
