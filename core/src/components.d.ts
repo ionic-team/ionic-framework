@@ -3792,10 +3792,6 @@ export namespace Components {
     */
     'mode': Mode;
     /**
-    * If `true`, the cancel button will remain visible until a user clicks to dismiss it, even after the searcbar has lost focus. The cancel button will not show up until the user has interacted with the searchbar at least once.
-    */
-    'persistCancelButton': boolean;
-    /**
     * Set the input's placeholder. `placeholder` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
     'placeholder': string;
@@ -3812,9 +3808,9 @@ export namespace Components {
     */
     'showCancel': () => void;
     /**
-    * If `true`, show the cancel button.
+    * Sets the behavior for the cancel button. `true`: Shows the cancel button on focus. `false`: Disables the cancel button. `persist`: Shows the cancel button on focus but does not hide it until the user clicks it or calls the `hideSearch` method.
     */
-    'showCancelButton': boolean;
+    'showCancelButton': boolean | string;
     /**
     * If `true`, enable spellcheck on the input.
     */
@@ -3894,10 +3890,6 @@ export namespace Components {
     */
     'onIonInput'?: (event: CustomEvent<KeyboardEvent>) => void;
     /**
-    * If `true`, the cancel button will remain visible until a user clicks to dismiss it, even after the searcbar has lost focus. The cancel button will not show up until the user has interacted with the searchbar at least once.
-    */
-    'persistCancelButton'?: boolean;
-    /**
     * Set the input's placeholder. `placeholder` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
     'placeholder'?: string;
@@ -3906,9 +3898,9 @@ export namespace Components {
     */
     'searchIcon'?: string;
     /**
-    * If `true`, show the cancel button.
+    * Sets the behavior for the cancel button. `true`: Shows the cancel button on focus. `false`: Disables the cancel button. `persist`: Shows the cancel button on focus but does not hide it until the user clicks it or calls the `hideSearch` method.
     */
-    'showCancelButton'?: boolean;
+    'showCancelButton'?: boolean | string;
     /**
     * If `true`, enable spellcheck on the input.
     */

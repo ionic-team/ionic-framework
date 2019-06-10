@@ -36,7 +36,7 @@ export class Searchbar implements ComponentInterface {
    * If `true`, the searchbar has received focus at
    * least once during a particular session.
    * This is to prevent the cancel button from being shown
-   * on page load when `persistCancelButton` is `true`.
+   * on page load when `showSearchBar` is set to `persist`.
    */
   @State() receivedInitialFocus = false;
   @State() noAnimate = true;
@@ -115,18 +115,14 @@ export class Searchbar implements ComponentInterface {
   @Prop() searchIcon = 'search';
 
   /**
-   * If `true`, show the cancel button.
+   * Sets the behavior for the cancel button.
+   * `true`: Shows the cancel button on focus.
+   * `false`: Disables the cancel button.
+   * `persist`: Shows the cancel button on focus
+   * but does not hide it until the user clicks it
+   * or calls the `hideSearch` method.
    */
-  @Prop() showCancelButton = false;
-
-  /**
-   * If `true`, the cancel button will remain visible
-   * until a user clicks to dismiss it, even after
-   * the searcbar has lost focus. The cancel
-   * button will not show up until the user has interacted
-   * with the searchbar at least once.
-   */
-  @Prop() persistCancelButton = false;
+  @Prop() showCancelButton: boolean | string = false;
 
   /**
    * If `true`, enable spellcheck on the input.
@@ -301,10 +297,10 @@ export class Searchbar implements ComponentInterface {
 
     /**
      * Even if the user manually showed the cancel button
-     * we still want to hide it on blur if `persistCancelButton`
-     * is set to false.
+     * we still want to hide it on blur if `showCancelButton`
+     * is not set to `persist`.
      */
-    if (!this.persistCancelButton) {
+    if (this.showCancelButton !== 'persist') {
       this.hideCancel();
     } else {
       this.positionElements();
@@ -391,7 +387,7 @@ export class Searchbar implements ComponentInterface {
   }
 
   /**
-   * Show the iOS Cancel button on focus or if `persistCancelButton` is enabled, hide it offscreen otherwise
+   * Show the iOS Cancel button on focus or if `showCancelButton` is set to `persist`, hide it offscreen otherwise
    */
   private positionCancelButton() {
     const isRTL = this.doc.dir === 'rtl';
@@ -433,19 +429,23 @@ export class Searchbar implements ComponentInterface {
    * Cancel button should be shown if one of the three conditions applies:
    * 1. The user has called showCancel(), setting forceShowCancel = true
    * 2. The user has focused the searchbar
-   * 3. The user has persistCancelButton enabled and the searchbar has
+   * 3. The user has `showCancelButton` set to `persist` and the searchbar has
    * already been focused at least once
    */
   private shouldShowCancelButton(): boolean {
     if (
       this.forceShowCancel ||
       this.focused ||
-      (this.persistCancelButton && this.receivedInitialFocus)
+      (this.showCancelButton === 'persist' && this.receivedInitialFocus)
     ) {
       return true;
     }
 
     return false;
+  }
+
+  private isCancelButtonEnabled(): boolean {
+    return this.showCancelButton !== false && this.showCancelButton !== 'false';
   }
 
   hostData() {
@@ -471,7 +471,7 @@ export class Searchbar implements ComponentInterface {
     const clearIcon = this.clearIcon || (this.mode === 'ios' ? 'ios-close-circle' : 'md-close');
     const searchIcon = this.searchIcon;
 
-    const cancelButton = this.showCancelButton && (
+    const cancelButton = this.isCancelButtonEnabled() && (
       <button
         type="button"
         tabIndex={this.mode === 'ios' && !this.shouldShowCancelButton() ? -1 : undefined}
