@@ -23,7 +23,7 @@
     "build": "npm run clean && npm run compile",
     "clean": "rm -rf dist",
     "compile": "npm run tsc && rollup -c",
-    "release": "np --any-branch",
+    "release": "np --any-branch --no-cleanup",
     "tsc": "tsc -p .",
     "test": "jest"
   },
@@ -53,7 +53,7 @@
     "@types/react-router-dom": "^4.3.1",
     "jest": "^24.8.0",
     "jest-dom": "^3.4.0",
-    "np": "^3.1.0",
+    "np": "^5.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.1",
@@ -62,7 +62,7 @@
     "rollup": "^1.14.6",
     "rollup-plugin-node-resolve": "^5.0.1",
     "ts-jest": "^24.0.2",
-    "typescript": "3.2.2"
+    "typescript": "3.5.1"
   },
   "jest": {
     "preset": "ts-jest",
