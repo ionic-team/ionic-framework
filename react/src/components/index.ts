@@ -23,4 +23,4 @@ export { IonBackButton } from './navigation/IonBackButton';
 
 addIcons(ICON_PATHS);
 
-export const bootStrapIonic = () => defineCustomElements(window);
+defineCustomElements(window);
