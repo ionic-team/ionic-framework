@@ -137,9 +137,11 @@
   // or activated
   :host(.ion-focused:hover) {
     --background-hover: var(--background-focused);
+    --color-hover: var(--color-focused);
   }
 
   :host(.activated:hover) {
     --background-hover: var(--background-activated);
+    --color-hover: var(--color-activated);
   }
 }
