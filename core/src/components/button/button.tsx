@@ -162,10 +162,7 @@ export class Button implements ComponentInterface {
     if (fill === undefined) {
       fill = this.inToolbar ? 'clear' : 'solid';
     }
-    let size = this.size;
-    if (size === undefined) {
-      size = this.inItem ? 'small' : undefined;
-    }
+    const size = this.size === undefined && this.inItem ? 'small' : this.size;
     return {
       'aria-disabled': disabled ? 'true' : null,
       class: {
