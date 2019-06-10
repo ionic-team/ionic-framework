@@ -4,7 +4,7 @@ export type Platforms = keyof typeof PLATFORMS_MAP;
 export const getPlatforms = (win: any) => setupPlatforms(win);
 
 export const isPlatform = (win: Window, platform: Platforms) =>
-  getPlatforms(win).includes(platform);
+  getPlatforms(win).indexOf(platform) > -1;
 
 export const setupPlatforms = (win: any) => {
   win.Ionic = win.Ionic || {};
