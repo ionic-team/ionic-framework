@@ -56,6 +56,29 @@ export class BackButton implements ComponentInterface {
     return openURL(this.win, this.defaultHref, ev, 'back');
   }
 
+  private get backButtonIcon() {
+    return this.icon != null ? this.icon : this.config.get('backButtonIcon', 'arrow-back');
+  }
+
+  private get backButtonText() {
+    const defaultBackButtonText = this.mode === 'ios' ? 'Back' : null;
+    return this.text != null ? this.text : this.config.get('backButtonText', defaultBackButtonText);
+  }
+
+  private get hasIconOnly() {
+    return this.backButtonIcon && !this.backButtonText;
+  }
+
+  private get rippleType() {
+    // If the button only has an icon we use the unbounded
+    // "circular" ripple effect
+    if (this.hasIconOnly) {
+      return 'unbounded';
+    }
+
+    return 'bounded';
+  }
+
   hostData() {
     const showBackButton = this.defaultHref !== undefined;
 
@@ -65,16 +88,16 @@ export class BackButton implements ComponentInterface {
         [`${this.mode}`]: true,
 
         'button': true, // ion-buttons target .button
+        'back-button-has-icon-only': this.hasIconOnly,
         'ion-activatable': true,
+        'ion-focusable': true,
         'show-back-button': showBackButton
       }
     };
   }
 
   render() {
-    const defaultBackButtonText = this.mode === 'ios' ? 'Back' : null;
-    const backButtonIcon = this.icon != null ? this.icon : this.config.get('backButtonIcon', 'arrow-back');
-    const backButtonText = this.text != null ? this.text : this.config.get('backButtonText', defaultBackButtonText);
+    const { backButtonIcon, backButtonText } = this;
 
     return (
       <button type="button" class="button-native">
@@ -82,7 +105,7 @@ export class BackButton implements ComponentInterface {
           {backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false}></ion-icon>}
           {backButtonText && <span class="button-text">{backButtonText}</span>}
         </span>
-        {this.mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
+        {this.mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
       </button>
     );
   }
