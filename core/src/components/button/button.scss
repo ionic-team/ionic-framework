@@ -297,6 +297,11 @@ ion-ripple-effect {
     background: var(--background-hover);
     color: var(--color-hover);
   }
+
+  :host(.ion-focused:hover) .button-native {
+    background: var(--background-focused);
+    color: var(--color-focused);
+  }
 }
 
 :host(.activated) .button-native {
