@@ -21,8 +21,10 @@
   },
   "scripts": {
     "build": "npm run clean && npm run compile",
-    "clean": "rm -rf dist",
+    "build:dev": "npm run clean && npm run compile:dev",
+    "clean": "rm -rf dist && rm -rf dist-transpiled",
     "compile": "npm run tsc && rollup -c",
+    "compile:dev": "npm run tsc && rollup -c rollup.config.dev.js",
     "release": "np --any-branch --no-cleanup",
     "tsc": "tsc -p .",
     "test": "jest"
