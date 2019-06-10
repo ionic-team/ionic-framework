@@ -149,6 +149,7 @@ ion-button,event,ionFocus,void,true
 ion-button,css-prop,--background
 ion-button,css-prop,--background-activated
 ion-button,css-prop,--background-focused
+ion-button,css-prop,--background-hover
 ion-button,css-prop,--border-color
 ion-button,css-prop,--border-radius
 ion-button,css-prop,--border-style
@@ -157,6 +158,7 @@ ion-button,css-prop,--box-shadow
 ion-button,css-prop,--color
 ion-button,css-prop,--color-activated
 ion-button,css-prop,--color-focused
+ion-button,css-prop,--color-hover
 ion-button,css-prop,--opacity
 ion-button,css-prop,--padding-bottom
 ion-button,css-prop,--padding-end
