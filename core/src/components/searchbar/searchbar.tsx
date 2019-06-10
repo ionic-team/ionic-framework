@@ -116,9 +116,9 @@ export class Searchbar implements ComponentInterface {
 
   /**
    * Sets the behavior for the cancel button.
-   * `true`: Shows the cancel button on focus.
-   * `false`: Disables the cancel button.
-   * `persist`: Shows the cancel button on focus
+   * Setting to `true` shows the cancel button on focus.
+   * Setting to `false` disables the cancel button.
+   * Setting to `persist` shows the cancel button on focus
    * but does not hide it until the user clicks it
    * or calls the `hideSearch` method.
    */
