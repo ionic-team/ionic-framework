@@ -76,6 +76,7 @@ import {
   SelectCompareFn,
 } from './components/select/select-interface';
 
+
 export namespace Components {
   interface IonActionSheet {
     /**
@@ -2577,7 +2578,7 @@ export namespace Components {
     */
     'approxItemHeight': number;
     /**
-    * This method marks the tail the items array as dirty, so they can be re-rendered.  It's equivalent to calling:  ```js virtualScroll.checkRange(lastItemLen); ```
+    * This method marks the tail the items array as dirty, so they can be re-rendered.  It's equivalent to calling:  ```js    * virtualScroll.checkRange(lastItemLen);    * ```
     */
     'checkEnd': () => Promise<void>;
     /**
@@ -3307,6 +3308,8 @@ declare global {
     'ion-toolbar': HTMLIonToolbarElement;
     'ion-virtual-scroll': HTMLIonVirtualScrollElement;
   }
+
+  interface ElementTagNameMap extends HTMLElementTagNameMap {}
 }
 
 declare namespace LocalJSX {

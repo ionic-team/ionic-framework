@@ -31,7 +31,7 @@ export default class IonTabs extends Component<Props> {
     let outlet: React.ReactElement<{}>;
     let tabBar: React.ReactElement<{ slot: 'bottom' | 'top' }>;
 
-    React.Children.forEach(this.props.children, child => {
+    React.Children.forEach(this.props.children, (child: any) => {
       if (child == null || typeof child !== 'object' || !child.hasOwnProperty('type')) {
         return;
       }

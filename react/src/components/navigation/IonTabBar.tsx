@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { IonTabBarInner, IonTabButton } from '../index';
 import { withRouter, RouteComponentProps } from 'react-router';
-import { Components } from '@ionic/core';
+import { JSX } from '@ionic/core';
 
-type Props = RouteComponentProps & Components.IonTabBarAttributes & {
+type Props = RouteComponentProps & JSX.IonTabBar & {
   children: React.ReactNode;
 }
 
@@ -24,7 +24,7 @@ class IonTabBar extends Component<Props, State> {
 
     const tabActiveUrls: { [key: string]: Tab } = {};
 
-    React.Children.forEach(this.props.children, (child) => {
+    React.Children.forEach(this.props.children, (child: any) => {
       if (child != null && typeof child === 'object' && child.props && child.type === IonTabButton) {
         tabActiveUrls[child.props.tab] = {
           originalHref: child.props.href,
@@ -71,7 +71,7 @@ class IonTabBar extends Component<Props, State> {
     this.props.history.push(targetUrl);
   }
 
-  renderChild = (activeTab: string) => (child: React.ReactElement<Components.IonTabButtonAttributes & { onIonTabButtonClick: (e: CustomEvent) => void }>) => {
+  renderChild = (activeTab: string) => (child: React.ReactElement<JSX.IonTabButton & { onIonTabButtonClick: (e: CustomEvent) => void }>) => {
     if (child != null && typeof child === 'object' && child.props && child.type === IonTabButton) {
       const href = (child.props.tab === activeTab) ? this.props.location.pathname : (this.state.tabs[child.props.tab].currentHref);
 

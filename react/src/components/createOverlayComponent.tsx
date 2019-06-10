@@ -12,7 +12,7 @@ export function createOverlayComponent<T extends object, E extends OverlayCompon
   type ReactOverlayProps = {
     children?: React.ReactNode;
     isOpen: boolean;
-    onDidDismiss: (event: CustomEvent<OverlayEventDetail>) => void;
+    onDidDismiss?: (event: CustomEvent<OverlayEventDetail>) => void;
   }
   type Props = T & ReactOverlayProps;
 
@@ -37,7 +37,7 @@ export function createOverlayComponent<T extends object, E extends OverlayCompon
 
     async componentDidUpdate(prevProps: Props) {
       if (prevProps.isOpen !== this.props.isOpen && this.props.isOpen === true) {
-        const { children, isOpen, onDidDismiss, ...cProps} = this.props;
+        const { children, isOpen, onDidDismiss = () => {}, ...cProps} = this.props;
         const elementProps = {
           ...cProps,
           [dismissEventName]: onDidDismiss

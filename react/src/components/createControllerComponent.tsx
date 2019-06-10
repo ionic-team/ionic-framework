@@ -30,11 +30,22 @@ export function createControllerComponent<T extends object, E extends OverlayCom
 
     componentDidMount() {
       this.controllerElement = ensureElementInBody<C>(controllerTagName);
+      if(this.props.isOpen) {
+        this.present();
+      }
     }
 
     async componentDidUpdate(prevProps: Props) {
       if (prevProps.isOpen !== this.props.isOpen && this.props.isOpen === true) {
-        const { isOpen, onDidDismiss, ...cProps} = this.props;
+        this.present();
+      }
+      if (this.element && prevProps.isOpen !== this.props.isOpen && this.props.isOpen === false) {
+        await this.element.dismiss();
+      }
+    }
+
+    async present(prevProps?: Props) {
+      const { isOpen, onDidDismiss, ...cProps} = this.props;
         const elementProps = {
           ...cProps,
           [dismissEventName]: onDidDismiss
@@ -43,15 +54,10 @@ export function createControllerComponent<T extends object, E extends OverlayCom
         if (this.controllerElement.componentOnReady) {
           await this.controllerElement.componentOnReady();
         }
-
         this.element = await this.controllerElement.create(elementProps);
         attachEventProps(this.element, elementProps, prevProps);
 
         await this.element.present();
-      }
-      if (this.element && prevProps.isOpen !== this.props.isOpen && this.props.isOpen === false) {
-        await this.element.dismiss();
-      }
     }
 
     render(): null {

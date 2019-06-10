@@ -15,6 +15,7 @@
     "noUnusedParameters": true,
     "outDir": "dist",
     "removeComments": false,
+    "inlineSources": true,
     "sourceMap": true,
     "jsx": "react",
     "target": "es2015"
