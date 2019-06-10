@@ -127,7 +127,8 @@
     --opacity: #{$button-ios-opacity-hover};
   }
 
-  :host(.button-clear:hover) {
+  :host(.button-clear:hover),
+  :host(.button-outline:hover) {
     --opacity: #{$button-ios-clear-opacity-hover};
   }
 }
