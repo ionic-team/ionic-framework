@@ -204,7 +204,7 @@ export class NavController {
 
       /**
        * `navigateByUrl` will still apply `NavigationExtras` properties
-       * that do not modify the url, such as `replaceUrl` which is why 
+       * that do not modify the url, such as `replaceUrl` which is why
        * `options` is passed in here.
        */
       return this.router!.navigateByUrl(urlTree, options);
