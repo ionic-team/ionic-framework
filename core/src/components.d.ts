@@ -3784,7 +3784,7 @@ export namespace Components {
     */
     'getInputElement': () => Promise<HTMLInputElement>;
     /**
-    * Hides the cancel button
+    * Hides the cancel button.
     */
     'hideCancel': () => void;
     /**
@@ -3792,7 +3792,7 @@ export namespace Components {
     */
     'mode': Mode;
     /**
-    * If `true`, the cancel button persists through defocus.
+    * If `true`, the cancel button will remain visible until a user clicks to dismiss it, even after the searcbar has lost focus. The cancel button will not show up until the user has interacted with the searchbar at least once.
     */
     'persistCancelButton': boolean;
     /**
@@ -3808,7 +3808,7 @@ export namespace Components {
     */
     'setFocus': () => void;
     /**
-    * Shows the cancel button even if the searchbar is not focused
+    * Shows the cancel button even if the searchbar is not focused. This will do nothing if `showCancelButton` is set to `false`.
     */
     'showCancel': () => void;
     /**
@@ -3894,7 +3894,7 @@ export namespace Components {
     */
     'onIonInput'?: (event: CustomEvent<KeyboardEvent>) => void;
     /**
-    * If `true`, the cancel button persists through defocus.
+    * If `true`, the cancel button will remain visible until a user clicks to dismiss it, even after the searcbar has lost focus. The cancel button will not show up until the user has interacted with the searchbar at least once.
     */
     'persistCancelButton'?: boolean;
     /**

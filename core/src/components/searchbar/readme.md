@@ -198,7 +198,7 @@ export default Example;
 | `debounce`            | `debounce`              | Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.                                                                                                                                                                                                              | `number`                                                                    | `250`             |
 | `disabled`            | `disabled`              | If `true`, the user cannot interact with the input.                                                                                                                                                                                                                                                                  | `boolean`                                                                   | `false`           |
 | `mode`                | `mode`                  | The mode determines which platform styles to use.                                                                                                                                                                                                                                                                    | `"ios" \| "md"`                                                             | `undefined`       |
-| `persistCancelButton` | `persist-cancel-button` | If `true`, the cancel button persists through defocus.                                                                                                                                                                                                                                                               | `boolean`                                                                   | `false`           |
+| `persistCancelButton` | `persist-cancel-button` | If `true`, the cancel button will remain visible until a user clicks to dismiss it, even after the searcbar has lost focus. The cancel button will not show up until the user has interacted with the searchbar at least once.                                                                                       | `boolean`                                                                   | `false`           |
 | `placeholder`         | `placeholder`           | Set the input's placeholder. `placeholder` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security) | `string`                                                                    | `'Search'`        |
 | `searchIcon`          | `search-icon`           | The icon to use as the search icon.                                                                                                                                                                                                                                                                                  | `string`                                                                    | `'search'`        |
 | `showCancelButton`    | `show-cancel-button`    | If `true`, show the cancel button.                                                                                                                                                                                                                                                                                   | `boolean`                                                                   | `false`           |
@@ -233,7 +233,7 @@ Type: `Promise<HTMLInputElement>`
 
 ### `hideCancel() => void`
 
-Hides the cancel button
+Hides the cancel button.
 
 #### Returns
 
@@ -254,7 +254,8 @@ Type: `void`
 
 ### `showCancel() => void`
 
-Shows the cancel button even if the searchbar is not focused
+Shows the cancel button even if the searchbar is not focused.
+This will do nothing if `showCancelButton` is set to `false`.
 
 #### Returns
 

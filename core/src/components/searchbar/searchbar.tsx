@@ -25,8 +25,20 @@ export class Searchbar implements ComponentInterface {
   @Prop({ context: 'document' }) doc!: Document;
 
   @State() focused = false;
+
+  /**
+   * If `true`, the cancel button will be shown
+   * regardless of focus state or other preferences
+   */
   @State() forceShowCancel = false;
-  @State() hadInitialFocus = false;
+
+  /**
+   * If `true`, the searchbar has received focus at
+   * least once during a particular session.
+   * This is to prevent the cancel button from being shown
+   * on page load when `persistCancelButton` is `true`.
+   */
+  @State() receivedInitialFocus = false;
   @State() noAnimate = true;
 
   /**
@@ -108,7 +120,11 @@ export class Searchbar implements ComponentInterface {
   @Prop() showCancelButton = false;
 
   /**
-   * If `true`, the cancel button persists through defocus.
+   * If `true`, the cancel button will remain visible
+   * until a user clicks to dismiss it, even after
+   * the searcbar has lost focus. The cancel
+   * button will not show up until the user has interacted
+   * with the searchbar at least once.
    */
   @Prop() persistCancelButton = false;
 
@@ -196,21 +212,29 @@ export class Searchbar implements ComponentInterface {
   }
 
   /**
-   * Shows the cancel button even if the searchbar is not focused
+   * Shows the cancel button even if the searchbar is not focused.
+   * This will do nothing if `showCancelButton` is set to `false`.
    */
   @Method()
   showCancel() {
     this.forceShowCancel = true;
+
     this.positionElements();
   }
 
   /**
-   * Hides the cancel button
+   * Hides the cancel button.
    */
   @Method()
   hideCancel() {
+    /**
+     * Reset the focus session
+     * since the user has manually
+     * dismissed the cancel button
+     */
     this.forceShowCancel = false;
-    this.hadInitialFocus = false;
+    this.receivedInitialFocus = false;
+
     this.positionElements();
   }
 
@@ -274,15 +298,25 @@ export class Searchbar implements ComponentInterface {
   private onBlur = () => {
     this.focused = false;
     this.ionBlur.emit();
-    this.positionElements();
+
+    /**
+     * Even if the user manually showed the cancel button
+     * we still want to hide it on blur if `persistCancelButton`
+     * is set to false.
+     */
+    if (!this.persistCancelButton) {
+      this.hideCancel();
+    } else {
+      this.positionElements();
+    }
   }
 
   /**
    * Sets the Searchbar to focused and active on input focus.
    */
   private onFocus = () => {
-    if (!this.hadInitialFocus) {
-      this.hadInitialFocus = true;
+    if (!this.receivedInitialFocus) {
+      this.receivedInitialFocus = true;
     }
 
     this.focused = true;
@@ -357,7 +391,7 @@ export class Searchbar implements ComponentInterface {
   }
 
   /**
-   * Show the iOS Cancel button on focus or persist cancel button is enabled, hide it offscreen otherwise
+   * Show the iOS Cancel button on focus or if `persistCancelButton` is enabled, hide it offscreen otherwise
    */
   private positionCancelButton() {
     const isRTL = this.doc.dir === 'rtl';
@@ -406,7 +440,7 @@ export class Searchbar implements ComponentInterface {
     if (
       this.forceShowCancel ||
       this.focused ||
-      (this.persistCancelButton && this.hadInitialFocus)
+      (this.persistCancelButton && this.receivedInitialFocus)
     ) {
       return true;
     }
