@@ -6,11 +6,13 @@ export default {
   output: [
     {
       file: 'dist/index.esm.js',
-      format: 'es'
+      format: 'es',
+      sourcemap: true
     },
     {
       file: 'dist/index.js',
-      format: 'commonjs'
+      format: 'commonjs',
+      sourcemap: true
     }
   ],
   external: [
