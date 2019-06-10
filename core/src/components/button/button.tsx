@@ -21,6 +21,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
 export class Button implements ComponentInterface {
 
   private inToolbar = false;
+  private inItem = false;
 
   @Element() el!: HTMLElement;
 
@@ -81,7 +82,7 @@ export class Button implements ComponentInterface {
   /**
    * The button size.
    */
-  @Prop({ reflectToAttr: true, mutable: true }) size?: 'small' | 'default' | 'large';
+  @Prop({ reflectToAttr: true }) size?: 'small' | 'default' | 'large';
 
   /**
    * If `true`, activates a button with a heavier font weight.
@@ -105,10 +106,7 @@ export class Button implements ComponentInterface {
 
   componentWillLoad() {
     this.inToolbar = !!this.el.closest('ion-buttons');
-    if (this.size === undefined && this.el.parentElement
-      && (this.el.parentElement.localName === 'ion-item' || this.el.parentElement.localName === 'ion-item-divider')) {
-      this.size = 'small';
-    }
+    this.inItem = !!this.el.closest('ion-item') || !!this.el.closest('ion-item-divider');
   }
 
   @Listen('click')
@@ -159,10 +157,14 @@ export class Button implements ComponentInterface {
   }
 
   hostData() {
-    const { buttonType, disabled, color, expand, hasIconOnly, shape, size, strong } = this;
+    const { buttonType, disabled, color, expand, hasIconOnly, shape, strong } = this;
     let fill = this.fill;
     if (fill === undefined) {
       fill = this.inToolbar ? 'clear' : 'solid';
+    }
+    let size = this.size;
+    if (size === undefined) {
+      size = this.inItem ? 'small' : undefined;
     }
     return {
       'aria-disabled': disabled ? 'true' : null,

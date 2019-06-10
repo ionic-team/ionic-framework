@@ -22,16 +22,18 @@
 
     <ion-content class="ion-padding" id="content" no-bounce>
       <ion-item id="dynamicItem">
+        <ion-button slot="start">Default</ion-button>
         <ion-label>Dynamic Button</ion-label>
       </ion-item>
-      <ion-button onClick="addButton('dynamicItem')">
+      <ion-button id="add-item-button" onClick="addButton('dynamicItem')">
         Add a Button
       </ion-button>
 
       <ion-item-divider id="dynamicItemDivider">
+        <ion-button slot="start">Default</ion-button>
         <ion-label>Dynamic Button</ion-label>
       </ion-item-divider>
-      <ion-button onClick="addButton('dynamicItemDivider')">
+      <ion-button id="add-item-divider-button" onClick="addButton('dynamicItemDivider')">
         Add a Button
       </ion-button>
     </ion-content>
