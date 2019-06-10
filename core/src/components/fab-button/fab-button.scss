@@ -4,12 +4,6 @@
 // --------------------------------------------------
 
 :host {
-  --transition: background-color, opacity 100ms linear;
-  --ripple-color: currentColor;
-  --border-radius: #{$fab-border-radius};
-  --border-width: 0;
-  --border-style: none;
-  --border-color: initial;
   /**
    * @prop --background: Background of the button
    * @prop --background-activated: Background of the button when activated
@@ -35,6 +29,17 @@
    * @prop --padding-bottom: Padding bottom of the button
    * @prop --padding-start: Padding start of the button
    */
+  --transition: background-color, opacity 100ms linear;
+  --ripple-color: currentColor;
+  --border-radius: #{$fab-border-radius};
+  --border-width: 0;
+  --border-style: none;
+  --border-color: initial;
+  --padding-top: 0;
+  --padding-end: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  
   @include margin(0);
   display: block;
 
@@ -62,7 +67,7 @@
 }
 
 // Focused/Activated Button with Color
-:host(.ion-color.focused) .button-native,
+:host(.ion-color.ion-focused) .button-native,
 :host(.ion-color.activated) .button-native {
   background: #{current-color(shade)};
   color: #{current-color(contrast)};
@@ -100,12 +105,8 @@
   overflow: hidden;
   z-index: 0;
   appearance: none;
-}
 
-.button-native[disabled] {
-  cursor: default;
-  opacity: .5;
-  pointer-events: none;
+  box-sizing: border-box;
 }
 
 ::slotted(ion-icon) {
@@ -140,7 +141,7 @@
 }
 
 // Focused Button
-:host(.focused) .button-native {
+:host(.ion-focused) .button-native {
   background: var(--background-focused);
   color: var(--color-focused);
 }
@@ -150,7 +151,7 @@
   pointer-events: none;
 }
 
-.button-native[disabled] {
+:host(.fab-button-disabled) .button-native {
   cursor: default;
   opacity: .5;
   pointer-events: none;

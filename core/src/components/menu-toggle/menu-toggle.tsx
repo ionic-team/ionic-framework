@@ -1,11 +1,14 @@
 import { Component, ComponentInterface, Listen, Prop, State } from '@stencil/core';
 
+import { Mode } from '../../interface';
+
 @Component({
   tag: 'ion-menu-toggle',
   styleUrl: 'menu-toggle.scss',
   shadow: true
 })
 export class MenuToggle implements ComponentInterface {
+  mode!: Mode;
 
   @Prop({ context: 'document' }) doc!: Document;
 
@@ -63,6 +66,7 @@ export class MenuToggle implements ComponentInterface {
     return {
       'aria-hidden': hidden ? 'true' : null,
       class: {
+        [`${this.mode}`]: true,
         'menu-toggle-hidden': hidden,
       }
     };

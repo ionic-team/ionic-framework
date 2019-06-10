@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Prop, QueueApi } from '@stencil/core';
 
-import { Config } from '../../interface';
+import { Config, Mode } from '../../interface';
 import { rIC } from '../../utils/helpers';
 import { isPlatform } from '../../utils/platform';
 
@@ -9,6 +9,7 @@ import { isPlatform } from '../../utils/platform';
   styleUrl: 'app.scss'
 })
 export class App implements ComponentInterface {
+  mode!: Mode;
 
   @Element() el!: HTMLElement;
 
@@ -27,12 +28,14 @@ export class App implements ComponentInterface {
       importInputShims(win, config);
       importStatusTap(win, config, queue);
       importHardwareBackButton(win, config);
+      importFocusVisible(win);
     });
   }
 
   hostData() {
     return {
       class: {
+        [`${this.mode}`]: true,
         'ion-page': true,
         'force-statusbar-padding': this.config.getBoolean('_forceStatusbarPadding')
       }
@@ -52,6 +55,10 @@ function importStatusTap(win: Window, config: Config, queue: QueueApi) {
   if (statusTap) {
     import('../../utils/status-tap').then(module => module.startStatusTap(win, queue));
   }
+}
+
+function importFocusVisible(win: Window) {
+  import('../../utils/focus-visible').then(module => module.startFocusVisible(win.document));
 }
 
 function importTapClick(win: Window, config: Config) {

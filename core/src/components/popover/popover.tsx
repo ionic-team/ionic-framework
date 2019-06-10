@@ -28,7 +28,6 @@ export class Popover implements ComponentInterface, OverlayInterface {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
 
   /** @internal */
@@ -99,16 +98,6 @@ export class Popover implements ComponentInterface, OverlayInterface {
   @Prop() animated = true;
 
   /**
-   * Emitted after the popover has loaded.
-   */
-  @Event() ionPopoverDidLoad!: EventEmitter<void>;
-
-  /**
-   * Emitted after the popover has unloaded.
-   */
-  @Event() ionPopoverDidUnload!: EventEmitter<void>;
-
-  /**
    * Emitted after the popover has presented.
    */
   @Event({ eventName: 'ionPopoverDidPresent' }) didPresent!: EventEmitter<void>;
@@ -127,14 +116,6 @@ export class Popover implements ComponentInterface, OverlayInterface {
    * Emitted after the popover has dismissed.
    */
   @Event({ eventName: 'ionPopoverDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
-
-  componentDidLoad() {
-    this.ionPopoverDidLoad.emit();
-  }
-
-  componentDidUnload() {
-    this.ionPopoverDidUnload.emit();
-  }
 
   @Listen('ionDismiss')
   protected onDismiss(ev: UIEvent) {
@@ -189,6 +170,9 @@ export class Popover implements ComponentInterface, OverlayInterface {
 
   /**
    * Dismiss the popover overlay after it has been presented.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the popover. For example, 'cancel' or 'backdrop'.
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
@@ -216,14 +200,15 @@ export class Popover implements ComponentInterface, OverlayInterface {
   }
 
   hostData() {
-
     return {
+      'aria-modal': 'true',
+      'no-router': true,
       style: {
         zIndex: 20000 + this.overlayIndex,
       },
-      'no-router': true,
       class: {
         ...getClassMap(this.cssClass),
+        [`${this.mode}`]: true,
         'popover-translucent': this.translucent
       }
     };

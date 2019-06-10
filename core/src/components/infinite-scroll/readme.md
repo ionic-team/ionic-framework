@@ -38,7 +38,7 @@ Separating the `ion-infinite-scroll` and `ion-infinite-scroll-content` component
 
 ```typescript
 import { Component, ViewChild } from '@angular/core';
-import { InfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll } from '@ionic/angular';
 
 @Component({
   selector: 'infinite-scroll-example',
@@ -46,7 +46,7 @@ import { InfiniteScroll } from '@ionic/angular';
   styleUrls: ['./infinite-scroll-example.css']
 })
 export class InfiniteScrollExample {
-  @ViewChild(InfiniteScroll) infiniteScroll: InfiniteScroll;
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   constructor() {}
 
@@ -64,7 +64,7 @@ export class InfiniteScrollExample {
   }
 
   toggleInfiniteScroll() {
-    infiniteScroll.disabled = !infiniteScroll.disabled;
+    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
 }
 ```
@@ -74,7 +74,7 @@ export class InfiniteScrollExample {
 
 ```html
 <ion-content>
-  <ion-button onclick="toggleInfiniteScroll()" expand="block">
+  <ion-button onClick="toggleInfiniteScroll()" expand="block">
     Toggle Infinite Scroll
   </ion-button>
 
@@ -111,6 +111,62 @@ function toggleInfiniteScroll() {
 ```
 
 
+### React
+
+```tsx
+import React, { Component } from 'react';
+
+import { IonButton, IonContent, IonInfiniteScroll, IonInfiniteScrollContent, IonList } from '@ionic/react';
+
+export default class Example extends Component<Props, State> {
+
+  ionInfiniteScrollRef: React.RefObject<HTMLionInfiniteScrollElement>
+
+  constructor() {
+    this.ionInfiniteScrollRef = React.createRef<HTMLionInfiniteScrollElement>();
+  }
+
+  loadData = (ev: MouseEvent) => {
+    setTimeout(() => {
+      console.log('Done');
+      ev.target.complete();
+
+      // App logic to determine if all data is loaded
+      // and disable the infinite scroll
+      if (data.length == 1000) {
+        ev.target.disabled = true;
+      }
+    }, 500);
+  }
+
+  toggleInfiniteScroll = () => {
+    this.ionInfiniteScrollRef.disabled = !this.ionInfiniteScrollRef.disabled;
+  }
+
+  render() {
+    return (
+      <>
+        <IonContent>
+          <IonButton onClick="toggleInfiniteScroll()" expand="block">
+            Toggle Infinite Scroll
+          </IonButton>
+
+          <IonList></IonList>
+
+          <IonInfiniteScroll threshold="100px" onIonInfinite={(ev) => this.loadData(ev)}>
+            <IonInfiniteScrollContent
+              loadingSpinner="bubbles"
+              loadingText="Loading more data...">
+            </IonInfiniteScrollContent>
+          </IonInfiniteScroll>
+        </IonContent>
+      </>
+    );
+  }
+}
+```
+
+
 
 ## Properties
 
@@ -123,9 +179,9 @@ function toggleInfiniteScroll() {
 
 ## Events
 
-| Event         | Description                                                                                                                                                                                 | Detail |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
-| `ionInfinite` | Emitted when the scroll reaches the threshold distance. From within your infinite handler, you must call the infinite scroll's `complete()` method when your async operation has completed. | void   |
+| Event         | Description                                                                                                                                                                                 | Type                |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| `ionInfinite` | Emitted when the scroll reaches the threshold distance. From within your infinite handler, you must call the infinite scroll's `complete()` method when your async operation has completed. | `CustomEvent<void>` |
 
 
 ## Methods

@@ -43,6 +43,10 @@
   pointer-events: none;
 }
 
+:host(.datetime-readonly) {
+  pointer-events: none;
+}
+
 button {
   @include input-cover();
 }
@@ -50,9 +54,14 @@ button {
 .datetime-text {
   @include text-inherit();
 
+  @include rtl() {
+    direction: rtl;
+  }
+
   flex: 1;
 
   min-height: inherit;
 
+  direction: ltr;
   overflow: inherit;
 }

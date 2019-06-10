@@ -2,14 +2,14 @@ const cloneMap = new WeakMap<HTMLElement, HTMLElement>();
 
 export function relocateInput(
   componentEl: HTMLElement,
-  inputEl: HTMLInputElement,
+  inputEl: HTMLInputElement | HTMLTextAreaElement,
   shouldRelocate: boolean,
   inputRelativeY = 0
 ) {
   if (cloneMap.has(componentEl) === shouldRelocate) {
     return;
   }
-  console.debug(`native-input, hideCaret, shouldHideCaret: ${shouldRelocate}, input value: ${inputEl.value}`);
+
   if (shouldRelocate) {
     addClone(componentEl, inputEl, inputRelativeY);
   } else {
@@ -17,11 +17,11 @@ export function relocateInput(
   }
 }
 
-export function isFocused(input: HTMLInputElement): boolean {
+export function isFocused(input: HTMLInputElement | HTMLTextAreaElement): boolean {
   return input === (input as any).getRootNode().activeElement;
 }
 
-function addClone(componentEl: HTMLElement, inputEl: HTMLInputElement, inputRelativeY: number) {
+function addClone(componentEl: HTMLElement, inputEl: HTMLInputElement | HTMLTextAreaElement, inputRelativeY: number) {
   // this allows for the actual input to receive the focus from
   // the user's touch event, but before it receives focus, it
   // moves the actual input to a location that will not screw
@@ -34,7 +34,7 @@ function addClone(componentEl: HTMLElement, inputEl: HTMLInputElement, inputRela
   const parentEl = inputEl.parentNode!;
 
   // DOM WRITES
-  const clonedEl = inputEl.cloneNode(false) as HTMLInputElement;
+  const clonedEl = inputEl.cloneNode(false) as HTMLElement;
   clonedEl.classList.add('cloned-input');
   clonedEl.tabIndex = -1;
   parentEl.appendChild(clonedEl);

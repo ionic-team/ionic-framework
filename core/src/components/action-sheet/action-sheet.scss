@@ -39,6 +39,10 @@
   z-index: $z-index-overlay;
 }
 
+:host(.overlay-hidden) {
+  display: none;
+}
+
 .action-sheet-wrapper {
   @include position(null, 0, 0, 0);
   @include margin(auto);
@@ -98,7 +102,7 @@
 .action-sheet-group {
   flex-shrink: 2;
   overscroll-behavior-y: contain;
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   pointer-events: all;
 

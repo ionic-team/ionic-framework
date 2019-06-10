@@ -1,10 +1,10 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
-import { DatetimeOptions, InputChangeEvent, Mode, PickerColumn, PickerColumnOption, PickerOptions, StyleEvent } from '../../interface';
+import { DatetimeChangeEventDetail, DatetimeOptions, Mode, PickerColumn, PickerColumnOption, PickerOptions, StyleEventDetail } from '../../interface';
 import { clamp, findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
-import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getValueFromFormat, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
+import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getDateValue, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
 
 @Component({
   tag: 'ion-datetime',
@@ -15,16 +15,17 @@ import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convert
   shadow: true
 })
 export class Datetime implements ComponentInterface {
+
   private inputId = `ion-dt-${datetimeIds++}`;
   private locale: LocaleData = {};
   private datetimeMin: DatetimeData = {};
   private datetimeMax: DatetimeData = {};
   private datetimeValue: DatetimeData = {};
+  private buttonEl?: HTMLButtonElement;
 
   @Element() el!: HTMLIonDatetimeElement;
 
   @State() isExpanded = false;
-  @State() keyFocus = false;
 
   @Prop({ connect: 'ion-picker-controller' }) pickerCtrl!: HTMLIonPickerControllerElement;
 
@@ -42,6 +43,11 @@ export class Datetime implements ComponentInterface {
    * If `true`, the user cannot interact with the datetime.
    */
   @Prop() disabled = false;
+
+  /**
+   * If `true`, the datetime appears normal but is not interactive.
+   */
+  @Prop() readonly = false;
 
   @Watch('disabled')
   protected disabledChanged() {
@@ -169,7 +175,7 @@ export class Datetime implements ComponentInterface {
 
   /**
    * Any additional options that the picker interface can accept.
-   * See the [Picker API docs](../../picker/Picker) for the picker options.
+   * See the [Picker API docs](../picker) for the picker options.
    */
   @Prop() pickerOptions?: DatetimeOptions;
 
@@ -204,7 +210,7 @@ export class Datetime implements ComponentInterface {
   /**
    * Emitted when the value (selected date) has changed.
    */
-  @Event() ionChange!: EventEmitter<InputChangeEvent>;
+  @Event() ionChange!: EventEmitter<DatetimeChangeEventDetail>;
 
   /**
    * Emitted when the datetime has focus.
@@ -220,7 +226,7 @@ export class Datetime implements ComponentInterface {
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   componentWillLoad() {
     // first see if locale names were provided in the inputs
@@ -238,6 +244,12 @@ export class Datetime implements ComponentInterface {
     this.emitStyle();
   }
 
+  @Listen('click')
+  onClick() {
+    this.setFocus();
+    this.open();
+  }
+
   /**
    * Opens the datetime overlay.
    */
@@ -249,9 +261,29 @@ export class Datetime implements ComponentInterface {
 
     const pickerOptions = this.generatePickerOptions();
     const picker = await this.pickerCtrl.create(pickerOptions);
+
     this.isExpanded = true;
     picker.onDidDismiss().then(() => {
       this.isExpanded = false;
+      this.setFocus();
+    });
+    picker.addEventListener('ionPickerColChange', async (event: any) => {
+      const data = event.detail;
+
+      const colSelectedIndex = data.selectedIndex;
+      const colOptions = data.options;
+
+      const changeData: any = {};
+      changeData[data.name] = {
+        value: colOptions[colSelectedIndex].value
+      };
+
+      this.updateDatetimeValue(changeData);
+      const columns = this.generateColumns();
+
+      picker.columns = columns;
+
+      await this.validate(picker);
     });
     await this.validate(picker);
     await picker.present();
@@ -273,8 +305,8 @@ export class Datetime implements ComponentInterface {
 
   private generatePickerOptions(): PickerOptions {
     const pickerOptions: PickerOptions = {
-      ...this.pickerOptions,
       mode: this.mode,
+      ...this.pickerOptions,
       columns: this.generateColumns()
     };
 
@@ -287,6 +319,7 @@ export class Datetime implements ComponentInterface {
           text: this.cancelText,
           role: 'cancel',
           handler: () => {
+            this.updateDatetimeValue(this.value);
             this.ionCancel.emit();
           }
         },
@@ -294,6 +327,19 @@ export class Datetime implements ComponentInterface {
           text: this.doneText,
           handler: (data: any) => {
             this.updateDatetimeValue(data);
+
+            /**
+             * Prevent convertDataToISO from doing any
+             * kind of transformation based on timezone
+             * This cancels out any change it attempts to make
+             *
+             * Important: Take the timezone offset based on
+             * the date that is currently selected, otherwise
+             * there can be 1 hr difference when dealing w/ DST
+             */
+            const date = new Date(convertDataToISO(this.datetimeValue));
+            this.datetimeValue.tzOffset = date.getTimezoneOffset() * -1;
+
             this.value = convertDataToISO(this.datetimeValue);
           }
         }
@@ -346,7 +392,8 @@ export class Datetime implements ComponentInterface {
 
       // cool, we've loaded up the columns with options
       // preselect the option for this column
-      const optValue = getValueFromFormat(this.datetimeValue, format);
+      const optValue = getDateValue(this.datetimeValue, format);
+
       const selectedIndex = colOptions.findIndex(opt => opt.value === optValue);
 
       return {
@@ -514,6 +561,13 @@ export class Datetime implements ComponentInterface {
   private getText() {
     // create the text of the formatted data
     const template = this.displayFormat || this.pickerFormat || DEFAULT_FORMAT;
+
+    if (
+      this.value === undefined ||
+      this.value === null ||
+      this.value.length === 0
+    ) { return; }
+
     return renderDatetime(template, this.datetimeValue, this.locale);
   }
 
@@ -522,12 +576,10 @@ export class Datetime implements ComponentInterface {
     return Object.keys(val).length > 0;
   }
 
-  private onClick = () => {
-    this.open();
-  }
-
-  private onKeyUp = () => {
-    this.keyFocus = true;
+  private setFocus() {
+    if (this.buttonEl) {
+      this.buttonEl.focus();
+    }
   }
 
   private onFocus = () => {
@@ -535,30 +587,33 @@ export class Datetime implements ComponentInterface {
   }
 
   private onBlur = () => {
-    this.keyFocus = false;
     this.ionBlur.emit();
   }
 
   hostData() {
-    const addPlaceholderClass =
-      (this.getText() === undefined && this.placeholder != null) ? true : false;
+    const { inputId, disabled, readonly, isExpanded, el, placeholder } = this;
 
-    const labelId = this.inputId + '-lbl';
-    const label = findItemLabel(this.el);
+    const addPlaceholderClass =
+      (this.getText() === undefined && placeholder != null) ? true : false;
+
+    const labelId = inputId + '-lbl';
+    const label = findItemLabel(el);
     if (label) {
       label.id = labelId;
     }
 
     return {
       'role': 'combobox',
-      'aria-disabled': this.disabled ? 'true' : null,
-      'aria-expanded': `${this.isExpanded}`,
+      'aria-disabled': disabled ? 'true' : null,
+      'aria-expanded': `${isExpanded}`,
       'aria-haspopup': 'true',
       'aria-labelledby': labelId,
       class: {
-        'datetime-disabled': this.disabled,
+        [`${this.mode}`]: true,
+        'datetime-disabled': disabled,
+        'datetime-readonly': readonly,
         'datetime-placeholder': addPlaceholderClass,
-        'in-item': hostContext('ion-item', this.el)
+        'in-item': hostContext('ion-item', el)
       }
     };
   }
@@ -576,10 +631,10 @@ export class Datetime implements ComponentInterface {
       <div class="datetime-text">{datetimeText}</div>,
       <button
         type="button"
-        onClick={this.onClick}
-        onKeyUp={this.onKeyUp}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
+        disabled={this.disabled}
+        ref={el => this.buttonEl = el}
       >
       </button>
     ];

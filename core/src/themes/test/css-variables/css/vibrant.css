@@ -6,7 +6,7 @@
  * colors are all changed to more vibrant shades.
  *
  * Looking to create a custom theme? Check out the generator!
- * https://beta.ionicframework.com/docs/theming/color-generator
+ * https://ionicframework.com/docs/theming/color-generator
 **/
 
 :root {
@@ -77,4 +77,5 @@
   --ion-background-color: #778899;
   --ion-item-background: #fff;
   --ion-item-border-color: #5bff76;
+  --ion-item-background-activated: #5bff76;
 }

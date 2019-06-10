@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
   <script src="../../../../../dist/ionic.js"></script>
 </head>
 
@@ -40,6 +41,23 @@
           <ion-segment-button class="segment-slack" value="slack">
             <ion-label>Slack</ion-label>
             <ion-icon name="logo-slack"></ion-icon>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar class="themed">
+        <ion-segment value="delete">
+          <ion-segment-button value="create">
+            <ion-label>Create</ion-label>
+            <ion-icon name="create"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button value="delete">
+            <ion-label>Delete</ion-label>
+            <ion-icon name="trash"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button value="upload">
+            <ion-label>Upload</ion-label>
+            <ion-icon name="cloud-upload"></ion-icon>
           </ion-segment-button>
         </ion-segment>
       </ion-toolbar>
@@ -122,34 +140,6 @@
 
 </body>
 
-<script>
-  var segment = document.getElementById('browserSegment');
-  var results = document.getElementById('browserResults');
-
-  checkUrl();
-
-  segment.addEventListener('ionChange', function () {
-    checkUrl();
-  });
-
-  function checkUrl() {
-    var url = window.location.href;
-
-    if (url.search('#bookmarks') > -1) {
-      setResults('bookmarks');
-    } else if (url.search('#reading') > -1) {
-      setResults('reading');
-    } else if (url.search('#links') > -1) {
-      setResults('links');
-    }
-  }
-
-  function setResults(value) {
-    results.innerHTML = value.charAt(0).toUpperCase() + value.slice(1);
-    segment.value = value;
-  }
-</script>
-
 <style>
   body {
     margin: 0;
@@ -178,6 +168,14 @@
     word-wrap: normal;
     white-space: pre;
     color: #314361;
+  }
+
+  .themed {
+    --ion-toolbar-background: #3880ff;
+    --ion-toolbar-color: #fff;
+    --ion-toolbar-color-activated: #fff;
+    --ion-toolbar-color-unchecked: rgba(255, 255, 255, .6);
+    --ion-toolbar-color-checked: #fff;
   }
 
   .custom {

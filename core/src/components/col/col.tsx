@@ -1,5 +1,6 @@
 import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
 
+import { Mode } from '../../interface';
 import { matchBreakpoint } from '../../utils/media';
 
 const win = window as any;
@@ -12,111 +13,113 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
   shadow: true
 })
 export class Col implements ComponentInterface {
+  mode!: Mode;
+
   @Prop({ context: 'window' }) win!: Window;
 
   @Element() el!: HTMLStencilElement;
 
   /**
-   * The amount to offset the column, in terms of how many columns it should shift to the right
+   * The amount to offset the column, in terms of how many columns it should shift to the end
    * of the total available.
    */
   @Prop() offset?: string;
 
   /**
    * The amount to offset the column for xs screens, in terms of how many columns it should shift
-   * to the right of the total available.
+   * to the end of the total available.
    */
   @Prop() offsetXs?: string;
 
   /**
    * The amount to offset the column for sm screens, in terms of how many columns it should shift
-   * to the right of the total available.
+   * to the end of the total available.
    */
   @Prop() offsetSm?: string;
 
   /**
    * The amount to offset the column for md screens, in terms of how many columns it should shift
-   * to the right of the total available.
+   * to the end of the total available.
    */
   @Prop() offsetMd?: string;
 
   /**
    * The amount to offset the column for lg screens, in terms of how many columns it should shift
-   * to the right of the total available.
+   * to the end of the total available.
    */
   @Prop() offsetLg?: string;
 
   /**
    * The amount to offset the column for xl screens, in terms of how many columns it should shift
-   * to the right of the total available.
+   * to the end of the total available.
    */
   @Prop() offsetXl?: string;
 
   /**
-   * The amount to pull the column, in terms of how many columns it should shift to the left of
+   * The amount to pull the column, in terms of how many columns it should shift to the start of
    * the total available.
    */
   @Prop() pull?: string;
 
   /**
    * The amount to pull the column for xs screens, in terms of how many columns it should shift
-   * to the left of the total available.
+   * to the start of the total available.
    */
   @Prop() pullXs?: string;
   /**
    * The amount to pull the column for sm screens, in terms of how many columns it should shift
-   * to the left of the total available.
+   * to the start of the total available.
    */
   @Prop() pullSm?: string;
   /**
    * The amount to pull the column for md screens, in terms of how many columns it should shift
-   * to the left of the total available.
+   * to the start of the total available.
    */
   @Prop() pullMd?: string;
   /**
    * The amount to pull the column for lg screens, in terms of how many columns it should shift
-   * to the left of the total available.
+   * to the start of the total available.
    */
   @Prop() pullLg?: string;
   /**
    * The amount to pull the column for xl screens, in terms of how many columns it should shift
-   * to the left of the total available.
+   * to the start of the total available.
    */
   @Prop() pullXl?: string;
 
   /**
-   * The amount to push the column, in terms of how many columns it should shift to the right
+   * The amount to push the column, in terms of how many columns it should shift to the end
    * of the total available.
    */
   @Prop() push?: string;
 
   /**
    * The amount to push the column for xs screens, in terms of how many columns it should shift
-   * to the right of the total available.
+   * to the end of the total available.
    */
   @Prop() pushXs?: string;
 
   /**
    * The amount to push the column for sm screens, in terms of how many columns it should shift
-   * to the right of the total available.
+   * to the end of the total available.
    */
   @Prop() pushSm?: string;
 
   /**
    * The amount to push the column for md screens, in terms of how many columns it should shift
-   * to the right of the total available.
+   * to the end of the total available.
    */
   @Prop() pushMd?: string;
 
   /**
    * The amount to push the column for lg screens, in terms of how many columns it should shift
-   * to the right of the total available.
+   * to the end of the total available.
    */
   @Prop() pushLg?: string;
 
   /**
    * The amount to push the column for xl screens, in terms of how many columns it should shift
-   * to the right of the total available.
+   * to the end of the total available.
    */
   @Prop() pushXl?: string;
 
@@ -232,24 +235,28 @@ export class Col implements ComponentInterface {
     };
   }
 
-  private calculateOffset() {
-    return this.calculatePosition('offset', 'margin-left');
+  private calculateOffset(isRTL: boolean) {
+    return this.calculatePosition('offset', isRTL ? 'margin-right' : 'margin-left');
   }
 
-  private calculatePull() {
-    return this.calculatePosition('pull', 'right');
+  private calculatePull(isRTL: boolean) {
+    return this.calculatePosition('pull', isRTL ? 'left' : 'right');
   }
 
-  private calculatePush() {
-    return this.calculatePosition('push', 'left');
+  private calculatePush(isRTL: boolean) {
+    return this.calculatePosition('push', isRTL ? 'right' : 'left');
   }
 
   hostData() {
+    const isRTL = this.win.document.dir === 'rtl';
     return {
+      class: {
+        [`${this.mode}`]: true
+      },
       style: {
-        ...this.calculateOffset(),
-        ...this.calculatePull(),
-        ...this.calculatePush(),
+        ...this.calculateOffset(isRTL),
+        ...this.calculatePull(isRTL),
+        ...this.calculatePush(isRTL),
         ...this.calculateSize(),
       }
     };

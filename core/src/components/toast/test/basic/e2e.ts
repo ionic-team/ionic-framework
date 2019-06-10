@@ -1,70 +1,103 @@
-import { newE2EPage } from '@stencil/core/testing';
+import { testToast } from '../test.utils';
 
-test('toast: basic', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/toast/test/basic?ionic:_testing=true'
-  });
+const DIRECTORY = 'basic';
 
-  // Show bottom toast
-  let button = await page.find('#showBottomToast');
-  await button.click();
+test('toast: basic, bottom', async () => {
+  await testToast(DIRECTORY, '#show-bottom-toast');
+});
 
-  let toast = await page.find('ion-toast');
-  await toast.waitForVisible();
-  await page.waitFor(250);
+test('toast: basic, middle', async () => {
+  await testToast(DIRECTORY, '#show-middle-toast');
+});
 
-  let compare = await page.compareScreenshot(`bottom toast`);
-  expect(compare).toMatchScreenshot();
+test('toast: basic, top', async () => {
+  await testToast(DIRECTORY, '#show-top-toast');
+});
 
-  await toast.callMethod('dismiss');
-  await toast.waitForNotVisible();
-  await page.waitFor(250);
+test('toast: basic, two lines', async () => {
+  await testToast(DIRECTORY, '#two-line-toast');
+});
 
-  compare = await page.compareScreenshot('dismissed bottom toast');
-  expect(compare).toMatchScreenshot();
+test('toast: basic, close button', async () => {
+  await testToast(DIRECTORY, '#close-button-toast');
+});
 
-  toast = await page.find('ion-toast');
-  expect(toast).toBeNull();
+test('toast: basic, custom close text', async () => {
+  await testToast(DIRECTORY, '#custom-close-text-toast');
+});
 
-  // Show middle toast
-  button = await page.find('#showMiddleToast');
-  await button.click();
+test('toast: basic, custom buttons', async () => {
+  await testToast(DIRECTORY, '#custom-action-buttons-toast');
+});
 
-  toast = await page.find('ion-toast');
-  await toast.waitForVisible();
-  await page.waitFor(250);
+test('toast: basic, translucent', async () => {
+  await testToast(DIRECTORY, '#translucent-toast');
+});
 
-  compare = await page.compareScreenshot(`middle toast`);
-  expect(compare).toMatchScreenshot();
+test('toast: basic, color', async () => {
+  await testToast(DIRECTORY, '#color-toast');
+});
 
-  await toast.callMethod('dismiss');
-  await toast.waitForNotVisible();
-  await page.waitFor(250);
+test('toast: basic, custom class', async () => {
+  await testToast(DIRECTORY, '#custom-class-toast');
+});
 
-  compare = await page.compareScreenshot('dismissed middle toast');
-  expect(compare).toMatchScreenshot();
+test('toast: start end position', async () => {
+  await testToast(DIRECTORY, '#toast-start-and-end');
+});
 
-  toast = await page.find('ion-toast');
-  expect(toast).toBeNull();
+test('toast: html', async () => {
+  await testToast(DIRECTORY, '#toast-html');
+});
 
-  // Show top toast
-  button = await page.find('#showTopToast');
-  await button.click();
+/**
+ * RTL Tests
+ */
 
-  toast = await page.find('ion-toast');
-  await toast.waitForVisible();
-  await page.waitFor(250);
+test('toast:rtl: basic, bottom', async () => {
+  await testToast(DIRECTORY, '#show-bottom-toast', true);
+});
 
-  compare = await page.compareScreenshot(`top toast`);
-  expect(compare).toMatchScreenshot();
+test('toast:rtl: basic, middle', async () => {
+  await testToast(DIRECTORY, '#show-middle-toast', true);
+});
 
-  await toast.callMethod('dismiss');
-  await toast.waitForNotVisible();
-  await page.waitFor(250);
+test('toast:rtl: basic, top', async () => {
+  await testToast(DIRECTORY, '#show-top-toast', true);
+});
 
-  compare = await page.compareScreenshot('dismissed top toast');
-  expect(compare).toMatchScreenshot();
+test('toast:rtl: basic, two lines', async () => {
+  await testToast(DIRECTORY, '#two-line-toast', true);
+});
 
-  toast = await page.find('ion-toast');
-  expect(toast).toBeNull();
+test('toast:rtl: basic, close button', async () => {
+  await testToast(DIRECTORY, '#close-button-toast', true);
+});
+
+test('toast:rtl: basic, custom close text', async () => {
+  await testToast(DIRECTORY, '#custom-close-text-toast', true);
+});
+
+test('toast:rtl: basic, custom buttons', async () => {
+  await testToast(DIRECTORY, '#custom-action-buttons-toast');
+});
+
+test('toast:rtl: basic, translucent', async () => {
+  await testToast(DIRECTORY, '#translucent-toast', true);
+});
+
+test('toast:rtl: basic, color', async () => {
+  await testToast(DIRECTORY, '#color-toast', true);
+});
+
+test('toast:rtl: basic, custom class', async () => {
+  await testToast(DIRECTORY, '#custom-class-toast', true);
+});
+
+test('toast:rtl: start end position', async () => {
+  await testToast(DIRECTORY, '#toast-start-and-end', true);
+});
+
+test('toast:rtl: html', async () => {
+  await testToast(DIRECTORY, '#toast-html', true);
 });

@@ -24,7 +24,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
   /** @internal */
   @Prop() overlayIndex!: number;
@@ -52,7 +51,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   /**
    * An array of buttons for the action sheet.
    */
-  @Prop() buttons!: (ActionSheetButton | string)[];
+  @Prop() buttons: (ActionSheetButton | string)[] = [];
 
   /**
    * Additional classes to apply for custom CSS. If multiple classes are
@@ -76,7 +75,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   @Prop() subHeader?: string;
 
   /**
-   * If `true`, the action sheet will be translucent.
+   * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports backdrop-filter.
    */
   @Prop() translucent = false;
 
@@ -84,16 +83,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
    * If `true`, the action sheet will animate.
    */
   @Prop() animated = true;
-
-  /**
-   * Emitted after the alert has loaded.
-   */
-  @Event() ionActionSheetDidLoad!: EventEmitter<void>;
-
-  /**
-   * Emitted after the alert has unloaded.
-   */
-  @Event() ionActionSheetDidUnload!: EventEmitter<void>;
 
   /**
    * Emitted after the alert has presented.
@@ -114,14 +103,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
    * Emitted after the alert has dismissed.
    */
   @Event({ eventName: 'ionActionSheetDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
-
-  componentDidLoad() {
-    this.ionActionSheetDidLoad.emit();
-  }
-
-  componentDidUnload() {
-    this.ionActionSheetDidUnload.emit();
-  }
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
@@ -147,6 +128,12 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   /**
    * Dismiss the action sheet overlay after it has been presented.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the action sheet.
+   * This can be useful in a button handler for determining which button was
+   * clicked to dismiss the action sheet.
+   * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
    */
   @Method()
   dismiss(data?: any, role?: string): Promise<boolean> {
@@ -154,7 +141,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   }
 
   /**
-   * Returns a promise that resolves when the action-sheet did dismiss.
+   * Returns a promise that resolves when the action sheet did dismiss.
    */
   @Method()
   onDidDismiss(): Promise<OverlayEventDetail> {
@@ -162,7 +149,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   }
 
   /**
-   * Returns a promise that resolves when the action-sheet will dismiss.
+   * Returns a promise that resolves when the action sheet will dismiss.
    *
    */
   @Method()
@@ -209,10 +196,14 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   hostData() {
     return {
+      'role': 'dialog',
+      'aria-modal': 'true',
       style: {
         zIndex: 20000 + this.overlayIndex,
       },
       class: {
+        [`${this.mode}`]: true,
+
         ...getClassMap(this.cssClass),
         'action-sheet-translucent': this.translucent
       }

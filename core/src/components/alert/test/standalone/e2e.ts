@@ -1,32 +1,35 @@
-import { newE2EPage } from '@stencil/core/testing';
+import { testAlert } from '../test.utils';
 
-test('alert: standalone', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/alert/test/standalone?ionic:_testing=true'
-  });
+const DIRECTORY = 'standalone';
 
-  const alerts = [
-    ['#basic'],
-    ['#longMessage', 'long message'],
-    ['#multipleButtons', 'multiple buttons'],
-    ['#noMessage', 'no message'],
-    ['#confirm', 'confirm'],
-    ['#prompt', 'prompt'],
-    ['#radio', 'radio'],
-    ['#checkbox', 'checkbox']
-  ];
+test(`alert: standalone`, async () => {
+  await testAlert(DIRECTORY, '#basic');
+});
 
-  for (const [buttonSelector, message] of alerts) {
-    await page.click(buttonSelector);
+test(`alert: standalone, long message`, async () => {
+  await testAlert(DIRECTORY, '#longMessage');
+});
 
-    const alert = await page.find('ion-alert');
-    expect(alert).not.toBe(null);
-    await alert.waitForVisible();
-    await page.waitFor(250);
+test(`alert: standalone, multiple buttons`, async () => {
+  await testAlert(DIRECTORY, '#multipleButtons');
+});
 
-    const compare = await page.compareScreenshot(message);
-    expect(compare).toMatchScreenshot();
-    await alert.callMethod('dismiss');
-  }
+test(`alert: standalone, no message`, async () => {
+  await testAlert(DIRECTORY, '#noMessage');
+});
 
+test(`alert: standalone, confirm`, async () => {
+  await testAlert(DIRECTORY, '#confirm');
+});
+
+test(`alert: standalone, prompt`, async () => {
+  await testAlert(DIRECTORY, '#prompt');
+});
+
+test(`alert: standalone, radio`, async () => {
+  await testAlert(DIRECTORY, '#radio');
+});
+
+test(`alert: standalone, checkbox`, async () => {
+  await testAlert(DIRECTORY, '#checkbox');
 });
