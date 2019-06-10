@@ -457,6 +457,10 @@ ion-item-divider,prop,mode,"ios" | "md",undefined,false,false
 ion-item-divider,prop,sticky,boolean,false,false,false
 ion-item-divider,css-prop,--background
 ion-item-divider,css-prop,--color
+ion-item-divider,css-prop,--inner-padding-bottom
+ion-item-divider,css-prop,--inner-padding-end
+ion-item-divider,css-prop,--inner-padding-start
+ion-item-divider,css-prop,--inner-padding-top
 ion-item-divider,css-prop,--padding-bottom
 ion-item-divider,css-prop,--padding-end
 ion-item-divider,css-prop,--padding-start
