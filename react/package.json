@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "0.0.6",
+  "version": "0.0.6-0",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -40,8 +40,8 @@
   "peerDependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-router": "^5.01",
-    "react-router-dom": "^5.01"
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1"
   },
   "devDependencies": {
     "@trust/webcrypto": "^0.9.2",
