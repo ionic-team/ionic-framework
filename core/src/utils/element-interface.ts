@@ -9,3 +9,10 @@ export interface AnchorInterface {
   target: string | undefined;
   // routerDirection: RouterDirection;
 }
+
+export interface ButtonInterface {
+  type: 'submit' | 'reset' | 'button';
+  disabled: boolean;
+
+  // routerDirection: RouterDirection;
+}
