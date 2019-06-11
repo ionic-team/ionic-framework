@@ -72,6 +72,7 @@ ion-alert,css-prop,--width
 
 ion-anchor,shadow
 ion-anchor,prop,color,string | undefined,undefined,false,false
+ion-anchor,prop,download,string | undefined,undefined,false,false
 ion-anchor,prop,href,string | undefined,undefined,false,false
 ion-anchor,prop,rel,string | undefined,undefined,false,false
 ion-anchor,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
@@ -143,6 +144,7 @@ ion-button,shadow
 ion-button,prop,buttonType,string,'button',false,false
 ion-button,prop,color,string | undefined,undefined,false,false
 ion-button,prop,disabled,boolean,false,false,true
+ion-button,prop,download,string | undefined,undefined,false,false
 ion-button,prop,expand,"block" | "full" | undefined,undefined,false,true
 ion-button,prop,fill,"clear" | "default" | "outline" | "solid" | undefined,undefined,false,true
 ion-button,prop,href,string | undefined,undefined,false,false
@@ -201,6 +203,7 @@ ion-card,scoped
 ion-card,prop,button,boolean,false,false,false
 ion-card,prop,color,string | undefined,undefined,false,false
 ion-card,prop,disabled,boolean,false,false,false
+ion-card,prop,download,string | undefined,undefined,false,false
 ion-card,prop,href,string | undefined,undefined,false,false
 ion-card,prop,mode,"ios" | "md",undefined,false,false
 ion-card,prop,rel,string | undefined,undefined,false,false
@@ -335,6 +338,7 @@ ion-fab-button,shadow
 ion-fab-button,prop,activated,boolean,false,false,false
 ion-fab-button,prop,color,string | undefined,undefined,false,false
 ion-fab-button,prop,disabled,boolean,false,false,false
+ion-fab-button,prop,download,string | undefined,undefined,false,false
 ion-fab-button,prop,href,string | undefined,undefined,false,false
 ion-fab-button,prop,mode,"ios" | "md",undefined,false,false
 ion-fab-button,prop,rel,string | undefined,undefined,false,false
@@ -481,6 +485,7 @@ ion-item-group,none
 ion-item-option,shadow
 ion-item-option,prop,color,string | undefined,undefined,false,false
 ion-item-option,prop,disabled,boolean,false,false,false
+ion-item-option,prop,download,string | undefined,undefined,false,false
 ion-item-option,prop,expandable,boolean,false,false,false
 ion-item-option,prop,href,string | undefined,undefined,false,false
 ion-item-option,prop,mode,"ios" | "md",undefined,false,false
@@ -509,6 +514,7 @@ ion-item,prop,color,string | undefined,undefined,false,false
 ion-item,prop,detail,boolean | undefined,undefined,false,false
 ion-item,prop,detailIcon,string,'ios-arrow-forward',false,false
 ion-item,prop,disabled,boolean,false,false,false
+ion-item,prop,download,string | undefined,undefined,false,false
 ion-item,prop,href,string | undefined,undefined,false,false
 ion-item,prop,lines,"full" | "inset" | "none" | undefined,undefined,false,false
 ion-item,prop,mode,"ios" | "md",undefined,false,false
@@ -1099,6 +1105,7 @@ ion-tab-bar,css-prop,--color
 
 ion-tab-button,shadow
 ion-tab-button,prop,disabled,boolean,false,false,false
+ion-tab-button,prop,download,string | undefined,undefined,false,false
 ion-tab-button,prop,href,string | undefined,undefined,false,false
 ion-tab-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide" | undefined,undefined,false,false
 ion-tab-button,prop,mode,"ios" | "md",undefined,false,false
