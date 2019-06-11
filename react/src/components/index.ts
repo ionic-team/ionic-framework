@@ -22,5 +22,4 @@ export { IonRouterOutlet } from './navigation/IonRouterOutlet';
 export { IonBackButton } from './navigation/IonBackButton';
 
 addIcons(ICON_PATHS);
-
-export const bootStrapIonic = (root = window) => defineCustomElements(root);
+defineCustomElements(window);
