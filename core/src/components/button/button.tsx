@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
 
 import { Color, Mode, RouterDirection } from '../../interface';
+import { AnchorInterface } from '../../utils/element-interface';
 import { hasShadowDom } from '../../utils/helpers';
 import { createColorClasses, openURL } from '../../utils/theme';
 
@@ -18,7 +19,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
   },
   shadow: true,
 })
-export class Button implements ComponentInterface {
+export class Button implements ComponentInterface, AnchorInterface {
 
   private inToolbar = false;
   private inItem = false;
@@ -72,7 +73,7 @@ export class Button implements ComponentInterface {
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
-  @Prop() href?: string;
+  @Prop() href: string | undefined;
 
   /**
    * The button shape.
@@ -94,7 +95,7 @@ export class Button implements ComponentInterface {
    * Only applies when an `href` is provided.
    * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
    */
-  @Prop() target?: string;
+  @Prop() target: string | undefined;
 
   /**
    * The type of the button.

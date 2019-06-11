@@ -393,7 +393,7 @@ export namespace Components {
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href': string | undefined;
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
@@ -401,7 +401,7 @@ export namespace Components {
     /**
     * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
     */
-    'target'?: string;
+    'target': string | undefined;
   }
   interface IonAnchorAttributes extends StencilHTMLAttributes {
     /**
@@ -411,7 +411,7 @@ export namespace Components {
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href'?: string | undefined;
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
@@ -419,7 +419,7 @@ export namespace Components {
     /**
     * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
     */
-    'target'?: string;
+    'target'?: string | undefined;
   }
 
   interface IonApp {}
@@ -551,7 +551,7 @@ export namespace Components {
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href': string | undefined;
     /**
     * The mode determines which platform styles to use.
     */
@@ -575,7 +575,7 @@ export namespace Components {
     /**
     * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
     */
-    'target'?: string;
+    'target': string | undefined;
     /**
     * The type of the button.
     */
@@ -605,7 +605,7 @@ export namespace Components {
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href'?: string | undefined;
     /**
     * The mode determines which platform styles to use.
     */
@@ -637,7 +637,7 @@ export namespace Components {
     /**
     * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
     */
-    'target'?: string;
+    'target'?: string | undefined;
     /**
     * The type of the button.
     */
@@ -747,7 +747,7 @@ export namespace Components {
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href': string | undefined;
     /**
     * The mode determines which platform styles to use.
     */
@@ -756,6 +756,10 @@ export namespace Components {
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection': RouterDirection;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target': string | undefined;
     /**
     * The type of the button. Only used when an `onclick` or `button` property is present.
     */
@@ -777,7 +781,7 @@ export namespace Components {
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href'?: string | undefined;
     /**
     * The mode determines which platform styles to use.
     */
@@ -786,6 +790,10 @@ export namespace Components {
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection'?: RouterDirection;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target'?: string | undefined;
     /**
     * The type of the button. Only used when an `onclick` or `button` property is present.
     */
@@ -1393,7 +1401,7 @@ export namespace Components {
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href': string | undefined;
     /**
     * The mode determines which platform styles to use.
     */
@@ -1410,6 +1418,10 @@ export namespace Components {
     * The size of the button. Set this to `small` in order to have a mini fab.
     */
     'size'?: 'small';
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target': string | undefined;
     /**
     * If `true`, the fab button will be translucent.
     */
@@ -1435,7 +1447,7 @@ export namespace Components {
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href'?: string | undefined;
     /**
     * The mode determines which platform styles to use.
     */
@@ -1460,6 +1472,10 @@ export namespace Components {
     * The size of the button. Set this to `small` in order to have a mini fab.
     */
     'size'?: 'small';
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target'?: string | undefined;
     /**
     * If `true`, the fab button will be translucent.
     */
@@ -1971,7 +1987,7 @@ export namespace Components {
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href': string | undefined;
     /**
     * The mode determines which platform styles to use.
     */
@@ -1979,7 +1995,7 @@ export namespace Components {
     /**
     * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
     */
-    'target'?: string;
+    'target': string | undefined;
     /**
     * The type of the button.
     */
@@ -2001,7 +2017,7 @@ export namespace Components {
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href'?: string | undefined;
     /**
     * The mode determines which platform styles to use.
     */
@@ -2009,7 +2025,7 @@ export namespace Components {
     /**
     * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
     */
-    'target'?: string;
+    'target'?: string | undefined;
     /**
     * The type of the button.
     */
@@ -2095,7 +2111,7 @@ export namespace Components {
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href': string | undefined;
     /**
     * How the bottom border should be displayed on the item.
     */
@@ -2111,7 +2127,7 @@ export namespace Components {
     /**
     * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
     */
-    'target'?: string;
+    'target': string | undefined;
     /**
     * The type of the button. Only used when an `onclick` or `button` property is present.
     */
@@ -2141,7 +2157,7 @@ export namespace Components {
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href'?: string | undefined;
     /**
     * How the bottom border should be displayed on the item.
     */
@@ -2157,7 +2173,7 @@ export namespace Components {
     /**
     * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
     */
-    'target'?: string;
+    'target'?: string | undefined;
     /**
     * The type of the button. Only used when an `onclick` or `button` property is present.
     */
@@ -4530,7 +4546,7 @@ export namespace Components {
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href': string | undefined;
     /**
     * Set the layout of the text and icon in the tab bar. It defaults to `'icon-top'`.
     */
@@ -4550,7 +4566,7 @@ export namespace Components {
     /**
     * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
     */
-    'target'?: string;
+    'target': string | undefined;
   }
   interface IonTabButtonAttributes extends StencilHTMLAttributes {
     /**
@@ -4560,7 +4576,7 @@ export namespace Components {
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href'?: string | undefined;
     /**
     * Set the layout of the text and icon in the tab bar. It defaults to `'icon-top'`.
     */
@@ -4580,7 +4596,7 @@ export namespace Components {
     /**
     * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
     */
-    'target'?: string;
+    'target'?: string | undefined;
   }
 
   interface IonTab {

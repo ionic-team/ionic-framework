@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Prop } from '@stencil/core';
 
 import { Color, Mode, RouterDirection } from '../../interface';
+import { AnchorInterface } from '../../utils/element-interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 @Component({
@@ -11,7 +12,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
   },
   shadow: true
 })
-export class FabButton implements ComponentInterface {
+export class FabButton implements ComponentInterface, AnchorInterface {
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'window' }) win!: Window;
@@ -42,13 +43,20 @@ export class FabButton implements ComponentInterface {
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
-  @Prop() href?: string;
+  @Prop() href: string | undefined;
 
   /**
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
   @Prop() routerDirection: RouterDirection = 'forward';
+
+  /**
+   * Specifies where to display the linked URL.
+   * Only applies when an `href` is provided.
+   * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+   */
+  @Prop() target: string | undefined;
 
   /**
    * If `true`, the fab button will show when in a fab-list.
@@ -113,7 +121,10 @@ export class FabButton implements ComponentInterface {
     const TagType = this.href === undefined ? 'button' : 'a' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
-      : { href: this.href };
+      : {
+        href: this.href,
+        target: this.target
+      };
 
     return (
       <TagType

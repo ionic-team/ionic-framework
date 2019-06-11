@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Color, Mode, RouterDirection } from '../../interface';
+import { AnchorInterface } from '../../utils/element-interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
 @Component({
@@ -11,7 +12,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
   },
   scoped: true
 })
-export class Card implements ComponentInterface {
+export class Card implements ComponentInterface, AnchorInterface {
 
   @Prop({ context: 'window' }) win!: Window;
 
@@ -46,13 +47,20 @@ export class Card implements ComponentInterface {
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
-  @Prop() href?: string;
+  @Prop() href: string | undefined;
 
   /**
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
   @Prop() routerDirection: RouterDirection = 'forward';
+
+  /**
+   * Specifies where to display the linked URL.
+   * Only applies when an `href` is provided.
+   * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+   */
+  @Prop() target: string | undefined;
 
   private isClickable(): boolean {
     return (this.href !== undefined || this.button);
@@ -79,9 +87,14 @@ export class Card implements ComponentInterface {
       ];
     }
 
-    const { href, mode, win, routerDirection, type } = this;
+    const { href, mode, win, routerDirection } = this;
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
-    const attrs = TagType === 'button' ? { type } : { href };
+    const attrs = (TagType === 'button')
+      ? { type: this.type }
+      : {
+        href: this.href,
+        target: this.target
+      };
 
     return (
       <TagType

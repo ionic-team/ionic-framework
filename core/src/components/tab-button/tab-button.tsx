@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi } from '@stencil/core';
 
 import { Config, Mode, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
+import { AnchorInterface } from '../../utils/element-interface';
 
 @Component({
   tag: 'ion-tab-button',
@@ -10,7 +11,7 @@ import { Config, Mode, TabBarChangedEventDetail, TabButtonClickEventDetail, TabB
   },
   shadow: true
 })
-export class TabButton implements ComponentInterface {
+export class TabButton implements ComponentInterface, AnchorInterface {
 
   @Element() el!: HTMLElement;
 
@@ -32,7 +33,7 @@ export class TabButton implements ComponentInterface {
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
-  @Prop() href?: string;
+  @Prop() href: string | undefined;
 
   /**
    * Set the layout of the text and icon in the tab bar.
@@ -56,7 +57,7 @@ export class TabButton implements ComponentInterface {
    * Only applies when an `href` is provided.
    * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
    */
-  @Prop() target?: string;
+  @Prop() target: string | undefined;
 
   /**
    * Emitted when the tab bar is clicked
@@ -144,10 +145,15 @@ export class TabButton implements ComponentInterface {
   }
 
   render() {
-    const { mode, href, target } = this;
+    const { mode } = this;
+
+    const attrs = {
+      href: this.href,
+      target: this.target
+    };
 
     return (
-      <a href={href} tabIndex={-1} target={target}>
+      <a {...attrs} tabIndex={-1}>
         <slot></slot>
         {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
       </a>

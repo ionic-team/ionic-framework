@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
+import { AnchorInterface } from '../../utils/element-interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -19,7 +20,7 @@ import { createColorClasses } from '../../utils/theme';
   },
   shadow: true
 })
-export class ItemOption implements ComponentInterface {
+export class ItemOption implements ComponentInterface, AnchorInterface {
 
   @Element() el!: HTMLElement;
 
@@ -49,14 +50,14 @@ export class ItemOption implements ComponentInterface {
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
-  @Prop() href?: string;
+  @Prop() href: string | undefined;
 
   /**
    * Specifies where to display the linked URL.
    * Only applies when an `href` is provided.
    * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
    */
-  @Prop() target?: string;
+  @Prop() target: string | undefined;
 
   /**
    * The type of the button.

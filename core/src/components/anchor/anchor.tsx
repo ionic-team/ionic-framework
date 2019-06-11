@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Listen, Prop } from '@stencil/core';
 
 import { Color, Mode, RouterDirection } from '../../interface';
+import { AnchorInterface } from '../../utils/element-interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
 @Component({
@@ -8,7 +9,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
   styleUrl: 'anchor.scss',
   shadow: true
 })
-export class Anchor implements ComponentInterface {
+export class Anchor implements ComponentInterface, AnchorInterface {
   mode!: Mode;
 
   @Prop({ context: 'window' }) win!: Window;
@@ -24,7 +25,7 @@ export class Anchor implements ComponentInterface {
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
-  @Prop() href?: string;
+  @Prop() href: string | undefined;
 
   /**
    * When using a router, it specifies the transition direction when navigating to
@@ -37,7 +38,7 @@ export class Anchor implements ComponentInterface {
    * Only applies when an `href` is provided.
    * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
    */
-  @Prop() target?: string;
+  @Prop() target: string | undefined;
 
   @Listen('click')
   onClick(ev: Event) {
@@ -55,8 +56,13 @@ export class Anchor implements ComponentInterface {
   }
 
   render() {
+    const attrs = {
+      href: this.href,
+      target: this.target
+    };
+
     return (
-      <a href={this.href} target={this.target}>
+      <a {...attrs}>
         <slot></slot>
       </a>
     );

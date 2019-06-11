@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Listen, Prop, State } from '@stencil/core';
 
 import { Color, CssClassMap, Mode, RouterDirection, StyleEventDetail } from '../../interface';
+import { AnchorInterface } from '../../utils/element-interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
@@ -16,7 +17,8 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
   },
   shadow: true
 })
-export class Item implements ComponentInterface {
+export class Item implements ComponentInterface, AnchorInterface {
+
   private itemStyles = new Map<string, CssClassMap>();
 
   @Element() el!: HTMLStencilElement;
@@ -62,7 +64,7 @@ export class Item implements ComponentInterface {
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
-  @Prop() href?: string;
+  @Prop() href: string | undefined;
 
   /**
    * How the bottom border should be displayed on the item.
@@ -80,7 +82,7 @@ export class Item implements ComponentInterface {
    * Only applies when an `href` is provided.
    * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
    */
-  @Prop() target?: string;
+  @Prop() target: string | undefined;
 
   /**
    * The type of the button. Only used when an `onclick` or `button` property is present.
