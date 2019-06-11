@@ -3800,7 +3800,7 @@ export namespace Components {
     */
     'setFocus': () => void;
     /**
-    * Sets the behavior for the cancel button. Setting to `"focus"` shows the cancel button on focus. Setting to `"never"` hides the cancel button. Setting to `"always"` shows the cancel button regardless of focus state.
+    * Sets the behavior for the cancel button. Defaults to `"never"`. Setting to `"focus"` shows the cancel button on focus. Setting to `"never"` hides the cancel button. Setting to `"always"` shows the cancel button regardless of focus state.
     */
     'showCancelButton': boolean | string;
     /**
@@ -3890,7 +3890,7 @@ export namespace Components {
     */
     'searchIcon'?: string;
     /**
-    * Sets the behavior for the cancel button. Setting to `"focus"` shows the cancel button on focus. Setting to `"never"` hides the cancel button. Setting to `"always"` shows the cancel button regardless of focus state.
+    * Sets the behavior for the cancel button. Defaults to `"never"`. Setting to `"focus"` shows the cancel button on focus. Setting to `"never"` hides the cancel button. Setting to `"always"` shows the cancel button regardless of focus state.
     */
     'showCancelButton'?: boolean | string;
     /**
