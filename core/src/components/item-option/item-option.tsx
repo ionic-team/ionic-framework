@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
-import { AnchorInterface } from '../../utils/element-interface';
+import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -20,7 +20,7 @@ import { createColorClasses } from '../../utils/theme';
   },
   shadow: true
 })
-export class ItemOption implements ComponentInterface, AnchorInterface {
+export class ItemOption implements ComponentInterface, AnchorInterface, ButtonInterface {
 
   @Element() el!: HTMLElement;
 

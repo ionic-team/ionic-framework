@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Color, Mode, RouterDirection } from '../../interface';
-import { AnchorInterface } from '../../utils/element-interface';
+import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
 @Component({
@@ -12,7 +12,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
   },
   scoped: true
 })
-export class Card implements ComponentInterface, AnchorInterface {
+export class Card implements ComponentInterface, AnchorInterface, ButtonInterface {
 
   @Prop({ context: 'window' }) win!: Window;
 

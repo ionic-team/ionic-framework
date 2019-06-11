@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Prop } from '@stencil/core';
 
 import { Color, Mode, RouterDirection } from '../../interface';
-import { AnchorInterface } from '../../utils/element-interface';
+import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 @Component({
@@ -12,7 +12,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
   },
   shadow: true
 })
-export class FabButton implements ComponentInterface, AnchorInterface {
+export class FabButton implements ComponentInterface, AnchorInterface, ButtonInterface {
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'window' }) win!: Window;

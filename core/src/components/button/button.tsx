@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
 
 import { Color, Mode, RouterDirection } from '../../interface';
-import { AnchorInterface } from '../../utils/element-interface';
+import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { hasShadowDom } from '../../utils/helpers';
 import { createColorClasses, openURL } from '../../utils/theme';
 
@@ -19,7 +19,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
   },
   shadow: true,
 })
-export class Button implements ComponentInterface, AnchorInterface {
+export class Button implements ComponentInterface, AnchorInterface, ButtonInterface {
 
   private inToolbar = false;
   private inItem = false;

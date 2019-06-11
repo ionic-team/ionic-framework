@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Listen, Prop, State } from '@stencil/core';
 
 import { Color, CssClassMap, Mode, RouterDirection, StyleEventDetail } from '../../interface';
-import { AnchorInterface } from '../../utils/element-interface';
+import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
@@ -17,7 +17,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
   },
   shadow: true
 })
-export class Item implements ComponentInterface, AnchorInterface {
+export class Item implements ComponentInterface, AnchorInterface, ButtonInterface {
 
   private itemStyles = new Map<string, CssClassMap>();
 
