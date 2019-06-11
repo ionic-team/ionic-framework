@@ -41,10 +41,12 @@
 }
 
 :host(.title-md) {
-  @include padding(0, 12px);
+  @include padding(0, 20px);
 
   font-size: 20px;
   font-weight: 500;
+
+  letter-spacing: .0125em;
 }
 
 :host(.ion-color) {

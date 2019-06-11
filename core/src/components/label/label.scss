@@ -29,6 +29,7 @@
   color: current-color(base);
 }
 
+:host(.ion-text-wrap),
 :host([text-wrap]) {
   white-space: normal;
 }
@@ -44,6 +45,10 @@
 
   max-width: 200px;
   pointer-events: none;
+}
+
+:host-context(.item-textarea) {
+  align-self: baseline;
 }
 
 
@@ -69,12 +74,6 @@
 
   width: auto;
   max-width: 100%;
-}
-
-:host-context(.item-has-focus).label-floating,
-:host-context(.item-has-placeholder).label-floating,
-:host-context(.item-has-value).label-floating {
-  @include transform(translate3d(0, 0, 0), scale(.8));
 }
 
 :host(.label-no-animate.label-floating) {

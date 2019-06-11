@@ -1,5 +1,5 @@
 import { ComponentRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { NavDirection, RouterDirection } from '@ionic/core';
 
 export function insertView(views: RouteView[], view: RouteView, direction: RouterDirection) {
@@ -94,5 +94,6 @@ export interface RouteView {
   element: HTMLElement;
   ref: ComponentRef<any>;
   savedData?: any;
+  savedExtras?: NavigationExtras;
   unlistenEvents: () => void;
 }

@@ -5,19 +5,17 @@ import { getScrollData } from './scroll-data';
 
 export function enableScrollAssist(
   componentEl: HTMLElement,
-  inputEl: HTMLInputElement,
+  inputEl: HTMLInputElement | HTMLTextAreaElement,
   contentEl: HTMLIonContentElement,
   keyboardHeight: number
 ) {
   let coord: any;
   const touchStart = (ev: Event) => {
     coord = pointerCoord(ev);
-    console.debug(`input-base, pointerStart, type: ${ev.type}`);
   };
 
   const touchEnd = (ev: Event) => {
     // input cover touchend/mouseup
-    console.debug(`input-base, pointerEnd, type: ${ev.type}`);
     if (!coord) {
       return;
     }
@@ -45,7 +43,7 @@ export function enableScrollAssist(
 
 function jsSetFocus(
   componentEl: HTMLElement,
-  inputEl: HTMLInputElement,
+  inputEl: HTMLInputElement | HTMLTextAreaElement,
   contentEl: HTMLIonContentElement,
   keyboardHeight: number
 ) {

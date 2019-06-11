@@ -108,14 +108,6 @@ export class Item implements ComponentInterface {
   }
 
   componentDidLoad() {
-    // Change the button size to small for each ion-button in the item
-    // unless the size is explicitly set
-    Array.from(this.el.querySelectorAll('ion-button')).forEach(button => {
-      if (button.size === undefined) {
-        button.size = 'small';
-      }
-    });
-
     // Check for multiple inputs to change the position to relative
     const inputs = this.el.querySelectorAll('ion-select, ion-datetime');
     this.multipleInputs = inputs.length > 1 ? true : false;
@@ -136,10 +128,11 @@ export class Item implements ComponentInterface {
       class: {
         ...childStyles,
         ...createColorClasses(this.color),
+        'item': true,
+        [`${this.mode}`]: true,
         [`item-lines-${this.lines}`]: this.lines !== undefined,
         'item-disabled': this.disabled,
         'in-list': hostContext('ion-list', this.el),
-        'item': true,
         'item-multiple-inputs': this.multipleInputs,
         'ion-activatable': this.isClickable(),
         'ion-focusable': true,

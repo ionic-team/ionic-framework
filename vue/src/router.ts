@@ -2,12 +2,12 @@ import VueRouter, { Route } from 'vue-router';
 import { PluginFunction } from 'vue';
 import { RouterArgs } from './interfaces';
 import IonVueRouter from './components/ion-vue-router';
-import { BackButtonEvent } from '@ionic/core';
+import { BackButtonEvent, RouterDirection } from '@ionic/core';
 
 // Extend the official VueRouter
 export default class Router extends VueRouter {
-  direction: number;
-  directionOverride: number | null;
+  direction: RouterDirection;
+  directionOverride: RouterDirection | null;
   viewCount: number;
   prevRouteStack: Route[];
   history: any;
@@ -18,7 +18,7 @@ export default class Router extends VueRouter {
     super(args);
 
     // The direction user navigates in
-    this.direction = args.direction || 1;
+    this.direction = args.direction || 'forward';
 
     // Override normal direction
     this.directionOverride = null;
@@ -65,12 +65,12 @@ export default class Router extends VueRouter {
       }
 
       // Increment or decrement the view count
-      this.viewCount += this.direction;
+      this.viewCount += this.direction === 'back' ? -1 : 1;
 
       // Call the original method
       this.history._updateRoute(nextRoute);
 
-      // Reset direction for overrides
+      // Reset direction overrides
       this.directionOverride = null;
     };
   }
@@ -81,7 +81,7 @@ export default class Router extends VueRouter {
     return this.viewCount > 1 && this.currentRoute.fullPath.length > 1;
   }
 
-  guessDirection(nextRoute: Route): number {
+  guessDirection(nextRoute: Route): RouterDirection {
     if (this.prevRouteStack.length !== 0) {
       const prevRoute: Route = this.prevRouteStack[this.prevRouteStack.length - 1];
 
@@ -93,7 +93,7 @@ export default class Router extends VueRouter {
         } else {
           this.prevRouteStack.pop();
         }
-        return -1;
+        return 'back';
       }
     }
 
@@ -101,7 +101,7 @@ export default class Router extends VueRouter {
     if (this.history.current.fullPath !== nextRoute.fullPath) {
       this.prevRouteStack.push(this.history.current);
     }
-    return 1;
+    return 'forward';
   }
 }
 

@@ -76,10 +76,10 @@ export default Example
 
 ## Properties
 
-| Property         | Attribute         | Description                                       | Type                                                                                              | Default     |
-| ---------------- | ----------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ----------- |
-| `loadingSpinner` | `loading-spinner` | An animated SVG spinner that shows while loading. | `"bubbles" \| "circles" \| "crescent" \| "dots" \| "lines" \| "lines-small" \| null \| undefined` | `undefined` |
-| `loadingText`    | `loading-text`    | Optional text to display while loading.           | `string \| undefined`                                                                             | `undefined` |
+| Property         | Attribute         | Description                                                                                                                                                                                                                                                                                                                     | Type                                                                                              | Default     |
+| ---------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ----------- |
+| `loadingSpinner` | `loading-spinner` | An animated SVG spinner that shows while loading.                                                                                                                                                                                                                                                                               | `"bubbles" \| "circles" \| "crescent" \| "dots" \| "lines" \| "lines-small" \| null \| undefined` | `undefined` |
+| `loadingText`    | `loading-text`    | Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security) | `string \| undefined`                                                                             | `undefined` |
 
 
 ----------------------------------------------

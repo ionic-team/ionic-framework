@@ -21,6 +21,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
 export class Button implements ComponentInterface {
 
   private inToolbar = false;
+  private inItem = false;
 
   @Element() el!: HTMLElement;
 
@@ -105,6 +106,7 @@ export class Button implements ComponentInterface {
 
   componentWillLoad() {
     this.inToolbar = !!this.el.closest('ion-buttons');
+    this.inItem = !!this.el.closest('ion-item') || !!this.el.closest('ion-item-divider');
   }
 
   @Listen('click')
@@ -130,6 +132,22 @@ export class Button implements ComponentInterface {
     }
   }
 
+  private get hasIconOnly() {
+    return !!this.el.querySelector('ion-icon[slot="icon-only"]');
+  }
+
+  private get rippleType() {
+    const hasClearFill = this.fill === undefined || this.fill === 'clear';
+
+    // If the button is in a toolbar, has a clear fill (which is the default)
+    // and only has an icon we use the unbounded "circular" ripple effect
+    if (hasClearFill && this.hasIconOnly && this.inToolbar) {
+      return 'unbounded';
+    }
+
+    return 'bounded';
+  }
+
   private onFocus = () => {
     this.ionFocus.emit();
   }
@@ -139,15 +157,17 @@ export class Button implements ComponentInterface {
   }
 
   hostData() {
-    const { buttonType, disabled, color, expand, shape, size, strong } = this;
+    const { buttonType, disabled, color, expand, hasIconOnly, shape, strong } = this;
     let fill = this.fill;
     if (fill === undefined) {
       fill = this.inToolbar ? 'clear' : 'solid';
     }
+    const size = this.size === undefined && this.inItem ? 'small' : this.size;
     return {
       'aria-disabled': disabled ? 'true' : null,
       class: {
         ...createColorClasses(color),
+        [`${this.mode}`]: true,
         [buttonType]: true,
         [`${buttonType}-${expand}`]: expand !== undefined,
         [`${buttonType}-${size}`]: size !== undefined,
@@ -155,6 +175,7 @@ export class Button implements ComponentInterface {
         [`${buttonType}-${fill}`]: true,
         [`${buttonType}-strong`]: strong,
 
+        'button-has-icon-only': hasIconOnly,
         'button-disabled': disabled,
         'ion-activatable': true,
         'ion-focusable': true,
@@ -182,7 +203,7 @@ export class Button implements ComponentInterface {
           <slot></slot>
           <slot name="end"></slot>
         </span>
-        {this.mode === 'md' && <ion-ripple-effect type={this.inToolbar ? 'unbounded' : 'bounded'}></ion-ripple-effect>}
+        {this.mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
       </TagType>
     );
   }

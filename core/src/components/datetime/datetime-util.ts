@@ -248,8 +248,31 @@ export function parseDate(val: string | undefined | null): DatetimeData | undefi
  * such as "01:47"
  */
 export const getLocalDateTime = (dateString: any = ''): Date => {
-  const date = (typeof dateString === 'string' && dateString.length > 0) ? new Date(dateString) : new Date();
+  /**
+   * If user passed in undefined
+   * or null, convert it to the
+   * empty string since the rest
+   * of this functions expects
+   * a string
+   */
+  if (dateString === undefined || dateString === null) {
+    dateString = '';
+  }
 
+  /**
+   * Ensures that YYYY-MM-DD, YYYY-MM,
+   * YYYY-DD, etc does not get affected
+   * by timezones and stays on the day/month
+   * that the user provided
+   */
+  if (
+    dateString.length === 10 ||
+    dateString.length === 7
+  ) {
+    dateString += ' ';
+  }
+
+  const date = (typeof dateString === 'string' && dateString.length > 0) ? new Date(dateString) : new Date();
   return new Date(
     Date.UTC(
       date.getFullYear(),
@@ -267,7 +290,6 @@ export function updateDate(existingData: DatetimeData, newData: any): boolean {
 
   if (!newData || typeof newData === 'string') {
     const localDateTime = getLocalDateTime(newData);
-
     if (!Number.isNaN(localDateTime.getTime())) {
       newData = localDateTime.toISOString();
     }
