@@ -74,6 +74,8 @@
   text-align: initial;
   text-decoration: none;
   box-sizing: border-box;
+
+  overflow: hidden;
 }
 
 
@@ -151,7 +153,7 @@
   background: var(--background);
 
   box-shadow: var(--box-shadow);
-  overflow: hidden;
+  overflow: inherit;
   box-sizing: border-box;
 }
 
@@ -196,7 +198,7 @@ button, a {
   border-color: var(--border-color);
 
   box-shadow: var(--inner-box-shadow);
-  overflow: hidden;
+  overflow: inherit;
   box-sizing: border-box;
 }
 
