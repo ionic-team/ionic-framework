@@ -25,24 +25,26 @@ export const popoverController = /*@__PURE__*/createController<PopoverOptions, H
 export const toastController = /*@__PURE__*/createController<ToastOptions, HTMLIonToastElement>('ion-toast');
 
 export function createOverlay<T extends HTMLIonOverlayElement>(tagName: string, opts: object | undefined): Promise<T> {
-  const doc = document;
-  const element = doc.createElement(tagName) as HTMLIonOverlayElement;
-  connectListeners(doc);
+  return customElements.whenDefined(tagName).then(() => {
+    const doc = document;
+    const element = doc.createElement(tagName) as HTMLIonOverlayElement;
+    connectListeners(doc);
 
-  // convert the passed in overlay options into props
-  // that get passed down into the new overlay
-  Object.assign(element, opts);
-  element.classList.add('overlay-hidden');
-  const overlayIndex = lastId++;
-  element.overlayIndex = overlayIndex;
-  if (!element.hasAttribute('id')) {
-    element.id = `ion-overlay-${overlayIndex}`;
-  }
+    // convert the passed in overlay options into props
+    // that get passed down into the new overlay
+    Object.assign(element, opts);
+    element.classList.add('overlay-hidden');
+    const overlayIndex = lastId++;
+    element.overlayIndex = overlayIndex;
+    if (!element.hasAttribute('id')) {
+      element.id = `ion-overlay-${overlayIndex}`;
+    }
 
-  // append the overlay element to the document body
-  getAppRoot(doc).appendChild(element);
+    // append the overlay element to the document body
+    getAppRoot(doc).appendChild(element);
 
-  return element.componentOnReady() as any;
+    return element.componentOnReady() as any;
+  });
 }
 
 export function connectListeners(doc: Document) {
