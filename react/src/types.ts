@@ -6,15 +6,6 @@ export interface HTMLStencilElement extends HTMLElement {
   forceUpdate(): void;
 }
 
-export interface OverlayComponentElement extends HTMLStencilElement {
-  'present': () => Promise<void>;
-  'dismiss': (data?: any, role?: string | undefined) => Promise<boolean>;
-}
-
-export interface OverlayControllerComponentElement<E extends OverlayComponentElement> extends HTMLStencilElement {
-  'create': (opts: any) => Promise<E>;
-}
-
 export interface IonicGlobal {
   config?: any;
   ael?: (elm: any, eventName: string, cb: (ev: Event) => void, opts: any) => void;
