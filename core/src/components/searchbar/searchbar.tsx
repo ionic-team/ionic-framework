@@ -399,10 +399,12 @@ export class Searchbar implements ComponentInterface {
    * options are removed.
    */
   private isCancelButtonSetToFocus(): boolean {
-    return this.showCancelButton === 'focus' ||
-    this.showCancelButton === 'true' ||
-    this.showCancelButton === true ||
-    this.showCancelButton === '';
+    return (
+      this.showCancelButton === 'focus' ||
+      this.showCancelButton === 'true' ||
+      this.showCancelButton === true ||
+      this.showCancelButton === ''
+    );
   }
 
   /**
@@ -413,9 +415,11 @@ export class Searchbar implements ComponentInterface {
    * options are removed.
    */
   private isCancelButtonSetToNever(): boolean {
-    return this.showCancelButton === 'never' ||
-    this.showCancelButton === 'false' ||
-    this.showCancelButton === false;
+    return (
+      this.showCancelButton === 'never' ||
+      this.showCancelButton === 'false' ||
+      this.showCancelButton === false
+    );
   }
 
   hostData() {
