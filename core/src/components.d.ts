@@ -4013,6 +4013,10 @@ export namespace Components {
     */
     'mode': Mode;
     /**
+    * The type of the button.
+    */
+    'type': 'submit' | 'reset' | 'button';
+    /**
     * The value of the segment button.
     */
     'value': string;
@@ -4038,6 +4042,10 @@ export namespace Components {
     * Emitted when the segment button is clicked.
     */
     'onIonSelect'?: (event: CustomEvent<void>) => void;
+    /**
+    * The type of the button.
+    */
+    'type'?: 'submit' | 'reset' | 'button';
     /**
     * The value of the segment button.
     */
