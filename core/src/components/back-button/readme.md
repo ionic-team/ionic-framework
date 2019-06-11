@@ -250,34 +250,38 @@ export default Example;
 
 ## CSS Custom Properties
 
-| Name                    | Description                       |
-| ----------------------- | --------------------------------- |
-| `--background`          | Background of the button          |
-| `--border-radius`       | Border radius of the button       |
-| `--color`               | Text color of the button          |
-| `--icon-font-size`      | Font size of the button icon      |
-| `--icon-font-weight`    | Font weight of the button icon    |
-| `--icon-margin-bottom`  | Margin bottom of the button icon  |
-| `--icon-margin-end`     | Margin end of the button icon     |
-| `--icon-margin-start`   | Margin start of the button icon   |
-| `--icon-margin-top`     | Margin top of the button icon     |
-| `--icon-padding-bottom` | Padding bottom of the button icon |
-| `--icon-padding-end`    | Padding end of the button icon    |
-| `--icon-padding-start`  | Padding start of the button icon  |
-| `--icon-padding-top`    | Padding top of the button icon    |
-| `--margin-bottom`       | Margin bottom of the button       |
-| `--margin-end`          | Margin end of the button          |
-| `--margin-start`        | Margin start of the button        |
-| `--margin-top`          | Margin top of the button          |
-| `--min-height`          | Minimum height of the button      |
-| `--min-width`           | Minimum width of the button       |
-| `--opacity`             | Opacity of the button             |
-| `--padding-bottom`      | Padding bottom of the button      |
-| `--padding-end`         | Padding end of the button         |
-| `--padding-start`       | Padding start of the button       |
-| `--padding-top`         | Padding top of the button         |
-| `--ripple-color`        | Color of the button ripple effect |
-| `--transition`          | Transition of the button          |
+| Name                    | Description                           |
+| ----------------------- | ------------------------------------- |
+| `--background`          | Background of the button              |
+| `--background-focused`  | Background of the button when focused |
+| `--background-hover`    | Background of the button when hover   |
+| `--border-radius`       | Border radius of the button           |
+| `--color`               | Text color of the button              |
+| `--color-focused`       | Text color of the button when focused |
+| `--color-hover`         | Text color of the button when hover   |
+| `--icon-font-size`      | Font size of the button icon          |
+| `--icon-font-weight`    | Font weight of the button icon        |
+| `--icon-margin-bottom`  | Margin bottom of the button icon      |
+| `--icon-margin-end`     | Margin end of the button icon         |
+| `--icon-margin-start`   | Margin start of the button icon       |
+| `--icon-margin-top`     | Margin top of the button icon         |
+| `--icon-padding-bottom` | Padding bottom of the button icon     |
+| `--icon-padding-end`    | Padding end of the button icon        |
+| `--icon-padding-start`  | Padding start of the button icon      |
+| `--icon-padding-top`    | Padding top of the button icon        |
+| `--margin-bottom`       | Margin bottom of the button           |
+| `--margin-end`          | Margin end of the button              |
+| `--margin-start`        | Margin start of the button            |
+| `--margin-top`          | Margin top of the button              |
+| `--min-height`          | Minimum height of the button          |
+| `--min-width`           | Minimum width of the button           |
+| `--opacity`             | Opacity of the button                 |
+| `--padding-bottom`      | Padding bottom of the button          |
+| `--padding-end`         | Padding end of the button             |
+| `--padding-start`       | Padding start of the button           |
+| `--padding-top`         | Padding top of the button             |
+| `--ripple-color`        | Color of the button ripple effect     |
+| `--transition`          | Transition of the button              |
 
 
 ----------------------------------------------
