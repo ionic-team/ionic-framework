@@ -63,12 +63,12 @@
 }
 
 :host(.button-disabled) {
+  --opacity: .5;
   pointer-events: none;
 }
 
 :host(.button-disabled) .button-native {
   cursor: default;
-  opacity: .5;
   pointer-events: none;
 }
 
