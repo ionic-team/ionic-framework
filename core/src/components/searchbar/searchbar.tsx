@@ -19,7 +19,7 @@ export class Searchbar implements ComponentInterface {
   private isCancelVisible = false;
   private shouldAlignLeft = true;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLStencilElement;
 
   @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'document' }) doc!: Document;
@@ -101,9 +101,13 @@ export class Searchbar implements ComponentInterface {
   @Prop() searchIcon = 'search';
 
   /**
-   * If `true`, show the cancel button.
+   * Sets the behavior for the cancel button.
+   * Setting to `"focus"` shows the cancel button on focus.
+   * Setting to `"never"` hides the cancel button.
+   * Setting to `"always"` shows the cancel button regardless
+   * of focus state.
    */
-  @Prop() showCancelButton = false;
+  @Prop() showCancelButton: boolean | string = false;
 
   /**
    * If `true`, enable spellcheck on the input.
@@ -158,6 +162,14 @@ export class Searchbar implements ComponentInterface {
       inputEl.value = value;
     }
     this.ionChange.emit({ value });
+  }
+
+  @Watch('showCancelButton')
+  protected showCancelButtonChanged() {
+    requestAnimationFrame(() => {
+      this.positionElements();
+      this.el.forceUpdate();
+    });
   }
 
   componentDidLoad() {
@@ -330,7 +342,7 @@ export class Searchbar implements ComponentInterface {
   private positionCancelButton() {
     const isRTL = this.doc.dir === 'rtl';
     const cancelButton = (this.el.shadowRoot || this.el).querySelector('.searchbar-cancel-button') as HTMLElement;
-    const shouldShowCancel = this.focused;
+    const shouldShowCancel = this.shouldShowCancelButton();
 
     if (cancelButton && shouldShowCancel !== this.isCancelVisible) {
       const cancelStyle = cancelButton.style;
@@ -362,6 +374,50 @@ export class Searchbar implements ComponentInterface {
     return this.getValue() !== '';
   }
 
+  /**
+   * Determines whether or not the cancel button should visible onscreen
+   * Cancel button should be shown if one of the three conditions applies:
+   * 1. The user has called showCancel(), setting forceShowCancel = true
+   * 2. The user has focused the searchbar
+   * 3. The user has `showCancelButton` set to `persist` and the searchbar has
+   * already been focused at least once
+   */
+  private shouldShowCancelButton(): boolean {
+    if (
+      this.isCancelButtonSetToNever() ||
+      (this.isCancelButtonSetToFocus() && !this.focused)
+    ) { return false; }
+
+    return true;
+  }
+
+  /**
+   * Wrapper method to check if the cancel button
+   * should be shown on focus.
+   *
+   * TODO: Remove this when the `true` and `false`
+   * options are removed.
+   */
+  private isCancelButtonSetToFocus(): boolean {
+    return this.showCancelButton === 'focus' ||
+    this.showCancelButton === 'true' ||
+    this.showCancelButton === true ||
+    this.showCancelButton === '';
+  }
+
+  /**
+   * Wrapper method to check if the cancel button
+   * should never be shown.
+   *
+   * TODO: Remove this when the `true` and `false`
+   * options are removed.
+   */
+  private isCancelButtonSetToNever(): boolean {
+    return this.showCancelButton === 'never' ||
+    this.showCancelButton === 'false' ||
+    this.showCancelButton === false;
+  }
+
   hostData() {
     const animated = this.animated && this.config.getBoolean('animated', true);
 
@@ -375,7 +431,8 @@ export class Searchbar implements ComponentInterface {
         'searchbar-no-animate': animated && this.noAnimate,
         'searchbar-has-value': this.hasValue(),
         'searchbar-left-aligned': this.shouldAlignLeft,
-        'searchbar-has-focus': this.focused
+        'searchbar-has-focus': this.focused,
+        'searchbar-should-show-cancel': this.shouldShowCancelButton()
       }
     };
   }
@@ -384,10 +441,10 @@ export class Searchbar implements ComponentInterface {
     const clearIcon = this.clearIcon || (this.mode === 'ios' ? 'ios-close-circle' : 'md-close');
     const searchIcon = this.searchIcon;
 
-    const cancelButton = this.showCancelButton && (
+    const cancelButton = !this.isCancelButtonSetToNever() && (
       <button
         type="button"
-        tabIndex={this.mode === 'ios' && !this.focused ? -1 : undefined}
+        tabIndex={this.mode === 'ios' && !this.shouldShowCancelButton() ? -1 : undefined}
         onMouseDown={this.onCancelSearchbar}
         onTouchStart={this.onCancelSearchbar}
         class="searchbar-cancel-button"

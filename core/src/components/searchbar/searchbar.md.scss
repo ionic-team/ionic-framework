@@ -105,7 +105,8 @@
   display: block;
 }
 
-:host(.searchbar-has-focus) .searchbar-cancel-button {
+:host(.searchbar-has-focus) .searchbar-cancel-button,
+:host(.searchbar-should-show-cancel) .searchbar-cancel-button {
   display: block;
 }
 

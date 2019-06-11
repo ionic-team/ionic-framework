@@ -917,7 +917,7 @@ ion-searchbar,prop,disabled,boolean,false,false,false
 ion-searchbar,prop,mode,"ios" | "md",undefined,false,false
 ion-searchbar,prop,placeholder,string,'Search',false,false
 ion-searchbar,prop,searchIcon,string,'search',false,false
-ion-searchbar,prop,showCancelButton,boolean,false,false,false
+ion-searchbar,prop,showCancelButton,boolean | string,false,false,false
 ion-searchbar,prop,spellcheck,boolean,false,false,false
 ion-searchbar,prop,type,"email" | "number" | "password" | "search" | "tel" | "text" | "url",'search',false,false
 ion-searchbar,prop,value,null | string | undefined,'',false,false
