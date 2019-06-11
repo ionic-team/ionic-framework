@@ -36,14 +36,6 @@ export class SplitPane implements ComponentInterface {
    * The content `id` of the split-pane's main content.
    * This property can be used instead of the `[main]` attribute to select the `main`
    * content of the split-pane.
-   *
-   * ```html
-   * <ion-split-pane content-id="my-content">
-   *   <ion-menu></ion-menu>
-   *   <div id="my-content">
-   * </ion-split-pane>
-   * ```
-   *
    */
   @Prop() contentId?: string;
 

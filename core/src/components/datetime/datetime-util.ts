@@ -249,6 +249,17 @@ export function parseDate(val: string | undefined | null): DatetimeData | undefi
  */
 export const getLocalDateTime = (dateString: any = ''): Date => {
   /**
+   * If user passed in undefined
+   * or null, convert it to the
+   * empty string since the rest
+   * of this functions expects
+   * a string
+   */
+  if (dateString === undefined || dateString === null) {
+    dateString = '';
+  }
+
+  /**
    * Ensures that YYYY-MM-DD, YYYY-MM,
    * YYYY-DD, etc does not get affected
    * by timezones and stays on the day/month
