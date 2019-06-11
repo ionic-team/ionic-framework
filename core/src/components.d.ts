@@ -438,6 +438,10 @@ export namespace Components {
     */
     'defaultHref'?: string;
     /**
+    * If `true`, the user cannot interact with the button.
+    */
+    'disabled': boolean;
+    /**
     * The icon name to use for the back button.
     */
     'icon'?: string | null;
@@ -449,6 +453,10 @@ export namespace Components {
     * The text to display in the back button.
     */
     'text'?: string | null;
+    /**
+    * The type of the button.
+    */
+    'type': 'submit' | 'reset' | 'button';
   }
   interface IonBackButtonAttributes extends StencilHTMLAttributes {
     /**
@@ -459,6 +467,10 @@ export namespace Components {
     * The url to navigate back to by default when there is no history.
     */
     'defaultHref'?: string;
+    /**
+    * If `true`, the user cannot interact with the button.
+    */
+    'disabled'?: boolean;
     /**
     * The icon name to use for the back button.
     */
@@ -471,6 +483,10 @@ export namespace Components {
     * The text to display in the back button.
     */
     'text'?: string | null;
+    /**
+    * The type of the button.
+    */
+    'type'?: 'submit' | 'reset' | 'button';
   }
 
   interface IonBackdrop {
@@ -2423,6 +2439,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * If `true`, the user cannot interact with the card.
+    */
+    'disabled': boolean;
+    /**
     * Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle
     */
     'menu'?: string;
@@ -2430,6 +2450,10 @@ export namespace Components {
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
+    /**
+    * The type of the button.
+    */
+    'type': 'submit' | 'reset' | 'button';
   }
   interface IonMenuButtonAttributes extends StencilHTMLAttributes {
     /**
@@ -2441,6 +2465,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * If `true`, the user cannot interact with the card.
+    */
+    'disabled'?: boolean;
+    /**
     * Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle
     */
     'menu'?: string;
@@ -2448,6 +2476,10 @@ export namespace Components {
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
+    /**
+    * The type of the button.
+    */
+    'type'?: 'submit' | 'reset' | 'button';
   }
 
   interface IonMenuController {
