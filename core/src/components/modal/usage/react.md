@@ -30,5 +30,4 @@ export class ModalExample extends Component<Props, State> {
     );
   }
 }
-
 ```

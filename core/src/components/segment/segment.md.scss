@@ -44,11 +44,11 @@
 // Segment: Default Toolbar
 // --------------------------------------------------
 
-:host-context(ion-toolbar):not(.ion-color)::slotted(ion-segment-button) {
+:host-context(ion-toolbar:not(.ion-color)):not(.ion-color)::slotted(ion-segment-button) {
   color: #{var(--ion-toolbar-color-unchecked, var(--color))};
 }
 
-:host-context(ion-toolbar):not(.ion-color)::slotted(.segment-button-checked) {
+:host-context(ion-toolbar:not(.ion-color)):not(.ion-color)::slotted(.segment-button-checked) {
   --indicator-color-checked: #{var(--ion-toolbar-color-checked, var(--color-checked))};
 
   color: #{var(--ion-toolbar-color-checked, var(--color-checked))};
