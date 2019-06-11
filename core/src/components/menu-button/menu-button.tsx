@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Color, Config, Mode } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-menu-button',
@@ -39,6 +40,8 @@ export class MenuButton implements ComponentInterface {
   hostData() {
     return {
       class: {
+        ...createColorClasses(this.color),
+
         [`${this.mode}`]: true,
 
         'button': true,  // ion-buttons target .button
@@ -52,9 +55,9 @@ export class MenuButton implements ComponentInterface {
     const menuIcon = this.config.get('menuIcon', 'menu');
     return (
       <ion-menu-toggle menu={this.menu} autoHide={this.autoHide}>
-        <button type="button">
+        <button type="button" class="button-native">
           <slot>
-            <ion-icon icon={menuIcon} mode={this.mode} color={this.color} lazy={false} />
+            <ion-icon icon={menuIcon} mode={this.mode} lazy={false} />
           </slot>
           {this.mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
         </button>
