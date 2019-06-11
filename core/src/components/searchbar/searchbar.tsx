@@ -19,7 +19,7 @@ export class Searchbar implements ComponentInterface {
   private isCancelVisible = false;
   private shouldAlignLeft = true;
 
-  @Element() el!: HTMLStencilElement;
+  @Element() el!: HTMLIonSearchbarElement;
 
   @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'document' }) doc!: Document;
