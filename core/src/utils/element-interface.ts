@@ -7,6 +7,7 @@
 export interface AnchorInterface {
   href: string | undefined;
   target: string | undefined;
+  rel: string | undefined;
   // routerDirection: RouterDirection;
 }
 

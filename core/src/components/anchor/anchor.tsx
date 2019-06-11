@@ -28,6 +28,12 @@ export class Anchor implements ComponentInterface, AnchorInterface {
   @Prop() href: string | undefined;
 
   /**
+   * Specifies the relationship of the target object to the link object.
+   * The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+   */
+  @Prop() rel: string | undefined;
+
+  /**
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
@@ -58,6 +64,7 @@ export class Anchor implements ComponentInterface, AnchorInterface {
   render() {
     const attrs = {
       href: this.href,
+      rel: this.rel,
       target: this.target
     };
 

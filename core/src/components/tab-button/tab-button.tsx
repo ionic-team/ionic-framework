@@ -36,6 +36,12 @@ export class TabButton implements ComponentInterface, AnchorInterface {
   @Prop() href: string | undefined;
 
   /**
+   * Specifies the relationship of the target object to the link object.
+   * The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+   */
+  @Prop() rel: string | undefined;
+
+  /**
    * Set the layout of the text and icon in the tab bar.
    * It defaults to `'icon-top'`.
    */
@@ -149,6 +155,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
 
     const attrs = {
       href: this.href,
+      rel: this.rel,
       target: this.target
     };
 

@@ -73,6 +73,7 @@ ion-alert,css-prop,--width
 ion-anchor,shadow
 ion-anchor,prop,color,string | undefined,undefined,false,false
 ion-anchor,prop,href,string | undefined,undefined,false,false
+ion-anchor,prop,rel,string | undefined,undefined,false,false
 ion-anchor,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 ion-anchor,prop,target,string | undefined,undefined,false,false
 ion-anchor,css-prop,--background
@@ -146,6 +147,7 @@ ion-button,prop,expand,"block" | "full" | undefined,undefined,false,true
 ion-button,prop,fill,"clear" | "default" | "outline" | "solid" | undefined,undefined,false,true
 ion-button,prop,href,string | undefined,undefined,false,false
 ion-button,prop,mode,"ios" | "md",undefined,false,false
+ion-button,prop,rel,string | undefined,undefined,false,false
 ion-button,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 ion-button,prop,shape,"round" | undefined,undefined,false,true
 ion-button,prop,size,"default" | "large" | "small" | undefined,undefined,false,true
@@ -201,6 +203,7 @@ ion-card,prop,color,string | undefined,undefined,false,false
 ion-card,prop,disabled,boolean,false,false,false
 ion-card,prop,href,string | undefined,undefined,false,false
 ion-card,prop,mode,"ios" | "md",undefined,false,false
+ion-card,prop,rel,string | undefined,undefined,false,false
 ion-card,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 ion-card,prop,target,string | undefined,undefined,false,false
 ion-card,prop,type,"button" | "reset" | "submit",'button',false,false
@@ -334,6 +337,7 @@ ion-fab-button,prop,color,string | undefined,undefined,false,false
 ion-fab-button,prop,disabled,boolean,false,false,false
 ion-fab-button,prop,href,string | undefined,undefined,false,false
 ion-fab-button,prop,mode,"ios" | "md",undefined,false,false
+ion-fab-button,prop,rel,string | undefined,undefined,false,false
 ion-fab-button,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 ion-fab-button,prop,show,boolean,false,false,false
 ion-fab-button,prop,size,"small" | undefined,undefined,false,false
@@ -480,6 +484,7 @@ ion-item-option,prop,disabled,boolean,false,false,false
 ion-item-option,prop,expandable,boolean,false,false,false
 ion-item-option,prop,href,string | undefined,undefined,false,false
 ion-item-option,prop,mode,"ios" | "md",undefined,false,false
+ion-item-option,prop,rel,string | undefined,undefined,false,false
 ion-item-option,prop,target,string | undefined,undefined,false,false
 ion-item-option,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-item-option,css-prop,--background
@@ -507,6 +512,7 @@ ion-item,prop,disabled,boolean,false,false,false
 ion-item,prop,href,string | undefined,undefined,false,false
 ion-item,prop,lines,"full" | "inset" | "none" | undefined,undefined,false,false
 ion-item,prop,mode,"ios" | "md",undefined,false,false
+ion-item,prop,rel,string | undefined,undefined,false,false
 ion-item,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 ion-item,prop,target,string | undefined,undefined,false,false
 ion-item,prop,type,"button" | "reset" | "submit",'button',false,false
@@ -1096,6 +1102,7 @@ ion-tab-button,prop,disabled,boolean,false,false,false
 ion-tab-button,prop,href,string | undefined,undefined,false,false
 ion-tab-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide" | undefined,undefined,false,false
 ion-tab-button,prop,mode,"ios" | "md",undefined,false,false
+ion-tab-button,prop,rel,string | undefined,undefined,false,false
 ion-tab-button,prop,selected,boolean,false,false,false
 ion-tab-button,prop,tab,string | undefined,undefined,false,false
 ion-tab-button,prop,target,string | undefined,undefined,false,false

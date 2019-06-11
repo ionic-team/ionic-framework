@@ -395,6 +395,10 @@ export namespace Components {
     */
     'href': string | undefined;
     /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel': string | undefined;
+    /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection': RouterDirection;
@@ -412,6 +416,10 @@ export namespace Components {
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
     'href'?: string | undefined;
+    /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel'?: string | undefined;
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
@@ -573,6 +581,10 @@ export namespace Components {
     */
     'mode': Mode;
     /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel': string | undefined;
+    /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection': RouterDirection;
@@ -634,6 +646,10 @@ export namespace Components {
     * Emitted when the button has focus.
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
+    /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel'?: string | undefined;
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
@@ -769,6 +785,10 @@ export namespace Components {
     */
     'mode': Mode;
     /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel': string | undefined;
+    /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection': RouterDirection;
@@ -802,6 +822,10 @@ export namespace Components {
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
+    /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel'?: string | undefined;
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
@@ -1423,6 +1447,10 @@ export namespace Components {
     */
     'mode': Mode;
     /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel': string | undefined;
+    /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection': RouterDirection;
@@ -1476,6 +1504,10 @@ export namespace Components {
     * Emitted when the button has focus.
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
+    /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel'?: string | undefined;
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
@@ -2009,6 +2041,10 @@ export namespace Components {
     */
     'mode': Mode;
     /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel': string | undefined;
+    /**
     * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
     */
     'target': string | undefined;
@@ -2038,6 +2074,10 @@ export namespace Components {
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
+    /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel'?: string | undefined;
     /**
     * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
     */
@@ -2137,6 +2177,10 @@ export namespace Components {
     */
     'mode': Mode;
     /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel': string | undefined;
+    /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection': RouterDirection;
@@ -2182,6 +2226,10 @@ export namespace Components {
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
+    /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel'?: string | undefined;
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
@@ -4596,6 +4644,10 @@ export namespace Components {
     */
     'mode': Mode;
     /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel': string | undefined;
+    /**
     * The selected tab component
     */
     'selected': boolean;
@@ -4625,6 +4677,10 @@ export namespace Components {
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
+    /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel'?: string | undefined;
     /**
     * The selected tab component
     */
