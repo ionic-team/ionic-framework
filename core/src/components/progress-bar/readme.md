@@ -48,7 +48,7 @@ import React from 'react';
 
 import { IonProgressBar } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
   <>
     {/*-- Default Progressbar --*/}
     <IonProgressBar></IonProgressBar>

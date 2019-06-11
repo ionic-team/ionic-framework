@@ -3,7 +3,7 @@ import React from 'react';
 
 import { IonItemDivider, IonLabel, IonList, IonItem } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
   <>
     <IonItemDivider>
       <IonLabel>

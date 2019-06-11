@@ -3,7 +3,7 @@ import React from 'react';
 
 import { IonSplitPane, IonMenu, IonHeader, IonToolbar, IonTitle, IonRouterOutlet } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
 
   <IonSplitPane contentId="menuContent">
     {/*--  our side menu  --*/}

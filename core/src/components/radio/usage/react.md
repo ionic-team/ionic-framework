@@ -3,7 +3,7 @@ import React from 'react';
 
 import { IonList, IonRadioGroup, IonListHeader, IonLabel, IonItem, IonRadio } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
 
   <IonList>
     <IonRadioGroup>

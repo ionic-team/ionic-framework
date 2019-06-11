@@ -3,7 +3,7 @@ import React from 'react';
 
 import { IonContent, IonInfiniteScroll } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
 
   <IonContent>
     <IonInfiniteScroll>

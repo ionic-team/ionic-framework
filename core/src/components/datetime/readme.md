@@ -417,7 +417,7 @@ const customDayShortNames = [
   'l\u00f8r'
 ];
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
   <>
     <IonItem>
       <IonLabel>MMMM</IonLabel>

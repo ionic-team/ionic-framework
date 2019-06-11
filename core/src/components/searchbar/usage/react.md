@@ -3,7 +3,7 @@ import React from 'react';
 
 import { IonSearchbar, IonToolbar } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
   <>
     {/*-- Default Searchbar --*/}
     <IonSearchbar></IonSearchbar>

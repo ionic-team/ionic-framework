@@ -279,7 +279,7 @@ function doReorder(event: CustomEvent) {
   event.detail.complete();
 }
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
   <>
     {/*-- The reorder gesture is disabled by default, enable it to drag and drop items --*/}
     <IonReorderGroup disabled={false} onIonItemReorder={doReorder}>

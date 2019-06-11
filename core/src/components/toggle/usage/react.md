@@ -3,7 +3,7 @@ import React from 'react';
 
 import { IonToggle, IonList, IonItem, IonLabel } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
   <>
     {/*-- Default Toggle --*/}
     <IonToggle></IonToggle>

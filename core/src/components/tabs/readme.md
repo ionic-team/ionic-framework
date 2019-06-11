@@ -180,7 +180,7 @@ import React from 'react';
 
 import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBadge } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
 
   <IonTabs>
     <IonTabBar slot="bottom">

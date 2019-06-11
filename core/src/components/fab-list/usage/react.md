@@ -3,7 +3,7 @@ import React from 'react';
 
 import { IonFab, IonFabButton, IonFabList } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
 
   <IonFab vertical="bottom" horizontal="end">
     <IonFabButton>Share</IonFabButton>

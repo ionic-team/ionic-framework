@@ -509,7 +509,7 @@ const slideOpts = {
   speed: 400
 };
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
   <IonSlides pager={true} options={slideOpts}>
     <IonSlide>
       <h1>Slide 1</h1>

@@ -122,7 +122,7 @@ import React from 'react';
 
 import { IonBackButton, IonHeader, IonToolbar, IonButtons, IonMenuButton } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
   <>
     {/*-- Default back button --*/}
     <IonHeader>

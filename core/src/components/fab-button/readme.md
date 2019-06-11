@@ -43,7 +43,7 @@ import React from 'react';
 
 import { IonContent, IonFab, IonFabButton } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
   <IonContent>
 
     {/*-- Fixed Floating Action Button that does not scroll with the content --*/}

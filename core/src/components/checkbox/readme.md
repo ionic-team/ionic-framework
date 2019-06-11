@@ -108,7 +108,7 @@ const form = [
   { val: 'Mushroom', isChecked: false }
 ];
 
-const CheckboxExample: React.SFC<{}> = () => (
+const CheckboxExample: React.FunctionComponent<{}> = () => (
   <>
     {/*-- Default Checkbox --*/}
     <IonCheckbox />

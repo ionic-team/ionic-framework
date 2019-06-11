@@ -3,7 +3,7 @@ import React from 'react';
 
 import { IonChip, IonLabel, IonIcon, IonAvatar } from '@ionic/react';
 
-const ChipExample: React.SFC<{}> = () => (
+const ChipExample: React.FunctionComponent<{}> = () => (
   <>
     <IonChip>
       <IonLabel>Default</IonLabel>

@@ -3,7 +3,7 @@ import React from 'react';
 
 import { IonList, IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
 
 <IonList>
   {/* Sliding item with text options on both sides */}

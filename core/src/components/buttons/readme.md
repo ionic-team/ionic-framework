@@ -110,7 +110,7 @@ import React from 'react';
 
 import { IonButtons, IonToolbar, IonBackButton, IonTitle, IonButton, IonIcon, IonMenuButton } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
   <>
     <IonToolbar>
       <IonButtons slot="start">

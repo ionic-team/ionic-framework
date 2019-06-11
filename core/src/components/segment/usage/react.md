@@ -3,7 +3,7 @@ import React from 'react';
 
 import { IonSegment, IonSegmentButton, IonLabel, IonIcon, IonToolbar } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
   <>
     {/*-- Default Segment --*/}
     <IonSegment onIonChange={(e) => console.log('Segment selected', e.detail.value)}>

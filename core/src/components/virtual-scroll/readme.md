@@ -289,7 +289,7 @@ for (let i = 0; i < 1000; i++) {
   }
 }
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
 
   <IonContent>
     <IonVirtualScroll items="items" approxItemHeight="320px">

@@ -81,7 +81,7 @@ import React from 'react';
 
 import { IonBackdrop } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
   <>
     {/*-- Default backdrop --*/}
     <IonBackdrop />

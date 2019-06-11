@@ -37,7 +37,7 @@ import React from 'react';
 
 import { IonHeader, IonContent, IonToolbar, IonButtons, IonBackButton, IonTitle } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
   <>
     <IonHeader>
       <IonToolbar>

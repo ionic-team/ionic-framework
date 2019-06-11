@@ -12,7 +12,7 @@ function doRefresh(event: CustomEvent) {
   }, 2000);
 }
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
   <>
     {/*-- Default Refresher --*/}
     <IonContent>

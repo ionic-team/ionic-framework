@@ -41,7 +41,7 @@ import React from 'react';
 
 import { IonBadge, IonItem, IonLabel } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
   <>
     {/*-- Default --*/}
     <IonBadge>99</IonBadge>

@@ -99,7 +99,7 @@ import React from 'react';
 
 import { IonContent, IonFab, IonFabButton, IonIcon, IonFabList } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
 
   <IonContent>
     {/*-- fab placed to the top end --*/}

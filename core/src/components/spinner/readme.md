@@ -47,7 +47,7 @@ import React from 'react';
 
 import { IonSpinner } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
   <>
     {/*-- Default Spinner --*/}
     <IonSpinner></IonSpinner>

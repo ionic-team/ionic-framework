@@ -88,7 +88,7 @@ import React from 'react';
 
 import { IonIcon, IonItem, IonLabel, IonReorder } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
   <>
     {/*-- Default reorder icon, end aligned items --*/}
     <IonItem>

@@ -35,7 +35,7 @@ type Item = {
 };
 const items: Item[] = [];
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
 
   <IonList>
     {items.map(({src, text}) =>

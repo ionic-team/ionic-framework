@@ -3,7 +3,7 @@ import React from 'react';
 
 import { IonInput, IonItem, IonLabel } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
   <>
     {/*-- Default Input --*/}
     <IonInput></IonInput>

@@ -98,7 +98,7 @@ import React from 'react';
 
 import { IonList, IonItem, IonRange, IonLabel, IonIcon } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
 
   <IonList>
     <IonItem>

@@ -3,7 +3,7 @@ import React from 'react';
 
 import { IonGrid, IonRow, IonCol } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
   <IonGrid>
     <IonRow>
       <IonCol>
