@@ -25,7 +25,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
   @Prop() mode!: Mode;
 
   /**
-   * The selected tab component
+   * If `true`, the user cannot interact with the tab button.
    */
   @Prop() disabled = false;
 

@@ -29,7 +29,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
   @Prop() mode!: Mode;
 
   /**
-   * If `true`, the user cannot interact with the card.
+   * If `true`, the user cannot interact with the menu button.
    */
   @Prop() disabled = false;
 

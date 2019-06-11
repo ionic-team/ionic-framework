@@ -2156,7 +2156,7 @@ export namespace Components {
     */
     'closeOpened': () => Promise<boolean>;
     /**
-    * If `true`, the user cannot interact with the sliding-item.
+    * If `true`, the user cannot interact with the sliding item.
     */
     'disabled': boolean;
     /**
@@ -2174,7 +2174,7 @@ export namespace Components {
   }
   interface IonItemSlidingAttributes extends StencilHTMLAttributes {
     /**
-    * If `true`, the user cannot interact with the sliding-item.
+    * If `true`, the user cannot interact with the sliding item.
     */
     'disabled'?: boolean;
     /**
@@ -2535,7 +2535,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * If `true`, the user cannot interact with the card.
+    * If `true`, the user cannot interact with the menu button.
     */
     'disabled': boolean;
     /**
@@ -2561,7 +2561,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * If `true`, the user cannot interact with the card.
+    * If `true`, the user cannot interact with the menu button.
     */
     'disabled'?: boolean;
     /**
@@ -4676,7 +4676,7 @@ export namespace Components {
 
   interface IonTabButton {
     /**
-    * The selected tab component
+    * If `true`, the user cannot interact with the tab button.
     */
     'disabled': boolean;
     /**
@@ -4714,7 +4714,7 @@ export namespace Components {
   }
   interface IonTabButtonAttributes extends StencilHTMLAttributes {
     /**
-    * The selected tab component
+    * If `true`, the user cannot interact with the tab button.
     */
     'disabled'?: boolean;
     /**
