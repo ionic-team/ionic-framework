@@ -377,12 +377,10 @@ export class Searchbar implements ComponentInterface {
   }
 
   /**
-   * Determines whether or not the cancel button should visible onscreen
-   * Cancel button should be shown if one of the three conditions applies:
-   * 1. The user has called showCancel(), setting forceShowCancel = true
-   * 2. The user has focused the searchbar
-   * 3. The user has `showCancelButton` set to `persist` and the searchbar has
-   * already been focused at least once
+   * Determines whether or not the cancel button should be visible onscreen.
+   * Cancel button should be shown if one of two conditions applies:
+   * 1. `showCancelButton` is set to `always`.
+   * 2. `showCancelButton` is set to `focus`, and the searchbar has been focused.
    */
   private shouldShowCancelButton(): boolean {
     if (
