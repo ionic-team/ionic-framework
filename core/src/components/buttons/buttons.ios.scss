@@ -29,7 +29,8 @@
 :host-context(.ion-color)::slotted(*) .button {
   --color: initial;
   --border-color: initial;
-  --color-activated: initial;
+  --background-focused: #{current-color(contrast, .1)};
+
 }
 
 :host-context(.ion-color)::slotted(*) .button-solid {
