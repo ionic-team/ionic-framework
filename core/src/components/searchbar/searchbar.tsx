@@ -5,8 +5,6 @@ import { debounceEvent } from '../../utils/helpers';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses } from '../../utils/theme';
 
-import { isCancelButtonSetToFocus, isCancelButtonSetToNever } from './searchbar.utils';
-
 @Component({
   tag: 'ion-searchbar',
   styleUrls: {
@@ -466,3 +464,32 @@ export class Searchbar implements ComponentInterface {
     ];
   }
 }
+
+/**
+ * Check if the cancel button should never be shown.
+ *
+ * TODO: Remove this when the `true` and `false`
+ * options are removed.
+ */
+const isCancelButtonSetToNever = (showCancelButton: boolean | string): boolean => {
+  return (
+    showCancelButton === 'never' ||
+    showCancelButton === 'false' ||
+    showCancelButton === false
+  );
+};
+
+/**
+ * Check if the cancel button should be shown on focus.
+ *
+ * TODO: Remove this when the `true` and `false`
+ * options are removed.
+ */
+const isCancelButtonSetToFocus = (showCancelButton: boolean | string): boolean => {
+  return (
+    showCancelButton === 'focus' ||
+    showCancelButton === 'true' ||
+    showCancelButton === true ||
+    showCancelButton === ''
+  );
+};
