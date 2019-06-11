@@ -42,6 +42,14 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
   @Prop() disabled = false;
 
   /**
+   * This attribute instructs browsers to download a URL instead of navigating to
+   * it, so the user will be prompted to save it as a local file. If the attribute
+   * has a value, it is used as the pre-filled file name in the Save prompt
+   * (the user can still change the file name if they want).
+   */
+  @Prop() download: string | undefined;
+
+  /**
    * If `true`, the option will expand to take up the available width and cover any other options.
    */
   @Prop() expandable = false;
@@ -97,6 +105,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
     const attrs = (TagType === 'button')
     ? { type: this.type }
     : {
+      download: this.download,
       href: this.href,
       target: this.target
     };

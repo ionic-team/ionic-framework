@@ -391,6 +391,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download': string | undefined;
+    /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
     'href': string | undefined;
@@ -412,6 +416,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download'?: string | undefined;
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
@@ -565,6 +573,10 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download': string | undefined;
+    /**
     * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
     */
     'expand'?: 'full' | 'block';
@@ -622,6 +634,10 @@ export namespace Components {
     * If `true`, the user cannot interact with the button.
     */
     'disabled'?: boolean;
+    /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download'?: string | undefined;
     /**
     * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
     */
@@ -777,6 +793,10 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download': string | undefined;
+    /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
     'href': string | undefined;
@@ -814,6 +834,10 @@ export namespace Components {
     * If `true`, the user cannot interact with the card.
     */
     'disabled'?: boolean;
+    /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download'?: string | undefined;
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
@@ -1439,6 +1463,10 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download': string | undefined;
+    /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
     'href': string | undefined;
@@ -1488,6 +1516,10 @@ export namespace Components {
     * If `true`, the user cannot interact with the fab button.
     */
     'disabled'?: boolean;
+    /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download'?: string | undefined;
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
@@ -2029,6 +2061,10 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download': string | undefined;
+    /**
     * If `true`, the option will expand to take up the available width and cover any other options.
     */
     'expandable': boolean;
@@ -2062,6 +2098,10 @@ export namespace Components {
     * If `true`, the user cannot interact with the item option.
     */
     'disabled'?: boolean;
+    /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download'?: string | undefined;
     /**
     * If `true`, the option will expand to take up the available width and cover any other options.
     */
@@ -2165,6 +2205,10 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download': string | undefined;
+    /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
     'href': string | undefined;
@@ -2214,6 +2258,10 @@ export namespace Components {
     * If `true`, the user cannot interact with the item.
     */
     'disabled'?: boolean;
+    /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download'?: string | undefined;
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
@@ -4632,6 +4680,10 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download': string | undefined;
+    /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
     'href': string | undefined;
@@ -4665,6 +4717,10 @@ export namespace Components {
     * The selected tab component
     */
     'disabled'?: boolean;
+    /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download'?: string | undefined;
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
