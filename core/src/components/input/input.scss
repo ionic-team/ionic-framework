@@ -15,7 +15,7 @@
    * @prop --placeholder-font-style: Font style of the input placeholder text
    * @prop --placeholder-font-weight: Font weight of the input placeholder text
    * @prop --placeholder-opacity: Opacity of the input placeholder text
-   * @prop --disabled-opacity: Opacity of the input when disabled
+   * @prop --opacity: Opacity of the input when disabled
    */
   --placeholder-color: initial;
   --placeholder-font-style: initial;
@@ -104,7 +104,7 @@
 }
 
 .native-input[disabled] {
-  opacity: var(--disabled-opacity, .4);
+  opacity: var(--opacity, .4);
 }
 
 
