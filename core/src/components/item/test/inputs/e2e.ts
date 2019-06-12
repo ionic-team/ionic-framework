@@ -18,7 +18,7 @@ test('item: inputs', async () => {
   const disableToggle = await page.find('#btnDisabled');
   await disableToggle.waitForVisible();
   await disableToggle.click();
-  await page.waitFor(100);
+  await page.waitFor(300);
 
   // check form
   await page.click('#submit');
