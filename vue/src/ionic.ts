@@ -12,6 +12,7 @@ import { IonicConfig } from '@ionic/core';
 import { appInitialize } from './app-initialize';
 import { VueDelegate } from './controllers/vue-delegate';
 import IonTabs from './components/navigation/ion-tabs';
+import { createInputComponent } from './components/inputs';
 
 export interface Controllers {
   actionSheetController: ActionSheetController;
@@ -94,6 +95,16 @@ export const install: PluginFunction<IonicConfig> = (_Vue, config) => {
   Vue = _Vue;
   Vue.config.ignoredElements.push(/^ion-/);
   Vue.component('IonTabs', IonTabs);
+
+  createInputComponent('IonCheckboxVue', 'ion-checkbox', 'ionChange', 'checked');
+  createInputComponent('IonDatetimeVue', 'ion-datetime');
+  createInputComponent('IonInputVue', 'ion-input', 'ionInput');
+  createInputComponent('IonRadioVue', 'ion-radio');
+  createInputComponent('IonRangeVue', 'ion-range');
+  createInputComponent('IonSearchbarVue', 'ion-searchbar', 'ionInput');
+  createInputComponent('IonSelectVue', 'ion-select');
+  createInputComponent('IonTextareaVue', 'ion-textarea');
+  createInputComponent('IonToggleVue', 'ion-toggle', 'ionChange', 'checked');
 
   appInitialize(config);
 

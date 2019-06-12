@@ -89,8 +89,12 @@ ion-back-button,prop,icon,null | string | undefined,undefined,false,false
 ion-back-button,prop,mode,"ios" | "md",undefined,false,false
 ion-back-button,prop,text,null | string | undefined,undefined,false,false
 ion-back-button,css-prop,--background
+ion-back-button,css-prop,--background-focused
+ion-back-button,css-prop,--background-hover
 ion-back-button,css-prop,--border-radius
 ion-back-button,css-prop,--color
+ion-back-button,css-prop,--color-focused
+ion-back-button,css-prop,--color-hover
 ion-back-button,css-prop,--icon-font-size
 ion-back-button,css-prop,--icon-font-weight
 ion-back-button,css-prop,--icon-margin-bottom
@@ -149,6 +153,7 @@ ion-button,event,ionFocus,void,true
 ion-button,css-prop,--background
 ion-button,css-prop,--background-activated
 ion-button,css-prop,--background-focused
+ion-button,css-prop,--background-hover
 ion-button,css-prop,--border-color
 ion-button,css-prop,--border-radius
 ion-button,css-prop,--border-style
@@ -157,6 +162,7 @@ ion-button,css-prop,--box-shadow
 ion-button,css-prop,--color
 ion-button,css-prop,--color-activated
 ion-button,css-prop,--color-focused
+ion-button,css-prop,--color-hover
 ion-button,css-prop,--opacity
 ion-button,css-prop,--padding-bottom
 ion-button,css-prop,--padding-end
@@ -451,6 +457,10 @@ ion-item-divider,prop,mode,"ios" | "md",undefined,false,false
 ion-item-divider,prop,sticky,boolean,false,false,false
 ion-item-divider,css-prop,--background
 ion-item-divider,css-prop,--color
+ion-item-divider,css-prop,--inner-padding-bottom
+ion-item-divider,css-prop,--inner-padding-end
+ion-item-divider,css-prop,--inner-padding-start
+ion-item-divider,css-prop,--inner-padding-top
 ion-item-divider,css-prop,--padding-bottom
 ion-item-divider,css-prop,--padding-end
 ion-item-divider,css-prop,--padding-start
@@ -477,7 +487,7 @@ ion-item-sliding,method,close,close() => Promise<void>
 ion-item-sliding,method,closeOpened,closeOpened() => Promise<boolean>
 ion-item-sliding,method,getOpenAmount,getOpenAmount() => Promise<number>
 ion-item-sliding,method,getSlidingRatio,getSlidingRatio() => Promise<number>
-ion-item-sliding,method,open,open(side: string | undefined) => Promise<void>
+ion-item-sliding,method,open,open(side: "start" | "end" | undefined) => Promise<void>
 ion-item-sliding,event,ionDrag,void,true
 
 ion-item,shadow
@@ -578,7 +588,13 @@ ion-menu-button,prop,autoHide,boolean,true,false,false
 ion-menu-button,prop,color,string | undefined,undefined,false,false
 ion-menu-button,prop,menu,string | undefined,undefined,false,false
 ion-menu-button,prop,mode,"ios" | "md",undefined,false,false
+ion-menu-button,css-prop,--background
+ion-menu-button,css-prop,--background-focused
+ion-menu-button,css-prop,--background-hover
+ion-menu-button,css-prop,--border-radius
 ion-menu-button,css-prop,--color
+ion-menu-button,css-prop,--color-focused
+ion-menu-button,css-prop,--color-hover
 ion-menu-button,css-prop,--padding-bottom
 ion-menu-button,css-prop,--padding-end
 ion-menu-button,css-prop,--padding-start
@@ -901,7 +917,7 @@ ion-searchbar,prop,disabled,boolean,false,false,false
 ion-searchbar,prop,mode,"ios" | "md",undefined,false,false
 ion-searchbar,prop,placeholder,string,'Search',false,false
 ion-searchbar,prop,searchIcon,string,'search',false,false
-ion-searchbar,prop,showCancelButton,boolean,false,false,false
+ion-searchbar,prop,showCancelButton,boolean | string,'never',false,false
 ion-searchbar,prop,spellcheck,boolean,false,false,false
 ion-searchbar,prop,type,"email" | "number" | "password" | "search" | "tel" | "text" | "url",'search',false,false
 ion-searchbar,prop,value,null | string | undefined,'',false,false

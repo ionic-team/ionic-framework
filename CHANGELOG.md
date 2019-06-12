@@ -1,3 +1,39 @@
+# [4.5.0](https://github.com/ionic-team/ionic/compare/v4.4.2...v4.5.0) (2019-06-12)
+
+
+### Bug Fixes
+
+* **angular:** ensure all NavigationExtras values are preserved when navigating ([#18468](https://github.com/ionic-team/ionic/issues/18468)) ([7610787](https://github.com/ionic-team/ionic/commit/7610787)), closes [#18469](https://github.com/ionic-team/ionic/issues/18469)
+* **button:** set opacity on the host element for disabled button ([#18509](https://github.com/ionic-team/ionic/issues/18509)) ([320719b](https://github.com/ionic-team/ionic/commit/320719b)), closes [#16965](https://github.com/ionic-team/ionic/issues/16965)
+* **button:** use correct border-radius on menu and back button ([#18501](https://github.com/ionic-team/ionic/issues/18501)) ([055e125](https://github.com/ionic-team/ionic/commit/055e125)), closes [#17624](https://github.com/ionic-team/ionic/issues/17624)
+* **button:** use correct size on a dynamic button in an item ([#18395](https://github.com/ionic-team/ionic/issues/18395)) ([a3e23fc](https://github.com/ionic-team/ionic/commit/a3e23fc)), closes [#18085](https://github.com/ionic-team/ionic/issues/18085)
+* **card:** remove white space from bottom of card ([#18328](https://github.com/ionic-team/ionic/issues/18328)) ([d53e7aa](https://github.com/ionic-team/ionic/commit/d53e7aa))
+* **content:** prevent ion-searchbar from receiving padding adjustment when keyboard is open ([#18008](https://github.com/ionic-team/ionic/issues/18008)) ([b2290a6](https://github.com/ionic-team/ionic/commit/b2290a6)), closes [#18007](https://github.com/ionic-team/ionic/issues/18007)
+* **datetime:** recalculate time columns on change ([#18380](https://github.com/ionic-team/ionic/issues/18380)) ([292b24a](https://github.com/ionic-team/ionic/commit/292b24a))
+* **item:** start align the content under stacked and floating labels ([#18379](https://github.com/ionic-team/ionic/issues/18379)) ([f0af707](https://github.com/ionic-team/ionic/commit/f0af707)), closes [#16375](https://github.com/ionic-team/ionic/issues/16375)
+* **item:** inherit overflow to allow better customization ([#18502](https://github.com/ionic-team/ionic/issues/18502)) ([8d2a47e](https://github.com/ionic-team/ionic/commit/8d2a47e)), closes [#17670](https://github.com/ionic-team/ionic/issues/17670)
+* **item:** use a step color if the activated background is not set ([#18450](https://github.com/ionic-team/ionic/issues/18450)) ([1899c13](https://github.com/ionic-team/ionic/commit/1899c13)), closes [#18449](https://github.com/ionic-team/ionic/issues/18449)
+* **item-sliding:** use the correct gesture direction and side for rtl ([#18366](https://github.com/ionic-team/ionic/issues/18366)) ([4545100](https://github.com/ionic-team/ionic/commit/4545100)), closes [#17012](https://github.com/ionic-team/ionic/issues/17012)
+* **label:** include the ion-text-wrap class styles for larger font ([#18374](https://github.com/ionic-team/ionic/issues/18374)) ([4bba540](https://github.com/ionic-team/ionic/commit/4bba540))
+* **platform:** prevent error with Platform.is on Android 4.4 ([#18387](https://github.com/ionic-team/ionic/issues/18387)) ([54bdb36](https://github.com/ionic-team/ionic/commit/54bdb36))
+* **react:** ensure element exists in controller before dismissing it ([0fd3e5d](https://github.com/ionic-team/ionic/commit/0fd3e5d))
+* **slides:** resolve issue where double tap to zoom was enabled by default ([10de1da](https://github.com/ionic-team/ionic/commit/10de1da)), closes [#18035](https://github.com/ionic-team/ionic/issues/18035)
+* **tabs:** allow selection on enter and spacebar press ([#18381](https://github.com/ionic-team/ionic/issues/18381)) ([11cde99](https://github.com/ionic-team/ionic/commit/11cde99)), closes [#18363](https://github.com/ionic-team/ionic/issues/18363)
+* **textarea:** inherit white-space for better customization ([#18508](https://github.com/ionic-team/ionic/issues/18508)) ([a583902](https://github.com/ionic-team/ionic/commit/a583902)), closes [#18495](https://github.com/ionic-team/ionic/issues/18495)
+* **virtual-scroll:** do not crash with an empty cell list ([#17799](https://github.com/ionic-team/ionic/issues/17799)) ([20c146e](https://github.com/ionic-team/ionic/commit/20c146e))
+
+
+### Features
+
+* **back-button:** add variables and support for focused and hover states ([#18451](https://github.com/ionic-team/ionic/issues/18451)) ([58672fb](https://github.com/ionic-team/ionic/commit/58672fb)), closes [#18465](https://github.com/ionic-team/ionic/issues/18465)
+* **button:** add variables for customizing hover state ([#18499](https://github.com/ionic-team/ionic/issues/18499)) ([5c5934b](https://github.com/ionic-team/ionic/commit/5c5934b)), closes [#17974](https://github.com/ionic-team/ionic/issues/17974)
+* **item-divider:** add inner padding CSS variables ([#18490](https://github.com/ionic-team/ionic/issues/18490)) ([35c143a](https://github.com/ionic-team/ionic/commit/35c143a)), closes [#18484](https://github.com/ionic-team/ionic/issues/18484)
+* **menu-button:** add variables for hover and focused states ([#18434](https://github.com/ionic-team/ionic/issues/18434)) ([5ba0aa9](https://github.com/ionic-team/ionic/commit/5ba0aa9)), closes [#18279](https://github.com/ionic-team/ionic/issues/18279)
+* **searchbar:** add cancel button options ([b959e0b](https://github.com/ionic-team/ionic/commit/b959e0b))
+* **toast:** allow html content ([#18423](https://github.com/ionic-team/ionic/issues/18423)) ([c8104a2](https://github.com/ionic-team/ionic/commit/c8104a2))
+
+
+
 ## [4.4.2](https://github.com/ionic-team/ionic/compare/v4.4.1...v4.4.2) (2019-05-22)
 
 

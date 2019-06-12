@@ -5,7 +5,7 @@ A sliding item contains an item that can be dragged to reveal buttons. It requir
 
 ### Swipe Direction
 
-By default, the buttons are placed on the `"end"` side. This means that options are revealed when the sliding item is swiped from end to start, i.e. from right to left in LTR, but from left to right in RTL. To place them on the opposite side, so that they are revealed when swiping in the opposite direction, set the `side` attribute to `"start"` on the [`ion-item-options`]((../item-options) element. Up to two `ion-item-options` can be used at the same time in order to reveal two different sets of options depending on the swiping direction.
+By default, the buttons are placed on the `"end"` side. This means that options are revealed when the sliding item is swiped from end to start, i.e. from right to left in LTR, but from left to right in RTL. To place them on the opposite side, so that they are revealed when swiping in the opposite direction, set the `side` attribute to `"start"` on the [`ion-item-options`](../item-options) element. Up to two `ion-item-options` can be used at the same time in order to reveal two different sets of options depending on the swiping direction.
 
 
 ### Options Layout
@@ -692,15 +692,15 @@ Type: `Promise<number>`
 
 
 
-### `open(side: string | undefined) => Promise<void>`
+### `open(side: "start" | "end" | undefined) => Promise<void>`
 
 Open the sliding item.
 
 #### Parameters
 
-| Name   | Type                  | Description                                                                                                                 |
-| ------ | --------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `side` | `string \| undefined` | The side of the options to open. If a side is not provided, it will open the first set of options it finds within the item. |
+| Name   | Type                            | Description                                                                                                                 |
+| ------ | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `side` | `"end" \| "start" \| undefined` | The side of the options to open. If a side is not provided, it will open the first set of options it finds within the item. |
 
 #### Returns
 
