@@ -1,4 +1,4 @@
-# [4.5.0](https://github.com/ionic-team/ionic/compare/v4.4.2...v4.5.0) (2019-06-12)
+# [4.5.0 Boron](https://github.com/ionic-team/ionic/compare/v4.4.2...v4.5.0) (2019-06-12)
 
 
 ### Bug Fixes
