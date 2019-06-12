@@ -9,6 +9,7 @@
    * @prop --padding-end: End padding of the select
    * @prop --padding-bottom: Bottom padding of the select
    * @prop --padding-start: Start padding of the select
+   * @prop --disabled-opacity: Opacity of the select when disabled
    */
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
@@ -28,7 +29,7 @@
 }
 
 :host(.select-disabled) {
-  opacity: .4;
+  opacity: var(--disabled-opacity, .4);
   pointer-events: none;
 }
 

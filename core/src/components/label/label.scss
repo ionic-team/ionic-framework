@@ -7,6 +7,7 @@
 :host-context(.item) {
   /**
    * @prop --color: Color of the label
+   * @prop --disabled-opacity: Opacity of the label when inside a disabled element
    */
   --color: initial;
 
@@ -36,7 +37,7 @@
 
 :host-context(.item-interactive-disabled) {
   cursor: default;
-  opacity: .3;
+  opacity: var(--disabled-opacity, .3);
   pointer-events: none;
 }
 
