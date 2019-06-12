@@ -15,8 +15,10 @@ test('item: inputs', async () => {
   expect(compare).toMatchScreenshot();
 
   // Disable everything
-  await page.click('#btnDisabled');
-  await page.waitFor(500);
+  const disableToggle = await page.find('#btnDisabled');
+  await disableToggle.waitForVisible();
+  await disableToggle.click();
+  await page.waitFor(100);
 
   // check form
   await page.click('#submit');
@@ -28,7 +30,7 @@ test('item: inputs', async () => {
   expect(compare).toMatchScreenshot();
 
   // Reenable and set some value
-  await page.click('#btnDisabled');
+  await disableToggle.click();
   await page.click('#btnSomeValue');
   await page.waitFor(100);
 
@@ -64,5 +66,6 @@ test('item: inputs', async () => {
 
 async function checkFormResult(page: E2EPage, content: string) {
   const div = await page.find('#form-result');
+
   expect(div.textContent).toEqual(content);
 }
