@@ -391,13 +391,25 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download': string | undefined;
+    /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href': string | undefined;
+    /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel': string | undefined;
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection': RouterDirection;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target': string | undefined;
   }
   interface IonAnchorAttributes extends StencilHTMLAttributes {
     /**
@@ -405,13 +417,25 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download'?: string | undefined;
+    /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href'?: string | undefined;
+    /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel'?: string | undefined;
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection'?: RouterDirection;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target'?: string | undefined;
   }
 
   interface IonApp {}
@@ -430,6 +454,10 @@ export namespace Components {
     */
     'defaultHref'?: string;
     /**
+    * If `true`, the user cannot interact with the button.
+    */
+    'disabled': boolean;
+    /**
     * The icon name to use for the back button.
     */
     'icon'?: string | null;
@@ -441,6 +469,10 @@ export namespace Components {
     * The text to display in the back button.
     */
     'text'?: string | null;
+    /**
+    * The type of the button.
+    */
+    'type': 'submit' | 'reset' | 'button';
   }
   interface IonBackButtonAttributes extends StencilHTMLAttributes {
     /**
@@ -451,6 +483,10 @@ export namespace Components {
     * The url to navigate back to by default when there is no history.
     */
     'defaultHref'?: string;
+    /**
+    * If `true`, the user cannot interact with the button.
+    */
+    'disabled'?: boolean;
     /**
     * The icon name to use for the back button.
     */
@@ -463,6 +499,10 @@ export namespace Components {
     * The text to display in the back button.
     */
     'text'?: string | null;
+    /**
+    * The type of the button.
+    */
+    'type'?: 'submit' | 'reset' | 'button';
   }
 
   interface IonBackdrop {
@@ -533,6 +573,10 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download': string | undefined;
+    /**
     * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
     */
     'expand'?: 'full' | 'block';
@@ -543,11 +587,15 @@ export namespace Components {
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href': string | undefined;
     /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
+    /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel': string | undefined;
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
@@ -564,6 +612,10 @@ export namespace Components {
     * If `true`, activates a button with a heavier font weight.
     */
     'strong': boolean;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target': string | undefined;
     /**
     * The type of the button.
     */
@@ -583,6 +635,10 @@ export namespace Components {
     */
     'disabled'?: boolean;
     /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download'?: string | undefined;
+    /**
     * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
     */
     'expand'?: 'full' | 'block';
@@ -593,7 +649,7 @@ export namespace Components {
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href'?: string | undefined;
     /**
     * The mode determines which platform styles to use.
     */
@@ -606,6 +662,10 @@ export namespace Components {
     * Emitted when the button has focus.
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
+    /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel'?: string | undefined;
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
@@ -622,6 +682,10 @@ export namespace Components {
     * If `true`, activates a button with a heavier font weight.
     */
     'strong'?: boolean;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target'?: string | undefined;
     /**
     * The type of the button.
     */
@@ -729,17 +793,29 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download': string | undefined;
+    /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href': string | undefined;
     /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
     /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel': string | undefined;
+    /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection': RouterDirection;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target': string | undefined;
     /**
     * The type of the button. Only used when an `onclick` or `button` property is present.
     */
@@ -759,17 +835,29 @@ export namespace Components {
     */
     'disabled'?: boolean;
     /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download'?: string | undefined;
+    /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href'?: string | undefined;
     /**
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
     /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel'?: string | undefined;
+    /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection'?: RouterDirection;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target'?: string | undefined;
     /**
     * The type of the button. Only used when an `onclick` or `button` property is present.
     */
@@ -1375,13 +1463,21 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download': string | undefined;
+    /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href': string | undefined;
     /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
+    /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel': string | undefined;
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
@@ -1394,6 +1490,10 @@ export namespace Components {
     * The size of the button. Set this to `small` in order to have a mini fab.
     */
     'size'?: 'small';
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target': string | undefined;
     /**
     * If `true`, the fab button will be translucent.
     */
@@ -1417,9 +1517,13 @@ export namespace Components {
     */
     'disabled'?: boolean;
     /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download'?: string | undefined;
+    /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href'?: string | undefined;
     /**
     * The mode determines which platform styles to use.
     */
@@ -1433,6 +1537,10 @@ export namespace Components {
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
     /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel'?: string | undefined;
+    /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection'?: RouterDirection;
@@ -1444,6 +1552,10 @@ export namespace Components {
     * The size of the button. Set this to `small` in order to have a mini fab.
     */
     'size'?: 'small';
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target'?: string | undefined;
     /**
     * If `true`, the fab button will be translucent.
     */
@@ -1949,17 +2061,33 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download': string | undefined;
+    /**
     * If `true`, the option will expand to take up the available width and cover any other options.
     */
     'expandable': boolean;
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href': string | undefined;
     /**
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
+    /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel': string | undefined;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target': string | undefined;
+    /**
+    * The type of the button.
+    */
+    'type': 'submit' | 'reset' | 'button';
   }
   interface IonItemOptionAttributes extends StencilHTMLAttributes {
     /**
@@ -1971,17 +2099,33 @@ export namespace Components {
     */
     'disabled'?: boolean;
     /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download'?: string | undefined;
+    /**
     * If `true`, the option will expand to take up the available width and cover any other options.
     */
     'expandable'?: boolean;
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href'?: string | undefined;
     /**
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
+    /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel'?: string | undefined;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target'?: string | undefined;
+    /**
+    * The type of the button.
+    */
+    'type'?: 'submit' | 'reset' | 'button';
   }
 
   interface IonItemOptions {
@@ -2012,7 +2156,7 @@ export namespace Components {
     */
     'closeOpened': () => Promise<boolean>;
     /**
-    * If `true`, the user cannot interact with the sliding-item.
+    * If `true`, the user cannot interact with the sliding item.
     */
     'disabled': boolean;
     /**
@@ -2030,7 +2174,7 @@ export namespace Components {
   }
   interface IonItemSlidingAttributes extends StencilHTMLAttributes {
     /**
-    * If `true`, the user cannot interact with the sliding-item.
+    * If `true`, the user cannot interact with the sliding item.
     */
     'disabled'?: boolean;
     /**
@@ -2061,9 +2205,13 @@ export namespace Components {
     */
     'disabled': boolean;
     /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download': string | undefined;
+    /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href': string | undefined;
     /**
     * How the bottom border should be displayed on the item.
     */
@@ -2073,9 +2221,17 @@ export namespace Components {
     */
     'mode': Mode;
     /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel': string | undefined;
+    /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection': RouterDirection;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target': string | undefined;
     /**
     * The type of the button. Only used when an `onclick` or `button` property is present.
     */
@@ -2103,9 +2259,13 @@ export namespace Components {
     */
     'disabled'?: boolean;
     /**
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+    */
+    'download'?: string | undefined;
+    /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href'?: string;
+    'href'?: string | undefined;
     /**
     * How the bottom border should be displayed on the item.
     */
@@ -2115,9 +2275,17 @@ export namespace Components {
     */
     'mode'?: Mode;
     /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel'?: string | undefined;
+    /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection'?: RouterDirection;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target'?: string | undefined;
     /**
     * The type of the button. Only used when an `onclick` or `button` property is present.
     */
@@ -2367,6 +2535,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * If `true`, the user cannot interact with the menu button.
+    */
+    'disabled': boolean;
+    /**
     * Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle
     */
     'menu'?: string;
@@ -2374,6 +2546,10 @@ export namespace Components {
     * The mode determines which platform styles to use.
     */
     'mode': Mode;
+    /**
+    * The type of the button.
+    */
+    'type': 'submit' | 'reset' | 'button';
   }
   interface IonMenuButtonAttributes extends StencilHTMLAttributes {
     /**
@@ -2385,6 +2561,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * If `true`, the user cannot interact with the menu button.
+    */
+    'disabled'?: boolean;
+    /**
     * Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle
     */
     'menu'?: string;
@@ -2392,6 +2572,10 @@ export namespace Components {
     * The mode determines which platform styles to use.
     */
     'mode'?: Mode;
+    /**
+    * The type of the button.
+    */
+    'type'?: 'submit' | 'reset' | 'button';
   }
 
   interface IonMenuController {
@@ -3925,6 +4109,10 @@ export namespace Components {
     */
     'mode': Mode;
     /**
+    * The type of the button.
+    */
+    'type': 'submit' | 'reset' | 'button';
+    /**
     * The value of the segment button.
     */
     'value': string;
@@ -3950,6 +4138,10 @@ export namespace Components {
     * Emitted when the segment button is clicked.
     */
     'onIonSelect'?: (event: CustomEvent<void>) => void;
+    /**
+    * The type of the button.
+    */
+    'type'?: 'submit' | 'reset' | 'button';
     /**
     * The value of the segment button.
     */
@@ -4484,13 +4676,17 @@ export namespace Components {
 
   interface IonTabButton {
     /**
-    * The selected tab component
+    * If `true`, the user cannot interact with the tab button.
     */
     'disabled': boolean;
     /**
-    * The URL which will be used as the `href` within this tab's button anchor.
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
     */
-    'href'?: string;
+    'download': string | undefined;
+    /**
+    * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+    */
+    'href': string | undefined;
     /**
     * Set the layout of the text and icon in the tab bar. It defaults to `'icon-top'`.
     */
@@ -4500,6 +4696,10 @@ export namespace Components {
     */
     'mode': Mode;
     /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel': string | undefined;
+    /**
     * The selected tab component
     */
     'selected': boolean;
@@ -4507,16 +4707,24 @@ export namespace Components {
     * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
     */
     'tab'?: string;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target': string | undefined;
   }
   interface IonTabButtonAttributes extends StencilHTMLAttributes {
     /**
-    * The selected tab component
+    * If `true`, the user cannot interact with the tab button.
     */
     'disabled'?: boolean;
     /**
-    * The URL which will be used as the `href` within this tab's button anchor.
+    * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
     */
-    'href'?: string;
+    'download'?: string | undefined;
+    /**
+    * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+    */
+    'href'?: string | undefined;
     /**
     * Set the layout of the text and icon in the tab bar. It defaults to `'icon-top'`.
     */
@@ -4526,6 +4734,10 @@ export namespace Components {
     */
     'mode'?: Mode;
     /**
+    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+    */
+    'rel'?: string | undefined;
+    /**
     * The selected tab component
     */
     'selected'?: boolean;
@@ -4533,6 +4745,10 @@ export namespace Components {
     * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
     */
     'tab'?: string;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target'?: string | undefined;
   }
 
   interface IonTab {

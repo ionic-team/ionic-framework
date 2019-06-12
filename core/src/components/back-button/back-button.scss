@@ -107,6 +107,11 @@
   display: block;
 }
 
+:host(.back-button-disabled) {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
+}
 
 // Native Back Button
 // --------------------------------------------------
