@@ -171,14 +171,18 @@ export default Example
 
 ## CSS Custom Properties
 
-| Name               | Description                        |
-| ------------------ | ---------------------------------- |
-| `--background`     | Background of the item divider     |
-| `--color`          | Color of the item divider          |
-| `--padding-bottom` | Bottom padding of the item divider |
-| `--padding-end`    | End padding of the item divider    |
-| `--padding-start`  | Start padding of the item divider  |
-| `--padding-top`    | Top padding of the item divider    |
+| Name                     | Description                              |
+| ------------------------ | ---------------------------------------- |
+| `--background`           | Background of the item divider           |
+| `--color`                | Color of the item divider                |
+| `--inner-padding-bottom` | Bottom inner padding of the item divider |
+| `--inner-padding-end`    | End inner padding of the item divider    |
+| `--inner-padding-start`  | Start inner padding of the item divider  |
+| `--inner-padding-top`    | Top inner padding of the item divider    |
+| `--padding-bottom`       | Bottom padding of the item divider       |
+| `--padding-end`          | End padding of the item divider          |
+| `--padding-start`        | Start padding of the item divider        |
+| `--padding-top`          | Top padding of the item divider          |
 
 
 ----------------------------------------------
