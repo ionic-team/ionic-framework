@@ -16,10 +16,14 @@ export async function testToast(
 
     const screenshotCompares = [];
 
-    await page.click(selector);
-    await page.waitForSelector(selector);
+    const button = await page.find(selector);
+    await button.waitForVisible();
+    await button.click();
+
+    await page.waitFor(250);
 
     let toast = await page.find('ion-toast');
+    await toast.waitForVisible();
 
     expect(toast).not.toBe(null);
     await toast.waitForVisible();

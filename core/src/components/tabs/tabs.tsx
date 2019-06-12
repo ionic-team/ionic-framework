@@ -44,14 +44,15 @@ export class Tabs implements NavOutlet {
    */
   @Event({ bubbles: false }) ionTabsDidChange!: EventEmitter<{tab: string}>;
 
-  async componentWillLoad() {
+  componentWillLoad() {
     if (!this.useRouter) {
       this.useRouter = !!document.querySelector('ion-router') && !this.el.closest('[no-router]');
     }
     this.tabs = Array.from(this.el.querySelectorAll('ion-tab'));
-    await this.initSelect();
-    this.ionNavWillLoad.emit();
-    this.componentWillUpdate();
+    this.initSelect().then(() => {
+      this.ionNavWillLoad.emit();
+      this.componentWillUpdate();
+    });
   }
 
   componentDidUnload() {

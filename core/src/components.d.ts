@@ -1990,9 +1990,9 @@ export namespace Components {
     */
     'setFocus': () => Promise<void>;
     /**
-    * If `true`, show the cancel button.
+    * Sets the behavior for the cancel button. Defaults to `"never"`. Setting to `"focus"` shows the cancel button on focus. Setting to `"never"` hides the cancel button. Setting to `"always"` shows the cancel button regardless of focus state.
     */
-    'showCancelButton': boolean;
+    'showCancelButton': boolean | string;
     /**
     * If `true`, enable spellcheck on the input.
     */
@@ -5104,9 +5104,9 @@ declare namespace LocalJSX {
     */
     'searchIcon'?: string;
     /**
-    * If `true`, show the cancel button.
+    * Sets the behavior for the cancel button. Defaults to `"never"`. Setting to `"focus"` shows the cancel button on focus. Setting to `"never"` hides the cancel button. Setting to `"always"` shows the cancel button regardless of focus state.
     */
-    'showCancelButton'?: boolean;
+    'showCancelButton'?: boolean | string;
     /**
     * If `true`, enable spellcheck on the input.
     */

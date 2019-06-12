@@ -32,7 +32,6 @@ ion-icon {
 // Menu Button Color: Focused
 // --------------------------------------------------
 
-
 :host(.ion-color.ion-focused) .button-native {
   background: #{current-color(base, .24)};
   color: #{current-color(base)};
