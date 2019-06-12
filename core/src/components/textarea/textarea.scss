@@ -16,6 +16,7 @@
    * @prop --padding-end: End padding of the textarea
    * @prop --padding-bottom: Bottom padding of the textarea
    * @prop --padding-start: Start padding of the textarea
+   * @prop --opacity: Opacity of the textarea when disabled
    */
   --background: initial;
   --color: initial;
@@ -103,7 +104,7 @@
 }
 
 .native-textarea[disabled] {
-  opacity: .4;
+  opacity: var(--opacity, .4);
 }
 
 // Input Cover: Unfocused
