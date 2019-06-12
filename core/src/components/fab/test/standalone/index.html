@@ -59,6 +59,26 @@
     </ion-fab-list>
   </ion-fab>
 
+  <ion-fab vertical="top" horizontal="end" id="fab6" slot="fixed">
+    <ion-fab-button onclick="clickMainFAB('fab6')" class="e2eFabCenter">
+      <ion-icon name="md-share"></ion-icon>
+      <img slot="close" src="/src/components/thumbnail/test/thumbnail.svg">
+    </ion-fab-button>
+    <ion-fab-list side="start">
+      <ion-fab-button onclick="openSocial('vimeo', 'fab6')" color="primary"><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-fab vertical="top" horizontal="center" id="fab7" slot="fixed">
+    <ion-fab-button onclick="clickMainFAB('fab7')" class="e2eFabCenter">
+      <ion-icon name="arrow-dropdown"></ion-icon>
+      <ion-button slot="close" fill="clear" size="small" color="danger">X</ion-button>
+    </ion-fab-button>
+    <ion-fab-list side="bottom">
+      <ion-fab-button onclick="openSocial('vimeo', 'fab7')" color="primary"><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
   <ion-fab horizontal="end" vertical="center" slot="fixed">
     <ion-fab-button color="danger" onclick="add()"><ion-icon name="add"></ion-icon></ion-fab-button>
   </ion-fab>
