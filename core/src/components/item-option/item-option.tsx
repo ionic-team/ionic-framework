@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
+import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -19,7 +20,7 @@ import { createColorClasses } from '../../utils/theme';
   },
   shadow: true
 })
-export class ItemOption implements ComponentInterface {
+export class ItemOption implements ComponentInterface, AnchorInterface, ButtonInterface {
 
   @Element() el!: HTMLElement;
 
@@ -41,6 +42,14 @@ export class ItemOption implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
+   * This attribute instructs browsers to download a URL instead of navigating to
+   * it, so the user will be prompted to save it as a local file. If the attribute
+   * has a value, it is used as the pre-filled file name in the Save prompt
+   * (the user can still change the file name if they want).
+   */
+  @Prop() download: string | undefined;
+
+  /**
    * If `true`, the option will expand to take up the available width and cover any other options.
    */
   @Prop() expandable = false;
@@ -49,7 +58,25 @@ export class ItemOption implements ComponentInterface {
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
-  @Prop() href?: string;
+  @Prop() href: string | undefined;
+
+  /**
+   * Specifies the relationship of the target object to the link object.
+   * The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+   */
+  @Prop() rel: string | undefined;
+
+  /**
+   * Specifies where to display the linked URL.
+   * Only applies when an `href` is provided.
+   * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+   */
+  @Prop() target: string | undefined;
+
+  /**
+   * The type of the button.
+   */
+  @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   @Listen('click')
   onClick(ev: Event) {
@@ -75,13 +102,19 @@ export class ItemOption implements ComponentInterface {
 
   render() {
     const TagType = this.href === undefined ? 'button' : 'a' as any;
+    const attrs = (TagType === 'button')
+    ? { type: this.type }
+    : {
+      download: this.download,
+      href: this.href,
+      target: this.target
+    };
 
     return (
       <TagType
-        type="button"
+        {...attrs}
         class="button-native"
         disabled={this.disabled}
-        href={this.href}
       >
         <span class="button-inner">
           <slot name="top"></slot>

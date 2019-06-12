@@ -359,7 +359,7 @@ export class Slides implements ComponentInterface {
       zoom: {
         maxRatio: 3,
         minRatio: 1,
-        toggle: true,
+        toggle: false,
       },
       touchRatio: 1,
       touchAngle: 45,
