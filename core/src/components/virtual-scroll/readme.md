@@ -97,6 +97,9 @@ kill its performance is to perform any DOM operations within section header
 and footer functions. These functions are called for every record in the
 dataset, so please make sure they're performant.
 
+## React
+
+The Virtual Scroll component is not supported in React.
 
 <!-- Auto Generated Below -->
 

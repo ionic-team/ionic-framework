@@ -1,12 +1,11 @@
 ```tsx
 import React from 'react';
+import { IonSegment, IonSegmentButton, IonLabel, IonIcon, IonToolbar, IonContent } from '@ionic/react';
 
-import { IonSegment, IonSegmentButton, IonLabel, IonIcon, IonToolbar } from '@ionic/react';
-
-const Example: React.FunctionComponent<{}> = () => (
-  <>
+export const SegmentExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Default Segment --*/}
-    <IonSegment onIonChange={(e) => console.log('Segment selected', e.detail.value)}>
+    <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)}>
       <IonSegmentButton value="friends">
         <IonLabel>Friends</IonLabel>
       </IonSegmentButton>
@@ -16,7 +15,7 @@ const Example: React.FunctionComponent<{}> = () => (
     </IonSegment>
 
     {/*-- Disabled Segment --*/}
-    <IonSegment onIonChange={(e) => console.log('Segment selected', e.detail.value)} disabled>
+    <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)} disabled>
       <IonSegmentButton value="sunny" checked>
         <IonLabel>Sunny</IonLabel>
       </IonSegmentButton>
@@ -26,7 +25,7 @@ const Example: React.FunctionComponent<{}> = () => (
     </IonSegment>
 
     {/*-- Segment with anchors --*/}
-    <IonSegment onIonChange={(e) => console.log('Segment selected', e.detail.value)}>
+    <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)}>
       <IonSegmentButton value="dogs">
         <IonLabel>Dogs</IonLabel>
       </IonSegmentButton>
@@ -61,7 +60,7 @@ const Example: React.FunctionComponent<{}> = () => (
     </IonSegment>
 
     {/*-- Segment with secondary color --*/}
-    <IonSegment onIonChange={(e) => console.log('Segment selected', e.detail.value)} color="secondary">
+    <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)} color="secondary">
       <IonSegmentButton value="standard">
         <IonLabel>Standard</IonLabel>
       </IonSegmentButton>
@@ -75,7 +74,7 @@ const Example: React.FunctionComponent<{}> = () => (
 
     {/*-- Segment in a toolbar --*/}
     <IonToolbar>
-      <IonSegment  onIonChange={(e) => console.log('Segment selected', e.detail.value)}>
+      <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)}>
         <IonSegmentButton value="camera">
           <IonIcon name="camera" />
         </IonSegmentButton>
@@ -86,7 +85,7 @@ const Example: React.FunctionComponent<{}> = () => (
     </IonToolbar>
 
     {/*-- Segment with default selection --*/}
-    <IonSegment onIonChange={(e) => console.log('Segment selected', e.detail.value)} value="javascript">
+    <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)} value="javascript">
       <IonSegmentButton value="python">
         <IonLabel>Python</IonLabel>
       </IonSegmentButton>
@@ -94,8 +93,6 @@ const Example: React.FunctionComponent<{}> = () => (
         <IonLabel>Javascript</IonLabel>
       </IonSegmentButton>
     </IonSegment>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```

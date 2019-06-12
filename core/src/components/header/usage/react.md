@@ -1,14 +1,13 @@
 ```tsx
 import React from 'react';
-
 import { IonHeader, IonContent, IonToolbar, IonButtons, IonBackButton, IonTitle } from '@ionic/react';
 
-const Example: React.FunctionComponent<{}> = () => (
+export const HeaderExample: React.FunctionComponent = () => (
   <>
     <IonHeader>
       <IonToolbar>
         <IonButtons slot="start">
-          <IonBackButton goBack={() => {}} />
+          <IonBackButton defaultHref="/" />
         </IonButtons>
         <IonTitle>My Navigation Bar</IonTitle>
       </IonToolbar>
@@ -21,5 +20,4 @@ const Example: React.FunctionComponent<{}> = () => (
     <IonContent />
   </>
 );
-
-export default Example
+```

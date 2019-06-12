@@ -1,11 +1,10 @@
 ```tsx
 import React from 'react';
-
 import { IonContent, IonFooter, IonToolbar, IonTitle } from '@ionic/react';
 
-const Example: React.FunctionComponent<{}> = () => (
+export const FooterExample: React.FunctionComponent = () => (
   <>
-    <IonContent></IonContent>
+    <IonContent />
 
     <IonFooter>
       <IonToolbar>
@@ -14,6 +13,4 @@ const Example: React.FunctionComponent<{}> = () => (
     </IonFooter>
   </>
 );
-
-export default Example;
 ```

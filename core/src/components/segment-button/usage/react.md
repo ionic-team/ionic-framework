@@ -1,10 +1,9 @@
 ```tsx
 import React from 'react';
+import { IonSegment, IonSegmentButton, IonLabel, IonIcon, IonContent } from '@ionic/react';
 
-import { IonSegment, IonSegmentButton, IonLabel, IonIcon } from '@ionic/react';
-
-const Example: React.FunctionComponent<{}> = () => (
-  <>
+export const SegmentButtonExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Segment buttons with text and click listeners --*/}
     <IonSegment>
       <IonSegmentButton onIonSelect={() => console.log('Friends segment selected')}>
@@ -140,8 +139,6 @@ const Example: React.FunctionComponent<{}> = () => (
         <IonLabel>Item Three</IonLabel>
       </IonSegmentButton>
     </IonSegment>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```
