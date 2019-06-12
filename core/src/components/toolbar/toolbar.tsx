@@ -35,7 +35,6 @@ export class Toolbar implements ComponentInterface {
    */
   @Prop() color?: Color;
 
-
   componentWillLoad() {
     const buttons = Array.from(this.el.querySelectorAll('ion-buttons'));
 

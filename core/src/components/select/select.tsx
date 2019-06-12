@@ -3,12 +3,10 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Me
 import { getIonMode } from '../../global/ionic-global';
 import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, OverlaySelect, PopoverOptions, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, StyleEventDetail } from '../../interface';
 import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
+import { actionSheetController, alertController, popoverController } from '../../utils/overlays';
 import { hostContext } from '../../utils/theme';
 
 import { SelectCompareFn } from './select-interface';
-import { actionSheetController } from '../../utils/overlays';
-import { alertController } from '../../utils/overlays';
-import { popoverController } from '../../utils/overlays';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
