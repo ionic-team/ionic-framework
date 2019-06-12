@@ -126,28 +126,19 @@ async function presentActionSheet() {
 ### React
 
 ```typescript
-import React, { Component } from 'react'
-import { IonActionSheet } from '@ionic/react';
+import React, { useState } from 'react'
+import { IonActionSheet, IonContent, IonButton } from '@ionic/react';
 
-type Props = {}
-type State = {
-  showActionSheet: boolean
-}
+export const ActionSheetExample: React.FunctionComponent = () => {
 
-export default class ActionSheetExample extends Component<Props, State> {
+  const [showActionSheet, setShowActionSheet] = useState(false);
 
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      showActionSheet: false
-    };
-  }
-
-  render() {
-    return (
+  return (
+    <IonContent>
+      <IonButton onClick={() => setShowActionSheet(true)} expand="block">Show Action Sheet</IonButton>
       <IonActionSheet
-        isOpen={this.state.showActionSheet}
-        onDidDismiss={() => this.setState(() => ({ showActionSheet: false }))}
+        isOpen={showActionSheet}
+        onDidDismiss={() => setShowActionSheet(false)}
         buttons={[{
           text: 'Delete',
           role: 'destructive',
@@ -183,9 +174,12 @@ export default class ActionSheetExample extends Component<Props, State> {
         }]}
       >
       </IonActionSheet>
-    );
-  }
+    </IonContent>
+
+  );
+
 }
+
 ```
 
 

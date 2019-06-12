@@ -96,47 +96,29 @@ async function presentLoadingWithOptions() {
 ### React
 
 ```tsx
-import React, { Component } from 'react'
-import { IonLoading } from '@ionic/react';
+import React, { useState } from 'react'
+import { IonLoading, IonButton } from '@ionic/react';
 
-type Props = {}
-type State = {
-  showLoading1: boolean
-  showLoading2: boolean
-}
+export const LoadingExample: React.FunctionComponent = () => {
 
-export class LoadingExample extends Component<Props, State> {
+  const [showLoading, setShowLoading] = useState(true);
 
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      showLoading1: false
-      showLoading2: false
-    };
-  }
+  setTimeout(() => {
+    setShowLoading(false);
+  }, 2000);
 
-  render() {
-    return (
+  return (
+    <>
+      <IonButton onClick={() => setShowLoading(true)}>Show Loading</IonButton>
       <IonLoading
-        isOpen={this.state.showLoading1}
-        onDidDismiss={() => this.setState(() => ({ showLoading1: false }))}
-        message={'Hellooo'}
-        duration={200}
-      >
-      </IonLoading>
-
-      <IonLoading
-        isOpen={this.state.showLoading2}
-        onDidDismiss={() => this.setState(() => ({ showLoading2: false }))}
-        spinner={null}
+        isOpen={showLoading}
+        onDidDismiss={() => setShowLoading(false)}
+        message={'Loading...'}
         duration={5000}
-        message='Please wait...'}
-        translucent={true}
-        cssClass='custom-class custom-loading'
       >
       </IonLoading>
-    );
-  }
+    </>
+  );
 }
 ```
 
