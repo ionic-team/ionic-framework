@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
 
 import { Color, Config, Mode } from '../../interface';
+import { ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
 @Component({
@@ -11,7 +12,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
   },
   scoped: true
 })
-export class BackButton implements ComponentInterface {
+export class BackButton implements ComponentInterface, ButtonInterface {
 
   @Element() el!: HTMLElement;
 
@@ -36,6 +37,11 @@ export class BackButton implements ComponentInterface {
   @Prop() defaultHref?: string;
 
   /**
+   * If `true`, the user cannot interact with the button.
+   */
+  @Prop({ reflectToAttr: true }) disabled = false;
+
+  /**
    * The icon name to use for the back button.
    */
   @Prop() icon?: string | null;
@@ -44,6 +50,11 @@ export class BackButton implements ComponentInterface {
    * The text to display in the back button.
    */
   @Prop() text?: string | null;
+
+  /**
+   * The type of the button.
+   */
+  @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   @Listen('click')
   async onClick(ev: Event) {
@@ -80,15 +91,19 @@ export class BackButton implements ComponentInterface {
   }
 
   hostData() {
-    const showBackButton = this.defaultHref !== undefined;
+    const { color, defaultHref, disabled, mode, hasIconOnly } = this;
+
+    const showBackButton = defaultHref !== undefined;
 
     return {
+      'aria-disabled': disabled ? 'true' : null,
       class: {
-        ...createColorClasses(this.color),
-        [`${this.mode}`]: true,
+        ...createColorClasses(color),
+        [`${mode}`]: true,
 
         'button': true, // ion-buttons target .button
-        'back-button-has-icon-only': this.hasIconOnly,
+        'back-button-disabled': disabled,
+        'back-button-has-icon-only': hasIconOnly,
         'ion-activatable': true,
         'ion-focusable': true,
         'show-back-button': showBackButton
@@ -99,8 +114,12 @@ export class BackButton implements ComponentInterface {
   render() {
     const { backButtonIcon, backButtonText } = this;
 
+    const attrs = {
+      type: this.type
+    };
+
     return (
-      <button type="button" class="button-native">
+      <button {...attrs} disabled={this.disabled} class="button-native">
         <span class="button-inner">
           {backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false}></ion-icon>}
           {backButtonText && <span class="button-text">{backButtonText}</span>}
