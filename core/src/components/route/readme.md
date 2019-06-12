@@ -1,8 +1,8 @@
 # ion-route
 
-Router is a component that can take a component, and render it when the Browser URl matches the url prop
+The route component takes a component and renders it when the Browser URl matches the url property.
 
-> Note: this is only meant for vanilla JavaScript project. For Angular projects, use `ion-router-outlet` and the Angular router.
+> Note: this component should only be used with vanilla and Stencil JavaScript projects. For Angular projects, use [`ion-router-outlet`](../router-outlet) and the Angular router.
 
 <!-- Auto Generated Below -->
 
