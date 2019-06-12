@@ -206,9 +206,10 @@ export default Example;
 
 ## CSS Custom Properties
 
-| Name      | Description        |
-| --------- | ------------------ |
-| `--color` | Color of the label |
+| Name        | Description          |
+| ----------- | -------------------- |
+| `--color`   | Color of the label   |
+| `--opacity` | Opacity of the label |
 
 
 ----------------------------------------------

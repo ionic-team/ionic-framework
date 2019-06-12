@@ -283,6 +283,7 @@ Type: `void`
 | --------------------------- | ----------------------------------------- |
 | `--background`              | Background of the input                   |
 | `--color`                   | Color of the input text                   |
+| `--opacity`                 | Opacity of the input when disabled        |
 | `--padding-bottom`          | Bottom padding of the input               |
 | `--padding-end`             | End padding of the input                  |
 | `--padding-start`           | Start padding of the input                |
