@@ -33,7 +33,6 @@ import {
   NavComponent,
   NavOptions,
   OverlayEventDetail,
-  OverlaySelect,
   PickerButton,
   PickerColumn,
   PickerOptions,
@@ -2186,7 +2185,7 @@ export namespace Components {
     /**
     * Open the select overlay. The overlay is either an alert, action sheet, or popover, depending on the `interface` property on the `ion-select`.
     */
-    'open': (event?: UIEvent | undefined) => Promise<HTMLIonPopoverElement | HTMLIonActionSheetElement | HTMLIonAlertElement | undefined>;
+    'open': (event?: UIEvent | undefined) => Promise<any>;
     /**
     * The text to display when the select is empty.
     */

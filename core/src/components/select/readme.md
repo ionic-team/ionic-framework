@@ -776,14 +776,14 @@ export const SelectExample: React.FunctionComponent = () => (
 
 ## Methods
 
-### `open(event?: UIEvent | undefined) => Promise<HTMLIonPopoverElement | HTMLIonActionSheetElement | HTMLIonAlertElement | undefined>`
+### `open(event?: UIEvent | undefined) => Promise<any>`
 
 Open the select overlay. The overlay is either an alert, action sheet, or popover,
 depending on the `interface` property on the `ion-select`.
 
 #### Returns
 
-Type: `Promise<HTMLIonPopoverElement | HTMLIonActionSheetElement | HTMLIonAlertElement | undefined>`
+Type: `Promise<any>`
 
 
 

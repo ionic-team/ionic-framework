@@ -191,7 +191,7 @@ export class Select implements ComponentInterface {
    * @param event The user interface event that called the open.
    */
   @Method()
-  async open(event?: UIEvent): Promise<OverlaySelect | undefined> {
+  async open(event?: UIEvent): Promise<any> {
     if (this.disabled || this.isExpanded) {
       return undefined;
     }
