@@ -9,6 +9,7 @@ import { NavController } from '../../providers/nav-controller';
 
 import { StackController } from './stack-controller';
 import { RouteView, getUrl } from './stack-utils';
+import { getIonMode } from '@ionic/core';
 
 @Directive({
   selector: 'ion-router-outlet',
@@ -94,7 +95,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     if ((this.nativeEl as any).componentOnReady) {
       this.nativeEl.componentOnReady().then(() => {
         if (this._swipeGesture === undefined) {
-          this.swipeGesture = this.config.getBoolean('swipeBackEnabled', false);
+          this.swipeGesture = this.config.getBoolean('swipeBackEnabled', getIonMode(this.nativeEl) === 'ios');
         }
       });
     }
