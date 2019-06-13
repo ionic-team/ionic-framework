@@ -14,7 +14,7 @@ let currentLayoutViewport: any = {};
 let keyboardOpen = false;
 
 /**
- * This is mostly just used for tests
+ * This is only used for tests
  */
 export const resetKeyboardAssist = () => {
   previousVisualViewport = {};
