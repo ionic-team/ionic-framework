@@ -45,6 +45,8 @@
   </ion-app>
   
   <script>
+    window.Ionic.config = { 'keyboardAssistExperimental': true };
+    
     const input = document.querySelector('ion-item');
     
     window.addEventListener('ionKeyboardDidOpen', (e) => {
