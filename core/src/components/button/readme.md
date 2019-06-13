@@ -256,8 +256,8 @@ export default Example;
 | Name                     | Description                                                                                               |
 | ------------------------ | --------------------------------------------------------------------------------------------------------- |
 | `--background`           | Background of the button                                                                                  |
-| `--background-activated` | Background of the button when activated                                                                   |
-| `--background-focused`   | Background of the button when focused                                                                     |
+| `--background-activated` | Background of the button when pressed                                                                     |
+| `--background-focused`   | Background of the button when focused with the tab key                                                    |
 | `--background-hover`     | Background of the button on hover                                                                         |
 | `--border-color`         | Border color of the button                                                                                |
 | `--border-radius`        | Border radius of the button                                                                               |
@@ -265,8 +265,8 @@ export default Example;
 | `--border-width`         | Border width of the button                                                                                |
 | `--box-shadow`           | Box shadow of the button                                                                                  |
 | `--color`                | Text color of the button                                                                                  |
-| `--color-activated`      | Text color of the button when activated                                                                   |
-| `--color-focused`        | Text color of the button when focused                                                                     |
+| `--color-activated`      | Text color of the button when pressed                                                                     |
+| `--color-focused`        | Text color of the button when focused with the tab key                                                    |
 | `--color-hover`          | Text color of the button when hover                                                                       |
 | `--opacity`              | Opacity of the button                                                                                     |
 | `--padding-bottom`       | Bottom padding of the button                                                                              |

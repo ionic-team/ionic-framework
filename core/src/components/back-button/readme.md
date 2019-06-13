@@ -255,11 +255,11 @@ export default Example;
 | Name                    | Description                                                                                                    |
 | ----------------------- | -------------------------------------------------------------------------------------------------------------- |
 | `--background`          | Background of the button                                                                                       |
-| `--background-focused`  | Background of the button when focused                                                                          |
+| `--background-focused`  | Background of the button when focused with the tab key                                                         |
 | `--background-hover`    | Background of the button when hover                                                                            |
 | `--border-radius`       | Border radius of the button                                                                                    |
 | `--color`               | Text color of the button                                                                                       |
-| `--color-focused`       | Text color of the button when focused                                                                          |
+| `--color-focused`       | Text color of the button when focused with the tab key                                                         |
 | `--color-hover`         | Text color of the button when hover                                                                            |
 | `--icon-font-size`      | Font size of the button icon                                                                                   |
 | `--icon-font-weight`    | Font weight of the button icon                                                                                 |

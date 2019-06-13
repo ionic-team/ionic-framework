@@ -645,7 +645,7 @@ export default Example;
 | Name                        | Description                                                                                                       |
 | --------------------------- | ----------------------------------------------------------------------------------------------------------------- |
 | `--background`              | Background of the segment button                                                                                  |
-| `--background-activated`    | Background of the activated (pressed) segment button                                                              |
+| `--background-activated`    | Background of the segment button when pressed                                                                     |
 | `--background-checked`      | Background of the checked segment button                                                                          |
 | `--background-hover`        | Background of the segment button on hover                                                                         |
 | `--border-color`            | Color of the segment button border                                                                                |
@@ -653,7 +653,7 @@ export default Example;
 | `--border-style`            | Style of the segment button border                                                                                |
 | `--border-width`            | Width of the segment button border                                                                                |
 | `--color`                   | Color of the segment button                                                                                       |
-| `--color-activated`         | Color of the activated segment button                                                                             |
+| `--color-activated`         | Color of the segment button when pressed                                                                          |
 | `--color-checked`           | Color of the checked segment button                                                                               |
 | `--color-checked-disabled`  | Color of the checked & disabled segment button                                                                    |
 | `--color-disabled`          | Color of the disabled segment button                                                                              |

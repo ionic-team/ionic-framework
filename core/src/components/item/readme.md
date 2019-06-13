@@ -1395,7 +1395,7 @@ Item Inputs
 | Name                        | Description                                                                                                   |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | `--background`              | Background of the item                                                                                        |
-| `--background-activated`    | Background of the activated item                                                                              |
+| `--background-activated`    | Background of the item when pressed                                                                           |
 | `--border-color`            | Color of the item border                                                                                      |
 | `--border-radius`           | Radius of the item border                                                                                     |
 | `--border-style`            | Style of the item border                                                                                      |

@@ -182,7 +182,7 @@ export default Example;
 | Name                   | Description                                                                                                   |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------- |
 | `--background`         | Background of the tab button                                                                                  |
-| `--background-focused` | Background of the focused tab button                                                                          |
+| `--background-focused` | Background of the tab button when focused with the tab key                                                    |
 | `--color`              | Color of the tab button                                                                                       |
 | `--color-selected`     | Color of the selected tab button                                                                              |
 | `--padding-bottom`     | Bottom padding of the tab button                                                                              |
