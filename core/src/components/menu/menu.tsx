@@ -1,4 +1,4 @@
-import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { config, getIonMode } from '../../global/ionic-global';
 import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuControllerI, MenuI, Side } from '../../interface';
@@ -496,34 +496,37 @@ export class Menu implements ComponentInterface, MenuI {
     this.afterAnimation(false);
   }
 
-  render() {
+  hostData() {
     const { isEndSide, type, disabled, isPaneVisible } = this;
-    return (
-      <Host
-        role="complementary"
-        class={{
-          [`menu-type-${type}`]: true,
-          'menu-enabled': !disabled,
-          'menu-side-end': isEndSide,
-          'menu-side-start': !isEndSide,
-          'menu-pane-visible': isPaneVisible
-        }}
-      >
-        <div
-          class="menu-inner"
-          ref={el => this.menuInnerEl = el}
-        >
-          <slot></slot>
-        </div>
+    return {
+      role: 'navigation',
+      class: {
+        [`${this.mode}`]: true,
+        [`menu-type-${type}`]: true,
+        'menu-enabled': !disabled,
+        'menu-side-end': isEndSide,
+        'menu-side-start': !isEndSide,
+        'menu-pane-visible': isPaneVisible
+      }
+    };
+  }
 
-        <ion-backdrop
-          ref={(el: any) => this.backdropEl = el}
-          class="menu-backdrop"
-          tappable={false}
-          stopPropagation={false}
-        />
-      </Host>
-    );
+  render() {
+    return [
+      <div
+        class="menu-inner"
+        ref={el => this.menuInnerEl = el}
+      >
+        <slot></slot>
+      </div>,
+
+      <ion-backdrop
+        ref={el => this.backdropEl = el}
+        class="menu-backdrop"
+        tappable={false}
+        stopPropagation={false}
+      />
+    ];
   }
 }
 

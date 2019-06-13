@@ -631,7 +631,7 @@ export const ItemSlidingExample: React.FunctionComponent = () => (
 
 | Property   | Attribute  | Description                                                | Type      | Default |
 | ---------- | ---------- | ---------------------------------------------------------- | --------- | ------- |
-| `disabled` | `disabled` | If `true`, the user cannot interact with the sliding-item. | `boolean` | `false` |
+| `disabled` | `disabled` | If `true`, the user cannot interact with the sliding item. | `boolean` | `false` |
 
 
 ## Events

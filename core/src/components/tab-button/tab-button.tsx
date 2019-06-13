@@ -2,6 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Pr
 
 import { getIonMode } from '../../global/ionic-global';
 import { Config, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
+import { AnchorInterface } from '../../utils/element-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -14,7 +15,7 @@ import { Config, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonL
   },
   shadow: true
 })
-export class TabButton implements ComponentInterface {
+export class TabButton implements ComponentInterface, AnchorInterface {
 
   @Element() el!: HTMLElement;
 
@@ -23,9 +24,29 @@ export class TabButton implements ComponentInterface {
   @Prop({ context: 'config' }) config!: Config;
 
   /**
-   * The selected tab component
+   * If `true`, the user cannot interact with the tab button.
    */
-  @Prop({ mutable: true }) selected = false;
+  @Prop() disabled = false;
+
+  /**
+   * This attribute instructs browsers to download a URL instead of navigating to
+   * it, so the user will be prompted to save it as a local file. If the attribute
+   * has a value, it is used as the pre-filled file name in the Save prompt
+   * (the user can still change the file name if they want).
+   */
+  @Prop() download: string | undefined;
+
+  /**
+   * Contains a URL or a URL fragment that the hyperlink points to.
+   * If this property is set, an anchor tag will be rendered.
+   */
+  @Prop() href: string | undefined;
+
+  /**
+   * Specifies the relationship of the target object to the link object.
+   * The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+   */
+  @Prop() rel: string | undefined;
 
   /**
    * Set the layout of the text and icon in the tab bar.
@@ -34,9 +55,9 @@ export class TabButton implements ComponentInterface {
   @Prop({ mutable: true }) layout?: TabButtonLayout;
 
   /**
-   * The URL which will be used as the `href` within this tab's button anchor.
+   * The selected tab component
    */
-  @Prop() href?: string;
+  @Prop({ mutable: true }) selected = false;
 
   /**
    * A tab id must be provided for each `ion-tab`. It's used internally to reference
@@ -45,9 +66,11 @@ export class TabButton implements ComponentInterface {
   @Prop() tab?: string;
 
   /**
-   * The selected tab component
+   * Specifies where to display the linked URL.
+   * Only applies when an `href` is provided.
+   * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
    */
-  @Prop() disabled = false;
+  @Prop() target: string | undefined;
 
   /**
    * Emitted when the tab bar is clicked
@@ -137,9 +160,16 @@ export class TabButton implements ComponentInterface {
 
   render() {
     const mode = getIonMode(this);
-    const { href } = this;
+
+    const attrs = {
+      download: this.download,
+      href: this.href,
+      rel: this.rel,
+      target: this.target
+    };
+
     return (
-      <a href={href} tabIndex={-1}>
+      <a {...attrs} tabIndex={-1}>
         <slot></slot>
         {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
       </a>

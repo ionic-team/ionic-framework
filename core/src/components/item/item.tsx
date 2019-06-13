@@ -2,6 +2,7 @@ import { Component, ComponentInterface, Element, Listen, Prop, State, h } from '
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
+import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
@@ -19,7 +20,8 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
   },
   shadow: true
 })
-export class Item implements ComponentInterface {
+export class Item implements ComponentInterface, AnchorInterface, ButtonInterface {
+
   private itemStyles = new Map<string, CssClassMap>();
 
   @Element() el!: HTMLIonItemElement;
@@ -57,10 +59,24 @@ export class Item implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
+   * This attribute instructs browsers to download a URL instead of navigating to
+   * it, so the user will be prompted to save it as a local file. If the attribute
+   * has a value, it is used as the pre-filled file name in the Save prompt
+   * (the user can still change the file name if they want).
+   */
+  @Prop() download: string | undefined;
+
+  /**
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
-  @Prop() href?: string;
+  @Prop() href: string | undefined;
+
+  /**
+   * Specifies the relationship of the target object to the link object.
+   * The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+   */
+  @Prop() rel: string | undefined;
 
   /**
    * How the bottom border should be displayed on the item.
@@ -72,6 +88,13 @@ export class Item implements ComponentInterface {
    * another page using `href`.
    */
   @Prop() routerDirection: RouterDirection = 'forward';
+
+  /**
+   * Specifies where to display the linked URL.
+   * Only applies when an `href` is provided.
+   * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+   */
+  @Prop() target: string | undefined;
 
   /**
    * The type of the button. Only used when an `onclick` or `button` property is present.
@@ -142,11 +165,18 @@ export class Item implements ComponentInterface {
 
   render() {
     const mode = getIonMode(this);
-    const { href, detail, win, detailIcon, routerDirection, type } = this;
+    const { detail, win, detailIcon, routerDirection } = this;
 
     const clickable = this.isClickable();
-    const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
-    const attrs = TagType === 'button' ? { type } : { href };
+    const TagType = clickable ? (this.href === undefined ? 'button' : 'a') : 'div' as any;
+    const attrs = (TagType === 'button')
+      ? { type: this.type }
+      : {
+        download: this.download,
+        href: this.href,
+        rel: this.rel,
+        target: this.target
+      };
     const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
 
     return [
@@ -154,7 +184,7 @@ export class Item implements ComponentInterface {
         {...attrs}
         class="item-native"
         disabled={this.disabled}
-        onClick={(ev: Event) => openURL(win, href, ev, routerDirection)}
+        onClick={(ev: Event) => openURL(win, this.href, ev, routerDirection)}
       >
         <slot name="start"></slot>
         <div class="item-inner">
