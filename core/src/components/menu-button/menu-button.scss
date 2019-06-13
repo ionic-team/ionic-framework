@@ -77,6 +77,15 @@ ion-icon {
   pointer-events: none;
 }
 
+// Menu Button: Disabled
+// --------------------------------------------------
+
+:host(.menu-button-disabled) {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
+}
+
 
 // Menu Button: Hover
 // --------------------------------------------------

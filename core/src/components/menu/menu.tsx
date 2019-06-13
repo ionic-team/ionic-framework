@@ -517,7 +517,7 @@ export class Menu implements ComponentInterface, MenuI {
   hostData() {
     const { isEndSide, type, disabled, isPaneVisible } = this;
     return {
-      role: 'complementary',
+      role: 'navigation',
       class: {
         [`${this.mode}`]: true,
         [`menu-type-${type}`]: true,
