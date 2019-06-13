@@ -25,10 +25,10 @@ export interface IonicConfig {
   hardwareBackButton?: boolean;
 
   /**
-   * If `true` Ionic will emit events whenever the on-screen keyboard opens
+   * EXPERIMENTAL: If `true` Ionic will emit events whenever the on-screen keyboard opens
    * or closes. Only available on iOS 13+ or devices with Chrome WebView 62+.
    */
-  keyboardAssist?: boolean;
+  keyboardAssistExperimental?: boolean;
 
   /**
    * Whenever clicking the top status bar should cause the scroll to top in an application.

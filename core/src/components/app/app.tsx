@@ -74,7 +74,7 @@ function importInputShims(win: Window, config: Config) {
 }
 
 function importKeyboardAssist(win: Window, config: Config) {
-  const keyboardAssist = config.getBoolean('keyboardAssist', true);
+  const keyboardAssist = config.getBoolean('keyboardAssistExperimental', false);
   if (keyboardAssist) {
     import('../../utils/keyboard').then(module => module.startKeyboardAssist(win));
   }
