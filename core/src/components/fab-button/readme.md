@@ -130,6 +130,7 @@ export default Example
 | `--background`           | Background of the button                |
 | `--background-activated` | Background of the button when activated |
 | `--background-focused`   | Background of the button when focused   |
+| `--background-hover`     | Background of the button on hover       |
 | `--border-color`         | Border color of the button              |
 | `--border-radius`        | Border radius of the button             |
 | `--border-style`         | Border style of the button              |
@@ -138,6 +139,7 @@ export default Example
 | `--color`                | Text color of the button                |
 | `--color-activated`      | Text color of the button when activated |
 | `--color-focused`        | Text color of the button when focused   |
+| `--color-hover`          | Text color of the button on hover       |
 | `--padding-bottom`       | Padding bottom of the button            |
 | `--padding-end`          | Padding end of the button               |
 | `--padding-start`        | Padding start of the button             |
