@@ -27,10 +27,10 @@
    * @prop --box-shadow: Box shadow of the button
    * @prop --opacity: Opacity of the button
    *
-   * @prop --padding-top: Padding top of the button
-   * @prop --padding-end: Padding end of the button
-   * @prop --padding-bottom: Padding bottom of the button
-   * @prop --padding-start: Padding start of the button
+   * @prop --padding-top: Top padding of the button
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button
+   * @prop --padding-bottom: Bottom padding of the button
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button
    */
   --overflow: hidden;
   --ripple-color: currentColor;
