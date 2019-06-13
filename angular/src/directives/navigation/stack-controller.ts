@@ -149,7 +149,7 @@ export class StackController {
           enteringView, // entering view
           leavingView, // leaving view
           'back',
-          true,
+          this.canGoBack(2),
           true
         );
       });
