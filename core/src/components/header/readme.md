@@ -62,10 +62,10 @@ export default Example
 
 ## Properties
 
-| Property      | Attribute     | Description                                                                                                                                               | Type            | Default     |
-| ------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | ----------- |
-| `mode`        | `mode`        | The mode determines which platform styles to use.                                                                                                         | `"ios" \| "md"` | `undefined` |
-| `translucent` | `translucent` | If `true`, the header will be translucent. Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content. | `boolean`       | `false`     |
+| Property      | Attribute     | Description                                                                                                                                                                           | Type            | Default     |
+| ------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | ----------- |
+| `mode`        | `mode`        | The mode determines which platform styles to use.                                                                                                                                     | `"ios" \| "md"` | `undefined` |
+| `translucent` | `translucent` | If `true`, the header will be translucent. Only applies to `ios` mode. Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content. | `boolean`       | `false`     |
 
 
 ----------------------------------------------
