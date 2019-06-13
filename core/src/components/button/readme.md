@@ -96,10 +96,10 @@ This attribute specifies the size of the button. Setting this attribute will cha
 ```tsx
 import React from 'react';
 
-import { IonButton, IonIcon } from '@ionic/react';
+import { IonButton, IonIcon, IonContent } from '@ionic/react';
 
-const Example: React.FunctionComponent<{}> = () => (
-  <>
+export const ButtonExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Default --*/}
     <IonButton>Default</IonButton>
 
@@ -148,10 +148,9 @@ const Example: React.FunctionComponent<{}> = () => (
     <IonButton size="large">Large</IonButton>
     <IonButton>Default</IonButton>
     <IonButton size="small">Small</IonButton>
-  </>
+  </IonContent>
 );
 
-export default Example;
 ```
 
 

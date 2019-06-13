@@ -207,10 +207,9 @@ function openCustom() {
 
 ```tsx
 import React from 'react';
-
 import { IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonRouterOutlet } from '@ionic/react';
 
-const Example: React.FunctionComponent<{}> = () => (
+export const MenuExample: React.FunctionComponent = () => (
   <>
     <IonMenu side="start" menuId="first">
       <IonHeader>
@@ -265,8 +264,6 @@ const Example: React.FunctionComponent<{}> = () => (
     <IonRouterOutlet></IonRouterOutlet>
   </>
 );
-
-export default Example;
 ```
 
 

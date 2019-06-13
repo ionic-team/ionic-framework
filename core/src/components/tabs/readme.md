@@ -177,11 +177,9 @@ will match the following tab:
 
 ```tsx
 import React from 'react';
-
 import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBadge } from '@ionic/react';
 
-const Example: React.FunctionComponent<{}> = () => (
-
+export const TabsExample: React.FunctionComponent = () => (
   <IonTabs>
     <IonTabBar slot="bottom">
       <IonTabButton tab="schedule">
@@ -207,8 +205,6 @@ const Example: React.FunctionComponent<{}> = () => (
     </IonTabBar>
   </IonTabs>
 );
-
-export default Example;
 ```
 
 

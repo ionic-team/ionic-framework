@@ -338,7 +338,7 @@ import {
 } from '@ionic/react';
 import './SkeletonTextExample.css';
 
-const SkeletonTextExample: React.FunctionComponent = () => {
+export const SkeletonTextExample: React.FunctionComponent = () => {
   const [data, setData] = useState();
 
   setTimeout(() => {

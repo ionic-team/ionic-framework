@@ -40,12 +40,10 @@ If the FAB button is not wrapped with `<ion-fab>`, it will scroll with the conte
 
 ```tsx
 import React from 'react';
-
 import { IonContent, IonFab, IonFabButton } from '@ionic/react';
 
-const Example: React.FunctionComponent<{}> = () => (
+export const FabButtonExample: React.FunctionComponent = () => (
   <IonContent>
-
     {/*-- Fixed Floating Action Button that does not scroll with the content --*/}
     <IonFab>
       <IonFabButton>Button</IonFabButton>
@@ -65,8 +63,7 @@ const Example: React.FunctionComponent<{}> = () => (
     <IonFabButton color="dark">Dark</IonFabButton>
   </IonContent>
 );
-
-export default Example
+```
 
 
 ### Vue

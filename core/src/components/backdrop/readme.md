@@ -78,11 +78,10 @@ backdrop.stopPropagation = false;
 
 ```tsx
 import React from 'react';
+import { IonBackdrop, IonContent } from '@ionic/react';
 
-import { IonBackdrop } from '@ionic/react';
-
-const Example: React.FunctionComponent<{}> = () => (
-  <>
+export const BackdropExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Default backdrop --*/}
     <IonBackdrop />
 
@@ -95,15 +94,9 @@ const Example: React.FunctionComponent<{}> = () => (
     {/*-- Backdrop with propagation --*/}
     <IonBackdrop stopPropagation={false} />
 
-    <IonBackdrop
-      tappable={true}
-      visible={true}
-      stopPropagation={true}
-    />
-  </>
+    <IonBackdrop tappable={true} visible={true} stopPropagation={true} />
+  </IonContent>
 );
-
-export default Example;
 ```
 
 

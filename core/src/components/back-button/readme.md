@@ -119,16 +119,15 @@ To change what is displayed in the back button, use the `text` and `icon` proper
 
 ```tsx
 import React from 'react';
+import { IonBackButton, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonContent } from '@ionic/react';
 
-import { IonBackButton, IonHeader, IonToolbar, IonButtons, IonMenuButton } from '@ionic/react';
-
-const Example: React.FunctionComponent<{}> = () => (
-  <>
+export const BackButtonExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Default back button --*/}
     <IonHeader>
       <IonToolbar>
         <IonButtons slot="start">
-          <IonBackButton goBack={() => {}} />
+          <IonBackButton />
         </IonButtons>
       </IonToolbar>
     </IonHeader>
@@ -137,7 +136,7 @@ const Example: React.FunctionComponent<{}> = () => (
     <IonHeader>
       <IonToolbar>
         <IonButtons slot="start">
-          <IonBackButton goBack={() => {}} defaultHref="home" />
+          <IonBackButton defaultHref="home" />
         </IonButtons>
       </IonToolbar>
     </IonHeader>
@@ -146,11 +145,7 @@ const Example: React.FunctionComponent<{}> = () => (
     <IonHeader>
       <IonToolbar>
         <IonButtons slot="start">
-          <IonBackButton
-            goBack={() => {}}
-            text="buttonText"
-            icon="buttonIcon"
-          />
+          <IonBackButton text="buttonText" icon="buttonIcon" />
         </IonButtons>
       </IonToolbar>
     </IonHeader>
@@ -159,7 +154,7 @@ const Example: React.FunctionComponent<{}> = () => (
     <IonHeader>
       <IonToolbar>
         <IonButtons slot="start">
-          <IonBackButton goBack={() => {}} text="" icon="add" />
+          <IonBackButton text="" icon="add" />
         </IonButtons>
       </IonToolbar>
     </IonHeader>
@@ -169,14 +164,12 @@ const Example: React.FunctionComponent<{}> = () => (
       <IonToolbar>
         <IonButtons slot="start">
           <IonMenuButton />
-          <IonBackButton goBack={() => {}} color="danger" />
+          <IonBackButton color="danger" />
         </IonButtons>
       </IonToolbar>
     </IonHeader>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```
 
 

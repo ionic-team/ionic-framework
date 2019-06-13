@@ -66,7 +66,7 @@ async function presentPopover(ev) {
 import React, { useState } from 'react';
 import { IonPopover, IonButton } from '@ionic/react';
 
-export const PopoverExample: React.FunctionalComponent = () => {
+export const PopoverExample: React.FunctionComponent = () => {
   const [showPopover, setShowPopover] = useState(false);
 
   return (
@@ -81,7 +81,6 @@ export const PopoverExample: React.FunctionalComponent = () => {
     </>
   );
 };
-
 ```
 
 

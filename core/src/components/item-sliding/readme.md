@@ -329,17 +329,15 @@ Options can be expanded to take up the full width of the item if you swipe past 
 
 ```tsx
 import React from 'react';
+import { IonList, IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption, IonIcon, IonNote } from '@ionic/react';
 
-import { IonList, IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption } from '@ionic/react';
-
-const Example: React.FunctionComponent<{}> = () => (
-
+export const ItemSlidingExample: React.FunctionComponent = () => (
 <IonList>
   {/* Sliding item with text options on both sides */}
   <IonItemSliding>
     <IonItemOptions side="start">
-      <IonItemOption onClick={favorite(item)}>Favorite</IonItemOption>
-      <IonItemOption color="danger" onClick={share(item)}>Share</IonItemOption>
+      <IonItemOption onClick={() => console.log('favorite clicked')}>Favorite</IonItemOption>
+      <IonItemOption color="danger" onClick={() => console.log('share clicked')}>Share</IonItemOption>
     </IonItemOptions>
 
     <IonItem>
@@ -347,7 +345,7 @@ const Example: React.FunctionComponent<{}> = () => (
     </IonItem>
 
     <IonItemOptions side="end">
-      <IonItemOption onClick={unread(item)}>Unread</IonItemOption>
+      <IonItemOption onClick={() => console.log('unread clicked')}>Unread</IonItemOption>
     </IonItemOptions>
   </IonItemSliding>
 
@@ -475,10 +473,7 @@ const Example: React.FunctionComponent<{}> = () => (
     </IonItemOptions>
   </IonItemSliding>
 </IonList>
-
 );
-
-export default Example;
 ```
 
 

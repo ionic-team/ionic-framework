@@ -164,7 +164,6 @@ export const ToastExample: React.FunctionComponent = () => {
     </IonContent>
   );
 };
-
 ```
 
 

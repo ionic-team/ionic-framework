@@ -40,10 +40,9 @@ content.addEventListener('ionScrollEnd', () => console.log('scroll end'));
 
 ```tsx
 import React from 'react';
-
 import { IonContent } from '@ionic/react';
 
-const Example: React.FunctionComponent<{}> = () => (
+const ContentExample: React.FunctionComponent = () => (
   <IonContent
     scrollEvents={true}
     onIonScrollStart={() => {}}
@@ -51,8 +50,6 @@ const Example: React.FunctionComponent<{}> = () => (
     onIonScrollEnd={() => {}}>
   </IonContent>
 );
-
-export default Example;
 ```
 
 

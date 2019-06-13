@@ -107,11 +107,10 @@ A Searchbar should be used instead of an input to search lists. A clear button i
 
 ```tsx
 import React from 'react';
+import { IonSearchbar, IonToolbar, IonContent } from '@ionic/react';
 
-import { IonSearchbar, IonToolbar } from '@ionic/react';
-
-const Example: React.FunctionComponent<{}> = () => (
-  <>
+export const SearchbarExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Default Searchbar --*/}
     <IonSearchbar></IonSearchbar>
     
@@ -134,7 +133,7 @@ const Example: React.FunctionComponent<{}> = () => (
     <IonSearchbar type="tel"></IonSearchbar>
 
     {/*-- Searchbar disabled  --*/}
-    <IonSearchbar disabled="true"></IonSearchbar>
+    <IonSearchbar disabled={true}></IonSearchbar>
 
     {/*-- Searchbar with a cancel button and custom cancel button text --*/}
     <IonSearchbar showCancelButton="focus" cancelButtonText="Custom Cancel"></IonSearchbar>
@@ -152,10 +151,8 @@ const Example: React.FunctionComponent<{}> = () => (
     <IonToolbar>
       <IonSearchbar></IonSearchbar>
     </IonToolbar>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```
 
 

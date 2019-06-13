@@ -24,9 +24,11 @@ describe('router-link params and fragments', () => {
   it('should return to a page with preserved query param and fragment', async () => {
     await browser.get('/router-link?ionic:_testing=true');
     await element(by.css('#queryParamsFragment')).click();
+    await waitTime(200);
     await element(by.css('#goToPage3')).click();
 
     browser.wait(EC.urlContains('router-link-page3'), 5000);
+    await waitTime(200);
 
     await element(by.css('#goBackFromPage3')).click();
 

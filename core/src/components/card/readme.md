@@ -67,11 +67,10 @@ sub-components to reflect this. Please see `ion-card-content`,
 
 ```tsx
 import React from 'react';
+import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonIcon, IonItem, IonLabel } from '@ionic/react';
 
-import { IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel, IonButton } from '@ionic/react';
-
-const Example: React.FunctionComponent<{}> = () => (
-  <>
+export const CardExample: React.FunctionComponent = () => (
+  <IonContent>
     <IonCard>
       <IonCardHeader>
         <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
@@ -118,10 +117,8 @@ const Example: React.FunctionComponent<{}> = () => (
         <IonLabel>Card Button Item 2</IonLabel>
       </IonItem>
     </IonCard>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```
 
 

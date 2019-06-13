@@ -103,20 +103,20 @@ export class RefresherExample {
 
 ```tsx
 import React from 'react';
-
 import { IonContent, IonRefresher, IonRefresherContent } from '@ionic/react';
+import { RefresherEventDetail } from '@ionic/core';
 
-function doRefresh(event: CustomEvent) {
+function doRefresh(event: CustomEvent<RefresherEventDetail>) {
   console.log('Begin async operation');
 
   setTimeout(() => {
     console.log('Async operation has ended');
-    event.target.complete();
+    event.detail.complete();
   }, 2000);
 }
 
-const Example: React.FunctionComponent<{}> = () => (
-  <>
+export const RefresherExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Default Refresher --*/}
     <IonContent>
       <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
@@ -142,11 +142,10 @@ const Example: React.FunctionComponent<{}> = () => (
         </IonRefresherContent>
       </IonRefresher>
     </IonContent>
-  </>
-  }
+  </IonContent>
 );
 
-export default Example
+```
 
 
 ### Vue

@@ -57,11 +57,10 @@ Chips represent complex entities in small blocks, such as a contact. A chip can 
 
 ```tsx
 import React from 'react';
+import { IonChip, IonLabel, IonIcon, IonAvatar, IonContent } from '@ionic/react';
 
-import { IonChip, IonLabel, IonIcon, IonAvatar } from '@ionic/react';
-
-const ChipExample: React.FunctionComponent<{}> = () => (
-  <>
+export const ChipExample: React.FunctionComponent = () => (
+  <IonContent>
     <IonChip>
       <IonLabel>Default</IonLabel>
     </IonChip>
@@ -102,10 +101,9 @@ const ChipExample: React.FunctionComponent<{}> = () => (
       <IonLabel>Avatar Chip</IonLabel>
       <IonIcon name="close-circle" />
     </IonChip>
-  </>
+  </IonContent>
 );
-
-export default ChipExample;
+```
 
 
 ### Vue

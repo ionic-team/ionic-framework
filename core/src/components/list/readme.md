@@ -145,11 +145,10 @@ Lists support several interactions including swiping items to reveal options, dr
 
 ```tsx
 import React from 'react';
+import { IonList, IonItem, IonLabel, IonInput, IonToggle, IonRadio, IonCheckbox, IonItemSliding, IonItemOption, IonItemOptions, IonContent } from '@ionic/react';
 
-import { IonList, IonItem, IonLabel, IonInput, IonToggle, IonRadio, IonCheckbox, IonItemSliding, IonItemOption, IonItemOptions } from '@ionic/react';
-
-const Example: React.FunctionComponent<{}> = () => (
-  <>
+export const ListExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- List of Text Items --*/}
     <IonList>
       <IonItem>
@@ -209,10 +208,8 @@ const Example: React.FunctionComponent<{}> = () => (
         </IonItemOptions>
       </IonItemSliding>
     </IonList>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```
 
 

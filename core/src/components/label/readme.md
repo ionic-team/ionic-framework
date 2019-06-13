@@ -70,20 +70,19 @@ Label is a wrapper element that can be used in combination with `ion-item`, `ion
 
 ```tsx
 import React from 'react';
+import { IonLabel, IonItem, IonInput, IonToggle, IonCheckbox, IonContent } from '@ionic/react';
 
-import { IonLabel, IonItem, IonInput, IonToggle, IonCheckbox } from '@ionic/react';
-
-const Example: React.FunctionComponent<{}> = () => (
-  <>
+export const LabelExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Default Label --*/}
-    <IonLabel>Label</IonLabel>
+    <IonLabel>Label</IonLabel><br />
 
     {/*-- Label Colors --*/}
-    <IonLabel color="primary">Primary Label</IonLabel>
-    <IonLabel color="secondary">Secondary Label</IonLabel>
-    <IonLabel color="danger">Danger Label</IonLabel>
-    <IonLabel color="light">Light Label</IonLabel>
-    <IonLabel color="dark">Dark Label</IonLabel>
+    <IonLabel color="primary">Primary Label</IonLabel><br />
+    <IonLabel color="secondary">Secondary Label</IonLabel><br />
+    <IonLabel color="danger">Danger Label</IonLabel><br />
+    <IonLabel color="light">Light Label</IonLabel><br />
+    <IonLabel color="dark">Dark Label</IonLabel><br />
 
     {/*-- Item Labels --*/}
     <IonItem>
@@ -127,10 +126,8 @@ const Example: React.FunctionComponent<{}> = () => (
       <IonCheckbox slot="start" checked />
       <IonLabel>Checkbox</IonLabel>
     </IonItem>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```
 
 

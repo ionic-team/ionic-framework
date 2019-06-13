@@ -99,11 +99,10 @@ The textarea component accepts the [native textarea attributes](https://develope
 
 ```tsx
 import React from 'react';
+import { IonTextarea, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-import { IonTextarea, IonItem, IonLabel } from '@ionic/react';
-
-const Example: React.FunctionComponent<{}> = () => (
-  <>
+export const TextAreaExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Default textarea --*/}
     <IonTextarea></IonTextarea>
 
@@ -139,10 +138,8 @@ const Example: React.FunctionComponent<{}> = () => (
       <IonLabel>Notes</IonLabel>
       <IonTextarea rows={6} cols={20} placeholder="Enter any notes here..."></IonTextarea>
     </IonItem>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```
 
 

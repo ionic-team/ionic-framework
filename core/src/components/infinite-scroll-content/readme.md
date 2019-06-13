@@ -39,28 +39,6 @@ The `ion-infinite-scroll-content` component is not supported in React.
 ```
 
 
-### React
-
-```tsx
-import React from 'react';
-
-import { IonContent, IonInfiniteScroll } from '@ionic/react';
-
-const Example: React.FunctionComponent<{}> = () => (
-
-  <IonContent>
-    <IonInfiniteScroll>
-      <IonInfiniteScrollContent
-        loadingSpinner="bubbles"
-        loadingText="Loading more data…">
-      </IonInfiniteScrollContent>
-    </IonInfiniteScroll>
-  </IonContent>
-);
-
-export default Example
-
-
 ### Vue
 
 ```html
