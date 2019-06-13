@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, NgZone, OnDestroy, OnInit, Optional, Output, SkipSelf, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ChildrenOutletContexts, OutletContext, PRIMARY_OUTLET, Router } from '@angular/router';
+import { getIonMode } from '@ionic/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
@@ -9,7 +10,6 @@ import { NavController } from '../../providers/nav-controller';
 
 import { StackController } from './stack-controller';
 import { RouteView, getUrl } from './stack-utils';
-import { getIonMode } from '@ionic/core';
 
 @Directive({
   selector: 'ion-router-outlet',
