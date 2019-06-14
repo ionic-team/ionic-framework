@@ -52,7 +52,7 @@
 }
 
 @media (any-hover: hover) {
-  :host(.ion-color)::slotted(:hover:not(.segment-button-checked)) {
+  :host(.ion-color)::slotted(ion-segment-button:hover:not(.segment-button-checked)) {
     background: #{current-color(base, .1)};
   }
 }
