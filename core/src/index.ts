@@ -1,5 +1,6 @@
-export * from './utils/platform';
+import 'ionicons';
+
 export * from './utils/config';
 export * from './components/nav/constants';
-export { getIonMode } from './global/ionic-global';
+export { isPlatform } from './utils/platform';
 export { alertController, actionSheetController, modalController, loadingController, pickerController, popoverController, toastController } from './utils/overlays';

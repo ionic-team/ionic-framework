@@ -1,7 +1,6 @@
 import { Location } from '@angular/common';
 import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, NgZone, OnDestroy, OnInit, Optional, Output, SkipSelf, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ChildrenOutletContexts, OutletContext, PRIMARY_OUTLET, Router } from '@angular/router';
-import { getIonMode } from '@ionic/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
@@ -95,7 +94,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     if ((this.nativeEl as any).componentOnReady) {
       this.nativeEl.componentOnReady().then(() => {
         if (this._swipeGesture === undefined) {
-          this.swipeGesture = this.config.getBoolean('swipeBackEnabled', getIonMode(this.nativeEl) === 'ios');
+          this.swipeGesture = this.config.getBoolean('swipeBackEnabled', (this.nativeEl as any).mode === 'ios');
         }
       });
     }

@@ -1,5 +1,4 @@
 import { getMode, setMode } from '@stencil/core';
-import 'ionicons';
 
 import { Mode } from '../interface';
 import { isPlatform, setupPlatforms } from '../utils/platform';
@@ -8,7 +7,7 @@ import { Config, configFromSession, configFromURL, saveConfig } from './config';
 
 declare const Context: any;
 
-const config = Context.config = new Config();
+const config = /*@__PURE__*/new Config();
 
 let mode: Mode;
 
@@ -19,6 +18,7 @@ export function getIonMode(ref?: any): Mode {
 export default function() {
   const doc = document;
   const win = window;
+  Context.config = config;
   const Ionic = (win as any).Ionic = (win as any).Ionic || {};
 
   // Setup platforms
@@ -51,7 +51,9 @@ export default function() {
     config.set('animated', false);
   }
 
-  setMode((elm: any) => (elm as any).mode || elm.getAttribute('mode') || mode);
+  setMode(
+    (elm: any) => (elm as any).mode = (elm as any).mode || elm.getAttribute('mode') || mode
+  );
 
 }
 
