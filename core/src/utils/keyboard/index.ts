@@ -96,7 +96,7 @@ export const keyboardDidClose = (win: Window): boolean => {
  * changed since the last visual viewport change.
  * It is rare that a layout viewport change is not
  * associated with a visual viewport change so we
- * want to make sure we don't get an false positives
+ * want to make sure we don't get any false positives.
  */
 const layoutViewportDidChange = (): boolean => {
   return (
