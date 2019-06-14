@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
 
 import { Mode, SegmentButtonLayout } from '../../interface';
+import { ButtonInterface } from '../../utils/element-interface';
 
 let ids = 0;
 
@@ -12,7 +13,7 @@ let ids = 0;
   },
   shadow: true
 })
-export class SegmentButton implements ComponentInterface {
+export class SegmentButton implements ComponentInterface, ButtonInterface {
 
   @Element() el!: HTMLElement;
 
@@ -35,6 +36,11 @@ export class SegmentButton implements ComponentInterface {
    * Set the layout of the text and icon in the segment.
    */
   @Prop() layout?: SegmentButtonLayout = 'icon-top';
+
+  /**
+   * The type of the button.
+   */
+  @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   /**
    * The value of the segment button.
@@ -88,7 +94,7 @@ export class SegmentButton implements ComponentInterface {
   render() {
     return [
       <button
-        type="button"
+        type={this.type}
         aria-pressed={this.checked ? 'true' : null}
         class="button-native"
         disabled={this.disabled}
