@@ -102,7 +102,7 @@
 .action-sheet-group {
   flex-shrink: 2;
   overscroll-behavior-y: contain;
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   pointer-events: all;
 

@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
 
-import { Side } from '../../interface';
+import { Mode, Side } from '../../interface';
 import { isEndSide } from '../../utils/helpers';
 
 @Component({
@@ -11,6 +11,8 @@ import { isEndSide } from '../../utils/helpers';
   }
 })
 export class ItemOptions implements ComponentInterface {
+  mode!: Mode;
+
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'window' }) win!: Window;
@@ -36,8 +38,14 @@ export class ItemOptions implements ComponentInterface {
 
   hostData() {
     const isEnd = isEndSide(this.win, this.side);
+
     return {
       class: {
+        [`${this.mode}`]: true,
+
+        // Used internally for styling
+        [`item-options-${this.mode}`]: true,
+
         'item-options-start': !isEnd,
         'item-options-end': isEnd
       }

@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
 
 import { Color, Mode, RouterDirection } from '../../interface';
+import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { hasShadowDom } from '../../utils/helpers';
 import { createColorClasses, openURL } from '../../utils/theme';
 
@@ -18,9 +19,10 @@ import { createColorClasses, openURL } from '../../utils/theme';
   },
   shadow: true,
 })
-export class Button implements ComponentInterface {
+export class Button implements ComponentInterface, AnchorInterface, ButtonInterface {
 
   private inToolbar = false;
+  private inItem = false;
 
   @Element() el!: HTMLElement;
 
@@ -68,10 +70,24 @@ export class Button implements ComponentInterface {
   @Prop() routerDirection: RouterDirection = 'forward';
 
   /**
+   * This attribute instructs browsers to download a URL instead of navigating to
+   * it, so the user will be prompted to save it as a local file. If the attribute
+   * has a value, it is used as the pre-filled file name in the Save prompt
+   * (the user can still change the file name if they want).
+   */
+  @Prop() download: string | undefined;
+
+  /**
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
-  @Prop() href?: string;
+  @Prop() href: string | undefined;
+
+  /**
+   * Specifies the relationship of the target object to the link object.
+   * The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+   */
+  @Prop() rel: string | undefined;
 
   /**
    * The button shape.
@@ -87,6 +103,13 @@ export class Button implements ComponentInterface {
    * If `true`, activates a button with a heavier font weight.
    */
   @Prop() strong = false;
+
+  /**
+   * Specifies where to display the linked URL.
+   * Only applies when an `href` is provided.
+   * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+   */
+  @Prop() target: string | undefined;
 
   /**
    * The type of the button.
@@ -105,6 +128,7 @@ export class Button implements ComponentInterface {
 
   componentWillLoad() {
     this.inToolbar = !!this.el.closest('ion-buttons');
+    this.inItem = !!this.el.closest('ion-item') || !!this.el.closest('ion-item-divider');
   }
 
   @Listen('click')
@@ -130,6 +154,22 @@ export class Button implements ComponentInterface {
     }
   }
 
+  private get hasIconOnly() {
+    return !!this.el.querySelector('ion-icon[slot="icon-only"]');
+  }
+
+  private get rippleType() {
+    const hasClearFill = this.fill === undefined || this.fill === 'clear';
+
+    // If the button is in a toolbar, has a clear fill (which is the default)
+    // and only has an icon we use the unbounded "circular" ripple effect
+    if (hasClearFill && this.hasIconOnly && this.inToolbar) {
+      return 'unbounded';
+    }
+
+    return 'bounded';
+  }
+
   private onFocus = () => {
     this.ionFocus.emit();
   }
@@ -139,15 +179,17 @@ export class Button implements ComponentInterface {
   }
 
   hostData() {
-    const { buttonType, disabled, color, expand, shape, size, strong } = this;
+    const { buttonType, disabled, color, expand, hasIconOnly, shape, strong } = this;
     let fill = this.fill;
     if (fill === undefined) {
       fill = this.inToolbar ? 'clear' : 'solid';
     }
+    const size = this.size === undefined && this.inItem ? 'small' : this.size;
     return {
       'aria-disabled': disabled ? 'true' : null,
       class: {
         ...createColorClasses(color),
+        [`${this.mode}`]: true,
         [buttonType]: true,
         [`${buttonType}-${expand}`]: expand !== undefined,
         [`${buttonType}-${size}`]: size !== undefined,
@@ -155,6 +197,7 @@ export class Button implements ComponentInterface {
         [`${buttonType}-${fill}`]: true,
         [`${buttonType}-strong`]: strong,
 
+        'button-has-icon-only': hasIconOnly,
         'button-disabled': disabled,
         'ion-activatable': true,
         'ion-focusable': true,
@@ -166,7 +209,12 @@ export class Button implements ComponentInterface {
     const TagType = this.href === undefined ? 'button' : 'a' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
-      : { href: this.href };
+      : {
+        download: this.download,
+        href: this.href,
+        rel: this.rel,
+        target: this.target
+      };
 
     return (
       <TagType
@@ -182,7 +230,7 @@ export class Button implements ComponentInterface {
           <slot></slot>
           <slot name="end"></slot>
         </span>
-        {this.mode === 'md' && <ion-ripple-effect type={this.inToolbar ? 'unbounded' : 'bounded'}></ion-ripple-effect>}
+        {this.mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
       </TagType>
     );
   }

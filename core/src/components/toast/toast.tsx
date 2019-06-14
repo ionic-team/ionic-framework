@@ -2,6 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Pr
 
 import { Animation, AnimationBuilder, Color, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface, ToastButton } from '../../interface';
 import { dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
+import { sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -147,6 +148,12 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
   /**
    * Dismiss the toast overlay after it has been presented.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the toast.
+   * This can be useful in a button handler for determining which button was
+   * clicked to dismiss the toast.
+   * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
    */
   @Method()
   dismiss(data?: any, role?: string): Promise<boolean> {
@@ -226,6 +233,8 @@ export class Toast implements ComponentInterface, OverlayInterface {
         zIndex: 60000 + this.overlayIndex,
       },
       class: {
+        [`${this.mode}`]: true,
+
         ...createColorClasses(this.color),
         ...getClassMap(this.cssClass),
         'toast-translucent': this.translucent
@@ -282,7 +291,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
               <div class="toast-header">{this.header}</div>
             }
             {this.message !== undefined &&
-              <div class="toast-message">{this.message}</div>
+              <div class="toast-message" innerHTML={sanitizeDOMString(this.message)}></div>
             }
           </div>
 

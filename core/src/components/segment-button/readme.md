@@ -611,7 +611,7 @@ export default Example;
   import { Component, Vue } from 'vue-property-decorator';
 
   @Component()
-  export default class MenuExample extends Vue {
+  export default class Example extends Vue {
     segmentButtonClicked(ev: any) {
       console.log('Segment button clicked', ev);
     }
@@ -629,6 +629,7 @@ export default Example;
 | `disabled` | `disabled` | If `true`, the user cannot interact with the segment button. | `boolean`                                                                                               | `false`               |
 | `layout`   | `layout`   | Set the layout of the text and icon in the segment.          | `"icon-bottom" \| "icon-end" \| "icon-hide" \| "icon-start" \| "icon-top" \| "label-hide" \| undefined` | `'icon-top'`          |
 | `mode`     | `mode`     | The mode determines which platform styles to use.            | `"ios" \| "md"`                                                                                         | `undefined`           |
+| `type`     | `type`     | The type of the button.                                      | `"button" \| "reset" \| "submit"`                                                                       | `'button'`            |
 | `value`    | `value`    | The value of the segment button.                             | `string`                                                                                                | `'ion-sb-' + (ids++)` |
 
 

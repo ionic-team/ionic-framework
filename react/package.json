@@ -48,7 +48,7 @@
     "react-dom": "^16.7.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-testing-library": "^5.5.3",
+    "react-testing-library": "^7.0.0",
     "ts-jest": "^23.10.5",
     "typescript": "^3.2.2"
   },

@@ -83,7 +83,7 @@
 .alert-message {
   box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
-  overflow-y: scroll;
+  overflow-y: auto;
   overscroll-behavior-y: contain;
 }
 

@@ -1,9 +1,9 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { Gesture, GestureDetail, ItemReorderEventDetail } from '../../interface';
+import { Gesture, GestureDetail, ItemReorderEventDetail, Mode } from '../../interface';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/haptic';
 
-const enum ReordeGroupState {
+const enum ReorderGroupState {
   Idle = 0,
   Active = 1,
   Complete = 2
@@ -14,6 +14,7 @@ const enum ReordeGroupState {
   styleUrl: 'reorder-group.scss'
 })
 export class ReorderGroup implements ComponentInterface {
+  mode!: Mode;
 
   private selectedItemEl?: HTMLElement;
   private selectedItemHeight!: number;
@@ -29,7 +30,7 @@ export class ReorderGroup implements ComponentInterface {
   private containerTop = 0;
   private containerBottom = 0;
 
-  @State() state = ReordeGroupState.Idle;
+  @State() state = ReorderGroupState.Idle;
 
   @Element() el!: HTMLElement;
 
@@ -89,8 +90,17 @@ export class ReorderGroup implements ComponentInterface {
   }
 
   /**
-   * This method must be called once the `ionItemReorder` event is handled in order
-   * to complete the reorder operation.
+   * Completes the reorder operation. Must be called by the `ionItemReorder` event.
+   *
+   * If a list of items is passed, the list will be reordered and returned in the
+   * proper order.
+   *
+   * If no parameters are passed or if `true` is passed in, the reorder will complete
+   * and the item will remain in the position it was dragged to. If `false` is passed,
+   * the reorder will complete and the item will bounce back to its original position.
+   *
+   * @param listOrReorder A list of items to be sorted and returned in the new order or a
+   * boolean of whether or not the reorder should reposition the item.
    */
   @Method()
   complete(listOrReorder?: boolean | any[]): Promise<any> {
@@ -98,7 +108,7 @@ export class ReorderGroup implements ComponentInterface {
   }
 
   private canStart(ev: GestureDetail): boolean {
-    if (this.selectedItemEl || this.state !== ReordeGroupState.Idle) {
+    if (this.selectedItemEl || this.state !== ReorderGroupState.Idle) {
       return false;
     }
     const target = ev.event.target as HTMLElement;
@@ -151,7 +161,7 @@ export class ReorderGroup implements ComponentInterface {
 
     this.lastToIndex = indexForItem(item);
     this.selectedItemHeight = item.offsetHeight;
-    this.state = ReordeGroupState.Active;
+    this.state = ReorderGroupState.Active;
 
     item.classList.add(ITEM_REORDER_SELECTED);
 
@@ -187,9 +197,9 @@ export class ReorderGroup implements ComponentInterface {
 
   private onEnd() {
     const selectedItem = this.selectedItemEl;
-    this.state = ReordeGroupState.Complete;
+    this.state = ReorderGroupState.Complete;
     if (!selectedItem) {
-      this.state = ReordeGroupState.Idle;
+      this.state = ReorderGroupState.Idle;
       return;
     }
 
@@ -212,13 +222,13 @@ export class ReorderGroup implements ComponentInterface {
 
   private completeSync(listOrReorder?: boolean | any[]): any {
     const selectedItemEl = this.selectedItemEl;
-    if (selectedItemEl && this.state === ReordeGroupState.Complete) {
+    if (selectedItemEl && this.state === ReorderGroupState.Complete) {
       const children = this.el.children as any;
       const len = children.length;
       const toIndex = this.lastToIndex;
       const fromIndex = indexForItem(selectedItemEl);
 
-      if (listOrReorder === true) {
+      if (!listOrReorder || listOrReorder === true) {
         const ref = (fromIndex < toIndex)
           ? children[toIndex + 1]
           : children[toIndex];
@@ -237,7 +247,7 @@ export class ReorderGroup implements ComponentInterface {
       selectedItemEl.style.transition = '';
       selectedItemEl.classList.remove(ITEM_REORDER_SELECTED);
       this.selectedItemEl = undefined;
-      this.state = ReordeGroupState.Idle;
+      this.state = ReorderGroupState.Idle;
     }
     return listOrReorder;
   }
@@ -293,8 +303,9 @@ export class ReorderGroup implements ComponentInterface {
   hostData() {
     return {
       class: {
+        [`${this.mode}`]: true,
         'reorder-enabled': !this.disabled,
-        'reorder-list-active': this.state !== ReordeGroupState.Idle,
+        'reorder-list-active': this.state !== ReorderGroupState.Idle,
       }
     };
   }

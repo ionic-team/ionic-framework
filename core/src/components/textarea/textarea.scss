@@ -42,6 +42,8 @@
 
   font-family: $font-family-base;
 
+  white-space: pre-wrap;
+
   z-index: $z-index-item-input;
 }
 
@@ -57,7 +59,7 @@
 // --------------------------------------------------
 
 :host-context(ion-item) {
-  position: static;
+  align-self: baseline;
 }
 
 :host-context(ion-item:not(.item-label)) {
@@ -69,15 +71,16 @@
 // --------------------------------------------------
 
 .native-textarea {
-  @include text-inherit();
   @include border-radius(var(--border-radius));
   @include margin(0);
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include text-inherit();
 
   display: block;
 
   width: 100%;
-  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
 
   border: 0;
 
@@ -87,8 +90,6 @@
   box-sizing: border-box;
   resize: none;
   appearance: none;
-
-  white-space: pre-wrap;
 
   &::placeholder {
     color: var(--placeholder-color);
@@ -103,4 +104,20 @@
 
 .native-textarea[disabled] {
   opacity: .4;
+}
+
+// Input Cover: Unfocused
+// --------------------------------------------------
+// The input cover is the div that actually receives the
+// tap/click event when scroll assist is configured to true.
+// This make it so the native input element is not clickable.
+// This will only show when the scroll assist is configured
+// otherwise the .input-cover will not be rendered at all
+// The input cover is not clickable when the input is disabled
+.cloned-input {
+  @include position(0, null, null, 0);
+
+  position: absolute;
+
+  pointer-events: none;
 }

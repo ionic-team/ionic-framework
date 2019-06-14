@@ -16,11 +16,6 @@
 ::slotted(*) ion-button {
   --padding-top: 0;
   --padding-bottom: 0;
-  --padding-start: 0;
-  --padding-end: 0;
-  --box-shadow: none;
-  --overflow: visible;
 
   @include margin(0);
-  @include margin-horizontal(2px, 2px);
 }

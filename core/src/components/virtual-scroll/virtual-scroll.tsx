@@ -177,6 +177,8 @@ export class VirtualScroll implements ComponentInterface {
 
   /**
    * Returns the position of the virtual item at the given index.
+   *
+   * @param index The index of the item.
    */
   @Method()
   positionForItem(index: number): Promise<number> {
@@ -184,21 +186,26 @@ export class VirtualScroll implements ComponentInterface {
   }
 
   /**
-   * This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as
-   * dirty any time the content or their style changes.
+   * Marks a subset of the items as dirty so they can be re-rendered.
+   * Items should be marked as dirty any time the content or their style changes.
    *
-   * The subset of items to be updated can are specifing by an offset and a length.
+   * The subset of items to be updated are specified by an offset and a length.
+   * If a length is not provided it will check all of the items beginning at
+   * the offset.
+   *
+   * @param offset The index of the item to start marking dirty.
+   * @param length The number of items to mark dirty.
    */
   @Method()
-  checkRange(offset: number, len = -1) {
+  checkRange(offset: number, length = -1) {
     // TODO: kind of hacky how we do in-place updated of the cells
     // array. this part needs a complete refactor
     if (!this.items) {
       return;
     }
-    const length = (len === -1)
+    const len = (length === -1)
       ? this.items.length - offset
-      : len;
+      : length;
 
     const cellIndex = findCellIndex(this.cells, offset);
     const cells = calcCells(
@@ -209,9 +216,8 @@ export class VirtualScroll implements ComponentInterface {
       this.approxHeaderHeight,
       this.approxFooterHeight,
       this.approxItemHeight,
-      cellIndex, offset, length
+      cellIndex, offset, len
     );
-    console.debug('[virtual] cells recalculated', cells.length);
     this.cells = inplaceUpdate(this.cells, cells, cellIndex);
     this.lastItemLen = this.items.length;
     this.indexDirty = Math.max(offset - 1, 0);
@@ -220,13 +226,9 @@ export class VirtualScroll implements ComponentInterface {
   }
 
   /**
-   * This method marks the tail the items array as dirty, so they can be re-rendered.
-   *
-   * It's equivalent to calling:
-   *
-   * ```js
-   * virtualScroll.checkRange(lastItemLen);
-   * ```
+   * Marks the tail of the items array as dirty, so they can be re-rendered.
+   * It's equivalent to calling `checkRange(length)` where `length` is the
+   * total length of the items.
    */
   @Method()
   checkEnd() {
@@ -328,7 +330,6 @@ export class VirtualScroll implements ComponentInterface {
       return;
     }
     if (cell.height !== height || cell.visible !== true) {
-      console.debug(`[virtual] cell height or visibility changed ${cell.height}px -> ${height}px`);
       cell.visible = true;
       cell.height = height;
       this.indexDirty = Math.min(this.indexDirty, index);
@@ -369,7 +370,6 @@ export class VirtualScroll implements ComponentInterface {
       this.approxItemHeight,
       0, 0, this.lastItemLen
     );
-    console.debug('[virtual] cells recalculated', this.cells.length);
     this.indexDirty = 0;
   }
 
@@ -385,7 +385,6 @@ export class VirtualScroll implements ComponentInterface {
     this.heightIndex = resizeBuffer(this.heightIndex, this.cells.length);
     this.totalHeight = calcHeightIndex(this.heightIndex, this.cells, index);
 
-    console.debug('[virtual] height index recalculated', this.heightIndex.length - index);
     this.indexDirty = Infinity;
   }
 

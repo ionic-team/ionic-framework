@@ -221,9 +221,11 @@ Hotfixes bypass `master` and should only be used for urgent fixes that can't wai
 
 ## Releasing
 
-1. Create the release branch from `master`, for example: `release-4.1.0`.
+1. Create the release branch from `master`, for example: `release-4.5.0`.
 
-1. Submit a pull request from the release branch into `stable`. Do not merge this pull request yet.
+1. For major or minor releases, create a version branch based off the latest version branch. For example, if releasing 4.5.0, create a branch called `4.5.x` based off `4.4.x`.
+
+1. Submit a pull request from the release branch into the version branch. Do not merge this pull request yet.
 
 1. Verify all tests are passing, fix any bugs if needed and make sure no undesired commits are in.
 
@@ -235,7 +237,8 @@ Hotfixes bypass `master` and should only be used for urgent fixes that can't wai
     - Select the version based on the type of commits and the [Ionic Versioning](https://ionicframework.com/docs/intro/versioning)
     - After the process completes, verify the version number in all packages (`core`, `docs`, `angular`)
     - Verify the changelog commits are accurate and follow the [proper format]((https://github.com/ionic-team/ionic/blob/master/.github/CONTRIBUTING.md#commit-message-format))
-    - Commit these changes with the version number as the message, e.g. `git commit -m "4.1.0"`
+    - For major or minor releases, ensure that the version number has an associated title (for example: `4.5.0 Boron`)
+    - Commit these changes with the version number as the message, e.g. `git commit -m "4.5.0"`
 
 1. Run `npm run release`
 
@@ -243,8 +246,6 @@ Hotfixes bypass `master` and should only be used for urgent fixes that can't wai
 
     <img width="191" alt="Merge pull request button" src="https://user-images.githubusercontent.com/236501/47032669-8be1b980-d138-11e8-9a90-d1518c223184.png">
 
-1. Rewrite the commit message to `merge release-4.1.0` with the proper release branch.
+1. Rewrite the commit message to `merge release-[VERSION]` with the proper release branch. For example, if this release is for `4.5.0`, the message would be `merge release-4.5.0`.
 
-1. Create a pull request and merge the release branch back into `master` using the same commit format in the last step, to ensure any changes made on the release branch get added to future releases.
-
-1. Merge the release branch into its corresponding version branch. If this is a major or minor release, create the version branch off the latest `stable`.
+1. Submit a pull request from the release branch into `master`. Merge this pull request using the same commit format in the last step, to ensure any changes made on the release branch get added to future releases.

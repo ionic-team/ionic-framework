@@ -17,7 +17,7 @@ Buttons placed in a toolbar should be placed inside of the `<ion-buttons>` eleme
 
 ### Borders
 
-In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and the `<ion-footer>` will receive a box-shadow on the top.  In `ios` mode, the `<ion-header>` will receive a border on the bottom, and the `<ion-footer>` will receive a border on the top. Both the `md` box-shadow and the `ios` border can be removed by adding the `no-border` attribute to the element.
+In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and the `<ion-footer>` will receive a box-shadow on the top.  In `ios` mode, the `<ion-header>` will receive a border on the bottom, and the `<ion-footer>` will receive a border on the top.
 
 
 
@@ -686,7 +686,7 @@ export default Example;
 | Slot          | Description                                                                                              |
 | ------------- | -------------------------------------------------------------------------------------------------------- |
 |               | Content is placed between the named slots if provided without a slot.                                    |
-| `"end"`       | Content is placed to the left of the toolbar text in LTR, and to the right in RTL.                       |
+| `"end"`       | Content is placed to the right of the toolbar text in LTR, and to the left in RTL.                       |
 | `"primary"`   | Content is placed to the right of the toolbar text in `ios` mode, and to the far right in `md` mode.     |
 | `"secondary"` | Content is placed to the left of the toolbar text in `ios` mode, and directly to the right in `md` mode. |
 | `"start"`     | Content is placed to the left of the toolbar text in LTR, and to the right in RTL.                       |

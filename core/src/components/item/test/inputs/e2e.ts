@@ -1,6 +1,6 @@
 import { E2EPage, newE2EPage } from '@stencil/core/testing';
 
-test.skip('item: inputs', async () => {
+test('item: inputs', async () => {
   const page = await newE2EPage({
     url: '/src/components/item/test/inputs?ionic:_testing=true'
   });
@@ -15,7 +15,10 @@ test.skip('item: inputs', async () => {
   expect(compare).toMatchScreenshot();
 
   // Disable everything
-  await page.click('#btnDisabled');
+  const disableToggle = await page.find('#btnDisabled');
+  await disableToggle.waitForVisible();
+  await disableToggle.click();
+  await page.waitFor(300);
 
   // check form
   await page.click('#submit');
@@ -27,7 +30,7 @@ test.skip('item: inputs', async () => {
   expect(compare).toMatchScreenshot();
 
   // Reenable and set some value
-  await page.click('#btnDisabled');
+  await disableToggle.click();
   await page.click('#btnSomeValue');
   await page.waitFor(100);
 
@@ -63,5 +66,6 @@ test.skip('item: inputs', async () => {
 
 async function checkFormResult(page: E2EPage, content: string) {
   const div = await page.find('#form-result');
+
   expect(div.textContent).toEqual(content);
 }
