@@ -15,7 +15,7 @@ import { getIonMode } from '../../global/ionic-global';
 export class Header implements ComponentInterface {
 
   /**
-   * If `true`, the header will be translucent.
+   * If `true`, the header will be translucent. Only applies to `ios` mode.
    * Note: In order to scroll content behind the header, the `fullscreen`
    * attribute needs to be set on the content.
    */
