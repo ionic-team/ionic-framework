@@ -1,10 +1,17 @@
-import Vue, { CreateElement, RenderContext, VNodeData } from 'vue';
+import Vue, { CreateElement, RenderContext, VNode, VNodeData } from 'vue';
 import { NavDirection } from '@ionic/core';
 
 type TransitionDone = () => void;
+
 interface Props {
   name: string;
   animated: boolean;
+}
+
+interface KeepAliveProps {
+  include?: string | string[] | RegExp;
+  exclude?: string | string[] | RegExp;
+  max?: number;
 }
 
 // Component entering the view
@@ -19,6 +26,8 @@ export default {
     name: { default: 'default', type: String },
     // Disable transitions
     animated: { default: true, type: Boolean },
+    // keep-alive props
+    keepAlive: { type: [String, Object as () => KeepAliveProps] },
   },
 
   render(h: CreateElement, { parent, props, data, children }: RenderContext) {
@@ -47,12 +56,11 @@ export default {
         leaveCancelled,
       }
     };
+    const routerViewNode: VNode = h('router-view', routerViewData, children);
+    const keepAliveNode: VNode = h('keep-alive', { props: { ...props.keepAlive } }, [routerViewNode]);
+    const transitionNode: VNode = h('transition', transitionData, [props.keepAlive === undefined ? routerViewNode : keepAliveNode]);
 
-    return h('ion-router-outlet', ionRouterOutletData, [
-      h('transition', transitionData, [
-        h('router-view', routerViewData, children)
-      ])
-    ]);
+    return h('ion-router-outlet', ionRouterOutletData, [transitionNode]);
   }
 };
 
