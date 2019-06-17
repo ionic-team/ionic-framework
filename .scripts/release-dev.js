@@ -7,7 +7,7 @@ const fs = require('fs-extra');
 
 const common = require('./common');
 
-const DIST_NPM_TAG = 'one';
+const DIST_NPM_TAG = 'dev';
 const DIST_TAG = 'dev';
 
 async function main() {

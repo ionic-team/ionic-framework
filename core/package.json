@@ -34,7 +34,7 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@stencil/core": "1.0.5",
+    "@stencil/core": "1.0.6",
     "@stencil/sass": "latest",
     "@stencil/utils": "latest",
     "@types/jest": "24.0.13",
