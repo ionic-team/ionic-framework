@@ -1,8 +1,10 @@
 import React from 'react';
 import { IonLifeCycleContext } from '../../lifecycle';
 import { DefaultIonLifeCycleContext } from '../../lifecycle/IonLifeCycleContext';
+import { NavContext } from './NavContext';
 
 interface StackItemManagerProps {
+  id: string;
   mount: boolean;
 }
 
@@ -13,6 +15,7 @@ interface StackItemManagerState {
 export class StackItemManager extends React.Component<StackItemManagerProps, StackItemManagerState> {
   ionLifeCycleContext = new DefaultIonLifeCycleContext();
   _isMounted = false;
+  context!: React.ContextType<typeof NavContext>;
 
   constructor(props: StackItemManagerProps) {
     super(props)
@@ -26,13 +29,15 @@ export class StackItemManager extends React.Component<StackItemManagerProps, Sta
          * Give child component time to finish calling its
          * own onViewDidLeave before destroying it
          */
-        setTimeout(() => {
+        // setTimeout(() => {
           if (this._isMounted) {
             this.setState({
               show: false
+            }, () => {
+              this.context.hideView(this.props.id);
             });
           }
-        }, 1000);
+        // }, 1000);
       }
     });
   }
@@ -55,4 +60,4 @@ export class StackItemManager extends React.Component<StackItemManagerProps, Sta
   }
 }
 // TODO: treeshake
-StackItemManager.contextType = IonLifeCycleContext;
+StackItemManager.contextType = NavContext;

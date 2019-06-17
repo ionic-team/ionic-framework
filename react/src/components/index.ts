@@ -20,6 +20,7 @@ export { IonTabs } from './navigation/IonTabs';
 export { IonTabBar } from './navigation/IonTabBar';
 export { IonRouterOutlet } from './navigation/IonRouterOutlet';
 export { IonBackButton } from './navigation/IonBackButton';
+export { IonRouterWrapped as IonRouter } from './navigation/IonRouter';
 
 addIcons(ICON_PATHS);
 defineCustomElements(window);

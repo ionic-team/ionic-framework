@@ -1,23 +1,23 @@
 import React from 'react';
 import { IonLifeCycleContext } from '../lifecycle/IonLifeCycleContext';
 
-type Props = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+type Props = React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
 
-interface InternalProps extends React.HTMLAttributes<HTMLDivElement> {
-  forwardedRef?: React.RefObject<HTMLDivElement>,
+interface InternalProps extends React.HTMLAttributes<HTMLElement> {
+  forwardedRef?: React.RefObject<HTMLElement>,
   activateView?: any;
 };
 
 type ExternalProps = Props & {
-  ref?: React.RefObject<HTMLDivElement>
+  ref?: React.RefObject<HTMLElement>
   activateView?: any;
 };
 
-interface StackItemState {
+interface StackViewState {
   ref: any;
 }
 
-class StackItemInternal extends React.Component<InternalProps, StackItemState> {
+class StackViewInternal extends React.Component<InternalProps, StackViewState> {
   context!: React.ContextType<typeof IonLifeCycleContext>;
 
   constructor(props: InternalProps) {
@@ -73,7 +73,7 @@ class StackItemInternal extends React.Component<InternalProps, StackItemState> {
     return (
         <div
           className={className ? `ion-page ${className}` : 'ion-page'}
-          ref={forwardedRef}
+          ref={forwardedRef as any}
           {...rest}
         >
           {ref && children}
@@ -81,11 +81,11 @@ class StackItemInternal extends React.Component<InternalProps, StackItemState> {
     )
   }
 }
-StackItemInternal.contextType = IonLifeCycleContext;
+StackViewInternal.contextType = IonLifeCycleContext;
 
-function forwardRef(props: InternalProps, ref: React.RefObject<HTMLDivElement>) {
-  return <StackItemInternal forwardedRef={ref} {...props} />;
+function forwardRef(props: InternalProps, ref: React.RefObject<HTMLElement>) {
+  return <StackViewInternal forwardedRef={ref} {...props} />;
 }
-forwardRef.displayName = 'StackItem';
+forwardRef.displayName = 'StackView';
 
-export const StackItem = /*@__PURE__*/React.forwardRef<HTMLDivElement, ExternalProps>(forwardRef);
+export const StackView = /*@__PURE__*/React.forwardRef<HTMLElement, ExternalProps>(forwardRef);
