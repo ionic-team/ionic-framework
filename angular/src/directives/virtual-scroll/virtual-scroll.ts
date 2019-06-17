@@ -123,9 +123,9 @@ export class IonVirtualScroll {
   private el: HTMLIonVirtualScrollElement;
   private refMap = new WeakMap<HTMLElement, EmbeddedViewRef<VirtualContext>> ();
 
-  @ContentChild(VirtualItem) itmTmp!: VirtualItem;
-  @ContentChild(VirtualHeader) hdrTmp!: VirtualHeader;
-  @ContentChild(VirtualFooter) ftrTmp!: VirtualFooter;
+  @ContentChild(VirtualItem, {static: true}) itmTmp!: VirtualItem;
+  @ContentChild(VirtualHeader, {static: true}) hdrTmp!: VirtualHeader;
+  @ContentChild(VirtualFooter, {static: true}) ftrTmp!: VirtualFooter;
 
   constructor(
     private zone: NgZone,

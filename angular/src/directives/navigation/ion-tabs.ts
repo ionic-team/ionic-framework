@@ -42,8 +42,8 @@ import { StackEvent } from './stack-utils';
 })
 export class IonTabs {
 
-  @ViewChild('outlet', { read: IonRouterOutlet }) outlet: IonRouterOutlet;
-  @ContentChild(IonTabBar) tabBar: IonTabBar | undefined;
+  @ViewChild('outlet', { read: IonRouterOutlet, static: true }) outlet: IonRouterOutlet;
+  @ContentChild(IonTabBar, {static: true}) tabBar: IonTabBar | undefined;
 
   @Output() ionTabsWillChange = new EventEmitter<{tab: string}>();
   @Output() ionTabsDidChange = new EventEmitter<{tab: string}>();
