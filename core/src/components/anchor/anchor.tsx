@@ -61,7 +61,7 @@ export class Anchor implements ComponentInterface, AnchorInterface {
 
   hostData() {
     const mode = getIonMode(this);
-
+    console.log('anchor', mode);
     return {
       class: {
         ...createColorClasses(this.color),
