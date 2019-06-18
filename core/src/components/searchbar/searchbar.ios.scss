@@ -110,6 +110,7 @@
 // -----------------------------------------
 
 :host(.searchbar-has-focus) .searchbar-cancel-button,
+:host(.searchbar-should-show-cancel) .searchbar-cancel-button,
 :host(.searchbar-animated) .searchbar-cancel-button {
   display: block;
 }
@@ -119,7 +120,8 @@
   transition: $searchbar-ios-input-transition;
 }
 
-:host(.searchbar-animated.searchbar-has-focus) .searchbar-cancel-button {
+:host(.searchbar-animated.searchbar-has-focus) .searchbar-cancel-button,
+:host(.searchbar-animated.searchbar-should-show-cancel) .searchbar-cancel-button {
   opacity: 1;
   pointer-events: auto;
 }
