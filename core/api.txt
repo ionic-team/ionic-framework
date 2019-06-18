@@ -72,8 +72,11 @@ ion-alert,css-prop,--width
 
 ion-anchor,shadow
 ion-anchor,prop,color,string | undefined,undefined,false,false
+ion-anchor,prop,download,string | undefined,undefined,false,false
 ion-anchor,prop,href,string | undefined,undefined,false,false
+ion-anchor,prop,rel,string | undefined,undefined,false,false
 ion-anchor,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
+ion-anchor,prop,target,string | undefined,undefined,false,false
 ion-anchor,css-prop,--background
 ion-anchor,css-prop,--color
 
@@ -85,12 +88,18 @@ ion-avatar,css-prop,--border-radius
 ion-back-button,scoped
 ion-back-button,prop,color,string | undefined,undefined,false,false
 ion-back-button,prop,defaultHref,string | undefined,undefined,false,false
+ion-back-button,prop,disabled,boolean,false,false,true
 ion-back-button,prop,icon,null | string | undefined,undefined,false,false
 ion-back-button,prop,mode,"ios" | "md",undefined,false,false
 ion-back-button,prop,text,null | string | undefined,undefined,false,false
+ion-back-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-back-button,css-prop,--background
+ion-back-button,css-prop,--background-focused
+ion-back-button,css-prop,--background-hover
 ion-back-button,css-prop,--border-radius
 ion-back-button,css-prop,--color
+ion-back-button,css-prop,--color-focused
+ion-back-button,css-prop,--color-hover
 ion-back-button,css-prop,--icon-font-size
 ion-back-button,css-prop,--icon-font-weight
 ion-back-button,css-prop,--icon-margin-bottom
@@ -135,20 +144,24 @@ ion-button,shadow
 ion-button,prop,buttonType,string,'button',false,false
 ion-button,prop,color,string | undefined,undefined,false,false
 ion-button,prop,disabled,boolean,false,false,true
+ion-button,prop,download,string | undefined,undefined,false,false
 ion-button,prop,expand,"block" | "full" | undefined,undefined,false,true
 ion-button,prop,fill,"clear" | "default" | "outline" | "solid" | undefined,undefined,false,true
 ion-button,prop,href,string | undefined,undefined,false,false
 ion-button,prop,mode,"ios" | "md",undefined,false,false
+ion-button,prop,rel,string | undefined,undefined,false,false
 ion-button,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 ion-button,prop,shape,"round" | undefined,undefined,false,true
 ion-button,prop,size,"default" | "large" | "small" | undefined,undefined,false,true
 ion-button,prop,strong,boolean,false,false,false
+ion-button,prop,target,string | undefined,undefined,false,false
 ion-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-button,event,ionBlur,void,true
 ion-button,event,ionFocus,void,true
 ion-button,css-prop,--background
 ion-button,css-prop,--background-activated
 ion-button,css-prop,--background-focused
+ion-button,css-prop,--background-hover
 ion-button,css-prop,--border-color
 ion-button,css-prop,--border-radius
 ion-button,css-prop,--border-style
@@ -157,6 +170,7 @@ ion-button,css-prop,--box-shadow
 ion-button,css-prop,--color
 ion-button,css-prop,--color-activated
 ion-button,css-prop,--color-focused
+ion-button,css-prop,--color-hover
 ion-button,css-prop,--opacity
 ion-button,css-prop,--padding-bottom
 ion-button,css-prop,--padding-end
@@ -189,9 +203,12 @@ ion-card,scoped
 ion-card,prop,button,boolean,false,false,false
 ion-card,prop,color,string | undefined,undefined,false,false
 ion-card,prop,disabled,boolean,false,false,false
+ion-card,prop,download,string | undefined,undefined,false,false
 ion-card,prop,href,string | undefined,undefined,false,false
 ion-card,prop,mode,"ios" | "md",undefined,false,false
+ion-card,prop,rel,string | undefined,undefined,false,false
 ion-card,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
+ion-card,prop,target,string | undefined,undefined,false,false
 ion-card,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-card,css-prop,--background
 ion-card,css-prop,--color
@@ -321,11 +338,14 @@ ion-fab-button,shadow
 ion-fab-button,prop,activated,boolean,false,false,false
 ion-fab-button,prop,color,string | undefined,undefined,false,false
 ion-fab-button,prop,disabled,boolean,false,false,false
+ion-fab-button,prop,download,string | undefined,undefined,false,false
 ion-fab-button,prop,href,string | undefined,undefined,false,false
 ion-fab-button,prop,mode,"ios" | "md",undefined,false,false
+ion-fab-button,prop,rel,string | undefined,undefined,false,false
 ion-fab-button,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 ion-fab-button,prop,show,boolean,false,false,false
 ion-fab-button,prop,size,"small" | undefined,undefined,false,false
+ion-fab-button,prop,target,string | undefined,undefined,false,false
 ion-fab-button,prop,translucent,boolean,false,false,false
 ion-fab-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-fab-button,event,ionBlur,void,true
@@ -451,6 +471,10 @@ ion-item-divider,prop,mode,"ios" | "md",undefined,false,false
 ion-item-divider,prop,sticky,boolean,false,false,false
 ion-item-divider,css-prop,--background
 ion-item-divider,css-prop,--color
+ion-item-divider,css-prop,--inner-padding-bottom
+ion-item-divider,css-prop,--inner-padding-end
+ion-item-divider,css-prop,--inner-padding-start
+ion-item-divider,css-prop,--inner-padding-top
 ion-item-divider,css-prop,--padding-bottom
 ion-item-divider,css-prop,--padding-end
 ion-item-divider,css-prop,--padding-start
@@ -461,9 +485,13 @@ ion-item-group,none
 ion-item-option,shadow
 ion-item-option,prop,color,string | undefined,undefined,false,false
 ion-item-option,prop,disabled,boolean,false,false,false
+ion-item-option,prop,download,string | undefined,undefined,false,false
 ion-item-option,prop,expandable,boolean,false,false,false
 ion-item-option,prop,href,string | undefined,undefined,false,false
 ion-item-option,prop,mode,"ios" | "md",undefined,false,false
+ion-item-option,prop,rel,string | undefined,undefined,false,false
+ion-item-option,prop,target,string | undefined,undefined,false,false
+ion-item-option,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-item-option,css-prop,--background
 ion-item-option,css-prop,--color
 
@@ -486,10 +514,13 @@ ion-item,prop,color,string | undefined,undefined,false,false
 ion-item,prop,detail,boolean | undefined,undefined,false,false
 ion-item,prop,detailIcon,string,'ios-arrow-forward',false,false
 ion-item,prop,disabled,boolean,false,false,false
+ion-item,prop,download,string | undefined,undefined,false,false
 ion-item,prop,href,string | undefined,undefined,false,false
 ion-item,prop,lines,"full" | "inset" | "none" | undefined,undefined,false,false
 ion-item,prop,mode,"ios" | "md",undefined,false,false
+ion-item,prop,rel,string | undefined,undefined,false,false
 ion-item,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
+ion-item,prop,target,string | undefined,undefined,false,false
 ion-item,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-item,css-prop,--background
 ion-item,css-prop,--background-activated
@@ -576,8 +607,10 @@ ion-loading,css-prop,--width
 ion-menu-button,shadow
 ion-menu-button,prop,autoHide,boolean,true,false,false
 ion-menu-button,prop,color,string | undefined,undefined,false,false
+ion-menu-button,prop,disabled,boolean,false,false,false
 ion-menu-button,prop,menu,string | undefined,undefined,false,false
 ion-menu-button,prop,mode,"ios" | "md",undefined,false,false
+ion-menu-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-menu-button,css-prop,--background
 ion-menu-button,css-prop,--background-focused
 ion-menu-button,css-prop,--background-hover
@@ -907,7 +940,7 @@ ion-searchbar,prop,disabled,boolean,false,false,false
 ion-searchbar,prop,mode,"ios" | "md",undefined,false,false
 ion-searchbar,prop,placeholder,string,'Search',false,false
 ion-searchbar,prop,searchIcon,string,'search',false,false
-ion-searchbar,prop,showCancelButton,boolean,false,false,false
+ion-searchbar,prop,showCancelButton,boolean | string,'never',false,false
 ion-searchbar,prop,spellcheck,boolean,false,false,false
 ion-searchbar,prop,type,"email" | "number" | "password" | "search" | "tel" | "text" | "url",'search',false,false
 ion-searchbar,prop,value,null | string | undefined,'',false,false
@@ -934,6 +967,7 @@ ion-segment-button,prop,checked,boolean,false,false,false
 ion-segment-button,prop,disabled,boolean,false,false,false
 ion-segment-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide" | undefined,'icon-top',false,false
 ion-segment-button,prop,mode,"ios" | "md",undefined,false,false
+ion-segment-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-segment-button,prop,value,string,'ion-sb-' + (ids++),false,false
 ion-segment-button,event,ionSelect,void,true
 ion-segment-button,css-prop,--background
@@ -1071,11 +1105,14 @@ ion-tab-bar,css-prop,--color
 
 ion-tab-button,shadow
 ion-tab-button,prop,disabled,boolean,false,false,false
+ion-tab-button,prop,download,string | undefined,undefined,false,false
 ion-tab-button,prop,href,string | undefined,undefined,false,false
 ion-tab-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide" | undefined,undefined,false,false
 ion-tab-button,prop,mode,"ios" | "md",undefined,false,false
+ion-tab-button,prop,rel,string | undefined,undefined,false,false
 ion-tab-button,prop,selected,boolean,false,false,false
 ion-tab-button,prop,tab,string | undefined,undefined,false,false
+ion-tab-button,prop,target,string | undefined,undefined,false,false
 ion-tab-button,css-prop,--background
 ion-tab-button,css-prop,--background-focused
 ion-tab-button,css-prop,--color

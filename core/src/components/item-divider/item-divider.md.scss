@@ -8,14 +8,11 @@
   --background: #{$item-md-divider-background};
   --color: #{$item-md-divider-color};
   --padding-start: #{$item-md-divider-padding-start};
+  --inner-padding-end: #{$item-md-divider-padding-end};
 
   border-bottom: $item-md-divider-border-bottom;
 
   font-size: $item-md-divider-font-size;
-}
-
-.item-divider-inner {
-  @include padding-horizontal(null, $item-md-divider-padding-end);
 }
 
 
