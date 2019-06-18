@@ -171,6 +171,16 @@ export class Header implements ComponentInterface {
     });
   }
 
+  private setToolbarTitleVisibility(toolbar: any, show = true) {
+    requestAnimationFrame(() => {
+      const ionTitle = toolbar.querySelector('ion-title');
+      if (!ionTitle) { return; }
+
+      ionTitle.style.transition = 'all 0.2s ease-in-out';
+      ionTitle.style.opacity = (show) ? '1' : '0';
+    });
+  }
+
   // TODO: Integrate this with Ionic Animation
   private translateToolbars(translateY = 0, transition = '') {
     requestAnimationFrame(() => {
@@ -180,17 +190,26 @@ export class Header implements ComponentInterface {
       const toolbars = (translateY > 0) ? toolbarsToAnimate : toolbarsToAnimate.reverse();
 
       let relativeTranslation = translateY;
-      for (let i = 0; i < toolbars.length; i++) {
-        const toolbar = toolbars[i];
+      let transformOffset = 0;
+
+      let index = toolbars.length - 1;
+      let secondaryToolbarOffset = -1;
+      for (const toolbar of toolbars) {
         const toolbarHeight = toolbar.clientHeight;
-        const transformUntilCollapsed = toolbarHeight * (i + 1);
+
+        transformOffset += toolbarHeight;
 
         toolbar.style.transition = transition;
         toolbar.style.transform = `translate3d(0, ${relativeTranslation}px, 0)`;
 
-        console.log(translateY, this.initialTransform);
         if (translateY < 0) {
-          if (Math.abs(translateY) <= transformUntilCollapsed) {
+
+          if (index === 0) {
+            secondaryToolbarOffset = transformOffset;
+          }
+
+          index -= 1;
+          if (Math.abs(translateY) <= transformOffset) {
             break;
           }
 
@@ -200,7 +219,42 @@ export class Header implements ComponentInterface {
 
       this.scrollEl.style.transition = transition;
       this.scrollEl.style.transform = `translate3d(0, ${translateY}px, 0)`;
+
+      // check to see if 1st toolbar is collapsed enough to show original title
+      const primaryToolbar = this.toolbars[0];
+      const secondaryToolbar = this.toolbars[1];
+
+      if (secondaryToolbarOffset > -1 && (secondaryToolbarOffset - Math.abs(this.collapseTransform)) <= 20) {
+        this.setToolbarTitleVisibility(primaryToolbar, true);
+        this.setToolbarTitleVisibility(secondaryToolbar, false);
+      } else {
+        this.setToolbarTitleVisibility(primaryToolbar, false);
+        this.setToolbarTitleVisibility(secondaryToolbar, true);
+      }
     });
+  }
+
+  private snapToolbarTranslation() {
+    if (!this.scrollEl) { return; }
+    const toolbarsToAnimate = this.toolbars.slice(1).reverse();
+
+    let transformOffset = 0;
+    for (const toolbar of toolbarsToAnimate) {
+      const toolbarHeight = toolbar.clientHeight;
+
+      transformOffset += toolbarHeight;
+
+      const isCollapsed = Math.abs(this.collapseTransform) > transformOffset;
+      if (isCollapsed) {
+        continue;
+      }
+
+      this.collapseTransform = -transformOffset;
+
+      this.translateToolbars(this.collapseTransform, 'all 0.25s ease-in-out');
+
+      break;
+    }
   }
 
   onMove(detail: GestureDetail) {
@@ -250,6 +304,8 @@ export class Header implements ComponentInterface {
       if (scale < 1.1) {
         this.scaleLargeTitles(scale, 'all 0.25s ease-in-out');
       }
+    } else {
+      this.snapToolbarTranslation();
     }
   }
 
