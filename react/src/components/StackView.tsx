@@ -5,12 +5,10 @@ type Props = React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElem
 
 interface InternalProps extends React.HTMLAttributes<HTMLElement> {
   forwardedRef?: React.RefObject<HTMLElement>,
-  activateView?: any;
 };
 
 type ExternalProps = Props & {
   ref?: React.RefObject<HTMLElement>
-  activateView?: any;
 };
 
 interface StackViewState {
@@ -28,16 +26,13 @@ class StackViewInternal extends React.Component<InternalProps, StackViewState> {
   }
 
   componentDidMount() {
-    const { forwardedRef, activateView } = this.props;
+    const { forwardedRef } = this.props;
     this.setState({ ref: forwardedRef });
     if (forwardedRef && forwardedRef.current) {
       forwardedRef.current.addEventListener('ionViewWillEnter', this.ionViewWillEnterHandler.bind(this));
       forwardedRef.current.addEventListener('ionViewDidEnter', this.ionViewDidEnterHandler.bind(this));
       forwardedRef.current.addEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler.bind(this));
       forwardedRef.current.addEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler.bind(this));
-      if (activateView) {
-        activateView(forwardedRef.current);
-      }
     }
   }
 
@@ -68,7 +63,7 @@ class StackViewInternal extends React.Component<InternalProps, StackViewState> {
   }
 
   render() {
-    const { className, children, forwardedRef, activateView, ...rest } = this.props;
+    const { className, children, forwardedRef, ...rest } = this.props;
     const { ref } = this.state;
     return (
         <div

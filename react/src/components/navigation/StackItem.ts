@@ -1,10 +1,10 @@
 import { match, RouteProps } from 'react-router-dom';
-import { Location } from 'history';
+// import { Location } from 'history';
 
 export type StackItem = {
   id: string;
   key: string;
-  location: Location;
+  // location: Location;
   match: match<{ tab: string }>;
   element: React.ReactElement<any>;
   ref?: React.RefObject<HTMLElement>;
