@@ -31,7 +31,7 @@ class IonRouter extends React.Component<IonRouterProps, IonRouterState> {
 
   hideView(viewId: string) {
     const viewStacks = Object.assign({}, this.state.viewStacks);
-    const {view} = this.findViewById(viewId, viewStacks);
+    const { view } = this.findViewById(viewId, viewStacks);
     if (view) {
       view.show = false;
       view.key = generateUniqueId();
@@ -74,26 +74,27 @@ class IonRouter extends React.Component<IonRouterProps, IonRouterState> {
     keys.some(key => {
       const vs = viewStacks[key];
       view = vs.views.find(x => x.id === id);
-      if(view) {
+      if (view) {
         viewStack = vs;
         return true;
       } else {
         return false;
       }
     });
-    return { view, viewStack};
+    return { view, viewStack };
   }
 
   setActiveView(location: HistoryLocation, action: HistoryAction) {
     const viewStacks = Object.assign({}, this.state.viewStacks);
     const { view: enteringView, viewStack, match } = this.findViewInfoByLocation(location, viewStacks);
 
-    let direction: NavDirection;
+    let direction: NavDirection = location.state && location.state.direction;
+
     if (!viewStack) {
       return;
     }
 
-    const {view: leavingView} = this.findViewById(this.activeViewId, viewStacks);
+    const { view: leavingView } = this.findViewById(this.activeViewId, viewStacks);
 
     // if (leavingView && leavingView.match.url === location.pathname) {
     //   return;
@@ -106,14 +107,16 @@ class IonRouter extends React.Component<IonRouterProps, IonRouterState> {
       viewStack.activeId = enteringView.id;
       this.activeViewId = enteringView.id;
 
-      if (leavingView && leavingView.match.params.tab === enteringView.match.params.tab) {
+      if (leavingView) {
         viewStack.prevId = leavingView.id;
         this.prevViewId = leavingView.id
-        if (action === 'PUSH') {
-          direction = 'forward';
-        } else {
-          direction = 'back';
-          leavingView.mount = false;
+        if(leavingView.match.params.tab === enteringView.match.params.tab) {
+          if (action === 'PUSH') {
+            direction = direction || 'forward';
+          } else {
+            direction = direction || 'back';
+            leavingView.mount = false;
+          }
         }
       }
 
@@ -143,13 +146,13 @@ class IonRouter extends React.Component<IonRouterProps, IonRouterState> {
         viewStacks: prevViewStacks
       };
     }, () => {
-      const {view: activeView} = this.findViewById(activeId, this.state.viewStacks);
+      const { view: activeView } = this.findViewById(activeId, this.state.viewStacks);
       if (activeView) {
         this.prevViewId = this.activeViewId;
         this.activeViewId = activeView.id;
         const direction = location.state ? location.state.direction : undefined;
-        if(direction) {
-          const {view: prevView} = this.findViewById(this.prevViewId, this.state.viewStacks);
+        if (direction) {
+          const { view: prevView } = this.findViewById(this.prevViewId, this.state.viewStacks);
           this.transitionView(activeView.ref.current, prevView && prevView.ref.current || undefined, routerOutlet, direction);
         } else {
           this.transitionView(activeView.ref.current, undefined, routerOutlet, undefined);
@@ -173,11 +176,11 @@ class IonRouter extends React.Component<IonRouterProps, IonRouterState> {
 
   goBack = (defaultHref?: string) => {
     const { viewStack } = this.findViewInfoByLocation(this.props.location, this.state.viewStacks);
-    const {view: newView} = this.findViewById(viewStack.prevId, this.state.viewStacks);
+    const { view: newView } = this.findViewById(viewStack.prevId, this.state.viewStacks);
     if (newView) {
-      this.props.history.replace(newView.match.url);
+      this.props.history.replace(newView.match.url, { direction: 'back' });
     } else {
-      this.props.history.replace(defaultHref);
+      this.props.history.replace(defaultHref, { direction: 'back' });
     }
   }
 
