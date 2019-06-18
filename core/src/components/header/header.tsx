@@ -54,7 +54,7 @@ export class Header implements ComponentInterface {
       gestureName: 'header',
       gesturePriority: 20,
       direction: 'y',
-      threshold: 20,
+      threshold: 0,
       canStart: () => this.canStart(),
       onStart: () => this.onStart(),
       onMove: ev => this.onMove(ev),
@@ -68,11 +68,8 @@ export class Header implements ComponentInterface {
     const page = this.el.closest('ion-app,ion-page,.ion-page,page-inner') as HTMLStencilElement;
     const contentEl = tabs ? tabs.querySelector('ion-content') : page.querySelector('ion-content');
 
-    if (contentEl && canCollapse) {
-      await contentEl.componentOnReady();
-      this.scrollEl = await contentEl.getScrollElement();
-    } else {
-      console.error('ion-header requires a content to collapse, make sure there is an ion-content.');
+    if (canCollapse) {
+      await this.setupCollapsableHeader(contentEl);
     }
 
     // Enable the collapse gesture if collapse is set and mode is ios
@@ -88,103 +85,156 @@ export class Header implements ComponentInterface {
     }
   }
 
+  private initialTransform: any = 0;
+  private collapseTransform: any = 0;
+
+  private toolbars: HTMLIonToolbarElement[] = [];
+
+  private maxTranslate = 200;
+  private minTranslate = -56;
+
+  private async setupCollapsableHeader(contentEl: any) {
+    if (!contentEl) { console.error('ion-header requires a content to collapse, make sure there is an ion-content.'); }
+
+    await contentEl.componentOnReady();
+    this.scrollEl = await contentEl.getScrollElement();
+
+    const toolbars = this.getToolbars();
+    if (toolbars.length < 2) {
+      return;
+    }
+
+    this.toolbars = Array.from(toolbars);
+
+    const primary = this.toolbars[0];
+    const secondary = this.toolbars[1];
+
+    primary.style.zIndex = '1';
+    secondary.style.zIndex = '0';
+
+    // Setup primary toolbar
+    const primaryIonTitle = primary.querySelector('ion-title');
+    if (!primaryIonTitle) { return; }
+
+    primaryIonTitle.style.opacity = '0';
+  }
+
   canStart() {
     return !this.isCollapsed;
   }
 
   onStart() {
     console.log('onStart');
+    this.initialTransform = this.collapseTransform;
+  }
+
+  private disableContentScroll() {
+    if (!this.scrollEl) { return; }
+
+    this.scrollEl.style.setProperty('--overflow', 'hidden');
+  }
+
+  private enableContentScroll() {
+    if (!this.scrollEl) { return; }
+
+    this.scrollEl.style.setProperty('--overflow', 'auto');
+  }
+
+  private clampTransform(value: number): number {
+    if (value > this.maxTranslate) {
+      return this.maxTranslate;
+    } else if (value < this.minTranslate) {
+      return this.minTranslate;
+    } else {
+      return value;
+    }
+  }
+
+  // TODO: Integration this with Ionic Animation
+  private scaleLargeTitles(scale = 1, transition = '') {
+    requestAnimationFrame(() => {
+      const toolbars = this.toolbars.slice(1);
+
+      toolbars.forEach(toolbar => {
+        const ionTitle = toolbar.querySelector('ion-title');
+        if (!ionTitle) { return; }
+
+        if (ionTitle.size !== 'large') { return; }
+
+        const titleDiv = ionTitle.shadowRoot!.querySelector('.toolbar-title') as HTMLElement | null;
+        if (titleDiv === null) { return; }
+
+        titleDiv.style.transformOrigin = 'left center';
+        titleDiv.style.transition = transition;
+        titleDiv.style.transform = `scale3d(${scale}, ${scale}, 1)`;
+      });
+    });
+  }
+
+  // TODO: Integration this with Ionic Animation
+  private translateToolbars(translateY = 0, transition = '') {
+    requestAnimationFrame(() => {
+      if (!this.scrollEl) { return; }
+      const toolbars = this.toolbars.slice(1);
+
+      toolbars.forEach(toolbar => {
+        toolbar.style.transition = transition;
+        toolbar.style.transform = `translate3d(0, ${translateY}px, 0)`;
+      });
+
+      this.scrollEl.style.transition = transition;
+      this.scrollEl.style.transform = `translate3d(0, ${translateY}px, 0)`;
+    });
   }
 
   onMove(detail: GestureDetail) {
-    console.log('detail is', detail);
+    if (!this.scrollEl) { return; }
 
-    // if there is no scroll element then do nothing
-    if (!this.scrollEl) {
+    const toolbars = this.getToolbars();
+    if (toolbars.length < 2) { return; }
+
+    const proposedTransform = this.clampTransform(this.initialTransform + detail.deltaY);
+    if (proposedTransform === this.collapseTransform) {
       return;
     }
 
-    const toolbars = this.el.querySelectorAll('ion-toolbar');
-    // if there are no toolbars then do nothing
-    if (toolbars.length === 0) {
+    // User must be at top for any of this to happen
+    if (this.scrollEl.scrollTop > 20) {
       return;
     }
 
-    // Grab the first toolbar's min height to make sure we don't
-    // go any smaller than that
-    const firstToolbar = toolbars[0];
-    const minHeightStr = window.getComputedStyle(firstToolbar).getPropertyValue('--min-height').replace('px', '');
-    const minHeight = parseInt(minHeightStr, 10);
-    const title = firstToolbar.querySelector('ion-title') as HTMLIonTitleElement;
+    this.collapseTransform = proposedTransform;
 
-    if (detail && detail.deltaY) {
-      // const velocity = detail.velocityY;
-      const difference = Math.floor(detail.deltaY);
+    this.disableContentScroll();
+    this.translateToolbars(this.collapseTransform);
 
-      // If dragging up we need to collapse the header
-      if (difference < 0) {
-        this.scrollEl.style.overflowY = 'hidden';
-
-        // If the current height of the toolbar is greater than the min height
-        if (firstToolbar.offsetHeight > minHeight) {
-          // If subtracting the difference would bring it under the min height
-          // set the height to the min height, otherwise subtract
-          const height = (firstToolbar.offsetHeight + difference < minHeight)
-            ? `${minHeight}px`
-            : `${firstToolbar.offsetHeight + difference}px`;
-
-          firstToolbar.style.height = height;
-        }
-
-        // if we're at the min height and still dragging then
-        // add the scroll back in
-        if (firstToolbar.offsetHeight === minHeight) {
-          // do something here like set collapsed
-          // collapsed changing should enable scroll
-          // and stop the gesture
-          // this.scrollEl.scrollTop = 0;
-          this.scrollEl.style.overflowY = 'auto';
-          title.size = 'standard';
-        }
-
-      // If dragging down we need to expand the header ONLY
-      // when it reaches the top of the scroll
-      } else {
-        console.log(this.scrollEl.scrollTop);
-        // this.scrollEl.style.overflowY = 'auto';
-
-        if (this.scrollEl.scrollTop === 0) {
-          this.scrollEl.style.overflowY = 'hidden';
-
-          // If the current height of the header is less than the original height
-          // we can expand up to the original height
-          if (this.el.offsetHeight < this.originalHeight) {
-            const height = (this.el.offsetHeight + difference) > this.originalHeight
-              ? `${this.originalHeight}px`
-              : `${firstToolbar.offsetHeight + difference}px`;
-
-            firstToolbar.style.height = height;
-          }
-
-          // if we're at the original height and still dragging then
-          // add the scroll back in
-          if (this.el.offsetHeight === this.originalHeight) {
-            // do something here like set collapsed
-            // collapsed changing should enable scroll
-            // and stop the gesture
-            this.scrollEl.style.overflowY = 'auto';
-            title.size = 'large';
-          }
-        }
+    if (this.collapseTransform > 0) {
+      const scale = 1 + (this.collapseTransform / this.maxTranslate / 5);
+      if (scale < 1.1) {
+        this.scaleLargeTitles(scale);
       }
     }
+  }
 
-    return;
+  private getToolbars(): NodeListOf<HTMLIonToolbarElement> {
+    return this.el.querySelectorAll('ion-toolbar');
   }
 
   onEnd(detail: GestureDetail) {
     console.log('onEnd', detail);
+    this.enableContentScroll();
     this.blocker.unblock();
+
+    if (this.collapseTransform > 0) {
+      this.collapseTransform = 0;
+
+      this.translateToolbars(this.collapseTransform, 'all 0.25s ease-in-out');
+
+      const scale = 1 + (this.collapseTransform / this.maxTranslate / 5);
+      if (scale < 1.1) {
+        this.scaleLargeTitles(scale, 'all 0.25s ease-in-out');
+      }
+    }
   }
 
   hostData() {

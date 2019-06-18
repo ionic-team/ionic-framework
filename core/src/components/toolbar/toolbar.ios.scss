@@ -66,11 +66,11 @@
 // --------------------------------------------------
 
 :host(.toolbar-title-large) .toolbar-container {
+
+  flex-wrap: wrap;
   align-items: flex-start;
 
   min-height: #{$toolbar-ios-large-min-height};
-
-  flex-wrap: wrap;
 }
 
 :host(.toolbar-title-large) .toolbar-content {

@@ -73,18 +73,18 @@
 :host(.title-ios-large) {
   @include padding(0, 21px);
 
-  padding-bottom: 10px;
-
-  letter-spacing: 0em;
-  font-weight: 700;
-
   bottom: 0;
-
-  font-size: 34px;
 
   align-items: flex-end;
 
   min-width: 100%;
+
+  padding-bottom: 10px;
+
+  font-size: 34px;
+  font-weight: 700;
+
+  letter-spacing: 0em;
 
   text-align: left;
 }
