@@ -37,7 +37,7 @@ export class Header implements ComponentInterface {
    * If `true`, the header will collapse on scroll of the content.
    * Only applies in `ios` mode.
    */
-  @Prop() collapse?: boolean;
+  @Prop() collapse: boolean = false;
 
   /**
    * If `true`, the header will be translucent. Only applies to `ios` mode.
@@ -290,6 +290,7 @@ export class Header implements ComponentInterface {
 
         [`header-translucent`]: this.translucent,
         [`header-translucent-${this.mode}`]: this.translucent,
+        [`header-collapse-${this.mode}`]: this.collapse
       }
     };
   }

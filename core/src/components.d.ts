@@ -1666,7 +1666,7 @@ export namespace Components {
     /**
     * If `true`, the header will collapse on scroll of the content. Only applies in `ios` mode.
     */
-    'collapse'?: boolean;
+    'collapse': boolean;
     /**
     * The mode determines which platform styles to use.
     */

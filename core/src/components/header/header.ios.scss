@@ -20,3 +20,10 @@
   --opacity: .8;
   --backdrop-filter: #{$header-ios-translucent-filter};
 }
+
+
+.header-collapse-ios ion-toolbar {
+  --background: red;
+  padding-top: 6px;
+  padding-bottom: 6px; 
+}
