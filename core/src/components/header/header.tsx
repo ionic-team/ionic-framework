@@ -1,7 +1,6 @@
-import { Component, ComponentInterface, Element, EventListenerEnable, Prop, QueueApi, State } from '@stencil/core';
+import { Component, ComponentInterface, Element, EventListenerEnable, Prop, QueueApi } from '@stencil/core';
 
 import { Gesture, GestureDetail, Mode } from '../../interface';
-import { GESTURE_CONTROLLER } from '../../utils/gesture';
 
 @Component({
   tag: 'ion-header',
@@ -14,14 +13,16 @@ export class Header implements ComponentInterface {
 
   private scrollEl?: HTMLElement;
   private gesture?: Gesture;
-  private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
 
-  lastScrollTop = 0;
-  originalHeight = 100;
+  private initialTransform = 0;
+  private currentTransform = 0;
+
+  private toolbars: HTMLIonToolbarElement[] = [];
+
+  private maxTranslate = 200;
+  private minTranslate = -500; // TODO: Update this
 
   @Element() el!: HTMLElement;
-
-  @State() isCollapsed = false;
 
   @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
   @Prop({ context: 'document' }) doc!: Document;
@@ -46,8 +47,6 @@ export class Header implements ComponentInterface {
   @Prop() translucent = false;
 
   async componentDidLoad() {
-    this.originalHeight = this.el.offsetHeight;
-
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.doc as any,
       queue: this.queue,
@@ -58,17 +57,19 @@ export class Header implements ComponentInterface {
       canStart: () => this.canStart(),
       onStart: () => this.onStart(),
       onMove: ev => this.onMove(ev),
-      onEnd: ev => this.onEnd(ev),
+      onEnd: () => this.onEnd(),
     });
 
     // Determine if the header can collapse
-    const canCollapse = (this.collapse && this.mode === 'ios') ? this.collapse : false;
+    const toolbars = this.el.querySelectorAll('ion-toolbar');
+    const canCollapse = (this.collapse && this.mode === 'ios' && toolbars.length >= 2) ? this.collapse : false;
 
     const tabs = this.el.closest('ion-tabs');
     const page = this.el.closest('ion-app,ion-page,.ion-page,page-inner') as HTMLStencilElement;
     const contentEl = tabs ? tabs.querySelector('ion-content') : page.querySelector('ion-content');
 
     if (canCollapse) {
+      this.toolbars = Array.from(toolbars);
       await this.setupCollapsableHeader(contentEl);
     }
 
@@ -77,7 +78,6 @@ export class Header implements ComponentInterface {
   }
 
   componentDidUnload() {
-    this.blocker.destroy();
     this.scrollEl = undefined;
     if (this.gesture) {
       this.gesture.destroy();
@@ -85,47 +85,60 @@ export class Header implements ComponentInterface {
     }
   }
 
-  private initialTransform: any = 0;
-  private collapseTransform: any = 0;
-
-  private toolbars: HTMLIonToolbarElement[] = [];
-
-  private maxTranslate = 200;
-  private minTranslate = -500; // TODO: Update this
-
   private async setupCollapsableHeader(contentEl: any) {
     if (!contentEl) { console.error('ion-header requires a content to collapse, make sure there is an ion-content.'); }
 
     await contentEl.componentOnReady();
     this.scrollEl = await contentEl.getScrollElement();
 
-    const toolbars = this.getToolbars();
-    if (toolbars.length < 2) {
-      return;
-    }
-
-    this.toolbars = Array.from(toolbars);
-
+    // TODO: find a better way to do this
     let zIndex = this.toolbars.length;
     this.toolbars.forEach(toolbar => {
       toolbar.style.zIndex = zIndex.toString();
       zIndex -= 1;
     });
 
-    // Setup primary toolbar
-    const primaryIonTitle = this.toolbars[0].querySelector('ion-title');
-    if (!primaryIonTitle) { return; }
-
-    primaryIonTitle.style.opacity = '0';
+    // Hide title on first primary toolbar
+    this.setToolbarTitleVisibility(this.toolbars[0], false);
   }
 
-  canStart() {
-    return !this.isCollapsed;
+  canStart(): boolean {
+    if (!this.scrollEl) { return false; }
+
+    return true;
   }
 
   onStart() {
-    console.log('onStart. Initial transform', this.initialTransform);
-    this.initialTransform = this.collapseTransform;
+    this.initialTransform = this.currentTransform;
+    this.disableContentScroll();
+  }
+
+  onMove(detail: GestureDetail) {
+    const proposedTransform = this.clampTransform(this.initialTransform + detail.deltaY);
+    if (proposedTransform === this.currentTransform) {
+      return;
+    }
+
+    this.currentTransform = proposedTransform;
+
+    this.translateToolbars(this.currentTransform);
+
+    if (this.currentTransform > 0) {
+      this.updateLargeTitlesScale();
+    }
+  }
+
+  onEnd() {
+    if (this.currentTransform <= 0) {
+      this.snapToolbarTranslation();
+      return;
+    }
+
+    this.currentTransform = 0;
+
+    this.translateToolbars(this.currentTransform, true);
+    this.updateLargeTitlesScale(true);
+    this.enableContentScroll();
   }
 
   private disableContentScroll() {
@@ -150,6 +163,13 @@ export class Header implements ComponentInterface {
     }
   }
 
+  private updateLargeTitlesScale(transition = false) {
+    const scale = 1 + (this.currentTransform / this.maxTranslate / 5);
+    if (scale < 1.1) {
+      this.scaleLargeTitles(scale, (transition) ? 'all 0.25s ease-in-out' : '');
+    }
+  }
+
   // TODO: Integrate this with Ionic Animation
   private scaleLargeTitles(scale = 1, transition = '') {
     requestAnimationFrame(() => {
@@ -157,9 +177,7 @@ export class Header implements ComponentInterface {
 
       toolbars.forEach(toolbar => {
         const ionTitle = toolbar.querySelector('ion-title');
-        if (!ionTitle) { return; }
-
-        if (ionTitle.size !== 'large') { return; }
+        if (!ionTitle || ionTitle.size !== 'large') { return; }
 
         const titleDiv = ionTitle.shadowRoot!.querySelector('.toolbar-title') as HTMLElement | null;
         if (titleDiv === null) { return; }
@@ -171,20 +189,22 @@ export class Header implements ComponentInterface {
     });
   }
 
-  private setToolbarTitleVisibility(toolbar: any, show = true) {
+  private setToolbarTitleVisibility(toolbar: any, show = true, transition = false) {
     requestAnimationFrame(() => {
       const ionTitle = toolbar.querySelector('ion-title');
       if (!ionTitle) { return; }
 
-      ionTitle.style.transition = 'all 0.2s ease-in-out';
+      ionTitle.style.transition = (transition) ? 'all 0.2s ease-in-out' : '';
       ionTitle.style.opacity = (show) ? '1' : '0';
     });
   }
 
   // TODO: Integrate this with Ionic Animation
-  private translateToolbars(translateY = 0, transition = '') {
+  private translateToolbars(translateY = 0, transition = false) {
     requestAnimationFrame(() => {
       if (!this.scrollEl) { return; }
+
+      const transitionString = (transition) ? 'all 0.25s ease-in-out' : '';
 
       const toolbarsToAnimate = this.toolbars.slice(1);
       const toolbars = (translateY > 0) ? toolbarsToAnimate : toolbarsToAnimate.reverse();
@@ -199,7 +219,7 @@ export class Header implements ComponentInterface {
 
         transformOffset += toolbarHeight;
 
-        toolbar.style.transition = transition;
+        toolbar.style.transition = transitionString;
         toolbar.style.transform = `translate3d(0, ${relativeTranslation}px, 0)`;
 
         if (translateY < 0) {
@@ -217,19 +237,19 @@ export class Header implements ComponentInterface {
         }
       }
 
-      this.scrollEl.style.transition = transition;
+      this.scrollEl.style.transition = transitionString;
       this.scrollEl.style.transform = `translate3d(0, ${translateY}px, 0)`;
 
       // check to see if 1st toolbar is collapsed enough to show original title
       const primaryToolbar = this.toolbars[0];
       const secondaryToolbar = this.toolbars[1];
 
-      if (secondaryToolbarOffset > -1 && (secondaryToolbarOffset - Math.abs(this.collapseTransform)) <= 20) {
-        this.setToolbarTitleVisibility(primaryToolbar, true);
-        this.setToolbarTitleVisibility(secondaryToolbar, false);
+      if (secondaryToolbarOffset > -1 && (secondaryToolbarOffset - Math.abs(this.currentTransform)) <= 20) {
+        this.setToolbarTitleVisibility(primaryToolbar, true, true);
+        this.setToolbarTitleVisibility(secondaryToolbar, false, true);
       } else {
-        this.setToolbarTitleVisibility(primaryToolbar, false);
-        this.setToolbarTitleVisibility(secondaryToolbar, true);
+        this.setToolbarTitleVisibility(primaryToolbar, false, true);
+        this.setToolbarTitleVisibility(secondaryToolbar, true, true);
       }
     });
   }
@@ -238,74 +258,25 @@ export class Header implements ComponentInterface {
     if (!this.scrollEl) { return; }
     const toolbarsToAnimate = this.toolbars.slice(1).reverse();
 
-    let transformOffset = 0;
+    /**
+     * The transform value at which
+     * a toolbar is considered "collapsed"
+     */
+    let collapsedTransform = 0;
     for (const toolbar of toolbarsToAnimate) {
       const toolbarHeight = toolbar.clientHeight;
+      collapsedTransform += toolbarHeight;
 
-      transformOffset += toolbarHeight;
-
-      const isCollapsed = Math.abs(this.collapseTransform) > transformOffset;
+      const isCollapsed = Math.abs(this.currentTransform) > collapsedTransform;
       if (isCollapsed) {
         continue;
       }
 
-      this.collapseTransform = -transformOffset;
+      this.currentTransform = -collapsedTransform;
 
-      this.translateToolbars(this.collapseTransform, 'all 0.25s ease-in-out');
+      this.translateToolbars(this.currentTransform, true);
 
       break;
-    }
-  }
-
-  onMove(detail: GestureDetail) {
-    if (!this.scrollEl) { return; }
-
-    const toolbars = this.getToolbars();
-    if (toolbars.length < 2) { return; }
-
-    const proposedTransform = this.clampTransform(this.initialTransform + detail.deltaY);
-    if (proposedTransform === this.collapseTransform) {
-      return;
-    }
-
-    // User must be at top for any of this to happen
-    if (this.scrollEl.scrollTop > 20) {
-      return;
-    }
-
-    this.collapseTransform = proposedTransform;
-
-    this.disableContentScroll();
-    this.translateToolbars(this.collapseTransform);
-
-    if (this.collapseTransform > 0) {
-      const scale = 1 + (this.collapseTransform / this.maxTranslate / 5);
-      if (scale < 1.1) {
-        this.scaleLargeTitles(scale);
-      }
-    }
-  }
-
-  private getToolbars(): NodeListOf<HTMLIonToolbarElement> {
-    return this.el.querySelectorAll('ion-toolbar');
-  }
-
-  onEnd(detail: GestureDetail) {
-    console.log('onEnd', detail);
-    this.enableContentScroll();
-    this.blocker.unblock();
-
-    if (this.collapseTransform > 0) {
-      this.collapseTransform = 0;
-
-      this.translateToolbars(this.collapseTransform, 'all 0.25s ease-in-out');
-
-      const scale = 1 + (this.collapseTransform / this.maxTranslate / 5);
-      if (scale < 1.1) {
-        this.scaleLargeTitles(scale, 'all 0.25s ease-in-out');
-      }
-    } else {
-      this.snapToolbarTranslation();
     }
   }
 
