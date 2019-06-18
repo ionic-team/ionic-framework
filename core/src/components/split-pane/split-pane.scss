@@ -50,3 +50,7 @@ ion-split-pane {
 .split-pane-visible > .split-pane-side[side=end] {
   order: 1;
 }
+
+.split-pane-visible ion-menu-button {
+  display: none;
+}
