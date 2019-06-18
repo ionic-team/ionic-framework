@@ -91,7 +91,7 @@ export class Header implements ComponentInterface {
   private toolbars: HTMLIonToolbarElement[] = [];
 
   private maxTranslate = 200;
-  private minTranslate = -56;
+  private minTranslate = -500; // TODO: Update this
 
   private async setupCollapsableHeader(contentEl: any) {
     if (!contentEl) { console.error('ion-header requires a content to collapse, make sure there is an ion-content.'); }
@@ -106,14 +106,14 @@ export class Header implements ComponentInterface {
 
     this.toolbars = Array.from(toolbars);
 
-    const primary = this.toolbars[0];
-    const secondary = this.toolbars[1];
-
-    primary.style.zIndex = '1';
-    secondary.style.zIndex = '0';
+    let zIndex = this.toolbars.length;
+    this.toolbars.forEach(toolbar => {
+      toolbar.style.zIndex = zIndex.toString();
+      zIndex -= 1;
+    });
 
     // Setup primary toolbar
-    const primaryIonTitle = primary.querySelector('ion-title');
+    const primaryIonTitle = this.toolbars[0].querySelector('ion-title');
     if (!primaryIonTitle) { return; }
 
     primaryIonTitle.style.opacity = '0';
@@ -124,7 +124,7 @@ export class Header implements ComponentInterface {
   }
 
   onStart() {
-    console.log('onStart');
+    console.log('onStart. Initial transform', this.initialTransform);
     this.initialTransform = this.collapseTransform;
   }
 
@@ -150,7 +150,7 @@ export class Header implements ComponentInterface {
     }
   }
 
-  // TODO: Integration this with Ionic Animation
+  // TODO: Integrate this with Ionic Animation
   private scaleLargeTitles(scale = 1, transition = '') {
     requestAnimationFrame(() => {
       const toolbars = this.toolbars.slice(1);
@@ -171,16 +171,32 @@ export class Header implements ComponentInterface {
     });
   }
 
-  // TODO: Integration this with Ionic Animation
+  // TODO: Integrate this with Ionic Animation
   private translateToolbars(translateY = 0, transition = '') {
     requestAnimationFrame(() => {
       if (!this.scrollEl) { return; }
-      const toolbars = this.toolbars.slice(1);
 
-      toolbars.forEach(toolbar => {
+      const toolbarsToAnimate = this.toolbars.slice(1);
+      const toolbars = (translateY > 0) ? toolbarsToAnimate : toolbarsToAnimate.reverse();
+
+      let relativeTranslation = translateY;
+      for (let i = 0; i < toolbars.length; i++) {
+        const toolbar = toolbars[i];
+        const toolbarHeight = toolbar.clientHeight;
+        const transformUntilCollapsed = toolbarHeight * (i + 1);
+
         toolbar.style.transition = transition;
-        toolbar.style.transform = `translate3d(0, ${translateY}px, 0)`;
-      });
+        toolbar.style.transform = `translate3d(0, ${relativeTranslation}px, 0)`;
+
+        console.log(translateY, this.initialTransform);
+        if (translateY < 0) {
+          if (Math.abs(translateY) <= transformUntilCollapsed) {
+            break;
+          }
+
+          relativeTranslation += toolbarHeight;
+        }
+      }
 
       this.scrollEl.style.transition = transition;
       this.scrollEl.style.transform = `translate3d(0, ${translateY}px, 0)`;
