@@ -144,7 +144,7 @@ export class Menu implements ComponentInterface, MenuI {
 
   async componentWillLoad() {
     if (this.type === undefined) {
-      this.type = this.config.get('menuType', this.mode === 'ios' ? 'reveal' : 'overlay');
+      this.type = this.config.get('menuType', 'overlay');
     }
 
     if (this.isServer) {
