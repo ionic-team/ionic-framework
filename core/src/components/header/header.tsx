@@ -19,8 +19,8 @@ export class Header implements ComponentInterface {
 
   private toolbars: HTMLIonToolbarElement[] = [];
 
-  private maxTranslate = 200;
-  private minTranslate = -500; // TODO: Update this
+  private maxTranslate = 1000;
+  private minTranslate = 0;
 
   @Element() el!: HTMLElement;
 
@@ -47,19 +47,6 @@ export class Header implements ComponentInterface {
   @Prop() translucent = false;
 
   async componentDidLoad() {
-    this.gesture = (await import('../../utils/gesture')).createGesture({
-      el: this.doc as any,
-      queue: this.queue,
-      gestureName: 'header',
-      gesturePriority: 20,
-      direction: 'y',
-      threshold: 0,
-      canStart: () => this.canStart(),
-      onStart: () => this.onStart(),
-      onMove: ev => this.onMove(ev),
-      onEnd: () => this.onEnd(),
-    });
-
     // Determine if the header can collapse
     const toolbars = this.el.querySelectorAll('ion-toolbar');
     const canCollapse = (this.collapse && this.mode === 'ios' && toolbars.length >= 2) ? this.collapse : false;
@@ -72,9 +59,6 @@ export class Header implements ComponentInterface {
       this.toolbars = Array.from(toolbars);
       await this.setupCollapsableHeader(contentEl);
     }
-
-    // Enable the collapse gesture if collapse is set and mode is ios
-    this.gesture.setDisabled(!canCollapse);
   }
 
   componentDidUnload() {
@@ -100,6 +84,30 @@ export class Header implements ComponentInterface {
 
     // Hide title on first primary toolbar
     this.setToolbarTitleVisibility(this.toolbars[0], false);
+
+    // Set minimum transform
+
+    this.toolbars
+      .slice(1)
+      .forEach(toolbar => {
+        this.minTranslate -= toolbar.clientHeight;
+      });
+
+    // Setup gesture controls
+    this.gesture = (await import('../../utils/gesture')).createGesture({
+      el: this.scrollEl! as any,
+      queue: this.queue,
+      gestureName: 'header',
+      gesturePriority: 20,
+      direction: 'y',
+      threshold: 0,
+      canStart: () => this.canStart(),
+      onStart: () => this.onStart(),
+      onMove: ev => this.onMove(ev),
+      onEnd: () => this.onEnd(),
+    });
+
+    this.gesture.setDisabled(false);
   }
 
   canStart(): boolean {
@@ -114,9 +122,24 @@ export class Header implements ComponentInterface {
   }
 
   onMove(detail: GestureDetail) {
-    const proposedTransform = this.clampTransform(this.initialTransform + detail.deltaY);
+    let proposedTransform = this.clampTransform(this.initialTransform + detail.deltaY);
     if (proposedTransform === this.currentTransform) {
       return;
+    }
+
+    // TODO: is this considered a hack
+/*
+
+    console.log(this.scrollEl!.scrollTop)
+    if (detail.deltaY < 0 && proposedTransform < this.minTranslate) {
+      this.scrollEl!.scrollTo(0, this.minTranslate - proposedTransform);
+      return;
+    }
+
+*/
+    // Add resistance when pulling down
+    if (proposedTransform > 0) {
+      proposedTransform = proposedTransform ** 0.85;
     }
 
     this.currentTransform = proposedTransform;
@@ -129,6 +152,8 @@ export class Header implements ComponentInterface {
   }
 
   onEnd() {
+    this.enableContentScroll();
+
     if (this.currentTransform <= 0) {
       this.snapToolbarTranslation();
       return;
@@ -139,6 +164,7 @@ export class Header implements ComponentInterface {
     this.translateToolbars(this.currentTransform, true);
     this.updateLargeTitlesScale(true);
     this.enableContentScroll();
+
   }
 
   private disableContentScroll() {
@@ -164,9 +190,9 @@ export class Header implements ComponentInterface {
   }
 
   private updateLargeTitlesScale(transition = false) {
-    const scale = 1 + (this.currentTransform / this.maxTranslate / 5);
+    const scale = 1 + (this.currentTransform / this.maxTranslate);
     if (scale < 1.1) {
-      this.scaleLargeTitles(scale, (transition) ? 'all 0.25s ease-in-out' : '');
+      this.scaleLargeTitles(scale, (transition) ? TRANSITION : '');
     }
   }
 
@@ -194,7 +220,7 @@ export class Header implements ComponentInterface {
       const ionTitle = toolbar.querySelector('ion-title');
       if (!ionTitle) { return; }
 
-      ionTitle.style.transition = (transition) ? 'all 0.2s ease-in-out' : '';
+      ionTitle.style.transition = (transition) ? TRANSITION : '';
       ionTitle.style.opacity = (show) ? '1' : '0';
     });
   }
@@ -204,7 +230,7 @@ export class Header implements ComponentInterface {
     requestAnimationFrame(() => {
       if (!this.scrollEl) { return; }
 
-      const transitionString = (transition) ? 'all 0.25s ease-in-out' : '';
+      const transitionString = (transition) ? TRANSITION : '';
 
       const toolbarsToAnimate = this.toolbars.slice(1);
       const toolbars = (translateY > 0) ? toolbarsToAnimate : toolbarsToAnimate.reverse();
@@ -244,7 +270,7 @@ export class Header implements ComponentInterface {
       const primaryToolbar = this.toolbars[0];
       const secondaryToolbar = this.toolbars[1];
 
-      if (secondaryToolbarOffset > -1 && (secondaryToolbarOffset - Math.abs(this.currentTransform)) <= 20) {
+      if (secondaryToolbarOffset > -1 && (secondaryToolbarOffset - Math.abs(this.currentTransform)) <= 17) {
         this.setToolbarTitleVisibility(primaryToolbar, true, true);
         this.setToolbarTitleVisibility(secondaryToolbar, false, true);
       } else {
@@ -295,3 +321,5 @@ export class Header implements ComponentInterface {
     };
   }
 }
+
+const TRANSITION = 'all 0.20s ease-in-out';
