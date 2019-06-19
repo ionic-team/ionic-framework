@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi, h } from '@stencil/core';
 
-import { Color, Config, Mode, ScrollBaseDetail, ScrollDetail } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, Config, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { isPlatform } from '../../utils/platform';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -45,9 +46,7 @@ export class Content implements ComponentInterface {
     isScrolling: true,
   };
 
-  mode!: Mode;
-
-  @Element() el!: HTMLStencilElement;
+  @Element() el!: HTMLIonContentElement;
 
   @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'queue' }) queue!: QueueApi;
@@ -108,7 +107,8 @@ export class Content implements ComponentInterface {
 
   componentWillLoad() {
     if (this.forceOverscroll === undefined) {
-      this.forceOverscroll = this.mode === 'ios' && isPlatform(this.win, 'mobile');
+      const mode = getIonMode(this);
+      this.forceOverscroll = mode === 'ios' && isPlatform(this.win, 'mobile');
     }
   }
 
@@ -302,10 +302,11 @@ export class Content implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getIonMode(this);
     return {
       class: {
         ...createColorClasses(this.color),
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         'content-sizing': hostContext('ion-popover', this.el),
         'overscroll': !!this.forceOverscroll,
       },

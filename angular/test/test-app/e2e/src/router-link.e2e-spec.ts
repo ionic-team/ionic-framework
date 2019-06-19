@@ -1,6 +1,5 @@
 import { browser, element, by, protractor } from 'protractor';
 import { waitTime, testStack, testLifeCycle, handleErrorMessages } from './utils';
-import { HttpUrlEncodingCodec } from '@angular/common/http';
 
 const EC = protractor.ExpectedConditions;
 
@@ -8,36 +7,38 @@ describe('router-link params and fragments', () => {
   const queryParam = 'A&=#Y';
   const fragment = 'myDiv1';
   const id = 'MyPageID==';
-  
+
   afterEach(() => {
     handleErrorMessages();
   });
-  
+
   it('should go to a page with properly encoded values', async () => {
     await browser.get('/router-link?ionic:_testing=true');
     await element(by.css('#queryParamsFragment')).click();
-    
+
     const expectedRoute = `${encodeURIComponent(id)}?token=${encodeURIComponent(queryParam)}#${encodeURIComponent(fragment)}`;
 
     browser.wait(EC.urlContains(expectedRoute), 5000);
   });
-  
+
   it('should return to a page with preserved query param and fragment', async () => {
     await browser.get('/router-link?ionic:_testing=true');
     await element(by.css('#queryParamsFragment')).click();
-    await element(by.css('#goToPage3')).click(); 
-    
+    await waitTime(200);
+    await element(by.css('#goToPage3')).click();
+
     browser.wait(EC.urlContains('router-link-page3'), 5000);
-    
-    await element(by.css('#goBackFromPage3')).click(); 
-    
+    await waitTime(200);
+
+    await element(by.css('#goBackFromPage3')).click();
+
     const expectedRoute = `${encodeURIComponent(id)}?token=${encodeURIComponent(queryParam)}#${encodeURIComponent(fragment)}`;
     browser.wait(EC.urlContains(expectedRoute), 5000);
   });
-  
+
   it('should preserve query param and fragment with defaultHref string', async () => {
     await browser.get('/router-link-page3?ionic:_testing=true');
-    
+
     await element(by.css('#goBackFromPage3')).click();
 
     const expectedRoute = '?token=ABC#fragment';

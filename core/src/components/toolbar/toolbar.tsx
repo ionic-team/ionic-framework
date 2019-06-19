@@ -1,9 +1,12 @@
-import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop, h } from '@stencil/core';
 
-import { Color, Config, CssClassMap, Mode, StyleEventDetail } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, Config, CssClassMap, StyleEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the toolbar text in LTR, and to the right in RTL.
  * @slot secondary - Content is placed to the left of the toolbar text in `ios` mode, and directly to the right in `md` mode.
@@ -21,7 +24,7 @@ import { createColorClasses } from '../../utils/theme';
 export class Toolbar implements ComponentInterface {
   private childrenStyles = new Map<string, CssClassMap>();
 
-  @Element() el!: HTMLStencilElement;
+  @Element() el!: HTMLIonToolbarElement;
 
   @Prop({ context: 'config' }) config!: Config;
 
@@ -31,11 +34,6 @@ export class Toolbar implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   componentWillLoad() {
     const buttons = Array.from(this.el.querySelectorAll('ion-buttons'));
@@ -85,6 +83,7 @@ export class Toolbar implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getIonMode(this);
     const childStyles = {};
     this.childrenStyles.forEach(value => {
       Object.assign(childStyles, value);
@@ -92,7 +91,7 @@ export class Toolbar implements ComponentInterface {
 
     return {
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
 
         ...childStyles,
         ...createColorClasses(this.color),

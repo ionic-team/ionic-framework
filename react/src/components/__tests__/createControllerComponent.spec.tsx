@@ -1,5 +1,5 @@
 import React from 'react';
-import { Components } from '@ionic/core';
+import { LoadingOptions } from '@ionic/core';
 import { createControllerComponent } from '../createControllerComponent';
 import { render, waitForElement, wait } from 'react-testing-library';
 import * as utils from '../utils';
@@ -7,8 +7,7 @@ import { createControllerUtils } from '../utils/controller-test-utils';
 import 'jest-dom/extend-expect';
 
 describe('createControllerComponent - events', () => {
-  const { cleanupAfterController, createControllerElement, augmentController} = createControllerUtils('ion-loading');
-  type LoadingOptions = Components.IonLoadingAttributes;
+  const { cleanupAfterController, createControllerElement, augmentController } = createControllerUtils('ion-loading');
   const IonLoading = createControllerComponent<LoadingOptions, HTMLIonLoadingElement, HTMLIonLoadingControllerElement>('ion-loading', 'ion-loading-controller')
 
   afterEach(cleanupAfterController);
@@ -68,7 +67,7 @@ describe('createControllerComponent - events', () => {
       duration: 2000,
       children: 'ButtonNameA',
       onIonLoadingDidDismiss: onDidDismiss
-    }, expect.any(Object));
+    }, undefined);
   });
 
   test('should dismiss component on hiding', async () => {
@@ -115,6 +114,32 @@ describe('createControllerComponent - events', () => {
     });
 
     expect(dismissFunction).toHaveBeenCalled();
+  });
+
+  test('should present component if isOpen is initially true', async () => {
+    const [element] = createControllerElement();
+    const container = document.createElement('div');
+    const baseElement = document.createElement('div');
+
+    augmentController(baseElement, container, element);
+
+    const { } = render(
+      <IonLoading
+        isOpen={true}
+        onDidDismiss={jest.fn()}
+        duration={12000}
+      >
+        Loading...
+      </IonLoading>, {
+        container: document.body.appendChild(container),
+        baseElement: baseElement
+      }
+    );
+
+    await waitForElement(() => document.querySelector('ion-loading'));
+
+    const item = document.querySelector('ion-loading');
+    expect(item).toBeTruthy();
   });
 
 });

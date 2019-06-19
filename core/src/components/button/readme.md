@@ -96,10 +96,10 @@ This attribute specifies the size of the button. Setting this attribute will cha
 ```tsx
 import React from 'react';
 
-import { IonButton, IonIcon } from '@ionic/react';
+import { IonButton, IonIcon, IonContent } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
-  <>
+export const ButtonExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Default --*/}
     <IonButton>Default</IonButton>
 
@@ -148,10 +148,9 @@ const Example: React.SFC<{}> = () => (
     <IonButton size="large">Large</IonButton>
     <IonButton>Default</IonButton>
     <IonButton size="small">Small</IonButton>
-  </>
+  </IonContent>
 );
 
-export default Example;
 ```
 
 
@@ -276,6 +275,19 @@ export default Example;
 | `--ripple-color`         | Color of the button ripple effect       |
 | `--transition`           | Transition of the button                |
 
+
+## Dependencies
+
+### Depends on
+
+- [ion-ripple-effect](../ripple-effect)
+
+### Graph
+```mermaid
+graph TD;
+  ion-button --> ion-ripple-effect
+  style ion-button fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

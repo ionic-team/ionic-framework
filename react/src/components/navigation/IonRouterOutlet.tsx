@@ -1,73 +1,73 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter, RouteComponentProps, matchPath, match, RouteProps } from 'react-router';
-import { Components } from '@ionic/core';
 import { generateUniqueId } from '../utils';
 import { Location } from 'history';
-import { IonBackButtonInner, IonRouterOutletInner } from '../index';
-import IonPage from '../IonPage';
+import { IonRouterOutletInner } from '../proxies';
+import { StackItem } from '../StackItem';
+import { NavContext } from './NavContext';
+import { StackItemManager } from './StackItemManager';
 
 type ChildProps = RouteProps & {
   computedMatch: match<any>
 }
 
-type Props = RouteComponentProps & {
+type IonRouterOutletProps = RouteComponentProps & {
   children?: React.ReactElement<ChildProps>[] | React.ReactElement<ChildProps>;
 };
 
-interface StackItem {
-  id: string;
-  location: Location;
-  match: match<{ tab: string }>;
-  element: React.ReactElement<any>;
-  prevId: string;
-}
-
-interface State {
-  direction: 'forward' | 'back' | undefined,
-  inTransition: boolean;
+type IonRouterOutletState = {
+  direction?: 'forward' | 'back',
   activeId: string | undefined;
   prevActiveId: string | undefined;
   tabActiveIds: { [tab: string]: string };
   views: StackItem[];
 }
 
-interface ContextInterface {
-  goBack: (defaultHref?: string) => void
+type StackItem = {
+  id: string;
+  location: Location;
+  match: match<{ tab: string }>;
+  element: React.ReactElement<any>;
+  prevId: string;
+  mount: boolean;
 }
 
-const Context = React.createContext<ContextInterface>({
-  goBack: () => {}
-});
-
-
-class RouterOutlet extends Component<Props, State> {
-
+class RouterOutlet extends React.Component<IonRouterOutletProps, IonRouterOutletState> {
+  enteringItem: StackItem;
+  leavingItem: StackItem;
   enteringEl: React.RefObject<HTMLDivElement> = React.createRef();
   leavingEl: React.RefObject<HTMLDivElement> = React.createRef();
   containerEl: React.RefObject<HTMLIonRouterOutletElement> = React.createRef();
+  inTransition = false;
 
-  constructor(props: Props) {
+  constructor(props: IonRouterOutletProps) {
     super(props);
 
     this.state = {
       direction: undefined,
-      inTransition: false,
       activeId: undefined,
       prevActiveId: undefined,
       tabActiveIds: {},
       views: []
     };
+
+    this.activateView = this.activateView.bind(this);
   }
 
-  static getDerivedStateFromProps(props: Props, state: State): Partial<State> {
+  static getDerivedStateFromProps(props: IonRouterOutletProps, state: IonRouterOutletState): Partial<IonRouterOutletState> {
     const location = props.location;
     let match: StackItem['match'] = null;
     let element: StackItem['element'];
 
     /**
+     * Remove any views that have been unmounted previously
+     */
+    const views = state.views.filter(x => x.mount === true);
+
+    /**
      * Get the current active view and if the path is the same then do nothing
      */
-    const activeView = state.views.find(v => v.id === state.activeId);
+    const activeView = views.find(v => v.id === state.activeId);
 
     /**
      * Look at all available paths and find the one that matches
@@ -95,23 +95,30 @@ class RouterOutlet extends Component<Props, State> {
      * If the location matches the existing tab path then set that view as active
      */
     const id = state.tabActiveIds[match.params.tab];
-    const currentActiveTabView = state.views.find(v => v.id === id);
+    const currentActiveTabView = views.find(v => v.id === id);
     if (currentActiveTabView && currentActiveTabView.location.pathname === props.location.pathname) {
       if (currentActiveTabView.id === state.activeId) {
+        /**
+         * The current tab was clicked, so do nothing
+         */
         return null;
       }
+      /**
+       * Activate a tab that is already in views
+       */
       return {
         direction: undefined,
         activeId: currentActiveTabView.id,
-        prevActiveId: undefined
+        prevActiveId: state.activeId,
+        views: views
       };
     }
 
     /**
-     * If the new active view is a previous view
+     * If the new active view is a previous view, then animate it back in
      */
     if (activeView) {
-      const prevActiveView = state.views.find(v => v.id === activeView.prevId);
+      const prevActiveView = views.find(v => v.id === activeView.prevId);
       if (prevActiveView && activeView.match.params.tab === match.params.tab && prevActiveView.match.url === match.url) {
         return {
           direction: 'back',
@@ -121,77 +128,183 @@ class RouterOutlet extends Component<Props, State> {
             ...state.tabActiveIds,
             [match.params.tab]: prevActiveView.id,
           },
+          views: views.map(x => {
+            if (x.id === activeView.id) {
+              return {
+                ...x,
+                mount: false
+              }
+            }
+            return x;
+          })
         }
       }
     }
 
-    const viewId = generateUniqueId();
+    /**
+       * If the current view does not match the url, see if the view that matches the url is currently in the stack.
+       * If so, show the view that matches the url and remove the current view.
+       */
+    if (currentActiveTabView && currentActiveTabView.location.pathname !== props.location.pathname) {
+      const view = views.find(x => x.location.pathname == props.location.pathname);
+      if (view && view.id === currentActiveTabView.prevId) {
+        return {
+          direction: undefined,
+          activeId: view.id,
+          prevActiveId: undefined,
+          views: views.filter(x => x.id !== currentActiveTabView.id),
+          tabActiveIds: {
+            ...state.tabActiveIds,
+            [match.params.tab]: view.id
+          },
+        };
+      }
+    }
 
-    return {
+    /**
+     * Else add this new view to the stack
+     */
+    const viewId = generateUniqueId();
+    const newState: IonRouterOutletState = {
       direction: (state.tabActiveIds[match.params.tab]) ? 'forward' : undefined,
       activeId: viewId,
-      prevActiveId: state.tabActiveIds[match.params.tab],
+      prevActiveId: state.tabActiveIds[match.params.tab] || state.activeId,
       tabActiveIds: {
         ...state.tabActiveIds,
         [match.params.tab]: viewId
       },
-      views: state.views.concat({
+      views: views.concat({
         id: viewId,
         location,
         match,
         element,
-        prevId: state.tabActiveIds[match.params.tab]
+        prevId: state.tabActiveIds[match.params.tab],
+        mount: true
       })
     };
+
+    return newState;
   }
 
   renderChild(item: StackItem) {
-    return React.cloneElement(item.element, {
+    const component = React.cloneElement(item.element, {
       location: item.location,
       computedMatch: item.match
     });
+    return component;
   }
 
   goBack = (defaultHref?: string) => {
     const prevView = this.state.views.find(v => v.id === this.state.activeId);
     const newView = this.state.views.find(v => v.id === prevView.prevId);
-    const newPath = newView ? newView.location.pathname : defaultHref;
-    this.props.history.replace(newPath);
+    if (newView) {
+      this.props.history.replace(newView.location.pathname || defaultHref);
+    } else {
+      /**
+       * find the parent view based on the defaultHref and add it
+       * to the views collection so that navigation works properly
+       */
+      let element: StackItem['element'];
+      let match: StackItem['match'];
+      React.Children.forEach(this.props.children, (child: React.ReactElement<ChildProps>) => {
+        if (match == null) {
+          element = child;
+          match = matchPath(defaultHref, child.props);
+        }
+      });
+
+      if (element && match) {
+        const viewId = generateUniqueId();
+        const parentView: StackItem = {
+          id: viewId,
+          location: {
+            pathname: defaultHref
+          } as any,
+          element: element,
+          match: match,
+          prevId: undefined,
+          mount: true
+        };
+        prevView.prevId = viewId;
+        this.setState({
+          views: [parentView, prevView]
+        });
+      }
+      this.props.history.replace(defaultHref);
+    }
   }
 
-  componentDidUpdate() {
-    const enteringEl = (this.enteringEl.current != null) ? this.enteringEl.current : undefined;
-    const leavingEl = (this.leavingEl.current != null) ? this.leavingEl.current : undefined;
+  activateView(el: HTMLElement) {
+    /**
+     * Gets called from StackItem to initialize a new view
+     */
+    if (!this.state.direction) {
+      const leavingEl = (this.leavingEl.current != null) ? this.leavingEl.current : undefined;
+      this.transitionView(el, leavingEl);
+    }
+  }
 
-    if (this.state.direction && !this.state.inTransition) {
-      this.setState({ inTransition: true });
-      this.containerEl.current.commit(enteringEl, leavingEl, {
+  transitionView(enteringEl: HTMLElement, leavingEl: HTMLElement) {
+    //
+    /**
+     * Super hacky workaround to make sure containerEL is available
+     * since activateView might be called from StackItem before IonRouterOutlet is mounted
+     */
+    if (this.containerEl && this.containerEl.current && this.containerEl.current.componentOnReady) {
+      this.commitView(enteringEl, leavingEl);
+    } else {
+      setTimeout(() => {
+        this.transitionView(enteringEl, leavingEl);
+      }, 10);
+    }
+  }
+
+  async commitView(enteringEl: HTMLElement, leavingEl: HTMLElement) {
+    if (!this.inTransition) {
+      this.inTransition = true;
+
+      await this.containerEl.current.componentOnReady();
+      await this.containerEl.current.commit(enteringEl, leavingEl, {
         deepWait: true,
-        duration: this.state.direction === undefined ? 0: undefined,
+        duration: this.state.direction === undefined ? 0 : undefined,
         direction: this.state.direction,
-        showGoBack: true,
+        showGoBack: this.state.direction === 'forward',
         progressAnimation: false
-      }).then(() => {
-        this.setState(() => ({
-          inTransition: false,
-          direction: undefined
-        }));
       });
+
+      if (leavingEl) {
+        /**
+         *  add hidden attributes
+        */
+        leavingEl.classList.add('ion-page-hidden');
+        leavingEl.setAttribute('aria-hidden', 'true');
+      }
+      this.inTransition = false;
+    }
+  }
+
+  componentDidUpdate(_prevProps: IonRouterOutletProps, prevState: IonRouterOutletState) {
+    /**
+     * Don't transition the view if the state didn't change
+     * Probably means we are still on the same view
+     */
+    if (prevState !== this.state) {
+      const enteringEl = (this.enteringEl.current != null) ? this.enteringEl.current : undefined;
+      const leavingEl = (this.leavingEl.current != null) ? this.leavingEl.current : undefined;
+      this.transitionView(enteringEl, leavingEl);
     }
   }
 
   render() {
     return (
       <IonRouterOutletInner ref={this.containerEl}>
-        <Context.Provider value={{ goBack: this.goBack }}>
+        <NavContext.Provider value={{ goBack: this.goBack }}>
           {this.state.views.map((item) => {
             let props: any = {};
 
             if (item.id === this.state.prevActiveId) {
               props = {
-                'ref': this.leavingEl,
-                'hidden': this.state.direction == null,
-                'className': (this.state.direction == null ? ' ion-page-hidden' : '')
+                'ref': this.leavingEl
               };
             } else if (item.id === this.state.activeId) {
               props = {
@@ -206,40 +319,23 @@ class RouterOutlet extends Component<Props, State> {
             }
 
             return (
-              <IonPage
-                {...props}
+              <StackItemManager
                 key={item.id}
+                mount={item.mount}
               >
-                { this.renderChild(item) }
-              </IonPage>
+                <StackItem
+                  activateView={this.activateView}
+                  {...props}
+                >
+                  {this.renderChild(item)}
+                </StackItem>
+              </StackItemManager>
             );
           })}
-        </Context.Provider>
+        </NavContext.Provider>
       </IonRouterOutletInner>
     );
   }
 }
 
-export const IonRouterOutlet = withRouter(RouterOutlet);
-
-
-type ButtonProps = Components.IonBackButtonAttributes & {
-  goBack: () => void;
-};
-
-export class IonBackButton extends Component<ButtonProps> {
-  context!: React.ContextType<typeof Context>;
-
-  clickButton = (e: MouseEvent) => {
-    e.stopPropagation();
-    this.context.goBack(this.props.defaultHref);
-  }
-
-  render() {
-    return (
-      <IonBackButtonInner onClick={this.clickButton} {...this.props}></IonBackButtonInner>
-    );
-  }
-}
-
-IonBackButton.contextType = Context;
+export const IonRouterOutlet = /*@__PURE__*/withRouter(RouterOutlet);

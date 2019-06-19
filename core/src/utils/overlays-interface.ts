@@ -1,4 +1,5 @@
 import { EventEmitter } from '@stencil/core';
+import { HTMLStencilElement } from '@stencil/core/internal';
 
 import { Animation, AnimationBuilder, Config, Mode } from '../interface';
 

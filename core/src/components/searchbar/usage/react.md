@@ -1,10 +1,9 @@
 ```tsx
 import React from 'react';
+import { IonSearchbar, IonToolbar, IonContent } from '@ionic/react';
 
-import { IonSearchbar, IonToolbar } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const SearchbarExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Default Searchbar --*/}
     <IonSearchbar></IonSearchbar>
     
@@ -27,7 +26,7 @@ const Example: React.SFC<{}> = () => (
     <IonSearchbar type="tel"></IonSearchbar>
 
     {/*-- Searchbar disabled  --*/}
-    <IonSearchbar disabled="true"></IonSearchbar>
+    <IonSearchbar disabled={true}></IonSearchbar>
 
     {/*-- Searchbar with a cancel button and custom cancel button text --*/}
     <IonSearchbar showCancelButton="focus" cancelButtonText="Custom Cancel"></IonSearchbar>
@@ -45,8 +44,6 @@ const Example: React.SFC<{}> = () => (
     <IonToolbar>
       <IonSearchbar></IonSearchbar>
     </IonToolbar>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```

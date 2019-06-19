@@ -1,4 +1,4 @@
-import { mockWindow } from '@stencil/core/mock-doc';
+import { mockWindow } from '@stencil/core/testing';
 
 import { RouteRedirect, RouteTree } from '../utils/interface';
 import { flattenRouterTree, readRedirects, readRouteNodes } from '../utils/parser';

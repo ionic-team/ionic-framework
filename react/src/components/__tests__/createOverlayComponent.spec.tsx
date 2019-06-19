@@ -1,5 +1,5 @@
 import React from 'react';
-import { Components } from '@ionic/core'
+import { JSX } from '@ionic/core'
 import { createOverlayComponent } from '../createOverlayComponent';
 import { render, waitForElement } from 'react-testing-library';
 import * as utils from '../utils';
@@ -8,7 +8,7 @@ import 'jest-dom/extend-expect';
 
 describe('createOverlayComponent - events', () => {
   const { cleanupAfterController, createControllerElement, augmentController} = createControllerUtils('ion-action-sheet');
-  type ActionSheetOptions = Components.IonActionSheetAttributes;
+  type ActionSheetOptions = JSX.IonActionSheet;
   const IonActionSheet = createOverlayComponent<ActionSheetOptions, HTMLIonActionSheetElement, HTMLIonActionSheetControllerElement>('ion-action-sheet', 'ion-action-sheet-controller');
 
   afterEach(cleanupAfterController);

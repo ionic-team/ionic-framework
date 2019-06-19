@@ -1,10 +1,14 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch, h } from '@stencil/core';
 
-import { Color, Gesture, GestureDetail, Mode, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, Gesture, GestureDetail, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
 import { hapticSelection } from '../../utils/haptic';
 import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-toggle',
   styleUrls: {
@@ -27,11 +31,6 @@ export class Toggle implements ComponentInterface {
   @Prop({ context: 'document' }) doc!: Document;
 
   @State() activated = false;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The color to use from your application's color palette.
@@ -108,7 +107,6 @@ export class Toggle implements ComponentInterface {
   async componentDidLoad() {
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
-      queue: this.queue,
       gestureName: 'toggle',
       gesturePriority: 100,
       threshold: 5,
@@ -148,7 +146,7 @@ export class Toggle implements ComponentInterface {
   }
 
   private onMove(detail: GestureDetail) {
-    if (shouldToggle(this.doc, this.checked, detail.deltaX, -10)) {
+    if (shouldToggle(document, this.checked, detail.deltaX, -10)) {
       this.checked = !this.checked;
       hapticSelection();
     }
@@ -181,6 +179,7 @@ export class Toggle implements ComponentInterface {
 
   hostData() {
     const { inputId, disabled, checked, activated, color, el } = this;
+    const mode = getIonMode(this);
     const labelId = inputId + '-lbl';
     const label = findItemLabel(el);
     if (label) {
@@ -195,7 +194,7 @@ export class Toggle implements ComponentInterface {
 
       class: {
         ...createColorClasses(color),
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         'in-item': hostContext('ion-item', el),
         'toggle-activated': activated,
         'toggle-checked': checked,
