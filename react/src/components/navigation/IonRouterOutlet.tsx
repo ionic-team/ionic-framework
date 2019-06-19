@@ -1,11 +1,11 @@
 import React from 'react';
-import { withRouter, RouteComponentProps, matchPath, RouteProps, match } from 'react-router';
+import { withRouter, RouteComponentProps, matchPath, RouteProps, match, Switch } from 'react-router';
 import { generateUniqueId } from '../utils';
 import { IonRouterOutletInner } from '../proxies';
-import { StackView } from '../StackView';
+import { View } from '../View';
 import { NavContext } from './NavContext';
-import { StackItemManager } from './StackItemManager';
-import { StackItem } from './StackItem';
+import { ViewItemManager } from './ViewItemManager';
+import { ViewItem } from './ViewItem';
 
 type ChildProps = RouteProps & {
   computedMatch: match<any>
@@ -16,9 +16,9 @@ type IonRouterOutletProps = RouteComponentProps & {
   children?: React.ReactElement<ChildProps>[] | React.ReactElement<ChildProps>;
 };
 
-type IonRouterOutletState = { }
+type IonRouterOutletState = {}
 
-class RouterOutlet extends React.Component<IonRouterOutletProps, IonRouterOutletState> {
+class IonRouterOutletUnWrapped extends React.Component<IonRouterOutletProps, IonRouterOutletState> {
   containerEl: React.RefObject<HTMLIonRouterOutletElement> = React.createRef();
   context!: React.ContextType<typeof NavContext>;
   id: string;
@@ -29,36 +29,52 @@ class RouterOutlet extends React.Component<IonRouterOutletProps, IonRouterOutlet
   }
 
   componentDidMount() {
-    const views: StackItem[] = [];
+    const views: ViewItem[] = [];
     let activeId: string;
     React.Children.forEach(this.props.children, (child: React.ReactElement<ChildProps>) => {
+      if (child.type === Switch) {
+        /**
+         * If the first child is a Switch, loop through its children to build the viewStack
+         */
+        React.Children.forEach(child.props.children, (grandChild: React.ReactElement<ChildProps>) => {
+          addView.call(this, grandChild);
+        });
+      } else {
+        addView.call(this, child);
+      }
+    });
+    this.context.registerViewStack(this.id, activeId, views, this.containerEl.current, this.props.location);
+
+    function addView(child: React.ReactElement<any>) {
       const location = this.props.history.location;
       const viewId = generateUniqueId();
       const key = generateUniqueId();
       const element = child;
-      const match: StackItem['match'] = matchPath(location.pathname, child.props);
-      const view: StackItem = {
+      const match: ViewItem['match'] = matchPath(location.pathname, child.props);
+      const view: ViewItem = {
         id: viewId,
         key,
-        // location,
         match,
         element,
         mount: true,
         show: !!match,
         ref: React.createRef(),
         childProps: child.props
-      }
-      if(!!match) {
-        activeId = viewId
+      };
+      if (!!match) {
+        activeId = viewId;
       };
       views.push(view);
-    });
-    this.context.registerViewStack(this.id, activeId, views, this.containerEl.current, this.props.location);
+      return activeId;
+    }
   }
 
-  renderChild(item: StackItem) {
+  componentWillUnmount() {
+    this.context.removeViewStack(this.id);
+  }
+
+  renderChild(item: ViewItem) {
     const component = React.cloneElement(item.element, {
-      // location: item.location,
       computedMatch: item.match
     });
     return component;
@@ -71,10 +87,9 @@ class RouterOutlet extends React.Component<IonRouterOutletProps, IonRouterOutlet
           this.context = context;
           const viewStack = context.viewStacks[this.id];
           const activeId = viewStack ? viewStack.activeId : '';
-          const views = (viewStack || {views: []}).views.filter(x => x.show);
+          const views = (viewStack || { views: [] }).views.filter(x => x.show);
           return (
-            <IonRouterOutletInner ref={this.containerEl}>
-
+            <IonRouterOutletInner data-id={this.id} ref={this.containerEl}>
               {views.map((item) => {
                 let props: any = {};
                 if (item.id === activeId) {
@@ -89,21 +104,20 @@ class RouterOutlet extends React.Component<IonRouterOutletProps, IonRouterOutlet
                 }
 
                 return (
-                  <StackItemManager
+                  <ViewItemManager
                     id={item.id}
                     key={item.key}
                     mount={item.mount}
                   >
-                    <StackView
+                    <View
                       ref={item.ref}
                       {...props}
                     >
                       {this.renderChild(item)}
-                    </StackView>
-                  </StackItemManager>
+                    </View>
+                  </ViewItemManager>
                 );
               })}
-
             </IonRouterOutletInner>
           );
         }}
@@ -112,4 +126,4 @@ class RouterOutlet extends React.Component<IonRouterOutletProps, IonRouterOutlet
   }
 }
 
-export const IonRouterOutlet = /*@__PURE__*/withRouter(RouterOutlet);
+export const IonRouterOutlet = /*@__PURE__*/withRouter(IonRouterOutletUnWrapped);

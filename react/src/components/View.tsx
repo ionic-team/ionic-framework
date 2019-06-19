@@ -15,7 +15,7 @@ interface StackViewState {
   ref: any;
 }
 
-class StackViewInternal extends React.Component<InternalProps, StackViewState> {
+class ViewInternal extends React.Component<InternalProps, StackViewState> {
   context!: React.ContextType<typeof IonLifeCycleContext>;
 
   constructor(props: InternalProps) {
@@ -76,11 +76,11 @@ class StackViewInternal extends React.Component<InternalProps, StackViewState> {
     )
   }
 }
-StackViewInternal.contextType = IonLifeCycleContext;
+ViewInternal.contextType = IonLifeCycleContext;
 
 function forwardRef(props: InternalProps, ref: React.RefObject<HTMLElement>) {
-  return <StackViewInternal forwardedRef={ref} {...props} />;
+  return <ViewInternal forwardedRef={ref} {...props} />;
 }
-forwardRef.displayName = 'StackView';
+forwardRef.displayName = 'View';
 
-export const StackView = /*@__PURE__*/React.forwardRef<HTMLElement, ExternalProps>(forwardRef);
+export const View = /*@__PURE__*/React.forwardRef<HTMLElement, ExternalProps>(forwardRef);

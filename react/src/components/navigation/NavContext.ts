@@ -1,5 +1,5 @@
 import React from 'react';
-import { StackItem } from './StackItem';
+import { ViewItem } from './ViewItem';
 import { NavDirection } from '@ionic/core';
 import { Location } from 'history';
 
@@ -7,8 +7,8 @@ import { Location } from 'history';
 export interface ViewStack {
   routerOutlet: HTMLIonRouterOutletElement;
   activeId?: string,
-  prevId?: string,
-  views: StackItem[]
+  // prevId?: string,
+  views: ViewItem[]
 }
 
 export interface ViewStacks {
@@ -18,7 +18,8 @@ export interface ViewStacks {
 export interface NavContextState {
   hideView: (viewId: string) => void;
   viewStacks: ViewStacks;
-  registerViewStack: (stack: string, activeId: string, stackItems: StackItem[], ionRouterOutlet: HTMLIonRouterOutletElement, location: Location) => void;
+  registerViewStack: (stack: string, activeId: string, stackItems: ViewItem[], ionRouterOutlet: HTMLIonRouterOutletElement, location: Location) => void;
+  removeViewStack: (stack: string) => void;
   goBack: (defaultHref?: string) => void;
   transitionView: (enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOuter: HTMLIonRouterOutletElement, direction: NavDirection) => void;
 }
@@ -28,6 +29,7 @@ export const NavContext = /*@__PURE__*/React.createContext<NavContextState>({
   hideView: () => { navContextNotFoundError(); },
   goBack: () => { navContextNotFoundError(); },
   registerViewStack: () => { navContextNotFoundError(); },
+  removeViewStack: () => { navContextNotFoundError(); },
   transitionView: () => { navContextNotFoundError(); }
 });
 
