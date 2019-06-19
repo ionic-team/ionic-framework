@@ -172,33 +172,6 @@ export class Toggle implements ComponentInterface {
     this.ionBlur.emit();
   }
 
-  hostData() {
-    const { inputId, disabled, checked, activated, color, el } = this;
-    const mode = getIonMode(this);
-    const labelId = inputId + '-lbl';
-    const label = findItemLabel(el);
-    if (label) {
-      label.id = labelId;
-    }
-
-    return {
-      'role': 'checkbox',
-      'aria-disabled': disabled ? 'true' : null,
-      'aria-checked': `${checked}`,
-      'aria-labelledby': labelId,
-
-      class: {
-        ...createColorClasses(color),
-        [mode]: true,
-        'in-item': hostContext('ion-item', el),
-        'toggle-activated': activated,
-        'toggle-checked': checked,
-        'toggle-disabled': disabled,
-        'interactive': true
-      }
-    };
-  }
-
   render() {
     const { inputId, disabled, checked, activated, color, el } = this;
     const mode = getIonMode(this);
@@ -229,7 +202,7 @@ export class Toggle implements ComponentInterface {
       >
         <div class="toggle-icon">
           <div class="toggle-inner"/>
-        </div>,
+        </div>
         <button
           type="button"
           onFocus={this.onFocus}
