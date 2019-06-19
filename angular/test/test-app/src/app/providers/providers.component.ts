@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {
-  Platform, Config, ModalController, AlertController, ActionSheetController,
+  Platform, ModalController, AlertController, ActionSheetController,
   PopoverController, ToastController,  Events, PickerController, MenuController,
   LoadingController, NavController, DomController
 } from '@ionic/angular';

@@ -33,9 +33,9 @@ export function getClassMap(classes: string | string[] | undefined): CssClassMap
 
 const SCHEME = /^[a-z][a-z0-9+\-.]*:/;
 
-export async function openURL(win: Window, url: string | undefined | null, ev: Event | undefined | null, direction: RouterDirection): Promise<boolean> {
+export async function openURL(url: string | undefined | null, ev: Event | undefined | null, direction: RouterDirection): Promise<boolean> {
   if (url != null && url[0] !== '#' && !SCHEME.test(url)) {
-    const router = win.document.querySelector('ion-router');
+    const router = document.querySelector('ion-router');
     if (router) {
       if (ev != null) {
         ev.preventDefault();

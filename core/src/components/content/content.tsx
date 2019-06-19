@@ -1,7 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, h, readTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, Config, ScrollBaseDetail, ScrollDetail } from '../../interface';
+import { Color, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { isPlatform } from '../../utils/platform';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -47,10 +47,6 @@ export class Content implements ComponentInterface {
   };
 
   @Element() el!: HTMLIonContentElement;
-
-  @Prop({ context: 'config' }) config!: Config;
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * The color to use from your application's color palette.
@@ -108,7 +104,7 @@ export class Content implements ComponentInterface {
   componentWillLoad() {
     if (this.forceOverscroll === undefined) {
       const mode = getIonMode(this);
-      this.forceOverscroll = mode === 'ios' && isPlatform(this.win, 'mobile');
+      this.forceOverscroll = mode === 'ios' && isPlatform(window, 'mobile');
     }
   }
 
@@ -130,7 +126,7 @@ export class Content implements ComponentInterface {
 
   private resize() {
     if (this.fullscreen) {
-      this.queue.read(this.readDimensions.bind(this));
+      readTask(this.readDimensions.bind(this));
     } else if (this.cTop !== 0 || this.cBottom !== 0) {
       this.cTop = this.cBottom = 0;
       this.el.forceUpdate();
@@ -159,7 +155,7 @@ export class Content implements ComponentInterface {
     }
     if (!this.queued && this.scrollEvents) {
       this.queued = true;
-      this.queue.read(ts => {
+      readTask(ts => {
         this.queued = false;
         this.detail.event = ev;
         updateScrollDetail(this.detail, this.scrollEl, ts, shouldStart);
@@ -306,7 +302,7 @@ export class Content implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
-        [`${mode}`]: true,
+        [mode]: true,
         'content-sizing': hostContext('ion-popover', this.el),
         'overscroll': !!this.forceOverscroll,
       },

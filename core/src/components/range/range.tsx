@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, Gesture, GestureDetail, KnobName, RangeChangeEventDetail, RangeValue, StyleEventDetail } from '../../interface';
@@ -28,9 +28,6 @@ export class Range implements ComponentInterface {
   private gesture?: Gesture;
 
   @Element() el!: HTMLIonRangeElement;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'document' }) doc!: Document;
 
   @State() private ratioA = 0;
   @State() private ratioB = 0;
@@ -377,7 +374,7 @@ export class Range implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
-        [`${mode}`]: true,
+        [mode]: true,
         'in-item': hostContext('ion-item', this.el),
         'range-disabled': this.disabled,
         'range-pressed': this.pressedKnob !== undefined,

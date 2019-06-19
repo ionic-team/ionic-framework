@@ -78,7 +78,7 @@ export class Fab implements ComponentInterface {
     const mode = getIonMode(this);
     return {
       class: {
-        [`${mode}`]: true,
+        [mode]: true,
         [`fab-horizontal-${this.horizontal}`]: this.horizontal !== undefined,
         [`fab-vertical-${this.vertical}`]: this.vertical !== undefined,
         'fab-edge': this.edge

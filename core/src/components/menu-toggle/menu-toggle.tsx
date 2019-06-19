@@ -9,8 +9,6 @@ import { getIonMode } from '../../global/ionic-global';
 })
 export class MenuToggle implements ComponentInterface {
 
-  @Prop({ context: 'document' }) doc!: Document;
-
   @State() visible = false;
 
   /**
@@ -66,7 +64,7 @@ export class MenuToggle implements ComponentInterface {
     return {
       'aria-hidden': hidden ? 'true' : null,
       class: {
-        [`${mode}`]: true,
+        [mode]: true,
         'menu-toggle-hidden': hidden,
       }
     };

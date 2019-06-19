@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, h } from '@stencil/core';
 
-import { Config, NavOutlet, RouteID, RouteWrite, TabButtonClickEventDetail } from '../../interface';
+import { NavOutlet, RouteID, RouteWrite, TabButtonClickEventDetail } from '../../interface';
 
 /**
  * @slot - Content is placed between the named slots if provided without a slot.
@@ -21,9 +21,6 @@ export class Tabs implements NavOutlet {
 
   @State() tabs: HTMLIonTabElement[] = [];
   @State() selectedTab?: HTMLIonTabElement;
-
-  @Prop({ context: 'config' }) config!: Config;
-  @Prop({ context: 'document' }) doc!: Document;
 
   /** @internal */
   @Prop({ mutable: true }) useRouter = false;

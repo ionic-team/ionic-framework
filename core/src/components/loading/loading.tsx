@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, Config, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
+import { config, getIonMode } from '../../global/ionic-global';
+import { Animation, AnimationBuilder, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
@@ -30,8 +30,6 @@ export class Loading implements ComponentInterface, OverlayInterface {
   mode = getIonMode(this);
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'config' }) config!: Config;
 
   /** @internal */
   @Prop() overlayIndex!: number;
@@ -115,9 +113,9 @@ export class Loading implements ComponentInterface, OverlayInterface {
   componentWillLoad() {
     if (this.spinner === undefined) {
       const mode = getIonMode(this);
-      this.spinner = this.config.get(
+      this.spinner = config.get(
         'loadingSpinner',
-        this.config.get('spinner', mode === 'ios' ? 'lines' : 'crescent')
+        config.get('spinner', mode === 'ios' ? 'lines' : 'crescent')
       );
     }
   }
@@ -183,7 +181,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
       },
       class: {
         ...getClassMap(this.cssClass),
-        [`${mode}`]: true,
+        [mode]: true,
         'loading-translucent': this.translucent
       }
     };

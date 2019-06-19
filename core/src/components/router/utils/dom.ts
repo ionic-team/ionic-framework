@@ -67,12 +67,12 @@ export async function readNavState(root: HTMLElement | undefined) {
   return { ids, outlet };
 }
 
-export function waitUntilNavNode(win: Window) {
-  if (searchNavNode(win.document.body)) {
+export function waitUntilNavNode() {
+  if (searchNavNode(document.body)) {
     return Promise.resolve();
   }
   return new Promise(resolve => {
-    win.addEventListener('ionNavWillLoad', resolve, { once: true });
+    window.addEventListener('ionNavWillLoad', resolve, { once: true });
   });
 }
 

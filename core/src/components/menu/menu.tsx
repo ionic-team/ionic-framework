@@ -93,7 +93,7 @@ export class Menu implements ComponentInterface, MenuI {
 
   @Watch('side')
   protected sideChanged() {
-    this.isEndSide = isEnd(window, this.side);
+    this.isEndSide = isEnd(this.side);
   }
 
   /**

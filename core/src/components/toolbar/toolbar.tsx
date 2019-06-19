@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Listen, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, Config, CssClassMap, StyleEventDetail } from '../../interface';
+import { Color, CssClassMap, StyleEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -25,8 +25,6 @@ export class Toolbar implements ComponentInterface {
   private childrenStyles = new Map<string, CssClassMap>();
 
   @Element() el!: HTMLIonToolbarElement;
-
-  @Prop({ context: 'config' }) config!: Config;
 
   /**
    * The color to use from your application's color palette.
@@ -91,7 +89,7 @@ export class Toolbar implements ComponentInterface {
 
     return {
       class: {
-        [`${mode}`]: true,
+        [mode]: true,
 
         ...childStyles,
         ...createColorClasses(this.color),

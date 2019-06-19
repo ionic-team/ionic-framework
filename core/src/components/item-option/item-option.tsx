@@ -90,7 +90,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
     return {
       class: {
         ...createColorClasses(this.color),
-        [`${mode}`]: true,
+        [mode]: true,
 
         'item-option-disabled': disabled,
         'item-option-expandable': expandable,

@@ -77,8 +77,8 @@ export function pointerCoord(ev: any): {x: number, y: number} {
  * @param side the side
  * @param isRTL whether the application dir is rtl
  */
-export function isEndSide(win: Window, side: Side): boolean {
-  const isRTL = win.document.dir === 'rtl';
+export function isEndSide(side: Side): boolean {
+  const isRTL = document.dir === 'rtl';
   switch (side) {
     case 'start': return isRTL;
     case 'end': return !isRTL;

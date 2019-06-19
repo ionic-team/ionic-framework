@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Method } from '@stencil/core';
 
 import { LoadingOptions, OverlayController } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
@@ -7,8 +7,6 @@ import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays'
   tag: 'ion-loading-controller'
 })
 export class LoadingController implements ComponentInterface, OverlayController {
-
-  @Prop({ context: 'document' }) doc!: Document;
 
   /**
    * Create a loading overlay with loading options.

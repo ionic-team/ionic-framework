@@ -468,7 +468,7 @@ export class Slides implements ComponentInterface {
 
     return {
       class: {
-        [`${mode}`]: true,
+        [mode]: true,
 
         // Used internally for styling
         [`slides-${mode}`]: true,

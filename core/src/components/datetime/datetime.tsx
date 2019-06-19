@@ -608,7 +608,7 @@ export class Datetime implements ComponentInterface {
       'aria-haspopup': 'true',
       'aria-labelledby': labelId,
       class: {
-        [`${mode}`]: true,
+        [mode]: true,
         'datetime-disabled': disabled,
         'datetime-readonly': readonly,
         'datetime-placeholder': addPlaceholderClass,
