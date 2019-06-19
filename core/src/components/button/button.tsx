@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
 
 import { Color, Mode, RouterDirection } from '../../interface';
+import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { hasShadowDom } from '../../utils/helpers';
 import { createColorClasses, openURL } from '../../utils/theme';
 
@@ -18,7 +19,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
   },
   shadow: true,
 })
-export class Button implements ComponentInterface {
+export class Button implements ComponentInterface, AnchorInterface, ButtonInterface {
 
   private inToolbar = false;
   private inItem = false;
@@ -69,10 +70,24 @@ export class Button implements ComponentInterface {
   @Prop() routerDirection: RouterDirection = 'forward';
 
   /**
+   * This attribute instructs browsers to download a URL instead of navigating to
+   * it, so the user will be prompted to save it as a local file. If the attribute
+   * has a value, it is used as the pre-filled file name in the Save prompt
+   * (the user can still change the file name if they want).
+   */
+  @Prop() download: string | undefined;
+
+  /**
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
-  @Prop() href?: string;
+  @Prop() href: string | undefined;
+
+  /**
+   * Specifies the relationship of the target object to the link object.
+   * The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+   */
+  @Prop() rel: string | undefined;
 
   /**
    * The button shape.
@@ -88,6 +103,13 @@ export class Button implements ComponentInterface {
    * If `true`, activates a button with a heavier font weight.
    */
   @Prop() strong = false;
+
+  /**
+   * Specifies where to display the linked URL.
+   * Only applies when an `href` is provided.
+   * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+   */
+  @Prop() target: string | undefined;
 
   /**
    * The type of the button.
@@ -187,7 +209,12 @@ export class Button implements ComponentInterface {
     const TagType = this.href === undefined ? 'button' : 'a' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
-      : { href: this.href };
+      : {
+        download: this.download,
+        href: this.href,
+        rel: this.rel,
+        target: this.target
+      };
 
     return (
       <TagType
