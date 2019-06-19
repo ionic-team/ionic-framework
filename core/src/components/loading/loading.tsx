@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
 
 import { config, getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
@@ -120,11 +120,6 @@ export class Loading implements ComponentInterface, OverlayInterface {
     }
   }
 
-  @Listen('ionBackdropTap')
-  protected onBackdropTap() {
-    this.dismiss(undefined, BACKDROP);
-  }
-
   /**
    * Present the loading overlay after it has been created.
    */
@@ -173,32 +168,36 @@ export class Loading implements ComponentInterface, OverlayInterface {
     return eventMethod(this.el, 'ionLoadingWillDismiss');
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      style: {
-        zIndex: 40000 + this.overlayIndex
-      },
-      class: {
-        ...getClassMap(this.cssClass),
-        [mode]: true,
-        'loading-translucent': this.translucent
-      }
-    };
+  private onBackdropTap = () => {
+    this.dismiss(undefined, BACKDROP);
   }
 
   render() {
-    return [
-      <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss} />,
-      <div class="loading-wrapper" role="dialog">
-        {this.spinner && (
-          <div class="loading-spinner">
-            <ion-spinner name={this.spinner} />
-          </div>
-        )}
+    const { message, spinner } = this;
+    const mode = getIonMode(this);
+    return (
+      <Host
+        onIonBackdropTap={this.onBackdropTap}
+        style={{
+          zIndex: `${40000 + this.overlayIndex}`
+        }}
+        class={{
+          ...getClassMap(this.cssClass),
+          [mode]: true,
+          'loading-translucent': this.translucent
+        }}
+      >
+        <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss} />
+        <div class="loading-wrapper" role="dialog">
+          {spinner && (
+            <div class="loading-spinner">
+              <ion-spinner name={spinner} />
+            </div>
+          )}
 
-        {this.message && <div class="loading-content" innerHTML={sanitizeDOMString(this.message)}></div>}
-      </div>
-    ];
+          {message && <div class="loading-content" innerHTML={sanitizeDOMString(message)}></div>}
+        </div>
+      </Host>
+    );
   }
 }

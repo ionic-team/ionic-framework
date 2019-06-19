@@ -50,6 +50,15 @@ export const config: Config = {
     { components: ['ion-toast'] },
     { components: ['ion-toggle'] },
     { components: ['ion-virtual-scroll'] },
+    { components: [
+      'ion-action-sheet-controller',
+      'ion-alert-controller',
+      'ion-loading-controller',
+      'ion-modal-controller',
+      'ion-popover-controller',
+      'ion-picker-controller',
+      'ion-toast-controller',
+    ]},
   ],
   plugins: [
     sass()
@@ -59,10 +68,10 @@ export const config: Config = {
       type: 'dist',
       esmLoaderPath: '../loader'
     },
-    {
-      type: 'experimental-dist-module',
-      externalRuntime: true,
-    },
+    // {
+    //   type: 'experimental-dist-module',
+    //   externalRuntime: true,
+    // },
     {
       type: 'docs-readme',
       strict: true
