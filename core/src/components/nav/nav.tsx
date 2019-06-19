@@ -247,18 +247,18 @@ export class Nav implements NavOutlet {
     opts?: NavOptions | null,
     done?: TransitionDoneFn
   ): Promise<boolean> {
-    const config: TransitionInstruction = {
+    const tiConfig: TransitionInstruction = {
       removeStart: -1,
       removeCount: -1,
       opts
     };
     if (typeof indexOrViewCtrl === 'object' && (indexOrViewCtrl as ViewController).component) {
-      config.removeView = indexOrViewCtrl;
-      config.removeStart = 1;
+      tiConfig.removeView = indexOrViewCtrl;
+      tiConfig.removeStart = 1;
     } else if (typeof indexOrViewCtrl === 'number') {
-      config.removeStart = indexOrViewCtrl + 1;
+      tiConfig.removeStart = indexOrViewCtrl + 1;
     }
-    return this.queueTrns(config, done);
+    return this.queueTrns(tiConfig, done);
   }
 
   /**

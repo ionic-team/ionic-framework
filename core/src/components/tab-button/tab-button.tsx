@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, h, Host } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, h } from '@stencil/core';
 
 import { config, getIonMode } from '../../global/ionic-global';
 import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';

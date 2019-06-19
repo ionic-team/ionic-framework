@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, Watch, h, Host } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, RadioChangeEventDetail, StyleEventDetail } from '../../interface';

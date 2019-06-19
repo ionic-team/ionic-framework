@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch, h, Host } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, Gesture, GestureDetail, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';

@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, Watch, h, Host } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { CheckboxChangeEventDetail, Color, StyleEventDetail } from '../../interface';
@@ -106,7 +106,6 @@ export class Checkbox implements ComponentInterface {
       this.buttonEl.focus();
     }
   }
-
 
   private onClick = () => {
     this.setFocus();
