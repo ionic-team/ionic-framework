@@ -36,7 +36,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@ionic/core": "4.5.0-dev.201906121618.2d7ac4e",
+    "@ionic/core": "^4.6.0-dev.201906192117.6727cfc",
     "tslib": "^1.10.0"
   },
   "peerDependencies": {
@@ -63,6 +63,7 @@
     "react-testing-library": "^7.0.0",
     "rollup": "^1.14.6",
     "rollup-plugin-node-resolve": "^5.0.1",
+    "rollup-plugin-sourcemaps": "^0.4.2",
     "ts-jest": "^24.0.2",
     "typescript": "3.5.1"
   },
