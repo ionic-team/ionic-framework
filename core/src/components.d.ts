@@ -863,21 +863,6 @@ export namespace Components {
     */
     'translucent': boolean;
   }
-  interface IonHeaderAttributes extends StencilHTMLAttributes {
-    /**
-    * If `true`, the header will collapse on scroll of the content. Only applies in `ios` mode.
-    */
-    'collapse'?: boolean;
-    /**
-    * The mode determines which platform styles to use.
-    */
-    'mode'?: Mode;
-    /**
-    * If `true`, the header will be translucent. Only applies to `ios` mode. Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content.
-    */
-    'translucent'?: boolean;
-  }
-
   interface IonImg {
     /**
     * This attribute defines the alternative text describing the image. Users will see this text displayed if the image URL is wrong, the image is not in one of the supported formats, or if the image is not yet downloaded.
@@ -2559,6 +2544,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * The size of the toolbar title. Only applies in `ios` mode.
+    */
+    'size': string;
   }
   interface IonToast {
     /**
@@ -2897,30 +2886,6 @@ declare global {
     new (): HTMLIonFabButtonElement;
   };
 
-  interface IonTitle {
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
-    /**
-    * The size of the toolbar title. Only applies in `ios` mode.
-    */
-    'size': string;
-  }
-  interface IonTitleAttributes extends StencilHTMLAttributes {
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
-    /**
-    * Emitted when the styles change.
-    */
-    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
-    /**
-    * The size of the toolbar title. Only applies in `ios` mode.
-    */
-    'size'?: string;
-  }
   interface HTMLIonFabListElement extends Components.IonFabList, HTMLStencilElement {}
   var HTMLIonFabListElement: {
     prototype: HTMLIonFabListElement;
@@ -4238,6 +4203,10 @@ declare namespace LocalJSX {
     'fixed'?: boolean;
   }
   interface IonHeader extends JSXBase.HTMLAttributes<HTMLIonHeaderElement> {
+    /**
+    * If `true`, the header will collapse on scroll of the content. Only applies in `ios` mode.
+    */
+    'collapse'?: boolean;
     /**
     * The mode determines which platform styles to use.
     */
@@ -5832,6 +5801,14 @@ declare namespace LocalJSX {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * Emitted when the styles change.
+    */
+    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
+    /**
+    * The size of the toolbar title. Only applies in `ios` mode.
+    */
+    'size'?: string;
   }
   interface IonToast extends JSXBase.HTMLAttributes<HTMLIonToastElement> {
     /**

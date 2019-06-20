@@ -269,7 +269,7 @@ export class IonGrid {
 proxyInputs(IonGrid, ['fixed']);
 
 export declare interface IonHeader extends Components.IonHeader {}
-@Component({ selector: 'ion-header', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['mode', 'collapse', 'translucent'] })
+@Component({ selector: 'ion-header', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['collapse', 'mode', 'translucent'] })
 export class IonHeader {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef) {
@@ -277,7 +277,7 @@ export class IonHeader {
     this.el = r.nativeElement;
   }
 }
-proxyInputs(IonHeader, ['mode', 'collapse', 'translucent']);
+proxyInputs(IonHeader, ['collapse', 'mode', 'translucent']);
 
 export declare interface IonIcon extends Components.IonIcon {}
 @Component({ selector: 'ion-icon', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['ariaLabel', 'color', 'flipRtl', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'size', 'src'] })

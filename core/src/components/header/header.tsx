@@ -1,8 +1,9 @@
-import { Component, ComponentInterface, Element, EventListenerEnable, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
 
-import { Gesture, GestureDetail } from '../../interface';
-import { areToolbarsFullyCollapsed, handleToolbarCollapse, handleToolbarPullDown, resetElementFixedHeights, resetToolbars, setElOpacity, setElementFixedHeights, translateEl } from './header.utils';
 import { getIonMode } from '../../global/ionic-global';
+import { Gesture, GestureDetail } from '../../interface';
+
+import { areToolbarsFullyCollapsed, handleToolbarCollapse, handleToolbarPullDown, resetElementFixedHeights, resetToolbars, setElOpacity, setElementFixedHeights, translateEl } from './header.utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -32,14 +33,7 @@ export class Header implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
   @Prop({ context: 'document' }) doc!: Document;
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, the header will collapse on scroll of the content.
@@ -57,11 +51,11 @@ export class Header implements ComponentInterface {
   async componentDidLoad() {
     // Determine if the header can collapse
     const toolbars = this.el.querySelectorAll('ion-toolbar');
-    const canCollapse = (this.collapse && this.mode === 'ios' && toolbars.length >= 2) ? this.collapse : false;
+    const canCollapse = (this.collapse && getIonMode(this) === 'ios' && toolbars.length >= 2) ? this.collapse : false;
 
     const tabs = this.el.closest('ion-tabs');
-    const page = this.el.closest('ion-app,ion-page,.ion-page,page-inner') as HTMLStencilElement;
-    const contentEl = tabs ? tabs.querySelector('ion-content') : page.querySelector('ion-content');
+    const page = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
+    const contentEl = tabs ? tabs.querySelector('ion-content') : page!.querySelector('ion-content');
 
     if (canCollapse) {
       this.toolbars = Array.from(toolbars).map(toolbar => {
@@ -112,10 +106,9 @@ export class Header implements ComponentInterface {
     // Setup gesture controls
     this.gesture = (await import('./collapse')).createCollapseGesture(
       this.scrollEl! as any,
-      this.queue,
       () => this.canStart(),
       () => this.onStart(),
-      ev => this.onMove(ev),
+      (ev: GestureDetail) => this.onMove(ev),
       () => this.onEnd(),
     );
 
@@ -196,7 +189,7 @@ export class Header implements ComponentInterface {
         [`header-${mode}`]: true,
 
         [`header-translucent`]: this.translucent,
-        [`header-collapse-${mode}`]: this.collapse
+        [`header-collapse-${mode}`]: this.collapse,
         [`header-translucent-${mode}`]: this.translucent,
       }
     };
