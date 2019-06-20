@@ -1,4 +1,4 @@
-import { QueueApi } from '@stencil/core';
+import { writeTask } from '@stencil/core';
 
 import { GESTURE_CONTROLLER } from './gesture-controller';
 import { createPointerEvents } from './pointer-events';
@@ -23,7 +23,6 @@ export function createGesture(config: GestureConfig): Gesture {
   const notCaptured = finalConfig.notCaptured;
   const onMove = finalConfig.onMove;
   const threshold = finalConfig.threshold;
-  const queue = finalConfig.queue;
 
   const detail = {
     type: 'pan',
@@ -103,7 +102,7 @@ export function createGesture(config: GestureConfig): Gesture {
       if (!isMoveQueued && hasFiredStart) {
         isMoveQueued = true;
         calcGestureData(detail, ev);
-        queue.write(fireOnMove);
+        writeTask(fireOnMove);
       }
       return;
     }
@@ -294,7 +293,6 @@ export interface GestureConfig {
   el: Node;
   disableScroll?: boolean;
 
-  queue: QueueApi;
   direction?: 'x' | 'y';
   gestureName: string;
   gesturePriority?: number;

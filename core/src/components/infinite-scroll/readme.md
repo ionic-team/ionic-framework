@@ -12,6 +12,10 @@ The `ion-infinite-scroll` component has the infinite scroll logic. It requires a
 
 Separating the `ion-infinite-scroll` and `ion-infinite-scroll-content` components allows developers to create their own content components, if desired. This content can contain anything, from an SVG element to elements with unique CSS animations.
 
+## React
+
+The Infinite Scroll component is not supported in React.
+
 <!-- Auto Generated Below -->
 
 
@@ -111,62 +115,6 @@ function toggleInfiniteScroll() {
 ```
 
 
-### React
-
-```tsx
-import React, { Component } from 'react';
-
-import { IonButton, IonContent, IonInfiniteScroll, IonInfiniteScrollContent, IonList } from '@ionic/react';
-
-export default class Example extends Component<Props, State> {
-
-  ionInfiniteScrollRef: React.RefObject<HTMLionInfiniteScrollElement>
-
-  constructor() {
-    this.ionInfiniteScrollRef = React.createRef<HTMLionInfiniteScrollElement>();
-  }
-
-  loadData = (ev: MouseEvent) => {
-    setTimeout(() => {
-      console.log('Done');
-      ev.target.complete();
-
-      // App logic to determine if all data is loaded
-      // and disable the infinite scroll
-      if (data.length == 1000) {
-        ev.target.disabled = true;
-      }
-    }, 500);
-  }
-
-  toggleInfiniteScroll = () => {
-    this.ionInfiniteScrollRef.disabled = !this.ionInfiniteScrollRef.disabled;
-  }
-
-  render() {
-    return (
-      <>
-        <IonContent>
-          <IonButton onClick="toggleInfiniteScroll()" expand="block">
-            Toggle Infinite Scroll
-          </IonButton>
-
-          <IonList></IonList>
-
-          <IonInfiniteScroll threshold="100px" onIonInfinite={(ev) => this.loadData(ev)}>
-            <IonInfiniteScrollContent
-              loadingSpinner="bubbles"
-              loadingText="Loading more data...">
-            </IonInfiniteScrollContent>
-          </IonInfiniteScroll>
-        </IonContent>
-      </>
-    );
-  }
-}
-```
-
-
 
 ## Properties
 
@@ -186,7 +134,7 @@ export default class Example extends Component<Props, State> {
 
 ## Methods
 
-### `complete() => void`
+### `complete() => Promise<void>`
 
 Call `complete()` within the `ionInfinite` output event handler when
 your async operation has completed. For example, the `loading`
@@ -199,7 +147,7 @@ to `enabled`.
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 

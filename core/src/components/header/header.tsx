@@ -1,9 +1,12 @@
 import { Component, ComponentInterface, Element, EventListenerEnable, Prop, QueueApi } from '@stencil/core';
 
-import { Gesture, GestureDetail, Mode } from '../../interface';
-
+import { Gesture, GestureDetail } from '../../interface';
 import { areToolbarsFullyCollapsed, handleToolbarCollapse, handleToolbarPullDown, resetElementFixedHeights, resetToolbars, setElOpacity, setElementFixedHeights, translateEl } from './header.utils';
+import { getIonMode } from '../../global/ionic-global';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-header',
   styleUrls: {
@@ -184,16 +187,17 @@ export class Header implements ComponentInterface {
 */
 
   hostData() {
+    const mode = getIonMode(this);
     return {
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
 
         // Used internally for styling
-        [`header-${this.mode}`]: true,
+        [`header-${mode}`]: true,
 
         [`header-translucent`]: this.translucent,
-        [`header-translucent-${this.mode}`]: this.translucent,
-        [`header-collapse-${this.mode}`]: this.collapse
+        [`header-collapse-${mode}`]: this.collapse
+        [`header-translucent-${mode}`]: this.translucent,
       }
     };
   }

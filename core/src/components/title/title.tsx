@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, h, Prop, Watch } from '@stencil/core';
 
-import { Color, Mode, StyleEventDetail } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, StyleEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -9,8 +10,6 @@ import { createColorClasses } from '../../utils/theme';
   shadow: true
 })
 export class ToolbarTitle implements ComponentInterface {
-
-  mode!: Mode;
 
   @Element() el!: HTMLElement;
 
@@ -44,8 +43,9 @@ export class ToolbarTitle implements ComponentInterface {
   }
 
   private getMode() {
+    const mode = getIonMode(this);
     const toolbar = this.el.closest('ion-toolbar');
-    return (toolbar && toolbar.mode) || this.mode;
+    return (toolbar && toolbar.mode) || mode;
   }
 
   componentDidLoad() {

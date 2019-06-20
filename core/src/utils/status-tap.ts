@@ -1,8 +1,8 @@
-import { QueueApi } from '@stencil/core';
+import { readTask, writeTask } from '@stencil/core';
 
-export function startStatusTap(win: Window, queue: QueueApi) {
+export function startStatusTap(win: Window) {
   win.addEventListener('statusTap', () => {
-    queue.read(() => {
+    readTask(() => {
       const width = win.innerWidth;
       const height = win.innerHeight;
       const el = win.document.elementFromPoint(width / 2, height / 2) as (Element | null);
@@ -12,7 +12,7 @@ export function startStatusTap(win: Window, queue: QueueApi) {
       const contentEl = el.closest('ion-content');
       if (contentEl) {
         contentEl.componentOnReady().then(() => {
-          queue.write(() => contentEl.scrollToTop(300));
+          writeTask(() => contentEl.scrollToTop(300));
         });
       }
     });

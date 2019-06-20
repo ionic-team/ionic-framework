@@ -714,7 +714,7 @@ import React from 'react';
 
 import { IonItem, IonLabel, IonList, IonText, IonAvatar, IonThumbnail, IonButton, IonIcon, IonSelect, IonSelectOption, IonDatetime, IonToggle, IonInput, IonCheckbox, IonRange } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
   <>
     {/*-- Default Item --*/}
     <IonItem>
@@ -1423,6 +1423,26 @@ Item Inputs
 | `--ripple-color`            | Color of the item ripple effect                     |
 | `--transition`              | Transition of the item                              |
 
+
+## Dependencies
+
+### Used by
+
+ - ion-select-popover
+
+### Depends on
+
+- ion-icon
+- [ion-ripple-effect](../ripple-effect)
+
+### Graph
+```mermaid
+graph TD;
+  ion-item --> ion-icon
+  ion-item --> ion-ripple-effect
+  ion-select-popover --> ion-item
+  style ion-item fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 
