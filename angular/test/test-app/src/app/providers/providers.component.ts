@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import {
   Platform, ModalController, AlertController, ActionSheetController,
-  PopoverController, ToastController,  Events, PickerController, MenuController,
-  LoadingController, NavController, DomController
+  PopoverController, ToastController, Events, PickerController, MenuController,
+  LoadingController, NavController, DomController, Config
 } from '@ionic/angular';
 
 @Component({
