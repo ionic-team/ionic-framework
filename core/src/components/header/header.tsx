@@ -2,6 +2,8 @@ import { Component, ComponentInterface, Element, EventListenerEnable, Prop, Queu
 
 import { Gesture, GestureDetail, Mode } from '../../interface';
 
+import { areToolbarsFullyCollapsed, handleToolbarCollapse, handleToolbarPullDown, resetElementFixedHeights, resetToolbars, setElOpacity, setElementFixedHeights, translateEl } from './header.utils';
+
 @Component({
   tag: 'ion-header',
   styleUrls: {
@@ -11,16 +13,19 @@ import { Gesture, GestureDetail, Mode } from '../../interface';
 })
 export class Header implements ComponentInterface {
 
+  private contentEl?: HTMLElement;
   private scrollEl?: HTMLElement;
   private gesture?: Gesture;
 
   private initialTransform = 0;
   private currentTransform = 0;
 
-  private toolbars: HTMLIonToolbarElement[] = [];
+  private toolbars: any[] = [];
 
+/*
   private maxTranslate = 1000;
   private minTranslate = 0;
+*/
 
   @Element() el!: HTMLElement;
 
@@ -56,7 +61,21 @@ export class Header implements ComponentInterface {
     const contentEl = tabs ? tabs.querySelector('ion-content') : page.querySelector('ion-content');
 
     if (canCollapse) {
-      this.toolbars = Array.from(toolbars);
+      this.toolbars = Array.from(toolbars).map(toolbar => {
+        const ionTitle = toolbar.querySelector('ion-title');
+
+        return {
+          el: toolbar as HTMLElement,
+          ionTitleEl: ionTitle,
+          innerTitleEl: (ionTitle) ? ionTitle.shadowRoot!.querySelector('.toolbar-title') : undefined,
+          dimensions: {
+            height: toolbar.clientHeight
+          },
+          position: {
+            y: 0
+          }
+        };
+      });
       await this.setupCollapsableHeader(contentEl);
     }
   }
@@ -73,39 +92,29 @@ export class Header implements ComponentInterface {
     if (!contentEl) { console.error('ion-header requires a content to collapse, make sure there is an ion-content.'); }
 
     await contentEl.componentOnReady();
+
+    this.contentEl = contentEl;
     this.scrollEl = await contentEl.getScrollElement();
 
     // TODO: find a better way to do this
     let zIndex = this.toolbars.length;
     this.toolbars.forEach(toolbar => {
-      toolbar.style.zIndex = zIndex.toString();
+      toolbar.el.style.zIndex = zIndex.toString();
       zIndex -= 1;
     });
 
     // Hide title on first primary toolbar
-    this.setToolbarTitleVisibility(this.toolbars[0], false);
-
-    // Set minimum transform
-
-    this.toolbars
-      .slice(1)
-      .forEach(toolbar => {
-        this.minTranslate -= toolbar.clientHeight;
-      });
+    setElOpacity(this.toolbars[0].ionTitleEl, 0);
 
     // Setup gesture controls
-    this.gesture = (await import('../../utils/gesture')).createGesture({
-      el: this.scrollEl! as any,
-      queue: this.queue,
-      gestureName: 'header',
-      gesturePriority: 20,
-      direction: 'y',
-      threshold: 0,
-      canStart: () => this.canStart(),
-      onStart: () => this.onStart(),
-      onMove: ev => this.onMove(ev),
-      onEnd: () => this.onEnd(),
-    });
+    this.gesture = (await import('./collapse')).createCollapseGesture(
+      this.scrollEl! as any,
+      this.queue,
+      () => this.canStart(),
+      () => this.onStart(),
+      ev => this.onMove(ev),
+      () => this.onEnd(),
+    );
 
     this.gesture.setDisabled(false);
   }
@@ -118,53 +127,46 @@ export class Header implements ComponentInterface {
 
   onStart() {
     this.initialTransform = this.currentTransform;
+    this.initialHeight = this.el.clientHeight;
     this.disableContentScroll();
+
+    setElementFixedHeights(this.toolbars.map(t => t.el).concat(this.el));
   }
 
+  private initialHeight = 0;
+
   onMove(detail: GestureDetail) {
-    let proposedTransform = this.clampTransform(this.initialTransform + detail.deltaY);
-    if (proposedTransform === this.currentTransform) {
+    const deltaY = this.initialTransform + Math.ceil(detail.deltaY);
+
+    /**
+     * If toolbars are fully collapsed do not
+     * let user swipe in a negative direction
+     */
+    if (areToolbarsFullyCollapsed(this.toolbars) && deltaY <= this.currentTransform) {
       return;
     }
 
-    // TODO: is this considered a hack
-/*
+    this.currentTransform = deltaY;
 
-    console.log(this.scrollEl!.scrollTop)
-    if (detail.deltaY < 0 && proposedTransform < this.minTranslate) {
-      this.scrollEl!.scrollTo(0, this.minTranslate - proposedTransform);
-      return;
-    }
-
-*/
-    // Add resistance when pulling down
-    if (proposedTransform > 0) {
-      proposedTransform = proposedTransform ** 0.85;
-    }
-
-    this.currentTransform = proposedTransform;
-
-    this.translateToolbars(this.currentTransform);
-
-    if (this.currentTransform > 0) {
-      this.updateLargeTitlesScale();
+    if (deltaY < 0) {
+      handleToolbarCollapse(this.toolbars, deltaY);
+      this.el.style.height = `${this.initialHeight + deltaY}px`;
+    } else {
+      handleToolbarPullDown(this.toolbars, deltaY);
+      translateEl(this.contentEl!, deltaY);
     }
   }
 
   onEnd() {
-    this.enableContentScroll();
+    if (this.currentTransform < 0) { return; }
 
-    if (this.currentTransform <= 0) {
-      this.snapToolbarTranslation();
-      return;
-    }
+    translateEl(this.contentEl!, this.currentTransform);
 
     this.currentTransform = 0;
 
-    this.translateToolbars(this.currentTransform, true);
-    this.updateLargeTitlesScale(true);
-    this.enableContentScroll();
-
+    resetToolbars(this.toolbars, true);
+    resetElementFixedHeights(this.toolbars.map(t => t.el).concat(this.el));
+    translateEl(this.contentEl!, 0, true);
   }
 
   private disableContentScroll() {
@@ -173,138 +175,13 @@ export class Header implements ComponentInterface {
     this.scrollEl.style.setProperty('--overflow', 'hidden');
   }
 
+/*
   private enableContentScroll() {
     if (!this.scrollEl) { return; }
 
     this.scrollEl.style.setProperty('--overflow', 'auto');
   }
-
-  private clampTransform(value: number): number {
-    if (value > this.maxTranslate) {
-      return this.maxTranslate;
-    } else if (value < this.minTranslate) {
-      return this.minTranslate;
-    } else {
-      return value;
-    }
-  }
-
-  private updateLargeTitlesScale(transition = false) {
-    const scale = 1 + (this.currentTransform / this.maxTranslate);
-    if (scale < 1.1) {
-      this.scaleLargeTitles(scale, (transition) ? TRANSITION : '');
-    }
-  }
-
-  // TODO: Integrate this with Ionic Animation
-  private scaleLargeTitles(scale = 1, transition = '') {
-    requestAnimationFrame(() => {
-      const toolbars = this.toolbars.slice(1);
-
-      toolbars.forEach(toolbar => {
-        const ionTitle = toolbar.querySelector('ion-title');
-        if (!ionTitle || ionTitle.size !== 'large') { return; }
-
-        const titleDiv = ionTitle.shadowRoot!.querySelector('.toolbar-title') as HTMLElement | null;
-        if (titleDiv === null) { return; }
-
-        titleDiv.style.transformOrigin = 'left center';
-        titleDiv.style.transition = transition;
-        titleDiv.style.transform = `scale3d(${scale}, ${scale}, 1)`;
-      });
-    });
-  }
-
-  private setToolbarTitleVisibility(toolbar: any, show = true, transition = false) {
-    requestAnimationFrame(() => {
-      const ionTitle = toolbar.querySelector('ion-title');
-      if (!ionTitle) { return; }
-
-      ionTitle.style.transition = (transition) ? TRANSITION : '';
-      ionTitle.style.opacity = (show) ? '1' : '0';
-    });
-  }
-
-  // TODO: Integrate this with Ionic Animation
-  private translateToolbars(translateY = 0, transition = false) {
-    requestAnimationFrame(() => {
-      if (!this.scrollEl) { return; }
-
-      const transitionString = (transition) ? TRANSITION : '';
-
-      const toolbarsToAnimate = this.toolbars.slice(1);
-      const toolbars = (translateY > 0) ? toolbarsToAnimate : toolbarsToAnimate.reverse();
-
-      let relativeTranslation = translateY;
-      let transformOffset = 0;
-
-      let index = toolbars.length - 1;
-      let secondaryToolbarOffset = -1;
-      for (const toolbar of toolbars) {
-        const toolbarHeight = toolbar.clientHeight;
-
-        transformOffset += toolbarHeight;
-
-        toolbar.style.transition = transitionString;
-        toolbar.style.transform = `translate3d(0, ${relativeTranslation}px, 0)`;
-
-        if (translateY < 0) {
-
-          if (index === 0) {
-            secondaryToolbarOffset = transformOffset;
-          }
-
-          index -= 1;
-          if (Math.abs(translateY) <= transformOffset) {
-            break;
-          }
-
-          relativeTranslation += toolbarHeight;
-        }
-      }
-
-      this.scrollEl.style.transition = transitionString;
-      this.scrollEl.style.transform = `translate3d(0, ${translateY}px, 0)`;
-
-      // check to see if 1st toolbar is collapsed enough to show original title
-      const primaryToolbar = this.toolbars[0];
-      const secondaryToolbar = this.toolbars[1];
-
-      if (secondaryToolbarOffset > -1 && (secondaryToolbarOffset - Math.abs(this.currentTransform)) <= 17) {
-        this.setToolbarTitleVisibility(primaryToolbar, true, true);
-        this.setToolbarTitleVisibility(secondaryToolbar, false, true);
-      } else {
-        this.setToolbarTitleVisibility(primaryToolbar, false, true);
-        this.setToolbarTitleVisibility(secondaryToolbar, true, true);
-      }
-    });
-  }
-
-  private snapToolbarTranslation() {
-    if (!this.scrollEl) { return; }
-    const toolbarsToAnimate = this.toolbars.slice(1).reverse();
-
-    /**
-     * The transform value at which
-     * a toolbar is considered "collapsed"
-     */
-    let collapsedTransform = 0;
-    for (const toolbar of toolbarsToAnimate) {
-      const toolbarHeight = toolbar.clientHeight;
-      collapsedTransform += toolbarHeight;
-
-      const isCollapsed = Math.abs(this.currentTransform) > collapsedTransform;
-      if (isCollapsed) {
-        continue;
-      }
-
-      this.currentTransform = -collapsedTransform;
-
-      this.translateToolbars(this.currentTransform, true);
-
-      break;
-    }
-  }
+*/
 
   hostData() {
     return {
@@ -321,5 +198,3 @@ export class Header implements ComponentInterface {
     };
   }
 }
-
-const TRANSITION = 'all 0.20s ease-in-out';
