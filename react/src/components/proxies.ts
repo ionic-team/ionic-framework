@@ -5,7 +5,7 @@ import { JSX as IoniconsJSX } from 'ionicons';
 
 
 // ionicons
-export const IonIcon = /*@__PURE__*/createReactComponent<IoniconsJSX.IonIcon & ReactProps, HTMLIonIconElement>('ion-icon');
+export const IonIcon = /*@__PURE__*/createReactComponent<IoniconsJSX.IonIcon & ReactProps, HTMLIonIconElement>('ion-icon', ['icon']);
 
 // /*@__PURE__*/createReactComponent
 export const IonTabBarInner = /*@__PURE__*/createReactComponent<JSX.IonTabBar & ReactProps, HTMLIonTabBarElement>('ion-tab-bar');
