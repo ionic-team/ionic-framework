@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { config, getIonMode } from '../../global/ionic-global';
+import { config } from '../../global/config';
+import { getIonMode } from '../../global/ionic-global';
 import { Color, SearchbarChangeEventDetail } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
 import { sanitizeDOMString } from '../../utils/sanitization';

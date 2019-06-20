@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Prop, h } from '@stencil/core';
 
-import { config, getIonMode } from '../../global/ionic-global';
+import { config } from '../../global/config';
+import { getIonMode } from '../../global/ionic-global';
 import { hostContext } from '../../utils/theme';
 
 @Component({

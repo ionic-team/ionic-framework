@@ -1,6 +1,6 @@
 import { Build, Component, Method } from '@stencil/core';
 
-import { config } from '../../global/ionic-global';
+import { config } from '../../global/config';
 import { Animation, AnimationBuilder, MenuControllerI, MenuI } from '../../interface';
 
 import { menuOverlayAnimation } from './animations/overlay';
