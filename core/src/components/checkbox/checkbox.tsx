@@ -121,31 +121,6 @@ export class Checkbox implements ComponentInterface {
     this.ionBlur.emit();
   }
 
-  hostData() {
-    const { inputId, disabled, checked, color, el } = this;
-    const labelId = inputId + '-lbl';
-    const mode = getIonMode(this);
-    const label = findItemLabel(el);
-    if (label) {
-      label.id = labelId;
-    }
-    return {
-      'role': 'checkbox',
-      'aria-disabled': disabled ? 'true' : null,
-      'aria-checked': `${checked}`,
-      'aria-labelledby': labelId,
-      class: {
-        ...createColorClasses(color),
-        [mode]: true,
-        'in-item': hostContext('ion-item', el),
-        'checkbox-checked': checked,
-        'checkbox-disabled': disabled,
-        'checkbox-indeterminate': this.indeterminate,
-        'interactive': true
-      }
-    };
-  }
-
   render() {
     const { inputId, indeterminate, disabled, checked, value, color, el } = this;
     const labelId = inputId + '-lbl';
