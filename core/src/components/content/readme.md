@@ -40,10 +40,9 @@ content.addEventListener('ionScrollEnd', () => console.log('scroll end'));
 
 ```tsx
 import React from 'react';
-
 import { IonContent } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const ContentExample: React.FunctionComponent = () => (
   <IonContent
     scrollEvents={true}
     onIonScrollStart={() => {}}
@@ -51,8 +50,6 @@ const Example: React.SFC<{}> = () => (
     onIonScrollEnd={() => {}}>
   </IonContent>
 );
-
-export default Example;
 ```
 
 
@@ -113,14 +110,6 @@ Type: `Promise<HTMLElement>`
 
 Scroll by a specified X/Y distance in the component.
 
-#### Parameters
-
-| Name       | Type     | Description                                          |
-| ---------- | -------- | ---------------------------------------------------- |
-| `x`        | `number` | The amount to scroll by on the horizontal axis.      |
-| `y`        | `number` | The amount to scroll by on the vertical axis.        |
-| `duration` | `number` | The amount of time to take scrolling by that amount. |
-
 #### Returns
 
 Type: `Promise<void>`
@@ -130,12 +119,6 @@ Type: `Promise<void>`
 ### `scrollToBottom(duration?: number) => Promise<void>`
 
 Scroll to the bottom of the component.
-
-#### Parameters
-
-| Name       | Type     | Description                                                          |
-| ---------- | -------- | -------------------------------------------------------------------- |
-| `duration` | `number` | The amount of time to take scrolling to the bottom. Defaults to `0`. |
 
 #### Returns
 
@@ -147,14 +130,6 @@ Type: `Promise<void>`
 
 Scroll to a specified X/Y location in the component.
 
-#### Parameters
-
-| Name       | Type                          | Description                                                          |
-| ---------- | ----------------------------- | -------------------------------------------------------------------- |
-| `x`        | `null \| number \| undefined` | The point to scroll to on the horizontal axis.                       |
-| `y`        | `null \| number \| undefined` | The point to scroll to on the vertical axis.                         |
-| `duration` | `number`                      | The amount of time to take scrolling to that point. Defaults to `0`. |
-
 #### Returns
 
 Type: `Promise<void>`
@@ -164,12 +139,6 @@ Type: `Promise<void>`
 ### `scrollToTop(duration?: number) => Promise<void>`
 
 Scroll to the top of the component.
-
-#### Parameters
-
-| Name       | Type     | Description                                                       |
-| ---------- | -------- | ----------------------------------------------------------------- |
-| `duration` | `number` | The amount of time to take scrolling to the top. Defaults to `0`. |
 
 #### Returns
 

@@ -23,9 +23,11 @@ import { FormComponent } from './form/form.component';
 import { NavigationPage1Component } from './navigation-page1/navigation-page1.component';
 import { NavigationPage2Component } from './navigation-page2/navigation-page2.component';
 import { NavigationPage3Component } from './navigation-page3/navigation-page3.component';
+import { AlertComponent } from './alert/alert.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
+  { path: 'alerts', component: AlertComponent },
   { path: 'inputs', component: InputsComponent },
   { path: 'form', component: FormComponent },
   { path: 'modals', component: ModalComponent },

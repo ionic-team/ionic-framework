@@ -1,8 +1,12 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, h } from '@stencil/core';
 
-import { Config, Mode, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Config, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
 import { AnchorInterface } from '../../utils/element-interface';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-tab-button',
   styleUrls: {
@@ -18,11 +22,6 @@ export class TabButton implements ComponentInterface, AnchorInterface {
   @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'document' }) doc!: Document;
   @Prop({ context: 'config' }) config!: Config;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, the user cannot interact with the tab button.
@@ -79,7 +78,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
    */
   @Event() ionTabButtonClick!: EventEmitter<TabButtonClickEventDetail>;
 
-  @Listen('parent:ionTabBarChanged')
+  @Listen('ionTabBarChanged', { target: 'parent' })
   onTabBarChanged(ev: CustomEvent<TabBarChangedEventDetail>) {
     this.selected = this.tab === ev.detail.tab;
   }
@@ -137,13 +136,14 @@ export class TabButton implements ComponentInterface, AnchorInterface {
 
   hostData() {
     const { disabled, hasIcon, hasLabel, tabIndex, layout, selected, tab } = this;
+    const mode = getIonMode(this);
     return {
       'tabindex': tabIndex,
       'role': 'tab',
       'aria-selected': selected ? 'true' : null,
       'id': tab !== undefined ? `tab-button-${tab}` : null,
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         'tab-selected': selected,
         'tab-disabled': disabled,
         'tab-has-label': hasLabel,
@@ -159,7 +159,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
   }
 
   render() {
-    const { mode } = this;
+    const mode = getIonMode(this);
 
     const attrs = {
       download: this.download,

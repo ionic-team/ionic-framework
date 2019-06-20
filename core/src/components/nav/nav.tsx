@@ -1,6 +1,7 @@
-import { Build, Component, Element, Event, EventEmitter, Method, Prop, QueueApi, Watch } from '@stencil/core';
+import { Build, Component, Element, Event, EventEmitter, Method, Prop, QueueApi, Watch, h } from '@stencil/core';
 
-import { Animation, AnimationBuilder, ComponentProps, Config, FrameworkDelegate, Gesture, Mode, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, RouterDirection, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Animation, AnimationBuilder, ComponentProps, Config, FrameworkDelegate, Gesture, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, RouterDirection, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
 import { assert } from '../../utils/helpers';
 import { TransitionOptions, lifecycle, setPageHidden, transition } from '../../utils/transition';
 
@@ -21,8 +22,6 @@ export class Nav implements NavOutlet {
   private destroyed = false;
   private views: ViewController[] = [];
   private gesture?: Gesture;
-
-  mode!: Mode;
 
   @Element() el!: HTMLElement;
 
@@ -99,9 +98,10 @@ export class Nav implements NavOutlet {
       !this.el.closest('[no-router]');
 
     if (this.swipeGesture === undefined) {
+      const mode = getIonMode(this);
       this.swipeGesture = this.config.getBoolean(
         'swipeBackEnabled',
-        this.mode === 'ios'
+        mode === 'ios'
       );
     }
 
@@ -113,7 +113,6 @@ export class Nav implements NavOutlet {
 
     this.gesture = (await import('../../utils/gesture/swipe-back')).createSwipeBackGesture(
       this.el,
-      this.queue,
       this.canStart.bind(this),
       this.onStart.bind(this),
       this.onMove.bind(this),
@@ -829,13 +828,12 @@ export class Nav implements NavOutlet {
     const progressCallback = opts.progressAnimation
       ? (ani: Animation | undefined) => this.sbAni = ani
       : undefined;
-
+    const mode = getIonMode(this);
     const enteringEl = enteringView.element!;
     const leavingEl = leavingView && leavingView.element!;
     const animationOpts: TransitionOptions = {
-      mode: this.mode,
+      mode,
       showGoBack: this.canGoBackSync(enteringView),
-      queue: this.queue,
       window: this.win,
       baseEl: this.el,
       animationBuilder: this.animation || opts.animationBuilder || this.config.get('navAnimation'),
