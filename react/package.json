@@ -36,7 +36,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@ionic/core": "4.5.0-dev.201906121618.2d7ac4e",
+    "@ionic/core": "^4.6.0-dev.201906192117.6727cfc",
     "tslib": "^1.10.0"
   },
   "peerDependencies": {
