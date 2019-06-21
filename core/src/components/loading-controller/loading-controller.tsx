@@ -17,7 +17,7 @@ export class LoadingController implements ComponentInterface, OverlayController 
    */
   @Method()
   create(options?: LoadingOptions): Promise<HTMLIonLoadingElement> {
-    return createOverlay(this.doc.createElement('ion-loading'), options);
+    return createOverlay('ion-loading', options);
   }
 
   /**
@@ -32,7 +32,7 @@ export class LoadingController implements ComponentInterface, OverlayController 
    */
   @Method()
   dismiss(data?: any, role?: string, id?: string) {
-    return dismissOverlay(this.doc, data, role, 'ion-loading', id);
+    return dismissOverlay(document, data, role, 'ion-loading', id);
   }
 
   /**
@@ -40,6 +40,6 @@ export class LoadingController implements ComponentInterface, OverlayController 
    */
   @Method()
   async getTop(): Promise<HTMLIonLoadingElement | undefined> {
-    return getOverlay(this.doc, 'ion-loading') as HTMLIonLoadingElement;
+    return getOverlay(document, 'ion-loading') as HTMLIonLoadingElement;
   }
 }

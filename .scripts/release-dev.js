@@ -7,6 +7,7 @@ const fs = require('fs-extra');
 
 const common = require('./common');
 
+const DIST_NPM_TAG = 'dev';
 const DIST_TAG = 'dev';
 
 async function main() {
@@ -37,7 +38,7 @@ async function main() {
     packages.forEach(package => {
       common.prepareDevPackage(tasks, package, devVersion);
     });
-    common.publishPackages(tasks, packages, devVersion, DIST_TAG);
+    common.publishPackages(tasks, packages, devVersion, DIST_NPM_TAG);
 
     const listr = new Listr(tasks);
     await listr.run();

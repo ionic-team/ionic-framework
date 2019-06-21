@@ -2,13 +2,15 @@ import { Config } from '../config';
 
 describe('Config', () => {
   it('should get a value from the config', () => {
-    const config = new Config({ name: 'Doc Brown' });
+    const config = new Config();
+    config.reset({ name: 'Doc Brown' });
     expect(config.get('name')).toEqual('Doc Brown');
     expect(config.getBoolean('name')).toBe(false);
   });
 
   it('should get a boolean value', () => {
-    const config = new Config({
+    const config = new Config();
+    config.reset({
       bool0: false,
       bool1: 'false',
       bool2: true,
@@ -27,7 +29,8 @@ describe('Config', () => {
   });
 
   it('should get a number value', () => {
-    const config = new Config({
+    const config = new Config();
+    config.reset({
       nu0: 0,
       nu1: -1,
       nu2: '200',
@@ -42,7 +45,8 @@ describe('Config', () => {
   });
 
   it('should not get fallback', () => {
-    const config = new Config({
+    const config = new Config();
+    config.reset({
       text0: '',
       text1: 'hola',
 
@@ -65,14 +69,14 @@ describe('Config', () => {
   });
 
   it('should get fallback', () => {
-    const config = new Config({});
+    const config = new Config();
     expect(config.get('text0', 'HEY')).toEqual('HEY');
     expect(config.getBoolean('bool0', true)).toEqual(true);
     expect(config.getNumber('nu0', 100)).toEqual(100);
   });
 
   it('should set value', () => {
-    const config = new Config({});
+    const config = new Config();
     expect(config.get('text0', 'HEY')).toEqual('HEY');
     config.set('text0', 'hola');
     expect(config.get('text0', 'HEY')).toEqual('hola');

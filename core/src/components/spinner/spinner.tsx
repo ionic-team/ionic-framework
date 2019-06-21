@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 
-import { Color, Config, Mode, SpinnerConfig, SpinnerTypes } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, Config, SpinnerConfig, SpinnerTypes } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 import { SPINNERS } from './spinner-configs';
@@ -12,8 +13,6 @@ import { SPINNERS } from './spinner-configs';
 })
 export class Spinner implements ComponentInterface {
   @Prop({ context: 'config' }) config!: Config;
-
-  mode!: Mode;
 
   /**
    * The color to use from your application's color palette.
@@ -40,17 +39,19 @@ export class Spinner implements ComponentInterface {
 
   private getName(): SpinnerTypes {
     const name = this.name || this.config.get('spinner');
+    const mode = getIonMode(this);
     if (name) {
       return name;
     }
-    return (this.mode === 'ios') ? 'lines' : 'crescent';
+    return (mode === 'ios') ? 'lines' : 'crescent';
   }
 
   hostData() {
+    const mode = getIonMode(this);
     return {
       class: {
         ...createColorClasses(this.color),
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         [`spinner-${this.getName()}`]: true,
         'spinner-paused': !!this.paused || this.config.getBoolean('_testing')
       }
