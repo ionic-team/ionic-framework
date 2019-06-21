@@ -228,7 +228,7 @@ export class MenuController implements MenuControllerI {
    * @param animation The animation function to register.
    */
   @Method()
-  registerAnimation(name: string, animation: AnimationBuilder) {
+  async registerAnimation(name: string, animation: AnimationBuilder) {
     this.menuAnimations.set(name, animation);
   }
 
@@ -315,7 +315,7 @@ export class MenuController implements MenuControllerI {
 
   private waitUntilReady() {
     return Promise.all(
-      Array.from(this.doc.querySelectorAll('ion-menu'))
+      Array.from(document.querySelectorAll('ion-menu'))
         .map(menu => menu.componentOnReady())
     );
   }

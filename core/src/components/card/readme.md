@@ -67,11 +67,10 @@ sub-components to reflect this. Please see `ion-card-content`,
 
 ```tsx
 import React from 'react';
+import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonIcon, IonItem, IonLabel } from '@ionic/react';
 
-import { IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel, IonButton } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const CardExample: React.FunctionComponent = () => (
+  <IonContent>
     <IonCard>
       <IonCardHeader>
         <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
@@ -118,10 +117,8 @@ const Example: React.SFC<{}> = () => (
         <IonLabel>Card Button Item 2</IonLabel>
       </IonItem>
     </IonCard>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```
 
 
@@ -203,6 +200,19 @@ export default Example;
 | `--background` | Background of the card |
 | `--color`      | Color of the card      |
 
+
+## Dependencies
+
+### Depends on
+
+- [ion-ripple-effect](../ripple-effect)
+
+### Graph
+```mermaid
+graph TD;
+  ion-card --> ion-ripple-effect
+  style ion-card fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 
