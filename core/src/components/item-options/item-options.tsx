@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
 
-import { Mode, Side } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Side } from '../../interface';
 import { isEndSide } from '../../utils/helpers';
 
 @Component({
@@ -11,7 +12,6 @@ import { isEndSide } from '../../utils/helpers';
   }
 })
 export class ItemOptions implements ComponentInterface {
-  mode!: Mode;
 
   @Element() el!: HTMLElement;
 
@@ -30,21 +30,22 @@ export class ItemOptions implements ComponentInterface {
 
   /** @internal */
   @Method()
-  fireSwipeEvent() {
+  async fireSwipeEvent() {
     this.ionSwipe.emit({
       side: this.side
     });
   }
 
   hostData() {
+    const mode = getIonMode(this);
     const isEnd = isEndSide(this.win, this.side);
 
     return {
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
 
         // Used internally for styling
-        [`item-options-${this.mode}`]: true,
+        [`item-options-${mode}`]: true,
 
         'item-options-start': !isEnd,
         'item-options-end': isEnd

@@ -17,7 +17,7 @@ export class PopoverController implements ComponentInterface, OverlayController 
    */
   @Method()
   create<T extends ComponentRef>(options: PopoverOptions<T>): Promise<HTMLIonPopoverElement> {
-    return createOverlay(this.doc.createElement('ion-popover'), options);
+    return createOverlay('ion-popover', options);
   }
 
   /**
@@ -32,7 +32,7 @@ export class PopoverController implements ComponentInterface, OverlayController 
    */
   @Method()
   dismiss(data?: any, role?: string, id?: string) {
-    return dismissOverlay(this.doc, data, role, 'ion-popover', id);
+    return dismissOverlay(document, data, role, 'ion-popover', id);
   }
 
   /**
@@ -40,6 +40,6 @@ export class PopoverController implements ComponentInterface, OverlayController 
    */
   @Method()
   async getTop(): Promise<HTMLIonPopoverElement | undefined> {
-    return getOverlay(this.doc, 'ion-popover') as HTMLIonPopoverElement;
+    return getOverlay(document, 'ion-popover') as HTMLIonPopoverElement;
   }
 }

@@ -140,6 +140,7 @@ describe('tabs', () => {
       const tab = await getSelectedTab();
       await tab.$('#goto-nested-page1').click();
 
+      await waitTime(600);
       await testStack('app-nested-outlet ion-router-outlet', ['app-nested-outlet-page']);
 
       const nestedOutlet = await element(by.css('app-nested-outlet'));

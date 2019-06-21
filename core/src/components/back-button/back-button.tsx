@@ -1,9 +1,13 @@
-import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop, h } from '@stencil/core';
 
-import { Color, Config, Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, Config } from '../../interface';
 import { ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-back-button',
   styleUrls: {
@@ -14,6 +18,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
 })
 export class BackButton implements ComponentInterface, ButtonInterface {
 
+  private mode = getIonMode(this);
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'config' }) config!: Config;
@@ -25,11 +30,6 @@ export class BackButton implements ComponentInterface, ButtonInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The url to navigate back to by default when there is no history.

@@ -500,8 +500,7 @@ slides.options = {
 
 ```tsx
 import React from 'react';
-
-import { IonSlides, IonSlide } from '@ionic/react';
+import { IonSlides, IonSlide, IonContent } from '@ionic/react';
 
 // Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
 const slideOpts = {
@@ -509,21 +508,21 @@ const slideOpts = {
   speed: 400
 };
 
-const Example: React.SFC<{}> = () => (
-  <IonSlides pager={true} options={slideOpts}>
-    <IonSlide>
-      <h1>Slide 1</h1>
-    </IonSlide>
-    <IonSlide>
-      <h1>Slide 2</h1>
-    </IonSlide>
-    <IonSlide>
-      <h1>Slide 3</h1>
-    </IonSlide>
-  </IonSlides>
+export const SlidesExample: React.FunctionComponent = () => (
+  <IonContent>
+    <IonSlides pager={true} options={slideOpts}>
+      <IonSlide>
+        <h1>Slide 1</h1>
+      </IonSlide>
+      <IonSlide>
+        <h1>Slide 2</h1>
+      </IonSlide>
+      <IonSlide>
+        <h1>Slide 3</h1>
+      </IonSlide>
+    </IonSlides>
+  </IonContent>
 );
-
-export default Example;
 ```
 
 
@@ -649,12 +648,6 @@ Type: `Promise<number>`
 
 Lock or unlock the ability to slide to the next slide.
 
-#### Parameters
-
-| Name   | Type      | Description                                   |
-| ------ | --------- | --------------------------------------------- |
-| `lock` | `boolean` | If `true`, disable swiping to the next slide. |
-
 #### Returns
 
 Type: `Promise<void>`
@@ -664,12 +657,6 @@ Type: `Promise<void>`
 ### `lockSwipeToPrev(lock: boolean) => Promise<void>`
 
 Lock or unlock the ability to slide to the previous slide.
-
-#### Parameters
-
-| Name   | Type      | Description                                       |
-| ------ | --------- | ------------------------------------------------- |
-| `lock` | `boolean` | If `true`, disable swiping to the previous slide. |
 
 #### Returns
 
@@ -681,12 +668,6 @@ Type: `Promise<void>`
 
 Lock or unlock the ability to slide to the next or previous slide.
 
-#### Parameters
-
-| Name   | Type      | Description                                                |
-| ------ | --------- | ---------------------------------------------------------- |
-| `lock` | `boolean` | If `true`, disable swiping to the next and previous slide. |
-
 #### Returns
 
 Type: `Promise<void>`
@@ -696,13 +677,6 @@ Type: `Promise<void>`
 ### `slideNext(speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>`
 
 Transition to the next slide.
-
-#### Parameters
-
-| Name           | Type                   | Description                                                                                 |
-| -------------- | ---------------------- | ------------------------------------------------------------------------------------------- |
-| `speed`        | `number \| undefined`  | The transition duration (in ms).                                                            |
-| `runCallbacks` | `boolean \| undefined` | If true, the transition will produce [Transition/SlideChange][Start/End] transition events. |
 
 #### Returns
 
@@ -714,13 +688,6 @@ Type: `Promise<void>`
 
 Transition to the previous slide.
 
-#### Parameters
-
-| Name           | Type                   | Description                                                                                     |
-| -------------- | ---------------------- | ----------------------------------------------------------------------------------------------- |
-| `speed`        | `number \| undefined`  | The transition duration (in ms).                                                                |
-| `runCallbacks` | `boolean \| undefined` | If true, the transition will produce the [Transition/SlideChange][Start/End] transition events. |
-
 #### Returns
 
 Type: `Promise<void>`
@@ -730,14 +697,6 @@ Type: `Promise<void>`
 ### `slideTo(index: number, speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>`
 
 Transition to the specified slide.
-
-#### Parameters
-
-| Name           | Type                   | Description                                                                                 |
-| -------------- | ---------------------- | ------------------------------------------------------------------------------------------- |
-| `index`        | `number`               | The index of the slide to transition to.                                                    |
-| `speed`        | `number \| undefined`  | The transition duration (in ms).                                                            |
-| `runCallbacks` | `boolean \| undefined` | If true, the transition will produce [Transition/SlideChange][Start/End] transition events. |
 
 #### Returns
 
@@ -780,12 +739,6 @@ Type: `Promise<void>`
 
 Force swiper to update its height (when autoHeight is enabled) for the duration
 equal to 'speed' parameter.
-
-#### Parameters
-
-| Name    | Type                  | Description                      |
-| ------- | --------------------- | -------------------------------- |
-| `speed` | `number \| undefined` | The transition duration (in ms). |
 
 #### Returns
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Components } from '@ionic/core';
+import { JSX } from '@ionic/core';
 import { createReactComponent } from '../createComponent';
 import { render, fireEvent, cleanup, RenderResult } from 'react-testing-library';
 import { IonButton } from '../index';
@@ -9,7 +9,7 @@ afterEach(cleanup);
 describe('createComponent - events', () => {
   test('should set events on handler', () => {
     const FakeOnClick = jest.fn((e) => e);
-    const IonButton = createReactComponent<Components.IonButtonAttributes, HTMLIonButtonElement>('ion-button');
+    const IonButton = createReactComponent<JSX.IonButton, HTMLIonButtonElement>('ion-button');
 
     const { getByText } = render(
       <IonButton onClick={FakeOnClick}>
@@ -22,7 +22,7 @@ describe('createComponent - events', () => {
 
   test('should add custom events', () => {
     const FakeIonFocus = jest.fn((e) => e);
-    const IonInput = createReactComponent<Components.IonInputAttributes, HTMLIonInputElement>('ion-input');
+    const IonInput = createReactComponent<JSX.IonInput, HTMLIonInputElement>('ion-input');
 
     const { getByText } = render(
       <IonInput onIonFocus={FakeIonFocus}>
@@ -37,7 +37,7 @@ describe('createComponent - events', () => {
 describe('createComponent - ref', () => {
   test('should pass ref on to web component instance', () => {
     const ionButtonRef: React.RefObject<any> = React.createRef();
-    const IonButton = createReactComponent<Components.IonButtonAttributes, HTMLIonButtonElement>('ion-button');
+    const IonButton = createReactComponent<JSX.IonButton, HTMLIonButtonElement>('ion-button');
 
     const { getByText } = render(
       <IonButton ref={ionButtonRef}>

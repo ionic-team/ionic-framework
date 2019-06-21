@@ -7,10 +7,6 @@ export default {
     format: 'es'
   },
   external: (id) => {
-    // inline @ionic/core deps
-    if (id === '@ionic/core') {
-      return false;
-    }
     // anything else is external
     // Windows: C:\xxxxxx\xxx
     const colonPosition = 1;

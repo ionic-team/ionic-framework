@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Element, Listen, Method, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Method, Prop, Watch, h } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-fab',
@@ -8,7 +8,6 @@ import { Mode } from '../../interface';
   shadow: true
 })
 export class Fab implements ComponentInterface {
-  mode!: Mode;
 
   @Element() el!: HTMLElement;
 
@@ -71,14 +70,15 @@ export class Fab implements ComponentInterface {
    * Close an active FAB list container.
    */
   @Method()
-  close() {
+  async close() {
     this.activated = false;
   }
 
   hostData() {
+    const mode = getIonMode(this);
     return {
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         [`fab-horizontal-${this.horizontal}`]: this.horizontal !== undefined,
         [`fab-vertical-${this.vertical}`]: this.vertical !== undefined,
         'fab-edge': this.edge

@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, EventListenerEnable, FunctionalComponent, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, FunctionalComponent, Listen, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
 
 import { Cell, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 
@@ -24,14 +24,11 @@ export class VirtualScroll implements ComponentInterface {
   private currentScrollTop = 0;
   private indexDirty = 0;
   private lastItemLen = 0;
+  private rmEvent: (() => void) | undefined;
 
-  @Element() el!: HTMLStencilElement;
+  @Element() el!: HTMLIonVirtualScrollElement;
 
   @State() totalHeight = 0;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
-  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * It is important to provide this
@@ -165,20 +162,13 @@ export class VirtualScroll implements ComponentInterface {
     this.scrollEl = undefined;
   }
 
-  @Listen('scroll', { enabled: false, passive: false })
-  onScroll() {
-    this.updateVirtualScroll();
-  }
-
-  @Listen('window:resize')
+  @Listen('resize', { target: 'window' })
   onResize() {
     this.updateVirtualScroll();
   }
 
   /**
    * Returns the position of the virtual item at the given index.
-   *
-   * @param index The index of the item.
    */
   @Method()
   positionForItem(index: number): Promise<number> {
@@ -186,26 +176,21 @@ export class VirtualScroll implements ComponentInterface {
   }
 
   /**
-   * Marks a subset of the items as dirty so they can be re-rendered.
-   * Items should be marked as dirty any time the content or their style changes.
+   * This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as
+   * dirty any time the content or their style changes.
    *
-   * The subset of items to be updated are specified by an offset and a length.
-   * If a length is not provided it will check all of the items beginning at
-   * the offset.
-   *
-   * @param offset The index of the item to start marking dirty.
-   * @param length The number of items to mark dirty.
+   * The subset of items to be updated can are specifing by an offset and a length.
    */
   @Method()
-  checkRange(offset: number, length = -1) {
+  async checkRange(offset: number, len = -1) {
     // TODO: kind of hacky how we do in-place updated of the cells
     // array. this part needs a complete refactor
     if (!this.items) {
       return;
     }
-    const len = (length === -1)
+    const length = (len === -1)
       ? this.items.length - offset
-      : length;
+      : len;
 
     const cellIndex = findCellIndex(this.cells, offset);
     const cells = calcCells(
@@ -216,7 +201,7 @@ export class VirtualScroll implements ComponentInterface {
       this.approxHeaderHeight,
       this.approxFooterHeight,
       this.approxItemHeight,
-      cellIndex, offset, len
+      cellIndex, offset, length
     );
     this.cells = inplaceUpdate(this.cells, cells, cellIndex);
     this.lastItemLen = this.items.length;
@@ -226,15 +211,23 @@ export class VirtualScroll implements ComponentInterface {
   }
 
   /**
-   * Marks the tail of the items array as dirty, so they can be re-rendered.
-   * It's equivalent to calling `checkRange(length)` where `length` is the
-   * total length of the items.
+   * This method marks the tail the items array as dirty, so they can be re-rendered.
+   *
+   * It's equivalent to calling:
+   *
+   * ```js
+   * virtualScroll.checkRange(lastItemLen);
+   * ```
    */
   @Method()
-  checkEnd() {
+  async checkEnd() {
     if (this.items) {
       this.checkRange(this.lastItemLen);
     }
+  }
+
+  private onScroll = () => {
+    this.updateVirtualScroll();
   }
 
   private updateVirtualScroll() {
@@ -250,8 +243,8 @@ export class VirtualScroll implements ComponentInterface {
     }
 
     // schedule DOM operations into the stencil queue
-    this.queue.read(this.readVS.bind(this));
-    this.queue.write(this.writeVS.bind(this));
+    readTask(this.readVS.bind(this));
+    writeTask(this.writeVS.bind(this));
   }
 
   private readVS() {
@@ -311,7 +304,7 @@ export class VirtualScroll implements ComponentInterface {
   private updateCellHeight(cell: Cell, node: any) {
     const update = () => {
       if ((node as any)['$ionCell'] === cell) {
-        const style = this.win.getComputedStyle(node);
+        const style = window.getComputedStyle(node);
         const height = node.offsetHeight + parseFloat(style.getPropertyValue('margin-bottom'));
         this.setCellHeight(cell, height);
       }
@@ -389,9 +382,18 @@ export class VirtualScroll implements ComponentInterface {
   }
 
   private enableScrollEvents(shouldListen: boolean) {
-    if (this.scrollEl) {
+    if (this.rmEvent) {
+      this.rmEvent();
+      this.rmEvent = undefined;
+    }
+
+    const scrollEl = this.scrollEl;
+    if (scrollEl) {
       this.isEnabled = shouldListen;
-      this.enableListener(this, 'scroll', shouldListen, this.scrollEl);
+      scrollEl.addEventListener('scroll', this.onScroll);
+      this.rmEvent = () => {
+        scrollEl.removeEventListener('scroll', this.onScroll);
+      };
     }
   }
 

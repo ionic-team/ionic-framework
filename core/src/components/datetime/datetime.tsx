@@ -1,11 +1,16 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { DatetimeChangeEventDetail, DatetimeOptions, Mode, PickerColumn, PickerColumnOption, PickerOptions, StyleEventDetail } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { DatetimeChangeEventDetail, DatetimeOptions, PickerColumn, PickerColumnOption, PickerOptions, StyleEventDetail } from '../../interface';
 import { clamp, findItemLabel, renderHiddenInput } from '../../utils/helpers';
+import { pickerController } from '../../utils/overlays';
 import { hostContext } from '../../utils/theme';
 
 import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getDateValue, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-datetime',
   styleUrls: {
@@ -26,13 +31,6 @@ export class Datetime implements ComponentInterface {
   @Element() el!: HTMLIonDatetimeElement;
 
   @State() isExpanded = false;
-
-  @Prop({ connect: 'ion-picker-controller' }) pickerCtrl!: HTMLIonPickerControllerElement;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The name of the control, which is submitted with the form data.
@@ -260,7 +258,7 @@ export class Datetime implements ComponentInterface {
     }
 
     const pickerOptions = this.generatePickerOptions();
-    const picker = await this.pickerCtrl.create(pickerOptions);
+    const picker = await pickerController.create(pickerOptions);
 
     this.isExpanded = true;
     picker.onDidDismiss().then(() => {
@@ -304,8 +302,9 @@ export class Datetime implements ComponentInterface {
   }
 
   private generatePickerOptions(): PickerOptions {
+    const mode = getIonMode(this);
     const pickerOptions: PickerOptions = {
-      mode: this.mode,
+      mode,
       ...this.pickerOptions,
       columns: this.generateColumns()
     };
@@ -592,7 +591,7 @@ export class Datetime implements ComponentInterface {
 
   hostData() {
     const { inputId, disabled, readonly, isExpanded, el, placeholder } = this;
-
+    const mode = getIonMode(this);
     const addPlaceholderClass =
       (this.getText() === undefined && placeholder != null) ? true : false;
 
@@ -609,7 +608,7 @@ export class Datetime implements ComponentInterface {
       'aria-haspopup': 'true',
       'aria-labelledby': labelId,
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         'datetime-disabled': disabled,
         'datetime-readonly': readonly,
         'datetime-placeholder': addPlaceholderClass,

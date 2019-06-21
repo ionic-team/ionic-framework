@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-grid',
@@ -8,7 +8,6 @@ import { Mode } from '../../interface';
   shadow: true
 })
 export class Grid implements ComponentInterface {
-  mode!: Mode;
 
   /**
    * If `true`, the grid will have a fixed width based on the screen size.
@@ -16,9 +15,10 @@ export class Grid implements ComponentInterface {
   @Prop() fixed = false;
 
   hostData() {
+    const mode = getIonMode(this);
     return {
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         'grid-fixed': this.fixed
       }
     };

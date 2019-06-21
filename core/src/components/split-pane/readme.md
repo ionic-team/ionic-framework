@@ -78,27 +78,34 @@ By default, the split pane will expand when the screen is larger than 992px. To 
 
 ```tsx
 import React from 'react';
+import {
+  IonSplitPane,
+  IonMenu,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonRouterOutlet,
+  IonContent,
+  IonPage
+} from '@ionic/react';
 
-import { IonSplitPane, IonMenu, IonHeader, IonToolbar, IonTitle, IonRouterOutlet } from '@ionic/react';
+export const SplitPlaneExample: React.SFC<{}> = () => (
+  <IonContent>
+    <IonSplitPane contentId="menuContent">
+      {/*--  our side menu  --*/}
+      <IonMenu contentId="menuContent">
+        <IonHeader>
+          <IonToolbar>
+            <IonTitle>Menu</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+      </IonMenu>
 
-const Example: React.SFC<{}> = () => (
-
-  <IonSplitPane contentId="menuContent">
-    {/*--  our side menu  --*/}
-    <IonMenu contentId="menuContent">
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Menu</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-    </IonMenu>
-
-    {/*-- the main content --*/}
-    <IonRouterOutlet></IonRouterOutlet>
-  </IonSplitPane>
+      {/*-- the main content --*/}
+      <IonPage id="menuContent"/>
+    </IonSplitPane>
+  </IonContent>
 );
-
-export default Example;
 ```
 
 
@@ -135,9 +142,9 @@ export default Example;
 
 ## Events
 
-| Event                 | Description                                                        | Type                              |
-| --------------------- | ------------------------------------------------------------------ | --------------------------------- |
-| `ionSplitPaneVisible` | Expression to be called when the split-pane visibility has changed | `CustomEvent<{visible: boolean}>` |
+| Event                 | Description                                                        | Type                                 |
+| --------------------- | ------------------------------------------------------------------ | ------------------------------------ |
+| `ionSplitPaneVisible` | Expression to be called when the split-pane visibility has changed | `CustomEvent<{ visible: boolean; }>` |
 
 
 ## CSS Custom Properties
