@@ -73,7 +73,7 @@
   min-height: #{$toolbar-ios-large-min-height};
 }
 
-:host(.toolbar-title-large) .toolbar-content {
+:host(.toolbar-title-large) .toolbar-content ion-title {
   flex: 1;
   order: map-get($toolbar-order-ios, title-large);
 

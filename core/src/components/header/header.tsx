@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail } from '../../interface';
 
-import { areToolbarsFullyCollapsed, handleToolbarCollapse, handleToolbarPullDown, resetElementFixedHeights, resetToolbars, setElOpacity, setElementFixedHeights, translateEl } from './header.utils';
+import { handleToolbarCollapse, handleToolbarPullDown, resetElementFixedHeights, resetToolbars, setElOpacity, setElementFixedHeights, toolbarsFullyCollapsed, translateEl } from './header.utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -21,6 +21,7 @@ export class Header implements ComponentInterface {
   private scrollEl?: HTMLElement;
   private gesture?: Gesture;
 
+  private initialHeaderHeight = 0;
   private initialTransform = 0;
   private currentTransform = 0;
 
@@ -28,8 +29,10 @@ export class Header implements ComponentInterface {
 
 /*
   private maxTranslate = 1000;
-  private minTranslate = 0;
+
 */
+
+  private minTranslate = 0;
 
   @Element() el!: HTMLElement;
 
@@ -58,21 +61,29 @@ export class Header implements ComponentInterface {
     const contentEl = tabs ? tabs.querySelector('ion-content') : page!.querySelector('ion-content');
 
     if (canCollapse) {
-      this.toolbars = Array.from(toolbars).map(toolbar => {
+      this.toolbars = Array.from(toolbars).map((toolbar, i) => {
         const ionTitle = toolbar.querySelector('ion-title');
+        const toolbarHeight = toolbar.clientHeight;
+
+        if (i > 0) {
+          this.minTranslate += toolbarHeight;
+        }
 
         return {
           el: toolbar as HTMLElement,
           ionTitleEl: ionTitle,
           innerTitleEl: (ionTitle) ? ionTitle.shadowRoot!.querySelector('.toolbar-title') : undefined,
           dimensions: {
-            height: toolbar.clientHeight
+            height: toolbarHeight
           },
           position: {
             y: 0
           }
         };
       });
+
+      this.minTranslate *= -1;
+
       await this.setupCollapsableHeader(contentEl);
     }
   }
@@ -92,6 +103,7 @@ export class Header implements ComponentInterface {
 
     this.contentEl = contentEl;
     this.scrollEl = await contentEl.getScrollElement();
+    this.initialHeaderHeight = this.el.clientHeight;
 
     // TODO: find a better way to do this
     let zIndex = this.toolbars.length;
@@ -113,6 +125,7 @@ export class Header implements ComponentInterface {
     );
 
     this.gesture.setDisabled(false);
+
   }
 
   canStart(): boolean {
@@ -123,46 +136,64 @@ export class Header implements ComponentInterface {
 
   onStart() {
     this.initialTransform = this.currentTransform;
-    this.initialHeight = this.el.clientHeight;
     this.disableContentScroll();
 
     setElementFixedHeights(this.toolbars.map(t => t.el).concat(this.el));
   }
 
-  private initialHeight = 0;
-
   onMove(detail: GestureDetail) {
-    const deltaY = this.initialTransform + Math.ceil(detail.deltaY);
+    let deltaY = this.initialTransform + Math.ceil(detail.deltaY);
 
-    /**
-     * If toolbars are fully collapsed do not
-     * let user swipe in a negative direction
-     */
-    if (areToolbarsFullyCollapsed(this.toolbars) && deltaY <= this.currentTransform) {
-      return;
+    if (deltaY < this.minTranslate) {
+      deltaY = this.minTranslate;
+    }
+
+    if (toolbarsFullyCollapsed(this.toolbars)) {
+      this.el.classList.add('header-fully-collapsed');
+
+      /**
+       * If toolbars are fully collapsed do not
+       * let user swipe in a negative direction
+       */
+      if (deltaY <= this.minTranslate) {
+        return;
+      }
+    } else {
+      this.el.classList.remove('header-fully-collapsed');
+    }
+
+    // Add resistance when pulling down
+    if (deltaY > 0) {
+      deltaY = deltaY ** 0.85;
     }
 
     this.currentTransform = deltaY;
 
+    let headerHeight = this.initialHeaderHeight;
     if (deltaY < 0) {
       handleToolbarCollapse(this.toolbars, deltaY);
-      this.el.style.height = `${this.initialHeight + deltaY}px`;
+      headerHeight += deltaY;
     } else {
       handleToolbarPullDown(this.toolbars, deltaY);
-      translateEl(this.contentEl!, deltaY);
+      translateEl(this.contentEl!, this.currentTransform);
     }
+
+    this.el.style.height = `${headerHeight}px`;
+
   }
 
   onEnd() {
+    this.enableContentScroll();
     if (this.currentTransform < 0) { return; }
-
-    translateEl(this.contentEl!, this.currentTransform);
 
     this.currentTransform = 0;
 
-    resetToolbars(this.toolbars, true);
-    resetElementFixedHeights(this.toolbars.map(t => t.el).concat(this.el));
-    translateEl(this.contentEl!, 0, true);
+    requestAnimationFrame(() => {
+      translateEl(this.contentEl!, 0, true);
+      resetToolbars(this.toolbars, true);
+
+      resetElementFixedHeights(this.toolbars.map(t => t.el).concat(this.el));
+    });
   }
 
   private disableContentScroll() {
@@ -171,13 +202,11 @@ export class Header implements ComponentInterface {
     this.scrollEl.style.setProperty('--overflow', 'hidden');
   }
 
-/*
   private enableContentScroll() {
     if (!this.scrollEl) { return; }
 
     this.scrollEl.style.setProperty('--overflow', 'auto');
   }
-*/
 
   hostData() {
     const mode = getIonMode(this);
@@ -190,7 +219,7 @@ export class Header implements ComponentInterface {
 
         [`header-translucent`]: this.translucent,
         [`header-collapse-${mode}`]: this.collapse,
-        [`header-translucent-${mode}`]: this.translucent,
+        [`header-translucent-${mode}`]: this.translucent
       }
     };
   }

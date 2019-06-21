@@ -21,7 +21,7 @@
           <ion-back-button text="Mailboxes" default-href="/"></ion-back-button>
         </ion-buttons>
         
-        <ion-title>Inbox</ion-title>
+        <ion-title>Settings</ion-title>
         
         <ion-buttons slot="primary">
           <ion-button>
@@ -32,7 +32,13 @@
       </ion-toolbar>
       
       <ion-toolbar>
-        <ion-title size="large">Inbox</ion-title>
+        <ion-buttons slot="end">
+          <ion-button>test</ion-button>
+        </ion-buttons>
+      
+        <ion-title size="large">Settings</ion-title>
+        
+        
       </ion-toolbar>
       
       <ion-toolbar>
@@ -61,7 +67,7 @@
 
   <script>
     let items = [];
-    for (var i = 0; i < 30; i++) {
+    for (var i = 0; i < 5; i++) {
       items.push(i + 1);
     }
     const list = document.getElementById('dynamicList');

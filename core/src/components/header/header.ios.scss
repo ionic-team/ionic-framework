@@ -16,7 +16,21 @@
   backdrop-filter: $header-ios-translucent-filter;
 }
 
-.header-translucent-ios ion-toolbar {
+.header-translucent-ios.header-collapse-ios ion-toolbar {
+  --opacity: 1;
+}
+
+.header-translucent-ios ion-toolbar, .header-translucent-ios.header-collapse-ios.header-fully-collapsed ion-toolbar {
   --opacity: .8;
-  --backdrop-filter: #{$header-ios-translucent-filter};
+}
+
+.header-collapse-ios.header-fully-collapsed ion-toolbar:not(:nth-of-type(1)) {
+  --opacity: 0;
+  transition: none;
+}
+
+.header-collapse-ios ion-searchbar {
+  height: 48px;
+
+  padding-top: 0px;
 }

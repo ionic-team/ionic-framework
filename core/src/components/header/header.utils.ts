@@ -1,13 +1,19 @@
+import { writeTask } from '@stencil/core';
+
 const TRANSITION = 'all 0.2s ease-in-out';
 const MAX_TRANSLATE = 500;
 
-export const areToolbarsFullyCollapsed = (toolbars: any[] = []): boolean => {
-  return toolbars[1].position.y <= -1;
+export const toolbarsFullyCollapsed = (toolbars: any[] = []): boolean => {
+  return hasToolbarCollapsed(toolbars[1]);
 };
 
 export const translateEl = (el: HTMLElement, translateY = 0, transition = false) => {
-  el.style.transition = (transition) ? TRANSITION : '';
-  el.style.transform = `translate3d(0, ${translateY}px, 0)`;
+  requestAnimationFrame(() => {
+    writeTask(() => {
+      el.style.transition = (transition) ? TRANSITION : '';
+      el.style.transform = `translate3d(0, ${translateY}px, 0)`;
+    });
+  });
 };
 
 export const hasToolbarCollapsed = (toolbar: any): boolean => {
@@ -49,31 +55,10 @@ export const handleToolbarCollapse = (toolbars: any[] = [], deltaY: number) => {
      * are relative to the position of each toolbar.
      */
     const translate = deltaY + amountAlreadyMoved;
+
     translateEl(toolbar.el, translate);
 
     toolbar.position.y = translate / (toolbarHeight);
-
-    /**
-     * The first collapsable header
-     * typically has a large ion-title in it.
-     * We want to hide that title and show
-     * the title in the main non-collapsable
-     * header when the first collapsable header
-     * is almost collapsed.
-     */
-
-    if (i === 1) {
-      const collapsableTitle = toolbar.ionTitleEl;
-      const primaryTitle = toolbars[0].ionTitleEl;
-
-      if (isToolbarWithinThreshold(toolbar, -1, 0.3)) {
-        setElOpacity(collapsableTitle, 0, true);
-        setElOpacity(primaryTitle, 1, true);
-      } else {
-        setElOpacity(collapsableTitle, 1, true);
-        setElOpacity(primaryTitle, 0, true);
-      }
-    }
 
     /**
      * If this current toolbar has not fully
@@ -85,6 +70,8 @@ export const handleToolbarCollapse = (toolbars: any[] = [], deltaY: number) => {
 
     amountAlreadyMoved += toolbarHeight;
   }
+
+  toggleTitlesIfNecessary(toolbars);
 };
 
 export const handleToolbarPullDown = (toolbars: any[] = [], deltaY: number) => {
@@ -96,6 +83,8 @@ export const handleToolbarPullDown = (toolbars: any[] = [], deltaY: number) => {
 
     toolbar.position.y = translate / toolbar.dimensions.height;
   }
+
+  toggleTitlesIfNecessary(toolbars);
 
   const titleScale = 1 + (deltaY / MAX_TRANSLATE);
   if (titleScale > 1.1) { return; }
@@ -127,4 +116,26 @@ export const resetElementFixedHeights = (els: any[] = []) => {
   els.forEach(el => {
     el.style.height = '';
   });
+};
+
+const toggleTitlesIfNecessary = (toolbars: any[] = []) => {
+  /**
+   * The first collapsable header
+   * typically has a large ion-title in it.
+   * We want to hide that title and show
+   * the title in the main non-collapsable
+   * header when the first collapsable header
+   * is almost collapsed.
+   */
+
+  const collapsableTitle = toolbars[1].ionTitleEl;
+  const primaryTitle = toolbars[0].ionTitleEl;
+
+  if (isToolbarWithinThreshold(toolbars[1], -1, 0.3)) {
+    setElOpacity(collapsableTitle, 0, true);
+    setElOpacity(primaryTitle, 1, true);
+  } else {
+    setElOpacity(collapsableTitle, 1, true);
+    setElOpacity(primaryTitle, 0, true);
+  }
 };
