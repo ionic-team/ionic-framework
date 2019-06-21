@@ -10,8 +10,35 @@
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script src="../../../../../dist/ionic.js"></script>
+  
+  <style>
+    .more, .create {
+      --dimension: 28px;
+      width: var(--dimension);
+      height: var(--dimension) !important;
+      --border-radius: var(--dimension) !important;
+    }
+    .more {
+      --background: #e9e9ea;
+    }
+    
+    .create {
+      --background: #3777ff;
+      --color: white !important;
+    }
+    
+    .create ion-icon {
+      transform: scale(0.9);
+    }
+  </style>
 </head>
-
+<!--<ion-button slot="icon-only" class="more">
+            <ion-icon name="ios-more"></ion-icon>
+          </ion-button>
+          
+          <ion-button slot="icon-only" class="create">
+            <ion-icon name="ios-create"></ion-icon>
+          </ion-button>-->
 <body>
   <ion-app>
     <ion-header collapse>
@@ -21,24 +48,23 @@
           <ion-back-button text="Mailboxes" default-href="/"></ion-back-button>
         </ion-buttons>
         
-        <ion-title>Settings</ion-title>
-        
-        <ion-buttons slot="primary">
-          <ion-button>
-            Edit
+        <ion-title>Messages</ion-title>
+
+        <ion-buttons slot="end" collapse="true">
+          <ion-button slot="icon-only">
+            <ion-icon name="star"></ion-icon>
           </ion-button>
         </ion-buttons>
-        
       </ion-toolbar>
       
-      <ion-toolbar>
-        <ion-buttons slot="end">
-          <ion-button>test</ion-button>
+      <ion-toolbar>      
+        <ion-title size="large">Messages</ion-title>
+        
+        <ion-buttons slot="end" collapse="true">
+          <ion-button slot="icon-only">
+            <ion-icon name="star"></ion-icon>
+          </ion-button>
         </ion-buttons>
-      
-        <ion-title size="large">Settings</ion-title>
-        
-        
       </ion-toolbar>
       
       <ion-toolbar>
@@ -67,7 +93,7 @@
 
   <script>
     let items = [];
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 10; i++) {
       items.push(i + 1);
     }
     const list = document.getElementById('dynamicList');

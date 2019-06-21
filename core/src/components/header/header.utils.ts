@@ -2,6 +2,7 @@ import { writeTask } from '@stencil/core';
 
 const TRANSITION = 'all 0.2s ease-in-out';
 const MAX_TRANSLATE = 500;
+const COLLAPSE_THRESHOLD = 0.25;
 
 export const toolbarsFullyCollapsed = (toolbars: any[] = []): boolean => {
   return hasToolbarCollapsed(toolbars[1]);
@@ -60,6 +61,8 @@ export const handleToolbarCollapse = (toolbars: any[] = [], deltaY: number) => {
 
     toolbar.position.y = translate / (toolbarHeight);
 
+    toggleToolbarButtonsIfNecessary(toolbar);
+
     /**
      * If this current toolbar has not fully
      * collapsed, we do not want to collapse
@@ -74,6 +77,30 @@ export const handleToolbarCollapse = (toolbars: any[] = [], deltaY: number) => {
   toggleTitlesIfNecessary(toolbars);
 };
 
+const toggleToolbarButtonsIfNecessary = (toolbar: any) => {
+  if (isToolbarWithinThreshold(toolbar, -1, COLLAPSE_THRESHOLD)) {
+    hideCollapsableButtons(toolbar.ionButtonsEl, true);
+  } else {
+    showCollapsableButtons(toolbar.ionButtonsEl, true);
+  }
+};
+
+export const hideCollapsableButtons = (buttons: any[] = [], transition = false) => {
+  buttons.forEach((button: any) => {
+    if (!button.collapse) { return; }
+
+    setElOpacity(button, 0, transition);
+  });
+};
+
+const showCollapsableButtons = (buttons: any[] = [], transition = false) => {
+  buttons.forEach((button: any) => {
+    if (!button.collapse) { return; }
+
+    setElOpacity(button, 1, transition);
+  });
+};
+
 export const handleToolbarPullDown = (toolbars: any[] = [], deltaY: number) => {
   for (let i = toolbars.length - 1; i > 0; i--) {
     const toolbar = toolbars[i];
@@ -82,6 +109,8 @@ export const handleToolbarPullDown = (toolbars: any[] = [], deltaY: number) => {
     translateEl(toolbar.el, translate);
 
     toolbar.position.y = translate / toolbar.dimensions.height;
+
+    toggleToolbarButtonsIfNecessary(toolbar);
   }
 
   toggleTitlesIfNecessary(toolbars);
@@ -131,11 +160,13 @@ const toggleTitlesIfNecessary = (toolbars: any[] = []) => {
   const collapsableTitle = toolbars[1].ionTitleEl;
   const primaryTitle = toolbars[0].ionTitleEl;
 
-  if (isToolbarWithinThreshold(toolbars[1], -1, 0.3)) {
+  if (isToolbarWithinThreshold(toolbars[1], -1, COLLAPSE_THRESHOLD)) {
     setElOpacity(collapsableTitle, 0, true);
     setElOpacity(primaryTitle, 1, true);
+    showCollapsableButtons(toolbars[0].ionButtonsEl, true);
   } else {
     setElOpacity(collapsableTitle, 1, true);
     setElOpacity(primaryTitle, 0, true);
+    hideCollapsableButtons(toolbars[0].ionButtonsEl, true);
   }
 };

@@ -79,3 +79,7 @@
 
   min-width: 100%;
 }
+
+:host(.toolbar-title-large) ::slotted(ion-buttons) {
+  margin-top: 10px;
+}

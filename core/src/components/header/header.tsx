@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail } from '../../interface';
 
-import { handleToolbarCollapse, handleToolbarPullDown, resetElementFixedHeights, resetToolbars, setElOpacity, setElementFixedHeights, toolbarsFullyCollapsed, translateEl } from './header.utils';
+import { handleToolbarCollapse, handleToolbarPullDown, hideCollapsableButtons, resetElementFixedHeights, resetToolbars, setElOpacity, setElementFixedHeights, toolbarsFullyCollapsed, translateEl } from './header.utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -73,6 +73,7 @@ export class Header implements ComponentInterface {
           el: toolbar as HTMLElement,
           ionTitleEl: ionTitle,
           innerTitleEl: (ionTitle) ? ionTitle.shadowRoot!.querySelector('.toolbar-title') : undefined,
+          ionButtonsEl: toolbar.querySelectorAll('ion-buttons'),
           dimensions: {
             height: toolbarHeight
           },
@@ -114,6 +115,8 @@ export class Header implements ComponentInterface {
 
     // Hide title on first primary toolbar
     setElOpacity(this.toolbars[0].ionTitleEl, 0);
+
+    hideCollapsableButtons(this.toolbars[0].ionButtonsEl);
 
     // Setup gesture controls
     this.gesture = (await import('./collapse')).createCollapseGesture(
