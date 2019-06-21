@@ -125,25 +125,25 @@ export const FabButtonExample: React.FunctionComponent = () => (
 
 ## CSS Custom Properties
 
-| Name                     | Description                             |
-| ------------------------ | --------------------------------------- |
-| `--background`           | Background of the button                |
-| `--background-activated` | Background of the button when activated |
-| `--background-focused`   | Background of the button when focused   |
-| `--border-color`         | Border color of the button              |
-| `--border-radius`        | Border radius of the button             |
-| `--border-style`         | Border style of the button              |
-| `--border-width`         | Border width of the button              |
-| `--box-shadow`           | Box shadow of the button                |
-| `--color`                | Text color of the button                |
-| `--color-activated`      | Text color of the button when activated |
-| `--color-focused`        | Text color of the button when focused   |
-| `--padding-bottom`       | Padding bottom of the button            |
-| `--padding-end`          | Padding end of the button               |
-| `--padding-start`        | Padding start of the button             |
-| `--padding-top`          | Padding top of the button               |
-| `--ripple-color`         | Color of the button ripple effect       |
-| `--transition`           | Transition of the button                |
+| Name                     | Description                                                                                               |
+| ------------------------ | --------------------------------------------------------------------------------------------------------- |
+| `--background`           | Background of the button                                                                                  |
+| `--background-activated` | Background of the button when pressed                                                                     |
+| `--background-focused`   | Background of the button when focused with the tab key                                                    |
+| `--border-color`         | Border color of the button                                                                                |
+| `--border-radius`        | Border radius of the button                                                                               |
+| `--border-style`         | Border style of the button                                                                                |
+| `--border-width`         | Border width of the button                                                                                |
+| `--box-shadow`           | Box shadow of the button                                                                                  |
+| `--color`                | Text color of the button                                                                                  |
+| `--color-activated`      | Text color of the button when pressed                                                                     |
+| `--color-focused`        | Text color of the button when focused with the tab key                                                    |
+| `--padding-bottom`       | Bottom padding of the button                                                                              |
+| `--padding-end`          | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button |
+| `--padding-start`        | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button |
+| `--padding-top`          | Top padding of the button                                                                                 |
+| `--ripple-color`         | Color of the button ripple effect                                                                         |
+| `--transition`           | Transition of the button                                                                                  |
 
 
 ## Dependencies
