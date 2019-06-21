@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { Gesture, GestureDetail, Mode, Side } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Gesture, GestureDetail, Side } from '../../interface';
 import { isEndSide } from '../../utils/helpers';
 
 const SWIPE_MARGIN = 30;
@@ -30,7 +31,6 @@ let openSlidingItem: HTMLIonItemSlidingElement | undefined;
   styleUrl: 'item-sliding.scss'
 })
 export class ItemSliding implements ComponentInterface {
-  mode!: Mode;
 
   private item: HTMLIonItemElement | null = null;
   private openAmount = 0;
@@ -72,7 +72,6 @@ export class ItemSliding implements ComponentInterface {
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
-      queue: this.queue,
       gestureName: 'item-swipe',
       gesturePriority: 100,
       threshold: 5,
@@ -378,9 +377,10 @@ export class ItemSliding implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getIonMode(this);
     return {
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         'item-sliding-active-slide': (this.state !== SlidingState.Disabled),
         'item-sliding-active-options-end': (this.state & SlidingState.End) !== 0,
         'item-sliding-active-options-start': (this.state & SlidingState.Start) !== 0,

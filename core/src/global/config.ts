@@ -2,9 +2,9 @@ import { IonicConfig } from '../interface';
 
 export class Config {
 
-  private m: Map<keyof IonicConfig, any>;
+  private m = new Map<keyof IonicConfig, any>();
 
-  constructor(configObj: IonicConfig) {
+  reset(configObj: IonicConfig) {
     this.m = new Map<keyof IonicConfig, any>(Object.entries(configObj) as any);
   }
 

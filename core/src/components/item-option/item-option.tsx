@@ -1,10 +1,13 @@
-import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop, h } from '@stencil/core';
 
-import { Color, Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the option text in LTR, and to the right in RTL.
  * @slot top - Content is placed above the option text.
@@ -30,11 +33,6 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, the user cannot interact with the item option.
@@ -87,11 +85,12 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
   }
 
   hostData() {
+    const mode = getIonMode(this);
     const { disabled, expandable } = this;
     return {
       class: {
         ...createColorClasses(this.color),
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
 
         'item-option-disabled': disabled,
         'item-option-expandable': expandable,
@@ -102,6 +101,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
 
   render() {
     const TagType = this.href === undefined ? 'button' : 'a' as any;
+    const mode = getIonMode(this);
     const attrs = (TagType === 'button')
     ? { type: this.type }
     : {
@@ -126,7 +126,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
           </div>
           <slot name="bottom"></slot>
         </span>
-        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+        {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </TagType>
     );
   }

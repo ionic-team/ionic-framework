@@ -1,30 +1,20 @@
 ```tsx
-import React, { Component } from 'react'
-import { IonPopover } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonPopover, IonButton } from '@ionic/react';
 
-type Props = {}
-type State = {
-  showPopover: boolean
-}
+export const PopoverExample: React.FunctionComponent = () => {
+  const [showPopover, setShowPopover] = useState(false);
 
-export class PopoverExample extends Component<Props, State> {
-
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      showPopover: false
-    };
-  }
-
-  render() {
-    return (
+  return (
+    <>
       <IonPopover
-        isOpen={this.state.showPopover}
-        onDidDismiss={() => this.setState(() => ({ showPopover: false }))}
+        isOpen={showPopover}
+        onDidDismiss={e => setShowPopover(false)}
       >
         <p>This is popover content</p>
       </IonPopover>
-    );
-  }
-}
+      <IonButton onClick={() => setShowPopover(true)}>Show Popover</IonButton>
+    </>
+  );
+};
 ```

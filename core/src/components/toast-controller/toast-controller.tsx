@@ -17,7 +17,7 @@ export class ToastController implements ComponentInterface, OverlayController {
    */
   @Method()
   create(options?: ToastOptions): Promise<HTMLIonToastElement> {
-    return createOverlay(this.doc.createElement('ion-toast'), options);
+    return createOverlay('ion-toast', options);
   }
 
   /**
@@ -29,7 +29,7 @@ export class ToastController implements ComponentInterface, OverlayController {
    */
   @Method()
   dismiss(data?: any, role?: string, id?: string) {
-    return dismissOverlay(this.doc, data, role, 'ion-toast', id);
+    return dismissOverlay(document, data, role, 'ion-toast', id);
   }
 
   /**
@@ -37,6 +37,6 @@ export class ToastController implements ComponentInterface, OverlayController {
    */
   @Method()
   async getTop(): Promise<HTMLIonToastElement | undefined> {
-    return getOverlay(this.doc, 'ion-toast') as HTMLIonToastElement;
+    return getOverlay(document, 'ion-toast') as HTMLIonToastElement;
   }
 }

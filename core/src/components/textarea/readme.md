@@ -99,11 +99,10 @@ The textarea component accepts the [native textarea attributes](https://develope
 
 ```tsx
 import React from 'react';
+import { IonTextarea, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-import { IonTextarea, IonItem, IonLabel } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const TextAreaExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Default textarea --*/}
     <IonTextarea></IonTextarea>
 
@@ -139,10 +138,8 @@ const Example: React.SFC<{}> = () => (
       <IonLabel>Notes</IonLabel>
       <IonTextarea rows={6} cols={20} placeholder="Enter any notes here..."></IonTextarea>
     </IonItem>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```
 
 
@@ -237,14 +234,14 @@ Type: `Promise<HTMLTextAreaElement>`
 
 
 
-### `setFocus() => void`
+### `setFocus() => Promise<void>`
 
 Sets focus on the specified `ion-textarea`. Use this method instead of the global
 `input.focus()`.
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 

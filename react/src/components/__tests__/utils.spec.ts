@@ -32,27 +32,6 @@ describe('syncEvent', () => {
   })
 });
 
-describe('ensureElementInBody', () => {
-  it('should return if exists', () => {
-    const element = document.createElement("some-random-thing");
-    document.body.innerHTML = '';
-    document.body.appendChild(element);
-
-    const returnedElement = utils.ensureElementInBody('some-random-thing');
-    expect(returnedElement).toEqual(element);
-    expect(document.body.children.length).toEqual(1);
-  });
-
-  it('should create if it does not exist', () => {
-    document.body.innerHTML = '';
-
-    const returnedElement = utils.ensureElementInBody('some-random-thing');
-    expect(returnedElement).toBeDefined();
-    expect(returnedElement.tagName).toEqual('SOME-RANDOM-THING');
-    expect(document.body.children.length).toEqual(1);
-  });
-});
-
 describe('attachEventProps', () => {
   it('should pass props to a dom node', () => {
     const onIonClickCallback = () => {};

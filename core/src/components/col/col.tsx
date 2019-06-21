@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop, h } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 import { matchBreakpoint } from '../../utils/media';
 
 const win = window as any;
@@ -13,11 +13,10 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
   shadow: true
 })
 export class Col implements ComponentInterface {
-  mode!: Mode;
 
   @Prop({ context: 'window' }) win!: Window;
 
-  @Element() el!: HTMLStencilElement;
+  @Element() el!: HTMLIonColElement;
 
   /**
    * The amount to offset the column, in terms of how many columns it should shift to the end
@@ -159,7 +158,7 @@ export class Col implements ComponentInterface {
    */
   @Prop() sizeXl?: string;
 
-  @Listen('window:resize')
+  @Listen('resize', { target: 'window' })
   onResize() {
     this.el.forceUpdate();
   }
@@ -249,9 +248,10 @@ export class Col implements ComponentInterface {
 
   hostData() {
     const isRTL = this.win.document.dir === 'rtl';
+    const mode = getIonMode(this);
     return {
       class: {
-        [`${this.mode}`]: true
+        [`${mode}`]: true
       },
       style: {
         ...this.calculateOffset(isRTL),

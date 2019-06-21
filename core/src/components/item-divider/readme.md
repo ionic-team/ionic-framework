@@ -55,11 +55,10 @@ Item Dividers are block elements that can be used to separate items in a list. T
 
 ```tsx
 import React from 'react';
+import { IonItemDivider, IonLabel, IonList, IonItem, IonContent } from '@ionic/react';
 
-import { IonItemDivider, IonLabel, IonList, IonItem } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const ItemDividerExample: React.FunctionComponent = () => (
+  <IonContent>
     <IonItemDivider>
       <IonLabel>
         Basic Item Divider
@@ -98,10 +97,9 @@ const Example: React.SFC<{}> = () => (
       <IonItem><IonLabel>B4</IonLabel></IonItem>
       <IonItem><IonLabel>B5</IonLabel></IonItem>
     </IonList>
-  </>
+  </IonContent>
 );
-
-export default Example
+```
 
 
 ### Vue
