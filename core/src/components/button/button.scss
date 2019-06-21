@@ -79,7 +79,7 @@
 :host(.button-solid) {
   --background: #{ion-color(primary, base)};
   --background-focused: #{ion-color(primary, shade)};
-  --background-hover: #{ion-color(primary, base, 0.92)};
+  --background-hover: #{ion-color(primary, tint)};
   --color: #{ion-color(primary, contrast)};
   --color-activated: #{ion-color(primary, contrast)};
   --color-focused: #{ion-color(primary, contrast)};
