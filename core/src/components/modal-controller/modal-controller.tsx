@@ -17,7 +17,7 @@ export class ModalController implements ComponentInterface, OverlayController {
    */
   @Method()
   create<T extends ComponentRef>(options: ModalOptions<T>): Promise<HTMLIonModalElement> {
-    return createOverlay(this.doc.createElement('ion-modal'), options);
+    return createOverlay('ion-modal', options);
   }
 
   /**
@@ -32,7 +32,7 @@ export class ModalController implements ComponentInterface, OverlayController {
    */
   @Method()
   dismiss(data?: any, role?: string, id?: string) {
-    return dismissOverlay(this.doc, data, role, 'ion-modal', id);
+    return dismissOverlay(document, data, role, 'ion-modal', id);
   }
 
   /**
@@ -40,6 +40,6 @@ export class ModalController implements ComponentInterface, OverlayController {
    */
   @Method()
   async getTop(): Promise<HTMLIonModalElement | undefined> {
-    return getOverlay(this.doc, 'ion-modal') as HTMLIonModalElement;
+    return getOverlay(document, 'ion-modal') as HTMLIonModalElement;
   }
 }

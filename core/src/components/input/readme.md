@@ -108,11 +108,10 @@ It is meant for text `type` inputs only, such as `"text"`, `"password"`, `"email
 
 ```tsx
 import React from 'react';
+import { IonInput, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-import { IonInput, IonItem, IonLabel } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const InputExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Default Input --*/}
     <IonInput></IonInput>
 
@@ -154,10 +153,9 @@ const Example: React.SFC<{}> = () => (
       <IonLabel position="stacked">Stacked Label</IonLabel>
       <IonInput></IonInput>
     </IonItem>
-  </>
+  </IonContent>
 );
-
-export default Example
+```
 
 
 ### Vue
@@ -265,14 +263,14 @@ Type: `Promise<HTMLInputElement>`
 
 
 
-### `setFocus() => void`
+### `setFocus() => Promise<void>`
 
 Sets focus on the specified `ion-input`. Use this method instead of the global
 `input.focus()`.
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 

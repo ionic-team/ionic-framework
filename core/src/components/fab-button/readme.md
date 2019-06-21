@@ -40,12 +40,10 @@ If the FAB button is not wrapped with `<ion-fab>`, it will scroll with the conte
 
 ```tsx
 import React from 'react';
-
 import { IonContent, IonFab, IonFabButton } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+export const FabButtonExample: React.FunctionComponent = () => (
   <IonContent>
-
     {/*-- Fixed Floating Action Button that does not scroll with the content --*/}
     <IonFab>
       <IonFabButton>Button</IonFabButton>
@@ -65,8 +63,7 @@ const Example: React.SFC<{}> = () => (
     <IonFabButton color="dark">Dark</IonFabButton>
   </IonContent>
 );
-
-export default Example
+```
 
 
 ### Vue
@@ -148,6 +145,21 @@ export default Example
 | `--ripple-color`         | Color of the button ripple effect       |
 | `--transition`           | Transition of the button                |
 
+
+## Dependencies
+
+### Depends on
+
+- ion-icon
+- [ion-ripple-effect](../ripple-effect)
+
+### Graph
+```mermaid
+graph TD;
+  ion-fab-button --> ion-icon
+  ion-fab-button --> ion-ripple-effect
+  style ion-fab-button fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

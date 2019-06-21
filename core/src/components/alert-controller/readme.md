@@ -12,12 +12,6 @@ Alert controllers programmatically control the alert component. Alerts can be cr
 
 Create an alert overlay with alert options.
 
-#### Parameters
-
-| Name      | Type           | Description                             |
-| --------- | -------------- | --------------------------------------- |
-| `options` | `AlertOptions` | The options to use to create the alert. |
-
 #### Returns
 
 Type: `Promise<HTMLIonAlertElement>`
@@ -27,14 +21,6 @@ Type: `Promise<HTMLIonAlertElement>`
 ### `dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>`
 
 Dismiss the open alert overlay.
-
-#### Parameters
-
-| Name   | Type                  | Description                                                                                                                                                                                                                                     |
-| ------ | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data` | `any`                 | Any data to emit in the dismiss events.                                                                                                                                                                                                         |
-| `role` | `string \| undefined` | The role of the element that is dismissing the alert. This can be useful in a button handler for determining which button was clicked to dismiss the alert. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`. |
-| `id`   | `string \| undefined` | The id of the alert to dismiss. If an id is not provided, it will dismiss the most recently opened alert.                                                                                                                                       |
 
 #### Returns
 

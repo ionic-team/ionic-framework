@@ -1,4 +1,4 @@
-import { Build, Component, ComponentInterface, Element, Method, Prop } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Method, Prop, h } from '@stencil/core';
 
 import { ComponentRef, FrameworkDelegate } from '../../interface';
 import { attachComponent } from '../../utils/framework-delegate';

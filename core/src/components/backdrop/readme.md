@@ -78,11 +78,10 @@ backdrop.stopPropagation = false;
 
 ```tsx
 import React from 'react';
+import { IonBackdrop, IonContent } from '@ionic/react';
 
-import { IonBackdrop } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const BackdropExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Default backdrop --*/}
     <IonBackdrop />
 
@@ -95,15 +94,9 @@ const Example: React.SFC<{}> = () => (
     {/*-- Backdrop with propagation --*/}
     <IonBackdrop stopPropagation={false} />
 
-    <IonBackdrop
-      tappable={true}
-      visible={true}
-      stopPropagation={true}
-    />
-  </>
+    <IonBackdrop tappable={true} visible={true} stopPropagation={true} />
+  </IonContent>
 );
-
-export default Example;
 ```
 
 
@@ -160,6 +153,31 @@ export default Example;
 | ---------------- | ------------------------------------ | ------------------- |
 | `ionBackdropTap` | Emitted when the backdrop is tapped. | `CustomEvent<void>` |
 
+
+## Dependencies
+
+### Used by
+
+ - [ion-action-sheet](../action-sheet)
+ - [ion-alert](../alert)
+ - [ion-loading](../loading)
+ - [ion-menu](../menu)
+ - [ion-modal](../modal)
+ - [ion-picker](../picker)
+ - [ion-popover](../popover)
+
+### Graph
+```mermaid
+graph TD;
+  ion-action-sheet --> ion-backdrop
+  ion-alert --> ion-backdrop
+  ion-loading --> ion-backdrop
+  ion-menu --> ion-backdrop
+  ion-modal --> ion-backdrop
+  ion-picker --> ion-backdrop
+  ion-popover --> ion-backdrop
+  style ion-backdrop fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

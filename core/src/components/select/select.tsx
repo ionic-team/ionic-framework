@@ -1,11 +1,16 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, Mode, OverlaySelect, PopoverOptions, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, StyleEventDetail } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, OverlaySelect, PopoverOptions, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, StyleEventDetail } from '../../interface';
 import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
+import { actionSheetController, alertController, popoverController } from '../../utils/overlays';
 import { hostContext } from '../../utils/theme';
 
 import { SelectCompareFn } from './select-interface';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-select',
   styleUrls: {
@@ -24,16 +29,7 @@ export class Select implements ComponentInterface {
 
   @Element() el!: HTMLIonSelectElement;
 
-  @Prop({ connect: 'ion-action-sheet-controller' }) actionSheetCtrl!: HTMLIonActionSheetControllerElement;
-  @Prop({ connect: 'ion-alert-controller' }) alertCtrl!: HTMLIonAlertControllerElement;
-  @Prop({ connect: 'ion-popover-controller' }) popoverCtrl!: HTMLIonPopoverControllerElement;
-
   @State() isExpanded = false;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, the user cannot interact with the select.
@@ -195,7 +191,7 @@ export class Select implements ComponentInterface {
    * @param event The user interface event that called the open.
    */
   @Method()
-  async open(event?: UIEvent): Promise<OverlaySelect | undefined> {
+  async open(event?: UIEvent): Promise<any> {
     if (this.disabled || this.isExpanded) {
       return undefined;
     }
@@ -304,9 +300,10 @@ export class Select implements ComponentInterface {
 
   private async openPopover(ev: UIEvent) {
     const interfaceOptions = this.interfaceOptions;
+    const mode = getIonMode(this);
 
     const popoverOpts: PopoverOptions = {
-      mode: this.mode,
+      mode,
       ...interfaceOptions,
 
       component: 'ion-select-popover',
@@ -320,20 +317,21 @@ export class Select implements ComponentInterface {
         options: this.createPopoverOptions(this.childOpts)
       }
     };
-    return this.popoverCtrl.create(popoverOpts);
+    return popoverController.create(popoverOpts);
   }
 
   private async openActionSheet() {
 
+    const mode = getIonMode(this);
     const interfaceOptions = this.interfaceOptions;
     const actionSheetOpts: ActionSheetOptions = {
-      mode: this.mode,
+      mode,
       ...interfaceOptions,
 
       buttons: this.createActionSheetButtons(this.childOpts),
       cssClass: ['select-action-sheet', interfaceOptions.cssClass]
     };
-    return this.actionSheetCtrl.create(actionSheetOpts);
+    return actionSheetController.create(actionSheetOpts);
   }
 
   private async openAlert() {
@@ -342,9 +340,10 @@ export class Select implements ComponentInterface {
 
     const interfaceOptions = this.interfaceOptions;
     const inputType = (this.multiple ? 'checkbox' : 'radio');
+    const mode = getIonMode(this);
 
     const alertOpts: AlertOptions = {
-      mode: this.mode,
+      mode,
       ...interfaceOptions,
 
       header: interfaceOptions.header ? interfaceOptions.header : labelText,
@@ -367,7 +366,7 @@ export class Select implements ComponentInterface {
       cssClass: ['select-alert', interfaceOptions.cssClass,
                  (this.multiple ? 'multiple-select-alert' : 'single-select-alert')]
     };
-    return this.alertCtrl.create(alertOpts);
+    return alertController.create(alertOpts);
   }
 
   /**
@@ -444,6 +443,7 @@ export class Select implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getIonMode(this);
     const labelId = this.inputId + '-lbl';
     const label = findItemLabel(this.el);
     if (label) {
@@ -457,7 +457,7 @@ export class Select implements ComponentInterface {
       'aria-haspopup': 'dialog',
       'aria-labelledby': labelId,
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         'in-item': hostContext('ion-item', this.el),
         'select-disabled': this.disabled,
       }
