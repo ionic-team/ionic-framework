@@ -119,16 +119,15 @@ To change what is displayed in the back button, use the `text` and `icon` proper
 
 ```tsx
 import React from 'react';
+import { IonBackButton, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonContent } from '@ionic/react';
 
-import { IonBackButton, IonHeader, IonToolbar, IonButtons, IonMenuButton } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const BackButtonExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Default back button --*/}
     <IonHeader>
       <IonToolbar>
         <IonButtons slot="start">
-          <IonBackButton goBack={() => {}} />
+          <IonBackButton />
         </IonButtons>
       </IonToolbar>
     </IonHeader>
@@ -137,7 +136,7 @@ const Example: React.SFC<{}> = () => (
     <IonHeader>
       <IonToolbar>
         <IonButtons slot="start">
-          <IonBackButton goBack={() => {}} defaultHref="home" />
+          <IonBackButton defaultHref="home" />
         </IonButtons>
       </IonToolbar>
     </IonHeader>
@@ -146,11 +145,7 @@ const Example: React.SFC<{}> = () => (
     <IonHeader>
       <IonToolbar>
         <IonButtons slot="start">
-          <IonBackButton
-            goBack={() => {}}
-            text="buttonText"
-            icon="buttonIcon"
-          />
+          <IonBackButton text="buttonText" icon="buttonIcon" />
         </IonButtons>
       </IonToolbar>
     </IonHeader>
@@ -159,7 +154,7 @@ const Example: React.SFC<{}> = () => (
     <IonHeader>
       <IonToolbar>
         <IonButtons slot="start">
-          <IonBackButton goBack={() => {}} text="" icon="add" />
+          <IonBackButton text="" icon="add" />
         </IonButtons>
       </IonToolbar>
     </IonHeader>
@@ -169,14 +164,12 @@ const Example: React.SFC<{}> = () => (
       <IonToolbar>
         <IonButtons slot="start">
           <IonMenuButton />
-          <IonBackButton goBack={() => {}} color="danger" />
+          <IonBackButton color="danger" />
         </IonButtons>
       </IonToolbar>
     </IonHeader>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```
 
 
@@ -285,6 +278,21 @@ export default Example;
 | `--ripple-color`        | Color of the button ripple effect     |
 | `--transition`          | Transition of the button              |
 
+
+## Dependencies
+
+### Depends on
+
+- ion-icon
+- [ion-ripple-effect](../ripple-effect)
+
+### Graph
+```mermaid
+graph TD;
+  ion-back-button --> ion-icon
+  ion-back-button --> ion-ripple-effect
+  style ion-back-button fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

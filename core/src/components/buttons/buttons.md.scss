@@ -38,8 +38,8 @@
 :host-context(.ion-color)::slotted(*) .button-solid {
   --background: #{current-color(contrast)};
   --background-activated: #{current-color(contrast)};
-  --background-focused: #{current-color(contrast, .9)};
-  --background-hover: #{current-color(contrast, .92)};
+  --background-focused: #{current-color(shade)};
+  --background-hover: #{current-color(tint)};
   --color: #{current-color(base)};
   --color-focused: #{current-color(base)};
   --color-hover: #{current-color(base)};

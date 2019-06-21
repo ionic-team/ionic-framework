@@ -319,11 +319,10 @@ for (let i = 0; i < segmentButtons.length; i++) {
 
 ```tsx
 import React from 'react';
+import { IonSegment, IonSegmentButton, IonLabel, IonIcon, IonContent } from '@ionic/react';
 
-import { IonSegment, IonSegmentButton, IonLabel, IonIcon } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const SegmentButtonExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Segment buttons with text and click listeners --*/}
     <IonSegment>
       <IonSegmentButton onIonSelect={() => console.log('Friends segment selected')}>
@@ -459,10 +458,8 @@ const Example: React.SFC<{}> = () => (
         <IonLabel>Item Three</IonLabel>
       </IonSegmentButton>
     </IonSegment>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```
 
 
@@ -669,6 +666,19 @@ export default Example;
 | `--padding-top`             | Top padding of the segment button                                   |
 | `--transition`              | Transition of the segment button                                    |
 
+
+## Dependencies
+
+### Depends on
+
+- [ion-ripple-effect](../ripple-effect)
+
+### Graph
+```mermaid
+graph TD;
+  ion-segment-button --> ion-ripple-effect
+  style ion-segment-button fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

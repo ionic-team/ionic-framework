@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, h } from '@stencil/core';
 
 import { Config, NavOutlet, RouteID, RouteWrite, TabButtonClickEventDetail } from '../../interface';
 
@@ -17,7 +17,7 @@ export class Tabs implements NavOutlet {
   private transitioning = false;
   private leavingTab?: HTMLIonTabElement;
 
-  @Element() el!: HTMLStencilElement;
+  @Element() el!: HTMLIonTabsElement;
 
   @State() tabs: HTMLIonTabElement[] = [];
   @State() selectedTab?: HTMLIonTabElement;
@@ -44,14 +44,15 @@ export class Tabs implements NavOutlet {
    */
   @Event({ bubbles: false }) ionTabsDidChange!: EventEmitter<{tab: string}>;
 
-  async componentWillLoad() {
+  componentWillLoad() {
     if (!this.useRouter) {
-      this.useRouter = !!this.doc.querySelector('ion-router') && !this.el.closest('[no-router]');
+      this.useRouter = !!document.querySelector('ion-router') && !this.el.closest('[no-router]');
     }
     this.tabs = Array.from(this.el.querySelectorAll('ion-tab'));
-    await this.initSelect();
-    this.ionNavWillLoad.emit();
-    this.componentWillUpdate();
+    this.initSelect().then(() => {
+      this.ionNavWillLoad.emit();
+      this.componentWillUpdate();
+    });
   }
 
   componentDidUnload() {
@@ -72,7 +73,7 @@ export class Tabs implements NavOutlet {
     const { href, tab } = ev.detail;
     const selectedTab = this.tabs.find(t => t.tab === tab);
     if (this.useRouter && href !== undefined) {
-      const router = this.doc.querySelector('ion-router');
+      const router = document.querySelector('ion-router');
       if (router) {
         router.push(href);
       }
@@ -189,7 +190,7 @@ export class Tabs implements NavOutlet {
 
   private notifyRouter() {
     if (this.useRouter) {
-      const router = this.doc.querySelector('ion-router');
+      const router = document.querySelector('ion-router');
       if (router) {
         return router.navChanged('forward');
       }

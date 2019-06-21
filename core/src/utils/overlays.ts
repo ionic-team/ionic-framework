@@ -1,25 +1,50 @@
-import { AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, OverlayInterface } from '../interface';
+import { ActionSheetOptions, AlertOptions, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
 
 let lastId = 0;
 
-export function createOverlay<T extends HTMLIonOverlayElement>(element: T, opts: object | undefined): Promise<T> {
-  const doc = element.ownerDocument!;
-  connectListeners(doc);
+const createController = <Opts extends object, HTMLElm extends any>(tagName: string) => {
+  return {
+    create(options: Opts): Promise<HTMLElm> {
+      return createOverlay(tagName, options) as any;
+    },
+    dismiss(data?: any, role?: string, id?: string) {
+      return dismissOverlay(document, data, role, tagName, id);
+    },
+    async getTop(): Promise<HTMLElm | undefined> {
+      return getOverlay(document, tagName) as any;
+    }
+  };
+};
 
-  // convert the passed in overlay options into props
-  // that get passed down into the new overlay
-  Object.assign(element, opts);
-  element.classList.add('overlay-hidden');
-  const overlayIndex = lastId++;
-  element.overlayIndex = overlayIndex;
-  if (!element.hasAttribute('id')) {
-    element.id = `ion-overlay-${overlayIndex}`;
-  }
+export const alertController = /*@__PURE__*/createController<AlertOptions, HTMLIonAlertElement>('ion-alert');
+export const actionSheetController = /*@__PURE__*/createController<ActionSheetOptions, HTMLIonActionSheetElement>('ion-action-sheet');
+export const loadingController = /*@__PURE__*/createController<LoadingOptions, HTMLIonLoadingElement>('ion-loading');
+export const modalController = /*@__PURE__*/createController<ModalOptions, HTMLIonModalElement>('ion-modal');
+export const pickerController = /*@__PURE__*/createController<PickerOptions, HTMLIonPickerElement>('ion-picker');
+export const popoverController = /*@__PURE__*/createController<PopoverOptions, HTMLIonPopoverElement>('ion-popover');
+export const toastController = /*@__PURE__*/createController<ToastOptions, HTMLIonToastElement>('ion-toast');
 
-  // append the overlay element to the document body
-  getAppRoot(doc).appendChild(element);
+export function createOverlay<T extends HTMLIonOverlayElement>(tagName: string, opts: object | undefined): Promise<T> {
+  return customElements.whenDefined(tagName).then(() => {
+    const doc = document;
+    const element = doc.createElement(tagName) as HTMLIonOverlayElement;
+    connectListeners(doc);
 
-  return element.componentOnReady();
+    // convert the passed in overlay options into props
+    // that get passed down into the new overlay
+    Object.assign(element, opts);
+    element.classList.add('overlay-hidden');
+    const overlayIndex = lastId++;
+    element.overlayIndex = overlayIndex;
+    if (!element.hasAttribute('id')) {
+      element.id = `ion-overlay-${overlayIndex}`;
+    }
+
+    // append the overlay element to the document body
+    getAppRoot(doc).appendChild(element);
+
+    return element.componentOnReady() as any;
+  });
 }
 
 export function connectListeners(doc: Document) {
@@ -157,7 +182,7 @@ async function overlayAnimation(
   baseEl.classList.remove('overlay-hidden');
 
   const aniRoot = baseEl.shadowRoot || overlay.el;
-  const animation = overlay.animation = await import('./animation').then(mod => mod.create(animationBuilder, aniRoot, opts));
+  const animation = await import('./animation').then(mod => mod.create(animationBuilder, aniRoot, opts));
   overlay.animation = animation;
   if (!overlay.animated || !overlay.config.getBoolean('animated', true)) {
     animation.duration(0);

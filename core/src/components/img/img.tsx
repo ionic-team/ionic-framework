@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch, h } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-img',
@@ -8,7 +8,6 @@ import { Mode } from '../../interface';
   shadow: true
 })
 export class Img implements ComponentInterface {
-  mode!: Mode;
 
   private io?: IntersectionObserver;
 
@@ -92,9 +91,10 @@ export class Img implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getIonMode(this);
     return {
       class: {
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
       }
     };
   }

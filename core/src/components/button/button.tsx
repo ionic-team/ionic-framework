@@ -1,11 +1,14 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, h } from '@stencil/core';
 
-import { Color, Mode, RouterDirection } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, RouterDirection } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { hasShadowDom } from '../../utils/helpers';
 import { createColorClasses, openURL } from '../../utils/theme';
 
 /**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot icon-only - Should be used on an icon in a button that has no text.
  * @slot start - Content is placed to the left of the button text in LTR, and to the right in RTL.
@@ -34,11 +37,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The type of button.
@@ -179,6 +177,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   }
 
   hostData() {
+    const mode = getIonMode(this);
     const { buttonType, disabled, color, expand, hasIconOnly, shape, strong } = this;
     let fill = this.fill;
     if (fill === undefined) {
@@ -189,7 +188,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       'aria-disabled': disabled ? 'true' : null,
       class: {
         ...createColorClasses(color),
-        [`${this.mode}`]: true,
+        [`${mode}`]: true,
         [buttonType]: true,
         [`${buttonType}-${expand}`]: expand !== undefined,
         [`${buttonType}-${size}`]: size !== undefined,
@@ -206,6 +205,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   }
 
   render() {
+    const mode = getIonMode(this);
     const TagType = this.href === undefined ? 'button' : 'a' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
@@ -230,7 +230,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           <slot></slot>
           <slot name="end"></slot>
         </span>
-        {this.mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
+        {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
       </TagType>
     );
   }

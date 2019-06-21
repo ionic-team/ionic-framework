@@ -1,10 +1,8 @@
-import { QueueApi } from '@stencil/core';
 
 import { Gesture, GestureDetail, createGesture } from './index';
 
 export function createSwipeBackGesture(
   el: HTMLElement,
-  queue: QueueApi,
   canStartHandler: () => boolean,
   onStartHandler: () => void,
   onMoveHandler: (step: number) => void,
@@ -44,7 +42,6 @@ export function createSwipeBackGesture(
 
   return createGesture({
     el,
-    queue,
     gestureName: 'goback-swipe',
     gesturePriority: 40,
     threshold: 10,
