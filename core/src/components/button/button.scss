@@ -68,7 +68,6 @@
 }
 
 :host(.button-disabled) .button-native {
-  --opacity: .5;
   cursor: default;
   pointer-events: none;
 }
