@@ -1,23 +1,21 @@
 import React from 'react';
 import { IonLifeCycleContext } from '../lifecycle/IonLifeCycleContext';
 
-type Props = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+type Props = React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
 
-interface InternalProps extends React.HTMLAttributes<HTMLDivElement> {
-  forwardedRef?: React.RefObject<HTMLDivElement>,
-  activateView?: any;
+interface InternalProps extends React.HTMLAttributes<HTMLElement> {
+  forwardedRef?: React.RefObject<HTMLElement>,
 };
 
 type ExternalProps = Props & {
-  ref?: React.RefObject<HTMLDivElement>
-  activateView?: any;
+  ref?: React.RefObject<HTMLElement>
 };
 
-interface StackItemState {
+interface StackViewState {
   ref: any;
 }
 
-class StackItemInternal extends React.Component<InternalProps, StackItemState> {
+class ViewInternal extends React.Component<InternalProps, StackViewState> {
   context!: React.ContextType<typeof IonLifeCycleContext>;
 
   constructor(props: InternalProps) {
@@ -28,16 +26,13 @@ class StackItemInternal extends React.Component<InternalProps, StackItemState> {
   }
 
   componentDidMount() {
-    const { forwardedRef, activateView } = this.props;
+    const { forwardedRef } = this.props;
     this.setState({ ref: forwardedRef });
     if (forwardedRef && forwardedRef.current) {
       forwardedRef.current.addEventListener('ionViewWillEnter', this.ionViewWillEnterHandler.bind(this));
       forwardedRef.current.addEventListener('ionViewDidEnter', this.ionViewDidEnterHandler.bind(this));
       forwardedRef.current.addEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler.bind(this));
       forwardedRef.current.addEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler.bind(this));
-      if (activateView) {
-        activateView(forwardedRef.current);
-      }
     }
   }
 
@@ -68,12 +63,12 @@ class StackItemInternal extends React.Component<InternalProps, StackItemState> {
   }
 
   render() {
-    const { className, children, forwardedRef, activateView, ...rest } = this.props;
+    const { className, children, forwardedRef, ...rest } = this.props;
     const { ref } = this.state;
     return (
         <div
           className={className ? `ion-page ${className}` : 'ion-page'}
-          ref={forwardedRef}
+          ref={forwardedRef as any}
           {...rest}
         >
           {ref && children}
@@ -81,11 +76,11 @@ class StackItemInternal extends React.Component<InternalProps, StackItemState> {
     )
   }
 }
-StackItemInternal.contextType = IonLifeCycleContext;
+ViewInternal.contextType = IonLifeCycleContext;
 
-function forwardRef(props: InternalProps, ref: React.RefObject<HTMLDivElement>) {
-  return <StackItemInternal forwardedRef={ref} {...props} />;
+function forwardRef(props: InternalProps, ref: React.RefObject<HTMLElement>) {
+  return <ViewInternal forwardedRef={ref} {...props} />;
 }
-forwardRef.displayName = 'StackItem';
+forwardRef.displayName = 'View';
 
-export const StackItem = /*@__PURE__*/React.forwardRef<HTMLDivElement, ExternalProps>(forwardRef);
+export const View = /*@__PURE__*/React.forwardRef<HTMLElement, ExternalProps>(forwardRef);
