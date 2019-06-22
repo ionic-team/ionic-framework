@@ -160,7 +160,7 @@ export class Checkbox implements ComponentInterface {
       >
         <svg class="checkbox-icon" viewBox="0 0 24 24">
           {path}
-        </svg>,
+        </svg>
         <button
           type="button"
           onFocus={this.onFocus}

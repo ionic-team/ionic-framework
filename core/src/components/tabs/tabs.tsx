@@ -204,7 +204,7 @@ export class Tabs implements NavOutlet {
       <Host
         onIonTabButtonClick={this.onTabClicked}
       >
-        <slot name="top"></slot>,
+        <slot name="top"></slot>
         <div class="tabs-inner">
           <slot></slot>
         </div>

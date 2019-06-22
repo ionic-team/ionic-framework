@@ -85,7 +85,7 @@ export class Fab implements ComponentInterface {
           'fab-edge': edge
         }}
       >
-        <slot></slot>;
+        <slot></slot>
       </Host>
     );
   }

@@ -90,7 +90,6 @@ export class Toolbar implements ComponentInterface {
       <Host
         class={{
           [mode]: true,
-
           ...childStyles,
           ...createColorClasses(this.color),
         }}

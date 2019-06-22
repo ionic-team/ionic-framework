@@ -551,7 +551,7 @@ export class Datetime implements ComponentInterface {
     return 0;
   }
 
-  private getText() {
+  private get text() {
     // create the text of the formatted data
     const template = this.displayFormat || this.pickerFormat || DEFAULT_FORMAT;
 
@@ -589,19 +589,20 @@ export class Datetime implements ComponentInterface {
   }
 
   render() {
-    const { inputId, disabled, readonly, isExpanded, el, placeholder } = this;
+    const { inputId, text, disabled, readonly, isExpanded, el, placeholder } = this;
     const mode = getIonMode(this);
     const labelId = inputId + '-lbl';
     const label = findItemLabel(el);
-    if (label) {
-      label.id = labelId;
-    }
+    const addPlaceholderClass = (text === undefined && placeholder != null) ? true : false;
 
     // If selected text has been passed in, use that first
     // otherwise use the placeholder
-    let datetimeText = this.getText();
-    if (datetimeText === undefined) {
-      datetimeText = placeholder != null ? placeholder : '';
+    const datetimeText = text === undefined
+      ? (placeholder != null ? placeholder : '')
+      : text;
+
+    if (label) {
+      label.id = labelId;
     }
 
     renderHiddenInput(true, el, this.name, this.value, this.disabled);
@@ -618,7 +619,7 @@ export class Datetime implements ComponentInterface {
           [mode]: true,
           'datetime-disabled': disabled,
           'datetime-readonly': readonly,
-          'datetime-placeholder': datetimeText !== '',
+          'datetime-placeholder': addPlaceholderClass,
           'in-item': hostContext('ion-item', el)
         }}
       >

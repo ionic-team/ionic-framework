@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, h, readTask } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, h, readTask, Host } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, ScrollBaseDetail, ScrollDetail } from '../../interface';
@@ -297,42 +297,40 @@ export class Content implements ComponentInterface {
     }
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        [mode]: true,
-        'content-sizing': hostContext('ion-popover', this.el),
-        'overscroll': !!this.forceOverscroll,
-      },
-      style: {
-        '--offset-top': `${this.cTop}px`,
-        '--offset-bottom': `${this.cBottom}px`,
-      }
-    };
-  }
-
   render() {
+    const mode = getIonMode(this);
     const { scrollX, scrollY, forceOverscroll } = this;
 
     this.resize();
 
-    return [
-      <div
+    return (
+      <Host
         class={{
-          'inner-scroll': true,
-          'scroll-x': scrollX,
-          'scroll-y': scrollY,
-          'overscroll': (scrollX || scrollY) && !!forceOverscroll
+          ...createColorClasses(this.color),
+          [mode]: true,
+          'content-sizing': hostContext('ion-popover', this.el),
+          'overscroll': !!this.forceOverscroll,
         }}
-        ref={el => this.scrollEl = el!}
-        onScroll={ev => this.onScroll(ev)}
+        style={{
+          '--offset-top': `${this.cTop}px`,
+          '--offset-bottom': `${this.cBottom}px`,
+        }}
       >
-        <slot></slot>
-      </div>,
-      <slot name="fixed"></slot>
-    ];
+        <div
+          class={{
+            'inner-scroll': true,
+            'scroll-x': scrollX,
+            'scroll-y': scrollY,
+            'overscroll': (scrollX || scrollY) && !!forceOverscroll
+          }}
+          ref={el => this.scrollEl = el!}
+          onScroll={ev => this.onScroll(ev)}
+        >
+          <slot></slot>
+        </div>
+        <slot name="fixed"></slot>
+      </Host>
+    );
   }
 }
 
