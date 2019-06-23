@@ -16,7 +16,7 @@ export class ItemGroup implements ComponentInterface {
     return {
       'role': 'group',
       class: {
-        [`${mode}`]: true,
+        [mode]: true,
 
         // Used internally for styling
         [`item-group-${mode}`]: true,

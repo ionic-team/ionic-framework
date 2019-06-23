@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Listen, Prop, State, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Listen, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
@@ -27,8 +27,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Element() el!: HTMLIonItemElement;
 
   @State() multipleInputs = false;
-
-  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * The color to use from your application's color palette.
@@ -139,65 +137,60 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     return (this.href !== undefined || this.button);
   }
 
-  hostData() {
-    const mode = getIonMode(this);
+  render() {
+    const { detail, detailIcon, download, lines, disabled, href, rel, target, routerDirection } = this;
     const childStyles = {};
+    const mode = getIonMode(this);
+    const clickable = this.isClickable();
+    const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
+    const attrs = (TagType === 'button')
+      ? { type: this.type }
+      : {
+        download,
+        href,
+        rel,
+        target
+      };
+    const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
     this.itemStyles.forEach(value => {
       Object.assign(childStyles, value);
     });
 
-    return {
-      'aria-disabled': this.disabled ? 'true' : null,
-      class: {
-        ...childStyles,
-        ...createColorClasses(this.color),
-        'item': true,
-        [`${mode}`]: true,
-        [`item-lines-${this.lines}`]: this.lines !== undefined,
-        'item-disabled': this.disabled,
-        'in-list': hostContext('ion-list', this.el),
-        'item-multiple-inputs': this.multipleInputs,
-        'ion-activatable': this.isClickable(),
-        'ion-focusable': true,
-      }
-    };
-  }
-
-  render() {
-    const mode = getIonMode(this);
-    const { detail, win, detailIcon, routerDirection } = this;
-
-    const clickable = this.isClickable();
-    const TagType = clickable ? (this.href === undefined ? 'button' : 'a') : 'div' as any;
-    const attrs = (TagType === 'button')
-      ? { type: this.type }
-      : {
-        download: this.download,
-        href: this.href,
-        rel: this.rel,
-        target: this.target
-      };
-    const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
-
-    return [
-      <TagType
-        {...attrs}
-        class="item-native"
-        disabled={this.disabled}
-        onClick={(ev: Event) => openURL(win, this.href, ev, routerDirection)}
+    return (
+      <Host
+        aria-disabled={disabled ? 'true' : null}
+        class={{
+          ...childStyles,
+          ...createColorClasses(this.color),
+          'item': true,
+          [mode]: true,
+          [`item-lines-${lines}`]: lines !== undefined,
+          'item-disabled': disabled,
+          'in-list': hostContext('ion-list', this.el),
+          'item-multiple-inputs': this.multipleInputs,
+          'ion-activatable': this.isClickable(),
+          'ion-focusable': true,
+        }}
       >
-        <slot name="start"></slot>
-        <div class="item-inner">
-          <div class="input-wrapper">
-            <slot></slot>
-          </div>
-          <slot name="end"></slot>
-          {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon"></ion-icon>}
-          <div class="item-inner-highlight"></div>
-        </div>
-        {clickable && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-      </TagType>,
-      <div class="item-highlight"></div>
-    ];
+          <TagType
+            {...attrs}
+            class="item-native"
+            disabled={disabled}
+            onClick={(ev: Event) => openURL(href, ev, routerDirection)}
+          >
+            <slot name="start"></slot>
+            <div class="item-inner">
+              <div class="input-wrapper">
+                <slot></slot>
+              </div>
+              <slot name="end"></slot>
+              {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon"></ion-icon>}
+              <div class="item-inner-highlight"></div>
+            </div>
+            {clickable && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+          </TagType>
+          <div class="item-highlight"></div>
+      </Host>
+    );
   }
 }

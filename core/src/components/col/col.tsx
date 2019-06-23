@@ -14,8 +14,6 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 })
 export class Col implements ComponentInterface {
 
-  @Prop({ context: 'window' }) win!: Window;
-
   @Element() el!: HTMLIonColElement;
 
   /**
@@ -169,7 +167,7 @@ export class Col implements ComponentInterface {
     let matched;
 
     for (const breakpoint of BREAKPOINTS) {
-      const matches = matchBreakpoint(this.win, breakpoint);
+      const matches = matchBreakpoint(breakpoint);
 
       // Grab the value of the property, if it exists and our
       // media query matches we return the value
@@ -247,11 +245,11 @@ export class Col implements ComponentInterface {
   }
 
   hostData() {
-    const isRTL = this.win.document.dir === 'rtl';
+    const isRTL = document.dir === 'rtl';
     const mode = getIonMode(this);
     return {
       class: {
-        [`${mode}`]: true
+        [mode]: true
       },
       style: {
         ...this.calculateOffset(isRTL),

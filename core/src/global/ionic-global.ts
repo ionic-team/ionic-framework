@@ -3,11 +3,9 @@ import { getMode, setMode } from '@stencil/core';
 import { Mode } from '../interface';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
-import { Config, configFromSession, configFromURL, saveConfig } from './config';
+import { config, configFromSession, configFromURL, saveConfig } from './config';
 
 declare const Context: any;
-
-const config = /*@__PURE__*/new Config();
 
 let mode: Mode;
 
@@ -56,5 +54,3 @@ export default function() {
   );
 
 }
-
-export { config };

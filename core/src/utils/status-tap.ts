@@ -1,11 +1,12 @@
 import { readTask, writeTask } from '@stencil/core';
 
-export function startStatusTap(win: Window) {
+export function startStatusTap() {
+  const win = window;
   win.addEventListener('statusTap', () => {
     readTask(() => {
       const width = win.innerWidth;
       const height = win.innerHeight;
-      const el = win.document.elementFromPoint(width / 2, height / 2) as (Element | null);
+      const el = document.elementFromPoint(width / 2, height / 2) as (Element | null);
       if (!el) {
         return;
       }

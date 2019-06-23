@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, Gesture, GestureDetail, KnobName, RangeChangeEventDetail, RangeValue, StyleEventDetail } from '../../interface';
@@ -28,9 +28,6 @@ export class Range implements ComponentInterface {
   private gesture?: Gesture;
 
   @Element() el!: HTMLIonRangeElement;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'document' }) doc!: Document;
 
   @State() private ratioA = 0;
   @State() private ratioB = 0;
@@ -171,24 +168,6 @@ export class Range implements ComponentInterface {
    * Emitted when the range loses focus.
    */
   @Event() ionBlur!: EventEmitter<void>;
-
-  @Listen('focusout')
-  onBlur() {
-    if (this.hasFocus) {
-      this.hasFocus = false;
-      this.ionBlur.emit();
-      this.emitStyle();
-    }
-  }
-
-  @Listen('focusin')
-  onFocus() {
-    if (!this.hasFocus) {
-      this.hasFocus = true;
-      this.ionFocus.emit();
-      this.emitStyle();
-    }
-  }
 
   componentWillLoad() {
     this.updateRatio();
@@ -372,23 +351,26 @@ export class Range implements ComponentInterface {
     }
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        [`${mode}`]: true,
-        'in-item': hostContext('ion-item', this.el),
-        'range-disabled': this.disabled,
-        'range-pressed': this.pressedKnob !== undefined,
-        'range-has-pin': this.pin
-      }
-    };
+  private onBlur = () => {
+    if (this.hasFocus) {
+      this.hasFocus = false;
+      this.ionBlur.emit();
+      this.emitStyle();
+    }
+  }
+
+  private onFocus = () => {
+    if (!this.hasFocus) {
+      this.hasFocus = true;
+      this.ionFocus.emit();
+      this.emitStyle();
+    }
   }
 
   render() {
-    const { min, max, step, ratioLower, ratioUpper } = this;
+    const { min, max, step, el, handleKeyboard, pressedKnob, disabled, pin, ratioLower, ratioUpper } = this;
 
+    const mode = getIonMode(this);
     const barStart = `${ratioLower * 100}%`;
     const barEnd = `${100 - ratioUpper * 100}%`;
 
@@ -396,6 +378,17 @@ export class Range implements ComponentInterface {
     const isRTL = doc.dir === 'rtl';
     const start = isRTL ? 'right' : 'left';
     const end = isRTL ? 'left' : 'right';
+
+    const tickStyle = (tick: any) => {
+      return {
+        [start]: tick[start]
+      };
+    };
+
+    const barStyle = {
+      [start]: barStart,
+      [end]: barEnd
+    };
 
     const ticks = [];
     if (this.snaps && this.ticks) {
@@ -413,70 +406,67 @@ export class Range implements ComponentInterface {
       }
     }
 
-    const tickStyle = (tick: any) => {
-      const style: any = {};
+    return (
+      <Host
+        onFocusin={this.onFocus}
+        onFocusout={this.onBlur}
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+          'in-item': hostContext('ion-item', el),
+          'range-disabled': disabled,
+          'range-pressed': pressedKnob !== undefined,
+          'range-has-pin': pin
+        }}
+      >
 
-      style[start] = tick[start];
+        <slot name="start"></slot>
+        <div class="range-slider" ref={rangeEl => this.rangeSlider = rangeEl}>
+          {ticks.map(tick => (
+            <div
+              style={tickStyle(tick)}
+              role="presentation"
+              class={{
+                'range-tick': true,
+                'range-tick-active': tick.active
+              }}
+            />
+          ))}
 
-      return style;
-    };
-
-    const barStyle = () => {
-      const style: any = {};
-
-      style[start] = barStart;
-      style[end] = barEnd;
-
-      return style;
-    };
-
-    return [
-      <slot name="start"></slot>,
-      <div class="range-slider" ref={el => this.rangeSlider = el}>
-        {ticks.map(tick => (
+          <div class="range-bar" role="presentation" />
           <div
-            style={tickStyle(tick)}
+            class="range-bar range-bar-active"
             role="presentation"
-            class={{
-              'range-tick': true,
-              'range-tick-active': tick.active
-            }}
+            style={barStyle}
           />
-        ))}
 
-        <div class="range-bar" role="presentation" />
-        <div
-          class="range-bar range-bar-active"
-          role="presentation"
-          style={barStyle()}
-        />
+          { renderKnob(isRTL, {
+            knob: 'A',
+            pressed: pressedKnob === 'A',
+            value: this.valA,
+            ratio: this.ratioA,
+            pin,
+            disabled,
+            handleKeyboard,
+            min,
+            max
+          })}
 
-        { renderKnob(isRTL, {
-          knob: 'A',
-          pressed: this.pressedKnob === 'A',
-          value: this.valA,
-          ratio: this.ratioA,
-          pin: this.pin,
-          disabled: this.disabled,
-          handleKeyboard: this.handleKeyboard,
-          min,
-          max
-        })}
-
-        { this.dualKnobs && renderKnob(isRTL, {
-          knob: 'B',
-          pressed: this.pressedKnob === 'B',
-          value: this.valB,
-          ratio: this.ratioB,
-          pin: this.pin,
-          disabled: this.disabled,
-          handleKeyboard: this.handleKeyboard,
-          min,
-          max
-        })}
-      </div>,
-      <slot name="end"></slot>
-    ];
+          { this.dualKnobs && renderKnob(isRTL, {
+            knob: 'B',
+            pressed: pressedKnob === 'B',
+            value: this.valB,
+            ratio: this.ratioB,
+            pin,
+            disabled,
+            handleKeyboard,
+            min,
+            max
+          })}
+        </div>
+        <slot name="end"></slot>
+      </Host>
+    );
   }
 }
 

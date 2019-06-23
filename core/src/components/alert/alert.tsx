@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AlertButton, AlertInput, Animation, AnimationBuilder, Config, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { AlertButton, AlertInput, Animation, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
@@ -34,8 +34,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
   mode = getIonMode(this);
 
   @Element() el!: HTMLIonAlertElement;
-
-  @Prop({ context: 'config' }) config!: Config;
 
   /** @internal */
   @Prop() overlayIndex!: number;
@@ -406,7 +404,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
       },
       class: {
         ...getClassMap(this.cssClass),
-        [`${mode}`]: true,
+        [mode]: true,
         'alert-translucent': this.translucent
       }
     };

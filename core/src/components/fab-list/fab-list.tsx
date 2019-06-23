@@ -36,7 +36,7 @@ export class FabList implements ComponentInterface {
     const mode = getIonMode(this);
     return {
       class: {
-        [`${mode}`]: true,
+        [mode]: true,
         'fab-list-active': this.activated,
         [`fab-list-side-${this.side}`]: true
       }

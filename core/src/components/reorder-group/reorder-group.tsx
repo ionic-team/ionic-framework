@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, ItemReorderEventDetail } from '../../interface';
@@ -33,9 +33,6 @@ export class ReorderGroup implements ComponentInterface {
   @State() state = ReorderGroupState.Idle;
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'document' }) doc!: Document;
 
   /**
    * If `true`, the reorder will be hidden.
@@ -304,7 +301,7 @@ export class ReorderGroup implements ComponentInterface {
 
     return {
       class: {
-        [`${mode}`]: true,
+        [mode]: true,
         'reorder-enabled': !this.disabled,
         'reorder-list-active': this.state !== ReorderGroupState.Idle,
       }
