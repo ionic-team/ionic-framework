@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, Config, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
+import { Animation, AnimationBuilder, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
@@ -30,8 +31,6 @@ export class Loading implements ComponentInterface, OverlayInterface {
   mode = getIonMode(this);
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'config' }) config!: Config;
 
   /** @internal */
   @Prop() overlayIndex!: number;
@@ -115,16 +114,11 @@ export class Loading implements ComponentInterface, OverlayInterface {
   componentWillLoad() {
     if (this.spinner === undefined) {
       const mode = getIonMode(this);
-      this.spinner = this.config.get(
+      this.spinner = config.get(
         'loadingSpinner',
-        this.config.get('spinner', mode === 'ios' ? 'lines' : 'crescent')
+        config.get('spinner', mode === 'ios' ? 'lines' : 'crescent')
       );
     }
-  }
-
-  @Listen('ionBackdropTap')
-  protected onBackdropTap() {
-    this.dismiss(undefined, BACKDROP);
   }
 
   /**
@@ -175,32 +169,36 @@ export class Loading implements ComponentInterface, OverlayInterface {
     return eventMethod(this.el, 'ionLoadingWillDismiss');
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      style: {
-        zIndex: 40000 + this.overlayIndex
-      },
-      class: {
-        ...getClassMap(this.cssClass),
-        [`${mode}`]: true,
-        'loading-translucent': this.translucent
-      }
-    };
+  private onBackdropTap = () => {
+    this.dismiss(undefined, BACKDROP);
   }
 
   render() {
-    return [
-      <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss} />,
-      <div class="loading-wrapper" role="dialog">
-        {this.spinner && (
-          <div class="loading-spinner">
-            <ion-spinner name={this.spinner} />
-          </div>
-        )}
+    const { message, spinner } = this;
+    const mode = getIonMode(this);
+    return (
+      <Host
+        onIonBackdropTap={this.onBackdropTap}
+        style={{
+          zIndex: `${40000 + this.overlayIndex}`
+        }}
+        class={{
+          ...getClassMap(this.cssClass),
+          [mode]: true,
+          'loading-translucent': this.translucent
+        }}
+      >
+        <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss} />
+        <div class="loading-wrapper" role="dialog">
+          {spinner && (
+            <div class="loading-spinner">
+              <ion-spinner name={spinner} />
+            </div>
+          )}
 
-        {this.message && <div class="loading-content" innerHTML={sanitizeDOMString(this.message)}></div>}
-      </div>
-    ];
+          {message && <div class="loading-content" innerHTML={sanitizeDOMString(message)}></div>}
+        </div>
+      </Host>
+    );
   }
 }

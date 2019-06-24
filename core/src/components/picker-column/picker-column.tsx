@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, QueueApi, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, PickerColumn } from '../../interface';
@@ -33,8 +33,6 @@ export class PickerColumnCmp implements ComponentInterface {
   private noAnimate = true;
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
    * Emitted when the selected value has changed
@@ -351,7 +349,7 @@ export class PickerColumnCmp implements ComponentInterface {
     const mode = getIonMode(this);
     return {
       class: {
-        [`${mode}`]: true,
+        [mode]: true,
         'picker-col': true,
         'picker-opts-left': this.col.align === 'left',
         'picker-opts-right': this.col.align === 'right'

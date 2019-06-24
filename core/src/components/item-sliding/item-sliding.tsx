@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, Side } from '../../interface';
@@ -47,8 +47,6 @@ export class ItemSliding implements ComponentInterface {
   @Element() el!: HTMLIonItemSlidingElement;
 
   @State() state: SlidingState = SlidingState.Disabled;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
    * If `true`, the user cannot interact with the sliding item.
@@ -138,7 +136,7 @@ export class ItemSliding implements ComponentInterface {
     }
 
     // In RTL we want to switch the sides
-    side = isEndSide(window, side) ? 'end' : 'start';
+    side = isEndSide(side) ? 'end' : 'start';
 
     const isStartOpen = this.openAmount < 0;
     const isEndOpen = this.openAmount > 0;
@@ -213,7 +211,7 @@ export class ItemSliding implements ComponentInterface {
     for (let i = 0; i < options.length; i++) {
       const option = await options.item(i).componentOnReady();
 
-      const side = isEndSide(window, option.side) ? 'end' : 'start';
+      const side = isEndSide(option.side) ? 'end' : 'start';
 
       if (side === 'start') {
         this.leftOptions = option;
@@ -380,7 +378,7 @@ export class ItemSliding implements ComponentInterface {
     const mode = getIonMode(this);
     return {
       class: {
-        [`${mode}`]: true,
+        [mode]: true,
         'item-sliding-active-slide': (this.state !== SlidingState.Disabled),
         'item-sliding-active-options-end': (this.state & SlidingState.End) !== 0,
         'item-sliding-active-options-start': (this.state & SlidingState.Start) !== 0,
