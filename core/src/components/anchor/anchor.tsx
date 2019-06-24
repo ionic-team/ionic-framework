@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Listen, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, RouterDirection } from '../../interface';
@@ -11,8 +11,6 @@ import { createColorClasses, openURL } from '../../utils/theme';
   shadow: true
 })
 export class Anchor implements ComponentInterface, AnchorInterface {
-
-  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * The color to use from your application's color palette.
@@ -54,35 +52,31 @@ export class Anchor implements ComponentInterface, AnchorInterface {
    */
   @Prop() target: string | undefined;
 
-  @Listen('click')
-  onClick(ev: Event) {
-    openURL(this.win, this.href, ev, this.routerDirection);
-  }
-
-  hostData() {
-    const mode = getIonMode(this);
-    console.log('anchor', mode);
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        [`${mode}`]: true,
-        'ion-activatable': true
-      }
-    };
+  private onClick = (ev: Event) => {
+    openURL(this.href, ev, this.routerDirection);
   }
 
   render() {
+    const mode = getIonMode(this);
     const attrs = {
       download: this.download,
       href: this.href,
       rel: this.rel,
       target: this.target
     };
-
     return (
-      <a {...attrs}>
-        <slot></slot>
-      </a>
+      <Host
+        onClick={this.onClick}
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+          'ion-activatable': true
+        }}
+      >
+        <a {...attrs}>
+          <slot></slot>
+        </a>
+      </Host>
     );
   }
 }

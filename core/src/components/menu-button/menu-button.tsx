@@ -1,7 +1,8 @@
 import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Color, Config } from '../../interface';
+import { Color } from '../../interface';
 import { ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses } from '../../utils/theme';
 
@@ -14,8 +15,6 @@ import { createColorClasses } from '../../utils/theme';
   shadow: true
 })
 export class MenuButton implements ComponentInterface, ButtonInterface {
-
-  @Prop({ context: 'config' }) config!: Config;
 
   /**
    * The color to use from your application's color palette.
@@ -53,7 +52,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
       class: {
         ...createColorClasses(color),
 
-        [`${mode}`]: true,
+        [mode]: true,
 
         'button': true,  // ion-buttons target .button
         'menu-button-disabled': disabled,
@@ -65,7 +64,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
 
   render() {
     const mode = getIonMode(this);
-    const menuIcon = this.config.get('menuIcon', 'menu');
+    const menuIcon = config.get('menuIcon', 'menu');
 
     const attrs = {
       type: this.type

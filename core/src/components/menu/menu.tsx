@@ -1,6 +1,7 @@
 import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { config, getIonMode } from '../../global/ionic-global';
+import { config } from '../../global/config';
+import { getIonMode } from '../../global/ionic-global';
 import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuControllerI, MenuI, Side } from '../../interface';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { assert, isEndSide as isEnd } from '../../utils/helpers';
@@ -93,7 +94,7 @@ export class Menu implements ComponentInterface, MenuI {
 
   @Watch('side')
   protected sideChanged() {
-    this.isEndSide = isEnd(window, this.side);
+    this.isEndSide = isEnd(this.side);
   }
 
   /**

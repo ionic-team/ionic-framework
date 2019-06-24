@@ -1,3 +1,4 @@
+import { config } from '../global/config';
 import { ActionSheetOptions, AlertOptions, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
 
 let lastId = 0;
@@ -24,7 +25,7 @@ export const pickerController = /*@__PURE__*/createController<PickerOptions, HTM
 export const popoverController = /*@__PURE__*/createController<PopoverOptions, HTMLIonPopoverElement>('ion-popover');
 export const toastController = /*@__PURE__*/createController<ToastOptions, HTMLIonToastElement>('ion-toast');
 
-export function createOverlay<T extends HTMLIonOverlayElement>(tagName: string, opts: object | undefined): Promise<T> {
+export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, opts: object | undefined): Promise<T> => {
   return customElements.whenDefined(tagName).then(() => {
     const doc = document;
     const element = doc.createElement(tagName) as HTMLIonOverlayElement;
@@ -45,9 +46,9 @@ export function createOverlay<T extends HTMLIonOverlayElement>(tagName: string, 
 
     return element.componentOnReady() as any;
   });
-}
+};
 
-export function connectListeners(doc: Document) {
+export const connectListeners = (doc: Document) => {
   if (lastId === 0) {
     lastId = 1;
     // trap focus inside overlays
@@ -81,39 +82,39 @@ export function connectListeners(doc: Document) {
       }
     });
   }
-}
+};
 
-export function dismissOverlay(doc: Document, data: any, role: string | undefined, overlayTag: string, id?: string): Promise<boolean> {
+export const dismissOverlay = (doc: Document, data: any, role: string | undefined, overlayTag: string, id?: string): Promise<boolean> => {
   const overlay = getOverlay(doc, overlayTag, id);
   if (!overlay) {
     return Promise.reject('overlay does not exist');
   }
   return overlay.dismiss(data, role);
-}
+};
 
-export function getOverlays(doc: Document, overlayTag?: string): HTMLIonOverlayElement[] {
+export const getOverlays = (doc: Document, overlayTag?: string): HTMLIonOverlayElement[] => {
   const overlays = (Array.from(getAppRoot(doc).children) as HTMLIonOverlayElement[]).filter(c => c.overlayIndex > 0);
   if (overlayTag === undefined) {
     return overlays;
   }
   overlayTag = overlayTag.toUpperCase();
   return overlays.filter(c => c.tagName === overlayTag);
-}
+};
 
-export function getOverlay(doc: Document, overlayTag?: string, id?: string): HTMLIonOverlayElement | undefined {
+export const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTMLIonOverlayElement | undefined => {
   const overlays = getOverlays(doc, overlayTag);
   return (id === undefined)
     ? overlays[overlays.length - 1]
     : overlays.find(o => o.id === id);
-}
+};
 
-export async function present(
+export const present = async (
   overlay: OverlayInterface,
   name: keyof IonicConfig,
   iosEnterAnimation: AnimationBuilder,
   mdEnterAnimation: AnimationBuilder,
   opts?: any
-) {
+) => {
   if (overlay.presented) {
     return;
   }
@@ -123,15 +124,15 @@ export async function present(
   // get the user's animation fn if one was provided
   const animationBuilder = (overlay.enterAnimation)
     ? overlay.enterAnimation
-    : overlay.config.get(name, overlay.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
+    : config.get(name, overlay.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
   const completed = await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
   if (completed) {
     overlay.didPresent.emit();
   }
-}
+};
 
-export async function dismiss(
+export const dismiss = async (
   overlay: OverlayInterface,
   data: any | undefined,
   role: string | undefined,
@@ -139,7 +140,7 @@ export async function dismiss(
   iosLeaveAnimation: AnimationBuilder,
   mdLeaveAnimation: AnimationBuilder,
   opts?: any
-): Promise<boolean> {
+): Promise<boolean> => {
   if (!overlay.presented) {
     return false;
   }
@@ -150,7 +151,7 @@ export async function dismiss(
 
     const animationBuilder = (overlay.leaveAnimation)
       ? overlay.leaveAnimation
-      : overlay.config.get(name, overlay.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
+      : config.get(name, overlay.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
     await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
     overlay.didDismiss.emit({ data, role });
@@ -161,18 +162,18 @@ export async function dismiss(
 
   overlay.el.remove();
   return true;
-}
+};
 
-function getAppRoot(doc: Document) {
+const getAppRoot = (doc: Document) => {
   return doc.querySelector('ion-app') || doc.body;
-}
+};
 
-async function overlayAnimation(
+const overlayAnimation = async (
   overlay: OverlayInterface,
   animationBuilder: AnimationBuilder,
   baseEl: any,
   opts: any
-): Promise<boolean> {
+): Promise<boolean> => {
   if (overlay.animation) {
     overlay.animation.destroy();
     overlay.animation = undefined;
@@ -184,7 +185,7 @@ async function overlayAnimation(
   const aniRoot = baseEl.shadowRoot || overlay.el;
   const animation = await import('./animation').then(mod => mod.create(animationBuilder, aniRoot, opts));
   overlay.animation = animation;
-  if (!overlay.animated || !overlay.config.getBoolean('animated', true)) {
+  if (!overlay.animated || !config.getBoolean('animated', true)) {
     animation.duration(0);
   }
   if (overlay.keyboardClose) {
@@ -200,9 +201,9 @@ async function overlayAnimation(
   animation.destroy();
   overlay.animation = undefined;
   return hasCompleted;
-}
+};
 
-export function autoFocus(containerEl: HTMLElement): HTMLElement | undefined {
+export const autoFocus = (containerEl: HTMLElement): HTMLElement | undefined => {
   const focusableEls = containerEl.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]');
   if (focusableEls.length > 0) {
     const el = focusableEls[0] as HTMLInputElement;
@@ -210,30 +211,30 @@ export function autoFocus(containerEl: HTMLElement): HTMLElement | undefined {
     return el;
   }
   return undefined;
-}
+};
 
-export function eventMethod<T>(element: HTMLElement, eventName: string): Promise<T> {
+export const eventMethod = <T>(element: HTMLElement, eventName: string): Promise<T> => {
   let resolve: (detail: T) => void;
   const promise = new Promise<T>(r => resolve = r);
   onceEvent(element, eventName, (event: any) => {
     resolve(event.detail);
   });
   return promise;
-}
+};
 
-export function onceEvent(element: HTMLElement, eventName: string, callback: (ev: Event) => void) {
+export const onceEvent = (element: HTMLElement, eventName: string, callback: (ev: Event) => void) => {
   const handler = (ev: Event) => {
     element.removeEventListener(eventName, handler);
     callback(ev);
   };
   element.addEventListener(eventName, handler);
-}
+};
 
-export function isCancel(role: string | undefined): boolean {
+export const isCancel = (role: string | undefined): boolean => {
   return role === 'cancel' || role === BACKDROP;
-}
+};
 
-function isDescendant(parent: HTMLElement, child: HTMLElement | null) {
+const isDescendant = (parent: HTMLElement, child: HTMLElement | null) => {
   while (child) {
     if (child === parent) {
       return true;
@@ -241,6 +242,6 @@ function isDescendant(parent: HTMLElement, child: HTMLElement | null) {
     child = child.parentElement;
   }
   return false;
-}
+};
 
 export const BACKDROP = 'backdrop';
