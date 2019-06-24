@@ -67,6 +67,9 @@
   box-sizing: border-box;
 
   overflow: hidden;
+  
+  // TODO: Find out how to do this without this
+  z-index: 1;
 }
 
 .scroll-y,

@@ -22,7 +22,8 @@ export const createHeaderIndex = (headerEl: any): any | undefined => {
       return {
         el: toolbar,
         ionTitleEl,
-        innerTitleEl: (ionTitleEl) ? ionTitleEl.shadowRoot!.querySelector('.toolbar-title') : null
+        innerTitleEl: (ionTitleEl) ? ionTitleEl.shadowRoot!.querySelector('.toolbar-title') : null,
+        ionButtonsEl: Array.from(toolbar.querySelectorAll('ion-buttons'))
       };
     })
   };
@@ -31,17 +32,14 @@ export const createHeaderIndex = (headerEl: any): any | undefined => {
 export const handleContentScroll = (scrollEl: any, mainHeaderIndex: any, scrollHeaderIndex: any, remainingHeight = 0) => {
   readTask(() => {
     const scrollTop = scrollEl.scrollTop;
+
     const lastMainToolbar = mainHeaderIndex.toolbars[mainHeaderIndex.toolbars.length - 1];
 
-    if (scrollTop === 0) {
-      setToolbarBorderColor(lastMainToolbar, `rgba(0, 0, 0, 0)`);
-      return;
-    }
-
-    const scale = 1 + (-scrollTop / 1000);
-    if (scale <= 1.1) {
+    const scale = 1 + (-scrollTop / 500);
+    if (scale <= 1.1 && scale >= 1) {
+      console.log(scale, scrollTop);
       writeTask(() => {
-        scaleLargeTitles(scrollHeaderIndex.toolbars);
+        scaleLargeTitles(scrollHeaderIndex.toolbars, scale);
       });
     }
 
@@ -66,44 +64,47 @@ export const handleContentScroll = (scrollEl: any, mainHeaderIndex: any, scrollH
  */
 export const handleToolbarIntersection = (ev: any, mainHeaderIndex: any, scrollHeaderIndex: any) => {
   writeTask(() => {
-
     const mainHeaderToolbars = mainHeaderIndex.toolbars;
     const lastMainHeaderToolbar = mainHeaderToolbars[mainHeaderToolbars.length - 1];
 
     if (ev[0].isIntersecting) {
-      makeHeaderInactive(mainHeaderIndex.el, true);
-      makeHeaderActive(scrollHeaderIndex.el, true);
+      makeHeaderInactive(mainHeaderIndex, true);
+      makeHeaderActive(scrollHeaderIndex, true);
       setToolbarBorderColor(lastMainHeaderToolbar, 'rgba(0, 0, 0, 0)');
     } else {
-      makeHeaderActive(mainHeaderIndex.el, true);
-      makeHeaderInactive(scrollHeaderIndex.el, true);
+      makeHeaderActive(mainHeaderIndex, true);
+      makeHeaderInactive(scrollHeaderIndex, true);
       setToolbarBorderColor(lastMainHeaderToolbar, 'rgba(0, 0, 0, 0.2)');
     }
   });
 };
 
-export const makeHeaderInactive = (header: any, transition = false) => {
-  const headerTitle = header.querySelector('ion-title');
-  if (!headerTitle) { return; }
+export const makeHeaderInactive = (headerIndex: any, transition = false) => {
+  headerIndex.el.classList.add('no-translucent');
 
-  setElOpacity(headerTitle, 0, transition);
+  if (headerIndex.toolbars.length === 0) {
+    return;
+  }
 
-  const headerButtons = Array.from(header.querySelectorAll('ion-buttons'));
-  if (headerButtons.length === 0) { return; }
+  const ionTitleEl = headerIndex.toolbars[0].ionTitleEl;
+  if (!ionTitleEl) { return; }
 
-  hideCollapsableButtons(headerButtons, transition);
+  setElOpacity(ionTitleEl, 0, transition);
+  hideCollapsableButtons(headerIndex.toolbars[0].ionButtonsEl, transition);
 };
 
-export const makeHeaderActive = (header: any, transition = false) => {
-  const headerTitle = header.querySelector('ion-title');
-  if (!headerTitle) { return; }
+export const makeHeaderActive = (headerIndex: any, transition = false) => {
+  if (headerIndex.toolbars.length === 0) {
+    return;
+  }
 
-  setElOpacity(headerTitle, 1, transition);
+  const ionTitleEl = headerIndex.toolbars[0].ionTitleEl;
+  if (!ionTitleEl) { return; }
 
-  const headerButtons = Array.from(header.querySelectorAll('ion-buttons'));
-  if (headerButtons.length === 0) { return; }
+  setElOpacity(ionTitleEl, 1, transition);
+  showCollapsableButtons(headerIndex.toolbars[0].ionButtonsEl, transition);
 
-  showCollapsableButtons(headerButtons, transition);
+  headerIndex.el.classList.remove('no-translucent');
 };
 
 export const setElOpacity = (el: HTMLElement, opacity = 1, transition = false) => {
@@ -129,6 +130,7 @@ const showCollapsableButtons = (buttons: any[] = [], transition = false) => {
 
 export const scaleLargeTitles = (toolbars: any[] = [], scale = 1, transition = false) => {
   toolbars.forEach(toolbar => {
+
     const ionTitle = toolbar.ionTitleEl;
     if (!ionTitle || ionTitle.size !== 'large') { return; }
 

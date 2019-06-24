@@ -16,10 +16,9 @@ import { createHeaderIndex, handleContentScroll, handleToolbarIntersection, setT
 export class Header implements ComponentInterface {
 
   private scrollEl?: any;
+  private contentScrollCallback?: any;
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'document' }) doc!: Document;
 
   /**
    * If `true`, the header will collapse on scroll of the content.
@@ -48,6 +47,12 @@ export class Header implements ComponentInterface {
     }
   }
 
+  componentDidUnload() {
+    if (this.contentScrollCallback) {
+      this.scrollEl.removeEventListener('scroll', this.contentScrollCallback);
+    }
+  }
+
   private async setupCollapsableHeader(contentEl: any) {
     if (!contentEl) { console.error('ion-header requires a content to collapse, make sure there is an ion-content.'); }
 
@@ -55,17 +60,17 @@ export class Header implements ComponentInterface {
 
     this.scrollEl = await contentEl.getScrollElement();
 
-    const headers = document.querySelectorAll('ion-header');
-    const mainHeader = Array.from(headers).find(header => !header.collapse);
-
     readTask(() => {
+      const headers = document.querySelectorAll('ion-header');
+      const mainHeader = Array.from(headers).find(header => !header.collapse);
+
       const mainHeaderIndex = createHeaderIndex(mainHeader);
       const scrollHeaderIndex = createHeaderIndex(this.el);
 
       if (!mainHeaderIndex || !scrollHeaderIndex) { return; }
 
       // TODO: Find a better way to do this
-      let zIndex = scrollHeaderIndex.toolbars.length;
+      let zIndex = scrollHeaderIndex.toolbars.length - 1;
       scrollHeaderIndex.toolbars.forEach((toolbar: any) => {
         toolbar.el.style.zIndex = zIndex.toString();
         zIndex -= 1;
@@ -76,8 +81,9 @@ export class Header implements ComponentInterface {
        * showing/hiding content in the primary ion-header
        */
       const toolbarIntersection = (ev: any) => { handleToolbarIntersection(ev, mainHeaderIndex, scrollHeaderIndex); };
-      const intersectionObserver = new IntersectionObserver(toolbarIntersection, { threshold: 0.25 });
 
+      // TODO: Dynamically determine what the root margin should be
+      const intersectionObserver = new IntersectionObserver(toolbarIntersection, { threshold: 0.25, rootMargin: '-44px 0px 0px 0px' });
       intersectionObserver.observe(scrollHeaderIndex.toolbars[0].el);
 
       /**
@@ -92,8 +98,8 @@ export class Header implements ComponentInterface {
         remainingHeight += scrollHeaderIndex.toolbars[i].el.clientHeight;
       }
 
-      const contentScroll = () => { handleContentScroll(this.scrollEl, mainHeaderIndex, scrollHeaderIndex, remainingHeight); };
-      this.scrollEl.addEventListener('scroll', contentScroll);
+      this.contentScrollCallback = () => { handleContentScroll(this.scrollEl, mainHeaderIndex, scrollHeaderIndex, remainingHeight); };
+      this.scrollEl.addEventListener('scroll', this.contentScrollCallback);
 
       /**
        * Set the initial state of the collapsable header

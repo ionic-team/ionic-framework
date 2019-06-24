@@ -42,7 +42,7 @@
 <body>
   <ion-app>
     <ion-header>
-      <ion-toolbar>      
+      <ion-toolbar color="dark">      
         <ion-title>Messages</ion-title>
         
         <ion-buttons slot="end" collapse="true">
@@ -53,9 +53,9 @@
       </ion-toolbar>
     </ion-header>
   
-    <ion-content id="content">
+    <ion-content id="content" color="dark">
       <ion-header collapse>
-        <ion-toolbar>      
+        <ion-toolbar color="dark">      
           <ion-title size="large">Messages</ion-title>
           
           <ion-buttons slot="end" collapse="true">
@@ -65,7 +65,7 @@
           </ion-buttons>
         </ion-toolbar>
         
-        <ion-toolbar>
+        <ion-toolbar color="dark">
           <ion-searchbar></ion-searchbar>
         </ion-toolbar>
       </ion-header>
@@ -98,7 +98,7 @@
     let html = '';
     for (let item of items) {
       html += `
-        <ion-item>
+        <ion-item color="dark">
           <ion-badge slot="start" class="item-badge ion-align-self-start">&nbsp;</ion-badge>
           <ion-label>
             <h2>Heading ${item}</h2>
