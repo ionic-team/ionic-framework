@@ -1,10 +1,8 @@
-import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop, readTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Gesture, GestureDetail } from '../../interface';
 
-import { handleToolbarCollapse, handleToolbarPullDown, hideCollapsableButtons, resetElementFixedHeights, resetToolbars, setElOpacity, setElementFixedHeights, toolbarsFullyCollapsed, translateEl } from './header.utils';
-
+import { createHeaderIndex, handleContentScroll, handleToolbarIntersection, setToolbarBorderColor } from './header.utils';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
@@ -17,22 +15,7 @@ import { handleToolbarCollapse, handleToolbarPullDown, hideCollapsableButtons, r
 })
 export class Header implements ComponentInterface {
 
-  private contentEl?: HTMLElement;
-  private scrollEl?: HTMLElement;
-  private gesture?: Gesture;
-
-  private initialHeaderHeight = 0;
-  private initialTransform = 0;
-  private currentTransform = 0;
-
-  private toolbars: any[] = [];
-
-/*
-  private maxTranslate = 1000;
-
-*/
-
-  private minTranslate = 0;
+  private scrollEl?: any;
 
   @Element() el!: HTMLElement;
 
@@ -61,39 +44,7 @@ export class Header implements ComponentInterface {
     const contentEl = tabs ? tabs.querySelector('ion-content') : page!.querySelector('ion-content');
 
     if (canCollapse) {
-      this.toolbars = Array.from(toolbars).map((toolbar, i) => {
-        const ionTitle = toolbar.querySelector('ion-title');
-        const toolbarHeight = toolbar.clientHeight;
-
-        if (i > 0) {
-          this.minTranslate += toolbarHeight;
-        }
-
-        return {
-          el: toolbar as HTMLElement,
-          ionTitleEl: ionTitle,
-          innerTitleEl: (ionTitle) ? ionTitle.shadowRoot!.querySelector('.toolbar-title') : undefined,
-          ionButtonsEl: toolbar.querySelectorAll('ion-buttons'),
-          dimensions: {
-            height: toolbarHeight
-          },
-          position: {
-            y: 0
-          }
-        };
-      });
-
-      this.minTranslate *= -1;
-
       await this.setupCollapsableHeader(contentEl);
-    }
-  }
-
-  componentDidUnload() {
-    this.scrollEl = undefined;
-    if (this.gesture) {
-      this.gesture.destroy();
-      this.gesture = undefined;
     }
   }
 
@@ -102,113 +53,54 @@ export class Header implements ComponentInterface {
 
     await contentEl.componentOnReady();
 
-    this.contentEl = contentEl;
     this.scrollEl = await contentEl.getScrollElement();
-    this.initialHeaderHeight = this.el.clientHeight;
 
-    // TODO: find a better way to do this
-    let zIndex = this.toolbars.length;
-    this.toolbars.forEach(toolbar => {
-      toolbar.el.style.zIndex = zIndex.toString();
-      zIndex -= 1;
-    });
+    const headers = document.querySelectorAll('ion-header');
+    const mainHeader = Array.from(headers).find(header => !header.collapse);
 
-    // Hide title on first primary toolbar
-    setElOpacity(this.toolbars[0].ionTitleEl, 0);
+    readTask(() => {
+      const mainHeaderIndex = createHeaderIndex(mainHeader);
+      const scrollHeaderIndex = createHeaderIndex(this.el);
 
-    hideCollapsableButtons(this.toolbars[0].ionButtonsEl);
+      if (!mainHeaderIndex || !scrollHeaderIndex) { return; }
 
-    // Setup gesture controls
-    this.gesture = (await import('./collapse')).createCollapseGesture(
-      this.scrollEl! as any,
-      () => this.canStart(),
-      () => this.onStart(),
-      (ev: GestureDetail) => this.onMove(ev),
-      () => this.onEnd(),
-    );
-
-    this.gesture.setDisabled(false);
-
-  }
-
-  canStart(): boolean {
-    if (!this.scrollEl) { return false; }
-
-    return true;
-  }
-
-  onStart() {
-    this.initialTransform = this.currentTransform;
-    this.disableContentScroll();
-
-    setElementFixedHeights(this.toolbars.map(t => t.el).concat(this.el));
-  }
-
-  onMove(detail: GestureDetail) {
-    let deltaY = this.initialTransform + Math.ceil(detail.deltaY);
-
-    if (deltaY < this.minTranslate) {
-      deltaY = this.minTranslate;
-    }
-
-    if (toolbarsFullyCollapsed(this.toolbars)) {
-      this.el.classList.add('header-fully-collapsed');
+      // TODO: Find a better way to do this
+      let zIndex = scrollHeaderIndex.toolbars.length;
+      scrollHeaderIndex.toolbars.forEach((toolbar: any) => {
+        toolbar.el.style.zIndex = zIndex.toString();
+        zIndex -= 1;
+      });
 
       /**
-       * If toolbars are fully collapsed do not
-       * let user swipe in a negative direction
+       * Handle interaction between toolbar collapse and
+       * showing/hiding content in the primary ion-header
        */
-      if (deltaY <= this.minTranslate) {
-        return;
+      const toolbarIntersection = (ev: any) => { handleToolbarIntersection(ev, mainHeaderIndex, scrollHeaderIndex); };
+      const intersectionObserver = new IntersectionObserver(toolbarIntersection, { threshold: 0.25 });
+
+      intersectionObserver.observe(scrollHeaderIndex.toolbars[0].el);
+
+      /**
+       * Handle scaling of large iOS titles and
+       * showing/hiding border on last toolbar
+       * in primary header
+       */
+
+      // TODO: Find a better way to do this
+      let remainingHeight = 0;
+      for (let i = 1; i <= scrollHeaderIndex.toolbars.length - 1; i++) {
+        remainingHeight += scrollHeaderIndex.toolbars[i].el.clientHeight;
       }
-    } else {
-      this.el.classList.remove('header-fully-collapsed');
-    }
 
-    // Add resistance when pulling down
-    if (deltaY > 0) {
-      deltaY = deltaY ** 0.85;
-    }
+      const contentScroll = () => { handleContentScroll(this.scrollEl, mainHeaderIndex, scrollHeaderIndex, remainingHeight); };
+      this.scrollEl.addEventListener('scroll', contentScroll);
 
-    this.currentTransform = deltaY;
-
-    let headerHeight = this.initialHeaderHeight;
-    if (deltaY < 0) {
-      handleToolbarCollapse(this.toolbars, deltaY);
-      headerHeight += deltaY;
-    } else {
-      handleToolbarPullDown(this.toolbars, deltaY);
-      translateEl(this.contentEl!, this.currentTransform);
-    }
-
-    this.el.style.height = `${headerHeight}px`;
-
-  }
-
-  onEnd() {
-    this.enableContentScroll();
-    if (this.currentTransform < 0) { return; }
-
-    this.currentTransform = 0;
-
-    requestAnimationFrame(() => {
-      translateEl(this.contentEl!, 0, true);
-      resetToolbars(this.toolbars, true);
-
-      resetElementFixedHeights(this.toolbars.map(t => t.el).concat(this.el));
+      /**
+       * Set the initial state of the collapsable header
+       */
+      const lastMainToolbar = mainHeaderIndex.toolbars[mainHeaderIndex.toolbars.length - 1];
+      setToolbarBorderColor(lastMainToolbar, 'rgba(0, 0, 0, 0)');
     });
-  }
-
-  private disableContentScroll() {
-    if (!this.scrollEl) { return; }
-
-    this.scrollEl.style.setProperty('--overflow', 'hidden');
-  }
-
-  private enableContentScroll() {
-    if (!this.scrollEl) { return; }
-
-    this.scrollEl.style.setProperty('--overflow', 'auto');
   }
 
   hostData() {

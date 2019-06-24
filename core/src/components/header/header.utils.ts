@@ -1,88 +1,114 @@
-import { writeTask } from '@stencil/core';
+import { readTask, writeTask } from '@stencil/core';
 
 const TRANSITION = 'all 0.2s ease-in-out';
-const MAX_TRANSLATE = 500;
-const COLLAPSE_THRESHOLD = 0.25;
 
-export const toolbarsFullyCollapsed = (toolbars: any[] = []): boolean => {
-  return hasToolbarCollapsed(toolbars[1]);
-};
+export const setToolbarBorderColor = (toolbar: any, color: string) => {
+  if (!toolbar) { return; }
 
-export const translateEl = (el: HTMLElement, translateY = 0, transition = false) => {
-  requestAnimationFrame(() => {
-    writeTask(() => {
-      el.style.transition = (transition) ? TRANSITION : '';
-      el.style.transform = `translate3d(0, ${translateY}px, 0)`;
-    });
+  writeTask(() => {
+    toolbar.el.style.setProperty('--border-color', color);
   });
 };
 
-export const hasToolbarCollapsed = (toolbar: any): boolean => {
-  return toolbar.position.y <= -1;
+export const createHeaderIndex = (headerEl: any): any | undefined => {
+  if (!headerEl) { return; }
+
+  const toolbars = headerEl.querySelectorAll('ion-toolbar');
+
+  return {
+    el: headerEl,
+    toolbars: Array.from(toolbars).map((toolbar: any) => {
+      const ionTitleEl = toolbar.querySelector('ion-title');
+      return {
+        el: toolbar,
+        ionTitleEl,
+        innerTitleEl: (ionTitleEl) ? ionTitleEl.shadowRoot!.querySelector('.toolbar-title') : null
+      };
+    })
+  };
 };
 
-const isToolbarWithinThreshold = (toolbar: any, value: number, threshold: number): boolean => {
-  const position = toolbar.position.y;
+export const handleContentScroll = (scrollEl: any, mainHeaderIndex: any, scrollHeaderIndex: any, remainingHeight = 0) => {
+  readTask(() => {
+    const scrollTop = scrollEl.scrollTop;
+    const lastMainToolbar = mainHeaderIndex.toolbars[mainHeaderIndex.toolbars.length - 1];
 
-  return Math.abs(position - value) <= threshold;
+    if (scrollTop === 0) {
+      setToolbarBorderColor(lastMainToolbar, `rgba(0, 0, 0, 0)`);
+      return;
+    }
+
+    const scale = 1 + (-scrollTop / 1000);
+    if (scale <= 1.1) {
+      writeTask(() => {
+        scaleLargeTitles(scrollHeaderIndex.toolbars);
+      });
+    }
+
+    const borderOpacity = (scrollTop - remainingHeight) / lastMainToolbar.el.clientHeight;
+
+    if (borderOpacity >= 0 && borderOpacity <= 1) {
+
+      const maxOpacity = 0.2;
+      const scaledOpacity = borderOpacity * maxOpacity;
+
+      writeTask(() => {
+        setToolbarBorderColor(lastMainToolbar, `rgba(0, 0, 0, ${scaledOpacity})`);
+      });
+    }
+  });
+};
+
+/**
+ * If toolbars are intersecting, hide the scrollable toolbar content
+ * and show the primary toolbar content. If the toolbars are not intersecting,
+ * hide the primary toolbar content and show the scrollable toolbar content
+ */
+export const handleToolbarIntersection = (ev: any, mainHeaderIndex: any, scrollHeaderIndex: any) => {
+  writeTask(() => {
+
+    const mainHeaderToolbars = mainHeaderIndex.toolbars;
+    const lastMainHeaderToolbar = mainHeaderToolbars[mainHeaderToolbars.length - 1];
+
+    if (ev[0].isIntersecting) {
+      makeHeaderInactive(mainHeaderIndex.el, true);
+      makeHeaderActive(scrollHeaderIndex.el, true);
+      setToolbarBorderColor(lastMainHeaderToolbar, 'rgba(0, 0, 0, 0)');
+    } else {
+      makeHeaderActive(mainHeaderIndex.el, true);
+      makeHeaderInactive(scrollHeaderIndex.el, true);
+      setToolbarBorderColor(lastMainHeaderToolbar, 'rgba(0, 0, 0, 0.2)');
+    }
+  });
+};
+
+export const makeHeaderInactive = (header: any, transition = false) => {
+  const headerTitle = header.querySelector('ion-title');
+  if (!headerTitle) { return; }
+
+  setElOpacity(headerTitle, 0, transition);
+
+  const headerButtons = Array.from(header.querySelectorAll('ion-buttons'));
+  if (headerButtons.length === 0) { return; }
+
+  hideCollapsableButtons(headerButtons, transition);
+};
+
+export const makeHeaderActive = (header: any, transition = false) => {
+  const headerTitle = header.querySelector('ion-title');
+  if (!headerTitle) { return; }
+
+  setElOpacity(headerTitle, 1, transition);
+
+  const headerButtons = Array.from(header.querySelectorAll('ion-buttons'));
+  if (headerButtons.length === 0) { return; }
+
+  showCollapsableButtons(headerButtons, transition);
 };
 
 export const setElOpacity = (el: HTMLElement, opacity = 1, transition = false) => {
   el.style.transition = (transition) ? TRANSITION : '';
   el.style.opacity = opacity.toString();
-};
-
-export const resetToolbars = (toolbars: any[] = [], transition = false) => {
-  toolbars.forEach(toolbar => {
-    translateEl(toolbar.el, 0, transition);
-    toolbar.position.y = 0;
-  });
-
-  scaleLargeTitles(toolbars, 1, true);
-};
-
-export const handleToolbarCollapse = (toolbars: any[] = [], deltaY: number) => {
-  let amountAlreadyMoved = 0;
-
-  for (let i = toolbars.length - 1; i > 0; i--) {
-    const toolbar = toolbars[i];
-    const toolbarHeight = toolbar.dimensions.height;
-
-    /**
-     * When deltaY < 0, toolbars should be
-     * stacking/unstacking. If this is the
-     * case, then we need to keep track of the
-     * amount already translated since translations
-     * are relative to the position of each toolbar.
-     */
-    const translate = deltaY + amountAlreadyMoved;
-
-    translateEl(toolbar.el, translate);
-
-    toolbar.position.y = translate / (toolbarHeight);
-
-    toggleToolbarButtonsIfNecessary(toolbar);
-
-    /**
-     * If this current toolbar has not fully
-     * collapsed, we do not want to collapse
-     * any other toolbars until this one
-     * has been completed.
-     */
-    if (!hasToolbarCollapsed(toolbar)) { break; }
-
-    amountAlreadyMoved += toolbarHeight;
-  }
-
-  toggleTitlesIfNecessary(toolbars);
-};
-
-const toggleToolbarButtonsIfNecessary = (toolbar: any) => {
-  if (isToolbarWithinThreshold(toolbar, -1, COLLAPSE_THRESHOLD)) {
-    hideCollapsableButtons(toolbar.ionButtonsEl, true);
-  } else {
-    showCollapsableButtons(toolbar.ionButtonsEl, true);
-  }
 };
 
 export const hideCollapsableButtons = (buttons: any[] = [], transition = false) => {
@@ -101,27 +127,7 @@ const showCollapsableButtons = (buttons: any[] = [], transition = false) => {
   });
 };
 
-export const handleToolbarPullDown = (toolbars: any[] = [], deltaY: number) => {
-  for (let i = toolbars.length - 1; i > 0; i--) {
-    const toolbar = toolbars[i];
-    const translate = deltaY;
-
-    translateEl(toolbar.el, translate);
-
-    toolbar.position.y = translate / toolbar.dimensions.height;
-
-    toggleToolbarButtonsIfNecessary(toolbar);
-  }
-
-  toggleTitlesIfNecessary(toolbars);
-
-  const titleScale = 1 + (deltaY / MAX_TRANSLATE);
-  if (titleScale > 1.1) { return; }
-
-  scaleLargeTitles(toolbars, titleScale);
-};
-
-const scaleLargeTitles = (toolbars: any[] = [], scale = 1, transition = false) => {
+export const scaleLargeTitles = (toolbars: any[] = [], scale = 1, transition = false) => {
   toolbars.forEach(toolbar => {
     const ionTitle = toolbar.ionTitleEl;
     if (!ionTitle || ionTitle.size !== 'large') { return; }
@@ -133,40 +139,4 @@ const scaleLargeTitles = (toolbars: any[] = [], scale = 1, transition = false) =
     titleDiv.style.transition = (transition) ? TRANSITION : '';
     titleDiv.style.transform = `scale3d(${scale}, ${scale}, 1)`;
   });
-};
-
-export const setElementFixedHeights = (els: any[] = []) => {
-  els.forEach(el => {
-    el.style.height = `${el.clientHeight}px`;
-  });
-};
-
-export const resetElementFixedHeights = (els: any[] = []) => {
-  els.forEach(el => {
-    el.style.height = '';
-  });
-};
-
-const toggleTitlesIfNecessary = (toolbars: any[] = []) => {
-  /**
-   * The first collapsable header
-   * typically has a large ion-title in it.
-   * We want to hide that title and show
-   * the title in the main non-collapsable
-   * header when the first collapsable header
-   * is almost collapsed.
-   */
-
-  const collapsableTitle = toolbars[1].ionTitleEl;
-  const primaryTitle = toolbars[0].ionTitleEl;
-
-  if (isToolbarWithinThreshold(toolbars[1], -1, COLLAPSE_THRESHOLD)) {
-    setElOpacity(collapsableTitle, 0, true);
-    setElOpacity(primaryTitle, 1, true);
-    showCollapsableButtons(toolbars[0].ionButtonsEl, true);
-  } else {
-    setElOpacity(collapsableTitle, 1, true);
-    setElOpacity(primaryTitle, 0, true);
-    hideCollapsableButtons(toolbars[0].ionButtonsEl, true);
-  }
 };

@@ -41,38 +41,35 @@
           </ion-button>-->
 <body>
   <ion-app>
-    <ion-header collapse>
-    
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-back-button text="Mailboxes" default-href="/"></ion-back-button>
-        </ion-buttons>
-        
-        <ion-title>Messages</ion-title>
-
-        <ion-buttons slot="end" collapse="true">
-          <ion-button slot="icon-only">
-            <ion-icon name="star"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-      
+    <ion-header>
       <ion-toolbar>      
-        <ion-title size="large">Messages</ion-title>
+        <ion-title>Messages</ion-title>
         
         <ion-buttons slot="end" collapse="true">
           <ion-button slot="icon-only">
             <ion-icon name="star"></ion-icon>
           </ion-button>
         </ion-buttons>
-      </ion-toolbar>
-      
-      <ion-toolbar>
-        <ion-searchbar></ion-searchbar>
       </ion-toolbar>
     </ion-header>
-
+  
     <ion-content id="content">
+      <ion-header collapse>
+        <ion-toolbar>      
+          <ion-title size="large">Messages</ion-title>
+          
+          <ion-buttons slot="end" collapse="true">
+            <ion-button slot="icon-only">
+              <ion-icon name="star"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+        
+        <ion-toolbar>
+          <ion-searchbar></ion-searchbar>
+        </ion-toolbar>
+      </ion-header>
+    
       <ion-list id="dynamicList"></ion-list>
     </ion-content>
   </ion-app>
@@ -93,7 +90,7 @@
 
   <script>
     let items = [];
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 50; i++) {
       items.push(i + 1);
     }
     const list = document.getElementById('dynamicList');
