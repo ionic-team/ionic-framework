@@ -64,11 +64,11 @@ export const VideoExample: React.FunctionComponent = () => (
 
 ## Properties
 
-| Property    | Attribute | Description                                                           | Type                    | Default     |
-| ----------- | --------- | --------------------------------------------------------------------- | ----------------------- | ----------- |
-| `loop`      | `loop`    | Determines if the video should loop endlessly. Defaults to true.      | `boolean \| undefined`  | `true`      |
-| `src`       | `src`     | The video URL. This attribute is mandatory for the <video> element.   | `string \| undefined`   | `undefined` |
-| `threshold` | --        | intersection threshold triggers: >= 0.65 will play < 0.65 will pause. | `number[] \| undefined` | `[0, 0.65]` |
+| Property    | Attribute | Description                                                                                 | Type                    | Default     |
+| ----------- | --------- | ------------------------------------------------------------------------------------------- | ----------------------- | ----------- |
+| `loop`      | `loop`    | Determines if the video should loop endlessly. Defaults to true.                            | `boolean \| undefined`  | `true`      |
+| `src`       | `src`     | The video URL. This attribute is mandatory for the <video> element.                         | `string \| undefined`   | `undefined` |
+| `threshold` | --        | An array that determines the threshold trigger values: >= 0.65 will play < 0.65 will pause. | `number[] \| undefined` | `[0, 0.65]` |
 
 
 ----------------------------------------------

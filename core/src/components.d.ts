@@ -2676,6 +2676,18 @@ export namespace Components {
     */
     'loop'?: boolean | undefined;
     /**
+    * Pauses the video
+    */
+    'pause': () => Promise<void>;
+    /**
+    * Plays the video
+    */
+    'play': () => Promise<void>;
+    /**
+    * Determines at what percent the video should be in the view before playing.
+    */
+    'playThreshold'?: number;
+    /**
     * The video URL. This attribute is mandatory for the <video> element.
     */
     'src'?: string;
@@ -5939,6 +5951,10 @@ declare namespace LocalJSX {
     * Determines if the video should loop endlessly. Defaults to true.
     */
     'loop'?: boolean | undefined;
+    /**
+    * Determines at what percent the video should be in the view before playing.
+    */
+    'playThreshold'?: number;
     /**
     * The video URL. This attribute is mandatory for the <video> element.
     */

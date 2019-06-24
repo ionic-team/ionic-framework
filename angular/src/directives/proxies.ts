@@ -921,7 +921,7 @@ export class IonToolbar {
 proxyInputs(IonToolbar, ['color', 'mode']);
 
 export declare interface IonVideo extends Components.IonVideo {}
-@Component({ selector: 'ion-video', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['loop', 'src'] })
+@Component({ selector: 'ion-video', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['loop', 'playThreshold', 'src'] })
 export class IonVideo {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef) {
@@ -929,4 +929,5 @@ export class IonVideo {
     this.el = r.nativeElement;
   }
 }
-proxyInputs(IonVideo, ['loop', 'src']);
+proxyMethods(IonVideo, ['play', 'pause']);
+proxyInputs(IonVideo, ['loop', 'playThreshold', 'src']);

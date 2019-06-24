@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Prop, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Method, Prop, State, h } from '@stencil/core';
 
 @Component({
   tag: 'ion-video',
@@ -32,19 +32,27 @@ export class Video implements ComponentInterface {
   @Prop() loop ? = true;
 
   /**
-   * An array that determines the threshold trigger values:
-   * >= 0.65 will play
-   * < 0.65 will pause.
+   * Determines at what percent the video should be in the view before playing.
    */
-  private threshold?: number[] = [0, 0.65];
+  @Prop() playThreshold?: number;
 
-  @Watch('src')
-  srcChanged() {
+  /**
+   * The intersectionObserver threshold values.
+   */
+  private threshold?: number[];
+
+  componentDidLoad() {
+    this.setThreshold();
     this.addIO();
   }
 
-  componentDidLoad() {
-    this.addIO();
+  private setThreshold() {
+
+    // Ensure that the threshold is valid.
+    if (this.playThreshold === undefined || this.playThreshold < 0 || this.playThreshold > 1) {
+      this.playThreshold = 0.65;
+    }
+    this.threshold = [0, this.playThreshold];
   }
 
   private addIO() {
@@ -58,22 +66,14 @@ export class Video implements ComponentInterface {
         // of the element we are observing
         // we can just use data[0]
 
-        // Suppress possible null check for threshold.
-        if (this.threshold === undefined || this.threshold.length === 0) {
-          return console.error('IonVideo: Threshold must contain array of values between 0 and 1.0');
-        }
-
         // Check if we should play the video.
-        const shouldPlay = data[0].intersectionRatio >= this.threshold[this.threshold.length - 1];
+        const shouldPlay = data[0].intersectionRatio >= this.playThreshold!;
 
         // Determine if the video state has changed to avoid useless operations.
         if (shouldPlay !== this.playing) {
 
-          // Grab the shadowRoot video element.
-          const video = data[0].target.shadowRoot.lastChild;
-
           // Play or Pause as necessary.
-          shouldPlay ? video.play() : video.pause();
+          shouldPlay ? this.play() : this.pause();
 
           // Update video state.
           this.playing = shouldPlay;
@@ -84,11 +84,34 @@ export class Video implements ComponentInterface {
     }
   }
 
+  private getVideoElement() {
+    // Grab the shadowRoot video element.
+    return this.el.shadowRoot!.lastChild;
+  }
+
   private removeIO() {
     if (this.io) {
       this.io.disconnect();
       this.io = undefined;
     }
+  }
+
+  /**
+   * Plays the video
+   */
+  @Method()
+  async play() {
+    const vid: any = this.getVideoElement();
+    vid.play();
+  }
+
+  /**
+   * Pauses the video
+   */
+  @Method()
+  async pause() {
+    const vid: any = this.getVideoElement();
+    vid.pause();
   }
 
   render() {
