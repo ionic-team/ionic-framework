@@ -262,6 +262,13 @@ export class Datetime implements ComponentInterface {
     picker.addEventListener('ionPickerColChange', async (event: any) => {
       const data = event.detail;
 
+      /**
+       * Don't bother checking for AM / PM as it won't change the number of columns
+       */
+      if (data.name === 'ampm') {
+        return;
+      }
+
       const colSelectedIndex = data.selectedIndex;
       const colOptions = data.options;
 
