@@ -97,6 +97,9 @@ kill its performance is to perform any DOM operations within section header
 and footer functions. These functions are called for every record in the
 dataset, so please make sure they're performant.
 
+## React
+
+The Virtual Scroll component is not supported in React.
 
 <!-- Auto Generated Below -->
 
@@ -240,76 +243,6 @@ within a `<div>` is a safe way to make sure dimensions are measured correctly.
 ```
 
 
-### React
-
-```tsx
-import React from 'react';
-
-import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonVirtualScroll } from '@ionic/react';
-
-let rotateImg = 0;
-const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, seddo eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
-
-const images = [
-  'bandit',
-  'batmobile',
-  'blues-brothers',
-  'bueller',
-  'delorean',
-  'eleanor',
-  'general-lee',
-  'ghostbusters',
-  'knight-rider',
-  'mirth-mobile'
-];
-
-function getImgSrc() {
-  const src = 'https://dummyimage.com/600x400/${Math.round( Math.random() * 99999)}/fff.png';
-  rotateImg++;
-  if (rotateImg === images.length) {
-    rotateImg = 0;
-  }
-  return src;
-}
-
-const items: any[] = [];
-
-for (let i = 0; i < 1000; i++) {
-  items.push({
-    name: i + ' - ' + images[rotateImg],
-    imgSrc: getImgSrc(),
-    avatarSrc: getImgSrc(),
-    imgHeight: Math.floor(Math.random() * 50 + 150),
-    content: lorem.substring(0, Math.random() * (lorem.length - 100) + 100)
-  });
-
-  rotateImg++;
-  if (rotateImg === images.length) {
-    rotateImg = 0;
-  }
-}
-
-const Example: React.SFC<{}> = () => (
-
-  <IonContent>
-    <IonVirtualScroll items="items" approxItemHeight="320px">
-      <IonCard virtualItem="let item; let itemBounds = bounds;">
-        <div>
-          <img src="item.imgSrc" height="item.imgHeight" alt="item.name" />
-        </div>
-        <IonCardHeader>
-          <IonCardTitle>{{ name }}</IonCardTitle>
-        </IonCardHeader>
-        <IonCardContent>{{ content }}</IonCardContent>
-      </IonCard>
-    </IonVirtualScroll>
-  </IonContent>
-);
-
-export default Example;
-```
-
-
 
 ## Properties
 
@@ -330,49 +263,38 @@ export default Example;
 
 ## Methods
 
-### `checkEnd() => void`
+### `checkEnd() => Promise<void>`
 
-Marks the tail of the items array as dirty, so they can be re-rendered.
-It's equivalent to calling `checkRange(length)` where `length` is the
-total length of the items.
+This method marks the tail the items array as dirty, so they can be re-rendered.
 
-#### Returns
+It's equivalent to calling:
 
-Type: `void`
-
-
-
-### `checkRange(offset: number, length?: number) => void`
-
-Marks a subset of the items as dirty so they can be re-rendered.
-Items should be marked as dirty any time the content or their style changes.
-
-The subset of items to be updated are specified by an offset and a length.
-If a length is not provided it will check all of the items beginning at
-the offset.
-
-#### Parameters
-
-| Name     | Type     | Description                                   |
-| -------- | -------- | --------------------------------------------- |
-| `offset` | `number` | The index of the item to start marking dirty. |
-| `length` | `number` | The number of items to mark dirty.            |
+```js
+virtualScroll.checkRange(lastItemLen);
+```
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
+
+
+
+### `checkRange(offset: number, len?: number) => Promise<void>`
+
+This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as
+dirty any time the content or their style changes.
+
+The subset of items to be updated can are specifing by an offset and a length.
+
+#### Returns
+
+Type: `Promise<void>`
 
 
 
 ### `positionForItem(index: number) => Promise<number>`
 
 Returns the position of the virtual item at the given index.
-
-#### Parameters
-
-| Name    | Type     | Description            |
-| ------- | -------- | ---------------------- |
-| `index` | `number` | The index of the item. |
 
 #### Returns
 

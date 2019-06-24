@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Listen, Prop, h } from '@stencil/core';
 
-import { Mode, SelectPopoverOption } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { SelectPopoverOption } from '../../interface';
 
 /**
  * @internal
@@ -11,8 +12,6 @@ import { Mode, SelectPopoverOption } from '../../interface';
   scoped: true
 })
 export class SelectPopover implements ComponentInterface {
-
-  mode!: Mode;
 
   /** Header text for the popover */
   @Prop() header?: string;
@@ -35,9 +34,10 @@ export class SelectPopover implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getIonMode(this);
     return {
       class: {
-        [`${this.mode}`]: true,
+        [mode]: true,
       }
     };
   }

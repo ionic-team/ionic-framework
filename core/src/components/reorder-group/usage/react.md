@@ -1,9 +1,9 @@
 ```tsx
 import React from 'react';
+import { IonItem, IonLabel, IonReorder, IonReorderGroup, IonIcon, IonContent } from '@ionic/react';
+import { ItemReorderEventDetail } from '@ionic/core';
 
-import { IonItem, IonLabel, IonReorder, IonReorderGroup, IonIcon } from '@ionic/react';
-
-function doReorder(event: CustomEvent) {
+function doReorder(event: CustomEvent<ItemReorderEventDetail>) {
   // The `from` and `to` properties contain the index of the item
   // when the drag started and ended, respectively
   console.log('Dragged from index', event.detail.from, 'to', event.detail.to);
@@ -14,81 +14,62 @@ function doReorder(event: CustomEvent) {
   event.detail.complete();
 }
 
-const Example: React.SFC<{}> = () => (
-  <>
+export const ReorderGroupExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- The reorder gesture is disabled by default, enable it to drag and drop items --*/}
     <IonReorderGroup disabled={false} onIonItemReorder={doReorder}>
       {/*-- Default reorder icon, end aligned items --*/}
       <IonItem>
-        <IonLabel>
-          Item 1
-        </IonLabel>
-        <IonReorder slot="end"></IonReorder>
+        <IonLabel>Item 1</IonLabel>
+        <IonReorder slot="end" />
       </IonItem>
 
       <IonItem>
-        <IonLabel>
-          Item 2
-        </IonLabel>
-        <IonReorder slot="end"></IonReorder>
+        <IonLabel>Item 2</IonLabel>
+        <IonReorder slot="end" />
       </IonItem>
 
       {/*-- Default reorder icon, start aligned items --*/}
       <IonItem>
-        <IonReorder slot="start"></IonReorder>
-        <IonLabel>
-          Item 3
-        </IonLabel>
+        <IonReorder slot="start" />
+        <IonLabel>Item 3</IonLabel>
       </IonItem>
 
       <IonItem>
-        <IonReorder slot="start"></IonReorder>
-        <IonLabel>
-          Item 4
-        </IonLabel>
+        <IonReorder slot="start" />
+        <IonLabel>Item 4</IonLabel>
       </IonItem>
 
       {/*-- Custom reorder icon end items --*/}
       <IonItem>
-        <IonLabel>
-          Item 5
-        </IonLabel>
+        <IonLabel>Item 5</IonLabel>
         <IonReorder slot="end">
-          <IonIcon name="pizza"></IonIcon>
+          <IonIcon name="pizza" />
         </IonReorder>
       </IonItem>
 
       <IonItem>
-        <IonLabel>
-          Item 6
-        </IonLabel>
+        <IonLabel>Item 6</IonLabel>
         <IonReorder slot="end">
-          <IonIcon name="pizza"></IonIcon>
+          <IonIcon name="pizza" />
         </IonReorder>
       </IonItem>
 
       {/*-- Items wrapped in a reorder, entire item can be dragged --*/}
       <IonReorder>
         <IonItem>
-          <IonLabel>
-            Item 7
-          </IonLabel>
+          <IonLabel>Item 7</IonLabel>
         </IonItem>
       </IonReorder>
 
       <IonReorder>
         <IonItem>
-          <IonLabel>
-            Item 8
-          </IonLabel>
+          <IonLabel>Item 8</IonLabel>
         </IonItem>
       </IonReorder>
     </IonReorderGroup>
-  </>
-  }
+  </IonContent>
 );
-
-export default Example
 ```
 
 #### Updating Data

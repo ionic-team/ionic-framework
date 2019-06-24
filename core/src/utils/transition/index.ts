@@ -1,4 +1,4 @@
-import { QueueApi } from '@stencil/core';
+import { writeTask } from '@stencil/core';
 
 import { LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '../../components/nav/constants';
 import { Animation, AnimationBuilder, NavDirection, NavOptions } from '../../interface';
@@ -8,7 +8,7 @@ const mdTransitionAnimation = () => import('./md.transition');
 
 export function transition(opts: TransitionOptions): Promise<TransitionResult> {
   return new Promise((resolve, reject) => {
-    opts.queue.write(() => {
+    writeTask(() => {
       beforeTransition(opts);
       runTransition(opts).then(result => {
         if (result.animation) {
@@ -214,9 +214,7 @@ function setZIndex(
 }
 
 export interface TransitionOptions extends NavOptions {
-  queue: QueueApi;
   progressCallback?: ((ani: Animation | undefined) => void);
-  window: Window;
   baseEl: any;
   enteringEl: HTMLElement;
   leavingEl: HTMLElement | undefined;
