@@ -74,5 +74,6 @@ d.IonApp,
   d.IonThumbnail,
   d.IonTitle,
   d.IonToggle,
-  d.IonToolbar
+  d.IonToolbar,
+  d.IonVideo
 ];

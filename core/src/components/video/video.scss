@@ -1,0 +1,15 @@
+:host {
+  display: block;
+
+  object-fit: fill;
+}
+
+video {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: inherit;
+  object-position: inherit;
+}

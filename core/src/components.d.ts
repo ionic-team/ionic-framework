@@ -2670,6 +2670,20 @@ export namespace Components {
     */
     'mode'?: "ios" | "md";
   }
+  interface IonVideo {
+    /**
+    * Determines if the video should loop endlessly. Defaults to true.
+    */
+    'loop'?: boolean | undefined;
+    /**
+    * The video URL. This attribute is mandatory for the <video> element.
+    */
+    'src'?: string;
+    /**
+    * intersection threshold triggers: >= 0.65 will play < 0.65 will pause.
+    */
+    'threshold'?: number[] | undefined;
+  }
   interface IonVirtualScroll {
     /**
     * The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
@@ -3310,6 +3324,12 @@ declare global {
     new (): HTMLIonToolbarElement;
   };
 
+  interface HTMLIonVideoElement extends Components.IonVideo, HTMLStencilElement {}
+  var HTMLIonVideoElement: {
+    prototype: HTMLIonVideoElement;
+    new (): HTMLIonVideoElement;
+  };
+
   interface HTMLIonVirtualScrollElement extends Components.IonVirtualScroll, HTMLStencilElement {}
   var HTMLIonVirtualScrollElement: {
     prototype: HTMLIonVirtualScrollElement;
@@ -3412,6 +3432,7 @@ declare global {
     'ion-toast-controller': HTMLIonToastControllerElement;
     'ion-toggle': HTMLIonToggleElement;
     'ion-toolbar': HTMLIonToolbarElement;
+    'ion-video': HTMLIonVideoElement;
     'ion-virtual-scroll': HTMLIonVirtualScrollElement;
   }
 }
@@ -5917,6 +5938,20 @@ declare namespace LocalJSX {
     */
     'mode'?: "ios" | "md";
   }
+  interface IonVideo extends JSXBase.HTMLAttributes<HTMLIonVideoElement> {
+    /**
+    * Determines if the video should loop endlessly. Defaults to true.
+    */
+    'loop'?: boolean | undefined;
+    /**
+    * The video URL. This attribute is mandatory for the <video> element.
+    */
+    'src'?: string;
+    /**
+    * intersection threshold triggers: >= 0.65 will play < 0.65 will pause.
+    */
+    'threshold'?: number[] | undefined;
+  }
   interface IonVirtualScroll extends JSXBase.HTMLAttributes<HTMLIonVirtualScrollElement> {
     /**
     * The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
@@ -6061,6 +6096,7 @@ declare namespace LocalJSX {
     'ion-toast-controller': IonToastController;
     'ion-toggle': IonToggle;
     'ion-toolbar': IonToolbar;
+    'ion-video': IonVideo;
     'ion-virtual-scroll': IonVirtualScroll;
   }
 }
