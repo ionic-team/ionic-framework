@@ -1262,8 +1262,10 @@ ion-toolbar,css-prop,--padding-top
 
 ion-video,shadow
 ion-video,prop,loop,boolean | undefined,true,false,false
+ion-video,prop,playThreshold,number | undefined,undefined,false,false
 ion-video,prop,src,string | undefined,undefined,false,false
-ion-video,prop,threshold,number[] | undefined,[0, 0.65],false,false
+ion-video,method,pause,pause() => Promise<void>
+ion-video,method,play,play() => Promise<void>
 
 ion-virtual-scroll,none
 ion-virtual-scroll,prop,approxFooterHeight,number,30,false,false
