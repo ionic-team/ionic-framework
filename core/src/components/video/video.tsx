@@ -32,11 +32,11 @@ export class Video implements ComponentInterface {
   @Prop() loop ? = true;
 
   /**
-   * intersection threshold triggers:
+   * An array that determines the threshold trigger values:
    * >= 0.65 will play
    * < 0.65 will pause.
    */
-  @Prop() threshold ? = [0, 0.65];
+  private threshold?: number[] = [0, 0.65];
 
   @Watch('src')
   srcChanged() {
@@ -58,8 +58,13 @@ export class Video implements ComponentInterface {
         // of the element we are observing
         // we can just use data[0]
 
+        // Suppress possible null check for threshold.
+        if (this.threshold === undefined || this.threshold.length === 0) {
+          return console.error('IonVideo: Threshold must contain array of values between 0 and 1.0');
+        }
+
         // Check if we should play the video.
-        const shouldPlay = data[0].intersectionRatio > 0.65;
+        const shouldPlay = data[0].intersectionRatio >= this.threshold[this.threshold.length - 1];
 
         // Determine if the video state has changed to avoid useless operations.
         if (shouldPlay !== this.playing) {
@@ -67,7 +72,7 @@ export class Video implements ComponentInterface {
           // Grab the shadowRoot video element.
           const video = data[0].target.shadowRoot.lastChild;
 
-          // Play or Pause if necessary.
+          // Play or Pause as necessary.
           shouldPlay ? video.play() : video.pause();
 
           // Update video state.

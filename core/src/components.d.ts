@@ -2679,10 +2679,6 @@ export namespace Components {
     * The video URL. This attribute is mandatory for the <video> element.
     */
     'src'?: string;
-    /**
-    * intersection threshold triggers: >= 0.65 will play < 0.65 will pause.
-    */
-    'threshold'?: number[] | undefined;
   }
   interface IonVirtualScroll {
     /**
@@ -5947,10 +5943,6 @@ declare namespace LocalJSX {
     * The video URL. This attribute is mandatory for the <video> element.
     */
     'src'?: string;
-    /**
-    * intersection threshold triggers: >= 0.65 will play < 0.65 will pause.
-    */
-    'threshold'?: number[] | undefined;
   }
   interface IonVirtualScroll extends JSXBase.HTMLAttributes<HTMLIonVirtualScrollElement> {
     /**
