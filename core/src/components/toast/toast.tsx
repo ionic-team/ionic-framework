@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, Color, Config, CssClassMap, OverlayEventDetail, OverlayInterface, ToastButton } from '../../interface';
+import { Animation, AnimationBuilder, Color, CssClassMap, OverlayEventDetail, OverlayInterface, ToastButton } from '../../interface';
 import { dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses, getClassMap } from '../../utils/theme';
@@ -31,8 +31,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
   mode = getIonMode(this);
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'config' }) config!: Config;
 
   /**
    * @internal
@@ -233,7 +231,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
         zIndex: 60000 + this.overlayIndex,
       },
       class: {
-        [`${mode}`]: true,
+        [mode]: true,
 
         ...createColorClasses(this.color),
         ...getClassMap(this.cssClass),

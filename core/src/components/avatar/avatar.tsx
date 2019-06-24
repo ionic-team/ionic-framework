@@ -17,7 +17,7 @@ export class Avatar implements ComponentInterface {
 
     return {
       class: {
-        [`${mode}`]: true,
+        [mode]: true,
       }
     };
   }

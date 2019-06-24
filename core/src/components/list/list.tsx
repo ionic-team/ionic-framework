@@ -45,7 +45,7 @@ export class List implements ComponentInterface {
     const mode = getIonMode(this);
     return {
       class: {
-        [`${mode}`]: true,
+        [mode]: true,
 
         // Used internally for styling
         [`list-${mode}`]: true,

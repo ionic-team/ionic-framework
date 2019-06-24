@@ -1,7 +1,8 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch, h } from '@stencil/core';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Color, Config, SearchbarChangeEventDetail } from '../../interface';
+import { Color, SearchbarChangeEventDetail } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses } from '../../utils/theme';
@@ -24,9 +25,6 @@ export class Searchbar implements ComponentInterface {
   private shouldAlignLeft = true;
 
   @Element() el!: HTMLIonSearchbarElement;
-
-  @Prop({ context: 'config' }) config!: Config;
-  @Prop({ context: 'document' }) doc!: Document;
 
   @State() focused = false;
   @State() noAnimate = true;
@@ -390,14 +388,14 @@ export class Searchbar implements ComponentInterface {
   }
 
   hostData() {
-    const animated = this.animated && this.config.getBoolean('animated', true);
+    const animated = this.animated && config.getBoolean('animated', true);
     const mode = getIonMode(this);
 
     return {
       'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...createColorClasses(this.color),
-        [`${mode}`]: true,
+        [mode]: true,
         'searchbar-animated': animated,
         'searchbar-disabled': this.disabled,
         'searchbar-no-animate': animated && this.noAnimate,

@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
@@ -32,8 +32,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
   mode = getIonMode(this);
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'config' }) config!: Config;
 
   /** @internal */
   @Prop() overlayIndex!: number;
@@ -195,7 +193,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       'no-router': true,
       'aria-modal': 'true',
       class: {
-        [`${mode}`]: true,
+        [mode]: true,
         ...getClassMap(this.cssClass)
       },
       style: {
@@ -208,7 +206,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const mode = getIonMode(this);
     const dialogClasses = {
       [`modal-wrapper`]: true,
-      [`${mode}`]: true,
+      [mode]: true,
     };
 
     return [

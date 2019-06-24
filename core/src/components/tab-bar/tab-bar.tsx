@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, TabBarChangedEventDetail } from '../../interface';
@@ -18,9 +18,6 @@ import { createColorClasses } from '../../utils/theme';
 export class TabBar implements ComponentInterface {
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'document' }) doc!: Document;
 
   @State() keyboardVisible = false;
 
@@ -74,7 +71,7 @@ export class TabBar implements ComponentInterface {
       'aria-hidden': keyboardVisible ? 'true' : null,
       class: {
         ...createColorClasses(color),
-        [`${mode}`]: true,
+        [mode]: true,
         'tab-bar-translucent': translucent,
         'tab-bar-hidden': keyboardVisible,
       }

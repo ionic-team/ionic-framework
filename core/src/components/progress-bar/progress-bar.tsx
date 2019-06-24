@@ -1,7 +1,8 @@
 import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Color, Config } from '../../interface';
+import { Color } from '../../interface';
 import { clamp } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
@@ -17,8 +18,6 @@ import { createColorClasses } from '../../utils/theme';
   shadow: true
 })
 export class ProgressBar implements ComponentInterface {
-
-  @Prop({ context: 'config' }) config!: Config;
 
   /**
    * The state of the progress bar, based on if the time the process takes is known or not.
@@ -53,7 +52,7 @@ export class ProgressBar implements ComponentInterface {
 
   hostData() {
     const { color, type, reversed, value } = this;
-    const paused = this.config.getBoolean('_testing');
+    const paused = config.getBoolean('_testing');
     const mode = getIonMode(this);
     return {
       'role': 'progressbar',
@@ -62,7 +61,7 @@ export class ProgressBar implements ComponentInterface {
       'aria-valuemax': 1,
       class: {
         ...createColorClasses(color),
-        [`${mode}`]: true,
+        [mode]: true,
         [`progress-bar-${type}`]: true,
         'progress-paused': paused,
         'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed

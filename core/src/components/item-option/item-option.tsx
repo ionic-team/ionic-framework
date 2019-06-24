@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Listen, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
@@ -76,58 +76,55 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
-  @Listen('click')
-  onClick(ev: Event) {
+  private onClick = (ev: Event) => {
     const el = (ev.target as HTMLElement).closest('ion-item-option');
     if (el) {
       ev.preventDefault();
     }
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-    const { disabled, expandable } = this;
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        [`${mode}`]: true,
-
-        'item-option-disabled': disabled,
-        'item-option-expandable': expandable,
-        'ion-activatable': true,
-      }
-    };
-  }
-
   render() {
-    const TagType = this.href === undefined ? 'button' : 'a' as any;
+    const { disabled, expandable, href } = this;
+    const TagType = href === undefined ? 'button' : 'a' as any;
     const mode = getIonMode(this);
     const attrs = (TagType === 'button')
-    ? { type: this.type }
-    : {
-      download: this.download,
-      href: this.href,
-      target: this.target
-    };
+      ? { type: this.type }
+      : {
+        download: this.download,
+        href: this.href,
+        target: this.target
+      };
 
     return (
-      <TagType
-        {...attrs}
-        class="button-native"
-        disabled={this.disabled}
+      <Host
+        onClick={this.onClick}
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+
+          'item-option-disabled': disabled,
+          'item-option-expandable': expandable,
+          'ion-activatable': true,
+        }}
       >
-        <span class="button-inner">
-          <slot name="top"></slot>
-          <div class="horizontal-wrapper">
-            <slot name="start"></slot>
-            <slot name="icon-only"></slot>
-            <slot></slot>
-            <slot name="end"></slot>
-          </div>
-          <slot name="bottom"></slot>
-        </span>
-        {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-      </TagType>
+        <TagType
+          {...attrs}
+          class="button-native"
+          disabled={disabled}
+        >
+          <span class="button-inner">
+            <slot name="top"></slot>
+            <div class="horizontal-wrapper">
+              <slot name="start"></slot>
+              <slot name="icon-only"></slot>
+              <slot></slot>
+              <slot name="end"></slot>
+            </div>
+            <slot name="bottom"></slot>
+          </span>
+          {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+        </TagType>
+      </Host>
     );
   }
 }

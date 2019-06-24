@@ -29,7 +29,7 @@ export class ListHeader implements ComponentInterface {
     return {
       class: {
         ...createColorClasses(this.color),
-        [`${mode}`]: true,
+        [mode]: true,
       }
     };
   }
