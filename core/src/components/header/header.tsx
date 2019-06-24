@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Prop, readTask } from '@stencil
 
 import { getIonMode } from '../../global/ionic-global';
 
-import { createHeaderIndex, handleContentScroll, handleToolbarIntersection, setToolbarBorderColor } from './header.utils';
+import { createHeaderIndex, handleContentScroll, handleToolbarIntersection, makeHeaderInactive, setToolbarBorderColor } from './header.utils';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
@@ -68,6 +68,8 @@ export class Header implements ComponentInterface {
       const scrollHeaderIndex = createHeaderIndex(this.el);
 
       if (!mainHeaderIndex || !scrollHeaderIndex) { return; }
+
+      makeHeaderInactive(mainHeaderIndex, false);
 
       // TODO: Find a better way to do this
       let zIndex = scrollHeaderIndex.toolbars.length - 1;

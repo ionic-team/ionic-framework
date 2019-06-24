@@ -37,7 +37,6 @@ export const handleContentScroll = (scrollEl: any, mainHeaderIndex: any, scrollH
 
     const scale = 1 + (-scrollTop / 500);
     if (scale <= 1.1 && scale >= 1) {
-      console.log(scale, scrollTop);
       writeTask(() => {
         scaleLargeTitles(scrollHeaderIndex.toolbars, scale);
       });
