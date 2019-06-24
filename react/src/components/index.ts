@@ -1,6 +1,7 @@
 
 import { defineCustomElements } from '@ionic/core/loader';
 export { AlertButton, AlertInput } from '@ionic/core';
+export { IonApp } from './IonApp'
 export * from './proxies';
 
 // createControllerComponent
@@ -17,8 +18,14 @@ export { IonPopover } from './IonPopover';
 export { IonPage } from './IonPage';
 export { IonTabs } from './navigation/IonTabs';
 export { IonTabBar } from './navigation/IonTabBar';
-export { IonRouterOutlet } from './navigation/IonRouterOutlet';
 export { IonBackButton } from './navigation/IonBackButton';
-export { IonRouterWrapped as IonRouter } from './navigation/IonRouter';
+
+// Routing
+export { IonRouterOutlet } from './navigation/routing/IonRouterOutlet';
+export { IonReactRouterWrapped as IonReactRouter } from './navigation/routing/ReactRouter/IonReactRouter';
+
+// Ionic Context
+export { IonicContext } from './utils/IonicContext';
+export { useIonicConfig } from './utils/utilHooks';
 
 defineCustomElements(window);
