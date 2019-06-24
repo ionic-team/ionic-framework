@@ -2,6 +2,10 @@
 
 Video is a tag that will play/pause the video as it hits the desired threshold. The component uses [Intersection Observer](https://caniuse.com/#feat=intersectionobserver) internally, which is supported in most modern browsers.
 
+Requires the following `config.xml` preference
+
+`<preference name=”AllowInlineMediaPlayback” value=”true” />` 
+
 <!-- Auto Generated Below -->
 
 
