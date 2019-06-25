@@ -27,10 +27,10 @@ export function createReactComponent<PropType, ElementType>(tagName: string, att
     }
 
     componentDidMount() {
-      this.componentWillReceiveProps(this.props);
+      this.componentDidUpdate(this.props);
     }
 
-    componentWillReceiveProps(props: InternalProps) {
+    componentDidUpdate(props: InternalProps) {
       const node = ReactDom.findDOMNode(this) as HTMLElement;
       attachEventProps(node, props, this.props);
     }
