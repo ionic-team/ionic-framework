@@ -9,7 +9,7 @@ export const config: Config = {
   bundles: [
     { components: ['ion-action-sheet'] },
     { components: ['ion-alert'] },
-    { components: ['ion-anchor', 'ion-back-button'] },
+    { components: ['ion-back-button'] },
     { components: ['ion-app', 'ion-buttons', 'ion-content', 'ion-footer', 'ion-header', 'ion-title', 'ion-toolbar'] },
     { components: ['ion-avatar', 'ion-badge', 'ion-thumbnail'] },
     { components: ['ion-backdrop'] },
@@ -118,6 +118,7 @@ export const config: Config = {
         'ion-router',
         'ion-route',
         'ion-route-redirect',
+        'ion-router-link',
         'ion-router-outlet',
         'ion-anchor',
 

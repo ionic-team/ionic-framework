@@ -665,17 +665,6 @@ export class IonRippleEffect {
 proxyMethods(IonRippleEffect, ['addRipple']);
 proxyInputs(IonRippleEffect, ['type']);
 
-export declare interface IonRouterLink extends Components.IonRouterLink {}
-@Component({ selector: 'ion-router-link', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'href', 'rel', 'routerDirection'] })
-export class IonRouterLink {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
-    c.detach();
-    this.el = r.nativeElement;
-  }
-}
-proxyInputs(IonRouterLink, ['color', 'href', 'rel', 'routerDirection']);
-
 export declare interface IonRow extends Components.IonRow {}
 @Component({ selector: 'ion-row', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>' })
 export class IonRow {
