@@ -360,6 +360,7 @@ ion-fab-button,event,ionFocus,void,true
 ion-fab-button,css-prop,--background
 ion-fab-button,css-prop,--background-activated
 ion-fab-button,css-prop,--background-focused
+ion-fab-button,css-prop,--background-hover
 ion-fab-button,css-prop,--border-color
 ion-fab-button,css-prop,--border-radius
 ion-fab-button,css-prop,--border-style
@@ -368,6 +369,7 @@ ion-fab-button,css-prop,--box-shadow
 ion-fab-button,css-prop,--color
 ion-fab-button,css-prop,--color-activated
 ion-fab-button,css-prop,--color-focused
+ion-fab-button,css-prop,--color-hover
 ion-fab-button,css-prop,--padding-bottom
 ion-fab-button,css-prop,--padding-end
 ion-fab-button,css-prop,--padding-start
