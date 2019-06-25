@@ -1,0 +1,6 @@
+{
+  "name": "@ionic/angular/server",
+  "private": true,
+  "main": "index.js",
+  "types": "index.d.ts"
+}
