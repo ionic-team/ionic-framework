@@ -5,8 +5,8 @@
 
 :host {
   /**
-   * @prop --background: Background of the anchor
-   * @prop --color: Text color of the anchor
+   * @prop --background: Background of the router link
+   * @prop --color: Text color of the router link
    */
   --background: transparent;
   --color: #{ion-color(primary, base)};
