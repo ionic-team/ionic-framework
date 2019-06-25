@@ -27,6 +27,9 @@ $fab-md-list-button-background-color:             ion-color(light, base) !defaul
 /// @prop - Background color of the activated button in a list
 $fab-md-list-button-background-color-activated:   ion-color(light, shade) !default;
 
+/// @prop - Background color of the activated button in a list
+$fab-md-list-button-background-color-hover:       ion-color(light, tint) !default;
+
 /// @prop - Text color of the button in a list
 $fab-md-list-button-text-color:                   rgba(var(--ion-text-color-rgb, $text-color-rgb), 0.54) !default;
 
