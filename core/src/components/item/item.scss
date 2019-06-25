@@ -145,11 +145,6 @@
   color: var(--color-activated);
 }
 
-:host(.ion-color.activated) .item-native {
-  background: current-color(shade);
-  color: current-color(contrast);
-}
-
 
 // Item: Disabled
 // --------------------------------------------------

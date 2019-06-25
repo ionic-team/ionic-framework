@@ -39,6 +39,11 @@
   color: var(--color-focused);
 }
 
+:host(.ion-color.activated) .item-native {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
 :host(.ion-color.ion-focused.activated) .item-native {
   background: current-color(shade);
   color: current-color(contrast);

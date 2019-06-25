@@ -32,6 +32,11 @@
   --transition: none;
 }
 
+:host(.ion-color.activated) .item-native {
+  background: current-color(shade);
+  color: current-color(contrast);
+}
+
 @media (any-hover: hover) {
   :host(.activated.ion-activatable:hover) .item-native {
     background: var(--background-activated);
