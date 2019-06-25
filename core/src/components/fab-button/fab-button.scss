@@ -244,3 +244,12 @@
 ion-ripple-effect {
   color: var(--ripple-color);
 }
+
+// Translucent FAB button
+// --------------------------------------------------
+
+@supports (backdrop-filter: blur(0)) {
+  :host(.fab-button-translucent) .button-native {
+    backdrop-filter: var(--backdrop-filter);
+  }
+}

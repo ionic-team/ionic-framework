@@ -815,7 +815,7 @@ export namespace Components {
     */
     'target': string | undefined;
     /**
-    * If `true`, the fab button will be translucent.
+    * If `true`, the fab button will be translucent. Only applies to `ios` mode on devices that support [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent': boolean;
     /**
@@ -4160,7 +4160,7 @@ declare namespace LocalJSX {
     */
     'target'?: string | undefined;
     /**
-    * If `true`, the fab button will be translucent.
+    * If `true`, the fab button will be translucent. Only applies to `ios` mode on devices that support [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent'?: boolean;
     /**
