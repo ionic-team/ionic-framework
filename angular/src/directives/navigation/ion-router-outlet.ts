@@ -94,7 +94,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     if ((this.nativeEl as any).componentOnReady) {
       this.nativeEl.componentOnReady().then(() => {
         if (this._swipeGesture === undefined) {
-          this.swipeGesture = this.config.getBoolean('swipeBackEnabled', this.nativeEl.mode === 'ios');
+          this.swipeGesture = this.config.getBoolean('swipeBackEnabled', (this.nativeEl as any).mode === 'ios');
         }
       });
     }

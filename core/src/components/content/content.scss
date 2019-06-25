@@ -5,15 +5,19 @@
 
 :host {
   /**
-   * @prop --background: Background of the Content
-   * @prop --color: Color of the Content
-   * @prop --padding-top: Padding top of the Content
-   * @prop --padding-bottom: Padding bottom of the Content
-   * @prop --padding-start: Padding start of the Content
-   * @prop --padding-end: Padding end of the Content
-   * @prop --keyboard-offset: Keyboard offset of the Content
-   * @prop --offset-top: Offset top of the Content
-   * @prop --offset-bottom: Offset bottom of the Content
+   * @prop --background: Background of the content
+   *
+   * @prop --color: Color of the content
+   *
+   * @prop --padding-top: Top padding of the content
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the content
+   * @prop --padding-bottom: Bottom padding of the content
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the content
+   *
+   * @prop --keyboard-offset: Keyboard offset of the content
+   *
+   * @prop --offset-top: Offset top of the content
+   * @prop --offset-bottom: Offset bottom of the content
    */
   --background: #{$background-color};
   --color: #{$text-color};

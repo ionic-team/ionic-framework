@@ -7,7 +7,7 @@ export class NavPop implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
-  @Listen('child:click')
+  @Listen('click')
   pop() {
     const nav = this.el.closest('ion-nav');
     if (nav) {

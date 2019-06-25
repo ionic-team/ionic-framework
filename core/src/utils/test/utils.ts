@@ -143,8 +143,7 @@ export async function checkComponentModeClasses(el: E2EElement, selector?: strin
  *
  * @param el: E2EElement - the element to verify the mode class on
  */
-export async function checkModeClasses(el: E2EElement) {
-  const mode = await el.getProperty('mode');
-
+export async function checkModeClasses(el: E2EElement, globalMode: string) {
+  const mode = (await el.getProperty('mode')) || globalMode;
   expect(el).toHaveClass(`${mode}`);
 }

@@ -12,9 +12,9 @@ const SCROLL_PADDING = true;
 const HIDE_CARET = true;
 
 export function startInputShims(
-  doc: Document,
   config: Config,
 ) {
+  const doc = document;
   const keyboardHeight = config.getNumber('keyboardHeight', 290);
   const scrollAssist = config.getBoolean('scrollAssist', true);
   const hideCaret = config.getBoolean('hideCaretOnScroll', true);
@@ -62,11 +62,11 @@ export function startInputShims(
   }
 
   if (inputBlurring && INPUT_BLURRING) {
-    enableInputBlurring(doc);
+    enableInputBlurring();
   }
 
   if (scrollPadding && SCROLL_PADDING) {
-    enableScrollPadding(doc, keyboardHeight);
+    enableScrollPadding(keyboardHeight);
   }
 
   // Input might be already loaded in the DOM before ion-device-hacks did.

@@ -1,9 +1,13 @@
-import { Component, ComponentInterface, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 
-import { Color, Mode, RouterDirection } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, RouterDirection } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-card',
   styleUrls: {
@@ -14,19 +18,12 @@ import { createColorClasses, openURL } from '../../utils/theme';
 })
 export class Card implements ComponentInterface, AnchorInterface, ButtonInterface {
 
-  @Prop({ context: 'window' }) win!: Window;
-
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, a button tag will be rendered and the card will be tappable.
@@ -81,9 +78,10 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   hostData() {
+    const mode = getIonMode(this);
     return {
       class: {
-        [`${this.mode}`]: true,
+        [mode]: true,
 
         ...createColorClasses(this.color),
         'card-disabled': this.disabled,
@@ -100,8 +98,8 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
         <slot></slot>
       ];
     }
-
-    const { href, mode, win, routerDirection } = this;
+    const mode = getIonMode(this);
+    const { href, routerDirection } = this;
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
@@ -117,7 +115,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
         {...attrs}
         class="card-native"
         disabled={this.disabled}
-        onClick={(ev: Event) => openURL(win, href, ev, routerDirection)}
+        onClick={(ev: Event) => openURL(href, ev, routerDirection)}
       >
         <slot></slot>
         {clickable && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
