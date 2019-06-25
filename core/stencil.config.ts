@@ -80,6 +80,9 @@ export const config: Config = {
       type: 'docs-json',
       file: '../docs/core.json'
     },
+    {
+      type: 'dist-hydrate-script'
+    },
     apiSpecGenerator({
       file: 'api.txt'
     }),
