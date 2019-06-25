@@ -17,10 +17,10 @@
 
 ## CSS Custom Properties
 
-| Name           | Description             |
-| -------------- | ----------------------- |
-| `--background` | Background of the badge |
-| `--color`      | Text color of the badge |
+| Name           | Description              |
+| -------------- | ------------------------ |
+| `--background` | Background of the anchor |
+| `--color`      | Text color of the anchor |
 
 
 ----------------------------------------------

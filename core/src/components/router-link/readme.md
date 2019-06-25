@@ -19,10 +19,10 @@ The router link component is used for navigating to a specified link. Similar to
 
 ## CSS Custom Properties
 
-| Name           | Description             |
-| -------------- | ----------------------- |
-| `--background` | Background of the badge |
-| `--color`      | Text color of the badge |
+| Name           | Description                   |
+| -------------- | ----------------------------- |
+| `--background` | Background of the router link |
+| `--color`      | Text color of the router link |
 
 
 ----------------------------------------------
