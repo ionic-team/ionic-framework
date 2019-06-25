@@ -5,9 +5,7 @@ const TRANSITION = 'all 0.2s ease-in-out';
 export const setToolbarBorderColor = (toolbar: any, color: string) => {
   if (!toolbar) { return; }
 
-  writeTask(() => {
-    toolbar.el.style.setProperty('--border-color', color);
-  });
+  toolbar.el.style.setProperty('--border-color', color);
 };
 
 export const createHeaderIndex = (headerEl: any): any | undefined => {
@@ -29,30 +27,31 @@ export const createHeaderIndex = (headerEl: any): any | undefined => {
   };
 };
 
+const clampValue = (value: number, max: number, min: number): number => {
+  if (value > max) {
+    return max;
+  } else if (value < min) {
+    return min;
+  }
+
+  return value;
+};
+
 export const handleContentScroll = (scrollEl: any, mainHeaderIndex: any, scrollHeaderIndex: any, remainingHeight = 0) => {
   readTask(() => {
     const scrollTop = scrollEl.scrollTop;
 
     const lastMainToolbar = mainHeaderIndex.toolbars[mainHeaderIndex.toolbars.length - 1];
+    const scale = clampValue(1 + (-scrollTop / 500), 1.1, 1);
 
-    const scale = 1 + (-scrollTop / 500);
-    if (scale <= 1.1 && scale >= 1) {
-      writeTask(() => {
-        scaleLargeTitles(scrollHeaderIndex.toolbars, scale);
-      });
-    }
+    const borderOpacity = clampValue((scrollTop - remainingHeight) / lastMainToolbar.el.clientHeight, 1, 0);
+    const maxOpacity = 0.2;
+    const scaledOpacity = borderOpacity * maxOpacity;
 
-    const borderOpacity = (scrollTop - remainingHeight) / lastMainToolbar.el.clientHeight;
-
-    if (borderOpacity >= 0 && borderOpacity <= 1) {
-
-      const maxOpacity = 0.2;
-      const scaledOpacity = borderOpacity * maxOpacity;
-
-      writeTask(() => {
-        setToolbarBorderColor(lastMainToolbar, `rgba(0, 0, 0, ${scaledOpacity})`);
-      });
-    }
+    writeTask(() => {
+      scaleLargeTitles(scrollHeaderIndex.toolbars, scale);
+      setToolbarBorderColor(lastMainToolbar, `rgba(0, 0, 0, ${scaledOpacity})`);
+    });
   });
 };
 
@@ -68,7 +67,7 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: any, scrollH
 
     if (ev[0].isIntersecting) {
       makeHeaderInactive(mainHeaderIndex, true);
-      makeHeaderActive(scrollHeaderIndex, true);
+      makeHeaderActive(scrollHeaderIndex, false);
       setToolbarBorderColor(lastMainHeaderToolbar, 'rgba(0, 0, 0, 0)');
     } else {
       makeHeaderActive(mainHeaderIndex, true);
@@ -108,7 +107,7 @@ export const makeHeaderActive = (headerIndex: any, transition = false) => {
 
 export const setElOpacity = (el: HTMLElement, opacity = 1, transition = false) => {
   el.style.transition = (transition) ? TRANSITION : '';
-  el.style.opacity = opacity.toString();
+  el.style.opacity = `${opacity}`;
 };
 
 export const hideCollapsableButtons = (buttons: any[] = [], transition = false) => {

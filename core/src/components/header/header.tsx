@@ -35,8 +35,7 @@ export class Header implements ComponentInterface {
 
   async componentDidLoad() {
     // Determine if the header can collapse
-    const toolbars = this.el.querySelectorAll('ion-toolbar');
-    const canCollapse = (this.collapse && getIonMode(this) === 'ios' && toolbars.length >= 2) ? this.collapse : false;
+    const canCollapse = (this.collapse && getIonMode(this) === 'ios') ? this.collapse : false;
 
     const tabs = this.el.closest('ion-tabs');
     const page = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
