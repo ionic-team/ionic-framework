@@ -134,6 +134,7 @@ export const config: Config = {
   testing: {
     allowableMismatchedPixels: 200,
     pixelmatchThreshold: 0.05,
+    waitBeforeScreenshot: 20,
     emulate: [
       {
         userAgent: 'iPhone',
