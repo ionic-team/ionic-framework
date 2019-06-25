@@ -45,13 +45,7 @@ export class IonRouterOutlet extends React.Component<IonRouterOutletProps, IonRo
                   props = {
                     'className': ' ion-page-invisible'
                   };
-                } else {
-                  props = {
-                    'aria-hidden': true,
-                    'className': 'ion-page-hidden'
-                  };
                 }
-
                 return (
                   <ViewItemManager
                     id={item.id}
