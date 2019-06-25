@@ -1396,12 +1396,17 @@ Item Inputs
 | --------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | `--background`              | Background of the item                                                                                        |
 | `--background-activated`    | Background of the item when pressed                                                                           |
+| `--background-focused`      | Background of the item when focused with the tab key                                                          |
+| `--background-hover`        | Background of the item on hover                                                                               |
 | `--border-color`            | Color of the item border                                                                                      |
 | `--border-radius`           | Radius of the item border                                                                                     |
 | `--border-style`            | Style of the item border                                                                                      |
 | `--border-width`            | Width of the item border                                                                                      |
 | `--box-shadow`              | Box shadow of the item                                                                                        |
 | `--color`                   | Color of the item                                                                                             |
+| `--color-activated`         | Color of the item when pressed                                                                                |
+| `--color-focused`           | Color of the item when focused with the tab key                                                               |
+| `--color-hover`             | Color of the item on hover                                                                                    |
 | `--detail-icon-color`       | Color of the item detail icon                                                                                 |
 | `--detail-icon-font-size`   | Font size of the item detail icon                                                                             |
 | `--detail-icon-opacity`     | Opacity of the item detail icon                                                                               |

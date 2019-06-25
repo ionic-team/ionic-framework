@@ -483,12 +483,17 @@ ion-item,prop,target,string | undefined,undefined,false,false
 ion-item,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-item,css-prop,--background
 ion-item,css-prop,--background-activated
+ion-item,css-prop,--background-focused
+ion-item,css-prop,--background-hover
 ion-item,css-prop,--border-color
 ion-item,css-prop,--border-radius
 ion-item,css-prop,--border-style
 ion-item,css-prop,--border-width
 ion-item,css-prop,--box-shadow
 ion-item,css-prop,--color
+ion-item,css-prop,--color-activated
+ion-item,css-prop,--color-focused
+ion-item,css-prop,--color-hover
 ion-item,css-prop,--detail-icon-color
 ion-item,css-prop,--detail-icon-font-size
 ion-item,css-prop,--detail-icon-opacity
