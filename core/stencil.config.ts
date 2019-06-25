@@ -37,7 +37,7 @@ export const config: Config = {
     { components: ['ion-refresher', 'ion-refresher-content'] },
     { components: ['ion-reorder', 'ion-reorder-group'] },
     { components: ['ion-ripple-effect'] },
-    { components: ['ion-router', 'ion-route', 'ion-route-redirect', 'ion-router-outlet'] },
+    { components: ['ion-anchor', 'ion-router', 'ion-route', 'ion-route-redirect', 'ion-router-link', 'ion-router-outlet'] },
     { components: ['ion-searchbar'] },
     { components: ['ion-segment', 'ion-segment-button'] },
     { components: ['ion-select', 'ion-select-option', 'ion-select-popover'] },
