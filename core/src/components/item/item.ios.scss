@@ -43,7 +43,7 @@
     color: var(--color-activated);
   }
 
-  :host(.ion-color.ion-activatable:hover) .item-native {
+  :host(.activated.ion-color.ion-activatable:hover) .item-native {
     background: #{current-color(shade)};
     color: #{current-color(contrast)};
   }
