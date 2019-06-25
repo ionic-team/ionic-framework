@@ -68,6 +68,12 @@
 // --------------------------------------------------
 
 @supports (backdrop-filter: blur(0)) {
+  @media (any-hover: hover) {
+    :host(.fab-button-translucent.ion-color:hover) .button-native {
+      background: #{current-color(base, $fab-ios-translucent-background-alpha-hover)};
+    }
+  }
+
   :host(.ion-color.fab-button-translucent) .button-native {
     background: #{current-color(base, $fab-ios-translucent-background-alpha)};
   }
@@ -75,11 +81,5 @@
   :host(.ion-color.ion-focused.fab-button-translucent) .button-native,
   :host(.ion-color.activated.fab-button-translucent) .button-native {
     background: #{current-color(base)};
-  }
-
-  @media (any-hover: hover) {
-    :host(.fab-button-translucent.ion-color:hover) .button-native {
-      background: #{current-color(base, $fab-ios-translucent-background-alpha-hover)};
-    }
   }
 }
