@@ -1,7 +1,7 @@
 import React from 'react';
 import { IonAppInner } from './proxies';
 import { IonicConfig, setupConfig } from '@ionic/core';
-import { arrowBack } from 'ionicons/icons';
+import { arrowBack, menu, close } from 'ionicons/icons';
 import { IonicContext, IonicContextState } from './utils/IonicContext';
 import { Platform } from './utils/platform';
 import { getConfig, setConfig } from './utils/config';
@@ -19,7 +19,11 @@ export class IonApp extends React.Component<IonAppProps, IonAppState> {
 
     const { initialConfig: config = {} } = this.props;
     if (config) {
-      setupConfig(Object.assign({ backButtonIcon: arrowBack }, config));
+      setupConfig(Object.assign({
+        backButtonIcon: arrowBack,
+        menuIcon: menu,
+        closeIcon: close
+      }, config));
     }
 
     const ionicPlatform = new Platform();
