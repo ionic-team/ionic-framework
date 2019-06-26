@@ -76,6 +76,8 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
 
   /**
    * If `true`, the fab button will be translucent.
+   * Only applies to `ios` mode on devices that support
+   * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    */
   @Prop() translucent = false;
 

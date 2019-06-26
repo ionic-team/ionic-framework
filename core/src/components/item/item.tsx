@@ -133,8 +133,23 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     this.multipleInputs = inputs.length > 1 ? true : false;
   }
 
+  // If the item contains an input including a radio, checkbox, datetime, etc.
+  // then the item will have a clickable input cover that should
+  // get the hover, focused and activated states UNLESS it has multiple
+  // inputs, then those need to individually get the click
+  private hasCover(): boolean {
+    const inputs = this.el.querySelectorAll('ion-checkbox, ion-datetime, ion-select, ion-radio');
+    return inputs.length > 0 && !this.multipleInputs;
+  }
+
+  // If the item has an href or button property it will render a native
+  // anchor or button that is clickable
   private isClickable(): boolean {
     return (this.href !== undefined || this.button);
+  }
+
+  private canActivate(): boolean {
+    return (this.isClickable() || this.hasCover());
   }
 
   render() {
@@ -142,6 +157,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const childStyles = {};
     const mode = getIonMode(this);
     const clickable = this.isClickable();
+    const canActivate = this.canActivate();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
@@ -168,7 +184,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
           'item-disabled': disabled,
           'in-list': hostContext('ion-list', this.el),
           'item-multiple-inputs': this.multipleInputs,
-          'ion-activatable': this.isClickable(),
+          'ion-activatable': canActivate,
           'ion-focusable': true,
         }}
       >
@@ -187,7 +203,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
               {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon"></ion-icon>}
               <div class="item-inner-highlight"></div>
             </div>
-            {clickable && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+            {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
           </TagType>
           <div class="item-highlight"></div>
       </Host>
