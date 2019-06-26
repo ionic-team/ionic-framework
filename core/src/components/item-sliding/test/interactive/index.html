@@ -8,12 +8,12 @@
   <link href="../../../../../css/core.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-list></ion-list>
-  
+
   <script>
     let lists = document.getElementsByTagName('ion-list');
       for (var i = 0; i < lists.length; i++) {
@@ -30,7 +30,7 @@
               <h2>Item Options Both Sides</h2>
             </ion-label>
           </ion-item>
-          
+
           <ion-item-options side="end">
             <ion-item-option color="danger" expandable onclick="remove(this)">
               <ion-icon name="trash"></ion-icon>
@@ -38,13 +38,13 @@
             </ion-item-option>
           </ion-item-options>
         `;
-        
-        
+
+
         slidingItem.id = `item-${list.childElementCount}`;
 
         list.appendChild(slidingItem);
       }
-      
+
       function remove(optionElement) {
         const slidingElement = optionElement.parentNode.parentNode;
         lists[0].removeChild(slidingElement);

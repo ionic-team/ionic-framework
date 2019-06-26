@@ -96,48 +96,28 @@ async function presentLoadingWithOptions() {
 ### React
 
 ```tsx
-import React, { Component } from 'react'
-import { IonLoading } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonLoading, IonButton, IonContent } from '@ionic/react';
 
-type Props = {}
-type State = {
-  showLoading1: boolean
-  showLoading2: boolean
-}
+export const LoadingExample: React.FunctionComponent = () => {
+  const [showLoading, setShowLoading] = useState(true);
 
-export class LoadingExample extends Component<Props, State> {
+  setTimeout(() => {
+    setShowLoading(false);
+  }, 2000);
 
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      showLoading1: false
-      showLoading2: false
-    };
-  }
-
-  render() {
-    return (
+  return (
+    <IonContent>
+      <IonButton onClick={() => setShowLoading(true)}>Show Loading</IonButton>
       <IonLoading
-        isOpen={this.state.showLoading1}
-        onDidDismiss={() => this.setState(() => ({ showLoading1: false }))}
-        message={'Hellooo'}
-        duration={200}
-      >
-      </IonLoading>
-
-      <IonLoading
-        isOpen={this.state.showLoading2}
-        onDidDismiss={() => this.setState(() => ({ showLoading2: false }))}
-        spinner={null}
+        isOpen={showLoading}
+        onDidDismiss={() => setShowLoading(false)}
+        message={'Loading...'}
         duration={5000}
-        message='Please wait...'}
-        translucent={true}
-        cssClass='custom-class custom-loading'
-      >
-      </IonLoading>
-    );
-  }
-}
+      />
+    </IonContent>
+  );
+};
 ```
 
 
@@ -214,12 +194,12 @@ export default {
 
 ## Events
 
-| Event                   | Description                               | Type                              |
-| ----------------------- | ----------------------------------------- | --------------------------------- |
-| `ionLoadingDidDismiss`  | Emitted after the loading has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionLoadingDidPresent`  | Emitted after the loading has presented.  | `CustomEvent<void>`               |
-| `ionLoadingWillDismiss` | Emitted before the loading has dismissed. | `CustomEvent<OverlayEventDetail>` |
-| `ionLoadingWillPresent` | Emitted before the loading has presented. | `CustomEvent<void>`               |
+| Event                   | Description                               | Type                                   |
+| ----------------------- | ----------------------------------------- | -------------------------------------- |
+| `ionLoadingDidDismiss`  | Emitted after the loading has dismissed.  | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionLoadingDidPresent`  | Emitted after the loading has presented.  | `CustomEvent<void>`                    |
+| `ionLoadingWillDismiss` | Emitted before the loading has dismissed. | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionLoadingWillPresent` | Emitted before the loading has presented. | `CustomEvent<void>`                    |
 
 
 ## Methods
@@ -227,13 +207,6 @@ export default {
 ### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
 
 Dismiss the loading overlay after it has been presented.
-
-#### Parameters
-
-| Name   | Type                  | Description                                                                                                                                                                                                                                         |
-| ------ | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data` | `any`                 | Any data to emit in the dismiss events.                                                                                                                                                                                                             |
-| `role` | `string \| undefined` | The role of the element that is dismissing the loading. This can be useful in a button handler for determining which button was clicked to dismiss the loading. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`. |
 
 #### Returns
 
@@ -285,6 +258,21 @@ Type: `Promise<void>`
 | `--spinner-color` | Color of the loading spinner         |
 | `--width`         | Width of the loading dialog          |
 
+
+## Dependencies
+
+### Depends on
+
+- [ion-backdrop](../backdrop)
+- [ion-spinner](../spinner)
+
+### Graph
+```mermaid
+graph TD;
+  ion-loading --> ion-backdrop
+  ion-loading --> ion-spinner
+  style ion-loading fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

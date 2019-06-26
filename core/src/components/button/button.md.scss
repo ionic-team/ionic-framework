@@ -124,7 +124,7 @@
 
 @media (any-hover: hover) {
   :host(.button-solid.ion-color:hover) .button-native {
-    background: #{current-color(base, .92)};
+    background: #{current-color(tint)};
   }
 
   :host(.button-clear.ion-color:hover) .button-native,

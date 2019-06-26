@@ -27,7 +27,6 @@
 
 :host(.ion-color)::slotted(ion-segment-button) {
   --border-color: #{current-color(base)};
-  --background-hover: #{current-color(base, .04)};
 
   background: transparent;
   color: #{current-color(base)};
@@ -50,6 +49,12 @@
 
 :host(.ion-color)::slotted(.segment-button-checked.segment-button-disabled) {
   color: #{current-color(contrast, $segment-ios-opacity-disabled)};
+}
+
+@media (any-hover: hover) {
+  :host(.ion-color)::slotted(ion-segment-button:hover:not(.segment-button-checked)) {
+    background: #{current-color(base, .1)};
+  }
 }
 
 

@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Method } from '@stencil/core';
 
 import { OverlayController, ToastOptions } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
@@ -8,8 +8,6 @@ import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays'
 })
 export class ToastController implements ComponentInterface, OverlayController {
 
-  @Prop({ context: 'document' }) doc!: Document;
-
   /**
    * Create a toast overlay with toast options.
    *
@@ -17,7 +15,7 @@ export class ToastController implements ComponentInterface, OverlayController {
    */
   @Method()
   create(options?: ToastOptions): Promise<HTMLIonToastElement> {
-    return createOverlay(this.doc.createElement('ion-toast'), options);
+    return createOverlay('ion-toast', options);
   }
 
   /**
@@ -29,7 +27,7 @@ export class ToastController implements ComponentInterface, OverlayController {
    */
   @Method()
   dismiss(data?: any, role?: string, id?: string) {
-    return dismissOverlay(this.doc, data, role, 'ion-toast', id);
+    return dismissOverlay(document, data, role, 'ion-toast', id);
   }
 
   /**
@@ -37,6 +35,6 @@ export class ToastController implements ComponentInterface, OverlayController {
    */
   @Method()
   async getTop(): Promise<HTMLIonToastElement | undefined> {
-    return getOverlay(this.doc, 'ion-toast') as HTMLIonToastElement;
+    return getOverlay(document, 'ion-toast') as HTMLIonToastElement;
   }
 }

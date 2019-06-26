@@ -6,13 +6,13 @@
 :host {
   /**
    * @prop --background: Background of the button
-   * @prop --background-activated: Background of the button when activated
-   * @prop --background-focused: Background of the button when focused
+   * @prop --background-activated: Background of the button when pressed
+   * @prop --background-focused: Background of the button when focused with the tab key
    * @prop --background-hover: Background of the button on hover
    *
    * @prop --color: Text color of the button
-   * @prop --color-activated: Text color of the button when activated
-   * @prop --color-focused: Text color of the button when focused
+   * @prop --color-activated: Text color of the button when pressed
+   * @prop --color-focused: Text color of the button when focused with the tab key
    * @prop --color-hover: Text color of the button when hover
    *
    * @prop --transition: Transition of the button
@@ -27,10 +27,10 @@
    * @prop --box-shadow: Box shadow of the button
    * @prop --opacity: Opacity of the button
    *
-   * @prop --padding-top: Padding top of the button
-   * @prop --padding-end: Padding end of the button
-   * @prop --padding-bottom: Padding bottom of the button
-   * @prop --padding-start: Padding start of the button
+   * @prop --padding-top: Top padding of the button
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button
+   * @prop --padding-bottom: Bottom padding of the button
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button
    */
   --overflow: hidden;
   --ripple-color: currentColor;
@@ -79,7 +79,7 @@
 :host(.button-solid) {
   --background: #{ion-color(primary, base)};
   --background-focused: #{ion-color(primary, shade)};
-  --background-hover: #{ion-color(primary, base, 0.92)};
+  --background-hover: #{ion-color(primary, tint)};
   --color: #{ion-color(primary, contrast)};
   --color-activated: #{ion-color(primary, contrast)};
   --color-focused: #{ion-color(primary, contrast)};
