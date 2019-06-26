@@ -85,80 +85,61 @@ Reorder is a component that allows an item in a group of items to be dragged to 
 
 ```tsx
 import React from 'react';
+import { IonIcon, IonItem, IonLabel, IonReorder, IonContent } from '@ionic/react';
 
-import { IonIcon, IonItem, IonLabel, IonReorder } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const ReorderExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Default reorder icon, end aligned items --*/}
     <IonItem>
-      <IonLabel>
-        Item 1
-      </IonLabel>
-      <IonReorder slot="end"></IonReorder>
+      <IonLabel>Item 1</IonLabel>
+      <IonReorder slot="end" />
     </IonItem>
 
     <IonItem>
-      <IonLabel>
-        Item 2
-      </IonLabel>
-      <IonReorder slot="end"></IonReorder>
+      <IonLabel>Item 2</IonLabel>
+      <IonReorder slot="end" />
     </IonItem>
 
     {/*-- Default reorder icon, start aligned items --*/}
     <IonItem>
-      <IonReorder slot="start"></IonReorder>
-      <IonLabel>
-        Item 3
-      </IonLabel>
+      <IonReorder slot="start" />
+      <IonLabel>Item 3</IonLabel>
     </IonItem>
 
     <IonItem>
-      <IonReorder slot="start"></IonReorder>
-      <IonLabel>
-        Item 4
-      </IonLabel>
+      <IonReorder slot="start" />
+      <IonLabel>Item 4</IonLabel>
     </IonItem>
 
     {/*-- Custom reorder icon end items --*/}
     <IonItem>
-      <IonLabel>
-        Item 5
-      </IonLabel>
+      <IonLabel>Item 5</IonLabel>
       <IonReorder slot="end">
-        <IonIcon name="pizza"></IonIcon>
+        <IonIcon name="pizza" />
       </IonReorder>
     </IonItem>
 
     <IonItem>
-      <IonLabel>
-        Item 6
-      </IonLabel>
+      <IonLabel>Item 6</IonLabel>
       <IonReorder slot="end">
-        <IonIcon name="pizza"></IonIcon>
+        <IonIcon name="pizza" />
       </IonReorder>
     </IonItem>
 
     {/*-- Items wrapped in a reorder, entire item can be dragged --*/}
     <IonReorder>
       <IonItem>
-        <IonLabel>
-          Item 7
-        </IonLabel>
+        <IonLabel>Item 7</IonLabel>
       </IonItem>
     </IonReorder>
 
     <IonReorder>
       <IonItem>
-        <IonLabel>
-          Item 8
-        </IonLabel>
+        <IonLabel>Item 8</IonLabel>
       </IonItem>
     </IonReorder>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```
 
 
@@ -235,6 +216,19 @@ export default Example;
 ```
 
 
+
+## Dependencies
+
+### Depends on
+
+- ion-icon
+
+### Graph
+```mermaid
+graph TD;
+  ion-reorder --> ion-icon
+  style ion-reorder fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

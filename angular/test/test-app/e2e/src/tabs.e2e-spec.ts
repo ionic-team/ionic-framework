@@ -8,6 +8,7 @@ describe('tabs', () => {
   describe('entry url - /tabs', () => {
     beforeEach(async () => {
       await browser.get('/tabs');
+      await waitTime(30);
     });
 
     it('should redirect and load tab-account', async () => {
@@ -99,6 +100,7 @@ describe('tabs', () => {
   describe('entry url - /tabs/account/nested/12', () => {
     beforeEach(async () => {
       await browser.get('/tabs/account/nested/12');
+      await waitTime(30);
     });
 
     it('should only display the back-button when there is a page in the stack', async () => {
@@ -118,6 +120,7 @@ describe('tabs', () => {
   describe('entry url - /tabs/lazy', () => {
     beforeEach(async () => {
       await browser.get('/tabs/lazy');
+      await waitTime(30);
     });
 
     it('should not display the back-button if coming from a different stack', async () => {
@@ -134,12 +137,14 @@ describe('tabs', () => {
   describe('enter url - /tabs/contact/one', () => {
     beforeEach(async () => {
       await browser.get('/tabs/contact/one');
+      await waitTime(30);
     });
 
     it('should return to correct tab after going to page in different outlet', async () => {
       const tab = await getSelectedTab();
       await tab.$('#goto-nested-page1').click();
 
+      await waitTime(600);
       await testStack('app-nested-outlet ion-router-outlet', ['app-nested-outlet-page']);
 
       const nestedOutlet = await element(by.css('app-nested-outlet'));

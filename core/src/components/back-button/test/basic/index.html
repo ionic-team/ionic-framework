@@ -9,8 +9,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -20,14 +20,14 @@
         <ion-back-button></ion-back-button>
         <ion-back-button text="Back"></ion-back-button>
         <ion-back-button icon="add"></ion-back-button>
-        <ion-back-button text="Text Only" icon=""></ion-back-button>
+        <ion-back-button disabled text="Text Only" icon=""></ion-back-button>
         <ion-back-button icon="heart" text="Love" color="danger"></ion-back-button>
       </p>
       <p>
         <ion-back-button class="ion-focused"></ion-back-button>
         <ion-back-button class="ion-focused" text="Back"></ion-back-button>
         <ion-back-button class="ion-focused" icon="add"></ion-back-button>
-        <ion-back-button class="ion-focused" text="Text Only" icon=""></ion-back-button>
+        <ion-back-button disabled class="ion-focused" text="Text Only" icon=""></ion-back-button>
         <ion-back-button class="ion-focused" icon="heart" text="Love" color="danger"></ion-back-button>
       </p>
 

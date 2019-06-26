@@ -9,7 +9,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 </head>
 
 <body>
@@ -17,7 +18,9 @@
     <ion-content>
       <h1>Default</h1>
       <ion-menu-button auto-hide="false"></ion-menu-button>
+      <ion-menu-button disabled auto-hide="false"></ion-menu-button>
       <ion-menu-button auto-hide="false" class="ion-focused"></ion-menu-button>
+      <ion-menu-button disabled auto-hide="false" class="ion-focused"></ion-menu-button>
 
       <h1>Custom</h1>
       <ion-menu-button auto-hide="false" class="custom"></ion-menu-button>

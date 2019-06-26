@@ -17,7 +17,7 @@ Buttons placed in a toolbar should be placed inside of the `<ion-buttons>` eleme
 
 ### Borders
 
-In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and the `<ion-footer>` will receive a box-shadow on the top.  In `ios` mode, the `<ion-header>` will receive a border on the bottom, and the `<ion-footer>` will receive a border on the top. Both the `md` box-shadow and the `ios` border can be removed by adding the `no-border` attribute to the element.
+In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and the `<ion-footer>` will receive a box-shadow on the top.  In `ios` mode, the `<ion-header>` will receive a border on the bottom, and the `<ion-footer>` will receive a border on the top.
 
 
 
@@ -346,168 +346,169 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
 
 ```tsx
 import React from 'react';
+import {
+  IonToolbar,
+  IonTitle,
+  IonButtons,
+  IonBackButton,
+  IonButton,
+  IonIcon,
+  IonMenuButton,
+  IonSearchbar,
+  IonSegment,
+  IonSegmentButton,
+  IonContent
+} from '@ionic/react';
 
-import { IonToolbar, IonTitle, IonButtons, IonBackButton, IonButton, IonIcon, IonMenuButton, IonSearchbar, IonSegment, IonSegmentButton } from '@ionic/react';
+export const ToolbarExample: React.FunctionComponent = () => (
+  <IonButton>
+    <IonToolbar>
+      <IonTitle>Title Only</IonTitle>
+    </IonToolbar>
 
-const Example: React.SFC<{}> = () => (
-  <>
-  <IonToolbar>
-    <IonTitle>Title Only</IonTitle>
-  </IonToolbar>
+    <IonToolbar>
+      <IonButtons slot="start">
+        <IonBackButton defaultHref="/" />
+      </IonButtons>
+      <IonTitle>Back Button</IonTitle>
+    </IonToolbar>
 
-  <IonToolbar>
-    <IonButtons slot="start">
-      <IonBackButton goBack={() => {}} />
-    </IonButtons>
-    <IonTitle>Back Button</IonTitle>
-  </IonToolbar>
+    <IonToolbar>
+      <IonButtons slot="secondary">
+        <IonButton>
+          <IonIcon slot="icon-only" name="contact" />
+        </IonButton>
+        <IonButton>
+          <IonIcon slot="icon-only" name="search" />
+        </IonButton>
+      </IonButtons>
+      <IonButtons slot="primary">
+        <IonButton color="secondary">
+          <IonIcon slot="icon-only" name="more" />
+        </IonButton>
+      </IonButtons>
+      <IonTitle>Default Buttons</IonTitle>
+    </IonToolbar>
 
-  <IonToolbar>
-    <IonButtons slot="secondary">
-      <IonButton>
-        <IonIcon slot="icon-only" name="contact" />
-      </IonButton>
-      <IonButton>
-        <IonIcon slot="icon-only" name="search" />
-      </IonButton>
-    </IonButtons>
-    <IonButtons slot="primary">
-      <IonButton color="secondary">
-        <IonIcon slot="icon-only" name="more" />
-      </IonButton>
-    </IonButtons>
-    <IonTitle>Default Buttons</IonTitle>
-  </IonToolbar>
+    <IonToolbar>
+      <IonButtons slot="secondary">
+        <IonButton fill="solid">
+          <IonIcon slot="start" name="contact" />
+          Contact
+        </IonButton>
+      </IonButtons>
+      <IonTitle>Solid Buttons</IonTitle>
+      <IonButtons slot="primary">
+        <IonButton fill="solid" color="secondary">
+          Help
+          <IonIcon slot="end" name="help-circle" />
+        </IonButton>
+      </IonButtons>
+    </IonToolbar>
 
-  <IonToolbar>
-    <IonButtons slot="secondary">
-      <IonButton fill="solid">
-        <IonIcon slot="start" name="contact" />
-        Contact
-      </IonButton>
-    </IonButtons>
-    <IonTitle>Solid Buttons</IonTitle>
-    <IonButtons slot="primary">
-      <IonButton fill="solid" color="secondary">
-        Help
-        <IonIcon slot="end" name="help-circle" />
-      </IonButton>
-    </IonButtons>
-  </IonToolbar>
+    <IonToolbar>
+      <IonButtons slot="secondary">
+        <IonButton fill="outline">
+          <IonIcon slot="start" name="star" />
+          Star
+        </IonButton>
+      </IonButtons>
+      <IonTitle>Outline Buttons</IonTitle>
+      <IonButtons slot="primary">
+        <IonButton color="danger" fill="outline">
+          Edit
+          <IonIcon slot="end" name="create" />
+        </IonButton>
+      </IonButtons>
+    </IonToolbar>
 
-  <IonToolbar>
-    <IonButtons slot="secondary">
-      <IonButton fill="outline">
-        <IonIcon slot="start" name="star" />
-        Star
-      </IonButton>
-    </IonButtons>
-    <IonTitle>Outline Buttons</IonTitle>
-    <IonButtons slot="primary">
-      <IonButton color="danger" fill="outline">
-        Edit
-        <IonIcon slot="end" name="create" />
-      </IonButton>
-    </IonButtons>
-  </IonToolbar>
+    <IonToolbar>
+      <IonButtons slot="secondary">
+        <IonButton>Account</IonButton>
+      </IonButtons>
+      <IonButtons slot="primary">
+        <IonButton color="danger">Edit</IonButton>
+      </IonButtons>
+      <IonTitle>Text Only Buttons</IonTitle>
+    </IonToolbar>
 
-  <IonToolbar>
-    <IonButtons slot="secondary">
-      <IonButton>
-        Account
-      </IonButton>
-    </IonButtons>
-    <IonButtons slot="primary">
-      <IonButton color="danger">
-        Edit
-      </IonButton>
-    </IonButtons>
-    <IonTitle>Text Only Buttons</IonTitle>
-  </IonToolbar>
+    <IonToolbar>
+      <IonButtons slot="start">
+        <IonMenuButton autoHide={false} />
+      </IonButtons>
+      <IonButtons slot="secondary">
+        <IonButton>
+          <IonIcon slot="icon-only" name="star" />
+        </IonButton>
+      </IonButtons>
+      <IonTitle>Left side menu toggle</IonTitle>
+    </IonToolbar>
 
-  <IonToolbar>
-    <IonButtons slot="start">
-      <IonMenuButton autoHide={false}></IonMenuButton>
+    <IonToolbar>
+      <IonButtons slot="primary">
+        <IonButton onClick={() => {}}>
+          <IonIcon slot="icon-only" name="star" />
+        </IonButton>
+      </IonButtons>
+      <IonTitle>Right side menu toggle</IonTitle>
+      <IonButtons slot="end">
+        <IonMenuButton autoHide={false} />
+      </IonButtons>
+    </IonToolbar>
 
-    </IonButtons>
-    <IonButtons slot="secondary">
-      <IonButton>
-        <IonIcon slot="icon-only" name="star" />
-      </IonButton>
-    </IonButtons>
-    <IonTitle>Left side menu toggle</IonTitle>
-  </IonToolbar>
+    <IonToolbar>
+      <IonButtons slot="primary">
+        <IonButton onClick={() => {}}>
+          <IonIcon slot="icon-only" name="search" />
+        </IonButton>
+      </IonButtons>
+      <IonSearchbar placeholder="Search Favorites" />
+    </IonToolbar>
 
-  <IonToolbar>
-    <IonButtons slot="primary">
-      <IonButton onClick={() => {}}>
-        <IonIcon slot="icon-only" name="star" />
-      </IonButton>
-    </IonButtons>
-    <IonTitle>Right side menu toggle</IonTitle>
-    <IonButtons slot="end">
-      <IonMenuButton autoHide={false}></IonMenuButton>
+    <IonToolbar>
+      <IonSegment>
+        <IonSegmentButton value="all" checked>
+          All
+        </IonSegmentButton>
+        <IonSegmentButton value="favorites">Favorites</IonSegmentButton>
+      </IonSegment>
+    </IonToolbar>
 
-    </IonButtons>
-  </IonToolbar>
+    <IonToolbar color="secondary">
+      <IonButtons slot="secondary">
+        <IonButton>
+          <IonIcon slot="icon-only" name="contact" />
+        </IonButton>
+        <IonButton>
+          <IonIcon slot="icon-only" name="search" />
+        </IonButton>
+      </IonButtons>
+      <IonButtons slot="primary">
+        <IonButton color="primary">
+          <IonIcon slot="icon-only" name="more" />
+        </IonButton>
+      </IonButtons>
+      <IonTitle>Secondary Toolbar</IonTitle>
+    </IonToolbar>
 
-  <IonToolbar>
-    <IonButtons slot="primary">
-      <IonButton onClick={() => {}}>
-        <IonIcon slot="icon-only" name="search" />
-      </IonButton>
-    </IonButtons>
-    <IonSearchbar placeholder="Search Favorites"></IonSearchbar>
-  </IonToolbar>
-
-  <IonToolbar>
-    <IonSegment>
-      <IonSegmentButton value="all" checked>
-        All
-      </IonSegmentButton>
-      <IonSegmentButton value="favorites">
-        Favorites
-      </IonSegmentButton>
-    </IonSegment>
-  </IonToolbar>
-
-  <IonToolbar color="secondary">
-    <IonButtons slot="secondary">
-      <IonButton>
-        <IonIcon slot="icon-only" name="contact" />
-      </IonButton>
-      <IonButton>
-        <IonIcon slot="icon-only" name="search" />
-      </IonButton>
-    </IonButtons>
-    <IonButtons slot="primary">
-      <IonButton color="primary">
-        <IonIcon slot="icon-only" name="more" />
-      </IonButton>
-    </IonButtons>
-    <IonTitle>Secondary Toolbar</IonTitle>
-  </IonToolbar>
-
-  <IonToolbar color="dark">
-    <IonButtons slot="secondary">
-      <IonButton>
-        <IonIcon slot="icon-only" name="contact" />
-      </IonButton>
-      <IonButton>
-        <IonIcon slot="icon-only" name="search" />
-      </IonButton>
-    </IonButtons>
-    <IonButtons slot="primary">
-      <IonButton color="danger">
-        <IonIcon slot="icon-only" name="more" />
-      </IonButton>
-    </IonButtons>
-    <IonTitle>Dark Toolbar</IonTitle>
-  </IonToolbar>
-  </>
+    <IonToolbar color="dark">
+      <IonButtons slot="secondary">
+        <IonButton>
+          <IonIcon slot="icon-only" name="contact" />
+        </IonButton>
+        <IonButton>
+          <IonIcon slot="icon-only" name="search" />
+        </IonButton>
+      </IonButtons>
+      <IonButtons slot="primary">
+        <IonButton color="danger">
+          <IonIcon slot="icon-only" name="more" />
+        </IonButton>
+      </IonButtons>
+      <IonTitle>Dark Toolbar</IonTitle>
+    </IonToolbar>
+  </IonButton>
 );
-
-export default Example;
 ```
 
 
@@ -694,19 +695,19 @@ export default Example;
 
 ## CSS Custom Properties
 
-| Name               | Description                       |
-| ------------------ | --------------------------------- |
-| `--background`     | Background of the toolbar         |
-| `--border-color`   | Color of the toolbar border       |
-| `--border-style`   | Style of the toolbar border       |
-| `--border-width`   | Width of the toolbar border       |
-| `--color`          | Color of the toolbar text         |
-| `--min-height`     | Minimum height of the toolbar     |
-| `--opacity`        | Opacity of the toolbar background |
-| `--padding-bottom` | Bottom padding of the toolbar     |
-| `--padding-end`    | End padding of the toolbar        |
-| `--padding-start`  | Start padding of the toolbar      |
-| `--padding-top`    | Top padding of the toolbar        |
+| Name               | Description                                                                                                |
+| ------------------ | ---------------------------------------------------------------------------------------------------------- |
+| `--background`     | Background of the toolbar                                                                                  |
+| `--border-color`   | Color of the toolbar border                                                                                |
+| `--border-style`   | Style of the toolbar border                                                                                |
+| `--border-width`   | Width of the toolbar border                                                                                |
+| `--color`          | Color of the toolbar text                                                                                  |
+| `--min-height`     | Minimum height of the toolbar                                                                              |
+| `--opacity`        | Opacity of the toolbar background                                                                          |
+| `--padding-bottom` | Bottom padding of the toolbar                                                                              |
+| `--padding-end`    | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the toolbar |
+| `--padding-start`  | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the toolbar |
+| `--padding-top`    | Top padding of the toolbar                                                                                 |
 
 
 ----------------------------------------------

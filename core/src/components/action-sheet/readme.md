@@ -126,28 +126,19 @@ async function presentActionSheet() {
 ### React
 
 ```typescript
-import React, { Component } from 'react'
-import { IonActionSheet } from '@ionic/react';
+import React, { useState } from 'react'
+import { IonActionSheet, IonContent, IonButton } from '@ionic/react';
 
-type Props = {}
-type State = {
-  showActionSheet: boolean
-}
+export const ActionSheetExample: React.FunctionComponent = () => {
 
-export default class ActionSheetExample extends Component<Props, State> {
+  const [showActionSheet, setShowActionSheet] = useState(false);
 
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      showActionSheet: false
-    };
-  }
-
-  render() {
-    return (
+  return (
+    <IonContent>
+      <IonButton onClick={() => setShowActionSheet(true)} expand="block">Show Action Sheet</IonButton>
       <IonActionSheet
-        isOpen={this.state.showActionSheet}
-        onDidDismiss={() => this.setState(() => ({ showActionSheet: false }))}
+        isOpen={showActionSheet}
+        onDidDismiss={() => setShowActionSheet(false)}
         buttons={[{
           text: 'Delete',
           role: 'destructive',
@@ -183,9 +174,12 @@ export default class ActionSheetExample extends Component<Props, State> {
         }]}
       >
       </IonActionSheet>
-    );
-  }
+    </IonContent>
+
+  );
+
 }
+
 ```
 
 
@@ -273,12 +267,12 @@ export default {
 
 ## Events
 
-| Event                       | Description                             | Type                              |
-| --------------------------- | --------------------------------------- | --------------------------------- |
-| `ionActionSheetDidDismiss`  | Emitted after the alert has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionActionSheetDidPresent`  | Emitted after the alert has presented.  | `CustomEvent<void>`               |
-| `ionActionSheetWillDismiss` | Emitted before the alert has dismissed. | `CustomEvent<OverlayEventDetail>` |
-| `ionActionSheetWillPresent` | Emitted before the alert has presented. | `CustomEvent<void>`               |
+| Event                       | Description                             | Type                                   |
+| --------------------------- | --------------------------------------- | -------------------------------------- |
+| `ionActionSheetDidDismiss`  | Emitted after the alert has dismissed.  | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionActionSheetDidPresent`  | Emitted after the alert has presented.  | `CustomEvent<void>`                    |
+| `ionActionSheetWillDismiss` | Emitted before the alert has dismissed. | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionActionSheetWillPresent` | Emitted before the alert has presented. | `CustomEvent<void>`                    |
 
 
 ## Methods
@@ -286,13 +280,6 @@ export default {
 ### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
 
 Dismiss the action sheet overlay after it has been presented.
-
-#### Parameters
-
-| Name   | Type                  | Description                                                                                                                                                                                                                                                   |
-| ------ | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data` | `any`                 | Any data to emit in the dismiss events.                                                                                                                                                                                                                       |
-| `role` | `string \| undefined` | The role of the element that is dismissing the action sheet. This can be useful in a button handler for determining which button was clicked to dismiss the action sheet. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`. |
 
 #### Returns
 
@@ -333,19 +320,36 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name                     | Description                                     |
-| ------------------------ | ----------------------------------------------- |
-| `--background`           | Background of the action sheet group            |
-| `--background-activated` | Background of the activated action sheet button |
-| `--background-selected`  | Background of the selected action sheet button  |
-| `--color`                | Color of the action sheet text                  |
-| `--height`               | height of the action sheet                      |
-| `--max-height`           | Maximum height of the action sheet              |
-| `--max-width`            | Maximum width of the action sheet               |
-| `--min-height`           | Minimum height of the action sheet              |
-| `--min-width`            | Minimum width of the action sheet               |
-| `--width`                | Width of the action sheet                       |
+| Name                     | Description                                        |
+| ------------------------ | -------------------------------------------------- |
+| `--background`           | Background of the action sheet group               |
+| `--background-activated` | Background of the action sheet button when pressed |
+| `--background-selected`  | Background of the selected action sheet button     |
+| `--color`                | Color of the action sheet text                     |
+| `--height`               | height of the action sheet                         |
+| `--max-height`           | Maximum height of the action sheet                 |
+| `--max-width`            | Maximum width of the action sheet                  |
+| `--min-height`           | Minimum height of the action sheet                 |
+| `--min-width`            | Minimum width of the action sheet                  |
+| `--width`                | Width of the action sheet                          |
 
+
+## Dependencies
+
+### Depends on
+
+- [ion-backdrop](../backdrop)
+- ion-icon
+- [ion-ripple-effect](../ripple-effect)
+
+### Graph
+```mermaid
+graph TD;
+  ion-action-sheet --> ion-backdrop
+  ion-action-sheet --> ion-icon
+  ion-action-sheet --> ion-ripple-effect
+  style ion-action-sheet fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 
