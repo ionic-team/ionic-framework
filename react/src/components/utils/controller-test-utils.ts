@@ -33,7 +33,11 @@ export function createControllerUtils(tagName: string) {
   }
 
   function augmentController(baseElement: HTMLElement, container: HTMLElement, childElement: HTMLElement): HTMLElement {
-    const controller: HTMLElement = baseElement.querySelector(controllerTag);
+    let controller: HTMLElement = baseElement.querySelector(controllerTag);
+    if(!controller) {
+      controller = document.createElement(controllerTag);
+      document.body.appendChild(controller);
+    }
     (controller as any).componentOnReady = jest.fn(async () => {
       return true;
     });
