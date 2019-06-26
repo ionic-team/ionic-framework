@@ -10,7 +10,10 @@ module.exports = {
     server: './server.ts'
   },
   target: 'node',
-  resolve: { extensions: ['.ts', '.js'] },
+  resolve: {
+    mainFields: ['node:main', 'module', 'main'],
+    extensions: ['.ts', '.js']
+  },
   optimization: {
     minimize: false
   },
