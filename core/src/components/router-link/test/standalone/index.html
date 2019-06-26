@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Router Link - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+
+<body class="ion-padding">
+  <h1>Default</h1>
+  <ion-router-link href="#">Router Link</ion-router-link>
+
+  <h1>Colors</h1>
+  <ion-router-link href="#" color="primary">Primary Router Link</ion-router-link>
+  <ion-router-link href="#" color="secondary">Secondary Router Link</ion-router-link>
+  <ion-router-link href="#" color="tertiary">Tertiary Router Link</ion-router-link>
+  <ion-router-link href="#" color="success">Success Router Link</ion-router-link>
+  <ion-router-link href="#" color="warning">Warning Router Link</ion-router-link>
+  <ion-router-link href="#" color="danger">Danger Router Link</ion-router-link>
+  <ion-router-link href="#" color="light">Light Router Link</ion-router-link>
+  <ion-router-link href="#" color="medium">Medium Router Link</ion-router-link>
+  <ion-router-link href="#" color="dark">Dark Router Link</ion-router-link>
+
+  <h1>Custom</h1>
+  <ion-router-link href="#" style="text-decoration: underline">Underline Router Link</ion-router-link>
+  <ion-router-link href="#" class="cursive">Cursive Router Link</ion-router-link>
+  <ion-router-link href="#" class="custom">Custom Router Link</ion-router-link>
+  <ion-router-link href="#" color="secondary" class="custom">Custom Secondary Router Link</ion-router-link>
+
+  <style>
+    ion-router-link {
+      display: block;
+      --color: blue;
+    }
+
+    .cursive {
+      font-family: cursive;
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 5px;
+      text-decoration: dotted underline;
+      text-transform: uppercase;
+      color: magenta;
+    }
+
+    .custom {
+      --background: blue;
+      --color: white;
+    }
+  </style>
+</body>
+
+</html>
