@@ -84,7 +84,7 @@ export class Header implements ComponentInterface {
       const toolbarIntersection = (ev: any) => { handleToolbarIntersection(ev, mainHeaderIndex, scrollHeaderIndex); };
 
       // TODO: Dynamically determine what the root margin should be
-      const intersectionObserver = new IntersectionObserver(toolbarIntersection, { threshold: 0.25, rootMargin: '-44px 0px 0px 0px' });
+      const intersectionObserver = new IntersectionObserver(toolbarIntersection, { threshold: 0.35, rootMargin: '-44px 0px 0px 0px' });
       intersectionObserver.observe(scrollHeaderIndex.toolbars[0].el);
 
       /**

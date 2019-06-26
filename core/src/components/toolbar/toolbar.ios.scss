@@ -66,11 +66,8 @@
 // --------------------------------------------------
 
 :host(.toolbar-title-large) .toolbar-container {
-
   flex-wrap: wrap;
   align-items: flex-start;
-
-  min-height: #{$toolbar-ios-large-min-height};
 }
 
 :host(.toolbar-title-large) .toolbar-content ion-title {
@@ -78,9 +75,4 @@
   order: map-get($toolbar-order-ios, title-large);
 
   min-width: 100%;
-}
-
-// TODO: Find better way to do this
-:host(.toolbar-title-large) ::slotted(ion-buttons) {
-  margin-top: 10px;
 }
