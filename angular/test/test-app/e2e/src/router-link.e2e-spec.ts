@@ -50,6 +50,7 @@ describe('router-link', () => {
 
   beforeEach(async () => {
     await browser.get('/router-link');
+    await waitTime(30);
   });
   afterEach(() => {
     handleErrorMessages();

@@ -17,7 +17,7 @@ export const config: Config = {
     { components: ['ion-card', 'ion-card-content', 'ion-card-header', 'ion-card-title', 'ion-card-subtitle'] },
     { components: ['ion-checkbox'] },
     { components: ['ion-chip'] },
-    { components: ['ion-datetime', 'ion-picker', 'ion-picker-column', 'ion-picker-controller'] },
+    { components: ['ion-datetime', 'ion-picker', 'ion-picker-column'] },
     { components: ['ion-fab', 'ion-fab-button', 'ion-fab-list'] },
     { components: ['ion-grid', 'ion-row', 'ion-col'] },
     { components: ['ion-infinite-scroll', 'ion-infinite-scroll-content'] },
@@ -135,6 +135,7 @@ export const config: Config = {
   testing: {
     allowableMismatchedPixels: 200,
     pixelmatchThreshold: 0.05,
+    waitBeforeScreenshot: 20,
     emulate: [
       {
         userAgent: 'iPhone',
