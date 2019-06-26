@@ -60,7 +60,6 @@
 // --------------------------------------------------
 
 :host(.button-clear) {
-  --opacity: #{$button-md-clear-opacity};
   --background-activated: transparent;
   --background-focused: #{ion-color(primary, base, .1)};
   --background-hover: #{ion-color(primary, base, .04)};

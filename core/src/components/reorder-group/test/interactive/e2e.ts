@@ -54,6 +54,7 @@ test('reorder: interactive', async () => {
 async function moveItem(id: string, page: pd.E2EPage, direction: 'up' | 'down' = 'up', numberOfSpaces = 1, ...parentSelectors: string[]) {
   try {
     await moveReorderItem(`#${id}`, page, direction, numberOfSpaces, ...parentSelectors);
+    await page.waitFor(50);
   } catch (err) {
     throw err;
   }
