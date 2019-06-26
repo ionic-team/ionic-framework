@@ -1,12 +1,17 @@
 const fs = require('fs-extra');
 const path = require('path');
 
+const ROOT_DIR = path.join(__dirname, '..');
 
 const cleanDirs = [
-  'dist'
+  path.join(ROOT_DIR, 'dist'),
+  path.join(ROOT_DIR, 'server')
 ];
 
 cleanDirs.forEach(dir => {
-  const cleanDir = path.join(__dirname, '../', dir);
-  fs.removeSync(cleanDir);
+  fs.emptyDirSync(dir);
 });
+
+const serverPackageSrc = path.join(ROOT_DIR, 'src', 'server', 'package.json');
+const serverPackageDst = path.join(ROOT_DIR, 'server', 'package.json');
+fs.copyFileSync(serverPackageSrc, serverPackageDst);

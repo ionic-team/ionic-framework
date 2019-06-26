@@ -20,13 +20,14 @@
     "url": "https://github.com/ionic-team/ionic.git"
   },
   "scripts": {
-    "build": "npm run clean && npm run build.core && npm run build.ng && npm run clean-generated",
+    "build": "npm run clean && npm run build.core && npm run build.ng && npm run build.server && npm run clean-generated",
     "build.core": "node scripts/build-core.js",
     "build.fesm": "rollup --config ./scripts/rollup.config.js",
     "build.link": "npm run build && node scripts/link-copy.js",
     "build.ng": "npm run build.es2015 && npm run build.es5",
     "build.es2015": "ngc -p tsconfig.json && rollup --config ./scripts/rollup.config.js",
     "build.es5": "ngc -p tsconfig.legacy.json && rollup --config ./scripts/rollup.config.legacy.js",
+    "build.server": "ngc -p ./src/server/tsconfig.json",
     "clean": "node scripts/clean.js",
     "clean-generated": "node ./scripts/clean-generated.js",
     "lint": "npm run lint.ts",
@@ -42,7 +43,8 @@
   "types": "dist/core.d.ts",
   "files": [
     "dist/",
-    "css/"
+    "css/",
+    "server/"
   ],
   "dependencies": {
     "@ionic/core": "4.5.0",
@@ -59,19 +61,23 @@
     "@angular/compiler-cli": "^7.2.1",
     "@angular/platform-browser": "^7.2.1",
     "@angular/platform-browser-dynamic": "^7.2.1",
+    "@angular/platform-server": "^7.2.1",
     "rxjs": ">=6.2.0",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
     "@angular-devkit/core": "^7.2.1",
     "@angular-devkit/schematics": "^7.2.1",
+    "@angular/animations": "^7.2.1",
     "@angular/common": "^7.2.1",
     "@angular/compiler": "^7.2.1",
     "@angular/compiler-cli": "^7.2.1",
     "@angular/core": "^7.2.1",
     "@angular/forms": "^7.2.1",
+    "@angular/http": "^7.2.1",
     "@angular/platform-browser": "^7.2.1",
     "@angular/platform-browser-dynamic": "^7.2.1",
+    "@angular/platform-server": "^7.2.1",
     "@angular/router": "^7.2.1",
     "@types/node": "~10.12.0",
     "fs-extra": "^7.0.0",

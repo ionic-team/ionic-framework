@@ -2,8 +2,8 @@
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
     "strictMetadataEmit" : true,
-    "flatModuleOutFile": "core.js",
-    "flatModuleId": "@ionic/angular",
+    "flatModuleOutFile": "index.js",
+    "flatModuleId": "@ionic/angular/server",
     "skipTemplateCodegen": true,
     "fullTemplateTypeCheck": false
   },
@@ -13,7 +13,7 @@
     "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
     "declaration": true,
-    "declarationDir": "dist",
+    "declarationDir": "../../server",
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "lib": ["dom", "es2017"],
@@ -23,23 +23,19 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "outDir": "build/es2015",
+    "outDir": "../../server",
     "pretty": true,
     "removeComments": false,
     "importHelpers": true,
-    "rootDir": "src",
+    "rootDir": ".",
     "strictPropertyInitialization": false,
-    "target": "es2015",
+    "target": "es2017",
     "baseUrl": ".",
     "paths": {
       "@ionic/core/hydrate": [
-        "../core/hydrate"
-      ],
-      "@ionic/core": [
-        "../core"
+        "../../../core/hydrate"
       ]
     }
   },
-  "exclude": ["node_modules", "src/schematics"],
-  "files": ["src/index.ts"]
+  "files": ["./ionic-server-module.ts"]
 }
