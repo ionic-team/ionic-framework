@@ -34,15 +34,14 @@ It's important to note that ion-header needs to be the one of the three root ele
 
 ```tsx
 import React from 'react';
-
 import { IonHeader, IonContent, IonToolbar, IonButtons, IonBackButton, IonTitle } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+export const HeaderExample: React.FunctionComponent = () => (
   <>
     <IonHeader>
       <IonToolbar>
         <IonButtons slot="start">
-          <IonBackButton goBack={() => {}} />
+          <IonBackButton defaultHref="/" />
         </IonButtons>
         <IonTitle>My Navigation Bar</IonTitle>
       </IonToolbar>
@@ -55,8 +54,7 @@ const Example: React.SFC<{}> = () => (
     <IonContent />
   </>
 );
-
-export default Example
+```
 
 
 

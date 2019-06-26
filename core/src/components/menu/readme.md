@@ -207,10 +207,9 @@ function openCustom() {
 
 ```tsx
 import React from 'react';
-
 import { IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonRouterOutlet } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+export const MenuExample: React.FunctionComponent = () => (
   <>
     <IonMenu side="start" menuId="first">
       <IonHeader>
@@ -265,8 +264,6 @@ const Example: React.SFC<{}> = () => (
     <IonRouterOutlet></IonRouterOutlet>
   </>
 );
-
-export default Example;
 ```
 
 
@@ -360,15 +357,15 @@ export default Example;
 
 ## Properties
 
-| Property       | Attribute        | Description                                                                                                                                       | Type                  | Default     |
-| -------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
-| `contentId`    | `content-id`     | The content's id the menu should use.                                                                                                             | `string \| undefined` | `undefined` |
-| `disabled`     | `disabled`       | If `true`, the menu is disabled.                                                                                                                  | `boolean`             | `false`     |
-| `maxEdgeStart` | `max-edge-start` | The edge threshold for dragging the menu open. If a drag/swipe happens over this value, the menu is not triggered.                                | `number`              | `50`        |
-| `menuId`       | `menu-id`        | An id for the menu.                                                                                                                               | `string \| undefined` | `undefined` |
-| `side`         | `side`           | Which side of the view the menu should be placed.                                                                                                 | `"end" \| "start"`    | `'start'`   |
-| `swipeGesture` | `swipe-gesture`  | If `true`, swiping the menu is enabled.                                                                                                           | `boolean`             | `true`      |
-| `type`         | `type`           | The animation type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`. Custom animations can be registered by the menu controller. | `string \| undefined` | `undefined` |
+| Property       | Attribute        | Description                                                                                                        | Type                  | Default     |
+| -------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------ | --------------------- | ----------- |
+| `contentId`    | `content-id`     | The content's id the menu should use.                                                                              | `string \| undefined` | `undefined` |
+| `disabled`     | `disabled`       | If `true`, the menu is disabled.                                                                                   | `boolean`             | `false`     |
+| `maxEdgeStart` | `max-edge-start` | The edge threshold for dragging the menu open. If a drag/swipe happens over this value, the menu is not triggered. | `number`              | `50`        |
+| `menuId`       | `menu-id`        | An id for the menu.                                                                                                | `string \| undefined` | `undefined` |
+| `side`         | `side`           | Which side of the view the menu should be placed.                                                                  | `"end" \| "start"`    | `'start'`   |
+| `swipeGesture` | `swipe-gesture`  | If `true`, swiping the menu is enabled.                                                                            | `boolean`             | `true`      |
+| `type`         | `type`           | The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.                                | `string \| undefined` | `undefined` |
 
 
 ## Events
@@ -385,13 +382,8 @@ export default Example;
 
 ### `close(animated?: boolean) => Promise<boolean>`
 
-Close the menu. Returns `false` if the menu is already closed or it can't be closed.
-
-#### Parameters
-
-| Name       | Type      | Description                                |
-| ---------- | --------- | ------------------------------------------ |
-| `animated` | `boolean` | If `true`, the menu will animate on close. |
+Closes the menu. If the menu is already closed or it can't be closed,
+it returns `false`.
 
 #### Returns
 
@@ -401,10 +393,10 @@ Type: `Promise<boolean>`
 
 ### `isActive() => Promise<boolean>`
 
-Get whether or not the menu is active. Returns `true` if the menu is active.
+Returns `true` is the menu is active.
 
 A menu is active when it can be opened or closed, meaning it's enabled
-and it's not part of an `ion-split-pane`.
+and it's not part of a `ion-split-pane`.
 
 #### Returns
 
@@ -414,7 +406,7 @@ Type: `Promise<boolean>`
 
 ### `isOpen() => Promise<boolean>`
 
-Get whether or not the menu is open. Returns `true` if the menu is open.
+Returns `true` is the menu is open.
 
 #### Returns
 
@@ -424,13 +416,8 @@ Type: `Promise<boolean>`
 
 ### `open(animated?: boolean) => Promise<boolean>`
 
-Open the menu. Returns `false` if the menu is already open or it can't be opened.
-
-#### Parameters
-
-| Name       | Type      | Description                               |
-| ---------- | --------- | ----------------------------------------- |
-| `animated` | `boolean` | If `true`, the menu will animate on open. |
+Opens the menu. If the menu is already open or it can't be opened,
+it returns `false`.
 
 #### Returns
 
@@ -440,15 +427,8 @@ Type: `Promise<boolean>`
 
 ### `setOpen(shouldOpen: boolean, animated?: boolean) => Promise<boolean>`
 
-Sets the menu to open or closed.
-Returns `false` if the operation can't be completed successfully.
-
-#### Parameters
-
-| Name         | Type      | Description                                         |
-| ------------ | --------- | --------------------------------------------------- |
-| `shouldOpen` | `boolean` | If `true`, the menu should open.                    |
-| `animated`   | `boolean` | If `true`, the menu will animate on open and close. |
+Opens or closes the button.
+If the operation can't be completed successfully, it returns `false`.
 
 #### Returns
 
@@ -458,15 +438,8 @@ Type: `Promise<boolean>`
 
 ### `toggle(animated?: boolean) => Promise<boolean>`
 
-Toggle the menu open or closed. If the menu is already open, it will try to
-close the menu, otherwise it will try to open it. Returns `false` if
-the operation can't be completed successfully.
-
-#### Parameters
-
-| Name       | Type      | Description                                         |
-| ---------- | --------- | --------------------------------------------------- |
-| `animated` | `boolean` | If `true`, the menu will animate on open and close. |
+Toggles the menu. If the menu is already open, it will try to close, otherwise it will try to open it.
+If the operation can't be completed successfully, it returns `false`.
 
 #### Returns
 
@@ -487,6 +460,21 @@ Type: `Promise<boolean>`
 | `--min-width`  | Minimum width of the menu  |
 | `--width`      | Width of the menu          |
 
+
+## Dependencies
+
+### Depends on
+
+- [ion-backdrop](../backdrop)
+- [ion-menu-controller](../menu-controller)
+
+### Graph
+```mermaid
+graph TD;
+  ion-menu --> ion-backdrop
+  ion-menu --> ion-menu-controller
+  style ion-menu fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

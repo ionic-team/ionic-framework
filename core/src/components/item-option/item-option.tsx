@@ -1,10 +1,13 @@
-import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
 
-import { Color, Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the option text in LTR, and to the right in RTL.
  * @slot top - Content is placed above the option text.
@@ -30,11 +33,6 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, the user cannot interact with the item option.
@@ -78,56 +76,55 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
-  @Listen('click')
-  onClick(ev: Event) {
+  private onClick = (ev: Event) => {
     const el = (ev.target as HTMLElement).closest('ion-item-option');
     if (el) {
       ev.preventDefault();
     }
   }
 
-  hostData() {
-    const { disabled, expandable } = this;
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        [`${this.mode}`]: true,
-
-        'item-option-disabled': disabled,
-        'item-option-expandable': expandable,
-        'ion-activatable': true,
-      }
-    };
-  }
-
   render() {
-    const TagType = this.href === undefined ? 'button' : 'a' as any;
+    const { disabled, expandable, href } = this;
+    const TagType = href === undefined ? 'button' : 'a' as any;
+    const mode = getIonMode(this);
     const attrs = (TagType === 'button')
-    ? { type: this.type }
-    : {
-      download: this.download,
-      href: this.href,
-      target: this.target
-    };
+      ? { type: this.type }
+      : {
+        download: this.download,
+        href: this.href,
+        target: this.target
+      };
 
     return (
-      <TagType
-        {...attrs}
-        class="button-native"
-        disabled={this.disabled}
+      <Host
+        onClick={this.onClick}
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+
+          'item-option-disabled': disabled,
+          'item-option-expandable': expandable,
+          'ion-activatable': true,
+        }}
       >
-        <span class="button-inner">
-          <slot name="top"></slot>
-          <div class="horizontal-wrapper">
-            <slot name="start"></slot>
-            <slot name="icon-only"></slot>
-            <slot></slot>
-            <slot name="end"></slot>
-          </div>
-          <slot name="bottom"></slot>
-        </span>
-        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-      </TagType>
+        <TagType
+          {...attrs}
+          class="button-native"
+          disabled={disabled}
+        >
+          <span class="button-inner">
+            <slot name="top"></slot>
+            <div class="horizontal-wrapper">
+              <slot name="start"></slot>
+              <slot name="icon-only"></slot>
+              <slot></slot>
+              <slot name="end"></slot>
+            </div>
+            <slot name="bottom"></slot>
+          </span>
+          {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+        </TagType>
+      </Host>
     );
   }
 }

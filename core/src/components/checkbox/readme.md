@@ -99,8 +99,7 @@ export class HomePage {
 
 ```tsx
 import React from 'react';
-
-import { IonCheckbox, IonList, IonItem, IonLabel } from '@ionic/react';
+import { IonCheckbox, IonList, IonItem, IonLabel, IonContent } from '@ionic/react';
 
 const form = [
   { val: 'Pepperoni', isChecked: true },
@@ -108,8 +107,8 @@ const form = [
   { val: 'Mushroom', isChecked: false }
 ];
 
-const CheckboxExample: React.SFC<{}> = () => (
-  <>
+export const CheckboxExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Default Checkbox --*/}
     <IonCheckbox />
 
@@ -130,15 +129,14 @@ const CheckboxExample: React.SFC<{}> = () => (
     <IonList>
       { form.map(({val, isChecked}) => (
         <IonItem key={val}>
-          <IonLabel>{{val}}</IonLabel>
+          <IonLabel>{val}</IonLabel>
           <IonCheckbox slot="end" value={val} checked={isChecked} />
         </IonItem>
       )) }
     </IonList>
-  </>
+  </IonContent>
 );
-
-export default CheckboxExample;
+```
 
 
 ### Vue
