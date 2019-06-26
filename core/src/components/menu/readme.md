@@ -465,8 +465,8 @@ Type: `Promise<boolean>`
 
 ### Depends on
 
-- [ion-backdrop](../backdrop)
-- [ion-menu-controller](../menu-controller)
+- [ion-backdrop](..\backdrop)
+- [ion-menu-controller](..\menu-controller)
 
 ### Graph
 ```mermaid

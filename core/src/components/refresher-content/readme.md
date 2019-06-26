@@ -22,7 +22,7 @@ The refresher content contains the text, icon and spinner to display during a pu
 ### Depends on
 
 - ion-icon
-- [ion-spinner](../spinner)
+- [ion-spinner](..\spinner)
 
 ### Graph
 ```mermaid

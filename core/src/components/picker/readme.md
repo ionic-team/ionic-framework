@@ -109,7 +109,7 @@ Type: `Promise<void>`
 
 ### Depends on
 
-- [ion-backdrop](../backdrop)
+- [ion-backdrop](..\backdrop)
 - ion-picker-column
 
 ### Graph

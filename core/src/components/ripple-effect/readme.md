@@ -48,19 +48,19 @@ Type: `Promise<() => void>`
 
 ### Used by
 
- - [ion-action-sheet](../action-sheet)
- - [ion-alert](../alert)
- - [ion-back-button](../back-button)
- - [ion-button](../button)
- - [ion-card](../card)
- - [ion-chip](../chip)
- - [ion-fab-button](../fab-button)
- - [ion-item](../item)
- - [ion-item-option](../item-option)
- - [ion-menu-button](../menu-button)
- - [ion-segment-button](../segment-button)
- - [ion-tab-button](../tab-button)
- - [ion-toast](../toast)
+ - [ion-action-sheet](..\action-sheet)
+ - [ion-alert](..\alert)
+ - [ion-back-button](..\back-button)
+ - [ion-button](..\button)
+ - [ion-card](..\card)
+ - [ion-chip](..\chip)
+ - [ion-fab-button](..\fab-button)
+ - [ion-item](..\item)
+ - [ion-item-option](..\item-option)
+ - [ion-menu-button](..\menu-button)
+ - [ion-segment-button](..\segment-button)
+ - [ion-tab-button](..\tab-button)
+ - [ion-toast](..\toast)
 
 ### Graph
 ```mermaid

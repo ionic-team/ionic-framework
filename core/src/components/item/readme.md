@@ -1438,7 +1438,7 @@ Item Inputs
 ### Depends on
 
 - ion-icon
-- [ion-ripple-effect](../ripple-effect)
+- [ion-ripple-effect](..\ripple-effect)
 
 ### Graph
 ```mermaid

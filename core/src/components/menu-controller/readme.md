@@ -154,7 +154,7 @@ Type: `Promise<boolean>`
 
 ### Used by
 
- - [ion-menu](../menu)
+ - [ion-menu](..\menu)
 
 ### Graph
 ```mermaid

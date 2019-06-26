@@ -68,7 +68,7 @@ The `ion-infinite-scroll-content` component is not supported in React.
 
 ### Depends on
 
-- [ion-spinner](../spinner)
+- [ion-spinner](..\spinner)
 
 ### Graph
 ```mermaid

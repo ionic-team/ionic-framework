@@ -263,8 +263,8 @@ Type: `Promise<void>`
 
 ### Depends on
 
-- [ion-backdrop](../backdrop)
-- [ion-spinner](../spinner)
+- [ion-backdrop](..\backdrop)
+- [ion-spinner](..\spinner)
 
 ### Graph
 ```mermaid

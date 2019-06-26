@@ -158,13 +158,13 @@ export const BackdropExample: React.FunctionComponent = () => (
 
 ### Used by
 
- - [ion-action-sheet](../action-sheet)
- - [ion-alert](../alert)
- - [ion-loading](../loading)
- - [ion-menu](../menu)
- - [ion-modal](../modal)
- - [ion-picker](../picker)
- - [ion-popover](../popover)
+ - [ion-action-sheet](..\action-sheet)
+ - [ion-alert](..\alert)
+ - [ion-loading](..\loading)
+ - [ion-menu](..\menu)
+ - [ion-modal](..\modal)
+ - [ion-picker](..\picker)
+ - [ion-popover](..\popover)
 
 ### Graph
 ```mermaid

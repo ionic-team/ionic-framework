@@ -21,7 +21,7 @@ In case it's desired to keep `ion-menu-toggle` always visible, the `autoHide` pr
 
 ### Used by
 
- - [ion-menu-button](../menu-button)
+ - [ion-menu-button](..\menu-button)
 
 ### Graph
 ```mermaid
