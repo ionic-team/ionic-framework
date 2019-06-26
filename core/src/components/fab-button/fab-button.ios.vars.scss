@@ -24,17 +24,8 @@ $fab-ios-background-color:                                    ion-color(primary,
 /// @prop - Background color of the activated button
 $fab-ios-background-color-activated:                          ion-color(primary, shade) !default;
 
-/// @prop - Background color alpha of the button in translucent mode
-$fab-ios-translucent-background-color-alpha:                  .9 !default;
-
-/// @prop - Background color of the button in translucent mode
-$fab-ios-translucent-background-color:                        ion-color(primary, base, $fab-ios-translucent-background-color-alpha) !default;
-
 /// @prop - Text color of the button
 $fab-ios-text-color:                                          ion-color(primary, contrast) !default;
-
-/// @prop - Color of the button icon
-$fab-ios-icon-fill-color:                                     $fab-ios-text-color !default;
 
 /// @prop - Font size of the button icon
 $fab-ios-icon-font-size:                                      28px !default;
@@ -45,17 +36,26 @@ $fab-ios-list-button-background-color:                        ion-color(light, b
 /// @prop - Background color of the activated button in a list
 $fab-ios-list-button-background-color-activated:              ion-color(light, shade) !default;
 
+/// @prop - Background color of the hovered button in a list
+$fab-ios-list-button-background-color-hover:                  ion-color(light, tint) !default;
+
 /// @prop - Text color of the button in a list
 $fab-ios-list-button-text-color:                              ion-color(light, contrast) !default;
 
 /// @prop - Font size of the button icon in a list
 $fab-ios-list-button-icon-font-size:                          18px !default;
 
-/// @prop - Background color of the button in a list
-$fab-ios-list-button-translucent-background-color-alpha:      .8 !default;
+// Translucent FAB Button
+// --------------------------------------------------
 
-/// @prop - Background color of the button in a list
-$fab-ios-list-button-translucent-background-color:            rgba($background-color-rgb, $fab-ios-list-button-translucent-background-color-alpha) !default;
-
-/// @prop - Filter of the translucent fab
+/// @prop - Backdrop filter of the translucent button
 $fab-ios-translucent-filter:                                  saturate(180%) blur(20px) !default;
+
+/// @prop - Alpha level of the translucent button background
+$fab-ios-translucent-background-alpha:                        .9 !default;
+
+/// @prop - Alpha level of the translucent button background on hover
+$fab-ios-translucent-background-alpha-hover:                  .8 !default;
+
+/// @prop - Alpha level of the translucent button background on focus
+$fab-ios-translucent-background-alpha-focused:                .82 !default;
