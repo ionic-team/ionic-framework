@@ -25,6 +25,10 @@
   top: 0;
 }
 
+.header-collapse-ios ion-toolbar:first-child {
+  padding-top: 7px;
+}
+
 .header-collapse-ios ion-toolbar ion-searchbar {
   
   height: 48px;

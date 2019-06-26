@@ -13,6 +13,16 @@ export function shadow<T extends Element>(el: T): ShadowRoot | T {
   return el.shadowRoot || el;
 }
 
+/**
+ * If a view has the iOS Large Header in use,
+ * we do not always want to interfere with the styles
+ * of the title in the main header as they can change
+ * depending on whether or not the large header is collapsed.
+ */
+const hasCollapsableHeader = (el: any): boolean => {
+  return el && el.classList.contains('collapse-header-title-hidden');
+};
+
 export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement, opts: TransitionOptions): Promise<Animation> {
 
   const isRTL = (navEl.ownerDocument as any).dir === 'rtl';
@@ -71,7 +81,8 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
     rootTransition.add(enteringToolBar);
 
     const enteringTitle = new AnimationC();
-    enteringTitle.addElement(enteringToolBarEl.querySelector('ion-title'));
+    const enteringTitleEl = enteringToolBarEl.querySelector('ion-title');
+    enteringTitle.addElement(enteringTitleEl);
 
     const enteringToolBarButtons = new AnimationC();
     enteringToolBarButtons.addElement(enteringToolBarEl.querySelectorAll('ion-buttons,[menuToggle]'));
@@ -96,7 +107,9 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
       .add(enteringToolBarBg)
       .add(enteringBackButton);
 
-    enteringTitle.fromTo(OPACITY, 0.01, 1, true);
+    if (!hasCollapsableHeader(enteringTitleEl)) {
+      enteringTitle.fromTo(OPACITY, 0.01, 1, true);
+    }
     enteringToolBarButtons.fromTo(OPACITY, 0.01, 1, true);
     enteringToolBarItems.fromTo(OPACITY, 0.01, 1, true);
 
@@ -158,7 +171,8 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
       leavingToolBar.addElement(leavingToolBarEl);
 
       const leavingTitle = new AnimationC();
-      leavingTitle.addElement(leavingToolBarEl.querySelector('ion-title'));
+      const leavingTitleEl = leavingToolBarEl.querySelector('ion-title');
+      leavingTitle.addElement(leavingTitleEl);
 
       const leavingToolBarButtons = new AnimationC();
       leavingToolBarButtons.addElement(leavingToolBarEl.querySelectorAll('ion-buttons,[menuToggle]'));
@@ -189,7 +203,10 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
 
       // fade out leaving toolbar items
       leavingBackButton.fromTo(OPACITY, 0.99, 0);
-      leavingTitle.fromTo(OPACITY, 0.99, 0);
+
+      if (!hasCollapsableHeader(leavingTitleEl)) {
+        leavingTitle.fromTo(OPACITY, 0.99, 0);
+      }
       leavingToolBarButtons.fromTo(OPACITY, 0.99, 0, 0);
       leavingToolBarItems.fromTo(OPACITY, 0.99, 0);
 
@@ -221,7 +238,11 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
           .afterClearStyles([TRANSFORM, OPACITY]);
 
         leavingBackButton.afterClearStyles([OPACITY]);
-        leavingTitle.afterClearStyles([OPACITY]);
+
+        if (!hasCollapsableHeader(leavingTitleEl)) {
+          leavingTitle.afterClearStyles([OPACITY]);
+        }
+
         leavingToolBarButtons.afterClearStyles([OPACITY]);
       }
     });

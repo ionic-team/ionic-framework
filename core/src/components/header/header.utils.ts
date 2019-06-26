@@ -65,42 +65,63 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: any, scrollH
     const mainHeaderToolbars = mainHeaderIndex.toolbars;
     const lastMainHeaderToolbar = mainHeaderToolbars[mainHeaderToolbars.length - 1];
 
+    /**
+     * If element does not have an offsetParent,
+     * then the page where this header exists
+     * is not the active page
+     */
+
+    if (!mainHeaderIndex.el.offsetParent) { return; }
     if (ev[0].isIntersecting) {
-      makeHeaderInactive(mainHeaderIndex, true);
+      makeHeaderInactive(mainHeaderIndex, true, true);
       makeHeaderActive(scrollHeaderIndex, false);
+
       setToolbarBorderColor(lastMainHeaderToolbar, 'rgba(0, 0, 0, 0)');
     } else {
-      makeHeaderActive(mainHeaderIndex, true);
+      makeHeaderActive(mainHeaderIndex, true, true);
       makeHeaderInactive(scrollHeaderIndex, true);
+
       setToolbarBorderColor(lastMainHeaderToolbar, 'rgba(0, 0, 0, 0.2)');
     }
   });
 };
 
-export const makeHeaderInactive = (headerIndex: any, transition = false) => {
+export const makeHeaderInactive = (headerIndex: any, transition = false, isMainHeader = false) => {
   headerIndex.el.classList.add('no-translucent');
 
   if (headerIndex.toolbars.length === 0) {
     return;
   }
 
-  const ionTitleEl = headerIndex.toolbars[0].ionTitleEl;
-  if (!ionTitleEl) { return; }
+  headerIndex.toolbars.forEach((toolbar: any) => {
+    const ionTitleEl = toolbar.ionTitleEl;
+    if (!ionTitleEl) { return; }
 
-  setElOpacity(ionTitleEl, 0, transition);
-  hideCollapsableButtons(headerIndex.toolbars[0].ionButtonsEl, transition);
+    setElOpacity(ionTitleEl, 0, transition);
+    hideCollapsableButtons(toolbar.ionButtonsEl, transition);
+
+    if (isMainHeader) {
+      ionTitleEl.classList.add('collapse-header-title-hidden');
+    }
+  });
 };
 
-export const makeHeaderActive = (headerIndex: any, transition = false) => {
+export const makeHeaderActive = (headerIndex: any, transition = false, isMainHeader = false) => {
   if (headerIndex.toolbars.length === 0) {
     return;
   }
 
-  const ionTitleEl = headerIndex.toolbars[0].ionTitleEl;
-  if (!ionTitleEl) { return; }
+  headerIndex.toolbars.forEach((toolbar: any) => {
+    const ionTitleEl = toolbar.ionTitleEl;
+    if (!ionTitleEl) { return; }
 
-  setElOpacity(ionTitleEl, 1, transition);
-  showCollapsableButtons(headerIndex.toolbars[0].ionButtonsEl, transition);
+    setElOpacity(ionTitleEl, 1, transition);
+    showCollapsableButtons(toolbar.ionButtonsEl, transition);
+
+    if (isMainHeader) {
+      ionTitleEl.classList.remove('collapse-header-title-hidden');
+    }
+  });
 
   headerIndex.el.classList.remove('no-translucent');
 };

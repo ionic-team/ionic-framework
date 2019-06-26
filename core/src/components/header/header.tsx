@@ -68,6 +68,12 @@ export class Header implements ComponentInterface {
 
       if (!mainHeaderIndex || !scrollHeaderIndex) { return; }
 
+      // TODO: Find a better way to do this
+      let remainingHeight = 0;
+      for (let i = 1; i <= scrollHeaderIndex.toolbars.length - 1; i++) {
+        remainingHeight += scrollHeaderIndex.toolbars[i].el.clientHeight;
+      }
+
       makeHeaderInactive(mainHeaderIndex, false);
 
       // TODO: Find a better way to do this
@@ -83,8 +89,8 @@ export class Header implements ComponentInterface {
        */
       const toolbarIntersection = (ev: any) => { handleToolbarIntersection(ev, mainHeaderIndex, scrollHeaderIndex); };
 
-      // TODO: Dynamically determine what the root margin should be
-      const intersectionObserver = new IntersectionObserver(toolbarIntersection, { threshold: 0.35, rootMargin: '-44px 0px 0px 0px' });
+      const mainHeaderHeight = mainHeaderIndex.el.clientHeight;
+      const intersectionObserver = new IntersectionObserver(toolbarIntersection, { threshold: 0.25, rootMargin: `-${mainHeaderHeight}px 0px 0px 0px` });
       intersectionObserver.observe(scrollHeaderIndex.toolbars[0].el);
 
       /**
@@ -92,13 +98,6 @@ export class Header implements ComponentInterface {
        * showing/hiding border on last toolbar
        * in primary header
        */
-
-      // TODO: Find a better way to do this
-      let remainingHeight = 0;
-      for (let i = 1; i <= scrollHeaderIndex.toolbars.length - 1; i++) {
-        remainingHeight += scrollHeaderIndex.toolbars[i].el.clientHeight;
-      }
-
       this.contentScrollCallback = () => { handleContentScroll(this.scrollEl, mainHeaderIndex, scrollHeaderIndex, remainingHeight); };
       this.scrollEl.addEventListener('scroll', this.contentScrollCallback);
 
