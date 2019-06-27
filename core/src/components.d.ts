@@ -2029,6 +2029,10 @@ export namespace Components {
     'commit': (enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
     'delegate'?: FrameworkDelegate;
     'getRouteId': () => Promise<RouteID | undefined>;
+    /**
+    * The mode determines which platform styles to use.
+    */
+    'mode': "ios" | "md";
     'setRouteId': (id: string, params: ComponentProps<null> | undefined, direction: RouterDirection) => Promise<RouteWrite>;
     'swipeHandler'?: SwipeGestureHandler;
   }
@@ -5254,6 +5258,10 @@ declare namespace LocalJSX {
     * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions.
     */
     'animation'?: AnimationBuilder;
+    /**
+    * The mode determines which platform styles to use.
+    */
+    'mode'?: "ios" | "md";
   }
   interface IonRow extends JSXBase.HTMLAttributes<HTMLIonRowElement> {}
   interface IonSearchbar extends JSXBase.HTMLAttributes<HTMLIonSearchbarElement> {

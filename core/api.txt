@@ -936,6 +936,7 @@ ion-router-link,css-prop,--color
 ion-router-outlet,shadow
 ion-router-outlet,prop,animated,boolean,true,false,false
 ion-router-outlet,prop,animation,((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) | undefined,undefined,false,false
+ion-router-outlet,prop,mode,"ios" | "md",getIonMode(this),false,false
 
 ion-row,shadow
 
