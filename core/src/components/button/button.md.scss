@@ -60,7 +60,6 @@
 // --------------------------------------------------
 
 :host(.button-clear) {
-  --opacity: #{$button-md-clear-opacity};
   --background-activated: transparent;
   --background-focused: #{ion-color(primary, base, .1)};
   --background-hover: #{ion-color(primary, base, .04)};
@@ -124,7 +123,7 @@
 
 @media (any-hover: hover) {
   :host(.button-solid.ion-color:hover) .button-native {
-    background: #{current-color(base, .92)};
+    background: #{current-color(tint)};
   }
 
   :host(.button-clear.ion-color:hover) .button-native,

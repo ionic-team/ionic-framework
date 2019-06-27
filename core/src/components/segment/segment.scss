@@ -5,7 +5,7 @@
 
 :host {
   --indicator-color-checked: initial;
-  --ripple-color: initial;
+  --ripple-color: currentColor;
   --color-activated: initial;
 
   @include font-smoothing();

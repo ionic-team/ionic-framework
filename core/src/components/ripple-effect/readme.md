@@ -37,19 +37,49 @@ The ripple effect component adds the [Material Design ink ripple interaction eff
 
 Adds the ripple effect to the parent element.
 
-#### Parameters
-
-| Name | Type     | Description                                                 |
-| ---- | -------- | ----------------------------------------------------------- |
-| `x`  | `number` | The horizontal coordinate of where the ripple should start. |
-| `y`  | `number` | The vertical coordinate of where the ripple should start.   |
-
 #### Returns
 
 Type: `Promise<() => void>`
 
 
 
+
+## Dependencies
+
+### Used by
+
+ - [ion-action-sheet](../action-sheet)
+ - [ion-alert](../alert)
+ - [ion-back-button](../back-button)
+ - [ion-button](../button)
+ - [ion-card](../card)
+ - [ion-chip](../chip)
+ - [ion-fab-button](../fab-button)
+ - [ion-item](../item)
+ - [ion-item-option](../item-option)
+ - [ion-menu-button](../menu-button)
+ - [ion-segment-button](../segment-button)
+ - [ion-tab-button](../tab-button)
+ - [ion-toast](../toast)
+
+### Graph
+```mermaid
+graph TD;
+  ion-action-sheet --> ion-ripple-effect
+  ion-alert --> ion-ripple-effect
+  ion-back-button --> ion-ripple-effect
+  ion-button --> ion-ripple-effect
+  ion-card --> ion-ripple-effect
+  ion-chip --> ion-ripple-effect
+  ion-fab-button --> ion-ripple-effect
+  ion-item --> ion-ripple-effect
+  ion-item-option --> ion-ripple-effect
+  ion-menu-button --> ion-ripple-effect
+  ion-segment-button --> ion-ripple-effect
+  ion-tab-button --> ion-ripple-effect
+  ion-toast --> ion-ripple-effect
+  style ion-ripple-effect fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

@@ -107,11 +107,10 @@ A Searchbar should be used instead of an input to search lists. A clear button i
 
 ```tsx
 import React from 'react';
+import { IonSearchbar, IonToolbar, IonContent } from '@ionic/react';
 
-import { IonSearchbar, IonToolbar } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const SearchbarExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Default Searchbar --*/}
     <IonSearchbar></IonSearchbar>
     
@@ -134,7 +133,7 @@ const Example: React.SFC<{}> = () => (
     <IonSearchbar type="tel"></IonSearchbar>
 
     {/*-- Searchbar disabled  --*/}
-    <IonSearchbar disabled="true"></IonSearchbar>
+    <IonSearchbar disabled={true}></IonSearchbar>
 
     {/*-- Searchbar with a cancel button and custom cancel button text --*/}
     <IonSearchbar showCancelButton="focus" cancelButtonText="Custom Cancel"></IonSearchbar>
@@ -152,10 +151,8 @@ const Example: React.SFC<{}> = () => (
     <IonToolbar>
       <IonSearchbar></IonSearchbar>
     </IonToolbar>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```
 
 
@@ -254,14 +251,14 @@ Type: `Promise<HTMLInputElement>`
 
 
 
-### `setFocus() => void`
+### `setFocus() => Promise<void>`
 
 Sets focus on the specified `ion-searchbar`. Use this method instead of the global
 `input.focus()`.
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 
@@ -280,6 +277,19 @@ Type: `void`
 | `--placeholder-font-weight` | Font weight of the searchbar placeholder |
 | `--placeholder-opacity`     | Opacity of the searchbar placeholder     |
 
+
+## Dependencies
+
+### Depends on
+
+- ion-icon
+
+### Graph
+```mermaid
+graph TD;
+  ion-searchbar --> ion-icon
+  style ion-searchbar fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

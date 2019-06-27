@@ -44,38 +44,35 @@ The default spinner to use is based on the platform. The default spinner for `io
 
 ```tsx
 import React from 'react';
+import { IonSpinner, IonContent } from '@ionic/react';
 
-import { IonSpinner } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const SpinnerExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Default Spinner --*/}
-    <IonSpinner></IonSpinner>
+    <IonSpinner />
 
     {/*-- Lines --*/}
-    <IonSpinner name="lines"></IonSpinner>
+    <IonSpinner name="lines" />
 
     {/*-- Lines Small --*/}
-    <IonSpinner name="lines-small"></IonSpinner>
+    <IonSpinner name="lines-small" />
 
     {/*-- Dots --*/}
-    <IonSpinner name="dots"></IonSpinner>
+    <IonSpinner name="dots" />
 
     {/*-- Bubbles --*/}
-    <IonSpinner name="bubbles"></IonSpinner>
+    <IonSpinner name="bubbles" />
 
     {/*-- Circles --*/}
-    <IonSpinner name="circles"></IonSpinner>
+    <IonSpinner name="circles" />
 
     {/*-- Crescent --*/}
-    <IonSpinner name="crescent"></IonSpinner>
+    <IonSpinner name="crescent" />
 
     {/*-- Paused Default Spinner --*/}
-    <IonSpinner paused></IonSpinner>
-  </>
+    <IonSpinner paused />
+  </IonContent>
 );
-
-export default Example;
 ```
 
 
@@ -127,6 +124,23 @@ export default Example;
 | --------- | -------------------- |
 | `--color` | Color of the spinner |
 
+
+## Dependencies
+
+### Used by
+
+ - [ion-infinite-scroll-content](../infinite-scroll-content)
+ - [ion-loading](../loading)
+ - [ion-refresher-content](../refresher-content)
+
+### Graph
+```mermaid
+graph TD;
+  ion-infinite-scroll-content --> ion-spinner
+  ion-loading --> ion-spinner
+  ion-refresher-content --> ion-spinner
+  style ion-spinner fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 
