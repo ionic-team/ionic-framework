@@ -8,7 +8,7 @@
 $label-md-text-color:                    $text-color-step-600 !default;
 
 /// @prop - Text color of the stacked/floating label when it is focused
-$label-md-text-color-focused:         null !default;
+$label-md-text-color-focused:            ion-color(primary, base) !default;
 
 /// @prop - Line height of the label when the text wraps
 $label-md-text-wrap-line-height:         1.5 !default;
