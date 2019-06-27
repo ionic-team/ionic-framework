@@ -4,15 +4,12 @@ import { getIonMode } from '../../global/ionic-global';
 import { Color, RouterDirection } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
-/**
- * @deprecated Use `ion-router-link` instead.
- */
 @Component({
-  tag: 'ion-anchor',
-  styleUrl: 'anchor.scss',
+  tag: 'ion-router-link',
+  styleUrl: 'router-link.scss',
   shadow: true
 })
-export class Anchor implements ComponentInterface {
+export class RouterLink implements ComponentInterface {
 
   /**
    * The color to use from your application's color palette.
@@ -38,10 +35,6 @@ export class Anchor implements ComponentInterface {
    * another page using `href`.
    */
   @Prop() routerDirection: RouterDirection = 'forward';
-
-  componentDidLoad() {
-    console.warn('The <ion-anchor> component has been deprecated. Please use an <ion-router-link> if you are using a vanilla JS or Stencil project or an <a> with the Angular router.');
-  }
 
   private onClick = (ev: Event) => {
     openURL(this.href, ev, this.routerDirection);

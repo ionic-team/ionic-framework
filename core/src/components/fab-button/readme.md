@@ -111,7 +111,7 @@ export const FabButtonExample: React.FunctionComponent = () => (
 | `show`            | `show`             | If `true`, the fab button will show when in a fab-list.                                                                                                                                                                                                                                   | `boolean`                         | `false`     |
 | `size`            | `size`             | The size of the button. Set this to `small` in order to have a mini fab.                                                                                                                                                                                                                  | `"small" \| undefined`            | `undefined` |
 | `target`          | `target`           | Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.                                                                                                                                       | `string \| undefined`             | `undefined` |
-| `translucent`     | `translucent`      | If `true`, the fab button will be translucent.                                                                                                                                                                                                                                            | `boolean`                         | `false`     |
+| `translucent`     | `translucent`      | If `true`, the fab button will be translucent. Only applies to `ios` mode on devices that support [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).                                                                            | `boolean`                         | `false`     |
 | `type`            | `type`             | The type of the button.                                                                                                                                                                                                                                                                   | `"button" \| "reset" \| "submit"` | `'button'`  |
 
 
@@ -130,6 +130,7 @@ export const FabButtonExample: React.FunctionComponent = () => (
 | `--background`           | Background of the button                                                                                  |
 | `--background-activated` | Background of the button when pressed                                                                     |
 | `--background-focused`   | Background of the button when focused with the tab key                                                    |
+| `--background-hover`     | Background of the button on hover                                                                         |
 | `--border-color`         | Border color of the button                                                                                |
 | `--border-radius`        | Border radius of the button                                                                               |
 | `--border-style`         | Border style of the button                                                                                |
@@ -138,6 +139,7 @@ export const FabButtonExample: React.FunctionComponent = () => (
 | `--color`                | Text color of the button                                                                                  |
 | `--color-activated`      | Text color of the button when pressed                                                                     |
 | `--color-focused`        | Text color of the button when focused with the tab key                                                    |
+| `--color-hover`          | Text color of the button on hover                                                                         |
 | `--padding-bottom`       | Bottom padding of the button                                                                              |
 | `--padding-end`          | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button |
 | `--padding-start`        | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button |

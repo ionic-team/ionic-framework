@@ -9,7 +9,7 @@ export const config: Config = {
   bundles: [
     { components: ['ion-action-sheet'] },
     { components: ['ion-alert'] },
-    { components: ['ion-anchor', 'ion-back-button'] },
+    { components: ['ion-back-button'] },
     { components: ['ion-app', 'ion-buttons', 'ion-content', 'ion-footer', 'ion-header', 'ion-title', 'ion-toolbar'] },
     { components: ['ion-avatar', 'ion-badge', 'ion-thumbnail'] },
     { components: ['ion-backdrop'] },
@@ -17,7 +17,7 @@ export const config: Config = {
     { components: ['ion-card', 'ion-card-content', 'ion-card-header', 'ion-card-title', 'ion-card-subtitle'] },
     { components: ['ion-checkbox'] },
     { components: ['ion-chip'] },
-    { components: ['ion-datetime', 'ion-picker', 'ion-picker-column', 'ion-picker-controller'] },
+    { components: ['ion-datetime', 'ion-picker', 'ion-picker-column'] },
     { components: ['ion-fab', 'ion-fab-button', 'ion-fab-list'] },
     { components: ['ion-grid', 'ion-row', 'ion-col'] },
     { components: ['ion-infinite-scroll', 'ion-infinite-scroll-content'] },
@@ -37,7 +37,7 @@ export const config: Config = {
     { components: ['ion-refresher', 'ion-refresher-content'] },
     { components: ['ion-reorder', 'ion-reorder-group'] },
     { components: ['ion-ripple-effect'] },
-    { components: ['ion-router', 'ion-route', 'ion-route-redirect', 'ion-router-outlet'] },
+    { components: ['ion-anchor', 'ion-router', 'ion-route', 'ion-route-redirect', 'ion-router-link', 'ion-router-outlet'] },
     { components: ['ion-searchbar'] },
     { components: ['ion-segment', 'ion-segment-button'] },
     { components: ['ion-select', 'ion-select-option', 'ion-select-popover'] },
@@ -118,6 +118,7 @@ export const config: Config = {
         'ion-router',
         'ion-route',
         'ion-route-redirect',
+        'ion-router-link',
         'ion-router-outlet',
         'ion-anchor',
 
@@ -134,6 +135,7 @@ export const config: Config = {
   testing: {
     allowableMismatchedPixels: 200,
     pixelmatchThreshold: 0.05,
+    waitBeforeScreenshot: 20,
     emulate: [
       {
         userAgent: 'iPhone',
