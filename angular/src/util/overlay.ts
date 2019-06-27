@@ -11,8 +11,9 @@ export class OverlayBaseController<Opts, Overlay> implements ControllerShape<Opt
   /**
    * Creates a new overlay
    */
-  create(opts: Opts) {
-    return this.ctrl.create(opts);
+  create(opts?: Opts) {
+    // TODO: next major release opts is not optional
+    return this.ctrl.create((opts || {}) as any);
   }
 
   /**
