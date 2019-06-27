@@ -13,9 +13,14 @@ export class InfiniteScroll implements ComponentInterface {
   private scrollEl?: HTMLElement;
   private didFire = false;
   private isBusy = false;
+  private onScrollBound: EventListener;
 
   @Element() el!: HTMLElement;
   @State() isLoading = false;
+
+  constructor() {
+    this.onScrollBound = this.onScroll.bind(this);
+  }
 
   /**
    * The threshold distance from the bottom
@@ -78,6 +83,7 @@ export class InfiniteScroll implements ComponentInterface {
     if (contentEl) {
       await contentEl.componentOnReady();
       this.scrollEl = await contentEl.getScrollElement();
+      this.scrollEl.addEventListener('scroll', this.onScrollBound);
     }
     this.thresholdChanged(this.threshold);
     if (this.position === 'top') {
@@ -90,10 +96,17 @@ export class InfiniteScroll implements ComponentInterface {
   }
 
   componentDidUnload() {
-    this.scrollEl = undefined;
+    if (this.scrollEl !== undefined) {
+      this.scrollEl.removeEventListener('scroll', this.onScrollBound);
+      this.scrollEl = undefined;
+    }
   }
 
   private onScroll = () => {
+    if (this.disabled) {
+      return 0;
+    }
+
     const scrollEl = this.scrollEl;
     if (!scrollEl || !this.canStart()) {
       return 1;
@@ -208,7 +221,6 @@ export class InfiniteScroll implements ComponentInterface {
           'infinite-scroll-loading': this.isLoading,
           'infinite-scroll-enabled': !this.disabled
         }}
-        onScroll={this.disabled ? undefined : this.onScroll}
       />
     );
   }
