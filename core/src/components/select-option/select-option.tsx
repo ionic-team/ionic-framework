@@ -61,7 +61,7 @@ export class SelectOption implements ComponentInterface {
       'role': 'option',
       'id': this.inputId,
       class: {
-        [`${mode}`]: true,
+        [mode]: true,
       }
     };
   }

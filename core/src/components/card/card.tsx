@@ -18,8 +18,6 @@ import { createColorClasses, openURL } from '../../utils/theme';
 })
 export class Card implements ComponentInterface, AnchorInterface, ButtonInterface {
 
-  @Prop({ context: 'window' }) win!: Window;
-
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -83,7 +81,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
     const mode = getIonMode(this);
     return {
       class: {
-        [`${mode}`]: true,
+        [mode]: true,
 
         ...createColorClasses(this.color),
         'card-disabled': this.disabled,
@@ -101,7 +99,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
       ];
     }
     const mode = getIonMode(this);
-    const { href, win, routerDirection } = this;
+    const { href, routerDirection } = this;
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
@@ -117,7 +115,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
         {...attrs}
         class="card-native"
         disabled={this.disabled}
-        onClick={(ev: Event) => openURL(win, href, ev, routerDirection)}
+        onClick={(ev: Event) => openURL(href, ev, routerDirection)}
       >
         <slot></slot>
         {clickable && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}

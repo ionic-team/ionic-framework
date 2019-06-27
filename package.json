@@ -19,8 +19,5 @@
     "listr": "^0.14.0",
     "semver": "^5.5.0",
     "turbocolor": "^2.4.1"
-  },
-  "dependencies": {
-    "node-sass": "^4.9.0"
   }
 }

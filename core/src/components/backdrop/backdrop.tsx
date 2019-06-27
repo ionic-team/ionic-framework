@@ -19,8 +19,6 @@ export class Backdrop implements ComponentInterface {
     disableScroll: true
   });
 
-  @Prop({ context: 'document' }) doc!: Document;
-
   /**
    * If `true`, the backdrop will be visible.
    */
@@ -81,7 +79,7 @@ export class Backdrop implements ComponentInterface {
     return {
       tabindex: '-1',
       class: {
-        [`${mode}`]: true,
+        [mode]: true,
         'backdrop-hide': !this.visible,
         'backdrop-no-tappable': !this.tappable,
       }

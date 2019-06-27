@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, RouterDirection } from '../../interface';
@@ -28,8 +28,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private inItem = false;
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * The color to use from your application's color palette.
@@ -129,29 +127,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     this.inItem = !!this.el.closest('ion-item') || !!this.el.closest('ion-item-divider');
   }
 
-  @Listen('click')
-  onClick(ev: Event) {
-    if (this.type === 'button') {
-      openURL(this.win, this.href, ev, this.routerDirection);
-
-    } else if (hasShadowDom(this.el)) {
-      // this button wants to specifically submit a form
-      // climb up the dom to see if we're in a <form>
-      // and if so, then use JS to submit it
-      const form = this.el.closest('form');
-      if (form) {
-        ev.preventDefault();
-
-        const fakeButton = this.win.document.createElement('button');
-        fakeButton.type = this.type;
-        fakeButton.style.display = 'none';
-        form.appendChild(fakeButton);
-        fakeButton.click();
-        fakeButton.remove();
-      }
-    }
-  }
-
   private get hasIconOnly() {
     return !!this.el.querySelector('ion-icon[slot="icon-only"]');
   }
@@ -168,6 +143,28 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     return 'bounded';
   }
 
+  private handleClick = (ev: Event) => {
+    if (this.type === 'button') {
+      openURL(this.href, ev, this.routerDirection);
+
+    } else if (hasShadowDom(this.el)) {
+      // this button wants to specifically submit a form
+      // climb up the dom to see if we're in a <form>
+      // and if so, then use JS to submit it
+      const form = this.el.closest('form');
+      if (form) {
+        ev.preventDefault();
+
+        const fakeButton = document.createElement('button');
+        fakeButton.type = this.type;
+        fakeButton.style.display = 'none';
+        form.appendChild(fakeButton);
+        fakeButton.click();
+        fakeButton.remove();
+      }
+    }
+  }
+
   private onFocus = () => {
     this.ionFocus.emit();
   }
@@ -176,62 +173,60 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     this.ionBlur.emit();
   }
 
-  hostData() {
+  render() {
     const mode = getIonMode(this);
-    const { buttonType, disabled, color, expand, hasIconOnly, shape, strong } = this;
+    const { buttonType, type, disabled, rel, target, size, href, color, expand, hasIconOnly, shape, strong } = this;
+    const finalSize = size === undefined && this.inItem ? 'small' : size;
+    const TagType = href === undefined ? 'button' : 'a' as any;
+    const attrs = (TagType === 'button')
+      ? { type }
+      : {
+        download: this.download,
+        href,
+        rel,
+        target
+      };
+
     let fill = this.fill;
     if (fill === undefined) {
       fill = this.inToolbar ? 'clear' : 'solid';
     }
-    const size = this.size === undefined && this.inItem ? 'small' : this.size;
-    return {
-      'aria-disabled': disabled ? 'true' : null,
-      class: {
-        ...createColorClasses(color),
-        [`${mode}`]: true,
-        [buttonType]: true,
-        [`${buttonType}-${expand}`]: expand !== undefined,
-        [`${buttonType}-${size}`]: size !== undefined,
-        [`${buttonType}-${shape}`]: shape !== undefined,
-        [`${buttonType}-${fill}`]: true,
-        [`${buttonType}-strong`]: strong,
-
-        'button-has-icon-only': hasIconOnly,
-        'button-disabled': disabled,
-        'ion-activatable': true,
-        'ion-focusable': true,
-      }
-    };
-  }
-
-  render() {
-    const mode = getIonMode(this);
-    const TagType = this.href === undefined ? 'button' : 'a' as any;
-    const attrs = (TagType === 'button')
-      ? { type: this.type }
-      : {
-        download: this.download,
-        href: this.href,
-        rel: this.rel,
-        target: this.target
-      };
-
     return (
-      <TagType
-        {...attrs}
-        class="button-native"
-        disabled={this.disabled}
-        onFocus={this.onFocus}
-        onBlur={this.onBlur}
+      <Host
+        onClick={this.handleClick}
+        aria-disabled={disabled ? 'true' : null}
+        class={{
+          ...createColorClasses(color),
+          [mode]: true,
+          [buttonType]: true,
+          [`${buttonType}-${expand}`]: expand !== undefined,
+          [`${buttonType}-${finalSize}`]: finalSize !== undefined,
+          [`${buttonType}-${shape}`]: shape !== undefined,
+          [`${buttonType}-${fill}`]: true,
+          [`${buttonType}-strong`]: strong,
+
+          'button-has-icon-only': hasIconOnly,
+          'button-disabled': disabled,
+          'ion-activatable': true,
+          'ion-focusable': true,
+        }}
       >
-        <span class="button-inner">
-          <slot name="icon-only"></slot>
-          <slot name="start"></slot>
-          <slot></slot>
-          <slot name="end"></slot>
-        </span>
-        {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
-      </TagType>
+        <TagType
+          {...attrs}
+          class="button-native"
+          disabled={disabled}
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+        >
+          <span class="button-inner">
+            <slot name="icon-only"></slot>
+            <slot name="start"></slot>
+            <slot></slot>
+            <slot name="end"></slot>
+          </span>
+          {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
+        </TagType>
+      </Host>
     );
   }
 }

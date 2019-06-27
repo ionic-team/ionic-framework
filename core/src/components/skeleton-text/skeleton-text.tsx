@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Prop, h } from '@stencil/core';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Config } from '../../interface';
 import { hostContext } from '../../utils/theme';
 
 @Component({
@@ -12,8 +12,6 @@ import { hostContext } from '../../utils/theme';
 export class SkeletonText implements ComponentInterface {
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'config' }) config!: Config;
 
   /**
    * If `true`, the skeleton text will animate.
@@ -45,13 +43,13 @@ export class SkeletonText implements ComponentInterface {
   }
 
   hostData() {
-    const animated = this.animated && this.config.getBoolean('animated', true);
+    const animated = this.animated && config.getBoolean('animated', true);
     const inMedia = hostContext('ion-avatar', this.el) || hostContext('ion-thumbnail', this.el);
     const mode = getIonMode(this);
 
     return {
       class: {
-        [`${mode}`]: true,
+        [mode]: true,
         'skeleton-text-animated': animated,
         'in-media': inMedia
       },

@@ -19,8 +19,6 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 export class FabButton implements ComponentInterface, AnchorInterface, ButtonInterface {
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'window' }) win!: Window;
-
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -78,6 +76,8 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
 
   /**
    * If `true`, the fab button will be translucent.
+   * Only applies to `ios` mode on devices that support
+   * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    */
   @Prop() translucent = false;
 
@@ -117,7 +117,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
       'aria-disabled': disabled ? 'true' : null,
       class: {
         ...createColorClasses(color),
-        [`${mode}`]: true,
+        [mode]: true,
         'fab-button-in-list': inList,
         'fab-button-translucent-in-list': inList && translucent,
         'fab-button-close-active': activated,
@@ -150,7 +150,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
         disabled={this.disabled}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
-        onClick={(ev: Event) => openURL(this.win, this.href, ev, this.routerDirection)}
+        onClick={(ev: Event) => openURL(this.href, ev, this.routerDirection)}
       >
         <span class="close-icon">
           <ion-icon name="close" lazy={false}></ion-icon>

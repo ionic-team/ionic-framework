@@ -72,11 +72,9 @@ ion-alert-controller,method,getTop,getTop() => Promise<HTMLIonAlertElement | und
 
 ion-anchor,shadow
 ion-anchor,prop,color,string | undefined,undefined,false,false
-ion-anchor,prop,download,string | undefined,undefined,false,false
 ion-anchor,prop,href,string | undefined,undefined,false,false
 ion-anchor,prop,rel,string | undefined,undefined,false,false
 ion-anchor,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
-ion-anchor,prop,target,string | undefined,undefined,false,false
 ion-anchor,css-prop,--background
 ion-anchor,css-prop,--color
 
@@ -361,6 +359,7 @@ ion-fab-button,event,ionFocus,void,true
 ion-fab-button,css-prop,--background
 ion-fab-button,css-prop,--background-activated
 ion-fab-button,css-prop,--background-focused
+ion-fab-button,css-prop,--background-hover
 ion-fab-button,css-prop,--border-color
 ion-fab-button,css-prop,--border-radius
 ion-fab-button,css-prop,--border-style
@@ -369,6 +368,7 @@ ion-fab-button,css-prop,--box-shadow
 ion-fab-button,css-prop,--color
 ion-fab-button,css-prop,--color-activated
 ion-fab-button,css-prop,--color-focused
+ion-fab-button,css-prop,--color-hover
 ion-fab-button,css-prop,--padding-bottom
 ion-fab-button,css-prop,--padding-end
 ion-fab-button,css-prop,--padding-start
@@ -483,12 +483,17 @@ ion-item,prop,target,string | undefined,undefined,false,false
 ion-item,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-item,css-prop,--background
 ion-item,css-prop,--background-activated
+ion-item,css-prop,--background-focused
+ion-item,css-prop,--background-hover
 ion-item,css-prop,--border-color
 ion-item,css-prop,--border-radius
 ion-item,css-prop,--border-style
 ion-item,css-prop,--border-width
 ion-item,css-prop,--box-shadow
 ion-item,css-prop,--color
+ion-item,css-prop,--color-activated
+ion-item,css-prop,--color-focused
+ion-item,css-prop,--color-hover
 ion-item,css-prop,--detail-icon-color
 ion-item,css-prop,--detail-icon-font-size
 ion-item,css-prop,--detail-icon-opacity
@@ -921,6 +926,14 @@ ion-router,method,back,back() => Promise<void>
 ion-router,method,push,push(url: string, direction?: RouterDirection) => Promise<boolean>
 ion-router,event,ionRouteDidChange,RouterEventDetail,true
 ion-router,event,ionRouteWillChange,RouterEventDetail,true
+
+ion-router-link,shadow
+ion-router-link,prop,color,string | undefined,undefined,false,false
+ion-router-link,prop,href,string | undefined,undefined,false,false
+ion-router-link,prop,rel,string | undefined,undefined,false,false
+ion-router-link,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
+ion-router-link,css-prop,--background
+ion-router-link,css-prop,--color
 
 ion-router-outlet,shadow
 ion-router-outlet,prop,animated,boolean,true,false,false

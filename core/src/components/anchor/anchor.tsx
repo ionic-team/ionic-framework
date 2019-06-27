@@ -1,18 +1,18 @@
-import { Component, ComponentInterface, Listen, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, RouterDirection } from '../../interface';
-import { AnchorInterface } from '../../utils/element-interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
+/**
+ * @deprecated Use `ion-router-link` instead.
+ */
 @Component({
   tag: 'ion-anchor',
   styleUrl: 'anchor.scss',
   shadow: true
 })
-export class Anchor implements ComponentInterface, AnchorInterface {
-
-  @Prop({ context: 'window' }) win!: Window;
+export class Anchor implements ComponentInterface {
 
   /**
    * The color to use from your application's color palette.
@@ -20,14 +20,6 @@ export class Anchor implements ComponentInterface, AnchorInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * This attribute instructs browsers to download a URL instead of navigating to
-   * it, so the user will be prompted to save it as a local file. If the attribute
-   * has a value, it is used as the pre-filled file name in the Save prompt
-   * (the user can still change the file name if they want).
-   */
-  @Prop() download: string | undefined;
 
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.
@@ -47,42 +39,33 @@ export class Anchor implements ComponentInterface, AnchorInterface {
    */
   @Prop() routerDirection: RouterDirection = 'forward';
 
-  /**
-   * Specifies where to display the linked URL.
-   * Only applies when an `href` is provided.
-   * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
-   */
-  @Prop() target: string | undefined;
-
-  @Listen('click')
-  onClick(ev: Event) {
-    openURL(this.win, this.href, ev, this.routerDirection);
+  componentDidLoad() {
+    console.warn('The <ion-anchor> component has been deprecated. Please use an <ion-router-link> if you are using a vanilla JS or Stencil project or an <a> with the Angular router.');
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-    console.log('anchor', mode);
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        [`${mode}`]: true,
-        'ion-activatable': true
-      }
-    };
+  private onClick = (ev: Event) => {
+    openURL(this.href, ev, this.routerDirection);
   }
 
   render() {
+    const mode = getIonMode(this);
     const attrs = {
-      download: this.download,
       href: this.href,
-      rel: this.rel,
-      target: this.target
+      rel: this.rel
     };
-
     return (
-      <a {...attrs}>
-        <slot></slot>
-      </a>
+      <Host
+        onClick={this.onClick}
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+          'ion-activatable': true
+        }}
+      >
+        <a {...attrs}>
+          <slot></slot>
+        </a>
+      </Host>
     );
   }
 }

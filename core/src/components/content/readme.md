@@ -1,8 +1,10 @@
 # ion-content
 
-Content component provides an easy to use content area with some useful methods
+The content component provides an easy to use content area with some useful methods
 to control the scrollable area. There should only be one content in a single
-view component.
+view.
+
+Content, along with many other Ionic components, can be customized to modify its padding, margin, and more using the global styles provided in the [CSS Utilities](/docs/layout/css-utilities) or by individually styling it using CSS and the available [CSS Custom Properties](#css-custom-properties).
 
 <!-- Auto Generated Below -->
 
@@ -157,17 +159,17 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name                | Description                    |
-| ------------------- | ------------------------------ |
-| `--background`      | Background of the Content      |
-| `--color`           | Color of the Content           |
-| `--keyboard-offset` | Keyboard offset of the Content |
-| `--offset-bottom`   | Offset bottom of the Content   |
-| `--offset-top`      | Offset top of the Content      |
-| `--padding-bottom`  | Padding bottom of the Content  |
-| `--padding-end`     | Padding end of the Content     |
-| `--padding-start`   | Padding start of the Content   |
-| `--padding-top`     | Padding top of the Content     |
+| Name                | Description                                                                                                |
+| ------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `--background`      | Background of the content                                                                                  |
+| `--color`           | Color of the content                                                                                       |
+| `--keyboard-offset` | Keyboard offset of the content                                                                             |
+| `--offset-bottom`   | Offset bottom of the content                                                                               |
+| `--offset-top`      | Offset top of the content                                                                                  |
+| `--padding-bottom`  | Bottom padding of the content                                                                              |
+| `--padding-end`     | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the content |
+| `--padding-start`   | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the content |
+| `--padding-top`     | Top padding of the content                                                                                 |
 
 
 ----------------------------------------------

@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { ActionSheetButton, Animation, AnimationBuilder, Config, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { ActionSheetButton, Animation, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
@@ -29,7 +29,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'config' }) config!: Config;
   /** @internal */
   @Prop() overlayIndex!: number;
 
@@ -204,7 +203,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         zIndex: 20000 + this.overlayIndex,
       },
       class: {
-        [`${mode}`]: true,
+        [mode]: true,
 
         ...getClassMap(this.cssClass),
         'action-sheet-translucent': this.translucent

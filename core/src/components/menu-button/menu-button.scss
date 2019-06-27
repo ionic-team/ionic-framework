@@ -9,16 +9,16 @@
    *
    * @prop --background: Background of the menu button
    * @prop --background-hover: Background of the menu button on hover
-   * @prop --background-focused: Background of the menu button when focused
+   * @prop --background-focused: Background of the menu button when focused with the tab key
    *
    * @prop --color: Color of the menu button
    * @prop --color-hover: Color of the menu button on hover
-   * @prop --color-focused: Color of the menu button when focused
+   * @prop --color-focused: Color of the menu button when focused with the tab key
    *
-   * @prop --padding-top: Padding top of the button
-   * @prop --padding-end: Padding end of the button
-   * @prop --padding-bottom: Padding bottom of the button
-   * @prop --padding-start: Padding start of the button
+   * @prop --padding-top: Top padding of the button
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button
+   * @prop --padding-bottom: Bottom padding of the button
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button
    */
   --background: transparent;
   --color-focused: var(--color);

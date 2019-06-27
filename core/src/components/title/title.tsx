@@ -57,7 +57,7 @@ export class ToolbarTitle implements ComponentInterface {
 
     return {
       class: {
-        [`${mode}`]: true,
+        [mode]: true,
         [`title-${mode}`]: true,
         [`title-${mode}-${this.size}`]: true,
 

@@ -2,7 +2,7 @@ import { Config } from '../interface';
 
 import { now, pointerCoord } from './helpers';
 
-export function startTapClick(doc: Document, config: Config) {
+export function startTapClick(config: Config) {
   let lastTouch = -MOUSE_WAIT * 10;
   let lastActivated = 0;
   let scrollingEl: HTMLElement | undefined;
@@ -133,6 +133,7 @@ export function startTapClick(doc: Document, config: Config) {
     }
   }
 
+  const doc = document;
   doc.addEventListener('ionScrollStart', ev => {
     scrollingEl = ev.target as HTMLElement;
     cancelActive();
