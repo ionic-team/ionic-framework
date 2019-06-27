@@ -209,14 +209,20 @@ export class StackController {
         containerEl.appendChild(enteringEl);
       }
 
-      await containerEl.componentOnReady();
-      await containerEl.commit(enteringEl, leavingEl, {
-        deepWait: true,
-        duration: direction === undefined ? 0 : undefined,
-        direction,
-        showGoBack,
-        progressAnimation
-      });
+      if (typeof (containerEl as any).componentOnReady === 'function') {
+        // SSR would not have componentOnReady()
+        await containerEl.componentOnReady();
+      }
+
+      if (typeof (containerEl as any).commit === 'function') {
+        await containerEl.commit(enteringEl, leavingEl, {
+          deepWait: true,
+          duration: direction === undefined ? 0 : undefined,
+          direction,
+          showGoBack,
+          progressAnimation
+        });
+      }
     }
   }
 
@@ -231,12 +237,16 @@ export class StackController {
 }
 
 function cleanupAsync(activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) {
-  return new Promise(resolve => {
-    requestAnimationFrame(() => {
-      cleanup(activeRoute, views, viewsSnapshot, location);
-      resolve();
+  if (typeof (requestAnimationFrame as any) === 'function') {
+    return new Promise(resolve => {
+      requestAnimationFrame(() => {
+        cleanup(activeRoute, views, viewsSnapshot, location);
+        resolve();
+      });
     });
-  });
+  }
+  cleanup(activeRoute, views, viewsSnapshot, location);
+  return Promise.resolve();
 }
 
 function cleanup(activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) {
