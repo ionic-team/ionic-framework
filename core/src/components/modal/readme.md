@@ -249,37 +249,22 @@ console.log(data);
 ### React
 
 ```tsx
-import React, { Component } from 'react'
-import { IonModal } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonModal, IonButton, IonContent } from '@ionic/react';
 
-type Props = {}
-type State = {
-  showModal: boolean
-}
+export const ModalExample: React.FunctionComponent = () => {
+  const [showModal, setShowModal] = useState(false);
 
-export class ModalExample extends Component<Props, State> {
-
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      showModal: false
-    };
-  }
-
-  render() {
-    return (
-      <IonModal
-        isOpen={this.state.showModal}
-        onDidDismiss={() => this.setState(() => ({ showModal: false }))}
-      >
+  return (
+    <IonContent>
+      <IonModal isOpen={showModal}>
         <p>This is modal content</p>
-        <IonButton onClick={() => this.setState(() => ({ showModal: false }))}>
-          Close Modal
-        </IonButton>
+        <IonButton onClick={() => setShowModal(false)}>Close Modal</IonButton>
       </IonModal>
-    );
-  }
-}
+      <IonButton onClick={() => setShowModal(true)}>Show Modal</IonButton>
+    </IonContent>
+  );
+};
 ```
 
 
@@ -368,12 +353,12 @@ export default {
 
 ## Events
 
-| Event                 | Description                             | Type                              |
-| --------------------- | --------------------------------------- | --------------------------------- |
-| `ionModalDidDismiss`  | Emitted after the modal has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionModalDidPresent`  | Emitted after the modal has presented.  | `CustomEvent<void>`               |
-| `ionModalWillDismiss` | Emitted before the modal has dismissed. | `CustomEvent<OverlayEventDetail>` |
-| `ionModalWillPresent` | Emitted before the modal has presented. | `CustomEvent<void>`               |
+| Event                 | Description                             | Type                                   |
+| --------------------- | --------------------------------------- | -------------------------------------- |
+| `ionModalDidDismiss`  | Emitted after the modal has dismissed.  | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionModalDidPresent`  | Emitted after the modal has presented.  | `CustomEvent<void>`                    |
+| `ionModalWillDismiss` | Emitted before the modal has dismissed. | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionModalWillPresent` | Emitted before the modal has presented. | `CustomEvent<void>`                    |
 
 
 ## Methods
@@ -381,13 +366,6 @@ export default {
 ### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
 
 Dismiss the modal overlay after it has been presented.
-
-#### Parameters
-
-| Name   | Type                  | Description                                                                                |
-| ------ | --------------------- | ------------------------------------------------------------------------------------------ |
-| `data` | `any`                 | Any data to emit in the dismiss events.                                                    |
-| `role` | `string \| undefined` | The role of the element that is dismissing the modal. For example, 'cancel' or 'backdrop'. |
 
 #### Returns
 
@@ -442,6 +420,19 @@ Type: `Promise<void>`
 | `--min-width`     | Minimum width of the modal         |
 | `--width`         | Width of the modal                 |
 
+
+## Dependencies
+
+### Depends on
+
+- [ion-backdrop](../backdrop)
+
+### Graph
+```mermaid
+graph TD;
+  ion-modal --> ion-backdrop
+  style ion-modal fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

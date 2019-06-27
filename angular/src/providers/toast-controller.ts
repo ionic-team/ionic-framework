@@ -1,6 +1,5 @@
-import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable } from '@angular/core';
-import { ToastOptions } from '@ionic/core';
+import { Injectable } from '@angular/core';
+import { ToastOptions, toastController } from '@ionic/core';
 
 import { OverlayBaseController } from '../util/overlay';
 
@@ -8,7 +7,7 @@ import { OverlayBaseController } from '../util/overlay';
   providedIn: 'root',
 })
 export class ToastController extends OverlayBaseController<ToastOptions, HTMLIonToastElement> {
-  constructor(@Inject(DOCUMENT) doc: any) {
-    super('ion-toast-controller', doc);
+  constructor() {
+    super(toastController);
   }
 }

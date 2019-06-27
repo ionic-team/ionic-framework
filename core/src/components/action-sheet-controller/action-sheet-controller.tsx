@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Method } from '@stencil/core';
 
 import { ActionSheetOptions, OverlayController } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
@@ -8,8 +8,6 @@ import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays'
 })
 export class ActionSheetController implements ComponentInterface, OverlayController {
 
-  @Prop({ context: 'document' }) doc!: Document;
-
   /**
    * Create an action sheet overlay with action sheet options.
    *
@@ -17,7 +15,7 @@ export class ActionSheetController implements ComponentInterface, OverlayControl
    */
   @Method()
   create(options: ActionSheetOptions): Promise<HTMLIonActionSheetElement> {
-    return createOverlay(this.doc.createElement('ion-action-sheet'), options);
+    return createOverlay('ion-action-sheet', options);
   }
 
   /**
@@ -32,7 +30,7 @@ export class ActionSheetController implements ComponentInterface, OverlayControl
    */
   @Method()
   dismiss(data?: any, role?: string, id?: string) {
-    return dismissOverlay(this.doc, data, role, 'ion-action-sheet', id);
+    return dismissOverlay(document, data, role, 'ion-action-sheet', id);
   }
 
   /**
@@ -40,6 +38,6 @@ export class ActionSheetController implements ComponentInterface, OverlayControl
    */
   @Method()
   async getTop(): Promise<HTMLIonActionSheetElement | undefined> {
-    return getOverlay(this.doc, 'ion-action-sheet') as HTMLIonActionSheetElement;
+    return getOverlay(document, 'ion-action-sheet') as HTMLIonActionSheetElement;
   }
 }

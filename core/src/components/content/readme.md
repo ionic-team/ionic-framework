@@ -1,8 +1,10 @@
 # ion-content
 
-Content component provides an easy to use content area with some useful methods
+The content component provides an easy to use content area with some useful methods
 to control the scrollable area. There should only be one content in a single
-view component.
+view.
+
+Content, along with many other Ionic components, can be customized to modify its padding, margin, and more using the global styles provided in the [CSS Utilities](/docs/layout/css-utilities) or by individually styling it using CSS and the available [CSS Custom Properties](#css-custom-properties).
 
 <!-- Auto Generated Below -->
 
@@ -40,10 +42,9 @@ content.addEventListener('ionScrollEnd', () => console.log('scroll end'));
 
 ```tsx
 import React from 'react';
-
 import { IonContent } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const ContentExample: React.FunctionComponent = () => (
   <IonContent
     scrollEvents={true}
     onIonScrollStart={() => {}}
@@ -51,8 +52,6 @@ const Example: React.SFC<{}> = () => (
     onIonScrollEnd={() => {}}>
   </IonContent>
 );
-
-export default Example;
 ```
 
 
@@ -113,14 +112,6 @@ Type: `Promise<HTMLElement>`
 
 Scroll by a specified X/Y distance in the component.
 
-#### Parameters
-
-| Name       | Type     | Description                                          |
-| ---------- | -------- | ---------------------------------------------------- |
-| `x`        | `number` | The amount to scroll by on the horizontal axis.      |
-| `y`        | `number` | The amount to scroll by on the vertical axis.        |
-| `duration` | `number` | The amount of time to take scrolling by that amount. |
-
 #### Returns
 
 Type: `Promise<void>`
@@ -130,12 +121,6 @@ Type: `Promise<void>`
 ### `scrollToBottom(duration?: number) => Promise<void>`
 
 Scroll to the bottom of the component.
-
-#### Parameters
-
-| Name       | Type     | Description                                                          |
-| ---------- | -------- | -------------------------------------------------------------------- |
-| `duration` | `number` | The amount of time to take scrolling to the bottom. Defaults to `0`. |
 
 #### Returns
 
@@ -147,14 +132,6 @@ Type: `Promise<void>`
 
 Scroll to a specified X/Y location in the component.
 
-#### Parameters
-
-| Name       | Type                          | Description                                                          |
-| ---------- | ----------------------------- | -------------------------------------------------------------------- |
-| `x`        | `null \| number \| undefined` | The point to scroll to on the horizontal axis.                       |
-| `y`        | `null \| number \| undefined` | The point to scroll to on the vertical axis.                         |
-| `duration` | `number`                      | The amount of time to take scrolling to that point. Defaults to `0`. |
-
 #### Returns
 
 Type: `Promise<void>`
@@ -164,12 +141,6 @@ Type: `Promise<void>`
 ### `scrollToTop(duration?: number) => Promise<void>`
 
 Scroll to the top of the component.
-
-#### Parameters
-
-| Name       | Type     | Description                                                       |
-| ---------- | -------- | ----------------------------------------------------------------- |
-| `duration` | `number` | The amount of time to take scrolling to the top. Defaults to `0`. |
 
 #### Returns
 
@@ -188,17 +159,17 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name                | Description                    |
-| ------------------- | ------------------------------ |
-| `--background`      | Background of the Content      |
-| `--color`           | Color of the Content           |
-| `--keyboard-offset` | Keyboard offset of the Content |
-| `--offset-bottom`   | Offset bottom of the Content   |
-| `--offset-top`      | Offset top of the Content      |
-| `--padding-bottom`  | Padding bottom of the Content  |
-| `--padding-end`     | Padding end of the Content     |
-| `--padding-start`   | Padding start of the Content   |
-| `--padding-top`     | Padding top of the Content     |
+| Name                | Description                                                                                                |
+| ------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `--background`      | Background of the content                                                                                  |
+| `--color`           | Color of the content                                                                                       |
+| `--keyboard-offset` | Keyboard offset of the content                                                                             |
+| `--offset-bottom`   | Offset bottom of the content                                                                               |
+| `--offset-top`      | Offset top of the content                                                                                  |
+| `--padding-bottom`  | Bottom padding of the content                                                                              |
+| `--padding-end`     | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the content |
+| `--padding-start`   | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the content |
+| `--padding-top`     | Top padding of the content                                                                                 |
 
 
 ----------------------------------------------

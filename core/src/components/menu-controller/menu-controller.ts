@@ -1,6 +1,7 @@
-import { Build, Component, Method, Prop } from '@stencil/core';
+import { Build, Component, Method } from '@stencil/core';
 
-import { Animation, AnimationBuilder, Config, MenuControllerI, MenuI } from '../../interface';
+import { config } from '../../global/config';
+import { Animation, AnimationBuilder, MenuControllerI, MenuI } from '../../interface';
 
 import { menuOverlayAnimation } from './animations/overlay';
 import { menuPushAnimation } from './animations/push';
@@ -14,9 +15,6 @@ export class MenuController implements MenuControllerI {
 
   private menus: MenuI[] = [];
   private menuAnimations = new Map<string, AnimationBuilder>();
-
-  @Prop({ context: 'document' }) doc!: Document;
-  @Prop({ context: 'config' }) config!: Config;
 
   constructor() {
     this.registerAnimation('reveal', menuRevealAnimation);
@@ -228,7 +226,7 @@ export class MenuController implements MenuControllerI {
    * @param animation The animation function to register.
    */
   @Method()
-  registerAnimation(name: string, animation: AnimationBuilder) {
+  async registerAnimation(name: string, animation: AnimationBuilder) {
     this.menuAnimations.set(name, animation);
   }
 
@@ -287,7 +285,7 @@ export class MenuController implements MenuControllerI {
     }
     const animation = await import('../../utils/animation')
       .then(mod => mod.create(animationBuilder, null, menuCmp));
-    if (!this.config.getBoolean('animated', true)) {
+    if (!config.getBoolean('animated', true)) {
       animation.duration(0);
     }
     return animation;
@@ -315,7 +313,7 @@ export class MenuController implements MenuControllerI {
 
   private waitUntilReady() {
     return Promise.all(
-      Array.from(this.doc.querySelectorAll('ion-menu'))
+      Array.from(document.querySelectorAll('ion-menu'))
         .map(menu => menu.componentOnReady())
     );
   }

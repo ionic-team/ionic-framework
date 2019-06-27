@@ -78,6 +78,6 @@ export function syncEvent(node: Element, eventName: string, newEventHandler: (e:
 
 function arrayToMap(arr: string[] | DOMTokenList) {
   const map = new Map<string, string>();
-  arr.forEach((s: string) => map.set(s, s));
+  (arr as string[]).forEach((s: string) => map.set(s, s));
   return map;
 }
