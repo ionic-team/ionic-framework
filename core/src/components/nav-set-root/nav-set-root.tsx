@@ -19,7 +19,7 @@ export class NavSetRoot implements ComponentInterface {
    */
   @Prop() componentProps?: ComponentProps;
 
-  @Listen('child:click')
+  @Listen('click')
   push() {
     const nav = this.el.closest('ion-nav');
     const toPush = this.component;

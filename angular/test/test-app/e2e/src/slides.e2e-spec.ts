@@ -5,6 +5,7 @@ describe('slides', () => {
 
   beforeEach(async () => {
     await browser.get('/slides');
+    await waitTime(30);
   });
   afterEach(() => {
     handleErrorMessages();

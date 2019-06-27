@@ -8,8 +8,8 @@
   <link href="../../../../../css/core.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-picker-controller></ion-picker-controller>
@@ -26,7 +26,7 @@
         'Chinchilla'
       ]
     ]
-    
+
     const multiColumnOptions = [
       [
         'Minified',
@@ -43,7 +43,7 @@
         'Artichoke'
       ]
     ]
-    
+
     async function openPicker(numColumns = 1, numOptions = 5, columnOptions = defaultColumnOptions) {
       const picker = await pickerController.create({
         columns: this.getColumns(numColumns, numOptions, columnOptions),
@@ -56,14 +56,14 @@
             text: 'Confirm',
             handler: (value) => {
               console.log(`Got Value ${value}`);
-            }  
+            }
           }
         ]
       });
-      
+
       await picker.present();
     }
-    
+
     function getColumns(numColumns, numOptions, columnOptions) {
       let columns = [];
       for (let i = 0; i < numColumns; i++) {
@@ -72,10 +72,10 @@
           options: this.getColumnOptions(i, numOptions, columnOptions)
         });
       }
-      
+
       return columns;
     }
-    
+
     function getColumnOptions(columnIndex, numOptions, columnOptions) {
       let options = [];
       for (let i = 0; i < numOptions; i++) {
@@ -84,7 +84,7 @@
           value: i
         })
       }
-      
+
       return options;
     }
   </script>

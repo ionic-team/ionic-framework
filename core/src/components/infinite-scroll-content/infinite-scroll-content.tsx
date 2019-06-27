@@ -1,6 +1,8 @@
-import { Component, ComponentInterface, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 
-import { Config, Mode, SpinnerTypes } from '../../interface';
+import { config } from '../../global/config';
+import { getIonMode } from '../../global/ionic-global';
+import { SpinnerTypes } from '../../interface';
 import { sanitizeDOMString } from '../../utils/sanitization';
 
 @Component({
@@ -11,10 +13,6 @@ import { sanitizeDOMString } from '../../utils/sanitization';
   }
 })
 export class InfiniteScrollContent implements ComponentInterface {
-
-  mode!: Mode;
-
-  @Prop({ context: 'config' }) config!: Config;
 
   /**
    * An animated SVG spinner that shows while loading.
@@ -34,20 +32,22 @@ export class InfiniteScrollContent implements ComponentInterface {
 
   componentDidLoad() {
     if (this.loadingSpinner === undefined) {
-      this.loadingSpinner = this.config.get(
+      const mode = getIonMode(this);
+      this.loadingSpinner = config.get(
         'infiniteLoadingSpinner',
-        this.config.get('spinner', this.mode === 'ios' ? 'lines' : 'crescent')
+        config.get('spinner', mode === 'ios' ? 'lines' : 'crescent')
       );
     }
   }
 
   hostData() {
+    const mode = getIonMode(this);
     return {
       class: {
-        [`${this.mode}`]: true,
+        [mode]: true,
 
         // Used internally for styling
-        [`infinite-scroll-content-${this.mode}`]: true
+        [`infinite-scroll-content-${mode}`]: true
       }
     };
   }

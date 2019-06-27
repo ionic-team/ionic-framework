@@ -32,6 +32,7 @@ import { FormComponent } from './form/form.component';
 import { NavigationPage1Component } from './navigation-page1/navigation-page1.component';
 import { NavigationPage2Component } from './navigation-page2/navigation-page2.component';
 import { NavigationPage3Component } from './navigation-page3/navigation-page3.component';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { NavigationPage3Component } from './navigation-page3/navigation-page3.co
     FormComponent,
     NavigationPage1Component,
     NavigationPage2Component,
-    NavigationPage3Component
+    NavigationPage3Component,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

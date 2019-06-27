@@ -1,6 +1,9 @@
-import { Component, ComponentInterface, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 
-import { Color, Config, Mode } from '../../interface';
+import { config } from '../../global/config';
+import { getIonMode } from '../../global/ionic-global';
+import { Color } from '../../interface';
+import { ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -11,9 +14,7 @@ import { createColorClasses } from '../../utils/theme';
   },
   shadow: true
 })
-export class MenuButton implements ComponentInterface {
-
-  @Prop({ context: 'config' }) config!: Config;
+export class MenuButton implements ComponentInterface, ButtonInterface {
 
   /**
    * The color to use from your application's color palette.
@@ -23,9 +24,9 @@ export class MenuButton implements ComponentInterface {
   @Prop() color?: Color;
 
   /**
-   * The mode determines which platform styles to use.
+   * If `true`, the user cannot interact with the menu button.
    */
-  @Prop() mode!: Mode;
+  @Prop() disabled = false;
 
   /**
    * Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle
@@ -37,14 +38,24 @@ export class MenuButton implements ComponentInterface {
    */
   @Prop() autoHide = true;
 
-  hostData() {
-    return {
-      class: {
-        ...createColorClasses(this.color),
+  /**
+   * The type of the button.
+   */
+  @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
-        [`${this.mode}`]: true,
+  hostData() {
+    const mode = getIonMode(this);
+    const { color, disabled } = this;
+
+    return {
+      'aria-disabled': disabled ? 'true' : null,
+      class: {
+        ...createColorClasses(color),
+
+        [mode]: true,
 
         'button': true,  // ion-buttons target .button
+        'menu-button-disabled': disabled,
         'ion-activatable': true,
         'ion-focusable': true
       }
@@ -52,14 +63,24 @@ export class MenuButton implements ComponentInterface {
   }
 
   render() {
-    const menuIcon = this.config.get('menuIcon', 'menu');
+    const mode = getIonMode(this);
+    const menuIcon = config.get('menuIcon', 'menu');
+
+    const attrs = {
+      type: this.type
+    };
+
     return (
       <ion-menu-toggle menu={this.menu} autoHide={this.autoHide}>
-        <button type="button" class="button-native">
+        <button
+          {...attrs}
+          disabled={this.disabled}
+          class="button-native"
+        >
           <slot>
-            <ion-icon icon={menuIcon} mode={this.mode} lazy={false} />
+            <ion-icon icon={menuIcon} mode={mode} lazy={false}></ion-icon>
           </slot>
-          {this.mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
+          {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
         </button>
       </ion-menu-toggle>
     );

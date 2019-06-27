@@ -15,6 +15,7 @@ log.txt
 coverage/
 collection/
 dist/
+dist-transpiled/
 node_modules/
 tmp/
 temp/
@@ -49,10 +50,16 @@ demos/src/**/*.ngfactory.ts
 demos/src/**/*.d.ts
 demos/src/**/*.metadata.json
 demos/src/**/*.css.shim.ts
+prerender.html
+prerender-domino.html
+prerender-hydrated.html
+prerender-static.html
 
 # stencil
 angular/css/
 core/css/
+core/hydrated/
 core/loader/
+core/www/
 .stencil/
 angular/build/

@@ -1,8 +1,6 @@
-import { Components } from '@ionic/core';
+import { JSX, toastController } from '@ionic/core';
 import { createControllerComponent } from './createControllerComponent';
-import { ReactProps } from './ReactProps';
 
-export type ToastOptions = Components.IonToastAttributes;
+export type ToastOptions = JSX.IonToast;
 
-const IonToast = createControllerComponent<ToastOptions & ReactProps, HTMLIonToastElement, HTMLIonToastControllerElement>('ion-toast', 'ion-toast-controller')
-export default IonToast;
+export const IonToast = /*@__PURE__*/createControllerComponent<ToastOptions, HTMLIonToastElement>('IonToast', toastController);

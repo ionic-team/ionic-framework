@@ -402,8 +402,7 @@ customPickerOptions.pickerOptions = customPickerButtons;
 
 ```tsx
 import React from 'react';
-
-import { IonItem, IonLabel, IonDatetime } from '@ionic/react';
+import { IonItem, IonLabel, IonDatetime, IonContent } from '@ionic/react';
 
 const customYearValues = [2020, 2016, 2008, 2004, 2000, 1996];
 
@@ -417,8 +416,8 @@ const customDayShortNames = [
   'l\u00f8r'
 ];
 
-const Example: React.SFC<{}> = () => (
-  <>
+export const DateTimeExample: React.FunctionComponent = () => (
+  <IonContent>
     <IonItem>
       <IonLabel>MMMM</IonLabel>
       <IonDatetime displayFormat="MMMM" value="2012-12-15T13:47:20.789"></IonDatetime>
@@ -519,10 +518,8 @@ const Example: React.SFC<{}> = () => (
         displayFormat="DD/MMM/YYYY"
       ></IonDatetime>
     </IonItem>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```
 
 
@@ -697,13 +694,13 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name                  | Description                       |
-| --------------------- | --------------------------------- |
-| `--padding-bottom`    | Padding bottom of the datetime    |
-| `--padding-end`       | Padding end of the datetime       |
-| `--padding-start`     | Padding start of the datetime     |
-| `--padding-top`       | Padding top of the datetime       |
-| `--placeholder-color` | Color of the datetime placeholder |
+| Name                  | Description                                                                                                 |
+| --------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `--padding-bottom`    | Bottom padding of the datetime                                                                              |
+| `--padding-end`       | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the datetime |
+| `--padding-start`     | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the datetime |
+| `--padding-top`       | Top padding of the datetime                                                                                 |
+| `--placeholder-color` | Color of the datetime placeholder                                                                           |
 
 
 ----------------------------------------------

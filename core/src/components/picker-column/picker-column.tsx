@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, QueueApi, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, Watch, h } from '@stencil/core';
 
-import { Gesture, GestureDetail, Mode, PickerColumn } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Gesture, GestureDetail, PickerColumn } from '../../interface';
 import { hapticSelectionChanged } from '../../utils/haptic';
 import { clamp } from '../../utils/helpers';
 
@@ -15,7 +16,6 @@ import { clamp } from '../../utils/helpers';
   }
 })
 export class PickerColumnCmp implements ComponentInterface {
-  mode!: Mode;
 
   private bounceFrom!: number;
   private lastIndex?: number;
@@ -34,8 +34,6 @@ export class PickerColumnCmp implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-
   /**
    * Emitted when the selected value has changed
    * @internal
@@ -53,7 +51,9 @@ export class PickerColumnCmp implements ComponentInterface {
     let pickerRotateFactor = 0;
     let pickerScaleFactor = 0.81;
 
-    if (this.mode === 'ios') {
+    const mode = getIonMode(this);
+
+    if (mode === 'ios') {
       pickerRotateFactor = -0.46;
       pickerScaleFactor = 1;
     }
@@ -73,7 +73,6 @@ export class PickerColumnCmp implements ComponentInterface {
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
-      queue: this.queue,
       gestureName: 'picker-swipe',
       gesturePriority: 100,
       threshold: 0,
@@ -347,9 +346,10 @@ export class PickerColumnCmp implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getIonMode(this);
     return {
       class: {
-        [`${this.mode}`]: true,
+        [mode]: true,
         'picker-col': true,
         'picker-opts-left': this.col.align === 'left',
         'picker-opts-right': this.col.align === 'right'

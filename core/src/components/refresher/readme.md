@@ -103,20 +103,20 @@ export class RefresherExample {
 
 ```tsx
 import React from 'react';
-
 import { IonContent, IonRefresher, IonRefresherContent } from '@ionic/react';
+import { RefresherEventDetail } from '@ionic/core';
 
-function doRefresh(event: CustomEvent) {
+function doRefresh(event: CustomEvent<RefresherEventDetail>) {
   console.log('Begin async operation');
 
   setTimeout(() => {
     console.log('Async operation has ended');
-    event.target.complete();
+    event.detail.complete();
   }, 2000);
 }
 
-const Example: React.SFC<{}> = () => (
-  <>
+export const RefresherExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Default Refresher --*/}
     <IonContent>
       <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
@@ -142,11 +142,10 @@ const Example: React.SFC<{}> = () => (
         </IonRefresherContent>
       </IonRefresher>
     </IonContent>
-  </>
-  }
+  </IonContent>
 );
 
-export default Example
+```
 
 
 ### Vue
@@ -223,17 +222,17 @@ export default Example
 
 ## Methods
 
-### `cancel() => void`
+### `cancel() => Promise<void>`
 
 Changes the refresher's state from `refreshing` to `cancelling`.
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 
-### `complete() => void`
+### `complete() => Promise<void>`
 
 Call `complete()` when your async operation has completed.
 For example, the `refreshing` state is while the app is performing
@@ -245,7 +244,7 @@ the refresher. This method also changes the refresher's state from
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 

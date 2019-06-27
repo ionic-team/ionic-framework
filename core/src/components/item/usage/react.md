@@ -3,7 +3,7 @@ import React from 'react';
 
 import { IonItem, IonLabel, IonList, IonText, IonAvatar, IonThumbnail, IonButton, IonIcon, IonSelect, IonSelectOption, IonDatetime, IonToggle, IonInput, IonCheckbox, IonRange } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FunctionComponent<{}> = () => (
   <>
     {/*-- Default Item --*/}
     <IonItem>
