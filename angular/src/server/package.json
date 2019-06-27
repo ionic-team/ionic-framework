@@ -1,5 +1,6 @@
 {
   "name": "@ionic/angular/server",
+  "description": "Angular SSR Module for Ionic",
   "private": true,
   "main": "index.js",
   "types": "index.d.ts"
