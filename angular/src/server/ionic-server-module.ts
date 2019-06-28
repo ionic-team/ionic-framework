@@ -33,9 +33,18 @@ export function hydrateIonicComponents(doc: any, appId: any) {
         }
       });
 
-      const styleElms = doc.head.querySelectorAll('style[data-styles]');
-      for (let i = 0; i < styleElms.length; i++) {
-        styleElms[i].setAttribute('ng-transition', appId);
+      if (doc.head != null) {
+        const styleElms = doc.head.querySelectorAll('style[data-styles]') as NodeListOf<HTMLStyleElement>;
+        for (let i = 0; i < styleElms.length; i++) {
+          styleElms[i].setAttribute('ng-transition', appId);
+        }
+      }
+
+      if (doc.body != null) {
+        const ionPages = doc.body.querySelectorAll('.ion-page.ion-page-invisible') as NodeListOf<HTMLElement>;
+        for (let i = 0; i < ionPages.length; i++) {
+          ionPages[i].classList.remove('ion-page-invisible');
+        }
       }
     });
   };
