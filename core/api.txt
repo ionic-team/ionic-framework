@@ -930,6 +930,7 @@ ion-router-link,prop,color,string | undefined,undefined,false,false
 ion-router-link,prop,href,string | undefined,undefined,false,false
 ion-router-link,prop,rel,string | undefined,undefined,false,false
 ion-router-link,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
+ion-router-link,prop,target,string | undefined,undefined,false,false
 ion-router-link,css-prop,--background
 ion-router-link,css-prop,--color
 
