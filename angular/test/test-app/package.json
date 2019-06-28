@@ -22,7 +22,6 @@
     "@angular/compiler": "~8.0.3",
     "@angular/core": "~8.0.3",
     "@angular/forms": "~8.0.3",
-    "@angular/http": "~7.2.15",
     "@angular/platform-browser": "~8.0.3",
     "@angular/platform-browser-dynamic": "~8.0.3",
     "@angular/platform-server": "~8.0.3",
@@ -34,7 +33,7 @@
     "express": "^4.15.2",
     "rxjs": "~6.5.2",
     "tslib": "^1.9.0",
-    "zone.js": "~0.8.29"
+    "zone.js": "~0.9.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.800.5",
