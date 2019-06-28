@@ -66,7 +66,10 @@ export const config: Config = {
   outputTargets: [
     {
       type: 'dist',
-      esmLoaderPath: '../loader'
+      esmLoaderPath: '../loader',
+      copy: [
+        { src: 'themes/*.scss' }
+      ]
     },
     // {
     //   type: 'experimental-dist-module',
