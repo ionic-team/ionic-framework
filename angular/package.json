@@ -43,8 +43,7 @@
   "types": "dist/core.d.ts",
   "files": [
     "dist/",
-    "css/",
-    "server/"
+    "css/"
   ],
   "dependencies": {
     "@ionic/core": "4.6.0",
