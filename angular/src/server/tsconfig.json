@@ -3,7 +3,7 @@
     "annotateForClosureCompiler": true,
     "strictMetadataEmit" : true,
     "flatModuleOutFile": "index.js",
-    "flatModuleId": "@ionic/angular/server",
+    "flatModuleId": "@ionic/angular-server",
     "skipTemplateCodegen": true,
     "fullTemplateTypeCheck": false
   },

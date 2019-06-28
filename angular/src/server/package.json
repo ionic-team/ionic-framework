@@ -10,6 +10,7 @@
     "@angular/common": "~8.0.0",
     "@angular/core": "~8.0.0",
     "@angular/platform-server": "~8.0.0",
+    "@ionic/core": "*",
     "rxjs": ">=6.2.0",
     "zone.js": ">=0.8.26"
   },
