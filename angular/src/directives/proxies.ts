@@ -739,7 +739,7 @@ proxyMethods(IonSelect, ['open']);
 proxyInputs(IonSelect, ['cancelText', 'compareWith', 'disabled', 'interface', 'interfaceOptions', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'value']);
 
 export declare interface IonSelectOption extends Components.IonSelectOption {}
-@Component({ selector: 'ion-select-option', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['disabled', 'selected', 'value', 'customCssClass'] })
+@Component({ selector: 'ion-select-option', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['customCssClass', 'disabled', 'selected', 'value'] })
 export class IonSelectOption {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef) {
@@ -747,7 +747,7 @@ export class IonSelectOption {
     this.el = r.nativeElement;
   }
 }
-proxyInputs(IonSelectOption, ['disabled', 'selected', 'value', 'customCssClass']);
+proxyInputs(IonSelectOption, ['customCssClass', 'disabled', 'selected', 'value']);
 
 export declare interface IonSkeletonText extends Components.IonSkeletonText {}
 @Component({ selector: 'ion-skeleton-text', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['animated', 'width'] })

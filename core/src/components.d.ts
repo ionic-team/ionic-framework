@@ -2209,7 +2209,7 @@ export namespace Components {
     */
     'value'?: any | null;
   }
-   interface IonSelectOption {
+  interface IonSelectOption {
     /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
@@ -2222,24 +2222,6 @@ export namespace Components {
     * If `true`, the element is selected.
     */
     'selected': boolean;
-    /**
-    * The text value of the option.
-    */
-    'value'?: any | null;
-  }
-  interface IonSelectOptionAttributes extends StencilHTMLAttributes {
-    /**
-    * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
-    */
-    'customCssClass'?: string | { [className: string]: boolean; } | undefined;
-    /**
-    * If `true`, the user cannot interact with the select option.
-    */
-    'disabled'?: boolean;
-    /**
-    * If `true`, the element is selected.
-    */
-    'selected'?: boolean;
     /**
     * The text value of the option.
     */
@@ -2819,7 +2801,7 @@ declare global {
     prototype: HTMLIonBackdropElement;
     new (): HTMLIonBackdropElement;
   };
-  
+
   interface HTMLIonBadgeElement extends Components.IonBadge, HTMLStencilElement {}
   var HTMLIonBadgeElement: {
     prototype: HTMLIonBadgeElement;
@@ -5495,6 +5477,10 @@ declare namespace LocalJSX {
     'value'?: any | null;
   }
   interface IonSelectOption extends JSXBase.HTMLAttributes<HTMLIonSelectOptionElement> {
+    /**
+    * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+    */
+    'customCssClass'?: string | { [className: string]: boolean; } | undefined;
     /**
     * If `true`, the user cannot interact with the select option.
     */
