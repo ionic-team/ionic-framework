@@ -24,6 +24,7 @@ export class Header implements ComponentInterface {
   hostData() {
     const mode = getIonMode(this);
     return {
+      role: 'banner',
       class: {
         [mode]: true,
 
