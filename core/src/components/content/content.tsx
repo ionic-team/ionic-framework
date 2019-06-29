@@ -316,7 +316,7 @@ export class Content implements ComponentInterface {
           '--offset-bottom': `${this.cBottom}px`,
         }}
       >
-        <div
+        <main
           class={{
             'inner-scroll': true,
             'scroll-x': scrollX,
@@ -327,7 +327,7 @@ export class Content implements ComponentInterface {
           onScroll={ev => this.onScroll(ev)}
         >
           <slot></slot>
-        </div>
+        </main>
         <slot name="fixed"></slot>
       </Host>
     );
