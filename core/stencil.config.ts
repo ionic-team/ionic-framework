@@ -37,7 +37,7 @@ export const config: Config = {
     { components: ['ion-refresher', 'ion-refresher-content'] },
     { components: ['ion-reorder', 'ion-reorder-group'] },
     { components: ['ion-ripple-effect'] },
-    { components: ['ion-anchor', 'ion-router', 'ion-route', 'ion-route-redirect', 'ion-router-link', 'ion-router-outlet'] },
+    { components: ['ion-router', 'ion-route', 'ion-route-redirect', 'ion-router-link', 'ion-router-outlet'] },
     { components: ['ion-searchbar'] },
     { components: ['ion-segment', 'ion-segment-button'] },
     { components: ['ion-select', 'ion-select-option', 'ion-select-popover'] },
@@ -50,7 +50,10 @@ export const config: Config = {
     { components: ['ion-toast'] },
     { components: ['ion-toggle'] },
     { components: ['ion-virtual-scroll'] },
+
+    // Deprecated
     { components: [
+      'ion-anchor',
       'ion-action-sheet-controller',
       'ion-alert-controller',
       'ion-loading-controller',
@@ -68,7 +71,7 @@ export const config: Config = {
       type: 'dist',
       esmLoaderPath: '../loader',
       copy: [
-        { src: 'themes/*.scss' }
+        { src: '**/*.scss' }
       ]
     },
     // {
