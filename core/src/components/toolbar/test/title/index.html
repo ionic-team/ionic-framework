@@ -41,37 +41,7 @@
           </ion-button>-->
 <body>
   <ion-app>
-    <ion-header>
-      <ion-toolbar>      
-        <ion-title>Messages</ion-title>
-        
-        <ion-buttons slot="end" collapse="true">
-          <ion-button slot="icon-only">
-            <ion-icon name="star"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-  
-    <ion-content id="content">
-      <ion-header collapse>
-        <ion-toolbar>      
-          <ion-title size="large">Messages</ion-title>
-          
-          <ion-buttons slot="end" collapse="true">
-            <ion-button slot="icon-only">
-              <ion-icon name="star"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-        
-        <ion-toolbar>
-          <ion-searchbar></ion-searchbar>
-        </ion-toolbar>
-      </ion-header>
-    
-      <ion-list id="dynamicList"></ion-list>
-    </ion-content>
+    <ion-nav root="page-one"></ion-nav>
   </ion-app>
 
   <style>
@@ -89,6 +59,7 @@
   </style>
 
   <script>
+/*
     let items = [];
     for (var i = 0; i < 50; i++) {
       items.push(i + 1);
@@ -98,18 +69,113 @@
     let html = '';
     for (let item of items) {
       html += `
-        <ion-item>
-          <ion-badge slot="start" class="item-badge ion-align-self-start">&nbsp;</ion-badge>
-          <ion-label>
-            <h2>Heading ${item}</h2>
-            <h3>Smaller heading ${item}</h2>
-            <p>Paragraph ${item}</p>
-          </ion-label>
-
-        </ion-item>
+        <ion-nav-push component="page-two">
+          <ion-item button>
+            <ion-badge slot="start" class="item-badge ion-align-self-start">&nbsp;</ion-badge>
+            <ion-label>
+              <h2>Heading ${item}</h2>
+              <h3>Smaller heading ${item}</h2>
+              <p>Paragraph ${item}</p>
+            </ion-label>
+  
+          </ion-item>
+        </ion-nav-push>
       `;
     }
     list.innerHTML = html;
+*/
+    
+    
+    class PageOne extends HTMLElement {
+      generateList() {
+        let html = '';
+        for (let i = 0; i < 100; i++) {
+          html += `
+            <ion-nav-push component="page-two">
+              <ion-item button>
+                <ion-badge slot="start" class="item-badge ion-align-self-start">&nbsp;</ion-badge>
+                <ion-label>
+                  <h2>Heading ${i}</h2>
+                  <h3>Smaller heading ${i}</h2>
+                  <p>Paragraph ${i}</p>
+                </ion-label>
+      
+              </ion-item>
+            </ion-nav-push>
+          `;
+        }
+        return html;
+      }
+      
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-header>
+            <ion-toolbar>      
+              <ion-title>Messages</ion-title>
+              
+              <ion-buttons slot="end" collapse="true">
+                <ion-button slot="icon-only">
+                  <ion-icon name="star"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+        
+          <ion-content id="content">
+            <ion-header collapse>
+              <ion-toolbar>      
+                <ion-title size="large">Messages</ion-title>
+                
+                <ion-buttons slot="end" collapse="true">
+                  <ion-button slot="icon-only">
+                    <ion-icon name="star"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-toolbar>
+              
+              <ion-toolbar>
+                <ion-searchbar></ion-searchbar>
+              </ion-toolbar>
+            </ion-header>
+          
+            <ion-list id="dynamicList">${this.generateList()}</ion-list>
+          </ion-content>
+        `;
+      }
+    }
+    
+    class PageTwo extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-back-button text="Messages"></ion-back-button>
+              </ion-buttons>
+              <ion-title>Page Two</ion-title>
+            </ion-toolbar>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-button>
+                  <ion-icon slot="icon-only" name="star"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+              <ion-searchbar></ion-searchbar>
+              <ion-buttons slot="end">
+                <ion-button>
+                  <ion-icon slot="icon-only" name="star"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <h1>Page Two</h1>
+          </ion-content>
+        `;
+      }
+    }
+    customElements.define('page-one', PageOne);
+    customElements.define('page-two', PageTwo);
   </script>
 </body>
 

@@ -1,7 +1,7 @@
 import { Animation } from '../../interface';
 import { TransitionOptions } from '../transition';
 
-const DURATION = 500;
+const DURATION = 10000;
 const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
 const OPACITY = 'opacity';
 const TRANSFORM = 'transform';
@@ -23,7 +23,10 @@ const hasCollapsableHeader = (el: any): boolean => {
   return el && el.classList.contains('collapse-header-title-hidden');
 };
 
-export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement, opts: TransitionOptions): Promise<Animation> {
+export async function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement, opts: TransitionOptions): Promise<Animation> {
+
+  let leavingLargeTitleEl: any;
+  let enteringBackButtonEl: any;
 
   const isRTL = (navEl.ownerDocument as any).dir === 'rtl';
   const OFF_RIGHT = isRTL ? '-99.5%' : '99.5%';
@@ -97,7 +100,10 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
     const backButtonEl = enteringToolBarEl.querySelector('ion-back-button');
 
     if (backButtonEl) {
-      enteringBackButton.addElement(backButtonEl);
+      if (!enteringBackButtonEl) {
+        enteringBackButtonEl = backButtonEl;
+      }
+      // enteringBackButton.addElement(backButtonEl);
     }
 
     enteringToolBar
@@ -206,7 +212,14 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
 
       if (!hasCollapsableHeader(leavingTitleEl)) {
         leavingTitle.fromTo(OPACITY, 0.99, 0);
+      } else {
+        const largeTitleEl = leavingEl.querySelector('ion-title.title-ios-large') as HTMLElement;
+
+        if (largeTitleEl && !leavingLargeTitleEl) {
+          leavingLargeTitleEl = largeTitleEl;
+        }
       }
+
       leavingToolBarButtons.fromTo(OPACITY, 0.99, 0, 0);
       leavingToolBarItems.fromTo(OPACITY, 0.99, 0);
 
@@ -247,6 +260,98 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
       }
     });
   }
+
+  /**
+   * Setup large iOS title navigation
+   */
+  if (leavingLargeTitleEl && enteringBackButtonEl) {
+    /**
+     * Set up leaving large title
+     */
+    const clonedTitleEl = await cloneElement(leavingLargeTitleEl, true, document.body);
+    clonedTitleEl.style.transformOrigin = 'left center';
+
+    const clonedLargeTitleAnimation = new AnimationC();
+    clonedLargeTitleAnimation.addElement(clonedTitleEl);
+
+    clonedLargeTitleAnimation
+      .beforeStyles({
+        'transform': 'scale(1, 1) translate(0, 49px)',
+        'height': 'auto',
+        'position': 'relative',
+        'transition-property': 'opacity, transform'
+      })
+      .duration([DURATION / 3, DURATION])
+      .fromTo(TRANSFORM, 'translate(0, 49px) scale(1)', 'translate(18px, 0px) scale(0.5)')
+      .fromTo(OPACITY, 0.99, 0);
+
+    rootTransition.add(clonedLargeTitleAnimation);
+
+    const largeTitleAnimation = new AnimationC();
+    largeTitleAnimation.addElement(leavingLargeTitleEl);
+
+    largeTitleAnimation
+      .beforeStyles({
+        'display': 'none'
+      })
+      .afterStyles({
+        'display': 'inherit'
+      });
+
+    rootTransition.add(largeTitleAnimation);
+
+    /**
+     * Setup entering back button
+     */
+    const enteringBackButtonTextAnimation = new AnimationC();
+    const enteringBackButtonIconAnimation = new AnimationC();
+
+    const clonedBackButtonEl = await cloneElement(enteringBackButtonEl, false, document.body);
+
+    clonedBackButtonEl.style.display = 'block';
+    clonedBackButtonEl.style.position = 'fixed';
+
+    enteringBackButtonEl.style.display = 'none';
+
+    const backButtonTextEl = clonedBackButtonEl.querySelector('.button-text');
+    backButtonTextEl.style.transformOrigin = 'left center';
+
+    const backButtonIconEl = clonedBackButtonEl.querySelector('ion-icon');
+    backButtonIconEl.style.transformOrigin = 'right center';
+
+    enteringBackButtonIconAnimation.addElement(backButtonIconEl);
+    enteringBackButtonTextAnimation.addElement(backButtonTextEl);
+
+    enteringBackButtonTextAnimation
+      .fromTo(TRANSFORM, 'translate(-7px, 8px) scale(2.1)', 'translate(4px, -40px) scale(1)')
+      .fromTo(OPACITY, 0, 1);
+
+    enteringBackButtonIconAnimation
+      .fromTo(TRANSFORM, 'translate(4px, -40px) scale(0.6)', 'translate(4px, -40px) scale(1)')
+      .fromTo(OPACITY, 0, 1);
+
+    rootTransition.add(enteringBackButtonTextAnimation);
+    rootTransition.add(enteringBackButtonIconAnimation);
+  }
+
   // Return the rootTransition promise
   return Promise.resolve(rootTransition);
 }
+
+const cloneElement = async (el: any, deep = false, elementToAppendTo?: any): Promise<any> => {
+  try {
+    const clone = el.cloneNode(deep);
+
+    if (elementToAppendTo) {
+      elementToAppendTo.appendChild(clone);
+
+      if (clone.componentOnReady) {
+        await clone.componentOnReady();
+      }
+    }
+
+    return clone;
+  } catch (err) {
+    throw err;
+  }
+};
