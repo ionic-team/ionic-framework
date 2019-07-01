@@ -165,6 +165,11 @@ export interface IonicConfig {
    */
   pickerLeave?: AnimationBuilder;
 
+  /**
+   * EXPERIMENTAL: Adds a page shadow to transitioning pages on iOS. Disabled by default.
+   */
+  experimentalTransitionShadow?: boolean;
+
   // PRIVATE configs
   keyboardHeight?: number;
   inputShims?: boolean;

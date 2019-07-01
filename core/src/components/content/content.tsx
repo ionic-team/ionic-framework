@@ -1,5 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, h, readTask } from '@stencil/core';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Color, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { isPlatform } from '../../utils/platform';
@@ -301,6 +302,8 @@ export class Content implements ComponentInterface {
     const mode = getIonMode(this);
     const { scrollX, scrollY, forceOverscroll } = this;
 
+    const transitionShadow = (mode === 'ios' && config.getBoolean('experimentalTransitionShadow', false));
+
     this.resize();
 
     return (
@@ -328,6 +331,12 @@ export class Content implements ComponentInterface {
         >
           <slot></slot>
         </div>
+        {transitionShadow ? (
+          <div class="trns-effect">
+            <div class="trns-cover"></div>
+            <div class="trns-shadow"></div>
+          </div>
+        ) : null}
         <slot name="fixed"></slot>
       </Host>
     );

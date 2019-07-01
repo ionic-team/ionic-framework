@@ -1,8 +1,8 @@
 import { Animation } from '../../interface';
 import { TransitionOptions } from '../transition';
 
-const DURATION = 500;
-const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
+const DURATION = 540;
+const EASING = 'cubic-bezier(0.32,0.72,0,1)';
 const OPACITY = 'opacity';
 const TRANSFORM = 'transform';
 const TRANSLATEX = 'translateX';
@@ -63,6 +63,29 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
     enteringContent
       .beforeClearStyles([OPACITY])
       .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
+
+    if (contentEl) {
+      const enteringTrnsEffectEl = shadow(contentEl).querySelector('.trns-effect');
+
+      if (enteringTrnsEffectEl) {
+        const enteringTrnsCoverEl = enteringTrnsEffectEl.querySelector('.trns-cover');
+        const enteringTrnsShadowEl = enteringTrnsEffectEl.querySelector('.trns-shadow');
+
+        const enteringTrnsCover = new AnimationC();
+        enteringTrnsCover.addElement(enteringTrnsCoverEl)
+          .beforeClearStyles([OPACITY])
+          .fromTo(OPACITY, 0, 0.1, true);
+
+        const enteringTrnsShadow = new AnimationC();
+        enteringTrnsShadow.addElement(enteringTrnsShadowEl)
+          .beforeClearStyles([OPACITY])
+          .fromTo(OPACITY, 0.97, 0.03, true);
+
+        enteringContent
+          .add(enteringTrnsCover)
+          .add(enteringTrnsShadow);
+      }
+    }
   }
 
   enteringToolBarEls.forEach(enteringToolBarEl => {
@@ -135,7 +158,8 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
   if (leavingEl) {
 
     const leavingContent = new AnimationC();
-    leavingContent.addElement(leavingEl.querySelector(':scope > ion-content'));
+    const leavingContentEl = leavingEl.querySelector(':scope > ion-content');
+    leavingContent.addElement(leavingContentEl);
     leavingContent.addElement(leavingEl.querySelectorAll(':scope > ion-header > *:not(ion-toolbar), :scope > ion-footer > *'));
     rootTransition.add(leavingContent);
 
@@ -144,6 +168,28 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
       leavingContent
         .beforeClearStyles([OPACITY])
         .fromTo(TRANSLATEX, CENTER, (isRTL ? '-100%' : '100%'));
+
+      if (leavingContentEl) {
+        const leavingTrnsEffectEl = shadow(leavingContentEl).querySelector('.trns-effect');
+        if (leavingTrnsEffectEl) {
+          const leavingTrnsCoverEl = leavingTrnsEffectEl.querySelector('.trns-cover');
+          const leavingTrnsShadowEl = leavingTrnsEffectEl.querySelector('.trns-shadow');
+
+          const leavingTrnsCover = new AnimationC();
+          leavingTrnsCover.addElement(leavingTrnsCoverEl)
+            .beforeClearStyles([OPACITY])
+            .fromTo(OPACITY, 0.1, 0, true);
+
+          const leavingTrnsShadow = new AnimationC();
+          leavingTrnsShadow.addElement(leavingTrnsShadowEl)
+            .beforeClearStyles([OPACITY])
+            .fromTo(OPACITY, 0.97, 0.03, true);
+
+          leavingContent
+            .add(leavingTrnsCover)
+            .add(leavingTrnsShadow);
+        }
+      }
 
     } else {
       // leaving content, forward direction
