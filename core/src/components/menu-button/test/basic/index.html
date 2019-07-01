@@ -10,7 +10,8 @@
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+</head>
 </head>
 
 <body>
@@ -82,6 +83,13 @@
         </ion-buttons>
         <ion-title>Success</ion-title>
       </ion-toolbar>
+
+      <ion-toolbar color="dark">
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Hidden</ion-title>
+      </ion-toolbar>
     </ion-content>
   </ion-app>
 
@@ -90,7 +98,7 @@
       padding-left: 16px;
     }
 
-    ion-menu-button {
+    ion-menu-button[auto-hide="false"] {
       display: inline-block;
     }
 
