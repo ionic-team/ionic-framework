@@ -14,12 +14,17 @@ export const iosTransitionAnimation = (AnimationC: Animation, navEl: HTMLElement
   const CENTER = '0%';
   const OFF_OPACITY = 0.8;
 
+  const backDirection = (opts.direction === 'back');
   const isRTL = (navEl.ownerDocument as any).dir === 'rtl';
   const OFF_RIGHT = isRTL ? '-99.5%' : '99.5%';
   const OFF_LEFT = isRTL ? '33%' : '-33%';
 
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
+  const contentEl = enteringEl.querySelector(':scope > ion-content');
+  const headerEls = enteringEl.querySelectorAll(':scope > ion-header > *:not(ion-toolbar), :scope > ion-footer > *');
+  const enteringToolBarEls = enteringEl.querySelectorAll(':scope > ion-header > ion-toolbar');
+  const enteringContent = new AnimationC();
 
   const rootTransition = new AnimationC();
   rootTransition
@@ -36,18 +41,12 @@ export const iosTransitionAnimation = (AnimationC: Animation, navEl: HTMLElement
     rootTransition.add(navDecor);
   }
 
-  const backDirection = (opts.direction === 'back');
-  // setting up enter view
-  const contentEl = enteringEl.querySelector(':scope > ion-content');
-  const headerEls = enteringEl.querySelectorAll(':scope > ion-header > *:not(ion-toolbar), :scope > ion-footer > *');
-  const enteringToolBarEls = enteringEl.querySelectorAll(':scope > ion-header > ion-toolbar');
-  const enteringContent = new AnimationC();
-
   if (!contentEl && enteringToolBarEls.length === 0 && headerEls.length === 0) {
     enteringContent.addElement(enteringEl.querySelector(':scope > .ion-page, :scope > ion-nav, :scope > ion-tabs'));
   } else {
-    enteringContent.addElement(contentEl);
-    enteringContent.addElement(headerEls);
+    enteringContent
+      .addElement(contentEl)
+      .addElement(headerEls);
   }
 
   rootTransition.add(enteringContent);
@@ -70,8 +69,14 @@ export const iosTransitionAnimation = (AnimationC: Animation, navEl: HTMLElement
         const enteringTrnsCoverEl = enteringTrnsEffectEl.querySelector('.trns-cover');
         const enteringTrnsShadowEl = enteringTrnsEffectEl.querySelector('.trns-shadow');
 
+        const enteringTrnsEffect = new AnimationC();
         const enteringTrnsCover = new AnimationC();
         const enteringTrnsShadow = new AnimationC();
+
+        enteringTrnsEffect
+          .addElement(enteringTrnsEffectEl)
+          .beforeStyles({ opacity: '1' })
+          .afterStyles({ opacity: '' });
 
         enteringTrnsCover
           .addElement(enteringTrnsCoverEl)
@@ -84,6 +89,7 @@ export const iosTransitionAnimation = (AnimationC: Animation, navEl: HTMLElement
           .fromTo(OPACITY, 0.97, 0.03, true);
 
         enteringContent
+          .add(enteringTrnsEffect)
           .add(enteringTrnsCover)
           .add(enteringTrnsShadow);
       }
@@ -179,8 +185,14 @@ export const iosTransitionAnimation = (AnimationC: Animation, navEl: HTMLElement
           const leavingTrnsCoverEl = leavingTrnsEffectEl.querySelector('.trns-cover');
           const leavingTrnsShadowEl = leavingTrnsEffectEl.querySelector('.trns-shadow');
 
+          const leavingTrnsEffect = new AnimationC();
           const leavingTrnsCover = new AnimationC();
           const leavingTrnsShadow = new AnimationC();
+
+          leavingTrnsEffect
+            .addElement(leavingTrnsEffectEl)
+            .beforeStyles({ opacity: '1' })
+            .afterStyles({ opacity: '' });
 
           leavingTrnsCover
             .addElement(leavingTrnsCoverEl)
@@ -193,6 +205,7 @@ export const iosTransitionAnimation = (AnimationC: Animation, navEl: HTMLElement
             .fromTo(OPACITY, 0.97, 0.03, true);
 
           leavingContent
+            .add(leavingTrnsEffect)
             .add(leavingTrnsCover)
             .add(leavingTrnsShadow);
         }
