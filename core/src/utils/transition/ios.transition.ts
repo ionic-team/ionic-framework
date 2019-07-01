@@ -1,19 +1,18 @@
 import { Animation } from '../../interface';
 import { TransitionOptions } from '../transition';
 
-const DURATION = 540;
-const EASING = 'cubic-bezier(0.32,0.72,0,1)';
-const OPACITY = 'opacity';
-const TRANSFORM = 'transform';
-const TRANSLATEX = 'translateX';
-const CENTER = '0%';
-const OFF_OPACITY = 0.8;
-
-export function shadow<T extends Element>(el: T): ShadowRoot | T {
+export const shadow = <T extends Element>(el: T): ShadowRoot | T => {
   return el.shadowRoot || el;
-}
+};
 
-export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement, opts: TransitionOptions): Promise<Animation> {
+export const iosTransitionAnimation = (AnimationC: Animation, navEl: HTMLElement, opts: TransitionOptions): Promise<Animation> => {
+  const DURATION = 540;
+  const EASING = 'cubic-bezier(0.32,0.72,0,1)';
+  const OPACITY = 'opacity';
+  const TRANSFORM = 'transform';
+  const TRANSLATEX = 'translateX';
+  const CENTER = '0%';
+  const OFF_OPACITY = 0.8;
 
   const isRTL = (navEl.ownerDocument as any).dir === 'rtl';
   const OFF_RIGHT = isRTL ? '-99.5%' : '99.5%';
@@ -285,4 +284,4 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
 
   // Return the rootTransition promise
   return Promise.resolve(rootTransition);
-}
+};
