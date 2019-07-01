@@ -13,7 +13,7 @@ export class Row implements ComponentInterface {
     const mode = getIonMode(this);
     return {
       class: {
-        [`${mode}`]: true,
+        [mode]: true,
       }
     };
   }

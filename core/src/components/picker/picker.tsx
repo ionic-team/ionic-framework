@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, Config, CssClassMap, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
+import { Animation, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
 import { dismiss, eventMethod, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
@@ -27,8 +27,6 @@ export class Picker implements ComponentInterface, OverlayInterface {
   animation?: Animation;
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'config' }) config!: Config;
 
   @State() presented = false;
 
@@ -214,7 +212,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
     return {
       'aria-modal': 'true',
       class: {
-        [`${mode}`]: true,
+        [mode]: true,
 
         // Used internally for styling
         [`picker-${mode}`]: true,

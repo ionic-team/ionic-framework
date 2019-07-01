@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Element, Listen, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Color, Config } from '../../interface';
+import { Color } from '../../interface';
 import { ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
@@ -20,9 +21,6 @@ export class BackButton implements ComponentInterface, ButtonInterface {
 
   private mode = getIonMode(this);
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'config' }) config!: Config;
-  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * The color to use from your application's color palette.
@@ -56,24 +54,13 @@ export class BackButton implements ComponentInterface, ButtonInterface {
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
-  @Listen('click')
-  async onClick(ev: Event) {
-    const nav = this.el.closest('ion-nav');
-    ev.preventDefault();
-
-    if (nav && await nav.canGoBack()) {
-      return nav.pop({ skipIfBusy: true });
-    }
-    return openURL(this.win, this.defaultHref, ev, 'back');
-  }
-
   private get backButtonIcon() {
-    return this.icon != null ? this.icon : this.config.get('backButtonIcon', 'arrow-back');
+    return this.icon != null ? this.icon : config.get('backButtonIcon', 'arrow-back');
   }
 
   private get backButtonText() {
     const defaultBackButtonText = this.mode === 'ios' ? 'Back' : null;
-    return this.text != null ? this.text : this.config.get('backButtonText', defaultBackButtonText);
+    return this.text != null ? this.text : config.get('backButtonText', defaultBackButtonText);
   }
 
   private get hasIconOnly() {
@@ -90,42 +77,43 @@ export class BackButton implements ComponentInterface, ButtonInterface {
     return 'bounded';
   }
 
-  hostData() {
-    const { color, defaultHref, disabled, mode, hasIconOnly } = this;
+  private onClick = async (ev: Event) => {
+    const nav = this.el.closest('ion-nav');
+    ev.preventDefault();
 
-    const showBackButton = defaultHref !== undefined;
-
-    return {
-      'aria-disabled': disabled ? 'true' : null,
-      class: {
-        ...createColorClasses(color),
-        [`${mode}`]: true,
-
-        'button': true, // ion-buttons target .button
-        'back-button-disabled': disabled,
-        'back-button-has-icon-only': hasIconOnly,
-        'ion-activatable': true,
-        'ion-focusable': true,
-        'show-back-button': showBackButton
-      }
-    };
+    if (nav && await nav.canGoBack()) {
+      return nav.pop({ skipIfBusy: true });
+    }
+    return openURL(this.defaultHref, ev, 'back');
   }
 
   render() {
-    const { backButtonIcon, backButtonText } = this;
-
-    const attrs = {
-      type: this.type
-    };
+    const { color, defaultHref, disabled, type, mode, hasIconOnly, backButtonIcon, backButtonText } = this;
+    const showBackButton = defaultHref !== undefined;
 
     return (
-      <button {...attrs} disabled={this.disabled} class="button-native">
-        <span class="button-inner">
-          {backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false}></ion-icon>}
-          {backButtonText && <span class="button-text">{backButtonText}</span>}
-        </span>
-        {this.mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
-      </button>
+      <Host
+        onClick={this.onClick}
+        class={{
+          ...createColorClasses(color),
+          [mode]: true,
+
+          'button': true, // ion-buttons target .button
+          'back-button-disabled': disabled,
+          'back-button-has-icon-only': hasIconOnly,
+          'ion-activatable': true,
+          'ion-focusable': true,
+          'show-back-button': showBackButton
+        }}
+      >
+        <button type={type} disabled={disabled} class="button-native">
+          <span class="button-inner">
+            {backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false}></ion-icon>}
+            {backButtonText && <span class="button-text">{backButtonText}</span>}
+          </span>
+          {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
+        </button>
+      </Host>
     );
   }
 }

@@ -1,6 +1,8 @@
 const PADDING_TIMER_KEY = '$ionPaddingTimer';
 
-export function enableScrollPadding(doc: Document, keyboardHeight: number) {
+export function enableScrollPadding(keyboardHeight: number) {
+  const doc = document;
+
   function onFocusin(ev: any) {
     setScrollPadding(ev.target, keyboardHeight);
   }

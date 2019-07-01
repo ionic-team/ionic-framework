@@ -215,7 +215,6 @@ function setZIndex(
 
 export interface TransitionOptions extends NavOptions {
   progressCallback?: ((ani: Animation | undefined) => void);
-  window: Window;
   baseEl: any;
   enteringEl: HTMLElement;
   leavingEl: HTMLElement | undefined;
