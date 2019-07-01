@@ -14,6 +14,7 @@ export function appInitialize(config: Config, doc: Document) {
       return applyPolyfills().then(() => {
         return defineCustomElements(win, {
           exclude: ['ion-tabs', 'ion-tab'],
+          resourcesUrl: document.baseURI,
           syncQueue: true,
           raf: h => (win.__zone_symbol__requestAnimationFrame) ? win.__zone_symbol__requestAnimationFrame(h) : requestAnimationFrame(h),
           ael(elm, eventName, cb, opts) {
