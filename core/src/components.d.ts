@@ -2016,6 +2016,10 @@ export namespace Components {
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection': RouterDirection;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target': string | undefined;
   }
   interface IonRouterOutlet {
     /**
@@ -5248,6 +5252,10 @@ declare namespace LocalJSX {
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
     'routerDirection'?: RouterDirection;
+    /**
+    * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+    */
+    'target'?: string | undefined;
   }
   interface IonRouterOutlet extends JSXBase.HTMLAttributes<HTMLIonRouterOutletElement> {
     /**
