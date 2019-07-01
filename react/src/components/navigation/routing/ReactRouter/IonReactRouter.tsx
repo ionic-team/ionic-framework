@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { withRouter, RouteComponentProps, matchPath, match, Redirect, Switch, RouteProps } from 'react-router-dom';
+import { RouteComponentProps, matchPath, match, Redirect, Switch, RouteProps, BrowserRouterProps, BrowserRouter, withRouter } from 'react-router-dom';
 import { UnregisterCallback, Action as HistoryAction, Location as HistoryLocation } from 'history';
 import { NavContext, NavContextState, ViewStacks, ViewStack } from '../NavContext';
 import { ViewItem } from './ViewItem';
@@ -10,11 +10,11 @@ interface IonReactRouterProps extends RouteComponentProps { }
 interface IonReactRouterState extends NavContextState { }
 
 interface IonRouteData {
-  match: match<{tab: string}>;
+  match: match<{ tab: string }>;
   childProps: RouteProps;
 }
 
-class IonReactRouter extends React.Component<IonReactRouterProps, IonReactRouterState> {
+class IonNavManager extends React.Component<IonReactRouterProps, IonReactRouterState> {
   listenUnregisterCallback: UnregisterCallback;
   activeViewId?: string;
   prevViewId?: string;
@@ -137,7 +137,7 @@ class IonReactRouter extends React.Component<IonReactRouterProps, IonReactRouter
          * We assume Routes with render props are redirects, because of this users should not use
          * the render prop for non redirects, and instead provide a component in its place.
          */
-        if(leavingView.element.type === Redirect || leavingView.element.props.render) {
+        if (leavingView.element.type === Redirect || leavingView.element.props.render) {
           leavingView.mount = false;
           leavingView.show = false;
         }
@@ -316,4 +316,16 @@ class IonReactRouter extends React.Component<IonReactRouterProps, IonReactRouter
   }
 };
 
-export const IonReactRouterWrapped = withRouter(IonReactRouter);
+const IonNavManagerWithRouter = withRouter(IonNavManager);
+IonNavManagerWithRouter.displayName = 'IonNavManager';
+
+export class IonReactRouter extends React.Component<BrowserRouterProps> {
+  render() {
+    const { children, ...props } = this.props;
+    return (
+      <BrowserRouter {...props}>
+        <IonNavManagerWithRouter>{children}</IonNavManagerWithRouter>
+      </BrowserRouter>
+    );
+  }
+}

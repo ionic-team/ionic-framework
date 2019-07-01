@@ -22,7 +22,7 @@ export { IonBackButton } from './navigation/IonBackButton';
 
 // Routing
 export { IonRouterOutlet } from './navigation/routing/IonRouterOutlet';
-export { IonReactRouterWrapped as IonReactRouter } from './navigation/routing/ReactRouter/IonReactRouter';
+export { IonReactRouter } from './navigation/routing/ReactRouter/IonReactRouter';
 
 // Ionic Context
 export { IonicContext } from './utils/IonicContext';
