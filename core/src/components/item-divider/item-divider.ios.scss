@@ -8,16 +8,13 @@
   --background: #{$item-ios-divider-background};
   --color: #{$item-ios-divider-color};
   --padding-start: #{$item-ios-divider-padding-start};
+  --inner-padding-end: #{$item-ios-divider-padding-end / 2};
 
   @include border-radius(0);
 
   position: relative;
 
   font-size: $item-ios-divider-font-size;
-}
-
-.item-divider-inner {
-  @include padding-horizontal(null, $item-ios-divider-padding-end / 2);
 }
 
 

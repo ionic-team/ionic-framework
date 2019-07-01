@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -20,7 +20,7 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content padding>
+    <ion-content class="ion-padding">
       <p>
         <a href="#">A</a>
       </p>
@@ -30,11 +30,11 @@
       </p>
 
       <p>
-        <ion-anchor href="#" style="text-decoration: underline">Underline Anchor</ion-anchor>
+        <ion-anchor href="https://ionicframework.com" rel="external" style="text-decoration: underline">Underline Anchor</ion-anchor>
       </p>
 
       <p>
-        <ion-anchor href="#" class="custom">Custom Anchor</ion-anchor>
+        <ion-anchor href="#" download="yes" class="custom">Custom Anchor</ion-anchor>
       </p>
 
       <p>

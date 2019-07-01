@@ -25,8 +25,8 @@
    *
    * @prop --button-color: Color of the button text
    *
-   * @prop --start: Position from the start
-   * @prop --end: Position from the end
+   * @prop --start: Position from the left if direction is left-to-right, and from the right if direction is right-to-left
+   * @prop --end: Position from the right if direction is left-to-right, and from the left if direction is right-to-left
    */
   --border-width: 0;
   --border-style: none;

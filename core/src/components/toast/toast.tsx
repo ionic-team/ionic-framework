@@ -1,7 +1,9 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, h } from '@stencil/core';
 
-import { Animation, AnimationBuilder, Color, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface, ToastButton } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Animation, AnimationBuilder, Color, CssClassMap, OverlayEventDetail, OverlayInterface, ToastButton } from '../../interface';
 import { dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
+import { sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -9,6 +11,9 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-toast',
   styleUrls: {
@@ -22,22 +27,15 @@ export class Toast implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
 
   presented = false;
+  animation?: Animation;
+  mode = getIonMode(this);
 
   @Element() el!: HTMLElement;
-
-  animation: Animation | undefined;
-
-  @Prop({ context: 'config' }) config!: Config;
 
   /**
    * @internal
    */
   @Prop() overlayIndex!: number;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The color to use from your application's color palette.
@@ -227,12 +225,13 @@ export class Toast implements ComponentInterface, OverlayInterface {
   }
 
   hostData() {
+    const mode = getIonMode(this);
     return {
       style: {
         zIndex: 60000 + this.overlayIndex,
       },
       class: {
-        [`${this.mode}`]: true,
+        [mode]: true,
 
         ...createColorClasses(this.color),
         ...getClassMap(this.cssClass),
@@ -246,6 +245,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
       return;
     }
 
+    const mode = getIonMode(this);
     const buttonGroupsClasses = {
       'toast-button-group': true,
       [`toast-button-group-${side}`]: true
@@ -263,7 +263,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
                 />}
               {b.text}
             </div>
-            {this.mode === 'md' && <ion-ripple-effect type={b.icon !== undefined && b.text === undefined ? 'unbounded' : 'bounded'}></ion-ripple-effect>}
+            {mode === 'md' && <ion-ripple-effect type={b.icon !== undefined && b.text === undefined ? 'unbounded' : 'bounded'}></ion-ripple-effect>}
           </button>
         )}
       </div>
@@ -290,7 +290,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
               <div class="toast-header">{this.header}</div>
             }
             {this.message !== undefined &&
-              <div class="toast-message">{this.message}</div>
+              <div class="toast-message" innerHTML={sanitizeDOMString(this.message)}></div>
             }
           </div>
 

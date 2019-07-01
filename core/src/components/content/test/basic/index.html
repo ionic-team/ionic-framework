@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -24,7 +24,7 @@
     </ion-header>
 
     <div style="display: flex; flex: 1">
-      <ion-content padding style="text-align: center; flex: 2" id="content">
+      <ion-content class="ion-padding" style="text-align: center; flex: 2" id="content">
         <ion-content>
         <f style="height: 50%"></f>
         <ion-button onclick="toggleFullscreen()">Toggle content.fullscreen</ion-button>
@@ -50,7 +50,7 @@
         <f></f>
       </ion-content>
       </ion-content>
-      <ion-content padding style="display: none" id="content3">
+      <ion-content class="ion-padding" style="display: none" id="content3">
         <f></f>
         <f></f>
         <f></f>
@@ -60,7 +60,7 @@
       </ion-content>
     </div>
 
-    <ion-content padding style="display: none" id="content2">
+    <ion-content class="ion-padding" style="display: none" id="content2">
       <f></f>
       <f></f>
       <f></f>

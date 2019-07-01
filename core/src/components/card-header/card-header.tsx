@@ -1,8 +1,12 @@
-import { Component, ComponentInterface, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 
-import { Color, Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-card-header',
   styleUrls: {
@@ -20,21 +24,17 @@ export class CardHeader implements ComponentInterface {
   @Prop() color?: Color;
 
   /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
-
-  /**
    * If `true`, the card header will be translucent.
    */
   @Prop() translucent = false;
 
   hostData() {
+    const mode = getIonMode(this);
     return {
       class: {
         ...createColorClasses(this.color),
         'card-header-translucent': this.translucent,
-        [`${this.mode}`]: true
+        [mode]: true
       }
     };
   }

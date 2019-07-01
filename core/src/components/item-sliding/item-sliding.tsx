@@ -1,6 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
-import { Gesture, GestureDetail, Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Gesture, GestureDetail, Side } from '../../interface';
+import { isEndSide } from '../../utils/helpers';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
@@ -29,7 +31,6 @@ let openSlidingItem: HTMLIonItemSlidingElement | undefined;
   styleUrl: 'item-sliding.scss'
 })
 export class ItemSliding implements ComponentInterface {
-  mode!: Mode;
 
   private item: HTMLIonItemElement | null = null;
   private openAmount = 0;
@@ -47,10 +48,8 @@ export class ItemSliding implements ComponentInterface {
 
   @State() state: SlidingState = SlidingState.Disabled;
 
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-
   /**
-   * If `true`, the user cannot interact with the sliding-item.
+   * If `true`, the user cannot interact with the sliding item.
    */
   @Prop() disabled = false;
   @Watch('disabled')
@@ -71,7 +70,6 @@ export class ItemSliding implements ComponentInterface {
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
-      queue: this.queue,
       gestureName: 'item-swipe',
       gesturePriority: 100,
       threshold: 5,
@@ -122,9 +120,8 @@ export class ItemSliding implements ComponentInterface {
    *
    * @param side The side of the options to open. If a side is not provided, it will open the first set of options it finds within the item.
    */
-   // TODO update to work with RTL
   @Method()
-  async open(side: string | undefined) {
+  async open(side: Side | undefined) {
     if (this.item === null) { return; }
 
     const optionsToOpen = this.getOptions(side);
@@ -137,6 +134,9 @@ export class ItemSliding implements ComponentInterface {
     if (side === undefined) {
       side = (optionsToOpen === this.leftOptions) ? 'start' : 'end';
     }
+
+    // In RTL we want to switch the sides
+    side = isEndSide(side) ? 'end' : 'start';
 
     const isStartOpen = this.openAmount < 0;
     const isEndOpen = this.openAmount > 0;
@@ -185,20 +185,20 @@ export class ItemSliding implements ComponentInterface {
   }
 
    /**
-    * Given a side, attempt to return the ion-item-options element
+    * Given an optional side, return the ion-item-options element.
     *
-    * @param side This side of the options to get. If a side is not provided it will return the first one available
+    * @param side This side of the options to get. If a side is not provided it will
+    * return the first one available.
     */
-    // TODO update to work with RTL
   private getOptions(side?: string): HTMLIonItemOptionsElement | undefined {
-      if (side === undefined) {
-        return this.leftOptions || this.rightOptions;
-      } else if (side === 'start') {
-        return this.leftOptions;
-      } else {
-        return this.rightOptions;
-      }
+    if (side === undefined) {
+      return this.leftOptions || this.rightOptions;
+    } else if (side === 'start') {
+      return this.leftOptions;
+    } else {
+      return this.rightOptions;
     }
+  }
 
   private async updateOptions() {
     const options = this.el.querySelectorAll('ion-item-options');
@@ -211,7 +211,9 @@ export class ItemSliding implements ComponentInterface {
     for (let i = 0; i < options.length; i++) {
       const option = await options.item(i).componentOnReady();
 
-      if (option.side === 'start') {
+      const side = isEndSide(option.side) ? 'end' : 'start';
+
+      if (side === 'start') {
         this.leftOptions = option;
         sides |= ItemSide.Start;
       } else {
@@ -373,9 +375,10 @@ export class ItemSliding implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getIonMode(this);
     return {
       class: {
-        [`${this.mode}`]: true,
+        [mode]: true,
         'item-sliding-active-slide': (this.state !== SlidingState.Disabled),
         'item-sliding-active-options-end': (this.state & SlidingState.End) !== 0,
         'item-sliding-active-options-start': (this.state & SlidingState.Start) !== 0,

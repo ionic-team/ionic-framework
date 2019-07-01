@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 type Props = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 
 type InternalProps = Props & {
@@ -11,7 +10,7 @@ type ExternalProps = Props & {
   ref?: React.RefObject<HTMLDivElement>
 };
 
-const IonPage: React.SFC<InternalProps> = ({ children, forwardedRef, className, ...props }) => (
+const IonPageInternal: React.SFC<InternalProps> = ({ children, forwardedRef, className, ...props }) => (
   <div
     className={className ? `ion-page ${className}` : 'ion-page'}
     ref={forwardedRef}
@@ -22,8 +21,8 @@ const IonPage: React.SFC<InternalProps> = ({ children, forwardedRef, className, 
 );
 
 function forwardRef(props: InternalProps, ref: React.RefObject<HTMLDivElement>) {
-  return <IonPage {...props} forwardedRef={ref} />;
+  return <IonPageInternal {...props} forwardedRef={ref} />;
 }
 forwardRef.displayName = 'IonPage';
 
-export default React.forwardRef<HTMLDivElement, ExternalProps>(forwardRef);
+export const IonPage = /*@__PURE__*/React.forwardRef<HTMLDivElement, ExternalProps>(forwardRef);

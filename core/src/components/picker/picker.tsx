@@ -1,12 +1,16 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, h } from '@stencil/core';
 
-import { Animation, AnimationBuilder, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Animation, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
 import { dismiss, eventMethod, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-picker',
   styleUrls: {
@@ -18,21 +22,16 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 export class Picker implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
 
+  mode = getIonMode(this);
+
   animation?: Animation;
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'config' }) config!: Config;
 
   @State() presented = false;
 
   /** @internal */
   @Prop() overlayIndex!: number;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
@@ -209,13 +208,14 @@ export class Picker implements ComponentInterface, OverlayInterface {
   }
 
   hostData() {
+    const mode = getIonMode(this);
     return {
       'aria-modal': 'true',
       class: {
-        [`${this.mode}`]: true,
+        [mode]: true,
 
         // Used internally for styling
-        [`picker-${this.mode}`]: true,
+        [`picker-${mode}`]: true,
 
         ...getClassMap(this.cssClass)
       },

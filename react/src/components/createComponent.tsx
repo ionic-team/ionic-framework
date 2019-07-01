@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDom from 'react-dom';
 import { dashToPascalCase, attachEventProps } from './utils';
 
 export function createReactComponent<PropType, ElementType>(tagName: string) {
@@ -33,7 +33,7 @@ export function createReactComponent<PropType, ElementType>(tagName: string) {
     }
 
     componentWillReceiveProps(props: InternalProps) {
-      const node = ReactDOM.findDOMNode(this) as HTMLElement;
+      const node = ReactDom.findDOMNode(this) as HTMLElement;
       attachEventProps(node, props, this.props);
     }
 

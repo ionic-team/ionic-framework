@@ -46,6 +46,10 @@ test('toast: start end position', async () => {
   await testToast(DIRECTORY, '#toast-start-and-end');
 });
 
+test('toast: html', async () => {
+  await testToast(DIRECTORY, '#toast-html');
+});
+
 /**
  * RTL Tests
  */
@@ -92,4 +96,8 @@ test('toast:rtl: basic, custom class', async () => {
 
 test('toast:rtl: start end position', async () => {
   await testToast(DIRECTORY, '#toast-start-and-end', true);
+});
+
+test('toast:rtl: html', async () => {
+  await testToast(DIRECTORY, '#toast-html', true);
 });

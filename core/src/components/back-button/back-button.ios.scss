@@ -5,26 +5,13 @@
 // --------------------------------------------------
 
 :host {
+  --background-focused: #{ion-color(primary, base, .1)};
+  --border-radius: 4px;
   --color: #{$back-button-ios-color};
-  --margin-top: 0;
-  --margin-end: 0;
-  --margin-bottom: 0;
-  --margin-start: 0;
-  --padding-top: 0;
-  --padding-end: 0;
-  --padding-bottom: 0;
-  --padding-start: 0;
-  --min-height: 32px;
-  --min-width: auto;
-  --icon-padding-top: 0;
-  --icon-padding-end: 0;
-  --icon-padding-bottom: 0;
-  --icon-padding-start: 0;
-  --icon-margin-top: 0;
   --icon-margin-end: -5px;
-  --icon-margin-bottom: 0;
   --icon-margin-start: -4px;
   --icon-font-size: 1.85em;
+  --min-height: 32px;
 
   font-size: 17px;
 }
@@ -41,4 +28,19 @@
 
 :host(.activated) .button-native {
   opacity: .4;
+}
+
+@media (any-hover: hover) {
+  :host(:hover) {
+    --opacity: .6;
+  }
+}
+
+
+
+// Back Button Color: Focused
+// --------------------------------------------------
+
+:host(.ion-color.ion-focused) .button-native {
+  background: #{current-color(base, .1)};
 }

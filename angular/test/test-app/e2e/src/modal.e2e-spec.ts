@@ -5,6 +5,7 @@ describe('modals', () => {
 
   beforeEach(async () => {
     await browser.get('/modals');
+    await waitTime(30);
   });
   afterEach(() => {
     handleErrorMessages();

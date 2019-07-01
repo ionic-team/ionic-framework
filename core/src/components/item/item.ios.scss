@@ -12,7 +12,8 @@
   --inner-border-width: #{0px 0px $item-ios-border-bottom-width 0px};
   --background: #{$item-ios-background};
   --background-activated: #{$item-ios-background-activated};
-  --background-focused: #{$item-ios-background-activated};
+  --background-focused: #{$item-ios-background-focused};
+  --background-hover: #{$item-ios-background-hover};
   --border-color: #{$item-ios-border-bottom-color};
   --color: #{$item-ios-color};
   --highlight-height: 0;
@@ -23,8 +24,29 @@
   font-size: $item-ios-font-size;
 }
 
+
+// iOS Activated
+// --------------------------------------------------
+
 :host(.activated) {
   --transition: none;
+}
+
+:host(.ion-color.activated) .item-native {
+  background: current-color(shade);
+  color: current-color(contrast);
+}
+
+@media (any-hover: hover) {
+  :host(.activated.ion-activatable:hover) .item-native {
+    background: var(--background-activated);
+    color: var(--color-activated);
+  }
+
+  :host(.activated.ion-color.ion-activatable:hover) .item-native {
+    background: #{current-color(shade)};
+    color: #{current-color(contrast)};
+  }
 }
 
 

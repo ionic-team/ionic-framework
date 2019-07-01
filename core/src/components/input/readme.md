@@ -108,11 +108,10 @@ It is meant for text `type` inputs only, such as `"text"`, `"password"`, `"email
 
 ```tsx
 import React from 'react';
+import { IonInput, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-import { IonInput, IonItem, IonLabel } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const InputExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Default Input --*/}
     <IonInput></IonInput>
 
@@ -154,10 +153,9 @@ const Example: React.SFC<{}> = () => (
       <IonLabel position="stacked">Stacked Label</IonLabel>
       <IonInput></IonInput>
     </IonItem>
-  </>
+  </IonContent>
 );
-
-export default Example
+```
 
 
 ### Vue
@@ -265,32 +263,32 @@ Type: `Promise<HTMLInputElement>`
 
 
 
-### `setFocus() => void`
+### `setFocus() => Promise<void>`
 
 Sets focus on the specified `ion-input`. Use this method instead of the global
 `input.focus()`.
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 
 
 ## CSS Custom Properties
 
-| Name                        | Description                               |
-| --------------------------- | ----------------------------------------- |
-| `--background`              | Background of the input                   |
-| `--color`                   | Color of the input text                   |
-| `--padding-bottom`          | Bottom padding of the input               |
-| `--padding-end`             | End padding of the input                  |
-| `--padding-start`           | Start padding of the input                |
-| `--padding-top`             | Top padding of the input                  |
-| `--placeholder-color`       | Color of the input placeholder text       |
-| `--placeholder-font-style`  | Font style of the input placeholder text  |
-| `--placeholder-font-weight` | Font weight of the input placeholder text |
-| `--placeholder-opacity`     | Opacity of the input placeholder text     |
+| Name                        | Description                                                                                              |
+| --------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `--background`              | Background of the input                                                                                  |
+| `--color`                   | Color of the input text                                                                                  |
+| `--padding-bottom`          | Bottom padding of the input                                                                              |
+| `--padding-end`             | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the input |
+| `--padding-start`           | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the input |
+| `--padding-top`             | Top padding of the input                                                                                 |
+| `--placeholder-color`       | Color of the input placeholder text                                                                      |
+| `--placeholder-font-style`  | Font style of the input placeholder text                                                                 |
+| `--placeholder-font-weight` | Font weight of the input placeholder text                                                                |
+| `--placeholder-opacity`     | Opacity of the input placeholder text                                                                    |
 
 
 ----------------------------------------------
