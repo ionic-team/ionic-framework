@@ -324,6 +324,16 @@ export function updateDate(existingData: DatetimeData, newData: any): boolean {
         (existingData as any)[key] = newData[key].value;
       }
       return true;
+    } else if (newData.ampm) {
+      newData.hour = {
+        value: newData.hour
+          ? newData.hour.value
+          : (newData.ampm.value === 'pm'
+            ? (existingData.hour! < 12 ? existingData.hour! + 12 : existingData.hour!)
+            : (existingData.hour! >= 12 ? existingData.hour! - 12 : existingData.hour))
+      };
+      (existingData as any)['hour'] = newData['hour'].value;
+      return true;
     }
 
     // eww, invalid data
@@ -378,7 +388,7 @@ export function getValueFromFormat(date: DatetimeData, format: string) {
     return (date.hour! < 12 ? 'am' : 'pm');
   }
   if (format === FORMAT_hh || format === FORMAT_h) {
-    return (date.hour! > 12 ? date.hour! - 12 : date.hour);
+    return (date.hour! > 12 ? date.hour! - 12 : (date.hour === 0 ? 12 : date.hour));
   }
   return (date as any)[convertFormatToKey(format)!];
 }
