@@ -565,7 +565,8 @@ export class Datetime implements ComponentInterface {
   }
 
   private hasValue(): boolean {
-    return this.text !== undefined;
+    const val = this.datetimeValue;
+    return Object.keys(val).length > 0;
   }
 
   private setFocus() {
