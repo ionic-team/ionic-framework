@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Item - Disabled</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Item: Disabled</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding-vertical">
+      <ion-list>
+        <ion-list-header>
+          <ion-label>Single Input Disabled Items</ion-label>
+        </ion-list-header>
+
+        <ion-item disabled>
+          <ion-label>Disabled Item</ion-label>
+        </ion-item>
+
+        <ion-item disabled button>
+          <ion-label>Disabled Item Button</ion-label>
+        </ion-item>
+
+        <ion-item disabled href="#">
+          <ion-label>Disabled Item Anchor</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Disabled Datetime</ion-label>
+          <ion-datetime disabled value="2019"></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Disabled Select</ion-label>
+          <ion-select disabled>
+            <ion-select-option value="">No Game Console</ion-select-option>
+            <ion-select-option value="nes">NES</ion-select-option>
+            <ion-select-option value="n64" selected>Nintendo64</ion-select-option>
+            <ion-select-option value="ps">PlayStation</ion-select-option>
+            <ion-select-option value="genesis">Sega Genesis</ion-select-option>
+            <ion-select-option value="saturn">Sega Saturn</ion-select-option>
+            <ion-select-option value="snes">SNES</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Disabled Input</ion-label>
+          <ion-input placeholder="Disabled" disabled></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Disabled Toggle</ion-label>
+          <ion-toggle disabled checked slot="end"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Disabled Checkbox</ion-label>
+          <ion-checkbox disabled checked slot="start"></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Disabled Range</ion-label>
+          <ion-range disabled value="10"></ion-range>
+        </ion-item>
+      </ion-list>
+
+      <ion-list>
+        <ion-list-header>
+          <ion-label>Multiple Input Disabled Items</ion-label>
+        </ion-list-header>
+
+        <ion-item>
+          <ion-checkbox disabled slot="start"></ion-checkbox>
+          <ion-input placeholder="Disabled Checkbox w/ Input"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox disabled slot="end"></ion-checkbox>
+          <ion-input placeholder="Disabled Checkbox w/ Input"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-radio disabled slot="start"></ion-radio>
+          <ion-input placeholder="Disabled Radio w/ Input"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-radio disabled slot="end"></ion-radio>
+          <ion-input placeholder="Disabled Radio w/ Input"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox disabled slot="start"></ion-checkbox>
+          <ion-label>Checkbox + Radio</ion-label>
+          <ion-radio slot="end"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox disabled slot="start"></ion-checkbox>
+          <ion-radio slot="start"></ion-radio>
+          <ion-label>Checkbox + Radio</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Disabled Selects</ion-label>
+          <ion-select placeholder="month">
+            <ion-select-option value="1">January</ion-select-option>
+            <ion-select-option value="2">February</ion-select-option>
+            <ion-select-option value="3">March</ion-select-option>
+          </ion-select>
+          <ion-select disabled placeholder="year">
+            <ion-select-option value="1990">1990</ion-select-option>
+            <ion-select-option value="1991">1991</ion-select-option>
+            <ion-select-option value="1992">1992</ion-select-option>
+            <ion-select-option value="1993">1993</ion-select-option>
+            <ion-select-option value="1994">1994</ion-select-option>
+            <ion-select-option value="1995">1995</ion-select-option>
+            <ion-select-option value="1996">1996</ion-select-option>
+            <ion-select-option value="1997">1997</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start"></ion-checkbox>
+          <ion-label>Checkbox + Range</ion-label>
+          <ion-range disabled value="45"></ion-range>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start"></ion-checkbox>
+          <ion-label>Checkbox + Toggle</ion-label>
+          <ion-toggle disabled value="45"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox disabled slot="start"></ion-checkbox>
+          <ion-label>Checkbox + Buttons</ion-label>
+          <ion-button slot="end">Default</ion-button>
+          <ion-button slot="end">Buttons</ion-button>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Disabled Input</ion-label>
+          <ion-input slot="start" placeholder="Disabled" disabled></ion-input>
+          <ion-segment>
+            <ion-segment-button value="friends">
+              <ion-label>Friends</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="enemies">
+              <ion-label>Enemies</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start" disabled></ion-checkbox>
+          <ion-label>Disabled Checkbox</ion-label>
+          <ion-searchbar></ion-searchbar>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+
+    <ion-footer>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button onClick="toggleDisabled()">Toggle</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>
+  </ion-app>
+
+  <script>
+    const disabledEls = document.querySelectorAll("[disabled]");
+
+    function toggleDisabled() {
+      for (var i = 0; i < disabledEls.length; i++) {
+        disabledEls[i].disabled = !disabledEls[i].disabled;
+      }
+    }
+
+  </script>
+
+</html>
