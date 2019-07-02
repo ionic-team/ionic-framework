@@ -5,7 +5,7 @@ import { JSX as IoniconsJSX } from 'ionicons';
 
 
 // ionicons
-export const IonIcon = /*@__PURE__*/createReactComponent<IoniconsJSX.IonIcon & ReactProps, HTMLIonIconElement>('ion-icon');
+export const IonIcon = /*@__PURE__*/createReactComponent<IoniconsJSX.IonIcon & ReactProps, HTMLIonIconElement>('ion-icon', ['icon']);
 
 // /*@__PURE__*/createReactComponent
 export const IonTabBarInner = /*@__PURE__*/createReactComponent<JSX.IonTabBar & ReactProps, HTMLIonTabBarElement>('ion-tab-bar');
@@ -14,7 +14,7 @@ export const IonBackButtonInner = /*@__PURE__*/createReactComponent<JSX.IonBackB
 export const IonTab = /*@__PURE__*/createReactComponent<JSX.IonTab & ReactProps, HTMLIonTabElement>('ion-tab');
 export const IonTabButton = /*@__PURE__*/createReactComponent<JSX.IonTabButton & ReactProps, HTMLIonTabButtonElement>('ion-tab-button');
 export const IonAnchor = /*@__PURE__*/createReactComponent<JSX.IonAnchor & ReactProps, HTMLIonAnchorElement>('ion-anchor');
-export const IonApp = /*@__PURE__*/createReactComponent<JSX.IonApp & ReactProps, HTMLIonAppElement>('ion-app');
+export const IonAppInner = /*@__PURE__*/createReactComponent<JSX.IonApp & ReactProps, HTMLIonAppElement>('ion-app');
 export const IonAvatar = /*@__PURE__*/createReactComponent<JSX.IonAvatar & ReactProps, HTMLIonAvatarElement>('ion-avatar');
 export const IonBackdrop = /*@__PURE__*/createReactComponent<JSX.IonBackdrop & ReactProps, HTMLIonBackdropElement>('ion-backdrop');
 export const IonBadge = /*@__PURE__*/createReactComponent<JSX.IonBadge & ReactProps, HTMLIonBadgeElement>('ion-badge');
