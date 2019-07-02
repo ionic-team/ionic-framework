@@ -141,7 +141,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     this.multipleInputs = covers.length + inputs.length > 1 ? true : false;
   }
 
-
   // If the item contains an input including a checkbox, datetime, select, or radio
   // then the item will have a clickable input cover that covers the item
   // that should get the hover, focused and activated states UNLESS it has multiple
@@ -150,7 +149,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const inputs = this.el.querySelectorAll('ion-checkbox, ion-datetime, ion-select, ion-radio');
     return inputs.length === 1 && !this.multipleInputs;
   }
-
 
   // If the item has an href or button property it will render a native
   // anchor or button that is clickable
