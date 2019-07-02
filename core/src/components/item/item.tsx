@@ -138,7 +138,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
     // Check for multiple inputs to change the position of the input cover to relative
     // for all of the covered inputs above
-    this.multipleInputs = covers.length + inputs.length > 1 ? true : false;
+    this.multipleInputs = covers.length + inputs.length > 1;
   }
 
   // If the item contains an input including a checkbox, datetime, select, or radio
