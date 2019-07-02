@@ -68,7 +68,6 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
     if (!hasStyleChange && Object.keys(newStyles).length !== Object.keys(childStyles).length) {
       hasStyleChange = true;
     }
-    console.log('has style change?', hasStyleChange);
     if (hasStyleChange) {
       this.buttonStyles.set(tagName, newStyles);
       this.el.forceUpdate();
