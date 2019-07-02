@@ -1,26 +1,32 @@
-import React from 'react';
-import { withRouter, RouteComponentProps, matchPath, match, Redirect } from 'react-router-dom';
+import React, { ReactNode } from 'react';
+import { RouteComponentProps, matchPath, match, Redirect, Switch, RouteProps, BrowserRouterProps, BrowserRouter, withRouter } from 'react-router-dom';
 import { UnregisterCallback, Action as HistoryAction, Location as HistoryLocation } from 'history';
-import { NavContext, NavContextState, ViewStacks, ViewStack } from './NavContext';
+import { NavContext, NavContextState, ViewStacks, ViewStack } from '../NavContext';
 import { ViewItem } from './ViewItem';
 import { NavDirection } from '@ionic/core';
-import { generateUniqueId } from '../utils';
+import { generateUniqueId } from '../../../utils';
 
-interface IonRouterProps extends RouteComponentProps { }
-interface IonRouterState extends NavContextState { }
+interface IonReactRouterProps extends RouteComponentProps { }
+interface IonReactRouterState extends NavContextState { }
 
-class IonRouter extends React.Component<IonRouterProps, IonRouterState> {
+interface IonRouteData {
+  match: match<{ tab: string }>;
+  childProps: RouteProps;
+}
+
+class IonNavManager extends React.Component<IonReactRouterProps, IonReactRouterState> {
   listenUnregisterCallback: UnregisterCallback;
   activeViewId?: string;
   prevViewId?: string;
 
-  constructor(props: IonRouterProps) {
+  constructor(props: IonReactRouterProps) {
     super(props);
     this.state = {
       viewStacks: {},
       hideView: this.hideView.bind(this),
-      registerViewStack: this.registerView.bind(this),
+      setupIonRouter: this.setupIonRouter.bind(this),
       removeViewStack: this.removeViewStack.bind(this),
+      renderChild: this.renderChild.bind(this),
       goBack: this.goBack.bind(this),
       transitionView: this.transitionView.bind(this)
     };
@@ -47,14 +53,14 @@ class IonRouter extends React.Component<IonRouterProps, IonRouterState> {
   }
 
   findViewInfoByLocation(location: HistoryLocation, viewStacks: ViewStacks) {
-    let view: ViewItem;
-    let match: match<{ tab: string }>;
+    let view: ViewItem<IonRouteData>;
+    let match: IonRouteData["match"];
     let viewStack: ViewStack;
     const keys = Object.keys(viewStacks);
     keys.some(key => {
       const vs = viewStacks[key];
       return vs.views.some(x => {
-        match = matchPath(location.pathname, x.childProps)
+        match = matchPath(location.pathname, x.routeData.childProps)
         if (match) {
           view = x;
           viewStack = vs;
@@ -64,12 +70,12 @@ class IonRouter extends React.Component<IonRouterProps, IonRouterState> {
       });
     })
 
-    const result: { view: ViewItem, viewStack: ViewStack, match: ViewItem['match'] } = { view, viewStack, match };
+    const result = { view, viewStack, match };
     return result;
   }
 
   findViewInfoById(id: string, viewStacks: ViewStacks) {
-    let view: ViewItem;
+    let view: ViewItem<IonRouteData>;
     let viewStack: ViewStack;
     const keys = Object.keys(viewStacks);
     keys.some(key => {
@@ -96,7 +102,7 @@ class IonRouter extends React.Component<IonRouterProps, IonRouterState> {
 
     const { view: leavingView } = this.findViewInfoById(this.activeViewId, viewStacks);
 
-    if (leavingView && leavingView.match.url === location.pathname) {
+    if (leavingView && leavingView.routeData.match.url === location.pathname) {
       return;
     }
 
@@ -111,13 +117,13 @@ class IonRouter extends React.Component<IonRouterProps, IonRouterState> {
 
       enteringView.show = true;
       enteringView.mount = true;
-      enteringView.match = match;
+      enteringView.routeData.match = match;
       enteringViewStack.activeId = enteringView.id;
       this.activeViewId = enteringView.id;
 
       if (leavingView) {
         this.prevViewId = leavingView.id
-        if (leavingView.match.params.tab === enteringView.match.params.tab) {
+        if (leavingView.routeData.match.params.tab === enteringView.routeData.match.params.tab) {
           if (action === 'PUSH') {
             direction = direction || 'forward';
           } else {
@@ -131,7 +137,7 @@ class IonRouter extends React.Component<IonRouterProps, IonRouterState> {
          * We assume Routes with render props are redirects, because of this users should not use
          * the render prop for non redirects, and instead provide a component in its place.
          */
-        if(leavingView.element.type === Redirect || leavingView.element.props.render) {
+        if (leavingView.element.type === Redirect || leavingView.element.props.render) {
           leavingView.mount = false;
           leavingView.show = false;
         }
@@ -155,7 +161,50 @@ class IonRouter extends React.Component<IonRouterProps, IonRouterState> {
     this.listenUnregisterCallback();
   }
 
-  registerView(stack: string, activeId: string, stackItems: ViewItem[], routerOutlet: HTMLIonRouterOutletElement, location: HistoryLocation) {
+  setupIonRouter(id: string, children: ReactNode, routerOutlet: HTMLIonRouterOutletElement) {
+    const views: ViewItem[] = [];
+    let activeId: string;
+    React.Children.forEach(children, (child: React.ReactElement) => {
+      if (child.type === Switch) {
+        /**
+         * If the first child is a Switch, loop through its children to build the viewStack
+         */
+        React.Children.forEach(child.props.children, (grandChild: React.ReactElement) => {
+          addView.call(this, grandChild);
+        });
+      } else {
+        addView.call(this, child);
+      }
+    });
+    this.registerViewStack(id, activeId, views, routerOutlet, this.props.location);
+
+    function addView(child: React.ReactElement<any>) {
+      const location = this.props.history.location;
+      const viewId = generateUniqueId();
+      const key = generateUniqueId();
+      const element = child;
+      const match: IonRouteData['match'] = matchPath(location.pathname, child.props);
+      const view: ViewItem<IonRouteData> = {
+        id: viewId,
+        key,
+        routeData: {
+          match,
+          childProps: child.props
+        },
+        element,
+        mount: true,
+        show: !!match,
+        ref: React.createRef()
+      };
+      if (!!match) {
+        activeId = viewId;
+      };
+      views.push(view);
+      return activeId;
+    }
+  }
+
+  registerViewStack(stack: string, activeId: string, stackItems: ViewItem[], routerOutlet: HTMLIonRouterOutletElement, location: HistoryLocation) {
     this.setState((prevState) => {
       const prevViewStacks = Object.assign({}, prevState.viewStacks);
       prevViewStacks[stack] = {
@@ -191,10 +240,17 @@ class IonRouter extends React.Component<IonRouterProps, IonRouterState> {
     });
   }
 
+  renderChild(item: ViewItem<IonRouteData>) {
+    const component = React.cloneElement(item.element, {
+      computedMatch: item.routeData.match
+    });
+    return component;
+  }
+
   findActiveView(views: ViewItem[]) {
-    let view: ViewItem | undefined;
+    let view: ViewItem<IonRouteData> | undefined;
     views.some(x => {
-      const match = matchPath(this.props.location.pathname, x.childProps)
+      const match = matchPath(this.props.location.pathname, x.routeData.childProps)
       if (match) {
         view = x;
         return true;
@@ -209,7 +265,7 @@ class IonRouter extends React.Component<IonRouterProps, IonRouterState> {
     if (leavingView) {
       const { view: enteringView } = this.findViewInfoById(leavingView.prevId, this.state.viewStacks);
       if (enteringView) {
-        this.props.history.replace(enteringView.match.url, { direction: 'back' });
+        this.props.history.replace(enteringView.routeData.match.url, { direction: 'back' });
       } else {
         this.props.history.replace(defaultHref, { direction: 'back' });
       }
@@ -260,4 +316,16 @@ class IonRouter extends React.Component<IonRouterProps, IonRouterState> {
   }
 };
 
-export const IonRouterWrapped = withRouter(IonRouter);
+const IonNavManagerWithRouter = withRouter(IonNavManager);
+IonNavManagerWithRouter.displayName = 'IonNavManager';
+
+export class IonReactRouter extends React.Component<BrowserRouterProps> {
+  render() {
+    const { children, ...props } = this.props;
+    return (
+      <BrowserRouter {...props}>
+        <IonNavManagerWithRouter>{children}</IonNavManagerWithRouter>
+      </BrowserRouter>
+    );
+  }
+}
