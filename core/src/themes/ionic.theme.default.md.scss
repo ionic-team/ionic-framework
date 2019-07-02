@@ -30,6 +30,8 @@ $toolbar-md-color-activated:                var(--ion-toolbar-color-activated, #
 // Material Design List & List Items
 // --------------------------------------------------
 $item-md-background:                        var(--ion-item-background, $background-color) !default;
-$item-md-background-activated:              var(--ion-item-background-activated, #f1f1f1) !default;
+// activated item background does not exist in MD as it uses the ripple color
+$item-md-background-focused:                var(--ion-item-background-focused, var(--ion-color-step-100, #e1e1e1)) !default;
+$item-md-background-hover:                  var(--ion-item-background-hover, var(--ion-color-step-50, #f5f5f5)) !default;
 $item-md-border-color:                      var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, .13)))) !default;
 $item-md-color:                             var(--ion-item-color, $text-color) !default;

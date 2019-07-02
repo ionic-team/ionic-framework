@@ -6,16 +6,20 @@
 :host {
   /**
    * @prop --background: Background of the textarea
+   *
    * @prop --border-radius: Border radius of the textarea
+   *
    * @prop --color: Color of the text
+   *
    * @prop --placeholder-color: Color of the placeholder text
    * @prop --placeholder-font-style: Style of the placeholder text
    * @prop --placeholder-font-weight: Weight of the placeholder text
    * @prop --placeholder-opacity: Opacity of the placeholder text
+   *
    * @prop --padding-top: Top padding of the textarea
-   * @prop --padding-end: End padding of the textarea
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the textarea
    * @prop --padding-bottom: Bottom padding of the textarea
-   * @prop --padding-start: Start padding of the textarea
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the textarea
    */
   --background: initial;
   --color: initial;
@@ -41,6 +45,8 @@
   color: var(--color);
 
   font-family: $font-family-base;
+
+  white-space: pre-wrap;
 
   z-index: $z-index-item-input;
 }
@@ -88,8 +94,6 @@
   box-sizing: border-box;
   resize: none;
   appearance: none;
-
-  white-space: pre-wrap;
 
   &::placeholder {
     color: var(--placeholder-color);

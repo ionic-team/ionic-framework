@@ -14,12 +14,6 @@ Close the menu. If a menu is specified, it will close that menu.
 If no menu is specified, then it will close any menu that is open.
 If it does not find any open menus, it will return `false`.
 
-#### Parameters
-
-| Name   | Type                          | Description                              |
-| ------ | ----------------------------- | ---------------------------------------- |
-| `menu` | `null \| string \| undefined` | The menuId or side of the menu to close. |
-
 #### Returns
 
 Type: `Promise<boolean>`
@@ -34,13 +28,6 @@ multiple menus on the same side and only one of them should be allowed
 to open. Enabling a menu will automatically disable all other menus
 on that side.
 
-#### Parameters
-
-| Name     | Type                          | Description                                          |
-| -------- | ----------------------------- | ---------------------------------------------------- |
-| `enable` | `boolean`                     | If `true`, the menu should be enabled.               |
-| `menu`   | `null \| string \| undefined` | The menuId or side of the menu to enable or disable. |
-
 #### Returns
 
 Type: `Promise<HTMLIonMenuElement | undefined>`
@@ -53,12 +40,6 @@ Get a menu instance. If a menu is not provided then it will return the first
 menu found. If the specified menu is `start` or `end`, then it will return the
 enabled menu on that side. Otherwise, it will try to find the menu using the menu's
 `id` property. If a menu is not found then it will return `null`.
-
-#### Parameters
-
-| Name   | Type                          | Description                     |
-| ------ | ----------------------------- | ------------------------------- |
-| `menu` | `null \| string \| undefined` | The menuId or side of the menu. |
 
 #### Returns
 
@@ -103,12 +84,6 @@ Get whether or not the menu is enabled. Returns `true` if the
 specified menu is enabled. Returns `false` if a menu is disabled
 or not found.
 
-#### Parameters
-
-| Name   | Type                          | Description                                           |
-| ------ | ----------------------------- | ----------------------------------------------------- |
-| `menu` | `null \| string \| undefined` | The menuId or side of the menu that is being checked. |
-
 #### Returns
 
 Type: `Promise<boolean>`
@@ -120,12 +95,6 @@ Type: `Promise<boolean>`
 Get whether or not the menu is open. Returns `true` if the specified
 menu is open. If a menu is not specified, it will return `true` if
 any menu is currently open.
-
-#### Parameters
-
-| Name   | Type                          | Description                                           |
-| ------ | ----------------------------- | ----------------------------------------------------- |
-| `menu` | `null \| string \| undefined` | The menuId or side of the menu that is being checked. |
 
 #### Returns
 
@@ -141,46 +110,26 @@ the enabled menu on that side. Otherwise, it will try to find the menu
 using the menu's `id` property. If a menu is not found then it will
 return `false`.
 
-#### Parameters
-
-| Name   | Type                          | Description                             |
-| ------ | ----------------------------- | --------------------------------------- |
-| `menu` | `null \| string \| undefined` | The menuId or side of the menu to open. |
-
 #### Returns
 
 Type: `Promise<boolean>`
 
 
 
-### `registerAnimation(name: string, animation: AnimationBuilder) => void`
+### `registerAnimation(name: string, animation: AnimationBuilder) => Promise<void>`
 
 Registers a new animation that can be used with any `ion-menu` by
 passing the name of the animation in its `type` property.
 
-#### Parameters
-
-| Name        | Type                                                                    | Description                            |
-| ----------- | ----------------------------------------------------------------------- | -------------------------------------- |
-| `name`      | `string`                                                                | The name of the animation to register. |
-| `animation` | `(Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>` | The animation function to register.    |
-
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 
 ### `swipeGesture(enable: boolean, menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>`
 
 Enable or disable the ability to swipe open the menu.
-
-#### Parameters
-
-| Name     | Type                          | Description                                                               |
-| -------- | ----------------------------- | ------------------------------------------------------------------------- |
-| `enable` | `boolean`                     | If `true`, the menu swipe gesture should be enabled.                      |
-| `menu`   | `null \| string \| undefined` | The menuId or side of the menu to enable or disable the swipe gesture on. |
 
 #### Returns
 
@@ -194,18 +143,25 @@ Toggle the menu open or closed. If the menu is already open, it will try to
 close the menu, otherwise it will try to open it. Returns `false` if
 a menu is not found.
 
-#### Parameters
-
-| Name   | Type                          | Description                               |
-| ------ | ----------------------------- | ----------------------------------------- |
-| `menu` | `null \| string \| undefined` | The menuId or side of the menu to toggle. |
-
 #### Returns
 
 Type: `Promise<boolean>`
 
 
 
+
+## Dependencies
+
+### Used by
+
+ - [ion-menu](../menu)
+
+### Graph
+```mermaid
+graph TD;
+  ion-menu --> ion-menu-controller
+  style ion-menu-controller fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

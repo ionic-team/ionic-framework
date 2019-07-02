@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Element, Method, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Method, Prop, readTask, writeTask } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-ripple-effect',
@@ -8,12 +8,8 @@ import { Mode } from '../../interface';
   shadow: true
 })
 export class RippleEffect implements ComponentInterface {
-  mode!: Mode;
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * Sets the type of ripple-effect:
@@ -35,7 +31,7 @@ export class RippleEffect implements ComponentInterface {
   @Method()
   async addRipple(x: number, y: number) {
     return new Promise<() => void>(resolve => {
-      this.queue.read(() => {
+      readTask(() => {
         const rect = this.el.getBoundingClientRect();
         const width = rect.width;
         const height = rect.height;
@@ -55,8 +51,8 @@ export class RippleEffect implements ComponentInterface {
         const moveX = width * 0.5 - posX;
         const moveY = height * 0.5 - posY;
 
-        this.queue.write(() => {
-          const div = this.win.document.createElement('div');
+        writeTask(() => {
+          const div = document.createElement('div');
           div.classList.add('ripple-effect');
           const style = div.style;
           style.top = styleY + 'px';
@@ -82,10 +78,11 @@ export class RippleEffect implements ComponentInterface {
   }
 
   hostData() {
+    const mode = getIonMode(this);
     return {
       role: 'presentation',
       class: {
-        [`${this.mode}`]: true,
+        [mode]: true,
         'unbounded': this.unbounded
       }
     };

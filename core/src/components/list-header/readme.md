@@ -25,6 +25,29 @@ Unlike ItemDivider, ListHeaders are styled to be stand-out from the rest of the 
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+import { IonList, IonItem, IonLabel, IonContent, IonListHeader } from '@ionic/react';
+
+export const ListHeaderExample: React.FunctionComponent = () => (
+  <IonContent>
+    <IonList>
+      <IonListHeader>
+        <IonLabel>Items</IonLabel>
+      </IonListHeader>
+      <IonItem>Item 1</IonItem>
+      <IonItem>Item 2</IonItem>
+      <IonItem>Item 3</IonItem>
+      <IonItem>Item 4</IonItem>
+      <IonItem>Item 5</IonItem>
+    </IonList>
+  </IonContent>
+);
+```
+
+
 
 ## Properties
 
@@ -41,6 +64,19 @@ Unlike ItemDivider, ListHeaders are styled to be stand-out from the rest of the 
 | `--background` | Background of the list header |
 | `--color`      | Color of the list header text |
 
+
+## Dependencies
+
+### Used by
+
+ - ion-select-popover
+
+### Graph
+```mermaid
+graph TD;
+  ion-select-popover --> ion-list-header
+  style ion-list-header fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 
