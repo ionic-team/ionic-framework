@@ -134,7 +134,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     // The following elements can accept focus alongside the previous elements
     // therefore if these elements are also a child of item, we don't want the
     // input cover on top of those interfering with their clicks
-    const inputs = this.el.querySelectorAll('ion-input, ion-range, ion-textarea, ion-toggle');
+    const inputs = this.el.querySelectorAll('ion-input, ion-range, ion-searchbar, ion-segment, ion-textarea, ion-toggle');
 
     // Check for multiple inputs to change the position of the input cover to relative
     // for all of the covered inputs above

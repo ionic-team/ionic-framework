@@ -152,6 +152,25 @@
           <ion-button slot="end">Default</ion-button>
           <ion-button slot="end">Buttons</ion-button>
         </ion-item>
+
+        <ion-item>
+          <ion-label>Disabled Input</ion-label>
+          <ion-input slot="start" placeholder="Disabled" disabled></ion-input>
+          <ion-segment>
+            <ion-segment-button value="friends">
+              <ion-label>Friends</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="enemies">
+              <ion-label>Enemies</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start" disabled></ion-checkbox>
+          <ion-label>Disabled Checkbox</ion-label>
+          <ion-searchbar></ion-searchbar>
+        </ion-item>
       </ion-list>
     </ion-content>
 
