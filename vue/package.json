@@ -57,9 +57,13 @@
     "vue-property-decorator": "^7.2.0",
     "vue": "^2.5.17",
     "vue-template-compiler": "^2.5.17",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "ionicons": "^4.6.0"
   },
   "dependencies": {
-    "@ionic/core": "^4.0.0"
+    "@ionic/core": "^4.6.0"
+  },
+  "peerDependencies": {
+    "ionicons": "^4.5.10-2"
   }
 }
