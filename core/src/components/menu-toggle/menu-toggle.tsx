@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Host, Listen, Prop, State, h } from '@stencil/core';
+import { Component, ComponentInterface, Event, EventEmitter, Host, Listen, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
+import { StyleEventDetail } from '../../interface';
 
 @Component({
   tag: 'ion-menu-toggle',
@@ -29,8 +30,31 @@ export class MenuToggle implements ComponentInterface {
    */
   @Prop() autoHide = true;
 
+  /**
+   * Emitted when the styles change.
+   * @internal
+   */
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+
+  componentWillLoad() {
+    this.emitStyle();
+  }
+
   componentDidLoad() {
     return this.updateVisibility();
+  }
+
+  @Watch('visible')
+  visibleChanged() {
+    this.emitStyle();
+  }
+
+  private emitStyle() {
+    const hidden = this.autoHide && !this.visible;
+
+    this.ionStyle.emit({
+      'hidden': hidden
+    });
   }
 
   @Listen('ionMenuChange', { target: 'body' })
@@ -56,6 +80,7 @@ export class MenuToggle implements ComponentInterface {
       }
     }
   }
+
   render() {
     const mode = getIonMode(this);
     const hidden = this.autoHide && !this.visible;

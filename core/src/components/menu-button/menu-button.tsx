@@ -1,8 +1,8 @@
-import { Component, ComponentInterface, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
+import { Color, CssClassMap, StyleEventDetail } from '../../interface';
 import { ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses } from '../../utils/theme';
 
@@ -15,6 +15,9 @@ import { createColorClasses } from '../../utils/theme';
   shadow: true
 })
 export class MenuButton implements ComponentInterface, ButtonInterface {
+  private buttonStyles = new Map<string, CssClassMap>();
+
+  @Element() el!: HTMLIonMenuButtonElement;
 
   /**
    * The color to use from your application's color palette.
@@ -43,13 +46,48 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
+  @Listen('ionStyle')
+  buttonStyle(ev: CustomEvent<StyleEventDetail>) {
+    ev.stopPropagation();
+
+    const tagName = (ev.target as HTMLElement).tagName;
+    const updatedStyles = ev.detail;
+    const newStyles = {} as any;
+    const childStyles = this.buttonStyles.get(tagName) || {};
+
+    let hasStyleChange = false;
+    Object.keys(updatedStyles).forEach(key => {
+      if (updatedStyles[key]) {
+        const classKey = `menu-button-${key}`;
+        if (!childStyles[classKey]) {
+          hasStyleChange = true;
+        }
+        newStyles[classKey] = true;
+      }
+    });
+    if (!hasStyleChange && Object.keys(newStyles).length !== Object.keys(childStyles).length) {
+      hasStyleChange = true;
+    }
+    console.log('has style change?', hasStyleChange);
+    if (hasStyleChange) {
+      this.buttonStyles.set(tagName, newStyles);
+      this.el.forceUpdate();
+    }
+  }
+
   hostData() {
+    const childStyles = {};
+    this.buttonStyles.forEach(value => {
+      Object.assign(childStyles, value);
+    });
+
     const mode = getIonMode(this);
     const { color, disabled } = this;
 
     return {
       'aria-disabled': disabled ? 'true' : null,
       class: {
+        ...childStyles,
         ...createColorClasses(color),
 
         [mode]: true,
