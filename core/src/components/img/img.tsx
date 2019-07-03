@@ -100,10 +100,10 @@ export class Img implements ComponentInterface {
   }
 
   render() {
-    if(!this.loadSrc) {
-      return
+    if (typeof this.loadSrc !== 'string') {
+      return;
     }
-    
+
     return (
       <img
         src={this.loadSrc}
