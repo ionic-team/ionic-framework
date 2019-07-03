@@ -325,13 +325,18 @@ export function updateDate(existingData: DatetimeData, newData: any): boolean {
       }
       return true;
     } else if (newData.ampm) {
-      newData.hour = {
-        value: newData.hour
-          ? newData.hour.value
-          : (newData.ampm.value === 'pm'
-            ? (existingData.hour! < 12 ? existingData.hour! + 12 : existingData.hour!)
-            : (existingData.hour! >= 12 ? existingData.hour! - 12 : existingData.hour))
-      };
+      if (!newData.hour) {
+        // Even though in the picker column hour values are between 1 and 12, the hour value is actually normalized
+        // to [0, 23] interval. Because of this when changing between AM and PM we have to update the hour so it points
+        // to the correct HH hour
+        newData.hour = {
+          value: newData.hour
+            ? newData.hour.value
+            : (newData.ampm.value === 'pm'
+              ? (existingData.hour! < 12 ? existingData.hour! + 12 : existingData.hour!)
+              : (existingData.hour! >= 12 ? existingData.hour! - 12 : existingData.hour))
+        };
+      }
       (existingData as any)['hour'] = newData['hour'].value;
       return true;
     }
