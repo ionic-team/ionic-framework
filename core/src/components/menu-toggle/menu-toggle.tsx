@@ -32,13 +32,13 @@ export class MenuToggle implements ComponentInterface {
   @Prop() autoHide = true;
 
   async componentDidLoad() {
-    this.setVisibility();
+    await this.setVisibility();
   }
 
   @Listen('ionMenuChange', { target: 'body' })
   @Listen('ionSplitPaneVisible', { target: 'body' })
   async visibilityChanged() {
-    this.setVisibility();
+    await this.setVisibility();
   }
 
   private setVisibility = async () => {
@@ -46,7 +46,7 @@ export class MenuToggle implements ComponentInterface {
   }
 
   private onClick = async () => {
-    toggleMenu(this.menu);
+    await toggleMenu(this.menu);
   }
 
   render() {

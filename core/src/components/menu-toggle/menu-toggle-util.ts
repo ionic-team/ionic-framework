@@ -1,15 +1,15 @@
 
 // Get the menu controller element
-export function getMenuController(doc: Document): Promise<HTMLIonMenuControllerElement | undefined> {
+export const getMenuController = (doc: Document): Promise<HTMLIonMenuControllerElement | undefined> => {
   const menuControllerElement = doc.querySelector('ion-menu-controller');
   if (!menuControllerElement) {
     return Promise.resolve(undefined);
   }
   return menuControllerElement.componentOnReady();
-}
+};
 
 // Given a menu, toggle it
-export async function toggleMenu(menu: string | undefined) {
+export const toggleMenu = async (menu: string | undefined) => {
   const menuCtrl = await getMenuController(document);
   if (menuCtrl) {
     const menuEl = await menuCtrl.get(menu);
@@ -17,11 +17,10 @@ export async function toggleMenu(menu: string | undefined) {
       menuCtrl.toggle(menu);
     }
   }
-}
+};
 
-// Given a menu, return whether or not the menu
-// toggle should be visible
-export async function updateVisibility(menu: string | undefined) {
+// Given a menu, return whether or not the menu toggle should be visible
+export const updateVisibility = async (menu: string | undefined) => {
   const menuCtrl = await getMenuController(document);
   if (menuCtrl) {
     const menuEl = await menuCtrl.get(menu);
@@ -30,4 +29,4 @@ export async function updateVisibility(menu: string | undefined) {
     }
   }
   return false;
-}
+};

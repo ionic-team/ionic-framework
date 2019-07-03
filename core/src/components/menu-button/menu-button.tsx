@@ -47,13 +47,13 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   async componentDidLoad() {
-    this.setVisibility();
+    await this.setVisibility();
   }
 
   @Listen('ionMenuChange', { target: 'body' })
   @Listen('ionSplitPaneVisible', { target: 'body' })
   async visibilityChanged() {
-    this.setVisibility();
+    await this.setVisibility();
   }
 
   private setVisibility = async () => {
@@ -61,7 +61,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
   }
 
   private onClick = async () => {
-    toggleMenu(this.menu);
+    await toggleMenu(this.menu);
   }
 
   render() {
