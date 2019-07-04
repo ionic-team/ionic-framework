@@ -1,10 +1,11 @@
-import { Component, ComponentInterface, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Host, Listen, Prop, State, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
 import { ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses } from '../../utils/theme';
+import { toggleMenu, updateVisibility } from '../menu-toggle/menu-toggle-util';
 
 @Component({
   tag: 'ion-menu-button',
@@ -15,6 +16,8 @@ import { createColorClasses } from '../../utils/theme';
   shadow: true
 })
 export class MenuButton implements ComponentInterface, ButtonInterface {
+
+  @State() visible = false;
 
   /**
    * The color to use from your application's color palette.
@@ -43,35 +46,51 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
-  hostData() {
-    const mode = getIonMode(this);
-    const { color, disabled } = this;
+  async componentDidLoad() {
+    await this.setVisibility();
+  }
 
-    return {
-      'aria-disabled': disabled ? 'true' : null,
-      class: {
-        ...createColorClasses(color),
+  @Listen('ionMenuChange', { target: 'body' })
+  @Listen('ionSplitPaneVisible', { target: 'body' })
+  async visibilityChanged() {
+    await this.setVisibility();
+  }
 
-        [mode]: true,
+  private setVisibility = async () => {
+    this.visible = await updateVisibility(this.menu);
+  }
 
-        'button': true,  // ion-buttons target .button
-        'menu-button-disabled': disabled,
-        'ion-activatable': true,
-        'ion-focusable': true
-      }
-    };
+  private onClick = async () => {
+    await toggleMenu(this.menu);
   }
 
   render() {
+    const { color, disabled } = this;
     const mode = getIonMode(this);
     const menuIcon = config.get('menuIcon', 'menu');
+    const hidden = this.autoHide && !this.visible;
 
     const attrs = {
       type: this.type
     };
 
     return (
-      <ion-menu-toggle menu={this.menu} autoHide={this.autoHide}>
+      <Host
+        onClick={this.onClick}
+        aria-disabled={disabled ? 'true' : null}
+        aria-hidden={hidden ? 'true' : null}
+        class={{
+          [mode]: true,
+
+          ...createColorClasses(color),
+
+          'button': true,  // ion-buttons target .button
+          'menu-button-hidden': hidden,
+          'menu-button-disabled': disabled,
+          'ion-activatable': true,
+          'ion-focusable': true
+        }}
+      >
         <button
           {...attrs}
           disabled={this.disabled}
@@ -82,7 +101,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
           </slot>
           {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
         </button>
-      </ion-menu-toggle>
+      </Host>
     );
   }
 }
