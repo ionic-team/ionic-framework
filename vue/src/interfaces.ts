@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import { RouterDirection } from '@ionic/core';
+import { RouterDirection, HTMLStencilElement } from '@ionic/core';
 import { RouterOptions } from 'vue-router/types/router';
 
 declare module 'vue-router/types/router' {
