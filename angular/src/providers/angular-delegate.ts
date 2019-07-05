@@ -114,16 +114,13 @@ const LIFECYCLES = [
 ];
 
 export function bindLifecycleEvents(instance: any, element: HTMLElement) {
-  const unregisters = LIFECYCLES.map(eventName => {
-    const handler = (ev: any) => {
-      instance[eventName](ev.detail);
-    };
-    if (typeof instance[eventName] === 'function') {
+  const unregisters = LIFECYCLES
+    .filter(eventName => typeof instance[eventName] === 'function')
+    .map(eventName => {
+      const handler = (ev: any) => instance[eventName](ev.detail);
       element.addEventListener(eventName, handler);
       return () => element.removeEventListener(eventName, handler);
-    }
-    return () => { return; };
-  })
+    });
   return () => unregisters.forEach(fn => fn());
 }
 

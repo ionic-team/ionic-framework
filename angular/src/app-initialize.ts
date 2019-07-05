@@ -19,7 +19,7 @@ export function appInitialize(config: Config, doc: Document, zone: NgZone) {
           jmp: (h: any) => zone.runOutsideAngular(h),
           raf: h => {
             return zone.runOutsideAngular(() => {
-              return (win.__zone_symbol__requestAnimationFrame) ? win.__zone_symbol__requestAnimationFrame(h) : requestAnimationFrame(h)
+              return (win.__zone_symbol__requestAnimationFrame) ? win.__zone_symbol__requestAnimationFrame(h) : requestAnimationFrame(h);
             });
           },
           ael(elm, eventName, cb, opts) {
