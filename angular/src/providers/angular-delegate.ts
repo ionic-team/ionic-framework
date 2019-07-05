@@ -116,18 +116,15 @@ const LIFECYCLES = [
 export function bindLifecycleEvents(instance: any, element: HTMLElement) {
   const unregisters = LIFECYCLES.map(eventName => {
     const handler = (ev: any) => {
-      if (typeof instance[eventName] === 'function') {
-        instance[eventName](ev.detail);
-      }
+      instance[eventName](ev.detail);
     };
-    element.addEventListener(eventName, handler);
-    return () => {
-      element.removeEventListener(eventName, handler);
-    };
-  });
-  return () => {
-    unregisters.forEach(fn => fn());
-  };
+    if (typeof instance[eventName] === 'function') {
+      element.addEventListener(eventName, handler);
+      return () => element.removeEventListener(eventName, handler);
+    }
+    return () => { return; };
+  })
+  return () => unregisters.forEach(fn => fn());
 }
 
 const NavParamsToken = new InjectionToken<any>('NavParamsToken');

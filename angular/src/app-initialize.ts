@@ -1,9 +1,10 @@
+import { NgZone } from '@angular/core';
 import { applyPolyfills, defineCustomElements } from '@ionic/core/loader';
 
 import { Config } from './providers/config';
 import { IonicWindow } from './types/interfaces';
 
-export function appInitialize(config: Config, doc: Document) {
+export function appInitialize(config: Config, doc: Document, zone: NgZone) {
   return (): any => {
     const win: IonicWindow | undefined = doc.defaultView as any;
     if (win) {
@@ -15,7 +16,12 @@ export function appInitialize(config: Config, doc: Document) {
         return defineCustomElements(win, {
           exclude: ['ion-tabs', 'ion-tab'],
           syncQueue: true,
-          raf: h => (win.__zone_symbol__requestAnimationFrame) ? win.__zone_symbol__requestAnimationFrame(h) : requestAnimationFrame(h),
+          jmp: (h: any) => zone.runOutsideAngular(h),
+          raf: h => {
+            return zone.runOutsideAngular(() => {
+              return (win.__zone_symbol__requestAnimationFrame) ? win.__zone_symbol__requestAnimationFrame(h) : requestAnimationFrame(h)
+            });
+          },
           ael(elm, eventName, cb, opts) {
             if ((elm as any).__zone_symbol__addEventListener && skipZone(eventName)) {
               (elm as any).__zone_symbol__addEventListener(eventName, cb, opts);
@@ -49,6 +55,7 @@ const SKIP_ZONE = [
   'mouseup',
 
   'ionStyle',
+  'ionTabButtonClick'
 ];
 
 function skipZone(eventName: string) {
