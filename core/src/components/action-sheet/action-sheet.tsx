@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Me
 
 import { getIonMode } from '../../global/ionic-global';
 import { ActionSheetButton, Animation, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
-import { BACKDROP, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
+import { BACKDROP, dismiss, eventMethod, isCancel, present, safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -169,17 +169,13 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   }
 
   private async callButtonHandler(button: ActionSheetButton | undefined) {
-    if (button && button.handler) {
+    if (button) {
       // a handler has been provided, execute it
       // pass the handler the values from the inputs
-      try {
-        const rtn = await button.handler();
-        if (rtn === false) {
-          // if the return value of the handler is false then do not dismiss
-          return false;
-        }
-      } catch (e) {
-        console.error(e);
+      const rtn = await safeCall(button.handler);
+      if (rtn === false) {
+        // if the return value of the handler is false then do not dismiss
+        return false;
       }
     }
     return true;

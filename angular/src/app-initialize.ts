@@ -10,7 +10,14 @@ export function appInitialize(config: Config, doc: Document, zone: NgZone) {
     if (win) {
       const Ionic = win.Ionic = win.Ionic || {};
 
-      Ionic.config = config;
+      Ionic.config = {
+        ...config,
+        _zoneGate: (h: any) => zone.run(h)
+      };
+
+      const aelFn = '__zone_symbol__addEventListener' in (document.body as any)
+        ? '__zone_symbol__addEventListener'
+        : 'addEventListener';
 
       return applyPolyfills().then(() => {
         return defineCustomElements(win, {
@@ -23,41 +30,13 @@ export function appInitialize(config: Config, doc: Document, zone: NgZone) {
             });
           },
           ael(elm, eventName, cb, opts) {
-            if ((elm as any).__zone_symbol__addEventListener && skipZone(eventName)) {
-              (elm as any).__zone_symbol__addEventListener(eventName, cb, opts);
-            } else {
-              elm.addEventListener(eventName, cb, opts);
-            }
+            (elm as any)[aelFn](eventName, cb, opts);
           },
           rel(elm, eventName, cb, opts) {
-            if ((elm as any).__zone_symbol__removeEventListener && skipZone(eventName)) {
-              (elm as any).__zone_symbol__removeEventListener(eventName, cb, opts);
-            } else {
-              elm.removeEventListener(eventName, cb, opts);
-            }
+            elm.removeEventListener(eventName, cb, opts);
           }
         });
       });
     }
   };
-}
-
-const SKIP_ZONE = [
-  'scroll',
-  'resize',
-
-  'touchstart',
-  'touchmove',
-  'touchend',
-
-  'mousedown',
-  'mousemove',
-  'mouseup',
-
-  'ionStyle',
-  'ionTabButtonClick'
-];
-
-function skipZone(eventName: string) {
-  return SKIP_ZONE.indexOf(eventName) >= 0;
 }

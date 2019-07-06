@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Me
 
 import { getIonMode } from '../../global/ionic-global';
 import { AlertButton, AlertInput, Animation, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
-import { BACKDROP, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
+import { BACKDROP, dismiss, eventMethod, isCancel, present, safeCall } from '../../utils/overlays';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
 
@@ -223,17 +223,13 @@ export class Alert implements ComponentInterface, OverlayInterface {
       input.checked = input === selectedInput;
     }
     this.activeId = selectedInput.id;
-    if (selectedInput.handler) {
-      selectedInput.handler(selectedInput);
-    }
+    safeCall(selectedInput.handler, selectedInput)
     this.el.forceUpdate();
   }
 
   private cbClick(selectedInput: AlertInput) {
     selectedInput.checked = !selectedInput.checked;
-    if (selectedInput.handler) {
-      selectedInput.handler(selectedInput);
-    }
+    safeCall(selectedInput.handler, selectedInput);
     this.el.forceUpdate();
   }
 
@@ -254,7 +250,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
     if (button && button.handler) {
       // a handler has been provided, execute it
       // pass the handler the values from the inputs
-      const returnData = button.handler(data);
+      const returnData = safeCall(button.handler, data);
       if (returnData === false) {
         // if the return value of the handler is false then do not dismiss
         return false;
