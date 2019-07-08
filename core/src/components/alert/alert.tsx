@@ -223,7 +223,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
       input.checked = input === selectedInput;
     }
     this.activeId = selectedInput.id;
-    safeCall(selectedInput.handler, selectedInput)
+    safeCall(selectedInput.handler, selectedInput);
     this.el.forceUpdate();
   }
 

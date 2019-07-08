@@ -203,7 +203,6 @@ const overlayAnimation = async (
   return hasCompleted;
 };
 
-
 export const eventMethod = <T>(element: HTMLElement, eventName: string): Promise<T> => {
   let resolve: (detail: T) => void;
   const promise = new Promise<T>(r => resolve = r);
