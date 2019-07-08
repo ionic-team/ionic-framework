@@ -129,9 +129,9 @@ export const SpinnerExample: React.FunctionComponent = () => (
 
 ### Used by
 
- - [ion-infinite-scroll-content](..\infinite-scroll-content)
- - [ion-loading](..\loading)
- - [ion-refresher-content](..\refresher-content)
+ - [ion-infinite-scroll-content](../infinite-scroll-content)
+ - [ion-loading](../loading)
+ - [ion-refresher-content](../refresher-content)
 
 ### Graph
 ```mermaid

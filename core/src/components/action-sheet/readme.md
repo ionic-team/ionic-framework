@@ -338,9 +338,9 @@ Type: `Promise<void>`
 
 ### Depends on
 
-- [ion-backdrop](..\backdrop)
+- [ion-backdrop](../backdrop)
 - ion-icon
-- [ion-ripple-effect](..\ripple-effect)
+- [ion-ripple-effect](../ripple-effect)
 
 ### Graph
 ```mermaid

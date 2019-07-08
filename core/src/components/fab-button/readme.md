@@ -153,7 +153,7 @@ export const FabButtonExample: React.FunctionComponent = () => (
 ### Depends on
 
 - ion-icon
-- [ion-ripple-effect](..\ripple-effect)
+- [ion-ripple-effect](../ripple-effect)
 
 ### Graph
 ```mermaid

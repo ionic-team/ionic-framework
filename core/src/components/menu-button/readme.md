@@ -39,7 +39,7 @@ Menu Button is component that automatically creates the icon and functionality t
 ### Depends on
 
 - ion-icon
-- [ion-ripple-effect](..\ripple-effect)
+- [ion-ripple-effect](../ripple-effect)
 
 ### Graph
 ```mermaid

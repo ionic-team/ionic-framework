@@ -174,7 +174,7 @@ Type: `Promise<void>`
 
 ### Depends on
 
-- [ion-backdrop](..\backdrop)
+- [ion-backdrop](../backdrop)
 
 ### Graph
 ```mermaid
