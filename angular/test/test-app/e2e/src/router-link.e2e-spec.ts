@@ -138,7 +138,7 @@ describe('router-link', () => {
 });
 
 async function testForward() {
-  await waitTime(500);
+  await waitTime(2500);
   await testStack('ion-router-outlet', ['app-router-link', 'app-router-link-page']);
   await testLifeCycle('app-router-link', {
     ionViewWillEnter: 1,
@@ -152,7 +152,6 @@ async function testForward() {
     ionViewWillLeave: 0,
     ionViewDidLeave: 0,
   });
-
 }
 
 async function testRoot() {
