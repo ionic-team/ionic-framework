@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * iOS Toast Enter Animation
  */
-export function iosEnterAnimation(AnimationC: Animation, baseEl: ShadowRoot, position: string): Promise<Animation> {
+export const iosEnterAnimation = (AnimationC: Animation, baseEl: ShadowRoot, position: string): Promise<Animation> => {
   const baseAnimation = new AnimationC();
 
   const wrapperAnimation = new AnimationC();
@@ -36,4 +36,4 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: ShadowRoot, pos
     .easing('cubic-bezier(.155,1.105,.295,1.12)')
     .duration(400)
     .add(wrapperAnimation));
-}
+};

@@ -9,9 +9,9 @@ declare const Context: any;
 
 let mode: Mode;
 
-export function getIonMode(ref?: any): Mode {
+export const getIonMode = (ref?: any): Mode => {
   return (ref && getMode(ref)) || mode;
-}
+};
 
 export default function() {
   const doc = document;

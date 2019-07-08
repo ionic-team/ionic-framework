@@ -301,7 +301,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   }
 }
 
-function buttonClass(button: ToastButton): CssClassMap {
+const buttonClass = (button: ToastButton): CssClassMap => {
   return {
     'toast-button': true,
     'toast-button-icon-only': button.icon !== undefined && button.text === undefined,
@@ -310,4 +310,4 @@ function buttonClass(button: ToastButton): CssClassMap {
     'ion-activatable': true,
     ...getClassMap(button.cssClass)
   };
-}
+};
