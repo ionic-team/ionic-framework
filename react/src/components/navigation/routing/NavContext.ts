@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { ViewItem } from './ReactRouter/ViewItem';
-import { NavDirection } from '@ionic/core';
+import { NavDirection, RouterDirection } from '@ionic/core';
 
 export interface ViewStack {
   routerOutlet: HTMLIonRouterOutletElement;
@@ -20,6 +20,8 @@ export interface NavContextState {
   renderChild: (item: ViewItem) => void;
   goBack: (defaultHref?: string) => void;
   transitionView: (enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOuter: HTMLIonRouterOutletElement, direction: NavDirection) => void;
+  navigate: (path: string, direction?: RouterDirection) => void;
+  hasIonicRouter: () => boolean;
 }
 
 export const NavContext = /*@__PURE__*/React.createContext<NavContextState>({
@@ -29,9 +31,11 @@ export const NavContext = /*@__PURE__*/React.createContext<NavContextState>({
   setupIonRouter: () => { navContextNotFoundError() },
   removeViewStack: () => { navContextNotFoundError(); },
   renderChild: () => { navContextNotFoundError(); },
-  transitionView: () => { navContextNotFoundError(); }
+  transitionView: () => { navContextNotFoundError(); },
+  navigate: () => { navContextNotFoundError(); },
+  hasIonicRouter: () => false
 });
 
 function navContextNotFoundError() {
-  console.error('IonRouter not found, did you add it to the app?')
+  console.error('IonReactRouter not found, did you add it to the app?')
 }

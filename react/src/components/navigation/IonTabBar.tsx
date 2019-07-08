@@ -1,7 +1,8 @@
 import React from 'react';
-import { IonTabBarInner, IonTabButton } from '../proxies';
+import { IonTabBarInner } from '../inner-proxies';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { JSX } from '@ionic/core';
+import { IonTabButton } from '../proxies';
 
 type Props = RouteComponentProps & JSX.IonTabBar & {
   children: React.ReactNode;

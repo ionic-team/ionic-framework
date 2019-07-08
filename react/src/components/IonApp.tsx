@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonAppInner } from './proxies';
+import { IonAppInner } from './inner-proxies';
 import { IonicConfig } from '@ionic/core';
 import { IonicContext, IonicContextState } from './utils/IonicContext';
 import { Platform } from './utils/platform';
