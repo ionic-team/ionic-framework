@@ -3,7 +3,7 @@ import { RouteComponentProps, matchPath, match, Redirect, Switch, RouteProps, Br
 import { UnregisterCallback, Action as HistoryAction, Location as HistoryLocation } from 'history';
 import { NavContext, NavContextState, ViewStacks, ViewStack } from '../NavContext';
 import { ViewItem } from './ViewItem';
-import { NavDirection } from '@ionic/core';
+import { NavDirection, RouterDirection } from '@ionic/core';
 import { generateUniqueId } from '../../../utils';
 
 interface IonReactRouterProps extends RouteComponentProps { }
@@ -28,7 +28,9 @@ class IonNavManager extends React.Component<IonReactRouterProps, IonReactRouterS
       removeViewStack: this.removeViewStack.bind(this),
       renderChild: this.renderChild.bind(this),
       goBack: this.goBack.bind(this),
-      transitionView: this.transitionView.bind(this)
+      transitionView: this.transitionView.bind(this),
+      navigate: this.navigate.bind(this),
+      hasIonicRouter: () => true
     };
   }
 
@@ -202,6 +204,10 @@ class IonNavManager extends React.Component<IonReactRouterProps, IonReactRouterS
       views.push(view);
       return activeId;
     }
+  }
+
+  navigate(path: string, direction?: RouterDirection) {
+    this.props.history.push(path, { direction });
   }
 
   registerViewStack(stack: string, activeId: string, stackItems: ViewItem[], routerOutlet: HTMLIonRouterOutletElement, location: HistoryLocation) {
