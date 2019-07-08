@@ -1,7 +1,7 @@
 import React from 'react';
 import { IonLifeCycleContext } from '../../lifecycle';
 import { DefaultIonLifeCycleContext } from '../../lifecycle/IonLifeCycleContext';
-import { NavContext } from './NavContext';
+import { NavContext } from './routing/NavContext';
 
 interface StackItemManagerProps {
   id: string;
