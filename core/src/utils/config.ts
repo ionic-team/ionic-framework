@@ -177,6 +177,7 @@ export interface IonicConfig {
   persistConfig?: boolean;
   _forceStatusbarPadding?: boolean;
   _testing?: boolean;
+  _zoneGate?: (h: () => any) => any;
 }
 
 export function setupConfig(config: IonicConfig) {

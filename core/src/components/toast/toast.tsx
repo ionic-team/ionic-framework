@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Pr
 
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, Color, CssClassMap, OverlayEventDetail, OverlayInterface, ToastButton } from '../../interface';
-import { dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
+import { dismiss, eventMethod, isCancel, present, safeCall } from '../../utils/overlays';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses, getClassMap } from '../../utils/theme';
 
@@ -212,7 +212,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
       // a handler has been provided, execute it
       // pass the handler the values from the inputs
       try {
-        const rtn = await button.handler();
+        const rtn = await safeCall(button.handler);
         if (rtn === false) {
           // if the return value of the handler is false then do not dismiss
           return false;

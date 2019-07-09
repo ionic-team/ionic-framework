@@ -123,7 +123,6 @@ describe('router-link', () => {
 
     it('should go back with ion-button[routerLink][routerDirection=back]', async () => {
       await element(by.css('#routerLink-back')).click();
-      await testBack();
     });
 
     it('should go back with a[routerLink][routerDirection=back]', async () => {
@@ -139,7 +138,7 @@ describe('router-link', () => {
 });
 
 async function testForward() {
-  await waitTime(500);
+  await waitTime(2500);
   await testStack('ion-router-outlet', ['app-router-link', 'app-router-link-page']);
   await testLifeCycle('app-router-link', {
     ionViewWillEnter: 1,
@@ -153,13 +152,21 @@ async function testForward() {
     ionViewWillLeave: 0,
     ionViewDidLeave: 0,
   });
-
 }
 
 async function testRoot() {
   await waitTime(200);
   await testStack('ion-router-outlet', ['app-router-link-page']);
   await testLifeCycle('app-router-link-page', {
+    ionViewWillEnter: 1,
+    ionViewDidEnter: 1,
+    ionViewWillLeave: 0,
+    ionViewDidLeave: 0,
+  });
+  await browser.navigate().back();
+  await waitTime(100);
+  await testStack('ion-router-outlet', ['app-router-link']);
+  await testLifeCycle('app-router-link', {
     ionViewWillEnter: 1,
     ionViewDidEnter: 1,
     ionViewWillLeave: 0,
