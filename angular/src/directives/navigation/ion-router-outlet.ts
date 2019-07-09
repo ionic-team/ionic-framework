@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, NgZone, OnDestroy, OnInit, Optional, Output, SkipSelf, ViewContainerRef } from '@angular/core';
-import { ActivatedRoute, ChildrenOutletContexts, OutletContext, PRIMARY_OUTLET, Router, NavigationExtras } from '@angular/router';
+import { ActivatedRoute, ChildrenOutletContexts, NavigationExtras, OutletContext, PRIMARY_OUTLET, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
