@@ -199,9 +199,11 @@ export class StackController {
     if (enteringView) {
       enteringView.ref.changeDetectorRef.reattach();
     }
-    if (leavingView) {
-      leavingView.ref.changeDetectorRef.detach();
-    }
+    // TODO: disconnect leaving page from change detection to
+    // reduce jank during the page transition
+    // if (leavingView) {
+    //   leavingView.ref.changeDetectorRef.detach();
+    // }
     const enteringEl = enteringView ? enteringView.element : undefined;
     const leavingEl = leavingView ? leavingView.element : undefined;
     const containerEl = this.containerEl;

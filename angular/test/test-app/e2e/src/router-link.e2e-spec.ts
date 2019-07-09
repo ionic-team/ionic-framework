@@ -143,8 +143,8 @@ async function testForward() {
   await testLifeCycle('app-router-link', {
     ionViewWillEnter: 1,
     ionViewDidEnter: 1,
-    ionViewWillLeave: 0, // missing change detection
-    ionViewDidLeave: 0, // missing change detection
+    ionViewWillLeave: 1,
+    ionViewDidLeave: 1,
   });
   await testLifeCycle('app-router-link-page', {
     ionViewWillEnter: 1,
