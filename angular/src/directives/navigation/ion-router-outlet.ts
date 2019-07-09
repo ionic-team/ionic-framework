@@ -241,6 +241,12 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
    */
   getLastUrl(stackId?: string): string | undefined {
     const active = this.stackCtrl.getLastUrl(stackId);
+
+    if (active && active.savedExtras && active.savedExtras.queryParams && Object.keys(active.savedExtras.queryParams).length > 0) {
+      const queryParamsMap = active.savedExtras.queryParams;
+      const queryParamsList = Object.keys(queryParamsMap).map(key => key + '=' + queryParamsMap[key]).join('&');
+      active.url = `${active.url}?${queryParamsList}`;
+    }
     return active ? active.url : undefined;
   }
 

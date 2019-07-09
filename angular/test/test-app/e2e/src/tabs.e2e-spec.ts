@@ -1,5 +1,7 @@
-import { browser, element, by, ElementFinder } from 'protractor';
+import { browser, element, by, ElementFinder, protractor } from 'protractor';
 import { waitTime, testStack, handleErrorMessages } from './utils';
+
+const EC = protractor.ExpectedConditions;
 
 describe('tabs', () => {
   afterEach(() => {
@@ -131,6 +133,31 @@ describe('tabs', () => {
       tab = await testTabTitle('Tab 1 - Page 2');
       await testStack('ion-tabs ion-router-outlet', ['app-tabs-tab3', 'app-tabs-tab1-nested']);
       expect(await tab.$('ion-back-button').isDisplayed()).toBe(false);
+    });
+  });
+
+  describe('enter url - /tabs/account/?query=parms', () => {
+    beforeEach(async () => {
+      await browser.get('/tabs/account?query=params');
+      await waitTime(30);
+    });
+
+    it('should preserved the query params when navigating back to a Tab', async () => {
+      const expectedRoute = '?queryParams=value';
+
+      await testTabTitle('Tab 1 - Page 1');
+      await testState(1, 'account');
+
+      await element(by.css('#tab-button-contact')).click();
+      await testTabTitle('Tab 2 - Page 1');
+      await testState(2, 'contact');
+
+      await element(by.css('#tab-button-account')).click();
+      await testTabTitle('Tab 1 - Page 1');
+      await testState(3, 'account');
+      await waitTime(30);
+
+      EC.urlContains(expectedRoute);
     });
   });
 
