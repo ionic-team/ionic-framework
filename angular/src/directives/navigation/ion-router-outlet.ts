@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, NgZone, OnDestroy, OnInit, Optional, Output, SkipSelf, ViewContainerRef } from '@angular/core';
-import { ActivatedRoute, ChildrenOutletContexts, OutletContext, PRIMARY_OUTLET, Router } from '@angular/router';
+import { ActivatedRoute, ChildrenOutletContexts, OutletContext, PRIMARY_OUTLET, Router, NavigationExtras } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
@@ -242,12 +242,26 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   getLastUrl(stackId?: string): string | undefined {
     const active = this.stackCtrl.getLastUrl(stackId);
 
-    if (active && active.savedExtras && active.savedExtras.queryParams && Object.keys(active.savedExtras.queryParams).length > 0) {
-      const queryParamsMap = active.savedExtras.queryParams;
-      const queryParamsList = Object.keys(queryParamsMap).map(key => key + '=' + queryParamsMap[key]).join('&');
-      active.url = `${active.url}?${queryParamsList}`;
+    if (!active) {
+      return undefined;
     }
-    return active ? active.url : undefined;
+
+    const queryParams = this.extractQueryParams(active.savedExtras);
+    return queryParams.length > 0 ? `${active.url}?${queryParams}` : active.url;
+  }
+
+  /**
+   * Returns a string containing the concatenated query params from given navigation extras.
+   */
+  private extractQueryParams(savedExtras: NavigationExtras | undefined): string {
+    let queryParams = '';
+    const queryParamsMap = savedExtras && savedExtras.queryParams;
+
+    if (queryParamsMap && Object.keys(queryParamsMap).length > 0) {
+      queryParams = Object.keys(queryParamsMap).map(key => key + '=' + queryParamsMap[key]).join('&');
+    }
+
+    return queryParams;
   }
 
   /**

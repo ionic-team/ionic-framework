@@ -136,15 +136,15 @@ describe('tabs', () => {
     });
   });
 
-  describe('enter url - /tabs/account/?query=parms', () => {
+  describe('enter url - /tabs/account/?query=params', () => {
+    const initialUrl = '/tabs/account?query=params';
+
     beforeEach(async () => {
-      await browser.get('/tabs/account?query=params');
+      await browser.get(initialUrl);
       await waitTime(30);
     });
 
     it('should preserved the query params when navigating back to a Tab', async () => {
-      const expectedRoute = '?queryParams=value';
-
       await testTabTitle('Tab 1 - Page 1');
       await testState(1, 'account');
 
@@ -157,7 +157,7 @@ describe('tabs', () => {
       await testState(3, 'account');
       await waitTime(30);
 
-      EC.urlContains(expectedRoute);
+      EC.urlIs(initialUrl);
     });
   });
 
@@ -180,7 +180,7 @@ describe('tabs', () => {
 
       await testTabTitle('Tab 2 - Page 1');
     });
-  })
+  });
 });
 
 async function testState(count: number, tab: string) {
