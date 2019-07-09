@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Me
 
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
-import { dismiss, eventMethod, present } from '../../utils/overlays';
+import { dismiss, eventMethod, present, safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -175,17 +175,9 @@ export class Picker implements ComponentInterface, OverlayInterface {
     // }
 
     // keep the time of the most recent button click
-    let shouldDismiss = true;
-
-    if (button.handler) {
-      // a handler has been provided, execute it
-      // pass the handler the values from the inputs
-      if (button.handler(this.getSelected()) === false) {
-        // if the return value of the handler is false then do not dismiss
-        shouldDismiss = false;
-      }
-    }
-
+    // a handler has been provided, execute it
+    // pass the handler the values from the inputs
+    const shouldDismiss = safeCall(button.handler, this.getSelected()) !== false;
     if (shouldDismiss) {
       return this.dismiss();
     }
