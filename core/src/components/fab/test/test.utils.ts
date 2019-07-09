@@ -2,11 +2,11 @@ import { newE2EPage } from '@stencil/core/testing';
 
 import { generateE2EUrl } from '../../../utils/test/utils';
 
-export async function testFab(
+export const testFab = async (
   type: string,
   selector: string,
   rtl = false
-) {
+) => {
   try {
     const pageUrl = generateE2EUrl('fab', type, rtl);
 
@@ -41,13 +41,13 @@ export async function testFab(
   } catch (err) {
     throw err;
   }
-}
+};
 
-export async function testDisabledFab(
+export const testDisabledFab = async (
   type: string,
   selector: string,
   rtl = false
-) {
+) => {
   try {
     const pageUrl = generateE2EUrl('fab', type, rtl);
 
@@ -71,23 +71,23 @@ export async function testDisabledFab(
   } catch (err) {
     throw err;
   }
-}
+};
 
-async function getFabComponent(page: any, selector: string) {
+const getFabComponent = async (page: any, selector: string) => {
   return page.find(selector);
-}
+};
 
-async function getFabButton(fabComponent: any) {
+const getFabButton = async (fabComponent: any) => {
   return fabComponent.find('ion-fab-button');
-}
+};
 
-async function getFabList(fabComponent: any) {
+const getFabList = async (fabComponent: any) => {
   return fabComponent.find('ion-fab-list');
-}
+};
 
-async function ensureFabState(fab: any, state: string) {
+const ensureFabState = async (fab: any, state: string) => {
   const active = (state === 'active') ? true : false;
 
   const fabList = await getFabList(fab);
   expect(fabList.classList.contains('fab-list-active')).toBe(active);
-}
+};

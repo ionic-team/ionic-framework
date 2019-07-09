@@ -64,8 +64,8 @@ test('item: inputs', async () => {
   expect(compare).toMatchScreenshot();
 });
 
-async function checkFormResult(page: E2EPage, content: string) {
+const checkFormResult = async (page: E2EPage, content: string) => {
   const div = await page.find('#form-result');
 
   expect(div.textContent).toEqual(content);
-}
+};
