@@ -76,7 +76,8 @@
 
       // present the modal
       const modalElement = await modalController.create({
-        component: element
+        component: element,
+        swipeToClose: true
       });
       return modalElement;
     }

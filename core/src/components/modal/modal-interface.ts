@@ -8,6 +8,7 @@ export interface ModalOptions<T extends ComponentRef = ComponentRef> {
   cssClass?: string | string[];
   delegate?: FrameworkDelegate;
   animated?: boolean;
+  swipeToClose?: boolean;
 
   mode?: Mode;
   keyboardClose?: boolean;
