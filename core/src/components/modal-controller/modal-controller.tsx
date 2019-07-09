@@ -88,9 +88,34 @@ export class ModalController implements ComponentInterface, OverlayController {
 
   private swipeToCloseOnEnd(_modal: HTMLIonModalElement, detail: GestureDetail) {
     console.log('On end', detail);
+
+    const viewportHeight = window.innerHeight;
+
+    this.swipeEnableTransition();
+
+    if (detail.velocityY < -0.6) {
+      console.log('Slide open');
+      // this.slideOpen();
+    } else if (detail.velocityY > 0.6) {
+      // this.slideClose();
+      console.log('Slide close');
+      this.dismiss();
+    } else if (detail.currentY <= viewportHeight / 2) {
+      console.log('Slide open');
+      // this.slideOpen();
+    } else {
+      console.log('Slide close');
+      // this.slideClose();
+      this.dismiss();
+    }
   }
 
   private swipeDisableTransition() {
     console.log('Disabling transition');
   }
+
+  private swipeEnableTransition() {
+    console.log('Enabling transition');
+  }
+
 }
