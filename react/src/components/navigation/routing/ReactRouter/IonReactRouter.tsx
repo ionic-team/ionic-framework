@@ -1,10 +1,10 @@
-import React, { ReactNode } from 'react';
-import { RouteComponentProps, matchPath, match, Redirect, Switch, RouteProps, BrowserRouterProps, BrowserRouter, withRouter } from 'react-router-dom';
-import { UnregisterCallback, Action as HistoryAction, Location as HistoryLocation } from 'history';
-import { NavContext, NavContextState, ViewStacks, ViewStack } from '../NavContext';
-import { ViewItem } from './ViewItem';
 import { NavDirection, RouterDirection } from '@ionic/core';
+import { Action as HistoryAction, Location as HistoryLocation, UnregisterCallback } from 'history';
+import React, { ReactNode } from 'react';
+import { BrowserRouter, BrowserRouterProps, match, matchPath, Redirect, RouteComponentProps, RouteProps, Switch, withRouter } from 'react-router-dom';
 import { generateUniqueId } from '../../../utils';
+import { NavContext, NavContextState, ViewStack, ViewStacks } from '../NavContext';
+import { ViewItem } from './ViewItem';
 
 interface IonReactRouterProps extends RouteComponentProps { }
 interface IonReactRouterState extends NavContextState { }
@@ -134,12 +134,9 @@ class IonNavManager extends React.Component<IonReactRouterProps, IonReactRouterS
           }
         }
         /**
-         * Attempt to determine if the leaving view is a route redirect.
-         * If it is, take it out of the rendering phase.
-         * We assume Routes with render props are redirects, because of this users should not use
-         * the render prop for non redirects, and instead provide a component in its place.
+         * If the leaving view is a Redirect, take it out of the rendering phase.
          */
-        if (leavingView.element.type === Redirect || leavingView.element.props.render) {
+        if (leavingView.element.type === Redirect) {
           leavingView.mount = false;
           leavingView.show = false;
         }
@@ -154,7 +151,7 @@ class IonNavManager extends React.Component<IonReactRouterProps, IonReactRouterS
           enteringEl,
           leavingEl,
           enteringViewStack.routerOutlet,
-          direction);
+          leavingEl && leavingEl.innerHTML !== '' ? direction : undefined) // Don't animate from an empty view
       });
     }
   }
@@ -185,7 +182,12 @@ class IonNavManager extends React.Component<IonReactRouterProps, IonReactRouterS
       const viewId = generateUniqueId();
       const key = generateUniqueId();
       const element = child;
-      const match: IonRouteData['match'] = matchPath(location.pathname, child.props);
+      const matchProps = {
+        exact: child.props.exact,
+        path: child.props.path || child.props.from,
+        component: child.props.component
+      };
+      const match: IonRouteData['match'] = matchPath(location.pathname, matchProps);
       const view: ViewItem<IonRouteData> = {
         id: viewId,
         key,
