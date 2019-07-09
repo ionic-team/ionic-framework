@@ -86,7 +86,7 @@ export const iosTransitionAnimation = (AnimationC: Animation, navEl: HTMLElement
         enteringTrnsShadow
           .addElement(enteringTrnsShadowEl)
           .beforeClearStyles([OPACITY])
-          .fromTo(OPACITY, 0.97, 0.03, true);
+          .fromTo(OPACITY, 0.70, 0.03, true);
 
         enteringContent
           .add(enteringTrnsEffect)
@@ -202,7 +202,7 @@ export const iosTransitionAnimation = (AnimationC: Animation, navEl: HTMLElement
           leavingTrnsShadow
             .addElement(leavingTrnsShadowEl)
             .beforeClearStyles([OPACITY])
-            .fromTo(OPACITY, 0.97, 0.03, true);
+            .fromTo(OPACITY, 0.70, 0.03, true);
 
           leavingContent
             .add(leavingTrnsEffect)
