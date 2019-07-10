@@ -15,7 +15,16 @@ export class AlertComponent {
   async openAlert() {
     const alert = await this.alertCtrl.create({
       header: 'Hello',
-      message: 'Some text'
+      message: 'Some text',
+      buttons: [
+        {
+          role: 'cancel',
+          text: 'Cancel',
+          handler: () => {
+            NgZone.assertInAngularZone();
+          }
+        }
+      ]
     });
     await alert.present();
   }
