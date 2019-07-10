@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Animation - Grid</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  <script type="module">
+    import { Animation as IonicAnimation } from '../../../../dist/collection/utils/animation/animation.js';
+    import { createGesture } from '../../../../dist/ionic/index-a098653b.js';
+    
+    window.IonicAnimation = IonicAnimation;
+    
+    const grid = document.querySelector('.grid-container');
+    
+    let dotsString = '';
+    for (let i = 0; i < 360; i++) {
+      dotsString += '<div class="dot"></div>';
+    }
+    grid.innerHTML = dotsString;
+    
+    const dots = document.querySelectorAll('.dot');    
+    const rootAnimation = new IonicAnimation();
+    
+    rootAnimation
+      .duration(500)
+      .easing('ease-in-out')
+      .iterations(Infinity);
+
+    dots.forEach((dot, i) => {
+      const animation = new IonicAnimation(`dot-${i}`);
+      animation
+        .addElement(dot)
+        .delay(i * 10)
+        .keyframes([
+          { transform: 'scale(1)', offset: 0 },
+          { transform: 'scale(2)', offset: 0.5 },
+          { transform: 'scale(1)', offset: 1 }
+        ]);
+      
+      rootAnimation.addAnimation(animation);
+    });
+        
+    document.querySelector('.pause').addEventListener('click', () => {
+      rootAnimation.pause();
+    });
+    
+    document.querySelector('.play').addEventListener('click', () => {
+      rootAnimation.play();
+    });
+  </script>
+  
+  <style>
+    .grid-container {
+      width: 330px;
+      height: 470px;
+      background: rgba(0, 0, 255, 0.5);
+    }
+    
+    .dot {
+      --width: 8px;
+      width: var(--width);
+      height: var(--width);
+      border-radius: var(--width);
+      background: rgba(0, 255, 0, 1);
+      float: left;
+      margin: 6px;
+    }
+    
+    .dot:nth-of-type(2n) {
+      background: rgba(255, 0, 0, 1);
+    }
+    
+    .dot:nth-of-type(3n) {
+      background: rgba(0, 0, 255, 1);
+    }
+  </style>
+  </head>
+
+<body
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Animations</ion-title>
+        <ion-buttons slot="end">
+          <ion-button class="pause">Pause</ion-button>
+          <ion-button class="play">Play</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content>
+      <div class="ion-padding">
+        <div class="grid-container">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </ion-content>
+  </ion-app>
+</body>
+
+</html>
+
