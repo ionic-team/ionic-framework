@@ -4,7 +4,7 @@ import { handleErrorMessages, setProperty, getText, waitTime } from './utils';
 describe('form', () => {
 
   afterEach(() => {
-    handleErrorMessages();
+    return handleErrorMessages();
   });
 
   describe('change', () => {
