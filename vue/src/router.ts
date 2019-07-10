@@ -1,7 +1,7 @@
 import VueRouter, { Route } from 'vue-router';
 import { PluginFunction } from 'vue';
 import { RouterArgs } from './interfaces';
-import IonVueRouter from './components/ion-vue-router';
+import IonVueRouter from './components/navigation/ion-vue-router';
 import { BackButtonEvent, RouterDirection } from '@ionic/core';
 
 // Extend the official VueRouter
