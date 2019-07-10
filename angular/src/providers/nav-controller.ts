@@ -126,17 +126,22 @@ export class NavController {
    *
    * It recursivelly finds the top active `ion-router-outlet` and calls `pop()`.
    * This is the recommended way to go back when you are using `ion-router-outlet`.
+   *
+   * Resolves to `true` if it was able to pop.
    */
-  async pop() {
+  async pop(): Promise<boolean> {
     let outlet = this.topOutlet;
+    let popped = false;
 
     while (outlet) {
-      if (await outlet.pop()) {
+      popped = await outlet.pop();
+      if (popped) {
         break;
       } else {
         outlet = outlet.parentOutlet;
       }
     }
+    return popped;
   }
 
   /**
