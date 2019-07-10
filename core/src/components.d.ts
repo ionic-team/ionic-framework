@@ -12,6 +12,7 @@ import {
   AlertButton,
   AlertInput,
   AlertOptions,
+  Animation,
   AnimationBuilder,
   CheckboxChangeEventDetail,
   Color,
@@ -1432,7 +1433,7 @@ export namespace Components {
     /**
     * Dismiss the modal overlay after it has been presented.
     */
-    'dismiss': (data?: any, role?: string | undefined) => Promise<boolean>;
+    'dismiss': (data?: any, role?: string | undefined, fromY?: string) => Promise<boolean>;
     /**
     * Animation to use when the modal is presented.
     */
@@ -1466,6 +1467,10 @@ export namespace Components {
     * If `true`, a backdrop will be displayed behind the modal.
     */
     'showBackdrop': boolean;
+    /**
+    * If `true`, the modal will support a swipe and pan drag gesture to close
+    */
+    'swipeToClose': boolean;
   }
   interface IonModalController {
     /**
@@ -4757,6 +4762,10 @@ declare namespace LocalJSX {
     * If `true`, a backdrop will be displayed behind the modal.
     */
     'showBackdrop'?: boolean;
+    /**
+    * If `true`, the modal will support a swipe and pan drag gesture to close
+    */
+    'swipeToClose'?: boolean;
   }
   interface IonModalController extends JSXBase.HTMLAttributes<HTMLIonModalControllerElement> {}
   interface IonNav extends JSXBase.HTMLAttributes<HTMLIonNavElement> {

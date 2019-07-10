@@ -1,7 +1,6 @@
-import { Component, ComponentInterface, Method, writeTask } from '@stencil/core';
+import { Component, ComponentInterface, Method } from '@stencil/core';
 
 import { ComponentRef, ModalOptions, OverlayController } from '../../interface';
-import { GestureDetail } from '../../utils/gesture';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
 @Component({
@@ -15,13 +14,7 @@ export class ModalController implements ComponentInterface, OverlayController {
    */
   @Method()
   async create<T extends ComponentRef>(options: ModalOptions<T>): Promise<HTMLIonModalElement> {
-    const overlay = await createOverlay<HTMLIonModalElement>('ion-modal', options);
-
-    if (options.swipeToClose) {
-      this.createSwipeToCloseGesture(overlay);
-    }
-
-    return Promise.resolve(overlay);
+    return createOverlay<HTMLIonModalElement>('ion-modal', options);
   }
 
   /**
@@ -45,77 +38,6 @@ export class ModalController implements ComponentInterface, OverlayController {
   @Method()
   async getTop(): Promise<HTMLIonModalElement | undefined> {
     return getOverlay(document, 'ion-modal') as HTMLIonModalElement;
-  }
-
-  private async createSwipeToCloseGesture(modal: HTMLIonModalElement) {
-    const gesture = (await import('../../utils/gesture')).createGesture({
-      el: modal,
-      gestureName: 'modalSwipeToClose',
-      gesturePriority: 110,
-      threshold: 0,
-      direction: 'y',
-      passive: false,
-      canStart: detail => this.swipeToCloseCanStart(modal, detail),
-      onStart: detail => this.swipeToCloseOnStart(modal, detail),
-      onMove: detail => this.swipeToCloseOnMove(modal, detail),
-      onEnd: detail => this.swipeToCloseOnEnd(modal, detail)
-    });
-
-    gesture.setDisabled(false);
-  }
-
-  private swipeToCloseCanStart(_modal: HTMLIonModalElement, detail: GestureDetail) {
-    console.log('Can start', detail);
-    return true;
-  }
-
-  private swipeToCloseOnStart(_modal: HTMLIonModalElement, detail: GestureDetail) {
-    console.log('On start', detail);
-    this.swipeDisableTransition();
-  }
-
-  private swipeToCloseOnMove(modal: HTMLIonModalElement, detail: GestureDetail) {
-    console.log('On move', detail);
-
-    const wrapper = modal.querySelector('.modal-wrapper') as HTMLDivElement;
-
-    const y = detail.deltaY;
-
-    writeTask(() => {
-      wrapper.style.transform = `translateY(${y}px)`;
-    });
-  }
-
-  private swipeToCloseOnEnd(_modal: HTMLIonModalElement, detail: GestureDetail) {
-    console.log('On end', detail);
-
-    const viewportHeight = window.innerHeight;
-
-    this.swipeEnableTransition();
-
-    if (detail.velocityY < -0.6) {
-      console.log('Slide open');
-      // this.slideOpen();
-    } else if (detail.velocityY > 0.6) {
-      // this.slideClose();
-      console.log('Slide close');
-      this.dismiss();
-    } else if (detail.currentY <= viewportHeight / 2) {
-      console.log('Slide open');
-      // this.slideOpen();
-    } else {
-      console.log('Slide close');
-      // this.slideClose();
-      this.dismiss();
-    }
-  }
-
-  private swipeDisableTransition() {
-    console.log('Disabling transition');
-  }
-
-  private swipeEnableTransition() {
-    console.log('Enabling transition');
   }
 
 }
