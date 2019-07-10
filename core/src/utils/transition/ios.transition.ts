@@ -63,35 +63,35 @@ export const iosTransitionAnimation = (AnimationC: Animation, navEl: HTMLElement
       .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
 
     if (contentEl) {
-      const enteringTrnsEffectEl = shadow(contentEl).querySelector('.trns-effect');
+      const enteringTransitionEffectEl = shadow(contentEl).querySelector('.transition-effect');
 
-      if (enteringTrnsEffectEl) {
-        const enteringTrnsCoverEl = enteringTrnsEffectEl.querySelector('.trns-cover');
-        const enteringTrnsShadowEl = enteringTrnsEffectEl.querySelector('.trns-shadow');
+      if (enteringTransitionEffectEl) {
+        const enteringTransitionCoverEl = enteringTransitionEffectEl.querySelector('.transition-cover');
+        const enteringTransitionShadowEl = enteringTransitionEffectEl.querySelector('.transition-shadow');
 
-        const enteringTrnsEffect = new AnimationC();
-        const enteringTrnsCover = new AnimationC();
-        const enteringTrnsShadow = new AnimationC();
+        const enteringTransitionEffect = new AnimationC();
+        const enteringTransitionCover = new AnimationC();
+        const enteringTransitionShadow = new AnimationC();
 
-        enteringTrnsEffect
-          .addElement(enteringTrnsEffectEl)
+        enteringTransitionEffect
+          .addElement(enteringTransitionEffectEl)
           .beforeStyles({ opacity: '1' })
           .afterStyles({ opacity: '' });
 
-        enteringTrnsCover
-          .addElement(enteringTrnsCoverEl)
+        enteringTransitionCover
+          .addElement(enteringTransitionCoverEl)
           .beforeClearStyles([OPACITY])
           .fromTo(OPACITY, 0, 0.1, true);
 
-        enteringTrnsShadow
-          .addElement(enteringTrnsShadowEl)
+        enteringTransitionShadow
+          .addElement(enteringTransitionShadowEl)
           .beforeClearStyles([OPACITY])
           .fromTo(OPACITY, 0.70, 0.03, true);
 
         enteringContent
-          .add(enteringTrnsEffect)
-          .add(enteringTrnsCover)
-          .add(enteringTrnsShadow);
+          .add(enteringTransitionEffect)
+          .add(enteringTransitionCover)
+          .add(enteringTransitionShadow);
       }
     }
   }
@@ -180,34 +180,34 @@ export const iosTransitionAnimation = (AnimationC: Animation, navEl: HTMLElement
         .fromTo(TRANSLATEX, CENTER, (isRTL ? '-100%' : '100%'));
 
       if (leavingContentEl) {
-        const leavingTrnsEffectEl = shadow(leavingContentEl).querySelector('.trns-effect');
-        if (leavingTrnsEffectEl) {
-          const leavingTrnsCoverEl = leavingTrnsEffectEl.querySelector('.trns-cover');
-          const leavingTrnsShadowEl = leavingTrnsEffectEl.querySelector('.trns-shadow');
+        const leavingTransitionEffectEl = shadow(leavingContentEl).querySelector('.transition-effect');
+        if (leavingTransitionEffectEl) {
+          const leavingTransitionCoverEl = leavingTransitionEffectEl.querySelector('.transition-cover');
+          const leavingTransitionShadowEl = leavingTransitionEffectEl.querySelector('.transition-shadow');
 
-          const leavingTrnsEffect = new AnimationC();
-          const leavingTrnsCover = new AnimationC();
-          const leavingTrnsShadow = new AnimationC();
+          const leavingTransitionEffect = new AnimationC();
+          const leavingTransitionCover = new AnimationC();
+          const leavingTransitionShadow = new AnimationC();
 
-          leavingTrnsEffect
-            .addElement(leavingTrnsEffectEl)
+          leavingTransitionEffect
+            .addElement(leavingTransitionEffectEl)
             .beforeStyles({ opacity: '1' })
             .afterStyles({ opacity: '' });
 
-          leavingTrnsCover
-            .addElement(leavingTrnsCoverEl)
+          leavingTransitionCover
+            .addElement(leavingTransitionCoverEl)
             .beforeClearStyles([OPACITY])
             .fromTo(OPACITY, 0.1, 0, true);
 
-          leavingTrnsShadow
-            .addElement(leavingTrnsShadowEl)
+          leavingTransitionShadow
+            .addElement(leavingTransitionShadowEl)
             .beforeClearStyles([OPACITY])
             .fromTo(OPACITY, 0.70, 0.03, true);
 
           leavingContent
-            .add(leavingTrnsEffect)
-            .add(leavingTrnsCover)
-            .add(leavingTrnsShadow);
+            .add(leavingTransitionEffect)
+            .add(leavingTransitionCover)
+            .add(leavingTransitionShadow);
         }
       }
 

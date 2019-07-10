@@ -332,9 +332,9 @@ export class Content implements ComponentInterface {
           <slot></slot>
         </div>
         {transitionShadow ? (
-          <div class="trns-effect">
-            <div class="trns-cover"></div>
-            <div class="trns-shadow"></div>
+          <div class="transition-effect">
+            <div class="transition-cover"></div>
+            <div class="transition-shadow"></div>
           </div>
         ) : null}
         <slot name="fixed"></slot>

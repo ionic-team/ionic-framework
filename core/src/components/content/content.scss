@@ -119,7 +119,7 @@
   position: relative;
 }
 
-.trns-effect {
+.transition-effect {
   position: absolute;
 
   /* stylelint-disable property-blacklist */
@@ -132,7 +132,7 @@
   opacity: 0;
 }
 
-.trns-cover {
+.transition-cover {
   position: absolute;
 
   /* stylelint-disable property-blacklist */
@@ -147,7 +147,7 @@
   opacity: 0.1;
 }
 
-.trns-shadow {
+.transition-shadow {
   display: block;
   position: absolute;
 
