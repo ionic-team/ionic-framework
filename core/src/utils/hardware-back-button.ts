@@ -7,7 +7,7 @@ interface HandlerRegister {
   handler: Handler;
 }
 
-export function startHardwareBackButton() {
+export const startHardwareBackButton = () => {
   const doc = document;
 
   let busy = false;
@@ -41,9 +41,9 @@ export function startHardwareBackButton() {
       executeAction(selectedHandler).then(() => busy = false);
     }
   });
-}
+};
 
-async function executeAction(handler: Handler | undefined) {
+const executeAction = async (handler: Handler | undefined) => {
   try {
     if (handler) {
       const result = handler();
@@ -54,4 +54,4 @@ async function executeAction(handler: Handler | undefined) {
   } catch (e) {
     console.error(e);
   }
-}
+};

@@ -1,6 +1,6 @@
 import { readTask, writeTask } from '@stencil/core';
 
-export function startStatusTap() {
+export const startStatusTap = () => {
   const win = window;
   win.addEventListener('statusTap', () => {
     readTask(() => {
@@ -18,4 +18,4 @@ export function startStatusTap() {
       }
     });
   });
-}
+};

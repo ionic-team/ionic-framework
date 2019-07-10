@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * md Toast Leave Animation
  */
-export function mdLeaveAnimation(AnimationC: Animation, baseEl: ShadowRoot): Promise<Animation> {
+export const mdLeaveAnimation = (AnimationC: Animation, baseEl: ShadowRoot): Promise<Animation> => {
   const baseAnimation = new AnimationC();
 
   const wrapperAnimation = new AnimationC();
@@ -20,4 +20,4 @@ export function mdLeaveAnimation(AnimationC: Animation, baseEl: ShadowRoot): Pro
     .easing('cubic-bezier(.36,.66,.04,1)')
     .duration(300)
     .add(wrapperAnimation));
-}
+};

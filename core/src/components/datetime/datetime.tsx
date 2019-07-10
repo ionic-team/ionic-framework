@@ -636,7 +636,7 @@ export class Datetime implements ComponentInterface {
   }
 }
 
-function divyColumns(columns: PickerColumn[]): PickerColumn[] {
+const divyColumns = (columns: PickerColumn[]): PickerColumn[] => {
   const columnsWidth: number[] = [];
   let col: PickerColumn;
   let width: number;
@@ -666,8 +666,8 @@ function divyColumns(columns: PickerColumn[]): PickerColumn[] {
     columns[2].align = 'left';
   }
   return columns;
-}
-
-let datetimeIds = 0;
+};
 
 const DEFAULT_FORMAT = 'MMM D, YYYY';
+
+let datetimeIds = 0;
