@@ -80,7 +80,7 @@ export class Spinner implements ComponentInterface {
   }
 }
 
-function buildCircle(spinner: SpinnerConfig, duration: number, index: number, total: number) {
+const buildCircle = (spinner: SpinnerConfig, duration: number, index: number, total: number) => {
   const data = spinner.fn(duration, index, total);
   data.style['animation-duration'] = `${duration}ms`;
 
@@ -89,9 +89,9 @@ function buildCircle(spinner: SpinnerConfig, duration: number, index: number, to
       <circle transform="translate(32,32)" r={data.r}></circle>
     </svg>
   );
-}
+};
 
-function buildLine(spinner: SpinnerConfig, duration: number, index: number, total: number) {
+const buildLine = (spinner: SpinnerConfig, duration: number, index: number, total: number) => {
   const data = spinner.fn(duration, index, total);
   data.style['animation-duration'] = `${duration}ms`;
 
@@ -100,4 +100,4 @@ function buildLine(spinner: SpinnerConfig, duration: number, index: number, tota
       <line transform="translate(32,32)" y1={data.y1} y2={data.y2}></line>
     </svg>
   );
-}
+};

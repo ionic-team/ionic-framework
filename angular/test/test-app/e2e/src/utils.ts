@@ -37,19 +37,12 @@ export interface LifeCycleCount {
 }
 
 export function handleErrorMessages() {
-  browser.manage().logs().get('browser').then(function(browserLog) {
-    let severWarnings = false;
-
-    for (let i; i <= browserLog.length - 1; i++) {
-        if (browserLog[i].level.name === 'SEVERE') {
-            console.log('\n' + browserLog[i].level.name);
-            console.log('(Possibly exception) \n' + browserLog[i].message);
-
-            severWarnings = true;
-        }
+  return browser.manage().logs().get('browser').then(function (browserLog) {
+    for (let i = 0; i <= browserLog.length - 1; i++) {
+      if (browserLog[i].level.name_ === 'SEVERE') {
+        fail(browserLog[i].message);
+      }
     }
-
-    expect(severWarnings).toBe(false);
   });
 }
 

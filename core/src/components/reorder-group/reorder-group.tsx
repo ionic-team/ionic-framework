@@ -309,11 +309,11 @@ export class ReorderGroup implements ComponentInterface {
   }
 }
 
-function indexForItem(element: any): number {
+const indexForItem = (element: any): number => {
   return element['$ionIndex'];
-}
+};
 
-function findReorderItem(node: HTMLElement | null, container: HTMLElement): HTMLElement | undefined {
+const findReorderItem = (node: HTMLElement | null, container: HTMLElement): HTMLElement | undefined => {
   let parent: HTMLElement | null;
   while (node) {
     parent = node.parentElement;
@@ -323,15 +323,15 @@ function findReorderItem(node: HTMLElement | null, container: HTMLElement): HTML
     node = parent;
   }
   return undefined;
-}
+};
 
 const AUTO_SCROLL_MARGIN = 60;
 const SCROLL_JUMP = 10;
 const ITEM_REORDER_SELECTED = 'reorder-selected';
 
-function reorderArray(array: any[], from: number, to: number): any[] {
+const reorderArray = (array: any[], from: number, to: number): any[] => {
   const element = array[from];
   array.splice(from, 1);
   array.splice(to, 0, element);
   return array.slice();
-}
+};

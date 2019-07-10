@@ -8,7 +8,7 @@ describe('modals', () => {
     await waitTime(30);
   });
   afterEach(() => {
-    handleErrorMessages();
+    return handleErrorMessages();
   });
 
   it('should open standalone modal and close', async () => {

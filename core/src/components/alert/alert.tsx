@@ -459,11 +459,11 @@ export class Alert implements ComponentInterface, OverlayInterface {
   }
 }
 
-function buttonClass(button: AlertButton): CssClassMap {
+const buttonClass = (button: AlertButton): CssClassMap => {
   return {
     'alert-button': true,
     'ion-focusable': true,
     'ion-activatable': true,
     ...getClassMap(button.cssClass)
   };
-}
+};
