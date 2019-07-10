@@ -4,7 +4,7 @@ import { handleErrorMessages, waitTime, testStack } from './utils';
 describe('navigation', () => {
 
   afterEach(() => {
-    handleErrorMessages();
+    return handleErrorMessages();
   });
 
   it('should navigate correctly', async () => {

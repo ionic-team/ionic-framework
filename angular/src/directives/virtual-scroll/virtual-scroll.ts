@@ -128,7 +128,7 @@ export class IonVirtualScroll {
   @ContentChild(VirtualFooter) ftrTmp!: VirtualFooter;
 
   constructor(
-    private zone: NgZone,
+    private z: NgZone,
     private iterableDiffers: IterableDiffers,
     elementRef: ElementRef,
   ) {
@@ -162,7 +162,7 @@ export class IonVirtualScroll {
   }
 
   private nodeRender(el: HTMLElement | null, cell: Cell, index: number): HTMLElement {
-    return this.zone.run(() => {
+    return this.z.run(() => {
       let node: EmbeddedViewRef<VirtualContext>;
       if (!el) {
         node = this.itmTmp.viewContainer.createEmbeddedView(

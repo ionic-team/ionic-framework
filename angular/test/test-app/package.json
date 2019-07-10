@@ -8,6 +8,7 @@
     "sync": "sh scripts/sync.sh",
     "build": "ng build --prod --no-progress",
     "test": "ng e2e --prod",
+    "test.dev": "npm run sync && ng e2e",
     "lint": "ng lint"
   },
   "private": true,

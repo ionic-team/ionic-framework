@@ -3,7 +3,7 @@ import { waitTime, testStack, handleErrorMessages } from './utils';
 
 describe('tabs', () => {
   afterEach(() => {
-    handleErrorMessages();
+    return handleErrorMessages();
   });
   describe('entry url - /tabs', () => {
     beforeEach(async () => {
