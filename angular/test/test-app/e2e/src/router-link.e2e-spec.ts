@@ -9,7 +9,7 @@ describe('router-link params and fragments', () => {
   const id = 'MyPageID==';
 
   afterEach(() => {
-    handleErrorMessages();
+    return handleErrorMessages();
   });
 
   it('should go to a page with properly encoded values', async () => {
@@ -53,7 +53,7 @@ describe('router-link', () => {
     await waitTime(30);
   });
   afterEach(() => {
-    handleErrorMessages();
+    return handleErrorMessages();
   });
 
 

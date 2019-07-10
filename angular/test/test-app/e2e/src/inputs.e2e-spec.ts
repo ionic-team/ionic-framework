@@ -8,7 +8,7 @@ describe('inputs', () => {
     await waitTime(30);
   });
   afterEach(() => {
-    handleErrorMessages();
+    return handleErrorMessages();
   });
 
   it('should have default value', async () => {
