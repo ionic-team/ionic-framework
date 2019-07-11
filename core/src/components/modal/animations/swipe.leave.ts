@@ -5,6 +5,7 @@ import { Animation } from '../../../interface';
  */
 export function swipeLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
   const baseAnimation = new AnimationC();
+  /*
 
   const backdropAnimation = new AnimationC();
   backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
@@ -25,4 +26,7 @@ export function swipeLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement):
     .duration(250)
     .add(backdropAnimation)
     .add(wrapperAnimation));
+  */
+
+  return Promise.resolve(baseAnimation.addElement(baseEl).duration(0));
 }

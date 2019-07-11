@@ -31,6 +31,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private usersElement?: HTMLElement;
 
   private wrapperEl?: HTMLDivElement;
+  private backdropEl?: HTMLIonBackdropElement;
 
   // private y = 0;
 
@@ -149,6 +150,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   async componentDidLoad() {
     this.wrapperEl = this.el.querySelector('.modal-wrapper') as HTMLDivElement || undefined;
+    this.backdropEl = this.el.querySelector('ion-backdrop') as HTMLIonBackdropElement || undefined;
+
     if (this.swipeToClose) {
       this.enableSwipeToClose();
     }
@@ -207,6 +210,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private async swipeDismiss() {
+    this.swipeEnableTransition();
     const dismissed = await dismiss(this, null, undefined, 'modalLeave', swipeLeaveAnimation, swipeLeaveAnimation);
     if (dismissed) {
       await detachComponent(this.delegate, this.usersElement);
@@ -245,6 +249,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private swipeToCloseOnMove(detail: GestureDetail) {
+    const viewportHeight = (this.el.ownerDocument as any).defaultView.innerHeight;
+    const yRatio = detail.deltaY / viewportHeight;
+    console.log('Viewport ratio', yRatio);
+
+    const backdropOpacity = 1 - yRatio;
+
+    this.swipeSetBackdropOpacity(backdropOpacity);
     this.swipeSlideTo(detail.deltaY);
   }
 
@@ -273,13 +284,19 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   private swipeEnableTransition() {
     console.log('Enabling transition');
-    this.wrapperEl!.style.transition = `400ms transform cubic-bezier(0.23, 1, 0.32, 1)`;
+    this.el.style.transition = `400ms transform,opacity cubic-bezier(0.23, 1, 0.32, 1)`;
   }
 
   private swipeSlideTo(y: number) {
     // this.y = y;
     writeTask(() => {
       this.wrapperEl!.style.transform = `translateY(${y}px)`;
+    });
+  }
+
+  private swipeSetBackdropOpacity(opacity: number) {
+    writeTask(() => {
+      this.backdropEl!.style.opacity = `${opacity}`;
     });
   }
 
