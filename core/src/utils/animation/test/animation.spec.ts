@@ -123,6 +123,83 @@ describe('Animation Class', () => {
     });
   });
   
+  describe('Before and After Animation Methods', () => {
+    let animation;
+    beforeEach(() => {
+      animation = new Animation();
+    });
+    
+    it('should register all "before" styles', () => {
+      animation.beforeStyles({ 'background': 'red', 'opacity': 1 });
+      expect(Object.keys(animation.beforeStylesValue).length).toEqual(2);
+    });
+    
+    it('should register all "before" classes given arrays', () => {
+      const classesToAdd = ['my-class', 'hello-world'];
+      const classesToRemove = ['ionic-framework'];
+      
+      animation.beforeAddClass(classesToAdd);
+      animation.beforeRemoveClass(classesToRemove);
+      
+      expect(animation.beforeAddClasses.length).toEqual(classesToAdd.length);
+      expect(animation.beforeRemoveClasses.length).toEqual(classesToRemove.length);
+    });
+    
+    it('should register all "before" classes given strings', () => {
+      const classesToAdd = 'my-class';
+      const classesToRemove = 'ionic-framework';
+      
+      animation.beforeAddClass(classesToAdd);
+      animation.beforeRemoveClass(classesToRemove);
+      
+      expect(animation.beforeAddClasses.length).toEqual(1);
+      expect(animation.beforeRemoveClasses.length).toEqual(1);
+    });
+    
+    it('should not register "before" classes given undefined', () => {
+      animation.beforeAddClass(undefined);
+      animation.beforeRemoveClass(undefined);
+      
+      expect(animation.beforeAddClasses.length).toEqual(0);
+      expect(animation.beforeRemoveClasses.length).toEqual(0);
+    });
+    
+    it('should register all "after" styles', () => {
+      animation.afterStyles({ 'background': 'red', 'opacity': 1 });
+      expect(Object.keys(animation.afterStylesValue).length).toEqual(2);
+    });
+    
+    it('should register all "after" classes given arrays', () => {
+      const classesToAdd = ['my-class', 'hello-world'];
+      const classesToRemove = ['ionic-framework'];
+      
+      animation.afterAddClass(classesToAdd);
+      animation.afterRemoveClass(classesToRemove);
+      
+      expect(animation.afterAddClasses.length).toEqual(classesToAdd.length);
+      expect(animation.afterRemoveClasses.length).toEqual(classesToRemove.length);
+    });
+    
+    it('should register all "after" classes given strings', () => {
+      const classesToAdd = 'my-class';
+      const classesToRemove = 'ionic-framework';
+      
+      animation.afterAddClass(classesToAdd);
+      animation.afterRemoveClass(classesToRemove);
+      
+      expect(animation.afterAddClasses.length).toEqual(1);
+      expect(animation.afterRemoveClasses.length).toEqual(1);
+    });
+    
+    it('should not register "after" classes given undefined', () => {
+      animation.afterAddClass(undefined);
+      animation.afterRemoveClass(undefined);
+      
+      expect(animation.afterAddClasses.length).toEqual(0);
+      expect(animation.afterRemoveClasses.length).toEqual(0);
+    });
+  });
+  
   describe('Animation Config Methods', () => {
     let animation;
     beforeEach(() => {
