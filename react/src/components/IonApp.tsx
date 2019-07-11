@@ -33,5 +33,3 @@ export class IonApp extends React.Component<IonAppProps, IonAppState> {
   }
 
 };
-
-export default IonAppProps;
