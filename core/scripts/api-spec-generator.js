@@ -1,17 +1,21 @@
 
+
 const fs = require('fs');
 
 function apiSpecGenerator(opts) {
-  return (docsData) => {
-    const content = [];
-    docsData.components.forEach(cmp => generateComponent(cmp, content));
+  return {
+    type: 'docs-custom',
+    generator: (docsData) => {
+      const content = [];
+      docsData.components.forEach(cmp => generateComponent(cmp, content));
 
-    const contentStr = content.join('\n');
-    return new Promise(resolve => {
-      fs.writeFile(opts.file, contentStr, () => {
-        resolve();
+      const contentStr = content.join('\n');
+      return new Promise(resolve => {
+        fs.writeFile(opts.file, contentStr, () => {
+          resolve();
+        });
       });
-    });
+    }
   };
 }
 

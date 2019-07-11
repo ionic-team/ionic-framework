@@ -2,7 +2,7 @@ import { Config } from '../interface';
 
 import { now, pointerCoord } from './helpers';
 
-export function startTapClick(doc: Document, config: Config) {
+export const startTapClick = (config: Config) => {
   let lastTouch = -MOUSE_WAIT * 10;
   let lastActivated = 0;
   let scrollingEl: HTMLElement | undefined;
@@ -14,57 +14,57 @@ export function startTapClick(doc: Document, config: Config) {
   const useRippleEffect = config.getBoolean('animated', true) && config.getBoolean('rippleEffect', true);
   const clearDefers = new WeakMap<HTMLElement, any>();
 
-  function isScrolling() {
+  const isScrolling = () => {
     return scrollingEl !== undefined && scrollingEl.parentElement !== null;
-  }
+  };
 
   // Touch Events
-  function onTouchStart(ev: TouchEvent) {
+  const onTouchStart = (ev: TouchEvent) => {
     lastTouch = now(ev);
     pointerDown(ev);
-  }
+  };
 
-  function onTouchEnd(ev: TouchEvent) {
+  const onTouchEnd = (ev: TouchEvent) => {
     lastTouch = now(ev);
     pointerUp(ev);
-  }
+  };
 
-  function onMouseDown(ev: MouseEvent) {
+  const onMouseDown = (ev: MouseEvent) => {
     const t = now(ev) - MOUSE_WAIT;
     if (lastTouch < t) {
       pointerDown(ev);
     }
-  }
+  };
 
-  function onMouseUp(ev: MouseEvent) {
+  const onMouseUp = (ev: MouseEvent) => {
     const t = now(ev) - MOUSE_WAIT;
     if (lastTouch < t) {
       pointerUp(ev);
     }
-  }
+  };
 
-  function cancelActive() {
+  const cancelActive = () => {
     clearTimeout(activeDefer);
     activeDefer = undefined;
     if (activatableEle) {
       removeActivated(false);
       activatableEle = undefined;
     }
-  }
+  };
 
-  function pointerDown(ev: any) {
+  const pointerDown = (ev: any) => {
     if (activatableEle || isScrolling()) {
       return;
     }
     scrollingEl = undefined;
     setActivatedElement(getActivatableTarget(ev), ev);
-  }
+  };
 
-  function pointerUp(ev: UIEvent) {
+  const pointerUp = (ev: UIEvent) => {
     setActivatedElement(undefined, ev);
-  }
+  };
 
-  function setActivatedElement(el: HTMLElement | undefined, ev: UIEvent) {
+  const setActivatedElement = (el: HTMLElement | undefined, ev: UIEvent) => {
     // do nothing
     if (el && el === activatableEle) {
       return;
@@ -101,9 +101,9 @@ export function startTapClick(doc: Document, config: Config) {
       }, delay);
     }
     activatableEle = el;
-  }
+  };
 
-  function addActivated(el: HTMLElement, x: number, y: number) {
+  const addActivated = (el: HTMLElement, x: number, y: number) => {
     lastActivated = Date.now();
     el.classList.add(ACTIVATED);
 
@@ -111,9 +111,9 @@ export function startTapClick(doc: Document, config: Config) {
     if (rippleEffect && rippleEffect.addRipple) {
       activeRipple = rippleEffect.addRipple(x, y);
     }
-  }
+  };
 
-  function removeActivated(smooth: boolean) {
+  const removeActivated = (smooth: boolean) => {
     if (activeRipple !== undefined) {
       activeRipple.then(remove => remove());
     }
@@ -131,8 +131,9 @@ export function startTapClick(doc: Document, config: Config) {
     } else {
       active.classList.remove(ACTIVATED);
     }
-  }
+  };
 
+  const doc = document;
   doc.addEventListener('ionScrollStart', ev => {
     scrollingEl = ev.target as HTMLElement;
     cancelActive();
@@ -148,9 +149,9 @@ export function startTapClick(doc: Document, config: Config) {
 
   doc.addEventListener('mousedown', onMouseDown, true);
   doc.addEventListener('mouseup', onMouseUp, true);
-}
+};
 
-function getActivatableTarget(ev: any): any {
+const getActivatableTarget = (ev: any): any => {
   if (ev.composedPath) {
     const path = ev.composedPath() as HTMLElement[];
     for (let i = 0; i < path.length - 2; i++) {
@@ -162,13 +163,13 @@ function getActivatableTarget(ev: any): any {
   } else {
     return ev.target.closest('.ion-activatable');
   }
-}
+};
 
-function isInstant(el: HTMLElement) {
+const isInstant = (el: HTMLElement) => {
   return el.classList.contains('ion-activatable-instant');
-}
+};
 
-function getRippleEffect(el: HTMLElement) {
+const getRippleEffect = (el: HTMLElement) => {
   if (el.shadowRoot) {
     const ripple = el.shadowRoot.querySelector('ion-ripple-effect');
     if (ripple) {
@@ -176,7 +177,7 @@ function getRippleEffect(el: HTMLElement) {
     }
   }
   return el.querySelector('ion-ripple-effect');
-}
+};
 
 const ACTIVATED = 'activated';
 const ADD_ACTIVATED_DEFERS = 200;

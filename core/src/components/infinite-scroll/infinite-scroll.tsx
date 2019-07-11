@@ -1,13 +1,12 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-infinite-scroll',
   styleUrl: 'infinite-scroll.scss'
 })
 export class InfiniteScroll implements ComponentInterface {
-  mode!: Mode;
 
   private thrPx = 0;
   private thrPc = 0;
@@ -17,9 +16,6 @@ export class InfiniteScroll implements ComponentInterface {
 
   @Element() el!: HTMLElement;
   @State() isLoading = false;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
 
   /**
    * The threshold distance from the bottom
@@ -33,7 +29,8 @@ export class InfiniteScroll implements ComponentInterface {
   @Prop() threshold = '15%';
 
   @Watch('threshold')
-  protected thresholdChanged(val: string) {
+  protected thresholdChanged() {
+    const val = this.threshold;
     if (val.lastIndexOf('%') > -1) {
       this.thrPx = 0;
       this.thrPc = (parseFloat(val) / 100);
@@ -56,12 +53,13 @@ export class InfiniteScroll implements ComponentInterface {
   @Prop() disabled = false;
 
   @Watch('disabled')
-  protected disabledChanged(val: boolean) {
-    if (this.disabled) {
+  protected disabledChanged() {
+    const disabled = this.disabled;
+    if (disabled) {
       this.isLoading = false;
       this.isBusy = false;
     }
-    this.enableScrollEvents(!val);
+    this.enableScrollEvents(!disabled);
   }
 
   /**
@@ -84,10 +82,10 @@ export class InfiniteScroll implements ComponentInterface {
       await contentEl.componentOnReady();
       this.scrollEl = await contentEl.getScrollElement();
     }
-    this.thresholdChanged(this.threshold);
-    this.enableScrollEvents(!this.disabled);
+    this.thresholdChanged();
+    this.disabledChanged();
     if (this.position === 'top') {
-      this.queue.write(() => {
+      writeTask(() => {
         if (this.scrollEl) {
           this.scrollEl.scrollTop = this.scrollEl.scrollHeight - this.scrollEl.clientHeight;
         }
@@ -96,11 +94,11 @@ export class InfiniteScroll implements ComponentInterface {
   }
 
   componentDidUnload() {
+    this.enableScrollEvents(false);
     this.scrollEl = undefined;
   }
 
-  @Listen('scroll', { enabled: false })
-  protected onScroll() {
+  private onScroll = () => {
     const scrollEl = this.scrollEl;
     if (!scrollEl || !this.canStart()) {
       return 1;
@@ -145,7 +143,7 @@ export class InfiniteScroll implements ComponentInterface {
    * to `enabled`.
    */
   @Method()
-  complete() {
+  async complete() {
     const scrollEl = this.scrollEl;
     if (!this.isLoading || !scrollEl) {
       return;
@@ -179,7 +177,7 @@ export class InfiniteScroll implements ComponentInterface {
 
       // ******** DOM READ ****************
       requestAnimationFrame(() => {
-        this.queue.read(() => {
+        readTask(() => {
           // UI has updated, save the new content dimensions
           const scrollHeight = scrollEl.scrollHeight;
           // New content was added on top, so the scroll position should be changed immediately to prevent it from jumping around
@@ -187,7 +185,7 @@ export class InfiniteScroll implements ComponentInterface {
 
           // ******** DOM WRITE ****************
           requestAnimationFrame(() => {
-            this.queue.write(() => {
+            writeTask(() => {
               scrollEl.scrollTop = newScrollTop;
               this.isBusy = false;
             });
@@ -208,18 +206,25 @@ export class InfiniteScroll implements ComponentInterface {
 
   private enableScrollEvents(shouldListen: boolean) {
     if (this.scrollEl) {
-      this.enableListener(this, 'scroll', shouldListen, this.scrollEl);
+      if (shouldListen) {
+        this.scrollEl.addEventListener('scroll', this.onScroll);
+      } else {
+        this.scrollEl.removeEventListener('scroll', this.onScroll);
+      }
     }
   }
 
-  hostData() {
-    return {
-      class: {
-        [`${this.mode}`]: true,
-        'infinite-scroll-loading': this.isLoading,
-        'infinite-scroll-enabled': !this.disabled
-      }
-    };
+  render() {
+    const mode = getIonMode(this);
+    const disabled = this.disabled;
+    return (
+      <Host
+        class={{
+          [mode]: true,
+          'infinite-scroll-loading': this.isLoading,
+          'infinite-scroll-enabled': !disabled
+        }}
+      />
+    );
   }
-
 }

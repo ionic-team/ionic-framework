@@ -1,8 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDom from 'react-dom';
 import { dashToPascalCase, attachEventProps } from './utils';
 
-export function createReactComponent<PropType, ElementType>(tagName: string) {
+export function createReactComponent<PropType, ElementType>(tagName: string, attributeValues: string[] = []) {
   const displayName = dashToPascalCase(tagName);
 
   type IonicReactInternalProps = {
@@ -17,11 +17,9 @@ export function createReactComponent<PropType, ElementType>(tagName: string) {
   }
 
   class ReactComponent extends React.Component<InternalProps> {
-    componentRef: React.RefObject<ElementType>;
 
     constructor(props: PropType & IonicReactInternalProps) {
       super(props);
-      this.componentRef = React.createRef();
     }
 
     static get displayName() {
@@ -33,17 +31,24 @@ export function createReactComponent<PropType, ElementType>(tagName: string) {
     }
 
     componentWillReceiveProps(props: InternalProps) {
-      const node = ReactDOM.findDOMNode(this) as HTMLElement;
+      const node = ReactDom.findDOMNode(this) as HTMLElement;
       attachEventProps(node, props, this.props);
     }
 
     render() {
       const { children, forwardedRef, ...cProps } = this.props;
 
+      const propsWithoutAttributeValues = Object.keys(cProps).reduce((oldValue, key) => {
+        if(attributeValues.indexOf(key) === -1) {
+          (oldValue as any)[key] = (cProps as any)[key];
+        }
+        return oldValue;
+      }, {});
+
       return React.createElement(
         tagName,
         {
-          ...cProps,
+          ...propsWithoutAttributeValues,
           ref: forwardedRef
         },
         children

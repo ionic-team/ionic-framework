@@ -96,11 +96,9 @@ Fabs are container elements that contain one or more fab buttons. They should be
 
 ```tsx
 import React from 'react';
-
 import { IonContent, IonFab, IonFabButton, IonIcon, IonFabList } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
-
+export const FabExample: React.FunctionComponent = () => (
   <IonContent>
     {/*-- fab placed to the top end --*/}
     <IonFab vertical="top" horizontal="end" slot="fixed">
@@ -181,8 +179,6 @@ const Example: React.SFC<{}> = () => (
     </IonFab>
   </IonContent>
 );
-
-export default Example;
 ```
 
 
@@ -286,13 +282,13 @@ export default Example;
 
 ## Methods
 
-### `close() => void`
+### `close() => Promise<void>`
 
 Close an active FAB list container.
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 

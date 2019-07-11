@@ -99,11 +99,10 @@ The textarea component accepts the [native textarea attributes](https://develope
 
 ```tsx
 import React from 'react';
+import { IonTextarea, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-import { IonTextarea, IonItem, IonLabel } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const TextAreaExample: React.FunctionComponent = () => (
+  <IonContent>
     {/*-- Default textarea --*/}
     <IonTextarea></IonTextarea>
 
@@ -139,10 +138,8 @@ const Example: React.SFC<{}> = () => (
       <IonLabel>Notes</IonLabel>
       <IonTextarea rows={6} cols={20} placeholder="Enter any notes here..."></IonTextarea>
     </IonItem>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```
 
 
@@ -237,33 +234,33 @@ Type: `Promise<HTMLTextAreaElement>`
 
 
 
-### `setFocus() => void`
+### `setFocus() => Promise<void>`
 
 Sets focus on the specified `ion-textarea`. Use this method instead of the global
 `input.focus()`.
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 
 
 ## CSS Custom Properties
 
-| Name                        | Description                     |
-| --------------------------- | ------------------------------- |
-| `--background`              | Background of the textarea      |
-| `--border-radius`           | Border radius of the textarea   |
-| `--color`                   | Color of the text               |
-| `--padding-bottom`          | Bottom padding of the textarea  |
-| `--padding-end`             | End padding of the textarea     |
-| `--padding-start`           | Start padding of the textarea   |
-| `--padding-top`             | Top padding of the textarea     |
-| `--placeholder-color`       | Color of the placeholder text   |
-| `--placeholder-font-style`  | Style of the placeholder text   |
-| `--placeholder-font-weight` | Weight of the placeholder text  |
-| `--placeholder-opacity`     | Opacity of the placeholder text |
+| Name                        | Description                                                                                                 |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `--background`              | Background of the textarea                                                                                  |
+| `--border-radius`           | Border radius of the textarea                                                                               |
+| `--color`                   | Color of the text                                                                                           |
+| `--padding-bottom`          | Bottom padding of the textarea                                                                              |
+| `--padding-end`             | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the textarea |
+| `--padding-start`           | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the textarea |
+| `--padding-top`             | Top padding of the textarea                                                                                 |
+| `--placeholder-color`       | Color of the placeholder text                                                                               |
+| `--placeholder-font-style`  | Style of the placeholder text                                                                               |
+| `--placeholder-font-weight` | Weight of the placeholder text                                                                              |
+| `--placeholder-opacity`     | Opacity of the placeholder text                                                                             |
 
 
 ----------------------------------------------

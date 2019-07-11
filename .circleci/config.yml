@@ -60,7 +60,7 @@ jobs:
           working_directory: /tmp/workspace/core
       - save_cache: *save-cache-core
       - run:
-          command: npm run build -- --max-workers 1
+          command: npm run build -- --ci
           working_directory: /tmp/workspace/core
       - save_cache: *save-cache-core-stencil
       - persist_to_workspace:
@@ -119,7 +119,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm run test.spec
+          command: npm run test.spec --ci
           working_directory: /tmp/workspace/core
 
   test-core-treeshake:
@@ -129,7 +129,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm run test.treeshake
+          command: npm run test.treeshake --ci
           working_directory: /tmp/workspace/core
 
   test-core-screenshot:
