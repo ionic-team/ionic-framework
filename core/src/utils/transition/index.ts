@@ -112,9 +112,9 @@ const waitForReady = async (opts: TransitionOptions, defaultDeep: boolean) => {
     deepReady(opts.enteringEl),
     deepReady(opts.leavingEl),
   ] : [
-    shallowReady(opts.enteringEl),
-    shallowReady(opts.leavingEl),
-  ];
+      shallowReady(opts.enteringEl),
+      shallowReady(opts.leavingEl),
+    ];
 
   await Promise.all(promises);
   await notifyViewReady(opts.viewIsReady, opts.enteringEl);

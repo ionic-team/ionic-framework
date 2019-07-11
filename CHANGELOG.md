@@ -1,3 +1,21 @@
+## [4.6.2](https://github.com/ionic-team/ionic/compare/v4.6.1...v4.6.2) (2019-07-10)
+
+
+### Bug Fixes
+
+* **menu-button:** hide menu button when auto hide or split pane ([#18702](https://github.com/ionic-team/ionic/issues/18702)) ([24840d4](https://github.com/ionic-team/ionic/commit/24840d4)), closes [#18666](https://github.com/ionic-team/ionic/issues/18666)
+* **menu-button:** move font-size to host for easier customization ([#18699](https://github.com/ionic-team/ionic/issues/18699)) ([876ab41](https://github.com/ionic-team/ionic/commit/876ab41)), closes [#18667](https://github.com/ionic-team/ionic/issues/18667)
+* **overlays:** fallback to step color if overlay background variable is unset ([#18709](https://github.com/ionic-team/ionic/issues/18709)) ([f16b118](https://github.com/ionic-team/ionic/commit/f16b118)), closes [#18658](https://github.com/ionic-team/ionic/issues/18658)
+* **virtual-scroll:**  remove runOutsideAngular error ([#18752](https://github.com/ionic-team/ionic/issues/18752)) ([8beeff2](https://github.com/ionic-team/ionic/commit/8beeff2)), closes [#18746](https://github.com/ionic-team/ionic/issues/18746)
+* **vue:** update imports for types and ionicons ([f56fea6](https://github.com/ionic-team/ionic/commit/f56fea6)), closes [#18701](https://github.com/ionic-team/ionic/issues/18701)
+
+
+### Performance Improvements
+
+* **all:** minify better by using arrow functions ([#18730](https://github.com/ionic-team/ionic/issues/18730)) ([03c1d19](https://github.com/ionic-team/ionic/commit/03c1d19))
+
+
+
 ## [4.6.1](https://github.com/ionic-team/ionic/compare/v4.6.0...v4.6.1) (2019-07-09)
 
 
