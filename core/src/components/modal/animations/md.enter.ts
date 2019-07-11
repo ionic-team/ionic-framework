@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * Md Modal Enter Animation
  */
-export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, _presentingEl?: HTMLElement): Promise<Animation> {
   const baseAnimation = new AnimationC();
 
   const backdropAnimation = new AnimationC();

@@ -12,6 +12,7 @@ import {
   AlertButton,
   AlertInput,
   AlertOptions,
+  Animation,
   AnimationBuilder,
   CheckboxChangeEventDetail,
   Color,
@@ -71,6 +72,9 @@ import {
   TransitionInstruction,
   ViewController,
 } from './interface';
+import {
+  ModalPresentationStyle,
+} from './components/modal/modal-interface';
 import {
   SelectCompareFn,
 } from './components/select/select-interface';
@@ -1461,7 +1465,11 @@ export namespace Components {
     /**
     * Present the modal overlay after it has been created.
     */
-    'present': () => Promise<void>;
+    'present': (presentingEl?: HTMLElement | undefined) => Promise<void>;
+    /**
+    * The style of presentation to use. `fullscreen` is the classic option that has the modal take up the full screen on mobile displays. A newer option, `card` is available that displays the modal in a stacked fashion while also zooming the previous page out slightly underneath. The `card` style is becoming a default starting with iOS 13.
+    */
+    'presentationStyle': ModalPresentationStyle;
     /**
     * If `true`, a backdrop will be displayed behind the modal.
     */
@@ -4757,6 +4765,10 @@ declare namespace LocalJSX {
     * Emitted before the modal has presented.
     */
     'onIonModalWillPresent'?: (event: CustomEvent<void>) => void;
+    /**
+    * The style of presentation to use. `fullscreen` is the classic option that has the modal take up the full screen on mobile displays. A newer option, `card` is available that displays the modal in a stacked fashion while also zooming the previous page out slightly underneath. The `card` style is becoming a default starting with iOS 13.
+    */
+    'presentationStyle'?: ModalPresentationStyle;
     /**
     * If `true`, a backdrop will be displayed behind the modal.
     */

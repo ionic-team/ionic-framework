@@ -1,5 +1,7 @@
 import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
 
+export type ModalPresentationStyle = 'fullscreen' | 'card';
+
 export interface ModalOptions<T extends ComponentRef = ComponentRef> {
   component: T;
   componentProps?: ComponentProps<T>;
@@ -13,6 +15,8 @@ export interface ModalOptions<T extends ComponentRef = ComponentRef> {
   mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
+
+  presentationStyle?: ModalPresentationStyle;
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;

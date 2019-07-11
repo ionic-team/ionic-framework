@@ -13,6 +13,7 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 import { swipeLeaveAnimation } from './animations/swipe.leave';
+import { ModalPresentationStyle } from './modal-interface';
 
 
 /**
@@ -30,6 +31,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   private usersElement?: HTMLElement;
 
+  // private presentingEl?: HTMLElement;
   private wrapperEl?: HTMLDivElement;
   private backdropEl?: HTMLIonBackdropElement;
 
@@ -99,6 +101,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Prop() swipeToClose = false;
 
   /**
+   * The style of presentation to use. `fullscreen` is the classic option that has the modal
+   * take up the full screen on mobile displays. A newer option, `card` is available that displays
+   * the modal in a stacked fashion while also zooming the previous page out slightly underneath. The
+   * `card` style is becoming a default starting with iOS 13.
+   */
+  @Prop() presentationStyle: ModalPresentationStyle = 'fullscreen';
+
+  /**
    * Emitted after the modal has presented.
    */
   @Event({ eventName: 'ionModalDidPresent' }) didPresent!: EventEmitter<void>;
@@ -161,10 +171,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * Present the modal overlay after it has been created.
    */
   @Method()
-  async present(): Promise<void> {
+  async present(presentingEl?: HTMLElement): Promise<void> {
     if (this.presented) {
       return;
     }
+
+    // this.presentingEl = presentingEl;
+
     const container = this.el.querySelector(`.modal-wrapper`);
     if (!container) {
       throw new Error('container is undefined');
@@ -175,7 +188,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
     };
     this.usersElement = await attachComponent(this.delegate, container, this.component, ['ion-page'], componentProps);
     await deepReady(this.usersElement);
-    return present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation);
+    return present(this,
+                   'modalEnter',
+                   (animation: Animation, baseEl: any) => iosEnterAnimation(animation, baseEl, presentingEl),
+                   (animation: Animation, baseEl: any) => mdEnterAnimation(animation, baseEl, presentingEl));
   }
 
   /**
