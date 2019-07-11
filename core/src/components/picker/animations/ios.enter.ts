@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * iOS Picker Enter Animation
  */
-export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+export const iosEnterAnimation = (AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> => {
   const baseAnimation = new AnimationC();
 
   const backdropAnimation = new AnimationC();
@@ -22,4 +22,4 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): P
     .duration(400)
     .add(backdropAnimation)
     .add(wrapperAnimation));
-}
+};

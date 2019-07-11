@@ -16,13 +16,16 @@ export class App implements ComponentInterface {
   componentDidLoad() {
     rIC(() => {
       if (!config.getBoolean('_testing')) {
-        importTapClick();
+        import('../../utils/tap-click').then(module => module.startTapClick(config));
       }
+      if (config.getBoolean('statusTap', isPlatform(window, 'hybrid'))) {
+        import('../../utils/status-tap').then(module => module.startStatusTap());
+      }
+      if (config.getBoolean('inputShims', needInputShims())) {
+        import('../../utils/input-shims/input-shims').then(module => module.startInputShims(config));
+      }
+      import('../../utils/focus-visible').then(module => module.startFocusVisible());
 
-      importInputShims();
-      importStatusTap();
-      importHardwareBackButton();
-      importFocusVisible();
     });
   }
 
@@ -39,35 +42,6 @@ export class App implements ComponentInterface {
   }
 }
 
-function importHardwareBackButton() {
-  const hardwareBackConfig = config.getBoolean('hardwareBackButton', isPlatform(window, 'hybrid'));
-  if (hardwareBackConfig) {
-    import('../../utils/hardware-back-button').then(module => module.startHardwareBackButton());
-  }
-}
-
-function importStatusTap() {
-  const statusTap = config.getBoolean('statusTap', isPlatform(window, 'hybrid'));
-  if (statusTap) {
-    import('../../utils/status-tap').then(module => module.startStatusTap());
-  }
-}
-
-function importFocusVisible() {
-  import('../../utils/focus-visible').then(module => module.startFocusVisible());
-}
-
-function importTapClick() {
-  import('../../utils/tap-click').then(module => module.startTapClick(config));
-}
-
-function importInputShims() {
-  const inputShims = config.getBoolean('inputShims', needInputShims());
-  if (inputShims) {
-    import('../../utils/input-shims/input-shims').then(module => module.startInputShims(config));
-  }
-}
-
-function needInputShims() {
+const needInputShims = () => {
   return isPlatform(window, 'ios') && isPlatform(window, 'mobile');
-}
+};
