@@ -5,7 +5,7 @@ const TRANSLATEY = 'translateY';
 const OFF_BOTTOM = '40px';
 const CENTER = '0px';
 
-export function mdTransitionAnimation(AnimationC: Animation, _: HTMLElement, opts: TransitionOptions): Promise<Animation> {
+export const mdTransitionAnimation = (AnimationC: Animation, _: HTMLElement, opts: TransitionOptions): Promise<Animation> => {
 
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
@@ -57,9 +57,9 @@ export function mdTransitionAnimation(AnimationC: Animation, _: HTMLElement, opt
   }
 
   return Promise.resolve(rootTransition);
-}
+};
 
-function getIonPageElement(element: HTMLElement) {
+const getIonPageElement = (element: HTMLElement) => {
   if (element.classList.contains('ion-page')) {
     return element;
   }
@@ -69,4 +69,4 @@ function getIonPageElement(element: HTMLElement) {
   }
   // idk, return the original element so at least something animates and we don't have a null pointer
   return element;
-}
+};

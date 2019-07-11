@@ -89,12 +89,12 @@ export class RippleEffect implements ComponentInterface {
   }
 }
 
-function removeRipple(ripple: HTMLElement) {
+const removeRipple = (ripple: HTMLElement) => {
   ripple.classList.add('fade-out');
   setTimeout(() => {
     ripple.remove();
   }, 200);
-}
+};
 
 const PADDING = 10;
 const INITIAL_ORIGIN_SCALE = 0.5;

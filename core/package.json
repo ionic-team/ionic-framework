@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "4.6.0",
+  "version": "4.6.2",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -30,11 +30,11 @@
     "loader/"
   ],
   "dependencies": {
-    "ionicons": "4.5.10-2",
+    "ionicons": "4.6.1",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@stencil/core": "1.1.2",
+    "@stencil/core": "1.1.5",
     "@stencil/sass": "1.0.0",
     "@types/jest": "24.0.13",
     "@types/node": "10.12.18",

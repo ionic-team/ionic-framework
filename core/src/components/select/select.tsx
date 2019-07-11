@@ -497,7 +497,7 @@ export class Select implements ComponentInterface {
   }
 }
 
-function parseValue(value: any) {
+const parseValue = (value: any) => {
   if (value == null) {
     return undefined;
   }
@@ -505,9 +505,9 @@ function parseValue(value: any) {
     return value.join(',');
   }
   return value.toString();
-}
+};
 
-function isOptionSelected(currentValue: any[] | any, compareValue: any, compareWith?: string | SelectCompareFn | null) {
+const isOptionSelected = (currentValue: any[] | any, compareValue: any, compareWith?: string | SelectCompareFn | null) => {
   if (currentValue === undefined) {
     return false;
   }
@@ -516,9 +516,9 @@ function isOptionSelected(currentValue: any[] | any, compareValue: any, compareW
   } else {
     return compareOptions(currentValue, compareValue, compareWith);
   }
-}
+};
 
-function compareOptions(currentValue: any, compareValue: any, compareWith?: string | SelectCompareFn | null): boolean {
+const compareOptions = (currentValue: any, compareValue: any, compareWith?: string | SelectCompareFn | null): boolean => {
   if (typeof compareWith === 'function') {
     return compareWith(currentValue, compareValue);
   } else if (typeof compareWith === 'string') {
@@ -526,9 +526,9 @@ function compareOptions(currentValue: any, compareValue: any, compareWith?: stri
   } else {
     return currentValue === compareValue;
   }
-}
+};
 
-function generateText(opts: HTMLIonSelectOptionElement[], value: any | any[], compareWith?: string | SelectCompareFn | null) {
+const generateText = (opts: HTMLIonSelectOptionElement[], value: any | any[], compareWith?: string | SelectCompareFn | null) => {
   if (value === undefined) {
     return '';
   }
@@ -540,15 +540,15 @@ function generateText(opts: HTMLIonSelectOptionElement[], value: any | any[], co
   } else {
     return textForValue(opts, value, compareWith) || '';
   }
-}
+};
 
-function textForValue(opts: HTMLIonSelectOptionElement[], value: any, compareWith?: string | SelectCompareFn | null): string | null {
+const textForValue = (opts: HTMLIonSelectOptionElement[], value: any, compareWith?: string | SelectCompareFn | null): string | null => {
   const selectOpt = opts.find(opt => {
     return compareOptions(opt.value, value, compareWith);
   });
   return selectOpt
     ? selectOpt.textContent
     : null;
-}
+};
 
 let selectIds = 0;

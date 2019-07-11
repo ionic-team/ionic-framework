@@ -10,7 +10,7 @@ export const SIZE_TO_MEDIA: any = {
 // Check if the window matches the media query
 // at the breakpoint passed
 // e.g. matchBreakpoint('sm') => true if screen width exceeds 576px
-export function matchBreakpoint(breakpoint: string | undefined) {
+export const matchBreakpoint = (breakpoint: string | undefined) => {
   if (breakpoint === undefined || breakpoint === '') {
     return true;
   }
@@ -19,4 +19,4 @@ export function matchBreakpoint(breakpoint: string | undefined) {
     return window.matchMedia(mediaQuery).matches;
   }
   return false;
-}
+};
