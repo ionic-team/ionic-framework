@@ -34,9 +34,11 @@ export class TabBar implements ComponentInterface {
   @Prop() selectedTab?: string;
   @Watch('selectedTab')
   selectedTabChanged() {
-    this.ionTabBarChanged.emit({
-      tab: this.selectedTab
-    });
+    if (this.selectedTab !== undefined) {
+      this.ionTabBarChanged.emit({
+        tab: this.selectedTab
+      });
+    }
   }
 
   /**

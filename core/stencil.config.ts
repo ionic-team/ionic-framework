@@ -10,7 +10,7 @@ export const config: Config = {
     { components: ['ion-action-sheet'] },
     { components: ['ion-alert'] },
     { components: ['ion-back-button'] },
-    { components: ['ion-app', 'ion-buttons', 'ion-content', 'ion-footer', 'ion-header', 'ion-title', 'ion-toolbar'] },
+    { components: ['ion-app', 'ion-router-outlet', 'ion-buttons', 'ion-content', 'ion-footer', 'ion-header', 'ion-title', 'ion-toolbar'] },
     { components: ['ion-avatar', 'ion-badge', 'ion-thumbnail'] },
     { components: ['ion-backdrop'] },
     { components: ['ion-button', 'ion-icon'] },
@@ -37,7 +37,7 @@ export const config: Config = {
     { components: ['ion-refresher', 'ion-refresher-content'] },
     { components: ['ion-reorder', 'ion-reorder-group'] },
     { components: ['ion-ripple-effect'] },
-    { components: ['ion-anchor', 'ion-router', 'ion-route', 'ion-route-redirect', 'ion-router-link', 'ion-router-outlet'] },
+    { components: ['ion-router', 'ion-route', 'ion-route-redirect', 'ion-router-link'] },
     { components: ['ion-searchbar'] },
     { components: ['ion-segment', 'ion-segment-button'] },
     { components: ['ion-select', 'ion-select-option', 'ion-select-popover'] },
@@ -50,7 +50,10 @@ export const config: Config = {
     { components: ['ion-toast'] },
     { components: ['ion-toggle'] },
     { components: ['ion-virtual-scroll'] },
+
+    // Deprecated
     { components: [
+      'ion-anchor',
       'ion-action-sheet-controller',
       'ion-alert-controller',
       'ion-loading-controller',
@@ -66,7 +69,10 @@ export const config: Config = {
   outputTargets: [
     {
       type: 'dist',
-      esmLoaderPath: '../loader'
+      esmLoaderPath: '../loader',
+      copy: [
+        { src: '**/*.scss' }
+      ]
     },
     // {
     //   type: 'experimental-dist-module',

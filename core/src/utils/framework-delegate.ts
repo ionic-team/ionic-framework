@@ -1,12 +1,12 @@
 import { ComponentRef, FrameworkDelegate } from '../interface';
 
-export async function attachComponent(
+export const attachComponent = async (
   delegate: FrameworkDelegate | undefined,
   container: Element,
   component: ComponentRef,
   cssClasses?: string[],
-  componentProps?: {[key: string]: any}
-): Promise<HTMLElement> {
+  componentProps?: { [key: string]: any }
+): Promise<HTMLElement> => {
   if (delegate) {
     return delegate.attachViewToDom(container, component, componentProps, cssClasses);
   }
@@ -30,9 +30,9 @@ export async function attachComponent(
     await el.componentOnReady();
   }
   return el;
-}
+};
 
-export function detachComponent(delegate: FrameworkDelegate | undefined, element: HTMLElement | undefined) {
+export const detachComponent = (delegate: FrameworkDelegate | undefined, element: HTMLElement | undefined) => {
   if (element) {
     if (delegate) {
       const container = element.parentElement;
@@ -41,4 +41,4 @@ export function detachComponent(delegate: FrameworkDelegate | undefined, element
     element.remove();
   }
   return Promise.resolve();
-}
+};
