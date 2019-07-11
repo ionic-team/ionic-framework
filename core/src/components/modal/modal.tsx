@@ -3,6 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Me
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
+import { GestureDetail } from '../../utils/gesture';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
@@ -12,7 +13,6 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 import { swipeLeaveAnimation } from './animations/swipe.leave';
-import { GestureDetail } from '../../utils/gesture';
 
 
 /**
@@ -30,7 +30,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   private usersElement?: HTMLElement;
 
-  // private y?: number;
+  private wrapperEl?: HTMLDivElement;
+
+  // private y = 0;
 
   presented = false;
   animation: Animation | undefined;
@@ -146,6 +148,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   async componentDidLoad() {
+    this.wrapperEl = this.el.querySelector('.modal-wrapper') as HTMLDivElement || undefined;
     if (this.swipeToClose) {
       this.enableSwipeToClose();
     }
@@ -213,6 +216,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   private async swipeOpen() {
     this.swipeEnableTransition();
+    this.swipeSlideTo(0);
   }
 
   private async enableSwipeToClose() {
@@ -232,26 +236,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
     gesture.setDisabled(false);
   }
 
-  private swipeToCloseCanStart(detail: GestureDetail) {
-    console.log('Can start', detail);
+  private swipeToCloseCanStart(_detail: GestureDetail) {
     return true;
   }
 
-  private swipeToCloseOnStart(detail: GestureDetail) {
-    console.log('On start', detail);
+  private swipeToCloseOnStart(_detail: GestureDetail) {
     this.swipeDisableTransition();
   }
 
   private swipeToCloseOnMove(detail: GestureDetail) {
-    console.log('On move', detail);
-
-    const wrapper = this.el.querySelector('.modal-wrapper') as HTMLDivElement;
-
-    const y = detail.deltaY;
-
-    writeTask(() => {
-      wrapper.style.transform = `translateY(${y}px)`;
-    });
+    this.swipeSlideTo(detail.deltaY);
   }
 
   private swipeToCloseOnEnd(detail: GestureDetail) {
@@ -262,28 +256,38 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.swipeEnableTransition();
 
     if (detail.velocityY < -0.6) {
-      console.log('Slide open');
       this.swipeOpen();
     } else if (detail.velocityY > 0.6) {
-      console.log('Slide close');
       this.swipeDismiss();
     } else if (detail.currentY <= viewportHeight / 2) {
-      console.log('Slide open');
       this.swipeOpen();
     } else {
-      console.log('Slide close');
-      // this.slideClose();
       this.swipeDismiss();
     }
   }
 
   private swipeDisableTransition() {
     console.log('Disabling transition');
+    this.wrapperEl!.style.transition = '';
   }
 
   private swipeEnableTransition() {
     console.log('Enabling transition');
+    this.wrapperEl!.style.transition = `400ms transform cubic-bezier(0.23, 1, 0.32, 1)`;
   }
+
+  private swipeSlideTo(y: number) {
+    // this.y = y;
+    writeTask(() => {
+      this.wrapperEl!.style.transform = `translateY(${y}px)`;
+    });
+  }
+
+  /*
+  private swipeSlideBy(dy: number) {
+    this.swipeSlideTo(this.y + dy);
+  }
+  */
 
   hostData() {
     const mode = getIonMode(this);
