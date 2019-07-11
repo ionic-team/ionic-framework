@@ -1,9 +1,9 @@
 import { Animation } from '../../../interface';
 
 /**
- * iOS Modal Leave Animation
+ * Modal Swipe Leave Animation
  */
-export function iosLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+export function swipeLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
   const baseAnimation = new AnimationC();
 
   const backdropAnimation = new AnimationC();
@@ -12,12 +12,12 @@ export function iosLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): P
   const wrapperAnimation = new AnimationC();
   const wrapperEl = baseEl.querySelector('.modal-wrapper');
   wrapperAnimation.addElement(wrapperEl);
-  const wrapperElRect = wrapperEl!.getBoundingClientRect();
+  // const wrapperElRect = wrapperEl!.getBoundingClientRect();
 
   wrapperAnimation.beforeStyles({ 'opacity': 1 })
-                  .fromTo('translateY', '0%', `${(baseEl.ownerDocument as any).defaultView.innerHeight - wrapperElRect.top}px`);
+                  .to('translateY', `${(baseEl.ownerDocument as any).defaultView.innerHeight}px`);
 
-  backdropAnimation.fromTo('opacity', 0.4, 0.0);
+  backdropAnimation.to('opacity', 0.0);
 
   return Promise.resolve(baseAnimation
     .addElement(baseEl)

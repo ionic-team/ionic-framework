@@ -11,7 +11,9 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
+import { swipeLeaveAnimation } from './animations/swipe.leave';
 import { GestureDetail } from '../../utils/gesture';
+
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -177,13 +179,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * @param role The role of the element that is dismissing the modal. For example, 'cancel' or 'backdrop'.
    */
   @Method()
-  async dismiss(data?: any, role?: string, fromY = '0%'): Promise<boolean> {
-    const dismissed = await dismiss(this,
-                                    data,
-                                    role,
-                                    'modalLeave',
-                                    (animation: Animation, baseEl: any) => iosLeaveAnimation(animation, baseEl, fromY),
-                                    mdLeaveAnimation);
+  async dismiss(data?: any, role?: string): Promise<boolean> {
+    const dismissed = await dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation);
     if (dismissed) {
       await detachComponent(this.delegate, this.usersElement);
     }
@@ -204,6 +201,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Method()
   onWillDismiss(): Promise<OverlayEventDetail> {
     return eventMethod(this.el, 'ionModalWillDismiss');
+  }
+
+  private async swipeDismiss() {
+    const dismissed = await dismiss(this, null, undefined, 'modalLeave', swipeLeaveAnimation, swipeLeaveAnimation);
+    if (dismissed) {
+      await detachComponent(this.delegate, this.usersElement);
+    }
+    return dismissed;
   }
 
   private async enableSwipeToClose() {
@@ -258,14 +263,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
     } else if (detail.velocityY > 0.6) {
       // this.slideClose();
       console.log('Slide close');
-      this.dismiss();
+      this.swipeDismiss();
     } else if (detail.currentY <= viewportHeight / 2) {
       console.log('Slide open');
       // this.slideOpen();
     } else {
       console.log('Slide close');
       // this.slideClose();
-      this.dismiss();
+      this.swipeDismiss();
     }
   }
 

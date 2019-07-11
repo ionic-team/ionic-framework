@@ -12,7 +12,6 @@ import {
   AlertButton,
   AlertInput,
   AlertOptions,
-  Animation,
   AnimationBuilder,
   CheckboxChangeEventDetail,
   Color,
@@ -1433,7 +1432,7 @@ export namespace Components {
     /**
     * Dismiss the modal overlay after it has been presented.
     */
-    'dismiss': (data?: any, role?: string | undefined, fromY?: string) => Promise<boolean>;
+    'dismiss': (data?: any, role?: string | undefined) => Promise<boolean>;
     /**
     * Animation to use when the modal is presented.
     */
