@@ -5,7 +5,7 @@ const EC = protractor.ExpectedConditions;
 
 describe('tabs', () => {
   afterEach(() => {
-    handleErrorMessages();
+    return handleErrorMessages();
   });
   describe('entry url - /tabs', () => {
     beforeEach(async () => {

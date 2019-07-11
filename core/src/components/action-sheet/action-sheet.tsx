@@ -260,11 +260,11 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   }
 }
 
-function buttonClass(button: ActionSheetButton): CssClassMap {
+const buttonClass = (button: ActionSheetButton): CssClassMap => {
   return {
     'action-sheet-button': true,
     'ion-activatable': true,
     [`action-sheet-${button.role}`]: button.role !== undefined,
     ...getClassMap(button.cssClass),
   };
-}
+};

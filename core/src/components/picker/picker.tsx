@@ -251,17 +251,17 @@ export class Picker implements ComponentInterface, OverlayInterface {
   }
 }
 
-function buttonWrapperClass(button: PickerButton): CssClassMap {
+const buttonWrapperClass = (button: PickerButton): CssClassMap => {
   return {
     [`picker-toolbar-${button.role}`]: button.role !== undefined,
     'picker-toolbar-button': true
   };
-}
+};
 
-function buttonClass(button: PickerButton): CssClassMap {
+const buttonClass = (button: PickerButton): CssClassMap => {
   return {
     'picker-button': true,
     'ion-activatable': true,
     ...getClassMap(button.cssClass)
   };
-}
+};

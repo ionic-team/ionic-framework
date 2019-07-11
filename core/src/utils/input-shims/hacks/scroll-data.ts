@@ -8,7 +8,7 @@ export interface ScrollData {
   inputSafeY: number;
 }
 
-export function getScrollData(componentEl: HTMLElement, contentEl: HTMLElement, keyboardHeight: number): ScrollData {
+export const getScrollData = (componentEl: HTMLElement, contentEl: HTMLElement, keyboardHeight: number): ScrollData => {
   const itemEl = componentEl.closest('ion-item,[ion-item]') as HTMLElement || componentEl;
   return calcScrollData(
     itemEl.getBoundingClientRect(),
@@ -16,14 +16,14 @@ export function getScrollData(componentEl: HTMLElement, contentEl: HTMLElement, 
     keyboardHeight,
     (componentEl as any).ownerDocument.defaultView.innerHeight
   );
-}
+};
 
-function calcScrollData(
+const calcScrollData = (
   inputRect: ClientRect,
   contentRect: ClientRect,
   keyboardHeight: number,
   platformHeight: number
-): ScrollData {
+): ScrollData => {
   // compute input's Y values relative to the body
   const inputTop = inputRect.top;
   const inputBottom = inputRect.bottom;
@@ -44,8 +44,8 @@ function calcScrollData(
   const desiredScrollAmount = Math.round((distanceToBottom < 0)
     ? -distanceToBottom
     : (distanceToTop > 0)
-    ? -distanceToTop
-    : 0);
+      ? -distanceToTop
+      : 0);
 
   // our calculations make some assumptions that aren't always true, like the keyboard being closed when an input
   // gets focus, so make sure we don't scroll the input above the visible area
@@ -61,4 +61,4 @@ function calcScrollData(
     scrollPadding: keyboardHeight,
     inputSafeY: -(inputTop - safeAreaTop) + 4
   };
-}
+};
