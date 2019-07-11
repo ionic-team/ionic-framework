@@ -5,20 +5,22 @@ import { Animation } from '../../../interface';
  */
 export function swipeLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
   const baseAnimation = new AnimationC();
-  /*
-
   const backdropAnimation = new AnimationC();
-  backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
+  const backdropEl = baseEl.querySelector('ion-backdrop');
+  backdropAnimation.addElement(backdropEl);
 
   const wrapperAnimation = new AnimationC();
   const wrapperEl = baseEl.querySelector('.modal-wrapper');
   wrapperAnimation.addElement(wrapperEl);
   const wrapperElRect = wrapperEl!.getBoundingClientRect();
 
+  const currentOpacity = backdropEl!.style.opacity;
+  console.log('Backdrop opacity', currentOpacity);
+
   wrapperAnimation.beforeStyles({ 'opacity': 1 })
                   .fromTo('translateY', `${wrapperElRect.top}px`, `${(baseEl.ownerDocument as any).defaultView.innerHeight}px`);
 
-  backdropAnimation.to('opacity', 0.0);
+  backdropAnimation.fromTo('opacity', currentOpacity, 0.0);
 
   return Promise.resolve(baseAnimation
     .addElement(baseEl)
@@ -26,7 +28,4 @@ export function swipeLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement):
     .duration(250)
     .add(backdropAnimation)
     .add(wrapperAnimation));
-  */
-
-  return Promise.resolve(baseAnimation.addElement(baseEl).duration(0));
 }

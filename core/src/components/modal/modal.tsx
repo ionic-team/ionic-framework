@@ -210,7 +210,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private async swipeDismiss() {
-    this.swipeEnableTransition();
     const dismissed = await dismiss(this, null, undefined, 'modalLeave', swipeLeaveAnimation, swipeLeaveAnimation);
     if (dismissed) {
       await detachComponent(this.delegate, this.usersElement);
@@ -219,8 +218,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private async swipeOpen() {
-    this.swipeEnableTransition();
-    this.swipeSlideTo(0);
+    requestAnimationFrame(() => {
+      this.swipeSlideTo(0);
+    });
   }
 
   private async enableSwipeToClose() {
@@ -253,7 +253,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const yRatio = detail.deltaY / viewportHeight;
     console.log('Viewport ratio', yRatio);
 
-    const backdropOpacity = 1 - yRatio;
+    const backdropOpacity = 0.4 - 0.4 * yRatio;
 
     this.swipeSetBackdropOpacity(backdropOpacity);
     this.swipeSlideTo(detail.deltaY);
@@ -278,13 +278,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private swipeDisableTransition() {
-    console.log('Disabling transition');
     this.wrapperEl!.style.transition = '';
   }
 
   private swipeEnableTransition() {
-    console.log('Enabling transition');
-    this.el.style.transition = `400ms transform,opacity cubic-bezier(0.23, 1, 0.32, 1)`;
+    this.wrapperEl!.style.transition = `400ms transform cubic-bezier(0.23, 1, 0.32, 1)`;
   }
 
   private swipeSlideTo(y: number) {
