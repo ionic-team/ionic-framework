@@ -14,7 +14,7 @@ export const iosTransitionAnimation = (AnimationC: Animation, navEl: HTMLElement
   const TRANSLATEX = 'translateX';
   const CENTER = '0%';
   const OFF_OPACITY = 0.8;
-  
+
   const backDirection = (opts.direction === 'back');
   const isRTL = (navEl.ownerDocument as any).dir === 'rtl';
   const OFF_RIGHT = isRTL ? '-99.5%' : '99.5%';
