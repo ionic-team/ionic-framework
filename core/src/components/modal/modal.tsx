@@ -35,6 +35,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private wrapperEl?: HTMLDivElement;
   private backdropEl?: HTMLIonBackdropElement;
 
+  private backdropOpacity = 0;
   // private y = 0;
 
   presented = false;
@@ -262,6 +263,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   private swipeToCloseOnStart(_detail: GestureDetail) {
     this.swipeDisableTransition();
+    this.backdropOpacity = parseFloat(this.backdropEl!.style.opacity!);
   }
 
   private swipeToCloseOnMove(detail: GestureDetail) {
@@ -269,7 +271,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const yRatio = detail.deltaY / viewportHeight;
     console.log('Viewport ratio', yRatio);
 
-    const backdropOpacity = 0.4 - 0.4 * yRatio;
+    const backdropOpacity = this.backdropOpacity - this.backdropOpacity * yRatio;
 
     this.swipeSetBackdropOpacity(backdropOpacity);
     this.swipeSlideTo(detail.deltaY);
