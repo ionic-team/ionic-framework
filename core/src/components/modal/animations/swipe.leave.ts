@@ -12,10 +12,10 @@ export function swipeLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement):
   const wrapperAnimation = new AnimationC();
   const wrapperEl = baseEl.querySelector('.modal-wrapper');
   wrapperAnimation.addElement(wrapperEl);
-  // const wrapperElRect = wrapperEl!.getBoundingClientRect();
+  const wrapperElRect = wrapperEl!.getBoundingClientRect();
 
   wrapperAnimation.beforeStyles({ 'opacity': 1 })
-                  .to('translateY', `${(baseEl.ownerDocument as any).defaultView.innerHeight}px`);
+                  .fromTo('translateY', `${wrapperElRect.top}px`, `${(baseEl.ownerDocument as any).defaultView.innerHeight}px`);
 
   backdropAnimation.to('opacity', 0.0);
 

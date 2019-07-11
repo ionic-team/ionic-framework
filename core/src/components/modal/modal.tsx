@@ -211,6 +211,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
     return dismissed;
   }
 
+  private async swipeOpen() {
+    this.swipeEnableTransition();
+  }
+
   private async enableSwipeToClose() {
     const gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
@@ -259,14 +263,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     if (detail.velocityY < -0.6) {
       console.log('Slide open');
-      // this.slideOpen();
+      this.swipeOpen();
     } else if (detail.velocityY > 0.6) {
-      // this.slideClose();
       console.log('Slide close');
       this.swipeDismiss();
     } else if (detail.currentY <= viewportHeight / 2) {
       console.log('Slide open');
-      // this.slideOpen();
+      this.swipeOpen();
     } else {
       console.log('Slide close');
       // this.slideClose();
