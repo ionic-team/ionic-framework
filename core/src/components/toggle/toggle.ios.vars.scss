@@ -17,7 +17,7 @@ $toggle-ios-border-width:              2px !default;
 $toggle-ios-border-radius:             $toggle-ios-height / 2 !default;
 
 /// @prop - Background color of the unchecked toggle
-$toggle-ios-background-color-off:      rgba($text-color-rgb, .09) !default;
+$toggle-ios-background-color-off:      rgba($text-color-rgb, .088) !default;
 
 /// @prop - Background color of the checked toggle
 $toggle-ios-background-color-on:       ion-color(primary, base) !default;
