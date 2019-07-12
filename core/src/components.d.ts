@@ -625,6 +625,10 @@ export namespace Components {
     */
     'scrollEvents': boolean;
     /**
+    * If you want to provide custom scrollbar styling, set this property to `true`.
+    */
+    'scrollStylesProvided': boolean;
+    /**
     * Scroll to the bottom of the component.
     */
     'scrollToBottom': (duration?: number) => Promise<void>;
@@ -3990,6 +3994,10 @@ declare namespace LocalJSX {
     * Because of performance reasons, ionScroll events are disabled by default, in order to enable them and start listening from (ionScroll), set this property to `true`.
     */
     'scrollEvents'?: boolean;
+    /**
+    * If you want to provide custom scrollbar styling, set this property to `true`.
+    */
+    'scrollStylesProvided'?: boolean;
     /**
     * If you want to enable the content scrolling in the X axis, set this property to `true`.
     */

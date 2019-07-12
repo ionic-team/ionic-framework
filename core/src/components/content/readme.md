@@ -72,14 +72,15 @@ const ContentExample: React.FunctionComponent = () => (
 
 ## Properties
 
-| Property          | Attribute          | Description                                                                                                                                                                                                                                                            | Type                   | Default     |
-| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ----------- |
-| `color`           | `color`            | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`  | `undefined` |
-| `forceOverscroll` | `force-overscroll` | If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.       | `boolean \| undefined` | `undefined` |
-| `fullscreen`      | `fullscreen`       | If `true`, the content will scroll behind the headers and footers. This effect can easily be seen by setting the toolbar to transparent.                                                                                                                               | `boolean`              | `false`     |
-| `scrollEvents`    | `scroll-events`    | Because of performance reasons, ionScroll events are disabled by default, in order to enable them and start listening from (ionScroll), set this property to `true`.                                                                                                   | `boolean`              | `false`     |
-| `scrollX`         | `scroll-x`         | If you want to enable the content scrolling in the X axis, set this property to `true`.                                                                                                                                                                                | `boolean`              | `false`     |
-| `scrollY`         | `scroll-y`         | If you want to disable the content scrolling in the Y axis, set this property to `false`.                                                                                                                                                                              | `boolean`              | `true`      |
+| Property               | Attribute                | Description                                                                                                                                                                                                                                                            | Type                   | Default     |
+| ---------------------- | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ----------- |
+| `color`                | `color`                  | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`  | `undefined` |
+| `forceOverscroll`      | `force-overscroll`       | If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.       | `boolean \| undefined` | `undefined` |
+| `fullscreen`           | `fullscreen`             | If `true`, the content will scroll behind the headers and footers. This effect can easily be seen by setting the toolbar to transparent.                                                                                                                               | `boolean`              | `false`     |
+| `scrollEvents`         | `scroll-events`          | Because of performance reasons, ionScroll events are disabled by default, in order to enable them and start listening from (ionScroll), set this property to `true`.                                                                                                   | `boolean`              | `false`     |
+| `scrollStylesProvided` | `scroll-styles-provided` | If you want to provide custom scrollbar styling, set this property to `true`.                                                                                                                                                                                          | `boolean`              | `false`     |
+| `scrollX`              | `scroll-x`               | If you want to enable the content scrolling in the X axis, set this property to `true`.                                                                                                                                                                                | `boolean`              | `false`     |
+| `scrollY`              | `scroll-y`               | If you want to disable the content scrolling in the Y axis, set this property to `false`.                                                                                                                                                                              | `boolean`              | `true`      |
 
 
 ## Events
@@ -159,17 +160,27 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name                | Description                                                                                                |
-| ------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `--background`      | Background of the content                                                                                  |
-| `--color`           | Color of the content                                                                                       |
-| `--keyboard-offset` | Keyboard offset of the content                                                                             |
-| `--offset-bottom`   | Offset bottom of the content                                                                               |
-| `--offset-top`      | Offset top of the content                                                                                  |
-| `--padding-bottom`  | Bottom padding of the content                                                                              |
-| `--padding-end`     | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the content |
-| `--padding-start`   | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the content |
-| `--padding-top`     | Top padding of the content                                                                                 |
+| Name                                          | Description                                                                                                |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `--background`                                | Background of the content                                                                                  |
+| `--color`                                     | Color of the content                                                                                       |
+| `--keyboard-offset`                           | Keyboard offset of the content                                                                             |
+| `--offset-bottom`                             | Offset bottom of the content                                                                               |
+| `--offset-top`                                | Offset top of the content                                                                                  |
+| `--padding-bottom`                            | Bottom padding of the content                                                                              |
+| `--padding-end`                               | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the content |
+| `--padding-start`                             | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the content |
+| `--padding-top`                               | Top padding of the content                                                                                 |
+| `--scrollbar-thumb-background-image`          | Background image for the scrollbar thumb / handle                                                          |
+| `--scrollbar-thumb-background-image-inactive` | Background image for the scrollbar thumb / handle when the window is inactive                              |
+| `--scrollbar-thumb-color`                     | Color of the scrollbar thumb / handle                                                                      |
+| `--scrollbar-thumb-color-inactive`            | Color of the scrollbar thumb / handle when the window is inactive                                          |
+| `--scrollbar-track-box-shadow`                | Box shadow of the scrollbar track                                                                          |
+| `--scrollbar-track-box-shadow-inactive`       | Box shadow of the scrollbar track when the window is inactive                                              |
+| `--scrollbar-track-color`                     | Color of the scrollbar track / gutter                                                                      |
+| `--scrollbar-track-color-inactive`            | Color of the scrollbar track / gutter when the window is inactive                                          |
+| `--scrollbar-width`                           | Width of the scrollbar element                                                                             |
+| `--scrollbar-width-inactive`                  | Width of the scrollbar element when the window is inactive                                                 |
 
 
 ----------------------------------------------

@@ -70,6 +70,11 @@ export class Content implements ComponentInterface {
   @Prop({ mutable: true }) forceOverscroll?: boolean;
 
   /**
+   * If you want to provide custom scrollbar styling, set this property to `true`.
+   */
+  @Prop() scrollStylesProvided = false;
+
+  /**
    * If you want to enable the content scrolling in the X axis, set this property to `true`.
    */
   @Prop() scrollX = false;
@@ -299,7 +304,7 @@ export class Content implements ComponentInterface {
 
   render() {
     const mode = getIonMode(this);
-    const { scrollX, scrollY, forceOverscroll } = this;
+    const { scrollX, scrollY, forceOverscroll, scrollStylesProvided } = this;
 
     this.resize();
 
@@ -319,6 +324,7 @@ export class Content implements ComponentInterface {
         <div
           class={{
             'inner-scroll': true,
+            'inner-scroll-styled': scrollStylesProvided,
             'scroll-x': scrollX,
             'scroll-y': scrollY,
             'overscroll': (scrollX || scrollY) && !!forceOverscroll

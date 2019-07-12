@@ -278,6 +278,7 @@ ion-content,prop,color,string | undefined,undefined,false,false
 ion-content,prop,forceOverscroll,boolean | undefined,undefined,false,false
 ion-content,prop,fullscreen,boolean,false,false,false
 ion-content,prop,scrollEvents,boolean,false,false,false
+ion-content,prop,scrollStylesProvided,boolean,false,false,false
 ion-content,prop,scrollX,boolean,false,false,false
 ion-content,prop,scrollY,boolean,true,false,false
 ion-content,method,getScrollElement,getScrollElement() => Promise<HTMLElement>
@@ -297,6 +298,16 @@ ion-content,css-prop,--padding-bottom
 ion-content,css-prop,--padding-end
 ion-content,css-prop,--padding-start
 ion-content,css-prop,--padding-top
+ion-content,css-prop,--scrollbar-thumb-background-image
+ion-content,css-prop,--scrollbar-thumb-background-image-inactive
+ion-content,css-prop,--scrollbar-thumb-color
+ion-content,css-prop,--scrollbar-thumb-color-inactive
+ion-content,css-prop,--scrollbar-track-box-shadow
+ion-content,css-prop,--scrollbar-track-box-shadow-inactive
+ion-content,css-prop,--scrollbar-track-color
+ion-content,css-prop,--scrollbar-track-color-inactive
+ion-content,css-prop,--scrollbar-width
+ion-content,css-prop,--scrollbar-width-inactive
 
 ion-datetime,shadow
 ion-datetime,prop,cancelText,string,'Cancel',false,false

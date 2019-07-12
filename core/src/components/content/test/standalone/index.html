@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <title>Content - Standalone</title>
@@ -9,6 +10,7 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+
 <body>
   <div class="content-height">
     <ion-content class="ion-padding">
@@ -50,7 +52,7 @@
   </div>
 
   <div class="content-height">
-    <ion-content class="ion-padding outer-content">
+    <ion-content class="ion-padding outer-content custom-scrollbars" scroll-styles-provided=true>
       <h1>Heading</h1>
       <h2>Heading</h2>
       <h3>Heading</h3>
@@ -80,6 +82,25 @@
       height: 200px;
     }
 
+    .custom-scrollbars {
+      --scrollbar-width: 8px;
+      --scrollbar-width-inactive: 4px;
+      --scrollbar-track-color: #000;
+      --scrollbar-track-color-inactive: #555;
+      --scrollbar-track-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      --scrollbar-track-box-shadow-inactive: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      --scrollbar-thumb-color: #FFAA00;
+      --scrollbar-thumb-color-inactive: #444;
+      --scrollbar-thumb-background-image: linear-gradient(45deg,
+          rgba(255, 255, 255, .2) 25%,
+          transparent 25%,
+          transparent 50%,
+          rgba(255, 255, 255, .2) 50%,
+          rgba(255, 255, 255, .2) 75%,
+          transparent 75%,
+          transparent);
+    }
+
     /* TODO should this be in content? */
     ion-content {
       height: 100%;
@@ -94,6 +115,8 @@
       --color: white;
       --hr-background: purple;
     }
+
   </style>
 </body>
+
 </html>

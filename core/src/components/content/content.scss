@@ -18,6 +18,17 @@
    *
    * @prop --offset-top: Offset top of the content
    * @prop --offset-bottom: Offset bottom of the content
+   *
+   * @prop --scrollbar-width: Width of the scrollbar element 
+   * @prop --scrollbar-width-inactive: Width of the scrollbar element when the window is inactive
+   * @prop --scrollbar-track-color: Color of the scrollbar track / gutter
+   * @prop --scrollbar-track-color-inactive: Color of the scrollbar track / gutter when the window is inactive
+   * @prop --scrollbar-track-box-shadow: Box shadow of the scrollbar track
+   * @prop --scrollbar-track-box-shadow-inactive: Box shadow of the scrollbar track when the window is inactive
+   * @prop --scrollbar-thumb-color: Color of the scrollbar thumb / handle
+   * @prop --scrollbar-thumb-color-inactive: Color of the scrollbar thumb / handle when the window is inactive
+   * @prop --scrollbar-thumb-background-image: Background image for the scrollbar thumb / handle
+   * @prop --scrollbar-thumb-background-image-inactive: Background image for the scrollbar thumb / handle when the window is inactive
    */
   --background: #{$background-color};
   --color: #{$text-color};
@@ -71,6 +82,45 @@
   box-sizing: border-box;
 
   overflow: hidden;
+
+  scrollbar-color: var(--scrollbar-track-color, initial) var(--scrollbar-thumb-color, initial);
+  scrollbar-width: var(--scrollbar-width, initial);
+
+  &-styled {
+    &::-webkit-scrollbar {
+      width: var(--scrollbar-width, initial);
+
+      &:window-inactive {
+        width: var(--scrollbar-width-inactive, --scrollbar-width);
+      }
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: var(--scrollbar-track-color, initial);
+
+      box-shadow: var(--scrollbar-track-box-shadow, initial);
+
+      &:window-inactive {
+        background-color: var(--scrollbar-track-color-inactive, --scrollbar-track-color);
+
+        box-shadow: var(--scrollbar-track-box-shadow-inactive, --scrollbar-track-box-shadow);
+      }
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--scrollbar-thumb-color, initial);
+      background-image: var(--scrollbar-thumb-background-image, initial);
+
+      box-shadow: var(--scrollbar-thumb-box-shadow, initial);
+
+      &:window-inactive {
+        background-color: var(--scrollbar-thumb-color-inactive, --scrollbar-thumb-color);
+        background-image: var(--scrollbar-thumb-background-image-inactive, --scrollbar-thumb-background-image);
+
+        box-shadow: var(--scrollbar-thumb-box-shadow-inactive, --scrollbar-thumb-box-shadow);
+      }
+    }
+  }
 }
 
 .scroll-y,
@@ -115,6 +165,7 @@
 :host(.content-sizing) {
   contain: none;
 }
+
 :host(.content-sizing) .inner-scroll {
   position: relative;
 }
