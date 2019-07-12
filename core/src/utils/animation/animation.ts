@@ -1,6 +1,36 @@
 // TODO: Add validation
 // TODO: More tests
 
+const animationEnd = (el: HTMLElement | null, callback: (ev?: TransitionEvent) => void) => {
+  let unRegTrans: (() => void) | undefined;
+  const opts: any = { passive: true };
+
+  function unregister() {
+    if (unRegTrans) {
+      unRegTrans();
+    }
+  }
+
+  function onTransitionEnd(ev: Event) {
+    if (el === ev.target) {
+      unregister();
+      callback(ev as TransitionEvent);
+    }
+  }
+
+  if (el) {
+    el.addEventListener('webkitAnimationEnd', onTransitionEnd, opts);
+    el.addEventListener('animationend', onTransitionEnd, opts);
+
+    unRegTrans = () => {
+      el.removeEventListener('webkitAnimationEnd', onTransitionEnd, opts);
+      el.removeEventListener('animationend', onTransitionEnd, opts);
+    };
+  }
+
+  return unregister;
+};
+
 const addElement = (animationElements: any[], el: Node | Node[] | NodeList | undefined | null) => {
   if (el != null) {
     const nodeList = el as NodeList;
@@ -75,7 +105,7 @@ const addClassToArray = (classes: string[] = [], className: string | string[] | 
 };
 
 export class Animation {
-  private elements: Element[] = [];
+  private elements: HTMLElement[] = [];
   private childAnimations: Animation[] = [];
 
   private _delay: number | undefined;
@@ -287,7 +317,77 @@ export class Animation {
     return this;
   }
 
+  private beforeAnimation() {
+    this.childAnimations.forEach(childAnimation => {
+      childAnimation.beforeAnimation();
+    });
+
+    const elements = this.elements;
+    const addClasses = this.beforeAddClasses;
+    const removeClasses = this.beforeRemoveClasses;
+    const styles = this.beforeStylesValue;
+
+    elements.forEach(el => {
+      const elementClassList = el.classList;
+
+      elementClassList.add(...addClasses);
+      elementClassList.remove(...removeClasses);
+
+      for (const property in styles) {
+        if (styles.hasOwnProperty(property)) {
+          el.style.setProperty(property, styles[property]);
+        }
+      }
+    });
+
+    animationEnd(elements[0], () => {
+      this.afterAnimation();
+    });
+  }
+
+  private afterAnimation() {
+    const elements = this.elements;
+    const addClasses = this.afterAddClasses;
+    const removeClasses = this.afterRemoveClasses;
+    const styles = this.afterStylesValue;
+
+    elements.forEach(el => {
+      const elementClassList = el.classList;
+
+      elementClassList.add(...addClasses);
+      elementClassList.remove(...removeClasses);
+
+      for (const property in styles) {
+        if (styles.hasOwnProperty(property)) {
+          el.style.setProperty(property, styles[property]);
+        }
+      }
+    });
+
+    this.cleanUpDOM();
+  }
+
+  private cleanUpDOM() {
+    if (this.stylesheet) {
+      this.stylesheet.parentNode!.removeChild(this.stylesheet);
+      this.stylesheet = undefined;
+    }
+
+    this.elements.forEach(element => {
+      element.style.removeProperty('animation-name');
+      element.style.removeProperty('animation-duration');
+      element.style.removeProperty('animation-timing-function');
+      element.style.removeProperty('animation-iteration-count');
+      element.style.removeProperty('animation-delay');
+      element.style.removeProperty('animation-play-state');
+    });
+
+    this.initialized = false;
+  }
+
   private initializeAnimation(): void {
+    this.beforeAnimation();
+
     if (!this.stylesheet) {
       this.stylesheet = createKeyframeStylesheet(this._keyframeString);
     }
