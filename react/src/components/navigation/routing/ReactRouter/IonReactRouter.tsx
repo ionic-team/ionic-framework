@@ -1,7 +1,7 @@
 import { NavDirection, RouterDirection } from '@ionic/core';
 import { Action as HistoryAction, Location as HistoryLocation, UnregisterCallback } from 'history';
 import React, { ReactNode } from 'react';
-import { BrowserRouter, BrowserRouterProps, match, matchPath, Redirect, RouteComponentProps, RouteProps, Switch, withRouter } from 'react-router-dom';
+import { BrowserRouter, BrowserRouterProps, match, matchPath, RouteComponentProps, RouteProps, Switch, withRouter, Redirect, Route } from 'react-router-dom';
 import { generateUniqueId } from '../../../utils';
 import { NavContext, NavContextState, ViewStack, ViewStacks } from '../NavContext';
 import { ViewItem } from './ViewItem';
@@ -62,7 +62,12 @@ class IonNavManager extends React.Component<IonReactRouterProps, IonReactRouterS
     keys.some(key => {
       const vs = viewStacks[key];
       return vs.views.some(x => {
-        match = matchPath(location.pathname, x.routeData.childProps)
+        const matchProps = {
+          exact: x.routeData.childProps.exact,
+          path: x.routeData.childProps.path || x.routeData.childProps.from,
+          component: x.routeData.childProps.component
+        };
+        match = matchPath(location.pathname, matchProps)
         if (match) {
           view = x;
           viewStack = vs;
@@ -136,7 +141,12 @@ class IonNavManager extends React.Component<IonReactRouterProps, IonReactRouterS
         /**
          * If the leaving view is a Redirect, take it out of the rendering phase.
          */
-        if (leavingView.element.type === Redirect) {
+        if (leavingView.element.type === Route && leavingView.element.props.render) {
+          if (leavingView.element.props.render().type === Redirect) {
+            leavingView.mount = false;
+            leavingView.show = false;
+          }
+        } else if (leavingView.element.type === Redirect) {
           leavingView.mount = false;
           leavingView.show = false;
         }
