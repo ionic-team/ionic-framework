@@ -164,6 +164,32 @@ describe('Animation Class', () => {
       expect(animation.beforeRemoveClasses.length).toEqual(0);
     });
     
+    it('should apply all "before" styles', () => {
+      const el = document.createElement('div');
+      el.classList.add('hello', 'world');
+      el.style.setProperty('opacity', "0.5");
+      
+      animation
+        .addElement(el)
+        .beforeAddClass(['ionic', 'framework'])
+        .beforeStyles({ 'background': 'blue' })
+        .beforeClearStyles(['opacity'])
+        .beforeRemoveClass('hello');
+        
+      expect(el.style.getPropertyValue('opacity')).toEqual("0.5");
+      expect(el.classList.contains('hello')).toEqual(true);
+      expect(el.classList.contains('world')).toEqual(true);
+      
+      animation.play();
+      
+      expect(el.style.getPropertyValue('opacity')).toEqual("");
+      expect(el.style.getPropertyValue('background')).toEqual('blue');
+      expect(el.classList.contains('hello')).toEqual(false);
+      expect(el.classList.contains('world')).toEqual(true);
+      expect(el.classList.contains('ionic')).toEqual(true);
+      expect(el.classList.contains('framework')).toEqual(true);
+    });
+    
     it('should register all "after" styles', () => {
       animation.afterStyles({ 'background': 'red', 'opacity': 1 });
       expect(Object.keys(animation.afterStylesValue).length).toEqual(2);
@@ -197,6 +223,47 @@ describe('Animation Class', () => {
       
       expect(animation.afterAddClasses.length).toEqual(0);
       expect(animation.afterRemoveClasses.length).toEqual(0);
+    });    
+    
+    it('should apply all "after" styles', async () => {
+      const el = document.createElement('div');
+      el.classList.add('hello', 'world');
+      el.style.setProperty('opacity', "0.5");
+      
+      animation
+        .name('my-animation')
+        .addElement(el)
+        .duration(500)
+        .keyframes([
+          { transform: 'scale(1) rotate(0deg)', opacity: 1, offset: 0 },
+          { transform: 'scale(0.5) rotate(-45deg)', opacity: 0.5, offset: 0.5 },
+          { transform: 'scale(1) rotate(0deg)', opacity: 1, offset: 1 }
+        ])
+        .afterAddClass(['ionic', 'framework'])
+        .afterStyles({ 'background': 'blue' })
+        .afterClearStyles(['opacity'])
+        .afterRemoveClass('hello');
+        
+      expect(el.style.getPropertyValue('opacity')).toEqual("0.5");
+      expect(el.classList.contains('hello')).toEqual(true);
+      expect(el.classList.contains('world')).toEqual(true);
+      
+      animation.play();
+      
+      /**
+       * Animations don't run in spec tests
+       * so we have to fake the end of the animation
+       */
+      const ev = new CustomEvent('animationend');
+      el.dispatchEvent(ev);
+      
+      expect(el.style.getPropertyValue('opacity')).toEqual("");
+      expect(el.style.getPropertyValue('background')).toEqual('blue');
+      expect(el.classList.contains('hello')).toEqual(false);
+      expect(el.classList.contains('world')).toEqual(true);
+      expect(el.classList.contains('ionic')).toEqual(true);
+      expect(el.classList.contains('framework')).toEqual(true);
+
     });
   });
   

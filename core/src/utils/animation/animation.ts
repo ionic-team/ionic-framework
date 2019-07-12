@@ -140,10 +140,37 @@ export class Animation {
       childAnimation.destroy();
     });
 
+    this.cleanUp();
+
     this.elements = [];
     this.childAnimations = [];
 
+    this.initialized = false;
+
     return this;
+  }
+
+  private cleanUp(): void {
+    this.cleanUpElements();
+    this.cleanUpStyleSheets();
+  }
+
+  private cleanUpElements(): void {
+    this.elements.forEach(element => {
+      element.style.removeProperty('animation-name');
+      element.style.removeProperty('animation-duration');
+      element.style.removeProperty('animation-timing-function');
+      element.style.removeProperty('animation-iteration-count');
+      element.style.removeProperty('animation-delay');
+      element.style.removeProperty('animation-play-state');
+    });
+  }
+
+  private cleanUpStyleSheets() {
+    if (this.stylesheet) {
+      this.stylesheet.parentNode!.removeChild(this.stylesheet);
+      this.stylesheet = undefined;
+    }
   }
 
   /**
@@ -364,25 +391,7 @@ export class Animation {
       }
     });
 
-    this.cleanUpDOM();
-  }
-
-  private cleanUpDOM() {
-    if (this.stylesheet) {
-      this.stylesheet.parentNode!.removeChild(this.stylesheet);
-      this.stylesheet = undefined;
-    }
-
-    this.elements.forEach(element => {
-      element.style.removeProperty('animation-name');
-      element.style.removeProperty('animation-duration');
-      element.style.removeProperty('animation-timing-function');
-      element.style.removeProperty('animation-iteration-count');
-      element.style.removeProperty('animation-delay');
-      element.style.removeProperty('animation-play-state');
-    });
-
-    this.initialized = false;
+    this.cleanUpElements();
   }
 
   private initializeAnimation(): void {
@@ -424,13 +433,13 @@ export class Animation {
   }
 
   playStep(step: number): Animation {
-    if (!this.initialized) {
-      this.initializeAnimation();
-    }
-
     this.childAnimations.forEach(animation => {
       animation.playStep(step);
     });
+
+    if (!this.initialized) {
+      this.initializeAnimation();
+    }
 
     this.pause();
 
@@ -446,11 +455,11 @@ export class Animation {
   }
 
   pause(): Animation {
-    if (this.initialized) {
-      this.childAnimations.forEach(animation => {
-        animation.pause();
-      });
+    this.childAnimations.forEach(animation => {
+      animation.pause();
+    });
 
+    if (this.initialized) {
       this.elements.forEach(element => {
         (element as HTMLElement).style.animationPlayState = 'paused';
       });
@@ -460,17 +469,30 @@ export class Animation {
   }
 
   play(): Animation {
-    if (!this.initialized) {
-      this.initializeAnimation();
-    }
-
     this.childAnimations.forEach(animation => {
       animation.play();
     });
 
+    if (!this.initialized) {
+      this.initializeAnimation();
+    }
+
     this.elements.forEach(element => {
       (element as HTMLElement).style.animationPlayState = 'running';
     });
+
+    return this;
+  }
+
+  stop(): Animation {
+    this.childAnimations.forEach(animation => {
+      animation.stop();
+    });
+
+    if (this.initialized) {
+      this.cleanUp();
+      this.initialized = false;
+    }
 
     return this;
   }
