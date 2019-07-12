@@ -1,9 +1,9 @@
 import { Animation } from '../../../interface';
 
 /**
- * iOS Modal Enter Animation
+ * iOS Modal Enter Animation for the full screen presentation style
  */
-export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, presentingEl?: HTMLElement): Promise<Animation> {
+export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
   const baseAnimation = new AnimationC();
 
   const backdropAnimation = new AnimationC();
@@ -18,26 +18,13 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, pr
 
   backdropAnimation.fromTo('opacity', 0.01, 0.4);
 
-  const presentingAnimation = new AnimationC();
-
-  if (presentingEl) {
-    presentingAnimation
-      .beforeStyles({
-        'transform-origin': 'top center'
-      })
-      .addElement(presentingEl)
-      .duration(400)
-      .fromTo('scale', 1, 0.8);
-  }
-
   return Promise.resolve(baseAnimation
     .addElement(baseEl)
     .easing('cubic-bezier(0.36,0.66,0.04,1)')
     .duration(400)
     .beforeAddClass('show-modal')
     .add(backdropAnimation)
-    .add(wrapperAnimation)
-    .add(presentingAnimation));
+    .add(wrapperAnimation));
 }
 
 /**

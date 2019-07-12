@@ -14,3 +14,7 @@
   // hidden by default to prevent flickers, the animation will show it
   @include transform(translate3d(0, 100%, 0));
 }
+
+.modal-card {
+  @include border-radius($modal-ios-border-radius, $modal-ios-border-radius, 0, 0);
+}

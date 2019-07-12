@@ -12,7 +12,6 @@ import {
   AlertButton,
   AlertInput,
   AlertOptions,
-  Animation,
   AnimationBuilder,
   CheckboxChangeEventDetail,
   Color,

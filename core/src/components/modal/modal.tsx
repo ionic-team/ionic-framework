@@ -8,6 +8,7 @@ import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
 
+import { iosEnterCardAnimation } from './animations/ios.enter.card';
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
@@ -177,7 +178,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return;
     }
 
-    // this.presentingEl = presentingEl;
+    const iosAnim = this.buildIOSEnterAnimation(presentingEl);
+    const mdAnim = this.buildMDEnterAnimation(presentingEl);
 
     const container = this.el.querySelector(`.modal-wrapper`);
     if (!container) {
@@ -189,10 +191,20 @@ export class Modal implements ComponentInterface, OverlayInterface {
     };
     this.usersElement = await attachComponent(this.delegate, container, this.component, ['ion-page'], componentProps);
     await deepReady(this.usersElement);
-    return present(this,
-                   'modalEnter',
-                   (animation: Animation, baseEl: any) => iosEnterAnimation(animation, baseEl, presentingEl),
-                   (animation: Animation, baseEl: any) => mdEnterAnimation(animation, baseEl, presentingEl));
+    return present(this, 'modalEnter', iosAnim, mdAnim);
+  }
+
+  private buildIOSEnterAnimation(presentingEl?: HTMLElement) {
+    switch (this.presentationStyle) {
+      case 'fullscreen': 
+        return iosEnterAnimation;
+      case 'card':
+        return (animation: Animation, baseEl: HTMLElement) => iosEnterCardAnimation(animation, baseEl, presentingEl);
+    }
+  }
+
+  private buildMDEnterAnimation(_presentingEl?: HTMLElement) {
+    return mdEnterAnimation;
   }
 
   /**
@@ -341,6 +353,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const mode = getIonMode(this);
     const dialogClasses = {
       [`modal-wrapper`]: true,
+      [`modal-card`]: this.presentationStyle === 'card',
       [mode]: true,
     };
 
