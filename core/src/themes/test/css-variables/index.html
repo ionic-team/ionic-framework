@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <title>CSS Variable - Basic</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
 
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
@@ -102,10 +103,18 @@
           </ion-toolbar>
           <ion-toolbar>
             <ion-segment>
-              <ion-segment-button><ion-label>Favorites</ion-label></ion-segment-button>
-              <ion-segment-button><ion-label>All</ion-label></ion-segment-button>
-              <ion-segment-button disabled><ion-label>Disabled</ion-label></ion-segment-button>
-              <ion-segment-button checked><ion-label>Active</ion-label></ion-segment-button>
+              <ion-segment-button>
+                <ion-label>Favorites</ion-label>
+              </ion-segment-button>
+              <ion-segment-button>
+                <ion-label>All</ion-label>
+              </ion-segment-button>
+              <ion-segment-button disabled>
+                <ion-label>Disabled</ion-label>
+              </ion-segment-button>
+              <ion-segment-button checked>
+                <ion-label>Active</ion-label>
+              </ion-segment-button>
             </ion-segment>
           </ion-toolbar>
         </ion-header>
@@ -119,7 +128,8 @@
                 </ion-card-header>
 
                 <ion-card-content>
-                  Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a week in the woods.
+                  Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a
+                  week in the woods.
                   Wash your spirit clean.
                 </ion-card-content>
               </ion-card>
@@ -190,31 +200,41 @@
                 </ion-item>
                 <ion-item-divider>Sliding Items</ion-item-divider>
                 <ion-item-sliding>
-                  <ion-item><ion-label>Half Life</ion-label></ion-item>
+                  <ion-item>
+                    <ion-label>Half Life</ion-label>
+                  </ion-item>
                   <ion-item-options>
                     <ion-item-option>More</ion-item-option>
                   </ion-item-options>
                 </ion-item-sliding>
                 <ion-item-sliding>
-                  <ion-item color="secondary"><ion-label>Final Fantasy VII</ion-label></ion-item>
+                  <ion-item color="secondary">
+                    <ion-label>Final Fantasy VII</ion-label>
+                  </ion-item>
                   <ion-item-options>
                     <ion-item-option>More</ion-item-option>
                   </ion-item-options>
                 </ion-item-sliding>
                 <ion-item-sliding>
-                  <ion-item><ion-label>Tetris</ion-label></ion-item>
+                  <ion-item>
+                    <ion-label>Tetris</ion-label>
+                  </ion-item>
                   <ion-item-options>
                     <ion-item-option>More</ion-item-option>
                   </ion-item-options>
                 </ion-item-sliding>
                 <ion-item-sliding>
-                  <ion-item><ion-label>Donkey Kong III</ion-label></ion-item>
+                  <ion-item>
+                    <ion-label>Donkey Kong III</ion-label>
+                  </ion-item>
                   <ion-item-options>
                     <ion-item-option>More</ion-item-option>
                   </ion-item-options>
                 </ion-item-sliding>
                 <ion-item-sliding>
-                  <ion-item><ion-label>Goldeneye 007</ion-label></ion-item>
+                  <ion-item>
+                    <ion-label>Goldeneye 007</ion-label>
+                  </ion-item>
                   <ion-item-options>
                     <ion-item-option disabled="true">More</ion-item-option>
                   </ion-item-options>
@@ -223,125 +243,134 @@
             </section>
 
             <section>
-              <ion-radio-group id="fruitRadio">
-                <ion-item-divider>
-                  <ion-label>Fruits</ion-label>
-                </ion-item-divider>
+              <ion-list>
+                <ion-radio-group id="fruitRadio">
+                  <ion-item-divider>
+                    <ion-label>Fruits</ion-label>
+                  </ion-item-divider>
+                  <ion-item>
+                    <ion-label>Apple</ion-label>
+                    <ion-radio slot="start" value="apple"></ion-radio>
+                  </ion-item>
+
+                  <ion-item>
+                    <ion-label>Grape, checked, disabled</ion-label>
+                    <ion-radio slot="start" id="grapeChecked" value="grape" checked disabled></ion-radio>
+                  </ion-item>
+
+                  <ion-item>
+                    <ion-label>Cherry</ion-label>
+                    <ion-radio slot="start" color="danger" value="cherry"></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </ion-list>
+
+              <ion-list>
+                <ion-radio-group id="fruitRadio">
+                  <ion-item-divider>
+                    <ion-label>Veggies</ion-label>
+                  </ion-item-divider>
+                  <ion-item>
+                    <ion-label>Celery</ion-label>
+                    <ion-radio color="tertiary" slot="start" value="celery"></ion-radio>
+                  </ion-item>
+
+                  <ion-item>
+                    <ion-label>Lettuce, checked, disabled</ion-label>
+                    <ion-radio color="tertiary" slot="start" value="lettuce" checked disabled></ion-radio>
+                  </ion-item>
+
+                  <ion-item>
+                    <ion-label>Onion</ion-label>
+                    <ion-radio color="tertiary" slot="start" value="onion"></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </ion-list>
+
+              <ion-list>
                 <ion-item>
-                  <ion-label>Apple</ion-label>
-                  <ion-radio slot="start" value="apple"></ion-radio>
+                  <ion-range value="20"></ion-range>
                 </ion-item>
 
                 <ion-item>
-                  <ion-label>Grape, checked, disabled</ion-label>
-                  <ion-radio slot="start" id="grapeChecked" value="grape" checked disabled></ion-radio>
+                  <ion-range color="success" value="20"></ion-range>
                 </ion-item>
 
                 <ion-item>
-                  <ion-label>Cherry</ion-label>
-                  <ion-radio slot="start" color="danger" value="cherry"></ion-radio>
-                </ion-item>
-              </ion-radio-group>
-
-              <ion-radio-group id="fruitRadio">
-                <ion-item-divider>
-                  <ion-label>Veggies</ion-label>
-                </ion-item-divider>
-                <ion-item>
-                  <ion-label>Celery</ion-label>
-                  <ion-radio color="tertiary" slot="start" value="celery"></ion-radio>
+                  <ion-range color="warning" value="20"></ion-range>
                 </ion-item>
 
                 <ion-item>
-                  <ion-label>Lettuce, checked, disabled</ion-label>
-                  <ion-radio color="tertiary" slot="start" value="lettuce" checked disabled></ion-radio>
+                  <ion-range color="danger" value="20"></ion-range>
                 </ion-item>
+              </ion-list>
 
-                <ion-item>
-                  <ion-label>Onion</ion-label>
-                  <ion-radio color="tertiary" slot="start" value="onion"></ion-radio>
-                </ion-item>
-              </ion-radio-group>
-
-              <ion-item>
-                <ion-range value="20"></ion-range>
-              </ion-item>
-
-              <ion-item>
-                <ion-range color="success" value="20"></ion-range>
-              </ion-item>
-
-              <ion-item>
-                <ion-range color="warning" value="20"></ion-range>
-              </ion-item>
-
-              <ion-item>
-                <ion-range color="danger" value="20"></ion-range>
-              </ion-item>
             </section>
 
             <section>
-              <ion-item>
-                <ion-label>Default</ion-label>
-                <ion-checkbox slot="end" checked></ion-checkbox>
-              </ion-item>
-              <ion-item>
-                <ion-label>Primary</ion-label>
-                <ion-checkbox slot="end" color="primary" checked></ion-checkbox>
-              </ion-item>
-              <ion-item>
-                <ion-label>Secondary</ion-label>
-                <ion-checkbox slot="end" color="secondary" checked></ion-checkbox>
-              </ion-item>
-              <ion-item>
-                <ion-label>Warning</ion-label>
-                <ion-checkbox slot="end" color="warning" checked></ion-checkbox>
-              </ion-item>
-              <ion-item>
-                <ion-label>Danger</ion-label>
-                <ion-checkbox slot="end" color="danger" checked></ion-checkbox>
-              </ion-item>
-              <ion-item>
-                <ion-label>Light</ion-label>
-                <ion-checkbox slot="end" color="light" checked></ion-checkbox>
-              </ion-item>
-              <ion-item>
-                <ion-label>Dark</ion-label>
-                <ion-checkbox slot="end" color="dark" checked></ion-checkbox>
-              </ion-item>
-              <ion-item>
-                <ion-label>Unchecked by Default</ion-label>
-                <ion-checkbox slot="end"></ion-checkbox>
-              </ion-item>
-              <ion-item>
-                <ion-label>Disabled</ion-label>
-                <ion-checkbox slot="end" disabled></ion-checkbox>
-              </ion-item>
+              <ion-list>
+                <ion-item>
+                  <ion-label>Default</ion-label>
+                  <ion-checkbox slot="end" checked></ion-checkbox>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Primary</ion-label>
+                  <ion-checkbox slot="end" color="primary" checked></ion-checkbox>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Secondary</ion-label>
+                  <ion-checkbox slot="end" color="secondary" checked></ion-checkbox>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Warning</ion-label>
+                  <ion-checkbox slot="end" color="warning" checked></ion-checkbox>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Danger</ion-label>
+                  <ion-checkbox slot="end" color="danger" checked></ion-checkbox>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Light</ion-label>
+                  <ion-checkbox slot="end" color="light" checked></ion-checkbox>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Dark</ion-label>
+                  <ion-checkbox slot="end" color="dark" checked></ion-checkbox>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Unchecked by Default</ion-label>
+                  <ion-checkbox slot="end"></ion-checkbox>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Disabled</ion-label>
+                  <ion-checkbox slot="end" disabled></ion-checkbox>
+                </ion-item>
 
-              <ion-item>
-                <ion-toggle slot="start"></ion-toggle>
-                <ion-label>Blueberry</ion-label>
-              </ion-item>
+                <ion-item>
+                  <ion-toggle slot="start"></ion-toggle>
+                  <ion-label>Blueberry</ion-label>
+                </ion-item>
 
-              <ion-item>
-                <ion-toggle color="success" slot="start" checked></ion-toggle>
-                <ion-label>Lettuce</ion-label>
-              </ion-item>
+                <ion-item>
+                  <ion-toggle color="success" slot="start" checked></ion-toggle>
+                  <ion-label>Lettuce</ion-label>
+                </ion-item>
 
-              <ion-item>
-                <ion-toggle color="danger" slot="start" checked></ion-toggle>
-                <ion-label>Apple</ion-label>
-              </ion-item>
+                <ion-item>
+                  <ion-toggle color="danger" slot="start" checked></ion-toggle>
+                  <ion-label>Apple</ion-label>
+                </ion-item>
 
-              <ion-item>
-                <ion-toggle color="tertiary" slot="start" checked></ion-toggle>
-                <ion-label>Radish</ion-label>
-              </ion-item>
+                <ion-item>
+                  <ion-toggle color="tertiary" slot="start" checked></ion-toggle>
+                  <ion-label>Radish</ion-label>
+                </ion-item>
 
-              <ion-item>
-                <ion-toggle color="dark" slot="start" checked></ion-toggle>
-                <ion-label>Blackberry</ion-label>
-              </ion-item>
+                <ion-item>
+                  <ion-toggle color="dark" slot="start" checked></ion-toggle>
+                  <ion-label>Blackberry</ion-label>
+                </ion-item>
+              </ion-list>
             </section>
           </div>
         </ion-content>
@@ -412,7 +441,8 @@
                   <ion-icon slot="icon-only" name="star"></ion-icon>
                 </ion-button>
                 <ion-button>
-                  <ion-icon slot="start" name="pin"></ion-icon>Map</ion-button>
+                  <ion-icon slot="start" name="pin"></ion-icon>Map
+                </ion-button>
                 <ion-button shape="round">Round</ion-button>
                 <ion-button fill="outline">Outline</ion-button>
                 <ion-button fill="clear">Clear</ion-button>
@@ -724,38 +754,38 @@
         <ion-content>
           <div class="wrapper">
             <!-- <section> -->
-              <ion-list>
-                <ion-item button onClick="presentAlert()">
-                  <ion-label>Present Alert</ion-label>
-                </ion-item>
-                <ion-item button onClick="presentActionSheet()">
-                  <ion-label>Present Action Sheet</ion-label>
-                </ion-item>
-                <ion-item button onClick="presentLoading()">
-                  <ion-label>Present Loading</ion-label>
-                </ion-item>
-                <ion-item button onClick="presentModal()">
-                  <ion-label>Present Modal</ion-label>
-                </ion-item>
-                <ion-item button onClick="presentPopover(event)">
-                  <ion-label>Present Popover</ion-label>
-                </ion-item>
-                <ion-item button onClick="presentToast()">
-                  <ion-label>Present Toast</ion-label>
-                </ion-item>
-                <ion-item>
-                  <ion-label>Datetime</ion-label>
-                  <ion-datetime></ion-datetime>
-                </ion-item>
-                <ion-item>
-                  <ion-label>Select</ion-label>
-                  <ion-select>
-                    <ion-select-option>1</ion-select-option>
-                    <ion-select-option>2</ion-select-option>
-                    <ion-select-option>3</ion-select-option>
-                  </ion-select>
-                </ion-item>
-              </ion-list>
+            <ion-list>
+              <ion-item button onClick="presentAlert()">
+                <ion-label>Present Alert</ion-label>
+              </ion-item>
+              <ion-item button onClick="presentActionSheet()">
+                <ion-label>Present Action Sheet</ion-label>
+              </ion-item>
+              <ion-item button onClick="presentLoading()">
+                <ion-label>Present Loading</ion-label>
+              </ion-item>
+              <ion-item button onClick="presentModal()">
+                <ion-label>Present Modal</ion-label>
+              </ion-item>
+              <ion-item button onClick="presentPopover(event)">
+                <ion-label>Present Popover</ion-label>
+              </ion-item>
+              <ion-item button onClick="presentToast()">
+                <ion-label>Present Toast</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>Datetime</ion-label>
+                <ion-datetime></ion-datetime>
+              </ion-item>
+              <ion-item>
+                <ion-label>Select</ion-label>
+                <ion-select>
+                  <ion-select-option>1</ion-select-option>
+                  <ion-select-option>2</ion-select-option>
+                  <ion-select-option>3</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
             <!-- </section> -->
           </div>
         </ion-content>
