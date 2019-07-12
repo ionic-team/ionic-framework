@@ -77,8 +77,6 @@
   --ion-text-color: #ffffff;
   --ion-text-color-rgb: 255,255,255;
 
-  --ion-border-color: #222222;
-
   --ion-color-step-50: #0d0d0d;
   --ion-color-step-100: #1a1a1a;
   --ion-color-step-150: #262626;
@@ -99,8 +97,8 @@
   --ion-color-step-900: #e6e6e6;
   --ion-color-step-950: #f2f2f2;
 
-  --ion-item-background: #1c1c1e;
-  --ion-item-background-activated: #19191a;
+  --ion-item-background: #1c1c1c;
+  --ion-item-background-activated: #313131;
 
   /* --ion-toolbar-color-unchecked: limegreen;
   --ion-toolbar-color-checked: limegreen; */
