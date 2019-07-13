@@ -36,6 +36,13 @@ export class RouterLink implements ComponentInterface {
    */
   @Prop() routerDirection: RouterDirection = 'forward';
 
+  /**
+   * Specifies where to display the linked URL.
+   * Only applies when an `href` is provided.
+   * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+   */
+  @Prop() target: string | undefined;
+
   private onClick = (ev: Event) => {
     openURL(this.href, ev, this.routerDirection);
   }
@@ -44,7 +51,8 @@ export class RouterLink implements ComponentInterface {
     const mode = getIonMode(this);
     const attrs = {
       href: this.href,
-      rel: this.rel
+      rel: this.rel,
+      target: this.target
     };
     return (
       <Host

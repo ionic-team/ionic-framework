@@ -177,9 +177,10 @@ export interface IonicConfig {
   persistConfig?: boolean;
   _forceStatusbarPadding?: boolean;
   _testing?: boolean;
+  _zoneGate?: (h: () => any) => any;
 }
 
-export function setupConfig(config: IonicConfig) {
+export const setupConfig = (config: IonicConfig) => {
   const win = window as any;
   const Ionic = win.Ionic;
   if (Ionic && Ionic.config && Ionic.config.constructor.name !== 'Object') {
@@ -192,4 +193,4 @@ export function setupConfig(config: IonicConfig) {
     ...config
   };
   return win.Ionic.config;
-}
+};

@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, NgZone, OnDestroy, OnInit, Optional, Output, SkipSelf, ViewContainerRef } from '@angular/core';
+import { Attribute, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, NgZone, OnDestroy, OnInit, Optional, Output, SkipSelf, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ChildrenOutletContexts, OutletContext, PRIMARY_OUTLET, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
@@ -57,7 +57,6 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     private resolver: ComponentFactoryResolver,
     @Attribute('name') name: string,
     @Optional() @Attribute('tabs') tabs: string,
-    private changeDetector: ChangeDetectorRef,
     private config: Config,
     private navCtrl: NavController,
     commonLocation: Location,
@@ -206,12 +205,11 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       // Calling `markForCheck` to make sure we will run the change detection when the
       // `RouterOutlet` is inside a `ChangeDetectionStrategy.OnPush` component.
       enteringView = this.stackCtrl.createView(this.activated, activatedRoute);
+      enteringView.ref.changeDetectorRef.detectChanges();
 
       // Store references to the proxy by component
       this.proxyMap.set(cmpRef.instance, activatedRouteProxy);
       this.currentActivatedRoute$.next({ component: cmpRef.instance, activatedRoute });
-
-      this.changeDetector.markForCheck();
     }
 
     this.activatedView = enteringView;
