@@ -7,7 +7,7 @@
 $segment-button-md-opacity:                           .6 !default;
 
 /// @prop - Text color of the segment button
-$segment-button-md-text-color:                        rgba(var(--ion-text-color-rgb, $text-color-rgb), $segment-button-md-opacity) !default;
+$segment-button-md-text-color:                        rgba($text-color-rgb, $segment-button-md-opacity) !default;
 
 /// @prop - Background of the segment button
 $segment-button-md-background:                        none !default;
