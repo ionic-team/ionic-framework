@@ -46,7 +46,7 @@ $searchbar-ios-input-text-color:                  $text-color !default;
 $searchbar-ios-input-background-color-alpha:      .07 !default;
 
 /// @prop - Background color of the searchbar input
-$searchbar-ios-input-background-color:            rgba(var(--ion-text-color-rgb, $text-color-rgb), $searchbar-ios-input-background-color-alpha) !default;
+$searchbar-ios-input-background-color:            rgba($text-color-rgb, $searchbar-ios-input-background-color-alpha) !default;
 
 /// @prop - Transition of the searchbar input
 $searchbar-ios-input-transition:                  all 300ms ease !default;
