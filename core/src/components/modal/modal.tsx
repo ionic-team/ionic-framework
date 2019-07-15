@@ -8,14 +8,14 @@ import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
 
-import { iosEnterCardAnimation } from './animations/ios.enter.card';
 import { iosEnterAnimation } from './animations/ios.enter';
+import { iosEnterCardAnimation } from './animations/ios.enter.card';
 import { iosLeaveAnimation } from './animations/ios.leave';
+import { iosLeaveCardAnimation } from './animations/ios.leave.card';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 import { swipeLeaveAnimation } from './animations/swipe.leave';
 import { ModalPresentationStyle } from './modal-interface';
-
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -32,11 +32,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   private usersElement?: HTMLElement;
 
-  // private presentingEl?: HTMLElement;
+  // The element that presented this modal. Used for scale card effects
+  private presentingEl?: HTMLElement;
   private wrapperEl?: HTMLDivElement;
   private backdropEl?: HTMLIonBackdropElement;
-
   private backdropOpacity = 0;
+  private presentingScale = 0.92;
   // private y = 0;
 
   presented = false;
@@ -178,6 +179,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return;
     }
 
+    this.presentingEl = presentingEl;
+
     const iosAnim = this.buildIOSEnterAnimation(presentingEl);
     const mdAnim = this.buildMDEnterAnimation(presentingEl);
 
@@ -196,7 +199,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   private buildIOSEnterAnimation(presentingEl?: HTMLElement) {
     switch (this.presentationStyle) {
-      case 'fullscreen': 
+      case 'fullscreen':
         return iosEnterAnimation;
       case 'card':
         return (animation: Animation, baseEl: HTMLElement) => iosEnterCardAnimation(animation, baseEl, presentingEl);
@@ -207,6 +210,19 @@ export class Modal implements ComponentInterface, OverlayInterface {
     return mdEnterAnimation;
   }
 
+  private buildIOSLeaveAnimation(presentingEl?: HTMLElement) {
+    switch (this.presentationStyle) {
+      case 'fullscreen':
+        return iosLeaveAnimation;
+      case 'card':
+        return (animation: Animation, baseEl: HTMLElement) => iosLeaveCardAnimation(animation, baseEl, presentingEl);
+    }
+  }
+
+  private buildMDLeaveAnimation(_presentingEl?: HTMLElement) {
+    return mdLeaveAnimation;
+  }
+
   /**
    * Dismiss the modal overlay after it has been presented.
    *
@@ -215,7 +231,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
-    const dismissed = await dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation);
+    const iosAnim = this.buildIOSLeaveAnimation(this.presentingEl);
+    const mdAnim = this.buildMDLeaveAnimation(this.presentingEl);
+
+    const dismissed = await dismiss(this, data, role, 'modalLeave', iosAnim, mdAnim);
     if (dismissed) {
       await detachComponent(this.delegate, this.usersElement);
     }
@@ -284,7 +303,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
     console.log('Viewport ratio', yRatio);
 
     const backdropOpacity = this.backdropOpacity - this.backdropOpacity * yRatio;
+    const presentingScale = this.presentingScale - this.presentingScale * yRatio;
 
+    this.swipeSetPresentingScale(presentingScale);
     this.swipeSetBackdropOpacity(backdropOpacity);
     this.swipeSlideTo(detail.deltaY);
   }
@@ -325,6 +346,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private swipeSetBackdropOpacity(opacity: number) {
     writeTask(() => {
       this.backdropEl!.style.opacity = `${opacity}`;
+    });
+  }
+
+  private swipeSetPresentingScale(scale: number) {
+    if (!this.presentingEl) {
+      return;
+    }
+
+    writeTask(() => {
+      this.presentingEl!.style.scale = `${scale}`;
     });
   }
 

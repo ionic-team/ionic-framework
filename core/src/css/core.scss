@@ -127,3 +127,8 @@ html.plt-ios.plt-hybrid, html.plt-ios.plt-pwa {
     --ion-safe-area-right: env(safe-area-inset-right);
   }
 }
+
+
+.presenting-view-card {
+  @include border-radius(10px, 10px, 0, 0);
+}
