@@ -29,7 +29,7 @@ export function iosEnterCardAnimation(AnimationC: Animation, baseEl: HTMLElement
       })
       .beforeAddClass('presenting-view-card')
       .addElement(presentingEl)
-      .duration(1000)
+      .duration(500)
       .fromTo('translateY', '0px', '-5px')
       .fromTo('scale', 1, 0.92);
   }
@@ -37,7 +37,7 @@ export function iosEnterCardAnimation(AnimationC: Animation, baseEl: HTMLElement
   return Promise.resolve(baseAnimation
     .addElement(baseEl)
     .easing('cubic-bezier(0.36,0.66,0.04,1)')
-    .duration(1000)
+    .duration(500)
     .beforeAddClass('show-modal')
     .add(backdropAnimation)
     .add(wrapperAnimation)

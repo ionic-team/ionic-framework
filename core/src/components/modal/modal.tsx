@@ -38,6 +38,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private backdropEl?: HTMLIonBackdropElement;
   private backdropOpacity = 0;
   private presentingScale = 0.92;
+  // The minimum y position for the open card style modal
+  private minY = 44;
   // private y = 0;
 
   presented = false;
@@ -267,7 +269,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   private async swipeOpen() {
     requestAnimationFrame(() => {
-      this.swipeSlideTo(0);
+      this.swipeSlideTo(this.minY);
     });
   }
 
@@ -298,16 +300,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private swipeToCloseOnMove(detail: GestureDetail) {
-    const viewportHeight = (this.el.ownerDocument as any).defaultView.innerHeight;
-    const yRatio = detail.deltaY / viewportHeight;
-    console.log('Viewport ratio', yRatio);
+    const y = this.minY + detail.deltaY;
 
-    const backdropOpacity = this.backdropOpacity - this.backdropOpacity * yRatio;
-    const presentingScale = this.presentingScale - this.presentingScale * yRatio;
-
-    this.swipeSetPresentingScale(presentingScale);
-    this.swipeSetBackdropOpacity(backdropOpacity);
-    this.swipeSlideTo(detail.deltaY);
+    this.swipeSlideTo(y);
   }
 
   private swipeToCloseOnEnd(detail: GestureDetail) {
@@ -337,6 +332,21 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private swipeSlideTo(y: number) {
+    const viewportHeight = (this.el.ownerDocument as any).defaultView.innerHeight;
+
+    const dy = y - this.minY;
+
+    const yRatio = dy / viewportHeight;
+
+    console.log(y, yRatio);
+
+    const backdropOpacity = this.backdropOpacity - this.backdropOpacity * yRatio;
+    // const presentingScale = this.presentingScale - this.presentingScale * yRatio;
+    const presentingScale = this.presentingScale - (this.presentingScale * -yRatio) * 0.3;
+    console.log('Presenting scale', presentingScale);
+
+    this.swipeSetPresentingScale(presentingScale);
+    this.swipeSetBackdropOpacity(backdropOpacity);
     // this.y = y;
     writeTask(() => {
       this.wrapperEl!.style.transform = `translateY(${y}px)`;
@@ -355,7 +365,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     writeTask(() => {
-      this.presentingEl!.style.scale = `${scale}`;
+      this.presentingEl!.style.transform = `translateY(-5px) scale(${scale})`;
     });
   }
 
