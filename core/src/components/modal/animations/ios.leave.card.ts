@@ -9,9 +9,10 @@ export function iosLeaveCardAnimation(
   presentingEl?: HTMLElement,
   currentY?: number,
   currentBackdropOpacity?: number,
-  currentPresentingScale?: number
+  currentPresentingScale?: number,
+  velocityY?: number
   ): Promise<Animation> {
-  console.log('CARD LEAVING', currentY, currentBackdropOpacity, currentPresentingScale);
+  const duration = velocityY ? 500 - Math.min(400, velocityY * 200) : 500;
 
   const baseAnimation = new AnimationC();
 
@@ -33,7 +34,7 @@ export function iosLeaveCardAnimation(
   if (presentingEl) {
     presentingAnimation
       .addElement(presentingEl)
-      .duration(1000)
+      .duration(duration)
       .fromTo('translateY', '-5px', '0px')
       .fromTo('scale', currentPresentingScale || 0.92, 1);
   }
@@ -46,7 +47,7 @@ export function iosLeaveCardAnimation(
   return Promise.resolve(baseAnimation
     .addElement(baseEl)
     .easing('cubic-bezier(0.36,0.66,0.04,1)')
-    .duration(1000)
+    .duration(duration)
     .add(bodyAnimation)
     .add(backdropAnimation)
     .add(wrapperAnimation)

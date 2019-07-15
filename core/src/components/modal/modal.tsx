@@ -232,14 +232,20 @@ export class Modal implements ComponentInterface, OverlayInterface {
     return mdLeaveAnimation;
   }
 
-  private buildSwipeLeaveAnimation() {
+  private buildSwipeLeaveAnimation(velocityY: number) {
     switch (this.presentationStyle) {
       case 'fullscreen':
         // TODO: Configure this animation
         return iosLeaveAnimation;
       case 'card':
         return (animation: Animation, baseEl: HTMLElement) =>
-          iosLeaveCardAnimation(animation, baseEl, this.presentingEl, this.y, this.backdropOpacity, this.presentingScale);
+          iosLeaveCardAnimation(animation,
+                                baseEl,
+                                this.presentingEl,
+                                this.y,
+                                this.backdropOpacity,
+                                this.presentingScale,
+                                velocityY);
     }
   }
 
@@ -277,8 +283,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     return eventMethod(this.el, 'ionModalWillDismiss');
   }
 
-  private async swipeDismiss() {
-    const leaveAnim = this.buildSwipeLeaveAnimation();
+  private async swipeDismiss(velocityY: number) {
+    const leaveAnim = this.buildSwipeLeaveAnimation(velocityY);
     const dismissed = await dismiss(this, null, undefined, 'modalLeave', leaveAnim, leaveAnim);
     if (dismissed) {
       await detachComponent(this.delegate, this.usersElement);
@@ -334,11 +340,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (detail.velocityY < -0.6) {
       this.swipeOpen();
     } else if (detail.velocityY > 0.6) {
-      this.swipeDismiss();
+      this.swipeDismiss(detail.velocityY);
     } else if (detail.currentY <= viewportHeight / 2) {
       this.swipeOpen();
     } else {
-      this.swipeDismiss();
+      this.swipeDismiss(detail.velocityY);
     }
   }
 
