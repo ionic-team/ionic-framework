@@ -438,7 +438,6 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
     beforeAnimation();
 
     if (supportsWebAnimations()) {
-      console.log('Your browser supports Web Animations');
       elements.forEach((element, i) => {
         const animation = element.animate(getKeyframes(), {
           delay: getDelay(),
@@ -453,7 +452,6 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
           };
         }
 
-        console.log(animation);
         animation.pause();
 
         webAnimations.push(animation);
