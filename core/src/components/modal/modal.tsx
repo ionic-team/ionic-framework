@@ -14,7 +14,6 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { iosLeaveCardAnimation } from './animations/ios.leave.card';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
-import { swipeLeaveAnimation } from './animations/swipe.leave';
 import { ModalPresentationStyle } from './modal-interface';
 
 /**
@@ -30,17 +29,25 @@ import { ModalPresentationStyle } from './modal-interface';
 })
 export class Modal implements ComponentInterface, OverlayInterface {
 
+  // Reference to the user's provided modal content
   private usersElement?: HTMLElement;
 
   // The element that presented this modal. Used for scale card effects
   private presentingEl?: HTMLElement;
+  // Reference to the wrapper element
   private wrapperEl?: HTMLDivElement;
+  // Reference to the backdrop element
   private backdropEl?: HTMLIonBackdropElement;
+  // The current opacity of the backdrop element
+  private minBackdropOpacity = 0.4;
   private backdropOpacity = 0;
-  private presentingScale = 0.92;
+  // The current scale of the presenting element
+  private minPresentingScale = 0.92;
+  private presentingScale = 0;
   // The minimum y position for the open card style modal
   private minY = 44;
-  // private y = 0;
+  // Current Y position of the draggin modal
+  private y = 0;
 
   presented = false;
   animation: Animation | undefined;
@@ -225,6 +232,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
     return mdLeaveAnimation;
   }
 
+  private buildSwipeLeaveAnimation() {
+    switch (this.presentationStyle) {
+      case 'fullscreen':
+        // TODO: Configure this animation
+        return iosLeaveAnimation;
+      case 'card':
+        return (animation: Animation, baseEl: HTMLElement) =>
+          iosLeaveCardAnimation(animation, baseEl, this.presentingEl, this.y, this.backdropOpacity, this.presentingScale);
+    }
+  }
+
   /**
    * Dismiss the modal overlay after it has been presented.
    *
@@ -260,7 +278,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private async swipeDismiss() {
-    const dismissed = await dismiss(this, null, undefined, 'modalLeave', swipeLeaveAnimation, swipeLeaveAnimation);
+    const leaveAnim = this.buildSwipeLeaveAnimation();
+    const dismissed = await dismiss(this, null, undefined, 'modalLeave', leaveAnim, leaveAnim);
     if (dismissed) {
       await detachComponent(this.delegate, this.usersElement);
     }
@@ -340,10 +359,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     console.log(y, yRatio);
 
-    const backdropOpacity = this.backdropOpacity - this.backdropOpacity * yRatio;
+    const backdropOpacity = this.minBackdropOpacity - this.minBackdropOpacity * yRatio;
     // const presentingScale = this.presentingScale - this.presentingScale * yRatio;
-    const presentingScale = this.presentingScale - (this.presentingScale * -yRatio) * 0.3;
-    console.log('Presenting scale', presentingScale);
+    const presentingScale = this.minPresentingScale - (this.minPresentingScale * -yRatio) * 0.1;
+
+    // Store current state of values for animation effects
+    this.presentingScale = presentingScale;
+    this.backdropOpacity = backdropOpacity;
+    this.y = y;
 
     this.swipeSetPresentingScale(presentingScale);
     this.swipeSetBackdropOpacity(backdropOpacity);

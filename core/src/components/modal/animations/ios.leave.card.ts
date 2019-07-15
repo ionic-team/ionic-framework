@@ -3,7 +3,16 @@ import { Animation } from '../../../interface';
 /**
  * iOS Modal Leave Animation
  */
-export function iosLeaveCardAnimation(AnimationC: Animation, baseEl: HTMLElement, presentingEl?: HTMLElement): Promise<Animation> {
+export function iosLeaveCardAnimation(
+  AnimationC: Animation,
+  baseEl: HTMLElement,
+  presentingEl?: HTMLElement,
+  currentY?: number,
+  currentBackdropOpacity?: number,
+  currentPresentingScale?: number
+  ): Promise<Animation> {
+  console.log('CARD LEAVING', currentY, currentBackdropOpacity, currentPresentingScale);
+
   const baseAnimation = new AnimationC();
 
   const backdropAnimation = new AnimationC();
@@ -12,7 +21,6 @@ export function iosLeaveCardAnimation(AnimationC: Animation, baseEl: HTMLElement
   const wrapperAnimation = new AnimationC();
   const wrapperEl = baseEl.querySelector('.modal-wrapper');
   wrapperAnimation.addElement(wrapperEl);
-  const wrapperElRect = wrapperEl!.getBoundingClientRect();
 
   const presentingAnimation = new AnimationC();
 
@@ -27,13 +35,13 @@ export function iosLeaveCardAnimation(AnimationC: Animation, baseEl: HTMLElement
       .addElement(presentingEl)
       .duration(1000)
       .fromTo('translateY', '-5px', '0px')
-      .fromTo('scale', 0.92, 1);
+      .fromTo('scale', currentPresentingScale || 0.92, 1);
   }
 
   wrapperAnimation.beforeStyles({ 'opacity': 1 })
-                  .fromTo('translateY', '44px', `${(baseEl.ownerDocument as any).defaultView.innerHeight - wrapperElRect.top}px`);
+                  .fromTo('translateY', currentY || '44px', `100%`);
 
-  backdropAnimation.fromTo('opacity', 0.4, 0.0);
+  backdropAnimation.fromTo('opacity', currentBackdropOpacity || 0.4, 0.0);
 
   return Promise.resolve(baseAnimation
     .addElement(baseEl)
