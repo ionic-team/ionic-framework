@@ -12,10 +12,8 @@
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   <script type="module">
-    import { Animation as IonicAnimation } from '../../../../dist/collection/utils/animation/animation.js';
-    
-    window.IonicAnimation = IonicAnimation;
-    
+    import { createAnimation } from '../../../../dist/collection/utils/animation/animation.js';
+        
     const grid = document.querySelector('.grid-container');
     
     let dotsString = '';
@@ -25,7 +23,7 @@
     grid.innerHTML = dotsString;
     
     const dots = document.querySelectorAll('.dot');    
-    const rootAnimation = new IonicAnimation();
+    const rootAnimation = createAnimation();
     
     rootAnimation
       .duration(500)
@@ -33,7 +31,7 @@
       .iterations(Infinity);
 
     dots.forEach((dot, i) => {
-      const animation = new IonicAnimation(`dot-${i}`);
+      const animation = createAnimation(`dot-${i}`);
       animation
         .addElement(dot)
         .delay(i * 10)
@@ -52,6 +50,7 @@
     
     document.querySelector('.play').addEventListener('click', () => {
       rootAnimation.play();
+      console.log('polkay',rootAnimation)
     });
   </script>
   

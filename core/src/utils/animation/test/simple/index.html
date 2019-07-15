@@ -12,12 +12,10 @@
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   <script type="module">
-    import { Animation as IonicAnimation } from '../../../../dist/collection/utils/animation/animation.js';
+    import { createAnimation } from '../../../../dist/collection/utils/animation/animation.js';
     
-    window.IonicAnimation = IonicAnimation;
-
     const square = document.querySelectorAll('.square');    
-    const animation = new IonicAnimation('animation-a');
+    const animation = createAnimation('animation-a');
 
     animation
       .addElement(square)

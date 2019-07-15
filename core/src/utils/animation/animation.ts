@@ -1,6 +1,47 @@
 // TODO: Add validation
 // TODO: More tests
 
+export interface Animation {
+  parentAnimation: Animation | undefined;
+  elements: HTMLElement[];
+  childAnimations: Animation[];
+  beforeAddClasses: string[];
+  beforeRemoveClasses: string[];
+  beforeStylesValue: { [property: string]: any };
+  afterAddClasses: string[];
+  afterRemoveClasses: string[];
+  afterStylesValue: { [property: string]: any };
+
+  parent(animation: Animation): Animation;
+  play(): Animation;
+  pause(): Animation;
+  stop(): Animation;
+  playStep(step: number): Animation;
+  destroy(): Animation;
+  keyframes(keyframes: any[]): Animation;
+  addAnimation(animationToADd: Animation | Animation[] | undefined | null): Animation;
+  addTarget(target: string): Animation;
+  addElement(el: Node | Node[] | NodeList | undefined | null): Animation;
+  iterations(iterations: number): Animation;
+  duration(duration: number): Animation;
+  easing(easing: string): Animation;
+  delay(delay: number): Animation;
+  name(name: string): Animation;
+  getKeyframes(): any[];
+  getDelay(): number | undefined;
+  getIterations(): number | undefined;
+  getEasing(): string | undefined;
+  getDuration(): number | undefined;
+  afterClearStyles(propertyNames: string[]): Animation;
+  afterStyles(styles: { [property: string]: any }): Animation;
+  afterRemoveClass(className: string | string[] | undefined): Animation;
+  afterAddClass(className: string | string[] | undefined): Animation;
+  beforeClearStyles(propertyNames: string[]): Animation;
+  beforeStyles(styles: { [property: string]: any }): Animation;
+  beforeRemoveClass(className: string | string[] | undefined): Animation;
+  beforeAddClass(className: string | string[] | undefined): Animation;
+}
+
 const animationEnd = (el: HTMLElement | null, callback: (ev?: TransitionEvent) => void) => {
   let unRegTrans: (() => void) | undefined;
   const opts: any = { passive: true };
@@ -31,37 +72,8 @@ const animationEnd = (el: HTMLElement | null, callback: (ev?: TransitionEvent) =
   return unregister;
 };
 
-const addElement = (animationElements: any[], el: Node | Node[] | NodeList | undefined | null) => {
-  if (el != null) {
-    const nodeList = el as NodeList;
-    if (nodeList.length >= 0) {
-      for (let i = 0; i < nodeList.length; i++) {
-        animationElements.push((el as any)[i]);
-      }
-    } else {
-      animationElements.push(el);
-    }
-  }
-};
-
-const addAnimation = (parentAnimation: Animation, childAnimations: Animation[], animationToAdd: Animation | Animation[] | undefined | null) => {
-  if (animationToAdd != null) {
-    const animationsToAdd = animationToAdd as Animation[];
-    if (animationsToAdd.length >= 0) {
-      for (const animation of animationsToAdd) {
-        animation.parentAnimation = parentAnimation;
-        childAnimations.push(animation);
-      }
-    } else {
-      (animationToAdd as Animation).parentAnimation = parentAnimation;
-      childAnimations.push(animationToAdd as Animation);
-    }
-  }
-};
-
-const addTarget = (animationElements: any[], target: string) => {
-  const els = document.querySelectorAll(target);
-  addElement(animationElements, els);
+const supportsWebAnimations = (): boolean => {
+  return !!(window as any).Animation;
 };
 
 const generateKeyframeString = (name: string | undefined, keyframes: any[] = []): string => {
@@ -104,257 +116,309 @@ const addClassToArray = (classes: string[] = [], className: string | string[] | 
   return classes;
 };
 
-export class Animation {
-  private elements: HTMLElement[] = [];
-  private childAnimations: Animation[] = [];
+export const createAnimation = (animationNameValue: string | undefined): Animation => {
+  let elements: HTMLElement[] = [];
+  let childAnimations: Animation[] = [];
+  let _name: string | undefined;
+  let _delay: number | undefined;
+  let _duration: number | undefined;
+  let _easing: string | undefined;
+  let _iterations: number | undefined;
 
-  private _delay: number | undefined;
-  private _duration: number | undefined;
-  private _easing: string | undefined;
-  private _iterations: number | undefined;
+  let _keyframes: any[] = [];
+  let _keyframeString = '';
 
-  private _keyframes: any[] = [];
-  private _keyframeString = '';
+  let initialized = false;
 
-  private initialized = false;
+  let stylesheet: HTMLElement | undefined;
 
-  private stylesheet?: HTMLElement;
+  let parentAnimation: Animation | undefined;
 
-  parentAnimation: Animation | undefined;
+  let beforeAddClasses: string[] = [];
+  let beforeRemoveClasses: string[] = [];
+  let beforeStylesValue: { [property: string]: any } = {};
 
-  private beforeAddClasses: string[] = [];
-  private beforeRemoveClasses: string[] = [];
-  private beforeStylesValue: { [property: string]: any } = {};
+  let afterAddClasses: string[] = [];
+  let afterRemoveClasses: string[] = [];
+  let afterStylesValue: { [property: string]: any } = {};
 
-  private afterAddClasses: string[] = [];
-  private afterRemoveClasses: string[] = [];
-  private afterStylesValue: { [property: string]: any } = {};
-
-  constructor(public _name: string | undefined) {}
+  let webAnimations: any[] = [];
 
   /**
    * Destroy this animation and all child animations.
    */
-  destroy(): Animation {
-    this.childAnimations.forEach(childAnimation => {
+  const destroy = (): Animation => {
+    childAnimations.forEach(childAnimation => {
       childAnimation.destroy();
     });
 
-    this.cleanUp();
+    cleanUp();
 
-    this.elements = [];
-    this.childAnimations = [];
+    elements = [];
+    childAnimations = [];
 
-    this.initialized = false;
+    initialized = false;
 
-    return this;
-  }
+    return generatePublicAPI();
+  };
 
-  private cleanUp(): void {
-    this.cleanUpElements();
-    this.cleanUpStyleSheets();
-  }
+  const cleanUp = () => {
+    cleanUpElements();
+    cleanUpStyleSheets();
+  };
 
-  private cleanUpElements(): void {
-    this.elements.forEach(element => {
-      element.style.removeProperty('animation-name');
-      element.style.removeProperty('animation-duration');
-      element.style.removeProperty('animation-timing-function');
-      element.style.removeProperty('animation-iteration-count');
-      element.style.removeProperty('animation-delay');
-      element.style.removeProperty('animation-play-state');
-    });
-  }
+  const cleanUpElements = () => {
+    if (supportsWebAnimations()) {
+      webAnimations.forEach(animation => {
+        animation.cancel();
+      });
 
-  private cleanUpStyleSheets() {
-    if (this.stylesheet) {
-      this.stylesheet.parentNode!.removeChild(this.stylesheet);
-      this.stylesheet = undefined;
+      webAnimations = [];
+    } else {
+      elements.forEach(element => {
+        element.style.removeProperty('animation-name');
+        element.style.removeProperty('animation-duration');
+        element.style.removeProperty('animation-timing-function');
+        element.style.removeProperty('animation-iteration-count');
+        element.style.removeProperty('animation-delay');
+        element.style.removeProperty('animation-play-state');
+      });
     }
-  }
+  };
+
+  const cleanUpStyleSheets = () => {
+    if (stylesheet) {
+      stylesheet.parentNode!.removeChild(stylesheet);
+      stylesheet = undefined;
+    }
+  };
 
   /**
    * Add CSS class to this animation's elements
    * before the animation begins.
    */
-  beforeAddClass(className: string | string[] | undefined): Animation {
-    this.beforeAddClasses = addClassToArray(this.beforeAddClasses, className);
+  const beforeAddClass = (className: string | string[] | undefined): Animation => {
+    beforeAddClasses = addClassToArray(beforeAddClasses, className);
 
-    return this;
-  }
+    return generatePublicAPI();
+  };
 
   /**
    * Remove CSS class from this animation's elements
    * before the animation begins.
    */
-  beforeRemoveClass(className: string | string[] | undefined): Animation {
-    this.beforeRemoveClasses = addClassToArray(this.beforeRemoveClasses, className);
+  const beforeRemoveClass = (className: string | string[] | undefined): Animation => {
+    beforeRemoveClasses = addClassToArray(beforeRemoveClasses, className);
 
-    return this;
-  }
+    return generatePublicAPI();
+  };
 
   /**
    * Set CSS inline styles to this animation's elements
    * before the animation begins.
    */
-  beforeStyles(styles: { [property: string]: any } = {}): Animation {
-    this.beforeStylesValue = styles;
+  const beforeStyles = (styles: { [property: string]: any } = {}): Animation => {
+    beforeStylesValue = styles;
 
-    return this;
-  }
+    return generatePublicAPI();
+  };
 
   /**
    * Clear CSS inline styles from this animation's elements
    * before the animation begins.
    */
-  beforeClearStyles(propertyNames: string[] = []): Animation {
+  const beforeClearStyles = (propertyNames: string[] = []): Animation => {
     for (const property of propertyNames) {
-      this.beforeStylesValue[property] = '';
+      beforeStylesValue[property] = '';
     }
 
-    return this;
-  }
+    return generatePublicAPI();
+  };
 
   /**
    * Add CSS class to this animation's elements
    * after the animation ends.
    */
-  afterAddClass(className: string | string[] | undefined): Animation {
-    this.afterAddClasses = addClassToArray(this.afterAddClasses, className);
+  const afterAddClass = (className: string | string[] | undefined): Animation => {
+    afterAddClasses = addClassToArray(afterAddClasses, className);
 
-    return this;
-  }
+    return generatePublicAPI();
+  };
 
   /**
    * Remove CSS class from this animation's elements
    * after the animation ends.
    */
-  afterRemoveClass(className: string | string[] | undefined): Animation {
-    this.afterRemoveClasses = addClassToArray(this.afterRemoveClasses, className);
+  const afterRemoveClass = (className: string | string[] | undefined): Animation => {
+    afterRemoveClasses = addClassToArray(afterRemoveClasses, className);
 
-    return this;
-  }
+    return generatePublicAPI();
+  };
 
   /**
    * Set CSS inline styles to this animation's elements
    * after the animation ends.
    */
-  afterStyles(styles: { [property: string]: any } = {}): Animation {
-    this.afterStylesValue = styles;
+  const afterStyles = (styles: { [property: string]: any } = {}): Animation => {
+    afterStylesValue = styles;
 
-    return this;
-  }
+    return generatePublicAPI();
+  };
 
   /**
    * Clear CSS inline styles from this animation's elements
    * after the animation ends.
    */
-  afterClearStyles(propertyNames: string[] = []): Animation {
+  const afterClearStyles = (propertyNames: string[] = []): Animation => {
     for (const property of propertyNames) {
-      this.afterStylesValue[property] = '';
+      afterStylesValue[property] = '';
     }
 
-    return this;
-  }
+    return generatePublicAPI();
+  };
 
-  getEasing(): string | undefined {
-    if (this._easing !== undefined) { return this._easing; }
-    if (this.parentAnimation) { return this.parentAnimation.getEasing(); }
-
-    return undefined;
-  }
-
-  getDuration(): number | undefined {
-    if (this._duration !== undefined) { return this._duration; }
-    if (this.parentAnimation) { return this.parentAnimation.getDuration(); }
+  const getEasing = (): string | undefined => {
+    if (_easing !== undefined) { return _easing; }
+    if (parentAnimation) { return parentAnimation.getEasing(); }
 
     return undefined;
-  }
+  };
 
-  getIterations(): number | undefined {
-    if (this._iterations !== undefined) { return this._iterations; }
-    if (this.parentAnimation) { return this.parentAnimation.getIterations(); }
-
-    return undefined;
-  }
-
-  getDelay(): number | undefined {
-    if (this._delay !== undefined) { return this._delay; }
-    if (this.parentAnimation) { return this.parentAnimation.getDelay(); }
+  const getDuration = (): number | undefined => {
+    if (_duration !== undefined) { return _duration; }
+    if (parentAnimation) { return parentAnimation.getDuration(); }
 
     return undefined;
-  }
+  };
 
-  getKeyframes(): any[] {
-    return this._keyframes;
-  }
+  const getIterations = (): number | undefined => {
+    if (_iterations !== undefined) { return _iterations; }
+    if (parentAnimation) { return parentAnimation.getIterations(); }
 
-  name(name: string): Animation {
-    this._name = name;
+    return undefined;
+  };
 
-    return this;
-  }
+  const getDelay = (): number | undefined => {
+    if (_delay !== undefined) { return _delay; }
+    if (parentAnimation) { return parentAnimation.getDelay(); }
 
-  delay(delay: number): Animation {
-    this._delay = delay;
+    return undefined;
+  };
 
-    return this;
-  }
+  const getKeyframes = (): any[] => {
+    return _keyframes;
+  };
 
-  easing(easing: string): Animation {
-    this._easing = easing;
+  const name = (animationName: string): Animation => {
+    _name = animationName;
 
-    return this;
-  }
+    return generatePublicAPI();
+  };
 
-  duration(duration: number): Animation {
-    this._duration = duration;
+  const delay = (animationDelay: number): Animation => {
+    _delay = animationDelay;
 
-    return this;
-  }
+    return generatePublicAPI();
+  };
 
-  iterations(iterations: number): Animation {
-    this._iterations = iterations;
+  const easing = (animationEasing: string): Animation => {
+    _easing = animationEasing;
 
-    return this;
-  }
+    return generatePublicAPI();
+  };
 
-  addElement(el: Node | Node[] | NodeList | undefined | null): Animation {
-    addElement(this.elements, el);
+  const duration = (animationDuration: number): Animation => {
+    _duration = animationDuration;
 
-    return this;
-  }
+    return generatePublicAPI();
+  };
 
-  addTarget(target: string): Animation {
-    addTarget(this.elements, target);
+  const iterations = (animationIterations: number): Animation => {
+    _iterations = animationIterations;
 
-    return this;
-  }
+    return generatePublicAPI();
+  };
 
-  addAnimation(childAnimation: Animation | undefined | null): Animation {
-    addAnimation(this, this.childAnimations, childAnimation);
+  const parent = (animation: Animation): Animation => {
+    parentAnimation = animation;
 
-    return this;
-  }
+    return generatePublicAPI();
+  };
 
-  keyframes(keyframes: any[]): Animation {
-    this._keyframes = keyframes;
-    this._keyframeString = generateKeyframeString(this._name, keyframes);
+  const addElement = (el: Node | Node[] | NodeList | undefined | null): Animation => {
+    if (el != null) {
+      const nodeList = el as NodeList;
+      if (nodeList.length >= 0) {
+        for (let i = 0; i < nodeList.length; i++) {
+          elements.push((el as any)[i]);
+        }
+      } else {
+        elements.push(el as any);
+      }
+    }
 
-    return this;
-  }
+    return generatePublicAPI();
+  };
 
-  private beforeAnimation() {
-    this.childAnimations.forEach(childAnimation => {
-      childAnimation.beforeAnimation();
+  const addTarget = (target: string): Animation => {
+    const els = document.querySelectorAll(target);
+
+    return addElement(els);
+  };
+
+  const addAnimation = (animationToAdd: Animation | Animation[] | undefined | null): Animation => {
+    if (animationToAdd != null) {
+      const parentAnim = generatePublicAPI();
+      const animationsToAdd = animationToAdd as Animation[];
+      if (animationsToAdd.length >= 0) {
+        for (const animation of animationsToAdd) {
+          animation.parent(parentAnim);
+          childAnimations.push(animation);
+        }
+      } else {
+        (animationToAdd as Animation).parent(parentAnim);
+        childAnimations.push(animationToAdd as Animation);
+      }
+    }
+
+    return generatePublicAPI();
+  };
+
+  const keyframes = (keyframeValues: any[]) => {
+    _keyframes = keyframeValues;
+
+    if (!supportsWebAnimations()) {
+      _keyframeString = generateKeyframeString(_name, keyframeValues);
+    }
+
+    return generatePublicAPI();
+  };
+
+  const beforeAnimation = () => {
+    const addClasses = beforeAddClasses;
+    const removeClasses = beforeRemoveClasses;
+    const styles = beforeStylesValue;
+
+    elements.forEach((el: HTMLElement) => {
+      const elementClassList = el.classList;
+
+      elementClassList.add(...addClasses);
+      elementClassList.remove(...removeClasses);
+
+      for (const property in styles) {
+        if (styles.hasOwnProperty(property)) {
+          el.style.setProperty(property, styles[property]);
+        }
+      }
     });
+  };
 
-    const elements = this.elements;
-    const addClasses = this.beforeAddClasses;
-    const removeClasses = this.beforeRemoveClasses;
-    const styles = this.beforeStylesValue;
+  const afterAnimation = () => {
+    const addClasses = afterAddClasses;
+    const removeClasses = afterRemoveClasses;
+    const styles = afterStylesValue;
 
-    elements.forEach(el => {
+    elements.forEach((el: HTMLElement) => {
       const elementClassList = el.classList;
 
       elementClassList.add(...addClasses);
@@ -367,133 +431,202 @@ export class Animation {
       }
     });
 
-    animationEnd(elements[0], () => {
-      this.afterAnimation();
-    });
-  }
+    cleanUpElements();
+  };
 
-  private afterAnimation() {
-    const elements = this.elements;
-    const addClasses = this.afterAddClasses;
-    const removeClasses = this.afterRemoveClasses;
-    const styles = this.afterStylesValue;
+  const initializeAnimation = () => {
+    beforeAnimation();
 
-    elements.forEach(el => {
-      const elementClassList = el.classList;
+    if (supportsWebAnimations()) {
+      console.log('Your browser supports Web Animations');
+      elements.forEach((element, i) => {
+        const animation = element.animate(getKeyframes(), {
+          delay: getDelay(),
+          duration: getDuration(),
+          easing: getEasing(),
+          iterations: getIterations()
+        });
 
-      elementClassList.add(...addClasses);
-      elementClassList.remove(...removeClasses);
-
-      for (const property in styles) {
-        if (styles.hasOwnProperty(property)) {
-          el.style.setProperty(property, styles[property]);
+        if (i === 0) {
+          animation.onfinish = () => {
+            afterAnimation();
+          };
         }
+
+        console.log(animation);
+        animation.pause();
+
+        webAnimations.push(animation);
+      });
+
+    } else {
+      if (!stylesheet) {
+        stylesheet = createKeyframeStylesheet(_keyframeString);
       }
-    });
 
-    this.cleanUpElements();
-  }
+      const animationDuration = getDuration();
+      const animationEasing = getEasing();
+      const animationIterationCount = getIterations();
+      const animationDelay = getDelay();
 
-  private initializeAnimation(): void {
-    this.beforeAnimation();
+      elements.forEach(element => {
+        if (_name !== undefined) {
+          (element as HTMLElement).style.animationName = _name;
+        }
 
-    if (!this.stylesheet) {
-      this.stylesheet = createKeyframeStylesheet(this._keyframeString);
+        if (animationDuration !== undefined) {
+          (element as HTMLElement).style.animationDuration = `${animationDuration}ms`;
+        }
+
+        if (animationEasing !== undefined) {
+          (element as HTMLElement).style.animationTimingFunction = animationEasing;
+        }
+
+        if (animationIterationCount !== undefined) {
+          (element as HTMLElement).style.animationIterationCount = (animationIterationCount === Infinity) ? 'infinite' : animationIterationCount.toString();
+        }
+
+        if (animationDelay !== undefined) {
+          (element as HTMLElement).style.animationDelay = `${animationDelay}ms`;
+        }
+      });
+
+      animationEnd(elements[0], () => {
+        afterAnimation();
+      });
     }
 
-    const animationName = this._name;
-    const animationDuration = this.getDuration();
-    const animationEasing = this.getEasing();
-    const animationIterationCount = this.getIterations();
-    const animationDelay = this.getDelay();
+    initialized = true;
+  };
 
-    this.elements.forEach(element => {
-      if (animationName !== undefined) {
-        (element as HTMLElement).style.animationName = animationName;
-      }
-
-      if (animationDuration !== undefined) {
-        (element as HTMLElement).style.animationDuration = `${animationDuration}ms`;
-      }
-
-      if (animationEasing !== undefined) {
-        (element as HTMLElement).style.animationTimingFunction = animationEasing;
-      }
-
-      if (animationIterationCount !== undefined) {
-        (element as HTMLElement).style.animationIterationCount = (animationIterationCount === Infinity) ? 'infinite' : animationIterationCount.toString();
-      }
-
-      if (animationDelay !== undefined) {
-        (element as HTMLElement).style.animationDelay = `${animationDelay}ms`;
-      }
-    });
-
-    this.initialized = true;
-  }
-
-  playStep(step: number): Animation {
-    this.childAnimations.forEach(animation => {
+  const playStep = (step: number): Animation => {
+    childAnimations.forEach(animation => {
       animation.playStep(step);
     });
 
-    if (!this.initialized) {
-      this.initializeAnimation();
+    if (!initialized) {
+      initializeAnimation();
     }
 
-    this.pause();
+    pause();
 
-    if (this.getDuration() !== undefined) {
-      const animationDuration = `-${this.getDuration()! * step}ms`;
+    if (getDuration() !== undefined) {
+      if (supportsWebAnimations()) {
+        webAnimations.forEach(animation => {
+          animation.currentTime = animation.effect.getComputedTiming().delay + (getDuration()! * step);
+        });
+      } else {
+        const animationDuration = `-${getDuration()! * step}ms`;
 
-      this.elements.forEach(element => {
-        (element as HTMLElement).style.animationDelay = animationDuration;
-      });
+        elements.forEach(element => {
+          (element as HTMLElement).style.animationDelay = animationDuration;
+        });
+      }
     }
 
-    return this;
-  }
+    return generatePublicAPI();
+  };
 
-  pause(): Animation {
-    this.childAnimations.forEach(animation => {
+  const pause = (): Animation => {
+    childAnimations.forEach(animation => {
       animation.pause();
     });
 
-    if (this.initialized) {
-      this.elements.forEach(element => {
-        (element as HTMLElement).style.animationPlayState = 'paused';
-      });
+    if (initialized) {
+      if (supportsWebAnimations()) {
+        webAnimations.forEach(animation => {
+          animation.pause();
+        });
+      } else {
+        elements.forEach(element => {
+          (element as HTMLElement).style.animationPlayState = 'paused';
+        });
+      }
     }
 
-    return this;
-  }
+    return generatePublicAPI();
+  };
 
-  play(): Animation {
-    this.childAnimations.forEach(animation => {
+  const play = (): Animation => {
+    childAnimations.forEach(animation => {
       animation.play();
     });
 
-    if (!this.initialized) {
-      this.initializeAnimation();
+    if (!initialized) {
+      initializeAnimation();
     }
 
-    this.elements.forEach(element => {
-      (element as HTMLElement).style.animationPlayState = 'running';
-    });
+    if (supportsWebAnimations()) {
+      webAnimations.forEach(animation => {
+        animation.play();
+      });
+    } else {
+      elements.forEach(element => {
+        (element as HTMLElement).style.animationPlayState = 'running';
+      });
+    }
 
-    return this;
-  }
+    return generatePublicAPI();
+  };
 
-  stop(): Animation {
-    this.childAnimations.forEach(animation => {
+  const stop = (): Animation => {
+    childAnimations.forEach(animation => {
       animation.stop();
     });
 
-    if (this.initialized) {
-      this.cleanUp();
-      this.initialized = false;
+    if (initialized) {
+      cleanUp();
+      initialized = false;
     }
 
-    return this;
+    return generatePublicAPI();
+  };
+
+  const generatePublicAPI = (): Animation => {
+    return {
+      parentAnimation,
+      elements,
+      childAnimations,
+      beforeAddClasses,
+      beforeRemoveClasses,
+      beforeStylesValue,
+      afterAddClasses,
+      afterRemoveClasses,
+      afterStylesValue,
+      parent,
+      play,
+      pause,
+      stop,
+      playStep,
+      destroy,
+      keyframes,
+      addAnimation,
+      addTarget,
+      addElement,
+      iterations,
+      duration,
+      easing,
+      delay,
+      name,
+      getKeyframes,
+      getDelay,
+      getIterations,
+      getEasing,
+      getDuration,
+      afterClearStyles,
+      afterStyles,
+      afterRemoveClass,
+      afterAddClass,
+      beforeClearStyles,
+      beforeStyles,
+      beforeRemoveClass,
+      beforeAddClass,
+    };
+  };
+
+  if (animationNameValue !== undefined) {
+    name(animationNameValue);
   }
-}
+
+  return generatePublicAPI();
+};

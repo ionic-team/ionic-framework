@@ -12,11 +12,9 @@
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   <script type="module">
-    import { Animation as IonicAnimation } from '../../../../dist/collection/utils/animation/animation.js';
+    import { createAnimation } from '../../../../dist/collection/utils/animation/animation.js';
     import { createGesture } from '../../../../dist/ionic/index-a098653b.js';
-    
-    window.IonicAnimation = IonicAnimation;
-    
+        
     function clamp(val) {
       if (val > 1) {
         return 1;
@@ -34,10 +32,10 @@
     const track = document.querySelector('.track');
     const cursor = document.querySelector('.track .cursor');
     
-    const rootAnimation = new IonicAnimation();
-    const animationA = new IonicAnimation('animation-a');
-    const animationB = new IonicAnimation('animation-b');
-    const animationC = new IonicAnimation('animation-c');
+    const rootAnimation = createAnimation();
+    const animationA = createAnimation('animation-a');
+    const animationB = createAnimation('animation-b');
+    const animationC = createAnimation('animation-c');
     
     const gesture = createGesture({
       el: track,
@@ -102,7 +100,7 @@
       ]);
     
     rootAnimation.addAnimation([animationA, animationB, animationC]);
-    rootAnimation.play();
+    //rootAnimation.play();
   </script>
   
   <style>

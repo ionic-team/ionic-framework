@@ -12,18 +12,16 @@
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   <script type="module">
-    import { Animation as IonicAnimation } from '../../../../dist/collection/utils/animation/animation.js';
-    window.IonicAnimation = IonicAnimation;
-    
+    import { createAnimation } from '../../../../dist/collection/utils/animation/animation.js';
     
     const squareA = document.querySelectorAll('.square-a');
     const squareB = document.querySelectorAll('.square-b');
     const squareC = document.querySelectorAll('.square-c');
     
-    const rootAnimation = new IonicAnimation();
-    const animationA = new IonicAnimation('animation-a');
-    const animationB = new IonicAnimation('animation-b');
-    const animationC = new IonicAnimation('animation-c');
+    const rootAnimation = createAnimation();
+    const animationA = createAnimation('animation-a');
+    const animationB = createAnimation('animation-b');
+    const animationC = createAnimation('animation-c');
     
     animationA
       .addElement(squareA)

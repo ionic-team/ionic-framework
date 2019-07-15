@@ -1,11 +1,11 @@
-import { Animation } from '../animation';
+import { createAnimation } from '../animation';
 
 describe('Animation Class', () => {
   
   describe('addElement()', () => {
     let animation;
     beforeEach(() => {
-      animation = new Animation();
+      animation = createAnimation();
     });
     
     it('should add 1 element', () => {
@@ -41,7 +41,7 @@ describe('Animation Class', () => {
   describe('addTarget()', () => {
     let animation;
     beforeEach(() => {
-      animation = new Animation();
+      animation = createAnimation();
       document.body.innerHTML = '';
     });
     
@@ -78,24 +78,20 @@ describe('Animation Class', () => {
   describe('addAnimation()', () => {
     let animation;
     beforeEach(() => {
-      animation = new Animation();
+      animation = createAnimation();
     });
     
     it('should add 1 animation', () => {
-      const newAnimation = new Animation();
+      const newAnimation = createAnimation();
       animation.addAnimation(newAnimation);
 
       expect(animation.childAnimations.length).toEqual(1);
-      expect(animation.childAnimations[0].parentAnimation).toEqual(animation);
     });
     
     it('should add multiple animations', () => {
-      animation.addAnimation([new Animation(), new Animation(), new Animation()]);
+      animation.addAnimation([createAnimation(), createAnimation(), createAnimation()]);
 
       expect(animation.childAnimations.length).toEqual(3);
-      expect(animation.childAnimations[0].parentAnimation).toEqual(animation);
-      expect(animation.childAnimations[1].parentAnimation).toEqual(animation);
-      expect(animation.childAnimations[2].parentAnimation).toEqual(animation);
     });
     
     it('should not error when trying to add null or undefined', () => {
@@ -109,7 +105,7 @@ describe('Animation Class', () => {
   describe('keyframes()', () => {
     let animation;
     beforeEach(() => {
-      animation = new Animation('my-animation');
+      animation = createAnimation('my-animation');
     });
     
     it('should generate a keyframe', () => {
@@ -119,18 +115,18 @@ describe('Animation Class', () => {
         { transform: 'scale(0)', opacity: 0, offset: 1 }
       ]);
       
-      expect(animation._keyframes.length).toEqual(3);
+      expect(animation.getKeyframes().length).toEqual(3);
     });
   });
   
   describe('Before and After Animation Methods', () => {
     let animation;
     beforeEach(() => {
-      animation = new Animation();
+      animation = createAnimation();
     });
     
     it('should register all "before" styles', () => {
-      animation.beforeStyles({ 'background': 'red', 'opacity': 1 });
+      animation = animation.beforeStyles({ 'background': 'red', 'opacity': 1 });
       expect(Object.keys(animation.beforeStylesValue).length).toEqual(2);
     });
     
@@ -138,8 +134,8 @@ describe('Animation Class', () => {
       const classesToAdd = ['my-class', 'hello-world'];
       const classesToRemove = ['ionic-framework'];
       
-      animation.beforeAddClass(classesToAdd);
-      animation.beforeRemoveClass(classesToRemove);
+      animation = animation.beforeAddClass(classesToAdd);
+      animation = animation.beforeRemoveClass(classesToRemove);
       
       expect(animation.beforeAddClasses.length).toEqual(classesToAdd.length);
       expect(animation.beforeRemoveClasses.length).toEqual(classesToRemove.length);
@@ -149,16 +145,16 @@ describe('Animation Class', () => {
       const classesToAdd = 'my-class';
       const classesToRemove = 'ionic-framework';
       
-      animation.beforeAddClass(classesToAdd);
-      animation.beforeRemoveClass(classesToRemove);
+      animation = animation.beforeAddClass(classesToAdd);
+      animation = animation.beforeRemoveClass(classesToRemove);
       
       expect(animation.beforeAddClasses.length).toEqual(1);
       expect(animation.beforeRemoveClasses.length).toEqual(1);
     });
     
     it('should not register "before" classes given undefined', () => {
-      animation.beforeAddClass(undefined);
-      animation.beforeRemoveClass(undefined);
+      animation = animation.beforeAddClass(undefined);
+      animation = animation.beforeRemoveClass(undefined);
       
       expect(animation.beforeAddClasses.length).toEqual(0);
       expect(animation.beforeRemoveClasses.length).toEqual(0);
@@ -191,7 +187,7 @@ describe('Animation Class', () => {
     });
     
     it('should register all "after" styles', () => {
-      animation.afterStyles({ 'background': 'red', 'opacity': 1 });
+      animation = animation.afterStyles({ 'background': 'red', 'opacity': 1 });
       expect(Object.keys(animation.afterStylesValue).length).toEqual(2);
     });
     
@@ -199,8 +195,8 @@ describe('Animation Class', () => {
       const classesToAdd = ['my-class', 'hello-world'];
       const classesToRemove = ['ionic-framework'];
       
-      animation.afterAddClass(classesToAdd);
-      animation.afterRemoveClass(classesToRemove);
+      animation = animation.afterAddClass(classesToAdd);
+      animation = animation.afterRemoveClass(classesToRemove);
       
       expect(animation.afterAddClasses.length).toEqual(classesToAdd.length);
       expect(animation.afterRemoveClasses.length).toEqual(classesToRemove.length);
@@ -210,16 +206,16 @@ describe('Animation Class', () => {
       const classesToAdd = 'my-class';
       const classesToRemove = 'ionic-framework';
       
-      animation.afterAddClass(classesToAdd);
-      animation.afterRemoveClass(classesToRemove);
+      animation = animation.afterAddClass(classesToAdd);
+      animation = animation.afterRemoveClass(classesToRemove);
       
       expect(animation.afterAddClasses.length).toEqual(1);
       expect(animation.afterRemoveClasses.length).toEqual(1);
     });
     
     it('should not register "after" classes given undefined', () => {
-      animation.afterAddClass(undefined);
-      animation.afterRemoveClass(undefined);
+      animation = animation.afterAddClass(undefined);
+      animation = animation.afterRemoveClass(undefined);
       
       expect(animation.afterAddClasses.length).toEqual(0);
       expect(animation.afterRemoveClasses.length).toEqual(0);
@@ -270,7 +266,7 @@ describe('Animation Class', () => {
   describe('Animation Config Methods', () => {
     let animation;
     beforeEach(() => {
-      animation = new Animation();
+      animation = createAnimation();
     });
     
     it('should get undefined when easing not set', () => {
@@ -278,7 +274,7 @@ describe('Animation Class', () => {
     });
     
     it('should get parent easing when child easing is not set', () => {
-      const childAnimation = new Animation();
+      const childAnimation = createAnimation();
       animation.addAnimation(childAnimation);
       childAnimation.easing('linear');
       
@@ -286,7 +282,7 @@ describe('Animation Class', () => {
     });
     
     it('should get prefer child easing over parent easing', () => {
-      const childAnimation = new Animation();
+      const childAnimation = createAnimation();
       childAnimation.easing('linear');
       
       animation.addAnimation(childAnimation);
@@ -300,7 +296,7 @@ describe('Animation Class', () => {
     });
     
     it('should get parent duration when child duration is not set', () => {
-      const childAnimation = new Animation();
+      const childAnimation = createAnimation();
       animation.addAnimation(childAnimation);
       childAnimation.duration(500);
       
@@ -308,7 +304,7 @@ describe('Animation Class', () => {
     });
     
     it('should get prefer child duration over parent duration', () => {
-      const childAnimation = new Animation();
+      const childAnimation = createAnimation();
       childAnimation.duration(500);
       
       animation.addAnimation(childAnimation);
@@ -322,7 +318,7 @@ describe('Animation Class', () => {
     });
     
     it('should get parent delay when child delay is not set', () => {
-      const childAnimation = new Animation();
+      const childAnimation = createAnimation();
       animation.addAnimation(childAnimation);
       childAnimation.delay(500);
       
@@ -330,7 +326,7 @@ describe('Animation Class', () => {
     });
     
     it('should get prefer child delay over parent delay', () => {
-      const childAnimation = new Animation();
+      const childAnimation = createAnimation();
       childAnimation.delay(500);
       
       animation.addAnimation(childAnimation);
@@ -344,7 +340,7 @@ describe('Animation Class', () => {
     });
     
     it('should get parent iterations when child iterations is not set', () => {
-      const childAnimation = new Animation();
+      const childAnimation = createAnimation();
       animation.addAnimation(childAnimation);
       childAnimation.iterations(2);
       
@@ -352,7 +348,7 @@ describe('Animation Class', () => {
     });
     
     it('should get prefer child iterations over parent iterations', () => {
-      const childAnimation = new Animation();
+      const childAnimation = createAnimation();
       childAnimation.iterations(2);
       
       animation.addAnimation(childAnimation);
