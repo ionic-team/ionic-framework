@@ -3,7 +3,17 @@ import { Animation } from '../../../interface';
 /**
  * iOS Modal Enter Animation for the Card presentation style
  */
-export function iosEnterCardAnimation(AnimationC: Animation, baseEl: HTMLElement, presentingEl?: HTMLElement): Promise<Animation> {
+export function iosEnterCardAnimation(
+  AnimationC: Animation,
+  baseEl: HTMLElement,
+  presentingEl?: HTMLElement,
+  toY = 44,
+  toBackdropOpacity = 0.4,
+  toPresentingScale = 0.89
+  ): Promise<Animation> {
+  // The top translate Y for the presenting element
+  const presentingToY = -12;
+
   const baseAnimation = new AnimationC();
 
   const backdropAnimation = new AnimationC();
@@ -13,9 +23,9 @@ export function iosEnterCardAnimation(AnimationC: Animation, baseEl: HTMLElement
   wrapperAnimation.addElement(baseEl.querySelector('.modal-wrapper'));
 
   wrapperAnimation.beforeStyles({ 'opacity': 1 })
-                  .fromTo('translateY', '100%', '44px');
+                  .fromTo('translateY', '100%', `${toY}px`);
 
-  backdropAnimation.fromTo('opacity', 0.01, 0.4);
+  backdropAnimation.fromTo('opacity', 0.01, toBackdropOpacity);
 
   const bodyEl = document.body;
   bodyEl.style.backgroundColor = 'black';
@@ -30,8 +40,8 @@ export function iosEnterCardAnimation(AnimationC: Animation, baseEl: HTMLElement
       .beforeAddClass('presenting-view-card')
       .addElement(presentingEl)
       .duration(500)
-      .fromTo('translateY', '0px', '-5px')
-      .fromTo('scale', 1, 0.92);
+      .fromTo('translateY', '0px', `${presentingToY}px`)
+      .fromTo('scale', 1, toPresentingScale);
   }
 
   return Promise.resolve(baseAnimation

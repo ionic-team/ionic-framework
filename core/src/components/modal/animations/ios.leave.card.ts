@@ -7,11 +7,14 @@ export function iosLeaveCardAnimation(
   AnimationC: Animation,
   baseEl: HTMLElement,
   presentingEl?: HTMLElement,
-  currentY?: number,
-  currentBackdropOpacity?: number,
-  currentPresentingScale?: number,
+  currentY = 44,
+  currentBackdropOpacity = 0.4,
+  currentPresentingScale = 0.89,
   velocityY?: number
   ): Promise<Animation> {
+  // The top translate Y for the presenting element
+  const presentingFromY = -12;
+
   const duration = velocityY ? 500 - Math.min(400, velocityY * 200) : 500;
 
   const baseAnimation = new AnimationC();
@@ -35,14 +38,14 @@ export function iosLeaveCardAnimation(
     presentingAnimation
       .addElement(presentingEl)
       .duration(duration)
-      .fromTo('translateY', '-5px', '0px')
-      .fromTo('scale', currentPresentingScale || 0.92, 1);
+      .fromTo('translateY', `${presentingFromY}px`, '0px')
+      .fromTo('scale', currentPresentingScale, 1);
   }
 
   wrapperAnimation.beforeStyles({ 'opacity': 1 })
-                  .fromTo('translateY', currentY || '44px', `100%`);
+                  .fromTo('translateY', `${currentY}px`, `100%`);
 
-  backdropAnimation.fromTo('opacity', currentBackdropOpacity || 0.4, 0.0);
+  backdropAnimation.fromTo('opacity', currentBackdropOpacity, 0.0);
 
   return Promise.resolve(baseAnimation
     .addElement(baseEl)
