@@ -1,4 +1,5 @@
 import { Animation } from '../../../interface';
+import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
 
 /**
  * iOS Modal Leave Animation
@@ -7,13 +8,13 @@ export function iosLeaveCardAnimation(
   AnimationC: Animation,
   baseEl: HTMLElement,
   presentingEl?: HTMLElement,
-  currentY = 44,
-  currentBackdropOpacity = 0.4,
-  currentPresentingScale = 0.89,
+  currentY = SwipeToCloseDefaults.MIN_Y,
+  currentBackdropOpacity = SwipeToCloseDefaults.MIN_BACKDROP_OPACITY,
+  currentPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE,
   velocityY?: number
   ): Promise<Animation> {
   // The top translate Y for the presenting element
-  const presentingFromY = -12;
+  const presentingFromY = SwipeToCloseDefaults.MIN_PRESENTING_Y;
 
   const duration = velocityY ? 500 - Math.min(400, velocityY * 200) : 500;
 
