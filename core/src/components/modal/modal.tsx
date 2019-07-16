@@ -1,9 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, h, writeTask } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { GestureDetail } from '../../utils/gesture';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
@@ -14,6 +13,7 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { iosLeaveCardAnimation } from './animations/ios.leave.card';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
+import { SwipeToCloseGesture } from './gestures/swipe-to-close';
 import { ModalPresentationStyle } from './modal-interface';
 
 /**
@@ -28,6 +28,7 @@ import { ModalPresentationStyle } from './modal-interface';
   scoped: true
 })
 export class Modal implements ComponentInterface, OverlayInterface {
+  private gesture?: SwipeToCloseGesture;
 
   // Reference to the user's provided modal content
   private usersElement?: HTMLElement;
@@ -38,22 +39,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private wrapperEl?: HTMLDivElement;
   // Reference to the backdrop element
   private backdropEl?: HTMLIonBackdropElement;
-  // The current opacity of the backdrop element
-  private minBackdropOpacity = 0.4;
-  private backdropOpacity = 0;
-  // The current scale of the presenting element
-  private minPresentingScale = 0.92;
-  private presentingScale = 0;
-  // The minimum y position for the open card style modal
-  private minY = 44;
-  // Current Y position of the draggin modal
-  private y = 0;
 
   presented = false;
   animation: Animation | undefined;
   mode = getIonMode(this);
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonModalElement;
 
   /** @internal */
   @Prop() overlayIndex!: number;
@@ -173,10 +164,18 @@ export class Modal implements ComponentInterface, OverlayInterface {
   async componentDidLoad() {
     this.wrapperEl = this.el.querySelector('.modal-wrapper') as HTMLDivElement || undefined;
     this.backdropEl = this.el.querySelector('ion-backdrop') as HTMLIonBackdropElement || undefined;
+  }
 
-    if (this.swipeToClose) {
-      this.enableSwipeToClose();
-    }
+  private async enableSwipeToClose() {
+    // All of the elements needed for the swipe gesture
+    // should be in the DOM and referenced by now
+    this.gesture = new SwipeToCloseGesture(
+      this.el,
+      this.backdropEl,
+      this.wrapperEl,
+      this.presentingEl,
+      (velocityY: number) => this.swipeDismiss(velocityY)
+    );
   }
 
   /**
@@ -189,6 +188,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     this.presentingEl = presentingEl;
+
+    if (this.swipeToClose) {
+      this.enableSwipeToClose();
+    }
 
     const iosAnim = this.buildIOSEnterAnimation(presentingEl);
     const mdAnim = this.buildMDEnterAnimation(presentingEl);
@@ -242,9 +245,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
           iosLeaveCardAnimation(animation,
                                 baseEl,
                                 this.presentingEl,
-                                this.y,
-                                this.backdropOpacity,
-                                this.presentingScale,
+                                this.gesture!.getY(),
+                                this.gesture!.getBackdropOpacity(),
+                                this.gesture!.getPresentingScale(),
                                 velocityY);
     }
   }
@@ -291,118 +294,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
     return dismissed;
   }
-
-  private async swipeOpen() {
-    requestAnimationFrame(() => {
-      this.swipeSlideTo(this.minY);
-    });
-  }
-
-  private async enableSwipeToClose() {
-    const gesture = (await import('../../utils/gesture')).createGesture({
-      el: this.el,
-      gestureName: 'modalSwipeToClose',
-      gesturePriority: 110,
-      threshold: 0,
-      direction: 'y',
-      passive: true,
-      canStart: detail => this.swipeToCloseCanStart(detail),
-      onStart: detail => this.swipeToCloseOnStart(detail),
-      onMove: detail => this.swipeToCloseOnMove(detail),
-      onEnd: detail => this.swipeToCloseOnEnd(detail)
-    });
-
-    gesture.setDisabled(false);
-  }
-
-  private swipeToCloseCanStart(_detail: GestureDetail) {
-    return true;
-  }
-
-  private swipeToCloseOnStart(_detail: GestureDetail) {
-    this.swipeDisableTransition();
-    this.backdropOpacity = parseFloat(this.backdropEl!.style.opacity!);
-  }
-
-  private swipeToCloseOnMove(detail: GestureDetail) {
-    const y = this.minY + detail.deltaY;
-
-    this.swipeSlideTo(y);
-  }
-
-  private swipeToCloseOnEnd(detail: GestureDetail) {
-    console.log('On end', detail);
-
-    const viewportHeight = window.innerHeight;
-
-    this.swipeEnableTransition();
-
-    if (detail.velocityY < -0.6) {
-      this.swipeOpen();
-    } else if (detail.velocityY > 0.6) {
-      this.swipeDismiss(detail.velocityY);
-    } else if (detail.currentY <= viewportHeight / 2) {
-      this.swipeOpen();
-    } else {
-      this.swipeDismiss(detail.velocityY);
-    }
-  }
-
-  private swipeDisableTransition() {
-    this.wrapperEl!.style.transition = '';
-  }
-
-  private swipeEnableTransition() {
-    this.wrapperEl!.style.transition = `400ms transform cubic-bezier(0.23, 1, 0.32, 1)`;
-  }
-
-  private swipeSlideTo(y: number) {
-    const viewportHeight = (this.el.ownerDocument as any).defaultView.innerHeight;
-
-    const dy = y - this.minY;
-
-    const yRatio = dy / viewportHeight;
-
-    console.log(y, yRatio);
-
-    const backdropOpacity = this.minBackdropOpacity - this.minBackdropOpacity * yRatio;
-    // const presentingScale = this.presentingScale - this.presentingScale * yRatio;
-    const presentingScale = this.minPresentingScale - (this.minPresentingScale * -yRatio) * 0.1;
-
-    // Store current state of values for animation effects
-    this.presentingScale = presentingScale;
-    this.backdropOpacity = backdropOpacity;
-    this.y = y;
-
-    this.swipeSetPresentingScale(presentingScale);
-    this.swipeSetBackdropOpacity(backdropOpacity);
-    // this.y = y;
-    writeTask(() => {
-      this.wrapperEl!.style.transform = `translateY(${y}px)`;
-    });
-  }
-
-  private swipeSetBackdropOpacity(opacity: number) {
-    writeTask(() => {
-      this.backdropEl!.style.opacity = `${opacity}`;
-    });
-  }
-
-  private swipeSetPresentingScale(scale: number) {
-    if (!this.presentingEl) {
-      return;
-    }
-
-    writeTask(() => {
-      this.presentingEl!.style.transform = `translateY(-5px) scale(${scale})`;
-    });
-  }
-
-  /*
-  private swipeSlideBy(dy: number) {
-    this.swipeSlideTo(this.y + dy);
-  }
-  */
 
   hostData() {
     const mode = getIonMode(this);
