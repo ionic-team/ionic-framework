@@ -9,7 +9,7 @@ export const SwipeToCloseDefaults = {
   MIN_BACKDROP_OPACITY: 0.4,
   MIN_PRESENTING_SCALE: 0.92,
   MIN_Y: 44,
-  MIN_PRESENTING_Y: -12
+  MIN_PRESENTING_Y: 1
 };
 
 export class SwipeToCloseGesture implements ModalGesture {
@@ -80,8 +80,6 @@ export class SwipeToCloseGesture implements ModalGesture {
   }
 
   private onEnd(detail: GestureDetail) {
-    console.log('On end', detail);
-
     const viewportHeight = window.innerHeight;
 
     this.enableTransition();
@@ -112,8 +110,6 @@ export class SwipeToCloseGesture implements ModalGesture {
 
     const yRatio = dy / viewportHeight;
 
-    console.log(y, yRatio);
-
     const backdropOpacity = this.minBackdropOpacity - this.minBackdropOpacity * yRatio;
     const presentingScale = this.minPresentingScale - (this.minPresentingScale * -yRatio) * 0.05;
 
@@ -137,7 +133,6 @@ export class SwipeToCloseGesture implements ModalGesture {
   }
 
   private setPresentingScale(scale: number) {
-    console.log('Presenting scale', scale);
     if (!this.presentingEl) {
       return;
     }
