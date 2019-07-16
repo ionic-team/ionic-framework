@@ -61,7 +61,8 @@ export class MenuController {
    * @return Returns the instance of the menu, which is useful for chaining.
    */
   swipeEnable(shouldEnable: boolean, menuId?: string): Promise<HTMLIonMenuElement> {
-    return proxyMethod(CTRL, this.doc, 'swipeGesture', shouldEnable, menuId);
+    console.warn('MenuController.swipeEnable is deprecated. Use MenuController.swipeGestute() instead');
+    return this.swipeGestute(shouldEnable, menuId);
   }
 
   /**
