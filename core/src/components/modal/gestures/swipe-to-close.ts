@@ -100,7 +100,7 @@ export class SwipeToCloseGesture implements ModalGesture {
   }
 
   private enableTransition() {
-    this.wrapperEl!.style.transition = `400ms transform cubic-bezier(0.23, 1, 0.32, 1)`;
+    this.wrapperEl!.style.transition = `500ms transform cubic-bezier(0.32,0.72,0,1)`;
   }
 
   private slideTo(y: number) {
