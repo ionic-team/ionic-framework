@@ -28,7 +28,6 @@ export const IonContent = /*@__PURE__*/createReactComponent<JSX.IonContent & Rea
 export const IonChip = /*@__PURE__*/createReactComponent<JSX.IonChip & ReactProps, HTMLIonChipElement>('ion-chip');
 export const IonDatetime = /*@__PURE__*/createReactComponent<JSX.IonDatetime & ReactProps, HTMLIonDatetimeElement>('ion-datetime');
 export const IonFab= /*@__PURE__*/createReactComponent<JSX.IonFab & ReactProps, HTMLIonFabElement>('ion-fab');
-export const IonFabButton= /*@__PURE__*/createReactComponent<JSX.IonFabButton & ReactProps, HTMLIonFabButtonElement>('ion-fab-button');
 export const IonFabList = /*@__PURE__*/createReactComponent<JSX.IonFabList & ReactProps, HTMLIonFabListElement>('ion-fab-list');
 export const IonFooter = /*@__PURE__*/createReactComponent<JSX.IonFooter & ReactProps, HTMLIonFooterElement>('ion-footer');
 export const IonGrid = /*@__PURE__*/createReactComponent<JSX.IonGrid & ReactProps, HTMLIonGridElement>('ion-grid');
