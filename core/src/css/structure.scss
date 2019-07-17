@@ -21,6 +21,10 @@ html {
   text-size-adjust: 100%;
 }
 
+html:not(.hydrated) body {
+  display: none;
+}
+
 html.plt-pwa {
   height: 100vh;
 }

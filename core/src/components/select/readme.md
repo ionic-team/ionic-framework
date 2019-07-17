@@ -425,8 +425,15 @@ customActionSheetSelect.interfaceOptions = customActionSheetOptions;
 
 ```tsx
 import React from 'react';
-
-import { IonList, IonListHeader, IonItem, IonLabel, IonSelect, IonSelectOption } from '@ionic/react';
+import {
+  IonList,
+  IonListHeader,
+  IonItem,
+  IonLabel,
+  IonSelect,
+  IonSelectOption,
+  IonContent
+} from '@ionic/react';
 
 const customAlertOptions = {
   header: 'Pizza Toppings',
@@ -468,11 +475,9 @@ const compareWith = (o1: any, o2: any) => {
   return o1 && o2 ? o1.id === o2.id : o1 === o2;
 };
 
-const Example: React.SFC<{}> = () => (
-  <>
+export const SelectExample: React.FunctionComponent = () => (
+  <IonContent>
     ## Single Selection
-
-
     <IonList>
       <IonListHeader>Single Selection</IonListHeader>
 
@@ -494,11 +499,7 @@ const Example: React.SFC<{}> = () => (
         </IonSelect>
       </IonItem>
     </IonList>
-
-
     ## Multiple Selection
-
-
     <IonList>
       <IonListHeader>Multiple Selection</IonListHeader>
 
@@ -521,38 +522,45 @@ const Example: React.SFC<{}> = () => (
       <IonItem>
         <IonLabel>Pets</IonLabel>
         <IonSelect multiple={true}>
-          <IonSelectOption value="bird" selected>Bird</IonSelectOption>
+          <IonSelectOption value="bird" selected>
+            Bird
+          </IonSelectOption>
           <IonSelectOption value="cat">Cat</IonSelectOption>
-          <IonSelectOption value="dog" selected>Dog</IonSelectOption>
+          <IonSelectOption value="dog" selected>
+            Dog
+          </IonSelectOption>
           <IonSelectOption value="honeybadger">Honey Badger</IonSelectOption>
         </IonSelect>
       </IonItem>
     </IonList>
-    
     ## Objects as Values
-    
     <IonList>
       <IonListHeader>Objects as Values (compareWith)</IonListHeader>
       <IonItem>
         <IonLabel>Users</IonLabel>
         <IonSelect compareWith={compareWith}>
           {objectOptions.map((object, i) => {
-            return <IonSelectOption key={object.id} value={object.id}>{object.first} {object.last}</IonSelectOption>
+            return (
+              <IonSelectOption key={object.id} value={object.id}>
+                {object.first} {object.last}
+              </IonSelectOption>
+            );
           })}
         </IonSelect>
       </IonItem>
     </IonList>
-
-
     ## Interface Options
-
-
     <IonList>
       <IonListHeader>Interface Options</IonListHeader>
 
       <IonItem>
         <IonLabel>Alert</IonLabel>
-        <IonSelect interfaceOptions={customAlertOptions} interface="alert" multiple={true} placeholder="Select One">
+        <IonSelect
+          interfaceOptions={customAlertOptions}
+          interface="alert"
+          multiple={true}
+          placeholder="Select One"
+        >
           <IonSelectOption value="bacon">Bacon</IonSelectOption>
           <IonSelectOption value="olives">Black Olives</IonSelectOption>
           <IonSelectOption value="xcheese">Extra Cheese</IonSelectOption>
@@ -578,7 +586,11 @@ const Example: React.SFC<{}> = () => (
 
       <IonItem>
         <IonLabel>Action Sheet</IonLabel>
-        <IonSelect interfaceOptions={customActionSheetOptions} interface="action-sheet" placeholder="Select One">
+        <IonSelect
+          interfaceOptions={customActionSheetOptions}
+          interface="action-sheet"
+          placeholder="Select One"
+        >
           <IonSelectOption value="red">Red</IonSelectOption>
           <IonSelectOption value="purple">Purple</IonSelectOption>
           <IonSelectOption value="yellow">Yellow</IonSelectOption>
@@ -587,10 +599,8 @@ const Example: React.SFC<{}> = () => (
         </IonSelect>
       </IonItem>
     </IonList>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```
 
 
@@ -766,32 +776,26 @@ export default Example;
 
 ## Methods
 
-### `open(event?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>`
+### `open(event?: UIEvent | undefined) => Promise<any>`
 
 Open the select overlay. The overlay is either an alert, action sheet, or popover,
 depending on the `interface` property on the `ion-select`.
 
-#### Parameters
-
-| Name    | Type                   | Description                                    |
-| ------- | ---------------------- | ---------------------------------------------- |
-| `event` | `UIEvent \| undefined` | The user interface event that called the open. |
-
 #### Returns
 
-Type: `Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined>`
+Type: `Promise<any>`
 
 
 
 
 ## CSS Custom Properties
 
-| Name               | Description                  |
-| ------------------ | ---------------------------- |
-| `--padding-bottom` | Bottom padding of the select |
-| `--padding-end`    | End padding of the select    |
-| `--padding-start`  | Start padding of the select  |
-| `--padding-top`    | Top padding of the select    |
+| Name               | Description                                                                                               |
+| ------------------ | --------------------------------------------------------------------------------------------------------- |
+| `--padding-bottom` | Bottom padding of the select                                                                              |
+| `--padding-end`    | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the select |
+| `--padding-start`  | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the select |
+| `--padding-top`    | Top padding of the select                                                                                 |
 
 
 ----------------------------------------------

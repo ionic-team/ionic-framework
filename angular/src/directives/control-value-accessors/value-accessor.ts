@@ -42,16 +42,14 @@ export class ValueAccessor implements ControlValueAccessor {
 }
 
 export function setIonicClasses(element: ElementRef) {
-  requestAnimationFrame(() => {
-    const input = element.nativeElement as HTMLElement;
-    const classes = getClasses(input);
-    setClasses(input, classes);
+  const input = element.nativeElement as HTMLElement;
+  const classes = getClasses(input);
+  setClasses(input, classes);
 
-    const item = input.closest('ion-item');
-    if (item) {
-      setClasses(item, classes);
-    }
-  });
+  const item = input.closest('ion-item');
+  if (item) {
+    setClasses(item, classes);
+  }
 }
 
 function getClasses(element: HTMLElement) {

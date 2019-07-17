@@ -23,7 +23,6 @@
 // --------------------------------------------------
 
 :host(.ion-color)::slotted(ion-segment-button) {
-  --background-hover: #{current-color(base, .04)};
   --background-activated: #{current-color(base, .16)};
   --ripple-color: #{current-color(base)};
 
@@ -40,6 +39,11 @@
   color: #{current-color(base)};
 }
 
+@media (any-hover: hover) {
+  :host(.ion-color)::slotted(ion-segment-button:hover) {
+    background: #{current-color(base, .04)};
+  }
+}
 
 // Segment: Default Toolbar
 // --------------------------------------------------

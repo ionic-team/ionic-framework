@@ -44,11 +44,7 @@ export class StackController {
 
   getExistingView(activatedRoute: ActivatedRoute): RouteView | undefined {
     const activatedUrlKey = getUrl(this.router, activatedRoute);
-    const view = this.views.find(vw => vw.url === activatedUrlKey);
-    if (view) {
-      view.ref.changeDetectorRef.reattach();
-    }
-    return view;
+    return this.views.find(vw => vw.url === activatedUrlKey);
   }
 
   setActive(enteringView: RouteView): Promise<StackEvent> {
@@ -95,15 +91,15 @@ export class StackController {
     }
 
     const views = this.insertView(enteringView, direction);
-    return this.wait(async () => {
-      await this.transition(enteringView, leavingView, animation, this.canGoBack(1), false);
-      await cleanupAsync(enteringView, views, viewsSnapshot, this.location);
-      return {
-        enteringView,
-        direction,
-        animation,
-        tabSwitch
-      };
+    return this.wait(() => {
+      return this.transition(enteringView, leavingView, animation, this.canGoBack(1), false)
+        .then(() => cleanupAsync(enteringView, views, viewsSnapshot, this.location))
+        .then(() => ({
+          enteringView,
+          direction,
+          animation,
+          tabSwitch
+        }));
     });
   }
 
@@ -138,13 +134,12 @@ export class StackController {
     });
   }
 
-  async startBackTransition() {
+  startBackTransition() {
     const leavingView = this.activeView;
     if (leavingView) {
       const views = this.getStack(leavingView.stackId);
       const enteringView = views[views.length - 2];
-      enteringView.ref.changeDetectorRef.reattach();
-      await this.wait(() => {
+      return this.wait(() => {
         return this.transition(
           enteringView, // entering view
           leavingView, // leaving view
@@ -154,6 +149,7 @@ export class StackController {
         );
       });
     }
+    return Promise.resolve();
   }
 
   endBackTransition(shouldComplete: boolean) {
@@ -189,7 +185,7 @@ export class StackController {
     return this.views.slice();
   }
 
-  private async transition(
+  private transition(
     enteringView: RouteView | undefined,
     leavingView: RouteView | undefined,
     direction: 'forward' | 'back' | undefined,
@@ -198,8 +194,16 @@ export class StackController {
   ) {
     if (this.skipTransition) {
       this.skipTransition = false;
-      return;
+      return Promise.resolve(false);
     }
+    if (enteringView) {
+      enteringView.ref.changeDetectorRef.reattach();
+    }
+    // TODO: disconnect leaving page from change detection to
+    // reduce jank during the page transition
+    // if (leavingView) {
+    //   leavingView.ref.changeDetectorRef.detach();
+    // }
     const enteringEl = enteringView ? enteringView.element : undefined;
     const leavingEl = leavingView ? leavingView.element : undefined;
     const containerEl = this.containerEl;
@@ -209,15 +213,15 @@ export class StackController {
         containerEl.appendChild(enteringEl);
       }
 
-      await containerEl.componentOnReady();
-      await containerEl.commit(enteringEl, leavingEl, {
+      return this.zone.runOutsideAngular(() => containerEl.commit(enteringEl, leavingEl, {
         deepWait: true,
         duration: direction === undefined ? 0 : undefined,
         direction,
         showGoBack,
         progressAnimation
-      });
+      }));
     }
+    return Promise.resolve(false);
   }
 
   private async wait<T>(task: () => Promise<T>): Promise<T> {
@@ -245,7 +249,6 @@ function cleanup(activeRoute: RouteView, views: RouteView[], viewsSnapshot: Rout
     .forEach(destroyView);
 
   views.forEach(view => {
-
     /**
      * In the event that a user navigated multiple
      * times in rapid succession, we want to make sure

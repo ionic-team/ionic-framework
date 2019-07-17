@@ -7,17 +7,17 @@ import { apiSpecGenerator } from './scripts/api-spec-generator';
 export const config: Config = {
   namespace: 'Ionic',
   bundles: [
-    { components: ['ion-action-sheet', 'ion-action-sheet-controller'] },
-    { components: ['ion-alert', 'ion-alert-controller'] },
-    { components: ['ion-anchor', 'ion-back-button'] },
-    { components: ['ion-app', 'ion-buttons', 'ion-content', 'ion-footer', 'ion-header', 'ion-title', 'ion-toolbar'] },
+    { components: ['ion-action-sheet'] },
+    { components: ['ion-alert'] },
+    { components: ['ion-back-button'] },
+    { components: ['ion-app', 'ion-router-outlet', 'ion-buttons', 'ion-content', 'ion-footer', 'ion-header', 'ion-title', 'ion-toolbar'] },
     { components: ['ion-avatar', 'ion-badge', 'ion-thumbnail'] },
     { components: ['ion-backdrop'] },
     { components: ['ion-button', 'ion-icon'] },
     { components: ['ion-card', 'ion-card-content', 'ion-card-header', 'ion-card-title', 'ion-card-subtitle'] },
     { components: ['ion-checkbox'] },
     { components: ['ion-chip'] },
-    { components: ['ion-datetime', 'ion-picker', 'ion-picker-column', 'ion-picker-controller'] },
+    { components: ['ion-datetime', 'ion-picker', 'ion-picker-column'] },
     { components: ['ion-fab', 'ion-fab-button', 'ion-fab-list'] },
     { components: ['ion-grid', 'ion-row', 'ion-col'] },
     { components: ['ion-infinite-scroll', 'ion-infinite-scroll-content'] },
@@ -25,19 +25,19 @@ export const config: Config = {
     { components: ['ion-textarea'] },
     { components: ['ion-item', 'ion-item-divider', 'ion-item-group', 'ion-label', 'ion-list', 'ion-list-header', 'ion-skeleton-text', 'ion-note'] },
     { components: ['ion-item-sliding', 'ion-item-options', 'ion-item-option'] },
-    { components: ['ion-loading', 'ion-loading-controller'] },
+    { components: ['ion-loading'] },
     { components: ['ion-menu', 'ion-menu-controller', 'ion-menu-toggle', 'ion-menu-button'] },
-    { components: ['ion-modal', 'ion-modal-controller'] },
+    { components: ['ion-modal'] },
     { components: ['ion-nav', 'ion-nav-pop', 'ion-nav-push', 'ion-nav-set-root'] },
     { components: ['ion-img'] },
-    { components: ['ion-popover', 'ion-popover-controller'] },
+    { components: ['ion-popover'] },
     { components: ['ion-progress-bar'] },
     { components: ['ion-radio', 'ion-radio-group'] },
     { components: ['ion-range'] },
     { components: ['ion-refresher', 'ion-refresher-content'] },
     { components: ['ion-reorder', 'ion-reorder-group'] },
     { components: ['ion-ripple-effect'] },
-    { components: ['ion-router', 'ion-route', 'ion-route-redirect', 'ion-router-outlet'] },
+    { components: ['ion-router', 'ion-route', 'ion-route-redirect', 'ion-router-link'] },
     { components: ['ion-searchbar'] },
     { components: ['ion-segment', 'ion-segment-button'] },
     { components: ['ion-select', 'ion-select-option', 'ion-select-popover'] },
@@ -47,9 +47,21 @@ export const config: Config = {
     { components: ['ion-tabs', 'ion-tab'] },
     { components: ['ion-tab-bar', 'ion-tab-button'] },
     { components: ['ion-text'] },
-    { components: ['ion-toast', 'ion-toast-controller'] },
+    { components: ['ion-toast'] },
     { components: ['ion-toggle'] },
     { components: ['ion-virtual-scroll'] },
+
+    // Deprecated
+    { components: [
+      'ion-anchor',
+      'ion-action-sheet-controller',
+      'ion-alert-controller',
+      'ion-loading-controller',
+      'ion-modal-controller',
+      'ion-popover-controller',
+      'ion-picker-controller',
+      'ion-toast-controller',
+    ]},
   ],
   plugins: [
     sass()
@@ -57,26 +69,30 @@ export const config: Config = {
   outputTargets: [
     {
       type: 'dist',
-      esmLoaderPath: '../loader'
+      esmLoaderPath: '../loader',
+      copy: [
+        { src: '**/*.scss' }
+      ]
     },
+    // {
+    //   type: 'experimental-dist-module',
+    //   externalRuntime: true,
+    // },
     {
-      type: 'docs',
+      type: 'docs-readme',
       strict: true
     },
     {
       type: 'docs-json',
       file: '../docs/core.json'
     },
-    {
-      type: 'stats',
-      file: 'stats.json'
-    },
-    {
-      type: 'docs-custom',
-      generator: apiSpecGenerator({
-        file: 'api.txt'
-      })
-    },
+    apiSpecGenerator({
+      file: 'api.txt'
+    }),
+    // {
+    //   type: 'stats',
+    //   file: 'stats.json'
+    // },
     {
       type: 'angular',
       componentCorePackage: '@ionic/core',
@@ -108,6 +124,7 @@ export const config: Config = {
         'ion-router',
         'ion-route',
         'ion-route-redirect',
+        'ion-router-link',
         'ion-router-outlet',
         'ion-anchor',
 
@@ -124,6 +141,7 @@ export const config: Config = {
   testing: {
     allowableMismatchedPixels: 200,
     pixelmatchThreshold: 0.05,
+    waitBeforeScreenshot: 20,
     emulate: [
       {
         userAgent: 'iPhone',
@@ -149,7 +167,6 @@ export const config: Config = {
       }
     ]
   },
-  copy: [{ src: '**/*.scss' }],
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   globalScript: 'src/global/ionic-global.ts',
   enableCache: true,

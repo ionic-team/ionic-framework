@@ -6,7 +6,9 @@ export function proxyInputs(Cmp: any, inputs: string[]) {
   inputs.forEach(item => {
     Object.defineProperty(Prototype, item, {
       get() { return this.el[item]; },
-      set(val: any) { this.el[item] = val; },
+      set(val: any) {
+        this.z.runOutsideAngular(() => this.el[item] = val);
+      },
     });
   });
 }
@@ -16,7 +18,7 @@ export function proxyMethods(Cmp: any, methods: string[]) {
   methods.forEach(methodName => {
     Prototype[methodName] = function() {
       const args = arguments;
-      return this.el.componentOnReady().then((el: any) => el[methodName].apply(el, args));
+      return this.z.runOutsideAngular(() => this.el[methodName].apply(this.el, args));
     };
   });
 }

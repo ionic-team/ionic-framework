@@ -1,13 +1,14 @@
 import { browser, element, by } from 'protractor';
-import { getProperty, setProperty, handleErrorMessages } from './utils';
+import { getProperty, setProperty, handleErrorMessages, waitTime } from './utils';
 
 describe('inputs', () => {
 
   beforeEach(async () => {
     await browser.get('/inputs');
+    await waitTime(30);
   });
   afterEach(() => {
-    handleErrorMessages();
+    return handleErrorMessages();
   });
 
   it('should have default value', async () => {

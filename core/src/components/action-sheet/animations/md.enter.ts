@@ -4,7 +4,7 @@ import { Animation } from '../../../interface';
 /**
  * MD Action Sheet Enter Animation
  */
-export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+export const mdEnterAnimation = (AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> => {
   const baseAnimation = new AnimationC();
 
   const backdropAnimation = new AnimationC();
@@ -24,4 +24,4 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Pr
     .add(wrapperAnimation);
 
   return Promise.resolve(ani);
-}
+};

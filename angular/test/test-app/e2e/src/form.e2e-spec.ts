@@ -4,12 +4,13 @@ import { handleErrorMessages, setProperty, getText, waitTime } from './utils';
 describe('form', () => {
 
   afterEach(() => {
-    handleErrorMessages();
+    return handleErrorMessages();
   });
 
   describe('change', () => {
     beforeEach(async () => {
       await browser.get('/form');
+      await waitTime(30);
     });
 
     it('should have default values', async () => {
@@ -81,6 +82,7 @@ describe('form', () => {
   describe('blur', () => {
     beforeEach(async () => {
       await browser.get('/form#blur');
+      await waitTime(30);
     });
 
     it('ion-toggle should change only after blur', async () => {

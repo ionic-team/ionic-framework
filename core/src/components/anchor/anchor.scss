@@ -5,8 +5,8 @@
 
 :host {
   /**
-   * @prop --background: Background of the badge
-   * @prop --color: Text color of the badge
+   * @prop --background: Background of the anchor
+   * @prop --color: Text color of the anchor
    */
   --background: transparent;
   --color: #{ion-color(primary, base)};

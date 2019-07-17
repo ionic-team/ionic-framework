@@ -17,6 +17,21 @@ The refresher content contains the text, icon and spinner to display during a pu
 | `refreshingText`    | `refreshing-text`    | The text you want to display when performing a refresh. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security) | `string \| undefined`                                                                             | `undefined` |
 
 
+## Dependencies
+
+### Depends on
+
+- ion-icon
+- [ion-spinner](../spinner)
+
+### Graph
+```mermaid
+graph TD;
+  ion-refresher-content --> ion-icon
+  ion-refresher-content --> ion-spinner
+  style ion-refresher-content fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

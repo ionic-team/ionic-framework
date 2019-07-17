@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * iOS Modal Enter Animation
  */
-export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+export const iosEnterAnimation = (AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> => {
   const baseAnimation = new AnimationC();
 
   const backdropAnimation = new AnimationC();
@@ -13,7 +13,7 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): P
   wrapperAnimation.addElement(baseEl.querySelector('.modal-wrapper'));
 
   wrapperAnimation.beforeStyles({ 'opacity': 1 })
-                  .fromTo('translateY', '100%', '0%');
+    .fromTo('translateY', '100%', '0%');
 
   backdropAnimation.fromTo('opacity', 0.01, 0.4);
 
@@ -24,7 +24,7 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): P
     .beforeAddClass('show-modal')
     .add(backdropAnimation)
     .add(wrapperAnimation));
-}
+};
 
 /**
  * Animations for modals

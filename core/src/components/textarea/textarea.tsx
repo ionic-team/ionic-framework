@@ -1,9 +1,13 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, readTask } from '@stencil/core';
 
-import { Color, Mode, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
 import { debounceEvent, findItemLabel } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-textarea',
   styleUrls: {
@@ -21,11 +25,6 @@ export class Textarea implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   @State() hasFocus = false;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The color to use from your application's color palette.
@@ -195,9 +194,11 @@ export class Textarea implements ComponentInterface {
   }
 
   private runAutoGrow() {
-    if (this.nativeInput && this.autoGrow) {
-      this.nativeInput.style.height = 'inherit';
-      this.nativeInput.style.height = this.nativeInput.scrollHeight + 'px';
+    const nativeInput = this.nativeInput;
+    if (nativeInput && this.autoGrow) {
+      readTask(() => {
+        nativeInput.style.height = nativeInput.scrollHeight + 'px';
+      });
     }
   }
 
@@ -210,7 +211,7 @@ export class Textarea implements ComponentInterface {
    * `input.focus()`.
    */
   @Method()
-  setFocus() {
+  async setFocus() {
     if (this.nativeInput) {
       this.nativeInput.focus();
     }
@@ -296,17 +297,8 @@ export class Textarea implements ComponentInterface {
     this.checkClearOnEdit();
   }
 
-  hostData() {
-    return {
-      'aria-disabled': this.disabled ? 'true' : null,
-      class: {
-        ...createColorClasses(this.color),
-        [`${this.mode}`]: true,
-      }
-    };
-  }
-
   render() {
+    const mode = getIonMode(this);
     const value = this.getValue();
     const labelId = this.inputId + '-lbl';
     const label = findItemLabel(this.el);
@@ -315,29 +307,37 @@ export class Textarea implements ComponentInterface {
     }
 
     return (
-      <textarea
-        class="native-textarea"
-        ref={el => this.nativeInput = el}
-        autoCapitalize={this.autocapitalize}
-        autoFocus={this.autofocus}
-        disabled={this.disabled}
-        maxLength={this.maxlength}
-        minLength={this.minlength}
-        name={this.name}
-        placeholder={this.placeholder || ''}
-        readOnly={this.readonly}
-        required={this.required}
-        spellCheck={this.spellcheck}
-        cols={this.cols}
-        rows={this.rows}
-        wrap={this.wrap}
-        onInput={this.onInput}
-        onBlur={this.onBlur}
-        onFocus={this.onFocus}
-        onKeyDown={this.onKeyDown}
+      <Host
+        aria-disabled={this.disabled ? 'true' : null}
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+        }}
       >
-        {value}
-      </textarea>
+        <textarea
+          class="native-textarea"
+          ref={el => this.nativeInput = el}
+          autoCapitalize={this.autocapitalize}
+          autoFocus={this.autofocus}
+          disabled={this.disabled}
+          maxLength={this.maxlength}
+          minLength={this.minlength}
+          name={this.name}
+          placeholder={this.placeholder || ''}
+          readOnly={this.readonly}
+          required={this.required}
+          spellCheck={this.spellcheck}
+          cols={this.cols}
+          rows={this.rows}
+          wrap={this.wrap}
+          onInput={this.onInput}
+          onBlur={this.onBlur}
+          onFocus={this.onFocus}
+          onKeyDown={this.onKeyDown}
+        >
+          {value}
+        </textarea>
+      </Host>
     );
   }
 }

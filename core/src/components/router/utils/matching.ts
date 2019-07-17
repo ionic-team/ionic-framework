@@ -1,6 +1,6 @@
 import { RouteChain, RouteID, RouteRedirect } from './interface';
 
-export function matchesRedirect(input: string[], route: RouteRedirect): route is RouteRedirect {
+export const matchesRedirect = (input: string[], route: RouteRedirect): route is RouteRedirect => {
   const { from, to } = route;
   if (to === undefined) {
     return false;
@@ -20,13 +20,13 @@ export function matchesRedirect(input: string[], route: RouteRedirect): route is
     }
   }
   return from.length === input.length;
-}
+};
 
-export function routeRedirect(path: string[], routes: RouteRedirect[]) {
+export const routeRedirect = (path: string[], routes: RouteRedirect[]) => {
   return routes.find(route => matchesRedirect(path, route)) as RouteRedirect | undefined;
-}
+};
 
-export function matchesIDs(ids: string[], chain: RouteChain): number {
+export const matchesIDs = (ids: string[], chain: RouteChain): number => {
   const len = Math.min(ids.length, chain.length);
   let i = 0;
   for (; i < len; i++) {
@@ -35,9 +35,9 @@ export function matchesIDs(ids: string[], chain: RouteChain): number {
     }
   }
   return i;
-}
+};
 
-export function matchesPath(inputPath: string[], chain: RouteChain): RouteChain | null {
+export const matchesPath = (inputPath: string[], chain: RouteChain): RouteChain | null => {
   const segments = new RouterSegments(inputPath);
   let matchesDefault = false;
   let allparams: any[] | undefined;
@@ -78,9 +78,9 @@ export function matchesPath(inputPath: string[], chain: RouteChain): RouteChain 
     }));
   }
   return chain;
-}
+};
 
-export function mergeParams(a: any, b: any): any {
+export const mergeParams = (a: any, b: any): any => {
   if (!a && b) {
     return b;
   } else if (a && !b) {
@@ -92,9 +92,9 @@ export function mergeParams(a: any, b: any): any {
     };
   }
   return undefined;
-}
+};
 
-export function routerIDsToChain(ids: RouteID[], chains: RouteChain[]): RouteChain | null {
+export const routerIDsToChain = (ids: RouteID[], chains: RouteChain[]): RouteChain | null => {
   let match: RouteChain | null = null;
   let maxMatches = 0;
   const plainIDs = ids.map(i => i.id);
@@ -113,9 +113,9 @@ export function routerIDsToChain(ids: RouteID[], chains: RouteChain[]): RouteCha
     }));
   }
   return null;
-}
+};
 
-export function routerPathToChain(path: string[], chains: RouteChain[]): RouteChain | null {
+export const routerPathToChain = (path: string[], chains: RouteChain[]): RouteChain | null => {
   let match: RouteChain | null = null;
   let matches = 0;
   for (const chain of chains) {
@@ -129,9 +129,9 @@ export function routerPathToChain(path: string[], chains: RouteChain[]): RouteCh
     }
   }
   return match;
-}
+};
 
-export function computePriority(chain: RouteChain): number {
+export const computePriority = (chain: RouteChain): number => {
   let score = 1;
   let level = 1;
   for (const route of chain) {
@@ -145,7 +145,7 @@ export function computePriority(chain: RouteChain): number {
     }
   }
   return score;
-}
+};
 
 export class RouterSegments {
   private path: string[];
