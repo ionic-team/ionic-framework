@@ -19,24 +19,12 @@
 
     animation
       .addElement(square)
-      .duration(2000)
-      .easing('linear')
-      .iterations(1)
-      .keyframes([
-        { transform: 'scale(1) rotate(0deg)', opacity: 1, offset: 0 },
-        { transform: 'scale(1.5) rotate(45deg)', opacity: 0.5, offset: 0.5 },
-        { transform: 'scale(1) rotate(0deg)', opacity: 1, offset: 1 }
-      ])
-      .beforeAddClass(['hello', 'ionic', 'world'])
-      .beforeRemoveClass('liam-was-here')
-      .beforeStyles({
-        'background': 'rgba(255, 0, 0, 0.5)',
-        'color': 'white'
-      })
-      .afterStyles({
-        'background': 'rgba(0, 255, 0, 0.5)',
-      });
-      
+      .duration(1000)
+      .easing('ease-in-out')
+      .direction('alternate')
+      .iterations(Infinity)
+      .fromTo('opacity', 0.1, 1);
+
       animation.play();
   </script>
   
@@ -50,6 +38,7 @@
       margin-left: 25px;
       margin-top: 25px;
       margin-bottom: 25px;
+      opacity: 0;
     }
   </style>
   </head>

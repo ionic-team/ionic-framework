@@ -12,26 +12,37 @@ export interface Animation {
   afterRemoveClasses: string[];
   afterStylesValue: { [property: string]: any };
 
-  parent(animation: Animation): Animation;
   play(): Animation;
+  playStep(step: number): Animation;
   pause(): Animation;
   stop(): Animation;
-  playStep(step: number): Animation;
   destroy(): Animation;
+
+  from(property: string, value: any): Animation;
+  to(property: string, value: any): Animation;
+  fromTo(property: string, fromValue: any, toValue: any): Animation;
   keyframes(keyframes: any[]): Animation;
+
   addAnimation(animationToADd: Animation | Animation[] | undefined | null): Animation;
   addTarget(target: string): Animation;
   addElement(el: Node | Node[] | NodeList | undefined | null): Animation;
   iterations(iterations: number): Animation;
+  fill(fill: 'auto' | 'none' | 'forwards' | 'backwards' | 'both' | undefined): Animation;
+  direction(direction: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse' | undefined): Animation;
   duration(duration: number): Animation;
   easing(easing: string): Animation;
   delay(delay: number): Animation;
   name(name: string): Animation;
+  parent(animation: Animation): Animation;
+
   getKeyframes(): any[];
+  getDirection(): 'normal' | 'reverse' | 'alternate' | 'alternate-reverse' | undefined;
+  getFill(): 'auto' | 'none' | 'forwards' | 'backwards' | 'both' | undefined;
   getDelay(): number | undefined;
   getIterations(): number | undefined;
   getEasing(): string | undefined;
   getDuration(): number | undefined;
+
   afterClearStyles(propertyNames: string[]): Animation;
   afterStyles(styles: { [property: string]: any }): Animation;
   afterRemoveClass(className: string | string[] | undefined): Animation;
@@ -40,24 +51,26 @@ export interface Animation {
   beforeStyles(styles: { [property: string]: any }): Animation;
   beforeRemoveClass(className: string | string[] | undefined): Animation;
   beforeAddClass(className: string | string[] | undefined): Animation;
+
+  onFinish(callback: any): Animation;
 }
 
 const animationEnd = (el: HTMLElement | null, callback: (ev?: TransitionEvent) => void) => {
   let unRegTrans: (() => void) | undefined;
   const opts: any = { passive: true };
 
-  function unregister() {
+  const unregister = () => {
     if (unRegTrans) {
       unRegTrans();
     }
-  }
+  };
 
-  function onTransitionEnd(ev: Event) {
+  const onTransitionEnd = (ev: Event) => {
     if (el === ev.target) {
       unregister();
       callback(ev as TransitionEvent);
     }
-  }
+  };
 
   if (el) {
     el.addEventListener('webkitAnimationEnd', onTransitionEnd, opts);
@@ -73,7 +86,7 @@ const animationEnd = (el: HTMLElement | null, callback: (ev?: TransitionEvent) =
 };
 
 const supportsWebAnimations = (): boolean => {
-  return !!(window as any).Animation;
+ return !!(window as any).Animation;
 };
 
 const generateKeyframeString = (name: string | undefined, keyframes: any[] = []): string => {
@@ -124,9 +137,10 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
   let _duration: number | undefined;
   let _easing: string | undefined;
   let _iterations: number | undefined;
+  let _fill: 'auto' | 'none' | 'forwards' | 'backwards' | 'both' | undefined;
+  let _direction: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse' | undefined;
 
   let _keyframes: any[] = [];
-  let _keyframeString = '';
 
   let initialized = false;
 
@@ -143,6 +157,7 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
   let afterStylesValue: { [property: string]: any } = {};
 
   let webAnimations: any[] = [];
+  let onFinishCallback: any | undefined;
 
   /**
    * Destroy this animation and all child animations.
@@ -165,6 +180,12 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
   const cleanUp = () => {
     cleanUpElements();
     cleanUpStyleSheets();
+  };
+
+  const onFinish = (callback: any): Animation => {
+    onFinishCallback = callback;
+
+    return generatePublicAPI();
   };
 
   const cleanUpElements = () => {
@@ -277,6 +298,21 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
     return generatePublicAPI();
   };
 
+  const getFill = (): 'auto' | 'none' | 'forwards' | 'backwards' | 'both' | undefined => {
+    if (_fill !== undefined) { return _fill; }
+    if (parentAnimation) { return parentAnimation.getFill(); }
+
+    return undefined;
+  };
+
+  const getDirection = (): 'normal' | 'reverse' | 'alternate' | 'alternate-reverse' | undefined => {
+    if (_direction !== undefined) { return _direction; }
+    if (parentAnimation) { return parentAnimation.getDirection(); }
+
+    return undefined;
+
+  };
+
   const getEasing = (): string | undefined => {
     if (_easing !== undefined) { return _easing; }
     if (parentAnimation) { return parentAnimation.getEasing(); }
@@ -313,6 +349,19 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
     _name = animationName;
 
     return generatePublicAPI();
+  };
+
+  const direction = (animationDirection: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse'): Animation => {
+    _direction = animationDirection;
+
+    return generatePublicAPI();
+  };
+
+  const fill = (animationFill: 'auto' | 'none' | 'forwards' | 'backwards' | 'both'): Animation => {
+    _fill = animationFill;
+
+    return generatePublicAPI();
+
   };
 
   const delay = (animationDelay: number): Animation => {
@@ -387,10 +436,6 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
   const keyframes = (keyframeValues: any[]) => {
     _keyframes = keyframeValues;
 
-    if (!supportsWebAnimations()) {
-      _keyframeString = generateKeyframeString(_name, keyframeValues);
-    }
-
     return generatePublicAPI();
   };
 
@@ -431,7 +476,9 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
       }
     });
 
-    cleanUpElements();
+    if (onFinishCallback !== undefined) {
+      onFinishCallback(generatePublicAPI());
+    }
   };
 
   const initializeAnimation = () => {
@@ -443,7 +490,9 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
           delay: getDelay(),
           duration: getDuration(),
           easing: getEasing(),
-          iterations: getIterations()
+          iterations: getIterations(),
+          fill: getFill(),
+          direction: getDirection()
         });
 
         if (i === 0) {
@@ -458,34 +507,45 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
       });
 
     } else {
+
       if (!stylesheet) {
-        stylesheet = createKeyframeStylesheet(_keyframeString);
+        stylesheet = createKeyframeStylesheet(generateKeyframeString(_name, _keyframes));
       }
 
       const animationDuration = getDuration();
       const animationEasing = getEasing();
       const animationIterationCount = getIterations();
       const animationDelay = getDelay();
+      const animationFill = getFill();
+      const animationDirection = getDirection();
 
       elements.forEach(element => {
         if (_name !== undefined) {
-          (element as HTMLElement).style.animationName = _name;
+          element.style.setProperty('animation-name', _name);
         }
 
         if (animationDuration !== undefined) {
-          (element as HTMLElement).style.animationDuration = `${animationDuration}ms`;
+          element.style.setProperty('animation-duration', `${animationDuration}ms`);
         }
 
         if (animationEasing !== undefined) {
-          (element as HTMLElement).style.animationTimingFunction = animationEasing;
+          element.style.setProperty('animation-timing-function', animationEasing);
         }
 
         if (animationIterationCount !== undefined) {
-          (element as HTMLElement).style.animationIterationCount = (animationIterationCount === Infinity) ? 'infinite' : animationIterationCount.toString();
+          element.style.setProperty('animation-iteration-count', (animationIterationCount === Infinity) ? 'infinite' : animationIterationCount.toString());
         }
 
         if (animationDelay !== undefined) {
-          (element as HTMLElement).style.animationDelay = `${animationDelay}ms`;
+          element.style.setProperty('animation-delay', `${animationDelay}ms`);
+        }
+
+        if (animationFill !== undefined) {
+          element.style.setProperty('animation-fill-mode', animationFill);
+        }
+
+        if (animationDirection !== undefined) {
+          element.style.setProperty('animation-direction', animationDirection);
         }
       });
 
@@ -580,6 +640,52 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
     return generatePublicAPI();
   };
 
+  const from = (property: string, value: any): Animation => {
+    const keyframeValues = getKeyframes();
+    const firstFrame = keyframeValues[0];
+
+    if (firstFrame != null && (firstFrame.offset === undefined || firstFrame.offset === 0)) {
+      firstFrame[property] = value;
+    } else {
+      const object: any = {
+        offset: 0
+      };
+      object[property] = value;
+
+      _keyframes = [
+        object,
+        ..._keyframes
+      ];
+    }
+
+    return generatePublicAPI();
+  };
+
+  const to = (property: string, value: any): Animation => {
+    const keyframeValues = getKeyframes();
+    const lastFrame = keyframeValues[keyframes.length - 1];
+
+    if (lastFrame != null && (lastFrame.offset === undefined || lastFrame.offset === 1)) {
+        lastFrame[property] = value;
+
+    } else {
+      const object: any = {
+        offset: 1
+      };
+      object[property] = value;
+
+      _keyframes = [
+        ..._keyframes,
+        object
+      ];
+    }
+    return generatePublicAPI();
+  };
+
+  const fromTo = (property: string, fromValue: any, toValue: any): Animation => {
+    return from(property, fromValue).to(property, toValue);
+  };
+
   const generatePublicAPI = (): Animation => {
     return {
       parentAnimation,
@@ -591,6 +697,9 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
       afterAddClasses,
       afterRemoveClasses,
       afterStylesValue,
+      from,
+      to,
+      fromTo,
       parent,
       play,
       pause,
@@ -601,12 +710,16 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
       addAnimation,
       addTarget,
       addElement,
+      fill,
+      direction,
       iterations,
       duration,
       easing,
       delay,
       name,
       getKeyframes,
+      getFill,
+      getDirection,
       getDelay,
       getIterations,
       getEasing,
@@ -619,6 +732,7 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
       beforeStyles,
       beforeRemoveClass,
       beforeAddClass,
+      onFinish,
     };
   };
 
