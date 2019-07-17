@@ -203,16 +203,6 @@ const overlayAnimation = async (
   return hasCompleted;
 };
 
-export const autoFocus = (containerEl: HTMLElement): HTMLElement | undefined => {
-  const focusableEls = containerEl.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]');
-  if (focusableEls.length > 0) {
-    const el = focusableEls[0] as HTMLInputElement;
-    el.focus();
-    return el;
-  }
-  return undefined;
-};
-
 export const eventMethod = <T>(element: HTMLElement, eventName: string): Promise<T> => {
   let resolve: (detail: T) => void;
   const promise = new Promise<T>(r => resolve = r);
@@ -242,6 +232,22 @@ const isDescendant = (parent: HTMLElement, child: HTMLElement | null) => {
     child = child.parentElement;
   }
   return false;
+};
+
+const defaultGate = (h: any) => h();
+
+export const safeCall = (handler: any, arg?: any) => {
+  if (typeof handler === 'function') {
+    const jmp = config.get('_zoneGate', defaultGate);
+    return jmp(() => {
+      try {
+        return handler(arg);
+      } catch (e) {
+        console.error(e);
+      }
+    });
+  }
+  return undefined;
 };
 
 export const BACKDROP = 'backdrop';

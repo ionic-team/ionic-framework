@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * Md Modal Leave Animation
  */
-export function mdLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+export const mdLeaveAnimation = (AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> => {
   const baseAnimation = new AnimationC();
 
   const backdropAnimation = new AnimationC();
@@ -25,4 +25,4 @@ export function mdLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Pr
     .duration(200)
     .add(backdropAnimation)
     .add(wrapperAnimation));
-}
+};

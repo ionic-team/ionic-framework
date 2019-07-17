@@ -8,13 +8,10 @@ import { JSX as IoniconsJSX } from 'ionicons';
 export const IonIcon = /*@__PURE__*/createReactComponent<IoniconsJSX.IonIcon & ReactProps, HTMLIonIconElement>('ion-icon', ['icon']);
 
 // /*@__PURE__*/createReactComponent
-export const IonTabBarInner = /*@__PURE__*/createReactComponent<JSX.IonTabBar & ReactProps, HTMLIonTabBarElement>('ion-tab-bar');
-export const IonRouterOutletInner = /*@__PURE__*/createReactComponent<JSX.IonRouterOutlet & ReactProps, HTMLIonRouterOutletElement>('ion-router-outlet');
-export const IonBackButtonInner = /*@__PURE__*/createReactComponent<JSX.IonBackButton & ReactProps, HTMLIonBackButtonElement>('ion-back-button');
+
 export const IonTab = /*@__PURE__*/createReactComponent<JSX.IonTab & ReactProps, HTMLIonTabElement>('ion-tab');
 export const IonTabButton = /*@__PURE__*/createReactComponent<JSX.IonTabButton & ReactProps, HTMLIonTabButtonElement>('ion-tab-button');
 export const IonAnchor = /*@__PURE__*/createReactComponent<JSX.IonAnchor & ReactProps, HTMLIonAnchorElement>('ion-anchor');
-export const IonAppInner = /*@__PURE__*/createReactComponent<JSX.IonApp & ReactProps, HTMLIonAppElement>('ion-app');
 export const IonAvatar = /*@__PURE__*/createReactComponent<JSX.IonAvatar & ReactProps, HTMLIonAvatarElement>('ion-avatar');
 export const IonBackdrop = /*@__PURE__*/createReactComponent<JSX.IonBackdrop & ReactProps, HTMLIonBackdropElement>('ion-backdrop');
 export const IonBadge = /*@__PURE__*/createReactComponent<JSX.IonBadge & ReactProps, HTMLIonBadgeElement>('ion-badge');
@@ -39,7 +36,6 @@ export const IonHeader = /*@__PURE__*/createReactComponent<JSX.IonHeader & React
 export const IonImg = /*@__PURE__*/createReactComponent<JSX.IonImg & ReactProps, HTMLIonImgElement>('ion-img');
 export const IonInfiniteScroll = /*@__PURE__*/createReactComponent<JSX.IonInfiniteScroll & ReactProps, HTMLIonInfiniteScrollElement>('ion-infinite-scroll');
 export const IonInput = /*@__PURE__*/createReactComponent<JSX.IonInput & ReactProps, HTMLIonInputElement>('ion-input');
-export const IonItem = /*@__PURE__*/createReactComponent<JSX.IonItem & ReactProps, HTMLIonItemElement>('ion-item');
 export const IonItemDivider = /*@__PURE__*/createReactComponent<JSX.IonItemDivider & ReactProps, HTMLIonItemDividerElement>('ion-item-divider');
 export const IonItemGroup = /*@__PURE__*/createReactComponent<JSX.IonItemGroup & ReactProps, HTMLIonItemGroupElement>('ion-item-group');
 export const IonItemOption = /*@__PURE__*/createReactComponent<JSX.IonItemOption & ReactProps, HTMLIonItemOptionElement>('ion-item-option');

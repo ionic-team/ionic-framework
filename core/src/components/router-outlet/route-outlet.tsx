@@ -21,6 +21,11 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
 
   @Element() el!: HTMLElement;
 
+  /**
+   * The mode determines which platform styles to use.
+   */
+  @Prop({ mutable: true }) mode = getIonMode(this);
+
   /** @internal */
   @Prop() delegate?: FrameworkDelegate;
 
@@ -147,8 +152,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     // emit nav will change event
     this.ionNavWillChange.emit();
 
-    const mode = getIonMode(this);
-    const { el } = this;
+    const { el, mode } = this;
     const animated = this.animated && config.getBoolean('animated', true);
     const animationBuilder = this.animation || opts.animationBuilder || config.get('navAnimation');
 

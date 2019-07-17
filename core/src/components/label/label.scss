@@ -35,7 +35,7 @@
   white-space: normal;
 }
 
-:host-context(.item-interactive-disabled) {
+:host-context(.item-interactive-disabled:not(.item-multiple-inputs)) {
   cursor: default;
   opacity: var(--opacity, .3);
   pointer-events: none;

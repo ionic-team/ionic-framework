@@ -65,7 +65,7 @@ $action-sheet-ios-title-border-style:                             solid !default
 $action-sheet-ios-title-border-color-alpha:                       .08 !default;
 
 /// @prop - Border color of the action sheet title
-$action-sheet-ios-title-border-color:                             rgba(var(--ion-text-color-rgb, $text-color-rgb), $action-sheet-ios-title-border-color-alpha) !default;
+$action-sheet-ios-title-border-color:                             rgba($text-color-rgb, $action-sheet-ios-title-border-color-alpha) !default;
 
 
 // Action Sheet Subtitle
@@ -124,7 +124,7 @@ $action-sheet-ios-button-border-style:                            solid !default
 $action-sheet-ios-button-border-color-alpha:                      .08 !default;
 
 /// @prop - Border color of the action sheet button
-$action-sheet-ios-button-border-color:                            rgba(var(--ion-text-color-rgb, $text-color-rgb), $action-sheet-ios-button-border-color-alpha) !default;
+$action-sheet-ios-button-border-color:                            rgba($text-color-rgb, $action-sheet-ios-button-border-color-alpha) !default;
 
 /// @prop - Background color of the action sheet button
 $action-sheet-ios-button-background:                              transparent !default;
@@ -133,7 +133,7 @@ $action-sheet-ios-button-background:                              transparent !d
 $action-sheet-ios-button-background-alpha-activated:              .08 !default;
 
 /// @prop - Background color of the activated action sheet button
-$action-sheet-ios-button-background-activated:                    rgba(var(--ion-text-color-rgb, $text-color-rgb), $action-sheet-ios-button-background-alpha-activated) !default;
+$action-sheet-ios-button-background-activated:                    rgba($text-color-rgb, $action-sheet-ios-button-background-alpha-activated) !default;
 
 /// @prop - Background color of the selected action sheet button
 $action-sheet-ios-button-background-selected:                     $background-color !default;

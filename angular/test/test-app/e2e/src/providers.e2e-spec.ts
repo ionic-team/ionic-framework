@@ -4,7 +4,7 @@ import { handleErrorMessages, waitTime } from './utils';
 describe('providers', () => {
 
   afterEach(() => {
-    handleErrorMessages();
+    return handleErrorMessages();
   });
 
   it('should load all providers', async () => {
