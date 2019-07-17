@@ -7,6 +7,7 @@ export function createPointerEvents(
   pointerDown: any,
   pointerMove: any,
   pointerUp: any,
+  mouseEvents: boolean,
   options: EventListenerOptions
 ) {
 
@@ -107,7 +108,7 @@ export function createPointerEvents(
       if (!rmTouchStart) {
         rmTouchStart = addEventListener(el, 'touchstart', handleTouchStart, options);
       }
-      if (!rmMouseStart) {
+      if (!rmMouseStart && mouseEvents) {
         rmMouseStart = addEventListener(el, 'mousedown', handleMouseDown, options);
       }
     }

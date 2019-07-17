@@ -12,6 +12,7 @@ export function createGesture(config: GestureConfig): Gesture {
     passive: true,
     maxAngle: 40,
     threshold: 10,
+    mouseEvents: true,
 
     ...config
   };
@@ -45,6 +46,7 @@ export function createGesture(config: GestureConfig): Gesture {
     pointerDown,
     pointerMove,
     pointerUp,
+    finalConfig.mouseEvents,
     {
       capture: false,
     }
@@ -292,6 +294,7 @@ export interface Gesture {
 export interface GestureConfig {
   el: Node;
   disableScroll?: boolean;
+  mouseEvents?: boolean;
 
   direction?: 'x' | 'y';
   gestureName: string;
