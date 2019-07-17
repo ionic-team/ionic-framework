@@ -26,10 +26,6 @@ export class SwipeToCloseGesture implements ModalGesture {
   // Current Y position of the dragging modal
   private y = 0;
 
-  // A reference to the scrollable region in the modal to be smart about
-  // allowing a drag to start if the user intended to scroll instead
-  private contentScrollEl?: HTMLElement;
-
   constructor(
     private el: HTMLIonModalElement,
     private backdropEl: HTMLElement | undefined,
@@ -56,12 +52,6 @@ export class SwipeToCloseGesture implements ModalGesture {
     });
 
     gesture.setDisabled(false);
-
-    const content = this.el.querySelector('ion-content') as HTMLIonContentElement;
-
-    if (content) {
-      this.contentScrollEl = await content.getScrollElement();
-    }
   }
 
   getY() {
@@ -89,10 +79,11 @@ export class SwipeToCloseGesture implements ModalGesture {
       return true;
     }
 
-    const scrollTop = this.contentScrollEl!.scrollTop;
-    console.log('Target on scroll top', scrollTop);
+    // Target is in the content so we don't start the gesture.
+    // We could be more nuanced here and allow it for content that
+    // does not need to scroll.
 
-    return true;
+    return false;
   }
 
   private onStart(_detail: GestureDetail) {
