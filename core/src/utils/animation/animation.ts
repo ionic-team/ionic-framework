@@ -12,11 +12,14 @@ export interface Animation {
   afterRemoveClasses: string[];
   afterStylesValue: { [property: string]: any };
 
+  animationFinish(): void;
+
   play(): Animation;
   playStep(step: number): Animation;
   pause(): Animation;
   stop(): Animation;
   destroy(): Animation;
+  progressStart(): Animation;
 
   from(property: string, value: any): Animation;
   to(property: string, value: any): Animation;
@@ -25,7 +28,7 @@ export interface Animation {
 
   addAnimation(animationToADd: Animation | Animation[] | undefined | null): Animation;
   addTarget(target: string): Animation;
-  addElement(el: Node | Node[] | NodeList | undefined | null): Animation;
+  addElement(el: Element | Element[] | Node | Node[] | NodeList | undefined | null): Animation;
   iterations(iterations: number): Animation;
   fill(fill: 'auto' | 'none' | 'forwards' | 'backwards' | 'both' | undefined): Animation;
   direction(direction: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse' | undefined): Animation;
@@ -159,6 +162,8 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
   let webAnimations: any[] = [];
   let onFinishCallback: any | undefined;
 
+  let numAnimationsRunning = 0;
+
   /**
    * Destroy this animation and all child animations.
    */
@@ -203,6 +208,8 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
         element.style.removeProperty('animation-iteration-count');
         element.style.removeProperty('animation-delay');
         element.style.removeProperty('animation-play-state');
+        element.style.removeProperty('animation-fill-mode');
+        element.style.removeProperty('animation-direction');
       });
     }
   };
@@ -394,7 +401,7 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
     return generatePublicAPI();
   };
 
-  const addElement = (el: Node | Node[] | NodeList | undefined | null): Animation => {
+  const addElement = (el: Element | Element[] | Node | Node[] | NodeList | undefined | null): Animation => {
     if (el != null) {
       const nodeList = el as NodeList;
       if (nodeList.length >= 0) {
@@ -481,77 +488,84 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
     }
   };
 
-  const initializeAnimation = () => {
-    beforeAnimation();
+  const animationFinish = () => {
+    if (numAnimationsRunning === 0) { return; }
 
-    if (supportsWebAnimations()) {
-      elements.forEach((element, i) => {
-        const animation = element.animate(getKeyframes(), {
-          delay: getDelay(),
-          duration: getDuration(),
-          easing: getEasing(),
-          iterations: getIterations(),
-          fill: getFill(),
-          direction: getDirection()
-        });
+    numAnimationsRunning--;
 
-        if (i === 0) {
-          animation.onfinish = () => {
-            afterAnimation();
-          };
-        }
+    if (numAnimationsRunning === 0) {
+      afterAnimation();
+    }
 
-        animation.pause();
+    if (parentAnimation) {
+      parentAnimation.animationFinish();
+    }
+  };
 
-        webAnimations.push(animation);
-      });
-
-    } else {
-
-      if (!stylesheet) {
+  const initializeCSSAnimation = () => {
+    if (!stylesheet) {
         stylesheet = createKeyframeStylesheet(generateKeyframeString(_name, _keyframes));
       }
 
-      const animationDuration = getDuration();
-      const animationEasing = getEasing();
-      const animationIterationCount = getIterations();
-      const animationDelay = getDelay();
-      const animationFill = getFill();
-      const animationDirection = getDirection();
+    elements.forEach(element => {
+        element.style.setProperty('animation-name', _name || null);
+        element.style.setProperty('animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
+        element.style.setProperty('animation-timing-function', getEasing() || null);
+        element.style.setProperty('animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
+        element.style.setProperty('animation-fill-mode', getFill() || null);
+        element.style.setProperty('animation-direction', getDirection() || null);
 
-      elements.forEach(element => {
-        if (_name !== undefined) {
-          element.style.setProperty('animation-name', _name);
+        let iterationsCount = null;
+        if (getIterations() !== undefined) {
+          iterationsCount = (getIterations() === Infinity) ? 'infinite' : getIterations()!.toString();
         }
 
-        if (animationDuration !== undefined) {
-          element.style.setProperty('animation-duration', `${animationDuration}ms`);
-        }
-
-        if (animationEasing !== undefined) {
-          element.style.setProperty('animation-timing-function', animationEasing);
-        }
-
-        if (animationIterationCount !== undefined) {
-          element.style.setProperty('animation-iteration-count', (animationIterationCount === Infinity) ? 'infinite' : animationIterationCount.toString());
-        }
-
-        if (animationDelay !== undefined) {
-          element.style.setProperty('animation-delay', `${animationDelay}ms`);
-        }
-
-        if (animationFill !== undefined) {
-          element.style.setProperty('animation-fill-mode', animationFill);
-        }
-
-        if (animationDirection !== undefined) {
-          element.style.setProperty('animation-direction', animationDirection);
-        }
+        element.style.setProperty('animation-directiteration-countion', iterationsCount);
       });
 
-      animationEnd(elements[0], () => {
-        afterAnimation();
+    if (elements.length > 0) {
+        animationEnd(elements[0], () => {
+          animationFinish();
+        });
+      }
+  };
+
+  const initializeWebAnimation = () => {
+    elements.forEach(element => {
+      const animation = element.animate(getKeyframes(), {
+        delay: getDelay(),
+        duration: getDuration(),
+        easing: getEasing(),
+        iterations: getIterations(),
+        fill: getFill(),
+        direction: getDirection()
       });
+
+      animation.pause();
+
+      webAnimations.push(animation);
+    });
+
+    if (webAnimations.length > 0) {
+      webAnimations[0].onfinish = () => {
+        animationFinish();
+      };
+    }
+  };
+
+  const initializeAnimation = () => {
+    beforeAnimation();
+
+    numAnimationsRunning = childAnimations.length + 1;
+
+    if (getKeyframes().length === 0) {
+      animationFinish();
+    } else {
+      if (supportsWebAnimations()) {
+        initializeWebAnimation();
+      } else {
+        initializeCSSAnimation();
+      }
     }
 
     initialized = true;
@@ -562,10 +576,7 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
       animation.playStep(step);
     });
 
-    if (!initialized) {
-      initializeAnimation();
-    }
-
+    progressStart();
     pause();
 
     if (getDuration() !== undefined) {
@@ -610,9 +621,7 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
       animation.play();
     });
 
-    if (!initialized) {
-      initializeAnimation();
-    }
+    progressStart(true);
 
     if (supportsWebAnimations()) {
       webAnimations.forEach(animation => {
@@ -663,7 +672,7 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
 
   const to = (property: string, value: any): Animation => {
     const keyframeValues = getKeyframes();
-    const lastFrame = keyframeValues[keyframes.length - 1];
+    const lastFrame = keyframeValues[keyframeValues.length - 1];
 
     if (lastFrame != null && (lastFrame.offset === undefined || lastFrame.offset === 1)) {
         lastFrame[property] = value;
@@ -686,6 +695,19 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
     return from(property, fromValue).to(property, toValue);
   };
 
+  const progressStart = (reset = false): Animation => {
+    if (initialized && reset) {
+      initialized = false;
+      cleanUpElements();
+    }
+
+    if (!initialized) {
+      initializeAnimation();
+    }
+
+    return generatePublicAPI();
+  };
+
   const generatePublicAPI = (): Animation => {
     return {
       parentAnimation,
@@ -697,6 +719,9 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
       afterAddClasses,
       afterRemoveClasses,
       afterStylesValue,
+
+      animationFinish,
+
       from,
       to,
       fromTo,
@@ -733,6 +758,7 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
       beforeRemoveClass,
       beforeAddClass,
       onFinish,
+      progressStart
     };
   };
 

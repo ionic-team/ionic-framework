@@ -18,18 +18,17 @@
     const squareB = document.querySelectorAll('.square-b');
     const squareC = document.querySelectorAll('.square-c');
     const squareCText = document.querySelectorAll('.square-c .text');
-    
-    const rootAnimation = createAnimation();
+        
     const animationA = createAnimation('animation-a');
     const animationB = createAnimation('animation-b');
     const animationC = createAnimation('animation-c');
     
     const animationCSubA = createAnimation('animation-c-sub-a');
+    const animationCSubB = createAnimation('animation-c-sub-b');
     
     animationA
       .addElement(squareA)
-      .duration(2000)
-      .delay(5000)
+      .duration(1000)
       .easing('linear')
       .iterations(1)
       .keyframes([
@@ -42,15 +41,11 @@
       })
       .afterStyles({
         'background': 'rgba(0, 255, 0, 0.5)'
-      })
-      .onFinish(() => {
-        console.log('Animation A Done');
       });
-      
+
     animationB
       .addElement(squareB)
       .duration(500)
-      .delay(2000)
       .easing('ease-in-out')
       .iterations(1)
       .keyframes([
@@ -63,15 +58,43 @@
       })
       .afterStyles({
         'background': 'rgba(0, 255, 0, 0.5)'
-      })
-      .onFinish(() => {
-        console.log('Animation B Done');
       });
-  
+      
+    animationCSubA
+      .addElement(squareCText)
+      .duration(1000)
+      .delay(2000)
+      .keyframes([
+        {
+          offset: 0,
+          transform: 'scale(1)'
+        },
+        {
+          offset: 0.5,
+          transform: 'scale(1.5)'
+        },
+        {
+          offset: 1,
+          transform: 'scale(1)'
+        }
+      ])
+      .fromTo('color', 'red', 'blue')
+      .onFinish(() => {
+        document.querySelector('li.animation-c-sub-a .status').innerText = 'DONE';
+      });
+      
+    animationCSubB
+      .addElement(squareCText)
+      .duration(1000)
+      .delay(3500)
+      .fromTo('background', 'red', 'blue')
+      .onFinish(() => {
+        document.querySelector('li.animation-c-sub-b .status').innerText = 'DONE';
+      });
+
     animationC
       .addElement(squareC)
       .duration(2000)
-      .delay(500)
       .easing('ease-in-out')
       .iterations(1)
       .keyframes([
@@ -85,41 +108,41 @@
       .afterStyles({
         'background': 'rgba(0, 255, 0, 0.5)'
       })
+      .addAnimation([animationCSubA, animationCSubB])
       .onFinish(() => {
-        console.log('Animation C Done')
+        document.querySelector('li.animation-c .status').innerText = 'DONE';
       });
       
-    animationCSubA
-      .addElement(squareCText)
-      .duration(1000)
-      .delay(3000)
-      .fromTo('color', 'red', 'blue')
-      .onFinish(() => {
-        console.log('Animation CSubA Done');
-      });
+    animationA.onFinish(() => {
+      animationB.play();
+      document.querySelector('li.animation-a .status').innerText = 'DONE';
+    });
+    animationB.onFinish(() => {
+      animationC.play()
+      document.querySelector('li.animation-b .status').innerText = 'DONE';
+    }); 
       
-    animationC.addAnimation(animationCSubA);
-    
-    rootAnimation
-      .addAnimation([animationA, animationB, animationC])
-      .onFinish(() => {
-        console.log('Root Animation Done');
-      });
-        
     document.querySelector('.play').addEventListener('click', () => {
-      rootAnimation.play();
+      animationA.play();
+      document.querySelectorAll('.status').forEach(status => {
+        status.innerText = '';
+      })
     });
     
     document.querySelector('.pause').addEventListener('click', () => {
-      rootAnimation.pause();
+      animationA.pause();
     });
     
     document.querySelector('.destroy').addEventListener('click', () => {
-      rootAnimation.destroy();
+      animationA.destroy();
     });
     
     document.querySelector('.stop').addEventListener('click', () => {
-      rootAnimation.stop();
+      animationA.stop();
+      
+      document.querySelectorAll('.status').forEach(status => {
+        status.innerText = '';
+      })
     });
   </script>
   
@@ -133,6 +156,20 @@
       margin-left: 25px;
       margin-top: 25px;
       margin-bottom: 25px;
+    }
+    
+    .status-pane {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 300px;
+      height: 400px;
+      padding-right: 10px;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    
+    li .status {
+      float: right;
     }
   </style>
   </head>
@@ -162,6 +199,24 @@
         
         <div class="square square-c">
           <div class="text">Hello</div>
+        </div>
+        
+        <div class="status-pane">
+          <ul>
+            <li class="animation-a">Animation A<div class="status"></div></li>
+          </ul>
+          
+          <ul>
+            <li class="animation-b">Animation B<div class="status"></div></li>
+          </ul>
+          
+          <ul>
+            <li class="animation-c">Animation C<div class="status"></div></li>
+            <ul>
+              <li class="animation-c-sub-a">Animation C sub A<div class="status"></div></li>
+              <li class="animation-c-sub-b">Animation C sub B<div class="status"></div></li>
+            </ul>
+          </ul>
         </div>
       </div>
     </ion-content>

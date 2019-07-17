@@ -102,7 +102,7 @@ describe('Animation Class', () => {
     })
   });
   
-  describe('keyframes()', () => {
+  describe('Animation Keyframes', () => {
     let animation;
     beforeEach(() => {
       animation = createAnimation('my-animation');
@@ -275,8 +275,9 @@ describe('Animation Class', () => {
     
     it('should get parent easing when child easing is not set', () => {
       const childAnimation = createAnimation();
-      animation.addAnimation(childAnimation);
-      childAnimation.easing('linear');
+      animation
+        .addAnimation(childAnimation)
+        .easing('linear');
       
       expect(childAnimation.getEasing()).toEqual('linear');
     });
@@ -285,8 +286,9 @@ describe('Animation Class', () => {
       const childAnimation = createAnimation();
       childAnimation.easing('linear');
       
-      animation.addAnimation(childAnimation);
-      animation.easing('ease-in-out');
+      animation
+        .addAnimation(childAnimation)
+        .easing('ease-in-out');
       
       expect(childAnimation.getEasing()).toEqual('linear');
     });
@@ -297,8 +299,9 @@ describe('Animation Class', () => {
     
     it('should get parent duration when child duration is not set', () => {
       const childAnimation = createAnimation();
-      animation.addAnimation(childAnimation);
-      childAnimation.duration(500);
+      animation
+        .addAnimation(childAnimation)
+        .duration(500);
       
       expect(childAnimation.getDuration()).toEqual(500);
     });
@@ -307,8 +310,9 @@ describe('Animation Class', () => {
       const childAnimation = createAnimation();
       childAnimation.duration(500);
       
-      animation.addAnimation(childAnimation);
-      animation.duration(1000);
+      animation
+        .addAnimation(childAnimation)
+        .duration(1000);
       
       expect(childAnimation.getDuration()).toEqual(500);
     });
@@ -319,8 +323,9 @@ describe('Animation Class', () => {
     
     it('should get parent delay when child delay is not set', () => {
       const childAnimation = createAnimation();
-      animation.addAnimation(childAnimation);
-      childAnimation.delay(500);
+      animation
+        .addAnimation(childAnimation)
+        .delay(500);
       
       expect(childAnimation.getDelay()).toEqual(500);
     });
@@ -329,8 +334,9 @@ describe('Animation Class', () => {
       const childAnimation = createAnimation();
       childAnimation.delay(500);
       
-      animation.addAnimation(childAnimation);
-      animation.delay(1000);
+      animation
+        .addAnimation(childAnimation)
+        .delay(1000);
       
       expect(childAnimation.getDelay()).toEqual(500);
     });
@@ -341,8 +347,9 @@ describe('Animation Class', () => {
     
     it('should get parent iterations when child iterations is not set', () => {
       const childAnimation = createAnimation();
-      animation.addAnimation(childAnimation);
-      childAnimation.iterations(2);
+      animation
+        .addAnimation(childAnimation)
+        .iterations(2);
       
       expect(childAnimation.getIterations()).toEqual(2);
     });
@@ -351,10 +358,59 @@ describe('Animation Class', () => {
       const childAnimation = createAnimation();
       childAnimation.iterations(2);
       
-      animation.addAnimation(childAnimation);
-      animation.iterations(1);
+      animation
+        .addAnimation(childAnimation)
+        .iterations(1);
       
       expect(childAnimation.getIterations()).toEqual(2);
+    });    
+    
+    it('should get undefined when fill not set', () => {
+      expect(animation.getFill()).toEqual(undefined);
+    });
+    
+    it('should get parent fill when child fill is not set', () => {
+      const childAnimation = createAnimation();
+      animation
+        .addAnimation(childAnimation)
+        .fill('both');
+      
+      expect(childAnimation.getFill()).toEqual('both');
+    });
+    
+    it('should get prefer child fill over parent fill', () => {
+      const childAnimation = createAnimation();
+      childAnimation.fill('none');
+      
+      animation
+        .addAnimation(childAnimation)
+        .fill('forwards');
+      
+      expect(childAnimation.getFill()).toEqual('none');
+    });
+    
+    it('should get undefined when direction not set', () => {
+      expect(animation.getDirection()).toEqual(undefined);
+    });
+    
+    it('should get parent direction when child direction is not set', () => {
+      const childAnimation = createAnimation();
+      animation
+        .addAnimation(childAnimation)
+        .direction('alternate');
+      
+      expect(childAnimation.getDirection()).toEqual('alternate');
+    });
+    
+    it('should get prefer child direction over parent direction', () => {
+      const childAnimation = createAnimation();
+      childAnimation.direction('alternate-reverse');
+      
+      animation
+        .addAnimation(childAnimation)
+        .direction('normal');
+      
+      expect(childAnimation.getDirection()).toEqual('alternate-reverse');
     });
 
   })

@@ -13,114 +13,94 @@
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   <script type="module">
     import { createAnimation } from '../../../../dist/collection/utils/animation/animation.js';
+    import { createGesture } from '../../../../dist/ionic/index-91289ad8.js';
+        
+    function clamp(val) {
+      if (val > 1) {
+        return 1;
+      } else if (val < 0) {
+        return 0;
+      }
+      
+      return val;
+    }
     
     const squareA = document.querySelectorAll('.square-a');
     const squareB = document.querySelectorAll('.square-b');
     const squareC = document.querySelectorAll('.square-c');
-    const squareCText = document.querySelectorAll('.square-c .text');
+    
+    const track = document.querySelector('.track');
+    const cursor = document.querySelector('.track .cursor');
     
     const rootAnimation = createAnimation();
     const animationA = createAnimation('animation-a');
     const animationB = createAnimation('animation-b');
     const animationC = createAnimation('animation-c');
     
-    const animationCSubA = createAnimation('animation-c-sub-a');
+    const gesture = createGesture({
+      el: track,
+      gestureName: 'drag',
+      gesturePriority: 100,
+      treshold: 5,
+      onStart: () => {},
+      onMove: (ev) => {
+        const start = ev.startX;
+        const width = track.clientWidth;
+        
+        const lower = start;
+        const upper = width - start;
+        
+        const current = clamp((ev.currentX - lower) / upper);
+        
+        rootAnimation.playStep(current);
+        cursor.style.transform = `translateX(${ev.currentX - 10}px)`;
+      },
+      onEnd: (ev) => {
+        rootAnimation.playStep(0);
+        cursor.style.transform = `translateX(${0}px)`;
+      }
+    });
+    
+    gesture.setDisabled(false);
     
     animationA
       .addElement(squareA)
       .duration(2000)
       .delay(5000)
       .easing('linear')
-      .iterations(1)
+      .iterations(Infinity)
       .keyframes([
         { transform: 'scale(1) rotate(0deg)', opacity: 1, offset: 0 },
         { transform: 'scale(1.5) rotate(45deg)', opacity: 0.5, offset: 0.5 },
         { transform: 'scale(1) rotate(0deg)', opacity: 1, offset: 1 }
-      ])
-      .beforeStyles({
-        'background': 'rgba(0, 0, 255, 0.5'
-      })
-      .afterStyles({
-        'background': 'rgba(0, 255, 0, 0.5)'
-      })
-      .onFinish(() => {
-        console.log('Animation A Done');
-      });
+      ]);
       
     animationB
       .addElement(squareB)
       .duration(500)
       .delay(2000)
       .easing('ease-in-out')
-      .iterations(1)
+      .iterations(Infinity)
       .keyframes([
         { transform: 'scale(1) rotate(0deg)', opacity: 1, offset: 0 },
         { transform: 'scale(0.5) rotate(-45deg)', opacity: 0.5, offset: 0.5 },
         { transform: 'scale(1) rotate(0deg)', opacity: 1, offset: 1 }
-      ])
-      .beforeStyles({
-        'background': 'rgba(0, 0, 255, 0.5'
-      })
-      .afterStyles({
-        'background': 'rgba(0, 255, 0, 0.5)'
-      })
-      .onFinish(() => {
-        console.log('Animation B Done');
-      });
-  
+      ]);
+      
     animationC
       .addElement(squareC)
       .duration(2000)
       .delay(500)
       .easing('ease-in-out')
-      .iterations(1)
+      .iterations(Infinity)
       .keyframes([
         { transform: 'scale(1) skew(0deg)', opacity: 1, offset: 0 },
         { transform: 'scale(1.5) skew(15deg)', opacity: 0.5, offset: 0.5 },
         { transform: 'scale(1) skew(0deg)', opacity: 1, offset: 1 }
-      ])
-      .beforeStyles({
-        'background': 'rgba(0, 0, 255, 0.5'
-      })
-      .afterStyles({
-        'background': 'rgba(0, 255, 0, 0.5)'
-      })
-      .onFinish(() => {
-        console.log('Animation C Done')
-      });
-      
-    animationCSubA
-      .addElement(squareCText)
-      .duration(1000)
-      .delay(3000)
-      .fromTo('color', 'red', 'blue')
-      .onFinish(() => {
-        console.log('Animation CSubA Done');
-      });
-      
-    animationC.addAnimation(animationCSubA);
+      ]);
     
-    rootAnimation
-      .addAnimation([animationA, animationB, animationC])
-      .onFinish(() => {
-        console.log('Root Animation Done');
-      });
-        
-    document.querySelector('.play').addEventListener('click', () => {
-      rootAnimation.play();
-    });
-    
-    document.querySelector('.pause').addEventListener('click', () => {
-      rootAnimation.pause();
-    });
-    
-    document.querySelector('.destroy').addEventListener('click', () => {
-      rootAnimation.destroy();
-    });
-    
-    document.querySelector('.stop').addEventListener('click', () => {
-      rootAnimation.stop();
-    });
+    rootAnimation.addAnimation([animationA, animationB, animationC]);
+    //rootAnimation.play();
   </script>
   
   <style>
@@ -133,6 +113,26 @@
       margin-left: 25px;
       margin-top: 25px;
       margin-bottom: 25px;
+    }
+    
+    .track {
+      width: 100%;
+      height: 100px;
+      background: rgba(0, 255, 0, 0.5);
+      text-align: center;
+      line-height: 100px;
+      user-select: none;
+      cursor: ew-resize;
+      position: relative;
+    }
+    
+    .track .cursor {
+      pointer-events: none;
+      width: 10px;
+      height: 100px;
+      background: rgba(255, 0, 0, 0.5);
+      position: absolute;
+      top: 0;
     }
   </style>
   </head>
@@ -147,21 +147,20 @@
     
     <ion-content>
       <div class="ion-padding">
-        <ion-button class="play">Play</ion-button>
-        <ion-button class="pause">Pause</ion-button>
-        <ion-button class="stop">Stop</ion-button>
-        <ion-button class="destroy">Destroy</ion-button>
-        
+        <div class="track">
+          Drag along the track to animate the elements
+          <div class="cursor"></div>
+        </div>
         <div class="square square-a">
-          <div class="text">Hello</div>
+          Hello
         </div>
         
         <div class="square square-b">
-          <div class="text">Hello</div>
+          Hello
         </div>
         
         <div class="square square-c">
-          <div class="text">Hello</div>
+          Hello
         </div>
       </div>
     </ion-content>

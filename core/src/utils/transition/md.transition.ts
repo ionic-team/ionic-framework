@@ -1,9 +1,64 @@
 import { Animation } from '../../interface';
+import { Animation as AnimationNew, createAnimation } from '../animation/animation';
 import { TransitionOptions } from '../transition';
 
 const TRANSLATEY = 'translateY';
 const OFF_BOTTOM = '40px';
 const CENTER = '0px';
+
+export const newMdTransitionAnimation = (opts: TransitionOptions): AnimationNew => {
+  try {
+    const rootAnimation = createAnimation('md-root-animation');
+
+    const enteringEl = opts.enteringEl;
+    const leavingEl = opts.leavingEl;
+    const backDirection = (opts.direction === 'back');
+
+    const ionPageElement = getIonPageElement(enteringEl);
+    const enteringToolbarEle = ionPageElement.querySelector('ion-toolbar');
+
+    rootAnimation
+      .addElement(ionPageElement)
+      .beforeRemoveClass('ion-page-invisible')
+      .fill('both');
+
+    if (backDirection) {
+      rootAnimation
+        .duration(opts.duration || 200)
+        .easing('cubic-bezier(0.47,0,0.745,0.715)');
+    } else {
+      rootAnimation
+        .duration(opts.duration || 280)
+        .easing('cubic-bezier(0.36,0.66,0.04,1)')
+        .fromTo('transform', `translateY(${OFF_BOTTOM})`, `translateY(${CENTER})`)
+        .fromTo('opacity', 0.01, 1);
+    }
+
+    if (enteringToolbarEle) {
+      const enteringToolBarAnimation = createAnimation('md-entering-toolbar-animation');
+      enteringToolBarAnimation.addElement(enteringToolbarEle);
+      rootAnimation.addAnimation(enteringToolBarAnimation);
+    }
+
+    if (leavingEl && backDirection) {
+      rootAnimation
+        .duration(opts.duration || 200)
+        .easing('cubic-bezier(0.47,0,0.745,0.715)');
+
+      const leavingPageAnimation = createAnimation('md-leaving-page-animation');
+      leavingPageAnimation
+        .addElement(getIonPageElement(leavingEl))
+        .fromTo('transform', `translateY(${CENTER})`, `translateY(${OFF_BOTTOM})`)
+        .fromTo('opacity', 1, 0);
+
+      rootAnimation.addAnimation(leavingPageAnimation);
+    }
+
+    return rootAnimation;
+  } catch (err) {
+    throw err;
+  }
+};
 
 export const mdTransitionAnimation = (AnimationC: Animation, _: HTMLElement, opts: TransitionOptions): Promise<Animation> => {
 

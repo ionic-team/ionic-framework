@@ -77,18 +77,32 @@ const animation = async (animationBuilder: AnimationBuilder, opts: TransitionOpt
   await waitForReady(opts, true);
 
   const trans = await import('../animation').then(mod => mod.create(animationBuilder, opts.baseEl, opts));
+  trans;
+
   fireWillEvents(opts.enteringEl, opts.leavingEl);
-  await playTransition(trans, opts);
+
+  const animation = ((opts.mode === 'ios')
+    ? (await iosTransitionAnimation()).newIosTransitionAnimation(opts.baseEl, opts)
+    : (await mdTransitionAnimation()).newMdTransitionAnimation(opts) as any);
+
+  animation;
+
+  await playTransition(animation, opts);
+
+  animation.hasCompleted = true;
+
   if (opts.progressCallback) {
     opts.progressCallback(undefined);
   }
 
-  if (trans.hasCompleted) {
+  if (animation.hasCompleted) {
     fireDidEvents(opts.enteringEl, opts.leavingEl);
   }
+
+  console.log('done!');
   return {
-    hasCompleted: trans.hasCompleted,
-    animation: trans
+    hasCompleted: animation.hasCompleted,
+    animation
   };
 };
 
@@ -126,7 +140,7 @@ const notifyViewReady = async (viewIsReady: undefined | ((enteringEl: HTMLElemen
   }
 };
 
-const playTransition = (trans: Animation, opts: TransitionOptions): Promise<Animation> => {
+const playTransition = async (trans: any, opts: TransitionOptions): Promise<Animation> => {
   const progressCallback = opts.progressCallback;
   const promise = new Promise<Animation>(resolve => trans.onFinish(resolve));
 
@@ -135,7 +149,7 @@ const playTransition = (trans: Animation, opts: TransitionOptions): Promise<Anim
     // this is a swipe to go back, just get the transition progress ready
     // kick off the swipe animation start
     trans.progressStart();
-    progressCallback(trans);
+    progressCallback(trans as any);
 
   } else {
     // only the top level transition should actually start "play"

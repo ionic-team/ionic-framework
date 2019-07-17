@@ -953,13 +953,14 @@ export class Nav implements NavOutlet {
   }
 
   private onMove(stepValue: number) {
+    console.log('step', stepValue, this.sbAni);
     if (this.sbAni) {
-      this.sbAni.progressStep(stepValue);
+      (this.sbAni as any).playStep(stepValue);
     }
   }
 
   private onEnd(shouldComplete: boolean, stepValue: number, dur: number) {
-    if (this.sbAni) {
+    if (this.sbAni && this.sbAni.progressEnd) {
       this.sbAni.progressEnd(shouldComplete, stepValue, dur);
     }
   }
