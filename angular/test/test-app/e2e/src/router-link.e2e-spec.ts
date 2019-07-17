@@ -23,12 +23,13 @@ describe('router-link params and fragments', () => {
 
   it('should return to a page with preserved query param and fragment', async () => {
     await browser.get('/router-link?ionic:_testing=true');
+    await waitTime(30);
     await element(by.css('#queryParamsFragment')).click();
-    await waitTime(200);
+    await waitTime(400);
     await element(by.css('#goToPage3')).click();
 
     browser.wait(EC.urlContains('router-link-page3'), 5000);
-    await waitTime(200);
+    await waitTime(400);
 
     await element(by.css('#goBackFromPage3')).click();
 
@@ -38,6 +39,7 @@ describe('router-link params and fragments', () => {
 
   it('should preserve query param and fragment with defaultHref string', async () => {
     await browser.get('/router-link-page3?ionic:_testing=true');
+    await waitTime(30);
 
     await element(by.css('#goBackFromPage3')).click();
 
