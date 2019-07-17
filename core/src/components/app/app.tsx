@@ -25,7 +25,7 @@ export class App implements ComponentInterface {
       if (config.getBoolean('inputShims', needInputShims())) {
         import('../../utils/input-shims/input-shims').then(module => module.startInputShims(config));
       }
-      if(config.getBoolean('hardwareBackButton', isHybrid)) {
+      if (config.getBoolean('hardwareBackButton', isHybrid)) {
         import('../../utils/hardware-back-button').then(module => module.startHardwareBackButton());
       }
       import('../../utils/focus-visible').then(module => module.startFocusVisible());
