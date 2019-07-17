@@ -1,5 +1,5 @@
 import { browser, element, by, protractor } from 'protractor';
-import { waitTime, testStack, testLifeCycle, handleErrorMessages } from './utils';
+import { waitTime, testStack, testLifeCycle, handleErrorMessages, getText } from './utils';
 
 const EC = protractor.ExpectedConditions;
 
@@ -71,18 +71,6 @@ describe('router-link', () => {
     it('should go forward with ion-button[routerLink]', async () => {
       await element(by.css('#routerLink')).click();
       await testForward();
-
-      // test go back
-      await element(by.css('ion-back-button')).click();
-      await waitTime(500);
-
-      await testStack('ion-router-outlet', ['app-router-link']);
-      await testLifeCycle('app-router-link', {
-        ionViewWillEnter: 2,
-        ionViewDidEnter: 2,
-        ionViewWillLeave: 1,
-        ionViewDidLeave: 1,
-      });
     });
 
     it('should go forward with a[routerLink]', async () => {
@@ -140,17 +128,22 @@ describe('router-link', () => {
 async function testForward() {
   await waitTime(2500);
   await testStack('ion-router-outlet', ['app-router-link', 'app-router-link-page']);
-  await testLifeCycle('app-router-link', {
-    ionViewWillEnter: 1,
-    ionViewDidEnter: 1,
-    ionViewWillLeave: 1,
-    ionViewDidLeave: 1,
-  });
   await testLifeCycle('app-router-link-page', {
     ionViewWillEnter: 1,
     ionViewDidEnter: 1,
     ionViewWillLeave: 0,
     ionViewDidLeave: 0,
+  });
+  expect(await getText(`app-router-link-page #canGoBack`)).toEqual('true');
+
+  await browser.navigate().back();
+  await waitTime(100);
+  await testStack('ion-router-outlet', ['app-router-link']);
+  await testLifeCycle('app-router-link', {
+    ionViewWillEnter: 2,
+    ionViewDidEnter: 2,
+    ionViewWillLeave: 1,
+    ionViewDidLeave: 1,
   });
 }
 
@@ -163,6 +156,8 @@ async function testRoot() {
     ionViewWillLeave: 0,
     ionViewDidLeave: 0,
   });
+  expect(await getText(`app-router-link-page #canGoBack`)).toEqual('false');
+
   await browser.navigate().back();
   await waitTime(100);
   await testStack('ion-router-outlet', ['app-router-link']);
@@ -178,6 +173,17 @@ async function testBack() {
   await waitTime(500);
   await testStack('ion-router-outlet', ['app-router-link-page']);
   await testLifeCycle('app-router-link-page', {
+    ionViewWillEnter: 1,
+    ionViewDidEnter: 1,
+    ionViewWillLeave: 0,
+    ionViewDidLeave: 0,
+  });
+  expect(await getText(`app-router-link-page #canGoBack`)).toEqual('false');
+
+  await browser.navigate().back();
+  await waitTime(100);
+  await testStack('ion-router-outlet', ['app-router-link']);
+  await testLifeCycle('app-router-link', {
     ionViewWillEnter: 1,
     ionViewDidEnter: 1,
     ionViewWillLeave: 0,
