@@ -132,3 +132,7 @@ html.plt-ios.plt-hybrid, html.plt-ios.plt-pwa {
 .presenting-view-card {
   @include border-radius(10px, 10px, 0, 0);
 }
+
+.presenting-view-card-reset {
+  transition: 500ms transform cubic-bezier(0.32, 0.72, 0, 1);
+}

@@ -99,15 +99,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Prop() animated = true;
 
   /**
-   * If `true`, the modal will support a swipe and pan drag gesture to close
+   * If `true`, the modal will support a swipe and pan drag gesture to close. Only supported on iOS as Android
+   * does not use this type of interaction.
    */
   @Prop() swipeToClose = false;
 
   /**
    * The style of presentation to use. `fullscreen` is the classic option that has the modal
-   * take up the full screen on mobile displays. A newer option, `card` is available that displays
+   * take up the full screen on mobile displays. A newer option, `card` is available for iOS only that displays
    * the modal in a stacked fashion while also zooming the previous page out slightly underneath. The
-   * `card` style is the new default starting with iOS 13.
+   * `card` style is the new default modal presentation style starting with iOS 13. Android does not use
+   * this type of modal so this option does not effect Android.
    */
   @Prop() presentationStyle: ModalPresentationStyle = 'fullscreen';
 

@@ -1466,7 +1466,7 @@ export namespace Components {
     */
     'present': (presentingEl?: HTMLElement | undefined) => Promise<void>;
     /**
-    * The style of presentation to use. `fullscreen` is the classic option that has the modal take up the full screen on mobile displays. A newer option, `card` is available that displays the modal in a stacked fashion while also zooming the previous page out slightly underneath. The `card` style is the new default starting with iOS 13.
+    * The style of presentation to use. `fullscreen` is the classic option that has the modal take up the full screen on mobile displays. A newer option, `card` is available for iOS only that displays the modal in a stacked fashion while also zooming the previous page out slightly underneath. The `card` style is the new default modal presentation style starting with iOS 13. Android does not use this type of modal so this option does not effect Android.
     */
     'presentationStyle': ModalPresentationStyle;
     /**
@@ -1474,7 +1474,7 @@ export namespace Components {
     */
     'showBackdrop': boolean;
     /**
-    * If `true`, the modal will support a swipe and pan drag gesture to close
+    * If `true`, the modal will support a swipe and pan drag gesture to close. Only supported on iOS as Android does not use this type of interaction.
     */
     'swipeToClose': boolean;
   }
@@ -4765,7 +4765,7 @@ declare namespace LocalJSX {
     */
     'onIonModalWillPresent'?: (event: CustomEvent<void>) => void;
     /**
-    * The style of presentation to use. `fullscreen` is the classic option that has the modal take up the full screen on mobile displays. A newer option, `card` is available that displays the modal in a stacked fashion while also zooming the previous page out slightly underneath. The `card` style is the new default starting with iOS 13.
+    * The style of presentation to use. `fullscreen` is the classic option that has the modal take up the full screen on mobile displays. A newer option, `card` is available for iOS only that displays the modal in a stacked fashion while also zooming the previous page out slightly underneath. The `card` style is the new default modal presentation style starting with iOS 13. Android does not use this type of modal so this option does not effect Android.
     */
     'presentationStyle'?: ModalPresentationStyle;
     /**
@@ -4773,7 +4773,7 @@ declare namespace LocalJSX {
     */
     'showBackdrop'?: boolean;
     /**
-    * If `true`, the modal will support a swipe and pan drag gesture to close
+    * If `true`, the modal will support a swipe and pan drag gesture to close. Only supported on iOS as Android does not use this type of interaction.
     */
     'swipeToClose'?: boolean;
   }

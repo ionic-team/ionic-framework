@@ -115,24 +115,31 @@ export class SwipeToCloseGesture implements ModalGesture {
 
     this.enableTransition();
 
-    if (detail.velocityY < -0.6) {
-      this.swipeOpen();
-    } else if (detail.velocityY > 0.6) {
-      this.onDismiss(detail.velocityY);
-    } else if (detail.currentY <= viewportHeight / 2) {
-      this.swipeOpen();
-    } else {
-      this.onDismiss(detail.velocityY);
-    }
+    requestAnimationFrame(() => {
+      if (detail.velocityY < -0.6) {
+        this.swipeOpen();
+      } else if (detail.velocityY > 0.6) {
+        this.onDismiss(detail.velocityY);
+      } else if (detail.currentY <= viewportHeight / 2) {
+        this.swipeOpen();
+      } else {
+        this.onDismiss(detail.velocityY);
+      }
+    });
   }
 
   private disableTransition() {
-    this.wrapperEl!.style.transition = '';
+    this.el.classList.remove('modal-animation-reset');
+    if (this.presentingEl) {
+      this.presentingEl.classList.remove('presenting-view-card-reset');
+    }
   }
 
-  // TODO: Re-evaluate this hard-coded transition
   private enableTransition() {
-    this.wrapperEl!.style.transition = `500ms transform cubic-bezier(0.32,0.72,0,1)`;
+    this.el.classList.add('modal-animation-reset');
+    if (this.presentingEl) {
+      this.presentingEl.classList.add('presenting-view-card-reset');
+    }
   }
 
   private slideTo(y: number) {
