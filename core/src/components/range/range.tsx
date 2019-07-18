@@ -368,7 +368,7 @@ export class Range implements ComponentInterface {
   }
 
   render() {
-    const { min, max, step, el, handleKeyboard, pressedKnob, disabled, pin, ratioLower, ratioUpper } = this;
+    const { min, max, step, el, handleKeyboard, pressedKnob, disabled, pin, ratioLower, ratioUpper, onBlur } = this;
 
     const mode = getIonMode(this);
     const barStart = `${ratioLower * 100}%`;
@@ -409,7 +409,6 @@ export class Range implements ComponentInterface {
     return (
       <Host
         onFocusin={this.onFocus}
-
         class={{
           ...createColorClasses(this.color),
           [mode]: true,
@@ -449,7 +448,8 @@ export class Range implements ComponentInterface {
             disabled,
             handleKeyboard,
             min,
-            max
+            max,
+            onBlur
           })}
 
           { this.dualKnobs && renderKnob(isRTL, {
@@ -461,7 +461,8 @@ export class Range implements ComponentInterface {
             disabled,
             handleKeyboard,
             min,
-            max
+            max,
+            onBlur
           })}
         </div>
         <slot name="end"></slot>
@@ -481,9 +482,13 @@ interface RangeKnob {
   pin: boolean;
 
   handleKeyboard: (name: KnobName, isIncrease: boolean) => void;
+  onBlur: () => void;
 }
 
-const renderKnob = (isRTL: boolean, { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard }: RangeKnob) => {
+const renderKnob = (isRTL: boolean, { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard, onBlur }: RangeKnob) => {
+
+
+
   const start = isRTL ? 'right' : 'left';
 
   const knobStyle = () => {
@@ -496,7 +501,7 @@ const renderKnob = (isRTL: boolean, { knob, value, ratio, min, max, disabled, pr
 
   return (
     <div
-      onMouseUp={this.onBlur}
+      onMouseUp={onBlur}
       onKeyDown={(ev: KeyboardEvent) => {
         const key = ev.key;
         if (key === 'ArrowLeft' || key === 'ArrowDown') {
