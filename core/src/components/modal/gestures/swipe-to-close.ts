@@ -23,6 +23,8 @@ export class SwipeToCloseGesture implements ModalGesture {
   private minPresentingY = SwipeToCloseDefaults.MIN_PRESENTING_Y;
   // The minimum y position for the open card style modal
   private minY = SwipeToCloseDefaults.MIN_Y;
+  // The lowest y to allow when dragging, will slow down considerably after this
+  private boundsY = 20;
   // Current Y position of the dragging modal
   private y = 0;
 
@@ -94,7 +96,15 @@ export class SwipeToCloseGesture implements ModalGesture {
   private onMove(detail: GestureDetail) {
     const y = this.minY + detail.deltaY;
 
-    this.slideTo(y);
+    const overY = this.boundsY + detail.deltaY * 0.07;
+
+    console.log('Over y', y, this.boundsY);
+
+    const actualY = y > this.boundsY ? y : overY;
+
+    console.log('Y', actualY);
+
+    this.slideTo(actualY);
   }
 
   private onEnd(detail: GestureDetail) {
@@ -117,6 +127,7 @@ export class SwipeToCloseGesture implements ModalGesture {
     this.wrapperEl!.style.transition = '';
   }
 
+  // TODO: Re-evaluate this hard-coded transition
   private enableTransition() {
     this.wrapperEl!.style.transition = `500ms transform cubic-bezier(0.32,0.72,0,1)`;
   }
@@ -129,25 +140,22 @@ export class SwipeToCloseGesture implements ModalGesture {
     const yRatio = dy / viewportHeight;
 
     const backdropOpacity = this.minBackdropOpacity - this.minBackdropOpacity * yRatio;
-    const presentingScale = this.minPresentingScale - (this.minPresentingScale * -yRatio) * 0.05;
+    const presentingScale = this.minPresentingScale - (this.minPresentingScale * -yRatio) * 0.085;
 
     // Store current state of values for animation effects
     this.presentingScale = presentingScale;
     this.backdropOpacity = backdropOpacity;
     this.y = y;
 
-    this.setPresentingScale(presentingScale);
-    this.setBackdropOpacity(backdropOpacity);
-    // this.y = y;
     writeTask(() => {
-      this.wrapperEl!.style.transform = `translateY(${y}px)`;
+      this.setPresentingScale(presentingScale);
+      this.setBackdropOpacity(backdropOpacity);
+      this.setY(y);
     });
   }
 
   private setBackdropOpacity(opacity: number) {
-    writeTask(() => {
-      this.backdropEl!.style.opacity = `${opacity}`;
-    });
+    this.backdropEl!.style.opacity = `${opacity}`;
   }
 
   private setPresentingScale(scale: number) {
@@ -155,9 +163,11 @@ export class SwipeToCloseGesture implements ModalGesture {
       return;
     }
 
-    writeTask(() => {
-      this.presentingEl!.style.transform = `translateY(${this.minPresentingY}px) scale(${scale})`;
-    });
+    this.presentingEl!.style.transform = `translateY(${this.minPresentingY}px) scale(${scale})`;
+  }
+
+  private setY(y: number) {
+    this.wrapperEl!.style.transform = `translateY(${y}px)`;
   }
 
   private async swipeOpen() {
