@@ -486,9 +486,6 @@ interface RangeKnob {
 }
 
 const renderKnob = (isRTL: boolean, { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard, onBlur }: RangeKnob) => {
-
-
-
   const start = isRTL ? 'right' : 'left';
 
   const knobStyle = () => {
