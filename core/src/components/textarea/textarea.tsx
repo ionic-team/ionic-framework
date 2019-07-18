@@ -193,10 +193,12 @@ export class Textarea implements ComponentInterface {
     this.ionInputDidLoad.emit();
   }
 
+  // TODO: performance hit, this cause layout thrashing
   private runAutoGrow() {
     const nativeInput = this.nativeInput;
     if (nativeInput && this.autoGrow) {
       readTask(() => {
+        nativeInput.style.height = 'inherit';
         nativeInput.style.height = nativeInput.scrollHeight + 'px';
       });
     }
