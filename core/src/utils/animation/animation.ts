@@ -15,11 +15,13 @@ export interface Animation {
   animationFinish(): void;
 
   play(): Animation;
-  playStep(step: number): Animation;
   pause(): Animation;
   stop(): Animation;
   destroy(): Animation;
-  progressStart(): Animation;
+  
+  progressStart(forceLinearEasing: boolean): Animation;
+  progressStep(step: number): Animation;
+  progressEnd(shouldComplete: boolean, step: number): Animation;
 
   from(property: string, value: any): Animation;
   to(property: string, value: any): Animation;
@@ -142,7 +144,6 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
   let _iterations: number | undefined;
   let _fill: 'auto' | 'none' | 'forwards' | 'backwards' | 'both' | undefined;
   let _direction: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse' | undefined;
-
   let _keyframes: any[] = [];
 
   let initialized = false;
@@ -163,6 +164,8 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
   let onFinishCallback: any | undefined;
 
   let numAnimationsRunning = 0;
+  
+  let shouldForceLinearEasing = false;
 
   /**
    * Destroy this animation and all child animations.
@@ -321,6 +324,7 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
   };
 
   const getEasing = (): string | undefined => {
+    if (shouldForceLinearEasing) { return 'linear'; }
     if (_easing !== undefined) { return _easing; }
     if (parentAnimation) { return parentAnimation.getEasing(); }
 
@@ -347,7 +351,7 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
 
     return undefined;
   };
-
+  
   const getKeyframes = (): any[] => {
     return _keyframes;
   };
@@ -520,7 +524,8 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
           iterationsCount = (getIterations() === Infinity) ? 'infinite' : getIterations()!.toString();
         }
 
-        element.style.setProperty('animation-directiteration-countion', iterationsCount);
+        element.style.setProperty('animation-iteration-countion', iterationsCount);
+        element.style.setProperty('animation-play-state', 'paused');
       });
 
     if (elements.length > 0) {
@@ -571,28 +576,56 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
     initialized = true;
   };
 
-  const playStep = (step: number): Animation => {
+  const progressStep = (step: number): Animation => {
+    if (step > 1) {
+      step = 0.99;
+    } else if (step < 0) {
+      step = 0;
+    }
+        
     childAnimations.forEach(animation => {
-      animation.playStep(step);
+      animation.progressStep(step);
     });
-
-    progressStart();
-    pause();
-
+    
     if (getDuration() !== undefined) {
       if (supportsWebAnimations()) {
         webAnimations.forEach(animation => {
           animation.currentTime = animation.effect.getComputedTiming().delay + (getDuration()! * step);
+          animation.pause();
         });
       } else {
         const animationDuration = `-${getDuration()! * step}ms`;
-
+        
         elements.forEach(element => {
           (element as HTMLElement).style.animationDelay = animationDuration;
+          (element as HTMLElement).style.animationPlayState = 'paused';
         });
       }
     }
 
+    return generatePublicAPI();
+  };
+  
+  const progressStart = (forceLinearEasing = false): Animation => {
+    childAnimations.forEach(animation => {
+      animation.progressStart(forceLinearEasing);
+    });
+    
+    shouldForceLinearEasing = forceLinearEasing;
+
+    if (!initialized) {
+      initializeAnimation();
+    }
+    
+    return generatePublicAPI();
+  };
+  
+  const progressEnd = (shouldComplete: boolean, step: number): Animation => {
+    shouldComplete;
+    step;
+    
+    shouldForceLinearEasing = false;
+    
     return generatePublicAPI();
   };
 
@@ -620,8 +653,10 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
     childAnimations.forEach(animation => {
       animation.play();
     });
-
-    progressStart(true);
+    
+    if (!initialized) {
+      initializeAnimation();
+    }
 
     if (supportsWebAnimations()) {
       webAnimations.forEach(animation => {
@@ -695,19 +730,6 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
     return from(property, fromValue).to(property, toValue);
   };
 
-  const progressStart = (reset = false): Animation => {
-    if (initialized && reset) {
-      initialized = false;
-      cleanUpElements();
-    }
-
-    if (!initialized) {
-      initializeAnimation();
-    }
-
-    return generatePublicAPI();
-  };
-
   const generatePublicAPI = (): Animation => {
     return {
       parentAnimation,
@@ -729,7 +751,6 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
       play,
       pause,
       stop,
-      playStep,
       destroy,
       keyframes,
       addAnimation,
@@ -758,7 +779,10 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
       beforeRemoveClass,
       beforeAddClass,
       onFinish,
-      progressStart
+      
+      progressStart,
+      progressStep,
+      progressEnd
     };
   };
 

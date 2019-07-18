@@ -953,9 +953,8 @@ export class Nav implements NavOutlet {
   }
 
   private onMove(stepValue: number) {
-    console.log('step', stepValue, this.sbAni);
     if (this.sbAni) {
-      (this.sbAni as any).playStep(stepValue);
+      (this.sbAni as any).progressStep(stepValue);
     }
   }
 

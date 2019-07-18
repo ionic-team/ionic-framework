@@ -148,7 +148,8 @@ const playTransition = async (trans: any, opts: TransitionOptions): Promise<Anim
   if (progressCallback) {
     // this is a swipe to go back, just get the transition progress ready
     // kick off the swipe animation start
-    trans.progressStart();
+    trans.progressStart(true);
+    
     progressCallback(trans as any);
 
   } else {

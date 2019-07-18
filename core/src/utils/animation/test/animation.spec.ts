@@ -293,6 +293,16 @@ describe('Animation Class', () => {
       expect(childAnimation.getEasing()).toEqual('linear');
     });
     
+    it('should get linear easing when forceLinear is set', () => {      
+      animation.easing('ease-in-out');
+      
+      animation.progressStart(true);
+      expect(animation.getEasing()).toEqual('linear');
+      
+      animation.progressEnd();
+      expect(animation.getEasing()).toEqual('ease-in-out');
+    });
+    
     it('should get undefined when duration not set', () => {
       expect(animation.getDuration()).toEqual(undefined);
     });
