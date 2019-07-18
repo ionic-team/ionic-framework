@@ -19,8 +19,6 @@ export { IonPage } from './IonPage';
 export { IonTabs } from './navigation/IonTabs';
 export { IonTabBar } from './navigation/IonTabBar';
 export { IonBackButton } from './navigation/IonBackButton';
-export { IonItem } from './IonItem';
-export { IonFabButton } from './IonFabButton';
 
 // Routing
 export { IonRouterOutlet } from './navigation/routing/IonRouterOutlet';

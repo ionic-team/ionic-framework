@@ -7,5 +7,3 @@ export const IonTabBarInner = /*@__PURE__*/createReactComponent<JSX.IonTabBar & 
 export const IonRouterOutletInner = /*@__PURE__*/createReactComponent<JSX.IonRouterOutlet & ReactProps, HTMLIonRouterOutletElement>('ion-router-outlet');
 export const IonBackButtonInner = /*@__PURE__*/createReactComponent<JSX.IonBackButton & ReactProps, HTMLIonBackButtonElement>('ion-back-button');
 export const IonAppInner = /*@__PURE__*/createReactComponent<JSX.IonApp & ReactProps, HTMLIonAppElement>('ion-app');
-export const IonItemInner = /*@__PURE__*/createReactComponent<JSX.IonItem & ReactProps, HTMLIonItemElement>('ion-item');
-export const IonFabButtonInner= /*@__PURE__*/createReactComponent<JSX.IonFabButton & ReactProps, HTMLIonFabButtonElement>('ion-fab-button');
