@@ -13,8 +13,6 @@ export function iosLeaveAnimation(
   ): Promise<Animation> {
   const duration = velocityY ? 250 - Math.min(100, velocityY * 75) : 250;
 
-  console.log('Duration', duration);
-
   const baseAnimation = new AnimationC();
 
   const backdropAnimation = new AnimationC();

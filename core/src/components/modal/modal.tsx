@@ -238,8 +238,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private buildSwipeLeaveAnimation(velocityY: number) {
     switch (this.presentationStyle) {
       case 'fullscreen':
-        console.log('Building fullscreen leave anim');
-        // TODO: Configure this animation
         return (animation: Animation, baseEl: HTMLElement) =>
                  iosLeaveAnimation(animation,
                                    baseEl,
