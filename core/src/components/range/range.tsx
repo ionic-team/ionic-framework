@@ -409,7 +409,7 @@ export class Range implements ComponentInterface {
     return (
       <Host
         onFocusin={this.onFocus}
-        onFocusout={this.onBlur}
+
         class={{
           ...createColorClasses(this.color),
           [mode]: true,
@@ -496,6 +496,7 @@ const renderKnob = (isRTL: boolean, { knob, value, ratio, min, max, disabled, pr
 
   return (
     <div
+      onMouseUp={this.onBlur}
       onKeyDown={(ev: KeyboardEvent) => {
         const key = ev.key;
         if (key === 'ArrowLeft' || key === 'ArrowDown') {
