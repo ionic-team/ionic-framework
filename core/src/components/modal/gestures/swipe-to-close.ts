@@ -8,7 +8,8 @@ import { ModalGesture } from './index';
 export const SwipeToCloseDefaults = {
   MIN_BACKDROP_OPACITY: 0.4,
   MIN_PRESENTING_SCALE: 0.92,
-  MIN_Y: 44,
+  MIN_Y_CARD: 44,
+  MIN_Y_FULLSCREEN: 0,
   MIN_PRESENTING_Y: 1
 };
 
@@ -21,10 +22,10 @@ export class SwipeToCloseGesture implements ModalGesture {
   private presentingScale = 0;
   // The minimum y position of the presenting element
   private minPresentingY = SwipeToCloseDefaults.MIN_PRESENTING_Y;
-  // The minimum y position for the open card style modal
-  private minY = SwipeToCloseDefaults.MIN_Y;
+  // The minimum y position for the swipe-to-close animations
+  private minY = SwipeToCloseDefaults.MIN_Y_FULLSCREEN;
   // The lowest y to allow when dragging, will slow down considerably after this
-  private boundsY = 20;
+  private boundsY = 0;
   // Current Y position of the dragging modal
   private y = 0;
 
@@ -34,6 +35,10 @@ export class SwipeToCloseGesture implements ModalGesture {
     private wrapperEl: HTMLElement | undefined,
     private presentingEl: HTMLElement | undefined,
     private onDismiss: (velocityY: number) => void) {
+
+    this.minY = el.presentationStyle === 'card' ? SwipeToCloseDefaults.MIN_Y_CARD : SwipeToCloseDefaults .MIN_Y_FULLSCREEN;
+    this.boundsY = el.presentationStyle === 'card' ? 20 : 0;
+
     this.init();
   }
 
@@ -96,13 +101,11 @@ export class SwipeToCloseGesture implements ModalGesture {
   private onMove(detail: GestureDetail) {
     const y = this.minY + detail.deltaY;
 
+    // A scaled down value for overdragging
     const overY = this.boundsY + detail.deltaY * 0.07;
 
-    console.log('Over y', y, this.boundsY);
-
+    // If we're above the max limit, then greatly reduce the drag amount
     const actualY = y > this.boundsY ? y : overY;
-
-    console.log('Y', actualY);
 
     this.slideTo(actualY);
   }
@@ -159,7 +162,9 @@ export class SwipeToCloseGesture implements ModalGesture {
   }
 
   private setPresentingScale(scale: number) {
-    if (!this.presentingEl) {
+    // Only adjust the scale of the presenting element if it exists and the
+    // presentation style is 'card'
+    if (!this.presentingEl || !(this.el.presentationStyle === 'card')) {
       return;
     }
 

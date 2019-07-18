@@ -8,7 +8,7 @@ export function iosEnterCardAnimation(
   AnimationC: Animation,
   baseEl: HTMLElement,
   presentingEl?: HTMLElement,
-  toY = SwipeToCloseDefaults.MIN_Y,
+  toY = SwipeToCloseDefaults.MIN_Y_CARD,
   toBackdropOpacity = SwipeToCloseDefaults.MIN_BACKDROP_OPACITY,
   toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE
   ): Promise<Animation> {

@@ -8,7 +8,7 @@ export function iosLeaveCardAnimation(
   AnimationC: Animation,
   baseEl: HTMLElement,
   presentingEl?: HTMLElement,
-  currentY = SwipeToCloseDefaults.MIN_Y,
+  currentY = SwipeToCloseDefaults.MIN_Y_CARD,
   currentBackdropOpacity = SwipeToCloseDefaults.MIN_BACKDROP_OPACITY,
   currentPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE,
   velocityY?: number

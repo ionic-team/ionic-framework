@@ -107,7 +107,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * The style of presentation to use. `fullscreen` is the classic option that has the modal
    * take up the full screen on mobile displays. A newer option, `card` is available that displays
    * the modal in a stacked fashion while also zooming the previous page out slightly underneath. The
-   * `card` style is becoming a default starting with iOS 13.
+   * `card` style is the new default starting with iOS 13.
    */
   @Prop() presentationStyle: ModalPresentationStyle = 'fullscreen';
 
@@ -238,11 +238,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private buildSwipeLeaveAnimation(velocityY: number) {
     switch (this.presentationStyle) {
       case 'fullscreen':
+        console.log('Building fullscreen leave anim');
         // TODO: Configure this animation
-        return iosLeaveAnimation;
+        return (animation: Animation, baseEl: HTMLElement) =>
+                 iosLeaveAnimation(animation,
+                                   baseEl,
+                                   this.gesture!.getY(),
+                                   this.gesture!.getBackdropOpacity(),
+                                   velocityY);
       case 'card':
         return (animation: Animation, baseEl: HTMLElement) =>
-          iosLeaveCardAnimation(animation,
+                 iosLeaveCardAnimation(animation,
                                 baseEl,
                                 this.presentingEl,
                                 this.gesture!.getY(),

@@ -1466,7 +1466,7 @@ export namespace Components {
     */
     'present': (presentingEl?: HTMLElement | undefined) => Promise<void>;
     /**
-    * The style of presentation to use. `fullscreen` is the classic option that has the modal take up the full screen on mobile displays. A newer option, `card` is available that displays the modal in a stacked fashion while also zooming the previous page out slightly underneath. The `card` style is becoming a default starting with iOS 13.
+    * The style of presentation to use. `fullscreen` is the classic option that has the modal take up the full screen on mobile displays. A newer option, `card` is available that displays the modal in a stacked fashion while also zooming the previous page out slightly underneath. The `card` style is the new default starting with iOS 13.
     */
     'presentationStyle': ModalPresentationStyle;
     /**
@@ -4765,7 +4765,7 @@ declare namespace LocalJSX {
     */
     'onIonModalWillPresent'?: (event: CustomEvent<void>) => void;
     /**
-    * The style of presentation to use. `fullscreen` is the classic option that has the modal take up the full screen on mobile displays. A newer option, `card` is available that displays the modal in a stacked fashion while also zooming the previous page out slightly underneath. The `card` style is becoming a default starting with iOS 13.
+    * The style of presentation to use. `fullscreen` is the classic option that has the modal take up the full screen on mobile displays. A newer option, `card` is available that displays the modal in a stacked fashion while also zooming the previous page out slightly underneath. The `card` style is the new default starting with iOS 13.
     */
     'presentationStyle'?: ModalPresentationStyle;
     /**

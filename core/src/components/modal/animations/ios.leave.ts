@@ -1,9 +1,18 @@
 import { Animation } from '../../../interface';
+import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
 
 /**
  * iOS Modal Leave Animation
  */
-export function iosLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+export function iosLeaveAnimation(
+  AnimationC: Animation,
+  baseEl: HTMLElement,
+  currentY = SwipeToCloseDefaults.MIN_Y_FULLSCREEN,
+  currentBackdropOpacity = SwipeToCloseDefaults.MIN_BACKDROP_OPACITY,
+  velocityY?: number
+  ): Promise<Animation> {
+  const duration = velocityY ? 250 - Math.min(200, velocityY * 100) : 250;
+
   const baseAnimation = new AnimationC();
 
   const backdropAnimation = new AnimationC();
@@ -12,17 +21,18 @@ export function iosLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): P
   const wrapperAnimation = new AnimationC();
   const wrapperEl = baseEl.querySelector('.modal-wrapper');
   wrapperAnimation.addElement(wrapperEl);
-  const wrapperElRect = wrapperEl!.getBoundingClientRect();
+  // const wrapperElRect = wrapperEl!.getBoundingClientRect();
 
   wrapperAnimation.beforeStyles({ 'opacity': 1 })
-                  .fromTo('translateY', '0%', `${(baseEl.ownerDocument as any).defaultView.innerHeight - wrapperElRect.top}px`);
+                  .fromTo('translateY', `${currentY}px`, `100%`);
+                  // `${(baseEl.ownerDocument as any).defaultView.innerHeight - wrapperElRect.top}px`);
 
-  backdropAnimation.fromTo('opacity', 0.4, 0.0);
+  backdropAnimation.fromTo('opacity', `${currentBackdropOpacity}`, 0.0);
 
   return Promise.resolve(baseAnimation
     .addElement(baseEl)
     .easing('ease-out')
-    .duration(250)
+    .duration(duration)
     .add(backdropAnimation)
     .add(wrapperAnimation));
 }
