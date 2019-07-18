@@ -525,8 +525,7 @@
       await modal.present(presentingEl);
       const data = await modal.onWillDismiss();
       const person = allContacts.find(c => c.email === data.data);
-      console.log('Got favorite', person);
-      addFavorite(person);
+      person && addFavorite(person);
     }
   </script>
 </body>
