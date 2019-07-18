@@ -4,6 +4,13 @@ Floating Action Buttons (FABs) represent the primary action in an application. B
 
 If the FAB button is not wrapped with `<ion-fab>`, it will scroll with the content. FAB buttons have a default size, a mini size and can accept different colors:
 
+The below chart has a description of each slot.
+
+| Slot         | Description                                                                                              |
+|--------------|----------------------------------------------------------------------------------------------------------|
+|  | The content, generally an icon, displayed in the FAB button. |
+| `close`  | The content, generally an icon, displayed in the FAB button if active and use as main action in a container for multiple fab buttons (fab-list).  |
+
 <!-- Auto Generated Below -->
 
 
@@ -152,13 +159,11 @@ export const FabButtonExample: React.FunctionComponent = () => (
 
 ### Depends on
 
-- ion-icon
 - [ion-ripple-effect](../ripple-effect)
 
 ### Graph
 ```mermaid
 graph TD;
-  ion-fab-button --> ion-icon
   ion-fab-button --> ion-ripple-effect
   style ion-fab-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
