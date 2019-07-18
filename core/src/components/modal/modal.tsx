@@ -166,18 +166,20 @@ export class Modal implements ComponentInterface, OverlayInterface {
   async componentDidLoad() {
     this.wrapperEl = this.el.querySelector('.modal-wrapper') as HTMLDivElement || undefined;
     this.backdropEl = this.el.querySelector('ion-backdrop') as HTMLIonBackdropElement || undefined;
-  }
 
-  private async enableSwipeToClose() {
-    // All of the elements needed for the swipe gesture
-    // should be in the DOM and referenced by now
-    this.gesture = new SwipeToCloseGesture(
-      this.el,
-      this.backdropEl,
-      this.wrapperEl,
-      this.presentingEl,
-      (velocityY: number) => this.swipeDismiss(velocityY)
-    );
+    if (this.swipeToClose) {
+      // All of the elements needed for the swipe gesture
+      // should be in the DOM and referenced by now
+      this.gesture = new SwipeToCloseGesture(
+        this.el,
+        this.backdropEl,
+        this.wrapperEl,
+        undefined,
+        (velocityY: number) => this.swipeDismiss(velocityY)
+      );
+    }
+
+    console.log('Modal component did load', this.presentationStyle, this.swipeToClose);
   }
 
   /**
@@ -191,8 +193,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     this.presentingEl = presentingEl;
 
-    if (this.swipeToClose) {
-      this.enableSwipeToClose();
+    if (this.swipeToClose && presentingEl) {
+      this.gesture!.setPresentingEl(presentingEl);
     }
 
     const iosAnim = this.buildIOSEnterAnimation(presentingEl);

@@ -73,6 +73,10 @@ export class SwipeToCloseGesture implements ModalGesture {
     return this.presentingScale;
   }
 
+  setPresentingEl(presentingEl: HTMLElement) {
+    this.presentingEl = presentingEl;
+  }
+
   private canStart(detail: GestureDetail) {
     const target = detail.event.target;
 
