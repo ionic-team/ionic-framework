@@ -16,7 +16,6 @@
     "pwa"
   ],
   "main": "dist/index.js",
-  "unpkg": "dist/ionic/ionic.js",
   "module": "dist/index.mjs",
   "es2015": "dist/esm/index.mjs",
   "es2017": "dist/esm/index.mjs",
