@@ -61,6 +61,7 @@ export const IonRefresherContent = /*@__PURE__*/createReactComponent<JSX.IonRefr
 export const IonReorder = /*@__PURE__*/createReactComponent<JSX.IonReorder & ReactProps, HTMLIonReorderElement>('ion-reorder');
 export const IonReorderGroup = /*@__PURE__*/createReactComponent<JSX.IonReorderGroup & ReactProps, HTMLIonReorderGroupElement>('ion-reorder-group');
 export const IonRippleEffect = /*@__PURE__*/createReactComponent<JSX.IonRippleEffect & ReactProps, HTMLIonRippleEffectElement>('ion-ripple-effect');
+export const IonRouterOutlet = /*@__PURE__*/createReactComponent<JSX.IonRouterOutlet & ReactProps, HTMLIonRouterOutletElement>('ion-router-outlet');
 export const IonRow = /*@__PURE__*/createReactComponent<JSX.IonRow & ReactProps, HTMLIonRowElement>('ion-row');
 export const IonSearchbar= /*@__PURE__*/createReactComponent<JSX.IonSearchbar & ReactProps, HTMLIonSearchbarElement>('ion-searchbar');
 export const IonSegment= /*@__PURE__*/createReactComponent<JSX.IonSegment & ReactProps, HTMLIonSegmentElement>('ion-segment');

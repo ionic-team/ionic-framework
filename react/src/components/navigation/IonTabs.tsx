@@ -1,10 +1,13 @@
 import React from 'react';
+import { NavContext } from './routing/NavContext';
+import { IonRouterOutlet } from '../proxies';
 import { IonTabBar } from './IonTabBar';
-import { IonRouterOutlet } from './routing/IonRouterOutlet';
 
 type Props = {
   children: React.ReactNode;
 }
+
+type State = {}
 
 const hostStyles: React.CSSProperties = {
   display: 'flex',
@@ -25,7 +28,13 @@ const tabsInner: React.CSSProperties = {
   contain: 'layout size style'
 };
 
-export class IonTabs extends React.Component<Props> {
+export class IonTabs extends React.Component<Props, State> {
+  context!: React.ContextType<typeof NavContext>;
+  routerOutletRef: React.RefObject<HTMLIonRouterOutletElement> = React.createRef();
+
+  constructor(props: Props) {
+    super(props);
+  }
 
   render() {
     let outlet: React.ReactElement<{}>;
@@ -43,14 +52,23 @@ export class IonTabs extends React.Component<Props> {
       }
     });
 
+    const NavManager = this.context.getViewManager();
+
     return (
       <div style={hostStyles}>
-        { tabBar.props.slot === 'top' ? tabBar : null }
+        {tabBar.props.slot === 'top' ? tabBar : null}
         <div style={tabsInner} className="tabs-inner">
-          { outlet }
+          {NavManager ? (
+            <NavManager>
+              {outlet}
+            </NavManager>
+          ) : (
+            {outlet}
+          )}
         </div>
-        { tabBar.props.slot === 'bottom' ? tabBar : null }
+        {tabBar.props.slot === 'bottom' ? tabBar : null}
       </div>
     );
   }
 }
+IonTabs.contextType = NavContext;

@@ -1,10 +1,11 @@
 import { NavDirection, RouterDirection } from '@ionic/core';
 import { Action as HistoryAction, Location as HistoryLocation, UnregisterCallback } from 'history';
 import React, { ReactNode } from 'react';
-import { BrowserRouter, BrowserRouterProps, match, matchPath, RouteComponentProps, RouteProps, Switch, withRouter, Redirect, Route } from 'react-router-dom';
+import { BrowserRouter, BrowserRouterProps, match, matchPath, RouteComponentProps, RouteProps, withRouter, Redirect, Route } from 'react-router-dom';
 import { generateUniqueId } from '../../../utils';
 import { NavContext, NavContextState, ViewStack, ViewStacks } from '../NavContext';
 import { ViewItem } from './ViewItem';
+import { ViewManager } from './ViewManager';
 
 interface IonReactRouterProps extends RouteComponentProps { }
 interface IonReactRouterState extends NavContextState { }
@@ -27,6 +28,9 @@ class IonNavManager extends React.Component<IonReactRouterProps, IonReactRouterS
       setupIonRouter: this.setupIonRouter.bind(this),
       removeViewStack: this.removeViewStack.bind(this),
       renderChild: this.renderChild.bind(this),
+      getHistory: this.getHistory.bind(this),
+      getLocation: this.getLocation.bind(this),
+      getViewManager: this.getViewManager.bind(this),
       goBack: this.goBack.bind(this),
       transitionView: this.transitionView.bind(this),
       navigate: this.navigate.bind(this),
@@ -173,21 +177,14 @@ class IonNavManager extends React.Component<IonReactRouterProps, IonReactRouterS
   setupIonRouter(id: string, children: ReactNode, routerOutlet: HTMLIonRouterOutletElement) {
     const views: ViewItem[] = [];
     let activeId: string;
-    React.Children.forEach(children, (child: React.ReactElement) => {
-      if (child.type === Switch) {
-        /**
-         * If the first child is a Switch, loop through its children to build the viewStack
-         */
-        React.Children.forEach(child.props.children, (grandChild: React.ReactElement) => {
-          addView.call(this, grandChild);
-        });
-      } else {
-        addView.call(this, child);
-      }
+    const ionRouterOutlet = React.Children.only(children) as React.ReactElement;
+    React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {
+      views.push(createViewItem.call(this, child));
     });
+
     this.registerViewStack(id, activeId, views, routerOutlet, this.props.location);
 
-    function addView(child: React.ReactElement<any>) {
+    function createViewItem(child: React.ReactElement<any>) {
       const location = this.props.history.location;
       const viewId = generateUniqueId();
       const key = generateUniqueId();
@@ -213,8 +210,7 @@ class IonNavManager extends React.Component<IonReactRouterProps, IonReactRouterS
       if (!!match) {
         activeId = viewId;
       };
-      views.push(view);
-      return activeId;
+      return view;
     }
   }
 
@@ -278,6 +274,18 @@ class IonNavManager extends React.Component<IonReactRouterProps, IonReactRouterS
     return view;
   }
 
+  getHistory = () => {
+    return this.props.history;
+  }
+
+  getLocation = () => {
+    return this.props.location;
+  }
+
+  getViewManager = () => {
+    return ViewManager;
+  }
+
   goBack = (defaultHref?: string) => {
     const { view: leavingView } = this.findViewInfoByLocation(this.props.location, this.state.viewStacks);
     if (leavingView) {
@@ -336,7 +344,7 @@ class IonNavManager extends React.Component<IonReactRouterProps, IonReactRouterS
 const IonNavManagerWithRouter = withRouter(IonNavManager);
 IonNavManagerWithRouter.displayName = 'IonNavManager';
 
-export class IonReactRouter extends React.Component<BrowserRouterProps> {
+export class Router extends React.Component<BrowserRouterProps> {
   render() {
     const { children, ...props } = this.props;
     return (

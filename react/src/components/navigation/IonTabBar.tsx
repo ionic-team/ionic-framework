@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { IonTabBarInner } from '../inner-proxies';
-import { withRouter, RouteComponentProps } from 'react-router';
-import { JSX } from '@ionic/core';
+import { JSX as LocalJSX } from '@ionic/core';
 import { IonTabButton } from '../proxies';
+import { NavContext } from './routing/NavContext';
 
-type Props = RouteComponentProps & JSX.IonTabBar & {
+type Props = LocalJSX.IonTabBar & {
+  navigate: (path: string) => void;
+  currentPath: string;
   children: React.ReactNode;
 }
 
@@ -18,7 +20,7 @@ type State = {
   tabs: { [key: string]: Tab }
 }
 
-class TabBar extends React.Component<Props, State> {
+class IonTabBarUnwrapped extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
@@ -44,10 +46,10 @@ class TabBar extends React.Component<Props, State> {
     const activeTab = Object.keys(state.tabs)
       .find(key => {
         const href = state.tabs[key].originalHref;
-        return props.location.pathname.startsWith(href)
+        return props.currentPath.startsWith(href)
       });
 
-    if (!activeTab || (activeTab === state.activeTab && state.tabs[activeTab].currentHref === props.location.pathname)) {
+    if (!activeTab || (activeTab === state.activeTab && state.tabs[activeTab].currentHref === props.currentPath)) {
       return null;
     }
 
@@ -57,7 +59,7 @@ class TabBar extends React.Component<Props, State> {
         ...state.tabs,
         [activeTab]: {
           originalHref: state.tabs[activeTab].originalHref,
-          currentHref: props.location.pathname
+          currentHref: props.currentPath
         }
       }
     }
@@ -68,13 +70,12 @@ class TabBar extends React.Component<Props, State> {
     const targetUrl = (this.state.activeTab === e.detail.tab) ?
       this.state.tabs[e.detail.tab].originalHref :
       this.state.tabs[e.detail.tab].currentHref;
-
-    this.props.history.push(targetUrl);
+    this.props.navigate(targetUrl);
   }
 
-  renderChild = (activeTab: string) => (child: React.ReactElement<JSX.IonTabButton & { onIonTabButtonClick: (e: CustomEvent) => void }>) => {
+  renderChild = (activeTab: string) => (child: React.ReactElement<LocalJSX.IonTabButton & { onIonTabButtonClick: (e: CustomEvent) => void }>) => {
     if (child != null && typeof child === 'object' && child.props && child.type === IonTabButton) {
-      const href = (child.props.tab === activeTab) ? this.props.location.pathname : (this.state.tabs[child.props.tab].currentHref);
+      const href = (child.props.tab === activeTab) ? this.props.currentPath : (this.state.tabs[child.props.tab].currentHref);
 
       return React.cloneElement(child, {
         href,
@@ -87,10 +88,23 @@ class TabBar extends React.Component<Props, State> {
   render() {
     return (
       <IonTabBarInner {...this.props} selectedTab={this.state.activeTab}>
-        { React.Children.map(this.props.children, this.renderChild(this.state.activeTab)) }
+        {React.Children.map(this.props.children, this.renderChild(this.state.activeTab))}
       </IonTabBarInner>
     );
   }
 }
 
-export const IonTabBar = /*@__PURE__*/withRouter(TabBar);
+
+export const IonTabBar: React.FC<LocalJSX.IonTabBar> = (props) => {
+  const context = useContext(NavContext);
+  return (
+    <IonTabBarUnwrapped
+      {...props as any}
+      navigate={(path: string) => {
+        context.navigate(path);
+      }}
+      currentPath={context.getLocation().pathname}>
+      {props.children}
+    </IonTabBarUnwrapped>
+  )
+}

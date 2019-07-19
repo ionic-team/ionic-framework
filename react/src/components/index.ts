@@ -21,8 +21,7 @@ export { IonTabBar } from './navigation/IonTabBar';
 export { IonBackButton } from './navigation/IonBackButton';
 
 // Routing
-export { IonRouterOutlet } from './navigation/routing/IonRouterOutlet';
-export { IonReactRouter } from './navigation/routing/ReactRouter/IonReactRouter';
+export * from './navigation/routing/ReactRouter';
 
 // Ionic Context
 export { IonicContext } from './utils/IonicContext';
