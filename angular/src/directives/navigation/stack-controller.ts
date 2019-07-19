@@ -31,7 +31,7 @@ export class StackController {
   createView(ref: ComponentRef<any>, activatedRoute: ActivatedRoute): RouteView {
     const url = getUrl(this.router, activatedRoute);
     const element = (ref && ref.location && ref.location.nativeElement) as HTMLElement;
-    const unlistenEvents = bindLifecycleEvents(ref.instance, element);
+    const unlistenEvents = bindLifecycleEvents(this.zone, ref.instance, element);
     return {
       id: this.nextId++,
       stackId: computeStackId(this.tabsPrefix, url),
@@ -90,16 +90,28 @@ export class StackController {
       }
     }
 
+    const reused = this.views.includes(enteringView);
     const views = this.insertView(enteringView, direction);
-    return this.wait(() => {
-      return this.transition(enteringView, leavingView, animation, this.canGoBack(1), false)
-        .then(() => cleanupAsync(enteringView, views, viewsSnapshot, this.location))
-        .then(() => ({
-          enteringView,
-          direction,
-          animation,
-          tabSwitch
-        }));
+
+    // Trigger change detection before transition starts
+    // This will call ngOnInit() the first time too, just after the view
+    // was attached to the dom, but BEFORE the transition starts
+    if (!reused) {
+      enteringView.ref.changeDetectorRef.detectChanges();
+    }
+
+    // Wait until previous transitions finish
+    return this.zone.runOutsideAngular(() => {
+      return this.wait(() => {
+        return this.transition(enteringView, leavingView, animation, this.canGoBack(1), false)
+          .then(() => cleanupAsync(enteringView, views, viewsSnapshot, this.location))
+          .then(() => ({
+            enteringView,
+            direction,
+            animation,
+            tabSwitch
+          }));
+      });
     });
   }
 
@@ -199,11 +211,11 @@ export class StackController {
     if (enteringView) {
       enteringView.ref.changeDetectorRef.reattach();
     }
-    // TODO: disconnect leaving page from change detection to
+    // disconnect leaving page from change detection to
     // reduce jank during the page transition
-    // if (leavingView) {
-    //   leavingView.ref.changeDetectorRef.detach();
-    // }
+    if (leavingView) {
+      leavingView.ref.changeDetectorRef.detach();
+    }
     const enteringEl = enteringView ? enteringView.element : undefined;
     const leavingEl = leavingView ? leavingView.element : undefined;
     const containerEl = this.containerEl;
@@ -213,13 +225,13 @@ export class StackController {
         containerEl.appendChild(enteringEl);
       }
 
-      return this.zone.runOutsideAngular(() => containerEl.commit(enteringEl, leavingEl, {
+      return containerEl.commit(enteringEl, leavingEl, {
         deepWait: true,
         duration: direction === undefined ? 0 : undefined,
         direction,
         showGoBack,
         progressAnimation
-      }));
+      });
     }
     return Promise.resolve(false);
   }
