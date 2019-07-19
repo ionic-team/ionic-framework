@@ -13,7 +13,6 @@ if (!version) {
 }
 
 const srcPath = path.join(__dirname, 'cdn-loader.js');
-const destPath = path.join(__dirname, '..', 'loader', 'cdn.js');
 let scriptContent = fs.readFileSync(srcPath, 'utf-8');
 
 // https://unpkg.com/@ionic/core@latest/dist/ionic.js
@@ -23,4 +22,5 @@ scriptContent = scriptContent.replace(
   'https://cdn.jsdelivr.net/npm/@ionic/core@' + version
 );
 
-fs.writeFileSync(destPath, scriptContent);
+fs.writeFileSync(path.join(__dirname, '..', 'loader', 'cdn.js'), scriptContent);
+fs.writeFileSync(path.join(__dirname, '..', 'loader', 'index.cjs.js'), scriptContent);
