@@ -4,21 +4,31 @@ export type EventHandler = (...args: any[]) => any;
 @Injectable({
   providedIn: 'root',
 })
-export class Events {
-  private c = new Map<string, EventHandler[]>();
+export class AppEvents {
+  private c = new Map<string, EventHandlerHolder[]>();
 
   /**
    * Subscribe to an event topic. Events that get posted to that topic will trigger the provided handler.
    *
    * @param topic the topic to subscribe to
    * @param handler the event handler
+   *
+   * @return random id of the registered handler to unsubscribe
    */
-  subscribe(topic: string, ...handlers: EventHandler[]) {
-    let topics = this.c.get(topic);
+  subscribe(topic: string, handler: EventHandler): number {
+    let topics: EventHandlerHolder[] = this.c.get(topic);
     if (!topics) {
       this.c.set(topic, topics = []);
     }
-    topics.push(...handlers);
+
+    const holder: EventHandlerHolder = {
+      handler,
+      id: Math.floor(Math.random() * (999999 - 1) + 1) // random id for this handler
+    };
+
+    topics.push(holder);
+
+    return holder.id;
   }
 
   /**
@@ -34,13 +44,61 @@ export class Events {
       return this.c.delete(topic);
     }
 
-    const topics = this.c.get(topic);
+    const topics: EventHandlerHolder[] = this.c.get(topic);
     if (!topics) {
       return false;
     }
 
     // We need to find and remove a specific handler
-    const index = topics.indexOf(handler);
+    let index = -1;
+    for (let i = 0; i < topics.length; i++) {
+      if (handler === topics[i].handler) {
+        index = i;
+        break;
+      }
+    }
+
+    if (index < 0) {
+      // Wasn't found, wasn't removed
+      return false;
+    }
+    topics.splice(index, 1);
+    if (topics.length === 0) {
+      this.c.delete(topic);
+    }
+    return true;
+  }
+
+  /**
+  * Unsubscribe from an event with a specific subscribed id. Your handler will no longer receive events published to this topic.
+  *
+  * @param topic the topic to unsubscribe from
+  * @param id the event handler's id returned when subscribed
+  *
+  * @return true if a handler was removed
+  */
+  unsubscribeId(id: number): boolean {
+    if (id <= 0) {
+      return false;
+    }
+
+    let topic: string;
+    let topics: EventHandlerHolder[];
+    let index = -1;
+    this.c.forEach((t, k) => {
+      for (let i = 0; i < t.length; i++) {
+        if (id === t[i].id) {
+          index = i;
+          topics = t;
+          topic = k;
+          return;
+        }
+      }
+    });
+
+    if (!topics) {
+      return false;
+    }
 
     if (index < 0) {
       // Wasn't found, wasn't removed
@@ -66,11 +124,16 @@ export class Events {
     }
     return topics.map(handler => {
       try {
-        return handler(...args);
+        return handler.handler(...args);
       } catch (e) {
         console.error(e);
         return null;
       }
     });
   }
+}
+
+class EventHandlerHolder {
+  handler: EventHandler;
+  id: number;
 }
