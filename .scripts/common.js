@@ -261,7 +261,7 @@ function isVersionGreater(oldVersion, newVersion) {
 function copyCDNLoader(tasks, version) {
   tasks.push({
     title: `Copy CDN loader`,
-    task: () => execa('node', ['copy-cdn-loader.js', version], { cwd: path.join(common.rootDir, 'core', 'scripts') }),
+    task: () => execa('node', ['copy-cdn-loader.js', version], { cwd: path.join(rootDir, 'core', 'scripts') }),
   });
 }
 
