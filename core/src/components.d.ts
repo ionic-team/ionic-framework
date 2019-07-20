@@ -135,7 +135,7 @@ export namespace Components {
     */
     'subHeader'?: string;
     /**
-    * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports backdrop-filter.
+    * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent': boolean;
   }
@@ -220,7 +220,7 @@ export namespace Components {
     */
     'subHeader'?: string;
     /**
-    * If `true`, the alert will be translucent.
+    * If `true`, the alert will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent': boolean;
   }
@@ -433,7 +433,7 @@ export namespace Components {
     */
     'mode'?: "ios" | "md";
     /**
-    * If `true`, the card header will be translucent.
+    * If `true`, the card header will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent': boolean;
   }
@@ -807,7 +807,7 @@ export namespace Components {
     */
     'target': string | undefined;
     /**
-    * If `true`, the fab button will be translucent. Only applies to `ios` mode on devices that support [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+    * If `true`, the fab button will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent': boolean;
     /**
@@ -831,7 +831,7 @@ export namespace Components {
     */
     'mode'?: "ios" | "md";
     /**
-    * If `true`, the footer will be translucent. Only applies to `ios` mode. Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content.
+    * If `true`, the footer will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content.
     */
     'translucent': boolean;
   }
@@ -847,7 +847,7 @@ export namespace Components {
     */
     'mode'?: "ios" | "md";
     /**
-    * If `true`, the header will be translucent. Only applies to `ios` mode. Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content.
+    * If `true`, the header will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content.
     */
     'translucent': boolean;
   }
@@ -1252,7 +1252,7 @@ export namespace Components {
     */
     'spinner'?: SpinnerTypes | null;
     /**
-    * If `true`, the loading indicator will be translucent.
+    * If `true`, the loading indicator will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent': boolean;
   }
@@ -1740,7 +1740,7 @@ export namespace Components {
     */
     'showBackdrop': boolean;
     /**
-    * If `true`, the popover will be translucent.
+    * If `true`, the popover will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent': boolean;
   }
@@ -2401,7 +2401,7 @@ export namespace Components {
     */
     'selectedTab'?: string;
     /**
-    * If `true`, the tab bar will be translucent.
+    * If `true`, the tab bar will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent': boolean;
   }
@@ -2638,7 +2638,7 @@ export namespace Components {
     */
     'showCloseButton': boolean;
     /**
-    * If `true`, the toast will be translucent.
+    * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent': boolean;
   }
@@ -3504,7 +3504,7 @@ declare namespace LocalJSX {
     */
     'subHeader'?: string;
     /**
-    * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports backdrop-filter.
+    * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent'?: boolean;
   }
@@ -3575,7 +3575,7 @@ declare namespace LocalJSX {
     */
     'subHeader'?: string;
     /**
-    * If `true`, the alert will be translucent.
+    * If `true`, the alert will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent'?: boolean;
   }
@@ -3787,7 +3787,7 @@ declare namespace LocalJSX {
     */
     'mode'?: "ios" | "md";
     /**
-    * If `true`, the card header will be translucent.
+    * If `true`, the card header will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent'?: boolean;
   }
@@ -4181,7 +4181,7 @@ declare namespace LocalJSX {
     */
     'target'?: string | undefined;
     /**
-    * If `true`, the fab button will be translucent. Only applies to `ios` mode on devices that support [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+    * If `true`, the fab button will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent'?: boolean;
     /**
@@ -4205,7 +4205,7 @@ declare namespace LocalJSX {
     */
     'mode'?: "ios" | "md";
     /**
-    * If `true`, the footer will be translucent. Only applies to `ios` mode. Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content.
+    * If `true`, the footer will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content.
     */
     'translucent'?: boolean;
   }
@@ -4221,7 +4221,7 @@ declare namespace LocalJSX {
     */
     'mode'?: "ios" | "md";
     /**
-    * If `true`, the header will be translucent. Only applies to `ios` mode. Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content.
+    * If `true`, the header will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content.
     */
     'translucent'?: boolean;
   }
@@ -4628,7 +4628,7 @@ declare namespace LocalJSX {
     */
     'spinner'?: SpinnerTypes | null;
     /**
-    * If `true`, the loading indicator will be translucent.
+    * If `true`, the loading indicator will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent'?: boolean;
   }
@@ -4963,7 +4963,7 @@ declare namespace LocalJSX {
     */
     'showBackdrop'?: boolean;
     /**
-    * If `true`, the popover will be translucent.
+    * If `true`, the popover will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent'?: boolean;
   }
@@ -5678,7 +5678,7 @@ declare namespace LocalJSX {
     */
     'selectedTab'?: string;
     /**
-    * If `true`, the tab bar will be translucent.
+    * If `true`, the tab bar will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent'?: boolean;
   }
@@ -5915,7 +5915,7 @@ declare namespace LocalJSX {
     */
     'showCloseButton'?: boolean;
     /**
-    * If `true`, the toast will be translucent.
+    * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent'?: boolean;
   }
