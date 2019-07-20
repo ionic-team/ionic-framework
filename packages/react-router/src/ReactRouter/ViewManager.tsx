@@ -1,6 +1,6 @@
 import React from 'react';
 import { generateUniqueId } from '../utils';
-import { View } from '@ionic/react-core';
+import { View } from './View';
 import { ViewItemManager } from './ViewItemManager';
 import { RouteManagerContext } from './RouteManagerContext';
 

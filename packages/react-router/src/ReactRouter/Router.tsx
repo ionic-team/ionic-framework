@@ -1,11 +1,11 @@
 import { NavDirection } from '@ionic/core';
-import { ViewItem } from '@ionic/react-core';
 import { Action as HistoryAction, Location as HistoryLocation, UnregisterCallback } from 'history';
 import React, { ReactNode } from 'react';
 import { BrowserRouter, BrowserRouterProps, match, matchPath, Redirect, Route, RouteComponentProps, RouteProps, withRouter } from 'react-router-dom';
 import { generateUniqueId } from '../utils';
 import { NavManager } from './NavManager';
 import { RouteManagerContext, RouteManagerContextState, ViewStack, ViewStacks } from './RouteManagerContext';
+import { ViewItem } from './ViewItem';
 
 interface RouterManagerProps extends RouteComponentProps { }
 

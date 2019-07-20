@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { NavDirection } from '@ionic/core';
-import { ViewItem } from '@ionic/react-core';
+import { ViewItem } from './ViewItem';
 
 export interface ViewStack {
   routerOutlet: HTMLIonRouterOutletElement;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonLifeCycleContext } from '../lifecycle/IonLifeCycleContext';
+import { IonLifeCycleContext } from '@ionic/react-core';
 
 type Props = React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
 
