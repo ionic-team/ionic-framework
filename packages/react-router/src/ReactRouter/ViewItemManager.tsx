@@ -1,7 +1,7 @@
 import React from 'react';
-import { IonLifeCycleContext } from '../../lifecycle';
-import { DefaultIonLifeCycleContext } from '../../lifecycle/IonLifeCycleContext';
-import { NavContext } from './routing/NavContext';
+import { IonLifeCycleContext } from '@ionic/react-core';
+import { DefaultIonLifeCycleContext } from '@ionic/react-core';
+import { RouteManagerContext } from './RouteManagerContext';
 
 interface StackItemManagerProps {
   id: string;
@@ -15,7 +15,7 @@ interface StackItemManagerState {
 export class ViewItemManager extends React.Component<StackItemManagerProps, StackItemManagerState> {
   ionLifeCycleContext = new DefaultIonLifeCycleContext();
   _isMounted = false;
-  context!: React.ContextType<typeof NavContext>;
+  context!: React.ContextType<typeof RouteManagerContext>;
 
   constructor(props: StackItemManagerProps) {
     super(props)
@@ -54,4 +54,4 @@ export class ViewItemManager extends React.Component<StackItemManagerProps, Stac
   }
 }
 // TODO: treeshake
-ViewItemManager.contextType = NavContext;
+ViewItemManager.contextType = RouteManagerContext;

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { IonTabBarInner } from '../inner-proxies';
 import { JSX as LocalJSX } from '@ionic/core';
 import { IonTabButton } from '../proxies';
-import { NavContext } from './routing/NavContext';
+import { NavContext } from '@ionic/react-core'
 
 type Props = LocalJSX.IonTabBar & {
   navigate: (path: string) => void;

@@ -1,9 +1,16 @@
 import React from 'react';
-import { generateUniqueId } from '../../../utils/utils';
-import { View } from '../../../View';
-import { NavContext } from '../NavContext';
-import { ViewItemManager } from '../../ViewItemManager';
-import { IonRouterOutlet } from '../../../proxies';
+import { generateUniqueId } from '../utils';
+import { View } from '@ionic/react-core';
+import { ViewItemManager } from './ViewItemManager';
+import { RouteManagerContext } from './RouteManagerContext';
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'ion-router-outlet': any;
+    }
+  }
+}
 
 type ViewManagerProps = {
   id?: string;
@@ -13,7 +20,7 @@ type ViewManagerState = {}
 
 export class ViewManager extends React.Component<ViewManagerProps, ViewManagerState> {
   containerEl: React.RefObject<HTMLIonRouterOutletElement> = React.createRef();
-  context!: React.ContextType<typeof NavContext>;
+  context!: React.ContextType<typeof RouteManagerContext>;
   id: string;
 
   constructor(props: ViewManagerProps) {
@@ -35,7 +42,7 @@ export class ViewManager extends React.Component<ViewManagerProps, ViewManagerSt
     const activeId = viewStack ? viewStack.activeId : '';
     const views = (viewStack || { views: [] }).views.filter(x => x.show);
     return (
-      <IonRouterOutlet data-id={this.id} ref={this.containerEl}>
+      <ion-router-outlet data-id={this.id} ref={this.containerEl}>
         {views.map((item) => {
           let props: any = {};
           if (item.id === activeId) {
@@ -58,8 +65,8 @@ export class ViewManager extends React.Component<ViewManagerProps, ViewManagerSt
             </ViewItemManager>
           );
         })}
-      </IonRouterOutlet>
+      </ion-router-outlet>
     );
   }
 }
-ViewManager.contextType = NavContext;
+ViewManager.contextType = RouteManagerContext;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavContext } from './routing/NavContext';
+import { NavContext, } from '@ionic/react-core'
 import { IonRouterOutlet } from '../proxies';
 import { IonTabBar } from './IonTabBar';
 
@@ -58,13 +58,13 @@ export class IonTabs extends React.Component<Props, State> {
       <div style={hostStyles}>
         {tabBar.props.slot === 'top' ? tabBar : null}
         <div style={tabsInner} className="tabs-inner">
-          {NavManager ? (
+          {this.context.hasIonicRouter() ? (
             <NavManager>
               {outlet}
             </NavManager>
           ) : (
-            {outlet}
-          )}
+              <>{outlet}</>
+            )}
         </div>
         {tabBar.props.slot === 'bottom' ? tabBar : null}
       </div>

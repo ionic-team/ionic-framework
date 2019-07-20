@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import { dashToPascalCase, attachEventProps } from './utils';
 import { RouterDirection } from '@ionic/core';
-import { NavContext } from './navigation/routing/NavContext';
+import { NavContext } from '@ionic/react-core'
 
 export function createReactComponent<PropType, ElementType>(tagName: string, attributeValues: string[] = [], hrefComponent = false) {
   const displayName = dashToPascalCase(tagName);
@@ -86,7 +86,6 @@ export function createReactComponent<PropType, ElementType>(tagName: string, att
       );
     }
   }
-
   ReactComponent.contextType = NavContext;
 
   function forwardRef(props: InternalProps, ref: React.RefObject<ElementType>) {

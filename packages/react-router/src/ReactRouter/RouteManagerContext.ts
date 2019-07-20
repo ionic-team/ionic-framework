@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
-import { ViewItem } from './ReactRouter/ViewItem';
-import { NavDirection, RouterDirection } from '@ionic/core';
+import { NavDirection } from '@ionic/core';
+import { ViewItem } from '@ionic/react-core';
 
 export interface ViewStack {
   routerOutlet: HTMLIonRouterOutletElement;
@@ -12,34 +12,34 @@ export interface ViewStacks {
   [key: string]: ViewStack;
 }
 
-export interface NavContextState {
+export interface RouteManagerContextState {
   hideView: (viewId: string) => void;
   viewStacks: ViewStacks;
   setupIonRouter: (id: string, children: ReactNode, routerOutlet: HTMLIonRouterOutletElement) => void;
   removeViewStack: (stack: string) => void;
   renderChild: (item: ViewItem) => void;
-  getHistory: () => History;
-  getLocation: () => Location;
-  getViewManager: () => any;
-  goBack: (defaultHref?: string) => void;
+  // getHistory: () => History;
+  // getLocation: () => Location;
+  // getViewManager: () => any;
+  // goBack: (defaultHref?: string) => void;
   transitionView: (enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOuter: HTMLIonRouterOutletElement, direction: NavDirection) => void;
-  navigate: (path: string, direction?: RouterDirection) => void;
-  hasIonicRouter: () => boolean;
+  // navigate: (path: string, direction?: RouterDirection) => void;
+  // hasIonicRouter: () => boolean;
 }
 
-export const NavContext = /*@__PURE__*/React.createContext<NavContextState>({
+export const RouteManagerContext = /*@__PURE__*/React.createContext<RouteManagerContextState>({
   viewStacks: {},
   hideView: () => { navContextNotFoundError(); },
-  getHistory: () => window.history,
-  getLocation: () => window.location,
-  getViewManager: () => undefined,
-  goBack: () => { navContextNotFoundError(); },
+  // getHistory: () => window.history,
+  // getLocation: () => window.location,
+  // getViewManager: () => undefined,
+  // goBack: () => { navContextNotFoundError(); },
   setupIonRouter: () => { navContextNotFoundError() },
   removeViewStack: () => { navContextNotFoundError(); },
   renderChild: () => { navContextNotFoundError(); },
   transitionView: () => { navContextNotFoundError(); },
-  navigate: (path: string) => { window.location.pathname = path },
-  hasIonicRouter: () => false
+  // navigate: (path: string) => { window.location.pathname = path },
+  // hasIonicRouter: () => false
 });
 
 function navContextNotFoundError() {

@@ -15,7 +15,7 @@ export default {
   external: [
     '@ionic/core',
     '@ionic/core/loader',
-    '@ionic/react-core',
+    "@ionic/react-core",
     'ionicons',
     'ionicons/icons',
     'react',

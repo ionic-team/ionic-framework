@@ -1,7 +1,7 @@
 {
-  "name": "@ionic/react",
+  "name": "@ionic/react-router",
   "version": "0.0.8",
-  "description": "React specific wrapper for @ionic/core",
+  "description": "React Router wrapper for @ionic/react",
   "keywords": [
     "ionic",
     "framework",
@@ -25,7 +25,7 @@
     "clean": "rm -rf dist && rm -rf dist-transpiled",
     "compile": "npm run tsc && rollup -c",
     "compile:dev": "npm run tsc && rollup -c rollup.config.dev.js",
-    "release": "np --any-branch --no-cleanup --yolo",
+    "release": "np --any-branch --no-cleanup",
     "tsc": "tsc -p .",
     "test": "jest"
   },
@@ -36,17 +36,19 @@
     "dist/"
   ],
   "dependencies": {
-    "@ionic/core": "4.7.0-dev.201907251411.f619853",
     "tslib": "^1.10.0"
   },
   "peerDependencies": {
+    "@ionic/core": "^4.6.0",
+    "@ionic/react-core": "file:/Users/elylucas/Documents/projects/ionic/ionic/packages/react-core/ionic-react-core-0.0.8.tgz",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.1",
-    "react-router-dom": "^5.0.1",
-    "ionicons": "^4.6.2"
+    "react-router-dom": "^5.0.1"
   },
   "devDependencies": {
+    "@ionic/core": "^4.6.0",
+    "@ionic/react-core": "file:../react-core/ionic-react-core-0.0.8.tgz",
     "@trust/webcrypto": "^0.9.2",
     "@types/jest": "^23.3.9",
     "@types/node": "10.12.9",
@@ -54,12 +56,13 @@
     "@types/react-dom": "^16.8.4",
     "@types/react-router": "^4.4.4",
     "@types/react-router-dom": "^4.3.1",
-    "ionicons": "^4.6.2",
     "jest": "^24.8.0",
     "jest-dom": "^3.4.0",
     "np": "^5.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1",
     "react-testing-library": "^7.0.0",
     "rollup": "^1.14.6",
     "rollup-plugin-node-resolve": "^5.0.1",

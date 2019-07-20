@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonLifeCycleContext } from './IonLifeCycleContext';
+import { IonLifeCycleContext } from '@ionic/react-core';
 
 export const withIonLifeCycle = (WrappedComponent: React.ComponentType<any>) => {
   return class IonLifeCycle extends React.Component<any, any> {

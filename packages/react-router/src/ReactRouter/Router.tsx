@@ -1,26 +1,27 @@
-import { NavDirection, RouterDirection } from '@ionic/core';
+import { NavDirection } from '@ionic/core';
+import { ViewItem } from '@ionic/react-core';
 import { Action as HistoryAction, Location as HistoryLocation, UnregisterCallback } from 'history';
 import React, { ReactNode } from 'react';
-import { BrowserRouter, BrowserRouterProps, match, matchPath, RouteComponentProps, RouteProps, withRouter, Redirect, Route } from 'react-router-dom';
-import { generateUniqueId } from '../../../utils';
-import { NavContext, NavContextState, ViewStack, ViewStacks } from '../NavContext';
-import { ViewItem } from './ViewItem';
-import { ViewManager } from './ViewManager';
+import { BrowserRouter, BrowserRouterProps, match, matchPath, Redirect, Route, RouteComponentProps, RouteProps, withRouter } from 'react-router-dom';
+import { generateUniqueId } from '../utils';
+import { NavManager } from './NavManager';
+import { RouteManagerContext, RouteManagerContextState, ViewStack, ViewStacks } from './RouteManagerContext';
 
-interface IonReactRouterProps extends RouteComponentProps { }
-interface IonReactRouterState extends NavContextState { }
+interface RouterManagerProps extends RouteComponentProps { }
+
+interface RouteManagerState extends RouteManagerContextState { }
 
 interface IonRouteData {
   match: match<{ tab: string }>;
   childProps: RouteProps;
 }
 
-class IonNavManager extends React.Component<IonReactRouterProps, IonReactRouterState> {
+class RouteManager extends React.Component<RouterManagerProps, RouteManagerState> {
   listenUnregisterCallback: UnregisterCallback;
   activeViewId?: string;
   prevViewId?: string;
 
-  constructor(props: IonReactRouterProps) {
+  constructor(props: RouterManagerProps) {
     super(props);
     this.state = {
       viewStacks: {},
@@ -28,13 +29,7 @@ class IonNavManager extends React.Component<IonReactRouterProps, IonReactRouterS
       setupIonRouter: this.setupIonRouter.bind(this),
       removeViewStack: this.removeViewStack.bind(this),
       renderChild: this.renderChild.bind(this),
-      getHistory: this.getHistory.bind(this),
-      getLocation: this.getLocation.bind(this),
-      getViewManager: this.getViewManager.bind(this),
-      goBack: this.goBack.bind(this),
-      transitionView: this.transitionView.bind(this),
-      navigate: this.navigate.bind(this),
-      hasIonicRouter: () => true
+      transitionView: this.transitionView.bind(this)
     };
   }
 
@@ -214,10 +209,6 @@ class IonNavManager extends React.Component<IonReactRouterProps, IonReactRouterS
     }
   }
 
-  navigate(path: string, direction?: RouterDirection) {
-    this.props.history.push(path, { direction });
-  }
-
   registerViewStack(stack: string, activeId: string, stackItems: ViewItem[], routerOutlet: HTMLIonRouterOutletElement, location: HistoryLocation) {
     this.setState((prevState) => {
       const prevViewStacks = Object.assign({}, prevState.viewStacks);
@@ -274,32 +265,6 @@ class IonNavManager extends React.Component<IonReactRouterProps, IonReactRouterS
     return view;
   }
 
-  getHistory = () => {
-    return this.props.history;
-  }
-
-  getLocation = () => {
-    return this.props.location;
-  }
-
-  getViewManager = () => {
-    return ViewManager;
-  }
-
-  goBack = (defaultHref?: string) => {
-    const { view: leavingView } = this.findViewInfoByLocation(this.props.location, this.state.viewStacks);
-    if (leavingView) {
-      const { view: enteringView } = this.findViewInfoById(leavingView.prevId, this.state.viewStacks);
-      if (enteringView) {
-        this.props.history.replace(enteringView.routeData.match.url, { direction: 'back' });
-      } else {
-        this.props.history.replace(defaultHref, { direction: 'back' });
-      }
-    } else {
-      this.props.history.replace(defaultHref, { direction: 'back' });
-    }
-  }
-
   transitionView(enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOuter: HTMLIonRouterOutletElement, direction: NavDirection) {
     /**
      * Super hacky workaround to make sure ionRouterOutlet is available
@@ -334,22 +299,27 @@ class IonNavManager extends React.Component<IonReactRouterProps, IonReactRouterS
 
   render() {
     return (
-      <NavContext.Provider value={this.state}>
-        {this.props.children}
-      </NavContext.Provider>
+      <RouteManagerContext.Provider value={this.state}>
+        <NavManager {...this.props}
+          findViewInfoById={(id: string) => this.findViewInfoById(id, this.state.viewStacks)}
+          findViewInfoByLocation={(location: HistoryLocation) => this.findViewInfoByLocation(location, this.state.viewStacks)}
+        >
+          {this.props.children}
+        </NavManager>
+      </RouteManagerContext.Provider>
     );
   }
 };
 
-const IonNavManagerWithRouter = withRouter(IonNavManager);
-IonNavManagerWithRouter.displayName = 'IonNavManager';
+const RouteManagerWithRouter = withRouter(RouteManager);
+RouteManagerWithRouter.displayName = 'RouteManager';
 
 export class Router extends React.Component<BrowserRouterProps> {
   render() {
     const { children, ...props } = this.props;
     return (
       <BrowserRouter {...props}>
-        <IonNavManagerWithRouter>{children}</IonNavManagerWithRouter>
+        <RouteManagerWithRouter>{children}</RouteManagerWithRouter>
       </BrowserRouter>
     );
   }

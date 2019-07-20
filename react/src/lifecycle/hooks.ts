@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonLifeCycleContext } from './IonLifeCycleContext';
+import { IonLifeCycleContext } from '@ionic/react-core';
 
 export const useIonViewWillEnter = (callback: Function) => {
   const value = React.useContext(IonLifeCycleContext);

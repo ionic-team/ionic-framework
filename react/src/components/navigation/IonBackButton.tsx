@@ -1,6 +1,6 @@
 import { JSX as LocalJSX } from '@ionic/core';
 import React from 'react';
-import { NavContext } from './routing/NavContext';
+import { NavContext } from '@ionic/react-core';
 import { IonBackButtonInner } from '../inner-proxies';
 
 type BackButtonProps = LocalJSX.IonBackButton & {

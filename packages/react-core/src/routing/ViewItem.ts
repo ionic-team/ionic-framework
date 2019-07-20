@@ -1,4 +1,4 @@
-export type ViewItem<RouteData = any> = {
+export interface ViewItem<RouteData = any> {
   id: string;
   key: string;
   element: React.ReactElement<any>;
