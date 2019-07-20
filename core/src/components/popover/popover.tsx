@@ -87,6 +87,8 @@ export class Popover implements ComponentInterface, OverlayInterface {
 
   /**
    * If `true`, the popover will be translucent.
+   * Only applies when the mode is `"ios"` and the device supports
+   * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    */
   @Prop() translucent = false;
 
