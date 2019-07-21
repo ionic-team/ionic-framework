@@ -55,7 +55,7 @@ export class NavController {
    * Going **forward** means that a new page it's going to be pushed to the stack of the outlet (ion-router-outlet),
    * and that it will show a "forward" animation by default.
    *
-   * Navigating forward can also be trigger in a declarative manner by using the `[routerDirection]` directive:
+   * Navigating forward can also be triggered in a declarative manner by using the `[routerDirection]` directive:
    *
    * ```html
    * <a routerLink="/path/to/page" routerDirection="forward">Link</a>
@@ -78,7 +78,7 @@ export class NavController {
    * Going **back** means that all the pages in the stack until the navigated page is found will be pop,
    * and that it will show a "back" animation by default.
    *
-   * Navigating back can also be trigger in a declarative manner by using the `[routerDirection]` directive:
+   * Navigating back can also be triggered in a declarative manner by using the `[routerDirection]` directive:
    *
    * ```html
    * <a routerLink="/path/to/page" routerDirection="back">Link</a>
@@ -101,7 +101,7 @@ export class NavController {
    * Going **root** means that all existing pages in the stack will be removed,
    * and the navigated page will become the single page in the stack.
    *
-   * Navigating root can also be trigger in a declarative manner by using the `[routerDirection]` directive:
+   * Navigating root can also be triggered in a declarative manner by using the `[routerDirection]` directive:
    *
    * ```html
    * <a routerLink="/path/to/page" routerDirection="root">Link</a>
