@@ -70,7 +70,6 @@ export const config: Config = {
     {
       type: 'dist',
       esmLoaderPath: '../loader',
-      experimentalCdnUrl: 'https://unpkg.com/@ionic/core@dev/dist/ionic',
       copy: [
         { src: '**/*.scss' }
       ]

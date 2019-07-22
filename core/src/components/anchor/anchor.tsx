@@ -62,6 +62,7 @@ export class Anchor implements ComponentInterface {
           'ion-activatable': true
         }}
       >
+        <ion-skeleton-text width="2"></ion-skeleton-text>
         <a {...attrs}>
           <slot></slot>
         </a>
