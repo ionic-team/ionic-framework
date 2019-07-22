@@ -1,6 +1,6 @@
 // TODO: Add validation
 // TODO: More tests
-
+let counter = 0;
 export interface Animation {
   parentAnimation: Animation | undefined;
   elements: HTMLElement[];
@@ -91,7 +91,8 @@ const animationEnd = (el: HTMLElement | null, callback: (ev?: TransitionEvent) =
 };
 
 const supportsWebAnimations = (): boolean => {
- return !!(window as any).Animation;
+ return false;
+ //return !!(window as any).Animation;
 };
 
 const generateKeyframeString = (name: string | undefined, keyframes: any[] = []): string => {
@@ -101,25 +102,35 @@ const generateKeyframeString = (name: string | undefined, keyframes: any[] = [])
 
   keyframes.forEach(keyframe => {
     const offset = keyframe.offset;
-    delete keyframe.offset;
 
     const frameString = [];
     for (const property in keyframe) {
-      if (keyframe.hasOwnProperty(property)) {
+      if (keyframe.hasOwnProperty(property) && property !== 'offset') {
         frameString.push(`${property}: ${keyframe[property]};`);
       }
     }
 
     keyframeString.push(`${offset * 100}% { ${frameString.join(' ')} }`);
   });
+  
+  keyframeString.push('}')
 
   return keyframeString.join(' ');
 };
 
-const createKeyframeStylesheet = (keyframeString: string): HTMLElement => {
+const createKeyframeStylesheet = (name: string | undefined, keyframeString: string, element: HTMLElement): HTMLElement | undefined => {
+  const stylesheetId = `ion-${name}`;
   const stylesheet = document.createElement('style');
+  stylesheet.id = stylesheetId;
   stylesheet.appendChild(document.createTextNode(keyframeString));
-  document.querySelector('head')!.appendChild(stylesheet);
+  
+  const rootNode = (element.getRootNode() as any);
+  const styleContainer = (rootNode.head || rootNode);
+  
+  const existingStylesheet = rootNode.querySelector(`#${stylesheetId}`);
+  if (existingStylesheet) { return }
+  
+  styleContainer.appendChild(stylesheet);
 
   return stylesheet;
 };
@@ -148,7 +159,7 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
 
   let initialized = false;
 
-  let stylesheet: HTMLElement | undefined;
+  let stylesheets: HTMLElement[] | undefined = [];
 
   let parentAnimation: Animation | undefined;
 
@@ -218,10 +229,11 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
   };
 
   const cleanUpStyleSheets = () => {
-    if (stylesheet) {
+    stylesheets.forEach(stylesheet => {
       stylesheet.parentNode!.removeChild(stylesheet);
-      stylesheet = undefined;
-    }
+    });
+    
+    stylesheets = [];
   };
 
   /**
@@ -358,6 +370,7 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
 
   const name = (animationName: string): Animation => {
     _name = animationName;
+    counter += 1;
 
     return generatePublicAPI();
   };
@@ -507,26 +520,32 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
   };
 
   const initializeCSSAnimation = () => {
-    if (!stylesheet) {
-        stylesheet = createKeyframeStylesheet(generateKeyframeString(_name, _keyframes));
-      }
-
+    
     elements.forEach(element => {
-        element.style.setProperty('animation-name', _name || null);
-        element.style.setProperty('animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
-        element.style.setProperty('animation-timing-function', getEasing() || null);
-        element.style.setProperty('animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
-        element.style.setProperty('animation-fill-mode', getFill() || null);
-        element.style.setProperty('animation-direction', getDirection() || null);
-
-        let iterationsCount = null;
-        if (getIterations() !== undefined) {
-          iterationsCount = (getIterations() === Infinity) ? 'infinite' : getIterations()!.toString();
+        if (_keyframes.length > 0) {
+          
+          const stylesheet = createKeyframeStylesheet(_name, generateKeyframeString(_name, _keyframes), element);
+          if (stylesheet) {
+            stylesheets.push(stylesheet);
+          }
+          
+          element.style.setProperty('animation-name', _name || null);
+          element.style.setProperty('animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
+          element.style.setProperty('animation-timing-function', getEasing() || null);
+          element.style.setProperty('animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
+          element.style.setProperty('animation-fill-mode', getFill() || null);
+          element.style.setProperty('animation-direction', getDirection() || null);
+  
+          let iterationsCount = null;
+          if (getIterations() !== undefined) {
+            iterationsCount = (getIterations() === Infinity) ? 'infinite' : getIterations()!.toString();
+          }
+  
+          element.style.setProperty('animation-iteration-countion', iterationsCount);
+          element.style.setProperty('animation-play-state', 'paused');
         }
-
-        element.style.setProperty('animation-iteration-countion', iterationsCount);
-        element.style.setProperty('animation-play-state', 'paused');
       });
+      
 
     if (elements.length > 0) {
         animationEnd(elements[0], () => {
@@ -586,7 +605,7 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
     childAnimations.forEach(animation => {
       animation.progressStep(step);
     });
-
+  
     if (getDuration() !== undefined) {
       if (supportsWebAnimations()) {
         webAnimations.forEach(animation => {
@@ -597,8 +616,10 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
         const animationDuration = `-${getDuration()! * step}ms`;
 
         elements.forEach(element => {
-          (element as HTMLElement).style.animationDelay = animationDuration;
-          (element as HTMLElement).style.animationPlayState = 'paused';
+          if (_keyframes.length > 0) {
+            (element as HTMLElement).style.animationDelay = animationDuration;
+            (element as HTMLElement).style.animationPlayState = 'paused';
+          }
         });
       }
     }
@@ -625,6 +646,9 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
     step;
 
     shouldForceLinearEasing = false;
+    
+    // temp
+    //play();
 
     return generatePublicAPI();
   };
@@ -653,18 +677,19 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
     childAnimations.forEach(animation => {
       animation.play();
     });
-
+    
     if (!initialized) {
       initializeAnimation();
     }
-
+    
     if (supportsWebAnimations()) {
       webAnimations.forEach(animation => {
         animation.play();
       });
     } else {
       elements.forEach(element => {
-        (element as HTMLElement).style.animationPlayState = 'running';
+        if (_keyframes.length > 0) {
+        (element as HTMLElement).style.animationPlayState = 'running';}
       });
     }
 
@@ -706,23 +731,25 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
   };
 
   const to = (property: string, value: any): Animation => {
+    
     const keyframeValues = getKeyframes();
     const lastFrame = keyframeValues[keyframeValues.length - 1];
 
     if (lastFrame != null && (lastFrame.offset === undefined || lastFrame.offset === 1)) {
         lastFrame[property] = value;
-
     } else {
+      
       const object: any = {
         offset: 1
       };
       object[property] = value;
-
+      
       _keyframes = [
         ..._keyframes,
         object
       ];
     }
+
     return generatePublicAPI();
   };
 
@@ -785,10 +812,15 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
       progressEnd
     };
   };
+  animationNameValue;
+  
+  name(`ion-animation-${counter}`);
 
+/*
   if (animationNameValue !== undefined) {
     name(animationNameValue);
   }
+*/
 
   return generatePublicAPI();
 };

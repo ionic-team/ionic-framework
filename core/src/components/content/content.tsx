@@ -1,5 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, h, readTask } from '@stencil/core';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Color, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { isPlatform } from '../../utils/platform';
@@ -301,6 +302,8 @@ export class Content implements ComponentInterface {
     const mode = getIonMode(this);
     const { scrollX, scrollY, forceOverscroll } = this;
 
+    const transitionShadow = (mode === 'ios' && config.getBoolean('experimentalTransitionShadow', false));
+
     this.resize();
 
     return (
@@ -328,6 +331,12 @@ export class Content implements ComponentInterface {
         >
           <slot></slot>
         </div>
+        {transitionShadow ? (
+          <div class="transition-effect">
+            <div class="transition-cover"></div>
+            <div class="transition-shadow"></div>
+          </div>
+        ) : null}
         <slot name="fixed"></slot>
       </Host>
     );
@@ -370,6 +379,8 @@ const updateScrollDetail = (
   const prevT = detail.timeStamp;
   const currentX = el.scrollLeft;
   const currentY = el.scrollTop;
+  const timeDelta = timestamp - prevT;
+
   if (shouldStart) {
     // remember the start positions
     detail.startTimeStamp = timestamp;
@@ -383,7 +394,6 @@ const updateScrollDetail = (
   detail.deltaX = currentX - detail.startX;
   detail.deltaY = currentY - detail.startY;
 
-  const timeDelta = timestamp - prevT;
   if (timeDelta > 0 && timeDelta < 100) {
     const velocityX = (currentX - prevX) / timeDelta;
     const velocityY = (currentY - prevY) / timeDelta;
