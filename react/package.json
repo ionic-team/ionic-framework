@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "0.0.7",
+  "version": "0.0.8-0",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -25,7 +25,7 @@
     "clean": "rm -rf dist && rm -rf dist-transpiled",
     "compile": "npm run tsc && rollup -c",
     "compile:dev": "npm run tsc && rollup -c rollup.config.dev.js",
-    "release": "np --any-branch --no-cleanup",
+    "release": "np --any-branch --no-cleanup --yolo",
     "tsc": "tsc -p .",
     "test": "jest"
   },
@@ -36,7 +36,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@ionic/core": "^4.6.0",
+    "@ionic/core": "4.7.0-dev.201907191806.32b736e",
     "tslib": "^1.10.0"
   },
   "peerDependencies": {
