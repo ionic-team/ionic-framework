@@ -23,6 +23,19 @@
 | `--color`      | Text color of the anchor |
 
 
+## Dependencies
+
+### Depends on
+
+- [ion-skeleton-text](../skeleton-text)
+
+### Graph
+```mermaid
+graph TD;
+  ion-anchor --> ion-skeleton-text
+  style ion-anchor fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

@@ -646,6 +646,19 @@ export const SkeletonTextExample: React.FunctionComponent = () => {
 | `--border-radius`  | Border radius of the skeleton text            |
 
 
+## Dependencies
+
+### Used by
+
+ - [ion-anchor](../anchor)
+
+### Graph
+```mermaid
+graph TD;
+  ion-anchor --> ion-skeleton-text
+  style ion-skeleton-text fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

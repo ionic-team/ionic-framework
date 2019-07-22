@@ -5640,9 +5640,6 @@ declare namespace LocalJSX {
     */
     'subHeader'?: string;
   }
-  /**
-   * This is a cool component
-   */
   interface IonSkeletonText extends JSXBase.HTMLAttributes<HTMLIonSkeletonTextElement> {
     /**
     * If `true`, the skeleton text will animate.
