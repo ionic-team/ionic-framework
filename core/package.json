@@ -16,7 +16,6 @@
     "pwa"
   ],
   "main": "dist/index.js",
-  "unpkg": "dist/ionic/ionic.js",
   "module": "dist/index.mjs",
   "es2015": "dist/esm/index.mjs",
   "es2017": "dist/esm/index.mjs",
@@ -34,7 +33,7 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@stencil/core": "1.1.5",
+    "@stencil/core": "1.1.9",
     "@stencil/sass": "1.0.0",
     "@types/jest": "24.0.13",
     "@types/node": "10.12.18",

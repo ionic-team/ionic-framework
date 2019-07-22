@@ -95,6 +95,8 @@ export namespace Components {
     'cssClass'?: string | string[];
     /**
     * Dismiss the action sheet overlay after it has been presented.
+    * @param data Any data to emit in the dismiss events.
+    * @param role The role of the element that is dismissing the action sheet. This can be useful in a button handler for determining which button was clicked to dismiss the action sheet. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
     */
     'dismiss': (data?: any, role?: string | undefined) => Promise<boolean>;
     /**
@@ -142,10 +144,14 @@ export namespace Components {
   interface IonActionSheetController {
     /**
     * Create an action sheet overlay with action sheet options.
+    * @param options The options to use to create the action sheet.
     */
     'create': (options: ActionSheetOptions) => Promise<HTMLIonActionSheetElement>;
     /**
     * Dismiss the open action sheet overlay.
+    * @param data Any data to emit in the dismiss events.
+    * @param role The role of the element that is dismissing the action sheet. This can be useful in a button handler for determining which button was clicked to dismiss the action sheet. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
+    * @param id The id of the action sheet to dismiss. If an id is not provided, it will dismiss the most recently opened action sheet.
     */
     'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>;
     /**
@@ -172,6 +178,8 @@ export namespace Components {
     'cssClass'?: string | string[];
     /**
     * Dismiss the alert overlay after it has been presented.
+    * @param data Any data to emit in the dismiss events.
+    * @param role The role of the element that is dismissing the alert. This can be useful in a button handler for determining which button was clicked to dismiss the alert. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
     */
     'dismiss': (data?: any, role?: string | undefined) => Promise<boolean>;
     /**
@@ -227,10 +235,14 @@ export namespace Components {
   interface IonAlertController {
     /**
     * Create an alert overlay with alert options.
+    * @param options The options to use to create the alert.
     */
     'create': (options: AlertOptions) => Promise<HTMLIonAlertElement>;
     /**
     * Dismiss the open alert overlay.
+    * @param data Any data to emit in the dismiss events.
+    * @param role The role of the element that is dismissing the alert. This can be useful in a button handler for determining which button was clicked to dismiss the alert. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
+    * @param id The id of the alert to dismiss. If an id is not provided, it will dismiss the most recently opened alert.
     */
     'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>;
     /**
@@ -618,6 +630,9 @@ export namespace Components {
     'getScrollElement': () => Promise<HTMLElement>;
     /**
     * Scroll by a specified X/Y distance in the component.
+    * @param x The amount to scroll by on the horizontal axis.
+    * @param y The amount to scroll by on the vertical axis.
+    * @param duration The amount of time to take scrolling by that amount.
     */
     'scrollByPoint': (x: number, y: number, duration: number) => Promise<void>;
     /**
@@ -626,14 +641,19 @@ export namespace Components {
     'scrollEvents': boolean;
     /**
     * Scroll to the bottom of the component.
+    * @param duration The amount of time to take scrolling to the bottom. Defaults to `0`.
     */
     'scrollToBottom': (duration?: number) => Promise<void>;
     /**
     * Scroll to a specified X/Y location in the component.
+    * @param x The point to scroll to on the horizontal axis.
+    * @param y The point to scroll to on the vertical axis.
+    * @param duration The amount of time to take scrolling to that point. Defaults to `0`.
     */
     'scrollToPoint': (x: number | null | undefined, y: number | null | undefined, duration?: number) => Promise<void>;
     /**
     * Scroll to the top of the component.
+    * @param duration The amount of time to take scrolling to the top. Defaults to `0`.
     */
     'scrollToTop': (duration?: number) => Promise<void>;
     /**
@@ -1144,6 +1164,7 @@ export namespace Components {
     'getSlidingRatio': () => Promise<number>;
     /**
     * Open the sliding item.
+    * @param side The side of the options to open. If a side is not provided, it will open the first set of options it finds within the item.
     */
     'open': (side: "start" | "end" | undefined) => Promise<void>;
   }
@@ -1204,6 +1225,8 @@ export namespace Components {
     'cssClass'?: string | string[];
     /**
     * Dismiss the loading overlay after it has been presented.
+    * @param data Any data to emit in the dismiss events.
+    * @param role The role of the element that is dismissing the loading. This can be useful in a button handler for determining which button was clicked to dismiss the loading. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
     */
     'dismiss': (data?: any, role?: string | undefined) => Promise<boolean>;
     /**
@@ -1259,10 +1282,14 @@ export namespace Components {
   interface IonLoadingController {
     /**
     * Create a loading overlay with loading options.
+    * @param options The options to use to create the loading.
     */
     'create': (options?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>;
     /**
     * Dismiss the open loading overlay.
+    * @param data Any data to emit in the dismiss events.
+    * @param role The role of the element that is dismissing the loading. This can be useful in a button handler for determining which button was clicked to dismiss the loading. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
+    * @param id The id of the loading to dismiss. If an id is not provided, it will dismiss the most recently opened loading.
     */
     'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>;
     /**
@@ -1350,14 +1377,18 @@ export namespace Components {
     '_getInstance': () => Promise<MenuControllerI>;
     /**
     * Close the menu. If a menu is specified, it will close that menu. If no menu is specified, then it will close any menu that is open. If it does not find any open menus, it will return `false`.
+    * @param menu The menuId or side of the menu to close.
     */
     'close': (menu?: string | null | undefined) => Promise<boolean>;
     /**
     * Enable or disable a menu. Disabling a menu will not allow gestures for that menu or any calls to open it. This is useful when there are multiple menus on the same side and only one of them should be allowed to open. Enabling a menu will automatically disable all other menus on that side.
+    * @param enable If `true`, the menu should be enabled.
+    * @param menu The menuId or side of the menu to enable or disable.
     */
     'enable': (enable: boolean, menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
     /**
     * Get a menu instance. If a menu is not provided then it will return the first menu found. If the specified menu is `start` or `end`, then it will return the enabled menu on that side. Otherwise, it will try to find the menu using the menu's `id` property. If a menu is not found then it will return `null`.
+    * @param menu The menuId or side of the menu.
     */
     'get': (menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
     /**
@@ -1374,26 +1405,34 @@ export namespace Components {
     'isAnimating': () => Promise<boolean>;
     /**
     * Get whether or not the menu is enabled. Returns `true` if the specified menu is enabled. Returns `false` if a menu is disabled or not found.
+    * @param menu The menuId or side of the menu that is being checked.
     */
     'isEnabled': (menu?: string | null | undefined) => Promise<boolean>;
     /**
     * Get whether or not the menu is open. Returns `true` if the specified menu is open. If a menu is not specified, it will return `true` if any menu is currently open.
+    * @param menu The menuId or side of the menu that is being checked.
     */
     'isOpen': (menu?: string | null | undefined) => Promise<boolean>;
     /**
     * Open the menu. If a menu is not provided then it will open the first menu found. If the specified menu is `start` or `end`, then it will open the enabled menu on that side. Otherwise, it will try to find the menu using the menu's `id` property. If a menu is not found then it will return `false`.
+    * @param menu The menuId or side of the menu to open.
     */
     'open': (menu?: string | null | undefined) => Promise<boolean>;
     /**
     * Registers a new animation that can be used with any `ion-menu` by passing the name of the animation in its `type` property.
+    * @param name The name of the animation to register.
+    * @param animation The animation function to register.
     */
     'registerAnimation': (name: string, animation: AnimationBuilder) => Promise<void>;
     /**
     * Enable or disable the ability to swipe open the menu.
+    * @param enable If `true`, the menu swipe gesture should be enabled.
+    * @param menu The menuId or side of the menu to enable or disable the swipe gesture on.
     */
     'swipeGesture': (enable: boolean, menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
     /**
     * Toggle the menu open or closed. If the menu is already open, it will try to close the menu, otherwise it will try to open it. Returns `false` if a menu is not found.
+    * @param menu The menuId or side of the menu to toggle.
     */
     'toggle': (menu?: string | null | undefined) => Promise<boolean>;
   }
@@ -1431,6 +1470,8 @@ export namespace Components {
     'delegate'?: FrameworkDelegate;
     /**
     * Dismiss the modal overlay after it has been presented.
+    * @param data Any data to emit in the dismiss events.
+    * @param role The role of the element that is dismissing the modal. For example, 'cancel' or 'backdrop'.
     */
     'dismiss': (data?: any, role?: string | undefined) => Promise<boolean>;
     /**
@@ -1470,10 +1511,14 @@ export namespace Components {
   interface IonModalController {
     /**
     * Create a modal overlay with modal options.
+    * @param options The options to use to create the modal.
     */
     'create': <T extends ComponentRef>(options: ModalOptions<T>) => Promise<HTMLIonModalElement>;
     /**
     * Dismiss the open modal overlay.
+    * @param data Any data to emit in the dismiss events.
+    * @param role The role of the element that is dismissing the modal. This can be useful in a button handler for determining which button was clicked to dismiss the modal. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
+    * @param id The id of the modal to dismiss. If an id is not provided, it will dismiss the most recently opened modal.
     */
     'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>;
     /**
@@ -1492,6 +1537,7 @@ export namespace Components {
     'animation'?: AnimationBuilder;
     /**
     * Returns `true` if the current view can go back.
+    * @param view The view to check.
     */
     'canGoBack': (view?: ViewController | undefined) => Promise<boolean>;
     'delegate'?: FrameworkDelegate;
@@ -1501,39 +1547,65 @@ export namespace Components {
     'getActive': () => Promise<ViewController | undefined>;
     /**
     * Get the view at the specified index.
+    * @param index The index of the view.
     */
     'getByIndex': (index: number) => Promise<ViewController | undefined>;
     /**
     * Get the previous view.
+    * @param view The view to get.
     */
     'getPrevious': (view?: ViewController | undefined) => Promise<ViewController | undefined>;
     'getRouteId': () => Promise<RouteID | undefined>;
     /**
     * Inserts a component into the navigation stack at the specified index. This is useful to add a component at any point in the navigation stack.
+    * @param insertIndex The index to insert the component at in the stack.
+    * @param component The component to insert into the navigation stack.
+    * @param componentProps Any properties of the component.
+    * @param opts The navigation options.
+    * @param done The transition complete function.
     */
     'insert': <T extends NavComponent>(insertIndex: number, component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     /**
     * Inserts an array of components into the navigation stack at the specified index. The last component in the array will become instantiated as a view, and animate in to become the active view.
+    * @param insertIndex The index to insert the components at in the stack.
+    * @param insertComponents The components to insert into the navigation stack.
+    * @param opts The navigation options.
+    * @param done The transition complete function.
     */
     'insertPages': (insertIndex: number, insertComponents: NavComponent[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     /**
     * Pop a component off of the navigation stack. Navigates back from the current component.
+    * @param opts The navigation options.
+    * @param done The transition complete function.
     */
     'pop': (opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     /**
     * Pop to a specific index in the navigation stack.
+    * @param indexOrViewCtrl The index or view controller to pop to.
+    * @param opts The navigation options.
+    * @param done The transition complete function.
     */
     'popTo': (indexOrViewCtrl: number | ViewController, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     /**
     * Navigate back to the root of the stack, no matter how far back that is.
+    * @param opts The navigation options.
+    * @param done The transition complete function.
     */
     'popToRoot': (opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     /**
     * Push a new component onto the current navigation stack. Pass any additional information along as an object. This additional information is accessible through NavParams.
+    * @param component The component to push onto the navigation stack.
+    * @param componentProps Any properties of the component.
+    * @param opts The navigation options.
+    * @param done The transition complete function.
     */
     'push': <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     /**
     * Removes a component from the navigation stack at the specified index.
+    * @param startIndex The number to begin removal at.
+    * @param removeCount The number of components to remove.
+    * @param opts The navigation options.
+    * @param done The transition complete function.
     */
     'removeIndex': (startIndex: number, removeCount?: number, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     /**
@@ -1546,10 +1618,17 @@ export namespace Components {
     'rootParams'?: ComponentProps;
     /**
     * Set the views of the current navigation stack and navigate to the last view. By default animations are disabled, but they can be enabled by passing options to the navigation controller. Navigation parameters can also be passed to the individual pages in the array.
+    * @param views The list of views to set as the navigation stack.
+    * @param opts The navigation options.
+    * @param done The transition complete function.
     */
     'setPages': (views: any[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     /**
     * Set the root for the current navigation stack to a component.
+    * @param component The component to set as the root of the navigation stack.
+    * @param componentProps Any properties of the component.
+    * @param opts The navigation options.
+    * @param done The transition complete function.
     */
     'setRoot': <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     'setRouteId': (id: string, params: ComponentProps<null> | undefined, direction: RouterDirection) => Promise<RouteWrite>;
@@ -1612,6 +1691,8 @@ export namespace Components {
     'cssClass'?: string | string[];
     /**
     * Dismiss the picker overlay after it has been presented.
+    * @param data Any data to emit in the dismiss events.
+    * @param role The role of the element that is dismissing the picker. This can be useful in a button handler for determining which button was clicked to dismiss the picker. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
     */
     'dismiss': (data?: any, role?: string | undefined) => Promise<boolean>;
     /**
@@ -1624,6 +1705,7 @@ export namespace Components {
     'enterAnimation'?: AnimationBuilder;
     /**
     * Get the column that matches the specified name.
+    * @param name The name of the column.
     */
     'getColumn': (name: string) => Promise<PickerColumn | undefined>;
     /**
@@ -1665,10 +1747,14 @@ export namespace Components {
   interface IonPickerController {
     /**
     * Create a picker overlay with picker options.
+    * @param options The options to use to create the picker.
     */
     'create': (options: PickerOptions) => Promise<HTMLIonPickerElement>;
     /**
     * Dismiss the open picker overlay.
+    * @param data Any data to emit in the dismiss events.
+    * @param role The role of the element that is dismissing the picker. This can be useful in a button handler for determining which button was clicked to dismiss the picker. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
+    * @param id The id of the picker to dismiss. If an id is not provided, it will dismiss the most recently opened picker.
     */
     'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>;
     /**
@@ -1700,6 +1786,8 @@ export namespace Components {
     'delegate'?: FrameworkDelegate;
     /**
     * Dismiss the popover overlay after it has been presented.
+    * @param data Any data to emit in the dismiss events.
+    * @param role The role of the element that is dismissing the popover. For example, 'cancel' or 'backdrop'.
     */
     'dismiss': (data?: any, role?: string | undefined) => Promise<boolean>;
     /**
@@ -1747,10 +1835,14 @@ export namespace Components {
   interface IonPopoverController {
     /**
     * Create a popover overlay with popover options.
+    * @param options The options to use to create the popover.
     */
     'create': <T extends ComponentRef>(options: PopoverOptions<T>) => Promise<HTMLIonPopoverElement>;
     /**
     * Dismiss the open popover overlay.
+    * @param data Any data to emit in the dismiss events.
+    * @param role The role of the element that is dismissing the popover. This can be useful in a button handler for determining which button was clicked to dismiss the popover. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
+    * @param id The id of the popover to dismiss. If an id is not provided, it will dismiss the most recently opened popover.
     */
     'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>;
     /**
@@ -1938,6 +2030,7 @@ export namespace Components {
   interface IonReorderGroup {
     /**
     * Completes the reorder operation. Must be called by the `ionItemReorder` event.  If a list of items is passed, the list will be reordered and returned in the proper order.  If no parameters are passed or if `true` is passed in, the reorder will complete and the item will remain in the position it was dragged to. If `false` is passed, the reorder will complete and the item will bounce back to its original position.
+    * @param listOrReorder A list of items to be sorted and returned in the new order or a boolean of whether or not the reorder should reposition the item.
     */
     'complete': (listOrReorder?: boolean | any[] | undefined) => Promise<any>;
     /**
@@ -1948,6 +2041,8 @@ export namespace Components {
   interface IonRippleEffect {
     /**
     * Adds the ripple effect to the parent element.
+    * @param x The horizontal coordinate of where the ripple should start.
+    * @param y The vertical coordinate of where the ripple should start.
     */
     'addRipple': (x: number, y: number) => Promise<() => void>;
     /**
@@ -1988,6 +2083,8 @@ export namespace Components {
     'printDebug': () => Promise<void>;
     /**
     * Navigate to the specified URL.
+    * @param url The url to navigate to.
+    * @param direction The direction of the animation. Defaults to `"forward"`.
     */
     'push': (url: string, direction?: RouterDirection) => Promise<boolean>;
     /**
@@ -2202,6 +2299,7 @@ export namespace Components {
     'okText': string;
     /**
     * Open the select overlay. The overlay is either an alert, action sheet, or popover, depending on the `interface` property on the `ion-select`.
+    * @param event The user interface event that called the open.
     */
     'open': (event?: UIEvent | undefined) => Promise<any>;
     /**
@@ -2254,6 +2352,9 @@ export namespace Components {
     * If `true`, the skeleton text will animate.
     */
     'animated': boolean;
+    /**
+    * @deprecated Use CSS instead. The width of the skeleton text. If supplied, it will override the CSS style.
+    */
     'width'?: string;
   }
   interface IonSlide {}
@@ -2280,14 +2381,17 @@ export namespace Components {
     'length': () => Promise<number>;
     /**
     * Lock or unlock the ability to slide to the next slide.
+    * @param lock If `true`, disable swiping to the next slide.
     */
     'lockSwipeToNext': (lock: boolean) => Promise<void>;
     /**
     * Lock or unlock the ability to slide to the previous slide.
+    * @param lock If `true`, disable swiping to the previous slide.
     */
     'lockSwipeToPrev': (lock: boolean) => Promise<void>;
     /**
     * Lock or unlock the ability to slide to the next or previous slide.
+    * @param lock If `true`, disable swiping to the next and previous slide.
     */
     'lockSwipes': (lock: boolean) => Promise<void>;
     /**
@@ -2308,14 +2412,21 @@ export namespace Components {
     'scrollbar': boolean;
     /**
     * Transition to the next slide.
+    * @param speed The transition duration (in ms).
+    * @param runCallbacks If true, the transition will produce [Transition/SlideChange][Start/End] transition events.
     */
     'slideNext': (speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>;
     /**
     * Transition to the previous slide.
+    * @param speed The transition duration (in ms).
+    * @param runCallbacks If true, the transition will produce the [Transition/SlideChange][Start/End] transition events.
     */
     'slidePrev': (speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>;
     /**
     * Transition to the specified slide.
+    * @param index The index of the slide to transition to.
+    * @param speed The transition duration (in ms).
+    * @param runCallbacks If true, the transition will produce [Transition/SlideChange][Start/End] transition events.
     */
     'slideTo': (index: number, speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>;
     /**
@@ -2332,6 +2443,7 @@ export namespace Components {
     'update': () => Promise<void>;
     /**
     * Force swiper to update its height (when autoHeight is enabled) for the duration equal to 'speed' parameter.
+    * @param speed The transition duration (in ms).
     */
     'updateAutoHeight': (speed?: number | undefined) => Promise<void>;
   }
@@ -2447,10 +2559,12 @@ export namespace Components {
     'getSelected': () => Promise<string | undefined>;
     /**
     * Get a specific tab by the value of its `tab` property or an element reference.
+    * @param tab The tab instance to select. If passed a string, it should be the value of the tab's `tab` property.
     */
     'getTab': (tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>;
     /**
     * Select a tab by the value of its `tab` property or an element reference.
+    * @param tab The tab instance to select. If passed a string, it should be the value of the tab's `tab` property.
     */
     'select': (tab: string | HTMLIonTabElement) => Promise<boolean>;
     'setRouteId': (id: string) => Promise<RouteWrite>;
@@ -2582,6 +2696,8 @@ export namespace Components {
     'cssClass'?: string | string[];
     /**
     * Dismiss the toast overlay after it has been presented.
+    * @param data Any data to emit in the dismiss events.
+    * @param role The role of the element that is dismissing the toast. This can be useful in a button handler for determining which button was clicked to dismiss the toast. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
     */
     'dismiss': (data?: any, role?: string | undefined) => Promise<boolean>;
     /**
@@ -2641,10 +2757,14 @@ export namespace Components {
   interface IonToastController {
     /**
     * Create a toast overlay with toast options.
+    * @param options The options to use to create the toast.
     */
     'create': (options?: ToastOptions | undefined) => Promise<HTMLIonToastElement>;
     /**
     * Dismiss the open toast overlay.
+    * @param data Any data to emit in the dismiss events.
+    * @param role The role of the element that is dismissing the toast. For example, 'cancel' or 'backdrop'.
+    * @param id The id of the toast to dismiss. If an id is not provided, it will dismiss the most recently opened toast.
     */
     'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>;
     /**
@@ -5525,6 +5645,9 @@ declare namespace LocalJSX {
     * If `true`, the skeleton text will animate.
     */
     'animated'?: boolean;
+    /**
+    * @deprecated Use CSS instead. The width of the skeleton text. If supplied, it will override the CSS style.
+    */
     'width'?: string;
   }
   interface IonSlide extends JSXBase.HTMLAttributes<HTMLIonSlideElement> {}
