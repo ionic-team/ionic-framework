@@ -225,13 +225,15 @@ export class StackController {
         containerEl.appendChild(enteringEl);
       }
 
-      return containerEl.commit(enteringEl, leavingEl, {
-        deepWait: true,
-        duration: direction === undefined ? 0 : undefined,
-        direction,
-        showGoBack,
-        progressAnimation
-      });
+      if ((containerEl as any).commit) {
+        return containerEl.commit(enteringEl, leavingEl, {
+          deepWait: true,
+          duration: direction === undefined ? 0 : undefined,
+          direction,
+          showGoBack,
+          progressAnimation
+        });
+      }
     }
     return Promise.resolve(false);
   }

@@ -20,7 +20,9 @@ export class FormComponent {
       input2: ['Default Value'],
       checkbox: [false],
       range: [5, Validators.min(10)],
-    }, {updateOn: window.location.hash === '#blur' ? 'blur' : 'change'});
+    }, {
+      updateOn: typeof (window as any) !== 'undefined' && window.location.hash === '#blur' ? 'blur' : 'change'
+    });
   }
 
   onSubmit(_ev) {
