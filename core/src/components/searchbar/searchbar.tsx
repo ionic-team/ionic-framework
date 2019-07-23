@@ -392,6 +392,7 @@ export class Searchbar implements ComponentInterface {
     const mode = getIonMode(this);
 
     return {
+      'role': 'search',
       'aria-disabled': this.disabled ? 'true' : null,
       class: {
         ...createColorClasses(this.color),
@@ -414,6 +415,7 @@ export class Searchbar implements ComponentInterface {
 
     const cancelButton = !isCancelButtonSetToNever(this.showCancelButton) && (
       <button
+        aria-label="cancel"
         type="button"
         tabIndex={mode === 'ios' && !this.shouldShowCancelButton() ? -1 : undefined}
         onMouseDown={this.onCancelSearchbar}
@@ -422,7 +424,7 @@ export class Searchbar implements ComponentInterface {
       >
         <div>
           { mode === 'md'
-            ? <ion-icon mode={mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
+            ? <ion-icon aria-hidden="true" mode={mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
             : this.cancelButtonText
           }
         </div>
@@ -432,6 +434,7 @@ export class Searchbar implements ComponentInterface {
     return [
       <div class="searchbar-input-container">
         <input
+          aria-label="search text"
           disabled={this.disabled}
           ref={el => this.nativeInput = el}
           class="searchbar-input"
@@ -451,13 +454,14 @@ export class Searchbar implements ComponentInterface {
         <ion-icon mode={mode} icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
 
         <button
+          aria-label="reset"
           type="button"
           no-blur
           class="searchbar-clear-button"
           onMouseDown={this.onClearInput}
           onTouchStart={this.onClearInput}
         >
-          <ion-icon mode={mode} icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
+          <ion-icon aria-hidden="true" mode={mode} icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
         </button>
       </div>,
       mode === 'ios' && cancelButton
