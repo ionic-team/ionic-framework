@@ -20,14 +20,13 @@
     "url": "https://github.com/ionic-team/ionic.git"
   },
   "scripts": {
-    "build": "npm run clean && npm run build.core && npm run build.ng && npm run build.server && npm run clean-generated",
+    "build": "npm run clean && npm run build.core && npm run build.ng && npm run clean-generated",
     "build.core": "node scripts/build-core.js",
     "build.fesm": "rollup --config ./scripts/rollup.config.js",
     "build.link": "npm run build && node scripts/link-copy.js",
     "build.ng": "npm run build.es2015 && npm run build.es5",
     "build.es2015": "ngc -p tsconfig.json && rollup --config ./scripts/rollup.config.js",
     "build.es5": "ngc -p tsconfig.legacy.json && rollup --config ./scripts/rollup.config.legacy.js",
-    "build.server": "ngc -p ./src/server/tsconfig.json",
     "clean": "node scripts/clean.js",
     "clean-generated": "node ./scripts/clean-generated.js",
     "lint": "npm run lint.ts",

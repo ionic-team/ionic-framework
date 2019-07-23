@@ -2,10 +2,17 @@
   "name": "@ionic/angular-server",
   "description": "Angular SSR Module for Ionic",
   "private": true,
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "ngc -p ./tsconfig.json",
+    "build.prod": "npm run clean && npm run build",
+    "clean": "rm -rf ./dist"
+  },
   "peerDependencies": {
-    "@angular/animations": "~8.0.0",
     "@angular-devkit/core": "~8.0.0",
     "@angular/common": "~8.0.0",
     "@angular/core": "~8.0.0",
@@ -17,11 +24,15 @@
   "devDependencies": {
     "@angular/animations": "~8.0.0",
     "@angular-devkit/core": "~8.0.0",
+    "@angular/compiler": "~8.0.0",
+    "@angular/compiler-cli": "~8.0.0",
     "@angular/common": "~8.0.0",
     "@angular/core": "~8.0.0",
+    "@angular/platform-browser": "~8.0.0",
     "@angular/platform-server": "~8.0.0",
     "@angular/router": "~8.0.0",
     "rxjs": "^6.4.0",
+    "tsickle": "^0.34.0",
     "typescript": "~3.4.3",
     "zone.js": "~0.9.1"
   }

@@ -6,7 +6,7 @@
     "start": "npm run sync && ng serve",
     "sync:build": "sh scripts/build-ionic.sh",
     "sync": "sh scripts/sync.sh",
-    "build": "ng build --prod --no-progress",
+    "build": "npm run sync && ng build --prod --no-progress",
     "test": "ng e2e --prod",
     "test.dev": "npm run sync && ng e2e",
     "lint": "ng lint",
@@ -14,7 +14,7 @@
     "compile:server": "webpack --config webpack.server.config.js --progress --colors",
     "serve:ssr": "node dist/server",
     "build:ssr": "npm run build:client-and-server-bundles && npm run compile:server",
-    "build:client-and-server-bundles": "ng build --prod && ng run test-app:server:production"
+    "build:client-and-server-bundles": "npm run build && ng run test-app:server:production"
   },
   "private": true,
   "dependencies": {
