@@ -34,13 +34,17 @@ export class TabBar implements ComponentInterface {
   @Prop() selectedTab?: string;
   @Watch('selectedTab')
   selectedTabChanged() {
-    this.ionTabBarChanged.emit({
-      tab: this.selectedTab
-    });
+    if (this.selectedTab !== undefined) {
+      this.ionTabBarChanged.emit({
+        tab: this.selectedTab
+      });
+    }
   }
 
   /**
    * If `true`, the tab bar will be translucent.
+   * Only applies when the mode is `"ios"` and the device supports
+   * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    */
   @Prop() translucent = false;
 

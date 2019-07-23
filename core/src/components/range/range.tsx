@@ -483,7 +483,7 @@ interface RangeKnob {
   handleKeyboard: (name: KnobName, isIncrease: boolean) => void;
 }
 
-function renderKnob(isRTL: boolean, { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard }: RangeKnob) {
+const renderKnob = (isRTL: boolean, { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard }: RangeKnob) => {
   const start = isRTL ? 'right' : 'left';
 
   const knobStyle = () => {
@@ -529,21 +529,21 @@ function renderKnob(isRTL: boolean, { knob, value, ratio, min, max, disabled, pr
       <div class="range-knob" role="presentation" />
     </div>
   );
-}
+};
 
-function ratioToValue(
+const ratioToValue = (
   ratio: number,
   min: number,
   max: number,
   step: number
-): number {
+): number => {
   let value = (max - min) * ratio;
   if (step > 0) {
     value = Math.round(value / step) * step + min;
   }
   return clamp(min, value, max);
-}
+};
 
-function valueToRatio(value: number, min: number, max: number): number {
+const valueToRatio = (value: number, min: number, max: number): number => {
   return clamp(0, (value - min) / (max - min), 1);
-}
+};

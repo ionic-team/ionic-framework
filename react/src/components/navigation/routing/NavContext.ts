@@ -1,13 +1,10 @@
-import React from 'react';
-import { ViewItem } from './ViewItem';
-import { NavDirection } from '@ionic/core';
-import { Location } from 'history';
-
+import React, { ReactNode } from 'react';
+import { ViewItem } from './ReactRouter/ViewItem';
+import { NavDirection, RouterDirection } from '@ionic/core';
 
 export interface ViewStack {
   routerOutlet: HTMLIonRouterOutletElement;
   activeId?: string,
-  // prevId?: string,
   views: ViewItem[]
 }
 
@@ -18,21 +15,27 @@ export interface ViewStacks {
 export interface NavContextState {
   hideView: (viewId: string) => void;
   viewStacks: ViewStacks;
-  registerViewStack: (stack: string, activeId: string, stackItems: ViewItem[], ionRouterOutlet: HTMLIonRouterOutletElement, location: Location) => void;
+  setupIonRouter: (id: string, children: ReactNode, routerOutlet: HTMLIonRouterOutletElement) => void;
   removeViewStack: (stack: string) => void;
+  renderChild: (item: ViewItem) => void;
   goBack: (defaultHref?: string) => void;
   transitionView: (enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOuter: HTMLIonRouterOutletElement, direction: NavDirection) => void;
+  navigate: (path: string, direction?: RouterDirection) => void;
+  hasIonicRouter: () => boolean;
 }
 
 export const NavContext = /*@__PURE__*/React.createContext<NavContextState>({
   viewStacks: {},
   hideView: () => { navContextNotFoundError(); },
   goBack: () => { navContextNotFoundError(); },
-  registerViewStack: () => { navContextNotFoundError(); },
+  setupIonRouter: () => { navContextNotFoundError() },
   removeViewStack: () => { navContextNotFoundError(); },
-  transitionView: () => { navContextNotFoundError(); }
+  renderChild: () => { navContextNotFoundError(); },
+  transitionView: () => { navContextNotFoundError(); },
+  navigate: () => { navContextNotFoundError(); },
+  hasIonicRouter: () => false
 });
 
 function navContextNotFoundError() {
-  console.error('IonRouter not found, did you add it to the app?')
+  console.error('IonReactRouter not found, did you add it to the app?')
 }

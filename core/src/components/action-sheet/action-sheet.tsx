@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Me
 
 import { getIonMode } from '../../global/ionic-global';
 import { ActionSheetButton, Animation, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
-import { BACKDROP, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
+import { BACKDROP, dismiss, eventMethod, isCancel, present, safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -74,7 +74,9 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   @Prop() subHeader?: string;
 
   /**
-   * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports backdrop-filter.
+   * If `true`, the action sheet will be translucent.
+   * Only applies when the mode is `"ios"` and the device supports
+   * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    */
   @Prop() translucent = false;
 
@@ -169,17 +171,13 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   }
 
   private async callButtonHandler(button: ActionSheetButton | undefined) {
-    if (button && button.handler) {
+    if (button) {
       // a handler has been provided, execute it
       // pass the handler the values from the inputs
-      try {
-        const rtn = await button.handler();
-        if (rtn === false) {
-          // if the return value of the handler is false then do not dismiss
-          return false;
-        }
-      } catch (e) {
-        console.error(e);
+      const rtn = await safeCall(button.handler);
+      if (rtn === false) {
+        // if the return value of the handler is false then do not dismiss
+        return false;
       }
     }
     return true;
@@ -264,11 +262,11 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   }
 }
 
-function buttonClass(button: ActionSheetButton): CssClassMap {
+const buttonClass = (button: ActionSheetButton): CssClassMap => {
   return {
     'action-sheet-button': true,
     'ion-activatable': true,
     [`action-sheet-${button.role}`]: button.role !== undefined,
     ...getClassMap(button.cssClass),
   };
-}
+};

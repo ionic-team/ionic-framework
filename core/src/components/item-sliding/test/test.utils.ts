@@ -1,5 +1,5 @@
 // Opens a sliding item by simulating a drag event
-export async function openItemSliding(id: string, page: any, rtl = false) {
+export const openItemSliding = async (id: string, page: any, rtl = false) => {
   try {
     const slidingItem = await page.$(id);
 
@@ -46,13 +46,13 @@ export async function openItemSliding(id: string, page: any, rtl = false) {
   } catch (err) {
     throw err;
   }
-}
+};
 
 // Close a sliding item after taking a screenshot
 // to allow other sliding items to open
-export async function closeItemSliding(page: any) {
+export const closeItemSliding = async (page: any) => {
   await page.mouse.move(0, 0);
   await page.mouse.down();
   await page.mouse.up();
   await page.waitFor(1000);
-}
+};

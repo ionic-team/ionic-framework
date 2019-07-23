@@ -1,26 +1,26 @@
 
 import { Gesture, GestureDetail, createGesture } from './index';
 
-export function createSwipeBackGesture(
+export const createSwipeBackGesture = (
   el: HTMLElement,
   canStartHandler: () => boolean,
   onStartHandler: () => void,
   onMoveHandler: (step: number) => void,
   onEndHandler: (shouldComplete: boolean, step: number, dur: number) => void,
-): Gesture {
+): Gesture => {
   const win = el.ownerDocument!.defaultView!;
-  function canStart(detail: GestureDetail) {
+  const canStart = (detail: GestureDetail) => {
     return detail.startX <= 50 && canStartHandler();
-  }
+  };
 
-  function onMove(detail: GestureDetail) {
+  const onMove = (detail: GestureDetail) => {
     // set the transition animation's progress
     const delta = detail.deltaX;
     const stepValue = delta / win.innerWidth;
     onMoveHandler(stepValue);
-  }
+  };
 
-  function onEnd(detail: GestureDetail) {
+  const onEnd = (detail: GestureDetail) => {
     // the swipe back gesture has ended
     const delta = detail.deltaX;
     const width = win.innerWidth;
@@ -38,7 +38,7 @@ export function createSwipeBackGesture(
       realDur = Math.min(dur, 300);
     }
     onEndHandler(shouldComplete, stepValue, realDur);
-  }
+  };
 
   return createGesture({
     el,
@@ -50,4 +50,4 @@ export function createSwipeBackGesture(
     onMove,
     onEnd
   });
-}
+};

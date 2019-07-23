@@ -150,6 +150,16 @@
   height: 100%;
 }
 
+
+// Alert Button: Disabled
+// --------------------------------------------------
+
+[disabled] .alert-button-inner {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
+}
+
 .alert-tappable {
   @include margin(0);
   @include padding(0);
