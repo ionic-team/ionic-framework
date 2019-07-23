@@ -77,32 +77,30 @@ const animation = async (animationBuilder: AnimationBuilder, opts: TransitionOpt
   await waitForReady(opts, true);
 
   const trans = await import('../animation').then(mod => mod.create(animationBuilder, opts.baseEl, opts));
-  trans;
 
   fireWillEvents(opts.enteringEl, opts.leavingEl);
 
-  const animation = ((opts.mode === 'ios')
+  const anim = ((opts.mode === 'ios')
     ? (await iosTransitionAnimation()).newIosTransitionAnimation(opts.baseEl, opts)
     : (await mdTransitionAnimation()).newMdTransitionAnimation(opts) as any);
 
-  animation;
+  console.log(trans, anim);
 
-  await playTransition(animation, opts);
+  await playTransition(anim, opts);
 
-  animation.hasCompleted = true;
+  anim.hasCompleted = true;
 
   if (opts.progressCallback) {
     opts.progressCallback(undefined);
   }
 
-  if (animation.hasCompleted) {
+  if (anim.hasCompleted) {
     fireDidEvents(opts.enteringEl, opts.leavingEl);
   }
 
-  console.log('done!');
   return {
-    hasCompleted: animation.hasCompleted,
-    animation
+    hasCompleted: anim.hasCompleted,
+    animation: anim
   };
 };
 

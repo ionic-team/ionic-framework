@@ -7,7 +7,7 @@ export const newMdTransitionAnimation = (opts: TransitionOptions): AnimationNew 
     const OFF_BOTTOM = '40px';
     const CENTER = '0px';
 
-    const rootAnimation = createAnimation('md-root-animation');
+    const rootAnimation = createAnimation();
 
     const enteringEl = opts.enteringEl;
     const leavingEl = opts.leavingEl;
@@ -34,7 +34,7 @@ export const newMdTransitionAnimation = (opts: TransitionOptions): AnimationNew 
     }
 
     if (enteringToolbarEle) {
-      const enteringToolBarAnimation = createAnimation('md-entering-toolbar-animation');
+      const enteringToolBarAnimation = createAnimation();
       enteringToolBarAnimation.addElement(enteringToolbarEle);
       rootAnimation.addAnimation(enteringToolBarAnimation);
     }
@@ -44,7 +44,7 @@ export const newMdTransitionAnimation = (opts: TransitionOptions): AnimationNew 
         .duration(opts.duration || 200)
         .easing('cubic-bezier(0.47,0,0.745,0.715)');
 
-      const leavingPageAnimation = createAnimation('md-leaving-page-animation');
+      const leavingPageAnimation = createAnimation();
       leavingPageAnimation
         .addElement(getIonPageElement(leavingEl))
         .fromTo('transform', `translateY(${CENTER})`, `translateY(${OFF_BOTTOM})`)

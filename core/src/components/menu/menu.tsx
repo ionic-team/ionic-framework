@@ -2,7 +2,7 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Lis
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuControllerI, MenuI, Side } from '../../interface';
+import { Gesture, GestureDetail, MenuChangeEventDetail, MenuControllerI, MenuI, Side } from '../../interface';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { assert, isEndSide as isEnd } from '../../utils/helpers';
 
@@ -16,7 +16,7 @@ import { assert, isEndSide as isEnd } from '../../utils/helpers';
 })
 export class Menu implements ComponentInterface, MenuI {
 
-  private animation?: Animation;
+  private animation?: any;
   private lastOnEnd = 0;
   private gesture?: Gesture;
   private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
@@ -312,7 +312,13 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
-    const ani = this.animation!.reverse(!shouldOpen);
+    const isReversed = !shouldOpen;
+
+    console.log('play', isReversed);
+    const ani = this.animation!
+      .direction((isReversed) ? 'reverse' : 'normal')
+      .easing((isReversed) ? 'cubic-bezier(0.4, 0.0, 0.6, 1)' : 'cubic-bezier(0.0, 0.0, 0.2, 1)');
+
     if (animated) {
       await ani.playAsync();
     } else {
@@ -358,7 +364,9 @@ export class Menu implements ComponentInterface, MenuI {
     }
 
     // the cloned animation should not use an easing curve during seek
-    this.animation.reverse(this._isOpen).progressStart();
+    this.animation
+      .direction('reverse')
+      .progressStart(true);
   }
 
   private onMove(detail: GestureDetail) {
@@ -492,7 +500,7 @@ export class Menu implements ComponentInterface, MenuI {
     assert(this._isOpen, 'menu cannot be closed');
 
     this.isAnimating = true;
-    const ani = this.animation!.reverse(true);
+    const ani = this.animation!.direction('reverse');
     ani.playSync();
     this.afterAnimation(false);
   }

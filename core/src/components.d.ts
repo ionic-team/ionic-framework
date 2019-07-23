@@ -1387,7 +1387,7 @@ export namespace Components {
     /**
     * Registers a new animation that can be used with any `ion-menu` by passing the name of the animation in its `type` property.
     */
-    'registerAnimation': (name: string, animation: AnimationBuilder) => Promise<void>;
+    'registerAnimation': (name: string, animation: any) => Promise<void>;
     /**
     * Enable or disable the ability to swipe open the menu.
     */

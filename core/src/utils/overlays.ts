@@ -1,5 +1,5 @@
 import { config } from '../global/config';
-import { ActionSheetOptions, AlertOptions, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
+import { ActionSheetOptions, AlertOptions, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
 
 let lastId = 0;
 
@@ -111,8 +111,8 @@ export const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTM
 export const present = async (
   overlay: OverlayInterface,
   name: keyof IonicConfig,
-  iosEnterAnimation: AnimationBuilder,
-  mdEnterAnimation: AnimationBuilder,
+  iosEnterAnimation: any,
+  mdEnterAnimation: any,
   opts?: any
 ) => {
   if (overlay.presented) {
@@ -137,8 +137,8 @@ export const dismiss = async (
   data: any | undefined,
   role: string | undefined,
   name: keyof IonicConfig,
-  iosLeaveAnimation: AnimationBuilder,
-  mdLeaveAnimation: AnimationBuilder,
+  iosLeaveAnimation: any,
+  mdLeaveAnimation: any,
   opts?: any
 ): Promise<boolean> => {
   if (!overlay.presented) {
@@ -170,12 +170,12 @@ const getAppRoot = (doc: Document) => {
 
 const overlayAnimation = async (
   overlay: OverlayInterface,
-  animationBuilder: AnimationBuilder,
+  animationBuilder: any,
   baseEl: any,
   opts: any
 ): Promise<boolean> => {
   if (overlay.animation) {
-    overlay.animation.destroy();
+    // overlay.animation.destroy();
     overlay.animation = undefined;
     return false;
   }
@@ -183,7 +183,9 @@ const overlayAnimation = async (
   baseEl.classList.remove('overlay-hidden');
 
   const aniRoot = baseEl.shadowRoot || overlay.el;
-  const animation = await import('./animation').then(mod => mod.create(animationBuilder, aniRoot, opts));
+  console.log(opts);
+  const animation = (['ActionSheet', 'Alert', 'Loading', 'Modal', 'Picker', 'Popover', 'Toast'].includes(overlay.constructor.name)) ? animationBuilder(aniRoot, opts) : await import('./animation').then(mod => mod.create(animationBuilder, aniRoot, opts));
+
   overlay.animation = animation;
   if (!overlay.animated || !config.getBoolean('animated', true)) {
     animation.duration(0);
@@ -198,7 +200,7 @@ const overlayAnimation = async (
   }
   await animation.playAsync();
   const hasCompleted = animation.hasCompleted;
-  animation.destroy();
+  // animation.destroy();
   overlay.animation = undefined;
   return hasCompleted;
 };

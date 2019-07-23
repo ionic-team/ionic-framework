@@ -27,8 +27,8 @@ export const newIosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOp
     const headerEls = enteringEl.querySelectorAll(':scope > ion-header > *:not(ion-toolbar), :scope > ion-footer > *');
     const enteringToolBarEls = enteringEl.querySelectorAll(':scope > ion-header > ion-toolbar');
 
-    const rootAnimation = createAnimation('ios-root-animation');
-    const enteringContentAnimation = createAnimation('ios-entering-content-animation');
+    const rootAnimation = createAnimation();
+    const enteringContentAnimation = createAnimation();
 
     rootAnimation
       .addElement(enteringEl)
@@ -37,7 +37,7 @@ export const newIosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOp
       .beforeRemoveClass('ion-page-invisible');
 
     if (leavingEl && navEl) {
-      const navDecorAnimation = createAnimation('ios-decor-animation');
+      const navDecorAnimation = createAnimation();
       navDecorAnimation.addElement(navEl);
       rootAnimation.addAnimation(navDecorAnimation);
     }
@@ -60,18 +60,18 @@ export const newIosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOp
       // entering content, forward direction
       enteringContentAnimation
         .beforeClearStyles([OPACITY])
-        .fromTo('transform', `translateX(${OFF_RIGHT})`, `translateX(${CENTER})`);      
+        .fromTo('transform', `translateX(${OFF_RIGHT})`, `translateX(${CENTER})`);
     }
-    
+
     if (contentEl) {
       const enteringTransitionEffectEl = shadow(contentEl).querySelector('.transition-effect');
       if (enteringTransitionEffectEl) {
         const enteringTransitionCoverEl = enteringTransitionEffectEl.querySelector('.transition-cover');
         const enteringTransitionShadowEl = enteringTransitionEffectEl.querySelector('.transition-shadow');
 
-        const enteringTransitionEffect = createAnimation('ios-entering-transition-effect');
-        const enteringTransitionCover = createAnimation('ios-entering-transition-cover');
-        const enteringTransitionShadow = createAnimation('ios-entering-transition-shadow');
+        const enteringTransitionEffect = createAnimation();
+        const enteringTransitionCover = createAnimation();
+        const enteringTransitionShadow = createAnimation();
 
         enteringTransitionEffect
           .addElement(enteringTransitionEffectEl)
@@ -87,30 +87,30 @@ export const newIosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOp
           .addElement(enteringTransitionShadowEl)
           .beforeClearStyles([OPACITY])
           .fromTo(OPACITY, 0.03, 0.70);
-          
+
         enteringTransitionEffect.addAnimation([enteringTransitionCover, enteringTransitionShadow]);
         enteringContentAnimation.addAnimation([enteringTransitionEffect]);
       }
     }
 
-    enteringToolBarEls.forEach((enteringToolBarEl, i) => {
-      const enteringToolBar = createAnimation(`ios-entering-toolbar-${i}`);
+    enteringToolBarEls.forEach(enteringToolBarEl => {
+      const enteringToolBar = createAnimation();
       enteringToolBar.addElement(enteringToolBarEl);
       rootAnimation.addAnimation(enteringToolBar);
 
-      const enteringTitle = createAnimation(`ios-entering-toolbar-${i}-title`);
+      const enteringTitle = createAnimation();
       enteringTitle.addElement(enteringToolBarEl.querySelector('ion-title'));
 
-      const enteringToolBarButtons = createAnimation(`ios-entering-toolbar-${i}-buttons`);
+      const enteringToolBarButtons = createAnimation();
       enteringToolBarButtons.addElement(enteringToolBarEl.querySelectorAll('ion-buttons,[menuToggle]'));
 
-      const enteringToolBarItems = createAnimation(`ios-entering-toolbar-${i}-items`);
+      const enteringToolBarItems = createAnimation();
       enteringToolBarItems.addElement(enteringToolBarEl.querySelectorAll(':scope > *:not(ion-title):not(ion-buttons):not([menuToggle])'));
 
-      const enteringToolBarBg = createAnimation(`ios-entering-toolbar-${i}-bg`);
+      const enteringToolBarBg = createAnimation();
       enteringToolBarBg.addElement(shadow(enteringToolBarEl).querySelector('.toolbar-background'));
 
-      const enteringBackButton = createAnimation(`ios-entering-toolbar-${i}-back-button`);
+      const enteringBackButton = createAnimation();
       const backButtonEl = enteringToolBarEl.querySelector('ion-back-button');
 
       if (backButtonEl) {
@@ -143,7 +143,7 @@ export const newIosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOp
         enteringBackButton.fromTo(OPACITY, 0.01, 1);
 
         if (backButtonEl) {
-          const enteringBackBtnText = createAnimation(`ios-entering-toolbar-${i}-back-button-text`);
+          const enteringBackBtnText = createAnimation();
           enteringBackBtnText
             .addElement(shadow(backButtonEl).querySelector('.button-text'))
             .fromTo(`transform`, (isRTL ? 'translateX(-100px)' : 'translateX(100px)'), 'translateX(0px)');
@@ -156,9 +156,9 @@ export const newIosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOp
     // setup leaving view
     if (leavingEl) {
 
-      let leavingContent = createAnimation(`ios-leaving-content-animation`);
+      const leavingContent = createAnimation();
       const leavingContentEl = leavingEl.querySelector(':scope > ion-content');
-      
+
       leavingContent.addElement(leavingContentEl);
       leavingContent.addElement(leavingEl.querySelectorAll(':scope > ion-header > *:not(ion-toolbar), :scope > ion-footer > *'));
       rootAnimation.addAnimation(leavingContent);
@@ -175,7 +175,7 @@ export const newIosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOp
           .fromTo('transform', `translateX(${CENTER})`, `translateX(${OFF_LEFT})`)
           .fromTo(OPACITY, 1, OFF_OPACITY);
       }
-      
+
       if (leavingContentEl) {
         const leavingTransitionEffectEl = shadow(leavingContentEl).querySelector('.transition-effect');
 
@@ -183,9 +183,9 @@ export const newIosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOp
           const leavingTransitionCoverEl = leavingTransitionEffectEl.querySelector('.transition-cover');
           const leavingTransitionShadowEl = leavingTransitionEffectEl.querySelector('.transition-shadow');
 
-          const leavingTransitionEffect = createAnimation('ios-leaving-transition-effect');
-          const leavingTransitionCover = createAnimation('ios-leaving-transition-cover');
-          const leavingTransitionShadow = createAnimation('ios-leaving-transition-shadow');
+          const leavingTransitionEffect = createAnimation();
+          const leavingTransitionCover = createAnimation();
+          const leavingTransitionShadow = createAnimation();
 
           leavingTransitionEffect
             .addElement(leavingTransitionEffectEl)
@@ -201,33 +201,33 @@ export const newIosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOp
             .addElement(leavingTransitionShadowEl)
             .beforeClearStyles([OPACITY])
             .fromTo(OPACITY, 0.70, 0.03);
-          
+
           leavingTransitionEffect.addAnimation([leavingTransitionCover, leavingTransitionShadow]);
           leavingContent.addAnimation([leavingTransitionEffect]);
         }
       }
 
       const leavingToolBarEls = leavingEl.querySelectorAll(':scope > ion-header > ion-toolbar');
-      leavingToolBarEls.forEach((leavingToolBarEl, i) => {
-        const leavingToolBar = createAnimation(`ios-leaving-toolbar-${i}-animation`);
+      leavingToolBarEls.forEach(leavingToolBarEl => {
+        const leavingToolBar = createAnimation();
         leavingToolBar.addElement(leavingToolBarEl);
 
-        const leavingTitle = createAnimation(`ios-leaving-toolbar-${i}-title-animation`);
+        const leavingTitle = createAnimation();
         leavingTitle.addElement(leavingToolBarEl.querySelector('ion-title'));
 
-        const leavingToolBarButtons = createAnimation(`ios-leaving-toolbar-${i}-buttons-animation`);
+        const leavingToolBarButtons = createAnimation();
         leavingToolBarButtons.addElement(leavingToolBarEl.querySelectorAll('ion-buttons,[menuToggle]'));
 
-        const leavingToolBarItems = createAnimation(`ios-leaving-toolbar-${i}-items-animation`);
+        const leavingToolBarItems = createAnimation();
         const leavingToolBarItemEls = leavingToolBarEl.querySelectorAll(':scope > *:not(ion-title):not(ion-buttons):not([menuToggle])');
         if (leavingToolBarItemEls.length > 0) {
           leavingToolBarItems.addElement(leavingToolBarItemEls);
         }
 
-        const leavingToolBarBg = createAnimation(`ios-leaving-toolbar-${i}-bg-animation`);
+        const leavingToolBarBg = createAnimation();
         leavingToolBarBg.addElement(shadow(leavingToolBarEl).querySelector('.toolbar-background'));
 
-        const leavingBackButton = createAnimation(`ios-leaving-toolbar-${i}-back-button-animation`);
+        const leavingBackButton = createAnimation();
         const backButtonEl = leavingToolBarEl.querySelector('ion-back-button');
         if (backButtonEl) {
           leavingBackButton.addElement(backButtonEl);
@@ -254,7 +254,7 @@ export const newIosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOp
             .fromTo(OPACITY, 1, 0.01);
 
           if (backButtonEl) {
-            const leavingBackBtnText = createAnimation(`ios-leaving-toolbar-${i}-back-button-text`);
+            const leavingBackBtnText = createAnimation();
             leavingBackBtnText.addElement(shadow(backButtonEl).querySelector('.button-text'));
             leavingBackBtnText.fromTo('transform', `translateX(${CENTER})`, `translateX(${(isRTL ? -124 : 124) + 'px'})`);
             leavingToolBar.addAnimation(leavingBackBtnText);
