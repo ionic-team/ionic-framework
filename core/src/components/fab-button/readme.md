@@ -159,11 +159,13 @@ export const FabButtonExample: React.FunctionComponent = () => (
 
 ### Depends on
 
+- ion-icon
 - [ion-ripple-effect](../ripple-effect)
 
 ### Graph
 ```mermaid
 graph TD;
+  ion-fab-button --> ion-icon
   ion-fab-button --> ion-ripple-effect
   style ion-fab-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
