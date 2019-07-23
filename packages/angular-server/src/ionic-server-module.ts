@@ -19,7 +19,6 @@ export class IonicServerModule {}
 // @dynamic
 export function hydrateIonicComponents(doc: any, appId: any) {
   return () => {
-    hydrateDocument;
     return hydrateDocument(doc, {
       clientHydrateAnnotations: false
     })
