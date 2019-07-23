@@ -29,7 +29,7 @@
     "loader/"
   ],
   "dependencies": {
-    "ionicons": "4.6.1",
+    "ionicons": "^4.6.2",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
