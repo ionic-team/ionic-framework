@@ -1,6 +1,8 @@
 import { ElementRef, HostListener } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 
+import { raf } from '../../util/util';
+
 export class ValueAccessor implements ControlValueAccessor {
 
   private onChange: (value: any) => void = () => {/**/};
@@ -42,7 +44,7 @@ export class ValueAccessor implements ControlValueAccessor {
 }
 
 export function setIonicClasses(element: ElementRef) {
-  requestAnimationFrame(() => {
+  raf(() => {
     const input = element.nativeElement as HTMLElement;
     const classes = getClasses(input);
     setClasses(input, classes);

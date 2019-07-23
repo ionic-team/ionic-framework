@@ -164,7 +164,7 @@ export class SplitPane implements ComponentInterface {
   }
 }
 
-function setPaneClass(el: HTMLElement, isMain: boolean) {
+const setPaneClass = (el: HTMLElement, isMain: boolean) => {
   let toAdd;
   let toRemove;
   if (isMain) {
@@ -177,4 +177,4 @@ function setPaneClass(el: HTMLElement, isMain: boolean) {
   const classList = el.classList;
   classList.add(toAdd);
   classList.remove(toRemove);
-}
+};

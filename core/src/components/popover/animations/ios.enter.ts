@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * iOS Popover Enter Animation
  */
-export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> {
+export const iosEnterAnimation = (AnimationC: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> => {
   let originY = 'top';
   let originX = 'left';
 
@@ -113,5 +113,6 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev
     .duration(100)
     .add(backdropAnimation)
     .add(wrapperAnimation));
-}
+};
+
 const POPOVER_IOS_BODY_PADDING = 5;

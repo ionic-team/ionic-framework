@@ -531,26 +531,26 @@ export class Menu implements ComponentInterface, MenuI {
   }
 }
 
-function computeDelta(
+const computeDelta = (
   deltaX: number,
   isOpen: boolean,
   isEndSide: boolean
-): number {
+): number => {
   return Math.max(0, isOpen !== isEndSide ? -deltaX : deltaX);
-}
+};
 
-function checkEdgeSide(
+const checkEdgeSide = (
   win: Window,
   posX: number,
   isEndSide: boolean,
   maxEdgeStart: number
-): boolean {
+): boolean => {
   if (isEndSide) {
     return posX >= win.innerWidth - maxEdgeStart;
   } else {
     return posX <= maxEdgeStart;
   }
-}
+};
 
 const SHOW_MENU = 'show-menu';
 const SHOW_BACKDROP = 'show-backdrop';

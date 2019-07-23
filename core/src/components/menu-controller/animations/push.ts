@@ -7,7 +7,7 @@ import { baseAnimation } from './base';
  * The content slides over to reveal the menu underneath.
  * The menu itself also slides over to reveal its bad self.
  */
-export function menuPushAnimation(AnimationC: Animation, _: HTMLElement, menu: MenuI): Promise<Animation> {
+export const menuPushAnimation = (AnimationC: Animation, _: HTMLElement, menu: MenuI): Promise<Animation> => {
 
   let contentOpenedX: string;
   let menuClosedX: string;
@@ -35,7 +35,7 @@ export function menuPushAnimation(AnimationC: Animation, _: HTMLElement, menu: M
 
   return baseAnimation(AnimationC).then(animation => {
     return animation.add(menuAnimation)
-    .add(backdropAnimation)
-    .add(contentAnimation);
+      .add(backdropAnimation)
+      .add(contentAnimation);
   });
-}
+};

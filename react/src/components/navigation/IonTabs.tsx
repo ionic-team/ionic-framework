@@ -1,6 +1,6 @@
 import React from 'react';
 import { IonTabBar } from './IonTabBar';
-import { IonRouterOutlet } from './IonRouterOutlet';
+import { IonRouterOutlet } from './routing/IonRouterOutlet';
 
 type Props = {
   children: React.ReactNode;
@@ -24,7 +24,6 @@ const tabsInner: React.CSSProperties = {
   flex: 1,
   contain: 'layout size style'
 };
-
 
 export class IonTabs extends React.Component<Props> {
 

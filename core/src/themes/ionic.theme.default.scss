@@ -87,11 +87,12 @@ $background-color-value:            #fff !default;
 $background-color-rgb-value:        255, 255, 255 !default;
 
 $text-color-value:                  #000 !default;
-$text-color-rgb:                    0, 0, 0 !default;
+$text-color-rgb-value:              0, 0, 0 !default;
 
 $background-color:                  var(--ion-background-color, $background-color-value) !default;
 $background-color-rgb:              var(--ion-background-color-rgb, $background-color-rgb-value) !default;
 $text-color:                        var(--ion-text-color, $text-color-value) !default;
+$text-color-rgb:                    var(--ion-text-color-rgb, $text-color-rgb-value) !default;
 
 // Default Foreground and Background Step Colors
 // -------------------------------------------------------------------------------------------
