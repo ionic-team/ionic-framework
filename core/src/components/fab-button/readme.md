@@ -9,7 +9,7 @@ The below chart has a description of each slot.
 | Slot         | Description                                                                                              |
 |--------------|----------------------------------------------------------------------------------------------------------|
 |  | The content, generally an icon, displayed in the FAB button. |
-| `close`  | The content, generally an icon, displayed in the FAB button if active and use as main action in a container for multiple fab buttons (fab-list).  |
+| `close`  | The content, per default an `<ion-icon name="close"/>`, displayed in the FAB button if active and use as main action in a container for multiple fab buttons (fab-list).  |
 
 <!-- Auto Generated Below -->
 
