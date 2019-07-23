@@ -15,14 +15,18 @@ export class App implements ComponentInterface {
 
   componentDidLoad() {
     rIC(() => {
+      const isHybrid = isPlatform(window, 'hybrid');
       if (!config.getBoolean('_testing')) {
         import('../../utils/tap-click').then(module => module.startTapClick(config));
       }
-      if (config.getBoolean('statusTap', isPlatform(window, 'hybrid'))) {
+      if (config.getBoolean('statusTap', isHybrid)) {
         import('../../utils/status-tap').then(module => module.startStatusTap());
       }
       if (config.getBoolean('inputShims', needInputShims())) {
         import('../../utils/input-shims/input-shims').then(module => module.startInputShims(config));
+      }
+      if (config.getBoolean('hardwareBackButton', isHybrid)) {
+        import('../../utils/hardware-back-button').then(module => module.startHardwareBackButton());
       }
       import('../../utils/focus-visible').then(module => module.startFocusVisible());
 
