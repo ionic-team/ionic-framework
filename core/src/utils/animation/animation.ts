@@ -1,6 +1,8 @@
 // TODO: Add validation
 // TODO: More tests
+
 let counter = 0;
+
 export interface Animation {
   parentAnimation: Animation | undefined;
   elements: HTMLElement[];
@@ -15,6 +17,8 @@ export interface Animation {
   animationFinish(): void;
 
   play(): Animation;
+  playAsync(): Promise<Animation>;
+  playSync(): Animation;
   pause(): Animation;
   stop(): Animation;
   destroy(): Animation;
@@ -48,10 +52,15 @@ export interface Animation {
   getEasing(): string | undefined;
   getDuration(): number | undefined;
 
+  afterAddRead(readFn: () => void): Animation;
+  afterAddWrite(writeFn: () => void): Animation;
   afterClearStyles(propertyNames: string[]): Animation;
   afterStyles(styles: { [property: string]: any }): Animation;
   afterRemoveClass(className: string | string[] | undefined): Animation;
   afterAddClass(className: string | string[] | undefined): Animation;
+
+  beforeAddRead(readFn: () => void): Animation;
+  beforeAddWrite(writeFn: () => void): Animation;
   beforeClearStyles(propertyNames: string[]): Animation;
   beforeStyles(styles: { [property: string]: any }): Animation;
   beforeRemoveClass(className: string | string[] | undefined): Animation;
@@ -91,8 +100,7 @@ const animationEnd = (el: HTMLElement | null, callback: (ev?: TransitionEvent) =
 };
 
 const supportsWebAnimations = (): boolean => {
- return false;
- //return !!(window as any).Animation;
+  return !!(window as any).Animation;
 };
 
 const generateKeyframeString = (name: string | undefined, keyframes: any[] = []): string => {
@@ -112,8 +120,8 @@ const generateKeyframeString = (name: string | undefined, keyframes: any[] = [])
 
     keyframeString.push(`${offset * 100}% { ${frameString.join(' ')} }`);
   });
-  
-  keyframeString.push('}')
+
+  keyframeString.push('}');
 
   return keyframeString.join(' ');
 };
@@ -123,13 +131,13 @@ const createKeyframeStylesheet = (name: string | undefined, keyframeString: stri
   const stylesheet = document.createElement('style');
   stylesheet.id = stylesheetId;
   stylesheet.appendChild(document.createTextNode(keyframeString));
-  
+
   const rootNode = (element.getRootNode() as any);
   const styleContainer = (rootNode.head || rootNode);
-  
+
   const existingStylesheet = rootNode.querySelector(`#${stylesheetId}`);
-  if (existingStylesheet) { return }
-  
+  if (existingStylesheet) { return; }
+
   styleContainer.appendChild(stylesheet);
 
   return stylesheet;
@@ -145,7 +153,7 @@ const addClassToArray = (classes: string[] = [], className: string | string[] | 
   return classes;
 };
 
-export const createAnimation = (animationNameValue: string | undefined): Animation => {
+export const createAnimation = (): Animation => {
   let elements: HTMLElement[] = [];
   let childAnimations: Animation[] = [];
   let _name: string | undefined;
@@ -153,13 +161,13 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
   let _duration: number | undefined;
   let _easing: string | undefined;
   let _iterations: number | undefined;
-  let _fill: 'auto' | 'none' | 'forwards' | 'backwards' | 'both' | undefined;
+  let _fill: 'auto' | 'none' | 'forwards' | 'backwards' | 'both' | undefined = 'forwards';
   let _direction: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse' | undefined;
   let _keyframes: any[] = [];
 
   let initialized = false;
 
-  let stylesheets: HTMLElement[] | undefined = [];
+  let stylesheets: HTMLElement[] = [];
 
   let parentAnimation: Animation | undefined;
 
@@ -177,6 +185,12 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
   let numAnimationsRunning = 0;
 
   let shouldForceLinearEasing = false;
+  let shouldForceSyncPlayback = false;
+
+  const _beforeAddReadFunctions: any[] = [];
+  const _beforeAddWriteFunctions: any[] = [];
+  const _afterAddReadFunctions: any[] = [];
+  const _afterAddWriteFunctions: any[] = [];
 
   /**
    * Destroy this animation and all child animations.
@@ -232,8 +246,32 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
     stylesheets.forEach(stylesheet => {
       stylesheet.parentNode!.removeChild(stylesheet);
     });
-    
+
     stylesheets = [];
+  };
+
+  const beforeAddRead = (readFn: () => void): Animation => {
+    _beforeAddReadFunctions.push(readFn);
+
+    return generatePublicAPI();
+  };
+
+  const beforeAddWrite = (writeFn: () => void): Animation => {
+    _beforeAddWriteFunctions.push(writeFn);
+
+    return generatePublicAPI();
+  };
+
+  const afterAddRead = (readFn: () => void): Animation => {
+    _afterAddReadFunctions.push(readFn);
+
+    return generatePublicAPI();
+  };
+
+  const afterAddWrite = (writeFn: () => void): Animation => {
+    _afterAddWriteFunctions.push(writeFn);
+
+    return generatePublicAPI();
   };
 
   /**
@@ -344,6 +382,7 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
   };
 
   const getDuration = (): number | undefined => {
+    if (shouldForceSyncPlayback) { return 0; }
     if (_duration !== undefined) { return _duration; }
     if (parentAnimation) { return parentAnimation.getDuration(); }
 
@@ -370,7 +409,6 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
 
   const name = (animationName: string): Animation => {
     _name = animationName;
-    counter += 1;
 
     return generatePublicAPI();
   };
@@ -463,7 +501,19 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
     return generatePublicAPI();
   };
 
-  const beforeAnimation = () => {
+  const runBeforeRead = () => {
+    _beforeAddReadFunctions.forEach(callback => {
+      callback();
+    });
+  };
+
+  const runBeforeWrite = () => {
+    _beforeAddWriteFunctions.forEach(callback => {
+      callback();
+    });
+  };
+
+  const runBeforeStyles = () => {
     const addClasses = beforeAddClasses;
     const removeClasses = beforeRemoveClasses;
     const styles = beforeStylesValue;
@@ -482,7 +532,25 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
     });
   };
 
-  const afterAnimation = () => {
+  const beforeAnimation = () => {
+    runBeforeRead();
+    runBeforeWrite();
+    runBeforeStyles();
+  };
+
+  const runAfterRead = () => {
+    _afterAddReadFunctions.forEach(callback => {
+      callback();
+    });
+  };
+
+  const runAfterWrite = () => {
+    _afterAddWriteFunctions.forEach(callback => {
+      callback();
+    });
+  };
+
+  const runAfterStyles = () => {
     const addClasses = afterAddClasses;
     const removeClasses = afterRemoveClasses;
     const styles = afterStylesValue;
@@ -499,6 +567,12 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
         }
       }
     });
+  };
+
+  const afterAnimation = () => {
+    runAfterRead();
+    runAfterWrite();
+    runAfterStyles();
 
     if (onFinishCallback !== undefined) {
       onFinishCallback(generatePublicAPI());
@@ -520,32 +594,31 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
   };
 
   const initializeCSSAnimation = () => {
-    
+
     elements.forEach(element => {
         if (_keyframes.length > 0) {
-          
+
           const stylesheet = createKeyframeStylesheet(_name, generateKeyframeString(_name, _keyframes), element);
           if (stylesheet) {
             stylesheets.push(stylesheet);
           }
-          
+
           element.style.setProperty('animation-name', _name || null);
           element.style.setProperty('animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
           element.style.setProperty('animation-timing-function', getEasing() || null);
           element.style.setProperty('animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
           element.style.setProperty('animation-fill-mode', getFill() || null);
           element.style.setProperty('animation-direction', getDirection() || null);
-  
+
           let iterationsCount = null;
           if (getIterations() !== undefined) {
             iterationsCount = (getIterations() === Infinity) ? 'infinite' : getIterations()!.toString();
           }
-  
+
           element.style.setProperty('animation-iteration-countion', iterationsCount);
           element.style.setProperty('animation-play-state', 'paused');
         }
       });
-      
 
     if (elements.length > 0) {
         animationEnd(elements[0], () => {
@@ -605,7 +678,7 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
     childAnimations.forEach(animation => {
       animation.progressStep(step);
     });
-  
+
     if (getDuration() !== undefined) {
       if (supportsWebAnimations()) {
         webAnimations.forEach(animation => {
@@ -634,21 +707,18 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
 
     shouldForceLinearEasing = forceLinearEasing;
 
-    if (!initialized) {
-      initializeAnimation();
-    }
+    initializeAnimation();
 
     return generatePublicAPI();
   };
 
   const progressEnd = (shouldComplete: boolean, step: number): Animation => {
-    shouldComplete;
-    step;
+    console.log(shouldComplete, step);
 
     shouldForceLinearEasing = false;
-    
+
     // temp
-    //play();
+    play();
 
     return generatePublicAPI();
   };
@@ -673,15 +743,31 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
     return generatePublicAPI();
   };
 
+  const playAsync = (): Promise<Animation> => {
+    return new Promise(resolve => {
+      onFinish(resolve);
+      play();
+
+      return generatePublicAPI();
+    });
+  };
+
+  const playSync = (): Animation => {
+    shouldForceSyncPlayback = true;
+
+    onFinish(() => shouldForceSyncPlayback = false);
+    play();
+
+    return generatePublicAPI();
+  };
+
   const play = (): Animation => {
     childAnimations.forEach(animation => {
       animation.play();
     });
-    
-    if (!initialized) {
-      initializeAnimation();
-    }
-    
+
+    initializeAnimation();
+
     if (supportsWebAnimations()) {
       webAnimations.forEach(animation => {
         animation.play();
@@ -689,7 +775,7 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
     } else {
       elements.forEach(element => {
         if (_keyframes.length > 0) {
-        (element as HTMLElement).style.animationPlayState = 'running';}
+        (element as HTMLElement).style.animationPlayState = 'running'; }
       });
     }
 
@@ -731,19 +817,19 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
   };
 
   const to = (property: string, value: any): Animation => {
-    
+
     const keyframeValues = getKeyframes();
     const lastFrame = keyframeValues[keyframeValues.length - 1];
 
     if (lastFrame != null && (lastFrame.offset === undefined || lastFrame.offset === 1)) {
         lastFrame[property] = value;
     } else {
-      
+
       const object: any = {
         offset: 1
       };
       object[property] = value;
-      
+
       _keyframes = [
         ..._keyframes,
         object
@@ -776,6 +862,8 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
       fromTo,
       parent,
       play,
+      playAsync,
+      playSync,
       pause,
       stop,
       destroy,
@@ -797,10 +885,14 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
       getIterations,
       getEasing,
       getDuration,
+      afterAddRead,
+      afterAddWrite,
       afterClearStyles,
       afterStyles,
       afterRemoveClass,
       afterAddClass,
+      beforeAddRead,
+      beforeAddWrite,
       beforeClearStyles,
       beforeStyles,
       beforeRemoveClass,
@@ -812,15 +904,9 @@ export const createAnimation = (animationNameValue: string | undefined): Animati
       progressEnd
     };
   };
-  animationNameValue;
-  
-  name(`ion-animation-${counter}`);
 
-/*
-  if (animationNameValue !== undefined) {
-    name(animationNameValue);
-  }
-*/
+  name(`ion-animation-${counter}`);
+  counter++;
 
   return generatePublicAPI();
 };
