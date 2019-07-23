@@ -1,8 +1,16 @@
 import { HTMLStencilElement } from '../types/interfaces';
 
+declare const __zone_symbol__requestAnimationFrame: any;
+declare const requestAnimationFrame: any;
+
 export const raf = (h: any) => {
-  const win = window as any;
-  return (win.__zone_symbol__requestAnimationFrame) ? win.__zone_symbol__requestAnimationFrame(h) : requestAnimationFrame(h);
+  if (typeof __zone_symbol__requestAnimationFrame === 'function') {
+    return __zone_symbol__requestAnimationFrame(h);
+  }
+  if (typeof requestAnimationFrame === 'function') {
+    return requestAnimationFrame(h);
+  }
+  return setTimeout(h);
 };
 
 export const proxyMethod = (ctrlName: string, doc: Document, methodName: string, ...args: any[]) => {
