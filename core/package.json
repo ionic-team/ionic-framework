@@ -26,6 +26,7 @@
   "files": [
     "dist/",
     "css/",
+    "hydrate/",
     "loader/"
   ],
   "dependencies": {
@@ -42,6 +43,7 @@
     "aws-sdk": "^2.320.0",
     "chromedriver": "^2.38.3",
     "clean-css-cli": "^4.1.11",
+    "domino": "^2.1.3",
     "fs-extra": "^8.0.1",
     "jest": "24.8.0",
     "jest-cli": "24.8.0",
@@ -76,7 +78,7 @@
     "lint.ts": "tslint --project .",
     "lint.ts.fix": "tslint --project . --fix",
     "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
-    "prerender.e2e": "node scripts/testing/prerender-e2e.js",
+    "prerender.e2e": "node scripts/testing/prerender.js",
     "start": "npm run build.css && stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
     "test.spec": "stencil test --spec",
