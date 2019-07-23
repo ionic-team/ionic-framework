@@ -246,20 +246,19 @@ export class StackController {
   }
 }
 
-function cleanupAsync(activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) {
+const cleanupAsync = (activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) => {
   if (typeof (requestAnimationFrame as any) === 'function') {
-    return new Promise(resolve => {
+    return new Promise<any>(resolve => {
       requestAnimationFrame(() => {
         cleanup(activeRoute, views, viewsSnapshot, location);
         resolve();
       });
     });
   }
-  cleanup(activeRoute, views, viewsSnapshot, location);
   return Promise.resolve();
-}
+};
 
-function cleanup(activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) {
+const cleanup = (activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) => {
   viewsSnapshot
     .filter(view => !views.includes(view))
     .forEach(destroyView);
@@ -284,4 +283,4 @@ function cleanup(activeRoute: RouteView, views: RouteView[], viewsSnapshot: Rout
       view.ref.changeDetectorRef.detach();
     }
   });
-}
+};
