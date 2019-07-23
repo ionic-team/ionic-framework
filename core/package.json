@@ -26,6 +26,7 @@
   "files": [
     "dist/",
     "css/",
+    "hydrate/",
     "loader/"
   ],
   "dependencies": {
@@ -77,7 +78,7 @@
     "lint.ts": "tslint --project .",
     "lint.ts.fix": "tslint --project . --fix",
     "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
-    "prerender.e2e": "node scripts/testing/prerender-e2e.js",
+    "prerender.e2e": "node scripts/testing/prerender.js",
     "start": "npm run build.css && stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
     "test.spec": "stencil test --spec",
