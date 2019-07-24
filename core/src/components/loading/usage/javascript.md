@@ -16,7 +16,7 @@ async function presentLoading() {
 
 async function presentLoadingWithOptions() {
   const loadingController = document.querySelector('ion-loading-controller');
-¡
+
   const loading = await loadingController.create({
     spinner: null,
     duration: 5000,

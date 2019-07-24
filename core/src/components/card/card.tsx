@@ -1,7 +1,7 @@
-import { Component, ComponentInterface, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, RouterDirection } from '../../interface';
+import { Color, Mode, RouterDirection } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
@@ -77,20 +77,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
     return (this.href !== undefined || this.button);
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      class: {
-        [mode]: true,
-
-        ...createColorClasses(this.color),
-        'card-disabled': this.disabled,
-        'ion-activatable': this.isClickable()
-      }
-    };
-  }
-
-  render() {
+  private renderCard(mode: Mode) {
     const clickable = this.isClickable();
 
     if (!clickable) {
@@ -99,7 +86,6 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
       ];
     }
     const { href, routerDirection } = this;
-    const mode = getIonMode(this);
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
@@ -120,6 +106,23 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
         <slot></slot>
         {clickable && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </TagType>
+    );
+  }
+
+  render() {
+    const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          [mode]: true,
+
+          ...createColorClasses(this.color),
+          'card-disabled': this.disabled,
+          'ion-activatable': this.isClickable()
+        }}
+      >
+        {this.renderCard(mode)}
+      </Host>
     );
   }
 }

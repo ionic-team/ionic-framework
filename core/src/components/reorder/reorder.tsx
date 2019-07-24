@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Listen, h } from '@stencil/core';
+import { Component, ComponentInterface, Host, Listen, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -18,17 +18,13 @@ export class Reorder implements ComponentInterface {
     ev.stopImmediatePropagation();
   }
 
-  hostData() {
-    return {
-      class: getIonMode(this)
-    };
-  }
-
   render() {
     return (
-      <slot>
-        <ion-icon name="reorder" lazy={false} class="reorder-icon" />
-      </slot>
+      <Host class={getIonMode(this)}>
+        <slot>
+          <ion-icon name="reorder" lazy={false} class="reorder-icon" />
+        </slot>
+      </Host>
     );
   }
 

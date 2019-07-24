@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, PickerColumn } from '../../interface';
@@ -345,51 +345,49 @@ export class PickerColumnCmp implements ComponentInterface {
     }
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      class: {
-        [mode]: true,
-        'picker-col': true,
-        'picker-opts-left': this.col.align === 'left',
-        'picker-opts-right': this.col.align === 'right'
-      },
-      style: {
-        'max-width': this.col.columnWidth
-      }
-    };
-  }
-
   render() {
     const col = this.col;
     const Button = 'button' as any;
-    return [
-      col.prefix && (
-        <div class="picker-prefix" style={{ width: col.prefixWidth! }}>
-          {col.prefix}
-        </div>
-      ),
-      <div
-        class="picker-opts"
-        style={{ maxWidth: col.optionsWidth! }}
-        ref={el => this.optsEl = el}
+    const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          [mode]: true,
+          'picker-col': true,
+          'picker-opts-left': this.col.align === 'left',
+          'picker-opts-right': this.col.align === 'right'
+        }}
+        style={{
+          'max-width': this.col.columnWidth
+        }}
       >
-        { col.options.map((o, index) =>
-          <Button
-            type="button"
-            class={{ 'picker-opt': true, 'picker-opt-disabled': !!o.disabled }}
-            opt-index={index}
-          >
-            {o.text}
-          </Button>
+        {col.prefix && (
+          <div class="picker-prefix" style={{ width: col.prefixWidth! }}>
+            {col.prefix}
+          </div>
         )}
-      </div>,
-      col.suffix && (
-        <div class="picker-suffix" style={{ width: col.suffixWidth! }}>
-          {col.suffix}
+        <div
+          class="picker-opts"
+          style={{ maxWidth: col.optionsWidth! }}
+          ref={el => this.optsEl = el}
+        >
+          { col.options.map((o, index) =>
+            <Button
+              type="button"
+              class={{ 'picker-opt': true, 'picker-opt-disabled': !!o.disabled }}
+              opt-index={index}
+            >
+              {o.text}
+            </Button>
+          )}
         </div>
-      )
-    ];
+        {col.suffix && (
+          <div class="picker-suffix" style={{ width: col.suffixWidth! }}>
+            {col.suffix}
+          </div>
+        )}
+      </Host>
+    );
   }
 }
 

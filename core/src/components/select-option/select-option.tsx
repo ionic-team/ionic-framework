@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -54,12 +54,15 @@ export class SelectOption implements ComponentInterface {
     this.ionSelectOptionDidUnload.emit();
   }
 
-  hostData() {
-    return {
-      'role': 'option',
-      'id': this.inputId,
-      class: getIonMode(this)
-    };
+  render() {
+    return (
+      <Host
+        role="option"
+        id={this.inputId}
+        class={getIonMode(this)}
+      >
+      </Host>
+    );
   }
 }
 
