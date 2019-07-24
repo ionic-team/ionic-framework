@@ -121,13 +121,10 @@ export class RadioGroup implements ComponentInterface {
   }
 
   hostData() {
-    const mode = getIonMode(this);
     return {
       'role': 'radiogroup',
       'aria-labelledby': this.labelId,
-      class: {
-        [mode]: true,
-      }
+      class: getIonMode(this)
     };
   }
 }

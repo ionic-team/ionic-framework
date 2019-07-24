@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
 
 import { ComponentProps, NavComponent } from '../../interface';
 
@@ -19,12 +19,17 @@ export class NavSetRoot implements ComponentInterface {
    */
   @Prop() componentProps?: ComponentProps;
 
-  @Listen('click')
-  push() {
+  private setRoot = () => {
     const nav = this.el.closest('ion-nav');
     const toPush = this.component;
     if (nav && toPush !== undefined) {
       nav.setRoot(toPush, this.componentProps, { skipIfBusy: true });
     }
+  }
+
+  render() {
+    return (
+      <Host onClick={this.setRoot}></Host>
+    );
   }
 }

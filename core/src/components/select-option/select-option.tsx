@@ -55,14 +55,10 @@ export class SelectOption implements ComponentInterface {
   }
 
   hostData() {
-    const mode = getIonMode(this);
-
     return {
       'role': 'option',
       'id': this.inputId,
-      class: {
-        [mode]: true,
-      }
+      class: getIonMode(this)
     };
   }
 }

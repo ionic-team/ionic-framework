@@ -56,11 +56,8 @@ export class RefresherContent implements ComponentInterface {
   }
 
   hostData() {
-    const mode = getIonMode(this);
     return {
-      class: {
-        [mode]: true,
-      }
+      class: getIonMode(this)
     };
   }
 

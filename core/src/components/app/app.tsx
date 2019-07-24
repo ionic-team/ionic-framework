@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -33,16 +33,18 @@ export class App implements ComponentInterface {
     });
   }
 
-  hostData() {
+  render() {
     const mode = getIonMode(this);
-
-    return {
-      class: {
-        [mode]: true,
-        'ion-page': true,
-        'force-statusbar-padding': config.getBoolean('_forceStatusbarPadding')
-      }
-    };
+    return (
+      <Host
+        class={{
+          [mode]: true,
+          'ion-page': true,
+          'force-statusbar-padding': config.getBoolean('_forceStatusbarPadding')
+        }}
+      >
+      </Host>
+    );
   }
 }
 

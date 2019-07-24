@@ -98,8 +98,8 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
         <slot></slot>
       ];
     }
-    const mode = getIonMode(this);
     const { href, routerDirection } = this;
+    const mode = getIonMode(this);
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
