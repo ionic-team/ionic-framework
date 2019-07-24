@@ -27,6 +27,7 @@ export class Footer implements ComponentInterface {
   hostData() {
     const mode = getIonMode(this);
     return {
+      role: 'contentinfo',
       class: {
         [mode]: true,
 
