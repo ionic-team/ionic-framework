@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EmbeddedViewRef, IterableDiffer, IterableDiffers, NgZone, SimpleChanges, TrackByFunction } from '@angular/core';
-import { Cell, CellType, HeaderFn, ItemHeightFn } from '@ionic/core';
+import { Cell, CellType, FooterHeightFn, HeaderFn, HeaderHeightFn, ItemHeightFn } from '@ionic/core';
 
 import { proxyInputs, proxyMethods } from '../proxies-utils';
 
@@ -75,13 +75,23 @@ export declare interface IonVirtualScroll {
 
   /**
    * An optional function that maps each item within their height.
-   * When this function is provides, heavy optimizations and fast path can be taked by
+   * When this function is provided, heavy optimizations and fast path can be taked by
    * `ion-virtual-scroll` leading to massive performance improvements.
    *
    * This function allows to skip all DOM reads, which can be Doing so leads
    * to massive performance
    */
   itemHeight?: ItemHeightFn;
+
+  /**
+   * An optional function that maps each item header within their height.
+   */
+  headerHeight?: HeaderHeightFn;
+
+  /**
+   * An optional function that maps each item footer within their height.
+   */
+  footerHeight?: FooterHeightFn;
 
   /**
    * Same as `ngForTrackBy` which can be used on `ngFor`.
@@ -114,6 +124,8 @@ export declare interface IonVirtualScroll {
     'footerFn',
     'items',
     'itemHeight',
+    'headerHeight',
+    'footerHeight',
     'trackBy'
   ]
 })
@@ -211,7 +223,9 @@ proxyInputs(IonVirtualScroll, [
   'headerFn',
   'footerFn',
   'items',
-  'itemHeight'
+  'itemHeight',
+  'headerHeight',
+  'footerHeight'
 ]);
 
 proxyMethods(IonVirtualScroll, [
