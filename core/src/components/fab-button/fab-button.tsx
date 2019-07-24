@@ -7,6 +7,9 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @slot - The content, generally an icon, displayed in the FAB button.
+ * @slot close - The content, per default an `<ion-icon name="close"/>`, displayed in the FAB button if active and use as main action in a container for multiple fab buttons (fab-list).
  */
 @Component({
   tag: 'ion-fab-button',
