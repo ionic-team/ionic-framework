@@ -180,7 +180,7 @@ export const createAnimation = (): Animation => {
   let afterStylesValue: { [property: string]: any } = {};
 
   let webAnimations: any[] = [];
-  let onFinishCallback: any | undefined;
+  const onFinishCallbacks: any[] = [];
 
   let numAnimationsRunning = 0;
 
@@ -204,6 +204,7 @@ export const createAnimation = (): Animation => {
 
     elements = [];
     childAnimations = [];
+    onFinishCallbacks = [];
 
     initialized = false;
 
@@ -216,7 +217,7 @@ export const createAnimation = (): Animation => {
   };
 
   const onFinish = (callback: any): Animation => {
-    onFinishCallback = callback;
+    onFinishCallbacks.push(callback);
 
     return generatePublicAPI();
   };
@@ -574,9 +575,9 @@ export const createAnimation = (): Animation => {
     runAfterWrite();
     runAfterStyles();
 
-    if (onFinishCallback !== undefined) {
-      onFinishCallback(generatePublicAPI());
-    }
+    onFinishCallbacks.forEach(callback => {
+      callback(generatePublicAPI());
+    });
   };
 
   const animationFinish = () => {
