@@ -1,22 +1,21 @@
 import { Animation } from '../../interface';
 import { TransitionOptions } from '../transition';
 
-const TRANSLATEY = 'translateY';
-const OFF_BOTTOM = '40px';
-const CENTER = '0px';
+export const mdTransitionAnimation = (AnimationC: Animation, _: HTMLElement, opts: TransitionOptions): Promise<Animation> => {
+  const TRANSLATEY = 'translateY';
+  const OFF_BOTTOM = '40px';
+  const CENTER = '0px';
 
-export function mdTransitionAnimation(AnimationC: Animation, _: HTMLElement, opts: TransitionOptions): Promise<Animation> {
-
+  const backDirection = (opts.direction === 'back');
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
   const ionPageElement = getIonPageElement(enteringEl);
-
+  const enteringToolbarEle = ionPageElement.querySelector('ion-toolbar');
   const rootTransition = new AnimationC();
+
   rootTransition
     .addElement(ionPageElement)
     .beforeRemoveClass('ion-page-invisible');
-
-  const backDirection = (opts.direction === 'back');
 
   // animate the component itself
   if (backDirection) {
@@ -33,7 +32,6 @@ export function mdTransitionAnimation(AnimationC: Animation, _: HTMLElement, opt
   }
 
   // Animate toolbar if it's there
-  const enteringToolbarEle = ionPageElement.querySelector('ion-toolbar');
   if (enteringToolbarEle) {
     const enteringToolBar = new AnimationC();
     enteringToolBar.addElement(enteringToolbarEle);
@@ -57,16 +55,17 @@ export function mdTransitionAnimation(AnimationC: Animation, _: HTMLElement, opt
   }
 
   return Promise.resolve(rootTransition);
-}
+};
 
-function getIonPageElement(element: HTMLElement) {
+const getIonPageElement = (element: HTMLElement) => {
   if (element.classList.contains('ion-page')) {
     return element;
   }
+
   const ionPage = element.querySelector(':scope > .ion-page, :scope > ion-nav, :scope > ion-tabs');
   if (ionPage) {
     return ionPage;
   }
   // idk, return the original element so at least something animates and we don't have a null pointer
   return element;
-}
+};

@@ -18,16 +18,18 @@
 // iOS Translucent Tab bar
 // --------------------------------------------------
 
-:host(.tab-bar-translucent) {
-  --background: #{$tab-bar-ios-translucent-background-color};
-  backdrop-filter: $tab-bar-ios-translucent-filter;
-}
+@supports (backdrop-filter: blur(0)) {
+  :host(.tab-bar-translucent) {
+    --background: #{$tab-bar-ios-translucent-background-color};
+    backdrop-filter: $tab-bar-ios-translucent-filter;
+  }
 
-// iOS Translucent Tab bar with Color
-:host(.ion-color.tab-bar-translucent) {
-  background: #{current-color(base, $tab-bar-ios-translucent-background-color-alpha)};
-}
+  // iOS Translucent Tab bar with Color
+  :host(.ion-color.tab-bar-translucent) {
+    background: #{current-color(base, $tab-bar-ios-translucent-background-color-alpha)};
+  }
 
-:host(.tab-bar-translucent) ::slotted(ion-tab-button.ion-focused) {
-  background: rgba($background-color-rgb, .6);
+  :host(.tab-bar-translucent) ::slotted(ion-tab-button.ion-focused) {
+    background: rgba($background-color-rgb, .6);
+  }
 }
