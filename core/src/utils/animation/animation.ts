@@ -180,7 +180,7 @@ export const createAnimation = (): Animation => {
   let afterStylesValue: { [property: string]: any } = {};
 
   let webAnimations: any[] = [];
-  const onFinishCallbacks: any[] = [];
+  let onFinishCallbacks: any[] = [];
 
   let numAnimationsRunning = 0;
 
