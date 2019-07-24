@@ -1,5 +1,5 @@
 // Components interfaces
-import {Components as IoniconsComponents} from 'ionicons';
+import {JSX as IoniconsJSX, Components as IoniconsComponents} from 'ionicons';
 export * from './components';
 export * from './index';
 export * from './components/alert/alert-interface';
@@ -64,5 +64,8 @@ export interface StyleEventDetail {
 declare module "./components" {
   export namespace Components {
     export interface IonIcon extends IoniconsComponents.IonIcon{}
+  }
+  export namespace JSX {
+    export interface IntrinsicElements extends IoniconsJSX.IntrinsicElements{}
   }
 }
