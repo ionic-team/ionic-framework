@@ -330,9 +330,8 @@ export class Content implements ComponentInterface {
           onScroll={ev => this.onScroll(ev)}
         >
           <slot></slot>
-
         </main>
-        
+
         {transitionShadow ? (
           <div class="transition-effect">
             <div class="transition-cover"></div>
