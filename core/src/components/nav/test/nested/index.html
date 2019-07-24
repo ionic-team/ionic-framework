@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-  <script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>  <script>
     class PageOne extends HTMLElement {
       connectedCallback() {
         this.innerHTML = `
@@ -18,7 +18,7 @@
               <ion-title>Page 1</ion-title>
             </ion-toolbar>
           </ion-header>
-          <ion-content padding>
+          <ion-content class="ion-padding">
             <h1>Page 1</h1>
             <ion-nav-push component="page-two">
               <ion-button class="next">Go to Page 2</ion-button>
@@ -47,7 +47,7 @@
               <ion-title>Page 2.1</ion-title>
             </ion-toolbar>
           </ion-header>
-          <ion-content padding>
+          <ion-content class="ion-padding">
             <h1>Page 2.1</h1>
             <div>
               <ion-nav-push component="page-two-two">
@@ -71,7 +71,7 @@
               <ion-title>Page 2.2</ion-title>
             </ion-toolbar>
           </ion-header>
-          <ion-content padding>
+          <ion-content class="ion-padding">
             <h1>Page 2.2</h1>
             <div>
               <ion-nav-push component="page-three">
@@ -94,7 +94,7 @@
               <ion-title>Page 3</ion-title>
             </ion-toolbar>
           </ion-header>
-          <ion-content padding>
+          <ion-content class="ion-padding">
             <h1>Page 3</h1>
           </ion-content>
         `;

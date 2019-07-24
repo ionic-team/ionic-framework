@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -122,17 +122,17 @@
         </ion-row>
 
         <ion-row>
-          <ion-col align-self-start>
+          <ion-col class="ion-align-self-start">
             <div>
               ion-col[top]
             </div>
           </ion-col>
-          <ion-col align-self-center>
+          <ion-col class="ion-align-self-center">
             <div>
               ion-col[center]
             </div>
           </ion-col>
-          <ion-col align-self-end>
+          <ion-col class="ion-align-self-end">
             <div>
               ion-col[bottom]
             </div>
@@ -146,7 +146,7 @@
           </ion-col>
         </ion-row>
 
-        <ion-row align-items-start>
+        <ion-row class="ion-align-items-start">
           <ion-col>
             <div>
               [top] ion-col
@@ -157,7 +157,7 @@
               [top] ion-col
             </div>
           </ion-col>
-          <ion-col align-self-end>
+          <ion-col class="ion-align-self-end">
             <div>
               [top] ion-col[bottom]
             </div>
@@ -171,7 +171,7 @@
           </ion-col>
         </ion-row>
 
-        <ion-row align-items-center>
+        <ion-row class="ion-align-items-center">
           <ion-col>
             <div>
               [center] ion-col
@@ -196,13 +196,13 @@
           </ion-col>
         </ion-row>
 
-        <ion-row align-items-end>
+        <ion-row class="ion-align-items-end">
           <ion-col>
             <div>
               [bottom] ion-col
             </div>
           </ion-col>
-          <ion-col align-self-start>
+          <ion-col class="ion-align-self-start">
             <div>
               [bottom] ion-col[top]
             </div>

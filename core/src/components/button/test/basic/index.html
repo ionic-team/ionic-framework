@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -20,70 +20,75 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content id="content" padding no-bounce text-center>
+    <ion-content class="ion-padding ion-text-center" id="content" no-bounce>
       <p>
         <ion-button>Default</ion-button>
-        <ion-button class="focused">Default.focused</ion-button>
+        <ion-button class="ion-focused">Default.focused</ion-button>
         <ion-button class="activated">Default.activated</ion-button>
       </p>
 
       <p>
         <ion-button color="primary">Primary</ion-button>
-        <ion-button class="focused" color="primary">Primary.focused</ion-button>
+        <ion-button class="ion-focused" color="primary">Primary.focused</ion-button>
         <ion-button class="activated" color="primary">Primary.activated</ion-button>
       </p>
 
       <p>
         <ion-button color="secondary">Secondary</ion-button>
-        <ion-button class="focused" color="secondary">Secondary.focused</ion-button>
+        <ion-button class="ion-focused" color="secondary">Secondary.focused</ion-button>
         <ion-button class="activated" color="secondary">Secondary.activated</ion-button>
       </p>
 
       <p>
         <ion-button color="tertiary">Tertiary</ion-button>
-        <ion-button class="focused" color="tertiary">Tertiary.focused</ion-button>
+        <ion-button class="ion-focused" color="tertiary">Tertiary.focused</ion-button>
         <ion-button class="activated" color="tertiary">Tertiary.activated</ion-button>
       </p>
 
       <p>
         <ion-button color="success">Success</ion-button>
-        <ion-button class="focused" color="success">Success.focused</ion-button>
+        <ion-button class="ion-focused" color="success">Success.focused</ion-button>
         <ion-button class="activated" color="success">Success.activated</ion-button>
       </p>
 
       <p>
         <ion-button color="warning">Warning</ion-button>
-        <ion-button class="focused" color="warning">Warning.focused</ion-button>
+        <ion-button class="ion-focused" color="warning">Warning.focused</ion-button>
         <ion-button class="activated" color="warning">Warning.activated</ion-button>
       </p>
 
       <p>
         <ion-button color="danger">Danger</ion-button>
-        <ion-button class="focused" color="danger">Danger.focused</ion-button>
+        <ion-button class="ion-focused" color="danger">Danger.focused</ion-button>
         <ion-button class="activated" color="danger">Danger.activated</ion-button>
       </p>
 
       <p>
         <ion-button color="light">Light</ion-button>
-        <ion-button class="focused" color="light">Light.focused</ion-button>
+        <ion-button class="ion-focused" color="light">Light.focused</ion-button>
         <ion-button class="activated" color="light">Light.activated</ion-button>
       </p>
 
       <p>
         <ion-button color="medium">Medium</ion-button>
-        <ion-button class="focused" color="medium">Medium.focused</ion-button>
+        <ion-button class="ion-focused" color="medium">Medium.focused</ion-button>
         <ion-button class="activated" color="medium">Medium.activated</ion-button>
       </p>
 
       <p>
         <ion-button color="dark">Dark</ion-button>
-        <ion-button class="focused" color="dark">Dark.focused</ion-button>
+        <ion-button class="ion-focused" color="dark">Dark.focused</ion-button>
         <ion-button class="activated" color="dark">Dark.activated</ion-button>
+      </p>
+
+      <p>
+        <ion-button style="--opacity: .2">Opacity: 0.2</ion-button>
       </p>
 
       <p>
         <ion-button expand="block" id="disabledButton" disabled onclick="clickedButton(event)">Button Disabled</ion-button>
         <ion-button expand="block" color="secondary" disabled>Secondary Disabled</ion-button>
+        <ion-button expand="block" color="tertiary" style="--opacity: 1" disabled>Disabled opacity: 1</ion-button>
       </p>
 
       <p>
@@ -116,7 +121,7 @@
     }
 
     function toggleDisabled() {
-      var buttonEl = this.document.getElementById('disabledButton');
+      var buttonEl = document.getElementById('disabledButton');
       console.log(buttonEl);
       buttonEl.disabled = !buttonEl.disabled;
     }

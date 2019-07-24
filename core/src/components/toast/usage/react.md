@@ -1,55 +1,46 @@
 ```tsx
-import React, { Component } from 'react'
-import { IonToast } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonToast, IonContent, IonButton } from '@ionic/react';
 
-type Props = {}
-type State = {
-  showToast1: boolean
-  showToast2: boolean
-}
+export const ToastExample: React.FunctionComponent = () => {
+  const [showToast1, setShowToast1] = useState(false);
+  const [showToast2, setShowToast2] = useState(false);
 
-export class Toast extends Component<Props, State> {
-
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      showToast1: false
-      showToast2: false
-    };
-  }
-
-  render() {
-    return (
+  return (
+    <IonContent>
+      <IonButton onClick={() => setShowToast1(true)} expand="block">Show Toast 1</IonButton>
+      <IonButton onClick={() => setShowToast2(true)} expand="block">Show Toast 2</IonButton>
       <IonToast
-        isOpen={this.state.showToast1}
-        onDidDismiss={() => this.setState(() => ({ showToast1: false }))}
-        message='Your settings have been saved.'
+        isOpen={showToast1}
+        onDidDismiss={() => setShowToast1(false)}
+        message="Your settings have been saved."
         duration={200}
-      >
-      </IonToast>
+      />
 
       <IonToast
-        isOpen={this.state.showToast2}
-        onDidDismiss={() => this.setState(() => ({ showToast2: false }))}
-        message='Click to Close'
-        position='top'
-        buttons={[{
-          side: 'start',
-          icon: 'star',
-          text: 'Favorite',
-          handler: () => {
-            console.log('Favorite clicked');
+        isOpen={showToast2}
+        onDidDismiss={() => setShowToast2(false)}
+        message="Click to Close"
+        position="top"
+        buttons={[
+          {
+            side: 'start',
+            icon: 'star',
+            text: 'Favorite',
+            handler: () => {
+              console.log('Favorite clicked');
+            }
+          },
+          {
+            text: 'Done',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
           }
-        }, {
-          text: 'Done',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }]}
-      >
-      </IonToast>
-    );
-  }
-}
+        ]}
+      />
+    </IonContent>
+  );
+};
 ```

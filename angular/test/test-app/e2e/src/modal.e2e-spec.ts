@@ -5,9 +5,10 @@ describe('modals', () => {
 
   beforeEach(async () => {
     await browser.get('/modals');
+    await waitTime(30);
   });
   afterEach(() => {
-    handleErrorMessages();
+    return handleErrorMessages();
   });
 
   it('should open standalone modal and close', async () => {

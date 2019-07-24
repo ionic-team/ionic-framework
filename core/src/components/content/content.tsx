@@ -1,6 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, h, readTask } from '@stencil/core';
 
-import { Color, Config, Mode, ScrollBaseDetail, ScrollDetail } from '../../interface';
+import { config } from '../../global/config';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { isPlatform } from '../../utils/platform';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -45,13 +47,7 @@ export class Content implements ComponentInterface {
     isScrolling: true,
   };
 
-  mode!: Mode;
-
-  @Element() el!: HTMLStencilElement;
-
-  @Prop({ context: 'config' }) config!: Config;
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'window' }) win!: Window;
+  @Element() el!: HTMLIonContentElement;
 
   /**
    * The color to use from your application's color palette.
@@ -108,7 +104,8 @@ export class Content implements ComponentInterface {
 
   componentWillLoad() {
     if (this.forceOverscroll === undefined) {
-      this.forceOverscroll = this.mode === 'ios' && isPlatform(this.win, 'mobile');
+      const mode = getIonMode(this);
+      this.forceOverscroll = mode === 'ios' && isPlatform(window, 'mobile');
     }
   }
 
@@ -130,7 +127,7 @@ export class Content implements ComponentInterface {
 
   private resize() {
     if (this.fullscreen) {
-      this.queue.read(this.readDimensions.bind(this));
+      readTask(this.readDimensions.bind(this));
     } else if (this.cTop !== 0 || this.cBottom !== 0) {
       this.cTop = this.cBottom = 0;
       this.el.forceUpdate();
@@ -159,7 +156,7 @@ export class Content implements ComponentInterface {
     }
     if (!this.queued && this.scrollEvents) {
       this.queued = true;
-      this.queue.read(ts => {
+      readTask(ts => {
         this.queued = false;
         this.detail.event = ev;
         updateScrollDetail(this.detail, this.scrollEl, ts, shouldStart);
@@ -301,45 +298,52 @@ export class Content implements ComponentInterface {
     }
   }
 
-  hostData() {
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        [`${this.mode}`]: true,
-        'content-sizing': hostContext('ion-popover', this.el),
-        'overscroll': !!this.forceOverscroll,
-      },
-      style: {
-        '--offset-top': `${this.cTop}px`,
-        '--offset-bottom': `${this.cBottom}px`,
-      }
-    };
-  }
-
   render() {
+    const mode = getIonMode(this);
     const { scrollX, scrollY, forceOverscroll } = this;
+
+    const transitionShadow = (mode === 'ios' && config.getBoolean('experimentalTransitionShadow', false));
 
     this.resize();
 
-    return [
-      <div
+    return (
+      <Host
         class={{
-          'inner-scroll': true,
-          'scroll-x': scrollX,
-          'scroll-y': scrollY,
-          'overscroll': (scrollX || scrollY) && !!forceOverscroll
+          ...createColorClasses(this.color),
+          [mode]: true,
+          'content-sizing': hostContext('ion-popover', this.el),
+          'overscroll': !!this.forceOverscroll,
         }}
-        ref={el => this.scrollEl = el!}
-        onScroll={ev => this.onScroll(ev)}
+        style={{
+          '--offset-top': `${this.cTop}px`,
+          '--offset-bottom': `${this.cBottom}px`,
+        }}
       >
-        <slot></slot>
-      </div>,
-      <slot name="fixed"></slot>
-    ];
+        <div
+          class={{
+            'inner-scroll': true,
+            'scroll-x': scrollX,
+            'scroll-y': scrollY,
+            'overscroll': (scrollX || scrollY) && !!forceOverscroll
+          }}
+          ref={el => this.scrollEl = el!}
+          onScroll={ev => this.onScroll(ev)}
+        >
+          <slot></slot>
+        </div>
+        {transitionShadow ? (
+          <div class="transition-effect">
+            <div class="transition-cover"></div>
+            <div class="transition-shadow"></div>
+          </div>
+        ) : null}
+        <slot name="fixed"></slot>
+      </Host>
+    );
   }
 }
 
-function getParentElement(el: any) {
+const getParentElement = (el: any) => {
   if (el.parentElement) {
     // normal element with a parent element
     return el.parentElement;
@@ -349,9 +353,9 @@ function getParentElement(el: any) {
     return el.parentNode.host;
   }
   return null;
-}
+};
 
-function getPageElement(el: HTMLElement) {
+const getPageElement = (el: HTMLElement) => {
   const tabs = el.closest('ion-tabs');
   if (tabs) {
     return tabs;
@@ -361,20 +365,22 @@ function getPageElement(el: HTMLElement) {
     return page;
   }
   return getParentElement(el);
-}
+};
 
 // ******** DOM READ ****************
-function updateScrollDetail(
+const updateScrollDetail = (
   detail: ScrollDetail,
   el: Element,
   timestamp: number,
   shouldStart: boolean
-) {
+) => {
   const prevX = detail.currentX;
   const prevY = detail.currentY;
   const prevT = detail.timeStamp;
   const currentX = el.scrollLeft;
   const currentY = el.scrollTop;
+  const timeDelta = timestamp - prevT;
+
   if (shouldStart) {
     // remember the start positions
     detail.startTimeStamp = timestamp;
@@ -388,11 +394,10 @@ function updateScrollDetail(
   detail.deltaX = currentX - detail.startX;
   detail.deltaY = currentY - detail.startY;
 
-  const timeDelta = timestamp - prevT;
   if (timeDelta > 0 && timeDelta < 100) {
     const velocityX = (currentX - prevX) / timeDelta;
     const velocityY = (currentY - prevY) / timeDelta;
     detail.velocityX = velocityX * 0.7 + detail.velocityX * 0.3;
     detail.velocityY = velocityY * 0.7 + detail.velocityY * 0.3;
   }
-}
+};

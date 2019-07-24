@@ -8,8 +8,8 @@
     "sync": "sh scripts/sync.sh",
     "build": "ng build --prod --no-progress",
     "test": "ng e2e --prod",
-    "lint": "ng lint",
-    "postinstall": "npm run sync"
+    "test.dev": "npm run sync && ng e2e",
+    "lint": "ng lint"
   },
   "private": true,
   "dependencies": {
@@ -21,7 +21,7 @@
     "@angular/platform-browser": "~7.2.1",
     "@angular/platform-browser-dynamic": "~7.2.1",
     "@angular/router": "~7.2.1",
-    "@ionic/angular": "^4.0.0-rc.1",
+    "@ionic/angular": "^4.5.0",
     "core-js": "^2.6.2",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
@@ -32,9 +32,9 @@
     "@angular/cli": "~7.2.1",
     "@angular/compiler-cli": "~7.2.1",
     "@angular/language-service": "~7.2.1",
-    "@types/node": "~8.9.4",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~8.9.4",
     "codelyzer": "~4.5.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",

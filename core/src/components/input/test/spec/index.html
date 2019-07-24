@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -29,6 +29,10 @@
       <ion-item>
         <ion-label position="stacked">Stacked: input value</ion-label>
         <ion-input value="value"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Stacked: div</ion-label>
+        <div>A div</div>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Floating: textarea</ion-label>

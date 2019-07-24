@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Back Button - Toolbar</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+</head>
+
+<body>
+  <ion-app>
+    <ion-content>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+          <ion-back-button class="ion-focused"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Default</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button class="custom"></ion-back-button>
+          <ion-back-button class="custom ion-focused"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Custom</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button color="secondary"></ion-back-button>
+          <ion-back-button color="secondary" class="ion-focused"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Secondary</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="light">
+        <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+          <ion-back-button class="ion-focused"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Light</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="danger">
+        <ion-buttons slot="start">
+          <ion-button>
+            <ion-icon name="star" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Danger</ion-title>
+        <ion-buttons slot="end">
+          <ion-back-button icon="star" text=""></ion-back-button>
+        </ion-buttons>
+      </ion-toolbar>
+
+      <ion-toolbar color="dark">
+        <ion-buttons slot="start">
+          <ion-back-button text="Back" icon=""></ion-back-button>
+          <ion-back-button text="Back" icon="" class="ion-focused"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Dark</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="tertiary">
+        <ion-buttons slot="start">
+          <ion-back-button text=""></ion-back-button>
+          <ion-back-button text="" class="ion-focused"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Tertiary</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+          <ion-back-button text="Back"></ion-back-button>
+          <ion-back-button text="Back" class="ion-focused"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Primary</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="success">
+        <ion-buttons slot="start">
+          <ion-back-button text="undo" icon="paper"></ion-back-button>
+          <ion-back-button text="undo" icon="paper" class="ion-focused"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Success</ion-title>
+      </ion-toolbar>
+    </ion-content>
+  </ion-app>
+
+  <script>
+    var buttons = document.querySelectorAll('ion-back-button');
+
+    for(var i = 0; i < buttons.length; i++) {
+      buttons[i].addEventListener('click', (event) => onClick(event));
+    }
+
+    function onClick(ev) {
+      console.log("clicked the button", ev.target.innerText);
+    }
+  </script>
+
+  <style>
+    ion-back-button {
+      display: inline-block !important;
+    }
+
+    .custom {
+      --background: #ffdde2;
+      --background-hover: #fcc6ce;
+      --background-focused: lightpink;
+      --color: rgb(214, 60, 235);
+      --border-radius: 10px;
+      --padding-start: 10px;
+      --padding-end: 10px;
+    }
+  </style>
+</body>
+
+</html>

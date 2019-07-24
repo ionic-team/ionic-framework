@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   <style>
   :root {
     --ion-safe-area-bottom: 40px;
@@ -28,7 +28,7 @@
             <ion-title>Tab One</ion-title>
           </ion-toolbar>
         </ion-header>
-        <ion-content padding>
+        <ion-content class="ion-padding">
           <h1>Tab One</h1>
           <ion-button expand="block" onclick="updateBadgeCount()">Update Badge Count</ion-button>
           <ion-button color="secondary" expand="block" onclick="updateBadgeColor()">Update Badge Color</ion-button>
@@ -41,7 +41,7 @@
             <ion-title>Tab Two</ion-title>
           </ion-toolbar>
         </ion-header>
-        <ion-content padding>
+        <ion-content class="ion-padding">
           <h1>Tab Two</h1>
         </ion-content>
       </ion-tab>
@@ -52,7 +52,7 @@
             <ion-title>Tab Three</ion-title>
           </ion-toolbar>
         </ion-header>
-        <ion-content padding>
+        <ion-content class="ion-padding">
           <h1>Tab Three</h1>
         </ion-content>
       </ion-tab>
@@ -63,7 +63,7 @@
             <ion-title>Hidden Tab</ion-title>
           </ion-toolbar>
         </ion-header>
-        <ion-content padding>
+        <ion-content class="ion-padding">
           <h1>Hidden Tab</h1>
         </ion-content>
       </ion-tab>
@@ -112,7 +112,7 @@
               <ion-title>Page Four</ion-title>
             </ion-toolbar>
           </ion-header>
-          <ion-content padding>
+          <ion-content class="ion-padding">
             Page Four
           </ion-content>
         `;

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import { RouterDirection } from '@ionic/core';
+import { RouterDirection, HTMLStencilElement } from '@ionic/core';
 import { RouterOptions } from 'vue-router/types/router';
 
 declare module 'vue-router/types/router' {
@@ -41,8 +41,6 @@ export interface IonicGlobal {
 export interface IonicWindow extends Window {
   Ionic: IonicGlobal;
 }
-
-
 
 export interface FrameworkDelegate {
   attachViewToDom(parentElement: HTMLElement, component: HTMLElement | WebpackFunction | object | Vue, opts?: object, classes?: string[]): Promise<HTMLElement>;

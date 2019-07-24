@@ -2,11 +2,11 @@ import { newE2EPage } from '@stencil/core/testing';
 
 import { generateE2EUrl } from '../../../utils/test/utils';
 
-export async function testToast(
+export const testToast = async (
   type: string,
   selector: string,
   rtl = false
-) {
+) => {
   try {
     const pageUrl = generateE2EUrl('toast', type, rtl);
 
@@ -16,10 +16,14 @@ export async function testToast(
 
     const screenshotCompares = [];
 
-    await page.click(selector);
-    await page.waitForSelector(selector);
+    const button = await page.find(selector);
+    await button.waitForVisible();
+    await button.click();
+
+    await page.waitFor(250);
 
     let toast = await page.find('ion-toast');
+    await toast.waitForVisible();
 
     expect(toast).not.toBe(null);
     await toast.waitForVisible();
@@ -41,4 +45,4 @@ export async function testToast(
   } catch (err) {
     throw err;
   }
-}
+};

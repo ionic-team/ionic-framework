@@ -37,29 +37,30 @@ export interface LifeCycleCount {
 }
 
 export function handleErrorMessages() {
-  browser.manage().logs().get('browser').then(function(browserLog) {
-    let severWarnings = false;
-
-    for (let i; i <= browserLog.length - 1; i++) {
-        if (browserLog[i].level.name === 'SEVERE') {
-            console.log('\n' + browserLog[i].level.name);
-            console.log('(Possibly exception) \n' + browserLog[i].message);
-
-            severWarnings = true;
-        }
+  return browser.manage().logs().get('browser').then(function (browserLog) {
+    for (let i = 0; i <= browserLog.length - 1; i++) {
+      if (browserLog[i].level.name_ === 'SEVERE') {
+        fail(browserLog[i].message);
+      }
     }
-
-    expect(severWarnings).toBe(false);
   });
 }
 
 export async function testLifeCycle(selector: string, expected: LifeCycleCount) {
   await waitTime(50);
-  expect(await getText(`${selector} #ngOnInit`)).toEqual('1');
-  expect(await getText(`${selector} #ionViewWillEnter`)).toEqual(expected.ionViewWillEnter.toString());
-  expect(await getText(`${selector} #ionViewDidEnter`)).toEqual(expected.ionViewDidEnter.toString());
-  expect(await getText(`${selector} #ionViewWillLeave`)).toEqual(expected.ionViewWillLeave.toString());
-  expect(await getText(`${selector} #ionViewDidLeave`)).toEqual(expected.ionViewDidLeave.toString());
+  const results = await Promise.all([
+    getText(`${selector} #ngOnInit`),
+    getText(`${selector} #ionViewWillEnter`),
+    getText(`${selector} #ionViewDidEnter`),
+    getText(`${selector} #ionViewWillLeave`),
+    getText(`${selector} #ionViewDidLeave`),
+  ]);
+
+  expect(results[0]).toEqual('1');
+  expect(results[1]).toEqual(expected.ionViewWillEnter.toString());
+  expect(results[2]).toEqual(expected.ionViewDidEnter.toString());
+  expect(results[3]).toEqual(expected.ionViewWillLeave.toString());
+  expect(results[4]).toEqual(expected.ionViewDidLeave.toString());
 }
 
 export async function testStack(selector: string, expected: string[]) {

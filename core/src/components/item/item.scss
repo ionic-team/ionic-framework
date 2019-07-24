@@ -6,29 +6,40 @@
 :host {
   /**
    * @prop --background: Background of the item
-   * @prop --background-activated: Background of the activated item
+   * @prop --background-activated: Background of the item when pressed
+   * @prop --background-focused: Background of the item when focused with the tab key
+   * @prop --background-hover: Background of the item on hover
+   *
    * @prop --border-color: Color of the item border
    * @prop --border-radius: Radius of the item border
    * @prop --border-style: Style of the item border
    * @prop --border-width: Width of the item border
+   *
    * @prop --box-shadow: Box shadow of the item
+   *
    * @prop --color: Color of the item
+   * @prop --color-activated: Color of the item when pressed
+   * @prop --color-focused: Color of the item when focused with the tab key
+   * @prop --color-hover: Color of the item on hover
    *
    * @prop --detail-icon-color: Color of the item detail icon
    * @prop --detail-icon-opacity: Opacity of the item detail icon
    * @prop --detail-icon-font-size: Font size of the item detail icon
    * @prop --inner-border-width: Width of the item inner border
+   *
    * @prop --inner-box-shadow: Box shadow of the item inner
-   * @prop --inner-padding-bottom: Bottom padding of the item inner
-   * @prop --inner-padding-end: End padding of the item inner
-   * @prop --inner-padding-start: Start padding of the item inner
    * @prop --inner-padding-top: Top padding of the item inner
+   * @prop --inner-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the item inner
+   * @prop --inner-padding-bottom: Bottom padding of the item inner
+   * @prop --inner-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the item inner
    *
    * @prop --min-height: Minimum height of the item
+   *
    * @prop --padding-bottom: Bottom padding of the item
-   * @prop --padding-end: End padding of the item
-   * @prop --padding-start: Start padding of the item
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the item
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the item
    * @prop --padding-top: Top padding of the item
+   *
    * @prop --transition: Transition of the item
    *
    * @prop --ripple-color: Color of the item ripple effect
@@ -57,6 +68,9 @@
   --detail-icon-color: initial;
   --detail-icon-font-size: 20px;
   --detail-icon-opacity: 0.25;
+  --color-activated: var(--color);
+  --color-focused: var(--color);
+  --color-hover: var(--color);
   --ripple-color: var(--ion-item-background-activated, currentColor);
 
   @include font-smoothing();
@@ -74,10 +88,12 @@
   text-align: initial;
   text-decoration: none;
   box-sizing: border-box;
+
+  overflow: hidden;
 }
 
 
-// Item with Color
+// Item: Color
 // --------------------------------------------------
 
 :host(.ion-color) .item-native {
@@ -91,24 +107,52 @@
 }
 
 
-// Activated Item
+// Item: Focused
 // --------------------------------------------------
 
 :host(.ion-focused) .item-native {
   background: var(--background-focused);
+  color: var(--color-focused);
 }
+
+:host(.ion-color.ion-focused) .item-native {
+  background: current-color(shade);
+  color: current-color(contrast);
+}
+
+
+// Item: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(.ion-activatable:hover) .item-native {
+    background: var(--background-hover);
+    color: var(--color-hover);
+  }
+
+  :host(.ion-color.ion-activatable:hover) .item-native {
+    background: #{current-color(tint)};
+    color: #{current-color(contrast)};
+  }
+}
+
+
+// Item: Activated
+// --------------------------------------------------
 
 :host(.activated) .item-native {
   background: var(--background-activated);
-}
-
-:host(.ion-color.activated) .item-native {
-  background: current-color(tint);
+  color: var(--color-activated);
 }
 
 
-// Disabled Item
+// Item: Disabled
 // --------------------------------------------------
+
+:host(.item-interactive-disabled:not(.item-multiple-inputs)) {
+  cursor: default;
+  pointer-events: none;
+}
 
 :host(.item-disabled) {
   cursor: default;
@@ -151,7 +195,7 @@
   background: var(--background);
 
   box-shadow: var(--box-shadow);
-  overflow: hidden;
+  overflow: inherit;
   box-sizing: border-box;
 }
 
@@ -196,12 +240,12 @@ button, a {
   border-color: var(--border-color);
 
   box-shadow: var(--inner-box-shadow);
-  overflow: hidden;
+  overflow: inherit;
   box-sizing: border-box;
 }
 
 // Item Detail Icon
-// -----------------------------------------
+// --------------------------------------------------
 
 .item-detail-icon {
   color: var(--detail-icon-color);
@@ -213,7 +257,7 @@ button, a {
 
 
 // Item Slots
-// -----------------------------------------
+// --------------------------------------------------
 
 ::slotted(ion-icon) {
   font-size: 1.6em;
@@ -234,7 +278,7 @@ button, a {
 
 
 // Item Input
-// -----------------------------------------
+// --------------------------------------------------
 
 :host([vertical-align-top]),
 :host(.item-input) {
@@ -253,6 +297,11 @@ button, a {
 
   overflow: hidden;
   box-sizing: border-box;
+}
+
+:host(.item-label-stacked) .item-native,
+:host(.item-label-floating) .item-native {
+  align-items: start;
 }
 
 :host(.item-label-stacked) .input-wrapper,
@@ -318,7 +367,7 @@ button, a {
 
 
 // Item Select
-// -----------------------------------------
+// --------------------------------------------------
 
 :host(.item-label-stacked) ::slotted(ion-select),
 :host(.item-label-floating) ::slotted(ion-select) {
@@ -333,7 +382,7 @@ button, a {
 
 
 // Item Datetime
-// -----------------------------------------
+// --------------------------------------------------
 
 :host(.item-label-stacked) ::slotted(ion-datetime),
 :host(.item-label-floating) ::slotted(ion-datetime) {
@@ -344,18 +393,20 @@ button, a {
 
 
 // Item w/ Multiple Inputs
-// -----------------------------------------
-// Multiple inputs in an item should have the input cover
-// relative to them instead of the item
+// --------------------------------------------------
+// Multiple inputs in an item should have the input
+// cover relative to themselves instead of the item
 
+:host(.item-multiple-inputs) ::slotted(ion-checkbox),
 :host(.item-multiple-inputs) ::slotted(ion-datetime),
+:host(.item-multiple-inputs) ::slotted(ion-radio),
 :host(.item-multiple-inputs) ::slotted(ion-select) {
   position: relative;
 }
 
 
 // Item Textarea
-// -----------------------------------------
+// --------------------------------------------------
 
 :host(.item-textarea) {
   align-items: stretch;

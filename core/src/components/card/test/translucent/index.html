@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -44,7 +44,7 @@
 
       <ion-card>
         <div style="position: absolute; top: 0; left:0; right:0; bottom:0;">
-          <img style="transform: rotate(145deg) scale(1.5)" src="http://images.all-free-download.com/images/graphiclarge/travel_icons_6813629.jpg">
+          <img style="transform: rotate(145deg) scale(1.5)" src="/src/components/card/test/img.jpg">
         </div>
         <ion-card-header translucent>
           <ion-card-subtitle>
@@ -61,7 +61,7 @@
 
       <ion-card style="color: white;">
         <div style="position: absolute; top: 0; left:0; right:0; bottom:0;">
-          <img style="transform: scale(2)" src="https://images.unsplash.com/photo-1500531279542-fc8490c8ea4d?auto=format&fit=crop&w=1502&q=60&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D">
+          <img style="transform: scale(2)" src="/src/components/card/test/img.jpg">
         </div>
         <ion-card-header translucent>
           <ion-card-subtitle>
@@ -79,7 +79,7 @@
 
       <ion-card>
         <div style="position: absolute; top: 0; left:0; right:0; bottom:0;">
-          <img src="https://images.unsplash.com/photo-1483354483454-4cd359948304?dpr=1&auto=format&fit=crop&w=1000&q=80&cs=tinysrgb&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D">
+          <img src="/src/components/card/test/img.jpg">
         </div>
 
         <ion-card-header>
@@ -108,13 +108,13 @@
 
         <ion-grid>
           <ion-row>
-            <ion-col no-padding>
+            <ion-col class="ion-no-padding">
               <ion-button fill="clear" size="small">
                 <ion-icon slot="start" name="star"></ion-icon>
                 Star
               </ion-button>
             </ion-col>
-            <ion-col no-padding text-right>
+            <ion-col class="ion-no-padding ion-text-right">
               <ion-button fill="clear" size="small" class="activated">
                 <ion-icon slot="start" name="share"></ion-icon>
                 Activated
@@ -184,19 +184,19 @@
 
         <ion-grid>
           <ion-row>
-            <ion-col no-padding>
+            <ion-col class="ion-no-padding">
               <ion-button fill="clear" size="small">
                 <ion-icon slot="start" name="star"></ion-icon>
                 Favorite
               </ion-button>
             </ion-col>
-            <ion-col no-padding text-center>
+            <ion-col class="ion-no-padding ion-text-center">
               <ion-button fill="clear" size="small">
                 <ion-icon slot="start" name="musical-notes"></ion-icon>
                 Listen
               </ion-button>
             </ion-col>
-            <ion-col no-padding align-self-center padding-end text-right>
+            <ion-col class="ion-no-padding ion-padding-end ion-text-right ion-align-self-center">
               <ion-note>
                 11h ago
               </ion-note>
@@ -205,7 +205,7 @@
         </ion-grid>
       </ion-card>
 
-      <ion-card no-margin>
+      <ion-card class="ion-no-margin">
 
         <div>
           <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
@@ -217,20 +217,20 @@
 
         <ion-grid>
           <ion-row>
-            <ion-col no-padding>
+            <ion-col class="ion-no-padding">
               <ion-button fill="clear" size="small" color="dark">
                 <ion-icon slot="start" name="star"></ion-icon>
                 Favorite
               </ion-button>
             </ion-col>
 
-            <ion-col no-padding text-center>
+            <ion-col class="ion-no-padding ion-text-center">
               <ion-button fill="clear" size="small" color="dark">
                 <ion-icon slot="start" name="musical-notes"></ion-icon>
                 Listen
               </ion-button>
             </ion-col>
-            <ion-col no-padding text-right>
+            <ion-col class="ion-no-padding ion-text-right">
               <ion-button fill="clear" size="small" color="dark">
                 <ion-icon slot="start" name="share-alt"></ion-icon>
                 Share

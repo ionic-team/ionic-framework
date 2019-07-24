@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * iOS Toast Leave Animation
  */
-export function iosLeaveAnimation(AnimationC: Animation, baseEl: ShadowRoot, position: string): Promise<Animation> {
+export const iosLeaveAnimation = (AnimationC: Animation, baseEl: ShadowRoot, position: string): Promise<Animation> => {
   const baseAnimation = new AnimationC();
 
   const wrapperAnimation = new AnimationC();
@@ -32,4 +32,4 @@ export function iosLeaveAnimation(AnimationC: Animation, baseEl: ShadowRoot, pos
     .easing('cubic-bezier(.36,.66,.04,1)')
     .duration(300)
     .add(wrapperAnimation));
-}
+};
