@@ -43,7 +43,7 @@ export class ValueAccessor implements ControlValueAccessor {
   }
 }
 
-export function setIonicClasses(element: ElementRef) {
+export const setIonicClasses = (element: ElementRef) => {
   raf(() => {
     const input = element.nativeElement as HTMLElement;
     const classes = getClasses(input);
@@ -54,9 +54,9 @@ export function setIonicClasses(element: ElementRef) {
       setClasses(item, classes);
     }
   });
-}
+};
 
-function getClasses(element: HTMLElement) {
+const getClasses = (element: HTMLElement) => {
   const classList = element.classList;
   const classes = [];
   for (let i = 0; i < classList.length; i++) {
@@ -66,7 +66,7 @@ function getClasses(element: HTMLElement) {
     }
   }
   return classes;
-}
+};
 
 function setClasses(element: HTMLElement, classes: string[]) {
   const classList = element.classList;
