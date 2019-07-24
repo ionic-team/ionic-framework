@@ -48,28 +48,3 @@ module.exports = {
     )
   ]
 };
-
-
-// TEMP HACK UNTIL STENCIL UPDATES node:main loader
-const fs = require('fs');
-const loaderDirPath = path.join(__dirname, 'node_modules', '@ionic', 'core', 'loader');
-const loaderPackagePath = path.join(loaderDirPath, 'package.json');
-const loaderNodeMainPath = path.join(loaderDirPath, 'node-main.js');
-
-fs.writeFileSync(loaderPackagePath, `
-{
-  "name": "ionic-loader",
-  "typings": "./index.d.ts",
-  "module": "./index.mjs",
-  "main": "./index.cjs.js",
-  "node:main": "./node-main.js",
-  "jsnext:main": "./index.es2017.mjs",
-  "es2015": "./index.es2017.mjs",
-  "es2017": "./index.es2017.mjs"
-}
-`);
-
-fs.writeFileSync(loaderNodeMainPath, `
-module.exports.applyPolyfills = function() { return Promise.resolve() };
-module.exports.defineCustomElements = function() { return Promise.resolve() };
-`);
