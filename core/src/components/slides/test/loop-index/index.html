@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Slides - Basic</title>
+
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>  <style>
+    ion-slide {
+      height: 200px !important;
+    }
+
+  </style>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-content id="content">
+      <ion-slides style="background: black" id="slides" pager>
+        <ion-slide style="background: rgb(0, 200, 0); color: white;">
+          <h1>Slide 1</h1>
+        </ion-slide>
+        <ion-slide style="background: white; color: blue;">
+          <h1>Slide 2</h1>
+        </ion-slide>
+        <ion-slide style="background: blue; color: white;">
+          <h1>Slide 3</h1>
+        </ion-slide>
+        <ion-slide style="background: red; color: white;">
+          <h1>Slide 4</h1>
+        </ion-slide>
+      </ion-slides>
+      <div padding>Tricky when you have loop mode enabled:</div>
+      <ion-button expand="block" onclick="getActiveIndex()">Get Active Index</ion-button>
+      <ion-button expand="block" onclick="getPreviousIndex()">Get Previous Index</ion-button>
+      <div padding>Always right about the current active slide:</div>
+      <ion-button expand="block" color="danger" onclick="getRealIndex()">Get Real Index</ion-button>
+    </ion-content>
+
+  </ion-app>
+  <script>
+    const slides = document.getElementById('slides')
+    slides.pager = false;
+    slides.options = { loop: true};
+
+    async function getActiveIndex() {
+      console.log(await slides.getActiveIndex());
+    };
+
+    async function getPreviousIndex() {
+      console.log(await slides.getPreviousIndex());
+    };
+
+    async function getRealIndex() {
+      console.log(await slides.getRealIndex());
+    };
+  </script>
+</body>
+
+</html>

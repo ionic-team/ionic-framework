@@ -2370,6 +2370,10 @@ export namespace Components {
     */
     'getPreviousIndex': () => Promise<number>;
     /**
+    * Get the index of the active slide considering duplicated slides in loop mode.
+    */
+    'getRealIndex': () => Promise<number>;
+    /**
     * Get whether or not the current slide is the first slide.
     */
     'isBeginning': () => Promise<boolean>;

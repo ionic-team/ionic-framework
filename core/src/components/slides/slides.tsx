@@ -226,6 +226,15 @@ export class Slides implements ComponentInterface {
   }
 
   /**
+   * Get the index of the active slide considering duplicated slides in loop mode.
+   */
+  @Method()
+  async getRealIndex(): Promise<number> {
+    const swiper = await this.getSwiper();
+    return swiper.realIndex;
+  }
+
+  /**
    * Get the total number of slides.
    */
   @Method()

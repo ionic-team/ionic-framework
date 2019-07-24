@@ -614,6 +614,16 @@ Type: `Promise<number>`
 
 
 
+### `getRealIndex() => Promise<number>`
+
+Get the index of the active slide considering duplicated slides in loop mode.
+
+#### Returns
+
+Type: `Promise<number>`
+
+
+
 ### `isBeginning() => Promise<boolean>`
 
 Get whether or not the current slide is the first slide.
