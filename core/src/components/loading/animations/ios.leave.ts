@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * iOS Loading Leave Animation
  */
-export function iosLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+export const iosLeaveAnimation = (AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> => {
   const baseAnimation = new AnimationC();
 
   const backdropAnimation = new AnimationC();
@@ -15,7 +15,7 @@ export function iosLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): P
   backdropAnimation.fromTo('opacity', 0.3, 0);
 
   wrapperAnimation.fromTo('opacity', 0.99, 0)
-                  .fromTo('scale', 1, 0.9);
+    .fromTo('scale', 1, 0.9);
 
   return Promise.resolve(baseAnimation
     .addElement(baseEl)
@@ -23,4 +23,4 @@ export function iosLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): P
     .duration(200)
     .add(backdropAnimation)
     .add(wrapperAnimation));
-}
+};

@@ -2,12 +2,12 @@ import { newE2EPage } from '@stencil/core/testing';
 
 import { generateE2EUrl } from '../../../utils/test/utils';
 
-export async function testActionSheet(
+export const testActionSheet = async (
   type: string,
   selector: string,
   rtl = false,
-  afterScreenshotHook = async (..._args: any[]): Promise<void> => {/**/}
-) {
+  afterScreenshotHook = async (..._args: any[]): Promise<void> => {/**/ }
+) => {
   try {
     const pageUrl = generateE2EUrl('action-sheet', type, rtl);
 
@@ -42,13 +42,13 @@ export async function testActionSheet(
   } catch (err) {
     throw err;
   }
-}
+};
 
-export async function testActionSheetBackdrop(
+export const testActionSheetBackdrop = async (
   page: any,
   screenshotCompares: any,
   actionSheet: any
-) {
+) => {
   try {
     const backdrop = await page.find('ion-backdrop');
     await backdrop.click();
@@ -57,15 +57,15 @@ export async function testActionSheetBackdrop(
 
     const isVisible = await actionSheet.isVisible();
     expect(isVisible).toBe(true);
-} catch (err) {
+  } catch (err) {
     throw err;
   }
-}
+};
 
-export async function testActionSheetAlert(
+export const testActionSheetAlert = async (
   page: any,
   screenshotCompares: any
-) {
+) => {
   try {
     const openAlertBtn = await page.find({ text: 'Open Alert' });
     await openAlertBtn.click();
@@ -81,4 +81,4 @@ export async function testActionSheetAlert(
   } catch (err) {
     throw err;
   }
-}
+};

@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * MD Action Sheet Leave Animation
  */
-export function mdLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+export const mdLeaveAnimation = (AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> => {
 
   const baseAnimation = new AnimationC();
 
@@ -24,4 +24,4 @@ export function mdLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Pr
     .add(wrapperAnimation);
 
   return Promise.resolve(ani);
-}
+};

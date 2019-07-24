@@ -1,6 +1,6 @@
 import React from 'react';
 import { generateUniqueId } from '../../utils/utils';
-import { IonRouterOutletInner } from '../../proxies';
+import { IonRouterOutletInner } from '../../inner-proxies';
 import { View } from '../../View';
 import { NavContext } from './NavContext';
 import { ViewItemManager } from '../ViewItemManager';
