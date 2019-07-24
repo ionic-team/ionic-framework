@@ -116,6 +116,7 @@ async function preparePackages(packages, version, install) {
 
   // update core readme with version number
   updateCoreReadme(tasks, version);
+  common.copyCDNLoader(tasks, version);
 
   const listr = new Listr(tasks, { showSubtasks: true });
   await listr.run();
@@ -170,7 +171,6 @@ function updateCoreReadme(tasks, version) {
     task: () => execa('node', ['update-readme.js', version], { cwd: path.join(common.rootDir, 'core', 'scripts') }),
   });
 }
-
 
 const SEMVER_INCREMENTS = ['patch', 'minor', 'major'];
 
