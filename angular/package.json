@@ -72,6 +72,7 @@
     "@angular/forms": "^7.2.1",
     "@angular/platform-browser": "^7.2.1",
     "@angular/platform-browser-dynamic": "^7.2.1",
+    "@angular/platform-server": "^7.2.1",
     "@angular/router": "^7.2.1",
     "@types/node": "~12.0.12",
     "fs-extra": "^7.0.0",
@@ -82,8 +83,8 @@
     "tsickle": "^0.34.0",
     "tslint": "^5.12.1",
     "tslint-ionic-rules": "0.0.21",
-    "typescript": "3.2.4",
-    "zone.js": "^0.8.28"
+    "typescript": "~3.2.2",
+    "zone.js": "~0.8.26"
   },
   "schematics": "./dist/schematics/collection.json"
 }
