@@ -225,13 +225,15 @@ export class StackController {
         containerEl.appendChild(enteringEl);
       }
 
-      return containerEl.commit(enteringEl, leavingEl, {
-        deepWait: true,
-        duration: direction === undefined ? 0 : undefined,
-        direction,
-        showGoBack,
-        progressAnimation
-      });
+      if ((containerEl as any).commit) {
+        return containerEl.commit(enteringEl, leavingEl, {
+          deepWait: true,
+          duration: direction === undefined ? 0 : undefined,
+          direction,
+          showGoBack,
+          progressAnimation
+        });
+      }
     }
     return Promise.resolve(false);
   }
@@ -246,16 +248,19 @@ export class StackController {
   }
 }
 
-function cleanupAsync(activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) {
-  return new Promise(resolve => {
-    requestAnimationFrame(() => {
-      cleanup(activeRoute, views, viewsSnapshot, location);
-      resolve();
+const cleanupAsync = (activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) => {
+  if (typeof (requestAnimationFrame as any) === 'function') {
+    return new Promise<any>(resolve => {
+      requestAnimationFrame(() => {
+        cleanup(activeRoute, views, viewsSnapshot, location);
+        resolve();
+      });
     });
-  });
-}
+  }
+  return Promise.resolve();
+};
 
-function cleanup(activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) {
+const cleanup = (activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) => {
   viewsSnapshot
     .filter(view => !views.includes(view))
     .forEach(destroyView);
@@ -280,4 +285,4 @@ function cleanup(activeRoute: RouteView, views: RouteView[], viewsSnapshot: Rout
       view.ref.changeDetectorRef.detach();
     }
   });
-}
+};
