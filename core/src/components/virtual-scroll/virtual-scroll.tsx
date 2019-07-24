@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, FunctionalComponent, Listen, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
 
-import { Cell, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
+import { Cell, DomRenderFn, FooterHeightFn, HeaderFn, HeaderHeightFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 
 import { CELL_TYPE_FOOTER, CELL_TYPE_HEADER, CELL_TYPE_ITEM } from './constants';
 import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, getShouldUpdate, getViewport, inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
@@ -105,6 +105,16 @@ export class VirtualScroll implements ComponentInterface {
   @Prop() itemHeight?: ItemHeightFn;
 
   /**
+   * An optional function that maps each item header within their height.
+   */
+  @Prop() headerHeight?: HeaderHeightFn;
+
+  /**
+   * An optional function that maps each item footer within their height.
+   */
+  @Prop() footerHeight?: FooterHeightFn;
+
+  /**
    * NOTE: only JSX API for stencil.
    *
    * Provide a render function for the items to be rendered. Returns a JSX virtual-dom.
@@ -134,6 +144,8 @@ export class VirtualScroll implements ComponentInterface {
   @Prop() domRender?: DomRenderFn;
 
   @Watch('itemHeight')
+  @Watch('headerHeight')
+  @Watch('footerHeight')
   @Watch('items')
   itemsChanged() {
     this.calcCells();
@@ -197,6 +209,8 @@ export class VirtualScroll implements ComponentInterface {
     const cells = calcCells(
       this.items,
       this.itemHeight,
+      this.headerHeight,
+      this.footerHeight,
       this.headerFn,
       this.footerFn,
       this.approxHeaderHeight,
@@ -357,6 +371,8 @@ export class VirtualScroll implements ComponentInterface {
     this.cells = calcCells(
       this.items,
       this.itemHeight,
+      this.headerHeight,
+      this.footerHeight,
       this.headerFn,
       this.footerFn,
       this.approxHeaderHeight,
