@@ -176,6 +176,7 @@ export class VirtualScroll implements ComponentInterface {
 
   @Listen('resize', { target: 'window' })
   onResize() {
+    this.calcCells();
     this.updateVirtualScroll();
   }
 
