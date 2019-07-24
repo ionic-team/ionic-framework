@@ -103,6 +103,8 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
   /**
    * If `true`, the toast will be translucent.
+   * Only applies when the mode is `"ios"` and the device supports
+   * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    */
   @Prop() translucent = false;
 
@@ -301,7 +303,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   }
 }
 
-function buttonClass(button: ToastButton): CssClassMap {
+const buttonClass = (button: ToastButton): CssClassMap => {
   return {
     'toast-button': true,
     'toast-button-icon-only': button.icon !== undefined && button.text === undefined,
@@ -310,4 +312,4 @@ function buttonClass(button: ToastButton): CssClassMap {
     'ion-activatable': true,
     ...getClassMap(button.cssClass)
   };
-}
+};

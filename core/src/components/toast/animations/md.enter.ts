@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * MD Toast Enter Animation
  */
-export function mdEnterAnimation(AnimationC: Animation, baseEl: ShadowRoot, position: string): Promise<Animation> {
+export const mdEnterAnimation = (AnimationC: Animation, baseEl: ShadowRoot, position: string): Promise<Animation> => {
   const baseAnimation = new AnimationC();
 
   const wrapperAnimation = new AnimationC();
@@ -38,4 +38,4 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: ShadowRoot, posi
     .easing('cubic-bezier(.36,.66,.04,1)')
     .duration(400)
     .add(wrapperAnimation));
-}
+};

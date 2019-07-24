@@ -97,6 +97,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   /**
    * If `true`, the alert will be translucent.
+   * Only applies when the mode is `"ios"` and the device supports
+   * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    */
   @Prop() translucent = false;
 
@@ -459,11 +461,11 @@ export class Alert implements ComponentInterface, OverlayInterface {
   }
 }
 
-function buttonClass(button: AlertButton): CssClassMap {
+const buttonClass = (button: AlertButton): CssClassMap => {
   return {
     'alert-button': true,
     'ion-focusable': true,
     'ion-activatable': true,
     ...getClassMap(button.cssClass)
   };
-}
+};

@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * Md Popover Enter Animation
  */
-export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> {
+export const mdEnterAnimation = (AnimationC: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> => {
   const doc = (baseEl.ownerDocument as any);
   const isRTL = doc.dir === 'rtl';
 
@@ -106,5 +106,6 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev?
     .add(wrapperAnimation)
     .add(contentAnimation)
     .add(viewportAnimation));
-}
+};
+
 const POPOVER_MD_BODY_PADDING = 12;
