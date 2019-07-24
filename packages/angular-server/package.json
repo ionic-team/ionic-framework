@@ -22,11 +22,11 @@
     "zone.js": ">=0.8.26"
   },
   "devDependencies": {
-    "@angular/animations": "~8.0.0",
     "@angular-devkit/core": "~8.0.0",
+    "@angular/animations": "~8.0.0",
+    "@angular/common": "~8.0.0",
     "@angular/compiler": "~8.0.0",
     "@angular/compiler-cli": "~8.0.0",
-    "@angular/common": "~8.0.0",
     "@angular/core": "~8.0.0",
     "@angular/platform-browser": "~8.0.0",
     "@angular/platform-server": "~8.0.0",
