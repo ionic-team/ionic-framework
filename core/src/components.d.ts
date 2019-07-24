@@ -20,8 +20,10 @@ import {
   DatetimeChangeEventDetail,
   DatetimeOptions,
   DomRenderFn,
+  FooterHeightFn,
   FrameworkDelegate,
   HeaderFn,
+  HeaderHeightFn,
   InputChangeEventDetail,
   ItemHeightFn,
   ItemRenderFn,
@@ -2835,9 +2837,17 @@ export namespace Components {
     */
     'footerFn'?: HeaderFn;
     /**
+    * An optional function that maps each item footer within their height.
+    */
+    'footerHeight'?: FooterHeightFn;
+    /**
     * Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.
     */
     'headerFn'?: HeaderFn;
+    /**
+    * An optional function that maps each item header within their height.
+    */
+    'headerHeight'?: HeaderHeightFn;
     /**
     * An optional function that maps each item within their height. When this function is provides, heavy optimizations and fast path can be taked by `ion-virtual-scroll` leading to massive performance improvements.  This function allows to skip all DOM reads, which can be Doing so leads to massive performance
     */
@@ -6101,9 +6111,17 @@ declare namespace LocalJSX {
     */
     'footerFn'?: HeaderFn;
     /**
+    * An optional function that maps each item footer within their height.
+    */
+    'footerHeight'?: FooterHeightFn;
+    /**
     * Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.
     */
     'headerFn'?: HeaderFn;
+    /**
+    * An optional function that maps each item header within their height.
+    */
+    'headerHeight'?: HeaderHeightFn;
     /**
     * An optional function that maps each item within their height. When this function is provides, heavy optimizations and fast path can be taked by `ion-virtual-scroll` leading to massive performance improvements.  This function allows to skip all DOM reads, which can be Doing so leads to massive performance
     */

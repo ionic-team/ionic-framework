@@ -31,15 +31,18 @@ By default, the select uses object equality (`===`) to determine if an option is
 
 ## Select Buttons
 
-By default, the alert has two buttons: `Cancel` and `OK`. Each button's text can be customized using the `cancelText` and `okText` properties.
+The alert supports two buttons: `Cancel` and `OK`. Each button's text can be customized using the `cancelText` and `okText` properties.
 
 The `action-sheet` and `popover` interfaces do not have an `OK` button, clicking on any of the options will automatically close the overlay and select that value. The `popover` interface does not have a `Cancel` button, clicking on the backdrop will close the overlay.
 
 
 ## Interface Options
 
-Since select uses the alert, action sheet and popover interfaces, options can be passed to these components through the `interfaceOptions` property. This can be used to pass a custom header, subheader, css class, and more. See the [AlertController API docs](../alert-controller), [ActionSheetController API docs](../action-sheet-controller), and [PopoverController API docs](../popover-controller) for the properties that each interface accepts.
+Since select uses the alert, action sheet and popover interfaces, options can be passed to these components through the `interfaceOptions` property. This can be used to pass a custom header, subheader, css class, and more. 
 
+See the [AlertController API docs](../alert-controller), [ActionSheetController API docs](../action-sheet-controller), and [PopoverController API docs](../popover-controller) for the properties that each interface accepts.
+
+Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
 
 <!-- Auto Generated Below -->
 

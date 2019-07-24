@@ -146,7 +146,7 @@ describe('resizeBuffer', () => {
 describe('calcCells', () => {
   it('should calculate cells without headers and itemHeight', () => {
     const items = ['0', 2, 'hola', { data: 'hello' }];
-    const cells = calcCells(items, undefined, undefined, undefined, 10, 20, 30, 0, 0, items.length);
+    const cells = calcCells(items, undefined, undefined, undefined, undefined, undefined, 10, 20, 30, 0, 0, items.length);
     expect(cells).toEqual([
       {
         type: CELL_TYPE_ITEM,
@@ -195,7 +195,7 @@ describe('calcCells', () => {
       called++;
       return index * 20 + 20;
     };
-    const cells = calcCells(items, itemHeight, undefined, undefined, 10, 20, 30, 0, 0, items.length);
+    const cells = calcCells(items, itemHeight, undefined, undefined, undefined, undefined, 10, 20, 30, 0, 0, items.length);
 
     expect(called).toEqual(3);
     expect(cells).toEqual([
@@ -251,7 +251,7 @@ describe('calcCells', () => {
       called++;
       return index * 20 + 20;
     };
-    const cells = calcCells(items, itemHeight, headerFn, footerFn, 10, 20, 30, 0, 0, items.length);
+    const cells = calcCells(items, itemHeight, undefined, undefined, headerFn, footerFn, 10, 20, 30, 0, 0, items.length);
     expect(cells).toHaveLength(5);
     expect(called).toEqual(3);
     expect(headerCalled).toEqual(3);
@@ -315,7 +315,7 @@ describe('calcHeightIndex', () => {
     const footerFn: HeaderFn = (_, index) => {
       return (index === 2) ? 'my footer' : null;
     };
-    const cells = calcCells(items, undefined, headerFn, footerFn, 10, 20, 50, 0, 0, items.length);
+    const cells = calcCells(items, undefined, undefined, undefined, headerFn, footerFn, 10, 20, 50, 0, 0, items.length);
     const buf = resizeBuffer(undefined, cells.length);
     const totalHeight = calcHeightIndex(buf, cells, 0);
     expect(buf.length).toEqual(7);
@@ -508,7 +508,7 @@ function mockVirtualScroll(
   headerFn?: HeaderFn,
   footerFn?: HeaderFn
 ) {
-  const cells = calcCells(items, itemHeight, headerFn, footerFn, 10, 10, 30, 0, 0, items.length);
+  const cells = calcCells(items, itemHeight, undefined, undefined, headerFn, footerFn, 10, 10, 30, 0, 0, items.length);
   const heightIndex = resizeBuffer(undefined, cells.length);
   calcHeightIndex(heightIndex, cells, 0);
   return { items, heightIndex, cells };
