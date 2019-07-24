@@ -1,7 +1,7 @@
 {
   "name": "@ionic/angular-server",
   "description": "Angular SSR Module for Ionic",
-  "private": true,
+  "version": "0.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
