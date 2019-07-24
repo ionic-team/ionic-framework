@@ -12,11 +12,13 @@
   --border-width: 0;
 }
 
-.header-translucent-ios {
-  backdrop-filter: $header-ios-translucent-filter;
-}
+@supports (backdrop-filter: blur(0)) {
+  .header-translucent-ios {
+    backdrop-filter: $header-ios-translucent-filter;
+  }
 
-.header-translucent-ios ion-toolbar {
-  --opacity: .8;
-  --backdrop-filter: #{$header-ios-translucent-filter};
+  .header-translucent-ios ion-toolbar {
+    --opacity: .8;
+    --backdrop-filter: #{$header-ios-translucent-filter};
+  }
 }
