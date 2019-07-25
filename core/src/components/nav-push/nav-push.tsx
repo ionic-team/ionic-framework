@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
 
 import { ComponentProps, NavComponent } from '../../interface';
 
@@ -18,12 +18,17 @@ export class NavPush implements ComponentInterface {
    */
   @Prop() componentProps?: ComponentProps;
 
-  @Listen('click')
-  push() {
+  private push = () => {
     const nav = this.el.closest('ion-nav');
     const toPush = this.component;
     if (nav && toPush !== undefined) {
       nav.push(toPush, this.componentProps, { skipIfBusy: true });
     }
+  }
+
+  render() {
+    return (
+      <Host onClick={this.push}></Host>
+    );
   }
 }

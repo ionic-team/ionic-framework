@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -24,19 +24,23 @@ export class Footer implements ComponentInterface {
    */
   @Prop() translucent = false;
 
-  hostData() {
+  render() {
     const mode = getIonMode(this);
-    return {
-      role: 'contentinfo',
-      class: {
-        [mode]: true,
+    const translucent = this.translucent;
+    return (
+      <Host
+        role="contentinfo"
+        class={{
+          [mode]: true,
 
-        // Used internally for styling
-        [`footer-${mode}`]: true,
+          // Used internally for styling
+          [`footer-${mode}`]: true,
 
-        [`footer-translucent`]: this.translucent,
-        [`footer-translucent-${mode}`]: this.translucent,
-      }
-    };
+          [`footer-translucent`]: translucent,
+          [`footer-translucent-${mode}`]: translucent,
+        }}
+      >
+      </Host>
+    );
   }
 }
