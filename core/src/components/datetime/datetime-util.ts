@@ -324,6 +324,19 @@ export const updateDate = (existingData: DatetimeData, newData: any): boolean =>
         (existingData as any)[key] = newData[key].value;
       }
       return true;
+    } else if (newData.ampm) {
+      // Even though in the picker column hour values are between 1 and 12, the hour value is actually normalized
+      // to [0, 23] interval. Because of this when changing between AM and PM we have to update the hour so it points
+      // to the correct HH hour
+      newData.hour = {
+        value: newData.hour
+          ? newData.hour.value
+          : (newData.ampm.value === 'pm'
+            ? (existingData.hour! < 12 ? existingData.hour! + 12 : existingData.hour!)
+            : (existingData.hour! >= 12 ? existingData.hour! - 12 : existingData.hour))
+      };
+      (existingData as any)['hour'] = newData['hour'].value;
+      return true;
     }
 
     // eww, invalid data
@@ -378,7 +391,7 @@ export const getValueFromFormat = (date: DatetimeData, format: string) => {
     return (date.hour! < 12 ? 'am' : 'pm');
   }
   if (format === FORMAT_hh || format === FORMAT_h) {
-    return (date.hour! > 12 ? date.hour! - 12 : date.hour);
+    return (date.hour! > 12 ? date.hour! - 12 : (date.hour === 0 ? 12 : date.hour));
   }
   return (date as any)[convertFormatToKey(format)!];
 };

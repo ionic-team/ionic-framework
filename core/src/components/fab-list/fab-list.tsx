@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Prop, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -32,19 +32,19 @@ export class FabList implements ComponentInterface {
    */
   @Prop() side: 'start' | 'end' | 'top' | 'bottom' = 'bottom';
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      class: {
-        [mode]: true,
-        'fab-list-active': this.activated,
-        [`fab-list-side-${this.side}`]: true
-      }
-    };
-  }
-
   render() {
-    return <slot></slot>;
+    const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          [mode]: true,
+          'fab-list-active': this.activated,
+          [`fab-list-side-${this.side}`]: true
+        }}
+      >
+        <slot></slot>
+      </Host>
+    );
   }
 
 }

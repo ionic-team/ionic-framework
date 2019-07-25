@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Event } from '@stencil/core';
+import { Component, ComponentInterface, Event, Host, h } from '@stencil/core';
 import { EventEmitter } from 'ionicons/dist/types/stencil.core';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -20,15 +20,17 @@ export class Slide implements ComponentInterface {
     this.ionSlideChanged.emit();
   }
 
-  hostData() {
+  render() {
     const mode = getIonMode(this);
-
-    return {
-      class: {
-        [mode]: true,
-        'swiper-slide': true,
-        'swiper-zoom-container': true
-      }
-    };
+    return (
+      <Host
+        class={{
+          [mode]: true,
+          'swiper-slide': true,
+          'swiper-zoom-container': true
+        }}
+      >
+      </Host>
+    );
   }
 }

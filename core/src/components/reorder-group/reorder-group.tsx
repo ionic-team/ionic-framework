@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, ItemReorderEventDetail } from '../../interface';
@@ -57,7 +57,6 @@ export class ReorderGroup implements ComponentInterface {
   async componentDidLoad() {
     const contentEl = this.el.closest('ion-content');
     if (contentEl) {
-      await contentEl.componentOnReady();
       this.scrollEl = await contentEl.getScrollElement();
     }
 
@@ -296,16 +295,19 @@ export class ReorderGroup implements ComponentInterface {
     return this.scrollEl.scrollTop - this.scrollElInitial;
   }
 
-  hostData() {
+  render() {
     const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          [mode]: true,
+          'reorder-enabled': !this.disabled,
+          'reorder-list-active': this.state !== ReorderGroupState.Idle,
+        }}
+      >
 
-    return {
-      class: {
-        [mode]: true,
-        'reorder-enabled': !this.disabled,
-        'reorder-list-active': this.state !== ReorderGroupState.Idle,
-      }
-    };
+      </Host>
+    );
   }
 }
 
