@@ -29,6 +29,7 @@ export class Footer implements ComponentInterface {
     const translucent = this.translucent;
     return (
       <Host
+        role="contentinfo"
         class={{
           [mode]: true,
 
