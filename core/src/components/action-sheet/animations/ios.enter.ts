@@ -1,9 +1,10 @@
-import { Animation, createAnimation } from '../../../utils/animation/animation';
+import { IonicAnimation } from '../../../interface';
+import { createAnimation } from '../../../utils/animation/animation';
 
 /**
  * iOS Action Sheet Enter Animation
  */
-export const iosEnterAnimation = (baseEl: HTMLElement): Animation => {
+export const iosEnterAnimation = (baseEl: HTMLElement): IonicAnimation => {
   const baseAnimation = createAnimation();
   const backdropAnimation = createAnimation();
   const wrapperAnimation = createAnimation();

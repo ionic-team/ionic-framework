@@ -1,64 +1,65 @@
-
-export interface AnimationController {
-  create(animationBuilder?: AnimationBuilder, baseEl?: any, opts?: any): Promise<Animation>;
-}
-
 export interface Animation {
-  new (): any;
-  parent: Animation | undefined;
-  hasChildren: boolean;
-  addElement(el: Node | Node[] | NodeList): Animation;
-  add(childAnimation: Animation): Animation;
-  duration(milliseconds: number): Animation;
-  easing(name: string): Animation;
-  easingReverse(name: string): Animation;
-  getDuration(opts?: PlayOptions): number;
-  getEasing(): string;
-  from(prop: string, val: any): Animation;
-  to(prop: string, val: any, clearProperyAfterTransition?: boolean): Animation;
-  fromTo(prop: string, fromVal: any, toVal: any, clearProperyAfterTransition?: boolean): Animation;
-  beforeAddClass(className: string): Animation;
-  beforeRemoveClass(className: string): Animation;
-  beforeStyles(styles: { [property: string]: any; }): Animation;
-  beforeClearStyles(propertyNames: string[]): Animation;
-  beforeAddRead(domReadFn: () => void): Animation;
-  beforeAddWrite(domWriteFn: () => void): Animation;
-  afterAddClass(className: string): Animation;
-  afterRemoveClass(className: string): Animation;
-  afterStyles(styles: { [property: string]: any; }): Animation;
+  parentAnimation: Animation | undefined;
+  elements: HTMLElement[];
+  childAnimations: Animation[];
+  beforeAddClasses: string[];
+  beforeRemoveClasses: string[];
+  beforeStylesValue: { [property: string]: any };
+  afterAddClasses: string[];
+  afterRemoveClasses: string[];
+  afterStylesValue: { [property: string]: any };
+
+  animationFinish(): void;
+
+  play(): Animation;
+  playAsync(): Promise<Animation>;
+  playSync(): Animation;
+  pause(): Animation;
+  stop(): Animation;
+  destroy(): Animation;
+
+  progressStart(forceLinearEasing: boolean): Animation;
+  progressStep(step: number): Animation;
+  progressEnd(shouldComplete: boolean, step: number): Animation;
+
+  from(property: string, value: any): Animation;
+  to(property: string, value: any): Animation;
+  fromTo(property: string, fromValue: any, toValue: any): Animation;
+  keyframes(keyframes: any[]): Animation;
+
+  addAnimation(animationToADd: Animation | Animation[] | undefined | null): Animation;
+  addTarget(target: string): Animation;
+  addElement(el: Element | Element[] | Node | Node[] | NodeList | undefined | null): Animation;
+  iterations(iterations: number): Animation;
+  fill(fill: 'auto' | 'none' | 'forwards' | 'backwards' | 'both' | undefined): Animation;
+  direction(direction: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse' | undefined): Animation;
+  duration(duration: number): Animation;
+  easing(easing: string): Animation;
+  delay(delay: number): Animation;
+  name(name: string): Animation;
+  parent(animation: Animation): Animation;
+
+  getKeyframes(): any[];
+  getDirection(): 'normal' | 'reverse' | 'alternate' | 'alternate-reverse' | undefined;
+  getFill(): 'auto' | 'none' | 'forwards' | 'backwards' | 'both' | undefined;
+  getDelay(): number | undefined;
+  getIterations(): number | undefined;
+  getEasing(): string | undefined;
+  getDuration(): number | undefined;
+
+  afterAddRead(readFn: () => void): Animation;
+  afterAddWrite(writeFn: () => void): Animation;
   afterClearStyles(propertyNames: string[]): Animation;
-  play(opts?: PlayOptions): void;
-  playSync(): void;
-  playAsync(opts?: PlayOptions): Promise<Animation>;
-  reverse(shouldReverse?: boolean): Animation;
-  stop(stepValue?: number): void;
-  progressStart(): void;
-  progressStep(stepValue: number): void;
-  progressEnd(shouldComplete: boolean, currentStepValue: number, dur: number): void;
-  onFinish(callback: (animation?: Animation) => void, opts?: {oneTimeCallback?: boolean, clearExistingCallbacks?: boolean}): Animation;
-  destroy(): void;
-  isRoot(): boolean;
-  hasCompleted: boolean;
-}
+  afterStyles(styles: { [property: string]: any }): Animation;
+  afterRemoveClass(className: string | string[] | undefined): Animation;
+  afterAddClass(className: string | string[] | undefined): Animation;
 
-export type AnimationBuilder = (Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>;
+  beforeAddRead(readFn: () => void): Animation;
+  beforeAddWrite(writeFn: () => void): Animation;
+  beforeClearStyles(propertyNames: string[]): Animation;
+  beforeStyles(styles: { [property: string]: any }): Animation;
+  beforeRemoveClass(className: string | string[] | undefined): Animation;
+  beforeAddClass(className: string | string[] | undefined): Animation;
 
-export interface PlayOptions {
-  duration?: number;
-  promise?: boolean;
-}
-
-export interface EffectProperty {
-  effectName: string;
-  trans: boolean;
-  wc?: string;
-  to?: EffectState;
-  from?: EffectState;
-  [state: string]: any;
-}
-
-export interface EffectState {
-  val: any;
-  num: number;
-  effectUnit: string;
+  onFinish(callback: any): Animation;
 }

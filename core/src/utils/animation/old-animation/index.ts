@@ -1,4 +1,4 @@
-import { Animation, AnimationBuilder } from '../../interface';
+import { Animation, AnimationBuilder } from '../../../interface';
 
 import { Animator } from './animator';
 

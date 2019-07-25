@@ -1,4 +1,5 @@
-import { Animation, createAnimation } from '../../../utils/animation/animation';
+import { IonicAnimation } from '../../../interface';
+import { createAnimation } from '../../../utils/animation/animation';
 
 /**
  * baseAnimation
@@ -6,7 +7,7 @@ import { Animation, createAnimation } from '../../../utils/animation/animation';
  * type will provide their own animations for open and close
  * and registers itself with Menu.
  */
-export const baseAnimation = (): Animation => {
+export const baseAnimation = (): IonicAnimation => {
   // https://material.io/guidelines/motion/movement.html#movement-movement-in-out-of-screen-bounds
   // https://material.io/guidelines/motion/duration-easing.html#duration-easing-natural-easing-curves
 

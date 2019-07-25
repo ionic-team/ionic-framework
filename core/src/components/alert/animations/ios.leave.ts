@@ -1,9 +1,10 @@
-import { Animation, createAnimation } from '../../../utils/animation/animation';
+import { IonicAnimation } from '../../../interface';
+import { createAnimation } from '../../../utils/animation/animation';
 
 /**
  * iOS Alert Leave Animation
  */
-export const iosLeaveAnimation = (baseEl: HTMLElement): Animation => {
+export const iosLeaveAnimation = (baseEl: HTMLElement): IonicAnimation => {
   const baseAnimation = createAnimation();
   const backdropAnimation = createAnimation();
   const wrapperAnimation = createAnimation();

@@ -1,8 +1,8 @@
-import { Animation } from '../../interface';
-import { Animation as AnimationNew, createAnimation } from '../animation/animation';
+import { IonicAnimation } from '../../interface';
+import { createAnimation } from '../animation/animation';
 import { TransitionOptions } from '../transition';
 
-export const newMdTransitionAnimation = (opts: TransitionOptions): AnimationNew => {
+export const mdTransitionAnimation = (opts: TransitionOptions): IonicAnimation => {
   try {
     const OFF_BOTTOM = '40px';
     const CENTER = '0px';
@@ -57,62 +57,6 @@ export const newMdTransitionAnimation = (opts: TransitionOptions): AnimationNew 
   } catch (err) {
     throw err;
   }
-};
-
-export const mdTransitionAnimation = (AnimationC: Animation, _: HTMLElement, opts: TransitionOptions): Promise<Animation> => {
-  const TRANSLATEY = 'translateY';
-  const OFF_BOTTOM = '40px';
-  const CENTER = '0px';
-
-  const backDirection = (opts.direction === 'back');
-  const enteringEl = opts.enteringEl;
-  const leavingEl = opts.leavingEl;
-  const ionPageElement = getIonPageElement(enteringEl);
-  const enteringToolbarEle = ionPageElement.querySelector('ion-toolbar');
-  const rootTransition = new AnimationC();
-
-  rootTransition
-    .addElement(ionPageElement)
-    .beforeRemoveClass('ion-page-invisible');
-
-  // animate the component itself
-  if (backDirection) {
-    rootTransition
-      .duration(opts.duration || 200)
-      .easing('cubic-bezier(0.47,0,0.745,0.715)');
-
-  } else {
-    rootTransition
-      .duration(opts.duration || 280)
-      .easing('cubic-bezier(0.36,0.66,0.04,1)')
-      .fromTo(TRANSLATEY, OFF_BOTTOM, CENTER, true)
-      .fromTo('opacity', 0.01, 1, true);
-  }
-
-  // Animate toolbar if it's there
-  if (enteringToolbarEle) {
-    const enteringToolBar = new AnimationC();
-    enteringToolBar.addElement(enteringToolbarEle);
-    rootTransition.add(enteringToolBar);
-  }
-
-  // setup leaving view
-  if (leavingEl && backDirection) {
-    // leaving content
-    rootTransition
-      .duration(opts.duration || 200)
-      .easing('cubic-bezier(0.47,0,0.745,0.715)');
-
-    const leavingPage = new AnimationC();
-    leavingPage
-      .addElement(getIonPageElement(leavingEl))
-      .fromTo(TRANSLATEY, CENTER, OFF_BOTTOM)
-      .fromTo('opacity', 1, 0);
-
-    rootTransition.add(leavingPage);
-  }
-
-  return Promise.resolve(rootTransition);
 };
 
 const getIonPageElement = (element: HTMLElement) => {

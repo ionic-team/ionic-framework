@@ -1,9 +1,10 @@
-import { Animation, createAnimation } from '../../../utils/animation/animation';
+import { IonicAnimation } from '../../../interface';
+import { createAnimation } from '../../../utils/animation/animation';
 
 /**
  * md Toast Leave Animation
  */
-export const mdLeaveAnimation = (baseEl: ShadowRoot): Animation => {
+export const mdLeaveAnimation = (baseEl: ShadowRoot): IonicAnimation => {
   const baseAnimation = createAnimation();
   const wrapperAnimation = createAnimation();
 

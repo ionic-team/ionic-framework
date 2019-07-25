@@ -1,5 +1,5 @@
-import { MenuI } from '../../../interface';
-import { Animation, createAnimation } from '../../../utils/animation/animation';
+import { IonicAnimation, MenuI } from '../../../interface';
+import { createAnimation } from '../../../utils/animation/animation';
 
 import { baseAnimation } from './base';
 
@@ -8,7 +8,7 @@ import { baseAnimation } from './base';
  * The content slides over to reveal the menu underneath.
  * The menu itself, which is under the content, does not move.
  */
-export const menuRevealAnimation = (menu: MenuI): Animation => {
+export const menuRevealAnimation = (menu: MenuI): IonicAnimation => {
   const openedX = (menu.width * (menu.isEndSide ? -1 : 1)) + 'px';
 
   const contentOpen = createAnimation()

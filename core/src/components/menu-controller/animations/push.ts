@@ -1,5 +1,5 @@
-import { MenuI } from '../../../interface';
-import { Animation, createAnimation } from '../../../utils/animation/animation';
+import { IonicAnimation, MenuI } from '../../../interface';
+import { createAnimation } from '../../../utils/animation/animation';
 
 import { baseAnimation } from './base';
 
@@ -8,7 +8,7 @@ import { baseAnimation } from './base';
  * The content slides over to reveal the menu underneath.
  * The menu itself also slides over to reveal its bad self.
  */
-export const menuPushAnimation = (menu: MenuI): Animation => {
+export const menuPushAnimation = (menu: MenuI): IonicAnimation => {
   let contentOpenedX: string;
   let menuClosedX: string;
 

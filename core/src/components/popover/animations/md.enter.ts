@@ -1,9 +1,10 @@
-import { Animation, createAnimation } from '../../../utils/animation/animation';
+import { IonicAnimation } from '../../../interface';
+import { createAnimation } from '../../../utils/animation/animation';
 
 /**
  * Md Popover Enter Animation
  */
-export const mdEnterAnimation = (baseEl: HTMLElement, ev?: Event): Animation => {
+export const mdEnterAnimation = (baseEl: HTMLElement, ev?: Event): IonicAnimation => {
   const POPOVER_MD_BODY_PADDING = 12;
   const doc = (baseEl.ownerDocument as any);
   const isRTL = doc.dir === 'rtl';

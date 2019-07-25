@@ -1,7 +1,7 @@
 import { writeTask } from '@stencil/core';
 
 import { LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '../../components/nav/constants';
-import { Animation, AnimationBuilder, NavDirection, NavOptions } from '../../interface';
+import { Animation, AnimationBuilder, IonicAnimation, NavDirection, NavOptions } from '../../interface';
 
 const iosTransitionAnimation = () => import('./ios.transition');
 const mdTransitionAnimation = () => import('./md.transition');
@@ -43,6 +43,7 @@ const beforeTransition = (opts: TransitionOptions) => {
 
 const runTransition = async (opts: TransitionOptions): Promise<TransitionResult> => {
   const animationBuilder = await getAnimationBuilder(opts);
+
   const ani = (animationBuilder)
     ? animation(animationBuilder, opts)
     : noAnimation(opts); // fast path for no animation
@@ -59,49 +60,56 @@ const afterTransition = (opts: TransitionOptions) => {
   }
 };
 
-const getAnimationBuilder = async (opts: TransitionOptions): Promise<AnimationBuilder | undefined> => {
+const getAnimationBuilder = async (opts: TransitionOptions): Promise<IonicAnimation | AnimationBuilder | undefined> => {
   if (!opts.leavingEl || !opts.animated || opts.duration === 0) {
     return undefined;
   }
+
   if (opts.animationBuilder) {
     return opts.animationBuilder;
   }
-  const builder = (opts.mode === 'ios')
+
+  const getAnimation = (opts.mode === 'ios')
     ? (await iosTransitionAnimation()).iosTransitionAnimation
     : (await mdTransitionAnimation()).mdTransitionAnimation;
 
-  return builder;
+  // TODO: make this work without typecast
+  return getAnimation as any;
 };
 
-const animation = async (animationBuilder: AnimationBuilder, opts: TransitionOptions): Promise<TransitionResult> => {
+const animation = async (animationBuilder: IonicAnimation | AnimationBuilder, opts: TransitionOptions): Promise<TransitionResult> => {
   await waitForReady(opts, true);
 
-  const trans = await import('../animation').then(mod => mod.create(animationBuilder, opts.baseEl, opts));
+  /**
+   * TODO: Remove AnimationBuilder
+   */
+  let trans;
+  // let isAnimationBuilder = false;
+  try {
+    trans = await import('../animation/old-animation').then(mod => mod.create(animationBuilder as any, opts.baseEl, opts));
+
+    // isAnimationBuilder = true;
+  } catch (err) {
+    trans = animationBuilder(opts.baseEl, opts);
+  }
 
   fireWillEvents(opts.enteringEl, opts.leavingEl);
 
-  const anim = ((opts.mode === 'ios')
-    ? (await iosTransitionAnimation()).newIosTransitionAnimation(opts.baseEl, opts)
-    : (await mdTransitionAnimation()).newMdTransitionAnimation(opts) as any);
-    
-    trans;
+  const didComplete = await playTransition(trans, opts);
 
-  const result = await playTransition(anim, opts);
-  console.log('final',result);
-
-  anim.hasCompleted = true;
+  trans.hasCompleted = didComplete;
 
   if (opts.progressCallback) {
     opts.progressCallback(undefined);
   }
 
-  if (anim.hasCompleted) {
+  if (trans.hasCompleted) {
     fireDidEvents(opts.enteringEl, opts.leavingEl);
   }
 
   return {
-    hasCompleted: anim.hasCompleted,
-    animation: anim
+    hasCompleted: trans.hasCompleted,
+    animation: trans
   };
 };
 
@@ -139,12 +147,12 @@ const notifyViewReady = async (viewIsReady: undefined | ((enteringEl: HTMLElemen
   }
 };
 
-const playTransition = async (trans: any, opts: TransitionOptions): Promise<Animation> => {
+const playTransition = async (trans: any, opts: TransitionOptions): Promise<boolean> => {
   const progressCallback = opts.progressCallback;
-  const promise = new Promise<Animation>(resolve => {
-    trans.onFinish((animation: any) => {
-      resolve(animation);
-    })
+  const promise = new Promise<boolean>(resolve => {
+    trans.onFinish((didComplete: boolean, _: any) => {
+      resolve(didComplete);
+    });
   });
 
   // cool, let's do this, start the transition

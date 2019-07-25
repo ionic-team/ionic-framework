@@ -175,7 +175,7 @@ const overlayAnimation = async (
   opts: any
 ): Promise<boolean> => {
   if (overlay.animation) {
-    // overlay.animation.destroy();
+    overlay.animation.destroy();
     overlay.animation = undefined;
     return false;
   }
@@ -183,8 +183,19 @@ const overlayAnimation = async (
   baseEl.classList.remove('overlay-hidden');
 
   const aniRoot = baseEl.shadowRoot || overlay.el;
-  console.log(opts);
-  const animation = (['ActionSheet', 'Alert', 'Loading', 'Modal', 'Picker', 'Popover', 'Toast'].includes(overlay.constructor.name)) ? animationBuilder(aniRoot, opts) : await import('./animation').then(mod => mod.create(animationBuilder, aniRoot, opts));
+
+  /**
+   * TODO: Remove AnimationBuilder
+   */
+  let animation;
+  let isAnimationBuilder = false;
+  try {
+    animation = await import('./animation/old-animation').then(mod => mod.create(animationBuilder, aniRoot, opts));
+
+    isAnimationBuilder = true;
+  } catch (err) {
+    animation = animationBuilder(aniRoot, opts);
+  }
 
   overlay.animation = animation;
   if (!overlay.animated || !config.getBoolean('animated', true)) {
@@ -198,9 +209,16 @@ const overlayAnimation = async (
       }
     });
   }
-  await animation.playAsync();
-  const hasCompleted = animation.hasCompleted;
-  // animation.destroy();
+  const animationResult = await animation.playAsync();
+
+  /**
+   * TODO: Remove AnimationBuilder
+   */
+  const hasCompleted = (typeof animationResult === 'boolean') ? animationResult : animation.hasCompleted;
+  if (isAnimationBuilder) {
+    animation.destroy();
+  }
+
   overlay.animation = undefined;
   return hasCompleted;
 };

@@ -1,158 +1,7 @@
-// TODO: Add validation
-// TODO: More tests
+import { Animation } from './animation-interface';
+import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyframeString, supportsWebAnimations } from './animation-utils';
 
 let counter = 0;
-
-export interface Animation {
-  parentAnimation: Animation | undefined;
-  elements: HTMLElement[];
-  childAnimations: Animation[];
-  beforeAddClasses: string[];
-  beforeRemoveClasses: string[];
-  beforeStylesValue: { [property: string]: any };
-  afterAddClasses: string[];
-  afterRemoveClasses: string[];
-  afterStylesValue: { [property: string]: any };
-
-  animationFinish(): void;
-  tempReverse(): void;
-
-  play(): Animation;
-  playAsync(): Promise<Animation>;
-  playSync(): Animation;
-  pause(): Animation;
-  stop(): Animation;
-  destroy(): Animation;
-
-  progressStart(forceLinearEasing: boolean): Animation;
-  progressStep(step: number): Animation;
-  progressEnd(shouldComplete: boolean, step: number): Animation;
-
-  from(property: string, value: any): Animation;
-  to(property: string, value: any): Animation;
-  fromTo(property: string, fromValue: any, toValue: any): Animation;
-  keyframes(keyframes: any[]): Animation;
-
-  addAnimation(animationToADd: Animation | Animation[] | undefined | null): Animation;
-  addTarget(target: string): Animation;
-  addElement(el: Element | Element[] | Node | Node[] | NodeList | undefined | null): Animation;
-  iterations(iterations: number): Animation;
-  fill(fill: 'auto' | 'none' | 'forwards' | 'backwards' | 'both' | undefined): Animation;
-  direction(direction: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse' | undefined): Animation;
-  duration(duration: number): Animation;
-  easing(easing: string): Animation;
-  delay(delay: number): Animation;
-  name(name: string): Animation;
-  parent(animation: Animation): Animation;
-
-  getKeyframes(): any[];
-  getDirection(): 'normal' | 'reverse' | 'alternate' | 'alternate-reverse' | undefined;
-  getFill(): 'auto' | 'none' | 'forwards' | 'backwards' | 'both' | undefined;
-  getDelay(): number | undefined;
-  getIterations(): number | undefined;
-  getEasing(): string | undefined;
-  getDuration(): number | undefined;
-
-  afterAddRead(readFn: () => void): Animation;
-  afterAddWrite(writeFn: () => void): Animation;
-  afterClearStyles(propertyNames: string[]): Animation;
-  afterStyles(styles: { [property: string]: any }): Animation;
-  afterRemoveClass(className: string | string[] | undefined): Animation;
-  afterAddClass(className: string | string[] | undefined): Animation;
-
-  beforeAddRead(readFn: () => void): Animation;
-  beforeAddWrite(writeFn: () => void): Animation;
-  beforeClearStyles(propertyNames: string[]): Animation;
-  beforeStyles(styles: { [property: string]: any }): Animation;
-  beforeRemoveClass(className: string | string[] | undefined): Animation;
-  beforeAddClass(className: string | string[] | undefined): Animation;
-
-  onFinish(callback: any): Animation;
-}
-
-const animationEnd = (el: HTMLElement | null, callback: (ev?: TransitionEvent) => void) => {
-  let unRegTrans: (() => void) | undefined;
-  const opts: any = { passive: true };
-
-  const unregister = () => {
-    if (unRegTrans) {
-      unRegTrans();
-    }
-  };
-
-  const onTransitionEnd = (ev: Event) => {
-    if (el === ev.target) {
-      unregister();
-      callback(ev as TransitionEvent);
-    }
-  };
-
-  if (el) {
-    el.addEventListener('webkitAnimationEnd', onTransitionEnd, opts);
-    el.addEventListener('animationend', onTransitionEnd, opts);
-
-    unRegTrans = () => {
-      el.removeEventListener('webkitAnimationEnd', onTransitionEnd, opts);
-      el.removeEventListener('animationend', onTransitionEnd, opts);
-    };
-  }
-
-  return unregister;
-};
-
-const supportsWebAnimations = (): boolean => {
-  return !!(window as any).Animation;
-};
-
-const generateKeyframeString = (name: string | undefined, keyframes: any[] = []): string => {
-  if (name === undefined) { console.warn('A name is required to generate keyframes'); }
-
-  const keyframeString = [`@keyframes ${name} {`];
-
-  keyframes.forEach(keyframe => {
-    const offset = keyframe.offset;
-
-    const frameString = [];
-    for (const property in keyframe) {
-      if (keyframe.hasOwnProperty(property) && property !== 'offset') {
-        frameString.push(`${property}: ${keyframe[property]};`);
-      }
-    }
-
-    keyframeString.push(`${offset * 100}% { ${frameString.join(' ')} }`);
-  });
-
-  keyframeString.push('}');
-
-  return keyframeString.join(' ');
-};
-
-const createKeyframeStylesheet = (name: string | undefined, keyframeString: string, element: HTMLElement): HTMLElement | undefined => {
-  const stylesheetId = `ion-${name}`;
-  const stylesheet = document.createElement('style');
-  stylesheet.id = stylesheetId;
-  stylesheet.appendChild(document.createTextNode(keyframeString));
-
-  const rootNode = (element.getRootNode() as any);
-  const styleContainer = (rootNode.head || rootNode);
-
-  const existingStylesheet = rootNode.querySelector(`#${stylesheetId}`);
-  if (existingStylesheet) { return; }
-
-  styleContainer.appendChild(stylesheet);
-
-  return stylesheet;
-};
-
-const addClassToArray = (classes: string[] = [], className: string | string[] | undefined): string[] => {
-  if (className !== undefined) {
-    const classNameToAppend = (Array.isArray(className)) ? className : [className];
-
-    return [...classes, ...classNameToAppend];
-  }
-
-  return classes;
-};
 
 export const createAnimation = (): Animation => {
   let elements: HTMLElement[] = [];
@@ -187,6 +36,8 @@ export const createAnimation = (): Animation => {
 
   let shouldForceLinearEasing = false;
   let shouldForceSyncPlayback = false;
+  let shouldForceReverseDirection = false;
+  let willComplete = true;
 
   const _beforeAddReadFunctions: any[] = [];
   const _beforeAddWriteFunctions: any[] = [];
@@ -368,6 +219,7 @@ export const createAnimation = (): Animation => {
   };
 
   const getDirection = (): 'normal' | 'reverse' | 'alternate' | 'alternate-reverse' | undefined => {
+    if (shouldForceReverseDirection) { return 'reverse'; }
     if (_direction !== undefined) { return _direction; }
     if (parentAnimation) { return parentAnimation.getDirection(); }
 
@@ -576,8 +428,10 @@ export const createAnimation = (): Animation => {
     runAfterWrite();
     runAfterStyles();
 
+    const didComplete = willComplete;
+
     onFinishCallbacks.forEach(callback => {
-      callback(generatePublicAPI());
+      callback(didComplete, generatePublicAPI());
     });
   };
 
@@ -598,35 +452,35 @@ export const createAnimation = (): Animation => {
   const initializeCSSAnimation = () => {
 
     elements.forEach(element => {
-        if (_keyframes.length > 0) {
+      if (_keyframes.length > 0) {
 
-          const stylesheet = createKeyframeStylesheet(_name, generateKeyframeString(_name, _keyframes), element);
-          if (stylesheet) {
-            stylesheets.push(stylesheet);
-          }
-
-          element.style.setProperty('animation-name', _name || null);
-          element.style.setProperty('animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
-          element.style.setProperty('animation-timing-function', getEasing() || null);
-          element.style.setProperty('animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
-          element.style.setProperty('animation-fill-mode', getFill() || null);
-          element.style.setProperty('animation-direction', getDirection() || null);
-
-          let iterationsCount = null;
-          if (getIterations() !== undefined) {
-            iterationsCount = (getIterations() === Infinity) ? 'infinite' : getIterations()!.toString();
-          }
-
-          element.style.setProperty('animation-iteration-countion', iterationsCount);
-          element.style.setProperty('animation-play-state', 'paused');
+        const stylesheet = createKeyframeStylesheet(_name, generateKeyframeString(_name, _keyframes), element);
+        if (stylesheet) {
+          stylesheets.push(stylesheet);
         }
-      });
+
+        element.style.setProperty('animation-name', _name || null);
+        element.style.setProperty('animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
+        element.style.setProperty('animation-timing-function', getEasing() || null);
+        element.style.setProperty('animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
+        element.style.setProperty('animation-fill-mode', getFill() || null);
+        element.style.setProperty('animation-direction', getDirection() || null);
+
+        let iterationsCount = null;
+        if (getIterations() !== undefined) {
+          iterationsCount = (getIterations() === Infinity) ? 'infinite' : getIterations()!.toString();
+        }
+
+        element.style.setProperty('animation-iteration-countion', iterationsCount);
+        element.style.setProperty('animation-play-state', 'paused');
+      }
+    });
 
     if (elements.length > 0) {
-        animationEnd(elements[0], () => {
-          animationFinish();
-        });
-      }
+      animationEnd(elements[0], () => {
+        animationFinish();
+      });
+    }
   };
 
   const initializeWebAnimation = () => {
@@ -697,14 +551,45 @@ export const createAnimation = (): Animation => {
 
     return generatePublicAPI();
   };
-  
-  const tempReverse = () => {
+
+  const updateWebAnimation = () => {
     webAnimations.forEach(animation => {
       animation.effect.updateTiming({
-        direction: 'reverse'
+        delay: getDelay(),
+        duration: getDuration(),
+        easing: getEasing(),
+        iterations: getIterations(),
+        fill: getFill(),
+        direction: getDirection()
       });
     });
-  }
+  };
+
+  const updateCSSAnimation = () => {
+    elements.forEach(element => {
+      element.style.setProperty('animation-name', _name || null);
+      element.style.setProperty('animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
+      element.style.setProperty('animation-timing-function', getEasing() || null);
+      element.style.setProperty('animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
+      element.style.setProperty('animation-fill-mode', getFill() || null);
+      element.style.setProperty('animation-direction', getDirection() || null);
+
+      let iterationsCount = null;
+      if (getIterations() !== undefined) {
+        iterationsCount = (getIterations() === Infinity) ? 'infinite' : getIterations()!.toString();
+      }
+
+      element.style.setProperty('animation-iteration-countion', iterationsCount);
+    });
+  };
+
+  const updateAnimation = () => {
+    if (supportsWebAnimations()) {
+      updateWebAnimation();
+    } else {
+      updateCSSAnimation();
+    }
+  };
 
   const progressStart = (forceLinearEasing = false): Animation => {
     childAnimations.forEach(animation => {
@@ -719,21 +604,23 @@ export const createAnimation = (): Animation => {
   };
 
   const progressEnd = (shouldComplete: boolean, step: number): Animation => {
-    
-    console.log(shouldComplete, step);
+    childAnimations.forEach(animation => {
+      animation.progressEnd(shouldComplete, step);
+    });
 
     shouldForceLinearEasing = false;
-    
+    willComplete = shouldComplete;
+
     if (!shouldComplete) {
-      tempReverse();
-            
-      childAnimations.forEach(animation => animation.tempReverse());
-      
-      console.log(webAnimations)
+      shouldForceReverseDirection = true;
+      onFinish(() => { willComplete = true; shouldForceReverseDirection = false; });
+      updateAnimation();
+      progressStep(1 - step);
     }
 
-    // temp
-    //play();
+    if (!parentAnimation) {
+      play();
+    }
 
     return generatePublicAPI();
   };
@@ -784,7 +671,7 @@ export const createAnimation = (): Animation => {
     if (!initialized) {
       initializeAnimation();
     }
-    
+
     if (supportsWebAnimations()) {
       webAnimations.forEach(animation => {
         animation.play();
@@ -873,7 +760,6 @@ export const createAnimation = (): Animation => {
       afterStylesValue,
 
       animationFinish,
-      tempReverse,
 
       from,
       to,
