@@ -1,3 +1,39 @@
+# [4.7.0 Nitrogen](https://github.com/ionic-team/ionic/compare/v4.6.2...v4.7.0) (2019-07-24)
+
+
+### Bug Fixes
+
+* **angular:** copy input form classes to parent ion-item ([#18820](https://github.com/ionic-team/ionic/issues/18820)) ([53179c4](https://github.com/ionic-team/ionic/commit/53179c4)), closes [#18800](https://github.com/ionic-team/ionic/issues/18800)
+* **angular:** add the swipeGesture method for enabling or disabling the ability to swipe open a menu ([#18806](https://github.com/ionic-team/ionic/issues/18806)) ([fbfc076](https://github.com/ionic-team/ionic/commit/fbfc076)), closes [#16002](https://github.com/ionic-team/ionic/issues/16002)
+* **angular:** webview "pause", "resume", and "resize" events now trigger change detection ([#18853](https://github.com/ionic-team/ionic/issues/18853)) ([544e550](https://github.com/ionic-team/ionic/commit/544e550)), closes [#18831](https://github.com/ionic-team/ionic/issues/18831)
+* **core:** apply translucent if backdrop-filter is supported ([#18832](https://github.com/ionic-team/ionic/issues/18832)) ([6b5a59d](https://github.com/ionic-team/ionic/commit/6b5a59d)), closes [ionic-team/ionic-docs#666](https://github.com/ionic-team/ionic-docs/issues/666)
+* **datetime:** allow AM/PM to be changed ([#18684](https://github.com/ionic-team/ionic/issues/18684)) ([b7761fe](https://github.com/ionic-team/ionic/commit/b7761fe)), closes [#18585](https://github.com/ionic-team/ionic/issues/18585)
+* **datetime:** properly apply disabled classes when updating columns ([#18875](https://github.com/ionic-team/ionic/issues/18875)) ([7ba718c](https://github.com/ionic-team/ionic/commit/7ba718c)), closes [#18793](https://github.com/ionic-team/ionic/issues/18793)
+* **hardware-back-button:** hardware back button no longer erroneously restarts app ([#18794](https://github.com/ionic-team/ionic/issues/18794)) ([978cc39](https://github.com/ionic-team/ionic/commit/978cc39)), closes [#18792](https://github.com/ionic-team/ionic/issues/18792)
+* **ripple-effct:** ensure ripple is removed from components after pointer release ([#18854](https://github.com/ionic-team/ionic/issues/18854)) ([71137a2](https://github.com/ionic-team/ionic/commit/71137a2)), closes [#18836](https://github.com/ionic-team/ionic/issues/18836)
+* **searchbar:** add aria and role for improved accessibility ([#18797](https://github.com/ionic-team/ionic/issues/18797)) ([798103b](https://github.com/ionic-team/ionic/commit/798103b)), closes [#18796](https://github.com/ionic-team/ionic/issues/18796)
+* **ssr:** avoid window reference ([#18865](https://github.com/ionic-team/ionic/issues/18865)) ([23ce6fa](https://github.com/ionic-team/ionic/commit/23ce6fa))
+* **ssr:** check for client runtime method ([#18866](https://github.com/ionic-team/ionic/issues/18866)) ([c52b3b4](https://github.com/ionic-team/ionic/commit/c52b3b4))
+* **textarea:** autogrow now resets textarea back to original number of rows when text is cleared ([#18822](https://github.com/ionic-team/ionic/issues/18822)) ([26e6d6f](https://github.com/ionic-team/ionic/commit/26e6d6f)), closes [#18744](https://github.com/ionic-team/ionic/issues/18744)
+* **theming:** update components to use the proper colors for dark themes ([#18735](https://github.com/ionic-team/ionic/issues/18735)) ([045bc59](https://github.com/ionic-team/ionic/commit/045bc59)), closes [#18713](https://github.com/ionic-team/ionic/issues/18713)
+* **virtual-scroll:** card rendering is no longer distorted ([#18877](https://github.com/ionic-team/ionic/issues/18877)) ([3ef6ecf](https://github.com/ionic-team/ionic/commit/3ef6ecf)), closes [#18870](https://github.com/ionic-team/ionic/issues/18870)
+* **virtual-scroll:** element dimensions are recalculated on resize ([#18878](https://github.com/ionic-team/ionic/issues/18878)) ([c91819c](https://github.com/ionic-team/ionic/commit/c91819c))
+
+
+### Features
+
+* **core:** add support for Stackblitz ([#18846](https://github.com/ionic-team/ionic/issues/18846)) ([fb18f3b](https://github.com/ionic-team/ionic/commit/fb18f3b))
+* **ssr:** add @ionic/core/hydrate app ([#18867](https://github.com/ionic-team/ionic/issues/18867)) ([815fa2e](https://github.com/ionic-team/ionic/commit/815fa2e))
+* **navigation:** add experimental shadow to iOS page transitions ([#18695](https://github.com/ionic-team/ionic/issues/18695)) ([9b075ef](https://github.com/ionic-team/ionic/commit/9b075ef)), closes [#18661](https://github.com/ionic-team/ionic/issues/18661)
+* **virtual-scroll:** adds headerHeight and footerHeight to help prevent flickering ([#18851](https://github.com/ionic-team/ionic/issues/18851)) ([0089111](https://github.com/ionic-team/ionic/commit/0089111)), closes [#17540](https://github.com/ionic-team/ionic/issues/17540)
+
+
+### Performance
+
+* **angular:** attach entering view before first change detection and detach leaving page ([#18821](https://github.com/ionic-team/ionic/issues/18821)) ([97fec92](https://github.com/ionic-team/ionic/commit/97fec92))
+
+
+
 ## [4.6.2](https://github.com/ionic-team/ionic/compare/v4.6.1...v4.6.2) (2019-07-10)
 
 

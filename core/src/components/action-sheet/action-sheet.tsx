@@ -74,7 +74,9 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   @Prop() subHeader?: string;
 
   /**
-   * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports backdrop-filter.
+   * If `true`, the action sheet will be translucent.
+   * Only applies when the mode is `"ios"` and the device supports
+   * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    */
   @Prop() translucent = false;
 

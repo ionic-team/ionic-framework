@@ -5,4 +5,8 @@
     document.documentElement.setAttribute('dir', 'rtl');
   }
 
+  window.Ionic = window.Ionic || {};
+  window.Ionic.config = window.Ionic.config || {};
+  window.Ionic.config.experimentalTransitionShadow = true;
+
 })();
