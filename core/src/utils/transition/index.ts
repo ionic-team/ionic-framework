@@ -83,10 +83,11 @@ const animation = async (animationBuilder: AnimationBuilder, opts: TransitionOpt
   const anim = ((opts.mode === 'ios')
     ? (await iosTransitionAnimation()).newIosTransitionAnimation(opts.baseEl, opts)
     : (await mdTransitionAnimation()).newMdTransitionAnimation(opts) as any);
+    
+    trans;
 
-  console.log(trans, anim);
-
-  await playTransition(anim, opts);
+  const result = await playTransition(anim, opts);
+  console.log('final',result);
 
   anim.hasCompleted = true;
 
@@ -140,7 +141,11 @@ const notifyViewReady = async (viewIsReady: undefined | ((enteringEl: HTMLElemen
 
 const playTransition = async (trans: any, opts: TransitionOptions): Promise<Animation> => {
   const progressCallback = opts.progressCallback;
-  const promise = new Promise<Animation>(resolve => trans.onFinish(resolve));
+  const promise = new Promise<Animation>(resolve => {
+    trans.onFinish((animation: any) => {
+      resolve(animation);
+    })
+  });
 
   // cool, let's do this, start the transition
   if (progressCallback) {

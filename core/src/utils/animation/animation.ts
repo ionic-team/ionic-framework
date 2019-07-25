@@ -15,6 +15,7 @@ export interface Animation {
   afterStylesValue: { [property: string]: any };
 
   animationFinish(): void;
+  tempReverse(): void;
 
   play(): Animation;
   playAsync(): Promise<Animation>;
@@ -670,11 +671,7 @@ export const createAnimation = (): Animation => {
   };
 
   const progressStep = (step: number): Animation => {
-    if (step > 1) {
-      step = 0.99;
-    } else if (step < 0) {
-      step = 0;
-    }
+    step = Math.min(Math.max(step, 0), 1);
 
     childAnimations.forEach(animation => {
       animation.progressStep(step);
@@ -700,6 +697,14 @@ export const createAnimation = (): Animation => {
 
     return generatePublicAPI();
   };
+  
+  const tempReverse = () => {
+    webAnimations.forEach(animation => {
+      animation.effect.updateTiming({
+        direction: 'reverse'
+      });
+    });
+  }
 
   const progressStart = (forceLinearEasing = false): Animation => {
     childAnimations.forEach(animation => {
@@ -714,12 +719,21 @@ export const createAnimation = (): Animation => {
   };
 
   const progressEnd = (shouldComplete: boolean, step: number): Animation => {
+    
     console.log(shouldComplete, step);
 
     shouldForceLinearEasing = false;
+    
+    if (!shouldComplete) {
+      tempReverse();
+            
+      childAnimations.forEach(animation => animation.tempReverse());
+      
+      console.log(webAnimations)
+    }
 
     // temp
-    play();
+    //play();
 
     return generatePublicAPI();
   };
@@ -767,8 +781,10 @@ export const createAnimation = (): Animation => {
       animation.play();
     });
 
-    initializeAnimation();
-
+    if (!initialized) {
+      initializeAnimation();
+    }
+    
     if (supportsWebAnimations()) {
       webAnimations.forEach(animation => {
         animation.play();
@@ -857,6 +873,7 @@ export const createAnimation = (): Animation => {
       afterStylesValue,
 
       animationFinish,
+      tempReverse,
 
       from,
       to,
