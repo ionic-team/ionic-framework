@@ -16,7 +16,7 @@ export function appInitialize(config: Config, doc: Document, zone: NgZone) {
         _zoneGate: (h: any) => zone.run(h)
       };
 
-      const aelFn = '__zone_symbol__addEventListener' in (document.body as any)
+      const aelFn = '__zone_symbol__addEventListener' in (doc.body as any)
         ? '__zone_symbol__addEventListener'
         : 'addEventListener';
 
