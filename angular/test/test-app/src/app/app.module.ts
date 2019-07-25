@@ -1,10 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouteReuseStrategy } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { InputsComponent } from './inputs/inputs.component';
 import { ModalComponent } from './modal/modal.component';
@@ -14,10 +15,6 @@ import { RouterLinkPageComponent } from './router-link-page/router-link-page.com
 import { RouterLinkPage2Component } from './router-link-page2/router-link-page2.component';
 import { RouterLinkPage3Component } from './router-link-page3/router-link-page3.component';
 import { HomePageComponent } from './home-page/home-page.component';
-import { TabsComponent } from './tabs/tabs.component';
-import { TabsTab1Component } from './tabs-tab1/tabs-tab1.component';
-import { TabsTab2Component } from './tabs-tab2/tabs-tab2.component';
-import { TabsTab1NestedComponent } from './tabs-tab1-nested/tabs-tab1-nested.component';
 import { VirtualScrollComponent } from './virtual-scroll/virtual-scroll.component';
 import { VirtualScrollDetailComponent } from './virtual-scroll-detail/virtual-scroll-detail.component';
 import { VirtualScrollInnerComponent } from './virtual-scroll-inner/virtual-scroll-inner.component';
@@ -45,10 +42,6 @@ import { AlertComponent } from './alert/alert.component';
     RouterLinkPage2Component,
     RouterLinkPage3Component,
     HomePageComponent,
-    TabsComponent,
-    TabsTab1Component,
-    TabsTab2Component,
-    TabsTab1NestedComponent,
     VirtualScrollComponent,
     VirtualScrollDetailComponent,
     VirtualScrollInnerComponent,
@@ -76,7 +69,9 @@ import { AlertComponent } from './alert/alert.component';
     ModalExampleComponent,
     NavComponent
   ],
-  providers: [],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
