@@ -1,7 +1,6 @@
 import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
 
-import { ComponentProps, NavComponent } from '../../interface';
-import { RouterDirection } from '../router/utils/interface';
+import { ComponentProps, NavComponent, RouterDirection } from '../../interface';
 
 import { navLink } from './nav-link-utils';
 
