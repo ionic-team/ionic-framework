@@ -1,5 +1,7 @@
 import { Component, ComponentInterface, Element, Host, h } from '@stencil/core';
 
+import { navLink } from '../nav-link/nav-link-utils';
+
 @Component({
   tag: 'ion-nav-pop',
 })
@@ -12,10 +14,7 @@ export class NavPop implements ComponentInterface {
   }
 
   private pop = () => {
-    const nav = this.el.closest('ion-nav');
-    if (nav) {
-      nav.pop({ skipIfBusy: true });
-    }
+    return navLink(this.el, 'back');
   }
 
   render() {
