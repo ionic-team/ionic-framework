@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -387,28 +387,8 @@ export class Searchbar implements ComponentInterface {
     return true;
   }
 
-  hostData() {
-    const animated = this.animated && config.getBoolean('animated', true);
-    const mode = getIonMode(this);
-
-    return {
-      'role': 'search',
-      'aria-disabled': this.disabled ? 'true' : null,
-      class: {
-        ...createColorClasses(this.color),
-        [mode]: true,
-        'searchbar-animated': animated,
-        'searchbar-disabled': this.disabled,
-        'searchbar-no-animate': animated && this.noAnimate,
-        'searchbar-has-value': this.hasValue(),
-        'searchbar-left-aligned': this.shouldAlignLeft,
-        'searchbar-has-focus': this.focused,
-        'searchbar-should-show-cancel': this.shouldShowCancelButton()
-      }
-    };
-  }
-
   render() {
+    const animated = this.animated && config.getBoolean('animated', true);
     const mode = getIonMode(this);
     const clearIcon = this.clearIcon || (mode === 'ios' ? 'ios-close-circle' : 'md-close');
     const searchIcon = this.searchIcon;
@@ -431,41 +411,58 @@ export class Searchbar implements ComponentInterface {
       </button>
     );
 
-    return [
-      <div class="searchbar-input-container">
-        <input
-          aria-label="search text"
-          disabled={this.disabled}
-          ref={el => this.nativeInput = el}
-          class="searchbar-input"
-          onInput={this.onInput}
-          onBlur={this.onBlur}
-          onFocus={this.onFocus}
-          placeholder={this.placeholder}
-          type={this.type}
-          value={this.getValue()}
-          autoComplete={this.autocomplete}
-          autoCorrect={this.autocorrect}
-          spellCheck={this.spellcheck}
-        />
+    return (
+      <Host
+        role="search"
+        aria-disabled={this.disabled ? 'true' : null}
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+          'searchbar-animated': animated,
+          'searchbar-disabled': this.disabled,
+          'searchbar-no-animate': animated && this.noAnimate,
+          'searchbar-has-value': this.hasValue(),
+          'searchbar-left-aligned': this.shouldAlignLeft,
+          'searchbar-has-focus': this.focused,
+          'searchbar-should-show-cancel': this.shouldShowCancelButton()
+        }}
+      >
 
-        {mode === 'md' && cancelButton}
+        <div class="searchbar-input-container">
+          <input
+            aria-label="search text"
+            disabled={this.disabled}
+            ref={el => this.nativeInput = el}
+            class="searchbar-input"
+            onInput={this.onInput}
+            onBlur={this.onBlur}
+            onFocus={this.onFocus}
+            placeholder={this.placeholder}
+            type={this.type}
+            value={this.getValue()}
+            autoComplete={this.autocomplete}
+            autoCorrect={this.autocorrect}
+            spellCheck={this.spellcheck}
+          />
 
-        <ion-icon mode={mode} icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
+          {mode === 'md' && cancelButton}
 
-        <button
-          aria-label="reset"
-          type="button"
-          no-blur
-          class="searchbar-clear-button"
-          onMouseDown={this.onClearInput}
-          onTouchStart={this.onClearInput}
-        >
-          <ion-icon aria-hidden="true" mode={mode} icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
-        </button>
-      </div>,
-      mode === 'ios' && cancelButton
-    ];
+          <ion-icon mode={mode} icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
+
+          <button
+            aria-label="reset"
+            type="button"
+            no-blur
+            class="searchbar-clear-button"
+            onMouseDown={this.onClearInput}
+            onTouchStart={this.onClearInput}
+          >
+            <ion-icon aria-hidden="true" mode={mode} icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
+          </button>
+        </div>
+        {mode === 'ios' && cancelButton}
+      </Host>
+    );
   }
 }
 

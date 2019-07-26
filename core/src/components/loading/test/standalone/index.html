@@ -37,7 +37,6 @@
   <script>
     async function presentLoading() {
       const loadingController = document.querySelector('ion-loading-controller');
-      await loadingController.componentOnReady();
       const loadingElement = await loadingController.create({
         message: 'Hellooo',
         duration: 5000
@@ -47,7 +46,6 @@
 
     async function presentLoadingWithOptions(opts) {
       const loadingController = document.querySelector('ion-loading-controller');
-      await loadingController.componentOnReady();
       const loadingElement = await loadingController.create(opts);
       return await loadingElement.present();
     }

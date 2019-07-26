@@ -35,7 +35,6 @@
       const mode = Ionic.mode;
 
       const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      await actionSheetController.componentOnReady();
       const actionSheetElement = await actionSheetController.create({
         header: "Open in",
         buttons: [{

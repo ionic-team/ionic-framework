@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
@@ -26,24 +26,21 @@ export class ToolbarTitle implements ComponentInterface {
     return (toolbar && toolbar.mode) || mode;
   }
 
-  hostData() {
-    const mode = this.getMode();
-
-    return {
-      class: {
-        [mode]: true,
-        [`title-${mode}`]: true,
-
-        ...createColorClasses(this.color),
-      }
-    };
-  }
-
   render() {
-    return [
-      <div class="toolbar-title">
-        <slot></slot>
-      </div>
-    ];
+    const mode = this.getMode();
+    return (
+      <Host
+        class={{
+          [mode]: true,
+          [`title-${mode}`]: true,
+
+          ...createColorClasses(this.color),
+        }}
+      >
+        <div class="toolbar-title">
+          <slot></slot>
+        </div>
+      </Host>
+    );
   }
 }

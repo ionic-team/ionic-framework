@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, Side } from '../../interface';
@@ -374,18 +374,21 @@ export class ItemSliding implements ComponentInterface {
     }
   }
 
-  hostData() {
+  render() {
     const mode = getIonMode(this);
-    return {
-      class: {
-        [mode]: true,
-        'item-sliding-active-slide': (this.state !== SlidingState.Disabled),
-        'item-sliding-active-options-end': (this.state & SlidingState.End) !== 0,
-        'item-sliding-active-options-start': (this.state & SlidingState.Start) !== 0,
-        'item-sliding-active-swipe-end': (this.state & SlidingState.SwipeEnd) !== 0,
-        'item-sliding-active-swipe-start': (this.state & SlidingState.SwipeStart) !== 0
-      }
-    };
+    return (
+      <Host
+        class={{
+          [mode]: true,
+          'item-sliding-active-slide': (this.state !== SlidingState.Disabled),
+          'item-sliding-active-options-end': (this.state & SlidingState.End) !== 0,
+          'item-sliding-active-options-start': (this.state & SlidingState.Start) !== 0,
+          'item-sliding-active-swipe-end': (this.state & SlidingState.SwipeEnd) !== 0,
+          'item-sliding-active-swipe-start': (this.state & SlidingState.SwipeStart) !== 0
+        }}
+      >
+      </Host>
+    );
   }
 }
 
