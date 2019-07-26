@@ -8,13 +8,13 @@
 $input-md-font-size:                      inherit !default;
 
 /// @prop - Margin top of the input
-$input-md-padding-top:                     $item-md-padding-top !default;
+$input-md-padding-top:                     10px !default;
 
 /// @prop - Margin end of the input
-$input-md-padding-end:                     ($item-md-padding-end / 2) !default;
+$input-md-padding-end:                     0 !default;
 
 /// @prop - Margin bottom of the input
-$input-md-padding-bottom:                  $item-md-padding-bottom !default;
+$input-md-padding-bottom:                  10px !default;
 
 /// @prop - Margin start of the input
 $input-md-padding-start:                   ($item-md-padding-start / 2) !default;
@@ -56,7 +56,7 @@ $input-md-highlight-color-invalid:        ion-color(danger, base) !default;
 $input-md-inset-padding-top:              ($item-md-padding-top / 2) !default;
 
 /// @prop - Padding end of the inset input
-$input-md-inset-padding-end:              ($item-md-padding-end / 2) !default;
+$input-md-inset-padding-end:              0 !default;
 
 /// @prop - Padding bottom of the inset input
 $input-md-inset-padding-bottom:           ($item-md-padding-bottom / 2) !default;

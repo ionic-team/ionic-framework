@@ -1,17 +1,21 @@
-import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
+
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-img',
   styleUrl: 'img.scss',
   shadow: true
 })
-export class Img {
+export class Img implements ComponentInterface {
 
   private io?: IntersectionObserver;
 
   @Element() el!: HTMLElement;
 
   @State() loadSrc?: string;
+
+  @State() loadError?: () => void;
 
   /**
    * This attribute defines the alternative text describing the image.
@@ -29,8 +33,14 @@ export class Img {
     this.addIO();
   }
 
-  /** Emitted when the img src is loaded */
+  /** Emitted when the img src has been set */
+  @Event() ionImgWillLoad!: EventEmitter<void>;
+
+  /** Emitted when the image has finished loading */
   @Event() ionImgDidLoad!: EventEmitter<void>;
+
+  /** Emitted when the img fails to load */
+  @Event() ionError!: EventEmitter<void>;
 
   componentDidLoad() {
     this.addIO();
@@ -47,17 +57,30 @@ export class Img {
         // of the element we are observing
         // we can just use data[0]
         if (data[0].isIntersecting) {
-          this.loadSrc = this.src;
+          this.load();
           this.removeIO();
-          this.ionImgDidLoad.emit();
         }
       });
 
       this.io.observe(this.el);
     } else {
       // fall back to setTimeout for Safari and IE
-      setTimeout(() => this.loadSrc = this.src, 200);
+      setTimeout(() => this.load(), 200);
     }
+  }
+
+  private load() {
+    this.loadError = this.onError;
+    this.loadSrc = this.src;
+    this.ionImgWillLoad.emit();
+  }
+
+  private onLoad = () => {
+    this.ionImgDidLoad.emit();
+  }
+
+  private onError = () => {
+    this.ionError.emit();
   }
 
   private removeIO() {
@@ -69,11 +92,15 @@ export class Img {
 
   render() {
     return (
-      <img
-        src={this.loadSrc}
-        alt={this.alt}
-        decoding="async"
-      />
+      <Host class={getIonMode(this)}>
+        <img
+          decoding="async"
+          src={this.loadSrc}
+          alt={this.alt}
+          onLoad={this.onLoad}
+          onError={this.loadError}
+        />
+      </Host>
     );
   }
 }

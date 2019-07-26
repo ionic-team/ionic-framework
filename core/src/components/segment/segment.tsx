@@ -1,17 +1,21 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, Watch, h } from '@stencil/core';
 
-import { Color, Mode, TextInputChangeEvent } from '../../interface';
-import { createColorClasses, hostContext } from '../../utils/theme';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, SegmentChangeEventDetail, StyleEventDetail } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-segment',
   styleUrls: {
     ios: 'segment.ios.scss',
     md: 'segment.md.scss'
   },
-  shadow: true
+  scoped: true
 })
-export class Segment {
+export class Segment implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
@@ -23,15 +27,14 @@ export class Segment {
   @Prop() color?: Color;
 
   /**
-   * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
-   */
-  @Prop() mode!: Mode;
-
-  /*
-   * If true, the user cannot interact with the segment. Defaults to `false`.
+   * If `true`, the user cannot interact with the segment.
    */
   @Prop() disabled = false;
+
+  /**
+   * If `true`, the segment buttons will overflow and the user can swipe to see them.
+   */
+  @Prop() scrollable = false;
 
   /**
    * the value of the segment.
@@ -47,12 +50,21 @@ export class Segment {
   /**
    * Emitted when the value property has changed.
    */
-  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<SegmentChangeEventDetail>;
+
+  /**
+   * Emitted when the styles change.
+   */
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   @Listen('ionSelect')
   segmentClick(ev: CustomEvent) {
     const selectedButton = ev.target as HTMLIonSegmentButtonElement;
     this.value = selectedButton.value;
+  }
+
+  componentWillLoad() {
+    this.emitStyle();
   }
 
   componentDidLoad() {
@@ -63,6 +75,12 @@ export class Segment {
       }
     }
     this.updateButtons();
+  }
+
+  private emitStyle() {
+    this.ionStyle.emit({
+      'segment': true
+    });
   }
 
   private updateButtons() {
@@ -76,20 +94,18 @@ export class Segment {
     return Array.from(this.el.querySelectorAll('ion-segment-button'));
   }
 
-  hostData() {
-    return {
-      class: {
-        ...createColorClasses(this.color),
-
-        'segment-disabled': this.disabled,
-        'in-toolbar': hostContext('ion-toolbar', this.el),
-        'in-color-toolbar': hostContext('ion-toolbar.ion-color', this.el)
-      }
-    };
-  }
-
   render() {
-    return <slot></slot>;
+    const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+          'segment-disabled': this.disabled,
+          'segment-scrollable': this.scrollable
+        }}
+      >
+      </Host>
+    );
   }
-
 }

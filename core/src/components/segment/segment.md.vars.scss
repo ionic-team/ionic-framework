@@ -1,65 +1,8 @@
 @import "../../themes/ionic.globals.md";
+@import "../segment-button/segment-button.md.vars";
 
 // Material Design Segment
 // --------------------------------------------------
 
 /// @prop - Opacity of the disabled segment
-$segment-md-opacity-disabled:                  .3 !default;
-
-
-// Material Design Segment Button
-// --------------------------------------------------
-
-/// @prop - Text color of the segment button
-$segment-button-md-text-color:                 $toolbar-md-color-active !default;
-
-/// @prop - Width of the bottom border on the segment button
-$segment-button-md-border-bottom-width:        2px !default;
-
-/// @prop - Color of the bottom border on the segment button
-$segment-button-md-border-bottom-color:        rgba(#000, .10) !default;
-
-/// @prop - Opacity of the segment button
-$segment-button-md-opacity:                    .7 !default;
-
-/// @prop - Border color of the activated segment button
-$segment-button-md-border-color-activated:     $toolbar-md-color-active !default;
-
-/// @prop - Opacity of the activated segment button
-$segment-button-md-opacity-activated:          1 !default;
-
-/// @prop - Opacity of the disabled segment button
-$segment-button-md-opacity-disabled:           .3 !default;
-
-/// @prop - Padding top of the segment button
-$segment-button-md-padding-top:                0 !default;
-
-/// @prop - Padding end of the segment button
-$segment-button-md-padding-end:                6px !default;
-
-/// @prop - Padding bottom of the segment button
-$segment-button-md-padding-bottom:             $segment-button-md-padding-top !default;
-
-/// @prop - Padding start of the segment button
-$segment-button-md-padding-start:              $segment-button-md-padding-end !default;
-
-/// @prop - Height of the segment button
-$segment-button-md-height:                     42px !default;
-
-/// @prop - Line height of the segment button
-$segment-button-md-line-height:                40px !default;
-
-/// @prop - Font size of the segment button
-$segment-button-md-font-size:                  12px !default;
-
-/// @prop - Font weight of the segment button
-$segment-button-md-font-weight:                500 !default;
-
-/// @prop - Transition of the segment button
-$segment-button-md-transition:                 100ms all linear !default;
-
-/// @prop - Size of an icon in the segment button
-$segment-button-md-icon-size:                  26px !default;
-
-/// @prop - Line height of an icon in the segment button
-$segment-button-md-icon-line-height:           $segment-button-md-line-height !default;
+$segment-md-opacity-disabled:                         .3 !default;

@@ -8,8 +8,7 @@
   --background: transparent;
   --color: #{$list-md-header-color};
 
-  @include padding-horizontal($list-md-header-padding-start, null);
-  @include margin(null, null, $list-md-header-margin-bottom, null);
+  @include padding-horizontal(calc(var(--ion-safe-area-left, 0px) + #{$list-md-header-padding-start}), null);
 
   min-height: $list-md-header-min-height;
 

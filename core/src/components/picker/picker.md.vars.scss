@@ -19,7 +19,7 @@ $picker-md-top-background-color:                    $picker-md-background-color 
 $picker-md-bottom-background-color-alpha:           .8 !default;
 
 /// @prop - Bottom Background Color of the picker wrapper gradient
-$picker-md-bottom-background-color:                 rgba(var(--ion-background-color-rgb, $background-color-rgb), $picker-md-bottom-background-color-alpha) !default;
+$picker-md-bottom-background-color:                 rgba($background-color-rgb, $picker-md-bottom-background-color-alpha) !default;
 
 /// @prop - Height of the picker toolbar
 $picker-md-toolbar-height:                          44px !default;
@@ -64,7 +64,7 @@ $picker-md-option-padding-bottom:                   $picker-md-option-padding-to
 $picker-md-option-padding-start:                    $picker-md-option-padding-end !default;
 
 /// @prop - Text color of the picker option
-$picker-md-option-text-color:                       $item-md-text-color !default;
+$picker-md-option-text-color:                       $item-md-color !default;
 
 /// @prop - Font size of the picker option
 $picker-md-option-font-size:                        22px !default;

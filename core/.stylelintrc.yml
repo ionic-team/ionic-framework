@@ -7,6 +7,7 @@ ignoreFiles:
   - src/css/flex-utils.scss
   - src/css/normalize.scss
   - src/css/text-alignment.scss
+  - src/css/display.scss
   - src/css/font-roboto.css
   - src/components/slides/slides-vendor.scss
   - src/themes/ionic.mixins.scss
@@ -240,6 +241,7 @@ rules:
       - contain
       - content
       - cursor
+      - direction
       - empty-cells
       - object-fit
       - opacity
@@ -255,7 +257,6 @@ rules:
 
   property-blacklist:
     - background-position
-    - direction
     - right
     - left
     - float

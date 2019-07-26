@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Icon - Direction</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button class="show-back-button"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Icon - Direction</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <h1>Flip RTL</h1>
+
+      <ion-grid>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="auto"><code>null</code></ion-col>
+          <ion-col><ion-icon name="call" color="primary"></ion-icon></ion-col>
+          <ion-col><ion-icon name="cut" color="secondary"></ion-icon></ion-col>
+          <ion-col><ion-icon name="journal" color="tertiary"></ion-icon></ion-col>
+          <ion-col><ion-icon name="alarm" color="success"></ion-icon></ion-col>
+          <ion-col><ion-icon name="checkbox" color="warning"></ion-icon></ion-col>
+          <ion-col><ion-icon name="brush" color="danger"></ion-icon></ion-col>
+          <ion-col><ion-icon name="bicycle" color="medium"></ion-icon></ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="auto"><code>true</code></ion-col>
+          <ion-col><ion-icon name="call" color="primary" flip-rtl></ion-icon></ion-col>
+          <ion-col><ion-icon name="cut" color="secondary" flip-rtl></ion-icon></ion-col>
+          <ion-col><ion-icon name="journal" color="tertiary" flip-rtl></ion-icon></ion-col>
+          <ion-col><ion-icon name="alarm" color="success" flip-rtl></ion-icon></ion-col>
+          <ion-col><ion-icon name="checkbox" color="warning" flip-rtl></ion-icon></ion-col>
+          <ion-col><ion-icon name="brush" color="danger" flip-rtl></ion-icon></ion-col>
+          <ion-col><ion-icon name="bicycle" color="medium" flip-rtl></ion-icon></ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="auto"><code>null</code></ion-col>
+          <ion-col><ion-icon name="arrow-dropright"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-dropright-circle"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-forward"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-round-forward"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-dropleft"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-dropleft-circle"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-back"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-round-back"></ion-icon></ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="auto"><code>false</code></ion-col>
+          <ion-col><ion-icon name="arrow-dropright" flip-rtl="false"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-dropright-circle" flip-rtl="false"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-forward" flip-rtl="false"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-round-forward" flip-rtl="false"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-dropleft" flip-rtl="false"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-dropleft-circle" flip-rtl="false"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-back" flip-rtl="false"></ion-icon></ion-col>
+          <ion-col><ion-icon name="arrow-round-back" flip-rtl="false"></ion-icon></ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-list>
+        <ion-list-header>
+          <ion-label>Item Detail Icons</ion-label>
+        </ion-list-header>
+
+        <ion-item detail>
+          <ion-label>
+            ion-item [detail] attr
+          </ion-label>
+        </ion-item>
+
+        <ion-item href="#">
+          <ion-label>
+            a[ion-item] w/ push detail
+          </ion-label>
+        </ion-item>
+
+        <ion-item onclick="testClick(event)">
+          <ion-label>
+            button[ion-item] w/ push detail
+          </ion-label>
+        </ion-item>
+
+        <ion-item detail detail-icon="arrow-down">
+          <ion-label>Detail with icon arrow down</ion-label>
+        </ion-item>
+
+        <ion-item detail detail-icon="home">
+          <ion-label>Detail with icon home</ion-label>
+        </ion-item>
+
+        <ion-item detail detail-icon="/src/components/item/test/icons/heart-broken.svg">
+          <ion-label>Detail with custom icon svg</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+
+    <style>
+      h1 {
+        padding-left: 10px;
+        padding-inline-start: 10px;
+      }
+
+      ion-icon {
+        font-size: 26px;
+      }
+
+      code {
+        background: #e5e5e5;
+      }
+
+      ion-col[size=auto] {
+        width: 60px !important;
+      }
+    </style>
+  </ion-app>
+</body>
+</html>

@@ -13,13 +13,13 @@ $picker-ios-border-color:                         $item-ios-border-color !defaul
 $picker-ios-background-color:                     $background-color !default;
 
 /// @prop - Top Background Color of the picker wrapper gradient
-$picker-ios-top-background-color:                 $picker-ios-background-color !default;
+$picker-ios-top-background-color:                 var(--background, $picker-ios-background-color) !default;
 
 /// @prop - Bottom Background Color alpha of the picker wrapper gradient
 $picker-ios-bottom-background-color-alpha:        .8 !default;
 
 /// @prop - Bottom Background Color of the picker wrapper gradient
-$picker-ios-bottom-background-color:              rgba(var(--ion-background-color-rgb, $background-color-rgb), $picker-ios-bottom-background-color-alpha) !default;
+$picker-ios-bottom-background-color:              rgba(var(--background-rgb, $background-color-rgb), $picker-ios-bottom-background-color-alpha) !default;
 
 /// @prop - Height of the picker toolbar
 $picker-ios-toolbar-height:                       44px !default;
@@ -32,9 +32,6 @@ $picker-ios-button-height:                        $picker-ios-toolbar-height !de
 
 /// @prop - Text color of the picker button
 $picker-ios-button-text-color:                    ion-color(primary, base) !default;
-
-/// @prop - Background of the picker button
-$picker-ios-button-background-color:              transparent !default;
 
 /// @prop - Font size of the picker button
 $picker-ios-button-font-size:                     16px !default;
@@ -82,7 +79,7 @@ $picker-ios-option-padding-bottom:                $picker-ios-option-padding-top
 $picker-ios-option-padding-start:                 $picker-ios-option-padding-end !default;
 
 /// @prop - Text color of the picker option
-$picker-ios-option-text-color:                    $item-ios-text-color !default;
+$picker-ios-option-text-color:                    $item-ios-color !default;
 
 /// @prop - Font size of the picker option
 $picker-ios-option-font-size:                     20px !default;

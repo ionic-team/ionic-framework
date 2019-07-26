@@ -1,0 +1,150 @@
+@import "./tab-button";
+@import "./tab-button.md.vars";
+
+// Material Design Tab Button
+// --------------------------------------------------------------
+
+:host {
+  --padding-top: #{$tab-button-md-padding-top};
+  --padding-end: #{$tab-button-md-padding-end};
+  --padding-bottom: #{$tab-button-md-padding-bottom};
+  --padding-start: #{$tab-button-md-padding-start};
+
+  max-width: 168px;
+
+  font-size: $tab-button-md-font-size;
+  font-weight: $tab-button-md-font-weight;
+
+  letter-spacing: $tab-button-md-letter-spacing;
+}
+
+
+// Material Design Tab Button: Label
+// --------------------------------------------------------------
+
+::slotted(ion-label) {
+  @include margin($tab-button-md-text-margin-top, $tab-button-md-text-margin-end, $tab-button-md-text-margin-bottom, $tab-button-md-text-margin-start);
+
+  text-transform: $tab-button-md-text-capitalization;
+}
+
+
+// Material Design Tab Button: Icon
+// --------------------------------------------------------------
+
+::slotted(ion-icon) {
+  @include margin($tab-button-md-icon-margin-top, $tab-button-md-icon-margin-end, $tab-button-md-icon-margin-bottom, $tab-button-md-icon-margin-start);
+  @include transform-origin(center, center);
+
+  font-size: $tab-button-md-icon-size;
+}
+
+// Material Design Tab Button: Badge
+// --------------------------------------------------------------
+
+::slotted(ion-badge) {
+  @include border-radius($tab-button-md-badge-border-radius);
+  @include padding($tab-button-md-badge-padding-top, $tab-button-md-badge-padding-end, $tab-button-md-badge-padding-bottom, $tab-button-md-badge-padding-start);
+  @include position(8px, null, null, calc(50% + 6px));
+
+  min-width: $tab-button-md-badge-min-width;
+
+  font-size: $tab-button-md-badge-font-size;
+
+  font-weight: normal;
+}
+
+::slotted(ion-badge:empty) {
+  display: block;
+
+  min-width: $tab-button-md-badge-size-empty;
+
+  height: $tab-button-md-badge-size-empty;
+}
+
+
+// Material Design Tab Button: Icon Top Layout
+// --------------------------------------------------------------
+
+// Icon
+:host(.tab-layout-icon-top) ::slotted(ion-icon) {
+  @include margin(6px, null, 2px, null);
+}
+
+// Label
+:host(.tab-layout-icon-top) ::slotted(ion-label) {
+  @include margin(0, null, 6px, null);
+}
+
+
+// Material Design Tab Button: Icon Bottom Layout
+// --------------------------------------------------------------
+
+// Badge
+:host(.tab-layout-icon-bottom) ::slotted(ion-badge) {
+  @include position(8px, null, null, 70%);
+}
+
+// Icon
+:host(.tab-layout-icon-bottom) ::slotted(ion-icon) {
+  @include margin(0, null, 6px, null);
+}
+
+// Label
+:host(.tab-layout-icon-bottom) ::slotted(ion-label) {
+  @include margin(6px, null, 0, null);
+}
+
+
+// Material Design Tab Button: Icon Start / Icon End Layout
+// --------------------------------------------------------------
+
+// Badge
+:host(.tab-layout-icon-start) ::slotted(ion-badge),
+:host(.tab-layout-icon-end) ::slotted(ion-badge) {
+  @include position(16px, null, null, 80%);
+}
+
+// Icon
+:host(.tab-layout-icon-start) ::slotted(ion-icon) {
+  @include margin(null, 6px, null, null);
+}
+
+// Icon
+:host(.tab-layout-icon-end) ::slotted(ion-icon) {
+  @include margin(null, null, null, 6px);
+}
+
+
+// Material Design Tab Button: Icon Hide / Label Only Layout
+// --------------------------------------------------------------
+
+// Badge
+:host(.tab-layout-icon-hide) ::slotted(ion-badge),
+:host(.tab-has-label-only) ::slotted(ion-badge) {
+  @include position(16px, null, null, 70%);
+}
+
+// Label
+:host(.tab-layout-icon-hide) ::slotted(ion-label),
+:host(.tab-has-label-only) ::slotted(ion-label) {
+  @include margin(0, null, 0, null);
+}
+
+
+// Material Design Tab Button: Icon Only / Label Hide Layout
+// --------------------------------------------------------------
+
+// Badge
+:host(.tab-layout-label-hide) ::slotted(ion-badge),
+:host(.tab-has-icon-only) ::slotted(ion-badge) {
+  @include position(16px, null, null, null);
+}
+
+// Icon
+:host(.tab-layout-label-hide) ::slotted(ion-icon),
+:host(.tab-has-icon-only) ::slotted(ion-icon) {
+  @include margin(0, null, 0, null);
+
+  font-size: 24px;
+}

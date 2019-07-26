@@ -1,4 +1,6 @@
-import { Component } from '@stencil/core';
+import { Component, ComponentInterface, Host, h } from '@stencil/core';
+
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-avatar',
@@ -8,10 +10,14 @@ import { Component } from '@stencil/core';
   },
   shadow: true
 })
-export class Avatar {
+export class Avatar implements ComponentInterface {
 
   render() {
-    return <slot></slot>;
+    return (
+      <Host class={getIonMode(this)}>
+        <slot></slot>
+      </Host>
+    );
   }
 
 }

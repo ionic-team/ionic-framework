@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Floating Action Button - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+
+<body>
+  <h3>Default</h3>
+  <p>
+    <ion-fab-button>Default</ion-fab-button>
+    <ion-fab-button><ion-icon name="star"></ion-icon></ion-fab-button>
+    <ion-fab-button size="small">Mini</ion-fab-button>
+    <ion-fab-button size="small"><ion-icon name="star"></ion-icon></ion-fab-button>
+    <ion-fab-button class="fab-button-in-list">In List</ion-fab-button>
+    <ion-fab-button class="fab-button-in-list"><ion-icon name="heart"></ion-icon></ion-fab-button>
+    <ion-fab-button size="small" class="fab-button-in-list"><ion-icon name="star"></ion-icon></ion-fab-button>
+    <ion-fab-button class="fab-button-in-list activated"><ion-icon name="heart"></ion-icon></ion-fab-button>
+    <ion-fab-button size="small" class="fab-button-in-list activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+  </p>
+
+  <h3>Colors</h3>
+  <p>
+    <ion-fab-button color="primary"><ion-icon name="heart"></ion-icon></ion-fab-button>
+    <ion-fab-button color="secondary"><ion-icon name="heart"></ion-icon></ion-fab-button>
+    <ion-fab-button color="tertiary"><ion-icon name="heart"></ion-icon></ion-fab-button>
+    <ion-fab-button color="success"><ion-icon name="heart"></ion-icon></ion-fab-button>
+    <ion-fab-button color="warning"><ion-icon name="heart"></ion-icon></ion-fab-button>
+    <ion-fab-button color="danger"><ion-icon name="heart"></ion-icon></ion-fab-button>
+    <ion-fab-button color="light"><ion-icon name="heart"></ion-icon></ion-fab-button>
+    <ion-fab-button color="medium"><ion-icon name="heart"></ion-icon></ion-fab-button>
+    <ion-fab-button color="dark"><ion-icon name="heart"></ion-icon></ion-fab-button>
+  </p>
+  <p>
+    <ion-fab-button color="primary" class="activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+    <ion-fab-button color="secondary" class="activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+    <ion-fab-button color="tertiary" class="activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+    <ion-fab-button color="success" class="activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+    <ion-fab-button color="warning" class="activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+    <ion-fab-button color="danger" class="activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+    <ion-fab-button color="light" class="activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+    <ion-fab-button color="medium" class="activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+    <ion-fab-button color="dark" class="activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+  </p>
+
+  <h3>Custom</h3>
+
+  <!-- Custom Font -->
+  <ion-fab-button class="large">large</ion-fab-button>
+
+  <!-- Custom Colors -->
+  <ion-fab-button class="custom"><ion-icon name="star"></ion-icon></ion-fab-button>
+  <ion-fab-button class="custom activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+  <ion-fab-button color="secondary" class="custom"><ion-icon name="heart"></ion-icon></ion-fab-button>
+
+  <!-- Custom Colors Fab In List -->
+  <ion-fab-button class="fab-button-in-list custom-white">White</ion-fab-button>
+  <ion-fab-button class="fab-button-in-list custom-white activated">White</ion-fab-button>
+  <ion-fab-button class="fab-button-in-list custom-white"><ion-icon name="heart"></ion-icon></ion-fab-button>
+  <ion-fab-button class="fab-button-in-list custom-white activated"><ion-icon name="heart"></ion-icon></ion-fab-button>
+  <ion-fab-button class="fab-button-in-list custom-blue"><ion-icon name="star"></ion-icon></ion-fab-button>
+  <ion-fab-button class="fab-button-in-list custom-blue activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+  <ion-fab-button class="fab-button-in-list custom-border">Border</ion-fab-button>
+  <ion-fab-button class="fab-button-in-list custom-border activated">Border</ion-fab-button>
+  <ion-fab-button class="fab-button-in-list custom-border"><ion-icon name="star"></ion-icon></ion-fab-button>
+  <ion-fab-button class="fab-button-in-list custom-border activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+
+  <style>
+    ion-fab-button {
+      display: inline-block;
+      margin-bottom: 5px;
+    }
+
+    .large {
+      font-size: 24px;
+    }
+
+    .custom {
+      --background: lightpink;
+      --background-activated: green;
+      --color: blue;
+      --color-activated: white;
+    }
+
+    .custom-white {
+      --background: white;
+      --background-activated: #f6f6f6;
+    }
+
+    .custom-blue {
+      --background: #add8e6;
+      --background-activated: #7cb2c4;
+    }
+
+    .custom-border {
+      --border-radius: 10px;
+      --border-width: 2px;
+      --border-style: dashed;
+      --border-color: red;
+    }
+  </style>
+</body>
+</html>

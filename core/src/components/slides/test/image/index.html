@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Slides - Image</title>
+
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>  <style>
+    ion-slide {
+      height: 200px !important;
+    }
+
+  </style>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-content id="content">
+      <ion-slides style="background: black" id="slides" pager>
+        <ion-slide style="background: rgb(0, 200, 0); color: white;">
+          <img src="image/cat.jpeg">
+        </ion-slide>
+        <ion-slide style="background: white; color: blue;">
+          <img src="image/cat.jpeg">
+        </ion-slide>
+        <ion-slide style="background: blue; color: white;">
+          <img src="image/cat.jpeg">
+        </ion-slide>
+      </ion-slides>
+      <ion-button expand="block" onclick="slidePrev()">Slide Prev</ion-button>
+      <ion-button expand="block" onclick="slideNext()">Slide Next</ion-button>
+      <ion-button expand="block" onclick="getActiveIndex()">Get Active Index</ion-button>
+      <ion-button expand="block" onclick="getPreviousIndex()">Get Previous Index</ion-button>
+
+      <ion-button expand="block" onclick="isEnd()">Is the End?</ion-button>
+      <ion-button expand="block" onclick="isBeginning()">Is the beginning?</ion-button>
+
+      <ion-button expand="block" onclick="slideTo()">Slide to slide index 2</ion-button>
+      <ion-button expand="block" onclick="slideLength()">Get slide length</ion-button>
+      <ion-button expand="block" onclick="slideAutoPlay()">Start auto play</ion-button>
+      <ion-button expand="block" onclick="slideStopAutoPlay()">Stop auto play</ion-button>
+      <ion-button expand="block" onclick="setOptions()">Set options</ion-button>
+    </ion-content>
+
+  </ion-app>
+  <script>
+    const slides = document.getElementById('slides')
+    slides.pager = false;
+    slides.options = {}
+
+    async function slideNext() {
+      await slides.slideNext(500)
+    };
+
+    async function slidePrev() {
+      await slides.slidePrev(500);
+    };
+
+    async function slideTo() {
+      await slides.slideTo(2);
+    }
+
+    async function slideAutoPlay() {
+      slides.options = Object.assign({}, slides.options, {
+        autoplay: {
+          delay: 2500,
+          disableOnInteraction: false
+        }
+      });
+      await slides.startAutoplay();
+    }
+
+    async function slideStopAutoPlay() {
+      await slides.stopAutoplay();
+    }
+
+    async function setOptions() {
+      slides.options = Object.assign({}, slides.options, {
+        slidesPerView: 2,
+      });
+    }
+
+    async function slideLength() {
+      console.log(await slides.length());
+    }
+
+    async function getActiveIndex() {
+      console.log(await slides.getActiveIndex());
+    };
+
+    async function getPreviousIndex() {
+      console.log(await slides.getPreviousIndex());
+    };
+
+    async function isEnd() {
+      console.log(await slides.isEnd());
+    }
+
+    async function isBeginning() {
+      console.log(await slides.isBeginning());
+    }
+    slides.addEventListener('ionSlideDidChange', function (e) {
+      console.log('slide did change', e)
+    });
+    slides.addEventListener('ionSlideWillChange', function (e) {
+      console.log('slide will change', e)
+    });
+    slides.addEventListener('ionSlideNextStart', function (e) {
+      console.log('slide next start', e)
+    });
+    slides.addEventListener('ionSlidePrevStart', function (e) {
+      console.log('slide prev start', e)
+    });
+    slides.addEventListener('ionSlideNextEnd', function (e) {
+      console.log('slide next end', e)
+    });
+    slides.addEventListener('ionSlidePrevEnd', function (e) {
+      console.log('slide prev end', e)
+    });
+    slides.addEventListener('ionSlideTransitionStart', function (e) {
+      console.log('slide transition start', e)
+    });
+    slides.addEventListener('ionSlideTransitionEnd', function (e) {
+      console.log('slide transistion end', e)
+    });
+    slides.addEventListener('ionSlideDrag', function (e) {
+      console.log('slide drag', e)
+    });
+    slides.addEventListener('ionSlideReachStart', function (e) {
+      console.log('slide reach start', e)
+    });
+    slides.addEventListener('ionSlideReachEnd', function (e) {
+      console.log('slide reach end', e)
+    });
+    slides.addEventListener('ionSlideTouchStart', function (e) {
+      console.log('slide touch start', e)
+    });
+    slides.addEventListener('ionSlideTouchEnd', function (e) {
+      console.log('slide touch end', e)
+    });
+    slides.addEventListener('ionSlidesDidLoad', function (e) {
+      console.log('slides did load', e)
+    });
+    slides.addEventListener('ionSlideTap', function (e) {
+      console.log('slide tapped', e)
+    });
+    slides.addEventListener('ionSlideDoubleTap', function (e) {
+      console.log('slide double-tapped', e)
+    });
+  </script>
+</body>
+
+</html>

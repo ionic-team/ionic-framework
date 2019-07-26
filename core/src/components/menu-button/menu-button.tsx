@@ -1,6 +1,11 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Host, Listen, Prop, State, h } from '@stencil/core';
 
-import { Color, Config, Mode } from '../../interface';
+import { config } from '../../global/config';
+import { getIonMode } from '../../global/ionic-global';
+import { Color } from '../../interface';
+import { ButtonInterface } from '../../utils/element-interface';
+import { createColorClasses } from '../../utils/theme';
+import { toggleMenu, updateVisibility } from '../menu-toggle/menu-toggle-util';
 
 @Component({
   tag: 'ion-menu-button',
@@ -10,9 +15,9 @@ import { Color, Config, Mode } from '../../interface';
   },
   shadow: true
 })
-export class MenuButton {
+export class MenuButton implements ComponentInterface, ButtonInterface {
 
-  @Prop({ context: 'config' }) config!: Config;
+  @State() visible = false;
 
   /**
    * The color to use from your application's color palette.
@@ -22,13 +27,12 @@ export class MenuButton {
   @Prop() color?: Color;
 
   /**
-   * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
+   * If `true`, the user cannot interact with the menu button.
    */
-  @Prop() mode!: Mode;
+  @Prop() disabled = false;
 
   /**
-   * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
+   * Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle
    */
   @Prop() menu?: string;
 
@@ -37,24 +41,67 @@ export class MenuButton {
    */
   @Prop() autoHide = true;
 
-  hostData() {
-    return {
-      class: {
-        'button': true
-      }
-    };
+  /**
+   * The type of the button.
+   */
+  @Prop() type: 'submit' | 'reset' | 'button' = 'button';
+
+  async componentDidLoad() {
+    await this.setVisibility();
+  }
+
+  @Listen('ionMenuChange', { target: 'body' })
+  @Listen('ionSplitPaneVisible', { target: 'body' })
+  async visibilityChanged() {
+    await this.setVisibility();
+  }
+
+  private setVisibility = async () => {
+    this.visible = await updateVisibility(this.menu);
+  }
+
+  private onClick = async () => {
+    await toggleMenu(this.menu);
   }
 
   render() {
-    const menuIcon = this.config.get('menuIcon', 'menu');
+    const { color, disabled } = this;
+    const mode = getIonMode(this);
+    const menuIcon = config.get('menuIcon', 'menu');
+    const hidden = this.autoHide && !this.visible;
+
+    const attrs = {
+      type: this.type
+    };
+
     return (
-      <ion-menu-toggle menu={this.menu} autoHide={this.autoHide}>
-        <button type="button">
+      <Host
+        onClick={this.onClick}
+        aria-disabled={disabled ? 'true' : null}
+        aria-hidden={hidden ? 'true' : null}
+        class={{
+          [mode]: true,
+
+          ...createColorClasses(color),
+
+          'button': true,  // ion-buttons target .button
+          'menu-button-hidden': hidden,
+          'menu-button-disabled': disabled,
+          'ion-activatable': true,
+          'ion-focusable': true
+        }}
+      >
+        <button
+          {...attrs}
+          disabled={this.disabled}
+          class="button-native"
+        >
           <slot>
-            <ion-icon icon={menuIcon} mode={this.mode} color={this.color} lazy={false} />
+            <ion-icon icon={menuIcon} mode={mode} lazy={false}></ion-icon>
           </slot>
+          {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
         </button>
-      </ion-menu-toggle>
+      </Host>
     );
   }
 }

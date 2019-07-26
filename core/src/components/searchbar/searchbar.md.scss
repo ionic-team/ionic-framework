@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  --clear-button-color: currentColor;
+  --clear-button-color: initial;
   --cancel-button-color: #{$searchbar-md-cancel-button-color};
   --color: #{$searchbar-md-input-text-color};
   --icon-color: #{$searchbar-md-input-search-icon-color};
@@ -32,14 +32,7 @@
 // -----------------------------------------
 
 .searchbar-cancel-button {
-  @include position(0, null, null, 10px);
-  @include margin(0);
-
-  display: none;
-
-  height: 100%;
-
-  border: 0;
+  @include position(0, null, null, 5px);
 
   background-color: $searchbar-md-cancel-button-background-color;
 
@@ -108,12 +101,18 @@
 // Searchbar Focused
 // -----------------------------------------
 
-:host(.searchbar-has-focus.searchbar-show-cancel) .searchbar-search-icon {
-  display: none;
+:host(.searchbar-has-focus) .searchbar-search-icon {
+  display: block;
 }
 
-:host(.searchbar-has-focus.searchbar-show-cancel) .searchbar-cancel-button {
-  display: inline-flex;
+:host(.searchbar-has-focus) .searchbar-cancel-button,
+:host(.searchbar-should-show-cancel) .searchbar-cancel-button {
+  display: block;
+}
+
+:host(.searchbar-has-focus) .searchbar-cancel-button + .searchbar-search-icon,
+:host(.searchbar-should-show-cancel) .searchbar-cancel-button + .searchbar-search-icon {
+  display: none;
 }
 
 
@@ -121,5 +120,5 @@
 // -----------------------------------------
 
 :host-context(ion-toolbar) {
-  @include padding(3px);
+  @include padding(3px, 7px);
 }

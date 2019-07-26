@@ -1,8 +1,12 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
-import { Color, Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-card-title',
   styleUrls: {
@@ -11,7 +15,7 @@ import { createColorClasses } from '../../utils/theme';
   },
   shadow: true
 })
-export class CardTitle {
+export class CardTitle implements ComponentInterface {
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -19,21 +23,19 @@ export class CardTitle {
    */
   @Prop() color?: Color;
 
-  /**
-   * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
-   */
-  @Prop() mode!: Mode;
-
-  hostData() {
-    return {
-      class: createColorClasses(this.color),
-      'role': 'heading',
-      'aria-level': '2'
-    };
-  }
-
   render() {
-    return <slot></slot>;
+    const mode = getIonMode(this);
+    return (
+      <Host
+        role="heading"
+        aria-level="2"
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true
+        }}
+      >
+        <slot></slot>;
+      </Host>
+    );
   }
 }

@@ -7,11 +7,11 @@
 $toolbar-order-md: (
   back-button: 0,
   menu-toggle-start: 1,
-  buttons-start: 2,
+  slot-start: 2,
   content: 3,
-  buttons-secondary: 4,
-  buttons-primary: 5,
-  buttons-end: 6,
+  slot-secondary: 4,
+  slot-primary: 5,
+  slot-end: 6,
   menu-toggle-end: 7,
 );
 
@@ -19,13 +19,16 @@ $toolbar-order-md: (
 $toolbar-md-button-font-size:                     14px !default;
 
 /// @prop - Text color of the toolbar button
-$toolbar-md-button-color:                         $toolbar-md-text-color !default;
+$toolbar-md-button-color:                         $toolbar-md-color !default;
 
 /// @prop - Background color of the toolbar button
-$toolbar-md-button-background-color:              $toolbar-md-background-color !default;
+$toolbar-md-button-background-color:              $toolbar-md-background !default;
 
 /// @prop - Background color of the toolbar button when activated
-$toolbar-md-button-background-color-activated:    $toolbar-md-color-active !default;
+$toolbar-md-button-background-color-activated:    $toolbar-md-color-activated !default;
+
+/// @prop - Border radius of the toolbar button
+$toolbar-md-button-border-radius:                 2px !default;
 
 /// @prop - Fill color of the toolbar button icon
 $toolbar-md-button-icon-fill-color:               currentColor !default;
@@ -41,4 +44,4 @@ $toolbar-md-button-strong-font-weight:            bold !default;
 $toolbar-md-title-font-size:             20px !default;
 
 /// @prop - Text color of the toolbar title
-$toolbar-md-title-text-color:            $toolbar-md-text-color !default;
+$toolbar-md-title-text-color:            $toolbar-md-color !default;

@@ -1,48 +1,29 @@
-import { ElementRef } from '@angular/core';
+import { HTMLStencilElement } from '../types/interfaces';
 
-export function inputs(instance: any, el: ElementRef, props: string[]) {
-  props.forEach(propName => {
-    Object.defineProperty(instance, propName, {
-      get: () => el.nativeElement[propName], set: (val: any) => el.nativeElement[propName] = val
-    });
-  });
-}
+declare const __zone_symbol__requestAnimationFrame: any;
+declare const requestAnimationFrame: any;
 
-export function proxyEvent(emitter: any, el: Node, eventName: string) {
-  el.addEventListener(eventName, (ev) => {
-    emitter.emit(ev);
-  });
-}
+export const raf = (h: any) => {
+  if (typeof __zone_symbol__requestAnimationFrame === 'function') {
+    return __zone_symbol__requestAnimationFrame(h);
+  }
+  if (typeof requestAnimationFrame === 'function') {
+    return requestAnimationFrame(h);
+  }
+  return setTimeout(h);
+};
 
-
-export function proxyMethod(ctrlName: string, methodName: string, ...args: any[]) {
-  const controller = ensureElementInBody(ctrlName);
+export const proxyMethod = (ctrlName: string, doc: Document, methodName: string, ...args: any[]) => {
+  const controller = ensureElementInBody(ctrlName, doc);
   return controller.componentOnReady()
     .then(() => (controller as any)[methodName].apply(controller, args));
-}
+};
 
-export function ensureElementInBody(elementName: string) {
-  let element = document.querySelector(elementName);
+export const ensureElementInBody = (elementName: string, doc: Document) => {
+  let element = doc.querySelector(elementName);
   if (!element) {
-    element = document.createElement(elementName);
-    document.body.appendChild(element);
+    element = doc.createElement(elementName);
+    doc.body.appendChild(element);
   }
   return element as HTMLStencilElement;
-}
-
-export function deepEqual(x: any, y: any) {
-  if (x === y) {
-    return true;
-  } else if (typeof x === 'object' && x != null && (typeof y === 'object' && y != null)) {
-    if (Object.keys(x).length !== Object.keys(y).length) return false;
-
-    for (const prop in x) {
-      if (y.hasOwnProperty(prop)) {
-        if (!deepEqual(x[prop], y[prop])) return false;
-      } else return false;
-    }
-
-    return true;
-  } else return false;
-}
-
+};

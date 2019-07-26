@@ -1,6 +1,7 @@
-import { Component, Element, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, h } from '@stencil/core';
 
-import { Config } from '../../interface';
+import { config } from '../../global/config';
+import { getIonMode } from '../../global/ionic-global';
 import { rIC } from '../../utils/helpers';
 import { isPlatform } from '../../utils/platform';
 
@@ -8,59 +9,45 @@ import { isPlatform } from '../../utils/platform';
   tag: 'ion-app',
   styleUrl: 'app.scss'
 })
-export class App {
+export class App implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'window' }) win!: Window;
-  @Prop({ context: 'config' }) config!: Config;
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-
   componentDidLoad() {
     rIC(() => {
-      importTapClick(this.win);
-      importInputShims(this.win, this.config);
-      importStatusTap(this.win, this.queue);
-      importHardwareBackButton(this.win);
+      const isHybrid = isPlatform(window, 'hybrid');
+      if (!config.getBoolean('_testing')) {
+        import('../../utils/tap-click').then(module => module.startTapClick(config));
+      }
+      if (config.getBoolean('statusTap', isHybrid)) {
+        import('../../utils/status-tap').then(module => module.startStatusTap());
+      }
+      if (config.getBoolean('inputShims', needInputShims())) {
+        import('../../utils/input-shims/input-shims').then(module => module.startInputShims(config));
+      }
+      if (config.getBoolean('hardwareBackButton', isHybrid)) {
+        import('../../utils/hardware-back-button').then(module => module.startHardwareBackButton());
+      }
+      import('../../utils/focus-visible').then(module => module.startFocusVisible());
+
     });
   }
 
-  hostData() {
-    return {
-      class: {
-        'ion-page': true,
-      }
-    };
+  render() {
+    const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          [mode]: true,
+          'ion-page': true,
+          'force-statusbar-padding': config.getBoolean('_forceStatusbarPadding')
+        }}
+      >
+      </Host>
+    );
   }
 }
 
-function importHardwareBackButton(win: Window) {
-  if (isPlatform(win, 'hybrid')) {
-    // tslint:disable-next-line:no-floating-promises
-    import('../../utils/hardware-back-button').then(module => module.startHardwareBackButton(win));
-  }
-}
-
-function importStatusTap(win: Window, queue: QueueApi) {
-  if (isPlatform(win, 'hybrid')) {
-    // tslint:disable-next-line:no-floating-promises
-    import('../../utils/status-tap').then(module => module.startStatusTap(win, queue));
-  }
-}
-
-function importTapClick(win: Window) {
-  // tslint:disable-next-line:no-floating-promises
-  import('../../utils/tap-click').then(module => module.startTapClick(win.document));
-}
-
-function importInputShims(win: Window, config: Config) {
-  const inputShims = config.getBoolean('inputShims', needInputShims(win));
-  if (inputShims) {
-    // tslint:disable-next-line:no-floating-promises
-    import('../../utils/input-shims/input-shims').then(module => module.startInputShims(win.document, config));
-  }
-}
-
-function needInputShims(win: Window) {
-  return isPlatform(win, 'ios') && isPlatform(win, 'mobile');
-}
+const needInputShims = () => {
+  return isPlatform(window, 'ios') && isPlatform(window, 'mobile');
+};

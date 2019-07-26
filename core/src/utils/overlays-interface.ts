@@ -1,6 +1,7 @@
 import { EventEmitter } from '@stencil/core';
+import { HTMLStencilElement } from '@stencil/core/internal';
 
-import { ActionSheetOptions, AlertOptions, Animation, AnimationBuilder, Config, Conforms, LoadingOptions, ModalOptions, Mode, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
+import { Animation, AnimationBuilder, Mode } from '../interface';
 
 export interface OverlayEventDetail<T = any> {
   data?: T;
@@ -12,11 +13,9 @@ export interface OverlayInterface {
   el: HTMLElement;
   animated: boolean;
   keyboardClose: boolean;
-  config: Config;
   overlayIndex: number;
   presented: boolean;
   animation?: Animation;
-  animationCtrl: HTMLIonAnimationControllerElement;
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
@@ -43,13 +42,4 @@ export interface HTMLIonOverlayElement extends HTMLStencilElement {
   dismiss(data?: any, role?: string): Promise<boolean>;
 }
 
-// Overlay checks
-export type Conforms<T extends Required<B>, B> = T;
-export type HTMLOverlaysElement =
-  Conforms<Required<HTMLIonModalElement>, ModalOptions> |
-  Conforms<Required<HTMLIonToastElement>, ToastOptions> |
-  Conforms<Required<HTMLIonActionSheetElement>, ActionSheetOptions> |
-  Conforms<Required<HTMLIonAlertElement>, AlertOptions> |
-  Conforms<Required<HTMLIonPopoverElement>, PopoverOptions> |
-  Conforms<Required<HTMLIonPickerElement>, PickerOptions> |
-  Conforms<Required<HTMLIonLoadingElement>, LoadingOptions>;
+export type OverlaySelect = HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement;

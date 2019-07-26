@@ -1,42 +1,51 @@
-import { Component, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { InputChangeEvent, Mode, PickerColumn, PickerColumnOption, PickerOptions, StyleEvent } from '../../interface';
-import { clamp, deferEvent } from '../../utils/helpers';
-import { createThemedClasses } from '../../utils/theme';
+import { getIonMode } from '../../global/ionic-global';
+import { DatetimeChangeEventDetail, DatetimeOptions, PickerColumn, PickerColumnOption, PickerOptions, StyleEventDetail } from '../../interface';
+import { clamp, findItemLabel, renderHiddenInput } from '../../utils/helpers';
+import { pickerController } from '../../utils/overlays';
+import { hostContext } from '../../utils/theme';
 
-import { DatetimeData, LocaleData, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getValueFromFormat, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
+import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getDateValue, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-datetime',
   styleUrls: {
     ios: 'datetime.ios.scss',
     md: 'datetime.md.scss'
-  }
+  },
+  shadow: true
 })
-export class Datetime {
+export class Datetime implements ComponentInterface {
 
   private inputId = `ion-dt-${datetimeIds++}`;
-  private labelId = `${this.inputId}-lbl`;
-  private picker?: HTMLIonPickerElement;
   private locale: LocaleData = {};
   private datetimeMin: DatetimeData = {};
   private datetimeMax: DatetimeData = {};
   private datetimeValue: DatetimeData = {};
+  private buttonEl?: HTMLButtonElement;
 
-  @State() text?: string;
+  @Element() el!: HTMLIonDatetimeElement;
 
-  @Prop({ connect: 'ion-picker-controller' }) pickerCtrl!: HTMLIonPickerControllerElement;
+  @State() isExpanded = false;
 
   /**
-   * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
+   * The name of the control, which is submitted with the form data.
    */
-  @Prop() mode!: Mode;
+  @Prop() name: string = this.inputId;
 
   /**
-   * If true, the user cannot interact with the datetime. Defaults to `false`.
+   * If `true`, the user cannot interact with the datetime.
    */
   @Prop() disabled = false;
+
+  /**
+   * If `true`, the datetime appears normal but is not interactive.
+   */
+  @Prop() readonly = false;
 
   @Watch('disabled')
   protected disabledChanged() {
@@ -83,12 +92,12 @@ export class Datetime {
   @Prop() pickerFormat?: string;
 
   /**
-   * The text to display on the picker's cancel button. Default: `Cancel`.
+   * The text to display on the picker's cancel button.
    */
   @Prop() cancelText = 'Cancel';
 
   /**
-   * The text to display on the picker's "Done" button. Default: `Done`.
+   * The text to display on the picker's "Done" button.
    */
   @Prop() doneText = 'Done';
 
@@ -164,27 +173,27 @@ export class Datetime {
 
   /**
    * Any additional options that the picker interface can accept.
-   * See the [Picker API docs](../../picker/Picker) for the picker options.
+   * See the [Picker API docs](../picker) for the picker options.
    */
-  @Prop() pickerOptions?: PickerOptions;
+  @Prop() pickerOptions?: DatetimeOptions;
 
   /**
    * The text to display when there's no date selected yet.
    * Using lowercase to match the input attribute
    */
-  @Prop() placeholder?: string;
+  @Prop() placeholder?: string | null;
 
   /**
-   * the value of the datetime.
+   * The value of the datetime as a valid ISO 8601 datetime string.
    */
-  @Prop({ mutable: true }) value?: any;
+  @Prop({ mutable: true }) value?: string | null;
 
   /**
    * Update the datetime value when the value changes
    */
   @Watch('value')
   protected valueChanged() {
-    this.updateValue();
+    this.updateDatetimeValue(this.value);
     this.emitStyle();
     this.ionChange.emit({
       value: this.value
@@ -199,18 +208,28 @@ export class Datetime {
   /**
    * Emitted when the value (selected date) has changed.
    */
-  @Event() ionChange!: EventEmitter<InputChangeEvent>;
+  @Event() ionChange!: EventEmitter<DatetimeChangeEventDetail>;
+
+  /**
+   * Emitted when the datetime has focus.
+   */
+  @Event() ionFocus!: EventEmitter<void>;
+
+  /**
+   * Emitted when the datetime loses focus.
+   */
+  @Event() ionBlur!: EventEmitter<void>;
 
   /**
    * Emitted when the styles change.
+   * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   componentWillLoad() {
     // first see if locale names were provided in the inputs
     // then check to see if they're in the config
     // if neither were provided then it will use default English names
-    this.ionStyle = deferEvent(this.ionStyle);
     this.locale = {
       // this.locale[type] = convertToArrayOfStrings((this[type] ? this[type] : this.config.get(type), type);
       monthNames: convertToArrayOfStrings(this.monthNames, 'monthNames'),
@@ -219,41 +238,62 @@ export class Datetime {
       dayShortNames: convertToArrayOfStrings(this.dayShortNames, 'dayShortNames')
     };
 
-    this.updateValue();
-  }
-
-  componentDidLoad() {
+    this.updateDatetimeValue(this.value);
     this.emitStyle();
   }
 
+  /**
+   * Opens the datetime overlay.
+   */
   @Method()
   async open() {
-    if (this.disabled) {
+    if (this.disabled || this.isExpanded) {
       return;
     }
 
     const pickerOptions = this.generatePickerOptions();
-    this.picker = await this.pickerCtrl.create(pickerOptions);
-    await this.validate();
-    await this.picker.present();
+    const picker = await pickerController.create(pickerOptions);
+
+    this.isExpanded = true;
+    picker.onDidDismiss().then(() => {
+      this.isExpanded = false;
+      this.setFocus();
+    });
+    picker.addEventListener('ionPickerColChange', async (event: any) => {
+      const data = event.detail;
+
+      const colSelectedIndex = data.selectedIndex;
+      const colOptions = data.options;
+
+      const changeData: any = {};
+      changeData[data.name] = {
+        value: colOptions[colSelectedIndex].value
+      };
+
+      this.updateDatetimeValue(changeData);
+      picker.columns = this.generateColumns();
+    });
+    await picker.present();
   }
 
   private emitStyle() {
     this.ionStyle.emit({
       'interactive': true,
       'datetime': true,
+      'has-placeholder': this.placeholder != null,
       'has-value': this.hasValue(),
       'interactive-disabled': this.disabled,
     });
   }
 
-  private updateValue() {
-    updateDate(this.datetimeValue, this.value);
-    this.updateText();
+  private updateDatetimeValue(value: any) {
+    updateDate(this.datetimeValue, value);
   }
 
   private generatePickerOptions(): PickerOptions {
+    const mode = getIonMode(this);
     const pickerOptions: PickerOptions = {
+      mode,
       ...this.pickerOptions,
       columns: this.generateColumns()
     };
@@ -266,12 +306,29 @@ export class Datetime {
         {
           text: this.cancelText,
           role: 'cancel',
-          handler: () => this.ionCancel.emit()
+          handler: () => {
+            this.updateDatetimeValue(this.value);
+            this.ionCancel.emit();
+          }
         },
         {
           text: this.doneText,
           handler: (data: any) => {
-            this.value = data;
+            this.updateDatetimeValue(data);
+
+            /**
+             * Prevent convertDataToISO from doing any
+             * kind of transformation based on timezone
+             * This cancels out any change it attempts to make
+             *
+             * Important: Take the timezone offset based on
+             * the date that is currently selected, otherwise
+             * there can be 1 hr difference when dealing w/ DST
+             */
+            const date = new Date(convertDataToISO(this.datetimeValue));
+            this.datetimeValue.tzOffset = date.getTimezoneOffset() * -1;
+
+            this.value = convertDataToISO(this.datetimeValue);
           }
         }
       ];
@@ -323,7 +380,8 @@ export class Datetime {
 
       // cool, we've loaded up the columns with options
       // preselect the option for this column
-      const optValue = getValueFromFormat(this.datetimeValue, format);
+      const optValue = getDateValue(this.datetimeValue, format);
+
       const selectedIndex = colOptions.findIndex(opt => opt.value === optValue);
 
       return {
@@ -343,14 +401,14 @@ export class Datetime {
         max[name] = 0;
       });
 
-    return divyColumns(columns);
+    return this.validateColumns(divyColumns(columns));
   }
 
-  private async validate() {
+  private validateColumns(columns: PickerColumn[]) {
     const today = new Date();
     const minCompareVal = dateDataSortValue(this.datetimeMin);
     const maxCompareVal = dateDataSortValue(this.datetimeMax);
-    const yearCol = await this.picker!.getColumn('year');
+    const yearCol = columns.find(c => c.name === 'year');
 
     let selectedYear: number = today.getFullYear();
     if (yearCol) {
@@ -369,7 +427,7 @@ export class Datetime {
       }
     }
 
-    const selectedMonth = await this.validateColumn(
+    const selectedMonth = this.validateColumn(columns,
       'month', 1,
       minCompareVal, maxCompareVal,
       [selectedYear, 0, 0, 0, 0],
@@ -377,38 +435,40 @@ export class Datetime {
     );
 
     const numDaysInMonth = daysInMonth(selectedMonth, selectedYear);
-    const selectedDay = await this.validateColumn(
+    const selectedDay = this.validateColumn(columns,
       'day', 2,
       minCompareVal, maxCompareVal,
       [selectedYear, selectedMonth, 0, 0, 0],
       [selectedYear, selectedMonth, numDaysInMonth, 23, 59]
     );
 
-    const selectedHour = await this.validateColumn(
+    const selectedHour = this.validateColumn(columns,
       'hour', 3,
       minCompareVal, maxCompareVal,
       [selectedYear, selectedMonth, selectedDay, 0, 0],
       [selectedYear, selectedMonth, selectedDay, 23, 59]
     );
 
-    await this.validateColumn(
+    this.validateColumn(columns,
       'minute', 4,
       minCompareVal, maxCompareVal,
       [selectedYear, selectedMonth, selectedDay, selectedHour, 0],
       [selectedYear, selectedMonth, selectedDay, selectedHour, 59]
     );
+
+    return columns;
   }
 
-  private calcMinMax(now?: Date) {
-    const todaysYear = (now || new Date()).getFullYear();
+  private calcMinMax() {
+    const todaysYear = new Date().getFullYear();
 
     if (this.yearValues !== undefined) {
       const years = convertToArrayOfNumbers(this.yearValues, 'year');
       if (this.min === undefined) {
-        this.min = Math.min.apply(Math, years);
+        this.min = Math.min(...years).toString();
       }
       if (this.max === undefined) {
-        this.max = Math.max.apply(Math, years);
+        this.max = Math.max(...years).toString();
       }
     } else {
       if (this.min === undefined) {
@@ -435,7 +495,7 @@ export class Datetime {
     min.second = min.second || 0;
     max.second = max.second || 59;
 
-    // Ensure min/max constraits
+    // Ensure min/max constraints
     if (min.year > max.year) {
       console.error('min.year > max.year');
       min.year = max.year - 100;
@@ -451,8 +511,8 @@ export class Datetime {
     }
   }
 
-  private async validateColumn(name: string, index: number, min: number, max: number, lowerBounds: number[], upperBounds: number[]): Promise<number> {
-    const column = await this.picker!.getColumn(name);
+  private validateColumn(columns: PickerColumn[], name: string, index: number, min: number, max: number, lowerBounds: number[], upperBounds: number[]): number {
+    const column = columns.find(c => c.name === name);
     if (!column) {
       return 0;
     }
@@ -488,63 +548,92 @@ export class Datetime {
     return 0;
   }
 
-  private updateText() {
+  private get text() {
     // create the text of the formatted data
     const template = this.displayFormat || this.pickerFormat || DEFAULT_FORMAT;
-    this.text = renderDatetime(template, this.datetimeValue, this.locale);
+
+    if (
+      this.value === undefined ||
+      this.value === null ||
+      this.value.length === 0
+    ) { return; }
+
+    return renderDatetime(template, this.datetimeValue, this.locale);
   }
 
-  hasValue(): boolean {
-    const val = this.datetimeValue;
-    return Object.keys(val).length > 0;
+  private hasValue(): boolean {
+    return this.text !== undefined;
   }
 
-  hostData() {
-    return {
-      class: {
-        ...createThemedClasses(this.mode, 'datetime'),
-        'datetime-disabled': this.disabled
-      }
-    };
+  private setFocus() {
+    if (this.buttonEl) {
+      this.buttonEl.focus();
+    }
+  }
+
+  private onClick = () => {
+    this.setFocus();
+    this.open();
+  }
+
+  private onFocus = () => {
+    this.ionFocus.emit();
+  }
+
+  private onBlur = () => {
+    this.ionBlur.emit();
   }
 
   render() {
-    let addPlaceholderClass = false;
+    const { inputId, text, disabled, readonly, isExpanded, el, placeholder } = this;
+    const mode = getIonMode(this);
+    const labelId = inputId + '-lbl';
+    const label = findItemLabel(el);
+    const addPlaceholderClass = (text === undefined && placeholder != null) ? true : false;
 
     // If selected text has been passed in, use that first
-    let datetimeText = this.text;
-    if (datetimeText === undefined) {
-      if (this.placeholder !== undefined) {
-        datetimeText = this.placeholder;
-        addPlaceholderClass = true;
-      } else {
-        datetimeText = '';
-      }
+    // otherwise use the placeholder
+    const datetimeText = text === undefined
+      ? (placeholder != null ? placeholder : '')
+      : text;
+
+    if (label) {
+      label.id = labelId;
     }
 
-    const datetimeTextClasses = {
-      'datetime-text': true,
-      'datetime-placeholder': addPlaceholderClass
-    };
+    renderHiddenInput(true, el, this.name, this.value, this.disabled);
 
-    return [
-      <div class={datetimeTextClasses}>{datetimeText}</div>,
-      <button
-        type="button"
+    return (
+      <Host
+        onClick={this.onClick}
+        role="combobox"
+        aria-disabled={disabled ? 'true' : null}
+        aria-expanded={`${isExpanded}`}
         aria-haspopup="true"
-        // id={this.datetimeId}
-        aria-labelledby={this.labelId}
-        aria-disabled={this.disabled ? 'true' : null}
-        onClick={this.open.bind(this)}
-        class="datetime-cover"
+        aria-labelledby={labelId}
+        class={{
+          [mode]: true,
+          'datetime-disabled': disabled,
+          'datetime-readonly': readonly,
+          'datetime-placeholder': addPlaceholderClass,
+          'in-item': hostContext('ion-item', el)
+        }}
       >
-        {this.mode === 'md' && <ion-ripple-effect />}
-      </button>
-    ];
+        <div class="datetime-text">{datetimeText}</div>
+        <button
+          type="button"
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+          disabled={this.disabled}
+          ref={btnEl => this.buttonEl = btnEl}
+        >
+        </button>
+      </Host>
+    );
   }
 }
 
-function divyColumns(columns: PickerColumn[]): PickerColumn[] {
+const divyColumns = (columns: PickerColumn[]): PickerColumn[] => {
   const columnsWidth: number[] = [];
   let col: PickerColumn;
   let width: number;
@@ -574,8 +663,8 @@ function divyColumns(columns: PickerColumn[]): PickerColumn[] {
     columns[2].align = 'left';
   }
   return columns;
-}
-
-let datetimeIds = 0;
+};
 
 const DEFAULT_FORMAT = 'MMM D, YYYY';
+
+let datetimeIds = 0;

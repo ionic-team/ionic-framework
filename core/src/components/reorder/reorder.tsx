@@ -1,6 +1,6 @@
-import { Component } from '@stencil/core';
+import { Component, ComponentInterface, Host, Listen, h } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-reorder',
@@ -10,15 +10,21 @@ import { Mode } from '../../interface';
   },
   shadow: true
 })
-export class Reorder {
+export class Reorder implements ComponentInterface {
 
-  mode!: Mode;
+  @Listen('click', { capture: true })
+  onClick(ev: Event) {
+    ev.preventDefault();
+    ev.stopImmediatePropagation();
+  }
 
   render() {
     return (
-      <slot>
-        <ion-icon name="reorder" lazy={false} class="reorder-icon" />
-      </slot>
+      <Host class={getIonMode(this)}>
+        <slot>
+          <ion-icon name="reorder" lazy={false} class="reorder-icon" />
+        </slot>
+      </Host>
     );
   }
 

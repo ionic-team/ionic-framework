@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * MD Action Sheet Leave Animation
  */
-export function mdLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+export const mdLeaveAnimation = (AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> => {
 
   const baseAnimation = new AnimationC();
 
@@ -13,7 +13,7 @@ export function mdLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Pr
   const wrapperAnimation = new AnimationC();
   wrapperAnimation.addElement(baseEl.querySelector('.action-sheet-wrapper'));
 
-  backdropAnimation.fromTo('opacity', 0.26, 0);
+  backdropAnimation.fromTo('opacity', 0.32, 0);
   wrapperAnimation.fromTo('translateY', '0%', '100%');
 
   const ani = baseAnimation
@@ -24,4 +24,4 @@ export function mdLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Pr
     .add(wrapperAnimation);
 
   return Promise.resolve(ani);
-}
+};

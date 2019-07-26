@@ -1,11 +1,11 @@
-import { Component, Element, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
 
 import { ComponentProps, NavComponent } from '../../interface';
 
 @Component({
   tag: 'ion-nav-push'
 })
-export class NavPush {
+export class NavPush implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   /**
@@ -18,13 +18,17 @@ export class NavPush {
    */
   @Prop() componentProps?: ComponentProps;
 
-  @Listen('child:click')
-  push() {
+  private push = () => {
     const nav = this.el.closest('ion-nav');
     const toPush = this.component;
     if (nav && toPush !== undefined) {
-      return nav.push(toPush, this.componentProps, { skipIfBusy: true });
+      nav.push(toPush, this.componentProps, { skipIfBusy: true });
     }
-    return Promise.resolve(false);
+  }
+
+  render() {
+    return (
+      <Host onClick={this.push}></Host>
+    );
   }
 }

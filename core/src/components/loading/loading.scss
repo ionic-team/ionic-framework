@@ -3,7 +3,25 @@
 // Loading
 // --------------------------------------------------
 
-ion-loading {
+:host {
+  /**
+   * @prop --background: Background of the loading dialog
+   *
+   * @prop --min-width: Minimum width of the loading dialog
+   * @prop --width: Width of the loading dialog
+   * @prop --max-width: Maximum width of the loading dialog
+   *
+   * @prop --min-height: Minimum height of the loading dialog
+   * @prop --height: Height of the loading dialog
+   * @prop --max-height: Maximum height of the loading dialog
+   *
+   * @prop --spinner-color: Color of the loading spinner
+   */
+  --min-width: auto;
+  --width: auto;
+  --min-height: auto;
+  --height: auto;
+
   @include font-smoothing();
   @include position(0, 0, 0, 0);
 
@@ -21,15 +39,35 @@ ion-loading {
   z-index: $z-index-overlay;
 }
 
-ion-loading-controller {
+:host(.overlay-hidden) {
   display: none;
 }
 
 .loading-wrapper {
   display: flex;
 
-  align-items: center;
+  align-items: inherit;
+  justify-content: inherit;
+
+  width: var(--width);
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+
+  height: var(--height);
+  min-height: var(--min-height);
+  max-height: var(--max-height);
+
+  background: var(--background);
 
   opacity: 0;
   z-index: $z-index-overlay-wrapper;
+}
+
+.spinner-lines,
+.spinner-lines-small,
+.spinner-bubbles,
+.spinner-circles,
+.spinner-crescent,
+.spinner-dots {
+  color: var(--spinner-color);
 }

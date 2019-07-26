@@ -1,57 +1,103 @@
-import { Component, Element, Method, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Method, Prop, h, readTask, writeTask } from '@stencil/core';
 
-import { rIC } from '../../utils/helpers';
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-ripple-effect',
   styleUrl: 'ripple-effect.scss',
   shadow: true
 })
-export class RippleEffect {
+export class RippleEffect implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'window' }) win!: Window;
+  /**
+   * Sets the type of ripple-effect:
+   *
+   * - `bounded`: the ripple effect expands from the user's click position
+   * - `unbounded`: the ripple effect expands from the center of the button and overflows the container.
+   *
+   * NOTE: Surfaces for bounded ripples should have the overflow property set to hidden,
+   * while surfaces for unbounded ripples should have it set to visible.
+   */
+  @Prop() type: 'bounded' | 'unbounded' = 'bounded';
 
   /**
-   * Adds the ripple effect to the parent element
+   * Adds the ripple effect to the parent element.
+   *
+   * @param x The horizontal coordinate of where the ripple should start.
+   * @param y The vertical coordinate of where the ripple should start.
    */
   @Method()
-  addRipple(pageX: number, pageY: number) {
-    rIC(() => this.prepareRipple(pageX, pageY));
+  async addRipple(x: number, y: number) {
+    return new Promise<() => void>(resolve => {
+      readTask(() => {
+        const rect = this.el.getBoundingClientRect();
+        const width = rect.width;
+        const height = rect.height;
+        const hypotenuse = Math.sqrt(width * width + height * height);
+        const maxDim = Math.max(height, width);
+        const maxRadius = this.unbounded ? maxDim : hypotenuse + PADDING;
+        const initialSize = Math.floor(maxDim * INITIAL_ORIGIN_SCALE);
+        const finalScale = maxRadius / initialSize;
+        let posX = x - rect.left;
+        let posY = y - rect.top;
+        if (this.unbounded) {
+          posX = width * 0.5;
+          posY = height * 0.5;
+        }
+        const styleX = posX - initialSize * 0.5;
+        const styleY = posY - initialSize * 0.5;
+        const moveX = width * 0.5 - posX;
+        const moveY = height * 0.5 - posY;
+
+        writeTask(() => {
+          const div = document.createElement('div');
+          div.classList.add('ripple-effect');
+          const style = div.style;
+          style.top = styleY + 'px';
+          style.left = styleX + 'px';
+          style.width = style.height = initialSize + 'px';
+          style.setProperty('--final-scale', `${finalScale}`);
+          style.setProperty('--translate-end', `${moveX}px, ${moveY}px`);
+
+          const container = this.el.shadowRoot || this.el;
+          container.appendChild(div);
+          setTimeout(() => {
+            resolve(() => {
+              removeRipple(div);
+            });
+          }, 225 + 100);
+        });
+      });
+    });
   }
 
-  private prepareRipple(pageX: number, pageY: number) {
-    let x: number;
-    let y: number;
-    let size: number;
+  private get unbounded() {
+    return this.type === 'unbounded';
+  }
 
-    this.queue.read(() => {
-      const rect = this.el.getBoundingClientRect();
-      const width = rect.width;
-      const height = rect.height;
-      size = Math.min(Math.sqrt(width * width + height * height) * 2, MAX_RIPPLE_DIAMETER);
-      x = pageX - rect.left - (size * 0.5);
-      y = pageY - rect.top - (size * 0.5);
-    });
-    this.queue.write(() => {
-      const div = this.win.document.createElement('div');
-      div.classList.add('ripple-effect');
-      const style = div.style;
-      const duration = Math.max(RIPPLE_FACTOR * Math.sqrt(size), MIN_RIPPLE_DURATION);
-      style.top = y + 'px';
-      style.left = x + 'px';
-      style.width = style.height = size + 'px';
-      style.animationDuration = duration + 'ms';
-
-      const container = this.el.shadowRoot || this.el;
-      container.appendChild(div);
-      setTimeout(() => div.remove(), duration + 50);
-    });
+  render() {
+    const mode = getIonMode(this);
+    return (
+      <Host
+        role="presentation"
+        class={{
+          [mode]: true,
+          'unbounded': this.unbounded
+        }}
+      >
+      </Host>
+    );
   }
 }
 
-const RIPPLE_FACTOR = 35;
-const MIN_RIPPLE_DURATION = 260;
-const MAX_RIPPLE_DIAMETER = 550;
+const removeRipple = (ripple: HTMLElement) => {
+  ripple.classList.add('fade-out');
+  setTimeout(() => {
+    ripple.remove();
+  }, 200);
+};
+
+const PADDING = 10;
+const INITIAL_ORIGIN_SCALE = 0.5;

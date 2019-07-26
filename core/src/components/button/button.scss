@@ -6,15 +6,14 @@
 :host {
   /**
    * @prop --background: Background of the button
-   * @prop --background-activated: Background of the button when activated
-   * @prop --background-focused: Background of the button when focused
+   * @prop --background-activated: Background of the button when pressed
+   * @prop --background-focused: Background of the button when focused with the tab key
+   * @prop --background-hover: Background of the button on hover
    *
    * @prop --color: Text color of the button
-   * @prop --color-activated: Text color of the button when activated
-   * @prop --color-focused: Text color of the button when focused
-   *
-   * @prop --width: Width of the button
-   * @prop --height: Height of the button
+   * @prop --color-activated: Text color of the button when pressed
+   * @prop --color-focused: Text color of the button when focused with the tab key
+   * @prop --color-hover: Text color of the button when hover
    *
    * @prop --transition: Transition of the button
    *
@@ -28,20 +27,24 @@
    * @prop --box-shadow: Box shadow of the button
    * @prop --opacity: Opacity of the button
    *
-   * @prop --margin-top: Margin top of the button
-   * @prop --margin-end: Margin end of the button
-   * @prop --margin-bottom: Margin bottom of the button
-   * @prop --margin-start: Margin start of the button
-   *
-   * @prop --padding-top: Padding top of the button
-   * @prop --padding-end: Padding end of the button
-   * @prop --padding-bottom: Padding bottom of the button
-   * @prop --padding-start: Padding start of the button
+   * @prop --padding-top: Top padding of the button
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button
+   * @prop --padding-bottom: Bottom padding of the button
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button
    */
   --overflow: hidden;
   --ripple-color: currentColor;
+  --border-width: initial;
+  --border-color: initial;
+  --border-style: initial;
+  --color-hover: initial;
+  --box-shadow: none;
 
   display: inline-block;
+
+  width: auto;
+
+  color: var(--color);
 
   font-family: $font-family-base;
 
@@ -54,14 +57,20 @@
   user-select: none;
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
+  pointer-events: auto;
 
   font-kerning: none;
 }
 
-:host([disabled]) {
+:host(.button-disabled) {
+  --opacity: .5;
   pointer-events: none;
 }
 
+:host(.button-disabled) .button-native {
+  cursor: default;
+  pointer-events: none;
+}
 
 // Solid Button
 // --------------------------------------------------
@@ -69,8 +78,8 @@
 // Default Solid Color
 :host(.button-solid) {
   --background: #{ion-color(primary, base)};
-  --background-activated: #{ion-color(primary, shade)};
   --background-focused: #{ion-color(primary, shade)};
+  --background-hover: #{ion-color(primary, tint)};
   --color: #{ion-color(primary, contrast)};
   --color-activated: #{ion-color(primary, contrast)};
   --color-focused: #{ion-color(primary, contrast)};
@@ -83,8 +92,7 @@
 }
 
 // Focused/Activated Solid Button with Color
-:host(.button-solid.ion-color.focused) .button-native,
-:host(.button-solid.ion-color.activated) .button-native {
+:host(.button-solid.ion-color.ion-focused) .button-native {
   background: #{current-color(shade)};
 }
 
@@ -108,7 +116,7 @@
   color: current-color(base);
 }
 
-:host(.button-outline.focused.ion-color) .button-native {
+:host(.button-outline.ion-focused.ion-color) .button-native {
   background: current-color(base, .1);
   color: current-color(base);
 }
@@ -131,7 +139,7 @@
 }
 
 // Focused Clear Button with Color
-:host(.button-clear.focused.ion-color) .button-native {
+:host(.button-clear.ion-focused.ion-color) .button-native {
   background: current-color(base, .1);
   color: current-color(base);
 }
@@ -158,7 +166,7 @@
 
   clear: both;
 
-  contain: strict;
+  contain: content;
 }
 
 :host(.button-block) .button-native::after {
@@ -180,7 +188,7 @@
 
   width: 100%;
 
-  contain: strict;
+  contain: content;
 }
 
 :host(.button-full:not(.button-round)) .button-native {
@@ -193,15 +201,15 @@
 .button-native {
   @include border-radius(var(--border-radius));
   @include font-smoothing();
-  @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
+  @include margin(0);
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include text-inherit();
 
   display: block;
   position: relative;
 
-  width: var(--width);
-  height: var(--height);
+  width: 100%;
+  height: 100%;
 
   transition: var(--transition);
 
@@ -212,12 +220,11 @@
   outline: none;
 
   background: var(--background);
-  color: var(--color);
 
   line-height: 1;
 
   box-shadow: var(--box-shadow);
-  contain: content;
+  contain: layout style;
   cursor: pointer;
   opacity: var(--opacity);
   overflow: var(--overflow);
@@ -227,26 +234,9 @@
   appearance: none;
 }
 
-.button-native[disabled] {
-  cursor: default;
-  opacity: .5;
-  pointer-events: none;
+.button-native::-moz-focus-inner {
+  border: 0;
 }
-
-:host(.focused) .button-native {
-  background: var(--background-focused);
-  color: var(--color-focused);
-}
-
-:host(.activated) .button-native {
-  background: var(--background-activated);
-  color: var(--color-activated);
-}
-
-
-// .button > .button-container:hover {
-//   opacity: var(--opacity-hover);
-// }
 
 .button-inner {
   display: flex;
@@ -287,4 +277,24 @@
 
 ion-ripple-effect {
   color: var(--ripple-color);
+}
+
+// Button: Hover
+// --------------------------------------------------
+
+:host(.ion-focused) .button-native {
+  background: var(--background-focused);
+  color: var(--color-focused);
+}
+
+:host(.activated) .button-native {
+  background: var(--background-activated);
+  color: var(--color-activated);
+}
+
+@media (any-hover: hover) {
+  :host(:hover) .button-native {
+    background: var(--background-hover);
+    color: var(--color-hover);
+  }
 }

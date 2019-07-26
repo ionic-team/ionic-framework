@@ -6,9 +6,6 @@
 <!-- Anchor -->
 <ion-button href="#">Anchor</ion-button>
 
-<!-- Anchor with backwards transition -->
-<ion-button href="/" goBack>Backwards Anchor</ion-button>
-
 <!-- Colors -->
 <ion-button color="primary">Primary</ion-button>
 <ion-button color="secondary">Secondary</ion-button>

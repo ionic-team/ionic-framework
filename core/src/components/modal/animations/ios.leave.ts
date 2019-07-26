@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * iOS Modal Leave Animation
  */
-export function iosLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+export const iosLeaveAnimation = (AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> => {
   const baseAnimation = new AnimationC();
 
   const backdropAnimation = new AnimationC();
@@ -15,7 +15,7 @@ export function iosLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): P
   const wrapperElRect = wrapperEl!.getBoundingClientRect();
 
   wrapperAnimation.beforeStyles({ 'opacity': 1 })
-                  .fromTo('translateY', '0%', `${window.innerHeight - wrapperElRect.top}px`);
+    .fromTo('translateY', '0%', `${(baseEl.ownerDocument as any).defaultView.innerHeight - wrapperElRect.top}px`);
 
   backdropAnimation.fromTo('opacity', 0.4, 0.0);
 
@@ -25,4 +25,4 @@ export function iosLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): P
     .duration(250)
     .add(backdropAnimation)
     .add(wrapperAnimation));
-}
+};

@@ -1,7 +1,9 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
-import { Config, Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
+import { config } from '../../global/config';
+import { getIonMode } from '../../global/ionic-global';
+import { SpinnerTypes } from '../../interface';
+import { sanitizeDOMString } from '../../utils/sanitization';
 
 @Component({
   tag: 'ion-infinite-scroll-content',
@@ -10,49 +12,56 @@ import { createThemedClasses } from '../../utils/theme';
     md: 'infinite-scroll-content.md.scss'
   }
 })
-export class InfiniteScrollContent {
-
-  mode!: Mode;
-
-  @Prop({ context: 'config' }) config!: Config;
+export class InfiniteScrollContent implements ComponentInterface {
 
   /**
    * An animated SVG spinner that shows while loading.
    */
-  @Prop({ mutable: true }) loadingSpinner?: string;
+  @Prop({ mutable: true }) loadingSpinner?: SpinnerTypes | null;
 
   /**
    * Optional text to display while loading.
+   * `loadingText` can accept either plaintext or HTML as a string.
+   * To display characters normally reserved for HTML, they
+   * must be escaped. For example `<Ionic>` would become
+   * `&lt;Ionic&gt;`
+   *
+   * For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
    */
   @Prop() loadingText?: string;
 
   componentDidLoad() {
     if (this.loadingSpinner === undefined) {
-      this.loadingSpinner = this.config.get(
+      const mode = getIonMode(this);
+      this.loadingSpinner = config.get(
         'infiniteLoadingSpinner',
-        this.config.get('spinner', 'lines')
+        config.get('spinner', mode === 'ios' ? 'lines' : 'crescent')
       );
     }
   }
 
-  hostData() {
-    return {
-      class: createThemedClasses(this.mode, 'infinite-scroll-content')
-    };
-  }
-
   render() {
+    const mode = getIonMode(this);
     return (
-      <div class="infinite-loading">
-        {this.loadingSpinner && (
-          <div class="infinite-loading-spinner">
-            <ion-spinner name={this.loadingSpinner} />
-          </div>
-        )}
-        {this.loadingText && (
-          <div class="infinite-loading-text" innerHTML={this.loadingText} />
-        )}
-      </div>
+      <Host
+        class={{
+          [mode]: true,
+
+          // Used internally for styling
+          [`infinite-scroll-content-${mode}`]: true
+        }}
+      >
+        <div class="infinite-loading">
+          {this.loadingSpinner && (
+            <div class="infinite-loading-spinner">
+              <ion-spinner name={this.loadingSpinner} />
+            </div>
+          )}
+          {this.loadingText && (
+            <div class="infinite-loading-text" innerHTML={sanitizeDOMString(this.loadingText)} />
+          )}
+        </div>
+      </Host>
     );
   }
 }

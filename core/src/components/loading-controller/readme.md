@@ -8,13 +8,56 @@ Loading controllers programmatically control the loading component. Loadings can
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Javascript
+
+```javascript
+async function presentLoading() {
+  const loadingController = document.querySelector('ion-loading-controller');
+
+  const loadingElement = await loadingController.create({
+    message: 'Please wait...',
+    spinner: 'crescent',
+    duration: 2000
+  });
+  return await loadingElement.present();
+}
+```
+
+
+
 ## Methods
 
-| Method    | Description                                    |
-| --------- | ---------------------------------------------- |
-| `create`  | Create a loading overlay with loading options. |
-| `dismiss` | Dismiss the open loading overlay.              |
-| `getTop`  | Get the most recently opened loading overlay.  |
+### `create(options?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>`
+
+Create a loading overlay with loading options.
+
+#### Returns
+
+Type: `Promise<HTMLIonLoadingElement>`
+
+
+
+### `dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>`
+
+Dismiss the open loading overlay.
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `getTop() => Promise<HTMLIonLoadingElement | undefined>`
+
+Get the most recently opened loading overlay.
+
+#### Returns
+
+Type: `Promise<HTMLIonLoadingElement | undefined>`
+
+
 
 
 ----------------------------------------------

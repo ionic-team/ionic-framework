@@ -1,7 +1,6 @@
-import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
 
-import { Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
+import { getIonMode } from '../../global/ionic-global';
 
 const SPLIT_PANE_MAIN = 'split-pane-main';
 const SPLIT_PANE_SIDE = 'split-pane-side';
@@ -21,20 +20,22 @@ const QUERY: { [key: string]: string } = {
     md: 'split-pane.md.scss'
   }
 })
-export class SplitPane {
+export class SplitPane implements ComponentInterface {
 
   private rmL: any;
-
-  mode!: Mode;
 
   @Element() el!: HTMLElement;
   @State() visible = false;
 
-  @Prop({ context: 'isServer' }) isServer!: boolean;
-  @Prop({ context: 'window' }) win!: Window;
+  /**
+   * The content `id` of the split-pane's main content.
+   * This property can be used instead of the `[main]` attribute to select the `main`
+   * content of the split-pane.
+   */
+  @Prop() contentId?: string;
 
   /**
-   * If true, the split pane will be hidden. Defaults to `false`.
+   * If `true`, the split pane will be hidden.
    */
   @Prop() disabled = false;
 
@@ -43,22 +44,16 @@ export class SplitPane {
    * Can be a CSS media query expression, or a shortcut expression.
    * Can also be a boolean expression.
    */
-  @Prop() when: string | boolean = QUERY['md'];
-
-  /**
-   * Emitted when the split pane is visible.
-   */
-  @Event({ bubbles: false }) ionChange!: EventEmitter<{visible: boolean}>;
+  @Prop() when: string | boolean = QUERY['lg'];
 
   /**
    * Expression to be called when the split-pane visibility has changed
    */
-  @Event() ionSplitPaneVisible!: EventEmitter;
+  @Event() ionSplitPaneVisible!: EventEmitter<{visible: boolean}>;
 
   @Watch('visible')
   visibleChanged(visible: boolean) {
     const detail = { visible, isPane: this.isPane.bind(this) };
-    this.ionChange.emit(detail);
     this.ionSplitPaneVisible.emit(detail);
   }
 
@@ -77,7 +72,7 @@ export class SplitPane {
   @Watch('disabled')
   @Watch('when')
   protected updateState() {
-    if (this.isServer) {
+    if (!Build.isBrowser) {
       return;
     }
     if (this.rmL) {
@@ -107,12 +102,17 @@ export class SplitPane {
       return;
     }
 
-    // Listen on media query
-    const callback = (q: MediaQueryList) => this.visible = q.matches;
-    const mediaList = this.win.matchMedia(mediaQuery);
-    mediaList.addListener(callback);
-    this.rmL = () => mediaList.removeListener(callback);
-    this.visible = mediaList.matches;
+    if ((window as any).matchMedia) {
+      // Listen on media query
+      const callback = (q: MediaQueryList) => {
+        this.visible = q.matches;
+      };
+
+      const mediaList = window.matchMedia(mediaQuery);
+      (mediaList as any).addListener(callback as any);
+      this.rmL = () => (mediaList as any).removeListener(callback as any);
+      this.visible = mediaList.matches;
+    }
   }
 
   private isPane(element: HTMLElement): boolean {
@@ -124,18 +124,19 @@ export class SplitPane {
   }
 
   private styleChildren() {
-    if (this.isServer) {
+    if (!Build.isBrowser) {
       return;
     }
+    const contentId = this.contentId;
     const children = this.el.children;
     const nu = this.el.childElementCount;
     let foundMain = false;
     for (let i = 0; i < nu; i++) {
       const child = children[i] as HTMLElement;
-      const isMain = child.hasAttribute('main');
+      const isMain = contentId !== undefined ? child.id === contentId : child.hasAttribute('main');
       if (isMain) {
         if (foundMain) {
-          console.warn('split pane can not have more than one main node');
+          console.warn('split pane cannot have more than one main node');
           return;
         }
         foundMain = true;
@@ -143,21 +144,29 @@ export class SplitPane {
       setPaneClass(child, isMain);
     }
     if (!foundMain) {
-      console.warn('split pane could not found any main node');
+      console.warn('split pane does not have a specified main node');
     }
   }
 
-  hostData() {
-    return {
-      class: {
-        ...createThemedClasses(this.mode, 'split-pane'),
-        'split-pane-visible': this.visible
-      }
-    };
+  render() {
+    const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          [mode]: true,
+
+          // Used internally for styling
+          [`split-pane-${mode}`]: true,
+
+          'split-pane-visible': this.visible
+        }}
+      >
+      </Host>
+    );
   }
 }
 
-function setPaneClass(el: HTMLElement, isMain: boolean) {
+const setPaneClass = (el: HTMLElement, isMain: boolean) => {
   let toAdd;
   let toRemove;
   if (isMain) {
@@ -170,4 +179,4 @@ function setPaneClass(el: HTMLElement, isMain: boolean) {
   const classList = el.classList;
   classList.add(toAdd);
   classList.remove(toRemove);
-}
+};

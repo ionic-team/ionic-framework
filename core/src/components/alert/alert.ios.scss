@@ -22,11 +22,12 @@
 // iOS Translucent Alert
 // -----------------------------------------
 
-:host(.alert-translucent) .alert-wrapper {
-  background: $alert-ios-translucent-background-color;
-  backdrop-filter: $alert-ios-translucent-filter;
+@supports (backdrop-filter: blur(0)) {
+  :host(.alert-translucent) .alert-wrapper {
+    background: $alert-ios-translucent-background-color;
+    backdrop-filter: $alert-ios-translucent-filter;
+  }
 }
-
 
 // iOS Alert Header
 // --------------------------------------------------
@@ -96,6 +97,9 @@
     font-weight: inherit;
   }
 
+  &::-ms-clear {
+    display: none;
+  }
 }
 
 
@@ -109,16 +113,12 @@
   max-height: $alert-ios-content-max-height;
 
   border-top: $alert-ios-list-border-top;
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
 .alert-tappable {
-  display: flex;
-
   height: $alert-ios-tappable-height;
-
-  contain: strict;
 }
 
 
@@ -281,7 +281,17 @@
   overflow: hidden;
 }
 
+.alert-button:first-child {
+  @include rtl() {
+    border-right: 0;
+  }
+}
+
 .alert-button:last-child {
+  @include rtl() {
+    border-right: $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color;
+  }
+
   border-right: 0;
 
   font-weight: $alert-ios-button-main-font-weight;

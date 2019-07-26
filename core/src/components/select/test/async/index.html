@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Select - Async</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+
+<body>
+  <ion-select id="default" placeholder="Default"></ion-select>
+  <ion-select id="popover" interface="popover" placeholder="Popover"></ion-select>
+  <ion-select id="actionSheet" interface="action-sheet" placeholder="Action Sheet"></ion-select>
+
+  <ion-item>
+    <ion-label position="floating">Label w/o Placeholder</ion-label>
+    <ion-select id="actionSheet" interface="action-sheet"></ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Label with Placeholder</ion-label>
+    <ion-select id="actionSheet" interface="action-sheet" placeholder="A Placeholder"></ion-select>
+  </ion-item>
+  <script>
+    let selects = document.querySelectorAll('ion-select');
+    const options = ['bird', 'dog', 'shark', 'lizard'];
+
+    setTimeout(() => {
+      selects.forEach(select => {
+        options.forEach(option => {
+          let o = document.createElement('ion-select-option');
+          o.value = option;
+          o.textContent = option;
+
+          select.appendChild(o);
+        });
+
+        select.value = options[0];
+      });
+    }, 5000);
+
+  </script>
+</body>
+</html>

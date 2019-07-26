@@ -5,9 +5,11 @@
   <meta charset="UTF-8">
   <title>Input - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
-</head>
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -28,6 +30,18 @@
           <ion-input placeholder="Placeholder"></ion-input>
         </ion-item>
 
+        <ion-item lines="full" id="fullItem">
+          <ion-input id="fullInput" placeholder="Full"></ion-input>
+        </ion-item>
+
+        <ion-item lines="inset" id="insetItem">
+          <ion-input id="insetInput" placeholder="Inset"></ion-input>
+        </ion-item>
+
+        <ion-item lines="none" id="noneItem">
+          <ion-input id="noneInput" placeholder="None"></ion-input>
+        </ion-item>
+
         <ion-item>
           <ion-label>Default Label</ion-label>
           <ion-input value="reallylonglonglonginputtoseetheedgesreallylonglonglonginputtoseetheedges"></ion-input>
@@ -38,7 +52,7 @@
           <ion-input clear-input value="reallylonglonglonginputtoseetheedgesreallylonglonglonginputtoseetheedges"></ion-input>
         </ion-item>
 
-        <ion-item>
+        <ion-item color="dark">
           <ion-label position="floating">Floating</ion-label>
           <ion-input checked></ion-input>
         </ion-item>
@@ -89,7 +103,7 @@
         </ion-item>
       </ion-list>
 
-      <div text-center>
+      <div class="ion-text-center">
         <ion-button onclick="toggleBoolean('dynamicDisabled', 'disabled')">
           Toggle Disabled
         </ion-button>
@@ -102,6 +116,21 @@
       <ion-item>
         <ion-label>Clear Input</ion-label>
         <ion-input clear-input value="reallylonglonglonginputtoseetheedgesreallylonglonglonginputtoseetheedges"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Clear On Edit</ion-label>
+        <ion-input clear-on-edit value="reallylonglonglonginputtoseetheedgesreallylonglonglonginputtoseetheedges"></ion-input>
+      </ion-item>
+
+      <ion-item style="max-width: 250px">
+        <ion-input value="Narrow input"></ion-input>
+        <ion-label class="ion-text-right">Left</ion-label>
+      </ion-item>
+
+      <ion-item style="max-width: 250px">
+        <ion-label>Right</ion-label>
+        <ion-input class="ion-text-right" value="Narrow input"></ion-input>
       </ion-item>
 
     </ion-content>

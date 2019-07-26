@@ -1,8 +1,10 @@
-import { Component, Element, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Method, Prop, h } from '@stencil/core';
 
-import { Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
+import { getIonMode } from '../../global/ionic-global';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-list',
   styleUrls: {
@@ -10,27 +12,26 @@ import { createThemedClasses } from '../../utils/theme';
     md: 'list.md.scss'
   }
 })
-export class List {
+export class List implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
   /**
-   * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
-   */
-  @Prop() mode!: Mode;
-
-  /**
    * How the bottom border should be displayed on all items.
-   * Available options: `"full"`, `"inset"`, `"none"`.
    */
   @Prop() lines?: 'full' | 'inset' | 'none';
 
   /**
-   * If true, the list will have margin around it and rounded corners. Defaults to `false`.
+   * If `true`, the list will have margin around it and rounded corners.
    */
   @Prop() inset = false;
 
+  /**
+   * If `ion-item-sliding` are used inside the list, this method closes
+   * any open sliding item.
+   *
+   * Returns `true` if an actual `ion-item-sliding` is closed.
+   */
   @Method()
   async closeSlidingItems(): Promise<boolean> {
     const item = this.el.querySelector('ion-item-sliding');
@@ -40,14 +41,23 @@ export class List {
     return false;
   }
 
-  hostData() {
-    return {
-      class: {
-        ...createThemedClasses(this.mode, 'list'),
-        [`list-lines-${this.lines}`]: !!this.lines,
-        'list-inset': this.inset,
-        [`list-${this.mode}-lines-${this.lines}`]: !!this.lines
-      }
-    };
+  render() {
+    const mode = getIonMode(this);
+    const { lines, inset } = this;
+    return (
+      <Host
+        class={{
+          [mode]: true,
+
+          // Used internally for styling
+          [`list-${mode}`]: true,
+
+          'list-inset': inset,
+          [`list-lines-${lines}`]: lines !== undefined,
+          [`list-${mode}-lines-${lines}`]: lines !== undefined
+        }}
+      >
+      </Host>
+    );
   }
 }

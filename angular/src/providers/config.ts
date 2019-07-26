@@ -1,8 +1,11 @@
+import { Injectable, InjectionToken } from '@angular/core';
 import { Config as CoreConfig, IonicConfig } from '@ionic/core';
-import { InjectionToken } from '@angular/core';
+
 import { IonicWindow } from '../types/interfaces';
 
-
+@Injectable({
+  providedIn: 'root'
+})
 export class Config {
 
   get(key: keyof IonicConfig, fallback?: any): any {
@@ -40,9 +43,8 @@ export class Config {
 export const ConfigToken = new InjectionToken<any>('USERCONFIG');
 
 function getConfig(): CoreConfig | null {
-  const win: IonicWindow = window as any;
-  if (typeof win !== 'undefined') {
-    const Ionic = win.Ionic;
+  if (typeof (window as any) !== 'undefined') {
+    const Ionic = (window as IonicWindow).Ionic;
     if (Ionic && Ionic.config) {
       return Ionic.config;
     }

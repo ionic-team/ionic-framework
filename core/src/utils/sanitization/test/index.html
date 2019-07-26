@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>Sanitization</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <script type="module">
+    import { sanitizeDOMString } from '../../../../dist/collection/utils/sanitization/index.js';
+    window.sanitizeDOMString = sanitizeDOMString;
+  </script>
+</head>
+
+<!--
+  So the goal with these tests is to ensure
+  that an `alert` call is never executed
+  in the browser. If it is, then our sanitization
+  function has failed to properly sanitize
+  an input
+-->
+
+<body>
+    <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Sanitization</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding" id="content">
+      <div class="results">Results will appear here</div>
+
+      <ion-button onclick="testA()" id="testA">Test A</ion-button>
+      <ion-button onclick="testB()" id="testB">Test B</ion-button>
+      <ion-button onclick="testC()" id="testC">Test C</ion-button>
+      <ion-button onclick="testD()" id="testD">Test D</ion-button>
+      <ion-button onclick="testE()" id="testE">Test E</ion-button>
+      <ion-button onclick="testF()" id="testF">Test F</ion-button>
+      <ion-button onclick="testG()" id="testG">Test G</ion-button>
+      <ion-button onclick="testH()" id="testH">Test H</ion-button>
+    </ion-content>
+
+  </ion-app>
+
+  <script>
+    const results = document.querySelector('.results');
+
+    window.alert = () => {
+      throw new Error('sanitizeFailed');
+    }
+
+    function runTest(inputString) {
+      console.log(`Sanitizing ${inputString}`);
+      const sanitizedResult = sanitizeDOMString(inputString);
+
+      results.innerHTML = sanitizedResult;
+      console.log(`Result ${sanitizedResult}`)
+    }
+
+    function testA() {
+      runTest('<img src="x" onerror="alert(document.cookie);">');
+    }
+
+    function testB() {
+      runTest('<button id="myButton" name="myButton" onclick="alert(document.cookie);">harmless button</button>');
+
+      const buttom = results.querySelector('button');
+      buttom.click();
+    }
+
+    function testC() {
+      runTest('<a href="javascript:alert(document.cookie)">harmless link</a>');
+
+      const link = results.querySelector('a');
+      link.click();
+    }
+
+    function testD() {
+      runTest('<a class="link" href="Javascript&#58;alert(document.cookie)">harmless link</a>');
+
+      const link = results.querySelector('a');
+      link.click();
+    }
+
+    function testE() {
+      runTest('<iframe src="javascript:alert(document.cookie)"></iframe>');
+    }
+
+    function testF() {
+      runTest('<div><button><a href="javascript:alert(document.cookie)">click me</a></button></div>');
+
+      const link = results.querySelector('a');
+      link.click();
+    }
+
+    function testG() {
+      runTest('<object><img src="x" onerror="alert(document.cookie);"></object>');
+    }
+
+    function testH() {
+      runTest('<ion-item><ion-label>Hello!</ion-label><ion-button onclick="alert(document.cookie);">Click me</ion-button>');
+
+      const button = results.querySelector('ion-button');
+      button.click();
+    }
+  </script>
+</body>
+
+</html>

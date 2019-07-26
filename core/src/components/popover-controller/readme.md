@@ -6,13 +6,55 @@ Popover controllers programmatically control the popover component. Popovers can
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Javascript
+
+```javascript
+async function presentPopover() {
+  const popoverController = document.querySelector('ion-popover-controller');
+
+  const popoverElement = await popoverController.create({
+    component: 'profile-page',
+    event: event
+  });
+  return await popoverElement.present();
+}
+```
+
+
+
 ## Methods
 
-| Method    | Description                                    |
-| --------- | ---------------------------------------------- |
-| `create`  | Create a popover overlay with popover options. |
-| `dismiss` | Dismiss the open popover overlay.              |
-| `getTop`  | Get the most recently opened popover overlay.  |
+### `create<T extends ComponentRef>(options: PopoverOptions<T>) => Promise<HTMLIonPopoverElement>`
+
+Create a popover overlay with popover options.
+
+#### Returns
+
+Type: `Promise<HTMLIonPopoverElement>`
+
+
+
+### `dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>`
+
+Dismiss the open popover overlay.
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `getTop() => Promise<HTMLIonPopoverElement | undefined>`
+
+Get the most recently opened popover overlay.
+
+#### Returns
+
+Type: `Promise<HTMLIonPopoverElement | undefined>`
+
+
 
 
 ----------------------------------------------

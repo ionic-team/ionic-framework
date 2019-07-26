@@ -11,32 +11,29 @@
    * @prop --handle-background-checked: Background of the toggle handle when checked
    */
 
-  // TODO can we remove important here
   /* stylelint-disable-next-line declaration-no-important */
   box-sizing: content-box !important;
 
   display: inline-block;
 
+  outline: none;
+
   contain: content;
   cursor: pointer;
   touch-action: none;
   user-select: none;
+  z-index: $z-index-item-input;
 }
 
-:host(.toggle-key) input {
+:host(.ion-focused) input {
   border: 2px solid #5e9ed6;
-}
-
-:host(:focus) {
-  outline: none;
 }
 
 :host(.toggle-disabled) {
   pointer-events: none;
 }
 
-input {
+button {
   @include input-cover();
-
-  pointer-events: none;
 }
+

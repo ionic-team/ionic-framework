@@ -1,22 +1,6 @@
 # ion-alert-controller
 
-Alert controllers programmatically control the alert component. Alerts can be created and dismissed from the alert controller. View the [Alert](../alert) documentation for a full list of options to pass upon creation.
-
-
-```javascript
-async function presentAlert() {
-  const alertController = document.querySelector('ion-alert-controller');
-  await alertController.componentOnReady();
-
-  const alert = await alertController.create({
-    header: 'Alert',
-    subHeader: 'Subtitle',
-    message: 'This is an alert message.',
-    buttons: ['OK']
-  });
-  return await alert.present();
-}
-```
+Alert controllers programmatically control the alert component. Alerts can be created and dismissed by the alert controller. View the [Alert](../alert) documentation for the list of options to pass upon creation and usage information.
 
 
 <!-- Auto Generated Below -->
@@ -24,11 +8,35 @@ async function presentAlert() {
 
 ## Methods
 
-| Method    | Description                                 |
-| --------- | ------------------------------------------- |
-| `create`  | Create an alert overlay with alert options  |
-| `dismiss` | Dismiss the open alert overlay.             |
-| `getTop`  | Get the most recently opened alert overlay. |
+### `create(options: AlertOptions) => Promise<HTMLIonAlertElement>`
+
+Create an alert overlay with alert options.
+
+#### Returns
+
+Type: `Promise<HTMLIonAlertElement>`
+
+
+
+### `dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>`
+
+Dismiss the open alert overlay.
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+### `getTop() => Promise<HTMLIonAlertElement | undefined>`
+
+Get the most recently opened alert overlay.
+
+#### Returns
+
+Type: `Promise<HTMLIonAlertElement | undefined>`
+
+
 
 
 ----------------------------------------------

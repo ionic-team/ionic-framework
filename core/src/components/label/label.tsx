@@ -1,8 +1,12 @@
-import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
 
-import { Color, Mode, StyleEvent } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, StyleEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-label',
   styleUrls: {
@@ -11,7 +15,7 @@ import { createColorClasses } from '../../utils/theme';
   },
   scoped: true
 })
-export class Label {
+export class Label implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   /**
@@ -22,42 +26,57 @@ export class Label {
   @Prop() color?: Color;
 
   /**
-   * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
-   */
-  @Prop() mode!: Mode;
-
-  /**
    * The position determines where and how the label behaves inside an item.
-   * Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
    */
   @Prop() position?: 'fixed' | 'stacked' | 'floating';
 
   /**
    * Emitted when the styles change.
+   * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+
+  @State() noAnimate = false;
+
+  componentWillLoad() {
+    this.noAnimate = (this.position === 'floating');
+    this.emitStyle();
+  }
 
   componentDidLoad() {
-    this.positionChanged();
+    if (this.noAnimate) {
+      setTimeout(() => {
+        this.noAnimate = false;
+      }, 1000);
+    }
   }
 
   @Watch('position')
   positionChanged() {
+    this.emitStyle();
+  }
+
+  private emitStyle() {
     const position = this.position;
     this.ionStyle.emit({
       'label': true,
-      [`label-${position}`]: !!position
+      [`label-${position}`]: position !== undefined
     });
   }
 
-  hostData() {
+  render() {
     const position = this.position;
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        [`label-${position}`]: !!position,
-      }
-    };
+    const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+          [`label-${position}`]: position !== undefined,
+          [`label-no-animate`]: (this.noAnimate)
+        }}
+      >
+      </Host>
+    );
   }
 }

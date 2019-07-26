@@ -5,9 +5,11 @@
   <meta charset="UTF-8">
   <title>Datetime - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
-</head>
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -29,6 +31,16 @@
           <ion-label>Default</ion-label>
           <ion-datetime></ion-datetime>
         </ion-item>
+        
+        <ion-item>
+          <ion-label position="floating">Default with floating label</ion-label>
+          <ion-datetime></ion-datetime>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="floating">Placeholder with floating label</ion-label>
+          <ion-datetime placeholder="Select a date"></ion-datetime>
+        </ion-item>
 
         <ion-item>
           <ion-label>Max</ion-label>
@@ -41,7 +53,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label>MM DD YY</ion-label>
+          <ion-label position="floating">MM DD YY</ion-label>
           <ion-datetime display-format="MM DD YY" placeholder="Select Date"></ion-datetime>
         </ion-item>
 
@@ -53,6 +65,13 @@
         <ion-item>
           <ion-label>YYYY</ion-label>
           <ion-datetime id="customPickerOptions" placeholder="Custom Options" display-format="YYYY" min="1981" max="2002"></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Multiple</ion-label>
+          <ion-datetime value="1994-12-24" display-format="YYYY" placeholder="year"></ion-datetime>
+          <ion-datetime value="1994-12-24" display-format="MM" placeholder="month"></ion-datetime>
+          <ion-datetime value="1994-12-24" display-format="DD" placeholder="day"></ion-datetime>
         </ion-item>
 
         <ion-item>
@@ -91,8 +110,13 @@
         </ion-item>
 
         <ion-item>
+          <ion-label>HH:mm (initial value 00:00)</ion-label>
+          <ion-datetime display-format="HH:mm" value="00:00"></ion-datetime>
+        </ion-item>
+
+        <ion-item>
           <ion-label>h:mm a</ion-label>
-          <ion-datetime display-format="h:mm a"></ion-datetime>
+          <ion-datetime display-format="h:mm a" value="01:47"></ion-datetime>
         </ion-item>
 
         <ion-item>
@@ -132,6 +156,12 @@
       </ion-list>
 
     </ion-content>
+
+    <style>
+      .outer-content {
+        --background: #f2f2f2;
+      }
+    </style>
 
     <script>
       var yearValuesArray = [2020, 2016, 2008, 2004, 2000, 1996];

@@ -5,8 +5,6 @@
 // --------------------------------------------------
 
 :host {
-  --size: #{$checkbox-ios-icon-size};
-
   // Border
   --border-radius: #{$checkbox-ios-icon-border-radius};
   --border-width: #{$checkbox-ios-icon-border-width};
@@ -15,68 +13,36 @@
 
   // Background
   --background: #{$checkbox-ios-background-color-off};
-}
 
-// iOS Checkbox Inner Checkmark: Checked
-// -----------------------------------------
+  // Size
+  --size: #{$checkbox-ios-icon-size};
 
-.checkbox-inner {
-  @include position(calc(var(--size) / 6), null, null, calc(var(--size) / 2.5 - 1px));
-
-  position: absolute;
-
-  width: calc(var(--size) / 6 + 1px);
-  height: calc(var(--size) / 2);
-
-  transform: rotate(45deg);
-
-  border-width: $checkbox-ios-checkmark-border-width;
-  border-top-width: 0;
-  border-left-width: 0;
-  border-style: $checkbox-ios-checkmark-border-style;
+  width: var(--size);
+  height: var(--size);
 }
 
 
 // iOS Checkbox: Disabled
 // -----------------------------------------
 
-// TODO: .item-ios.item-checkbox-disabled ion-labe
+// TODO: .item-ios.item-checkbox-disabled ion-label
 :host(.checkbox-disabled) {
   opacity: $checkbox-ios-disabled-opacity;
-}
-
-
-// iOS Checkbox Keyboard Focus
-// -----------------------------------------
-
-:host(.checkbox-key) .checkbox-icon::after {
-  @include border-radius(50%);
-  @include position(-9px, null, null, -9px);
-
-  display: block;
-  position: absolute;
-
-  width: 36px;
-  height: 36px;
-
-  background: $checkbox-ios-background-color-focused;
-
-  content: "";
-  opacity: .2;
 }
 
 
 // iOS Checkbox Within An Item
 // -----------------------------------------
 
-// :host-context(.item)
 :host(.in-item) {
-  @include margin($checkbox-ios-item-start-margin-top, $checkbox-ios-item-start-margin-end, $checkbox-ios-item-start-margin-bottom, $checkbox-ios-item-start-margin-start);
+  // end position by default
+  @include margin($checkbox-ios-item-end-margin-top, $checkbox-ios-item-end-margin-end, $checkbox-ios-item-end-margin-bottom, $checkbox-ios-item-end-margin-start);
 
   display: block;
+
   position: static;
 }
 
-:host(.in-item[slot="end"]) {
-  @include margin($checkbox-ios-item-end-margin-top, $checkbox-ios-item-end-margin-end, $checkbox-ios-item-end-margin-bottom, $checkbox-ios-item-end-margin-start);
+:host(.in-item[slot="start"]) {
+  @include margin($checkbox-ios-item-start-margin-top, $checkbox-ios-item-start-margin-end, $checkbox-ios-item-start-margin-bottom, $checkbox-ios-item-start-margin-start);
 }

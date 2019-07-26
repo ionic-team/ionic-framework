@@ -1,5 +1,6 @@
-import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
 
+import { getIonMode } from '../../global/ionic-global';
 import { Side } from '../../interface';
 import { isEndSide } from '../../utils/helpers';
 
@@ -10,13 +11,12 @@ import { isEndSide } from '../../utils/helpers';
     md: 'item-options.md.scss'
   }
 })
-export class ItemOptions {
+export class ItemOptions implements ComponentInterface {
+
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'window' }) win!: Window;
-
   /**
-   * The side the option button should be on. Possible values: `"start"` and `"end"`. Defaults to `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
+   * The side the option button should be on. Possible values: `"start"` and `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
    *
    */
   @Prop() side: Side = 'end';
@@ -24,20 +24,32 @@ export class ItemOptions {
   /**
    * Emitted when the item has been fully swiped.
    */
-  @Event() ionSwipe!: EventEmitter<void>;
+  @Event() ionSwipe!: EventEmitter<any>;
 
+  /** @internal */
   @Method()
-  fireSwipeEvent() {
-    this.ionSwipe.emit();
+  async fireSwipeEvent() {
+    this.ionSwipe.emit({
+      side: this.side
+    });
   }
 
-  hostData() {
-    const isEnd = isEndSide(this.win, this.side);
-    return {
-      class: {
-        'item-options-start': !isEnd,
-        'item-options-end': isEnd
-      }
-    };
+  render() {
+    const mode = getIonMode(this);
+    const isEnd = isEndSide(this.side);
+    return (
+      <Host
+        class={{
+          [mode]: true,
+
+          // Used internally for styling
+          [`item-options-${mode}`]: true,
+
+          'item-options-start': !isEnd,
+          'item-options-end': isEnd
+        }}
+      >
+      </Host>
+    );
   }
 }

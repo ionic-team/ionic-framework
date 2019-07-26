@@ -1,6 +1,6 @@
 import { HeaderFn, ItemHeightFn, VirtualNode } from '../../../interface';
-import { CellType } from '../virtual-scroll-interface';
 import { Range, calcCells, calcHeightIndex, getRange, getShouldUpdate, getViewport, positionForIndex, resizeBuffer, updateVDom } from '../virtual-scroll-utils';
+import { CELL_TYPE_ITEM, CELL_TYPE_HEADER, CELL_TYPE_FOOTER } from '../constants';
 
 describe('getViewport', () => {
   it('should return viewport without margin', () => {
@@ -146,10 +146,10 @@ describe('resizeBuffer', () => {
 describe('calcCells', () => {
   it('should calculate cells without headers and itemHeight', () => {
     const items = ['0', 2, 'hola', { data: 'hello' }];
-    const cells = calcCells(items, undefined, undefined, undefined, 10, 20, 30, 0, 0, items.length);
+    const cells = calcCells(items, undefined, undefined, undefined, undefined, undefined, 10, 20, 30, 0, 0, items.length);
     expect(cells).toEqual([
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: '0',
         i: 0,
         index: 0,
@@ -158,7 +158,7 @@ describe('calcCells', () => {
         visible: false,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: 2,
         i: 1,
         index: 1,
@@ -167,7 +167,7 @@ describe('calcCells', () => {
         visible: false,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: 'hola',
         i: 2,
         index: 2,
@@ -176,7 +176,7 @@ describe('calcCells', () => {
         visible: false,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: { data: 'hello' },
         i: 3,
         index: 3,
@@ -195,12 +195,12 @@ describe('calcCells', () => {
       called++;
       return index * 20 + 20;
     };
-    const cells = calcCells(items, itemHeight, undefined, undefined, 10, 20, 30, 0, 0, items.length);
+    const cells = calcCells(items, itemHeight, undefined, undefined, undefined, undefined, 10, 20, 30, 0, 0, items.length);
 
     expect(called).toEqual(3);
     expect(cells).toEqual([
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: 10,
         i: 0,
         index: 0,
@@ -209,7 +209,7 @@ describe('calcCells', () => {
         visible: true,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: 9,
         i: 1,
         index: 1,
@@ -218,7 +218,7 @@ describe('calcCells', () => {
         visible: true,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: 8,
         i: 2,
         index: 2,
@@ -251,14 +251,14 @@ describe('calcCells', () => {
       called++;
       return index * 20 + 20;
     };
-    const cells = calcCells(items, itemHeight, headerFn, footerFn, 10, 20, 30, 0, 0, items.length);
+    const cells = calcCells(items, itemHeight, undefined, undefined, headerFn, footerFn, 10, 20, 30, 0, 0, items.length);
     expect(cells).toHaveLength(5);
     expect(called).toEqual(3);
     expect(headerCalled).toEqual(3);
     expect(footerCalled).toEqual(3);
     expect(cells).toEqual([
       {
-        type: CellType.Header,
+        type: CELL_TYPE_HEADER,
         value: 'my header',
         i: 0,
         index: 0,
@@ -267,7 +267,7 @@ describe('calcCells', () => {
         visible: false,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: '10',
         i: 1,
         index: 0,
@@ -276,7 +276,7 @@ describe('calcCells', () => {
         visible: true,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: '9',
         i: 2,
         index: 1,
@@ -285,7 +285,7 @@ describe('calcCells', () => {
         visible: true,
       },
       {
-        type: CellType.Item,
+        type: CELL_TYPE_ITEM,
         value: '8',
         i: 3,
         index: 2,
@@ -294,7 +294,7 @@ describe('calcCells', () => {
         visible: true,
       },
       {
-        type: CellType.Footer,
+        type: CELL_TYPE_FOOTER,
         value: 'my footer',
         i: 4,
         index: 2,
@@ -315,7 +315,7 @@ describe('calcHeightIndex', () => {
     const footerFn: HeaderFn = (_, index) => {
       return (index === 2) ? 'my footer' : null;
     };
-    const cells = calcCells(items, undefined, headerFn, footerFn, 10, 20, 50, 0, 0, items.length);
+    const cells = calcCells(items, undefined, undefined, undefined, headerFn, footerFn, 10, 20, 50, 0, 0, items.length);
     const buf = resizeBuffer(undefined, cells.length);
     const totalHeight = calcHeightIndex(buf, cells, 0);
     expect(buf.length).toEqual(7);
@@ -368,15 +368,20 @@ describe('updateVDom', () => {
   it('should initialize empty VDOM', () => {
     const vdom: VirtualNode[] = [];
     const items = [1, 2, 3, 4, 5];
-    const { heightIndex, cells } = mockVirtualScroll(items, () => 20);
-    const range: Range = { offset: 1, length: 4 };
+    const { heightIndex, cells } = mockVirtualScroll(items, () => 20,
+      (_, i) => i === 1 ? 'hola' : null,
+      (_, i) => i === 2 ? 'hola' : null
+    );
+    const range: Range = { offset: 1, length: 6 };
 
     updateVDom(vdom, heightIndex, cells, range);
     expect(vdom).toEqual([
       { cell: cells[1], change: 2, d: false, top: 20, visible: true },
-      { cell: cells[2], change: 2, d: false, top: 40, visible: true },
-      { cell: cells[3], change: 2, d: false, top: 60, visible: true },
-      { cell: cells[4], change: 2, d: false, top: 80, visible: true }
+      { cell: cells[2], change: 2, d: false, top: 30, visible: true },
+      { cell: cells[3], change: 2, d: false, top: 50, visible: true },
+      { cell: cells[4], change: 2, d: false, top: 70, visible: true },
+      { cell: cells[5], change: 2, d: false, top: 80, visible: true },
+      { cell: cells[6], change: 2, d: false, top: 100, visible: true }
     ]);
   });
 
@@ -503,7 +508,7 @@ function mockVirtualScroll(
   headerFn?: HeaderFn,
   footerFn?: HeaderFn
 ) {
-  const cells = calcCells(items, itemHeight, headerFn, footerFn, 10, 10, 30, 0, 0, items.length);
+  const cells = calcCells(items, itemHeight, undefined, undefined, headerFn, footerFn, 10, 10, 30, 0, 0, items.length);
   const heightIndex = resizeBuffer(undefined, cells.length);
   calcHeightIndex(heightIndex, cells, 0);
   return { items, heightIndex, cells };

@@ -1,41 +1,42 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
 
-import { Animation, AnimationBuilder, Config, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { config } from '../../global/config';
+import { getIonMode } from '../../global/ionic-global';
+import { Animation, AnimationBuilder, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
-import { createThemedClasses, getClassMap } from '../../utils/theme';
+import { sanitizeDOMString } from '../../utils/sanitization';
+import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-loading',
   styleUrls: {
     ios: 'loading.ios.scss',
     md: 'loading.md.scss'
-  }
+  },
+  scoped: true
 })
-export class Loading implements OverlayInterface {
+export class Loading implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
 
   presented = false;
   animation?: Animation;
+  mode = getIonMode(this);
 
   @Element() el!: HTMLElement;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
-  @Prop({ context: 'config' }) config!: Config;
+  /** @internal */
   @Prop() overlayIndex!: number;
 
   /**
-   * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
-   */
-  @Prop() mode!: Mode;
-
-  /**
-   * If true, the keyboard will be automatically dismissed when the overlay is presented.
+   * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
    */
   @Prop() keyboardClose = true;
 
@@ -66,40 +67,31 @@ export class Loading implements OverlayInterface {
   @Prop() duration = 0;
 
   /**
-   * If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
+   * If `true`, the loading indicator will be dismissed when the backdrop is clicked.
    */
   @Prop() backdropDismiss = false;
 
   /**
-   * If true, a backdrop will be displayed behind the loading indicator. Defaults to `true`.
+   * If `true`, a backdrop will be displayed behind the loading indicator.
    */
   @Prop() showBackdrop = true;
 
   /**
-   * The name of the spinner to display. Possible values are: `"lines"`, `"lines-small"`, `"dots"`,
-   * `"bubbles"`, `"circles"`, `"crescent"`.
+   * The name of the spinner to display.
    */
-  @Prop({ mutable: true }) spinner?: string;
+  @Prop({ mutable: true }) spinner?: SpinnerTypes | null;
 
   /**
-   * If true, the loading indicator will be translucent. Defaults to `false`.
+   * If `true`, the loading indicator will be translucent.
+   * Only applies when the mode is `"ios"` and the device supports
+   * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    */
   @Prop() translucent = false;
 
   /**
-   * If true, the loading indicator will animate. Defaults to `true`.
+   * If `true`, the loading indicator will animate.
    */
   @Prop() animated = true;
-
-  /**
-   * Emitted after the loading has unloaded.
-   */
-  @Event() ionLoadingDidUnload!: EventEmitter<void>;
-
-  /**
-   * Emitted after the loading has loaded.
-   */
-  @Event() ionLoadingDidLoad!: EventEmitter<void>;
 
   /**
    * Emitted after the loading has presented.
@@ -123,21 +115,12 @@ export class Loading implements OverlayInterface {
 
   componentWillLoad() {
     if (this.spinner === undefined) {
-      this.spinner = this.config.get('loadingSpinner', this.mode === 'ios' ? 'lines' : 'crescent');
+      const mode = getIonMode(this);
+      this.spinner = config.get(
+        'loadingSpinner',
+        config.get('spinner', mode === 'ios' ? 'lines' : 'crescent')
+      );
     }
-  }
-
-  componentDidLoad() {
-    this.ionLoadingDidLoad.emit();
-  }
-
-  componentDidUnload() {
-    this.ionLoadingDidUnload.emit();
-  }
-
-  @Listen('ionBackdropTap')
-  protected onBackdropTap() {
-    return this.dismiss(undefined, BACKDROP);
   }
 
   /**
@@ -157,6 +140,12 @@ export class Loading implements OverlayInterface {
 
   /**
    * Dismiss the loading overlay after it has been presented.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the loading.
+   * This can be useful in a button handler for determining which button was
+   * clicked to dismiss the loading.
+   * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
    */
   @Method()
   dismiss(data?: any, role?: string): Promise<boolean> {
@@ -182,35 +171,36 @@ export class Loading implements OverlayInterface {
     return eventMethod(this.el, 'ionLoadingWillDismiss');
   }
 
-  hostData() {
-    const themedClasses = this.translucent
-      ? createThemedClasses(this.mode, 'loading-translucent')
-      : {};
-
-    return {
-      style: {
-        zIndex: 20000 + this.overlayIndex
-      },
-      class: {
-        ...createThemedClasses(this.mode, 'loading'),
-        ...themedClasses,
-        ...getClassMap(this.cssClass)
-      }
-    };
+  private onBackdropTap = () => {
+    this.dismiss(undefined, BACKDROP);
   }
 
   render() {
-    return [
-      <ion-backdrop visible={this.showBackdrop} tappable={false} />,
-      <div class="loading-wrapper" role="dialog">
-        {this.spinner !== 'hide' && (
-          <div class="loading-spinner">
-            <ion-spinner name={this.spinner} />
-          </div>
-        )}
+    const { message, spinner } = this;
+    const mode = getIonMode(this);
+    return (
+      <Host
+        onIonBackdropTap={this.onBackdropTap}
+        style={{
+          zIndex: `${40000 + this.overlayIndex}`
+        }}
+        class={{
+          ...getClassMap(this.cssClass),
+          [mode]: true,
+          'loading-translucent': this.translucent
+        }}
+      >
+        <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss} />
+        <div class="loading-wrapper" role="dialog">
+          {spinner && (
+            <div class="loading-spinner">
+              <ion-spinner name={spinner} />
+            </div>
+          )}
 
-        {this.message && <div class="loading-content">{this.message}</div>}
-      </div>
-    ];
+          {message && <div class="loading-content" innerHTML={sanitizeDOMString(message)}></div>}
+        </div>
+      </Host>
+    );
   }
 }

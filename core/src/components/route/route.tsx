@@ -1,9 +1,9 @@
-import { Component, Event, EventEmitter, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 
 @Component({
   tag: 'ion-route'
 })
-export class Route {
+export class Route implements ComponentInterface {
 
   /**
    * Relative path that needs to match in order for this route to apply.
@@ -18,7 +18,7 @@ export class Route {
    * when the route matches.
    *
    * The value of this property is not always the tagname of the component to load,
-   * in ion-tabs it actually refers to the name of the `ion-tab` to select.
+   * in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
    */
   @Prop() component!: string;
 
@@ -29,7 +29,7 @@ export class Route {
   @Prop() componentProps?: {[key: string]: any};
 
   /**
-   * Used internaly by `ion-router` to know when this route did change.
+   * Used internally by `ion-router` to know when this route did change.
    */
   @Event() ionRouteDataChanged!: EventEmitter<any>;
 

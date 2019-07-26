@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * Md Loading Enter Animation
  */
-export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+export const mdEnterAnimation = (AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> => {
   const baseAnimation = new AnimationC();
 
   const backdropAnimation = new AnimationC();
@@ -12,7 +12,7 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Pr
   const wrapperAnimation = new AnimationC();
   wrapperAnimation.addElement(baseEl.querySelector('.loading-wrapper'));
 
-  backdropAnimation.fromTo('opacity', 0.01, 0.5);
+  backdropAnimation.fromTo('opacity', 0.01, 0.32);
 
   wrapperAnimation.fromTo('opacity', 0.01, 1).fromTo('scale', 1.1, 1);
 
@@ -22,4 +22,4 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Pr
     .duration(200)
     .add(backdropAnimation)
     .add(wrapperAnimation));
-}
+};

@@ -5,42 +5,60 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: currentColor;
-}
-
-.back-button-native {
-  @include margin(1px, 6px, 0, 0);
-  @include padding(0, 5px);
-
-  min-width: 44px;
-  height: 32px;
-
-  border: 0;
-
-  background-color: transparent;
+  --border-radius: 4px;
+  --background-focused: rgba(66, 66, 66, 0.24);
+  --background-hover: rgba(66, 66, 66, 0.08);
+  --color: #{$back-button-md-color};
+  --icon-margin-end: 0;
+  --icon-margin-start: 0;
+  --icon-font-size: 24px;
+  --icon-font-weight: normal;
+  --min-height: 32px;
+  --min-width: 44px;
+  --padding-start: 12px;
+  --padding-end: 12px;
 
   font-size: 14px;
   font-weight: 500;
 
   text-transform: uppercase;
+}
 
+:host(.back-button-has-icon-only) {
+  --border-radius: 50%;
+
+  min-width: 48px;
+  height: 48px;
+}
+
+.button-native {
   box-shadow: none;
+}
 
-  &.activated {
-    opacity: .4;
-  }
+.button-text {
+  @include padding(0, 4px);
 }
 
 ion-icon {
-  @include padding-horizontal(null, .3em);
-  @include margin(0);
-  @include margin(0, 6px);
-
-  font-size: 24px;
-  font-weight: normal;
-
   line-height: .67;
 
   text-align: start;
-  pointer-events: none;
+}
+
+
+// Back Button Color: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(.ion-color:hover) .button-native {
+    background: #{current-color(base, .08)};
+  }
+}
+
+
+// Back Button Color: Focused
+// --------------------------------------------------
+
+:host(.ion-color.ion-focused) .button-native {
+  background: #{current-color(base, .24)};
 }

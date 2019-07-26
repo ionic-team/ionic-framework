@@ -5,27 +5,25 @@
 
 :host {
   /**
-   * @prop --color: Color of the select text
-   * @prop --icon-color: Color of the select icon
    * @prop --padding-top: Top padding of the select
-   * @prop --padding-end: End padding of the select
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the select
    * @prop --padding-bottom: Bottom padding of the select
-   * @prop --padding-start: Start padding of the select
-   * @prop --placeholder-color: Color of the select placeholder text
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the select
    */
-
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
   display: flex;
-
-  color: var(--color);
+  position: relative;
 
   font-family: $font-family-base;
 
   overflow: hidden;
+  z-index: $z-index-item-input;
 }
 
 :host(.in-item) {
+  position: static;
+
   max-width: 45%;
 }
 
@@ -34,15 +32,17 @@
   pointer-events: none;
 }
 
-:host(.select-key) button {
+:host(.ion-focused) button {
   border: 2px solid #5e9ed6;
 }
 
 .select-placeholder {
-  color: var(--placeholder-color);
+  color: currentColor;
+
+  opacity: .33;
 }
 
-.select-cover {
+button {
   @include input-cover();
 }
 
@@ -77,14 +77,9 @@
   border-right: 5px solid transparent;
   border-left: 5px solid transparent;
 
-  color: var(--icon-color);
+  color: currentColor;
+
+  opacity: .33;
+
   pointer-events: none;
-}
-
-::slotted(ion-select-option) {
-  display: none;
-}
-
-button:focus {
-  outline: none;
 }

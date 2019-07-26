@@ -4,9 +4,6 @@
 // Material Design List Header
 // --------------------------------------------------
 
-/// @prop - Margin bottom of the header in a list
-$list-md-header-margin-bottom:   13px !default;
-
 /// @prop - Padding start of the header in a list
 $list-md-header-padding-start:   $item-md-padding-start !default;
 
@@ -17,4 +14,4 @@ $list-md-header-min-height:      45px !default;
 $list-md-header-font-size:       14px !default;
 
 /// @prop - Text color of the header in a list
-$list-md-header-color:           $text-color-step-400 !default;
+$list-md-header-color:           $text-color !default;

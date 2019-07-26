@@ -1,88 +1,68 @@
+
 ```html
-<ion-content>
-  <ion-list>
-    <ion-reorder-group>
+<!-- Default reorder icon, end aligned items -->
+<ion-item>
+  <ion-label>
+    Item 1
+  </ion-label>
+  <ion-reorder slot="end"></ion-reorder>
+</ion-item>
 
-      <ion-item>
-        <ion-label>
-          Item 1
-        </ion-label>
-        <ion-reorder slot="end"></ion-reorder>
-      </ion-item>
+<ion-item>
+  <ion-label>
+    Item 2
+  </ion-label>
+  <ion-reorder slot="end"></ion-reorder>
+</ion-item>
 
-      <ion-item>
-        <ion-label>
-          Item 2
-        </ion-label>
-        <ion-reorder slot="end"></ion-reorder>
-      </ion-item>
+<!-- Default reorder icon, start aligned items -->
+<ion-item>
+  <ion-reorder slot="start"></ion-reorder>
+  <ion-label>
+    Item 3
+  </ion-label>
+</ion-item>
 
-      <ion-item>
-        <ion-label>
-          Item 3 (default ion-reorder slot="start")
-        </ion-label>
-        <ion-reorder slot="start"></ion-reorder>
-      </ion-item>
+<ion-item>
+  <ion-reorder slot="start"></ion-reorder>
+  <ion-label>
+    Item 4
+  </ion-label>
+</ion-item>
 
-      <ion-item color="secondary">
-        <ion-label>
-          Item 4 (default ion-reorder slot="start")
-        </ion-label>
-        <ion-reorder slot="start"></ion-reorder>
-      </ion-item>
+<!-- Custom reorder icon end items -->
+<ion-item>
+  <ion-label>
+    Item 5
+  </ion-label>
+  <ion-reorder slot="end">
+    <ion-icon name="pizza"></ion-icon>
+  </ion-reorder>
+</ion-item>
 
-      <ion-item>
-        <ion-label>
-          Item 5 (custom ion-reorder)
-        </ion-label>
-        <ion-reorder slot="end">
-          <ion-icon name="pizza"></ion-icon>
-        </ion-reorder>
-      </ion-item>
+<ion-item>
+  <ion-label>
+    Item 6
+  </ion-label>
+  <ion-reorder slot="end">
+    <ion-icon name="pizza"></ion-icon>
+  </ion-reorder>
+</ion-item>
 
-      <ion-item>
-        <ion-label>
-          Item 6 (custom ion-reorder)
-        </ion-label>
-        <ion-reorder slot="end">
-          <ion-icon name="pizza"></ion-icon>
-        </ion-reorder>
-      </ion-item>
+<!-- Items wrapped in a reorder, entire item can be dragged -->
+<ion-reorder>
+  <ion-item>
+    <ion-label>
+      Item 7
+    </ion-label>
+  </ion-item>
+</ion-reorder>
 
-      <ion-item>
-        <ion-label>
-          Item 7 (custom ion-reorder slot="start")
-        </ion-label>
-        <ion-reorder slot="start">
-          <ion-icon name="pizza"></ion-icon>
-        </ion-reorder>
-      </ion-item>
-
-      <ion-reorder>
-        <ion-item>
-          <ion-label>
-            Item 8 (the whole item can be dragged)
-          </ion-label>
-          </ion-item>
-      </ion-reorder>
-
-      <ion-reorder>
-        <ion-item>
-          <ion-label>
-            Item 9 (the whole item can be dragged)
-          </ion-label>
-          </ion-item>
-      </ion-reorder>
-
-      <ion-reorder>
-        <ion-item>
-          <ion-label>
-            Item 10 (the whole item can be dragged)
-          </ion-label>
-          </ion-item>
-      </ion-reorder>
-
-    </ion-reorder-group>
-  </ion-list>
-</ion-content>
+<ion-reorder>
+  <ion-item>
+    <ion-label>
+      Item 8
+    </ion-label>
+  </ion-item>
+</ion-reorder>
 ```

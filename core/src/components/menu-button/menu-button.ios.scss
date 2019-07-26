@@ -1,17 +1,34 @@
 @import "./menu-button";
-@import "./menu-button.ios.vars";
 
 // iOS Menu Button
 // --------------------------------------------------
 
 :host {
-  color: #{ion-color(primary, base)};
-}
+  --background-focused: #{ion-color(primary, base, .1)};
+  --border-radius: 4px;
+  --color: #{ion-color(primary, base)};
+  --padding-start: 5px;
+  --padding-end: 5px;
 
-button {
-  @include padding(0, 5px);
-}
+  height: 32px;
 
-ion-icon {
   font-size: 31px;
+}
+
+:host(.activated) {
+  opacity: .4;
+}
+
+@media (any-hover: hover) {
+  :host(:hover) {
+    opacity: .6;
+  }
+}
+
+
+// Menu Button Color: Focused
+// --------------------------------------------------
+
+:host(.ion-color.ion-focused) .button-native {
+  background: #{current-color(base, .1)};
 }

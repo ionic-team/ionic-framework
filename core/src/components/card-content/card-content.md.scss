@@ -44,3 +44,7 @@
     line-height: 1.5;
   }
 }
+
+ion-card-header + .card-content-md {
+  padding-top: 0;
+}

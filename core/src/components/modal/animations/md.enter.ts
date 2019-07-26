@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * Md Modal Enter Animation
  */
-export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+export const mdEnterAnimation = (AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> => {
   const baseAnimation = new AnimationC();
 
   const backdropAnimation = new AnimationC();
@@ -16,7 +16,7 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Pr
     .fromTo('opacity', 0.01, 1)
     .fromTo('translateY', '40px', '0px');
 
-  backdropAnimation.fromTo('opacity', 0.01, 0.4);
+  backdropAnimation.fromTo('opacity', 0.01, 0.32);
 
   return Promise.resolve(baseAnimation
     .addElement(baseEl)
@@ -25,4 +25,4 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Pr
     .beforeAddClass('show-modal')
     .add(backdropAnimation)
     .add(wrapperAnimation));
-}
+};

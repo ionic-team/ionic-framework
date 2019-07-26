@@ -8,6 +8,8 @@
    * @prop --background: Background of the card
    * @prop --color: Color of the card
    */
+  --ion-safe-area-left: 0px;
+  --ion-safe-area-right: 0px;
 
   @include font-smoothing();
 
@@ -30,9 +32,10 @@
   color: current-color(contrast);
 }
 
+:host(.ion-color)::slotted(*) ion-card-header,
 :host(.ion-color)::slotted(*) ion-card-title,
 :host(.ion-color)::slotted(*) ion-card-subtitle {
-  color: currentColor;
+  color: current-color(contrast);
 }
 
 // Slotted Content
@@ -46,4 +49,57 @@
 
 ::slotted(*) ion-list {
   @include margin(0);
+}
+
+
+// Disabled Card
+// --------------------------------------------------
+
+:host(.card-disabled) {
+  cursor: default;
+  opacity: .3;
+  pointer-events: none;
+}
+
+
+// Native
+// --------------------------------------------------
+
+.card-native {
+  @include text-inherit();
+  @include padding(0);
+  @include margin(0);
+
+  display: block;
+
+  width: 100%;
+  min-height: var(--min-height);
+
+  transition: var(--transition);
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  outline: none;
+
+  background: var(--background);
+}
+
+.card-native::-moz-focus-inner {
+  border: 0;
+}
+
+button, a {
+  cursor: pointer;
+  user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+// Card Button Ripple effect
+// --------------------------------------------------
+
+ion-ripple-effect {
+  color: var(--ripple-color);
 }

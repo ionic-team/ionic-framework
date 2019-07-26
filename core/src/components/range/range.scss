@@ -8,6 +8,7 @@
    * @prop --bar-background: Background of the range bar
    * @prop --bar-background-active: Background of the active range bar
    * @prop --bar-height: Height of the range bar
+   * @prop --bar-border-radius: Border radius of the range bar
    * @prop --height: Height of the range
    * @prop --knob-background: Background of the range knob
    * @prop --knob-border-radius: Border radius of the range knob
@@ -19,12 +20,17 @@
   display: flex;
   position: relative;
 
-  flex: 1;
+  flex: 3;
   align-items: center;
 
   font-family: $font-family-base;
 
   user-select: none;
+  z-index: $z-index-item-input;
+}
+
+:host(.range-disabled) {
+  pointer-events: none;
 }
 
 ::slotted(ion-label) {
@@ -34,9 +40,6 @@
 ::slotted(ion-icon[slot]) {
   font-size: 24px;
 }
-
-
-
 
 .range-slider {
   position: relative;
@@ -49,6 +52,7 @@
   contain: size layout style;
 
   cursor: grab;
+  touch-action: pan-y;
 }
 
 :host(.range-pressed) .range-slider {
@@ -75,6 +79,11 @@
     null
   );
 
+  @include rtl() {
+    /* stylelint-disable-next-line property-blacklist */
+    left: unset;
+  }
+
   position: absolute;
 
   width: var(--knob-handle-size);
@@ -89,7 +98,14 @@
 }
 
 .range-bar {
+  @include border-radius(var(--bar-border-radius));
   @include position(calc((var(--height) - var(--bar-height)) / 2), null, null, 0);
+
+  @include rtl() {
+    /* stylelint-disable-next-line property-blacklist */
+    left: unset;
+  }
+
   position: absolute;
 
   width: 100%;
@@ -108,6 +124,11 @@
     calc(50% - var(--knob-size) / 2)
   );
 
+  @include rtl() {
+    /* stylelint-disable-next-line property-blacklist */
+    left: unset;
+  }
+
   position: absolute;
 
   width: var(--knob-size);
@@ -124,9 +145,6 @@
   will-change: left, right;
 }
 
-:host(.range-pressed) .range-knob-handle {
-  will-change: left;
-}
 
 // Range in Item
 // ----------------------------

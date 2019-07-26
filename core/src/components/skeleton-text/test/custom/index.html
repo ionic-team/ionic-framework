@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Skeleton Text - Custom</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Skeleton Text</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <header>Default</header>
+      <div class="ion-padding">
+        <!-- width should not be used a prop but make sure it works for backwards compatibility -->
+        <ion-skeleton-text width="88%"></ion-skeleton-text>
+        <ion-skeleton-text class="tiny"></ion-skeleton-text>
+        <ion-skeleton-text style="width: 60%"></ion-skeleton-text>
+        <ion-skeleton-text animated class="tiny"></ion-skeleton-text>
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </div>
+      <header>Custom RGB Background</header>
+      <div class="ion-padding custom-skeleton-color">
+        <!-- width should not be used a prop but make sure it works for backwards compatibility -->
+        <ion-skeleton-text width="88%"></ion-skeleton-text>
+        <ion-skeleton-text class="tiny"></ion-skeleton-text>
+        <ion-skeleton-text style="width: 60%"></ion-skeleton-text>
+        <ion-skeleton-text animated class="tiny"></ion-skeleton-text>
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </div>
+      <header>Global Text Color Dark Theme</header>
+      <div class="ion-padding custom-skeleton-dark">
+        <!-- width should not be used a prop but make sure it works for backwards compatibility -->
+        <ion-skeleton-text width="88%"></ion-skeleton-text>
+        <ion-skeleton-text class="tiny"></ion-skeleton-text>
+        <ion-skeleton-text style="width: 60%"></ion-skeleton-text>
+        <ion-skeleton-text animated class="tiny"></ion-skeleton-text>
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </div>
+
+      <ion-skeleton-text style="margin: 16px; width: 40px; height: 50px"></ion-skeleton-text>
+    </ion-content>
+  </ion-app>
+
+  <style>
+    .tiny {
+      width: 40%;
+    }
+
+    header {
+      padding: 16px 16px 4px 16px;
+    }
+
+    .custom-skeleton-color ion-skeleton-text {
+      --background-rgb: 255,0,0;
+    }
+
+    .custom-skeleton-dark {
+      background: #222;
+
+      --ion-text-color: white;
+      --ion-text-color-rgb: 255,255,255;
+    }
+  </style>
+</body>
+
+</html>

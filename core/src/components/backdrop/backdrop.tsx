@@ -1,5 +1,7 @@
-import { Component, Event, EventEmitter, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Event, EventEmitter, Host, Listen, Prop, h } from '@stencil/core';
 
+import { getIonMode } from '../../global/ionic-global';
+import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { now } from '../../utils/helpers';
 
 @Component({
@@ -10,24 +12,25 @@ import { now } from '../../utils/helpers';
   },
   shadow: true
 })
-export class Backdrop {
+export class Backdrop implements ComponentInterface {
 
   private lastClick = -10000;
-
-  @Prop({ context: 'document' }) doc!: Document;
+  private blocker = GESTURE_CONTROLLER.createBlocker({
+    disableScroll: true
+  });
 
   /**
-   * If true, the backdrop will be visible. Defaults to `true`.
+   * If `true`, the backdrop will be visible.
    */
   @Prop() visible = true;
 
   /**
-   * If true, the backdrop will can be clicked and will emit the `ionBackdropTap` event. Defaults to `true`.
+   * If `true`, the backdrop will can be clicked and will emit the `ionBackdropTap` event.
    */
   @Prop() tappable = true;
 
   /**
-   * If true, the backdrop will stop propagation on tap. Defaults to `true`.
+   * If `true`, the backdrop will stop propagation on tap.
    */
   @Prop() stopPropagation = true;
 
@@ -37,11 +40,13 @@ export class Backdrop {
   @Event() ionBackdropTap!: EventEmitter<void>;
 
   componentDidLoad() {
-    registerBackdrop(this.doc, this);
+    if (this.stopPropagation) {
+      this.blocker.block();
+    }
   }
 
   componentDidUnload() {
-    unregisterBackdrop(this.doc, this);
+    this.blocker.destroy();
   }
 
   @Listen('touchstart', { passive: false, capture: true })
@@ -50,6 +55,7 @@ export class Backdrop {
     this.emitTap(ev);
   }
 
+  @Listen('click', { passive: false, capture: true })
   @Listen('mousedown', { passive: false, capture: true })
   protected onMouseDown(ev: TouchEvent) {
     if (this.lastClick < now(ev) - 2500) {
@@ -67,28 +73,18 @@ export class Backdrop {
     }
   }
 
-  hostData() {
-    return {
-      tabindex: '-1',
-      class: {
-        'backdrop-hide': !this.visible,
-        'backdrop-no-tappable': !this.tappable,
-      }
-    };
-  }
-}
-
-const BACKDROP_NO_SCROLL = 'backdrop-no-scroll';
-const activeBackdrops = new Set();
-
-function registerBackdrop(doc: Document, backdrop: any) {
-  activeBackdrops.add(backdrop);
-  doc.body.classList.add(BACKDROP_NO_SCROLL);
-}
-
-function unregisterBackdrop(doc: Document, backdrop: any) {
-  activeBackdrops.delete(backdrop);
-  if (activeBackdrops.size === 0) {
-    doc.body.classList.remove(BACKDROP_NO_SCROLL);
+  render() {
+    const mode = getIonMode(this);
+    return (
+      <Host
+        tabindex="-1"
+        class={{
+          [mode]: true,
+          'backdrop-hide': !this.visible,
+          'backdrop-no-tappable': !this.tappable,
+        }}
+      >
+      </Host>
+    );
   }
 }

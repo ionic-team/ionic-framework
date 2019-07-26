@@ -4,7 +4,21 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --background: Background of the alert
+   *
+   * @prop --min-width: Minimum width of the alert
+   * @prop --width: Width of the alert
+   * @prop --max-width: Maximum width of the alert
+   *
+   * @prop --min-height: Minimum height of the alert
+   * @prop --height: Height of the alert
+   * @prop --max-height: Maximum height of the alert
+   */
   --min-width: #{$alert-min-width};
+  --width: auto;
+  --min-height: auto;
+  --height: auto;
   --max-height: #{$alert-max-height};
 
   @include font-smoothing();
@@ -24,6 +38,10 @@
   z-index: $z-index-overlay;
 }
 
+:host(.overlay-hidden) {
+  display: none;
+}
+
 :host(.alert-top) {
   @include padding(50px, null, null, null);
 
@@ -35,9 +53,12 @@
 
   flex-direction: column;
 
+  width: var(--width);
   min-width: var(--min-width);
   max-width: var(--max-width);
 
+  height: var(--height);
+  min-height: var(--min-height);
   max-height: var(--max-height);
 
   background: var(--background);
@@ -62,10 +83,12 @@
 .alert-message {
   box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
-  overflow-y: scroll;
+  overflow-y: auto;
   overscroll-behavior-y: contain;
 }
 
+.alert-checkbox-group::-webkit-scrollbar,
+.alert-radio-group::-webkit-scrollbar,
 .alert-message::-webkit-scrollbar {
   display: none;
 }
@@ -110,6 +133,11 @@
   z-index: 0;
 }
 
+.alert-button.ion-focused,
+.alert-tappable.ion-focused {
+  background: $background-color-step-100;
+}
+
 .alert-button-inner {
   display: flex;
 
@@ -126,6 +154,8 @@
   @include margin(0);
   @include padding(0);
 
+  display: flex;
+
   width: 100%;
 
   border: 0;
@@ -138,16 +168,15 @@
 
   text-align: start;
   appearance: none;
+
+  contain: strict;
 }
 
 .alert-button,
 .alert-checkbox,
 .alert-input,
 .alert-radio {
-  &:active,
-  &:focus {
-    outline: none;
-  }
+  outline: none;
 }
 
 .alert-radio-icon,

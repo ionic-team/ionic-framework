@@ -1,0 +1,168 @@
+@import "../../themes/ionic.globals";
+
+:host {
+  /**
+   * @prop --background: Background of the tab button
+   * @prop --background-focused: Background of the tab button when focused with the tab key
+   *
+   * @prop --color: Color of the tab button
+   * @prop --color-selected: Color of the selected tab button
+   *
+   * @prop --padding-top: Top padding of the tab button
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the tab button
+   * @prop --padding-bottom: Bottom padding of the tab button
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the tab button
+   *
+   * @prop --ripple-color: Color of the button ripple effect
+   */
+  --ripple-color: var(--color-selected);
+
+  flex: 1;
+
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+
+  outline: none;
+
+  background: var(--background);
+  color: var(--color);
+}
+
+// Tab Button: Native
+// --------------------------------------------------
+
+a {
+  @include margin(0);
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include text-inherit();
+
+  display: flex;
+  position: relative;
+
+  flex-direction: inherit;
+  align-items: inherit;
+  justify-content: inherit;
+
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+
+  outline: none;
+
+  background: transparent;
+
+  text-decoration: none;
+
+  cursor: pointer;
+  overflow: hidden;
+  box-sizing: border-box;
+  -webkit-user-drag: none;
+}
+
+:host(.ion-focused) {
+  background: var(--background-focused);
+}
+
+@media (any-hover: hover) {
+  a:hover {
+    color: var(--color-selected);
+  }
+}
+
+
+// Tab Button: States
+// --------------------------------------------------
+
+:host(.tab-selected) {
+  color: var(--color-selected);
+}
+
+:host(.tab-hidden) {
+  /* stylelint-disable-next-line declaration-no-important */
+  display: none !important;
+}
+
+:host(.tab-disabled) {
+  pointer-events: none;
+
+  opacity: .4;
+}
+
+
+// Tab Button: Label / Icon
+// --------------------------------------------------
+
+::slotted(ion-label),
+::slotted(ion-icon) {
+  display: block;
+
+  align-self: center;
+
+  max-width: 100%;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+::slotted(ion-label) {
+  order: 0;
+}
+
+::slotted(ion-icon) {
+  order: -1;
+
+  height: 1em;
+}
+
+
+:host(.tab-has-label-only) ::slotted(ion-label) {
+  white-space: normal;
+}
+
+
+// Tab Button: Badge
+// --------------------------------------------------
+
+::slotted(ion-badge) {
+  box-sizing: border-box;
+
+  position: absolute;
+
+  z-index: 1;
+}
+
+
+// Tab Button: Layout
+// --------------------------------------------------
+
+:host(.tab-layout-icon-start) {
+  flex-direction: row;
+}
+
+:host(.tab-layout-icon-end) {
+  flex-direction: row-reverse;
+}
+
+:host(.tab-layout-icon-bottom) {
+  flex-direction: column-reverse;
+}
+
+:host(.tab-layout-icon-hide) ::slotted(ion-icon) {
+  display: none;
+}
+
+:host(.tab-layout-label-hide) ::slotted(ion-label) {
+  display: none;
+}
+
+ion-ripple-effect {
+  color: var(--ripple-color);
+}

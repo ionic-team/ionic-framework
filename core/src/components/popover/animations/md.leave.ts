@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * Md Popover Leave Animation
  */
-export function mdLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+export const mdLeaveAnimation = (AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> => {
   const baseAnimation = new AnimationC();
 
   const backdropAnimation = new AnimationC();
@@ -13,7 +13,7 @@ export function mdLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Pr
   wrapperAnimation.addElement(baseEl.querySelector('.popover-wrapper'));
 
   wrapperAnimation.fromTo('opacity', 0.99, 0);
-  backdropAnimation.fromTo('opacity', 0.08, 0);
+  backdropAnimation.fromTo('opacity', 0.32, 0);
 
   return Promise.resolve(baseAnimation
     .addElement(baseEl)
@@ -21,4 +21,4 @@ export function mdLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Pr
     .duration(500)
     .add(backdropAnimation)
     .add(wrapperAnimation));
-}
+};

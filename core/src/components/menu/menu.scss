@@ -4,8 +4,23 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --background: Background of the menu
+   *
+   * @prop --min-width: Minimum width of the menu
+   * @prop --width: Width of the menu
+   * @prop --max-width: Maximum width of the menu
+   *
+   * @prop --min-height: Minimum height of the menu
+   * @prop --height: Height of the menu
+   * @prop --max-height: Maximum height of the menu
+   */
   --width: #{$menu-width};
-  --width-small: #{$menu-small-width};
+  --min-width: auto;
+  --max-width: auto;
+  --height: 100%;
+  --min-height: auto;
+  --max-height: auto;
   --background: #{$background-color};
 
   @include position(0, 0, 0, 0);
@@ -32,7 +47,12 @@
   justify-content: space-between;
 
   width: var(--width);
-  height: 100%;
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+
+  height: var(--height);
+  min-height: var(--min-height);
+  max-height: var(--max-height);
 
   background: var(--background);
 
@@ -40,6 +60,8 @@
 }
 
 :host(.menu-side-start) .menu-inner {
+  --ion-safe-area-right: 0px;
+
   @include multi-dir() {
     /* stylelint-disable property-blacklist */
     right: auto;
@@ -48,6 +70,8 @@
 }
 
 :host(.menu-side-end) .menu-inner {
+  --ion-safe-area-left: 0px;
+
   @include multi-dir() {
     right: 0;
     left: auto;
@@ -62,25 +86,10 @@ ion-backdrop {
   z-index: -1;
 }
 
-.menu-content {
-  @include transform(translate3d(0, 0, 0));
-}
-
-.menu-content-open {
-  cursor: pointer;
-  touch-action: manipulation;
-
-  // the containing element itself should be clickable but
-  // everything inside of it should not clickable when menu is open
-  pointer-events: none;
-}
-
 @media (max-width: 340px) {
-
   .menu-inner {
-    width: var(--width-small);
+    --width: #{$menu-small-width};
   }
-
 }
 
 

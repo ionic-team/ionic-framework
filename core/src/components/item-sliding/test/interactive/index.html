@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Item Sliding - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+
+<body>
+  <ion-list></ion-list>
+
+  <script>
+    let lists = document.getElementsByTagName('ion-list');
+      for (var i = 0; i < lists.length; i++) {
+        for (var j = 0; j < 3; j++) {
+          addSlidingItem(lists[i]);
+        }
+      }
+
+      function addSlidingItem(list) {
+        const slidingItem = document.createElement('ion-item-sliding');
+        slidingItem.innerHTML = `
+          <ion-item>
+            <ion-label>
+              <h2>Item Options Both Sides</h2>
+            </ion-label>
+          </ion-item>
+
+          <ion-item-options side="end">
+            <ion-item-option color="danger" expandable onclick="remove(this)">
+              <ion-icon name="trash"></ion-icon>
+              Delete
+            </ion-item-option>
+          </ion-item-options>
+        `;
+
+
+        slidingItem.id = `item-${list.childElementCount}`;
+
+        list.appendChild(slidingItem);
+      }
+
+      function remove(optionElement) {
+        const slidingElement = optionElement.parentNode.parentNode;
+        lists[0].removeChild(slidingElement);
+      }
+  </script>
+</body>
+</html>

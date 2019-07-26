@@ -1,7 +1,6 @@
 ```javascript
 async function presentActionSheet() {
   const actionSheetController = document.querySelector('ion-action-sheet-controller');
-  await actionSheetController.componentOnReady();
 
   const actionSheet = await actionSheetController.create({
     header: "Albums",

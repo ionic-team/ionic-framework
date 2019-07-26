@@ -4,10 +4,7 @@
 // iOS Label
 // --------------------------------------------------
 
-:host {
-  @include margin($label-ios-margin-top, $label-ios-margin-end, $label-ios-margin-bottom, $label-ios-margin-start);
-}
-
+:host(.ion-text-wrap),
 :host([text-wrap]) {
   font-size: $label-ios-text-wrap-font-size;
 
@@ -21,7 +18,7 @@
 :host(.label-stacked) {
   @include margin(null, null, 4px, null);
 
-  font-size: 12px;
+  font-size: 13.6px;
 }
 
 :host(.label-floating) {
@@ -35,6 +32,12 @@
 :host-context(.item-has-focus).label-stacked,
 :host-context(.item-has-focus).label-floating {
   color: $label-ios-text-color-focused;
+}
+
+:host-context(.item-has-focus).label-floating,
+:host-context(.item-has-placeholder).label-floating,
+:host-context(.item-has-value).label-floating {
+  @include transform(translate3d(0, 0, 0), scale(.8));
 }
 
 

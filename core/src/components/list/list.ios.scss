@@ -6,16 +6,9 @@
 
 .list-ios {
   @include margin(-1px, $list-ios-margin-end, $list-ios-margin-bottom, $list-ios-margin-start);
-}
 
-.list-ios:not(.list-inset):not(.list-ios-lines-none) .item:last-child {
-  --inner-border-width: 0;
-  --border-width: #{0 0 $list-ios-item-border-bottom-width 0};
+  background: $item-ios-background;
 }
-// .list-ios:not(.list-inset) + .list-ios:not(.list-inset) ion-list-header {
-//   @include margin(-$list-ios-margin-top, null, null, null);
-//   @include padding(0, null, null, null);
-// }
 
 
 // iOS Inset List
@@ -71,8 +64,6 @@
   --inner-border-width: #{0 0 $list-ios-item-border-bottom-width 0};
 }
 
-
-
 // Remove the border from items in lists
 // if they are explicitly styled by the item
 // to be different than the list
@@ -81,5 +72,10 @@
 }
 
 .list-ios .item-lines-full {
+  --inner-border-width: 0;
+}
+
+.list-ios .item-lines-none {
+  --border-width: 0;
   --inner-border-width: 0;
 }

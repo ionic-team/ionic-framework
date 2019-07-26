@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * iOS Loading Enter Animation
  */
-export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+export const iosEnterAnimation = (AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> => {
   const baseAnimation = new AnimationC();
 
   const backdropAnimation = new AnimationC();
@@ -15,7 +15,7 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): P
   backdropAnimation.fromTo('opacity', 0.01, 0.3);
 
   wrapperAnimation.fromTo('opacity', 0.01, 1)
-                  .fromTo('scale', 1.1, 1);
+    .fromTo('scale', 1.1, 1);
 
   return Promise.resolve(baseAnimation
     .addElement(baseEl)
@@ -23,4 +23,4 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): P
     .duration(200)
     .add(backdropAnimation)
     .add(wrapperAnimation));
-}
+};

@@ -7,16 +7,15 @@
 
 :host {
   --border-radius: #{$button-ios-border-radius};
-  --margin-top: #{$button-ios-margin-top};
-  --margin-bottom: #{$button-ios-margin-bottom};
-  --margin-start: #{$button-ios-margin-start};
-  --margin-end: #{$button-ios-margin-end};
   --padding-top: #{$button-ios-padding-top};
   --padding-bottom: #{$button-ios-padding-bottom};
   --padding-start: #{$button-ios-padding-start};
   --padding-end: #{$button-ios-padding-end};
-  --height: #{$button-ios-height};
   --transition: background-color, opacity 100ms linear;
+
+  @include margin($button-ios-margin-top, $button-ios-margin-end, $button-ios-margin-bottom, $button-ios-margin-start);
+
+  height: #{$button-ios-height};
 
   font-size: #{$button-ios-font-size};
   font-weight: #{$button-ios-font-weight};
@@ -27,12 +26,16 @@
 // iOS Solid Button
 // --------------------------------------------------
 
-:host(.button-solid:hover) {
-  --opacity: #{$button-ios-opacity-hover};
+:host(.button-solid) {
+  --background-activated: #{ion-color(primary, shade)};
 }
 
 :host(.button-solid.activated) {
   --opacity: #{$button-ios-opacity-activated};
+}
+
+:host(.button-solid.activated.ion-color) .button-native {
+  background: current-color(shade);
 }
 
 // iOS Outline Button
@@ -56,10 +59,6 @@
 // iOS Clear Button
 // --------------------------------------------------
 
-:host(.button-clear:hover) {
-  --opacity: #{$button-ios-clear-opacity-hover};
-}
-
 :host(.button-clear.activated) {
   --opacity: #{$button-ios-clear-opacity-activated};
 }
@@ -69,6 +68,34 @@
   --background-focused: #{ion-color(primary, base, .1)};
   --color-activated: #{ion-color(primary, base)};
   --color-focused: #{ion-color(primary, base)};
+}
+
+
+// iOS Button Sizes
+// --------------------------------------------------
+
+:host(.button-large) {
+  --border-radius: #{$button-ios-large-border-radius};
+  --padding-top: #{$button-ios-large-padding-top};
+  --padding-start: #{$button-ios-large-padding-start};
+  --padding-end: #{$button-ios-large-padding-end};
+  --padding-bottom: #{$button-ios-large-padding-bottom};
+
+  height: #{$button-ios-large-height};
+
+  font-size: #{$button-ios-large-font-size};
+}
+
+:host(.button-small) {
+  --border-radius: #{$button-ios-small-border-radius};
+  --padding-top: #{$button-ios-small-padding-top};
+  --padding-start: #{$button-ios-small-padding-start};
+  --padding-end: #{$button-ios-small-padding-end};
+  --padding-bottom: #{$button-ios-small-padding-bottom};
+
+  height: #{$button-ios-small-height};
+
+  font-size: #{$button-ios-small-font-size};
 }
 
 
@@ -84,35 +111,37 @@
 }
 
 
-// iOS Button Sizes
-// --------------------------------------------------
-
-:host(.button-large) {
-  --border-radius: #{$button-ios-large-border-radius};
-  --padding-top: #{$button-ios-large-padding-top};
-  --padding-start: #{$button-ios-large-padding-start};
-  --padding-end: #{$button-ios-large-padding-end};
-  --padding-bottom: #{$button-ios-large-padding-bottom};
-  --height: #{$button-ios-large-height};
-
-  font-size: #{$button-ios-large-font-size};
-}
-
-:host(.button-small) {
-  --border-radius: #{$button-ios-small-border-radius};
-  --padding-top: #{$button-ios-small-padding-top};
-  --padding-start: #{$button-ios-small-padding-start};
-  --padding-end: #{$button-ios-small-padding-end};
-  --padding-bottom: #{$button-ios-small-padding-bottom};
-  --height: #{$button-ios-small-height};
-
-  font-size: #{$button-ios-small-font-size};
-}
-
-
 // iOS strong Button
 // --------------------------------------------------
 
 :host(.button-strong) {
   font-weight: #{$button-ios-strong-font-weight};
+}
+
+
+// iOS Button Focus
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(.button-solid:hover) {
+    --opacity: #{$button-ios-opacity-hover};
+  }
+
+  :host(.button-clear:hover),
+  :host(.button-outline:hover) {
+    --opacity: #{$button-ios-clear-opacity-hover};
+  }
+
+  // Since iOS changes the opacity on hover,
+  // we want to keep the background if focused
+  // or activated
+  :host(.ion-focused:hover) {
+    --background-hover: var(--background-focused);
+    --color-hover: var(--color-focused);
+  }
+
+  :host(.activated:hover) {
+    --background-hover: var(--background-activated);
+    --color-hover: var(--color-activated);
+  }
 }

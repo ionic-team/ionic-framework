@@ -7,7 +7,7 @@
 $range-md-padding-vertical:                  8px !default;
 
 /// @prop - Padding start/end of the range
-$range-md-padding-horizontal:                8px !default;
+$range-md-padding-horizontal:                14px !default;
 
 /// @prop - Height of the range slider
 $range-md-slider-height:                     42px !default;
@@ -35,27 +35,6 @@ $range-md-knob-height:                       $range-md-knob-width !default;
 
 /// @prop - Background of the range knob
 $range-md-knob-background-color:             $range-md-bar-active-background-color !default;
-
-/// @prop - Background of the range knob when the value is the minimum
-$range-md-knob-min-background-color:         $background-color !default;
-
-/// @prop - Border of the range knob when the value is the minimum
-$range-md-knob-min-border:                   2px solid $range-md-bar-background-color !default;
-
-/// @prop - Width of the range tick
-$range-md-tick-width:                        2px !default;
-
-/// @prop - Height of the range tick
-$range-md-tick-height:                       $range-md-tick-width !default;
-
-/// @prop - Border radius of the range tick
-$range-md-tick-border-radius:                50% !default;
-
-/// @prop - Background of the range tick
-$range-md-tick-background-color:             $background-color !default;
-
-/// @prop - Background of the active range tick
-$range-md-tick-active-background-color:      $range-md-tick-background-color !default;
 
 /// @prop - Background of the range pin
 $range-md-pin-background-color:              $range-md-bar-active-background-color !default;

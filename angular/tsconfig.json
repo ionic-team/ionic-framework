@@ -1,32 +1,36 @@
 {
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "strictMetadataEmit" : true,
+    "flatModuleOutFile": "core.js",
+    "flatModuleId": "@ionic/angular",
+    "skipTemplateCodegen": true,
+    "fullTemplateTypeCheck": false
+  },
   "compilerOptions": {
     "alwaysStrict": true,
     "strict": true,
     "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
     "declaration": true,
+    "declarationDir": "dist",
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "jsx": "react",
-    "jsxFactory": "h",
-    "lib": [
-      "dom",
-      "es2017"
-    ],
+    "lib": ["dom", "es2017"],
     "module": "es2015",
     "moduleResolution": "node",
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "outDir": "dist",
+    "outDir": "build/es2015",
     "pretty": true,
     "removeComments": false,
+    "importHelpers": true,
     "rootDir": "src",
     "strictPropertyInitialization": false,
-    "target": "es5"
+    "target": "es2015"
   },
-  "files": [
-    "src/index.ts"
-  ]
+  "exclude": ["node_modules", "src/schematics"],
+  "files": ["src/index.ts"]
 }

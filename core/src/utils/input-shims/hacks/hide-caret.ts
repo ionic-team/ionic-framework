@@ -1,13 +1,11 @@
 import { isFocused, relocateInput } from './common';
 
-export function enableHideCaretOnScroll(componentEl: HTMLElement, inputEl: HTMLInputElement | undefined, scrollEl: HTMLIonContentElement | undefined) {
+export const enableHideCaretOnScroll = (componentEl: HTMLElement, inputEl: HTMLInputElement | HTMLTextAreaElement | undefined, scrollEl: HTMLIonContentElement | undefined) => {
   if (!scrollEl || !inputEl) {
     return () => { return; };
   }
-  console.debug('Input: enableHideCaretOnScroll');
 
   const scrollHideCaret = (shouldHideCaret: boolean) => {
-    // console.log('scrollHideCaret', shouldHideCaret)
     if (isFocused(inputEl)) {
       relocateInput(componentEl, inputEl, shouldHideCaret);
     }
@@ -26,4 +24,4 @@ export function enableHideCaretOnScroll(componentEl: HTMLElement, inputEl: HTMLI
     scrollEl.removeEventListener('ionScrollEnd', showCaret);
     inputEl.addEventListener('ionBlur', onBlur);
   };
-}
+};

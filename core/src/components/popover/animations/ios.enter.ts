@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * iOS Popover Enter Animation
  */
-export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> {
+export const iosEnterAnimation = (AnimationC: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> => {
   let originY = 'top';
   let originX = 'left';
 
@@ -12,19 +12,14 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev
   const contentWidth = contentDimentions.width;
   const contentHeight = contentDimentions.height;
 
-  const bodyWidth = window.innerWidth;
-  const bodyHeight = window.innerHeight;
+  const bodyWidth = (baseEl.ownerDocument as any).defaultView.innerWidth;
+  const bodyHeight = (baseEl.ownerDocument as any).defaultView.innerHeight;
 
   // If ev was passed, use that for target element
-  const targetDim =
-    ev && ev.target && (ev.target as HTMLElement).getBoundingClientRect();
+  const targetDim = ev && ev.target && (ev.target as HTMLElement).getBoundingClientRect();
 
-  const targetTop =
-    targetDim != null && 'top' in targetDim
-      ? targetDim.top
-      : bodyHeight / 2 - contentHeight / 2;
-  const targetLeft =
-    targetDim != null && 'left' in targetDim ? targetDim.left : bodyWidth / 2;
+  const targetTop = targetDim != null && 'top' in targetDim ? targetDim.top : bodyHeight / 2 - contentHeight / 2;
+  const targetLeft = targetDim != null && 'left' in targetDim ? targetDim.left : bodyWidth / 2;
   const targetWidth = (targetDim && targetDim.width) || 0;
   const targetHeight = (targetDim && targetDim.height) || 0;
 
@@ -34,7 +29,7 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev
   const arrowWidth = arrowDim.width;
   const arrowHeight = arrowDim.height;
 
-  if (targetDim != null) {
+  if (targetDim == null) {
     arrowEl.style.display = 'none';
   }
 
@@ -64,8 +59,7 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev
     checkSafeAreaLeft = true;
     popoverCSS.left = POPOVER_IOS_BODY_PADDING;
   } else if (
-    contentWidth + POPOVER_IOS_BODY_PADDING + popoverCSS.left + 25 >
-    bodyWidth
+    contentWidth + POPOVER_IOS_BODY_PADDING + popoverCSS.left + 25 > bodyWidth
   ) {
     // Ok, so we're on the right side of the screen,
     // but now we need to make sure we're still a bit further right
@@ -76,14 +70,8 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev
   }
 
   // make it pop up if there's room above
-  if (
-    (targetTop + targetHeight + contentHeight) > bodyHeight &&
-    (targetTop - contentHeight) > 0
-  ) {
+  if (targetTop + targetHeight + contentHeight > bodyHeight && targetTop - contentHeight > 0) {
     arrowCSS.top = targetTop - (arrowHeight + 1);
-    console.log(arrowCSS);
-    console.log(targetTop);
-    console.log(contentHeight);
     popoverCSS.top = targetTop - contentHeight - (arrowHeight - 1);
 
     baseEl.className = baseEl.className + ' popover-bottom';
@@ -100,11 +88,11 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev
   contentEl.style.left = popoverCSS.left + 'px';
 
   if (checkSafeAreaLeft) {
-    contentEl.style.left = `calc(${popoverCSS.left}px + var(--ion-safe-area-left, 0px)`;
+    contentEl.style.left = `calc(${popoverCSS.left}px + var(--ion-safe-area-left, 0px))`;
   }
 
   if (checkSafeAreaRight) {
-    contentEl.style.left = `calc(${popoverCSS.left}px + var(--ion-safe-area-right, 0px)`;
+    contentEl.style.left = `calc(${popoverCSS.left}px - var(--ion-safe-area-right, 0px))`;
   }
 
   contentEl.style.transformOrigin = originY + ' ' + originX;
@@ -125,5 +113,6 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev
     .duration(100)
     .add(backdropAnimation)
     .add(wrapperAnimation));
-}
+};
+
 const POPOVER_IOS_BODY_PADDING = 5;

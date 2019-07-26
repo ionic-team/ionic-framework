@@ -4,7 +4,7 @@ import { Animation } from '../../../interface';
 /**
  * MD Action Sheet Enter Animation
  */
-export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+export const mdEnterAnimation = (AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> => {
   const baseAnimation = new AnimationC();
 
   const backdropAnimation = new AnimationC();
@@ -13,7 +13,7 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Pr
   const wrapperAnimation = new AnimationC();
   wrapperAnimation.addElement(baseEl.querySelector('.action-sheet-wrapper'));
 
-  backdropAnimation.fromTo('opacity', 0.01, 0.26);
+  backdropAnimation.fromTo('opacity', 0.01, 0.32);
   wrapperAnimation.fromTo('translateY', '100%', '0%');
 
   const ani = baseAnimation
@@ -24,4 +24,4 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Pr
     .add(wrapperAnimation);
 
   return Promise.resolve(ani);
-}
+};

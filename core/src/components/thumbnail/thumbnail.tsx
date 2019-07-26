@@ -1,12 +1,19 @@
-import { Component } from '@stencil/core';
+import { Component, ComponentInterface, Host, h } from '@stencil/core';
+
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-thumbnail',
   styleUrl: 'thumbnail.scss',
   shadow: true
 })
-export class Thumbnail {
+export class Thumbnail implements ComponentInterface {
+
   render() {
-    return <slot></slot>;
+    return (
+      <Host class={getIonMode(this)}>
+        <slot></slot>
+      </Host>
+    );
   }
 }

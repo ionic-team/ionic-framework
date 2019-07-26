@@ -5,9 +5,11 @@
   <meta charset="UTF-8">
   <title>Nav</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
-  <script>
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>  <script>
     class PageOne extends HTMLElement {
       connectedCallback() {
         this.innerHTML = `
@@ -16,7 +18,7 @@
               <ion-title>Page One</ion-title>
             </ion-toolbar>
           </ion-header>
-          <ion-content padding>
+          <ion-content class="ion-padding">
             <h1>Page One</h1>
             <ion-button href="#/two">Go to Page Two</ion-button>
           </ion-content>
@@ -34,7 +36,7 @@
               <ion-title>Page Two</ion-title>
             </ion-toolbar>
           </ion-header>
-          <ion-content padding>
+          <ion-content class="ion-padding">
             <h1>Page Two</h1>
             <div>
               <ion-nav-push component="page-three">
@@ -56,7 +58,7 @@
               <ion-title>Page Three</ion-title>
             </ion-toolbar>
           </ion-header>
-          <ion-content padding>
+          <ion-content class="ion-padding">
             <h1>Page Three</h1>
           </ion-content>
         `;

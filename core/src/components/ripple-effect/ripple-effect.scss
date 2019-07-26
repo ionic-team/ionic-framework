@@ -4,12 +4,22 @@
 // Material Design Ripple Effect
 // --------------------------------------------------
 
+$scale-duration: 225ms;
+$fade-in-duration: 75ms;
+$fade-out-duration: 150ms;
+$opacity-duration: $fade-in-duration + $fade-out-duration;
+
 :host {
   @include position(0, 0, 0, 0);
 
   position: absolute;
 
   contain: strict;
+  pointer-events: none;
+}
+
+:host(.unbounded) {
+  contain: layout size style;
 }
 
 .ripple-effect {
@@ -23,23 +33,51 @@
 
   contain: strict;
   opacity: 0;
-  animation-name: rippleAnimation;
-  animation-duration: 200ms;
-  animation-timing-function: ease-out;
+  animation:
+    $scale-duration rippleAnimation forwards,
+    $fade-in-duration fadeInAnimation forwards;
+
   will-change: transform, opacity;
   pointer-events: none;
 }
 
-@keyframes rippleAnimation {
-  0% {
-    transform: scale(.1);
+.fade-out {
+  transform: translate(var(--translate-end)) scale(var(--final-scale, 1));
+  animation: $fade-out-duration fadeOutAnimation forwards;
+}
 
-    opacity: .2;
+@keyframes rippleAnimation {
+  from {
+    animation-timing-function: cubic-bezier(.4, 0, .2, 1);
+
+    transform: scale(1);
   }
 
-  100% {
-    transform: scale(1);
+  to {
+    transform: translate(var(--translate-end)) scale(var(--final-scale, 1));
+  }
+}
 
+@keyframes fadeInAnimation {
+  from {
+    animation-timing-function: linear;
+
+    opacity: 0;
+  }
+
+  to {
+    opacity: 0.16;
+  }
+}
+
+@keyframes fadeOutAnimation {
+  from {
+    animation-timing-function: linear;
+
+    opacity: 0.16;
+  }
+
+  to {
     opacity: 0;
   }
 }

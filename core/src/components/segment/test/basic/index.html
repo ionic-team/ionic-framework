@@ -5,20 +5,20 @@
   <meta charset="UTF-8">
   <title>Segment - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.bundle.css">
-</head>
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body onload="listenForEvent()">
   <ion-app>
 
-    <ion-header no-border>
+    <ion-header>
       <ion-toolbar>
         <ion-title>Segment - Basic</ion-title>
       </ion-toolbar>
-    </ion-header>
 
-    <ion-content>
       <ion-toolbar>
         <ion-segment class="event-tester" value="Free">
           <ion-segment-button value="Paid">
@@ -82,18 +82,20 @@
           </ion-segment-button>
         </ion-segment>
       </ion-toolbar>
+    </ion-header>
 
-      <div padding>
+    <ion-content>
+      <div class="ion-padding">
         <ion-segment>
-          <ion-segment-button>Seg 1</ion-segment-button>
-          <ion-segment-button>Seg 2</ion-segment-button>
-          <ion-segment-button>Seg 3</ion-segment-button>
+          <ion-segment-button><ion-label>Seg 1</ion-label></ion-segment-button>
+          <ion-segment-button><ion-label>Seg 2</ion-label></ion-segment-button>
+          <ion-segment-button><ion-label>Seg 3</ion-label></ion-segment-button>
         </ion-segment>
 
         <ion-segment disabled>
-          <ion-segment-button>Seg 2 1</ion-segment-button>
-          <ion-segment-button checked>Seg 2 2</ion-segment-button>
-          <ion-segment-button>Seg 2 3</ion-segment-button>
+          <ion-segment-button><ion-label>Seg 2 1</ion-label></ion-segment-button>
+          <ion-segment-button checked><ion-label>Seg 2 2</ion-label></ion-segment-button>
+          <ion-segment-button><ion-label>Seg 2 3</ion-label></ion-segment-button>
         </ion-segment>
 
         <ion-segment color="dark" value="Reading List">
@@ -108,27 +110,54 @@
           </ion-segment-button>
         </ion-segment>
 
+        <ion-segment>
+          <ion-segment-button value="330">
+            <ion-label>330ml</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="440">
+            <ion-label>440ml</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="500">
+            <ion-label>500ml</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="custom">
+            <ion-icon name="create"></ion-icon>
+          </ion-segment-button>
+    </ion-segment>
+
         <ion-segment name="dynamicPropDisable" disabled color="danger">
           <ion-segment-button value="Bookmarks">
-            Bookmarks
+            <ion-label>Bookmarks</ion-label>
           </ion-segment-button>
           <ion-segment-button value="Reading List">
-            Reading List
+            <ion-label>Reading List</ion-label>
           </ion-segment-button>
           <ion-segment-button value="Shared Links">
-            Shared Links
+            <ion-label>Shared Links</ion-label>
           </ion-segment-button>
         </ion-segment>
 
         <ion-segment id="finalSegment" name="dynamicAttrElem" color="secondary" value="active">
           <ion-segment-button value="active">
-            Active
+            <ion-label>Active</ion-label>
           </ion-segment-button>
           <ion-segment-button name="dynamicAttrDisable" value="disabled" disabled="true">
-            Disabled
+            <ion-label>Disabled</ion-label>
           </ion-segment-button>
           <ion-segment-button value="inactive" disabled="false">
-            Inactive
+            <ion-label>Inactive</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+
+        <ion-segment name="dynamicAttrElem" value="disabled">
+          <ion-segment-button value="active">
+            <ion-label>Active</ion-label>
+          </ion-segment-button>
+          <ion-segment-button name="dynamicAttrDisable" value="disabled" disabled="true">
+            <ion-label>Disabled</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="inactive" disabled="false">
+            <ion-label>Inactive</ion-label>
           </ion-segment-button>
         </ion-segment>
 
@@ -136,10 +165,10 @@
         <ion-segment id="dynamicButtons" color="dark"></ion-segment>
       </div>
 
-      <div padding-horizontal>
+      <div class="ion-padding-horizontal">
         <ion-button expand="block" onClick="toggleDisabled()">Toggle Disabled</ion-button>
       </div>
-      <div padding>
+      <div class="ion-padding">
         <ion-button expand="block" color="secondary" onClick="toggleValue()">Toggle Value</ion-button>
       </div>
 
@@ -194,7 +223,7 @@
           for (var i = 0; i < length; i++) {
             dynamicButtons.innerHTML += `
                 <ion-segment-button value="segment-${i}">
-                  Btn ${i}
+                  <ion-label>Btn ${i}</ion-label>
                 </ion-segment-button>`;
           }
         }

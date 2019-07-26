@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Toolbar - Spec</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+
+<body>
+  <ion-app>
+    <ion-content>
+      <ion-toolbar color="tertiary">
+        <ion-buttons slot="start">
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button>
+            <ion-icon slot="icon-only" name="download"></ion-icon>
+          </ion-button>
+          <ion-button>
+            <ion-icon slot="icon-only" name="print"></ion-icon>
+          </ion-button>
+          <ion-button>
+            <ion-icon slot="icon-only" name="bookmark"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
+        <ion-title>Standard</ion-title>
+      </ion-toolbar>
+
+      <ion-header>
+        <ion-toolbar color="tertiary">
+          <ion-buttons slot="start">
+            <ion-menu-button auto-hide="false"></ion-menu-button>
+          </ion-buttons>
+          <ion-buttons slot="primary">
+            <ion-button>
+              <ion-icon slot="icon-only" name="heart"></ion-icon>
+            </ion-button>
+            <ion-button>
+              <ion-icon slot="icon-only" name="search"></ion-icon>
+            </ion-button>
+            <ion-button>
+              <ion-icon slot="icon-only" name="more"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+
+          <ion-title>Page title</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-toolbar color="tertiary">
+        <ion-buttons slot="start">
+          <ion-button>
+            Clearing
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="secondary">
+          <ion-button>
+            Done
+          </ion-button>
+        </ion-buttons>
+
+        <ion-title>Text</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="tertiary">
+        <ion-buttons slot="start">
+          <ion-button>
+            Start
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button>
+            Pri
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button>
+            End
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="secondary">
+          <ion-button>
+            Sec
+          </ion-button>
+        </ion-buttons>
+
+        <ion-title>Slots</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="tertiary">
+        <ion-buttons slot="start">
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="secondary">
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+
+        <ion-title>Slots</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="tertiary">
+        <ion-buttons slot="end">
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button>
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="secondary">
+          <ion-button>
+            <ion-icon slot="icon-only" name="call"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="start">
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+
+        <ion-title>Slots</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="tertiary">
+        <ion-buttons slot="end">
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button>
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="secondary">
+          <ion-button>
+            <ion-icon slot="icon-only" name="call"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="start">
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="start">
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+
+        <ion-title>Slots</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="tertiary">
+        <ion-buttons slot="start">
+          <ion-back-button default-href="#"></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="secondary">
+          <ion-button>
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
+        <ion-title>Text</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="tertiary">
+        <ion-segment>
+          <ion-segment-button checked>All</ion-segment-button>
+          <ion-segment-button>Favorites</ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar color="tertiary">
+        <ion-buttons slot="start">
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button>
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
+        <ion-segment>
+          <ion-segment-button checked>All</ion-segment-button>
+          <ion-segment-button>Favorites</ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar color="tertiary">
+        <ion-buttons slot="end">
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+
+        <ion-segment>
+          <ion-segment-button checked>All</ion-segment-button>
+          <ion-segment-button>Favorites</ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar color="tertiary">
+        <ion-buttons slot="start">
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+
+        <ion-segment>
+          <ion-segment-button checked>All</ion-segment-button>
+          <ion-segment-button>Favorites</ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar color="tertiary">
+        <ion-buttons slot="start">
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button>
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
+        <ion-searchbar></ion-searchbar>
+      </ion-toolbar>
+
+      <ion-toolbar color="tertiary">
+        <ion-buttons slot="start">
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button>
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
+        <ion-progress-bar value=".4"></ion-progress-bar>
+      </ion-toolbar>
+
+    </ion-content>
+
+    <ion-footer>
+      <ion-toolbar>
+        <ion-title>
+          Click to Add Text
+        </ion-title>
+        <ion-buttons slot="end">
+          <ion-button id="changeText" onClick="toggleText()">
+            <ion-icon slot="start" name="refresh"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>
+
+    <script>
+      const button = document.getElementById('changeText');
+
+      function toggleText() {
+        const hasText = button.querySelector('#childText');
+
+        if (hasText) {
+          button.removeChild(hasText);
+        } else {
+          var text = document.createElement('span');
+          text.innerHTML = 'Toggle';
+          text.id = 'childText';
+          button.appendChild(text, button);
+        }
+      }
+    </script>
+
+    <style>
+      ion-toolbar {
+        margin-bottom: 10px;
+      }
+    </style>
+  </ion-app>
+</body>
+
+</html>

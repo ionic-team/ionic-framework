@@ -7,13 +7,15 @@ interface HandlerRegister {
   handler: Handler;
 }
 
-export function startHardwareBackButton(win: Window) {
+export const startHardwareBackButton = () => {
+  const doc = document;
+
   let busy = false;
-  win.addEventListener('backbutton', () => {
+  doc.addEventListener('backbutton', () => {
     if (busy) {
       return;
     }
-    busy = true;
+
     const handlers: HandlerRegister[] = [];
     const ev: BackButtonEvent = new CustomEvent('ionBackButton', {
       bubbles: false,
@@ -23,22 +25,33 @@ export function startHardwareBackButton(win: Window) {
         }
       }
     });
-    win.dispatchEvent(ev);
+    doc.dispatchEvent(ev);
 
     if (handlers.length > 0) {
       let selectedPriority = Number.MIN_SAFE_INTEGER;
-      let handler: Handler;
-      handlers.forEach(h => {
-        if (h.priority >= selectedPriority) {
-          selectedPriority = h.priority;
-          handler = h.handler;
+      let selectedHandler: Handler | undefined;
+      handlers.forEach(({ priority, handler }) => {
+        if (priority >= selectedPriority) {
+          selectedPriority = priority;
+          selectedHandler = handler;
         }
       });
-      const result = handler!();
-      if (result != null) {
-        // tslint:disable-next-line:no-floating-promises
-        result.then(() => busy = false);
-      }
+
+      busy = true;
+      executeAction(selectedHandler).then(() => busy = false);
     }
   });
-}
+};
+
+const executeAction = async (handler: Handler | undefined) => {
+  try {
+    if (handler) {
+      const result = handler();
+      if (result != null) {
+        await result;
+      }
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};

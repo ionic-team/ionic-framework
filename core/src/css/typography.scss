@@ -10,25 +10,23 @@ $headings-font-weight:         500 !default;
 /// @prop - Line height of all headings
 $headings-line-height:         1.2 !default;
 
-$h-step:                       var(--ion-header-step, 2px) !default;
-
 /// @prop - Font size of heading level 1
-$h1-font-size:                 var(--ion-header-size, 26px) !default;
+$h1-font-size:                 26px !default;
 
 /// @prop - Font size of heading level 2
-$h2-font-size:                 calc(#{$h1-font-size} - #{$h-step}) !default;
+$h2-font-size:                 24px !default;
 
 /// @prop - Font size of heading level 3
-$h3-font-size:                 calc(#{$h1-font-size} - #{$h-step} * 2) !default;
+$h3-font-size:                 22px !default;
 
 /// @prop - Font size of heading level 4
-$h4-font-size:                 calc(#{$h1-font-size} - #{$h-step} * 3) !default;
+$h4-font-size:                 20px !default;
 
 /// @prop - Font size of heading level 5
-$h5-font-size:                 calc(#{$h1-font-size} - #{$h-step} * 4) !default;
+$h5-font-size:                 18px !default;
 
 /// @prop - Font size of heading level 6
-$h6-font-size:                 calc(#{$h1-font-size} - #{$h-step} * 5) !default;
+$h6-font-size:                 16px !default;
 
 html {
   font-family: var(--ion-font-family);

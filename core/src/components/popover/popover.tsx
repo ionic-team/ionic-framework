@@ -1,9 +1,10 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
 
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
-import { createThemedClasses, getClassMap } from '../../utils/theme';
+import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -11,32 +12,32 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-popover',
   styleUrls: {
     ios: 'popover.ios.scss',
     md: 'popover.md.scss'
-  }
+  },
+  scoped: true
 })
-export class Popover implements OverlayInterface {
+export class Popover implements ComponentInterface, OverlayInterface {
 
   private usersElement?: HTMLElement;
 
   presented = false;
   animation?: Animation;
+  mode = getIonMode(this);
 
   @Element() el!: HTMLElement;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
-  @Prop({ context: 'config' }) config!: Config;
+  /** @internal */
   @Prop() delegate?: FrameworkDelegate;
-  @Prop() overlayIndex!: number;
 
-  /**
-   * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
-   */
-  @Prop() mode!: Mode;
+  /** @internal */
+  @Prop() overlayIndex!: number;
 
   /**
    * Animation to use when the popover is presented.
@@ -59,7 +60,7 @@ export class Popover implements OverlayInterface {
   @Prop() componentProps?: ComponentProps;
 
   /**
-   * If true, the keyboard will be automatically dismissed when the overlay is presented.
+   * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
    */
   @Prop() keyboardClose = true;
 
@@ -70,7 +71,7 @@ export class Popover implements OverlayInterface {
   @Prop() cssClass?: string | string[];
 
   /**
-   * If true, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.
+   * If `true`, the popover will be dismissed when the backdrop is clicked.
    */
   @Prop() backdropDismiss = true;
 
@@ -80,29 +81,21 @@ export class Popover implements OverlayInterface {
   @Prop() event: any;
 
   /**
-   * If true, a backdrop will be displayed behind the popover. Defaults to `true`.
+   * If `true`, a backdrop will be displayed behind the popover.
    */
   @Prop() showBackdrop = true;
 
   /**
-   * If true, the popover will be translucent. Defaults to `false`.
+   * If `true`, the popover will be translucent.
+   * Only applies when the mode is `"ios"` and the device supports
+   * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    */
   @Prop() translucent = false;
 
   /**
-   * If true, the popover will animate. Defaults to `true`.
+   * If `true`, the popover will animate.
    */
   @Prop() animated = true;
-
-  /**
-   * Emitted after the popover has loaded.
-   */
-  @Event() ionPopoverDidLoad!: EventEmitter<void>;
-
-  /**
-   * Emitted after the popover has unloaded.
-   */
-  @Event() ionPopoverDidUnload!: EventEmitter<void>;
 
   /**
    * Emitted after the popover has presented.
@@ -124,44 +117,6 @@ export class Popover implements OverlayInterface {
    */
   @Event({ eventName: 'ionPopoverDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
-  componentDidLoad() {
-    this.ionPopoverDidLoad.emit();
-  }
-
-  componentDidUnload() {
-    this.ionPopoverDidUnload.emit();
-  }
-
-  @Listen('ionDismiss')
-  protected onDismiss(ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    return this.dismiss();
-  }
-
-  @Listen('ionBackdropTap')
-  protected onBackdropTap() {
-    return this.dismiss(undefined, BACKDROP);
-  }
-
-  @Listen('ionPopoverDidPresent')
-  @Listen('ionPopoverWillPresent')
-  @Listen('ionPopoverWillDismiss')
-  @Listen('ionPopoverDidDismiss')
-  protected lifecycle(modalEvent: CustomEvent) {
-    const el = this.usersElement;
-    const name = LIFECYCLE_MAP[modalEvent.type];
-    if (el && name) {
-      const event = new CustomEvent(name, {
-        bubbles: false,
-        cancelable: false,
-        detail: modalEvent.detail
-      });
-      el.dispatchEvent(event);
-    }
-  }
-
   /**
    * Present the popover overlay after it has been created.
    */
@@ -178,13 +133,16 @@ export class Popover implements OverlayInterface {
       ...this.componentProps,
       popover: this.el
     };
-    this.usersElement = await attachComponent(this.delegate, container, this.component, ['popover-viewport'], data);
+    this.usersElement = await attachComponent(this.delegate, container, this.component, ['popover-viewport', (this.el as any)['s-sc']], data);
     await deepReady(this.usersElement);
     return present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, this.event);
   }
 
   /**
    * Dismiss the popover overlay after it has been presented.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the popover. For example, 'cancel' or 'backdrop'.
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
@@ -211,38 +169,65 @@ export class Popover implements OverlayInterface {
     return eventMethod(this.el, 'ionPopoverWillDismiss');
   }
 
-  hostData() {
-    const themedClasses = this.translucent ? createThemedClasses(this.mode, 'popover-translucent') : {};
+  private onDismiss = (ev: UIEvent) => {
+    ev.stopPropagation();
+    ev.preventDefault();
 
-    return {
-      style: {
-        zIndex: 20000 + this.overlayIndex,
-      },
-      'no-router': true,
-      class: {
-        ...createThemedClasses(this.mode, 'popover'),
-        ...getClassMap(this.cssClass),
-        ...themedClasses,
-      }
-    };
+    this.dismiss();
+  }
+
+  private onBackdropTap = () => {
+    this.dismiss(undefined, BACKDROP);
+  }
+
+  private onLifecycle = (modalEvent: CustomEvent) => {
+    const el = this.usersElement;
+    const name = LIFECYCLE_MAP[modalEvent.type];
+    if (el && name) {
+      const event = new CustomEvent(name, {
+        bubbles: false,
+        cancelable: false,
+        detail: modalEvent.detail
+      });
+      el.dispatchEvent(event);
+    }
   }
 
   render() {
-    const wrapperClasses = createThemedClasses(this.mode, 'popover-wrapper');
-
-    return [
-      <ion-backdrop tappable={this.backdropDismiss}/>,
-      <div class={wrapperClasses}>
-        <div class="popover-arrow"></div>
-        <div class="popover-content"></div>
-      </div>
-    ];
+    const mode = getIonMode(this);
+    const { onLifecycle } = this;
+    return (
+      <Host
+        aria-modal="true"
+        no-router
+        style={{
+          zIndex: `${20000 + this.overlayIndex}`,
+        }}
+        class={{
+          ...getClassMap(this.cssClass),
+          [mode]: true,
+          'popover-translucent': this.translucent
+        }}
+        onIonPopoverDidPresent={onLifecycle}
+        onIonPopoverWillPresent={onLifecycle}
+        onIonPopoverWillDismiss={onLifecycle}
+        onIonPopoverDidDismiss={onLifecycle}
+        onIonDismiss={this.onDismiss}
+        onIonBackdropTap={this.onBackdropTap}
+      >
+        <ion-backdrop tappable={this.backdropDismiss} visible={this.showBackdrop}/>
+        <div class="popover-wrapper">
+          <div class="popover-arrow"></div>
+          <div class="popover-content"></div>
+        </div>
+      </Host>
+    );
   }
 }
 
 const LIFECYCLE_MAP: any = {
   'ionPopoverDidPresent': 'ionViewDidEnter',
   'ionPopoverWillPresent': 'ionViewWillEnter',
-  'ionPopoverWillDismiss': 'ionViewWillDismiss',
-  'ionPopoverDidDismiss': 'ionViewDidDismiss',
+  'ionPopoverWillDismiss': 'ionViewWillLeave',
+  'ionPopoverDidDismiss': 'ionViewDidLeave',
 };
