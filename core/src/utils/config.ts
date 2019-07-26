@@ -182,6 +182,7 @@ export interface IonicConfig {
   persistConfig?: boolean;
   _forceStatusbarPadding?: boolean;
   _testing?: boolean;
+  _forceCSSAnimations?: boolean;
   _zoneGate?: (h: () => any) => any;
 }
 

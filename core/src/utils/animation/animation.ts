@@ -1,7 +1,12 @@
-import { Animation } from './animation-interface';
+import { Animation, AnimationDirection, AnimationFill } from './animation-interface';
 import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyframeString } from './animation-utils';
 
 let counter = 0;
+
+/**
+ * HACKY
+ */
+const _forceCSSAnimations = new URLSearchParams(window.location.search).get('ionic:_forceCSSAnimations');
 
 export const createAnimation = () => {
   const elements: HTMLElement[] = [];
@@ -45,7 +50,7 @@ export const createAnimation = () => {
   const _afterAddReadFunctions: any[] = [];
   const _afterAddWriteFunctions: any[] = [];
 
-  const supportsWebAnimations = !!(window as any).Animation;
+  const supportsWebAnimations = !!(window as any).Animation && _forceCSSAnimations !== null;
 
   /**
    * Destroy this animation and all child animations.
@@ -213,14 +218,14 @@ export const createAnimation = () => {
     return ani;
   };
 
-  const getFill = (): 'auto' | 'none' | 'forwards' | 'backwards' | 'both' | undefined => {
+  const getFill = () => {
     if (_fill !== undefined) { return _fill; }
     if (parentAnimation) { return parentAnimation.getFill(); }
 
     return undefined;
   };
 
-  const getDirection = (): 'normal' | 'reverse' | 'alternate' | 'alternate-reverse' | undefined => {
+  const getDirection = () => {
     if (shouldForceReverseDirection) { return 'reverse'; }
     if (_direction !== undefined) { return _direction; }
     if (parentAnimation) { return parentAnimation.getDirection(); }
@@ -229,7 +234,7 @@ export const createAnimation = () => {
 
   };
 
-  const getEasing = (): string | undefined => {
+  const getEasing = () => {
     if (shouldForceLinearEasing) { return 'linear'; }
     if (_easing !== undefined) { return _easing; }
     if (parentAnimation) { return parentAnimation.getEasing(); }
@@ -237,7 +242,7 @@ export const createAnimation = () => {
     return undefined;
   };
 
-  const getDuration = (): number | undefined => {
+  const getDuration = () => {
     if (shouldForceSyncPlayback) { return 0; }
     if (_duration !== undefined) { return _duration; }
     if (parentAnimation) { return parentAnimation.getDuration(); }
@@ -245,21 +250,21 @@ export const createAnimation = () => {
     return undefined;
   };
 
-  const getIterations = (): number | undefined => {
+  const getIterations = () => {
     if (_iterations !== undefined) { return _iterations; }
     if (parentAnimation) { return parentAnimation.getIterations(); }
 
     return undefined;
   };
 
-  const getDelay = (): number | undefined => {
+  const getDelay = () => {
     if (_delay !== undefined) { return _delay; }
     if (parentAnimation) { return parentAnimation.getDelay(); }
 
     return undefined;
   };
 
-  const getKeyframes = (): any[] => {
+  const getKeyframes = () => {
     return _keyframes;
   };
 
@@ -269,13 +274,13 @@ export const createAnimation = () => {
     return ani;
   };
 
-  const direction = (animationDirection: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse') => {
+  const direction = (animationDirection: AnimationDirection) => {
     _direction = animationDirection;
 
     return ani;
   };
 
-  const fill = (animationFill: 'auto' | 'none' | 'forwards' | 'backwards' | 'both') => {
+  const fill = (animationFill: AnimationFill) => {
     _fill = animationFill;
 
     return ani;
@@ -469,7 +474,7 @@ export const createAnimation = () => {
           iterationsCount = (getIterations() === Infinity) ? 'infinite' : getIterations()!.toString();
         }
 
-        element.style.setProperty('animation-iteration-countion', iterationsCount);
+        element.style.setProperty('animation-iteration-count', iterationsCount);
         element.style.setProperty('animation-play-state', 'paused');
       }
     });
@@ -540,8 +545,8 @@ export const createAnimation = () => {
 
         elements.forEach(element => {
           if (_keyframes.length > 0) {
-            (element as HTMLElement).style.animationDelay = animationDuration;
-            (element as HTMLElement).style.animationPlayState = 'paused';
+            element.style.setProperty('animation-delay', animationDuration);
+            element.style.setProperty('animation-play-state', 'paused');
           }
         });
       }
@@ -643,7 +648,7 @@ export const createAnimation = () => {
     return ani;
   };
 
-  const playAsync = (): Promise<Animation> => {
+  const playAsync = () => {
     return new Promise(resolve => {
       onFinish(resolve);
       play();
@@ -799,5 +804,5 @@ export const createAnimation = () => {
     progressStart,
     progressStep,
     progressEnd
-  };
+  } as Animation;
 };

@@ -24,8 +24,8 @@ export interface Animation {
   addAnimation(animationToADd: Animation | Animation[] | undefined | null): Animation;
   addElement(el: Element | Element[] | Node | Node[] | NodeList | undefined | null): Animation;
   iterations(iterations: number): Animation;
-  fill(fill: 'auto' | 'none' | 'forwards' | 'backwards' | 'both' | undefined): Animation;
-  direction(direction: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse' | undefined): Animation;
+  fill(fill: AnimationFill | undefined): Animation;
+  direction(direction: AnimationDirection | undefined): Animation;
   duration(duration: number): Animation;
   easing(easing: string): Animation;
   delay(delay: number): Animation;
@@ -33,8 +33,8 @@ export interface Animation {
   parent(animation: Animation): Animation;
 
   getKeyframes(): any[];
-  getDirection(): 'normal' | 'reverse' | 'alternate' | 'alternate-reverse' | undefined;
-  getFill(): 'auto' | 'none' | 'forwards' | 'backwards' | 'both' | undefined;
+  getDirection(): AnimationDirection | undefined;
+  getFill(): AnimationFill | undefined;
   getDelay(): number | undefined;
   getIterations(): number | undefined;
   getEasing(): string | undefined;
@@ -56,3 +56,6 @@ export interface Animation {
 
   onFinish(callback: any): Animation;
 }
+
+export type AnimationDirection = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
+export type AnimationFill = 'auto' | 'none' | 'forwards' | 'backwards' | 'both';

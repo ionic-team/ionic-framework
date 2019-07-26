@@ -12,11 +12,11 @@
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   <script type="module">
-    import { createAnimation } from '../../../../dist/collection/utils/animation/animation.js';
+    import { createAnimation } from '../../../../dist/index.mjs';
     
-    const squareA = document.querySelectorAll('.square-a');
-    const squareB = document.querySelectorAll('.square-b');
-    const squareC = document.querySelectorAll('.square-c');
+    const squareA = document.querySelector('.square-a');
+    const squareB = document.querySelector('.square-b');
+    const squareC = document.querySelector('.square-c');
     const squareCText = document.querySelectorAll('.square-c .text');
     
     const rootAnimation = createAnimation();
@@ -44,7 +44,8 @@
         'background': 'rgba(0, 255, 0, 0.5)'
       })
       .onFinish(() => {
-        console.log('Animation A Done');
+        const ev = new CustomEvent('ionAnimationFinished', { detail: 'AnimationAFinished' });
+        squareA.dispatchEvent(ev);
       });
       
     animationB
@@ -65,7 +66,8 @@
         'background': 'rgba(0, 255, 0, 0.5)'
       })
       .onFinish(() => {
-        console.log('Animation B Done');
+        const ev = new CustomEvent('ionAnimationFinished', { detail: 'AnimationBFinished' });
+        squareA.dispatchEvent(ev);
       });
   
     animationC
@@ -86,7 +88,8 @@
         'background': 'rgba(0, 255, 0, 0.5)'
       })
       .onFinish(() => {
-        console.log('Animation C Done')
+        const ev = new CustomEvent('ionAnimationFinished', { detail: 'AnimationCFinished' });
+        squareA.dispatchEvent(ev);
       });
       
     animationCSubA
@@ -95,7 +98,8 @@
       .delay(3000)
       .fromTo('color', 'red', 'blue')
       .onFinish(() => {
-        console.log('Animation CSubA Done');
+        const ev = new CustomEvent('ionAnimationFinished', { detail: 'AnimationCSubAFinished' });
+        squareA.dispatchEvent(ev);
       });
       
     animationC.addAnimation(animationCSubA);
@@ -103,7 +107,8 @@
     rootAnimation
       .addAnimation([animationA, animationB, animationC])
       .onFinish(() => {
-        console.log('Root Animation Done');
+        const ev = new CustomEvent('ionAnimationFinished', { detail: 'AnimationRootFinished' });
+        squareA.dispatchEvent(ev);
       });
         
     document.querySelector('.play').addEventListener('click', () => {
