@@ -19,6 +19,10 @@ export class NavSetRoot implements ComponentInterface {
    */
   @Prop() componentProps?: ComponentProps;
 
+  componentDidLoad() {
+    console.warn('`<ion-nav-set-root component="MyComponent">` is deprecated. Use `<ion-nav-link component="MyComponent" routerDirection="root">` instead.');
+  }
+
   private setRoot = () => {
     const nav = this.el.closest('ion-nav');
     const toPush = this.component;

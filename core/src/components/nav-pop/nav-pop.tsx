@@ -7,6 +7,10 @@ export class NavPop implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
+  componentDidLoad() {
+    console.warn('`<ion-nav-pop>` is deprecated. Use `<ion-nav-link routerDirection="back">` instead.');
+  }
+
   private pop = () => {
     const nav = this.el.closest('ion-nav');
     if (nav) {
